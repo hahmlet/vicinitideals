@@ -20,6 +20,7 @@ import pytest
 import yaml
 
 from flats.provenance import discover as mod
+from flats.provenance import municode as mc
 from flats.provenance.discover import (
     Candidate,
     classify,
@@ -234,31 +235,35 @@ def test_nothing_to_discover_is_an_error_not_a_silent_zero(rules: Path) -> None:
 
 
 # --- Municode is asked, not probed -------------------------------------
+#
+# Membership and the document both live in flats.provenance.municode; what is
+# defended here is only that discovery reports its answer honestly.
 
 
-CLIENTS = json.dumps(
-    [
-        {"ClientName": "Wilsonville", "ClientID": 4976},
-        {"ClientName": "Washington County", "ClientID": 4800},
-    ]
+CLIENTS = json.dumps([{"ClientName": "Wilsonville", "ClientID": 4976}]).encode()
+CONTENT = json.dumps(
+    {"codes": [{"productName": "Code of Ordinances", "productId": 1, "publicationId": 1951}]}
 ).encode()
 
 
 @pytest.fixture(autouse=True)
 def _no_cached_registry():
-    mod.municode_clients.cache_clear()
+    mc.clients.cache_clear()
     yield
-    mod.municode_clients.cache_clear()
+    mc.clients.cache_clear()
 
 
 def _registry(monkeypatch, body: bytes | None) -> None:
     def fake(url: str, **kw):
+        if body is None:
+            raise FetchFailed("nope", (("plain", 503),))
+        if "ClientContent" in url:
+            return Fetched(CONTENT, "plain", 200, Authority.official)
         if "api.municode.com" in url:
-            if body is None:
-                raise FetchFailed("nope", (("plain", 503),))
             return Fetched(body, "plain", 200, Authority.official)
         raise FetchFailed("nope", (("plain", 404),))
 
+    monkeypatch.setattr(mc, "fetch", fake)
     monkeypatch.setattr(mod, "fetch", fake)
 
 
@@ -268,7 +273,7 @@ def test_a_city_on_the_registry_is_a_real_lead(monkeypatch) -> None:
     got = mod.municode("l", "Wilsonville")
 
     assert got.verdict == "index"
-    assert "4976" in got.note
+    assert got.url == "https://api.municode.com/PublicationPdfDownload/1951"
 
 
 def test_a_city_not_on_the_registry_is_missing_not_a_shell(monkeypatch) -> None:
@@ -282,43 +287,14 @@ def test_a_city_not_on_the_registry_is_missing_not_a_shell(monkeypatch) -> None:
 
 
 def test_an_empty_registry_is_an_answer_not_a_failure(monkeypatch) -> None:
-    # "Municode publishes nobody in this state" and "we could not read the
-    # list" are opposite conclusions that an empty tuple would collapse.
     _registry(monkeypatch, b"[]")
 
     assert mod.municode("l", "Wilsonville").verdict == "missing"
 
 
 def test_an_unreadable_registry_is_blocked_not_an_empty_platform(monkeypatch) -> None:
-    # "No city is a Municode client" and "we could not read the client list"
-    # are opposite conclusions, and the second one must never be reported as
-    # the first.
+    # "Municode publishes nobody here" and "we could not read the list" are
+    # opposite conclusions, and the second must never be reported as the first.
     _registry(monkeypatch, None)
 
     assert mod.municode("l", "Wilsonville").verdict == "blocked"
-
-
-def test_unincorporated_county_land_is_filed_under_the_county(monkeypatch) -> None:
-    # It is its own jurisdiction because that is how the zoning works. A
-    # codifier files it under the county's name.
-    _registry(monkeypatch, CLIENTS)
-
-    assert mod.municode("l", "Washington Unincorporated").verdict == "index"
-
-
-def test_the_registry_is_read_once_per_sweep(monkeypatch) -> None:
-    calls: list[str] = []
-
-    def counting(url: str, **kw):
-        calls.append(url)
-        if "api.municode.com" in url:
-            return Fetched(CLIENTS, "plain", 200, Authority.official)
-        raise FetchFailed("nope", (("plain", 404),))
-
-    monkeypatch.setattr(mod, "fetch", counting)
-    mod.municode("l", "Wilsonville")
-    mod.municode("l", "Gresham")
-
-    assert [u for u in calls if "api.municode.com" in u] == [
-        mod.MUNICODE_CLIENTS.format(state="OR")
-    ]

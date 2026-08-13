@@ -1382,6 +1382,53 @@ URL template reaches — Gresham's Community Development Code and Happy Valley's
 each a one-off. That is hand work, and now it is *six* pieces of hand work with
 names on them rather than sixteen of unknown shape.
 
-The four Municode cities still need a rendered fetch or that platform's content API
-to read; being on the registry proves the code is there, not that a fetcher can see
-it. That remains the largest single piece of coverage work.
+The four Municode cities needed a rendered fetch or that platform's content API to
+read. §22 gets them without either.
+
+
+---
+
+## 22. The document a city adopted, not the page that renders it
+
+Municode's library needs a token: `library.municode.com/api/CodesContent` answers
+401 to anything without one, and its content renders through an OIDC-authenticated
+SPA. The obvious next move was a headless browser — a dependency, a container, and
+a rendering step between the ordinance and the citation.
+
+It was not necessary. Reading the library's own JavaScript found a **public**
+publication endpoint, and what it hands back is better than the rendered HTML:
+
+```
+GET  api.municode.com/Clients/stateAbbr?stateAbbr=OR   -> 55 Oregon clients
+GET  api.municode.com/ClientContent/4976               -> publicationId 1951
+GET  api.municode.com/PublicationPdfDownload/1951      -> a signed blob URL
+                                                       -> 17.5 MB, %PDF-1.5
+```
+
+That is **the adopted code as a single PDF** — the document the council voted on,
+not a page assembled from it. A citation promises a reader can go and check; that
+promise is strongest against the artifact itself.
+
+### Two details that decide whether the citation survives
+
+**The declared URL is the unsigned one.** The blob URL carries a SAS signature that
+expires in minutes. Writing it into a rule file would produce a citation that stops
+working before anybody follows it, so `code:` holds
+`https://api.municode.com/PublicationPdfDownload/1951` — stable, official — and the
+fetcher follows the hop. One host answers a document request with the document's
+*address*; that is now handled once, in `fetch`, for every caller.
+
+**Authority stays with the declared URL.** The blob lives on
+`mcclibrary.blob.core.usgovcloudapi.net`, which no registry classifies, so judging
+the hop would demote an official document to `unknown` and block every value citing
+it from ever being signed (§15). The hop preserves the authority of the URL a rule
+file actually declares.
+
+```
+python -m flats.provenance.municode --all   # prints a paste-ready `code:` block
+```
+
+Which turns the platform gap from "two thirds of the corpus is unreachable" into
+four `code:` blocks and a fetch — and makes every *other* Oregon Municode city
+reachable the same way, which matters more than the four, because statewide
+coverage is the standing goal.

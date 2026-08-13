@@ -26,7 +26,7 @@ being named here, which is a one-line change somebody makes deliberately.
 from __future__ import annotations
 
 import enum
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Sequence
 
 #: Impersonation targets, cheapest first. The plain client covers most PDFs and
@@ -182,6 +182,13 @@ def _impersonated(url: str, target: str) -> tuple[bytes, int]:
     return response.content, response.status_code
 
 
+def _indirect(url: str, content: bytes) -> str | None:
+    """The real address, when the body that came back was one."""
+    from flats.provenance.municode import resolve
+
+    return resolve(url, content)
+
+
 def fetch(url: str, *, strategies: Sequence[str] = STRATEGIES) -> Fetched:
     """Try each strategy in turn, returning the first that actually answers.
 
@@ -202,6 +209,19 @@ def fetch(url: str, *, strategies: Sequence[str] = STRATEGIES) -> Fetched:
             attempts.append((target, type(exc).__name__))
             continue
         if status == 200 and content:
+            hop = _indirect(url, content)
+            if hop:
+                # One host answers a document request with the document's
+                # address: Municode's publication endpoint returns a signed
+                # blob URL that expires in minutes. Declaring the signed URL
+                # would produce a citation that stops working before anybody
+                # follows it, so the stable endpoint is what a rule file holds
+                # and the hop happens here, once, for every caller.
+                # Authority stays with the URL a rule file declares. The blob
+                # host is Municode's own storage under a signature; judging the
+                # hop would demote an official document to `unknown` and block
+                # every value citing it from ever being signed.
+                return replace(fetch(hop, strategies=strategies), authority=authority_for(url))
             return Fetched(content, target, status, authority_for(url))
         problems.append(f"{target}: HTTP {status}")
         attempts.append((target, status))

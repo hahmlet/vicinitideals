@@ -35,14 +35,13 @@ Run::
 from __future__ import annotations
 
 import argparse
-import json
 import re
 import sys
 from dataclasses import dataclass
-from functools import lru_cache
 from pathlib import Path
 from typing import Sequence
 
+from flats.provenance import municode as mc
 from flats.provenance.sources import Authority, FetchFailed, authority_for, fetch
 from flats.rules.loader import CONFIG_ROOT, load_rules
 
@@ -62,7 +61,6 @@ PLATFORMS: tuple[tuple[str, str, str], ...] = (
 #: rendered in JavaScript. Probing the URL therefore reports a lead for every
 #: city on earth. Its client registry is a plain JSON list and answers the
 #: question the URL cannot: is this jurisdiction actually on this platform?
-MUNICODE_CLIENTS = "https://api.municode.com/Clients/stateAbbr?stateAbbr={state}"
 MUNICODE_LIBRARY = "https://library.municode.com/{state_lower}/{snake}/codes/code_of_ordinances"
 
 #: Words a municipal code index has and a 404 page does not. Deliberately dull:
@@ -167,64 +165,29 @@ def probe(layer: str, platform: str, url: str) -> Candidate:
     )
 
 
-@lru_cache(maxsize=8)
-def municode_clients(state: str = "OR") -> tuple[tuple[str, int], ...] | None:
-    """Every jurisdiction Municode publishes in one state, from its own registry.
-
-    Cached because a sweep asks once per city and the answer is one list.
-    ``None`` means the registry could not be read — distinct from an empty list,
-    which would mean the platform publishes nobody here. Those are opposite
-    conclusions and the second must never stand in for the first.
-    """
-    try:
-        got = fetch(MUNICODE_CLIENTS.format(state=state.upper()), strategies=("plain",))
-        listed = json.loads(got.content)
-    except (FetchFailed, ValueError):
-        return None
-    return tuple(
-        (str(entry.get("ClientName", "")), int(entry.get("ClientID", 0)))
-        for entry in listed
-        if entry.get("ClientName")
-    )
-
-
-def _key(name: str) -> str:
-    return _PUNCT.sub("", name.lower())
-
-
 def municode(layer: str, label: str, *, state: str = "OR") -> Candidate:
-    """Ask Municode's registry whether it publishes this jurisdiction."""
-    clients = municode_clients(state)
-    url = MUNICODE_LIBRARY.format(state_lower=state.lower(), **name_forms(label))
-    if clients is None:
-        return Candidate(layer, "municode", url, "blocked", authority=authority_for(url))
-    wanted = {_key(label)} | {_key(alias) for alias in aliases(label)}
-    for name, client_id in clients:
-        if _key(name) in wanted:
-            return Candidate(
-                layer,
-                "municode",
-                MUNICODE_LIBRARY.format(state_lower=state.lower(), **name_forms(name)),
-                "index",
-                status=200,
-                strategy="registry",
-                authority=authority_for(url),
-                note=f"client {client_id}; content renders in JavaScript",
-            )
-    return Candidate(layer, "municode", url, "missing", authority=authority_for(url))
+    """Ask Municode's registry whether it publishes this jurisdiction.
 
-
-def aliases(label: str) -> tuple[str, ...]:
-    """Other names a codifier might file this jurisdiction under.
-
-    Unincorporated county land is encoded as its own jurisdiction because that
-    is how the zoning works, but a codifier files it under the county's name.
+    Not a URL probe: `library.municode.com/or/<anything>/codes/...` returns the
+    same frame whether the city is a client or not, so probing it reported a
+    lead for every city on earth. See :mod:`flats.provenance.municode`.
     """
-    lowered = label.lower()
-    if "unincorporated" in lowered:
-        county = lowered.replace("unincorporated", "").strip()
-        return (f"{county} county", county)
-    return ()
+    url = MUNICODE_LIBRARY.format(state_lower=state.lower(), **name_forms(label))
+    if mc.clients(state) is None:
+        return Candidate(layer, "municode", url, "blocked", authority=authority_for(url))
+    pub = mc.publication(label, state=state)
+    if pub is None:
+        return Candidate(layer, "municode", url, "missing", authority=authority_for(url))
+    return Candidate(
+        layer,
+        "municode",
+        pub.url,
+        "index",
+        status=200,
+        strategy="registry",
+        authority=authority_for(url),
+        note=f"{pub.client} {pub.product}, adopted PDF; updated {pub.updated[:10]}",
+    )
 
 
 def discover(layer: str, label: str) -> list[Candidate]:
@@ -284,11 +247,8 @@ def main(argv: Sequence[str] | None = None) -> int:
 
 
 __all__ = [
-    "MUNICODE_CLIENTS",
     "PLATFORMS",
-    "aliases",
     "municode",
-    "municode_clients",
     "Candidate",
     "classify",
     "discover",
