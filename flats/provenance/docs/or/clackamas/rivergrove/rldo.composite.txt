@@ -1,0 +1,2441 @@
+Rivergrove
+  Land Development ordinance
+                                        54-89
+
+This document is an unofficial electronic version, compiled to incorporate
+amendments. For the official version, please refer to the actual document
+                    adopted by the Rivergrove Cit y Council.
+           Official ordinances are available from the Cit y Manager:
+                          Leanne@Cit yof Rivergrove.com
+       Note: Please check the Rivergrove Flood Map before consulting these
+           ordinances, to see if the propert y is in a designated flood area.
+                  If it is, please consult the Flood Area section first.
+Flood overlay ordinances apply in flood areas and about half of the land area of the
+                           Cit y is in at least one flood zone.
+                                         RIVERGROVE
+
+                      LAND DEVELOPMENT ORDINANCE
+
+                           (Attachment C to Ordinance No. 54-89)
+
+                               Adopted March, 1989, and as amended.
+
+                                           City of Rivergrove
+                                             P.O. Box 1104
+                                       Lake Oswego, OR  97035
+                                             (503) 639-6919
+
+This document was compiled from a variety of sources for ease of locating the various sources
+of authority over land development in the City of Rivergrove and has not been adopted or
+approved by either the Rivergrove Planning Commission or City Council.  In the event of
+conflict between this document and the officially adopted ordinances, the ordinances take
+precedence.  Anyone relying on this document should confirm the contents of the regulations
+with the official documents.
+THIS DOCUMENT IS AN UNOFFICIAL ELECTRONIC VERSION COMPILED TO
+INCORPORATE AMENDMENTS.  FOR THE OFFICIAL VERSION, PLEASE REFER TO
+THE ACTUAL DOCUMENTS ADOPTED BY THE RIVERGROVE CITY COUNCIL.
+
+The Rivergrove Land Development Ordinance, Attachment C to Rivergrove Ordinance No. 54-89
+serves as the base document.  The changes to this document include the following ordinances:
+
+Ordinance No. 59-97A
+            Sections Affected:
+                   5.010 (Land Use)
+                   5.050 (Permitted Uses)
+                   3.020 (Membership)
+
+Ordinance No. 61-98
+            Sections Affected:
+                        5.060 (Permitted Uses in the Flood Hazard Zone)
+                        6.226 (Procedure)
+
+Ordinance No. 62-98
+            Sections Affected:
+                        5.055 (Secondary Dwelling Units)
+
+Ordinance No. 68-2000
+            Sections Affected:
+                        5.075 (Minimum Density Standard)
+                        6.080 (Division of Land)
+                        5.095 (Parking Standards)
+
+Ordinance No. 71-2002
+            Sections Affected:
+                        5.130 (Gates or Other Barriers)
+                        6.135 (Public and Private Streets and Driveways)
+
+Ordinance No. 73-2003A
+            Sections Affected:
+                        5.050 (Permitted Uses)
+                        6.300 (Conditional Use)
+                        6.310 (Application Requirements)
+                        6.320 (Review Criteria)
+                        6.330 (Additional Criteria)
+                        6.340 (Conditions)
+
+Ordinance No. 74-2004
+            Sections Affected:
+                        5.100 (Tree Cutting)
+
+In addition, to the RLDO, the City of Rivergrove has adopted other ordinances that affect land use
+in the City.  Some of those documents include:
+
+Ordinance #52             (Rivergrove Flood Damage Prevention Ordinance)
+
+Ordinance 57-93         (Siting of Manufactured Homes in the City of Rivergrove)
+
+Ordinance 65-99:       (Consenting to the application and enforcement of Lake Oswego City Code
+                            provisions related to sanitary sewer services in the City of Rivergrove)
+
+Ordinance 70-2001     (Water Quality and Flood Management Ordinance)
+
+Finally, the Rivergrove Planning Commission has interpreted several provisions of the RLDO and
+adopted formal interpretations, including:
+
+July 7, 1997                – Section 2.040(h)
+November 3, 1997      – Section 9.030
+March 2, 1998            – Section 5.080
+July 6, 1998                - Section 5.080
+May 7, 2001               - Section 9.030 (as well as Section 5.2-4(1)(iii) of Ordinance #52)
+September 5, 2002     - section 5.010
+October 11, 2004        - Section 5.080 (as well as Section VI(D)(4) of Ordinance #70-2001)
+
+                    RIVERGROVE LAND DEVELOPMENT ORINDANCE
+                                           TABLE OF CONTENTS
+
+ARTICLE                          CONTENT
+
+1                                General Provisions
+
+     1.010                       Title
+     1.020                       Repeal
+     1.030                       Severability and Validity
+     1.040                       Interpretation
+     1.050                       Definitions
+
+2                                Scope and Compliance
+
+     2.010                       Scope and Compliance
+     2.020                       Consistency with Plan and Laws
+     2.030                       Development Permit Required
+     2.040                       Exclusions
+     2.050                       Use
+     2.060                       Nonconforming Development
+     2.070                       Completion of Nonconforming Development
+     2.080                       Termination of Nonconforming Development
+     2.090                       Timeline for Development Permit Review & Decision
+
+3                                Planning Commission and Hearings Officer
+
+     3.010                       Establishment
+     3.020                       Membership
+     3.030                       Terms
+     3.040                       Vacancies and Removal
+     3.050                       Officers
+     3.060                       Meetings
+     3.070                       Powers and Duties
+     3.080                       Hearings Officer
+
+4                                Procedures for Decisions-Making
+
+     4.010                       Procedures for Processing Permits
+     4.020                       Coordination
+     4.030                       Pre-Application Conference
+     4.040                       Development Permit Application
+     4.050                       Submission of Application
+     4.060                       Permit Referral
+     4.070                       Decision
+     4.080                       Resubmission
+     4.090                          Type I Procedure
+     4.100                          Type II Procedure
+     4.110                          Type III Procedure
+     4.120                          Type IV Procedure
+
+5                                   Districts and Zones
+
+     5.010                          Land use
+     5.020                          Flood Hazard District
+     5.030                          Classification Change
+     5.040                          Land Development Map
+     5.050                          Permitted Uses
+     5.055                          Secondary Dwelling Units
+     5.060                          Permitted uses – FHD
+     5.070                          Future Development
+     5.075                          Minimum Density Standard
+     5.080                          General Building Setbacks in All Zones and Districts
+     5.090                          Building Height Limit
+     5.095                          Parking Standards
+     5.100                          Tree Cutting
+     5.110                          Houses Moved Into City
+     5.120                          Home Occupations in All Districts and Zones
+     5.130                          Gates or Other Barriers
+
+6                                   Permit and Issue Determinations
+
+     6.010                          Area Accessory Development
+     6.020                          Application
+     6.030                          Action On Application
+     6.040                          Notice
+     6.050                          Criteria
+     6.060                          Hardship Relief – Procedure
+     6.070                          Authority To Grant Hardship Relief
+     6.080                          Land Division
+     6.090                          Type I Division
+     6.100                          Type II Division
+     6.110                          Type III Division
+     6.120                          Pre-Application Conference
+     6.130                          Future Street and Public Facilities Plan
+     6.135                          Public and Private Streets and Driveways
+     6.140                          Recording and Filing
+     6.150                          Revision
+     6.160                          Criteria
+     6.070                          Tentative Plan
+     6.180                          Staged Development
+     6.190                          Final Plat
+     6.200                          Approval Signatures – Final  Subdivision Plat
+     6.210                          Approval Signatures – Final Partition Plat
+     6.221                          Change of Land Use Classification
+     6.222                          Criteria
+     6.223                          Vacation Criteria
+
+     6.224                         Conditions
+     6.225                         Legislation
+     6.226                         Procedure
+     6.227                         Notice
+     6.228                         Public Participation
+     6.229                         Recommendation
+     6.230                         Legislative Action – City  Council
+     6.231                         Site Design Review
+     6.232                         Procedure
+     6.233                         Identification of Environmentally Sensitive Areas
+     6.234                         Requests for Development/Site Design Review
+     6.235                         Annexation Criteria
+     6.236                         Designation of Annexed Property
+     6.300                         Conditional Use
+     6.310                         Application Requirements
+     6.320                         Review Criteria
+     6.330                         Additional Criteria
+     6.340                         Conditions
+
+7                                  Reserved for Planned Unit Development
+
+8                                  Public Deliberations and Hearings
+
+     8.010                         Responsibility of  Commission
+     8.020                         Notice
+     8.030                         Procedure
+     8.040                         Published or Posted Notice
+     8.050                         Time and Cost of Notice
+     8.060                         Challenges to Impartiality
+     8.070                         Disqualifications
+     8.080                         Interested Officers
+     8.090                         Ex Parte Contacts
+     8.100                         Disqualifications
+     8.110                         Rights of Disqualified Members
+     8.120                         Burden of Proof
+     8.130                         Decision
+     8.140                         Findings and Order
+     8.150                         Record
+     8.160                         Request for Review
+     8.070                         Notice of Appeal
+     8.180                         Scope of Review
+     8.190                         Review on Record
+     8.200                         De Novo Review
+     8.210                         Review Decision
+
+9                                  Bonds, Deposits and Penalties
+
+     9.010                         Bonds or Cash Deposits
+
+     9.020                         Penalties and Abatement
+     9.030                         Fees and System Development Charges
+
+10                                 Reserved
+
+                                                   Attachment C
+                                             to Ordinance No.  54-89
+
+                                A LAND DEVELOPMENT ORDINANCE
+                                                         AND
+          A DEVELOPMENT STANDARDS DOCUMENTS ORDINANCE FOR THE
+                                   CITY OF RIVERGROVE, OREGON.
+
+             THE CITY OF RIVERGROVE, OREGON, ORDAINS AS FOLLOWS:
+
+                                                    ARTICLE 1
+                                           GENERAL PROVISIONS
+
+Section 1.010.  Title.  This ordinance shall be known as the Rivergrove Development Ordinance
+of 1989 (hereinafter the "ordinance") and is comprised of the ordinance and the Rivergrove Land
+Development Standards Document.
+
+Section 1.020.  Repeal.  Ordinance Nos. 11, 12, 14, 26, 27, 34 and 36 and all other ordinances and
+parts of ordinances in conflict herewith are hereby repealed.
+
+Section 1.030.  Severability and Validity.  The provisions of this ordinance are severable.  If
+any section, sentence, clause or phrase of this ordinance is adjudged by a court of competent
+jurisdiction to be invalid, that decision shall not affect the validity of the remaining portions of this
+ordinance.
+
+Section 1.040.  Interpretation.  Where the conditions imposed by a provision of this ordinance are
+less restrictive than comparable conditions imposed by any other provisions of this or any other
+ordinance, the more restrictive provision shall govern.
+
+Section 1.050.  Definitions.  As used in this ordinance the masculine includes the feminine and the
+neuter and the singular includes the plural.  The following words and phrases, unless the context
+otherwise requires, shall mean:
+
+    (a)       "Building line" means a line on a plat or map indicating the limit beyond which
+             buildings, structures or development may not be erected or undertaken.
+
+    (b)       "City" means the city of Rivergrove, Oregon.
+
+    (c)       "City Council" means the governing body of the city of River grove, Oregon.
+
+    (d)       "Comprehensive Plan" means the official plan adopted by the City for the guidance of
+             growth and development including those amendments which may be made to it.
+
+    (e)       "Development" means any man-made change to improved or unimproved real estate,
+             including but not limited to construction, installation or alteration of a building or other
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                             1
+              structure, land division, establishment or termination of a right to access, storage on the
+              land, tree cutting, drilling and site alteration such as that due to land or surface mining,
+              dredging, paving grading, excavation, clearing, or the alteration of the banks or bed of
+              any waterway in the City.
+
+    (f)        "Dividing Land" means the process of separating a parcel of land or a lot in a
+              subdivision into a number of lots by subdivision or parcels by partitioning.  Dividing
+              occurs when an improved plat or plan has been filed, or, if approval is not required,
+              when less than the entire contiguous land holdings in a single ownership on the effective
+              date of this ordinance is transferred to a new owner.
+
+    (g)       "Impact Area" means an area that has been identified in the plan or map as needing land
+              or Water management to protect against adverse impact such as erosion, slippage, loss
+              of unique wildlife or plant habitat or another feature identified as needing special
+              consideration and protection where such management is to be implemented through a
+              site investigation program.
+
+    (h)       "Land Division" means a lot or parcel of land created through the process of dividing
+              land.
+
+    (i)        "Lot" means a unit of land created by a subdivision of land or other means.
+
+              (1)          "Corner Lot" means a lot at least two adjacent sides of which abut streets other
+                          than alleys, provided the angle of the intersection of the adjacent streets does
+                          not exceed 135 degrees.
+
+              (2)          "Reversed Corner Lot" means a comer lot, the side street line of which is
+                          substantially a continuation of the front line of the first lot to its rear.
+
+              (3)          "Through Lot" means a lot having frontage on two parallel or approximately
+                          parallel streets other than alleys.
+
+    (j)        "Major Partition" means the dividing of land into two or three parcels within one
+              calendar year and including the creation of a road or street, either public or private and
+              including easements.-
+
+    (k)       "Map" means a final diagram, drawing or other writing concerning a land division.
+
+    (1)       "Minor Partition" means the dividing of land into two or three parcels within one
+              calendar year that does not include the creation of a road or street or easement.
+
+    (m)      "Nonconforming Use or Development" means a use or development lawfully existing
+              at the time-this ordinance became applicable to it by being in compliance with the
+              standards applicable to it at the time it came into existence, but that would not be lawful
+              except for its pre-existence.
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                             2
+    (n)       "Owner" means the legal owner of record, or where there is a recorded land sales
+              contract, the purchaser thereunder.
+
+    (o)       "Pedestrian Way" means a right-of-way for pedestrian traffic.
+
+    (p)       "Person" means an individual, including any trustee, receiver, assignee, or any group or
+              combination acting as a unit, a including any political subdivision.
+
+    (q)       "Planning Commission" or "Commission" means the Planning Commission of the city
+              of Rivergrove, Oregon, and also serves as the City Design Review Body.
+
+    (r)        "Plat" means the final map, diagram, drawing, replat, or other writing containing all the
+              descriptions, locations, specifications, dedications, provisions, and other information
+              concerning a land division.
+
+    (s)       "Resident" means a person or persons living as a resident for some continuous period
+              (as distinguished as a transient).
+
+    (t)        "Right-of-way" means the area between boundary lines of a street or other easement
+
+    (u)       "Roadway" means the portion of a street right-of-way developed for vehicular traffic.
+
+    (v)       "Sidewalk" means a pedestrian walkway with permanent surfacing to City standards.
+
+    (w)      "Street" means a public or private way that is created to provide ingress or egress for
+              persons to one or more lots, parcels, areas, or tracts of land, and the placement of
+              utilities and including the terms "road," "highway," "lane," "avenue," "way," "place,"
+              "court," "boulevard," "circle," "drive," "alley," or other similar designation.
+
+              (1)          "Alley" means a narrow street through a block primarily for vehicular service
+                          access to the back or side of property otherwise abutting on another street.
+              (2)          "Arterial" means street of considerable continuity which is primarily a traffic
+                          artery for inter-communication among large areas.
+              (3)          "Collector" means a street supplementary to the arterial street system and a
+                          means of intercommunication between this system and smaller areas; also used
+                          to some extent for access to abutting properties and may be used to a limited
+                          extent for through traffic.
+              (4)          "Cul-de-sac" means a short street having one end open to traffic and
+                          terminated by a vehicle turnaround; also called a dead end street.
+
+    (x)       "Subdivide Land" means to divide an area or tract of land into four or more lots within a
+              calendar year when such area or tract of land exists as a unit or contiguous units of land
+              under a single ownership at the beginning of such year.
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                             3
+    (y)       "Subdivision" means either an act of subdividing land or an area or a tract of land
+              subdivided as defined in this ordinance.
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                             4
+                                                      ARTICLE 2
+
+                                          SCOPE AND COMPLIANCE
+
+Section 2.010.  Scope and Compliance.  A parcel of land may be used, developed by land division
+or otherwise, and a structure may be used or developed by construction, reconstruction, alteration,
+occupancy, or otherwise only as this ordinance permits.  The requirements of this ordinance shall
+apply to the person initiating any development, the user of any development, and to all successors
+in interest.
+
+Section 2.020.  Consistency with Plan and Laws.  Development under this ordinance shall be
+consistent with the adopted comprehensive plan of the city of Rivergrove (hereinafter the "plan")
+and with applicable state and federal laws and regulations.
+
+Section 2.030.  Development Permit Required.
+
+         (a)       Except as provided by Section 2.040, no person shall engage in or cause to
+                  take place any development for which a development permit has not been issued.
+                  The City Council shall not issue a permit for the construction, reconstruction, or
+                  alteration of a structure or a part of a structure for which a development permit has
+                  not been issued.
+
+         (b)       A development permit shall be issued by the City Council according to the
+                  provisions of this ordinance.  The City Council shall not issue a development permit
+                  for the improvement or use of land that has been previously divided or otherwise
+                  developed in violation of the plan or this ordinance, unless such violation can be
+                  cured as part of the development for which the permit is sought.
+
+         (c )      Unless appealed, a decision on a development permit shall be final upon expiration
+                  of the period provided for filing an appeal or, if appealed, upon final decision by the
+                  reviewing body.
+
+Section 2.040.  Exclusions From Development Permit Requirement.  An activity or development
+listed below is excluded from the requirement for a development permit:
+
+         (a)       Landscaping or other treatment or use of the land surface not involving a structure.
+
+         (b)       A change internal to a building or other structure that does not substantially affect
+                  the use or appearance of the structure.
+
+         (c)       An emergency measure for the safety or protection of property.
+
+         (d)       Erection of a tent or similar portable temporary structure provided that the structure
+                  is in place for no more than 3 months per calendar year.
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                             5
+         (e)       Farming, truck gardening, orchards and nurseries provided that no wholesale
+                   business office is maintained on the premises, and provided that no poultry or
+                   livestock, other than household pets, shall be housed within 100 feet of any
+                   residence other than the dwelling on the same 19t.
+
+         (f)        An alteration that does not substantially affect the use or appearance of land or a
+                   structure.
+
+         (g)       The establishment, construction, or termination of a public facility that directly
+                   serves development authorized for an area including facilities such as public or
+                   private streets, sewer and water lines, or telephone or television cable systems.
+                   However, as an alternative to complying with this ordinance, the developing public
+                   body shall supply to the city, engineered drawings of the public facility.
+
+         (h)       Installation or construction of an accessory structure that does not require a building 1
+                   permit (i.e. 108 square feet in size).
+
+Section 2.050.  Use of a Development.  A development may be used only for a lawful use.  A
+lawful use is one that is not prohibited by law and for which the development is designed, arranged
+or intended, or which is nonconforming.
+
+Section 2.060.  Continuation of a Nonconforming Development.  Except as provided in Section
+2.080, a nonconforming development or use may continue but shall be changed only as authorized
+by this section.
+
+         (a)       A development that is nonconforming only because of a failure to comply with
+                   the Comprehensive Plan or this Ordinance may be altered or extended only if the
+                   Planning Commission and the City Council find the alteration or extension will
+                   decrease the extent of noncompliance and the development is not a land division
+                   that is nonconforming because of a public facility deficiency.  A land division that
+                   is nonconforming because of a public facility deficiency may not be further altered
+                   or extended before the public facility deficiency is cured.
+
+         (b)       With the approval of the City Council under the procedure set out in Section 6.060
+                   and Section 6.070, a nonconforming development or use may be changed provided,
+                   however, that the maximum special relief shall be as follows:
+
+                   (1)       the floor area of a building shall not be increased by more than twenty (20)
+                            percent;
+
+                   (2)       the land area covered by structures shall not be increased by more than
+                            twenty (20) percent; or
+
+1             RLDO 2.040(H) is subject to an interpretation of the Rivergrove Planning Commission dated July 7, 1997.
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                             6
+                  (3)       the standard requirement for land area or width or length of a lot or parcel
+                            shall not be reduced by more than twenty (20) percent.
+
+         (c)       The entire contiguous ownership of land shall be considered as a single parcel for
+                  determination of noncompliance as a consideration for approval of any further
+                  development.  A record of separate lot or parcel boundaries shall be disregarded.
+
+Section 2.070.  Completion of a Nonconforming Development.  A development that is lawfully
+under construction on the effective date of this ordinance may be completed even though not in
+compliance with the requirements of this ordinance and may be used for the purpose for which it
+was designed, arranged or intended.  Such development and its use are nonconforming.
+
+Section 2.080.  Termination of a Nonconforming Development.  A nonconforming development or
+use shall automatically terminate when any of the following conditions are met:
+
+         (a)       the use has been discontinued for a period of 12 months.
+
+Section 2.090.  Timeline for Development Permit Review/Decision.  Development permit review
+and decision shall be accomplished within 120 days of application -- unless an extension is agreed
+to in writing by both the City and the applicant.
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                             7
+                                                     ARTICLE 3
+
+                       PLANNING COMMISSION AND HEARINGS OFFICER
+
+Section 3.010.  There is hereby established a city Planning Commission for the city of Rivergrove,
+Oregon (hereinafter the "Commission").
+
+Section 3.020.  Membership.  The Commission shall consist of five members who are not officials
+or employees of the City.  The Mayor and President of the Council shall be entitled to sit with the
+Commission and take part in its deliberations, but shall not have any voting privileges.
+
+Section 3.030.  Term of Office.  Members of the Commission shall serve for a term of three (3)
+years.
+
+Section 3.040.  Vacancies and Removal.  Appointments to fill vacancies shall be for the remainder
+of any expired term.  A member may be removed by the City Council, after hearing, for misconduct
+or nonperformance of duty.  A member who is absent from three (3) consecutive meetings, without
+good cause shown, shall be rebuttably presumed to be in nonperformance of duty and the City
+Council shall declare the position to be vacant unless it finds otherwise after a public hearing.
+
+Section 3.050.  Presiding Officers.  At its first meeting of each calendar year, the Commission shall
+elect a chairperson and vice-chairperson to serve for that year.
+
+Section 3.060.  Meetings.  The Commission shall meet at least once a month and shall be open to
+the public.  Meetings other than at regularly scheduled times may be announced at a prior meeting
+which announcement shall be entered in the minutes.  The chairperson upon his/her own motion,
+or upon the request of two or more of the Commission members, may call a special meeting
+previously unannounced and notice shall be given to other Commission members no later than
+24 hours after such notice.  Such notice shall be posted at the City Hall and, to the extent possible
+under the circumstances, shall be given to the public and other interested persons.
+
+Section 3.070.  Powers and Duties.  The Commission shall have the powers and duties which are
+now or may hereafter be assigned to it by the Charter, ordinances, resolutions of the City and
+provisions of this ordinance and general laws of this State.
+
+Section 3.080.  Hearings Officer.  The Planning Commission may refer such land use matters as
+it deems necessary to one or more Hearings Officers.  The scope of authority of such officials
+shall be as provided in this ordinance and as otherwise provided by law.  The findings of fact
+and recommendations of the Hearings Officers shall be acted upon by the Commission and City
+Council as provided in this ordinance.  Appeals from the action of the Planning Commission on a
+Hearings Officer's report and recommendation shall be as provided in this ordinance.  The cost of
+all Hearings Officer expenses shall be borne by the applicant
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                             8
+Section 3.090.  Interpretation of the Land Development Code.  It is the duty of the Planning
+Commission to interpret this Ordinance when necessary.  These interpretations shall be made
+in writing and shall be available with copies of this Ordinance.  A Planning Commission
+Interpretation of this Ordinance may be appealed to the City Council following the appeals
+procedure set forth in this Ordinance.
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                             9
+                                                     ARTICLE 4
+
+                                PROCEDURES FOR DECISION-MAKING
+
+Section 4.010.  Procedures for Processing Development Permits.
+
+         (a)       An application for a development permit shall be processed under a Type I, II or III
+                  procedure as these procedures are described below.  The difference between the
+                  procedures are generally associated with the different nature of the decisions as
+                  described in TABLE 4.010 below.
+
+                                                    TABLE 4.010
+                             APPLICATION PROCESSING PROCEDURES
+
+Type I Procedure                          Type II Procedure                         Type III Procedure
+(Objective Decisions)                     (Objective Decisions)                     (Complex or Subjective
+                                                                                    Decisions)
+
+Little discretion required.               Little discretion required.               Discretion or Judgement
+                                                                                    Required.
+
+Minimal or no effect on others;           Application of the standards              Possible significant effect on
+issuance of permit is not                 may require knowing effect on             some or broad effect on a
+dependent on involving others.            others.                                   number of persons.
+
+Participation of applicant only.          Affected persons invited to               In addition to applicant, others
+                                          respond to tentative decision.            affected invited to present
+                                                                                    initial information.
+
+         (b)       At its next regular meeting after an application and proposed development is
+                  submitted, the Commission shall determine the type procedure the ordinance
+                  specifies for processing and shall identify the affected agencies to which the
+                  application shall be referred.  In the event of doubt about which type procedure
+                  the application should be processed, it shall be processed under the higher number
+                  type.  An application shall be processed under the highest numbered type procedure
+                  required for any part of the development proposal.
+
+Section 4.020.  Coordination of Development Procedure.  The Commission shall be responsible for
+coordinating the development permit application and decision-making procedure and shall issue a
+development permit to an applicant whose application and proposed development complies with
+the plan and this ordinance after being provided with the detail required to establish full compliance
+with the requirements of this ordinance.
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           10
+Section 4.030.  Pre-Application Conference.  An applicant or his authorized representative
+may request the Commission to conduct a pre-application conference.  Upon such request, the
+conference shall be held at the next regular meeting of the Commission.  The purpose of the
+conference shall be to acquaint the applicant with the substantive and procedural requirements
+of this ordinance, provide for an exchange of information regarding applicable elements of the
+plan and development requirements, arrange any technical and design assistance that will aid
+the applicant, and to otherwise identify policies and regulations that create opportunities or pose
+significant problems for the proposed development, and to simplify and expedite the development
+process.  If requested by the applicant at the time of the conference, the Commission shall provide
+the applicant with a brief written summary of the conference within five days of the conference.
+The summary shall include confirmation of the procedures to be used to process the application,
+a list of materials to be submitted, and the criteria and standards which may apply to the approval
+of the application.
+
+Section 4.040.  Development Permit Application.  An application for a development permit shall
+consist of the materials below, and any that are otherwise required by this or other City ordinances.
+
+         (a)       A completed development permit application form, plus a copy of all plans to be
+                  submitted for the building permit.
+
+         (b)       A brief statement of intent, explaining the nature of the proposed development,
+                  reasons for the request, background information, and any other information that may
+                  be reasonably expected to aid the Commission in processing the application.
+
+         (c)       Legal description of the affected property.
+
+         (d)       Proof of exclusive ownership of the affected property, or proof that the applicant has
+                  the consent of all co-owners of the affected property.
+
+         (e)       Proof of sewer connection and/or septic system approval, where construction of a
+                  new residence is proposed.
+
+         (f)        Site Plan, certified survey, and building plans.
+
+         (g)       Other information as may be requested by the Planning Commission.
+
+         (h)       Fee as required for the permit (see City of Rivergrove fee schedule).
+
+Section 4.050.  Submission of Permit Application.  Application materials shall be submitted to the
+City Recorder who shall mark the date of submission on each copy of the materials submitted.
+At the next regular meeting of the Commission, the Commission shall determine whether the
+application is complete.  If the Commission determines that the application is incomplete or does
+not comply with this ordinance, the Commission shall immediately notify the applicant of the
+negative determination by mailing an explanation to the applicant.  An application on which a
+negative determination has been made may be resubmitted under Section 4.080 after revision and
+correction.  If a development permit application is complete and complies with this ordinance, the
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           11
+Commission shall accept it and note the date of acceptance and the approvals needed for granting
+the permit on all copies.
+
+Section 4.060.  Referral and Review of Permit Applications.  Upon acceptance of an application,
+the Commission shall do the following at the next regular meeting.
+
+         (a)       Transmit one copy of the application, or appropriate parts of it, to each referral
+                  agency for review and comment, including those responsible for determination of
+                  compliance with state and federal requirements.  If the referral agency does not
+                  return its comment with ten (10) days, unless an extension of no more than ten (10)
+                  days has been granted by the Commission, the referral agency shall be presumed to
+                  have no comment.  The Commission shall grant a request for an extension only
+                  under unusual circumstances or where a Type III procedure is involved.
+
+         (b)       Transmit an application involving approval by others for disposition as otherwise
+                  required by this ordinance.  The Commission shall, to the greatest extent possible,
+                  consolidate action on approvals.
+
+         (c)       If a Type III procedure is required, provide for notice and hearing as required by
+                  Article 8.
+
+Section 4.070.  Development Permit Decision.
+
+         (a)       Within 15 days of acceptance of a permit application not involving approval by
+                  others or at the next regular meeting of the Commission after receipt of required
+                  approval by others the Commission shall grant or deny the development permit.
+                  The Commission's decision shall be based on the application, evidence, comments
+                  from referral agencies, and approvals from others.  The Commission shall notify
+                  the applicant and, where required by this ordinance, others entitled to notice the
+                  disposition of the application.  Such notice shall state the effective date of the
+                  decision and shall describe applicant's right to appeal the decision pursuant to
+                  Section 8.160.
+
+         (b)       The Commission shall issue the permit if it finds that necessary approvals by others
+                  have been granted and the proposed development otherwise meets the requirements
+                  of this ordinance.
+
+         (c)       The Commission shall deny the application if it does not meet the requirements of
+                  this ordinance.  Notice of denial of the application shall state the reasons therefore
+                  and shall indicate the information listed in paragraph (a) which was relied on for the
+                  decision.
+
+Section 4.080.  Action On Resubmission of Denied Application.  Upon a final determination
+denying an application, an applicant may take appropriate measures to cure the defect and resubmit
+the proposal with payment of any additional fees required.  If a previously denied application is
+submitted within one year, previous approvals need not be reconsidered unless the Commission
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           12
+finds that changed conditions or changes in the proposal warrant reconsideration of the entire
+proposal.
+
+Section 4.090.  Ty  pe I Procedure.
+
+         (a)       Under a Type I procedure, an application shall be processed without a public hearing
+                  or notification of other interested parties.  As provided by other provisions of this
+                  ordinance, the nature of the development proposed may require the Commission
+                  sitting as a review Committee to determine compliance with standards.  In that
+                  event, the action of the Commission to issue or deny the permit pursuant to Sections
+                  4.010 to 4.080 shall include implementation of the determination of the Committee.
+
+         (b)       A decision of the Commission under a Type I procedure may be appealed by an
+                  affected party or referred by the Commission according to Sections 8.160 to 8.210,
+                  except review of a Type I decision shall be 'a review of the record supplemented by
+                  oral testimony.
+
+Section 4.100.  Type II Procedure.
+
+         (a)       Except as provided in paragraph (b) of this Section, an application under a Type II
+                  procedure shall be processed without a public hearing.  If the Commission finds,
+                  considering any determination of the Review Committee, that the proposal meets
+                  the applicable standards, the Commission shall mail notice of the proposal as
+                  required by Sections 8.030 and 8.050.  The applicant shall provide a list of abutting
+                  landowners or other affected persons.  The notice shall briefly summarize the
+                  standards and facts that the decision was based on and shall be sent to abutting
+                  landowners and affected persons and shall invite persons to submit information
+                  relevant to standards applicable to the proposal within 10 days, stating specific
+                  reasons why the application should be approved or denied and any modifications
+                  that would bring the proposal into compliance.  Notice shall advise of rights to
+                  appeal the decision pursuant to Sections 8.150 to 8.210.
+
+         (b)       If the Commission finds that persons other than the applicant may be expected to
+                  question the applicant's compliance with this ordinance of the plan, the Commission
+                  shall initiate a public hearing.  The Commission shall set a date for the hearing and
+                  mail notices as required by Sections 8.030 to 8.050.  At the hearing the applicant
+                  and other affected or interested persons may present testimony and submit evidence
+                  regarding the proposal, including specific reasons why the application should be
+                  approved or denied and may suggest any modifications that would bring the
+                  proposal into compliance.
+
+         (c)       The Commission shall review any information and evidence received under
+                  paragraph (a) or (b), make findings, and make a decision on the application by
+                  approving, approving conditionally or denying the application.  A decision may be
+                  appealed by the applicant or other affected persons or interested person who
+                  appeared at the hearing or referred by the Commission.  Appeals procedure shall
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           13
+                  follow Sections 8.150 to 8.210, except that review of a Type II decision is a review
+                  of the record supplemented by oral testimony relevant to the record
+
+Section 4.110.  Type III Procedure.
+
+         (a)       Under a Type III procedure an application shall be set for public hearing pursuant
+                  to Article 8 before the Commission or its hearings officer.  The form of notice
+                  and persons to receive it shall be as required by Sections 8.030 to 8.050 or this
+                  ordinance.  The applicant shall provide the City with a list of abutting or affected
+                  property owners.  At the hearing, the City staff, applicant and any interested person
+                  may present information and testimony on the criteria and standards relevant to the
+                  proposal, giving specific reasons why the application should be approved or denied
+                  and may suggest any modifications that would bring the proposal into compliance.
+                  If the application is approved, the Commission shall issue a development permit
+                  upon compliance with all other requirements of this ordinance.
+
+         (b)       A decision of the Commission may be appealed according to Sections 8.150 to
+                  8.210.
+
+         (c)       The decision of the Planning Commission, with regards to a matter requiring a
+                  Type III hearing shall be based upon the Policies set forth in the Comprehensive
+                  Plan, the standards established on the Land Development Ordinance, and the factual
+                  evidence presented at the Public Hearing.  The Commission shall make findings
+                  which explain the basis for the approval or denial of each particular proposal.
+
+Section 4.120.  Type IV Procedure.  This type of procedure is intended for use in reaching
+decisions on ordinance amendments, street vacations, and other similar issues that are characterized
+by the establishment or revision of City land use policy and it is not intended for use in processing
+development permit application's.
+
+         (a)       The Commission shall schedule a public hearing pursuant to Article 8 before the
+                  Commission.  Form of notice and the persons entitled to it shall be as setout in
+                  Sections 8.030 to 8.050.  At the hearing, the City staff, and all interested persons
+                  may present evidence and testimony relevant to the proposal, giving specific reasons
+                  why the proposal does or does not meet the plan or this ordinance and may suggest
+                  any modifications that would bring the proposal into compliance.  Where criteria are
+                  involved, the Commission shall make a finding for each that applies.  A written
+                  report and recommendation shall be submitted to the City Council.
+
+         (b)       If the Commission has recommended against a proposal or fails to act on a proposal,
+                  the City Council may terminate further consideration of the proposal.  Upon a
+                  favorable recommendation by the Commission and for proposals that have not been
+                  terminated, the City Council shall conduct a public hearing pursuant to Article 8.
+                  The Council shall set a date for the hearing and provide for notice in the form and
+                  to the persons that are required in Sections 8.030 to 8.050.  At the hearing the City
+                  Council shall review the report of the Commission and all interested persons shall be
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           14
+                   given the opportunity to present new information and evidence relevant to the
+                   proposal and to present testimony why the proposal should be approved or denied.
+
+         (c)       The City Council shall make a finding for each of the criteria applicable and may
+                   reverse, modify or sustain the findings of the report of the Commission.
+
+         (d)       To the extent that a policy is to be established or revised, the City Council shall
+                   make its decision only according to procedures set forth above.  The decision shall
+                   be enacted by ordinance.
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           15
+                                                        ARTICLE 5
+
+                                               DISTRICT AND ZONES
+
+                                 2
+Section 5.010.  Land Use.           All land within the city of Rivergrove is zoned residential.  The
+minimum lot size within the Flood Hazard District is ½ acre.  The minimum lot size outside the
+Flood Hazard District is 10,000 square feet.
+
+Section 5.020.  Flood Hazard District.  All land development within the 100-year flood boundary as
+defined in the "Flood Insurance Study:  City of Rivergrove, Oregon, August 4, 1987" [FEMA] shall
+be within the Flood Hazard District (HID) and shall be subject to special requirements in addition
+to the criteria and standards of this ordinance.  Land subject to flood hazard is generally indicated
+on the floodplain map found in the Flood Insurance Study and consists of those areas of the City
+where hydrological studies have been prepared by the Federal Emergency Management Agency.
+A map based on these studies shows the boundaries of this district and is entitled the "Floodway
+Flood Boundary and Floodway Map" and shall be available to public inspection at City Hall during
+regular business hours.  All development within the 100-year flood boundary shall follow the
+provisions of the Flood Damage Prevention Ordinance of the City of Rivergrove (Ord. #52).
+
+Section 5.030.  Change in Classification.  The land use classifications of this ordinance may be
+changed according to the provisions of Section 6.221 or by legislative action.  A change in
+classification shall take effect 20 days after the date of approval, unless appealed.
+
+Section 5.050.  Permitted Uses.  The following developments are permitted.  Uses not listed here
+are prohibited.
+            (a)       One single-family detached dwelling, including manufactured home, or one duplex,
+                   or one triplex residential unit per lot.  All residential structures must have at least
+                   two of the following elements:
+
+                        (1)       the dwelling shall be placed on an excavated and backfilled foundation;
+
+                        (2)       the dwelling shall have a pitched roof with a slope no less than three feet in
+                             height for each 12 feet in width;
+
+                        (3)       the dwelling shall have an exterior thermal envelope meeting performance
+                             standards at or equivalent to those required of dwellings built under the state
+                             building code as defined in ORS 455.010;
+
+                        (4)       the dwelling shall have a garage or carport built of the same materials as the
+                             main dwelling.
+
+            (b)       Secondary Dwelling Unit (defined as a residential unit either within the primary
+                   residence or above a garage up to 750 sq. ft. of floor area).
+
+2             RLDO 5.010 is subject to an interpretation of the Rivergrove Planning Commission dated September 5, 2002.
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           16
+            (c)       Area Accessory Development, subject to Sections 6.010 to 6.050 and accessory
+                   structures such as garages, carports, studios, pergolas, private workshops, play-
+                   houses, private greenhouses or other similar structures related to the dwelling in
+                   design, whether attached or not.
+
+            (d)       Cultivation of land and growing crops, subject to Section 2.040(5).
+
+            (e)       Residential homes and residential facilities as defined in ORS 443.400 and sited
+                   according to ORS 197.660 through 197.670.
+
+            (f)        Signs for the sale or rental of housing or land or for use by roadside vendors of fruit
+                   or produce, and signs stating the name of the owner or occupant of the property.  No
+                   sign shall be artificially illuminated, permanent, or exceed 4 square feet in area or 4
+                   feet on one side.
+
+            (g)       Conditional uses, such as parks, playgrounds or community centers, churches,
+                   schools, golf courses, day or child care facilities, recreation uses, public and private
+                   clubs and use of similar nature as approved by the Commission and subject to
+                   Sections 6.300 through 6.340.
+
+            (h)       Temporary structures provided they relate directly to the building or sale of land or
+                   houses, and provided that a temporary permit from the Commission shall first be
+                   obtained for such structure.  The permit shall expire automatically one year from the
+                   date of approval and may be extended no more than once.
+
+Section 5.055.  Second Dwelling Units.
+
+            (a)       Notwithstanding the provisions of Section 5.050(b) and 5.060(c), secondary
+                   dwelling units (defined as residential units either within the primary residence or
+                   above a garage up to a maximum of 750 sq. ft. of floor area) are permitted only in
+                   conjunction with single family dwellings and will be permitted both within and
+                   outside the Flood Hazard District.
+
+            (b)       Within the Flood Hazard District, the minimum lot size is ½ acre and the maximum
+                   density allowed is one (1) house (single-family dwelling) per ½ acre plus one
+                   secondary dwelling unit as permitted by Section 5.050(b).
+
+            (c)       Outside the Flood Hazard District, the minimum lot size is 10,000 sq. ft. and the
+                   maximum density allowed is:
+
+                        (1)       one (1) house (single-family dwelling) per lot plus one secondary dwelling
+                   unit as permitted by Section 5.050(b), or
+
+                        (2)       one duplex per lot (secondary dwelling units not permitted in conjunction
+                   with duplexes), or
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           17
+                        (3)       one triplex per lot (secondary dwelling units not permitted in conjunction
+                   with triplexes).
+
+            (d)       This section clarifies secondary dwelling unit policy but is not limited in its scope
+                   and/or application to development proposals including secondary dwelling units.  It
+                   shall apply to all proposals for residential development within the City of
+                   Rivergrove.
+
+Section 5.060.  Permitted Uses in Flood Hazard District.
+
+         (a)       Open spaces.
+
+         (b)       Any use permitted otherwise, provided it is elevated above the regulation flood
+                   protection elevation and complies with the requirements of the City of Rivergrove
+                   Flood Damage Prevention Ordinance.
+
+         (c)       The maximum density allowed within the Flood Hazard District is one (1) house
+                   (single-family dwelling) per ½ acre.
+
+Section 5.070.  Future Development.  New development shall be approved only where necessary
+and adequate services are available or provisions have been made to provide those services and
+facilities.  There shall be no new development within 25 feet of the ordinary high watermark of the
+Tualatin River.  There shall be no new development within 25 feet of a wetland area identified by
+the U.S. Army Corps of Engineers.
+
+Section 5.075.  Minimum Density Standard.  To ensure that property develops at or near the density
+envisioned for the areas outside the Flood Hazard District, Rivergrove hereby establishes a
+minimum density standard of 80% of maximum density.
+
+            (a)       The calculation of minimum and maximum densities shall be made as follows:
+
+                        (1)       The “net development area,” in acres, shall be determined by subtracting the
+                             following land areas from the gross acres, which is all of the land included in
+                             the legal description of the property to be developed or divided:
+
+                                    a)        Land within the 100-year flood plain;
+                                    b)        Land with slopes exceeding 25%;
+                                    c)        Water Quality Resource Areas;
+                                    d)        All land dedicated for public rights-of-way;
+                                    e)        All land used or proposed as a private road for access benefiting more
+                                       than one lot.
+
+                        (2)       To calculate the maximum number of residential units per net acre, divide
+                             the number of square feet in the net acres by the minimum number of square
+                             feet required for each lot, i.e. 10,000 square feet.
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           18
+                        (3)       To calculate the minimum density standard, multiply the maximum number
+                               of residential units per net acre by 80% (0.8), and round down to the next
+                               whole number.
+
+            (b)       The minimum density standard states the number of units to be placed on the
+                     property to be developed or divided.
+
+                        (1)       Units shall be counted as follows:
+
+                                    a)        a single-family detached dwelling     - one unit;
+                                    b)        a secondary dwelling unit                  - one unit;
+                                    c)        a duplex                                              - two units;
+                                    d)        a triplex                                              - three units.
+
+                        (2)       Units shall be counted when a development permit is issued for one of the
+                               above or when a lot is restricted by plat restrictions or covenants to
+                               development as:
+
+                                    a)        a single-family with a secondary dwelling unit; or
+                                    b)        a duplex; or
+                                    c)        a triplex.
+
+                        (3)       Applicants may request a variance from the minimum density standard under
+                               Section 6.060.  Added to the criteria to be considered on a variance request
+                               from the minimum density standard are:
+
+                                    a)        the configuration of the property to be developed or divided;
+                                    b)        the availability of sewer service to the property to be developed or
+                                          divided.
+
+            (c)       The provisions of this section do not apply to land within 100-year flood plain or to
+                     multi-family developments.
+                                                                                                3
+Section 5.080 General Building Setbacks in All Zones and Districts.
+
+All setbacks referred to in this section shall be measured from building roof edge or drip line.
+
+          (a)       All new detached residential structures built with any zone or district in the City of
+                     Rivergrove shall maintain the following setbacks from the property lines of the lot
+                     on which they are constructed or erected.
+                     Front Setback - 25 feet.
+
+3             RLDO 5.080 is subject to three interpretations by the Rivergrove Planning Commission dated March 2, 1998,
+July 6, 1998, and October 11, 2004.
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           19
+                   Side Setback - 10 feet.
+                   Side Setback on a Corner Lot - 15 feet (to insure better visibility).
+                   Rear Setback - 25 feet (from the read lot line or the ordinary high water mark -
+                   whichever is greater).
+
+         (b)       All new attached residential shall maintain the same set backs as detached
+                   residential around the perimeter of the structure.
+
+         (c)       All new detached accessory buildings (permanently placed on a site) shall maintain
+                   the following setbacks from the property line of the lot on which they are
+                   constructed or erected.
+                   Front Setback - 30 feet.  Side Setback - 3 feet
+                   Side Setback (corner lot) - 10 feet.
+                   Rear Setback - 3 feet.
+
+         (d)       Site specific variances from these setbacks may be granted to allow the location of
+                   building that use solar energy as a heating source.  As requested for variance for
+                   solar access purposes shall be submitted with a detail site plan showing the location
+                   of all structures to be constructed, and other appropriate information as deemed
+                   necessary - such as solar easements obtained over adjoining properties.
+
+         (e)
+
+Section 5.090.  Building Height Limit.
+
+         (a)       No new residential structure may exceed 35 feet in height (not including the height
+                   of antennas, solar collectors, or wind generators).
+
+         (b)       No new accessory structures may exceed 20 feet in height.
+
+Section 5.095.  Parking Standards.
+
+            (a)       Rivergrove establishes parking minimums and maximums not to exceed those ratios
+established by the following table:
+
+Land Use                                   Minimum Parking                            Maximum Parking
+                                           Requirements                               Permitted
+Places of Worship                          0.5 per 1,000 sq. ft.                      0.8 per 1,000 sq. ft.
+Recreation Facilities                      3.4 per 1,000 sq. ft.*                     6.5 per 1,000 sq. ft.
+Single Family Detached                     2 covered, enclosed spaces per             No maximum
+                                           unit, 2 off-street parking spaces
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           20
+                                           per unit.
+Residential units, less than 500           1 covered, enclosed space per              No maximum
+sq. ft., 1 bedroom, except                 unit, 1 off-street parking space
+“over-the-garage” 1 bedroom                per unit.
+units, which require no
+additional parking
+Multi-family, townhouse one                1 covered, enclosed space per              No maximum
+bedroom                                    unit, 1.25 off-street.
+Multi-family, townhouse two                2 covered, enclosed spaces per             No maximum
+bedroom                                    unit, 1.5 off-street parking
+                                           spaces per unit.
+Multi-family, townhouse three              2 covered, enclosed spaces per             No maximum
+bedroom or more                            unit, 1.75 off-street parking
+                                           spaces per unit.
+
+*  Net interior floor space.
+
+Note:  Calculations resulting in fractional numbers shall be rounded up to the next whole number.
+Parking calculations shall be based on, and apply to individual lots, regardless of the number of lots
+in the development application.
+
+           (b)       Variances for parking when a development application is received which may result
+                  in approval of construction of parking spaces either in excess of the maximum
+                  parking ratios or less than the city’s minimum parking ratios established by the
+                  above table may be made under the provisions of Section 6.060.
+
+Section 5.100.  Tree Cutting
+
+           (a)       DEFINITIONS
+
+                       (1)       “Tree”:  Any standing woody plant having a trunk 11.5 inch diameter (36"
+                            circumference) measured 4.5 feet from the ground (DBH diameter-breast-
+                            height).  "Tree" does not include any plant on the Nuisance Plant List.
+
+                      (2)       “Cutting”:  Felling or removal or any procedure that has the natural result of
+                            causing the death or substantial destruction of a tree; cutting does not include
+                            trimming, limbing, pruning or topping within the bounds of accepted
+                            arboricultural practices.  Cutting includes damage inflicted upon the root
+                            system of the tree.
+
+           (b)       APPLICATION FOR PERMIT
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           21
+                        (1)       A permit is required for each tree cut within the City of Rivergrove.
+                             Application is to be made and permit to be obtained from the City before the
+                             tree is cut.  For permits issued under Emergency conditions, see part (c)
+                             below.
+
+                        (2)       Permits or emergency permits for the first three trees not located in a Water
+                             Quality Resource Area cut on a single lot or parcel in one calendar year
+                             (January 1 to December 31):  Approval will be granted by the City without a
+                             hearing.  Such permits will be granted promptly upon submission of a
+                             written application.  There will be no fee charged for this type of permit.
+
+                        (3)       Permits for cutting trees beyond the first three trees cut on a single lot or
+                             parcel in one calendar year (January 1 to December 31) and for trees located
+                             in a Water Quality Resource Area:  Written application must be made to the
+                             City for approval by the Planning Commission at one of its meetings.  The
+                             first three trees cut on a single lot or parcel in a calendar year include any
+                             trees cut under emergency conditions in accordance with subsection (c)
+                             below.
+
+                        (4)       The application shall contain the number, size, species, and location of the
+                             trees to be cut, the time and method of cutting or removal.  In addition, the
+                             applicant shall furnish other information as may be required by the City.
+
+                        (5)       If the tree cutting permit is approved, a fee of $20 per tree (plus costs
+                             incurred by the City for all administrative, legal, engineering and planning
+                             requirements associated with the application) will be assessed starting with
+                             the fourth tree for that calendar year.  The application will not require review
+                             by staff unless directed by the Planning Commission.
+
+                        (6)       Notwithstanding subsection (5) above, a single fee of $20.00 (plus costs
+                             incurred) will be assessed for a permit application that deals solely with
+                             dead, dangerous, and dying trees.
+
+            (c)       EMERGENCIES
+
+                   In emergency conditions that require the immediate cutting or removal of trees to
+                   avoid danger or hazard to persons or property, an emergency permit may be issued
+                   by the Mayor, the President of the City Council or the Chairman of the Planning
+                   Commission, without formal application or payment of a fee.  If they are
+                   unavailable, it shall be lawful to cut trees without a permit to the extent necessary to
+                   avoid an immediate danger or hazard.  If a tree is cut under the provisions of this
+                   section, without an application having been filed, the property owner shall report the
+                   action taken to one of the aforementioned people within 7 days after such removal
+                   and provide information and evidence as may be reasonably required to explain and
+                   justify the action.  If the evidence and information presented by the property owner
+                   does not justify the emergency tree cutting standards set forth, the application shall
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           22
+                   be denied and the property owner shall be subject to the penalties set forth in the
+                   Rivergrove Land Development Ordinance (RLDO).
+
+         (d)       CRITERIA FOR ISSUANCE OF PERMITS
+
+                     A tree cutting permit may be issued by the Planning Commission as requested in the
+                   application; may be issued in part and denied in part, or may be issued subject to
+                   compliance by the applicant with reasonable conditions to be imposed in order to
+                   promote the purpose of this Ordinance.  The application does not require review by
+                   staff unless directed by the Planning Commission.  A permit shall state the period of
+                   time for which it is valid.  A permit issued for the reason that an improvement is to
+                   be constructed upon the premises shall contain a provision that a permit is not valid
+                   until a building permit or development permit has been issued for the construction of
+                   the improvement.  The burden is on the applicant to show that granting of a permit
+                   would be consistent with the stated purposes of the Rivergrove Land Development
+                   Ordinance (RLDO).  The following criteria shall be considered:
+
+                     (1)       The condition of the trees with respect to dead, dying, dangerous, proximity
+                             to existing or proposed structures or development, and interference with
+                             utility services or traffic safety.  For the purposes of Section 5.100:
+
+                                 a.         “Dead” means the tree is lifeless.
+
+                                 b.         “Dying” means the tree is in an advanced state of decline because it
+                                      is diseased, infested by insects or rotting and cannot be saved by
+                                      reasonable treatment or pruning, or must be removed to prevent
+                                      spread of the infestation or disease to other trees.
+
+                                 c.         “Dangerous” means the condition or location of the tree presents a
+                                      clear public safety hazard or a foreseeable danger of property damage
+                                      to an existing structure and such hazard or danger cannot reasonably
+                                      be alleviated by treatment or pruning.
+
+                                 The planning commission may require the retention of dead or dying trees
+                             located in wetlands, natural areas, stream corridors, parks or open space
+                             areas, in order to provide for wildlife habit and natural processes, unless the
+                             tree presents a potential hazard to persons or property or conflicts with
+                             development.
+
+                     (2)       The necessity to remove trees in order to construct proposed improvements,
+                             or to otherwise utilize the applicant’s property in a reasonable manner.
+
+                     (3)       The topography of the land and the effect of tree removal on erosion, soil
+                             retention, stability of earth, flow of surface waters, protection of nearby
+                             trees, windbreaks, and a desirable balance between shade and open space.
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           23
+                     (4)       The number of trees existing in the neighborhood, the character and property
+                            uses in the neighborhood, and the effect of tree removal upon neighborhood
+                            characteristics, beauty and property values.
+
+                     (5)       The planning commission may require an adequate mitigation plan be
+                            submitted as a condition of approval for the permit, including requiring the
+                            submission of a drainage plan if appropriate.
+
+          (e)      EVIDENCE OF VIOLATION
+
+                     (1)       If a tree is removed without a tree cutting permit, a violation may be
+                            determined by measuring the stump.  A stump measured at the ground that is
+                            44" or more in circumference shall be considered prima facie evidence of a
+                            violation.
+
+                     (2)       Removal of the stump of a tree cut without a tree cutting permit prior to the
+                            determination is a violation.
+
+                     (3)       Proof of violation shall be deemed prima facie evidence that such violation is
+                            that of the owner of the property upon which the violation was committed.
+                            Prosecution of or failure to prosecute the owner shall not be deemed to
+                            relieve any other responsible individual property owner, legal entity, or
+                            collective parties.
+
+         (f)        APPEAL
+
+                   A decision made by the Planning Commission may be appealed to the City Council.
+                   A Notice of Appeal must be submitted in writing within 10 days after the denial,
+                   shall briefly state the facts and grounds of appeal and shall be signed by the
+                   appellant.  Following receipt of the Notice of Appeal the matter shall be set for
+                   hearing no later than 45 days from the date of receipt.  The appellant shall be
+                   notified of the hearing date.
+
+         (g)       PENALTIES
+
+                   (1)       Cutting a tree in violation of the Ordinance, breach of a term or conditions of
+                            a permit granted under this Ordinance, or violation of any other provision of
+                            this Ordinance is an offense punishable by fine not to exceed $1,500.00.  The
+                            unlawful cutting of each individual tree is a separate offense.
+
+                   (2)       The City retains the authority to require the applicant to replace any illegally
+                            removed trees pursuant to a plan, and meet any conditions as set forth by the
+                            Planning Commission.  No future permits or approvals for any use of the
+                            subject property shall be granted without compliance with the plan.
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           24
+                   (3)       The property owner has the burden to prove that the criteria for granting a
+                            permit are satisfied or that cutting is allowed without a permit.
+
+Section 5.110.  Houses Moved Into City.
+
+         (a)       That any house moved onto a new foundation on a new lot in the City of Rivergrove
+                   must meet code requirements as if it were new construction; and
+
+         (b)       That in applying for a permit for a new dwelling unit, where an existing structure
+                   is to be moved, the applicant must provide photographs of all elevations of that
+                   structure and provide certification by appropriate professional engineers that the
+                   house to be moved meets all building code requirements as if it were new
+                   construction pursuant to the Uniform Building Code Section 1D4 (e); arid
+
+         (c)       The City must find that the structure will not be detrimental to the quality of the
+                   City's neighborhoods and that the dwelling is comparable in all respects to other
+                   dwellings in the immediate area; and
+
+         (d)       The City may impose conditions on the building permit related both to the structural
+                   character of the house and its aesthetics, and that no permit for occupancy of the
+                   residence shall be issued by the City or its agents until those conditions have been
+                   met to the satisfaction of the Mayor of the City of Rivergrove;
+
+         (e)       Violations of this ordinance shall result in revocation of the Building Permit and/or
+                   Occupancy Permit.
+
+Section 5.120.  Home Occupations in All Zones and Districts
+
+         (a)       DEFINITION
+
+                   1)        "Home Occupation" is an occupation or business activity which results in a
+                            product or service and which:  is conducted, in whole or in part, in either the
+                            dwelling or in an accessory building normally associated with permitted
+                            uses; is conducted by at least one family member occupying the residence;
+                            and is clearly subordinate to the residential use of the dwelling and premises.
+
+                   2)        Home occupations do not include garage sales, yard sales, Christmas
+                            bazaars, or home parties which are held for the purpose of the sale or
+                            distribution of goods or services.  However, if such sales and/or parties
+                            are held more than six times in any calendar year, or operate in excess of
+                            24 cumulative days in a calendar year, such sales and/or parties shall be
+                            considered a home occupation.
+
+         (b)       PURPOSE AND INTENT
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           25
+                   The conduct of business in residences may be permitted under the provisions of this
+                   section.  It is the intent of this section to only allow such uses which:
+
+                   1)        Ensure the compatibility of home occupations with other uses permitted in
+                            the district.
+
+                   2)        Maintain and preserve the character of the community and residential
+                            neighborhoods; and
+
+                   3)        Promote the efficient use of public services and facilities by assuring these
+                            services are provided to the residential population for which they were
+                            planned and constructed, rather than to commercial uses.
+
+                   4)        Provide peace, quiet, and domestic tranquility within all areas permitting
+                            residences within the County.
+
+                   5)        Guarantee to all residents freedom from excessive noise, excessive traffic,
+                            nuisance, fire hazard, and other possible effects of commercial uses being
+                            conducted in areas permitting residences.
+
+         (c)       MINOR HOME OCCUPATIONS
+
+                   In all zones permitting residences, minor home occupations in compliance with the
+                   following regulations are permitting as accessory uses.  Due to their small scale and
+                   residential nature, minor home occupations are relatively common accessory uses
+                   which are not easily detectable and are not reasonable or desirable to regulate
+                   through a special use permit.
+
+                   1)        Scale:  A minor home occupation shall be conducted within a dwelling and
+                            shall be clearly incidental to the use of the structure as a dwelling.
+
+                   2)        Character:  There shall be no change in the outside appearance of the
+                            dwelling or premises or any visible evidence of the conduct of a minor home
+                            occupation.
+
+                   3)        Participants:  No more than one (1) person other than residents of the
+                            dwelling shall be employed in the conduct of a minor home occupation.
+
+                   4)        Storage and Accessory Space:  There shall be no storage of equipment,
+                            vehicles, or supplies associated with the minor home occupation outside the
+                            dwelling;
+
+                   5)        Display of Products:  There shall be no display of products visible in any
+                            manner from the outside of the dwelling.
+
+                   6)        Signs:  No advertising or display signs shall be permitted.
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           26
+                   7)        Parking:  The use shall not require additional off-street parking spaces for
+                            clients or customers of the minor home occupation.
+
+                   8)        Traffic:  The use shall not generate more than five vehicle trips to and from
+                            the property in one day.  No vehicle associated with a home occupation shall
+                            be stored, parked, or repaired on public rights-of-way.
+
+                   9)        Noise, Equipment, and Process Restrictions:
+
+                            (a)       No equipment or process shall be used in a home occupation which
+                                      creates noise, vibration, glare, fumes, or odor detectable to normal
+                                      sense off the property, or produces hazardous chemical wastes
+                                      dumped into septic systems or the public sewers, or spread onto the
+                                      ground.
+
+                            (b)       No equipment or process shall be used which creates visual or
+                                      audible electrical interference in any radio or television receiver off
+                                      the premises or causes fluctuations in line voltage off the premises.
+
+                            (c)       Deliveries and Large Vehicles Storage:  The home occupation shall
+                                      not involve the use, parking, storage or repair of any vehicle or
+                                      construction equipment exceeding a gross vehicle weight of 11,000
+                                      pounds, except deliveries by parcel post, United Parcel Service, or
+                                      similar in-town delivery service trucks.
+
+                   10)      Vehicle Repair:  No more than two (2) vehicles for repair shall be located on
+                            the property at any time, and such vehicles shall be stored, parked, and
+                            repaired within an enclosed building.
+
+                   11)      Lodging:  Business offering transient lodging shall be allowed only with an
+                            approved permit from the City.
+
+Section 5.130.  Gates or Other Barriers.  Gates or other barriers shall not be used to restrict
+vehicular access to residential developments from any public or private street, except as specifically
+required or allowed by the City Council to address an operational or safety issue.  For the purpose
+of this Section, residential development means a residential partition or subdivision or 2 or more
+dwelling units on a single lot or parcel or 2 or more residential lots or parcels.
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           27
+                                                      ARTICLE 6
+
+                                PERMIT AND ISSUE DETERMINATIONS
+
+Section 6.010.  Area Accessory Development.  Area accessory developments ma be necessary in a
+particular area because of social or technical needs.  The following are examples of appropriate
+area accessory developments:
+
+(a)       Removal or deposit of earth or rock that changes the contour of the ground without being
+         part of another development.
+
+(b)       Utility structure, including a pole, line, pipe, substation or other facility required for the
+         transmission of power or communication.
+
+(c)       Sewerage or drainageway, including a pump station, manhole, or other collection or
+         treatment facility for sewage or storm water.
+
+(d)       Street, including a sidewalk, catch basin, street light, traffic control device or other facility
+         associated with an access, collector or arterial street.
+
+(e)       Water system, including a main, fire hydrant, treatment plant, storage reservoir, pump
+         station or other facility associated with the supply or distribution of water.
+
+(f)        Emergency service facilities or other public facilities needing location in the area to permit
+         effective service within the area.
+
+(g)       Any of these uses in Section 5.050(f).
+
+Section 6.020.  Application for Area Accessory Development.
+
+Applications for an area accessory development shall be made by application for a permit and,
+unless the development is excluded from the development permit requirements of Section 2.040,
+shall provide facts and information sufficient to enable the Commission to make its determination
+and shall include the names and addresses of the owners of property situated within 200 feet of a
+boundary of the property to be developed.
+
+Section 6.030.  Action on Application.  Unless referred to a hearings official, the Commission
+shall act on an application for area accessory development permit under Type IT procedure.  The
+Commission may refer an application to the hearings official for disposition under a Type III
+procedure if the Commission finds that the scope of the application requires a full public hearing to
+protect the best interests of affected properties or the City as a whole.  Determination by either
+Type IT or III procedure shall follow the criteria in Section 6.050.
+
+Section 6.040.  Notice.  Notice of a Type II or III hearing on an area accessory development shall
+be mailed to the owners of property within 200 feet of the property to be developed.
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           28
+Section 6.050.  Criteria for Decisions on Area Accessory Development.
+
+         (a)       A development permit shall be issued for an area accessory development if, in
+                   addition to complying with the plan and applicable standards, the location size,
+                   design and operating characteristics of the proposal are appropriate to the needs of
+                   the area and will be reasonably compatible with and have minimal impact on the
+                   livability and development of abutting property and the surrounding area.
+
+         (b)       Consideration shall be given also to the following:
+
+                   (1)       harmony in scale, bulk:, coverage and density;
+                   (2)       the availability of public facilities and utilities; and
+                   (3)       the generation of traffic and the capacity of surrounding streets.
+                   (4)       other relevant impacts of the development.
+
+                                                      Hardship Relief
+
+Section 6.060.  Type II Hardship Relief Procedure.
+
+         (a)       The Council may grant hardship relief waiving a provision of this ordinance for
+                   an individual parcel of land under a Type II procedure upon a finding that a literal
+                   application of the requirement would render the parcel incapable of reasonable
+                   economic use.  Authority to grant relief under this section does not grant authority
+                   to approve a development that is designed, arranged or intended for a use otherwise
+                   not approvable in the location, or that violates the plan.  When submitting a written
+                   application for hardship relief, the applicant shall provide facts and information
+                   sufficient to enable findings in compliance with the criteria of this Section.
+
+         (b)       The criteria are:
+
+                   (1)       The hardship is not the result of any act or omission of the applicant;
+                   (2)       The grant of relief will not result in a land use not otherwise
+                             permissible;
+                   (3)       Grant of the relief will not violate the Plan;
+                   (4)       The relief sought will not be materially detrimental to the public welfare;
+                   (5)       The development will be on a parcel of land that in conjunction with
+                             adjacent land in the same ownership is not otherwise reasonably capable of
+                             economic use;
+                   (6)       Or materially injurious to the property in the vicinity;
+                   (7)       The development will be the same as development permitted under this
+                             ordinance and City standards to the greatest extent possible while permitting
+                             some economic use of the land;
+                   (8)       Special circumstances or conditions exist that do not apply to other property
+                             in the vicinity.
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           29
+Section 6.070.  Authority to Grant Hardship Relief Under Type I
+
+Procedure.  The Council may grant hardship relief under a Type I procedure if the request involves
+only the expansion or reduction by no more than 20 percent of one or more quantifiable provisions
+of yard or area standards of the Development Standards Document or comparable deviation from
+such additional standards set by the Commission.  The decision shall be based on the criteria in
+Section 6.060.
+
+                                                      Land Division
+
+Section 6.080.  Division of Land.
+
+         (a)       Section 2.030 requires that a land division not occur unless a development permit
+                   has been issued.  No land shall be divided prior to approval of a major or minor
+                   partition or subdivision in accordance with this ordinance.  If a land division
+                   application is submitted that does not involve other proposed development, the
+                   application shall state an intended form of future development for the parcels
+                   created.  The future development will then be processed along with the land
+                   division processing just as if the applicant were intending to proceed with further
+                   development.  Where the nature of the development associated with the hind
+                   division does not otherwise require, the procedures of Sections 6.090 to 6.110
+                   shall be followed.
+
+         (b)       Land division is processed by approving a tentative plan prior to approval of the
+                   complete land division plat or map.  Where a Type IT or III procedure is required,
+                   that procedure shall also apply to approval of the tentative plan.  Upon compliance
+                   with the approved tentative plan the Commission shall approve final plats and maps
+                   for land division in conjunction with issuing a development permit under Section
+                   4.010.
+         (c)       Nothing herein shall prohibit the partitioning or subdividing of an existing lot that is
+                   two or more times the minimum lot size specified in the development code.
+
+Section 6.090.  Type I Land Division.  Minor partitioning shall be approved by the Council
+under a Type I procedure if the parcels created comply with standards for the form of additional
+development contemplated.  A permit fee defined by a schedule of fees adopted by the City
+Council shall be charged only if the partition is one of the following:
+
+         (a)       The partition is located at the end of the street;
+
+         (b)       The partition abuts a street that has a center line-to-property line width less than one-
+                   half the width specified for that functional street classification according to City
+                   standards;
+
+         (c)       The partition contains a parcel having 25 feet or less street frontage;
+         (d)       The partition contains a parcel with depth-to-width ratio exceeding 2.5-   to-   l;
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           30
+         (e)       The partition contains a parcel with an area four or more times the area of the
+                   smallest parcel.
+
+Section 6.100.  Type II Land Division.  Except as provided in Section 6.110, a major partition or
+subdivision shall be processed by the Commission under a Type II procedure when satisfactory
+street conditions exist Satisfactory street conditions exist when:
+
+         (a)       An existing street or a new proposed street need not continue beyond the land to be
+                   divided in order to complete an appropriate street system or to provide access to
+                   adjacent property; or
+
+         (b)       The proposed street layout is· consistent with a street pattern adopted as part of the
+                   plan, or with a future street plan approved under Section 6.130.  The applicant shall
+                   provide a list of owners of property abutting the property proposed for development.
+
+         (c)       Improvement of streets or other public facilities may be required by the Commission
+                   as a condition of permit approval.
+
+Section 6.110.  Type III Land Division.  A land division of major significance shall be processed
+under a Type III procedure by the Commission.  A land division of major significance is one of the
+following:
+
+         (a)       A land division that ~ill create a street that is not part of a planned street; or
+
+         (b)       A land division that the Commission finds may either eliminate or make impractical
+                   the establishment of a planned street.  The applicant shall provide an ownership list
+                   containing the names and addresses of property owners within 200 feet of the
+                   property to be divided.
+
+Section 6.120.  Pre-Application Conference.  Prior to submission of a tentative plan for land
+division requiring a Type II or III procedure, the applicant may request a preapplication conference
+pursuant to Section 4.030.
+
+Section 6.130.  Future Street and Public Facilities Plan Required.
+
+         (a)       Except as required in paragraph (b) of this Section, a Future Street and Public
+                   Facilities Plan shall be filed simultaneously with an application for a land division
+                   requiring a Type III procedure.  The plan shall show a pattern of future street from
+                   the boundaries of the proposed land division to include the other tracts within
+                   200 feet surrounding and adjacent to the proposed land division.
+
+         (b)       A Future Street and Public Facilities Plan shall not be required for any portion of the
+                   area for which a proposed street layout has been established by either the plan or a
+                   Future Street and Public Facilities Plan already adopted by the Commission.
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           31
+         (c)       Construction of all or part of the Future Street and Public Facilities Plan may be
+                   required as a condition of approval by the Commission.
+
+         (d)       The Commission shall have the power to adopt a Future Street and Public Facilities
+                   Plan for which there is no proposal for a land division, providing that plan is adopted
+                   under a Type ill procedure.
+
+Section 6.135.  Public and Private Streets and Driveways.  Public and private streets and driveways
+providing access to residential developments from any public or private street shall not be gated,
+except as specifically required or allowed by the City Council to address an operational or safety
+issue.  For the purpose of this Section, residential development means a residential partition or
+subdivision or 2 or more dwelling units on a single lot or parcel or 2 or more residential lots or
+parcels.
+
+Section 6.140.  Recording and Filing of Future Street and Public Facilities Plans.  Upon final
+approval, a Future Street and Public Facilities Plan shall be:
+
+         (a)       Recorded by the applicant or, if there is no applicant, by the Commission, with the
+                   City Recorder, and
+
+         (b)       Indexed and filed with the Commission.
+
+Section 6.150.  Revision.  An approved Future Street and Public Facilities Plan may be revised
+under a Type III procedure by the Commission, including revision in conjunction with approval of
+a land division.  An approved Future Street and Public Facilities Plan may be revised by the City
+Council in conjunction with a revision of the plan.
+
+Section 6.160.  Criteria for Approval.  A tentative land division plan or adopted Future Street and
+Public Facilities Plan shall comply with Sections 2.010, 2.020, and:
+
+         (a)       Development of any remainder of property under the same ownership must comply
+                   with this ordinance; and
+
+         (b)       It must not prevent access to or the development of adjoining land in accordance
+                   with the requirements of this ordinance or the plan,
+
+         (c)       Adequate bonding is provided to provide for construction and maintenance of the
+                   public improvements required as a condition of approval for a period of not less than
+                   two years from the date of approval of the final subdivision plot.
+
+Section 6.170.  Tentative Plan Expiration Date.  Within six months after the effective date of
+approval of a tentative land division plan, the final plat or map shall be submitted in the form
+required by Section4.040 and shall further state any modification or condition required by approval
+of the tentative plan.  The Commission may, upon written request, grant an extension of time for up
+to six months upon a written finding that the facts relied on to grant the initial approval have not
+significantly changed and that no other development approval will be affected.
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           32
+Section 6.180.  Staged Subdivision Development.  When an application desires to record
+and develop subdivision plats covering portions of an approved tentative plan in stages, the
+Commission may authorize a time schedule for platting and otherwise developing the stages in
+periods of time in excess of one year but in no case shall the total time for all stages be more than
+five years, unless there is a resubmission of the tentative plan.  Each stage platted and developed
+shall comply with the plan and this ordinance and portions platted after one year may be required
+to be modified to comply with amendments to the plan or this ordinance and other regulations.
+
+Section 6.190.  Submission and Review of Final Plat or Map.  A final plat or map shall be
+submitted and, at its next regular meeting, the Commission shall determine whether it complies
+with the approved tentative plan and this ordinance.  If it does not comply, the applicant shall be
+notified and afforded an opportunity to make corrections.· Upon compliance, the plat or map shall
+be signed and dated by the Commission if all other requirements for a development permit have
+been met
+
+Section 6.200.  Approval Signatures for Final Subdivision Plat.  Following review and approval of
+a subdivision plat, the applicant shall perform the following:
+
+         (a)       Obtain the approval signature by the county surveyor certifying that the plat
+                  complies with applicable survey laws.  The surveyor may conduct field
+                  investigations to verify that the plat survey is accurate.  Upon notice of
+                  noncompliance, the applicant shall be notified and given and opportunity to make
+                  corrections.  Upon compliance, the plat shall be signed and dated by the surveyor.
+
+         (b)       Obtain the signatures, required by ORS 92.110, of the board of directors of any
+                  irrigation district, drainage district, water control district or district improvement
+                  company if the subdivision is within such a district.
+
+         (c)       Obtain the approval signatures of a majority of the City Council certifying approval
+                  of the plat
+
+         (d)       Obtain the approval signature of the county assessor certifying that all property taxes
+                  have been paid or bonded for in accordance with the law.
+
+         (e)       Obtain proof of adequate bonding and provide for construction and maintenance, of
+                  the public improvements as required by §6.160( c) and Section 9.010 of this
+                  Ordinance.
+
+         (f)        Deliver the approved subdivision plat and accompanying documents for recording
+                  with the appropriate official.
+
+Section 6.210.  Approval Signatures for Final Partition Map.  Following review and approval of
+a final partition map, the applicant shall follow the provisions of Section 6.200(a), shall obtain
+certification that the map is approved, and deliver the approved partition map and accompanying
+documents for recording with the appropriate official.
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           33
+Section 6.220.  Effective Date for Approval.  Approval for a subdivision shall become final upon
+the recording of the approved subdivision plat under ORS 92.120(1), and for a partition, upon the
+recording of the approved partition map together with any required documents with the county
+recorder.  Final approval constitutes the approval necessary before a development permit may be
+issued.  Action expressly authorized by a tentative approval may take place prior to issuance of the
+development permit.
+
+Section 6.221.  Change of Land Use Classification.  Unless part of a legislative action, a change
+of land use or district classification may be made by the Commission to Section 6.222 or as
+otherwise authorized.  The change shall be under a Type III procedure and may be initiated by
+the Commission, either on its own motion or upon request of the City Council, or by petition of a
+majority of property owners in the area proposed for change.  Written notice of the hearing shall be
+given to owners of property within 200 feet of the area.
+
+Section 6.222.  Criteria.  The Commission shall approve a non-legislative land use or district
+change if it would comply with the requirements of Sections 2.010 and 2.020 and:
+
+         (a)       The change will not interfere with the development or value of other land in the
+                   vicinity when compared to the public interest in allowing the change; and
+
+         (b)       The change will not be detrimental to public interests of the Community.
+
+                                                         Vacation
+
+Section 6.223.  Vacation Criteria.  A proposal to vacate a street, plat, public square or other public
+place shall be under a Type IV procedure and applicable State law.  The Commission shall base its
+recommendation on the following criteria:
+
+         (a)       The proposal shall not violate the plan.
+
+         (b)       No street to be vacated shall substantially reduce the fair market value of abutting
+                   property unless a majority of the owners of the affected property consent to the
+                   vacation in writing.
+
+         (c)       The Commission finds that the vacation is in the public interest of the community.
+                   The City Council shall make affirmative findings on the criteria and vacation
+                   proceedings may be terminated at any time.
+
+Section 6.224.  Conditions.  The following conditions may be attached to the approval of a
+vacation:
+
+         (a)       Retention of an easement for a public utility or public service facility and limitations
+                   on the use of the area adjacent to such facility.
+
+         (b)       Construction or removal of a public utility or public facility.
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           34
+         (c)       Replotting of land in a subdivision to be vacated.
+
+         (d)       Construction or improvement of replaceme nt facilities.
+
+                                                        Legislation
+
+Section 6.225.  Definition.  A legislative action under this ordinance is land use action that the
+Council finds involves a substantial area of the City and number of property owners or such broad
+public policy that administrative processing would be inappropriate.  Some examples of legislative
+decisions are amendments to the plan or this ordinance or changes in the use or classification of
+land or vacation actions.
+
+Section 6.226.  Procedure.  Legislative action under this ordinance shall follow Type IV Procedure
+subject to the requirements of Sections 6.227 to 6.230.
+
+Section 6.227.  Notice of Legislative Hearing.  Notice of a hearing on a legislative matter under this
+ordinance shall be reasonably calculated to actual notice to the owners of specific affected property,
+and shall be given to the community as a whole by posting and publishing notice as required by
+Section 8.040.
+
+Section 6.228.  Public Participation.  The Commission shall provide all interested persons the
+opportunity to submit written recommendations and comments in advance of the hearing and this
+material shall be available for public inspection prior to the hearing.  At the hearing, written
+recommendations and other material shall be received and oral statements shall be permitted.  In
+addition to matters relating to compliance with applicable criteria and standards of this ordinance
+and with the Plan, a person may submit testimony and evidence regarding desirable policy the City
+should adopt.
+
+Section 6.229.  Recommendations.  In making its recommendation, the Commission shall:
+
+         (a)       Identify the provisions of the plan that are relevant to the decision and prepare
+                   adequate findings on how the proposal does or does not comply with each provision;
+
+         (b)       Review the nature of the proposal and state whether the proposal is appropriate for
+                   processing as a legislative matter, and
+
+         (c)       Make appropriate recommendations, along with the reason for each.
+
+Section 6.230.  Legislative Action by the City Council.
+
+         (a)       The Council may limit information at the hearing in order to avoid unduly repetitive
+                   or cumulative information or testimony and may limit comment to whether the
+                   proposal (1) is appropriate for legislative consideration, (2) complies with the plan,
+                   and (3) presents issues of significant policy change or refinement;
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           35
+         (b)       After confirming, amending or denying the recommendations of the Commission,
+                  the Council may:
+
+                  (1)       Enact or defeat an ordinance on all or part of the proposal;
+                  (2)       Refer some or all of the proposal back to the Commission for further
+                            consideration.
+                            If such referral is later returned, no further hearing is required provided the
+                            proposal is processed· under the City's procedure for the enactment of
+                            ordinances.
+
+                                                  Site Design Review
+
+Section 6.231.  Site Design Review.  The Commission may require a site review for any
+development which is proposed in environmentally sensitive areas, a flood plain or as required
+in other sections of this Ordinance.  New Multiple Family Developments shall be subject to
+Site Design Review.  All developments subject to Design Review shall follow the procedures
+established in Section 6.232.  A development permit for multi-family housing units and for area
+accessory developments shall comply with the requirements of Section 6.232 if the development
+permit is for initial development or construction or for an alteration that affects the use or
+significant elements of the site plan or exterior building design.  Information on the proposed
+development shall include detail sufficient to establish compliance with Sections 2.010 and 2.020
+and this Section, and shall include sketches of the proposed development showing its integration
+and separation with its surroundings, and such other information as the Commission believes will
+reasonably aid in evaluating the proposal.  In reaching a decision, the reviewing committee shall
+consider whether the proposal avoids endangering life and property; prevents the creation of public
+nuisances; prevents exposure to hazardous conditions; encourages preservation and use of natural
+drainageways; utilizes a site that is easily accessible to all necessary elements of the community
+infrastructure and avoids expansion of the infrastructure to accommodate uses which can be more
+easily accommodated elsewhere; encourages energy conservation; harmonizes with the lay of the
+land; respects the limitations of soils and geology; prevents excessive cuts and fills, unsightly
+grading, and scarring of natural landforms; prevents excessive loss of vegetation and limits
+disruption to areas with a relatively high potential for successful revegetation; avoids loss of
+watershed and wind shelter; preserves wetland areas and wildlife habitats; prevents disruption of
+natural watercourses; minimizes potential sources of pollution; and is consistent with applicable
+requirements of the Development Standards Document.
+
+Section 6.232.  Procedure.  Land Development Ordinance Section 6.232 Procedure shall be
+amended to read as follows:
+
+           "Proposed Developments which are subject to a Site Design Review shall be
+           considered by the Commission sitting as the Site Review Committee.  All Site
+           Design Reviews which occur within an environmentally sensitive area shall
+           be processed under the Type ill procedure.  The review of a multi-family
+           development outside of an Environmentally Sensitive Area shall be conducted
+           under a Type III procedure."
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           36
+Notice shall be given to all owners of land located within 200 feet of the property to be developed.
+.
+
+Section 6.233.  Identification of Environmentally Sensitive Areas.  The Commission shall identify
+environmentally sensitive areas, including, but not limited to, wetland and wildlife habitats, areas
+having significant drainage or erosion problems and areas where development may be constrained
+by the type of soil.  These areas shall be delineated on the appropriate maps accompanying the
+Rivergrove Comprehensive Plan.
+
+Section 6.234.  Requests for Development/Site Design Review:  Requests for Development, which
+require Site Design Review shall be submitted along With adequate information to allow the design
+review to occur.  This information shall include site plans, grading plans, architectural drawings
+and any other supporting materials which would be helpful in explaining the development proposal
+to the Planning Commission.
+
+The Planning Commission may require changes in a proposed project to ensure that the following
+general design criteria are met to the maximum extent practical in a particular development
+proposal.
+
+         (a)       The project shall contain a safe and efficient traffic circulation system which meets
+                  the needs of both pedestrians and automobiles.
+
+         (b)       The project shall not create any situations which contain significant hazard to life or
+                  property.
+
+         (c)       In an Environmentally sensitive area, grading, filling, and diversion of drainage
+                  ways shall be minimized.
+
+         (d)       Natural vegetation, specifically large trees shall be preserved whenever practical.
+
+         (e)       The proposed projects shall meet the criteria established in the Policies of the
+                  Comprehensive Plan when appropriate.  .
+
+         (f)        Appropriate screening shall be provided between multi-family dwelling and existing
+                  single family dwellings.
+
+Section 6.235.  Annexation Criteria.  A proposal to annex territory to the city shall be conducted
+under the Type IV procedure with supplements or modifications required to comply with state law.
+When an annexation proposal has been initiated and the (planning director) has determined the
+territory is eligible for annexation it shall be referred to the planning commission.  The commission
+shall base its recommendation on whether the following criteria have been met.
+
+         (1)       The proposal conforms to the comprehensive plan or substantial changes in
+conditions have occurred which render the comprehensive plan inapplicable to the annexation.
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           37
+         (2)       The inclusion of the territory within the city would be consistent with the purpose
+served by the city.
+
+         Although the city council shall make affirmative findings on the two criteria if it proceeds
+with the annexation, proceedings may be terminated by the council at any time.
+
+Section 6.236.  Designation of Annexed Property.  Territory annexed to the city shall remain
+subject to the land development regulations of the county until changed by the city.  Such change
+may be entirely or partially carried out as a part of the annexation proceedings if included in the
+Type IV proceedings of the council.  Within thirty days after the effective date of annexation the
+city recorder shall report on any further steps that appear necessary to have the annexed territory
+fully subject to the provisions of this ordinance and shall initiate appropriate action to have those
+steps carried out.  If the city council finds it is important to the protection or implementation of city
+policies, interim regulations may be applied in the annexed area until more permanent action can be
+taken.
+
+Section 6.300.  Conditional Use.  The Planning Commission may allow a conditional use, after a
+hearing conducted pursuant to the Type III land use procedure in the Rivergrove Land
+Development Ordinance provided the applicant complies with the relevant Application
+Requirements of this section and demonstrates that the proposed use satisfies the applicable
+conditions set forth in this ordinance and the Rivergrove Land Development Ordinance.  For the
+purposes of Section 6.300 through 6.340, the Planning Commission has the responsibility and
+authority to determine the relevance of requirements and criteria and the applicability of conditions.
+
+Section 6.310.  Application Requirements.  An application for Conditional Use will be on forms
+provided by the City Recorder and will include the following, where applicable:
+
+            (a)       A description of the land (address, lot, block, tract, or similar description) on which
+the proposed development is to take place;
+
+            (b)       A list of the addresses of property within 200 feet of the affected property and
+mailing labels;
+
+            (c)       Narrative addressing how the application meets the relevant review criteria in 6.320
+and 6.330 below;
+
+            (d)       Site plan drawn to scale and, where relevant, illustrating existing and proposed:
+
+                        (1)       Relationship of the site to adjoining properties, streets, alleys, structures,
+                             public utilities, and drainage ways;
+
+                        (2)       Lot line dimensions;
+
+                        (3)       Location of structures;
+
+                        (4)       Vehicle and pedestrian access points and access ways;
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           38
+                        (5)       General location of vegetated areas;
+
+                        (6)       Utility service areas;
+
+                        (7)       Fences and walls;
+
+                        (8)       Parking spaces, maneuvering, loading, and refuse areas;
+
+                        (9)       Direction of traffic flow on the property;
+
+                        (10)     Drainage controls;
+
+                        (11)     Proposed modifications to existing grades.
+
+            (e)       If relevant, exterior lighting plan (which may be shown on the site plan) indicating
+                     location, size, height, typical design, material, color, method and strength of
+                     illumination.
+
+            (f)        If relevant, plans and elevations of structure(s) to scale indicating:
+
+                        (1)       Heights of structure:
+
+                        (2)       Entrances and exits of proposed structures;
+
+                        (3)       Architectural drawings or sketches, including floor plans, in sufficient detail
+                               to permit computation of set back requirements;
+
+                        (4)       Building materials to be used;
+
+                        (5)       Specifications as to type, color, and texture of exterior surfaces of proposed
+                               structures.
+
+            (g)       If relevant, landscape plan drawn to scale showing:
+
+                        (1)       Location of existing trees and vegetation proposed to be removed or retained
+                               on the site;
+
+                        (2)       Location and design of landscaped areas;
+
+                        (3)       Proposed varieties and sizes of trees and plant materials;
+
+                        (4)       Other pertinent landscape features, and irrigation systems required to
+                               maintain plant materials.
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           39
+            (h)       Vicinity map showing the site in relation to local and collector streets; plus any other
+                   features in the nearby area;
+
+            (i)        Any additional information that may be required by the Planning Commission to
+                   properly evaluate the proposed conditional use, if the need for such information is
+                   justified on the basis of special and/or unforeseen circumstances.
+
+            (j)        The Planning Commission may waive any of the requirements above where
+                   determined that the information required is unnecessary to properly evaluate the
+                   proposal.  The applicant will provide a number of plans as required by the City
+                   Recorder.
+
+Section 6.320.  Review Criteria.  Applications for a conditional use will be reviewed to assure
+consistency with the purposes of this ordinance, the Rivergrove Land Development Ordinance,
+policies of the Comprehensive Plan, and any other applicable policies and standards adopted by the
+City Council.  In addition, the Planning Commission will consider and weigh with equal priority
+the following compatibility factors that are relevant to the proposal:
+
+            (a)       Basic site design (organization of uses on the site);
+
+            (b)       Noise attenuation;
+
+            (c)       Noxious odors;
+
+            (d)       Lighting;
+
+            (e)       Signage;
+
+            (f)        Landscaping for buffering and screening;
+
+            (g)       Traffic;
+
+            (h)       Effects on off-street parking;
+
+            (i)        Effects on air and water quality.
+
+Section 6.330.  Additional Criteria.  The Planning Commission may allow a conditional use,
+provided that the applicant provides evidence substantiating that all the requirements of the
+ordinance relative to the proposed use are satisfied, and demonstrates that the proposed use also
+satisfies the following criteria:
+
+            (a)       The characteristics of the site are suitable for the proposed use considering size,
+                   shape, location, topography, existence of improvements and natural features;
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           40
+            (b)       The site and proposed development are timely, considering the adequacy of
+                   transportation systems, public facilities and services existing or planned for the area
+                   affected by the use;
+
+            (c)       The proposed use will not affect the surrounding area in a manner which adversely
+                   limits, impairs or precludes the use of surrounding properties.
+
+Section 6.340.  Conditions.
+
+            (a)       Permits for conditional uses stipulate restrictions or conditions which may include,
+                   but are not limited to, a definite time limit to meet such conditions, provisions for a
+                   front, side or rear yard greater than the minimum set back standards, suitable
+                   landscaping, off-street parking, and any other reasonable restriction, condition or
+                   safeguard that would uphold the spirit and intent of the Rivergrove Land
+                   Development Ordinance, and mitigate any adverse effect upon the neighborhood
+                   properties as set forth in the findings of the Planning Commission.
+
+            (b)       In the case of a use existing prior to the effective date of the ordinance codified in
+                   this title and classified in this title as a conditional use, any change of use, expansion
+                   of lot area or expansion of structure conform with the requirements for conditional
+                   use.
+
+            (c)       A conditional use approval expire if it is not implemented within 2 years from the
+                   date of the final written decision unless a  lesser time period if specified as a
+                   condition of approval or a time extension is approved pursuant to RLDO 6.340(d).
+                   If the City’s final written decision is appealed, the approval period commences on
+                   the date of the final appellate decision.  A conditional use approve is implemented
+                   when all necessary permits for development have been secured and are maintained.
+                   Approval of public roads, public schools and public parks do not expire unless an
+                   expiration date is specified as a condition of approval.
+
+            (d)       A 1-year time extension may be granted once as a type I decision by the Planning
+                   Commission pursuant to RLDO 4.090 and subject to the following provisions:
+
+                        (1)       A time extension be requested in writing, on forms provided by the City
+                             Recorder, prior to the expiration of the approval; and
+
+                        (2)       The applicant demonstrates that:
+
+                                    (A)      The conditional use is consistent with the provisions of this ordinance
+                                       in effect on the date a complete application for a time extension is
+                                       submitted; and
+
+                                    (B)      There is a reasonable expectancy that the necessary development
+                                       permits will be secured within the 1-year extension period.
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           41
+            (e)       Any violation of the terms, conditions or restrictions of a conditional use permit can
+                   result in revocation of the conditional use permit.
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           42
+                                                    ARTICLE 7
+
+                        RESERVED FOR PLANNED UNIT DEVELOPMENT
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           43
+                                                      ARTICLE 8
+
+                               PUBLIC DELIBERATIONS AND HEARINGS
+
+Section 8.10.  Responsibility of Commission for Hearings.  The Commission shall carry out the
+following duties relating to public hearings on land use matters according to the requirements of
+this ordinance:
+
+         (a)       Schedule and assign the matter for hearing and review.
+
+         (b)       Conduct the correspondence of the hearing body.
+
+         (c)       Give notice as required.
+
+         (d)       Maintain a record of all proceedings and enter into the record all relevant dates such
+                  as those of giving notice, hearings, postponement and continuances and a summary
+                  of actions taken by the hearing body.
+
+         (e)       Prepare minutes of all decisions and the reasons for the decisions.
+
+         (f)        Reduce the decisions of the hearings body to writing no more than 15 days from the
+                  date of the hearing.
+
+         (g)       Mail a copy of the decision to any person requesting it upon payment of a
+                  reasonable copying fee and postage.
+
+Section 8.020.  Notice of Hearing.  Notice shall be reasonably calculated to give actual notice and,
+except for a legislative action under Sections 6.225 to 6.230, shall contain the following
+information:
+
+         (a)       The date, time and place of the hearing.
+
+         (b)       A brief description of the property for which a development permit or other action is
+                  pending, including reference to a map or postal address and a subdivision lot and
+                  block designation, a metes and bounds description or the tax map designation of the
+                  county assessor.
+
+         (c)       The nature of the issues.
+
+         (d)       The section of the plan, this ordinance, or other ordinance that are believed to apply
+                  to the matter at issue.
+
+         (e)       Where information and evidence may be examined and the manner in which written
+                  comment or testimony addressing the issue may be submitted.
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           44
+Section 8.030.  Procedure for Mailed Notice.  Unless otherwise required, addresses for mailed
+notice required by this ordinance shall be obtained from the county real property tax record.  Unless
+the name and address is on file with the City, a person whose name is not on the tax records at the
+time an application 13 filed, or other action not based on an application is begun, need not be
+furnished mailed notice.  Failure to receive notice shall not invalidate an action if a good faith effort
+was made to comply with the requirements for notice.  In addition to persons required to be given
+notice by this ordinance, the Commission shall provide notice to persons it has reasonable cause to
+believe are affected by the proposal.
+
+Section 8.040.  Posted or Published Notice.
+
+         (a)       Where posted notice is required, it shall be posted in at least two conspicuous places
+                   within the area containing affected property and at City Hall.
+
+         (b)       Where published notice is required, it shall be published in a newspaper of general
+                   circulation at least twice and a copy of the notice shall be posted at City Hall.
+
+Section 8.050.  Time and Cost of Notice.
+
+         (a)       Unless otherwise required, notice shall be mailed, posted, or first published not less
+                   than 10 nor more than 15 days prior to the action or hearing requiring the notice.
+
+         (b)       Cost of notice shall be assessed as part of the development permit application fee.
+
+Section 8.060.  Challenges to Impartiality.  Any interested persons or member of a hearing body
+may challenge the qualifications of a member of the hearing body to participate in the hearing and
+decision regarding the matter.  The challenge shall be in writing and shall state the facts relied upon
+by the challenger relating to bias, prejudgment, personal or pecuniary interest, or other facts from
+which the challenger concludes that the member of the hearing body cannot participate in an
+impartial manner.  Any challenges shall be made part of the record.
+
+Section 8.070.  Disqualifications.  No member of a hearing body shall participate in a discussion of
+a proposal or vote on it if anyone of the following conditions exist:
+
+         (a)       Any of the following have a direct or substantial pecuniary or financial interest in
+                   the proposal:  the hearing body member or the member's spouse, brother, sister,
+                   child, parent, father-in-law, mother-in-law, any business in which the member is
+                   serving or employed or has served or been employed within the previous two years,
+                   or employment;
+
+         (b)       The member owns property within the area entitled to receive notice of the hearing;
+
+         (c)       The member has direct private interest in the proposal;
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           45
+         (d)       For any reasons the member has concluded that he cannot reasonably reach an
+                   impartial decision on the matter.  A member shall disclose any disqualifications.
+
+Section 8.080.  Participation by Interested Officers or Employees.  No officer or employee of the
+City who has a financial or other private interest in a proposal shall participate in discussion with or
+give an official opinion to the hearing body on the proposal without first disclosing the nature and
+extent of that interest.
+
+Section 8.090.  Ex Parte Contacts.  Hearing body members shall disclose any prehearing or ex parte
+contacts with regard to any matter before the body at the commencement of the hearing.
+
+Section 8.100.  Disqualification.  A majority of the members of a hearing body present and voting
+may order the disqualification of a member for any reasons stated in Sections 8.070 or 8.080.  The
+member who is the subject of the motion to disqualify shall not vote on that motion.
+
+Section 8.110; Rights of Disqualified Member.
+
+         (a)       An abstaining or disqualified member of a hearing body may be counted for
+                   purposes of forming a quorum.  A member who represents his/her personal interest
+                   at a hearing shall do so only by abstaining from voting on the proposal, physically
+                   joining the audience and vacating the seat on the hearing body, and making full
+                   disclosure of his/her role at the time he/she addresses the body;
+
+         (b)       If all members of a hearing body are disqualified or abstain, all members present
+                   shall state their reasons for abstention or disqualification and after doing so shall be
+                   considered requalified and may proceed to resolve the issues before them;
+
+         (c)       A member absent during the presentation of evidence at a hearing shall not
+                   participate in the deliberations or decision on the matter until he/she reviews the
+                   evidence.
+
+Section 8.120.  Burden of Proof.  The burden of proof is on the proponent.  "In all cases, the burden
+of proof shall be the preponderance or greater weight of the creditable evidence."  The proposal
+must be supported by proof that it complies with the applicable elements of the plan and to
+applicable provisions of this ordinance, including the specific criteria and standards set forth for
+the particular type of proposal or action.
+
+Section 8.130.  Decision.  The hearing body shall approve or deny the application or, if the hearing
+is in the nature of an appeal, affirm, modify, reverse or remand the decision on appeal.  A decision
+on a hearing or an application for development permit shall be made within 10 days of the
+application except that with the express agreement of the hearing body and the applicant or
+appellant, consideration may be extended for a reasonable time, but no longer than 45days from
+the date of the first hearing on the matter.
+
+Section 8.140.  Findings and Order.  The hearing body shall prepare brief written findings of fact
+and an order which shall include:
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           46
+         (a)       A statement of the criteria and standards against which the proposal was tested, and
+                   of the hearing body's interpretation; of what is required to comply with those criteria
+                   and standards.
+
+         (b)       A statement of the facts which were found to establish compliance or
+                   noncompliance with the criteria and standards.
+
+         (c)       The reason for approval, modification, or denial.
+
+Section 8.150.  Record of Proceedings.  Proceedings shall be recorded stenographically or
+electronically.
+
+         (a)       Testimony shall be transcribed if required for judicial review or if ordered by the
+                   hearing body.
+
+         (b)       Where practicable each item of evidence shall be marked with the name of the
+                   person introducing it, and shall be retained in the file until the expiration of the
+                   appropriate time of appeal.  Unclaimed exhibits may be destroyed thereafter.
+
+         (c)       The findings and order shall be included in the record.
+
+         (d)       All proceedings' records shall be open for public inspection and copying during
+                   business hours at City Hall.
+
+Section 8.160.  Request for Review.
+
+         (a)       Where a decision has been made by a Hearings Officer, a decision on the issuance of
+                   a development permit may be appealed to the Commission by an affected person by
+                   filing an appeal with the Commission within 30 days of receipt of notice of the
+                   decision.  Notice of appeal shall be as set out in Section 8.8170.
+
+         (b)       A decision of the Commission maybe appealed to the City Council by an affected
+                   person by filing an appeal within 10 days of receipt of notice of the decision.  Notice
+                   of appeal shall clearly indicate the decision that is being appealed.
+
+         (c)       The City Council may limit its review to a review of the record and oral argument
+                   on the record, or it may accept new evidence and testimony in which case a hearing
+                   shall be conducted pursuant to this Article.
+
+Section 8.170.  Notice of Appeal.  Notice of appeal shall contain the following:
+
+         (a)       An identification of the decision being appealed, including the date of the decision.
+
+         (b)       A short statement of the interest of the person seeking review.
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           47
+         (c)       The specific grounds for the appeal.
+
+         (d)       A de novo review or review by additional testimony and evidence is sought, a
+                   statement relating the request to the factors listed in Section 8.200 (a).
+
+Section 8.180.  Scope of Review.  The reviewing body shall issue an order stating the scope of
+review to be one of the following:
+
+         (a)       Restricted to the record made on the decision appealed.
+
+         (b)       Limited to such issues as the reviewing body determines necessary for a proper
+                   resolution of the matter.
+
+         (c)       A de novo hearing.
+
+Section 8.190.  Review on the Record.  Unless otherwise required by this ordinance, review of a
+decision on appeal shall be confined to the record of the proceeding, which record shall include:
+
+         (a)       A factual report prepared by the hearing body.
+
+         (b)       All exhibits, materials, pleadings, memoranda, stipulations and motions.
+
+         (c)       The transcript of the hearing below, if one was required.  The reviewing body
+                   shall allow oral argument on the record by the parties.
+
+Section 8.200.  De Novo Review.
+
+         (a)       The reviewing body may hear the matter de novo; or it may admit additional
+                   testimony or evidence not previously admitted if such evidence or testimony could
+                   not reasonably have been presented at the earlier hearing.  In deciding whether to
+                   admit such testimony or evidence the reviewing body shall consider all of the
+                   following:
+
+                   (1)       Prejudice to a party;
+                   (2)       Convenience or availability of the evidence at the time of the initial hearing;
+                   (3)       Surprise to other parties;
+                   (4)       The nature and relevancy of the testimony or evidence.
+
+         (b)       "De novo hearing" shall mean a hearing by the review body as if the action had not
+                   been previously heard and as if no decision had been rendered, except that all
+                   testimony, evidence and other material from the prior hearing shall be included in
+                   the record of the review.
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           48
+Section 8.210.  Decision Upon Review.
+
+         (a)       Upon review, the review body may by order affirm, remand, reverse or modify, in
+                   whole or part, a determination of the decision under review.  The review body shall
+                   clearly state its findings and the reasons for its decision.
+
+         (b)       Action by the review body shall be taken by a majority vote of the members present
+                   at the review session.  The review body shall render its decision no later than 10
+                   days after the filing of a request for review and shall me its decision with the City
+                   Recorder no later than five days after it is rendered.
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           49
+                                                      ARTICLE 9
+
+                                    BONDS, DEPOSITS AND PENALTIES
+
+Section 9.010.  Bonds of Cash Deposits.  Before issuing or renewing a development permit where
+the applicant has an obligation to construct or improve public facilities to serve the development or
+to reclaim land, the obligation shall be fulfilled prior to the issuance of the permit or the applicant
+shall file with the city recorder an acknowledgment of the obligation.  The acknowledgment shall
+state the time within which it shall be met and a surety bond or cash or negotiable security deposit
+sufficient to cover the cost of the work as estimated by the Commission for the year fulfillment of
+the obligation is expected.  The bond shall be conditioned on carrying out the obligation and
+meeting the requirements of this ordinance and the Development Standards Document that apply to
+the development.  The deposit or bond shall be forfeit to the City in the event of failure to comply
+with this section and shall remain in, the custody of the City until the obligation is completed or the
+deposit or bond is forfeited "All maintenance bonds for maintenance of constructed public facilities
+shall be for a period of two years from the date of acceptance by the City of the completed
+improvements."
+
+Section 9.020.  Penalties and Abatement.  This ordinance may be enforced in any manner now or
+hereafter authorized bylaw.  Any person using land in violation of this ordinance shall be punished,
+upon conviction, by a fine of not more than $100 for each day of violation where the offense is a
+continuing offense, but such fine shall not exceed $1,500.  For a noncontinuing offense, the fine
+shall be not more than $500.  ln addition, the City Council, the District Attorney, or a person whose
+interest in real property in the city of Rivergrove is or may be affected by the violation may, in
+addition to all other remedies provided by law, institute injunction, mandamus, abatement or other
+proceedings to prevent, temporarily or permanently enjoin or abate the unlawful use.
+                                                                      4
+Section 9.030.  Fees and System Development Charges.                      All fees and system development charges
+under this ordinance, and the Development Standards Document, shall be as outlined below.  This
+fee schedule may be amended at any time by Resolution of the City Council.  Fee must be paid to
+the City by the applicant at the time of application.  Fees assessed to an applicant may include the
+costs to the City of legal services, hearings officers, engineering services, planning services, and
+design services as the City determines are necessary to consider the permit.  When such costs are
+not known in advance, the City shall estimate the cost, and provide a full accounting at the end of
+the permit process.  Overcharges will be· refunded to the applicant, and the applicant shall be
+responsible to the City for any additional costs not covered by the estimate.
+
+For construction of new residential units which will use streets and roads within the City of
+Rivergrove, the City may assess a roadway system development fee.  This fee will be deposited in
+to the City's Road fund and may be used only for the purposes legally allowed for road funds.  The
+roadway system development fee may be waived by the City Council should the City determine it
+will be a hardship, and, at the City's discretion, may credit the cost of required public facility
+improvements against such fees.
+
+4             RLDO 9.030 is subject to two interpretaions by the Rivergrove Planning Commission dated November 3,
+1997 and May 7, 2001.
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           50
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           51
+FEE SCHEDULE
+
+BUILDING PERMIT (CITY FEE)                                                                                  $10.00*
+
+VARIANCE (HARDSHIP RELIEF)                                                                                  $50.00*
+
+TYPE I LAND DIVISION                                                                                         $15.00
+                                                                                   per lot plus actual City Costs
+
+TYPE II LAND DIVISION                                                                                        $25.00
+                                                                                   per lot plus actual City Costs
+
+TYPE III LAND DIVISION                                                                                       $35.00
+                                                                                   per lot plus actual City Costs
+
+TYPE IV STREET VACATIONS                                                                                     $50.00
+                                                                                           plus actual City Costs
+
+TREE CUTTING                                                                        No Cost -- Actual City Cost
+                                                                                                       upon appeal
+
+AREA DEVELOPMENT PERMIT                                                                                      $25.00
+
+ROADWAY SYSTEM DEVELOPMENT CHARGE                                                                           $500.00
+                                                                                 per residential unit with access
+                                                                                  provided by a roadway within
+                                                                                           the City of Rivergrove
+
+*Plus the cost of hearings officer, notification and specialized services the city may require.
+
+PDX_DOCS:394639.2 [34762-00100]
+
+THIS IS A COMPILATION OF RIVERGROVE ENACTMENTS AND IS NOT THE OFFICIAL RIVERGROVE
+LAND DEVELOPMENT ORDINANCE.  THE ACCURACY OF THIS DOCUMENT CANNOT BE ASSUMED.
+                                                                                                                                           52

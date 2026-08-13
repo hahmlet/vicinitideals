@@ -12,8 +12,18 @@ ingest:
   zoning_layer: zoning_metro
   zone_field: ZONE
   strip_lowercase_suffix: false
+code:
+# The city posts the RLDO as one composite PDF ("compilation of Rivergrove
+# enactments"). Setbacks are 5.080, lot size 5.010/5.075.
+- id: rldo.composite
+  url: https://www.cityofrivergrove.org/s/RLDOComposite-with-cover.pdf
+  title: Rivergrove Land Development Ordinance (composite compilation)
 zones:
   R10:
+    section:
+    - '5.010'
+    - '5.075'
+    - '5.080'
     cite_default:
       cite: Rivergrove Land Development Ordinance (RLDO, Ord. 54-89); Metro RLIS Zoning layer
       url: https://www.cityofrivergrove.org/zoning
