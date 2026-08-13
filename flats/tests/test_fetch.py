@@ -255,7 +255,7 @@ def test_a_marker_that_stops_matching_fails_before_anything_is_written(
 def test_citing_finds_the_values_that_point_at_a_document(bench: dict) -> None:
     layers = load_rules(bench["root"])
 
-    assert citing(layers, DOC) == [(PORTLAND, "R5", "setback_front_ft")]
+    assert citing(layers, DOC) == [(PORTLAND, "R5", "setback_front_ft", ())]
     assert citing(layers, "or/multnomah/portland/33.120.txt") == []
 
 

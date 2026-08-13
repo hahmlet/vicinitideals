@@ -33,10 +33,17 @@ from pathlib import Path
 from typing import Sequence
 
 from flats.encode.load import load_trusted
-from flats.encode.verify import LOG_PATH, Verification, VerificationLog, sign
+from flats.encode.verify import (
+    LOG_PATH,
+    Verification,
+    VerificationError,
+    VerificationLog,
+    sign,
+    variant_for,
+)
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.loader import CONFIG_ROOT, load_rules
-from flats.rules.model import Layer, Status, Value
+from flats.rules.model import Layer, Status, Value, Variant
 
 #: Values in these states are what the queue is for.
 PENDING = (Status.draft, Status.encoded, Status.stale)
@@ -72,14 +79,33 @@ def _walk(layers: dict[str, Layer]):
                 yield layer_id, zone_code, name, value
 
 
-def _evidence(store: ProvenanceStore, value: Value) -> tuple[str, str]:
-    """The stored text a value cites, or the reason there is none."""
-    if not value.prov.quote:
+def _evidence(store: ProvenanceStore, part: Value | Variant) -> tuple[str, str]:
+    """The stored text a value cites, or the reason there is none.
+
+    Takes a variant as readily as a base value, because an exception usually
+    cites a different sentence — often a different chapter — and it is that
+    sentence the reviewer has to be shown.
+    """
+    if not part.prov.quote:
         return "", "no quote — nothing to compare the number against"
     try:
-        return store.quote(value.prov.quote), ""
+        return store.quote(part.prov.quote), ""
     except ProvenanceError as exc:
         return "", str(exc)
+
+
+def _part(value: Value, when: Sequence[str]) -> Value | Variant:
+    """The base value, or the one exception named on the command line."""
+    if not when:
+        return value
+    try:
+        return variant_for(value, when)
+    except VerificationError as exc:
+        raise SystemExit(str(exc)) from exc
+
+
+def _label(field: str, when: Sequence[str]) -> str:
+    return f"{field} [{'+'.join(sorted(when))}]" if when else field
 
 
 def cmd_status(args: argparse.Namespace) -> int:
@@ -93,7 +119,7 @@ def cmd_status(args: argparse.Namespace) -> int:
         print(line)
     for orphan in trusted.orphans:
         print(
-            f"  ORPHAN {orphan.layer} {orphan.zone} {orphan.field}: {orphan.reason}"
+            f"  ORPHAN {orphan.layer} {orphan.zone} {orphan.label}: {orphan.reason}"
             f" (signed {orphan.reviewed} by {orphan.reviewer})"
         )
     for stale in trusted.stale:
@@ -112,19 +138,25 @@ def cmd_queue(args: argparse.Namespace) -> int:
     )
     shown = 0
     for layer_id, zone, field, value in _walk(trusted.layers):
-        if value.status not in PENDING:
-            continue
         if args.layer and not layer_id.startswith(args.layer):
             continue
         if args.zone and zone != args.zone:
             continue
-        print(
-            f"{value.status.value:8} {layer_id} {zone} {field} = {value.value}"
-            f"  [{value.prov.cite}]"
-        )
-        shown += 1
-        if args.limit and shown >= args.limit:
-            break
+        # Base and exceptions queue separately. A standard whose base is signed
+        # and whose "10 ft. where affordable" is not has one line of work left,
+        # and hiding that behind a verified base is how a half-read rule starts
+        # looking finished.
+        for part in (value, *value.variants):
+            if part.status not in PENDING:
+                continue
+            print(
+                f"{part.status.value:8} {layer_id} {zone} "
+                f"{_label(field, getattr(part, 'when', ()))} = {part.value}"
+                f"  [{part.prov.cite}]"
+            )
+            shown += 1
+            if args.limit and shown >= args.limit:
+                return 0
     if not shown:
         print("nothing pending")
     return 0
@@ -132,20 +164,30 @@ def cmd_queue(args: argparse.Namespace) -> int:
 
 def cmd_show(args: argparse.Namespace) -> int:
     value = _find(load_rules(args.root), args.layer, args.zone, args.field)
+    part = _part(value, args.when)
     store = ProvenanceStore(args.docs)
 
-    print(f"{args.layer} {args.zone} {args.field}")
-    print(f"  value     {value.value}")
-    print(f"  status    {value.status.value}")
-    print(f"  cite      {value.prov.cite}")
-    print(f"  url       {value.prov.url}")
-    print(f"  retrieved {value.prov.retrieved}")
-    print(f"  quote     {value.prov.quote or '(none)'}")
+    print(f"{args.layer} {args.zone} {_label(args.field, args.when)}")
+    print(f"  value     {part.value}")
+    print(f"  status    {part.status.value}")
+    print(f"  cite      {part.prov.cite}")
+    print(f"  url       {part.prov.url}")
+    print(f"  retrieved {part.prov.retrieved}")
+    print(f"  quote     {part.prov.quote or '(none)'}")
     if value.preempts:
         print("  preempts  yes — a more specific layer cannot override this")
+    if not args.when and value.variants:
+        # Reviewing the base without being told the exceptions exist is how a
+        # signature ends up standing for more than the reviewer read.
+        print("  exceptions:")
+        for other in value.variants:
+            print(
+                f"    {other.value} when {'+'.join(sorted(other.when))}"
+                f"  ({other.status.value}) — sign with --when {' '.join(sorted(other.when))}"
+            )
     print()
 
-    text, err = _evidence(store, value)
+    text, err = _evidence(store, part)
     if err:
         print(f"  NO EVIDENCE: {err}")
         print("  Nothing to review against. Fetch the source before signing.")
@@ -163,21 +205,29 @@ def cmd_sign(args: argparse.Namespace) -> int:
 
     active = log.active()
     entries = []
+    when = tuple(sorted(args.when))
     for field in args.fields:
         value = _find(layers, args.layer, args.zone, field)
-        _, err = _evidence(store, value)
+        part = _part(value, when)
+        _, err = _evidence(store, part)
         if err:
             # Nothing is written. A partial batch would leave the reviewer
             # unsure which of the fields they named actually got signed.
-            print(f"refusing {field}: {err}", file=sys.stderr)
+            print(f"refusing {_label(field, when)}: {err}", file=sys.stderr)
             return 1
         # Whether this is already verified is a question for the log, not for
         # the file — the file always loads draft, by design.
-        prior = active.get((args.layer, args.zone, field))
+        prior = active.get((args.layer, args.zone, field, when))
         if prior is not None and prior.fingerprint == sign(
-            args.layer, args.zone, field, value, reviewer=args.reviewer, reviewed=reviewed
+            args.layer,
+            args.zone,
+            field,
+            value,
+            reviewer=args.reviewer,
+            reviewed=reviewed,
+            when=when,
         ).fingerprint:
-            print(f"{field}: already verified by {prior.reviewer}, nothing to sign")
+            print(f"{_label(field, when)}: already verified by {prior.reviewer}, nothing to sign")
             continue
         entries.append(
             sign(
@@ -188,20 +238,26 @@ def cmd_sign(args: argparse.Namespace) -> int:
                 reviewer=args.reviewer,
                 reviewed=reviewed,
                 note=args.note,
+                when=when,
             )
         )
 
     for entry in entries:
         log.append(entry, args.log)
-        print(f"signed {entry.layer} {entry.zone} {entry.field} ({entry.reviewer}, {entry.reviewed})")
+        print(
+            f"signed {entry.layer} {entry.zone} {entry.label}"
+            f" ({entry.reviewer}, {entry.reviewed})"
+        )
     return 0
 
 
 def cmd_revoke(args: argparse.Namespace) -> int:
     log = VerificationLog.load(args.log)
-    existing = log.active().get((args.layer, args.zone, args.field))
+    when = tuple(sorted(args.when))
+    label = _label(args.field, when)
+    existing = log.active().get((args.layer, args.zone, args.field, when))
     if existing is None:
-        print(f"no active verification for {args.layer} {args.zone} {args.field}", file=sys.stderr)
+        print(f"no active verification for {args.layer} {args.zone} {label}", file=sys.stderr)
         return 1
 
     log.append(
@@ -212,13 +268,14 @@ def cmd_revoke(args: argparse.Namespace) -> int:
             fingerprint=existing.fingerprint,
             reviewer=args.reviewer,
             reviewed=date.fromisoformat(args.reviewed) if args.reviewed else date.today(),
+            when=when,
             note=args.note,
             revoked=True,
         ),
         args.log,
     )
     print(
-        f"withdrew {args.layer} {args.zone} {args.field}"
+        f"withdrew {args.layer} {args.zone} {label}"
         f" (was {existing.reviewer}, {existing.reviewed})"
     )
     return 0
@@ -246,6 +303,7 @@ def build_parser() -> argparse.ArgumentParser:
     show.add_argument("layer")
     show.add_argument("zone")
     show.add_argument("field")
+    show.add_argument("--when", nargs="*", default=[], help='condition(s) naming the exception to act on, e.g. --when affordable. Omit for the base value.')
     show.set_defaults(func=cmd_show)
 
     signer = sub.add_parser("sign", help="record that you read these values against the text")
@@ -255,6 +313,7 @@ def build_parser() -> argparse.ArgumentParser:
     signer.add_argument("--reviewer", required=True, help="who read it; no default on purpose")
     signer.add_argument("--reviewed", default="", help="ISO date, defaults to today")
     signer.add_argument("--note", default="", help="e.g. the table the number came from")
+    signer.add_argument("--when", nargs="*", default=[], help='condition(s) naming the exception to act on, e.g. --when affordable. Omit for the base value.')
     signer.set_defaults(func=cmd_sign)
 
     revoke = sub.add_parser("revoke", help="withdraw a verification without erasing it")
@@ -264,6 +323,7 @@ def build_parser() -> argparse.ArgumentParser:
     revoke.add_argument("--reviewer", required=True)
     revoke.add_argument("--reviewed", default="")
     revoke.add_argument("--note", default="", help="why it is being withdrawn")
+    revoke.add_argument("--when", nargs="*", default=[], help='condition(s) naming the exception to act on, e.g. --when affordable. Omit for the base value.')
     revoke.set_defaults(func=cmd_revoke)
     return parser
 

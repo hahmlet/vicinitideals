@@ -26,7 +26,16 @@ from typing import Any
 import yaml
 
 from flats.rules.fields import field
-from flats.rules.model import LAYER_META, ZONE_META, Layer, Provenance, Status, Value, Zone
+from flats.rules.model import (
+    LAYER_META,
+    ZONE_META,
+    Layer,
+    Provenance,
+    Status,
+    Value,
+    Variant,
+    Zone,
+)
 
 CONFIG_ROOT = Path(__file__).resolve().parents[1] / "config" / "jurisdictions"
 
@@ -80,6 +89,7 @@ def _parse_values(
         if isinstance(node, dict) and "value" in node:
             body = dict(node)
             value = body.pop("value")
+            raw_variants = body.pop("variants", None) or ()
             unknown = set(body) - set(_PROV_KEYS) - set(_REVIEW_KEYS)
             if unknown:
                 problems.append(f"{where}.{key}: unknown key(s) {sorted(unknown)}")
@@ -87,6 +97,7 @@ def _parse_values(
             # Shorthand: the scalar is the value, everything else is inherited.
             body = {}
             value = node
+            raw_variants = ()
 
         prov_src: dict[str, Any] = dict(cite_default or {})
         prov_src.update({k: body[k] for k in _PROV_KEYS if k in body})
@@ -112,6 +123,7 @@ def _parse_values(
 
         try:
             prov = Provenance(**{k: prov_src.get(k) for k in _PROV_KEYS})
+            variants = _parse_variants(raw_variants, prov_src, f"{where}.{key}", problems)
             out[key] = Value(
                 name=key,
                 value=value,
@@ -120,10 +132,78 @@ def _parse_values(
                 reviewer=body.get("reviewer"),
                 reviewed=body.get("reviewed"),
                 preempts=bool(body.get("preempts", False)),
+                variants=variants,
             )
         except Exception as exc:  # pydantic ValidationError or ValueError
             problems.append(f"{where}.{key}: {_terse(exc)}")
     return out
+
+
+def _parse_variants(
+    raw: Any,
+    prov_src: dict[str, Any],
+    where: str,
+    problems: list[str],
+) -> tuple[Variant, ...]:
+    """Parse the exceptions attached to one standard.
+
+    A variant inherits the base value's citation, because the usual case is one
+    table cell with a footnote hanging off it. Overriding matters when the
+    exception lives somewhere else entirely — a bonus chapter, a different
+    section — and then the variant carries the citation for where *it* was read,
+    which is what a reviewer will be sent to.
+    """
+    if not raw:
+        return ()
+    if not isinstance(raw, list):
+        problems.append(f"{where}.variants: expected a list")
+        return ()
+
+    out: list[Variant] = []
+    for i, node in enumerate(raw):
+        at = f"{where}.variants[{i}]"
+        if not isinstance(node, dict) or "value" not in node:
+            problems.append(f"{at}: expected a mapping with a 'value'")
+            continue
+        body = dict(node)
+        value = body.pop("value")
+        when = body.pop("when", None)
+        if isinstance(when, str):
+            when = [when]
+        if not isinstance(when, list) or not when:
+            problems.append(f"{at}: 'when' must list the condition(s) this applies under")
+            continue
+        unknown = set(body) - set(_PROV_KEYS) - set(_REVIEW_KEYS)
+        if unknown:
+            problems.append(f"{at}: unknown key(s) {sorted(unknown)}")
+
+        declared = str(body.get("status", "draft"))
+        if declared in (Status.verified.value, Status.stale.value):
+            # Same rule as a base value: trust is a signature, not a keyword.
+            # A variant is if anything easier to wave through, because it looks
+            # like a detail of a value somebody already checked.
+            problems.append(
+                f"{at}: a file may not declare status {declared!r} — "
+                f"verify it with a signature, and leave stale to be derived"
+            )
+            continue
+
+        merged = dict(prov_src)
+        merged.update({k: body[k] for k in _PROV_KEYS if k in body})
+        try:
+            out.append(
+                Variant(
+                    value=value,
+                    when=tuple(str(c) for c in when),
+                    prov=Provenance(**{k: merged.get(k) for k in _PROV_KEYS}),
+                    status=Status(declared),
+                    reviewer=body.get("reviewer"),
+                    reviewed=body.get("reviewed"),
+                )
+            )
+        except Exception as exc:
+            problems.append(f"{at}: {_terse(exc)}")
+    return tuple(out)
 
 
 def _terse(exc: Exception) -> str:

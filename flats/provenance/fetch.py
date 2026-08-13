@@ -33,7 +33,7 @@ from datetime import date
 from pathlib import Path
 from typing import Callable, Sequence
 
-from flats.encode.verify import LOG_PATH, Verification, VerificationLog
+from flats.encode.verify import LOG_PATH, VerKey, Verification, VerificationLog
 from flats.provenance.sources import (
     Authority,
     FetchFailed,
@@ -246,17 +246,25 @@ def fetch_text(
     return slice_between(_to_text((get or _http_get)(url)), start, end, nth=nth)
 
 
-def citing(layers: dict[str, Layer], doc_path: str) -> list[tuple[str, str, str]]:
-    """Every (layer, zone, field) whose quote points into this document."""
-    found: list[tuple[str, str, str]] = []
+def citing(layers: dict[str, Layer], doc_path: str) -> list[VerKey]:
+    """Every verification key whose quote points into this document.
+
+    Variants are listed separately from the value they hang off. An exception
+    commonly cites a different chapter from its base, so amending one document
+    should withdraw the signatures that read *it* and leave the rest standing.
+    """
+    found: list[VerKey] = []
     for layer_id, layer in layers.items():
         blocks = [("defaults", layer.defaults)]
         blocks += [(code, zone.values) for code, zone in layer.zones.items()]
         for zone_name, values in blocks:
             for name, value in values.items():
-                quote = value.prov.quote or ""
-                if quote.split("#", 1)[0] == doc_path:
-                    found.append((layer_id, zone_name, name))
+                for part in (value, *value.variants):
+                    quote = part.prov.quote or ""
+                    if quote.split("#", 1)[0] == doc_path:
+                        found.append(
+                            (layer_id, zone_name, name, tuple(sorted(getattr(part, "when", ()))))
+                        )
     return sorted(found)
 
 
@@ -281,6 +289,7 @@ def withdraw_reviews(
             layer=key[0],
             zone=key[1],
             field=key[2],
+            when=key[3],
             fingerprint=prior.fingerprint,
             reviewer=prior.reviewer,
             reviewed=prior.reviewed,

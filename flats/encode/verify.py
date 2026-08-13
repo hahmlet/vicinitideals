@@ -35,11 +35,15 @@ import json
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
-from typing import Any, Iterable, Iterator, Mapping
+from typing import Any, Iterable, Iterator, Mapping, Sequence
 
-from flats.rules.model import Layer, Status, Value
+from flats.rules.model import Layer, Status, Value, Variant
 
 LOG_PATH = Path(__file__).resolve().parents[1] / "config" / "verifications.jsonl"
+
+#: (layer, zone, field, when). ``when`` is empty for a base value and names
+#: the sorted conditions of a variant — one signature per number, not per field.
+VerKey = tuple[str, str, str, tuple[str, ...]]
 
 
 class VerificationError(Exception):
@@ -47,7 +51,14 @@ class VerificationError(Exception):
 
 
 def fingerprint(
-    layer: str, zone: str, field: str, value: Any, *, cite: str = "", quote: str | None = None
+    layer: str,
+    zone: str,
+    field: str,
+    value: Any,
+    *,
+    cite: str = "",
+    quote: str | None = None,
+    when: Sequence[str] = (),
 ) -> str:
     """Hash of everything a reviewer was looking at when they signed off.
 
@@ -55,6 +66,12 @@ def fingerprint(
     10 to 15 invalidates its verification, and so does re-pointing the quote at
     a different section — because in both cases what was reviewed is no longer
     what is there.
+
+    ``when`` names the variant. The base value and each exception hash apart, so
+    signing "5 ft." cannot silently certify "10 ft. where affordable" — a
+    reviewer reads one sentence at a time and signs for the one they read. The
+    conditions are sorted, because the order somebody typed them in is not part
+    of what was reviewed.
     """
     payload = json.dumps(
         {
@@ -64,6 +81,7 @@ def fingerprint(
             "value": value,
             "cite": cite,
             "quote": quote or "",
+            "when": sorted(when),
         },
         sort_keys=True,
         separators=(",", ":"),
@@ -82,13 +100,20 @@ class Verification:
     fingerprint: str
     reviewer: str
     reviewed: date
+    #: Which variant was read. Empty is the base value.
+    when: tuple[str, ...] = ()
     note: str = ""
     #: A withdrawal. The entry stays in the log so the history survives.
     revoked: bool = False
 
     @property
-    def key(self) -> tuple[str, str, str]:
-        return (self.layer, self.zone, self.field)
+    def key(self) -> VerKey:
+        return (self.layer, self.zone, self.field, tuple(sorted(self.when)))
+
+    @property
+    def label(self) -> str:
+        """How this reads in a queue: the field, or the field under conditions."""
+        return f"{self.field} [{'+'.join(sorted(self.when))}]" if self.when else self.field
 
     def to_json(self) -> str:
         return json.dumps(
@@ -99,6 +124,7 @@ class Verification:
                 "fingerprint": self.fingerprint,
                 "reviewer": self.reviewer,
                 "reviewed": self.reviewed.isoformat(),
+                "when": sorted(self.when),
                 "note": self.note,
                 "revoked": self.revoked,
             },
@@ -115,6 +141,7 @@ class Verification:
                 fingerprint=str(raw["fingerprint"]),
                 reviewer=str(raw["reviewer"]),
                 reviewed=date.fromisoformat(str(raw["reviewed"])),
+                when=tuple(sorted(str(c) for c in raw.get("when", ()))),
                 note=str(raw.get("note", "")),
                 revoked=bool(raw.get("revoked", False)),
             )
@@ -139,14 +166,14 @@ class VerificationLog:
     def __iter__(self) -> Iterator[Verification]:
         return iter(self.entries)
 
-    def current(self) -> dict[tuple[str, str, str], Verification]:
+    def current(self) -> dict[VerKey, Verification]:
         """Latest entry per field, withdrawals included so they can be seen."""
-        out: dict[tuple[str, str, str], Verification] = {}
+        out: dict[VerKey, Verification] = {}
         for e in self.entries:
             out[e.key] = e
         return out
 
-    def active(self) -> dict[tuple[str, str, str], Verification]:
+    def active(self) -> dict[VerKey, Verification]:
         """Latest entry per field, withdrawals removed."""
         return {k: v for k, v in self.current().items() if not v.revoked}
 
@@ -182,6 +209,23 @@ class VerificationLog:
         return cls(entries)
 
 
+def variant_for(value: Value, when: Sequence[str]) -> Variant:
+    """The exception this reviewer means, found by its exact condition set.
+
+    Exact, not most-specific: :meth:`Value.under` answers "what applies to this
+    lot", which is a different question from "which sentence am I signing". A
+    near-miss here would put a signature on a number nobody looked at.
+    """
+    want = frozenset(when)
+    for variant in value.variants:
+        if frozenset(variant.when) == want:
+            return variant
+    known = [" + ".join(sorted(v.when)) for v in value.variants] or ["(none encoded)"]
+    raise VerificationError(
+        f"{value.name}: no variant under {sorted(want)} — encoded variants are {known}"
+    )
+
+
 def sign(
     layer: str,
     zone: str,
@@ -191,17 +235,32 @@ def sign(
     reviewer: str,
     reviewed: date,
     note: str = "",
+    when: Sequence[str] = (),
 ) -> Verification:
-    """Build a verification for a value as it currently stands."""
+    """Build a verification for a value as it currently stands.
+
+    ``when`` signs one of the value's variants rather than its base. They are
+    separate signatures over separate text, so a value whose variants are
+    unsigned is only partly reviewed — which is what the queue should say about
+    it, instead of showing it green.
+    """
+    signed: Value | Variant = variant_for(value, when) if when else value
     return Verification(
         layer=layer,
         zone=zone,
         field=field,
         fingerprint=fingerprint(
-            layer, zone, field, value.value, cite=value.prov.cite, quote=value.prov.quote
+            layer,
+            zone,
+            field,
+            signed.value,
+            cite=signed.prov.cite,
+            quote=signed.prov.quote,
+            when=when,
         ),
         reviewer=reviewer,
         reviewed=reviewed,
+        when=tuple(sorted(when)),
         note=note,
     )
 
@@ -218,6 +277,14 @@ class Orphan:
     #: "value_changed" when the field is still there but different,
     #: "field_gone" when nothing by that name remains.
     reason: str
+    #: The variant this signature was over. Empty is the base value. A base
+    #: that still stands while its exception was rewritten produces exactly one
+    #: orphan, and this is what says which.
+    when: tuple[str, ...] = ()
+
+    @property
+    def label(self) -> str:
+        return f"{self.field} [{'+'.join(self.when)}]" if self.when else self.field
 
 
 VALUE_CHANGED = "value_changed"
@@ -230,6 +297,23 @@ def _promote(value: Value, v: Verification) -> Value:
     )
 
 
+def _promote_variant(variant: Variant, v: Verification) -> Variant:
+    return variant.model_copy(
+        update={"status": Status.verified, "reviewer": v.reviewer, "reviewed": v.reviewed}
+    )
+
+
+def _matches(
+    layer_id: str, zone_name: str, name: str, part: Value | Variant, v: Verification
+) -> bool:
+    """Is this signature still over what is written here?"""
+    when = getattr(part, "when", ())
+    expected = fingerprint(
+        layer_id, zone_name, name, part.value, cite=part.prov.cite, quote=part.prov.quote, when=when
+    )
+    return expected == v.fingerprint
+
+
 def apply_verifications(
     layers: Mapping[str, Layer], log: VerificationLog
 ) -> tuple[dict[str, Layer], list[Orphan]]:
@@ -240,7 +324,7 @@ def apply_verifications(
     to draft on its own, and the orphan is the queue entry that says why.
     """
     active = log.active()
-    used: set[tuple[str, str, str]] = set()
+    used: set[VerKey] = set()
     out: dict[str, Layer] = {}
 
     for layer_id, layer in layers.items():
@@ -250,31 +334,44 @@ def apply_verifications(
             nonlocal changed
             updated: dict[str, Value] = {}
             for name, value in values.items():
-                v = active.get((layer_id, zone_name, name))
-                if v is None:
-                    updated[name] = value
-                    continue
-                expected = fingerprint(
-                    layer_id,
-                    zone_name,
-                    name,
-                    value.value,
-                    cite=value.prov.cite,
-                    quote=value.prov.quote,
-                )
-                if expected != v.fingerprint:
-                    # The signature is over a value that is no longer there.
-                    updated[name] = value
-                    continue
-                # Matched, so the verification is accounted for either way —
-                # a file that already declares `verified` keeps its own
-                # reviewer rather than having the log overwrite it.
-                used.add(v.key)
-                if value.status is Status.verified:
-                    updated[name] = value
-                else:
-                    updated[name] = _promote(value, v)
+                edits: dict[str, object] = {}
+
+                # The exceptions first: each is its own signature over its own
+                # sentence, and a value can perfectly well have a verified base
+                # and a draft variant. That mix is the honest state of most
+                # half-reviewed standards, and it has to survive this pass.
+                variants = []
+                for variant in value.variants:
+                    key = (layer_id, zone_name, name, tuple(sorted(variant.when)))
+                    v = active.get(key)
+                    if v is None or not _matches(layer_id, zone_name, name, variant, v):
+                        variants.append(variant)
+                        continue
+                    used.add(v.key)
+                    variants.append(
+                        variant
+                        if variant.status is Status.verified
+                        else _promote_variant(variant, v)
+                    )
+                if tuple(variants) != value.variants:
+                    edits["variants"] = tuple(variants)
+
+                v = active.get((layer_id, zone_name, name, ()))
+                if v is not None and _matches(layer_id, zone_name, name, value, v):
+                    # Matched, so the verification is accounted for either way —
+                    # a file that already declares `verified` keeps its own
+                    # reviewer rather than having the log overwrite it.
+                    used.add(v.key)
+                    if value.status is not Status.verified:
+                        edits.update(
+                            status=Status.verified, reviewer=v.reviewer, reviewed=v.reviewed
+                        )
+
+                if edits:
+                    updated[name] = value.model_copy(update=edits)
                     changed = True
+                else:
+                    updated[name] = value
             return updated
 
         defaults = promote_block("defaults", dict(layer.defaults))
@@ -292,14 +389,20 @@ def apply_verifications(
     for key, v in active.items():
         if key in used:
             continue
-        layer_id, zone_name, field = key
+        layer_id, zone_name, field, when = key
         layer = layers.get(layer_id)
         present = False
         if layer is not None:
             block = layer.defaults if zone_name == "defaults" else (
                 layer.zones[zone_name].values if zone_name in layer.zones else {}
             )
-            present = field in block
+            value = block.get(field)
+            # A variant whose conditions were rewritten is gone in the sense
+            # that matters: there is no longer any sentence this signature could
+            # be standing over, so it reads the same as a deleted field.
+            present = value is not None and (
+                not when or any(frozenset(x.when) == frozenset(when) for x in value.variants)
+            )
         orphans.append(
             Orphan(
                 layer=layer_id,
@@ -308,7 +411,8 @@ def apply_verifications(
                 reviewer=v.reviewer,
                 reviewed=v.reviewed,
                 reason=VALUE_CHANGED if present else FIELD_GONE,
+                when=when,
             )
         )
-    orphans.sort(key=lambda o: (o.layer, o.zone, o.field))
+    orphans.sort(key=lambda o: (o.layer, o.zone, o.field, o.when))
     return out, orphans

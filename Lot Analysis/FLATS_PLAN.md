@@ -939,3 +939,94 @@ that silently stop tracking their source the first time R-6 is amended.
 This is the next model change, and it is exactly the kind the encoding UI depends on:
 a reviewer must be able to see that VSF's front setback *is* R-6's, not a duplicate
 of it.
+
+
+---
+
+## 16. One standard, more than one number
+
+Half the numbers in a zoning table have a footnote marker on them. *"Front setback:
+10 ft. — 5 ft. where the development is affordable."* *"Minimum lot area: 3,000 sq.
+ft.; 2,500 sq. ft. on a corner lot."* This is not an edge case in the code, it is the
+ordinary shape of the code, and until this pass the rule model could not hold it.
+
+The old behaviour was to refuse the whole value. That is safe in the sense that
+nothing wrong gets encoded, and useless in the sense that the most common shape in
+real zoning becomes unencodable — which is the same as saying the jurisdiction cannot
+be finished.
+
+### The three wrong ways to do it
+
+**Encode the base and drop the footnote.** Every project that takes the incentive is
+screened against a standard that does not apply to it. Silently.
+
+**Encode the footnote and drop the base.** The same error, reversed, for every project
+that does not.
+
+**Encode both as separate fields.** `setback_front_ft` and
+`setback_front_ft_affordable`. Now the screen has to know which to read, that
+knowledge lives in code rather than in the rule file, and the field registry grows a
+combinatorial tail nobody can review.
+
+### What a variant is
+
+One `Value`, one field name, one base number, and a list of exceptions — each with
+the conditions it applies under and its own citation:
+
+```yaml
+setback_front_ft:
+  value: 10
+  variants:
+    - value: 5
+      when: [affordable]
+      cite: "PCC 33.120.205"          # inherited if omitted
+      quote: "pdx/33.120.txt#L12"
+    - value: 4
+      when: [affordable, corner_lot]
+```
+
+Reading it is `value.under(conditions)`, and the rules are:
+
+* a variant applies when **every** condition it names is active;
+* the **most specific** match wins — `affordable + corner_lot` beats `affordable`,
+  because a code that wrote both meant the pair to differ from either alone;
+* two **equally specific** matches are *not* resolved. Picking one would be guessing
+  between two encoded rules on no basis, and the guess would be invisible in the
+  output. The tie is reported, the resolution verdict becomes `ambiguous`, and the
+  lot goes to UNKNOWN.
+
+That last rule is the recall bias applied to our own encoding: not knowing which of
+two numbers governs is a gap in our work, so it lands on our backlog rather than in
+a colour that reads like an answer.
+
+### An exception is signed on its own
+
+A reviewer who confirmed *"10 ft."* has not confirmed *"5 ft. where affordable."*
+Those are different sentences, usually in different chapters. So the fingerprint
+includes the variant's conditions, and the base and each exception hash apart:
+
+* `flats-review sign … setback_front_ft` signs the base;
+* `flats-review sign … setback_front_ft --when affordable` signs that exception;
+* the queue lists them as separate rows, so a standard with a verified base and a
+  draft footnote reads as the half-finished thing it is rather than as done;
+* amending the chapter an exception cites withdraws that signature and leaves the
+  base standing, and vice versa;
+* `Effective.trusted` is false when the exception that applied is unsigned — a
+  verified base cannot certify a number the reviewer never read.
+
+### Levers fall out of it
+
+`Value.levers` is the set of conditions that change *this* standard, and
+`ZoneResolution.levers` the union across a zone. That is exactly what the batch view
+needs: offering every registered condition as a toggle on every selection would bury
+the two or three that actually move a number some lot in the selection is bound by.
+The lever list is derived from the encoding, so it grows as the encoding does and
+never needs maintaining separately.
+
+### What this does not do
+
+It does not handle **zone-to-zone incorporation** — the Fairview shape in §15, where
+one zone adopts another's standards by reference with a conflict clause. That is the
+next model change. A variant is one field with several numbers; incorporation is one
+zone with another zone's fields, and copying numbers across to fake it produces
+values that stop tracking their source the first time the referenced zone is amended.

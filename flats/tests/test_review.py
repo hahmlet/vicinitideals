@@ -261,3 +261,111 @@ def test_status_names_a_broken_rule_file_instead_of_failing(bench: dict, capsys)
 
     assert run(bench, "status") == 1
     assert "unknown rule field" in capsys.readouterr().out
+
+
+# --- exceptions at the desk -------------------------------------------
+
+#: The same zone, with a footnote on the front setback. `--when` is how a
+#: reviewer says which of the two sentences they read.
+WITH_VARIANT = (
+    "label: Portland\n"
+    + CITE
+    + "zones:\n"
+    "  R5:\n"
+    "    setback_front_ft:\n"
+    "      value: 10\n"
+    "      variants:\n"
+    "        - value: 5\n"
+    "          when: [affordable]\n"
+)
+
+
+@pytest.fixture()
+def footnoted(bench: dict) -> dict:
+    bench["rules"].write_text(WITH_VARIANT, encoding="utf-8")
+    return bench
+
+
+def test_show_lists_the_exceptions_hanging_off_a_value(footnoted: dict, capsys) -> None:
+    # Reviewing the base without being told the exception exists is how a
+    # signature ends up standing for more than the reviewer read.
+    assert run(footnoted, "show", PORTLAND, "R5", "setback_front_ft") == 0
+
+    out = capsys.readouterr().out
+    assert "exceptions:" in out
+    assert "--when affordable" in out
+
+
+def test_show_can_be_pointed_at_the_exception(footnoted: dict, capsys) -> None:
+    assert run(footnoted, "show", PORTLAND, "R5", "setback_front_ft", "--when", "affordable") == 0
+
+    out = capsys.readouterr().out
+    assert "setback_front_ft [affordable]" in out
+    assert "value     5" in out
+
+
+def test_signing_the_base_does_not_sign_the_exception(footnoted: dict) -> None:
+    assert run(footnoted, "sign", PORTLAND, "R5", "setback_front_ft", "--reviewer", "sjk") == 0
+
+    entries = list(log(footnoted))
+    assert [e.when for e in entries] == [()]
+
+
+def test_the_exception_signs_on_its_own(footnoted: dict) -> None:
+    assert (
+        run(
+            footnoted, "sign", PORTLAND, "R5", "setback_front_ft",
+            "--reviewer", "sjk", "--when", "affordable",
+        )
+        == 0
+    )
+
+    assert [e.when for e in log(footnoted)] == [("affordable",)]
+
+
+def test_signing_an_exception_nobody_encoded_is_refused(footnoted: dict) -> None:
+    with pytest.raises(SystemExit, match="no variant"):
+        run(
+            footnoted, "sign", PORTLAND, "R5", "setback_front_ft",
+            "--reviewer", "sjk", "--when", "corner_lot",
+        )
+
+
+def test_the_queue_lists_a_signed_base_and_its_unsigned_exception(
+    footnoted: dict, capsys
+) -> None:
+    run(footnoted, "sign", PORTLAND, "R5", "setback_front_ft", "--reviewer", "sjk")
+    capsys.readouterr()
+
+    assert run(footnoted, "queue") == 0
+
+    lines = [ln for ln in capsys.readouterr().out.splitlines() if "setback_front_ft" in ln]
+    assert len(lines) == 1, "the base is done; the footnote is not"
+    assert "[affordable]" in lines[0]
+
+
+def test_revoking_names_the_exception_it_withdraws(footnoted: dict, capsys) -> None:
+    run(
+        footnoted, "sign", PORTLAND, "R5", "setback_front_ft",
+        "--reviewer", "sjk", "--when", "affordable",
+    )
+    capsys.readouterr()
+
+    assert (
+        run(
+            footnoted, "revoke", PORTLAND, "R5", "setback_front_ft",
+            "--reviewer", "sjk", "--when", "affordable",
+        )
+        == 0
+    )
+    assert "setback_front_ft [affordable]" in capsys.readouterr().out
+    assert log(footnoted).active() == {}
+
+
+def test_revoking_the_base_leaves_the_exception_signed(footnoted: dict) -> None:
+    for extra in ([], ["--when", "affordable"]):
+        run(footnoted, "sign", PORTLAND, "R5", "setback_front_ft", "--reviewer", "sjk", *extra)
+
+    run(footnoted, "revoke", PORTLAND, "R5", "setback_front_ft", "--reviewer", "sjk")
+
+    assert [k[3] for k in log(footnoted).active()] == [("affordable",)]

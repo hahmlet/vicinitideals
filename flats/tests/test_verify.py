@@ -202,7 +202,7 @@ def test_a_later_entry_supersedes_an_earlier_one() -> None:
 
     log = VerificationLog([old, new])
 
-    assert log.active()[(LAYER, "R5", "setback_front_ft")].reviewer == "pat"
+    assert log.active()[(LAYER, "R5", "setback_front_ft", ())].reviewer == "pat"
     assert len(log) == 2, "history is kept, not overwritten"
 
 

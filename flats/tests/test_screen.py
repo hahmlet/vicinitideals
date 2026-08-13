@@ -543,3 +543,28 @@ def test_the_backlog_counts_our_work_not_the_lots_problems() -> None:
 
 def test_a_clean_run_has_no_backlog() -> None:
     assert backlog([run(), run()]) == {}
+
+
+# --- an exception nobody resolved -------------------------------------
+
+
+def test_two_exceptions_that_tie_send_the_lot_to_our_backlog() -> None:
+    # Not the developer's queue: nothing they elect or apply for fixes this.
+    # The encoding does not say which of two numbers governs, so we own it.
+    result = run(rules(RuleVerdict.ambiguous), relief=READ)
+
+    assert result.triage is Triage.unknown
+    assert result.reasons == ("RULE_AMBIGUOUS",)
+
+
+def test_an_ambiguous_rule_set_cannot_delete_a_lot() -> None:
+    # Same asymmetry as an unverified standard, and for the same reason: a
+    # false RED silently removes an acquisition target and nobody ever looks
+    # at it again.
+    result = run(rules(RuleVerdict.ambiguous), f=fit(best_depth_ft=20.0), relief=NO_RELIEF)
+
+    assert result.triage is Triage.unknown
+
+
+def test_ambiguity_is_counted_as_encoding_work() -> None:
+    assert backlog([run(rules(RuleVerdict.ambiguous))])["RULE_AMBIGUOUS"] == 1

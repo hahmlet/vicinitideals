@@ -32,9 +32,21 @@ def sign_encoded(
         blocks += [(code, zone.values) for code, zone in layer.zones.items()]
         for zone_name, values in blocks:
             for name, value in values.items():
-                if value.status is Status.encoded:
-                    entries.append(
-                        sign(layer_id, zone_name, name, value, reviewer=reviewer, reviewed=reviewed)
-                    )
+                # Base and exceptions sign separately, so a fixture can mark
+                # one `encoded` and leave the other draft — which is the state
+                # a half-reviewed standard is actually in.
+                for part in (value, *value.variants):
+                    if part.status is Status.encoded:
+                        entries.append(
+                            sign(
+                                layer_id,
+                                zone_name,
+                                name,
+                                value,
+                                reviewer=reviewer,
+                                reviewed=reviewed,
+                                when=getattr(part, "when", ()),
+                            )
+                        )
     promoted, _ = apply_verifications(layers, VerificationLog(entries))
     return promoted

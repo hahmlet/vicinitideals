@@ -31,11 +31,13 @@ override is what keeps it auditable. Both are required.
 from __future__ import annotations
 
 import enum
+from dataclasses import dataclass
 from datetime import date
-from typing import Any
+from typing import Any, Collection
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
+from flats.rules.conditions import condition
 from flats.rules.fields import FieldDef, field
 
 
@@ -92,6 +94,86 @@ class Provenance(BaseModel):
     )
 
 
+class Variant(BaseModel):
+    """The same standard, at a different number, under stated conditions.
+
+    "5 ft., or 10 ft. where the development is affordable" is one rule with two
+    numbers, not two rules. Encoding only the base silently applies the wrong
+    one to every project that took the incentive; encoding only the exception
+    does the same in reverse.
+
+    A variant carries its own citation and is signed on its own, because a
+    reviewer who confirmed the base has not thereby confirmed the exception —
+    they are usually in different sentences and often in different chapters.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    value: Any
+    #: Registered condition names, all of which must hold. An empty tuple is
+    #: rejected: that is the base value, and two bases cannot be told apart.
+    when: tuple[str, ...]
+    prov: Provenance
+    status: Status = Status.draft
+    reviewer: str | None = None
+    reviewed: date | None = None
+
+    @property
+    def trusted(self) -> bool:
+        return self.status.trusted
+
+    @model_validator(mode="after")
+    def _conditions_are_registered(self) -> Variant:
+        # Same refusal as the field registry: an unregistered name is a typo
+        # that would become a second lever nobody can satisfy.
+        for name in self.when:
+            try:
+                condition(name)
+            except KeyError as exc:
+                # Re-raised as a ValueError so pydantic collects it with every
+                # other problem in the file instead of aborting the load on the
+                # first typo. Porting a jurisdiction should surface all of them.
+                raise ValueError(exc.args[0]) from None
+        return self
+
+    @model_validator(mode="after")
+    def _verified_needs_a_reviewer(self) -> Variant:
+        if self.status is Status.verified and not (self.reviewer and self.reviewed):
+            raise ValueError("a verified variant requires both 'reviewer' and 'reviewed'")
+        return self
+
+
+@dataclass(frozen=True, slots=True)
+class Effective:
+    """The number that applies to one lot, and where it came from.
+
+    Separate from :class:`Value` because a value is what the code says and this
+    is what the code says *here* — under this configuration, for this lot.
+    """
+
+    value: Any
+    prov: Provenance
+    status: Status
+    reviewer: str | None = None
+    reviewed: date | None = None
+    #: Conditions that selected this number. Empty means the base applied.
+    when: tuple[str, ...] = ()
+    #: Populated when two variants applied equally well. The number carried is
+    #: the base, but nothing may treat it as an answer.
+    ambiguous: tuple[str, ...] = ()
+
+    @property
+    def trusted(self) -> bool:
+        """Verified, and unambiguous. Ambiguity is not a trust question a
+        signature can settle — both variants may be correctly transcribed and
+        the encoding still not say which one governs."""
+        return self.status.trusted and not self.ambiguous
+
+    @property
+    def conditional(self) -> bool:
+        return bool(self.when)
+
+
 class Value(BaseModel):
     """One encoded standard plus its proof and review state."""
 
@@ -103,6 +185,9 @@ class Value(BaseModel):
     status: Status = Status.draft
     reviewer: str | None = None
     reviewed: date | None = None
+    #: Exceptions to this standard, each under its own conditions. The base
+    #: value applies when none of them do.
+    variants: tuple[Variant, ...] = ()
     #: When True this value wins over anything a more specific layer says.
     #: This is how state preemption works: OAR 660-046-0220 caps required
     #: parking at 1 stall/unit, and a city asking for 2 does not get to
@@ -129,28 +214,109 @@ class Value(BaseModel):
 
     @model_validator(mode="after")
     def _value_matches_kind(self) -> Value:
-        fd = self.definition
-        v = self.value
-        kind = fd.kind
-        if v is None:
-            raise ValueError(f"{self.name}: value may not be null — omit the field instead")
-        if kind == "bool":
-            if not isinstance(v, bool):
-                raise ValueError(f"{self.name}: expected a boolean, got {type(v).__name__}")
-        elif kind == "count":
-            if isinstance(v, bool) or not isinstance(v, int) or v < 0:
-                raise ValueError(f"{self.name}: expected a non-negative integer, got {v!r}")
-        elif kind in ("length_ft", "area_sqft", "ratio", "percent"):
-            if isinstance(v, bool) or not isinstance(v, (int, float)) or v < 0:
-                raise ValueError(f"{self.name}: expected a non-negative number, got {v!r}")
-            if kind == "percent" and v > 100:
-                raise ValueError(f"{self.name}: percent value {v} exceeds 100")
-        elif kind == "curve":
-            _validate_curve(self.name, v)
-        elif kind == "enum":
-            if v not in fd.choices:
-                raise ValueError(f"{self.name}: {v!r} not one of {list(fd.choices)}")
+        check_kind(self.name, self.value)
+        for variant in self.variants:
+            check_kind(self.name, variant.value)
         return self
+
+    @model_validator(mode="after")
+    def _variants_are_distinguishable(self) -> Value:
+        seen: set[frozenset[str]] = set()
+        for variant in self.variants:
+            if not variant.when:
+                # A variant with no conditions is the base value written twice,
+                # and nothing downstream could say which one applies.
+                raise ValueError(
+                    f"{self.name}: a variant must state the condition(s) it applies under"
+                )
+            key = frozenset(variant.when)
+            if key in seen:
+                raise ValueError(
+                    f"{self.name}: two variants apply under the same conditions "
+                    f"{sorted(key)} — one of them is wrong"
+                )
+            seen.add(key)
+        return self
+
+    # -- reading a value under a configuration -------------------------
+
+    @property
+    def levers(self) -> frozenset[str]:
+        """Conditions that change this standard.
+
+        What makes the batch view possible: a lever is worth offering only when
+        flipping it moves a number some lot in the selection is bound by.
+        """
+        return frozenset(c for variant in self.variants for c in variant.when)
+
+    def under(self, active: Collection[str] = ()) -> Effective:
+        """The value that applies when these conditions hold.
+
+        A variant applies when every condition it names is active. The most
+        specific match wins — "affordable and corner" beats "affordable" —
+        because a code that states both meant the pair to be different from
+        either alone.
+
+        Two equally-specific matches are not resolved. Picking one would mean
+        guessing which of two encoded rules the drafters meant, and that guess
+        would be invisible in the output. The ambiguity is reported instead and
+        the screen routes the lot to UNKNOWN, which is what not knowing is.
+        """
+        if not self.variants:
+            return Effective(self.value, self.prov, self.status, self.reviewer, self.reviewed)
+        held = set(active)
+        matches = [v for v in self.variants if set(v.when) <= held]
+        if not matches:
+            return Effective(self.value, self.prov, self.status, self.reviewer, self.reviewed)
+        deepest = max(len(v.when) for v in matches)
+        best = [v for v in matches if len(v.when) == deepest]
+        if len(best) > 1:
+            return Effective(
+                self.value,
+                self.prov,
+                self.status,
+                self.reviewer,
+                self.reviewed,
+                ambiguous=tuple(sorted("+".join(sorted(v.when)) for v in best)),
+            )
+        winner = best[0]
+        return Effective(
+            winner.value,
+            winner.prov,
+            winner.status,
+            winner.reviewer,
+            winner.reviewed,
+            when=tuple(sorted(winner.when)),
+        )
+
+
+def check_kind(name: str, v: Any) -> None:
+    """Whatever this field is declared to hold, is this that?
+
+    Shared by a value and by every variant of it. A variant is a different
+    number under a different condition, not a different kind of thing, so
+    "10 ft. when affordable" is checked exactly as the base 5 ft. was.
+    """
+    fd = field(name)
+    kind = fd.kind
+    if v is None:
+        raise ValueError(f"{name}: value may not be null — omit the field instead")
+    if kind == "bool":
+        if not isinstance(v, bool):
+            raise ValueError(f"{name}: expected a boolean, got {type(v).__name__}")
+    elif kind == "count":
+        if isinstance(v, bool) or not isinstance(v, int) or v < 0:
+            raise ValueError(f"{name}: expected a non-negative integer, got {v!r}")
+    elif kind in ("length_ft", "area_sqft", "ratio", "percent"):
+        if isinstance(v, bool) or not isinstance(v, (int, float)) or v < 0:
+            raise ValueError(f"{name}: expected a non-negative number, got {v!r}")
+        if kind == "percent" and v > 100:
+            raise ValueError(f"{name}: percent value {v} exceeds 100")
+    elif kind == "curve":
+        _validate_curve(name, v)
+    elif kind == "enum":
+        if v not in fd.choices:
+            raise ValueError(f"{name}: {v!r} not one of {list(fd.choices)}")
 
 
 def _validate_curve(name: str, v: Any) -> None:
