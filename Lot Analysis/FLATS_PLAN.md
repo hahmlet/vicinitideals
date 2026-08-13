@@ -1298,3 +1298,62 @@ Fairview Creek's centerline, which is a variant pair and not a number.
 That split is the honest picture of where the corpus is. Roughly a fifth of the
 unquoted backlog was mechanical and is done; the rest is either a document nobody
 has declared yet (§18) or a rule that needs a person.
+
+---
+
+## 21. Sixteen cities, one search
+
+The ladder's loudest finding was not that the corpus is under-reviewed. It is that
+**sixteen of nineteen jurisdictions have zones encoded and no `code:` block** — no
+document declared, so nothing to fetch, so nothing to quote, so nothing that can
+ever be signed. Reviewing harder does not move any of it.
+
+Hunting those URLs by hand is the same search sixteen times, because Oregon cities
+publish through a short list of codifiers whose URL shape follows from the city's
+name. `flats.provenance.discover` runs it:
+
+```
+python -m flats.provenance.discover --all
+```
+
+**A hit is a lead, not a source.** What comes back is a code *index* — the front
+door — and a `code:` entry needs the chapter carrying the zoning standards. Naming
+the platform and proving it answers is the part that cost an afternoon per city;
+picking the chapter still means reading a table of contents, and the tool says so
+rather than guessing a chapter number into a rule file.
+
+### Four verdicts, because they are four different next actions
+
+| verdict | means | what to do |
+|---|---|---|
+| `index` | answered, and reads like a code index | follow it: pick the zoning chapter |
+| `shell` | answered with a JavaScript frame | the code is there and a plain fetch will never see it |
+| `missing` | 404 — the name guess was wrong, or the city is on another platform | try the next platform |
+| `blocked` | every impersonation strategy refused | a fetching problem, not a coverage one |
+
+The `missing`/`blocked` split is §15's finding turned into a report. A 404 says the
+URL is wrong; a 403 says the fetcher is. They are opposite problems that look
+identical in a log, and collapsing them sends somebody hunting for an
+impersonation fix for a city that simply uses a different codifier. `fetch` now
+carries what each strategy got, so the caller can tell.
+
+`shell` earns its own verdict for the same reason. Municode's empty frame carries
+"Municode Library" in its `<title>`, so a classifier that asks "does this mention
+chapters?" *before* asking "is this a JavaScript shell?" calls the frame a code
+index — a lead that is not there, which costs more than no lead.
+
+### What the sweep found
+
+**15 of 15 have a lead. Five are directly fetchable; ten are Municode.**
+
+```
+index   codepublishing   Gladstone, Lake Oswego, West Linn, Wood Village
+index   qcode            Milwaukie
+shell   municode         Gresham, Troutdale, Wilsonville, Happy Valley, Oregon City,
+                         Tualatin, Rivergrove, Johnson City, and both unincorporated areas
+```
+
+That quantifies the platform gap §15 left open: **Municode is not one city's problem,
+it is two thirds of the remaining corpus.** A rendered fetch or that platform's API
+is now the single highest-leverage piece of coverage work in the project — worth
+more than any individual city's encoding.

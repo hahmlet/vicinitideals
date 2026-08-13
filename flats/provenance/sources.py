@@ -149,7 +149,21 @@ class Fetched:
 
 
 class FetchFailed(RuntimeError):
-    """Every strategy was tried and none returned the document."""
+    """Every strategy was tried and none returned the document.
+
+    ``attempts`` carries what each one got — an HTTP status, or the name of the
+    exception that ended it. A caller deciding what to do next needs that: a
+    404 means the URL is wrong, a 403 means the fetcher is, and they are
+    opposite problems that look identical in a log line.
+    """
+
+    def __init__(self, message: str, attempts: Sequence[tuple[str, int | str]] = ()) -> None:
+        super().__init__(message)
+        self.attempts: tuple[tuple[str, int | str], ...] = tuple(attempts)
+
+    @property
+    def statuses(self) -> tuple[int, ...]:
+        return tuple(code for _, code in self.attempts if isinstance(code, int))
 
 
 def _plain(url: str) -> tuple[bytes, int]:
@@ -177,6 +191,7 @@ def fetch(url: str, *, strategies: Sequence[str] = STRATEGIES) -> Fetched:
     and that would look like a coverage gap rather than a fetching bug.
     """
     problems: list[str] = []
+    attempts: list[tuple[str, int | str]] = []
     for target in strategies:
         try:
             content, status = (
@@ -184,11 +199,13 @@ def fetch(url: str, *, strategies: Sequence[str] = STRATEGIES) -> Fetched:
             )
         except Exception as exc:  # noqa: BLE001 — any transport failure is one more strategy down
             problems.append(f"{target}: {type(exc).__name__}")
+            attempts.append((target, type(exc).__name__))
             continue
         if status == 200 and content:
             return Fetched(content, target, status, authority_for(url))
         problems.append(f"{target}: HTTP {status}")
-    raise FetchFailed(f"{url} — every strategy refused ({'; '.join(problems)})")
+        attempts.append((target, status))
+    raise FetchFailed(f"{url} — every strategy refused ({'; '.join(problems)})", attempts)
 
 
 __all__ = [
