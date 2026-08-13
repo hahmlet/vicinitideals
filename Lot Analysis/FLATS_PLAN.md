@@ -1432,3 +1432,34 @@ Which turns the platform gap from "two thirds of the corpus is unreachable" into
 four `code:` blocks and a fetch — and makes every *other* Oregon Municode city
 reachable the same way, which matters more than the four, because statewide
 coverage is the standing goal.
+### First city through the whole chain
+
+Wilsonville, end to end: discovered → declared → fetched → on the ladder.
+
+```yaml
+code:
+  - id: "4.planning"
+    url: https://api.municode.com/PublicationPdfDownload/1951
+    start: "PLANNING AND LAND DEVELOPMENT"     # Chapter 4, sliced out of a 3.5M-character code
+    end: "Chapter 5"
+```
+
+22,352 lines stored; the jurisdiction moved `no_source` → `unquoted`. The slice is
+deliberately generous — the whole land-use chapter rather than the zoning sections
+alone — because over-slicing drops a standard the screen then never applies, and a
+lot passing a test it was never given is the failure this project exists to avoid.
+A document stored unsliced now says so, since a whole code costs megabytes and puts
+a reviewer a thousand pages from the setback they are checking.
+
+**And attaching found nothing.** That is the finding, not a failure: Wilsonville
+states its standards in *prose under a per-zone section heading* — "Section 4.122.
+Residential Zone", then paragraphs — where Portland states them in a table with a
+column per zone. Corroboration only counts zone-keyed readings (§12), and a
+paragraph is only zone-keyed by the heading above it, which nothing currently
+tracks.
+
+That is the next structural piece, and it is not one city's problem: Fairview's
+19.115 has the same shape, and so does most of the state. **Section scope** —
+binding every clause to the zone whose section encloses it — is what makes
+prose-organised codes readable at all, and it is worth more than any individual
+city's encoding.

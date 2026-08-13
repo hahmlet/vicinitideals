@@ -391,6 +391,10 @@ def fetch_one(
         # line numbers that point at an index entry.
         print(f"warning: {path} sliced to {lines} line(s) — check --start/--nth", file=sys.stderr)
 
+    bulky = _bulky(text, start, end)
+    if bulky:
+        print(f"note: {path} — {bulky}", file=sys.stderr)
+
     if not store.exists(path):
         if check:
             print(f"MISSING {path} — declared but never fetched", file=sys.stderr)
@@ -426,6 +430,24 @@ def fetch_one(
     if withdrawn:
         print(f"  {len(withdrawn)} value(s) need re-reading against the new text")
     return 0
+
+
+#: Above this, a stored document is almost certainly a whole code rather than a
+#: chapter. Not refused — a whole code is a real document and slicing it wrong
+#: is worse than storing it — but said out loud, because the alternative is a
+#: repository that quietly grows by several megabytes per jurisdiction and a
+#: reviewer scrolling a thousand pages to check one setback.
+BULKY_CHARS = 400_000
+
+
+def _bulky(text: str, start: str, end: str) -> str:
+    if len(text) < BULKY_CHARS or (start or end):
+        return ""
+    return (
+        f"stored {len(text) // 1000:,}k characters unsliced — this looks like a whole "
+        "code. `start:`/`end:` in the `code:` entry narrows it to the chapter, which "
+        "keeps quotes readable and the store small."
+    )
 
 
 def declared(layers: dict[str, Layer], only: str = "") -> list[tuple[Layer, str, CodeDocument]]:

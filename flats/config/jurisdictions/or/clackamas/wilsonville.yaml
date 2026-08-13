@@ -12,6 +12,16 @@ ingest:
   zoning_layer: zoning_wilsonville
   zone_field: ZONE_CODE
   strip_lowercase_suffix: false
+code:
+  # Municode client 4976, publication 1951. The library page is a JavaScript
+  # frame; PublicationPdfDownload returns the adopted code as one PDF, and the
+  # unsigned endpoint is declared because the blob URL it resolves to carries a
+  # signature that expires in minutes.
+  - id: "4.planning"
+    url: https://api.municode.com/PublicationPdfDownload/1951
+    title: "Chapter 4 — Planning and Land Development"
+    start: "PLANNING AND LAND DEVELOPMENT"
+    end: "Chapter 5"
 zones:
   R:
     cite_default:
