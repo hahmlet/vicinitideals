@@ -12,8 +12,14 @@ ingest:
   zoning_layer: zoning_happy_valley
   zone_field: ZONE
   strip_lowercase_suffix: false
+code:
+- id: 16.22.residential
+  url: https://ecode360.com/print/HA4934?guid=43529907
+  title: HV LDC Chapter 16.22 - Residential Land Use Districts
 zones:
   R40:
+    section:
+    - '16.22.020'
     cite_default:
       cite: HV LDC 16.22.020 Table 16.22.020-2 (Very Low Density)
       url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
@@ -30,6 +36,8 @@ zones:
       front to 15 ft. Quadplex by-right per HV Middle Housing amendments. min_lot is the nominal density
       basis (verify Table 16.22.020-2).'
   R20:
+    section:
+    - '16.22.020'
     cite_default:
       cite: HV LDC 16.22.020 Table 16.22.020-2
       url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
@@ -44,6 +52,8 @@ zones:
     notes: 'quadfit confidence: verified | Height 45 ft front / 49 ft side+rear. Porch >=20% bldg line
       -> front 15 ft. min_lot nominal.'
   R15:
+    section:
+    - '16.22.020'
     cite_default:
       cite: HV LDC 16.22.020 Table 16.22.020-2
       url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
@@ -58,6 +68,8 @@ zones:
     notes: 'quadfit confidence: verified | Height 45/49 ft. Porch >=20% bldg line -> front 15 ft. min_lot
       nominal.'
   R10:
+    section:
+    - '16.22.030'
     cite_default:
       cite: HV LDC 16.22.030 Table 16.22.030-2 (Low Density)
       url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
@@ -72,6 +84,8 @@ zones:
     notes: 'quadfit confidence: verified | Height 45/49 ft. Porch >=20% bldg line -> front 15 ft. min_lot
       nominal.'
   R8.5:
+    section:
+    - '16.22.030'
     cite_default:
       cite: HV LDC 16.22.030 Table 16.22.030-2
       url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
@@ -86,6 +100,8 @@ zones:
     notes: 'quadfit confidence: verified | Layer value is ''R8.5'' (code text ''R-8.5''). Height 45/49
       ft. Porch >=20% -> front 15 ft. min_lot nominal.'
   R7:
+    section:
+    - '16.22.030'
     cite_default:
       cite: HV LDC 16.22.030 Table 16.22.030-2
       url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
@@ -100,6 +116,8 @@ zones:
     notes: 'quadfit confidence: verified | Height 45/49 ft. Porch >=20% -> front 15 ft. Coverage never
       binds a ~1,000 sf/unit fourplex footprint. min_lot nominal.'
   R5:
+    section:
+    - '16.22.040'
     cite_default:
       cite: HV LDC 16.22.040 Table 16.22.040-2 (Medium Density)
       url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
@@ -109,11 +127,16 @@ zones:
     setback_side_ft: 5
     setback_rear_ft: 20
     setback_street_side_ft: 8
-    min_lot_sqft: 5000
-    max_coverage_pct: 50
+    min_lot_sqft: 7000
+    max_coverage_pct: 60
     notes: 'quadfit confidence: verified | Front 20 ft street-access / 10 ft alley-access. Height 45/49
-      ft. Densest std SF zone. min_lot nominal.'
+      ft. Densest std SF zone. CORRECTED 2026-08-13 against Table 16.22.040-2: quadfit encoded the
+      single-family tiers (5,000 sf lot / 50% coverage); the table splits by housing type and the
+      quadplex tier is 7,000 sf min lot (note 8) and 60% coverage (Duplex, triplex, quadplex, townhome
+      row). Townhome path is 1,500 sf/lot if platted as four lots.'
   MURS:
+    section:
+    - '16.22.040'
     cite_default:
       cite: HV LDC 16.22.040 (MUR-S, Mixed Use Residential-Single-Family); allows detached SFD
       url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
@@ -127,6 +150,8 @@ zones:
       Model Home form (verified); max_coverage not shown in form (verify Table 16.22.040-2). Front 20
       street/10 alley. In HV middle-housing zone list.'
   R20CC:
+    section:
+    - '16.22.020'
     cite_default:
       cite: Assumed R-20 variant (unexplained 'CC' suffix in layer)
       url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf

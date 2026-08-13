@@ -903,3 +903,203 @@ def test_zone_spelling_matches_across_space_and_hyphen() -> None:
     assert stacked_candidates_for(grids, "LR 7.5")
     assert stacked_candidates_for(grids, "lr12")
     assert stacked_candidates_for(grids, "R-5") == []
+
+
+# Happy Valley's Table 16.22.020-2 family: labels wear glued footnote refs,
+# setback rows drop the word "yard" under a "Building setbacks (minimum)6"
+# heading, a typed sub-row sits under a heading whose own row-read fails,
+# and one column prints "Variable4" where a number would be.
+HAPPY_VALLEY_GRID = """
+Standard
+
+R-40
+
+R-20
+
+Lot size (minimum): Townhome1
+
+1,500 sq. ft.
+
+1,500 sq. ft.
+
+Lot width (minimum)2,6
+
+100 feet
+
+80 feet
+
+Lot coverage (maximum)3
+
+Duplex, triplex, quadplex, townhome
+
+20%
+
+Variable4
+
+Building setbacks (minimum)6
+
+Front
+
+22 feet
+
+22 feet
+
+Interior side
+
+15/04 feet
+
+10/04 feet
+
+Garage and carport entrances
+
+22 feet
+
+22 feet
+
+Street side (corner lot)
+
+15 feet
+
+15 feet
+"""
+
+
+def _r40(field: str):
+    return [c for c in _grid(HAPPY_VALLEY_GRID)["R-40"] if c.field == field]
+
+
+def test_a_label_wearing_glued_refs_still_reads_and_stays_conditional() -> None:
+    # "Lot width (minimum)2,6" is a label with two superscripts fused on.
+    # Refusing it for the digits loses the row; reading it clean loses the
+    # footnotes. It reads, and the refs ride along as conditions.
+    width = _r40("min_lot_width_ft")
+
+    assert [c.value for c in width] == [100]
+    assert "footnote 2 (text not captured)" in width[0].notes
+
+
+def test_a_heading_ref_conditions_every_row_it_scopes() -> None:
+    # The 6 on "Building setbacks (minimum)6" belongs to all the setback
+    # rows under it, none of which repeat it.
+    front = _r40("setback_front_ft")
+
+    assert [c.value for c in front] == [22]
+    assert "footnote 6 (text not captured)" in front[0].notes
+
+
+def test_a_bare_direction_reads_under_a_setbacks_heading() -> None:
+    # "Front" with no "yard" — the heading names the standard, the row only
+    # the direction.
+    assert [c.value for c in _r40("setback_front_ft")] == [22]
+
+
+def test_an_unmatched_row_does_not_end_the_setbacks_block() -> None:
+    # "Garage and carport entrances" over "22 feet" is a row this reader has
+    # no field for — not a new block heading. The street-side row after it
+    # must still know it is a setback.
+    street = _r40("setback_street_side_ft")
+
+    assert [c.value for c in street] == [15]
+    assert not any("corner" in n for n in street[0].notes)
+
+
+def test_a_slashed_cell_refuses_the_whole_row() -> None:
+    # "15/04 feet" is a two-tier standard with a glued footnote; no single
+    # number is honest, so the interior-side row produces nothing.
+    assert _r40("setback_side_ft") == []
+
+
+def test_a_typed_sub_row_under_a_failed_heading_reads_with_its_types() -> None:
+    # "Lot coverage (maximum)3" has no values of its own; the typed rows
+    # under it do. The heading's field and ref scope the sub-row.
+    coverage = _r40("max_coverage_pct")
+
+    assert [c.value for c in coverage] == [20]
+    assert "quadplex" in coverage[0].housing_type.split("+")
+    assert "footnote 3 (text not captured)" in coverage[0].notes
+
+
+def test_a_variable_cell_yields_no_candidate() -> None:
+    # The R-20 coverage cell says "Variable4": the standard exists and is
+    # not a number. Like a dash, that zone gets nothing — not a neighbour's
+    # value shifted into place.
+    r20 = [c for c in _grid(HAPPY_VALLEY_GRID)["R-20"] if c.field == "max_coverage_pct"]
+
+    assert r20 == []
+
+
+def test_a_run_of_bare_letters_is_not_a_header() -> None:
+    # Lettered list fragments match the zone pattern; a real district run
+    # carries a digit somewhere.
+    text = """
+C
+
+D
+
+Front setback
+
+10 ft
+
+12 ft
+"""
+    assert _grid(text) == {}
+
+
+def test_sf_counts_as_square_feet() -> None:
+    # Happy Valley's 040-2 prints "5,000 sf".
+    assert measure("5,000 sf") == (5000.0, "area_sqft")
+
+
+def test_a_context_paren_conditions_the_row_it_qualifies() -> None:
+    # "Front (street access garage)" and "Front (alley access garage)" are
+    # both real front setbacks, conditioned on which way the garage faces.
+    # Both read, and neither reads clean.
+    text = """
+Standard
+
+R-5
+
+MUR-S
+
+Building setbacks (minimum)8
+
+Front (street access garage)
+
+20 feet
+
+20 feet
+
+Front (alley access garage)
+
+10 feet
+
+10 feet
+"""
+    fronts = [c for c in _grid(text)["R-5"] if c.field == "setback_front_ft"]
+
+    assert sorted(c.value for c in fronts) == [10, 20]
+    assert all(any("(row context)" in n for n in c.notes) for c in fronts)
+
+
+def test_a_bare_direction_pair_is_not_zone_evidence() -> None:
+    # Lake Oswego's WLG R-2.5 structure-type table pairs "Front" with
+    # "10 ft." under a setbacks heading. A pair has no column geometry to
+    # pin a zone, so bare directions stay stacked-grid-only; the yard forms
+    # keep working.
+    from flats.encode.tables import read_pairs
+
+    text = """
+Minimum Setbacks
+
+Front
+
+10 ft
+
+Front yard
+
+15 ft
+"""
+    fields = [(c.field, c.value) for c in read_pairs(text, path="doc.txt")]
+
+    assert ("setback_front_ft", 10) not in fields
+    assert ("setback_front_ft", 15) in fields

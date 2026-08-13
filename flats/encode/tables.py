@@ -52,7 +52,7 @@ _MEASURE = re.compile(
     r"^(?P<n>\d{1,3}(?:,\d{3})+|\d+(?:\.\d+)?)\s*"
     # A trailing \b would reject "45%", because there is no word character
     # after the sign — and a percentage sign is how a coverage table writes it.
-    r"(?P<unit>sq\.?\s*ft\.?|square feet|ft\.?|feet|foot|percent|%)(?![A-Za-z0-9])",
+    r"(?P<unit>sq\.?\s*ft\.?|square feet|s\.?f\.?|ft\.?|feet|foot|percent|%)(?![A-Za-z0-9])",
     re.I,
 )
 #: Footnote markers travel with the value. They are not part of the number and
@@ -619,7 +619,7 @@ def _read_span(lines: Sequence[str], first: int, last: int, start_line: int) -> 
 #: Anchored on the unit so a decimal never donates its fraction: "7.5 ft"
 #: has no digits after the unit, and "35 ft.12" cannot be 35.12 because the
 #: number a unit follows is already complete.
-_GLUED_NOTE = re.compile(r"^(?P<body>.*?(?:sq\.?\s*ft\.?|ft\.|feet|%))\s?(?P<n>\d{1,2})$")
+_GLUED_NOTE = re.compile(r"^(?P<body>.*?(?:sq\.?\s*ft\.?|sf|ft\.|feet|%))\s?(?P<n>\d{1,2})$")
 
 
 def _unglue(cell: str) -> tuple[str, tuple[int, ...]]:
@@ -653,7 +653,7 @@ def measure(raw: str) -> tuple[float, str] | None:
     if not m:
         return None
     unit = m.group("unit").lower().replace(" ", "").replace(".", "")
-    if unit in ("sqft", "squarefeet"):
+    if unit in ("sqft", "squarefeet", "sf"):
         kind = "sqft"
     elif unit in ("percent", "%"):
         kind = "pct"
@@ -671,6 +671,19 @@ _GROUPED_SUBJECTS = {
     "interior side yard": "setback_side_ft",
     "street side yard": "setback_street_side_ft",
     "rear yard": "setback_rear_ft",
+}
+#: Happy Valley's stacked grid drops the word "yard": "Front", "Interior
+#: side", "Street side (corner lot)". Bare directions are trusted only where
+#: column geometry pins the zone — the stacked reader. A bare "Front" /
+#: "10 ft." pair has no such anchor: Lake Oswego's WLG R-2.5 structure-type
+#: table pairs exactly that way, and reading it as zone evidence lands one
+#: sub-zone's setbacks on every zone that declares the section.
+_BARE_GROUPED = {
+    "front": "setback_front_ft",
+    "side": "setback_side_ft",
+    "interior side": "setback_side_ft",
+    "street side": "setback_street_side_ft",
+    "rear": "setback_rear_ft",
 }
 #: The unit when it is printed in the label — "Minimum lot width (ft.)" over
 #: cells that are bare digits — rather than beside each number.
@@ -718,7 +731,10 @@ _GROUP_WORDS = 12
 #: standard gets applied to the exact type it excludes.
 _HOUSING_TYPES: tuple[tuple[re.Pattern[str], str], ...] = (
     (re.compile(r"\btown\s?(?:house|home)s?\b|\brow\s?houses?\b", re.I), "townhouse"),
-    (re.compile(r"\ball other uses?\b|\ball others?\b|\bother uses\b", re.I), "default"),
+    # "Uses" is required on purpose: Happy Valley's frontage rows sub-label
+    # by lot context ("All other lots"), and a bare "all others" pattern
+    # would read a cul-de-sac tier as the pod's default row.
+    (re.compile(r"\ball other uses?\b|\bother uses\b", re.I), "default"),
     (re.compile(r"\ball (?:residential )?uses\b", re.I), "all"),
     (re.compile(r"\bsingle[ -](?:family[ -])?detached\b", re.I), "single_detached"),
     (re.compile(r"\bduplex(?:es)?\b", re.I), "duplex"),
@@ -880,22 +896,58 @@ _LABEL_DASH = re.compile(r"^[—–-]\s+")
 #: is a corner *variant* of the base standard above it, and reading one as
 #: the base is how 5 ft becomes 10.
 _CORNER_BLOCK = re.compile(r"\bcorner\b", re.I)
+#: Footnote refs glued straight onto a row label — "Lot width (minimum)2,6",
+#: "… cottage cluster1,6". Superscripts lose their baseline in a stacked grid
+#: the same way they do in cells; left in place they make every such label
+#: fail the no-digit rule and the whole row goes unread. Anchored after a
+#: letter or a closing paren so a number that is part of a name ("R-2.5")
+#: never sheds its digits.
+_LABEL_REFS = re.compile(r"(?:(?<=[a-z])|(?<=\)))(?P<refs>\d{1,2}(?:,\d{1,2})*)$")
+#: Parenthesised context on a grouped row label — "Street side (corner lot)".
+_PAREN_CTX = re.compile(r"\([^)]*\)")
+#: A cell stating the standard is set case-by-case rather than as a number —
+#: Happy Valley prints "Variable4" down the whole MUR-S column.
+_VARIABLE = re.compile(r"^variable$", re.I)
 
 
 def _grid_value(line: str, label: str) -> tuple[float, str, tuple[str, ...]] | None:
     """One stacked-grid cell as (number, kind, notes), or None.
 
-    Whole-line like a pair's value, after setting aside paren footnotes —
-    which are kept: "10 ft(1)" is a base case with an exit, and the marker is
-    what says so.
+    Whole-line like a pair's value, after setting aside paren and glued
+    footnotes — which are kept: "10 ft(1)" and "45 feet5" are base cases
+    with an exit, and the marker is what says so.
     """
     marks = tuple(f"footnote ({m.group('n')})" for m in _PAREN_NOTE.finditer(line))
     cell = _PAREN_NOTE.sub("", line).strip()
+    cell, glued = _unglue(cell)
+    marks += tuple(f"footnote {n} (text not captured)" for n in glued)
     parsed = _measure_line(cell) or _measure_bare(cell, label, "")
     if parsed is None:
         return None
     number, kind = parsed
     return number, kind, marks
+
+
+def _grid_vocab(line: str) -> bool:
+    """Whether a repeated line is grid vocabulary rather than page decoration.
+
+    The sibling tables of a district family print the same row labels and
+    block headings — Happy Valley's 020-2, 030-2 and 040-2 all say "Front"
+    and "Lot depth (minimum)" — and frequency alone would junk them. Dropping
+    a label deletes a row boundary, which merges neighbouring value runs and
+    the overrun refusal then silently eats both rows. Anything the grid could
+    consume as a label or heading is exempt from the junk set.
+    """
+    label = _LABEL_DASH.sub("", _PAREN_NOTE.sub("", line)).strip()
+    refs = _LABEL_REFS.search(label)
+    if refs:
+        label = label[: refs.start()].strip()
+    if _subject(label) is not None:
+        return True
+    bare = " ".join(_PAREN_CTX.sub("", label).split()).strip(" .:").lower()
+    if bare in _GROUPED_SUBJECTS:
+        return True
+    return not any(ch.isdigit() for ch in label) and 0 < len(label.split()) <= 4
 
 
 def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
@@ -926,18 +978,21 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
     geometry is not what this reader assumes, and nothing positional survives
     that.
 
-    Labels must name their standard outright ("– Front setback"). Grouped
-    and nested labels — Lake Oswego's "Front (ft.)" under "Primary
-    Structure" under "YARD SETBACKS", printed again under "Accessory
-    Structure" — are deliberately unread: position inside a nested block is
-    a context this reader does not track, and an accessory-structure setback
-    wearing the zone's citation is the expensive kind of wrong.
+    Labels must name their standard, either outright ("– Front setback") or
+    through the one block heading above them that does — "Front" under
+    "Building setbacks (minimum)" reads, because the heading names the
+    standard and the row the direction. Nested blocks — Lake Oswego's
+    "Front (ft.)" under "Primary Structure" under "YARD SETBACKS", printed
+    again under "Accessory Structure" — still produce nothing: the nearest
+    heading there names a structure, not a standard, and an
+    accessory-structure setback wearing the zone's citation is the
+    expensive kind of wrong.
     """
     lines = text.splitlines()
     junk = {
         j
         for j in _furniture([line.strip() for line in lines])
-        if _measure_line(j) is None and _subject(j) is None and not _ZONE.match(j)
+        if _measure_line(j) is None and not _ZONE.match(j) and not _grid_vocab(j)
     }
     live = [
         (n, line.strip())
@@ -949,6 +1004,8 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
     zones: tuple[str, ...] = ()
     section = ""
     block = ""
+    block_refs: tuple[str, ...] = ()
+    block_field = ""
     i = 0
     while i < len(live):
         n, stripped = live[i]
@@ -957,38 +1014,93 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
             section = found.group("sec")
             zones = ()
             block = ""
+            block_refs = ()
+            block_field = ""
             i += 1
             continue
         run = []
         while i + len(run) < len(live) and _ZONE.match(live[i + len(run)][1]):
             run.append(live[i + len(run)][1])
-        if len(run) >= 2:
+        if len(run) >= 2 and any(ch.isdigit() for z in run for ch in z):
+            # A run of bare letters is not a header: lettered subsection
+            # fragments match _ZONE too, and a real district run carries a
+            # digit somewhere (R-40, LR7.5, MUR-S beside R-5).
             zones = tuple(run)
             block = ""
+            block_refs = ()
+            block_field = ""
             i += len(run)
             continue
         label = _LABEL_DASH.sub("", _PAREN_NOTE.sub("", stripped)).strip()
+        refs: tuple[str, ...] = ()
+        glued = _LABEL_REFS.search(label)
+        if glued:
+            refs = tuple(glued.group("refs").split(","))
+            label = label[: glued.start()].strip()
         name = _subject(label)
+        ctx_notes: tuple[str, ...] = ()
+        if name is None and "setback" in block.lower():
+            # "Front" under "Building setbacks (minimum)" — the heading names
+            # the standard and the row the direction. Parenthesised context —
+            # "Front (street access garage)" — is dropped for the lookup and
+            # kept as a note: the 10 ft alley variant beside the 20 ft street
+            # variant is a conditional pair, not two clean readings. "(corner
+            # lot)" on the street side is the one context that conditions
+            # nothing: that standard only exists on a corner.
+            bare = " ".join(_PAREN_CTX.sub("", label).split()).strip(" .:").lower()
+            name = _GROUPED_SUBJECTS.get(bare) or _BARE_GROUPED.get(bare)
+            if name is not None:
+                ctx_notes = tuple(
+                    f"{m} (row context)"
+                    for m in _PAREN_CTX.findall(label)
+                    if not (
+                        name == "setback_street_side_ft" and _CORNER_BLOCK.search(m)
+                    )
+                )
+        if name is None and block_field and len(label.split()) <= _GROUP_WORDS:
+            if _housing_type(label):
+                # "Duplex, triplex, quadplex, townhome" under a heading whose
+                # own row-read failed ("Lot coverage (maximum)") — the heading
+                # names the standard and the row names who. Gresham's
+                # row-level housing pattern in stacked geometry.
+                name = block_field
+        next_is_cell = i + 1 < len(live) and (
+            bool(_DASH.match(live[i + 1][1]))
+            or _grid_value(live[i + 1][1], label) is not None
+        )
         if (
             zones
             and name is None
+            and not next_is_cell
             and not any(ch.isdigit() for ch in label)
             and len(label.split()) <= 4
+            and _housing_type(label) is None
+            and not _VARIABLE.match(label)
+            and not _NOT_A_NUMBER.match(label)
             and not _PAREN_LINE.match(stripped)
             and _measure_line(stripped) is None
         ):
             # "Minimum Setbacks", "Corner Lots" — a heading scoping the rows
-            # under it, until the next heading or header.
+            # under it, until the next heading or header. A heading is never
+            # followed by a value line — "Garage and carport entrances" over
+            # "22 feet" is an unmatched row, not a new block, and must not
+            # end the setbacks block above it — and cell words ("Variable",
+            # "None") stranded by a refused row are cells, not headings.
+            # Refs glued to a heading ("Building setbacks (minimum)6")
+            # condition every row scoped by it.
             block = label
+            block_refs = refs
+            block_field = ""
         if zones and name is not None and not any(ch.isdigit() for ch in label):
+            in_corner_block = _CORNER_BLOCK.search(block) and name.startswith("setback_")
             if (
-                _CORNER_BLOCK.search(block)
-                and name.startswith("setback_")
-                and name != "setback_street_side_ft"
-            ):
-                # Where the block ends is not printed, so the guard is scoped
-                # by field instead: only setbacks have corner variants, and a
-                # coverage row after the corner rows is a sibling, not a member.
+                in_corner_block or _CORNER_BLOCK.search(label)
+            ) and name != "setback_street_side_ft":
+                # Where the block ends is not printed, so the block guard is
+                # scoped by field: only setbacks have corner variants, and a
+                # coverage row after the corner rows is a sibling, not a
+                # member. Corner named on the row itself is exact and guards
+                # every field.
                 i += 1
                 continue
             cells: list[tuple[int, tuple[float, str, tuple[str, ...]]] | None] = []
@@ -1004,6 +1116,16 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
                     cells.append(None)
                     j += 1
                     continue
+                bare_cell = _PAREN_NOTE.sub("", cell_line).strip()
+                trail = _LABEL_REFS.search(bare_cell)
+                if trail:
+                    bare_cell = bare_cell[: trail.start()].strip()
+                if _VARIABLE.match(bare_cell):
+                    # "Variable4" — the standard exists and is not a number;
+                    # like a dash it yields this zone no candidate.
+                    cells.append(None)
+                    j += 1
+                    continue
                 parsed = _grid_value(cell_line, label)
                 if parsed is None:
                     break
@@ -1015,6 +1137,10 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
                 and _grid_value(live[j][1], label) is not None
             )
             if len(cells) == len(zones) and not overrun:
+                htype = _housing_type(label) or ""
+                placeholders = ctx_notes + tuple(
+                    f"footnote {r} (text not captured)" for r in (*refs, *block_refs)
+                )
                 for zone, cell in zip(zones, cells):
                     if cell is None:
                         continue
@@ -1030,12 +1156,22 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
                             text=f"{stripped} ({zone})",
                             quote=f"{path}#L{cell_no}",
                             source="table",
-                            notes=marks,
+                            notes=marks + placeholders,
+                            housing_type=htype,
                             section=section,
                         )
                     )
                 i = j
                 continue
+            if _subject(label) is not None and not any(ch.isdigit() for ch in label):
+                # The walk failed under a label that names a standard outright
+                # — "Lot coverage (maximum)" over typed sub-rows. The label
+                # becomes the block and its field scopes the typed rows under
+                # it. Grouped labels ("Interior side") whose rows refuse do
+                # not: their standard came from the block they are already in.
+                block = label
+                block_field = name
+                block_refs = refs
         i += 1
     return out
 

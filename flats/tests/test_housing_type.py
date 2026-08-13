@@ -274,3 +274,11 @@ def test_selection_reads_the_townhouse_grid_not_the_detached_one() -> None:
 
     assert side.verdict is Verdict.agrees
     assert side.found == (5,)
+
+
+def test_a_lot_context_sub_label_is_not_a_default_row() -> None:
+    # Happy Valley's frontage rows sub-label by lot context. "All other
+    # lots" must not read as the pod's "all other uses" row: it is a tier
+    # of lots, and every housing type is in it.
+    assert _housing_type("All other lots") is None
+    assert _housing_type("All other uses") == "default"
