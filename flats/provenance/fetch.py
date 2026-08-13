@@ -41,6 +41,9 @@ from flats.rules.model import Layer
 #: Bumped when the extraction algorithm changes. A hash that moves because the
 #: extractor changed is not an amendment, and the two must be tellable apart.
 EXTRACTOR = "flats-html-text/1"
+#: A slice shorter than this is reported. Legitimate one-line sections exist;
+#: a marker that hit the table of contents is far more common.
+SHORT_SLICE = 3
 
 #: Elements whose contents are never prose.
 _DROP = frozenset({"script", "style", "noscript", "svg", "head", "template", "iframe"})
@@ -100,19 +103,29 @@ def html_to_text(source: str) -> str:
     return _BLANKS.sub("\n\n", "\n".join(lines)).strip() + "\n"
 
 
-def slice_between(text: str, start: str = "", end: str = "") -> str:
+def slice_between(text: str, start: str = "", end: str = "", *, nth: int = 1) -> str:
     """The span between two literal markers, inclusive of ``start``.
 
     Markers are literal text a reviewer can see on the page — a section number
     is the usual choice. Failing loudly when one is absent matters: silently
     storing the whole page instead would put a reviewer's quote line numbers
     somewhere else entirely.
+
+    ``nth`` picks which occurrence starts the slice, and it is needed more often
+    than it sounds: a chapter PDF lists every section number in its table of
+    contents first, so the obvious marker matches a line of the index rather
+    than the standards. Getting this wrong stores a one-line document, which is
+    why a short result is called out rather than accepted quietly.
     """
     out = text
     if start:
-        i = out.find(start)
-        if i < 0:
-            raise ProvenanceError(f"start marker {start!r} not found in the fetched text")
+        i, found = -1, 0
+        while found < max(1, nth):
+            i = out.find(start, i + 1)
+            if i < 0:
+                where = f" (occurrence {nth})" if nth > 1 else ""
+                raise ProvenanceError(f"start marker {start!r} not found in the fetched text{where}")
+            found += 1
         out = out[i:]
     if end:
         j = out.find(end, len(start) if start else 0)
@@ -122,21 +135,50 @@ def slice_between(text: str, start: str = "", end: str = "") -> str:
     return out.strip() + "\n"
 
 
-def _http_get(url: str) -> str:
+def pdf_to_text(data: bytes) -> str:
+    """Text out of a PDF, in reading order, one page after another.
+
+    Oregon codifiers publish chapters as PDF — Portland's Title 33 among them —
+    so this is not an edge case but the main path for the biggest jurisdiction
+    in the state. Page furniture is left in: the running header carries the
+    revision date, which is exactly the kind of change a hash should catch.
+    """
+    from pypdf import PdfReader
+    from io import BytesIO
+
+    reader = PdfReader(BytesIO(data))
+    pages = [(page.extract_text() or "").replace("\r\n", "\n") for page in reader.pages]
+    lines = [_SPACES.sub(" ", line).strip() for line in "\n".join(pages).split("\n")]
+    return _BLANKS.sub("\n\n", "\n".join(lines)).strip() + "\n"
+
+
+def _http_get(url: str) -> bytes:
     import httpx
 
-    response = httpx.get(url, follow_redirects=True, timeout=30.0)
+    response = httpx.get(url, follow_redirects=True, timeout=60.0)
     response.raise_for_status()
-    return response.text
+    return response.content
+
+
+def _to_text(raw: bytes | str) -> str:
+    """Whatever came back, reduced to the stored form."""
+    if isinstance(raw, bytes):
+        if raw[:5] == b"%PDF-":
+            return pdf_to_text(raw)
+        raw = raw.decode("utf-8", errors="replace")
+    return html_to_text(raw) if "<" in raw[:2048] else raw.replace("\r\n", "\n")
 
 
 def fetch_text(
-    url: str, *, get: Callable[[str], str] | None = None, start: str = "", end: str = ""
+    url: str,
+    *,
+    get: Callable[[str], bytes | str] | None = None,
+    start: str = "",
+    end: str = "",
+    nth: int = 1,
 ) -> str:
     """Fetch a URL and reduce it to the stored form."""
-    raw = (get or _http_get)(url)
-    text = html_to_text(raw) if "<" in raw[:2048] else raw.replace("\r\n", "\n")
-    return slice_between(text, start, end)
+    return slice_between(_to_text((get or _http_get)(url)), start, end, nth=nth)
 
 
 def citing(layers: dict[str, Layer], doc_path: str) -> list[tuple[str, str, str]]:
@@ -196,7 +238,7 @@ def store_document(
     return store.save(path, url=url, text=text, retrieved=retrieved or date.today())
 
 
-def main(argv: Sequence[str] | None = None, *, get: Callable[[str], str] | None = None) -> int:
+def main(argv: Sequence[str] | None = None, *, get: Callable[[str], bytes | str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="flats-fetch", description="Store the code text a rule value will cite."
     )
@@ -204,6 +246,13 @@ def main(argv: Sequence[str] | None = None, *, get: Callable[[str], str] | None 
     parser.add_argument("url")
     parser.add_argument("--start", default="", help="literal marker where the stored text begins")
     parser.add_argument("--end", default="", help="literal marker where it ends")
+    parser.add_argument(
+        "--nth",
+        type=int,
+        default=1,
+        help="which occurrence of --start begins the slice; a chapter PDF lists "
+        "every section in its contents before the standards, so this is often 2",
+    )
     parser.add_argument("--docs", type=Path, default=None, help="provenance store root")
     parser.add_argument("--rules", type=Path, default=CONFIG_ROOT)
     parser.add_argument("--log", type=Path, default=LOG_PATH)
@@ -217,13 +266,21 @@ def main(argv: Sequence[str] | None = None, *, get: Callable[[str], str] | None 
 
     store = ProvenanceStore(args.docs)
     try:
-        text = fetch_text(args.url, get=get, start=args.start, end=args.end)
+        text = fetch_text(args.url, get=get, start=args.start, end=args.end, nth=args.nth)
     except ProvenanceError as exc:
         print(f"{args.path}: {exc}", file=sys.stderr)
         return 1
 
     retrieved = date.fromisoformat(args.retrieved) if args.retrieved else date.today()
     lines = len(text.splitlines())
+    if args.start and lines < SHORT_SLICE:
+        # Almost always a marker that matched the table of contents instead of
+        # the section. Storing it would give every quote into this document
+        # line numbers that point at an index entry.
+        print(
+            f"warning: {args.path} sliced to {lines} line(s) — check --start/--nth",
+            file=sys.stderr,
+        )
 
     if not store.exists(args.path):
         store_document(store, args.path, args.url, text, retrieved=retrieved)

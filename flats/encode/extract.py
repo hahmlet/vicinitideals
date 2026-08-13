@@ -73,8 +73,18 @@ _UNITS: tuple[tuple[str, tuple[str, ...]], ...] = (
 )
 
 _EXCEPTION = re.compile(
-    r"\b(except|unless|notwithstanding|does not apply|shall not apply|exempt)\b", re.I
+    r"\b(except|unless|notwithstanding|does not apply|shall not apply|exempt"
+    # Relief provisions are exceptions in everything but the word. Portland's
+    # "the front building setback may be reduced to 10 feet" states a number
+    # that is not the standard, and reading it as one understates the setback
+    # on every lot in the zone.
+    r"|may be reduced|is reduced|may extend|is lowered|is allowed if|may be increased)\b",
+    re.I,
 )
+#: An outline heading that puts everything under it in exception scope.
+_EXCEPTION_HEADING = re.compile(r"\b(exceptions?|adjustments?|reductions?|special situations)\b", re.I)
+#: A top-level outline marker: "A.", "B." — where a heading's scope begins and ends.
+_TOP_LEVEL = re.compile(r"^[A-Z]\.\s")
 _REQUIREMENT = re.compile(
     r"\b(shall|must|may not|no .{0,40} shall|required|minimum|maximum|at least|no more than)\b",
     re.I,
@@ -86,6 +96,17 @@ _APPLICABILITY = re.compile(
 )
 _DEFINITION = re.compile(r"\b(means|is defined as|for the purposes of|see (?:section|chapter))\b", re.I)
 _SECTION = re.compile(r"^(?P<sec>\d{1,3}\.\d{2,3}(?:\.\d{1,4})?)\b")
+#: Cross-references, table and figure names. Their digits are addresses, not
+#: sizes — "See Figures 110-2 and 110-3" contains no standard whatsoever.
+_CITATION = re.compile(
+    r"\b\d{1,3}\.\d{2,3}(?:\.\d{1,4})?\b"  # 33.110.265
+    r"|\b(?:Table|Figure|Map)s?\s+\d+-\d+\b"  # Table 110-4
+    r"|\b\d{1,3}-\d{1,3}\b",  # a bare hyphenated pair is an identifier
+    re.I,
+)
+#: "stated in Table 110-4" — the standard is real, and its number lives
+#: somewhere this harness cannot read.
+_DEFERS = re.compile(r"\b(?:stated|listed|shown|set out|found) in Table\s+(?P<table>\d+-\d+)", re.I)
 
 
 @dataclass(frozen=True, slots=True)
@@ -121,6 +142,19 @@ class Extraction:
     @property
     def conflicted(self) -> tuple[str, ...]:
         return tuple(sorted({c.field for c in self.candidates if c.conflict}))
+
+    @property
+    def tables(self) -> tuple[str, ...]:
+        """Tables the prose defers its numbers to.
+
+        Portland states almost nothing in sentences: 33.110.220 says the
+        setbacks "are stated in Table 110-4", and the table is a grid with one
+        column per zone that flattens into unreadable text. Naming the table is
+        the honest output — the alternative is reading a column belonging to
+        some other zone and encoding it with confidence.
+        """
+        found = {m.group("table") for c in self.clauses if (m := _DEFERS.search(c.text))}
+        return tuple(sorted(found))
 
     def unresolved(self) -> tuple[Clause, ...]:
         """Requirement clauses that produced no candidate value.
@@ -163,14 +197,24 @@ def tag_of(text: str) -> Rase | None:
     return None
 
 
-def _subject(text: str) -> str | None:
+def _match_subject(text: str) -> tuple[int, int, str] | None:
     lowered = text.lower()
-    best: tuple[int, str] | None = None
+    best: tuple[int, int, str] | None = None
     for pattern, name in _SUBJECTS:
         m = re.search(pattern, lowered)
         if m and (best is None or m.start() < best[0]):
-            best = (m.start(), name)
-    return best[1] if best else None
+            best = (m.start(), m.end(), name)
+    return best
+
+
+def _subject(text: str) -> str | None:
+    found = _match_subject(text)
+    return found[2] if found else None
+
+
+def _subject_span(text: str) -> tuple[int, int] | None:
+    found = _match_subject(text)
+    return (found[0], found[1]) if found else None
 
 
 def _units_allow(text: str, kind: str) -> bool:
@@ -181,33 +225,132 @@ def _units_allow(text: str, kind: str) -> bool:
     return False
 
 
-def _numbers(text: str) -> list[float]:
-    return [float(m.group("n").replace(",", "")) for m in re.finditer(_NUM, text)]
+def _numbers(text: str, *, subject: tuple[int, int] | None = None) -> list[float]:
+    """Numbers in the line, minus the ones that are addresses rather than sizes.
+
+    Every false positive found on real Portland text came from here: a
+    cross-reference to 33.110.275 reads as "33.11" and "275", and a chapter is
+    dense with them. Citations, table and figure names are struck out first.
+
+    Position then decides ownership. A standard states its number after the
+    thing it governs — "the minimum front setback is 10 feet" — or immediately
+    before it as a quantity — "2 parking spaces per unit". A number further
+    back than that belongs to a different clause of the same sentence, which is
+    how "cisterns that are 6 feet or less in height" becomes a 6-foot height
+    limit for the entire zone.
+    """
+    scrubbed = _CITATION.sub(lambda m: " " * len(m.group(0)), text)
+    start, end = subject if subject else (0, 0)
+    return [
+        float(m.group("n").replace(",", ""))
+        for m in re.finditer(_NUM, scrubbed)
+        if m.start() >= end or m.end() >= start - QUANTITY_LEAD
+    ]
 
 
-def candidates_in(text: str, line: int, path: str) -> list[Candidate]:
+def candidates_in(text: str, line: int, path: str, *, quote: str = "") -> list[Candidate]:
     """Proposed values from one line of code text.
 
-    Deliberately conservative: a number is only proposed when the line names a
-    subject this system has a field for *and* carries units that field could be
-    measured in. "10 feet" beside "front setback" is a candidate; "10" beside
-    "Table 110-4" is not.
+    Deliberately conservative, and every restriction here was earned on real
+    text. A number is proposed only when the line names a subject this system
+    has a field for, carries units that field could be measured in, and states
+    the number *after* the subject — because standards read "the minimum front
+    setback is 10 feet", while "cisterns that are 6 feet or less in height" is
+    a sentence about cisterns that happens to end in the word height.
+
+    Exceptions are never mined. A clause tagged E qualifies a standard rather
+    than setting one, so a number inside it is the one case the rule does not
+    apply to — precisely the value that must never end up encoded as the rule.
     """
+    if tag_of(text) is Rase.exception:
+        return []
+
     name = _subject(text)
     if name is None:
         return []
-    definition = FIELDS[name]
-    if not _units_allow(text, definition.kind):
+    if not _units_allow(text, FIELDS[name].kind):
         return []
 
     out: list[Candidate] = []
-    for number in _numbers(text):
+    for number in _numbers(text, subject=_subject_span(text)):
         value = int(number) if number.is_integer() else number
         out.append(
             Candidate(
-                field=name, value=value, line=line, text=text.strip(), quote=f"{path}#L{line}"
+                field=name,
+                value=value,
+                line=line,
+                text=text.strip(),
+                quote=quote or f"{path}#L{line}",
             )
         )
+    return out
+
+
+#: A line that opens a new clause: "A.", "1.", "a.", "(2)", a bullet, or a
+#: section number. Codes are outlines, and the outline marker is the boundary.
+_OPENER = re.compile(r"^(?:[A-Za-z]\.|\(?\d+\)|\d+\.|[•\-•▪]|\d{1,3}\.\d{2,3})\s")
+#: Running page numbers like "110-14".
+_PAGE_NUMBER = re.compile(r"^\d{2,3}-\d{1,3}$")
+#: A line repeated this often across a document is a header or footer, not text.
+FURNITURE_REPEATS = 3
+#: A section line no longer than this is a heading, not the first sentence.
+HEADING_WORDS = 8
+#: How far before its subject a number may sit and still belong to it —
+#: enough for "2 parking spaces", not enough for "6 feet or less in height".
+QUANTITY_LEAD = 12
+
+
+def _furniture(lines: Sequence[str]) -> set[str]:
+    """Lines that are page decoration rather than ordinance.
+
+    A chapter PDF stamps its title and revision date on all fifty pages, which
+    lands in the middle of sentences and splits them. Frequency finds them
+    without hard-coding any one codifier's layout.
+    """
+    counts: dict[str, int] = {}
+    for line in lines:
+        if line and len(line) < 80:
+            counts[line] = counts.get(line, 0) + 1
+    return {line for line, n in counts.items() if n >= FURNITURE_REPEATS}
+
+
+def paragraphs(text: str) -> list[tuple[int, int, str]]:
+    """Reassemble wrapped lines into clauses, as ``(first_line, last_line, text)``.
+
+    A PDF breaks "the minimum front building setback is / 10 feet" across two
+    lines, and reading each half as its own clause loses the standard entirely
+    — the subject is on one line and the number on the other. Joining is what
+    makes the sentence readable to both a tagger and a person.
+    """
+    lines = [line.strip() for line in text.splitlines()]
+    junk = _furniture(lines)
+    out: list[tuple[int, int, str]] = []
+    start = 0
+    buffer: list[str] = []
+
+    def flush() -> None:
+        if buffer:
+            out.append((start, start + len(buffer) - 1, " ".join(buffer)))
+
+    for n, line in enumerate(lines, start=1):
+        if not line or line in junk or _PAGE_NUMBER.match(line):
+            # Furniture does not end a sentence; it interrupts one. Skipping it
+            # without flushing lets the sentence continue across the page break.
+            continue
+        opens = bool(_OPENER.match(line))
+        ends = buffer and buffer[-1].endswith((".", ";", ":"))
+        if buffer and (opens or ends):
+            flush()
+            buffer, start = [], n
+        if not buffer:
+            start = n
+        buffer.append(line)
+        if _SECTION.match(line) and len(line.split()) <= HEADING_WORDS:
+            # "33.110.220 Setbacks" carries no terminal period, so without this
+            # the heading swallows the first sentence of its own section.
+            flush()
+            buffer = []
+    flush()
     return out
 
 
@@ -217,14 +360,23 @@ def extract(text: str, *, path: str, jurisdiction: str = "", section: str = "") 
     proposed: list[Candidate] = []
     current = section
 
-    for n, line in enumerate(text.splitlines(), start=1):
-        stripped = line.strip()
-        if not stripped:
-            continue
+    in_exceptions = False
+
+    for first, last, stripped in paragraphs(text):
+        n = first
+        quote = f"{path}#L{first}" if first == last else f"{path}#L{first}-L{last}"
         found = _SECTION.match(stripped)
         if found:
             current = found.group("sec")
+        if _TOP_LEVEL.match(stripped):
+            # Codes are outlines, and scope is inherited. Everything under
+            # "D. Exceptions to the required setbacks" qualifies the standard
+            # rather than stating it, however plainly the sub-clause reads.
+            in_exceptions = bool(_EXCEPTION_HEADING.search(stripped.split(".", 1)[1][:80]))
+
         tag = tag_of(stripped)
+        if in_exceptions and tag in (Rase.requirement, None):
+            tag = Rase.exception
         if tag is None and found and len(stripped.split()) <= 8:
             # A section heading states no rule. Leaving it untagged would put
             # every heading in the document on the review queue, which is the
@@ -232,15 +384,16 @@ def extract(text: str, *, path: str, jurisdiction: str = "", section: str = "") 
             tag = Rase.non_normative
         clauses.append(
             Clause(
-                id=f"{path}#L{n}",
+                id=quote,
                 jurisdiction=jurisdiction,
                 section=current,
-                quote=f"{path}#L{n}",
+                quote=quote,
                 text=stripped,
                 tag=tag,
             )
         )
-        proposed.extend(candidates_in(stripped, n, path))
+        if tag is not Rase.exception:
+            proposed.extend(candidates_in(stripped, n, path, quote=quote))
 
     return Extraction(path=path, clauses=tuple(clauses), candidates=tuple(_mark(proposed)))
 

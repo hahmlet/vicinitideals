@@ -82,6 +82,9 @@ flats = [
     "shapely>=2.0",
     "numpy>=1.26",
     "pyyaml>=6",
+    # Oregon codifiers publish zoning chapters as PDF, not HTML — Portland's
+    # Title 33 included. Reading the source means reading PDFs.
+    "pypdf>=5.1",
 ]
 # Offline geospatial analysis ("Lot Analysis/quadfit") — not used by the app runtime.
 gis = [

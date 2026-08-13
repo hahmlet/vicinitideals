@@ -111,8 +111,8 @@ def sha256(text: str) -> str:
 class ProvenanceStore:
     """Documents on disk under a root, addressed by relative path."""
 
-    def __init__(self, root: Path | None = None) -> None:
-        self.root = root or STORE_ROOT
+    def __init__(self, root: Path | str | None = None) -> None:
+        self.root = Path(root) if root is not None else STORE_ROOT
 
     # --- paths -------------------------------------------------------
 

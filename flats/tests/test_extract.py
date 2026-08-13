@@ -219,3 +219,79 @@ def test_the_draft_yaml_is_never_pre_verified() -> None:
 
 def test_an_empty_document_extracts_to_nothing() -> None:
     assert extract("", path=DOC) == Extraction(path=DOC)
+
+
+# --- what a real chapter PDF looks like -------------------------------
+#
+# Every case below was found by running this against Portland's Title 33
+# chapter 33.110 rather than imagined: the numbers live in a table, sentences
+# wrap mid-clause, page furniture lands in the middle of them, cross-references
+# read as numbers, and the relief provisions state figures that are not the
+# standard.
+
+CHAPTER = """33.110.220 Setbacks
+A. Purpose. The setback regulations serve several purposes.
+B. Required setbacks. The required setbacks for buildings are
+stated in Table 110-4. Other setbacks may apply.
+Chapter 33.110 Title 33, Planning and Zoning
+Single-Dwelling Zones 1/1/25
+110-14
+C. Standards. The minimum lot area is
+3,000 square feet.
+Chapter 33.110 Title 33, Planning and Zoning
+Single-Dwelling Zones 1/1/25
+110-15
+D. Exceptions to the required setbacks.
+1. In the R7 zones, the front building setback may be reduced to 10 feet.
+2. See Figures 110-2 and 110-3. Detached structures are addressed in 33.110.245.
+Chapter 33.110 Title 33, Planning and Zoning
+Single-Dwelling Zones 1/1/25
+110-16
+"""
+
+
+def test_a_wrapped_sentence_is_read_as_one_clause() -> None:
+    # "the minimum lot area is / 3,000 square feet" is a standard split across
+    # two PDF lines. Read as two clauses it is a subject with no number and a
+    # number with no subject, and the standard vanishes.
+    result = one(CHAPTER)
+
+    assert any(c.field == "min_lot_sqft" and c.value == 3000 for c in result.candidates)
+
+
+def test_page_furniture_does_not_break_a_sentence() -> None:
+    result = one(CHAPTER)
+
+    assert not any("Single-Dwelling Zones" in c.text for c in result.clauses)
+    assert not any(c.text.strip() == "110-14" for c in result.clauses)
+
+
+def test_a_section_heading_does_not_swallow_its_first_sentence() -> None:
+    result = one(CHAPTER)
+
+    assert result.clauses[0].text == "33.110.220 Setbacks"
+
+
+def test_a_cross_reference_is_not_a_number() -> None:
+    # "33.110.245" reads as 33.11 and 245; "Figures 110-2" as 110 and 2. A
+    # chapter is dense with these, and every one of them would be a value.
+    result = one(CHAPTER)
+
+    assert all(c.value not in (110, 245, 33.11) for c in result.candidates)
+
+
+def test_relief_provisions_are_exceptions_by_scope() -> None:
+    # "the front building setback may be reduced to 10 feet" sits under
+    # "D. Exceptions". Encoding its 10 as the standard would understate the
+    # setback on every lot in the zone — the confident wrong answer.
+    result = one(CHAPTER)
+
+    assert result.for_field("setback_front_ft") == ()
+    assert any(c.tag is Rase.exception for c in result.clauses if "reduced to 10" in c.text)
+
+
+def test_a_table_the_prose_defers_to_is_named() -> None:
+    # The honest output for Portland: the setbacks are real, they are in Table
+    # 110-4, and this harness cannot read a grid with one column per zone.
+    # Naming it queues the work; guessing a column encodes another zone's rule.
+    assert one(CHAPTER).tables == ("110-4",)
