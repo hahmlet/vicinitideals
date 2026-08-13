@@ -98,13 +98,25 @@ def _parse_values(
             )
             continue
 
+        declared = str(body.get("status", "draft"))
+        if declared in (Status.verified.value, Status.stale.value):
+            # Trust is not typeable. `verified` is a signature over the value,
+            # its cite and its quote (flats/config/verifications.jsonl), and
+            # `stale` is derived at load. Accepting either here would let an
+            # edit to a YAML file certify a number nobody read.
+            problems.append(
+                f"{where}.{key}: a file may not declare status {declared!r} — "
+                f"verify it with a signature, and leave stale to be derived"
+            )
+            continue
+
         try:
             prov = Provenance(**{k: prov_src.get(k) for k in _PROV_KEYS})
             out[key] = Value(
                 name=key,
                 value=value,
                 prov=prov,
-                status=Status(body.get("status", "draft")),
+                status=Status(declared),
                 reviewer=body.get("reviewer"),
                 reviewed=body.get("reviewed"),
                 preempts=bool(body.get("preempts", False)),
@@ -193,6 +205,7 @@ def load_rules(root: Path | None = None, strict: bool = True) -> dict[str, Layer
 
     if problems and strict:
         raise RuleLoadError(problems)
-    if problems:
-        load_rules.last_problems = problems  # type: ignore[attr-defined]
+    # Always reassigned, including to empty — a stale list from an earlier
+    # non-strict call would report problems the current rule set does not have.
+    load_rules.last_problems = problems  # type: ignore[attr-defined]
     return layers

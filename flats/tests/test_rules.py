@@ -14,6 +14,7 @@ import pytest
 from flats.rules.loader import RuleLoadError, load_rules
 from flats.rules.model import Status
 from flats.rules.resolver import RuleSet, Verdict
+from flats.tests.signing import sign_encoded
 
 pytestmark = pytest.mark.unit
 
@@ -26,7 +27,8 @@ CITE = (
     '  url: "https://www.portland.gov/code/33/100s/110"\n'
     "  retrieved: 2026-08-12\n"
 )
-REVIEWED = "status: verified, reviewer: sjk, reviewed: 2026-08-14"
+#: Ready for review. The signing helper promotes exactly these.
+REVIEWED = "status: encoded"
 
 
 def write(root: Path, rel: str, body: str) -> None:
@@ -69,14 +71,13 @@ def test_full_form_overrides_cite_default(root: Path) -> None:
         '      cite: "PCC 33.110.240"\n'
         '      url: "https://example.gov/240"\n'
         "      retrieved: 2026-08-01\n"
-        "      status: verified\n"
-        "      reviewer: sjk\n"
-        "      reviewed: 2026-08-14\n",
+        "      status: encoded\n",
     )
     v = load_rules(root)[PORTLAND].zones["R5"].values["setback_front_ft"]
 
     assert v.prov.cite == "PCC 33.110.240"
-    assert v.trusted
+    assert v.prov.url == "https://example.gov/240"
+    assert not v.trusted, "written down is not read — only a signature promotes"
 
 
 # --- the "no unsourced numbers" contract -----------------------------
@@ -94,10 +95,35 @@ def test_unknown_field_is_rejected(root: Path) -> None:
         load_rules(root)
 
 
-def test_verified_without_reviewer_is_rejected(root: Path) -> None:
+def test_a_file_may_not_declare_itself_verified(root: Path) -> None:
+    # The forgery this design exists to stop: an edit to a YAML file that
+    # certifies a number nobody read. Trust is a signature over the value, its
+    # citation and its quote — never the word typed beside it.
     portland(root, "  R5:\n    setback_front_ft: {value: 10, status: verified}\n")
-    with pytest.raises(RuleLoadError, match="requires both 'reviewer' and 'reviewed'"):
+    with pytest.raises(RuleLoadError, match="may not declare status"):
         load_rules(root)
+
+
+def test_stale_is_derived_and_may_not_be_typed_either(root: Path) -> None:
+    portland(root, "  R5:\n    setback_front_ft: {value: 10, status: stale}\n")
+    with pytest.raises(RuleLoadError, match="stale to be derived"):
+        load_rules(root)
+
+
+def test_a_verified_value_still_needs_a_reviewer_on_it(root: Path) -> None:
+    # The model invariant behind the signature: reaching `verified` without a
+    # named reviewer and a date is not a state this system has.
+    from pydantic import ValidationError
+
+    from flats.rules.model import Provenance, Value
+
+    with pytest.raises(ValidationError, match="requires both 'reviewer' and 'reviewed'"):
+        Value(
+            name="setback_front_ft",
+            value=10,
+            prov=Provenance(cite="PCC 33.110", url="https://example.gov/1", retrieved="2026-08-01"),
+            status=Status.verified,
+        )
 
 
 @pytest.mark.parametrize(
@@ -211,8 +237,10 @@ def test_draft_values_make_the_zone_unverified(root: Path) -> None:
 
 
 def test_missing_required_field_blocks_trust(root: Path) -> None:
+    # One signed field does not carry a zone. An absent standard is unknown,
+    # and unknown routes to REVIEW rather than being assumed away.
     portland(root, "  R5:\n    quadplex_allowed: {value: true, " + REVIEWED + "}\n")
-    r = RuleSet(load_rules(root)).resolve(PORTLAND, "R5")
+    r = RuleSet(sign_encoded(load_rules(root))).resolve(PORTLAND, "R5")
 
     assert r.verdict is Verdict.unverified
     assert "setback_front_ft" in r.missing_required
@@ -233,7 +261,7 @@ def test_fully_verified_zone_is_trusted(root: Path) -> None:
         ]
     )
     portland(root, zones)
-    r = RuleSet(load_rules(root)).resolve(PORTLAND, "R5")
+    r = RuleSet(sign_encoded(load_rules(root))).resolve(PORTLAND, "R5")
 
     assert r.verdict is Verdict.trusted, f"untrusted={r.untrusted} missing={r.missing_required}"
 

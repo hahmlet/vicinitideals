@@ -25,11 +25,14 @@ from flats.rules.ledger import (
 )
 from flats.rules.loader import load_rules
 from flats.rules.resolver import RuleSet
+from flats.tests.signing import sign_encoded
 
 pytestmark = pytest.mark.unit
 
 PORTLAND = "or/multnomah/portland"
-REVIEWED = "status: verified, reviewer: sjk, reviewed: 2026-08-14"
+#: Marks a value as ready for review. The helper signs exactly these — a
+#: file cannot declare itself verified, which is what the log is for.
+REVIEWED = "status: encoded"
 CITE = (
     "cite_default:\n"
     '  cite: "PCC 33.110.220, Table 110-4"\n'
@@ -51,7 +54,9 @@ def rules_with(root: Path, zones_yaml: str) -> RuleSet:
     p = root / f"{PORTLAND}.yaml"
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text("label: Portland\n" + CITE + "zones:\n" + zones_yaml, encoding="utf-8")
-    return RuleSet(load_rules(root))
+    # Stands in for a reviewer working the queue: everything marked `encoded`
+    # gets signed, everything left shorthand stays draft.
+    return RuleSet(sign_encoded(load_rules(root)))
 
 
 def verified_zone(name: str) -> str:
