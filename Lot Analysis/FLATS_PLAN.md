@@ -569,7 +569,7 @@ An earlier draft of this section said otherwise; §6 is the decision.
 | ✅ | `config/slack.yaml` (§4) and the slack/tolerance policy |
 | ✅ | `geom/` — edge classification and the buildable envelope |
 | ✅ | `fit/` — 0–180° rotation sweep, rasterizer, fit-with-a-margin (Phase 2 pulled forward) |
-| ✅ | `score/screen.py` — GREEN/REVIEW/RED with split attribution (tightest vs dominant) |
+| ✅ | `score/screen.py` — GREEN/YELLOW/RED/UNKNOWN with split attribution (tightest vs dominant) |
 | | Ingest: `config/pipeline.yaml` (data sources per county) and the acquire/normalize/assign stages |
 
 **On "100% blocked".** That is the correct reading of the first ledger, not a
@@ -715,6 +715,10 @@ lots the screen uses our best understanding, because there is nothing to overrid
 
 ### What the three colours mean now
 
+> **Superseded by §14.** REVIEW below covers two unrelated things — a path the
+> developer can apply for, and a gap in our own encoding — and merging them hid
+> the first. There are four colours, not three.
+
 **RED — no configuration in the catalog produces a legal fit.** That is the only honest
 red, and it is deliberately hard to earn. Anything that clears *somehow* is not red.
 
@@ -773,3 +777,97 @@ that actually binds one of them.
 5. **Storage is per lot per qualifying configuration**, not one row per lot.
 
 Items 1–3 are foundation and do not depend on the web app existing.
+
+---
+
+## 14. Yellow is an ask, not a doubt
+
+*Added 2026-08-12. It corrects §13's colour table, which used REVIEW for two
+unrelated things and so made one of them invisible.*
+
+### The conflation
+
+§13 said REVIEW means "a configuration clears but something under it is not solid."
+That covers an unsigned rule, a guessed site fact, and a measurement inside tolerance
+— all of which are **our** failures, and all of which are supposed to disappear as the
+encoding finishes. Review is not a destination; it is a work queue with a burn-down.
+
+It does not cover the case that is not a failure at all: **we know the answer, and the
+answer is "you would have to ask."** A pod one foot over a front setback is not
+uncertain. It is certain, and it is an adjustment application. Filing it under the same
+colour as an unencoded standard hides a real, common, and usually-granted path behind a
+label that says "we are still working on it."
+
+### Four outcomes
+
+| | Means | Whose queue |
+|---|---|---|
+| **GREEN** | Clears as-of-right under some configuration. No ask. | nobody's |
+| **YELLOW** | Clears, but only with a discretionary approval. Labelled with which. | the developer's — file for it |
+| **RED** | No configuration clears, and no relief the code offers can close the gap. | nobody's. Dead. |
+| **UNKNOWN** (grey) | We cannot answer yet. | **ours** — encode it, fetch it, verify it |
+
+Grey carries a reason code and is meant to shrink. Yellow is not, and should not: it is
+what the regulatory world actually looks like. Counting them together makes the encoding
+backlog unmeasurable, which is the reason for the split.
+
+### Relief is an elective condition, not a colour
+
+Applying for an adjustment is something the developer chooses, exactly like electing
+affordability or picking design variant 2. So it needs no new machinery — it is a third
+`kind` in the condition registry (§13 item 2), and the colour falls out of the existing
+configuration search:
+
+* best configuration needs no relief → **GREEN**
+* best configuration needs relief → **YELLOW**, labelled with the tier and the gap
+* nothing clears even with the deepest relief available → **RED**
+* we could not evaluate → **UNKNOWN**
+
+### Yellow is a scale, not a bucket
+
+The size of the miss selects the tier, and the tier is what the code says, not what we
+wish:
+
+| Tier | Meaning |
+|---|---|
+| `as_of_right` | no approval needed |
+| `administrative` | staff-level decision, no hearing |
+| `discretionary` | public review, hearing, appealable |
+| `unavailable` | nobody may waive this — state building code, fire access, floodplain |
+
+Only `unavailable` earns a RED. A dimensional miss essentially never does on its own,
+which is the correction §13 needed: today a one-foot setback miss beyond tolerance is
+RED, and that is wrong.
+
+### Tolerance and relief are different uncertainties
+
+They were both REVIEW, and they are not the same thing at all:
+
+* **Tolerance** is epistemic — the raster is conservative to half a foot, the DEM has a
+  three-foot noise floor. We may be measuring wrong. → **UNKNOWN**.
+* **Relief** is legal — we measured correctly, and the code offers a path. → **YELLOW**.
+
+### Two guardrails, same recall bias as everything else
+
+1. **Relief is encoded, not assumed to be absent.** Portland's adjustment chapter gets
+   fetched into the provenance store and read like any other rule, so a yellow can say
+   *why* it is yellow and cite it.
+2. **Unknown waivability defaults to available.** A dimensional standard with no encoded
+   relief path is treated as `discretionary`, not `unavailable`, and the result carries
+   `RELIEF_UNCONFIRMED` so the claim names its own gap. A false red deletes a target
+   silently; a false yellow costs one review.
+
+   **Use permission is the exception.** A zone that bars the use is RED, not yellow,
+   unless a conditional-use path is encoded. Codes enumerate conditional uses explicitly,
+   so silence there is evidence of absence in a way that silence about adjustments is not.
+
+### Posture — which asks are worth making
+
+Tier availability is a fact about the code. Whether the team will *pursue* an ask is a
+policy knob, `posture` in `flats/config/relief.yaml`, exactly parallel to tolerance:
+
+    posture: administrative     # as-of-right | administrative | discretionary
+
+It filters the buy list; it never changes a colour. Re-running the county at
+"as-of-right only" versus "we will file for adjustments" is a report-time sweep, seconds,
+not a rebuild.

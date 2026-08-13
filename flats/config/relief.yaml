@@ -1,0 +1,59 @@
+# Relief policy — what the code lets you ask for when a lot misses a standard.
+#
+# A pod one foot over a front setback is not an uncertain lot. It is a certain
+# lot with an application attached, and Oregon cities grant those routinely.
+# Screening it RED deletes an acquisition target over a foot.
+#
+# Two different things live here, deliberately separate:
+#
+#   jurisdictions — what each code OFFERS. A fact, encoded from the chapter
+#   that grants it, with a citation. Read once, cited forever.
+#
+#   posture — how far THIS TEAM will go. A knob. It filters the buy list and
+#   never changes a colour, because a lot does not become illegal by our being
+#   in a hurry.
+#
+# Nothing in here is invented. No cap appears until somebody has read the
+# chapter stating it, and `confirmed: true` requires a cite — a confirmed path
+# with nothing to check it against is the one claim this file must never carry.
+#
+# Where a jurisdiction says nothing, the screen assumes relief EXISTS
+# (discretionary, unconfirmed) rather than assuming it does not. The opposite
+# default would turn every near-miss in every unencoded city red overnight.
+# The result carries RELIEF_UNCONFIRMED so the claim names its own gap.
+
+# as_of_right | administrative | discretionary
+# The deepest ask this team will pursue. `discretionary` keeps everything with
+# a legal path on the list; `administrative` drops anything needing a hearing.
+posture: discretionary
+
+# Per-jurisdiction, keyed by the same or/<county>/<city> layer path the rule
+# files use. Most specific layer wins, and within a layer a named check beats
+# the "*" catch-all.
+#
+# Shape, once a chapter has been read:
+#
+#   or/multnomah/portland:
+#     "*":
+#       - condition: adjustment          # must be registered in flats/rules/conditions.py
+#         tier: administrative
+#         cap_pct: 0.10                  # "up to 10% of the standard" — only if stated
+#         cite: "PCC 33.805.040"
+#         confirmed: true
+#       - condition: variance
+#         tier: discretionary            # uncapped: granted on findings, not on size
+#         cite: "PCC 33.805.050"
+#         confirmed: true
+#     min_lot_area_sqft:                 # a standard its own chapter treats differently
+#       - condition: variance
+#         tier: discretionary
+#         cite: "PCC 33.805.040.B"
+#         confirmed: true
+#     use: []                            # no conditional-use path in this zone
+#
+# `use` is the exception to the generous default. Codes enumerate conditional
+# uses explicitly, so a zone that does not list one has no path — silence there
+# is evidence of absence in a way that silence about adjustments is not. An
+# absent `use` key means the same thing as an empty list.
+
+jurisdictions: {}

@@ -1,20 +1,39 @@
-"""GREEN, REVIEW, or RED — and what the binding constraint was.
+"""GREEN, YELLOW, RED or UNKNOWN — and what the binding constraint was.
 
 Everything upstream measures. This is where measurements become an answer, and
-the rules for turning one into the other are deliberately asymmetric:
+the rules for turning one into the other are deliberately asymmetric.
+
+Four outcomes, and the split that matters is **whose queue the lot lands in**:
+
+``GREEN``    clears as-of-right. Nobody's queue.
+``YELLOW``   clears, but only with an approval somebody has to apply for. The
+             developer's queue, labelled with which approval and how deep.
+``RED``      a verified standard the lot cannot meet, with no relief the code
+             offers. Nobody's queue. Dead.
+``UNKNOWN``  we could not answer. **Ours** — encode it, fetch it, verify it.
+
+The last two used to be one colour called REVIEW, and merging them hid the
+useful half. A pod one foot over a setback is not an uncertain lot; it is a
+certain lot with an adjustment application attached, and Oregon cities grant
+those routinely. Filing it under the same label as an unencoded standard buries
+a real and usually-granted path behind "we are still working on it". See
+FLATS_PLAN section 14.
+
+The asymmetries this enforces:
 
 *Only a trusted rule set may produce a verdict.* If any standard governing the
-lot is draft, stale, or missing, the lot is REVIEW — not RED. A wrong number in
-a rule file must never delete an acquisition target, and it is the encoding
+lot is draft, stale, or missing, the lot is UNKNOWN — never RED. A wrong number
+in a rule file must never delete an acquisition target, and it is the encoding
 lifecycle, not the geometry, that decides whether a number can be believed.
 
-*A tolerated miss is REVIEW, never GREEN.* Tolerance exists for measurement
-noise. It can rescue a lot from RED so a human looks at it; it can never
-certify one.
+*Tolerance and relief are different uncertainties.* A miss inside tolerance is
+epistemic — the raster is conservative to about half a foot — so it lands in
+UNKNOWN. A miss the code offers a path around is legal, and lands in YELLOW.
+Neither ever produces a GREEN.
 
 *A standard nobody encoded is not a standard that passes.* Skipping a check the
 code plainly imposes would manufacture GREENs. Any skipped check drops the lot
-to REVIEW and names itself, which is how the coverage ledger gets its work.
+out of GREEN and names itself, which is how the coverage ledger gets its work.
 
 Some checks are honest approximations rather than measurements — leftover lot
 area is an upper bound on qualifying open space, not the open space itself.
@@ -31,30 +50,46 @@ from typing import Any, Sequence
 from flats.designs.model import Design
 from flats.fit.rectangle import Fit
 from flats.geom.edges import Tier as GeometryTier
+from flats.rules.conditions import Tier
 from flats.rules.fields import REQUIRED_FIELDS
 from flats.rules.resolver import Verdict as RuleVerdict, ZoneResolution
+from flats.score.relief import (
+    RELIEF_UNCONFIRMED,
+    ReliefOutcome,
+    ReliefPolicy,
+    worst as _hardest_ask,
+)
 from flats.score.slack import CheckResult, SlackPolicy, Verdict, binding, dominant
 
 
 class Triage(str, enum.Enum):
     """The traffic light."""
 
-    #: Every standard encoded, verified, and cleared. Buildable by right.
+    #: Every standard encoded, verified, and cleared with nothing to ask for.
     green = "green"
-    #: Something needs a human — an unverified rule, a miss inside tolerance,
-    #: an unreadable lot shape, or a standard nobody has encoded yet.
-    review = "review"
-    #: A verified standard the lot cannot meet, by more than measurement noise.
+    #: Clears, but a standard is missed by an amount the code offers relief
+    #: for. A real path, priced in applications rather than in doubt.
+    yellow = "yellow"
+    #: A verified standard the lot cannot meet, and no relief exists for it.
     red = "red"
+    #: We could not answer: an unverified rule, an unreadable lot shape, a
+    #: standard nobody has encoded, or a miss inside measurement noise. Our
+    #: backlog, not the lot's problem — this is the colour that should shrink.
+    unknown = "unknown"
+
+    @property
+    def buildable(self) -> bool:
+        """Whether some legal path exists, with or without an application."""
+        return self in (Triage.green, Triage.yellow)
 
 
-#: Reasons a lot lands in REVIEW that are not a failed check.
+#: Reasons a lot lands in UNKNOWN that are not a failed check.
 NO_FRONTAGE = "NO_FRONTAGE"
 GEOMETRY_UNREADABLE = "GEOMETRY_UNREADABLE"
 STANDARD_NOT_ENCODED = "STANDARD_NOT_ENCODED"
 USE_NOT_ENCODED = "USE_NOT_ENCODED"
 
-#: Hard exclusion: the zone forbids the use outright.
+#: The zone forbids the use outright and lists no conditional-use path.
 USE_PROHIBITED = "USE_PROHIBITED"
 
 #: Checks computed from a proxy that runs in the lot's favour.
@@ -118,10 +153,22 @@ class Screening:
     #: `binding` is the human work queue.
     dominant: str | None = None
 
+    #: What clearing this lot would take: the deepest approval any failing
+    #: check needs. Populated whatever the colour, so a lot held in UNKNOWN by
+    #: an unrelated gap still shows the application it would need.
+    ask: Tier = Tier.as_of_right
+    #: One entry per failing check: which procedure covers it, and whether
+    #: anybody has read the chapter granting that procedure.
+    relief: tuple[ReliefOutcome, ...] = ()
+
     @property
     def head(self) -> str | None:
         """The tightest blocker: what is nearly solved on this lot."""
         return self.binding[0].check if self.binding else None
+
+    @property
+    def needs_ask(self) -> bool:
+        return self.ask.needs_ask
 
 
 def _coverage_allowed_sqft(rules: ZoneResolution, lot_sqft: float) -> tuple[float | None, str]:
@@ -247,6 +294,17 @@ def _checks(
     return out, unchecked
 
 
+def _unconfirmed(outcomes: Sequence[ReliefOutcome]) -> tuple[str, ...]:
+    """Whether this answer leans on a relief path nobody has read.
+
+    A yellow resting on an assumed adjustment chapter is still the right
+    colour — assuming relief exists is the recall-biased default — but it is a
+    claim, and a claim has to say so.
+    """
+    leaning = any(o.available and not o.confirmed for o in outcomes)
+    return (RELIEF_UNCONFIRMED,) if leaning else ()
+
+
 def screen(
     rules: ZoneResolution,
     lot: LotFacts,
@@ -254,38 +312,65 @@ def screen(
     fit: Fit,
     *,
     policy: SlackPolicy,
+    relief: ReliefPolicy | None = None,
 ) -> Screening:
-    """Turn measurements into GREEN / REVIEW / RED for one lot and one design."""
+    """Turn measurements into GREEN / YELLOW / RED / UNKNOWN for one lot and design."""
     reasons: list[str] = []
+    paths = relief if relief is not None else ReliefPolicy()
 
     if lot.lot_sqft <= 0:
-        return Screening(triage=Triage.review, reasons=(GEOMETRY_UNREADABLE,))
+        return Screening(triage=Triage.unknown, reasons=(GEOMETRY_UNREADABLE,))
 
+    where = rules.jurisdiction
     checks, unchecked = _checks(rules, lot, design, fit, policy)
     blockers = tuple(binding(checks))
     optimistic = tuple(sorted({c.check for c in checks} & OPTIMISTIC_CHECKS))
-    worst = dominant(checks)
+    worst_check = dominant(checks)
+
+    # Every definite failure gets a second question: what would it take to
+    # clear this anyway? A miss with a path is an application, not a wall.
+    failing = [c for c in checks if c.verdict is Verdict.fails]
+    outcomes = [
+        paths.for_check(
+            c.check, shortfall=c.shortfall, threshold=c.threshold, jurisdiction=where
+        )
+        for c in failing
+    ]
+
+    # The use gate is categorical, not a margin: a zone that forbids fourplexes
+    # forbids them by any amount of slack. Its only exit is a conditional use,
+    # and unlike an adjustment that exit has to be enumerated to exist.
+    allowed = rules.get("quadplex_allowed")
+    use_blocked = allowed is False and rules.trusted
+    if use_blocked:
+        outcomes.append(paths.for_use(where))
+
+    hardest = _hardest_ask(outcomes)
     common: dict[str, Any] = {
         "checks": tuple(checks),
         "binding": blockers,
-        "dominant": worst.check if worst else None,
+        "dominant": worst_check.check if worst_check else None,
         "unchecked": tuple(unchecked),
         "optimistic": optimistic,
         "fit_slack_ft": fit.slack_ft,
+        "ask": hardest.tier if hardest else Tier.as_of_right,
+        "relief": tuple(outcomes),
     }
 
-    # The use gate is categorical, not a margin: a zone that forbids fourplexes
-    # forbids them by any amount of slack.
-    allowed = rules.get("quadplex_allowed")
-    if allowed is False and rules.trusted:
-        return Screening(triage=Triage.red, reasons=(USE_PROHIBITED,), **common)
+    if use_blocked:
+        if not paths.for_use(where).available:
+            return Screening(triage=Triage.red, reasons=(USE_PROHIBITED,), **common)
+        return Screening(
+            triage=Triage.yellow, reasons=(USE_PROHIBITED, *_unconfirmed(outcomes)), **common
+        )
 
     if not rules.trusted:
-        # An unverified standard may not delete a lot. Whatever the checks say,
-        # this is a question for a human.
+        # An unverified standard may not delete a lot, and a failure measured
+        # against one is not a definite failure. Whatever the checks say, this
+        # is a question for a human.
         reason = rules.reason
         return Screening(
-            triage=Triage.review, reasons=tuple(r for r in (reason,) if r), **common
+            triage=Triage.unknown, reasons=tuple(r for r in (reason,) if r), **common
         )
 
     if allowed is None:
@@ -297,10 +382,23 @@ def screen(
     if any(CHECK_FIELD.get(name, name) in REQUIRED_FIELDS for name in unchecked):
         reasons.append(STANDARD_NOT_ENCODED)
 
-    if any(c.verdict is Verdict.fails for c in checks):
+    if any(not o.available for o in outcomes):
+        # A verified standard the code offers no way around. Nothing still
+        # unencoded can rescue this — missing rules only ever add constraints.
         return Screening(triage=Triage.red, reasons=tuple(reasons), **common)
+
+    if outcomes:
+        # Definite failures, every one of them with a path. That is an answer,
+        # so it outranks whatever else is still missing: the gaps ride along in
+        # `reasons` and can only add asks, never remove this one.
+        return Screening(
+            triage=Triage.yellow, reasons=(*reasons, *_unconfirmed(outcomes)), **common
+        )
+
     if reasons or any(c.verdict is Verdict.tolerated for c in checks):
-        return Screening(triage=Triage.review, reasons=tuple(reasons), **common)
+        # Nothing definitely failed, and nothing can be certified either.
+        return Screening(triage=Triage.unknown, reasons=tuple(reasons), **common)
+
     return Screening(triage=Triage.green, reasons=(), **common)
 
 
@@ -328,18 +426,37 @@ def histogram(results: Sequence[Screening]) -> BindingHistogram:
     return BindingHistogram(counts)
 
 
+def backlog(results: Sequence[Screening]) -> dict[str, int]:
+    """Reason codes across a run, most common first — the encoding work queue.
+
+    Counted from ``reasons`` rather than from the UNKNOWN colour on purpose. A
+    lot can be YELLOW on a definite miss and still be missing an encoded
+    parking standard, and that gap is just as much work as one holding a lot in
+    UNKNOWN. Counting colours would hide it.
+    """
+    counts: dict[str, int] = {}
+    for r in results:
+        for reason in r.reasons:
+            counts[reason] = counts.get(reason, 0) + 1
+    return dict(sorted(counts.items(), key=lambda kv: (-kv[1], kv[0])))
+
+
 __all__ = [
     "GEOMETRY_UNREADABLE",
     "NO_FRONTAGE",
     "OPTIMISTIC_CHECKS",
+    "RELIEF_UNCONFIRMED",
     "STANDARD_NOT_ENCODED",
     "USE_NOT_ENCODED",
     "USE_PROHIBITED",
     "BindingHistogram",
     "LotFacts",
+    "ReliefPolicy",
     "RuleVerdict",
     "Screening",
+    "Tier",
     "Triage",
+    "backlog",
     "histogram",
     "screen",
 ]
