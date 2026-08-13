@@ -21,6 +21,9 @@ code:
     title: "Title 17 - Zoning"
     start: "ZONING"
     end: "STATUTORY"
+    # This publication is a scan with OCR text; layout mode shreds it into
+    # padded fragments ("authori z ed"). Plain mode reads it, OCR noise and all.
+    extraction: plain
 zones:
   R-10:
     section: ["17.08.", "17.16."]
