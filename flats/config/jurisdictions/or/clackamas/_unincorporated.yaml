@@ -13,6 +13,14 @@ ingest:
   zoning_layer: zoning_metro
   zone_field: ZONE
   strip_lowercase_suffix: false
+code:
+# The county publishes each ZDO section as inline page text; the slice cuts
+# the site navigation off both ends.
+- id: zdo.315
+  url: https://www.clackamas.us/planning/zdo315
+  title: Clackamas County ZDO Section 315 - Low Density Residential Districts (Tables 315-1/2/3)
+  start: "315.01 Purpose"
+  end: "Return to the Zoning and Development Ordinance main page"
 zones:
   R5:
     cite_default:
