@@ -12,8 +12,37 @@ ingest:
   zoning_layer: zoning_gresham
   zone_field: ZONE
   strip_lowercase_suffix: false
+code:
+  # The city hosts the Development Code as one PDF per section series,
+  # served plain (no impersonation). Layout extraction is clean (no
+  # fusing); 4.0100 and 7.0400 carry rotated figure text pypdf warns
+  # about and skips. The dimensional tables (4.0120/4.0130/4.0131) are
+  # spatial grids with housing-type rows under lettered group headings
+  # -- the housing-type dimension, explicit.
+  - id: "4.0100.residential"
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
+    title: "Section 4.0100 - Residential Land Use Districts"
+  - id: "4.0400.corridor"
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0400.pdf
+    title: "Section 4.0400 - Corridor Land Use Districts"
+  - id: "4.1100.downtown"
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
+    title: "Section 4.1100 - Downtown Land Use Districts"
+  - id: "4.1300.gresham-butte"
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1300.pdf
+    title: "Section 4.1300 - Gresham Butte Plan District"
+  - id: "4.1400.pleasant-valley"
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1400.pdf
+    title: "Section 4.1400 - Pleasant Valley Plan District"
+  - id: "4.1500.springwater"
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1500.pdf
+    title: "Section 4.1500 - Springwater Plan District"
+  - id: "7.0400.middle-housing-design"
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+    title: "Section 7.0400 - Middle Housing Design Standards"
 zones:
   LDR-5:
+    section: ["4.01", "7.042"]
     cite_default:
       cite: Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
@@ -27,6 +56,7 @@ zones:
     notes: 'quadfit confidence: verified | Quadplex P outright. Rear w/ alley 8 ft (not modeled). FAR
       1.0. Height 35 ft.'
   LDR-7:
+    section: ["4.01", "7.042"]
     cite_default:
       cite: Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
@@ -40,6 +70,7 @@ zones:
     notes: 'quadfit confidence: verified | Min lot 7,000 sf. FAR 0.7 (tightest in city; still >1,000 sf
       building on min lot).'
   TLDR:
+    section: ["4.01", "7.042"]
     cite_default:
       cite: Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
@@ -52,6 +83,7 @@ zones:
     notes: 'quadfit confidence: verified | NO minimum lot size, no FAR, no max density — most permissive
       LDR-family zone.'
   TR:
+    section: ["4.01", "7.042"]
     cite_default:
       cite: Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
@@ -64,6 +96,7 @@ zones:
     min_lot_sqft: 4000
     notes: 'quadfit confidence: verified | Min lot 4,000 sf. FAR 1.0.'
   LDR-PV:
+    section: ["4.14", "7.042"]
     cite_default:
       cite: Gresham Development Code Tables 4.1413/4.1415A/4.1415B (Pleasant Valley); 7.0420
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1400.pdf
@@ -76,6 +109,7 @@ zones:
     min_lot_sqft: 5000
     notes: 'quadfit confidence: verified | Pleasant Valley plan district. Rear 10 ft (vs 15 in base LDR).'
   LDR-SW:
+    section: ["4.15", "7.042"]
     cite_default:
       cite: Gresham Development Code Tables 4.1507/4.1508 (Springwater); 7.0420
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1500.pdf
@@ -89,6 +123,7 @@ zones:
     notes: 'quadfit confidence: verified | Springwater. Min lot width 45 ft, min depth 80 ft (not separately
       modeled — envelope test dominates).'
   MDR-12:
+    section: ["4.01", "7.042"]
     cite_default:
       cite: Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
@@ -102,6 +137,7 @@ zones:
     notes: 'quadfit confidence: verified | Interior side 10 ft; street-side wall 20 ft (corner lots modeled
       at max(F, street-side)).'
   MDR-24:
+    section: ["4.01", "7.042"]
     cite_default:
       cite: Gresham Development Code Tables 4.0120/4.0130 n.5/4.0131; Sec 3.0103
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
@@ -116,6 +152,7 @@ zones:
       waived for existing lots of record; but middle housing COUNTS toward max density here (24.2 u/ac):
       4 units need ~7,200 sf net — encoded as min_lot_sqft (approximation, net≈gross for existing lots).'
   DRL-1:
+    section: ["4.11", "7.042"]
     cite_default:
       cite: Gresham Development Code Tables 4.1120/4.1130 (Downtown); 7.0420(J)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
@@ -131,6 +168,7 @@ zones:
       (7.0420(J)) effectively force the long axis parallel to the street — axis_required. Max-front-setback
       placement band not modeled (blind spot).'
   DRL-2:
+    section: ["4.11", "7.042"]
     cite_default:
       cite: Gresham Development Code Tables 4.1120/4.1130 (Downtown); 7.0420(J)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
@@ -144,6 +182,7 @@ zones:
     orientation_constraint: axis_required
     notes: 'quadfit confidence: verified | Same as DRL-1; height 50 ft.'
   CMF:
+    section: ["4.04", "7.042"]
     cite_default:
       cite: Gresham Development Code Tables 4.0420/4.0430 (Corridor); 7.0420(J)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0400.pdf
@@ -161,6 +200,7 @@ zones:
       follow TLDR standards instead (Table 4.0430 n.14) — NOT split out; base regime applied everywhere
       = conservative.'
   LDR/GB:
+    section: ["4.13"]
     cite_default:
       cite: Gresham Development Code 4.1310 (Gresham Butte)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1300.pdf
@@ -169,6 +209,7 @@ zones:
     notes: 'quadfit confidence: verified | Quadplexes explicitly prohibited in Gresham Butte overlay (hillside/fire
       risk); duplex max.'
   THR-SW:
+    section: ["4.15"]
     cite_default:
       cite: Gresham Development Code Table 4.1507 (Springwater)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1500.pdf

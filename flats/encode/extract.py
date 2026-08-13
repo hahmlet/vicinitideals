@@ -106,12 +106,14 @@ _DEFINITION = re.compile(r"\b(means|is defined as|for the purposes of|see (?:sec
 #: case-insensitive — so a sentence starting "The 10.25 acre site" or
 #: "and 40.100" never reads as a heading.
 _SECTION = re.compile(
-    r"^(?:(?:Sec(?:tion|\.)?|(?-i:[A-Z]{2,4}))\s+)?(?P<sec>\d{1,3}\.\d{2,3}(?:\.\d{1,4})?)\b", re.I
+    # The second component runs to four digits for Gresham, which numbers
+    # sections "4.0101" — three was the corpus maximum until it was not.
+    r"^(?:(?:Sec(?:tion|\.)?|(?-i:[A-Z]{2,4}))\s+)?(?P<sec>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)\b", re.I
 )
 #: Cross-references, table and figure names. Their digits are addresses, not
 #: sizes — "See Figures 110-2 and 110-3" contains no standard whatsoever.
 _CITATION = re.compile(
-    r"\b\d{1,3}\.\d{2,3}(?:\.\d{1,4})?\b"  # 33.110.265
+    r"\b\d{1,3}\.\d{2,4}(?:\.\d{1,4})?\b"  # 33.110.265, 4.0130
     r"|\b(?:Table|Figure|Map)s?\s+\d+-\d+\b"  # Table 110-4
     r"|\b\d{1,3}-\d{1,3}\b",  # a bare hyphenated pair is an identifier
     re.I,

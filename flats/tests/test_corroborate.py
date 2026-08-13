@@ -403,3 +403,13 @@ The minimum front yard setback for a cottage cluster is 10 feet.
 
     assert front.verdict is Verdict.agrees
     assert front.found == (20,)
+
+
+def test_a_four_digit_section_number_is_still_a_heading() -> None:
+    # Gresham numbers sections "4.0101" — four digits after the dot, one more
+    # than the corpus maximum until it was not. Unread, every paragraph in its
+    # Development Code lands in whatever section was last seen.
+    from flats.encode.extract import _SECTION
+
+    assert _SECTION.match("4.0101 PURPOSE").group("sec") == "4.0101"
+    assert _SECTION.match("33.110.220 Development Standards").group("sec") == "33.110.220"
