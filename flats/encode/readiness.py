@@ -59,7 +59,7 @@ ACTION = {
     "no_zones": "encode this jurisdiction's zones: nothing is written yet",
     "no_source": "find the URL that serves the ordinance text, and declare it under `code:`",
     "unfetched": "python -m flats.provenance.fetch --layer {layer}",
-    "unquoted": "add quotes: a value pointing at no text cannot be reviewed",
+    "unquoted": "python -m flats.encode.attach {layer} --doc {doc} (what it refuses, quote by hand)",
     "no_evidence": "python -m flats.provenance.fetch --layer {layer} (quotes point at text that is not stored)",
     "unsigned": "python -m flats.encode.review queue --layer {layer}, then read and sign",
     "stale": "re-read the values whose source moved, then re-sign",
@@ -85,6 +85,10 @@ class Readiness:
     no_evidence: tuple[tuple[str, str], ...] = ()
     #: Values demoted because their evidence moved.
     stale: int = 0
+    #: A declared document, for actions that name one. The first is as good as
+    #: any: a jurisdiction with several is one where somebody has to choose,
+    #: and printing all of them would bury the sentence.
+    doc: str = ""
 
     @property
     def rung(self) -> int:
@@ -100,7 +104,7 @@ class Readiness:
 
     @property
     def action(self) -> str:
-        return ACTION[self.stage].format(layer=self.layer)
+        return ACTION[self.stage].format(layer=self.layer, doc=self.doc or "<document>")
 
     def line(self) -> str:
         return (
@@ -187,6 +191,7 @@ def readiness_for(
         unquoted=tuple(unquoted),
         no_evidence=tuple(no_evidence),
         stale=stale,
+        doc=next(iter(layer.documents()), ""),
     )
 
 

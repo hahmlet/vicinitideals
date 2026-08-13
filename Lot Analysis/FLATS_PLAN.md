@@ -1234,3 +1234,67 @@ This is the surface the two remaining consumers read. A review UI renders the
 ladder as its landing page; an agent picking up encoding work asks it what to do
 next. Neither has to be told the order of operations, because the order is in the
 data.
+
+---
+
+## 20. A number with no sentence behind it
+
+The ladder put Portland and Fairview on `unquoted`: 93 values stating a standard
+and pointing at no text. They arrived through the quadfit port, which carried
+numbers and not citations. In that state a value is not merely unverified — it is
+**unreviewable**, because the reviewer has nothing to read.
+
+Re-reading a chapter to re-find a number somebody already read is the wrong shape
+of work when the document is in the store and §12's corroborator is already
+matching encoded values against it. So `flats.encode.attach` closes that loop:
+where corroboration says *the document states this number for this zone*, the line
+it matched on is written into the file.
+
+```
+python -m flats.encode.attach or/multnomah/portland \
+    --doc or/multnomah/portland/33.110.txt --apply
+```
+
+**It attaches a quote. It does not verify anything.** A quote is where to look,
+not evidence that somebody looked; the value stays a draft and stays on the review
+queue. The whole gain is that the queue entry is now answerable in thirty seconds
+instead of an afternoon.
+
+### The refusals are the module
+
+A wrong quote is worse than no quote, because the number and the sentence get
+checked against each other and against nothing else — a citation aimed at the
+wrong line manufactures agreement. So:
+
+| refusal | why |
+|---|---|
+| never overwrites an existing quote | that is a reading somebody made; repointing it moves a citation with nobody deciding to |
+| zone-keyed evidence only | a sentence in a fifty-page chapter does not say which zone it belongs to. Table columns and single-zone chapters do |
+| refuses when the document states two numbers | that is a base case and an exception (§16). Quoting the base hides the exit |
+| refuses footnoted numbers | same, even when the number itself agrees |
+| refuses when the document contradicts the file | and says so loudly — one of the two is wrong, which is a reading question, not a citation to staple on |
+
+**Comments in the rule file survive.** The edit is textual rather than a re-dump of
+parsed YAML, because those comments record things nothing else holds — why *this*
+URL is the one serving the ordinance and not the landing page above it. The edited
+text is parsed and compared against the same transform applied to the parsed
+document before anything is written; a mis-aimed edit fails loudly instead of
+quietly rewriting a rule file.
+
+### What it reached, and what it could not
+
+Portland: **20 of 31** unquoted values now cite the table row that states them —
+Table 110-3's setback rows and the triplex/fourplex minimum-lot-area table. The
+11 it left are `quadplex_allowed` and `coverage_curve`: a boolean and a tiered
+table, neither of which any reader can state as one number, so no machine gets a
+vote on them.
+
+Fairview: **1 of 51.** Chapter 19.115 is the VSF chapter, and VSF's dimensional
+standards are *in Chapter 19.30* — the incorporation §17 exists for. Attaching
+cannot invent evidence that is in a document nobody has fetched. It refused VSF's
+rear setback outright, correctly: the chapter states 15 ft. basic and 50 ft. from
+Fairview Creek's centerline, which is a variant pair and not a number.
+
+That split is the honest picture of where the corpus is. Roughly a fifth of the
+unquoted backlog was mechanical and is done; the rest is either a document nobody
+has declared yet (§18) or a rule that needs a person.

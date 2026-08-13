@@ -290,3 +290,25 @@ def test_the_line_names_the_command_that_unblocks_it(bench: dict) -> None:
 
     assert PORTLAND in line
     assert "flats.provenance.fetch --layer" in line
+
+
+def test_the_unquoted_action_names_the_document_to_read_from(bench: dict) -> None:
+    # "add quotes" is advice; naming the document and the tool is an action.
+    # A jurisdiction with no declared document cannot be on this rung at all,
+    # so there is always one to name.
+    city(bench, CODE + CITE + "zones:\n  R5:\n    setback_front_ft: 10\n")
+    evidence(bench)
+
+    r = report(bench)
+
+    assert r.stage == "unquoted"
+    assert DOC in r.action
+    assert "flats.encode.attach" in r.action
+
+
+def test_a_jurisdiction_with_no_document_still_renders_an_action(bench: dict) -> None:
+    city(bench, CITE + "zones:\n  R5:\n    setback_front_ft: 10\n")
+
+    # no_source names no document, and formatting must not blow up reaching for
+    # one that does not exist.
+    assert "code:" in report(bench).action

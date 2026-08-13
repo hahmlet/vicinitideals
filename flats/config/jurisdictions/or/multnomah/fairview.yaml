@@ -113,7 +113,9 @@ zones:
     setback_rear_ft: 15
     setback_street_side_ft: 10
     min_lot_sqft: 4000
-    max_coverage_pct: 60
+    max_coverage_pct:
+      value: 60
+      quote: "or/multnomah/fairview/19.115.txt#L39"
     notes: 'quadfit confidence: needs_verification | Code sides: 4 ft one / 5 ft opposite (combined 9)
       — modeled uniform 4.5 (exact max width). Front is ''either 10 or 15 ft''. Quadplex use flows in
       via amended 19.30.020 linkage (the needs_verification part). Village design standards apply.'
