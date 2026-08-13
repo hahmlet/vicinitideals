@@ -1668,3 +1668,58 @@ those — it is to make the refusal name the row it could not claim.
 Net effect of the two readers: 66 quotes attached in one session — Gladstone
 12, West Linn 40, Wood Village 14 — every one pointing at the line its number
 is printed on.
+
+## 26. The housing-type dimension, row-level
+
+Three cities named the same missing axis before it was built: a table that
+states one standard per heading and one row per *housing type* under it.
+Gresham's Table 4.0130 is the pure case — "B. Minimum Lot Size" over rows
+labelled Duplex, Townhouse, All other uses — and it is now the first shape of
+that dimension the readers handle. Getting there took four reader facts, each
+a property of how Gresham prints the table rather than of the dimension:
+
+1. **The bare header.** The zone columns have no label cell over the row
+   labels — the header line is nothing but district names. A header of ≥2
+   cells that are all zone codes, at least one carrying a digit, now anchors
+   a table (the digit rule keeps a wrapped row of "NA NA NA" from becoming
+   three districts).
+2. **Lettered group headings.** "B. Minimum Lot Size2" ends with no colon, so
+   it used to glue onto the previous row as a label continuation. A lettered
+   or numbered heading with no cells beside it (≤12 words, no trailing
+   period — footnotes are longer and close like sentences) now scopes the
+   rows below it, exactly as a colon heading does.
+3. **Glued footnotes.** A PDF superscript loses its baseline: "35 ft.12",
+   "16 ft.7". The number after the unit is now a footnote mark, the value
+   stays conditional, and a mark whose definition was not captured yields a
+   placeholder note rather than a silent promotion to unconditional.
+4. **Corner sub-groups.** "2. Width at building line: Corner lot" is the
+   corner variant of a standard this system states once; the stacked reader's
+   corner rule now applies here too — inside a corner block only the
+   street-side setback is at home.
+
+The framework piece is **selection**, and it encodes a fact about the pod that
+no reader can: a 4-unit attached townhome can be permitted as a *quadplex on
+one lot* or as *four townhouse lots*, and jurisdictions file the same building
+under either word. Both classifications speak for the pod. "All other uses"
+speaks too — quadplexes are usually in it implicitly — *until* some row of the
+same field names quadplexes explicitly, at which point "other" provably
+excludes them and falls silent. A row naming only other types (a duplex's lot
+width) is never evidence. And when the two plat paths state different numbers
+— Gresham's townhouse lot width is 16 ft. where the quadplex compound row says
+35 — both survive, the field reads as multi-value, and attach refuses: the
+plat-path choice is a decision for a person, not a coin flip in a reader.
+
+What it bought immediately: Gresham's minimum lot sizes corroborated and
+quoted for LDR-5, LDR-7, MDR-12, TR off the "All other uses" row (quadplexes
+unnamed in that group, so the row is theirs), with MDR-24 honestly unsupported
+— its default cell reads "None". What refuses now names the dimension's next
+two shapes: Troutdale's grid-per-type family ("read the townhouse *table*")
+and Wood Village's MR columns ("read the townhouse *column*"), plus Gresham's
+own Table 4.0131, a third arrangement (housing-type blocks over zone-group
+rows under two-tier column headers) that no reader claims yet.
+
+A limitation worth stating: a "None" cell produces no candidate, so a
+townhouse row whose standard is *no minimum* cannot veto the default row
+beside it. The encoded file's plat-path choice is what makes that safe —
+Gresham's values model the quadplex path, for which the default row is the
+right one — and the reviewer, not the reader, owns that choice.

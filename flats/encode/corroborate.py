@@ -144,6 +144,9 @@ def check_zone(
             if best:
                 by_field[name] = best
                 break
+    by_field = {
+        name: kept for name, cands in by_field.items() if (kept := _select_housing(cands))
+    }
 
     out: list[Finding] = []
     for name, value in sorted(values.items()):
@@ -189,6 +192,43 @@ def check_zone(
             )
         )
     return out
+
+
+#: The use classifications a 4-unit attached townhome pod can be permitted
+#: under. Both are real and jurisdiction-dependent: Gresham's quadfit-era
+#: values model the pod as a quadplex on one lot, while Troutdale's table
+#: family files the same building under "Townhouse dwellings". Selection
+#: keeps every row either classification claims; when the two paths state
+#: different numbers, both survive, the field reads as multi-value, and
+#: attach refuses — the plat-path choice is a decision, not a coin flip.
+_POD_TYPES = frozenset({"quadplex", "townhouse", "all"})
+
+
+def _select_housing(candidates: Sequence) -> list:
+    """The candidates that speak for the pod when a table stratifies by type.
+
+    Untyped candidates pass through untouched — most tables state one number
+    per zone and this function is not about them. A typed candidate survives
+    when its types intersect the pod's. "All other uses" is the subtle one:
+    quadplexes are usually in it *implicitly*, so it speaks for the pod —
+    until some row of the same field names quadplexes explicitly, at which
+    point "other" provably excludes them and the row falls silent. A row
+    naming only other types (a duplex's lot width) never counts: it is not
+    evidence for or against the pod's standard, and letting it corroborate
+    one turns the check into a coincidence detector.
+    """
+    typed = [c for c in candidates if getattr(c, "housing_type", "")]
+    if not typed:
+        return list(candidates)
+    explicit_quadplex = any("quadplex" in c.housing_type.split("+") for c in typed)
+    kept = []
+    for c in typed:
+        types = set(c.housing_type.split("+"))
+        if types & _POD_TYPES:
+            kept.append(c)
+        elif "default" in types and not explicit_quadplex:
+            kept.append(c)
+    return kept + [c for c in candidates if not getattr(c, "housing_type", "")]
 
 
 def _notes(candidates: Sequence) -> tuple[str, ...]:

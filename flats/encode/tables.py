@@ -137,8 +137,18 @@ class Table:
     note_lines: dict[int, int] = dc_field(default_factory=dict)
 
     def notes_for(self, row: Row, zone: str) -> tuple[str, ...]:
-        """The footnote texts attached to one zone's cell in one row."""
-        return tuple(self.notes[n] for n in row.marks_for(zone) if n in self.notes)
+        """The footnote texts attached to one zone's cell in one row.
+
+        A mark whose definition was not captured still yields a note — a
+        placeholder naming the number. The mark is the table saying this cell
+        has a condition; losing the text is a reading failure, and quietly
+        promoting the number to unconditional would encode a standard the
+        code does not state.
+        """
+        return tuple(
+            self.notes.get(n, f"footnote {n} (text not captured)")
+            for n in row.marks_for(zone)
+        )
 
     def __iter__(self):
         return iter(self.rows)
@@ -182,6 +192,10 @@ def _slots(line: str) -> tuple[str | None, ...]:
     offsets — without them the fifth cell looks like the fifth zone.
     """
     found = _cells(line)
+    if found and _ZONE.match(found[0][1]):
+        # A bare header has no label cell: its first cell is the first zone's
+        # column, and dropping it would shift every row one zone left.
+        return tuple(text if _ZONE.match(text) else None for _, text in found)
     return tuple(text if _ZONE.match(text) else None for _, text in found[1:])
 
 
@@ -196,7 +210,20 @@ def header(line: str) -> tuple[str, tuple[Column, ...]] | None:
     gate nobody applies.
     """
     found = _cells(line)
-    if not found or not _HEADER_HINT.search(found[0][1]):
+    if not found:
+        return None
+    if not _HEADER_HINT.search(found[0][1]):
+        # Gresham's header is nothing but district names — no "Standard", no
+        # label cell at all. All cells must be zone codes, and at least one
+        # must carry a digit: "NA  NA  NA" is a row of empty cells whose label
+        # wrapped onto another line, and _ZONE cannot tell it from a district.
+        zones = [Column(text, offset) for offset, text in found if _ZONE.match(text)]
+        if (
+            len(zones) >= 2
+            and len(zones) == len(found)
+            and any(any(ch.isdigit() for ch in c.zone) for c in zones)
+        ):
+            return ZONES_ACROSS, tuple(zones)
         return None
     rest = found[1:]
     zones = [Column(text, offset) for offset, text in rest if _ZONE.match(text)]
@@ -451,7 +478,7 @@ def _read_span(lines: Sequence[str], first: int, last: int, start_line: int) -> 
                 if label is None:
                     continue
                 down.setdefault(label, {})[zone_code] = (
-                    _FOOTNOTE.sub("", cell),
+                    _unglue(_FOOTNOTE.sub("", cell))[0],
                     n,
                     _marks(cell),
                 )
@@ -478,7 +505,7 @@ def _read_span(lines: Sequence[str], first: int, last: int, start_line: int) -> 
                     continue
                 placed.append((zone, cell))
         for zone, cell in placed:
-            value = _FOOTNOTE.sub("", cell)
+            value = _unglue(_FOOTNOTE.sub("", cell))[0]
             if _marks(cell):
                 marks[zone] = _marks(cell)
             if zone in values and values[zone] != value:
@@ -489,6 +516,20 @@ def _read_span(lines: Sequence[str], first: int, last: int, start_line: int) -> 
             values[zone] = value
 
         joined = " ".join(label_parts).strip()
+        if (
+            not values
+            and _GROUP_HEAD.match(joined)
+            and len(joined.split()) <= _GROUP_WORDS
+            and not joined.endswith(".")
+        ):
+            # "B. Minimum Lot Size2" — Gresham letters its group headings down
+            # the table with no colon in sight. Without this branch the heading
+            # glues onto the previous row's label as a continuation, and every
+            # housing-type row after it keeps the wrong group. The word cap and
+            # the no-period rule keep footnote text out: "8. Abuts an alley:
+            # 16 feet; ..." is a condition, not a heading.
+            group = joined
+            continue
         if joined.endswith(":"):
             # "Setbacks (ft):" — a heading, not a row, whatever stray cells
             # sit beside it. It scopes every row after it (across page breaks,
@@ -533,9 +574,28 @@ def _read_span(lines: Sequence[str], first: int, last: int, start_line: int) -> 
     return Table(rows=tuple(rows), notes=notes, note_lines=note_lines)
 
 
+#: A footnote number glued straight onto the unit — "35 ft.12", "16 ft.7",
+#: "20,000 sq. ft.1". A PDF superscript loses its baseline in extraction and
+#: lands inline; reading the prefix and dropping the digits would encode the
+#: base case of a conditional standard as if the condition did not exist.
+#: Anchored on the unit so a decimal never donates its fraction: "7.5 ft"
+#: has no digits after the unit, and "35 ft.12" cannot be 35.12 because the
+#: number a unit follows is already complete.
+_GLUED_NOTE = re.compile(r"^(?P<body>.*?(?:sq\.?\s*ft\.?|ft\.|feet|%))\s?(?P<n>\d{1,2})$")
+
+
+def _unglue(cell: str) -> tuple[str, tuple[int, ...]]:
+    """A cell with any glued footnote split off: ("35 ft.", (12,))."""
+    m = _GLUED_NOTE.match(cell.strip())
+    if m:
+        return m.group("body"), (int(m.group("n")),)
+    return cell, ()
+
+
 def _marks(cell: str) -> tuple[int, ...]:
     """Footnote numbers on a cell, in the order they appear."""
-    return tuple(int(m.group("n")) for m in _FOOTNOTE.finditer(cell))
+    bracketed = tuple(int(m.group("n")) for m in _FOOTNOTE.finditer(cell))
+    return bracketed or _unglue(cell)[1]
 
 
 def measure(raw: str) -> tuple[float, str] | None:
@@ -597,6 +657,49 @@ def _measure_bare(cell: str, label: str, group: str) -> tuple[float, str] | None
     u = unit.group("u").lower().replace(" ", "").rstrip(".")
     kind = "sqft" if u.startswith("sq") else "pct" if u in ("%", "percent") else "ft"
     return float(m.group("n").replace(",", "")), _UNIT_KIND[kind]
+
+
+#: A lettered or numbered heading with no cells beside it — "B. Minimum Lot
+#: Size2", "2. Section 7.0400 Rear Height Limits". The letter is the giveaway;
+#: rows never print one.
+_GROUP_HEAD = re.compile(r"^(?:[A-Z]|\d{1,2})\.\s+\S")
+#: Longest a group heading may run. Gresham's wordiest is eleven words
+#: ("C. Minimum Net Density3 (See definition of Net Density in Article 3)");
+#: its footnotes run longer, and a footnote taken as a heading scopes every
+#: row after it to a sentence.
+_GROUP_WORDS = 12
+
+#: Row labels that name who a standard is for rather than what it is —
+#: "Townhouse", "Duplex", "All other uses" under a heading like "B. Minimum
+#: Lot Size". A compound label ("Duplex, Triplex, Quadplex, and Cottage
+#: Cluster") is tagged with every type it names, "+"-joined, because which
+#: member matters is selection's question — a row that includes quadplexes
+#: is the pod's row no matter what it is listed alongside. A label with
+#: "except" in it is refused outright — "All uses except X" applies to the
+#: pod only if X is not the pod, and deciding that from a row label is how a
+#: standard gets applied to the exact type it excludes.
+_HOUSING_TYPES: tuple[tuple[re.Pattern[str], str], ...] = (
+    (re.compile(r"\btown\s?(?:house|home)s?\b|\brow\s?houses?\b", re.I), "townhouse"),
+    (re.compile(r"\ball other uses?\b|\ball others?\b|\bother uses\b", re.I), "default"),
+    (re.compile(r"\ball (?:residential )?uses\b", re.I), "all"),
+    (re.compile(r"\bsingle[ -](?:family[ -])?detached\b", re.I), "single_detached"),
+    (re.compile(r"\bduplex(?:es)?\b", re.I), "duplex"),
+    (re.compile(r"\btriplex(?:es)?\b", re.I), "triplex"),
+    (re.compile(r"\b(?:quad|four)-?plex(?:es)?\b", re.I), "quadplex"),
+    (re.compile(r"\bcottage\s+clusters?\b", re.I), "cottage_cluster"),
+    (re.compile(r"\bmulti-?family\b|\bapartments?\b", re.I), "multifamily"),
+    (re.compile(r"\bmanufactured\b|\bmobile\s+home\b", re.I), "manufactured"),
+)
+
+_EXCEPT = re.compile(r"\bexcept\b", re.I)
+
+
+def _housing_type(label: str) -> str | None:
+    """Every canonical housing type a row label names, "+"-joined, or None."""
+    if _EXCEPT.search(label):
+        return None
+    found = [name for pattern, name in _HOUSING_TYPES if pattern.search(label)]
+    return "+".join(found) if found else None
 
 
 #: A pair group heading mentions setbacks and carries no number of its own —
@@ -922,12 +1025,29 @@ def candidates_for(table: Table | Iterable[Row], zone: str, *, path: str) -> lis
     table = table if isinstance(table, Table) else Table(rows=tuple(table))
     out: list[Candidate] = []
     for row in table.rows:
+        htype = ""
         name = _subject(row.label)
         if name is None and "setback" in row.group.lower():
             # "Front yard" under "Setbacks (ft.):" — the group heading, not
             # the row label, is what says these are setbacks at all.
             name = _GROUPED_SUBJECTS.get(row.label.strip(" .").lower())
         if name is None:
+            # "Townhouse" under "B. Minimum Lot Size2" — the row names who the
+            # standard is for and the group heading names the standard. The
+            # candidate is tagged with the type; whether that type speaks for
+            # the pod is selection's decision, not the reader's.
+            found_type = _housing_type(row.label)
+            if found_type:
+                name = _subject(row.group)
+                htype = found_type if name else ""
+        if name is None:
+            continue
+        if _CORNER_BLOCK.search(row.group) and name != "setback_street_side_ft":
+            # "2. Width at building line: Corner lot" — the corner variant of
+            # a standard this system states once. Same rule as the stacked
+            # reader: inside a corner block only the street-side setback is
+            # at home; everything else is a variant that would sit beside the
+            # interior value as a bogus second reading.
             continue
         parsed = measure(row.value_for(zone)) or _measure_bare(
             row.value_for(zone), row.label, row.group
@@ -947,6 +1067,7 @@ def candidates_for(table: Table | Iterable[Row], zone: str, *, path: str) -> lis
                 quote=f"{path}#L{row.line_for(zone)}",
                 source="table",
                 notes=table.notes_for(row, zone),
+                housing_type=htype,
             )
         )
     return out

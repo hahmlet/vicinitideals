@@ -53,7 +53,10 @@ _SUBJECTS: tuple[tuple[str, str], ...] = (
     (r"(?:interior )?side (?:building |yard )?setback", "setback_side_ft"),
     (r"rear (?:building |yard )?setback", "setback_rear_ft"),
     (r"lot (?:area|size)", "min_lot_sqft"),
-    (r"lot width", "min_lot_width_ft"),
+    # "Width at building line" is Gresham's name for lot width — the heading
+    # "E. Minimum Lot Width" is real but its sub-headings replace it as the
+    # group, and they say "1. Width at building line: Interior lot" instead.
+    (r"lot width|width at building line", "min_lot_width_ft"),
     (r"(?:street )?frontage", "min_frontage_ft"),
     (r"(?:building )?height", "max_height_ft"),
     (r"floor area ratio|\bFAR\b", "max_far"),
@@ -78,7 +81,13 @@ _EXCEPTION = re.compile(
     # "the front building setback may be reduced to 10 feet" states a number
     # that is not the standard, and reading it as one understates the setback
     # on every lot in the zone.
-    r"|may be reduced|is reduced|may extend|is lowered|is allowed if|may be increased)\b",
+    # "shall not be employed where ..." — Gresham's zero-lot-line side yard
+    # provision. The clause prohibits a special setback and then states the
+    # 5-foot fallback for when it cannot be used; neither number is the base
+    # standard, and reading the fallback as one contradicts every zone whose
+    # real side setback is larger.
+    r"|may be reduced|is reduced|may extend|is lowered|is allowed if|may be increased"
+    r"|shall not be employed)\b",
     re.I,
 )
 #: An outline heading that puts everything under it in exception scope.
@@ -149,6 +158,12 @@ class Candidate:
     #: that state standards in prose per zone: the heading is the only thing
     #: saying whose setback this is.
     section: str = ""
+    #: The housing type the row was written for — "townhouse", "duplex",
+    #: "default" ("All other uses") — when the table stratifies a standard by
+    #: type rather than stating one number per zone. Empty for ordinary rows.
+    #: A typed value is not the zone's standard; it is one housing type's, and
+    #: which type speaks for the pod is decided at selection, not here.
+    housing_type: str = ""
 
     @property
     def conditional(self) -> bool:
@@ -468,20 +483,10 @@ def _mark(candidates: Iterable[Candidate]) -> list[Candidate]:
     listed = list(candidates)
     for c in listed:
         values.setdefault(c.field, set()).add(float(c.value))
-    return [
-        Candidate(
-            c.field,
-            c.value,
-            c.line,
-            c.text,
-            c.quote,
-            conflict=len(values[c.field]) > 1,
-            source=c.source,
-            notes=c.notes,
-            section=c.section,
-        )
-        for c in listed
-    ]
+    # ``replace`` rather than a positional rebuild: the rebuild silently
+    # dropped every field it did not name, which is how housing_type vanished
+    # between the reader and the checker the day it was added.
+    return [replace(c, conflict=len(values[c.field]) > 1) for c in listed]
 
 
 def to_yaml(extraction: Extraction, *, zone: str, cite: str, url: str, retrieved: str) -> str:
