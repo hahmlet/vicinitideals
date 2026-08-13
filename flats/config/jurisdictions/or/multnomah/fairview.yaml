@@ -12,6 +12,12 @@ ingest:
   zoning_layer: zoning_metro
   zone_field: ZONE
   strip_lowercase_suffix: false
+code:
+  # Code Publishing refuses a plain request and accepts curl-cffi impersonating
+  # chrome124 — measured, not reasoned about. See flats/provenance/sources.py.
+  - id: "19.115"
+    url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19115.html
+    title: Chapter 19.115 VSF Village Single-Family Residential
 zones:
   R-6:
     cite_default:

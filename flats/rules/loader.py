@@ -29,6 +29,7 @@ from flats.rules.fields import field
 from flats.rules.model import (
     LAYER_META,
     ZONE_META,
+    CodeDocument,
     Incorporation,
     Layer,
     Provenance,
@@ -272,6 +273,36 @@ def _parse_like(
         return None
 
 
+def _parse_code(raw: Any, where: str, problems: list[str]) -> tuple[CodeDocument, ...]:
+    """Parse a layer's declaration of which documents hold its code."""
+    if not raw:
+        return ()
+    if not isinstance(raw, list):
+        problems.append(f"{where}.code: expected a list of documents")
+        return ()
+
+    out: list[CodeDocument] = []
+    seen: set[str] = set()
+    for i, node in enumerate(raw):
+        at = f"{where}.code[{i}]"
+        if not isinstance(node, dict):
+            problems.append(f"{at}: expected a mapping with 'id' and 'url'")
+            continue
+        try:
+            doc = CodeDocument(**node)
+        except Exception as exc:
+            problems.append(f"{at}: {_terse(exc)}")
+            continue
+        if doc.id in seen:
+            # Two entries would fetch to the same file, and the second would
+            # silently overwrite the first every run.
+            problems.append(f"{at}: document {doc.id!r} declared twice")
+            continue
+        seen.add(doc.id)
+        out.append(doc)
+    return tuple(out)
+
+
 def _terse(exc: Exception) -> str:
     """Pydantic errors are verbose; keep the message a reviewer can scan."""
     msg = str(exc).replace("\n", " ")
@@ -324,6 +355,7 @@ def load_layer(path: Path, root: Path, problems: list[str]) -> Layer | None:
             zones=zones,
             notes=raw.get("notes"),
             ingest=raw.get("ingest") or {},
+            code=_parse_code(raw.get("code"), where, problems),
         )
     except Exception as exc:
         problems.append(f"{where}: {_terse(exc)}")

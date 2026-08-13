@@ -31,6 +31,7 @@ override is what keeps it auditable. Both are required.
 from __future__ import annotations
 
 import enum
+import re
 from dataclasses import dataclass
 from datetime import date
 from typing import Any, Collection
@@ -58,12 +59,16 @@ class Status(str, enum.Enum):
         return self is Status.verified
 
 
+#: A Census GEOID prefix on a directory name, e.g. '4159000-portland'.
+_GEOID = re.compile(r"^\d{5,7}-")
+
 #: Meta keys permitted alongside field names inside a zone block.
 ZONE_META = frozenset({"zone", "cite_default", "notes", "clauses", "like"})
 #: Meta keys permitted at the top level of a jurisdiction/layer file.
 LAYER_META = frozenset(
     {
         "layer",
+        "code",
         "kind",
         "label",
         "eligible",
@@ -419,6 +424,46 @@ class Zone(BaseModel):
         return tuple(out)
 
 
+class CodeDocument(BaseModel):
+    """One document that holds part of a jurisdiction's code.
+
+    Which URL serves the actual ordinance text — as opposed to a landing page,
+    a table of contents, or a JavaScript shell — is per-jurisdiction knowledge
+    that somebody worked out once, usually by trying four of them. Leaving it
+    in the shell history of whoever was encoding that week is how a coverage
+    gap becomes permanent, and it is why nothing could re-fetch the corpus to
+    watch it for amendments.
+
+    So it is declared beside the rules it backs, and re-fetching a jurisdiction
+    is one command that needs no arguments.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    #: Chapter or section number, e.g. "33.110". Becomes the stored filename,
+    #: so it is what every quote in this jurisdiction points into.
+    id: str = Field(min_length=1)
+    url: str = Field(min_length=5)
+    title: str = ""
+    #: Literal marker where the stored slice begins. Codifier boilerplate churns
+    #: constantly and the ordinance rarely does, so storing the chapter rather
+    #: than the page is what keeps drift detection meaningful.
+    start: str = ""
+    end: str = ""
+    #: Which occurrence of ``start`` opens the slice. A chapter PDF lists every
+    #: section in its contents before printing any of them, so this is often 2.
+    nth: int = Field(default=1, ge=1)
+    #: Set only for a genuinely short section, and only by somebody who has read
+    #: it. Never to silence a URL that is serving the wrong thing.
+    allow_thin: bool = False
+
+    @model_validator(mode="after")
+    def _id_is_a_filename(self) -> CodeDocument:
+        if "/" in self.id or "\\" in self.id:
+            raise ValueError(f"document id {self.id!r} may not contain a path separator")
+        return self
+
+
 class Layer(BaseModel):
     """One node of the state → county → city hierarchy.
 
@@ -439,10 +484,32 @@ class Layer(BaseModel):
     #: Ingest hints — which GIS zoning layer and attribute carry this layer's
     #: zone codes. Not a zoning standard; kept beside them for locality.
     ingest: dict[str, Any] = Field(default_factory=dict)
+    #: The documents this jurisdiction's rules are read from.
+    code: tuple[CodeDocument, ...] = ()
 
     @property
     def depth(self) -> int:
         return self.layer.count("/")
+
+    @property
+    def doc_root(self) -> str:
+        """Where this layer's documents live in the provenance store.
+
+        Directory names carry a Census GEOID prefix so two Springfields can sit
+        side by side; the store drops it, because a quote is a thing a person
+        reads in a review queue and ``or/multnomah/portland/33.110.txt#L454``
+        is legible in a way the GEOID form is not.
+        """
+        return "/".join(part.split("-", 1)[-1] if _GEOID.match(part) else part
+                        for part in self.layer.split("/"))
+
+    def document_path(self, doc_id: str) -> str:
+        """Store path for one of this layer's documents."""
+        return f"{self.doc_root}/{doc_id}.txt"
+
+    def documents(self) -> dict[str, CodeDocument]:
+        """Declared documents keyed by the store path each lands at."""
+        return {self.document_path(d.id): d for d in self.code}
 
     def ancestors(self) -> list[str]:
         """Hierarchy paths from this layer up to the state root, most specific first."""

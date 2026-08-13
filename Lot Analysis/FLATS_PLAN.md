@@ -924,8 +924,8 @@ the coverage gap itself remains.
 
 **Landing pages are not documents.** Portland's HTML route for a chapter is furniture;
 the PDF is the artifact. Which URL holds the real text is per-jurisdiction knowledge
-and belongs in the layer's `ingest` block rather than in whoever is running the
-command.
+and belongs in the layer file rather than in whoever is running the command.
+**Built — see §18.**
 
 ### A structural gap the reading surfaced
 
@@ -1105,3 +1105,66 @@ unnoticed than the zone code is.
 Asking to review a borrowed field where it is not printed is refused with a pointer
 rather than a "no such field", because the number is not missing; it is somewhere
 else, and reviewing it here would mean reviewing a copy.
+
+
+---
+
+## 18. A jurisdiction says where its code is
+
+§15 found that one document in six came back usable, and that the knowledge of
+*which URL serves the actual ordinance* — as opposed to a landing page, a table of
+contents, or a JavaScript shell that renders one — lived nowhere but the shell
+history of whoever was encoding that week. Two consequences, both quiet:
+
+* a coverage gap someone already solved gets re-solved, or does not;
+* **nothing could re-fetch the corpus**, so nothing watched it for amendments. The
+  encoding was a snapshot of what the web looked like the week it was made, and its
+  signatures would go on standing over sentences that had since changed.
+
+So the layer file declares it, beside the rules it backs:
+
+```yaml
+code:
+  # Portland's HTML route for a chapter serves navigation furniture; the PDF is
+  # the artifact.
+  - id: "33.110"
+    url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+    title: Chapter 33.110 Single-Dwelling Zones
+
+  # Code Publishing refuses a plain request and accepts curl-cffi impersonating
+  # chrome124 — measured, not reasoned about. See flats/provenance/sources.py.
+  - id: "19.115"
+    url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19115.html
+    start: "19.115.010"     # slice to the section actually read
+    nth: 2                  # a chapter PDF lists its sections before printing them
+```
+
+The store path is derived — `{layer}/{id}.txt`, with the Census GEOID prefix dropped,
+because a quote is something a person reads in a review queue and
+`or/multnomah/portland/33.110.txt#L454` is legible where the GEOID form is not. So a
+quote written by hand and a document fetched by the registry land in the same place
+without anybody coordinating.
+
+```
+flats-fetch --layer or/multnomah          # a county brings its cities
+flats-fetch --all --check                 # the corpus watch: report drift, store nothing
+flats-fetch --audit                       # reconcile without fetching
+```
+
+A sweep does not stop on a bad document. The point of a corpus watch is the report at
+the end, and a run that halts on the first 403 tells you about one city instead of
+eighty.
+
+### Three sets that ought to agree
+
+`--audit` reconciles what is **declared**, what is **stored**, and what values actually
+**cite**. Each mismatch is a different job, and one "coverage" number would hide which:
+
+| | meaning | who owns it |
+|---|---|---|
+| `UNDECLARED` | a value cites a document nobody declared | **the loud one** — nothing will re-fetch it, so an amendment passes unnoticed while every value on it reads as verified |
+| `UNFETCHED` | declared, never stored | ordinary work: run the fetch |
+| `uncited` | stored, nothing points at it | usually a chapter fetched ahead of the encoding |
+
+Only the first two fail the audit. Fetching ahead of encoding is the normal order of
+work.

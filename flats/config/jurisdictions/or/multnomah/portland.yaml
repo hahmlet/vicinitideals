@@ -11,6 +11,12 @@ ingest:
   zoning_layer: zoning_portland
   zone_field: ZONE
   strip_lowercase_suffix: true
+code:
+  # Portland's HTML route for a chapter serves navigation furniture; the PDF is
+  # the artifact. Whole-chapter, unsliced: this one is already the chapter.
+  - id: "33.110"
+    url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+    title: Chapter 33.110 Single-Dwelling Zones
 zones:
   RF:
     cite_default:
