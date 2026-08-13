@@ -1,0 +1,263 @@
+"""The reviewer's tool.
+
+What is being tested is mostly what the tool refuses. A verification CLI that
+is easy to use carelessly is worse than none — it produces a log full of names
+attached to numbers nobody read, which is indistinguishable from real review
+and scales silently to every lot in the county.
+"""
+
+from __future__ import annotations
+
+from datetime import date
+from pathlib import Path
+
+import pytest
+
+from flats.encode.review import main
+from flats.encode.verify import VerificationLog
+from flats.provenance.store import ProvenanceStore
+from flats.rules.model import Status
+
+pytestmark = pytest.mark.unit
+
+PORTLAND = "or/multnomah/portland"
+DOC = "or/multnomah/portland/33.110.txt"
+TEXT = (
+    "33.110.220 Development Standards\n"
+    "The minimum front building setback is 10 feet.\n"
+    "The minimum side building setback is 5 feet.\n"
+)
+CITE = (
+    "cite_default:\n"
+    '  cite: "PCC 33.110.220, Table 110-4"\n'
+    '  url: "https://www.portland.gov/code/33/100s/110"\n'
+    "  retrieved: 2026-08-12\n"
+    f'  quote: "{DOC}#L2"\n'
+)
+
+
+@pytest.fixture()
+def bench(tmp_path: Path) -> dict:
+    """A rule file, its evidence, and an empty log — one reviewer's desk."""
+    root = tmp_path / "jurisdictions"
+    rules = root / f"{PORTLAND}.yaml"
+    rules.parent.mkdir(parents=True, exist_ok=True)
+    rules.write_text(
+        "label: Portland\n"
+        + CITE
+        + "zones:\n  R5:\n    setback_front_ft: 10\n    setback_side_ft: 5\n",
+        encoding="utf-8",
+    )
+    docs = tmp_path / "docs"
+    ProvenanceStore(docs).save(
+        DOC,
+        url="https://www.portland.gov/code/33/100s/110",
+        text=TEXT,
+        retrieved=date(2026, 8, 12),
+    )
+    return {
+        "root": root,
+        "docs": docs,
+        "log": tmp_path / "verifications.jsonl",
+        "rules": rules,
+    }
+
+
+def run(bench: dict, *argv: str) -> int:
+    return main(
+        [
+            "--root",
+            str(bench["root"]),
+            "--docs",
+            str(bench["docs"]),
+            "--log",
+            str(bench["log"]),
+            *argv,
+        ]
+    )
+
+
+def log(bench: dict) -> VerificationLog:
+    return VerificationLog.load(bench["log"])
+
+
+# --- reading before signing -------------------------------------------
+
+
+def test_show_puts_the_number_next_to_the_text_it_claims(bench: dict, capsys) -> None:
+    # The entire job, in one screen: 10 feet, and the sentence that says so.
+    assert run(bench, "show", PORTLAND, "R5", "setback_front_ft") == 0
+
+    out = capsys.readouterr().out
+    assert "value     10" in out
+    assert "minimum front building setback is 10 feet" in out
+
+
+def test_show_reports_a_value_with_no_evidence_stored(bench: dict, capsys) -> None:
+    bench["rules"].write_text(
+        bench["rules"].read_text(encoding="utf-8").replace(f'  quote: "{DOC}#L2"\n', ""),
+        encoding="utf-8",
+    )
+
+    assert run(bench, "show", PORTLAND, "R5", "setback_front_ft") == 1
+    assert "NO EVIDENCE" in capsys.readouterr().out
+
+
+def test_the_queue_lists_what_is_waiting(bench: dict, capsys) -> None:
+    assert run(bench, "queue") == 0
+
+    out = capsys.readouterr().out
+    assert "setback_front_ft" in out and "setback_side_ft" in out
+    assert "draft" in out
+
+
+def test_the_queue_narrows_to_one_zone(bench: dict, capsys) -> None:
+    assert run(bench, "queue", "--zone", "RM1") == 0
+    assert "nothing pending" in capsys.readouterr().out
+
+
+# --- signing ----------------------------------------------------------
+
+
+def test_signing_promotes_the_value_on_the_next_load(bench: dict) -> None:
+    from flats.encode.load import load_trusted
+
+    assert run(bench, "sign", PORTLAND, "R5", "setback_front_ft", "--reviewer", "sjk") == 0
+
+    trusted = load_trusted(
+        bench["root"], log=log(bench), store=ProvenanceStore(bench["docs"])
+    )
+    value = trusted.layers[PORTLAND].zones["R5"].values["setback_front_ft"]
+    assert value.status is Status.verified
+    assert value.reviewer == "sjk"
+
+
+def test_a_reviewer_may_sign_a_row_of_a_table_at_once(bench: dict) -> None:
+    # One table read, several numbers confirmed — but every field typed out.
+    assert (
+        run(
+            bench,
+            "sign",
+            PORTLAND,
+            "R5",
+            "setback_front_ft",
+            "setback_side_ft",
+            "--reviewer",
+            "sjk",
+        )
+        == 0
+    )
+
+    assert len(log(bench)) == 2
+
+
+def test_signing_refuses_a_value_it_cannot_show_you(bench: dict, capsys) -> None:
+    # The rule that matters most. Without stored text there is nothing to
+    # compare the number against, so a signature would certify a comparison
+    # that never happened.
+    bench["rules"].write_text(
+        bench["rules"].read_text(encoding="utf-8").replace(DOC, "or/multnomah/portland/99.txt"),
+        encoding="utf-8",
+    )
+
+    assert run(bench, "sign", PORTLAND, "R5", "setback_front_ft", "--reviewer", "sjk") == 1
+    assert "refusing" in capsys.readouterr().err
+    assert not bench["log"].exists(), "a refused batch writes nothing at all"
+
+
+def test_a_bad_field_in_a_batch_writes_nothing(bench: dict) -> None:
+    with pytest.raises(SystemExit):
+        run(bench, "sign", PORTLAND, "R5", "setback_front_ft", "max_height_ft", "--reviewer", "sjk")
+
+    assert not bench["log"].exists()
+
+
+def test_signing_the_same_value_twice_is_a_no_op(bench: dict, capsys) -> None:
+    run(bench, "sign", PORTLAND, "R5", "setback_front_ft", "--reviewer", "sjk")
+    capsys.readouterr()
+
+    # Second pass: nothing changed in the file, so there is nothing to re-sign.
+    assert run(bench, "sign", PORTLAND, "R5", "setback_front_ft", "--reviewer", "pat") == 0
+    assert len(log(bench)) == 1
+    assert "already verified" in capsys.readouterr().out
+
+
+def test_a_reviewer_must_name_themselves(bench: dict) -> None:
+    # No default reviewer, ever. An unattributed verification is not one.
+    with pytest.raises(SystemExit):
+        run(bench, "sign", PORTLAND, "R5", "setback_front_ft")
+
+
+def test_a_note_survives_into_the_log(bench: dict) -> None:
+    run(
+        bench,
+        "sign",
+        PORTLAND,
+        "R5",
+        "setback_front_ft",
+        "--reviewer",
+        "sjk",
+        "--note",
+        "Table 110-4 row 2",
+    )
+
+    assert list(log(bench))[0].note == "Table 110-4 row 2"
+
+
+# --- withdrawal -------------------------------------------------------
+
+
+def test_revoking_stops_the_promotion_without_erasing_the_record(bench: dict) -> None:
+    from flats.encode.load import load_trusted
+
+    run(bench, "sign", PORTLAND, "R5", "setback_front_ft", "--reviewer", "sjk")
+
+    assert run(bench, "revoke", PORTLAND, "R5", "setback_front_ft", "--reviewer", "sjk") == 0
+
+    trusted = load_trusted(
+        bench["root"], log=log(bench), store=ProvenanceStore(bench["docs"])
+    )
+    assert trusted.layers[PORTLAND].zones["R5"].values["setback_front_ft"].status is Status.draft
+    assert len(log(bench)) == 2, "the withdrawal is an append; the history stays"
+
+
+def test_revoking_what_was_never_signed_is_an_error(bench: dict, capsys) -> None:
+    assert run(bench, "revoke", PORTLAND, "R5", "setback_front_ft", "--reviewer", "sjk") == 1
+    assert "no active verification" in capsys.readouterr().err
+
+
+# --- status -----------------------------------------------------------
+
+
+def test_status_reports_nothing_verified_as_a_clean_but_untrusted_state(
+    bench: dict, capsys
+) -> None:
+    assert run(bench, "status") == 0
+
+    out = capsys.readouterr().out
+    assert "verified: 0.0%" in out
+    assert "draft=2" in out
+
+
+def test_status_surfaces_evidence_that_was_edited(bench: dict, capsys) -> None:
+    run(bench, "sign", PORTLAND, "R5", "setback_front_ft", "--reviewer", "sjk")
+    ProvenanceStore(bench["docs"]).text_path(DOC).write_text(
+        TEXT.replace("10 feet", "20 feet"), encoding="utf-8", newline=""
+    )
+    capsys.readouterr()
+
+    assert run(bench, "status") == 1, "a non-zero exit is what a CI gate reads"
+
+    out = capsys.readouterr().out
+    assert "TAMPERED" in out
+    assert "STALE" in out
+
+
+def test_status_names_a_broken_rule_file_instead_of_failing(bench: dict, capsys) -> None:
+    bench["rules"].write_text(
+        "label: Portland\n" + CITE + "zones:\n  R5:\n    setback_diagonal_ft: 10\n",
+        encoding="utf-8",
+    )
+
+    assert run(bench, "status") == 1
+    assert "unknown rule field" in capsys.readouterr().out
