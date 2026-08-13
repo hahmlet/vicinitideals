@@ -1463,3 +1463,49 @@ That is the next structural piece, and it is not one city's problem: Fairview's
 binding every clause to the zone whose section encloses it — is what makes
 prose-organised codes readable at all, and it is worth more than any individual
 city's encoding.
+
+---
+
+## 23. Section scope — how a prose code says whose standard this is
+
+Portland states its standards in a table with a column per zone, so a reading is
+zone-keyed by the column it came from. **Most of Oregon does not.** Wilsonville
+writes "Section 4.122. Residential Zone." and then paragraphs; Fairview's 19.115
+is a chapter for one zone. In those codes a sentence is bound to a zone by the
+*heading above it* and by nothing else, and corroboration — which counts only
+zone-keyed readings — heard none of it. Wilsonville's first attach pass found
+zero quotable values out of 71 for exactly this reason.
+
+So a zone may declare the sections that state its standards:
+
+```yaml
+zones:
+  R:
+    section: ["4.122", "4.113"]   # its own zone section, plus the standards
+                                  # applying to residential development in ANY zone
+```
+
+**Declared, not inferred.** Guessing which heading means which zone — matching "R"
+against "Residential Zone" — would attribute one zone's setback to another
+silently, and silently is the direction that turns lots red. A section number is
+one line, and a reviewer can check the claim in a glance. A prefix match covers
+subsections, so `4.113` reaches `4.113(.02)` without listing every paragraph.
+
+One reader fix came with it: `_SECTION` only recognised headings that *start* with
+the number, which is Portland's shape ("33.110.220 Development Standards"). Every
+heading in a "Section  4.122." code went unrecognised, so every paragraph in the
+chapter was attributed to whatever section was last seen — 586 of Wilsonville's 781
+candidates were filed under one wrong section. With the prefix read, they land under
+18 sections, and the numbers appear where the code puts them.
+
+### What it reached, and the honest limit
+
+Wilsonville now sees candidates per zone where it saw nothing. It still attaches
+**zero**, and the refusal is right: a section is coarse, so the reader hands back
+every number in it — `setback_front_ft` "states more than one value (15, 20)" —
+and quoting one of those would be a guess wearing a citation.
+
+That is the next reader problem, and it is a reader problem rather than a scoping
+one: binding a number to a *subject* ("front yard setback shall be 20 feet") inside
+a section that also discusses lot widths, heights and driveway aprons. Section scope
+was the prerequisite — without it the numbers were not even in the room.

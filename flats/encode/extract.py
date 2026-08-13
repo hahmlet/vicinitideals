@@ -29,7 +29,7 @@ from __future__ import annotations
 
 import argparse
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Iterable, Sequence
 
@@ -95,7 +95,13 @@ _APPLICABILITY = re.compile(
     re.I,
 )
 _DEFINITION = re.compile(r"\b(means|is defined as|for the purposes of|see (?:section|chapter))\b", re.I)
-_SECTION = re.compile(r"^(?P<sec>\d{1,3}\.\d{2,3}(?:\.\d{1,4})?)\b")
+#: A section heading. The optional "Section"/"Sec." prefix is not cosmetic:
+#: Portland prints "33.110.220 Development Standards" and Wilsonville prints
+#: "Section  4.122.  Residential Zone". Without the prefix every heading in the
+#: second kind of code goes unrecognised, which leaves every paragraph in it
+#: attributed to whatever section was last seen — and section is what binds a
+#: prose standard to a zone.
+_SECTION = re.compile(r"^(?:Sec(?:tion|\.)?\s+)?(?P<sec>\d{1,3}\.\d{2,3}(?:\.\d{1,4})?)\b", re.I)
 #: Cross-references, table and figure names. Their digits are addresses, not
 #: sizes — "See Figures 110-2 and 110-3" contains no standard whatsoever.
 _CITATION = re.compile(
@@ -129,6 +135,10 @@ class Candidate:
     #: case with an exit attached, not a standard, and must not be encoded as
     #: an unconditional value.
     notes: tuple[str, ...] = ()
+    #: The code section this was read under — "4.122". Load-bearing for codes
+    #: that state standards in prose per zone: the heading is the only thing
+    #: saying whose setback this is.
+    section: str = ""
 
     @property
     def conditional(self) -> bool:
@@ -417,7 +427,10 @@ def extract(
             )
         )
         if tag is not Rase.exception:
-            proposed.extend(candidates_in(stripped, n, path, quote=quote))
+            proposed.extend(
+                replace(candidate, section=current)
+                for candidate in candidates_in(stripped, n, path, quote=quote)
+            )
 
     if zone:
         for table in read_tables(text):
@@ -442,6 +455,7 @@ def _mark(candidates: Iterable[Candidate]) -> list[Candidate]:
             conflict=len(values[c.field]) > 1,
             source=c.source,
             notes=c.notes,
+            section=c.section,
         )
         for c in listed
     ]

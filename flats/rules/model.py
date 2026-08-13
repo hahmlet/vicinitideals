@@ -63,7 +63,7 @@ class Status(str, enum.Enum):
 _GEOID = re.compile(r"^\d{5,7}-")
 
 #: Meta keys permitted alongside field names inside a zone block.
-ZONE_META = frozenset({"zone", "cite_default", "notes", "clauses", "like"})
+ZONE_META = frozenset({"zone", "cite_default", "notes", "clauses", "like", "section"})
 #: Meta keys permitted at the top level of a jurisdiction/layer file.
 LAYER_META = frozenset(
     {
@@ -399,6 +399,13 @@ class Zone(BaseModel):
     clauses: tuple[str, ...] = ()
     #: Another zone whose standards this one adopts. See :class:`Incorporation`.
     like: Incorporation | None = None
+    #: Code section numbers whose text states this zone's standards — "4.122",
+    #: "19.115". Declared rather than inferred: most codes state standards in
+    #: prose under a per-zone heading, and a paragraph is bound to a zone only
+    #: by the section enclosing it. Guessing which heading means which zone
+    #: would attribute one zone's setback to another, so an encoder says it
+    #: once and a reviewer can check the claim in one glance.
+    section: tuple[str, ...] = ()
 
     @property
     def trusted(self) -> bool:

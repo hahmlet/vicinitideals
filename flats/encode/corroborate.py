@@ -99,6 +99,7 @@ def check_zone(
     values: dict[str, Value],
     path: str,
     zoned: bool = False,
+    sections: Sequence[str] = (),
 ) -> list[Finding]:
     """Compare one zone's encoded values against the document.
 
@@ -111,11 +112,23 @@ def check_zone(
 
     ``zoned`` says the document covers exactly one zone — a per-zone slice —
     in which case its sentences are about this zone and do count.
+
+    ``sections`` is the third way a sentence can be zone-keyed, and the one most
+    of Oregon needs: a code that states standards in prose under "Section 4.122.
+    Residential Zone" binds those paragraphs to a zone by the heading above
+    them. The section numbers are declared on the zone (`section:` in the rule
+    file) rather than guessed from heading text, because guessing which heading
+    means which zone attributes one zone's setback to another — silently, and in
+    the direction that turns lots red.
     """
     read = extract(text, path=path, jurisdiction=layer, zone=zone)
+    wanted = tuple(str(s).strip() for s in sections if str(s).strip())
     by_field: dict[str, list] = {}
     for candidate in read.candidates:
-        if candidate.source == "table" or zoned:
+        in_section = bool(candidate.section) and any(
+            candidate.section.startswith(prefix) for prefix in wanted
+        )
+        if candidate.source == "table" or zoned or in_section:
             by_field.setdefault(candidate.field, []).append(candidate)
 
     out: list[Finding] = []
@@ -194,6 +207,7 @@ def check_layer(
                     values=zone.values,
                     path=path,
                     zoned=zoned,
+                    sections=zone.section,
                 )
             )
     return out

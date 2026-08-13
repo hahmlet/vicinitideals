@@ -250,3 +250,102 @@ def test_corroboration_never_promotes_anything(rules: Path, store: Path) -> None
 
     assert (rules / "or" / "multnomah" / "portland.yaml").read_text(encoding="utf-8") == before
     assert "status" not in before
+
+
+# --- section scope: how a prose code says whose standard this is -------
+
+
+PROSE = """Section  4.122.  Residential Zone.
+The minimum front yard setback shall be 20 feet.
+
+Section  4.123.  Old Town Residential Zone.
+The minimum front yard setback shall be 10 feet.
+"""
+
+
+def _zone(**values):
+    from flats.rules.model import Provenance, Value
+
+    prov = Provenance(
+        cite="Wilsonville Development Code 4.122",
+        url="https://api.municode.com/PublicationPdfDownload/1951",
+        retrieved=date(2026, 8, 13),
+    )
+    return {
+        name: Value(name=name, value=value, prov=prov) for name, value in values.items()
+    }
+
+
+def test_a_prose_standard_under_a_declared_section_is_zone_keyed() -> None:
+    # Most of Oregon writes standards this way: a heading names the zone and
+    # the paragraphs under it state the numbers. Without section scope none of
+    # it counts as evidence, because a sentence in a 22,000-line chapter does
+    # not say whose setback it is.
+    found = check_zone(
+        PROSE,
+        layer="or/clackamas/wilsonville",
+        zone="R",
+        values=_zone(setback_front_ft=20),
+        path="doc.txt",
+        sections=("4.122",),
+    )
+
+    assert [f.verdict for f in found] == [Verdict.agrees]
+
+
+def test_the_neighbouring_section_does_not_speak_for_this_zone() -> None:
+    # 4.123 states 10 feet for a different zone. Counting it would report a
+    # disagreement that is the reader's fault, and a page of those gets skimmed
+    # past the one real disagreement in it.
+    found = check_zone(
+        PROSE,
+        layer="or/clackamas/wilsonville",
+        zone="R",
+        values=_zone(setback_front_ft=20),
+        path="doc.txt",
+        sections=("4.122",),
+    )
+
+    assert found[0].found == (20,)
+
+
+def test_without_a_declared_section_prose_states_nothing() -> None:
+    # The default stays deliberately deaf. An encoder declaring `section:` is
+    # making a checkable claim; inferring it from heading text would attribute
+    # one zone's setback to another silently.
+    found = check_zone(
+        PROSE,
+        layer="or/clackamas/wilsonville",
+        zone="R",
+        values=_zone(setback_front_ft=20),
+        path="doc.txt",
+    )
+
+    assert [f.verdict for f in found] == [Verdict.unsupported]
+
+
+def test_a_section_prefix_matches_its_subsections() -> None:
+    # A code numbering paragraphs 4.113.02 states the same standard as 4.113.
+    # Requiring an exact match would need every subsection listed by hand.
+    text = "Section 4.113.02 Setbacks.\nThe minimum front yard setback shall be 20 feet.\n"
+    found = check_zone(
+        text,
+        layer="l",
+        zone="R",
+        values=_zone(setback_front_ft=20),
+        path="doc.txt",
+        sections=("4.113",),
+    )
+
+    assert [f.verdict for f in found] == [Verdict.agrees]
+
+
+def test_a_heading_printed_with_the_word_section_is_still_a_heading() -> None:
+    # Portland prints "33.110.220 Development Standards"; Wilsonville prints
+    # "Section  4.122.  Residential Zone". Reading only the first shape leaves
+    # every paragraph of the second attributed to whatever came before it.
+    from flats.encode.extract import extract
+
+    read = extract(PROSE, path="doc.txt", jurisdiction="l", zone="R")
+
+    assert {c.section for c in read.candidates} == {"4.122", "4.123"}

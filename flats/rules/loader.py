@@ -208,6 +208,15 @@ def _parse_variants(
     return tuple(out)
 
 
+def _parse_sections(raw: object) -> tuple[str, ...]:
+    """`section: "4.122"` or `section: ["4.122", "4.113"]`, both to a tuple."""
+    if raw is None:
+        return ()
+    if isinstance(raw, str):
+        return (raw.strip(),) if raw.strip() else ()
+    return tuple(str(item).strip() for item in raw if str(item).strip())
+
+
 def _parse_like(
     raw: Any,
     cite_default: dict[str, Any] | None,
@@ -342,6 +351,7 @@ def load_layer(path: Path, root: Path, problems: list[str]) -> Layer | None:
             values=values,
             notes=zraw.get("notes"),
             clauses=tuple(zraw.get("clauses") or ()),
+            section=_parse_sections(zraw.get("section")),
             like=_parse_like(zraw.get("like"), zone_cite, f"{where}.zones.{zname}", problems),
         )
 
