@@ -12,6 +12,15 @@ ingest:
   zoning_layer: zoning_oregon_city
   zone_field: ZONE
   strip_lowercase_suffix: false
+code:
+  # Municode client 3708, publication 1377 (updated 2026-06-16). One product:
+  # zoning is Title 17 inside the Municipal Code. The library renders in
+  # JavaScript; this endpoint returns the adopted PDF.
+  - id: "17.zoning"
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    title: "Title 17 - Zoning"
+    start: "ZONING"
+    end: "STATUTORY"
 zones:
   R-10:
     cite_default:

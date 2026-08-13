@@ -77,8 +77,13 @@ class Publication:
 
     @property
     def doc_id(self) -> str:
-        """Store filename stem. Dull on purpose — a reviewer reads this."""
-        return "municode-code"
+        """Store filename stem: the product's name, slugged.
+
+        Not a constant — Troutdale and Tualatin each publish a Code of
+        Ordinances *and* a Development Code as separate products, and one
+        fixed id would file both under the same name.
+        """
+        return _PUNCT.sub("-", self.product.lower()).strip("-") or "municode-code"
 
 
 def key(name: str) -> str:
@@ -127,32 +132,51 @@ def client_for(label: str, *, state: str = "OR") -> tuple[str, int] | None:
     return next((entry for entry in listed if key(entry[0]) in wanted), None)
 
 
-def publication(label: str, *, state: str = "OR") -> Publication | None:
-    """The adopted code Municode holds for this jurisdiction, if it holds one."""
+#: Product names that carry zoning standards when a client publishes several.
+#: Measured, not assumed: Troutdale and Tualatin both list a Code of
+#: Ordinances first and keep their setbacks in a separately-published
+#: Development Code — their own rule-file citations say so.
+_ZONING_PRODUCT_WORDS = ("development", "zoning", "land use", "land development")
+
+
+def publications(label: str, *, state: str = "OR") -> tuple[Publication, ...]:
+    """Every adopted publication Municode holds for this jurisdiction."""
     entry = client_for(label, state=state)
     if entry is None:
-        return None
+        return ()
     name, client_id = entry
     try:
         got = fetch(CLIENT_CONTENT.format(client_id=client_id), strategies=("plain",))
         content = json.loads(got.content)
     except (FetchFailed, ValueError):
-        return None
-    for code in content.get("codes") or []:
-        # A client can carry several products — a code, a charter, land
-        # development regs published separately. The first with a publication
-        # is the code of ordinances; anything more selective would need a
-        # reader, and picking wrong is worse than reporting the obvious one.
-        if code.get("publicationId"):
-            return Publication(
-                client=name,
-                client_id=client_id,
-                product=str(code.get("productName", "")),
-                product_id=int(code.get("productId", 0)),
-                publication_id=int(code["publicationId"]),
-                updated=str(code.get("latestUpdatedDate", "")),
-            )
-    return None
+        return ()
+    return tuple(
+        Publication(
+            client=name,
+            client_id=client_id,
+            product=str(code.get("productName", "")),
+            product_id=int(code.get("productId", 0)),
+            publication_id=int(code["publicationId"]),
+            updated=str(code.get("latestUpdatedDate", "")),
+        )
+        for code in content.get("codes") or []
+        if code.get("publicationId")
+    )
+
+
+def publication(label: str, *, state: str = "OR") -> Publication | None:
+    """The publication most likely to state this jurisdiction's zoning standards.
+
+    A development code when the client publishes one, otherwise the first
+    product. Two of the three Municode cities in this corpus keep their
+    setbacks outside the code of ordinances, so "first listed" was quietly
+    handing back a charter.
+    """
+    found = publications(label, state=state)
+    for pub in found:
+        if any(word in pub.product.lower() for word in _ZONING_PRODUCT_WORDS):
+            return pub
+    return found[0] if found else None
 
 
 def resolve(url: str, body: bytes) -> str | None:
@@ -212,12 +236,16 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     found = 0
     for layer_id, label in targets:
+        held = publications(label, state=args.state)
         pub = publication(label, state=args.state)
         if pub is None:
             print(f"{layer_id:38} not a Municode jurisdiction")
             continue
         found += 1
         print(f"{layer_id:38} {pub.client} - {pub.product} (updated {pub.updated[:10]})")
+        for other in held:
+            if other.publication_id != pub.publication_id:
+                print(f"{'':38} also publishes: {other.product} (publication {other.publication_id})")
         print(code_block(pub))
     print(f"{found}/{len(targets)} jurisdiction(s) publish through Municode")
     return 0
@@ -234,6 +262,7 @@ __all__ = [
     "key",
     "main",
     "publication",
+    "publications",
     "resolve",
 ]
 

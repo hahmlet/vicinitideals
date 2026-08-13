@@ -1,0 +1,1298 @@
+ZONING DISTRICTS
+
+                                              3.000    General Provisions
+3.010                Purpose.
+3.020                Zoning District Outline.
+3.030                Zoning District Map.
+3.040                Urban Planning Area.
+3.050                National Scenic Area.
+3.060                Unlisted or Similar Uses.
+
+                                        3.100    Residential Zoning Districts
+3.110                 General Purpose.
+3.111                 LDR-1 - Low-Density Residential.
+3.112                 LDR-2 - Low-Density Residential.
+3.113                 MDR - Medium-Density Residential.
+3.114                 HDR - High-Density Residential.
+3.120                Land Use Table for Residential Zoning Districts.
+3.130                Dimensional Standards for Residential Zoning Districts.
+3.140                Residential Densities.
+
+                                        3.200    Mixed-Use Zoning Districts
+3.210                General Purpose.
+3.211                 MU-1 - Downtown Mixed-Use.
+3.212                MU-2 - General Mixed-Use.
+3.213                MU-3 - Urban Mixed-Use.
+3.220                Land Use Table for Mixed-Use Zoning Districts.
+3.230                Dimensional Standards for Mixed-Use Zoning Districts.
+3.235                Detailed Dimensional Standards.
+
+                                       3.300    Commercial Zoning Districts
+3.310                General Purpose.
+3.311                 CC - Community Commercial.
+3.312                GC - General Commercial.
+3.320                Land Use Table for Commercial Zoning Districts.
+3.325                Additional Requirements.
+3.330                Dimensional Standards for Commercial Zoning Districts.
+
+                                         3.400    Industrial Zoning Districts
+3.410                General Purpose.
+3.411                 IP - Industrial Park.
+3.412                LI - Light Industrial.
+3.413                GI - General Industrial.
+3.420                Use Table for Industrial Zoning Districts.
+
+                                                            TDC3-1
+                                               TROUTDALE DEVELOPMENT CODE
+
+3.430                Dimensional Standards for Industrial Zoning Districts.
+3.440                Additional Requirements.
+
+                                           3.500    Other Zoning Districts
+3.510                General Purpose.
+3.520                OS - Open Space.
+
+                                                           TDC3-2
+                                                        ZONING DISTRICTS                                                               3.030
+
+                                               3.000  GENERAL PROVISIONS
+
+3.010  Purpose.
+
+This Chapter contains land use allowances and dimensional standards for development of lots that
+are designated a particular zoning district as contained in Section 3.020 of this Code. Development
+and design standards are contained within Chapter 8 of this Code.
+
+3.020  Zoning District Outline.
+
+All areas within The City limits of Troutdale are divided into the following zoning districts. The use of
+each tract of land within the corporate limits of the City of Troutdale shall be limited to those uses
+permitted within the applicable zoning district.
+
+ Symbol           District Name                                                                                   TDC Section
+                       Residential Districts                                                                              3.100
+LDR-1              Low-Density Residential (formerly R-20 & R-10)                                     3.111
+LDR-2              Low-Density Residential (formerly R-7)                                                   3.112
+MDR                Medium-Density Residential (formerly R-5 & R-4)                                   3.113
+HDR                High-Density Residential (formerly A-2)                                                   3.114
+                       Mixed-Use Districts                                                                               3.200
+MU-1               Downtown Mixed-Use (formerly CBD)                                                     3.211
+MU-2               General Mixed-Use (formerly MO/H & NC)                                             3.212
+MU-3               Urban Mixed-Use                                                                                     3.213
+                       Commercial Districts                                                                             3.300
+CC                   Community Commercial                                                                          3.311
+GC                   General Commercial                                                                                3.312
+                       Industrial Districts                                                                                 3.400
+IP                     Industrial Park                                                                                          3.450
+LI                     Light Industrial                                                                                         3.460
+GI                    General Industrial                                                                                    3.470
+                       Other Districts                                                                                        3.500
+OS                   Open Space                                                                                             3.520
+UPA                 Urban Planning Area — unincorporated areas with city zoning              3.040
+NSA                 National Scenic Area — incorporated areas with county zoning             3.050
+
+3.030  Zoning District Map.
+
+A.     The Zoning District Map and all amendments to the map shall remain on file in the City
+       Recorder's office.
+
+B.     The boundaries of all districts are established as shown on the Zoning District Map.
+
+C.     Zoning district boundary lines are intended to follow property lines; lot lines; centerlines of
+       streets, alleys, streams, or railroads; or the extension of such lines except where reference is
+       made on the map to a street line, political boundary, or other designated line by dimensions
+       shown on said map.
+
+                                                                  TDC3-3
+3.030                                      TROUTDALE DEVELOPMENT CODE
+
+D.     The exact location of zoning district boundary lines shall be interpreted by the Director or
+      designated official.
+
+E.     Whenever any street, alley, or other public way is vacated by official action, the zoning district
+      adjoining the side of such public way shall be automatically extended, depending on the side
+      or sides to which such lands revert, to include the right-of-way thus vacated, which shall be
+      subject to all regulations of the extended zoning district or districts.
+
+3.040  Urban Planning Area.
+
+The City of Troutdale holds zoning authority over certain areas that are located in unincorporated
+areas of Multnomah County and within the regional Urban Growth Boundary. These areas include
+those areas which are identified in Goal 14 — Urbanization in the Comprehensive Land Use Plan
+and through an effective intergovernmental agreement between the agencies. In accordance with
+Goal 14 and the intergovernmental agreement, most future development in the Urban Planning
+Areas shall require annexation into the City of Troutdale. Lots in Urban Planning Areas have an
+assigned zoning district and are designated with a "UPA" prefix in front of the corresponding zoning
+district.
+
+3.050  National Scenic Area.
+
+Multnomah County holds zoning authority over certain lots that are located within incorporated areas
+of the City of Troutdale that are within the federally-designated Columbia River Gorge National
+Scenic Area. These affected lots maintain County zoning district designation in accordance with
+Chapters 38 and 39 of the Multnomah County Code and the official zoning district map for
+Multnomah County. The City of Troutdale retains certain development standards and regulatory
+authority as identified in Chapter 1 of this Code and established through an effective intergovern-
+mental agreement.
+
+3.060  Unlisted or Similar Uses.
+
+When a proposed land use is not clearly identifiable as an existing land use as defined in this Code,
+the Director is authorized to provide written interpretation that a use is comparable or similar in
+nature to an existing permitted or conditional use for the corresponding zoning district. The Director
+may also require an applicant to file for a Director's Interpretation as provided within Section 6.400
+of this Code or may refer the matter to Planning Commission as provided within Section 2.010 of this
+Code.
+
+                                                       TDC3-4
+                                               ZONING DISTRICTS                                                    3.113
+
+                                 3.100  RESIDENTIAL ZONING DISTRICTS
+
+3.110  General Purpose.
+
+The purpose of residential zoning districts is to provide dedicated residential areas in neighborhood
+settings. Through the Comprehensive Land Use Plan, there are four (4) general classifications of
+densities that are established with general assumptions on current land use patterns and future
+development expectations. The zoning districts listed within this Section are associated with their
+correlating land use designation.
+(Ord. No. 894, § 2, 12-10-2024)
+
+3.111  LDR-1 - Low-Density Residential.
+
+This district is intended primarily for low-density development patterns that consist of single-family
+detached dwellings and middle housing typologies, with lot sizes typically ten thousand (10,000)
+square feet in size or greater. Lots above twenty thousand (20,000) square feet are generally
+appropriate in areas where natural features such as slope, flood plain, soil condition, etc., make
+these areas difficult to serve or inefficient to develop at higher densities. This zoning district is not
+applicable for areas or lots within the Town Center district. (Previously R-20 & R-10)
+(Ord. No. 894, § 2, 12-10-2024)
+
+3.112  LDR-2 - Low-Density Residential.
+
+This district is intended primarily for low-density development patterns that consist of single-family
+detached dwellings and middle housing typologies, with lot sizes typically between seven thousand
+(7,000) to ten thousand (10,000) square feet in size. This zoning district is not applicable for areas
+or lots within the Town Center district. (Previously R-7)
+(Ord. No. 894, § 2, 12-10-2024)
+
+3.113  MDR - Medium-Density Residential.
+
+This district is intended primarily for the development of smaller-lot single family dwellings on lots of
+four thousand (4,000) to seven thousand (7,000) square feet in size and to accommodate middle
+housing typologies on appropriately scaled lots. This district has certain use, dimensional, and
+design distinctions that are location-dependent in the City as described below and elsewhere within
+Chapters 3 and 8 of this Code. (Previously R-5 & R-4)
+
+      A.     MDR-zoned areas and lots outside the Town Center district are typically located in areas
+             adjacent to arterial and collector roads and preferably near commercial areas, civic uses,
+             and parks.
+
+      B.     MDR-zoned areas and lots within the Town Center district are typically located and in the
+             western and southern peripheral neighborhoods surrounding the Downtown area.
+(Ord. No. 894, § 2, 12-10-2024)
+
+Supp. No. 1                                             TDC3-5
+3.114                                      TROUTDALE DEVELOPMENT CODE
+
+3.114  HDR - High-Density Residential.
+
+This district is intended primarily for the development of multi-family residential buildings or
+complexes and to accommodate certain middle housing typologies on appropriately-scaled lots.
+This zoning district has certain use, dimensional, and design distinctions that are location-dependent
+as described below and elsewhere within Chapters 3 and 8 of this Code. (Previously A-2)
+       A.     HDR-zoned areas and lots outside the Town Center district are typically located in areas
+               adjacent to arterial and collector roads, be served by current or expected fixed-route
+               transit service, and be within one-quarter (¼) mile of adjacent commercial areas, civic
+               uses, and parks.
+       B.     HDR-zoned areas and lots within the Town Center district are typically located in certain
+               areas in the western and eastern peripheral neighborhoods surrounding the Downtown
+               area.
+(Ord. No. 894, § 2, 12-10-2024)
+
+3.120  Land Use Table for Residential Zoning Districts.
+
+A.     Uses that are permitted are marked with a "P", with specific standards for the use listed in the
+       far-right column as shown below.
+
+B.     Uses that require conditional use approval in accordance with Section 6.300 of this Code are
+       marked with a "C", with specific standards for the use listed in the far-right column as shown
+       below.
+
+C.     Uses that are not permitted are marked with a "N".
+
+                                                                                                                           Specific
+                                                                                    MDR                         HDR        Stan-
+Land Use                             LDR-1     LDR-2      MDR                       (TC)        HDR             (TC)         dards
+Residential Dwellings and Uses
+Single-family                                P             P             P             P             N             P          8.110
+detached
+Duplex                                       P             P             P             P             N             P          8.110
+Triplex                                       P             P             P             P             N             P          8.120
+Quadplex                                  P             P             P             P             N             P          8.120
+Townhouse                                P             P             P             P             P             P          8.130
+Cottage cluster                          P             P             P             P             N             P          8.140
+Multi-family                                N             N             N             N             P             P          8.150
+(residential only)
+Multi-family                                N             N             N             N             N             N         varies,
+(vertical mixed-use)                                                                                                           see
+                                                                                                                             8.200
+Manufactured home                  P             P             P             P             N             P          8.160
+Manufactured home park          P             P             P             N             N             N          8.160
+Accessory dwelling units           P             P             P             P             P             P          8.170
+
+Supp. No. 1                                                   TDC3-6
+                                                          ZONING DISTRICTS                                                                   3.120
+
+                                                                                                                                       Specific
+                                                                                            MDR                            HDR         Stan-
+Land Use                             LDR-1     LDR-2      MDR                               (TC)        HDR                (TC)          dards
+Shared dwellings                      P             P             P             P             P             P          8.180
+Residential facility                     P             P             P             P             P             P
+Other Uses
+Agricultural or                                  C             N             N             N             N             N          5.090
+animal-based
+uses
+Bed and breakfast inns             P             P             P             P             P             P          5.100
+Community service uses          C             C             C             C             C             C
+Food stand                                P             P             P             P             P             P          5.200
+Home-based child care             P             P             P             P             P             P
+Human services                        C             C             C             C             C             C
+
+Supp. No. 1                                                        TDC3-6.1
+
+                                                      ZONING DISTRICTS                                                             3.130
+
+                                                                                                                              Specific
+                                                                                     MDR                          HDR        Stan-
+Land Use                             LDR-1     LDR-2      MDR                         (TC)        HDR             (TC)         dards
+Recreation facilities (ac-                   C             C             C             C             C             C
+tive)
+Recreation facilities (pas-                  P             P             P             P             P             P
+sive)
+Utility facilities                           C             C             C             C             C             C
+(major)
+Utility facilities                           P             P             P             P             P             P
+(minor)
+
+3.130  Dimensional Standards for Residential Zoning Districts.
+The following standards are outlined below based on the residential use proposed for the respective
+lot.
+       A.     Single-family detached and duplex dwellings:
+
+                                                                                                MDR                            HDR
+Dimensional Standard              LDR-1       LDR-2        MDR                                  (TC)          HDR               (TC)
+Minimum lot size (sq. ft.):
+   Single-family detached            10,000       7,000        5,000        5,000          N/A      see 3.235
+   Duplex                                     10,000       7,000        5,000        5,000          N/A      see 3.235
+Minimum lot width (ft.)                    70             60             50             50            N/A            20
+Minimum lot depth (ft.)                  100            80             70             70            N/A      see 3.235
+Minimum lot frontage (ft.)               20             20             20             20            N/A            20
+Setbacks (ft):
+   Front yard                                   20             20         10 or 20           10 or 20           N/A        10 or 20
+                                                                            see note 1      see note 1                      see note 1
+   Side yard                                    10             7.5              5               5             N/A             5
+   Building side (duplex)                  0               0               0               0             N/A             0
+   Building side (zero lot line)   see note 2 see note 2 see note 2 see note 2      N/A      see note 2
+   Street side yard                          10             10             10             10            N/A        10 or 20
+                                                                                                                            see note 5
+   Rear yard                               15 or 20           15 or 20        15 or 20       15 or 20           N/A      see 3.235
+                                             see note 3      see note 3     see note 4      see note 4
+   Accessory structures            see 5.010 see 5.010 see 5.010 see 5.010      N/A      see 5.010
+Maximum building height (ft.)         35             35             35             35            N/A            35
+Density standards                    see 3.140 see 3.140 see 3.140 see 3.140      N/A      see 3.140
+Table Notes
+1. Front yard setback may be reduced if driveway access is taken from rear yard and corre-
+sponding setbacks are adjusted.
+2. Zero lot line dwellings shall have no side setback on one side yard or a lot and double the
+amount of required side yard setback on the other side yard.
+
+                                                                TDC3-7
+3.130                                      TROUTDALE DEVELOPMENT CODE
+
+                                                                                                 MDR                              HDR
+Dimensional Standard              LDR-1       LDR-2        MDR                                    (TC)          HDR               (TC)
+3. Rear yard setbacks for duplexes are 15 feet unless driveway access is taken from a rear yard
+(20 feet).
+4. Rear yard setback is 20 feet if driveway access is taken from a side yard.
+5. Street side yard setback is 20 feet if driveway access is taken from street side yard.
+       B.     Triplex and quadplex dwellings:
+
+                                                                                                 MDR                              HDR
+Dimensional Standard              LDR-1       LDR-2        MDR                                    (TC)          HDR               (TC)
+Minimum lot size (sq. ft.)             10,000       7,000        5,000        5,000          N/A      see 3.235
+Minimum lot width (ft.)                    70             60             50             50            N/A            20
+Minimum lot depth (ft.)                  100            80             70             70            N/A      see 3.235
+Minimum lot frontage (ft.)               20             20             20             16            N/A            20
+Setbacks (ft):
+   Front yard                                   10             10             10         10 or 20                 N/A        10 or 20
+                                                                                              see note 1                      see note 1
+   Side yard                                    10             7.5              5               5             N/A             5
+   Building side                                0               0               0               0             N/A             0
+   Street side yard                          10             10             10             10            N/A        10 or 20
+                                                                                                                              see note 2
+   Rear yard                                    10             10             10             10            N/A      see 3.235
+   Accessory structures            see 5.010 see 5.010 see 5.010 see 5.010      N/A           N/A
+Maximum building height (ft.)         35             35             35             35            N/A           N/A
+Density standards                    see 3.140 see 3.140 see 3.140 see 3.140      N/A           N/A
+Table Notes
+1. Front yard setback is 20 feet if driveway access is taken from front yard.
+2. Street side yard setback is 20 feet if driveway access is taken from street side yard.
+       C.     Townhouse dwellings:
+
+                                                                                                 MDR                              HDR
+Dimensional Standard              LDR-1       LDR-2        MDR                                    (TC)          HDR               (TC)
+Minimum lot size (sq. ft.)              none         none         none         none         none         none
+Minimum lot width (ft.)                  none         none         none         none         none         none
+Minimum lot depth (ft.)                 none         none         none         none         none         none
+Minimum lot frontage (ft.)         see note 1 see note 1 see note 1 see note 1 see note 1 see note 1
+Setbacks (ft):
+   Front yard                                   10             10             10       10  or  20                  10              0
+                                                                                              see note 2
+   Side yard                                     5               5               5               5               5               5
+   Building side                                0               0               0               0               0               0
+   Street side yard                          10             10             10             10       10 or 18,                  0  or  18,
+                                                                                                              see note 3      see note 3
+
+                                                                 TDC3-8
+                                                     ZONING DISTRICTS                                                             3.130
+
+                                                                                               MDR                            HDR
+Dimensional Standard              LDR-1       LDR-2        MDR                                 (TC)          HDR              (TC)
+   Rear yard                                10 or 0           10 or 0         10 or 0      10   or   0     10   or   0      10 or 0,
+                                            see note 4      see note 4      see note 4     see note 4      see note 4      see note 4
+   Accessory structures            see 5.010 see 5.010 see 5.010 see 5.010 see 5.010 see 5.010
+Maximum building height (ft.)         35             35             35             35             35             35
+Density standards                    see 3.140 see 3.140 see 3.140 see 3.140 see 3.140 see 3.140
+Table Notes
+1. Minimum lot frontage is 15 feet if driveway, garage, or off-street parking area is in front yard.
+2. Front yard setback is 20 feet if driveway access is taken from front yard.
+3. Street side yard setback is 18 feet if driveway access is taken from street side yard.
+4. Rear yard setbacks are 0 feet for lots with rear alley access; 10 feet for other situations.
+       D.     Cottage cluster development and dwellings:
+
+                                                                                               MDR                            HDR
+Dimensional Standard              LDR-1       LDR-2        MDR                                 (TC)          HDR              (TC)
+Minimum lot size (sq. ft.)             10,000       7,000        5,000        5,000          N/A           N/A
+Minimum lot width (ft.)                    70             60             50             50            N/A           N/A
+Minimum lot depth (ft.)                  100            80             70             70            N/A           N/A
+Minimum lot frontage (ft.)             none         none         none         none          N/A           N/A
+Setbacks (ft):                                                                                                       N/A           N/A
+   Front yard                                   10             10             10             10            N/A           N/A
+   Side yard                                     5               5               5               5             N/A           N/A
+   Street side yard                           5               5               5               5             N/A           N/A
+   Rear yard                                    10             10             10             10            N/A           N/A
+   Building separation                      6               6               6               6             N/A           N/A
+   Accessory structures            see 5.010 see 5.010 see 5.010 see 5.010      N/A           N/A
+Maximum building height (ft.)         25             25             25             25            N/A           N/A
+Minimum density                         4 units             4 units per 4 units per        4 units per         N/A           N/A
+                                              per acre          acre            acre           acre
+Maximum density                          N/A           N/A           N/A           N/A           N/A           N/A
+       E.     Multi-family. The standards within this Subsection shall apply for multi-family residential
+               developments or buildings that do not have a ground-floor commercial component. For
+               vertical-based mixed-use development, dimensional standards for commercial develop-
+               ment shall apply unless otherwise referenced within this Code.
+               1.     Minimum lot size. Refer to the table in the Maximum Density and Lot Size provisions
+                       of this Section for residential uses; 5,400 square feet for all other uses.
+               2.     Minimum lot width:
+                       a.     Sixty feet at the front setback line.
+                       b.     Seventy feet at the front setback line of a corner lot.
+               3.     Minimum lot depth:
+                       a.     Ninety feet when there is approved street access;
+
+                                                               TDC3-9
+3.130                                      TROUTDALE DEVELOPMENT CODE
+
+                     b.     One hundred feet for any use with access from an alley within an easement
+                            that is part of the lot.
+
+              4.     Minimum lot frontage: Twenty feet.
+
+              5.     Minimum Density. See Section 3.140.A of this Code.
+
+              6.     Maximum Density and Lot Size. Where the number of dwelling units erected on a lot
+                     is calculated in accordance with this Section, no greater number of units shall in any
+                     event be permitted at any time unless the lot is within the Town Center Overlay
+                     District, or except as may be approved under the Planned Development District.
+
+                                                                                                                 Max Lot
+               Dwellings       Minimum Lot Area                                                                 Coverage
+               5 to 14            9,000 sq. ft. plus 2,500 sq. ft. for each unit over 3                   45%
+               15 to 37          41,000 sq. ft. plus 2,000 sq. ft. for each unit over 15               50%
+               38 to 94          87,000 sq. ft. plus 1,500 sq. ft. for each unit over 38               50%
+               95 to 155        172,500 sq. ft. plus 1,000 sq. ft for each unit over 95              55%
+               Over 155         1,500 sq. ft. per unit                                                                  55%
+              7.     Setbacks.
+
+                     a.     Front yard setback: Minimum of 20 feet.
+
+                     b.     Side yard setback:
+                            i.      Adjoining the HDR zoning district or a non-residential zoning district:
+                                   Minimum of 5 feet.
+                            ii.      Adjoining a different residential zoning district:
+                                   (a)    Single-story construction: One and one-half times the minimum
+                                          side yard setback of the adjoining residential zoning district but not
+                                          less than 10 feet.
+                                   (b)    Two-story construction: Two (2) times the minimum required side
+                                          yard setback of the adjoining residential district but not less than 15
+                                          feet.
+                                   (c)    Three-story or greater construction: Three (3) times the minimum
+                                          required side yard setback of the adjoining residential district but
+                                          not less than 20 feet.
+                            iii.     No side yard setback shall apply for the interior side property lines of
+                                   attached dwelling on individual lots.
+                            iv.     Ten foot side yard setback shall apply for the exterior side property line
+                                   for attached dwelling on individual lot.
+
+                     c.     Street side yard setback: Minimum of 10 feet unless the street side yard is
+                            used for the driveway, in which case the minimum setback shall be 18 feet to
+                            the garage.
+
+                                                          TDC3-10
+                                                 ZONING DISTRICTS                                                     3.140
+
+                    d.     Rear yard setback:
+                           i.      Adjoining the HDR zoning district or a non-residential zoning district:
+                                  (a)    Without an alley: Minimum of 15 feet.
+                                  (b)    With an alley that is platted either as an easement or a separate
+                                         tract that is at least 20 feet in width:
+                                         (i)     Minimum of 18 feet from the nearest edge of the tract or
+                                                easement to the garage door.
+                                         (ii)    Minimum of 5 feet to any other wall of the garage and all other
+                                                structures as measured from the nearest edge of the tract or
+                                                easement.
+                    e.     Adjoining a different residential zoning district:
+                           i.      Without an alley:
+                                  (a)    Single story construction: The minimum rear yard setback of the
+                                         adjoining residential zoning district.
+                                  (b)    Two-story and greater construction: One and one-half times the
+                                         minimum rear yard setback of the adjoining residential district but
+                                         not less than 20 feet.
+                           ii.      With an alley that is platted either as an easement or a separate tract that
+                                  is at least 20 feet in width, and the alley intervenes between the dwelling
+                                  or structure and the other residential zoning district: Minimum of 20 feet
+                                  to the nearest edge of the tract or easement, regardless of the number of
+                                  stories.
+                    f.      Projections into setbacks. See Section 5.020 of this Code.
+                    g.     Structures in setback areas. See Section 5.010 of this Code.
+                    h.     Distance between buildings: See Section 8.150 of this Code.
+                    i.      Off-street parking, garages, and carports: See Section 8.225 of this Code.
+             8.     Height Limitation. The maximum height of a structure shall be 35 feet.
+
+      F.     Manufactured homes. Dimensional standards are referenced in Section 8.160 of this
+             Code for individual manufactured homes and in Section 8.165 of this Code for manufac-
+             tured home parks.
+
+      G.    Accessory dwelling units. Dimensional standards are referenced in Section 8.170 of this
+             Code.
+
+      H.     Shared dwellings. Dimensional standards are referenced in Section 8.180 of this Code.
+
+3.140  Residential Densities.
+
+A.     Minimum density.
+
+      1.     Applicability. Minimum density standards shall apply to all residential development.
+
+                                                        TDC3-11
+3.140                                      TROUTDALE DEVELOPMENT CODE
+
+      2.     Standard. Residential development is required to be built at eighty percent (80%) or more
+             of the maximum number of dwelling units per net acre unless another standard is
+             explicitly stated within this Code. For computing the minimum number of dwelling units, if
+             the total contains a fraction, then the number shall be rounded down to the next lower
+             whole number.
+
+B.     Maximum density.
+      1.     Single-family detached. Development shall not exceed one hundred percent (100%) of
+             the maximum number of dwelling units per net acre. For purposes of this standard, in
+             computing the maximum number of dwelling units, if the total contains a fraction, then the
+             number shall be rounded down to the next lower whole number.
+      2.     Multi-family residential. See Subsection 3.130.E of this Code.
+      3.     Townhouse projects.
+             a.     In the LDR-1 and LDR-2 zoning districts, townhouse projects are allowed four (4)
+                    times the allowed density for detached single-family dwellings.
+             b.     In the MDR zoning district, townhouse projects are allowed three (3) times the
+                    allowed density for detached single-family dwellings.
+             c.     In all other zoning districts where townhouses are permitted, the maximum density
+                    for a townhouse project shall not exceed twenty-five (25) units per net acre.
+      4.     Other residential development. Maximum density standards shall not apply to duplex,
+             triplex, quadplex, cottage cluster projects, or vertical mixed-use development on a
+             dwelling units per net acre calculation and are instead regulated by development
+             provisions of the corresponding housing typology within Section 8.100 of this Code.
+
+                                                      TDC3-12
+                                               ZONING DISTRICTS                                                   3.213
+
+                                  3.200  MIXED-USE ZONING DISTRICTS
+
+3.210  General Purpose.
+
+The purpose of mixed use zoning districts is to fulfill the expectations of Town Center and Main Street
+designations within the Metro 2040 Growth Concept by having a properly-scaled mixture of
+residential, commercial, and civic uses in close proximity to one another or co-located within a
+structure or upon a lot. These districts are to be predominantly located within the Town Center zoning
+overlay district.
+
+3.211  MU-1 - Downtown Mixed-Use.
+
+This district is intended to provide and promote a downtown business district that serves as the core
+of the Town Center district and is primarily oriented towards smaller-scale commercial development
+along a walkable "main street" setting. Residential uses may be considered in select circumstances.
+Lots are typically less than 1/2 acre in size and are dependent on public rights-of-way, publicly owned
+property, or alleys to handle parking and loading and provide for an attractive streetscape. Specific
+development and design criteria for development is specified in Section 8.210 of this Code.
+(Previously CBD)
+
+3.212  MU-2 - General Mixed-Use.
+
+This district is intended to provide a compatible mix of commercial uses and medium-density
+residential opportunities in certain areas across the City, including but not limited to areas adjacent
+to the MU-1 district. Smaller-scale high-density residential may be appropriate in select areas. This
+district is distinct from the MU-1 district in terms of having lots that are typically larger than a simple
+storefront, along with general expectations for maintaining on-site parking, landscaping, and
+screening. This district is distinct from the MU-3 district in terms of development scale and overall
+impact on surrounding areas. Specific development and design criteria for development is specified
+in Chapter 8 of this Code. (Previously MO/H & NC)
+
+3.213  MU-3 - Urban Mixed-Use.
+
+This district is intended to provide a compatible mix of commercial uses and medium- to high-density
+residential opportunities in select areas of The City where vertical development has a negligible
+impact on surrounding areas. Residential development should include middle housing or higher
+density housing typologies. Commercial development should be well-integrated with residential
+uses situated above a ground floor retail space or immediately adjacent to promote a compact,
+walkable environment. Parking areas are to be located along publicly accessible streets, in areas
+behind structures or in consolidated or shared facilities where appropriate. Specific development
+and design criteria for development is specified in Section 8.230 of this Code and by adopted
+framework plans within the City's Urban Renewal Area.
+
+                                                      TDC3-13
+3.220                                      TROUTDALE DEVELOPMENT CODE
+
+3.220  Land Use Table for Mixed-Use Zoning Districts.
+
+A.     Uses that are permitted are marked with a "P", with specific standards for the use listed in the
+        far-right column as shown below.
+
+B.     Uses that require conditional use approval in accordance with Section 6.300 of this Code are
+        marked with a "C", with specific standards for the use listed in the far-right column as shown
+        below.
+
+C.     Uses that are not permitted are marked with a "N".
+
+                                                                                                                                     Specific
+Land Use                                                      MU-1             MU-2             MU-3                                Standards
+Residential Dwellings and Uses
+Single-family detached                                     N                    P                    N                8.110
+Duplex                                                              N                    P                    N                8.110
+Triplex                                                               N                    P                    P                8.120
+Quadplex                                                          N                    P                    P                8.120
+Townhouse                                                       P                    P                    P                8.130
+Cottage cluster                                                 N                    P                    N                8.140
+Multi-family (residential units only)                   P                    P                    P                8.150
+Multi-family (vertical mixed-use)                       P                    P                    P          varies,    see
+                                                                                                                                        8.200
+Manufactured home                                         N                    N                    N
+Manufactured home park                                 N                    N                    N
+Accessory dwelling units                                  N                    P                    P                8.170
+Shared dwellings                                              N                    C                    C                8.180
+Residential facility                                             N                    C                    N
+Mixed-Uses
+Live-Work units                                                          P                    P                    P
+(residential/commercial)
+Live-Make units                                                          N                    N                    C
+(residential/industrial)
+Flex units (commercial/industrial)                     N                    N                    C
+Home-based child care                                    P                    P                    P
+Commercial Uses
+General retail (up to 15,000 s.f.)                       P                    P                    P
+General retail (above 15,000 s.f.)                     C                    C                    P
+Offices (up to 15,000 s.f.)                                 P                    P                    P
+Offices (above 15,000 s.f.)                               C                    P                    P
+Eating & drinking establishments
+   Restaurants & bars (no drive-thru)                P                    P                    P
+   Restaurants & bars (with drive-thru)             C                    P                    P
+   Kiosks (drive-thru only)                                 C                    C                    N                5.200
+
+                                                                    TDC3-14
+                                                            ZONING DISTRICTS                                                                      3.230
+
+                                                                                                                                         Specific
+Land Use                                                      MU-1             MU-2             MU-3                                   Standards
+   Mobile food vendor (individually                                       P                    P                    P                5.200
+    placed, in park or right-of-way)
+   Mobile food vendor (individually                                       P                    P                    N                5.200
+    placed, on privately owned lot)
+Food cart pod, micro-retail pod, or out-                                  P                    P                    C
+door market
+Financial institutions (no drive-thru)                  P                    P                    P
+Financial institutions (with drive-thru)               P                    P                    P
+Personal services                                             P                    P                    P
+Human services                                                C                    P                    C
+Vehicular and equipment services
+   Fueling stations                                             N                    C                    N
+   Repair shops                                                 N                    C                    N
+   Sales or rentals                                             C                    C                    N
+Lodging facilities                                               P                    P                    P
+Bed & breakfast inns                                        P                    P                    C
+Entertainment facilities (major)                         N                    N                    C
+Entertainment facilities (minor)                         P                    P                    P
+Storage facilities                                               N                    N                    N
+Marijuana facilities                                            N                    N                    N
+Industrial Uses
+Marijuana processors                                       N                    N                    N
+LI permitted uses                                                         C                    N                    C
+(unless otherwise listed in table)
+Other Uses
+Community service uses                                  C                    C                    C
+Recreation facilities (active)                             C                    C                    C
+   Gym (up to 5,000 s.f.)                                   P                    P                    C
+   Gym (above 5,000 s.f.)                                 C                    C                    C
+Recreation facilities (passive)                           P                    P                    P
+Utility facilities (major)                                      C                    C                    C
+Utility facilities (minor)                                       P                    P                    P
+(Ord. No. 894, § 2, 12-10-2024)
+
+3.230  Dimensional Standards for Mixed-Use Zoning Districts.
+
+A.     Non-residential uses (including vertical mixed-use with upper floor residential units):
+
+ Dimensional Standard                                                      MU-1              MU-2              MU-3
+Minimum lot size (sq. ft.)                                                     None              None              None
+Minimum lot width (ft.)                                                         None              None              None
+
+Supp. No. 1                                                           TDC3-15
+3.230                                      TROUTDALE DEVELOPMENT CODE
+
+Dimensional Standard                                                      MU-1              MU-2              MU-3
+Minimum lot depth (ft.)                                                         None              None              None
+Minimum lot frontage (ft.)                                                       15                  15                  15
+Setbacks (ft):
+   when abutting a park (regardless of zoning district)            0                    0                   10
+   when abutting a non-residential zoning district                   0                    0                    0
+   when abutting a residential zoning district                         20                  20                  20
+   for building facades over 35 ft. in height                           N/A                N/A                 15
+Maximum building height (ft.)                                                 35                  35           see 3.235.D
+Maximum building footprint size (sq. ft.)                               N/A              20,000                                       60,000
+                                                                                                             see note 1              footprint
+Table Notes
+1. There is no maximum building size applicable if the building was in existence prior to March
+10, 1950.
+B.     Residential uses (excluding vertical mixed-use with upper floor residential units):
+
+ Dimensional Standard                                                      MU-1              MU-2              MU-3
+Minimum lot size (sq. ft.)                                                see 3.235.A   see 3.235.A   see 3.235.A
+Minimum lot width (ft.)                                                            15                  15                  15
+Minimum lot depth (ft.)                                                   see 3.235.B   see 3.235.B   see 3.235.B
+Minimum lot frontage (ft.)                                                       15                  15                  15
+Minimum setbacks (ft):                                                                                                 see 3.230.A
+   Front yard:
+        without alley access
+            to the garage door of units with a driveway                                      20                  20
+           from street
+            to the front façade of a residential unit                        15                  15
+            to the front porch of a residential unit                          10                  10
+        with alley access
+            to the front façade of a residential unit                        10                  10
+            to the front porch of a residential unit                           5                    5
+   Side yard                                                                   see 3.235.C.2 see 3.235.C.2
+   Building side                                                                        0                    0                    0
+   Street side yard                                                              0 or 18                        0 or 18
+                                                                                       see note 1            see note 1
+   Rear yard                                                                   see 3.235.C.5 see 3.235.C.5
+   Accessory structures                                                    see 5.010       see 5.010       see 5.010
+Maximum front yard setback (ft.)                                          N/A                N/A                 20
+Minimum building height (ft.)                                                 N/A                N/A                 25
+Maximum building height (ft.)                                                 35                  35           see 3.235.D
+Maximum building footprint size (sq. ft.)                               N/A              20,000                                       60,000
+                                                                                                             see note 2
+Density standards                                                            see 3.140       see 3.140       see 3.140
+
+Supp. No. 1                                                         TDC3-16
+                                                 ZONING DISTRICTS                                                     3.235
+
+Table Notes
+1. Street side yard setback is 18 feet if driveway access is taken from street side yard.
+2. There is no maximum building size applicable if the building was in existence prior to March
+10, 1950.
+
+3.235  Detailed Dimensional Standards.
+
+Listed below are detailed dimensional standards referenced from the tables found in Sections 3.130
+and 3.230 of this Code that require additional context or explanation.
+      A.     Minimum lot size for residential uses. The minimum lot size shall be based on the
+             minimum lot width and minimum lot depth standards.
+
+      B.     Minimum lot depth for residential uses.
+             1.     Seventy (70) feet for residential units with a driveway from the public street or with
+                    access from an alley within a separate tract from the lot.
+             2.     Ninety (90) feet for residential units with access from an alley within an easement
+                    that is part of the lot.
+             3.     There is no minimum lot depth for lots within the area between Historic Columbia
+                    River Highway and 2nd Street extended west to its intersection with 257th Avenue
+                    from 257th Avenue to the SE Sandy Street right-of-way.
+      C.     Minimum setbacks.
+             1.     Front yard. See table in Section 3.230 of this Code.
+             2.     Side yard.
+                    a.     Abutting a non-residential or HDR zoning district: Five (5) feet.
+                    b.     Abutting all other residential zoning districts.
+                           i.      Single-story construction: Minimum of five (5) feet from an adjoining side
+                                  yard and a minimum of fifteen (15) feet from an adjoining rear yard.
+                           ii.      Two (2) story or greater construction: Minimum of seven and one-half (7
+                                  ½) feet from an adjoining side yard and a minimum of fifteen (15) feet
+                                  from an adjoining rear yard.
+                           iii.     The minimum side yard setback from an adjoining rear yard may be
+                                  reduced as provided in Subsection 3.235.C.6 of this Section.
+             3.     Building side. See table in Section 3.230 of this Code.
+             4.     Street side yard. See table in Section 3.230 of this Code.
+             5.     Rear yard.
+                    a.     Abutting a non-residential zoning district:
+                           i.      Without an alley: Ten (10) feet.
+                           ii.      With an alley that is platted either as an easement or as a separate tract
+                                  that is at least twenty (20) feet in width: Five (5) feet from the nearest
+                                  edge of the alley.
+
+Supp. No. 1                                             TDC3-17
+3.235                                      TROUTDALE DEVELOPMENT CODE
+
+                    b.     Abutting a residential zoning district:
+                           i.      Without an alley:
+                                  (a)    Single-story construction: Fifteen (15) feet.
+                                  (b)    Two (2) story and greater construction: Twenty (20) feet.
+                                  (c)    The minimum rear yard setback may be reduced as provided in
+                                         Subsection 3.235.C.6 of this Section.
+                           ii.      With an alley that is platted either as an easement or as a separate tract
+                                  that is at least twenty (20) feet in width: Five (5) feet from the nearest
+                                  edge of the alley.
+             6.     Reduced setback allowed. The minimum side yard setback for residential uses
+                    adjoining a rear yard in a residential zoning district other than HDR, and the
+                    minimum rear yard setback (without an alley) adjoining a residential district, may be
+                    reduced by as much as five (5) feet based on the following:
+                    a.     A maximum building height ceiling shall first be determined for the subject
+                           property. The maximum building height ceiling is the plane established at the
+                           maximum building height as measured at the highest point along the shared
+                           property line of the adjoining parcel from which the setback is being mea-
+                           sured.
+                    b.     For each one (1) foot reduction in the minimum setback, the building height
+                           ceiling shall be reduced by two (2) feet. Thus, a building that is set back the
+                           maximum five (5) feet closer to the common property line has a building height
+                           ceiling that is ten (10) feet lower than the maximum.
+                    c.     The height of the building may not exceed the maximum building height, nor
+                           may it project above the reduced ceiling height.
+      D.     Maximum building height in the MU-3 zoning district.
+             1.     Building heights of up to fifty-five (55) feet shall be subject to a Type II site
+                    development review provided there are no other circumstances in an application
+                    requiring a higher review.
+             2.     Building heights between fifty-five (55) feet one (1) inch and seventy-five (75) feet
+                    shall be subject to a Type IV site development review.
+             3.     Exceptions to the building height limit are listed in Section 5.030 of this Code.
+(Ord. No. 894, § 2, 12-10-2024)
+
+Supp. No. 1                                             TDC3-18
+                                                    ZONING DISTRICTS                                                          3.320
+
+                                    3.300  COMMERCIAL ZONING DISTRICTS
+
+3.310  General Purpose.
+
+The purpose of commercial zoning districts is to provide dedicated commercial areas in certain
+areas of the City that are best suited for businesses that typically do not involve an industrial process.
+The types of districts are distinctive based on the consumer catchment area and the scale and types
+of businesses that are most appropriate for the setting and its immediate surroundings.
+(Ord. No. 895, § 1(Att. A), 2-25-2025)
+
+3.311  CC - Community Commercial.
+
+This district is intended for the shopping needs of several neighborhoods in locations easily
+accessible to such neighborhoods. This zoning district is not applicable for areas or lots within the
+Town Center district.
+
+3.312  GC - General Commercial.
+
+This district is intended for more intensive commercial uses in addition to those provided in the
+Community Commercial (CC) districts.
+
+3.320  Land Use Table for Commercial Zoning Districts.
+
+A.     Uses that are permitted are marked with a "P", with specific standards for the use listed in the
+       far-right column as shown below.
+
+B.     Uses that require conditional use approval in accordance with Section 6.300 of this Code are
+       marked with a "C", with specific standards for the use listed in the far-right column as shown
+       below.
+
+C.     Uses that are not permitted are marked with a "N".
+
+                                                                                                                      Specific
+Land Use                                                                              CC                 GC         Standards
+Residential Dwellings and Uses
+Residential facilities                                                                P                    P
+Other residential uses                                                            N                    N
+Mixed-Uses
+Live-Work units (residential/commercial)                                P                    N
+Live-Make units (residential/industrial)                                   C                    N
+Flex units (commercial/industrial)                                           C                    C
+Commercial Uses
+General retail (up to 60,000 s.f.)                                             P                    P
+General retail (above 60,000 s.f.)                                           C                    P
+Offices (up to 60,000 s.f.)                                                       P                    P
+Offices (above 60,000 s.f.)                                                     N                    P
+Eating & drinking establishments
+
+Supp. No. 1                                                 TDC3-19
+3.320                                      TROUTDALE DEVELOPMENT CODE
+
+                                                                                                                                         Specific
+Land Use                                                                              CC                 GC                            Standards
+   Restaurants & bars (no drive-thru)                                      P                    P
+   Restaurants & bars (with drive-thru)                                   P                    P
+   Kiosks (drive-thru only)                                                       P                    P                 5.200
+   Mobile food vendor (individually placed, in park or                                           P                    P                 5.200
+    right-of-way)
+   Mobile food vendor (individually placed, on pri-                                              P                    P                 5.200
+    vately owned lot)
+Food cart pod, micro-retail pod, or outdoor market                P                    P                 5.200
+Financial institutions (no drive-thru)                                        P                    P
+Financial institutions (with drive-thru)                                     P                    P
+Personal services                                                                   P                    P
+Human services                                                                      P                    P
+Vehicular and equipment services
+   Fueling stations                                                                   C                    P
+   Repair shops                                                                       N                    P
+   Sales or rentals                                                                   C                    C
+Lodging facilities                                                                     P                    P
+Bed & breakfast inns                                                              N                    N
+Entertainment facilities (major)                                               C                    C               3.325.B
+Entertainment facilities (minor)                                               P                    P
+Storage facilities                                                                     N                    N
+Marijuana facilities                                                                  N                    C               3.325.A
+Industrial Uses
+Warehousing or distribution outlets                                        N                    C
+Marijuana processors                                                             N                    N
+LI permitted uses (unless otherwise listed in table)                N                    N
+Other Uses
+Agricultural or animal-based uses                                          N                    P
+Community service uses                                                        C                    C
+Recreation facilities (active)                                                   C                    C
+   Gym (up to 5,000 s.f.)                                                         P                    P
+   Gym (above 5,000 s.f.)                                                       C                    C
+Recreation facilities (passive)                                                 P                    P
+Utility facilities (major)                                                            C                    C
+Utility facilities (minor)                                                             P                    P
+(Ord. No. 894, § 2, 12-10-2024; Ord. No. 895, § 1(Att. A), 2-25-2025)
+
+3.325  Additional Requirements.
+
+A.     Marijuana Facilities licensed and authorized under state law, when not located within one
+        thousand (1,000) feet of real property which is the site of a public or private school or a public
+
+Supp. No. 1                                                           TDC3-20
+                                                      ZONING DISTRICTS                                                            3.330
+
+       park. For purposes of this subsection, "within one thousand (1,000) feet" means a straight-line
+       measurement in a radius extending for one thousand (1,000) feet in every direction from any
+       point on the boundary line of the real property comprising an existing public or private school
+       or public park. This buffer shall not apply to new schools or parks located within one thousand
+       (1,000) feet of an existing Marijuana Facility. For purposes of this Chapter, a public or private
+       school includes a community college or other institution where students under the age of
+       eighteen (18) receive instruction to receive academic credits that apply towards elementary,
+       middle, or high school grades K through twelve (12) and which may also apply towards college
+       advancement credits.
+B.     Major entertainment businesses shall not be permitted within the town center boundary and
+       shall not be located within three hundred (300) feet of a residentially zoned property.
+(Ord. No. 894, § 2, 12-10-2024; Ord. No. 895, § 1(Att. A), 2-25-2025)
+
+3.330  Dimensional Standards for Commercial Zoning Districts.
+A.     All land uses:
+
+ Dimensional Standard                                                                         CC                     GC
+Minimum lot size (sq. ft.)                                                                       none                  none
+Minimum lot width (ft.)                                                                           none                  none
+Minimum lot depth (ft.)                                                                          none                  none
+Minimum lot frontage (ft.)                                                                        20                      50
+Setbacks (ft):
+   Front yard                                                                                            20                      20
+   Side yard
+        when abutting a non-residential zoning district                                 0                        0
+        when abutting a residential zoning district                                 see note 1         see note 1
+   Street side yard                                                                                   10                       5
+   Rear yard
+        when abutting a non-residential zoning district                                 0                        0
+        when abutting a residential zoning district                                 see note 2         see note 2
+   In cases of insufficient right-of-way                                               see note 3         see note 3
+Maximum building height (ft.)                                                                  45                      45
+Maximum building size (sq. ft.)                                                         60,000 s.f.               N/A
+Table Notes
+1. Side yard setback shall be the same side yard setback as required by the abutting zoning dis-
+trict.
+2. Rear yard setback shall be the same rear yard setback as required by the abutting zoning dis-
+trict, but in no case shall be less than fifteen (15) feet.
+3. The minimum front, side, or other setbacks shall be increased where such yard or setback
+abuts a street having right-of-way width less than the applicable City or County standard. The
+necessary right-of-way widths and the additional yard or setback requirements in such cases
+shall be based upon the Comprehensive Land Use Plan and applicable ordinances and stan-
+dards.
+
+Supp. No. 1                                                   TDC3-21
+3.410                                      TROUTDALE DEVELOPMENT CODE
+
+                                  3.400  INDUSTRIAL ZONING DISTRICTS
+
+3.410  General Purpose.
+
+The purpose of industrial zoning districts is to provide dedicated industrial areas in certain areas of
+the City that are best suited for businesses that involve an industrial process and that may operate
+in a way that is less desirable for adjacent residential uses and certain commercial uses. These
+areas are also often considered employment centers and may conduct activities at various hours of
+the day.
+(Ord. No. 895, § 1(Att. A), 2-25-2025)
+
+3.411  IP - Industrial Park.
+
+This district is intended for a mix of employee-intensive industries, offices, services, and retail
+commercial uses, which have no off-site impacts in terms of noise, odor, glare, light, vibration,
+smoke, dust, or other types of off-site impacts. It provides for combining parking, landscaping, and
+other design features which physically and visually link structures and uses within one (1) develop-
+ment. Offices, services, and retail commercial uses are permitted in compliance with the Troutdale
+Development Code.
+
+3.412  LI - Light Industrial.
+
+This district is primarily intended for light, clean industries usually of a manufacturing or storage
+nature with little limited outdoor accessory storage. These industries usually do not require rail
+access and have very little process visibility. They usually create little or no air or water pollution and
+have few, if any, nuisance factors such as bright yard lights, continuous noise, or objectionable
+odors, or significant outdoor accessory storage. Professional offices and limited retail sales are
+permitted in compliance with the Troutdale Development Code. Uses within the LI District may be
+located adjacent to residential uses with appropriate adequate buffering.
+
+3.413  GI - General Industrial.
+
+This district is primarily intended for manufacturing industries, large-scale fabricators, freight and
+trucking firms, primary metals, and lumber, etc., that usually require highway access and/or rail
+service. These firms usually have a high degree of process visibility and need outdoor storage of
+materials and products. These industries are likely to create minor air and water pollution, as well as
+noise and odor, and the generation of truck, shipping, or rail traffic. Non-industrial uses of a
+commercial nature are permitted in compliance with the Troutdale Development Code.
+
+3.420  Use Table for Industrial Zoning Districts.
+
+A.     Uses that are permitted are marked with a "P", with specific standards for the use listed in the
+      far-right column as shown below.
+
+B.     Uses that require conditional use approval in accordance with Section 6.300 of this Code are
+      marked with a "C", with specific standards for the use listed in the far-right column as shown
+      below.
+
+Supp. No. 1                                            TDC3-22
+                                                         ZONING DISTRICTS                                                                3.420
+
+C.     Uses that are not permitted are marked with a "N".
+D.     Gyms up to five thousand (5,000) square feet shall not be permitted in areas designated
+        Regionally Significant Industrial Areas (RSIA) on Metro's 2040 Growth Map.
+
+                                                                                                                               Specific
+Land Use                                                                  IP                LI                GI                Standards
+Residential Uses
+One Caretaker unit in conjunction with an ex-                                 N                 P                 P
+isting industrial use
+All other residential uses                                           N                 N                 N
+Commercial Uses
+Commercial sports complexes including, but                                    N                 C                 C
+not limited to, health clubs, tennis courts,
+aquatic centers, skating rinks, and similar fa-
+cilities
+Convenience stores                                                   C                 N                 N             3.440.I
+Eating and drinking establishments
+   Restaurants and bars                                             P                 N                 N            3.440.H
+   Mobile Food Vendor operating a Food                                        P                 P                 P              5.200
+    Stand, Food Cart, and Food Trailer
+Financial institutions                                                  C                 N                 N          3.440.D.1
+Hotels/Motels/Convention Halls                                 C                 C                 N
+Marijuana facilities                                                     N                 C                 C            3.440.F
+Medical and dental clinics                                          C                 P                 P           3.440.D.1
+Personal services                                                      C                 N                 N          3.440.D.1
+Product sales, service, and/or display acces-                                 N                 P                 P            3.440.K
+sory to any manufacturing, fabricating, or pro-
+cessing use
+Professional Offices                                                   P                 P                 N          3.440.D.1
+Storage facilities                                                        N                 C                 N            3.440.J
+Automobile, truck, trailer, heavy equipment,
+recreational vehicle, boat and manufactured
+home services
+   Card-lock fueling stations, truck stops, ser-                              N                 C                 P
+    vice stations, tire shops, and oil change fa-
+    cilities.
+   Repair and modification shops                               N                 P                 P
+   Sales and rentals                                                   N                 P                 P           3.440.D.1
+                                                                                                                                 3.440.D.3
+Wholesale trade/retail/discount sales and ser-                                C                 P                 P           3.440.D.1
+vices
+Industrial Uses
+Aggregate resource                                                   N                 N                 P              4.000
+
+Supp. No. 1                                                       TDC3-23
+3.420                                      TROUTDALE DEVELOPMENT CODE
+
+                                                                                                                                   Specific
+Land Use                                                                  IP                LI                GI                   Standards
+Manufacturing, milling, and processing
+   Assembly and limited manufacturing                     C                 P                 P
+   Concrete and asphalt manufacturing plants          N                 N                 C
+   Electronic and appliance products                         N                 C                 P
+   Food and beverage products
+        Food processing involving slaughtering,                                  N                 N                 C
+       fermentation, or fat rendering
+        Beverage processing involving brewing,                                   C                 P                 P
+       distilling, roasting, or fermentation
+        Other food and beverage products                     P                 P                 P
+   Furniture and related products                               N                 P                 P
+   Machinery and transportation equipment               N                 C                 P
+   Use and temporary storage in the manufac-                                     N                 N                 P
+    turing process of toxic or hazardous mate-
+    rial by-products
+   The manufacturing or storing of toxic or                                      N                 N                 C
+    hazardous materials when done in compli-
+    ance with federal and state regulations
+   Marijuana processors                                             N                 N                 C            3.440.G
+   Metal and fabricated metal products
+        Primary manufacturing or milling                        N                 N                 P
+        Secondary manufacturing or processing            N                 P                 P
+   Nonmetallic mineral products                                 N                 C                 P
+   Plastic or rubber products                                      N                 C                 P
+   Printing                                                                   C                 P                 P
+   Textile, apparel, and leather products                    N                 C                 P
+   Wood or paper products
+        Primary manufacturing and milling                     N                 N                 P
+        Secondary manufacturing and processing         N                 C                 P
+Transportation facilities
+   Airports (including heliports)                                  N                 P                 P
+   Heliports (not within an airport)                              N                 C                 P
+   Marinas                                                                  C                 P                 P
+   Freight and trucking firm                                        N                 C                 P
+Warehousing and Storage
+   Warehouse                                                             N                 P                 P
+   Accessory storage                                                 P                 P                 P
+   Storage facilities                                                     N                 C                 N            3.440.J
+Junk yard                                                                   N                 N                 C
+Marine industrial or service facilities                          N                 N                 P
+
+Supp. No. 1                                                        TDC3-24
+                                                          ZONING DISTRICTS                                                                   3.430
+
+                                                                                                                                   Specific
+Land Use                                                                  IP                LI                GI                   Standards
+Research, experimental, or testing                                              P                 P                 P
+laboratories
+Sanitary landfills, recycling centers, and                                      N                 N                 C
+transfer stations.
+Trade or commercial schools                                     P                 P                 P
+Other Uses
+Agricultural or animal-based uses                             N                 N                 N
+Child-care facilities in conjunction with a                                     C                 C                 C          3.440.D.1
+permitted use or an approved conditional
+use
+Community service uses                                           C                 C                 C
+Public Parks, parkways, trails, and related                                     P                 P                 P
+facilities
+Recreation facilities (active)                                       C                 C                 C
+   Gym (up to 5,000 s.f.)                                            P                 P                 P            3.420.D
+   Gym (above 5,000 s.f.)                                          C                 C                 C
+Recreation facilities (passive)                                    P                 P                 P
+Utility facilities (major)                                                C                 C                 P
+Utility facilities (minor)                                                P                 P                 P
+Other uses similar to those listed above                  P/C              P/C              P/C
+(Ord. No. 894, § 2, 12-10-2024; Ord. No. 895, § 1(Att. A), 2-25-2025)
+
+3.430  Dimensional Standards for Industrial Zoning Districts.
+
+A.     Dimensional Standards Table for Industrial Zoning Districts.
+
+ Land Use                                                          IP                            LI                           GI
+Lot Size and Coverage
+   Minimum lot width                                      150 ft.                      None                      None
+   Maximum lot coverage                        60% of the site               None                      None
+Setbacks
+   Front yard setback                                      20 ft.                       20 ft.                       20 ft.
+   Side yard setback                                       15 ft.                       10 ft.                       None
+                                                                                                                           see 3.430.B.4
+   Street side yard setback                             15 ft.                       10 ft.                       None
+                                                                                                                           see 3.430.B.4
+   Rear yard setback                                       10 ft.                       None                      None
+                                                                                                                           see 3.430.B.4
+   Setbacks for insufficient right-of-                         see 3.430.B.1         see 3.430.B.1         see 3.430.B.1
+    way
+   Additional setback requirements                None               see 3.430.B.3         see 3.430.B.3
+
+Supp. No. 1                                                        TDC3-25
+3.430                                      TROUTDALE DEVELOPMENT CODE
+
+Land Use                                                          IP                            LI                           GI
+Maximum Height of the Structure                   35 ft.                       45 ft.                      see 3.430.B.2
+                                                                                 see 3.430.B.2
+Lot Area                                                    No minimum           No minimum          see 3.430.B.5
+
+B.     Additional Dimensional Standards.
+
+       1.     Setbacks for insufficient rights-of-way: The minimum front, side, or other setbacks shall
+              be increased where such yard or setback abuts a street having insufficient rights-of-way
+              width to serve the area. The necessary right-of-way widths, and the additional yard or
+              setback requirements in such cases, shall be determined
+
+       2.     Unless otherwise limited by the Federal Aviation Administration.
+
+       3.     Additional setback requirements: If any use in this district abuts or faces any residential
+              zoning district, a setback of fifty (50) feet from the property line or centerline of an
+              intervening public street, on the side abutting or facing the residential zoning district shall
+              be required.
+
+       4.     No side or rear yard setbacks unless the property abuts a parcel of land in a more
+              restrictive manufacturing or commercial district, in which case the requirements of the
+              abutting zoning district shall apply.
+
+       5.     Lot Area. Division of lots or parcels are permitted as follows:
+
+              a.     Lots or parcels fifty (50) acres or smaller in size may be divided into any number of
+                     smaller lots or parcels.
+
+              b.     Undeveloped lots, parcels, or tracts larger than fifty (50) acres in size may be
+                     divided into smaller lots, parcels, or tracts so long as the resulting land division
+                     yields at least one (1) lot, parcel, or tract of at least fifty (50) acres in size. If a land
+                     division results in more than one (1) lot, parcel, or tract of fifty (50) acres or greater
+                     in size, only one (1) of those fifty (50) + acre lots, parcels, or tracts, if further divided,
+                     must yield a lot, parcel, or tract of at least fifty (50) acres in size.
+
+              c.     Developed lots or parcels fifty (50) acres or larger in size may be divided into any
+                     number of smaller lots or parcels pursuant to a master plan approved by the City so
+                     long as at least forty percent (40%) of the net area of the lot or parcel has already
+                     been developed with industrial uses or uses accessory to industrial use, and no
+                     portion of the lot has been developed, or is proposed to be developed, with uses
+                     regulated by Subsection 3.175(D) of this Code.
+
+              d.     Notwithstanding parts b. and c. of this Subsection, any lot or parcel may be divided
+                     into smaller lots or parcels or made subject to rights-of-way for the following
+                     purposes:
+
+                     i.      To provide public facilities and services;
+
+Supp. No. 1                                               TDC3-26
+                                                ZONING DISTRICTS                                                     3.440
+
+                    ii.      To separate a portion of a lot or parcel in order to protect a natural resource, to
+                           provide a public amenity, or to implement a remediation plan for a site
+                           identified by the Oregon Department of Environmental Quality pursuant to
+                           ORS 465.225;
+                    iii.     To separate a portion of a lot or parcel containing a nonconforming use from
+                           the remainder of the lot or parcel in order to render the remainder more
+                           practical for a permitted use; or
+                    iv.     To allow the creation of a lot for financing purposes when the created lot is part
+                           of a master planned development.
+(Ord. No. 894, § 2, 12-10-2024; Ord. No. 895, § 1(Att. A), 2-25-2025)
+
+3.440  Additional Requirements.
+
+A.     Unless otherwise provided in this Code, compliance with Chapters 8 and 11 relating to design
+      review and landscaping is required.
+
+B.     All lots shall have frontage or approved access to public streets, public water, and public sewer
+      before development is allowed.
+
+C.     Off-street parking spaces shall be provided in accordance with the requirements of Chapter 9,
+      Off-Street Parking and Loading, of this Code.
+
+D.     Commercial uses, as indicated in the specific standards column in TDC 3.420, are subject to
+      the following standards:
+
+      1.     In order to ensure that certain permitted and conditional non-industrial uses are primarily
+             intended to serve the needs of workers in the immediate area, professional offices;
+             medical and dental clinics; banks; restaurants; and retail, wholesale, and discount sales
+             and service shall not exceed five thousand (5,000) square feet of gross leasable area. If
+             there are multiple businesses within these categories of uses that occur within a single
+             building or within multiple buildings that are part of the same development project, then
+             the cumulative gross leasable area for all these businesses shall not exceed twenty
+             thousand (20,000) square feet.
+
+      2.     Drive-thru and drive-up service windows are not permitted in the general industrial zoning
+             district.
+
+E.     Development is subject to compliance with any applicable overlay zoning district standards.
+
+F.     Marijuana Facilities licensed and authorized under state law, when not located within one
+      thousand (1,000) feet of real property which is the site of a public or private school or a public
+      park. For purposes of this subsection, "within one thousand (1,000) feet" means a straight-line
+      measurement in a radius extending for one thousand (1,000) feet in every direction from any
+      point on the boundary line of the real property comprising an existing public or private school
+      or public park. This buffer shall not apply to new schools or parks located within one thousand
+      (1,000) feet of an existing Marijuana Facility.
+
+Supp. No. 1                                             TDC3-27
+3.440                                      TROUTDALE DEVELOPMENT CODE
+
+G.    Marijuana Processors licensed and authorized under state law, when not located within one
+      thousand (1,000) feet of real property which is the site of a public or private school or a public
+      park. For purposes of this subsection, "within one thousand (1,000) feet" means a straight-line
+      measurement in a radius extending for one thousand (1,000) feet in every direction from any
+      point on the boundary line of the real property comprising an existing public or private school
+      or public park. This buffer shall not apply to new schools or parks located within one thousand
+      (1,000) feet of an existing Marijuana Processor.
+
+H.     Eating and drinking establishment, subject to the following requirements:
+      1.     The use is located within a building which houses another permitted use.
+      2.     No drive-through window is permitted.
+      3.     Inside seating area shall not exceed fifty percent (50%) of the use's gross floor area or
+             one hundred fifty (150) square feet, whichever is the lesser.
+
+I.      In the industrial park zoning district, convenience stores, not to exceed thirty-five hundred
+      (3,500) square feet in size.
+J.     In the light industrial zoning district, storage facilities are allowed when located within one-
+      quarter (¼) mile of the eastern overpasses of Interstate 84 at Exit 17. For purposes of this
+      subsection, "within one-quarter (¼) mile" means a straight line measurement in a radius
+      extending for one thousand three hundred twenty (1,320) feet in every direction from the point
+      positioned on the centerline of 257th Drive situated exactly in between the eastbound and
+      westbound bridges of Interstate 84 at Exit 17.
+
+K.     In the light industrial and general industrial zoning districts, product sales, service, and/or
+      display accessory to any manufacturing, fabricating, or processing use are allowed provided
+      the sales, service, and/or display area does not exceed fifteen percent (15%) of the gross floor
+      area, or three thousand (3,000) square feet, whichever is less.
+(Ord. No. 894, § 2, 12-10-2024; Ord. No. 895, § 1(Att. A), 2-25-2025)
+
+Supp. No. 1                                             TDC3-28
+                                                ZONING DISTRICTS                                                     3.520
+
+                                      3.500  OTHER ZONING DISTRICTS
+
+3.510  General Purpose.
+
+Certain zoning districts may not be neatly defined as residential, mixed-use, commercial and
+industrial but require distinct designations to convey their purpose.
+
+3.520  OS - Open Space.
+
+A.     Purpose. The district is intended to provide and preserve open space areas. In addition to other
+      areas which may be so zoned by the City, this district shall apply to publicly owned parklands.
+
+B.     Permitted Uses. The following uses and their accessory uses are permitted in the OS district.
+      1.     Nature and wildlife preserves.
+      2.     Passive recreation amenities and features.
+      3.     Restroom, storage, and janitorial facilities.
+      4.     Utility facilities (minor).
+B.     Conditional Uses. The following uses and their accessory uses require conditional use
+      approval in accordance with Section 6.300 of this Code.
+      1.     Active recreation amenities and features.
+      2.     Community service uses.
+      3.     Utility facilities (major).
+
+C.     Development Criteria. The development of amenities, features, or facilities shall include, but
+      not be limited to the following criteria:
+      1.     Uses within the OS-designated lot shall be compatible with adjacent land uses.
+      2.     Picnic grounds and parking facilities shall be equipped with trash receptacles.
+      3.     OS-designated lands shall be maintained by the lot owner if privately owned or by the City
+             or other public agency by agreement if publicly owned.
+      4.     A conditional use located within a permitted use shall be compatible with that permitted
+             use.
+
+Supp. No. 1                                             TDC3-29
+
+                                                        CHAPTER 4

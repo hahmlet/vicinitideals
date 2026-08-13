@@ -187,10 +187,17 @@ def pdf_to_text(data: bytes) -> str:
     from pypdf import PdfReader
 
     reader = PdfReader(BytesIO(data))
-    pages = [
-        (page.extract_text(extraction_mode="layout") or "").replace("\r\n", "\n")
-        for page in reader.pages
-    ]
+    pages = []
+    for page in reader.pages:
+        if "/Contents" not in page:
+            # A page with no content stream is a legal, genuinely blank page —
+            # Tualatin's Development Code carries one. pypdf's layout mode
+            # raises KeyError on it, which reads as a broken document when
+            # nothing is actually missing. Only this measured case is skipped;
+            # any other extraction failure still fails loud.
+            pages.append("")
+            continue
+        pages.append((page.extract_text(extraction_mode="layout") or "").replace("\r\n", "\n"))
     # Internal spacing is kept, unlike the HTML path. Portland states its
     # standards in a grid with one column per zone, and the gaps between
     # columns are the only thing that says which number belongs to which zone.

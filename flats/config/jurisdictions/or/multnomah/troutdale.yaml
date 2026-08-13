@@ -12,6 +12,21 @@ ingest:
   zoning_layer: zoning_troutdale
   zone_field: zonecode
   strip_lowercase_suffix: false
+code:
+  # Municode client 4663, publication 1813 (updated 2025-11-17). The zoning
+  # lives in the separately-published Development Code, not the Code of
+  # Ordinances (publication 1812). The library renders in JavaScript; this
+  # endpoint returns the adopted PDF.
+  - id: "3.zoning-districts"
+    url: https://api.municode.com/PublicationPdfDownload/1813
+    title: "Chapter 3 - Zoning Districts"
+    start: "ZONING DISTRICTS"
+    end: "ZONING DISTRICT OVERLAYS"
+  - id: "8.development-standards"
+    url: https://api.municode.com/PublicationPdfDownload/1813
+    title: "Chapter 8 - Development and Design Standards"
+    start: "DEVELOPMENT AND DESIGN STANDARDS"
+    end: "CHAPTER 9"
 zones:
   LDR-1:
     cite_default:

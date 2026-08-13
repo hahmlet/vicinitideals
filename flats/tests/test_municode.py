@@ -16,7 +16,14 @@ import json
 import pytest
 
 from flats.provenance import municode as mod
-from flats.provenance.municode import Publication, aliases, code_block, publication, resolve
+from flats.provenance.municode import (
+    Publication,
+    aliases,
+    code_block,
+    publication,
+    publications,
+    resolve,
+)
 from flats.provenance.sources import Authority, FetchFailed, Fetched
 
 pytestmark = pytest.mark.unit
@@ -100,6 +107,57 @@ def test_a_client_with_no_publication_yields_nothing(monkeypatch) -> None:
     assert publication("Wilsonville") is None
 
 
+# --- which product carries the zoning ----------------------------------
+
+TWO_PRODUCTS = json.dumps(
+    {
+        "codes": [
+            {"productName": "Code of Ordinances", "productId": 16663, "publicationId": 1812},
+            {"productName": "Development Code", "productId": 17318, "publicationId": 1813},
+        ]
+    }
+).encode()
+
+
+def test_a_development_code_beats_the_code_of_ordinances(monkeypatch) -> None:
+    # The measurement: Troutdale and Tualatin both list a Code of Ordinances
+    # first and keep their setbacks in a separately-published Development
+    # Code. "First listed" handed back a charter and called it the zoning.
+    _api(monkeypatch, Clients=CLIENTS, ClientContent=TWO_PRODUCTS)
+
+    pub = publication("Wilsonville")
+
+    assert pub is not None
+    assert pub.product == "Development Code"
+    assert pub.publication_id == 1813
+
+
+def test_a_single_product_client_still_yields_its_only_code(monkeypatch) -> None:
+    # Oregon City: one Municipal Code, zoning inside it as Title 17.
+    _api(monkeypatch, Clients=CLIENTS, ClientContent=CONTENT)
+
+    got = publication("Wilsonville")
+
+    assert got is not None and got.publication_id == 1951
+
+
+def test_every_product_is_reported_not_just_the_preferred_one(monkeypatch) -> None:
+    _api(monkeypatch, Clients=CLIENTS, ClientContent=TWO_PRODUCTS)
+
+    assert [p.product for p in publications("Wilsonville")] == [
+        "Code of Ordinances",
+        "Development Code",
+    ]
+
+
+def test_the_doc_id_names_the_product(monkeypatch) -> None:
+    # Not a constant: a client carrying two products would file both stored
+    # documents under one name, and the second fetch would overwrite the first.
+    pub = Publication("Troutdale", 4663, "Development Code", 17318, 1813)
+
+    assert pub.doc_id == "development-code"
+
+
 # --- the hop -----------------------------------------------------------
 
 
@@ -139,7 +197,7 @@ def test_the_code_block_is_valid_yaml_naming_the_document() -> None:
     parsed = yaml.safe_load(code_block(pub))
 
     assert parsed["code"][0]["url"] == pub.url
-    assert parsed["code"][0]["id"] == "municode-code"
+    assert parsed["code"][0]["id"] == "code-of-ordinances"
 
 
 def test_the_code_block_records_why_the_url_is_that_one() -> None:

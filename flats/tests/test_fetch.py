@@ -310,3 +310,22 @@ def test_implausible_names_its_reason() -> None:
     assert implausible("") == "the response was empty"
     assert "characters" in (implausible("33.110.220 Setbacks are 5 feet.") or "")
     assert implausible(html_to_text(PAGE)) is None
+
+
+def test_a_pdf_page_with_no_content_stream_is_a_blank_page_not_a_broken_document() -> None:
+    # Tualatin's Development Code carries a page with no /Contents key — legal
+    # per the PDF spec, and pypdf's layout mode raises KeyError on it. That
+    # killed the whole fetch, reporting a 900-page code as unreadable over one
+    # blank sheet.
+    from io import BytesIO
+
+    from pypdf import PdfWriter
+
+    from flats.provenance.fetch import pdf_to_text
+
+    writer = PdfWriter()
+    writer.add_blank_page(width=200, height=200)
+    buf = BytesIO()
+    writer.write(buf)
+
+    assert pdf_to_text(buf.getvalue()).strip() == ""

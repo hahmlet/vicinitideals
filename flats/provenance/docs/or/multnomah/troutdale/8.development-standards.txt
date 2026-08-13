@@ -1,0 +1,1612 @@
+DEVELOPMENT AND DESIGN STANDARDS
+
+                                             8.000    General Standards
+8.010                Purpose.
+8.020                Applicability and Exemptions.
+8.025                Authority to Adjust Standards.
+8.030                Pedestrian Walkways.
+8.040                Transit Facilities.
+8.050                Reserved.
+8.060                Landscaping and Screening.
+8.070                Reserved.
+8.080                Reserved.
+
+                                          8.100    Residential Standards
+8.110                 Single-Family Detached and Duplex Dwellings.
+8.120                Triplex and Quadplex Dwellings.
+8.130                Townhouse Projects and Dwellings.
+8.140                Cottage Cluster Projects and Dwellings.
+8.150                Multi-Family Residential Projects and Dwellings.
+8.155                Age-Restricted Units (Reserved).
+8.160                Manufactured Home Parks.
+8.165                Manufactured Home Dwellings.
+8.170                Accessory Dwelling Units.
+8.180                Shared Dwellings.
+
+                                           8.200    Mixed-Use Standards
+8.210                Standards in the MU-1 (Downtown Mixed-Use) Zoning District (Reserved).
+8.220                Standards in the MU-2 (General Mixed-Use) Zoning District (Reserved).
+8.230                Standards in the MU-3 (Urban Mixed-Use) Zoning District.
+8.240                Standards for All Other Mixed-Use Development (Reserved).
+
+                                 8.300    Commercial Standards (Reserved).
+
+                                   8.400    Industrial Standards (Reserved).
+
+                                              8.500    Other Standards
+8.510                257th Avenue Corridor Standards.
+
+                                                          TDC8-1
+
+                               DEVELOPMENT AND DESIGN STANDARDS                                                  8.020
+
+                                        8.000  GENERAL STANDARDS
+
+8.010  Purpose.
+
+The purpose of this Chapter is to advance all of the following objectives in the public interest:
+
+      A.     Carry out the development pattern and plan of the City and its comprehensive plan
+             policies through efficient and effective review of site development proposals;
+      B.     Promote the public health, safety and general welfare;
+
+      C.     Provide adequate light and air, prevent overcrowding of land, and provide for adequate
+             transportation, water supply, sewage, fire protection, pollution control, surface water
+             management, and protection against natural hazards; and
+      D.     Encourage efficient use of land resources and public services, and provision of transpor-
+             tation options.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+8.020  Applicability and Exemptions.
+
+A.     General Standards. Unless otherwise stated, standards in Sections 8.030 to 8.099 of this
+      Division shall apply to all existing uses and development, and to new or expanded uses or
+      development, regardless of zoning district, land use designation, or site development review
+      requirements as described below.
+
+B.     Specific Standards. Unless otherwise stated, standards in the following Divisions shall apply to
+      existing uses and development, and to new or expanded uses of development as contained
+      below:
+      1.     Residential standards in Division 8.100 of this Chapter shall apply to all residential
+             development and uses in any zoning district, except for those in mixed-use zoning
+             districts.
+
+      2.     Mixed-use standards in Division 8.200 of this Chapter shall apply to all mixed-use
+             development and uses, dependent on the zoning district designation.
+
+      3.     Commercial standards in Division 8.300 of this Chapter shall apply to all commercial
+             development and uses in any zoning district, except for those in mixed-use zoning
+             districts.
+      4.     Industrial standards in Division 8.400 of this Chapter shall apply to all industrial develop-
+             ment and uses in any zoning district, except for those in mixed-use zoning districts.
+
+      5.     Other standards contained in Division 8.500 of this Chapter shall apply in accordance
+             with applicability standards contained therein.
+
+C.     Site Development Review. Site development review approval in accordance with Section
+      6.900 of this Code is required for new development, building expansions, expansion of a
+      nonconforming use or development, and changing of use resulting in increased vehicle traffic
+      or requiring an increase in minimum parking pursuant to Chapter 9 of this Code.
+
+Supp. No. 1                                            TDC8-3
+8.020                                      TROUTDALE DEVELOPMENT CODE
+
+D.     Exemptions. Except as specified by a condition of approval on a prior City decision, or as
+      required for uses subject to conditional use approval, a land use decision for site development
+      review is not required for the following:
+
+      1.     Change in occupancy from one allowed land use to another allowed land use.
+
+      2.     Physical expansion of existing structures by ten percent (10%) or less, occurring in a
+             single expansion or in several aggregated expansions relative to the originally approved
+             project.
+
+      3.     Single-family detached dwellings (including manufactured home on its own lot).
+
+      4.     Middle housing typologies, including duplexes, triplexes, quadplexes, townhouse dwell-
+             ings, and cottage cluster dwellings and projects. Townhouse projects of four (4) or more
+             lots shall be subject to applicable subdivision standards and approval procedures in
+             accordance with Chapter 7 of this Code.
+
+      5.     Home occupations.
+
+      6.     Accessory structures that do not require a building permit, with or without accessory
+             parking.
+
+      7.     Public improvements required by City standards or as stipulated by a condition of land
+             use approval (e.g., transportation facilities and improvements, parks, trails, utilities, and
+             similar improvements), except where a condition of approval requires site development
+             review.
+
+      8.     Regular maintenance, repair and replacement of materials (e.g., roof, siding, awnings,
+             etc.), parking resurfacing and similar maintenance and repair.
+
+E.     Middle housing regulations. In the event of a conflict between this Code and state law
+      governing middle housing development, the standards of state code shall control. Middle
+      housing shall comply with protective measures adopted pursuant to statewide land use
+      planning goals.
+(Ord. No. 894, § 5, 12-10-2024; Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+8.025  Authority to Adjust Standards.
+
+Because of the diverse topography, parcel configurations, and site characteristics within the City, it
+is neither practical nor feasible to uniformly apply the design standards within this Chapter of this
+Code to all development projects. The Director may grant adjustments to these design standards
+upon making the following written findings:
+
+      A.     The adjustment is justified due to the unique site conditions.
+
+      B.     The proposal conforms to the extent practicable with these design standards.
+
+      C.     Any impacts from the adjustments are mitigated to the extent practical.
+
+      D.     The decision to adjust a standard is a Type II decision.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+Supp. No. 1                                             TDC8-4
+                                DEVELOPMENT AND DESIGN STANDARDS                                                   8.040
+
+8.030  Pedestrian Walkways.
+
+All industrial parks, commercial developments, community service uses, and parking lots greater
+than one-half (½) acre in size shall meet the following requirements for pedestrian walkways:
+      A.     Number and Placement.
+             1.     At least one (1) pedestrian walkway shall be provided to each street, other than
+                    limited access freeways, abutting the property.
+             2.     Pedestrian walkways shall reasonably connect building entrances to one another,
+                    to public street entrances, and/or to existing or planned transit stops, and off-street
+                    accessible parking spaces.
+             3.     Where practicable, on-site walkways shall connect with walkways, sidewalks, bike
+                    paths, alleyways, and other bicycle or pedestrian connections on adjacent proper-
+                    ties used as, or planned for, industrial parks, commercial, multiple-family, or
+                    community service uses.
+             4.     Where practicable, pedestrian walkways and driveways shall provide a direct
+                    connection to walkways and driveways on abutting developments.
+             5.     A required walkway or walkway connection need not be provided where another
+                    required sidewalk or walkway route provides a reasonably direct alternate route. An
+                    alternate route is reasonably direct if the walking distance increases by less than
+                    fifty percent (50%) over the other required route.
+             6.     Pedestrian walkways are required between those parts of a site that people on the
+                    site normally would walk between. Walkways are not required between buildings or
+                    portions of a site which are not intended for, or likely to be used by, pedestrians.
+                    Such buildings and features include truck loading docks, warehouses not including
+                    office/warehouse combinations, automobile sales lots, temporary uses, outdoor
+                    storage areas, etc.
+
+      B.     Routing.
+             1.     Pedestrian walkways shall be as direct as reasonably possible.
+             2.     Pedestrian driveway crossings should be minimized. Internal parking lot circulation
+                    and design shall maintain ease of access for pedestrians from streets and transit
+                    stops.
+             3.     The on-site pedestrian circulation system shall connect adjacent streets to the main
+                    entrance of the primary structure on the site in a reasonably direct route.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+8.040  Transit Facilities.
+
+A.     Applicability. Any Type II land divisions where further divisions are possible, and all Type III land
+      divisions, multiple-family developments, community service uses, and commercial or industrial
+      uses located on an existing or future transit route shall meet the requirements of TriMet for
+      transit facilities. Applicants shall consult with TriMet to determine necessary transit facility
+
+Supp. No. 1                                             TDC8-5
+8.040                                      TROUTDALE DEVELOPMENT CODE
+
+      improvements in conjunction with the proposed development. Proposals shall be consistent
+      with the road crossing improvements that are identified in the City Transportation System Plan
+      on streets with existing or planned transit service.
+
+B.     Standards. All commercial and community service development, and any industrial develop-
+      ment designed to accommodate fifty (50) or more employees and located on parcels within six
+      hundred (600) feet of existing or planned transit routes shall meet the following requirements:
+      1.     Building Entrances.
+             a.     Where practicable, buildings shall be oriented on the property in a transit friendly
+                    manner. At least one (1) building entrance shall be oriented toward the transit street
+                    and shall be accessed from a public sidewalk. Public sidewalks shall be provided
+                    adjacent to public streets along the street frontage.
+             b.     Buildings within thirty (30) feet of the transit street shall have an entrance for
+                    pedestrians directly from the street to the building interior. This entrance shall be
+                    designed to be attractive and functional, and shall be open to the public during all
+                    business hours.
+             c.     All uses in commercial zones must provide a public entrance on the façade of a
+                    building nearest to, and facing, a transit street or route. If the lot has frontage on
+                    more than one (1) transit street, the building need only have one (1) entrance
+                    oriented to a transit street, or to the corner where two (2) transit streets intersect.
+
+      2.     Setbacks. Buildings shall be setback no more than fifty (50) feet from a transit street,
+             except that when a building is adjacent to a transit street that has a major transit stop
+             within five hundred (500) feet of the building entrance, the building shall be setback no
+             more than twenty (20) feet from the transit street. Where the site is adjacent to more than
+             one (1) transit street, a building is required to meet the maximum setback standard on
+             only one (1) of the streets. Industrial development as described within this Section are
+             exempt from this particular provision.
+
+      3.     As alternative to meeting the requirements in Subsection 1., a development proposal
+             may incorporate the following design features through the design review process in such
+             combination that the City may conclude the access for pedestrians, transit riders, and
+             bicyclists to the development is as good as or better than if the building fronted a major
+             transit route.
+             a.     The building incorporates two (2) entrances, one (1) that provides direct access to
+                    the transit street, in addition to an entrance that fronts a parking lot.
+             b.     The development proposes additional sidewalk amenities and width which allow the
+                    City to conclude that use of sidewalks is no less inviting than if a main building
+                    entrance fronted on a major transit route. Any additional sidewalk amenities will not
+                    prohibit future building modifications that move a building's main façade or main
+                    pedestrian access to a point on a major transit route. To qualify, an applicant must
+                    submit drawings of alternative designs that demonstrate future building modifica-
+                    tions can comply with Subsection 1., above.
+
+Supp. No. 1                                              TDC8-6
+                                DEVELOPMENT AND DESIGN STANDARDS                                                    8.060
+
+             c.     The proposal will construct one (1) or more onsite or offsite multi-use path connec-
+                    tions that connect the building to existing or planned multi-use pedestrian and trail
+                    systems. These systems include, but are not limited to, current and future pedes-
+                    trian or bicycle transit paths, or portions of the forty (40) mile trail loop and the
+                    Beaver Creek Trail. Such connection must invite users of the development to also
+                    use the path in their experience of accessing and using the development.
+             d.     The proposal will construct one (1) or more mid-block bicycle or pedestrian
+                    accesses provided the following are met (not all are required):
+                    i.      Construction features such as ramps, bollards, or curb cuts, when used,
+                           physically limit use of the feature to bicycles or pedestrians.
+                    ii.      The developer installs safety enhancements, such as bicycle stop signs,
+                           lights, walkway areas, or other features, to minimize conflicts between bicy-
+                           cles and pedestrians.
+                    iii.     Mid-block crossings connect to and obviously comprise part of the pedestrian
+                           or bicycle route to building parking lots or front door entrances.
+                    iv.     Bollards and related safety barrier measures create or enhance an effect that
+                           a mid-block crossing is safeguarded or sequestered from passing motor
+                           vehicle traffic.
+                    v.      The overall building design has the effect of increasing or supporting in-
+                           creases in transit ridership in the same way as buildings which comply with
+                           Subsection 1., above.
+             e.     The development amply uses wayfaring signs that:
+                    i.      Identify pedestrian and bicycle connections which are present upon, adjacent
+                           to, and that exist nearby, the development. Such signage should encourage
+                           use of such connections and be of similar size, attractiveness, or visibility as
+                           any vehicle parking signs; and
+                    ii.      Identify bicycle parking areas.
+             f.      Signage inside the buildings, along with other information or with internal layout,
+                    alone or together alert and direct persons to transit stops or other transit amenities
+                    such as mid-block crossings or informational kiosks.
+             g.     The developer constructs offsite improvements, such as pedestrian facilities, or
+                    traffic control devices, that increase connectivity of dedicated pedestrian paths or
+                    demonstrates that constructed improvement will be compatible with and encourage
+                    future connections.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+8.050  Reserved.
+
+8.060  Landscaping and Screening.
+A.     Minimum Basic Improvements.
+      1.     The minimum area of a site to be retained in landscaping shall be as follows:
+
+Supp. No. 1                                             TDC8-7
+8.060                                      TROUTDALE DEVELOPMENT CODE
+
+        Zoning District or Use                                                             Percentage
+        Multi-Family Residential                                                                   25%
+        Manufactured Home Park                                                                25%
+        MU-1—Downtown Mixed-Use                                                            5%
+        MU-2—General Mixed Use                                                               15%
+        CC—Community Commercial                                                          15%
+        GC—General Commercial                                                                15%
+        IP—Industrial Park                                                                            15%
+        LI—Light Industrial                                                                            15%
+        GI—General Industrial                                                                       10%
+       2.     For multi-family residential development and mixed-use development, usable recreation
+              areas shall be provided for development containing more than five (5) dwelling units at
+              the rate of two hundred (200) square feet per dwelling unit. Such areas shall be counted
+              as part of the required landscaping percentage. Examples include, but are not limited to,
+              playgrounds, exercise trails, swimming pools, etc.
+
+       3.     Except for portions approved for parking, loading, or traffic maneuvering, a required
+              setback area abutting a public street, and open area between the property line and the
+              roadway in the public street, shall be landscaped. This landscaping shall be counted as
+              part of the required landscaping percentage, except for that portion of the landscaping
+              within the street right-of-way.
+
+       4.     Sight-obscuring shrubbery or a berm, wall, or fence shall be placed along the boundary
+              of each classification of zone, i.e., residential, commercial or industrial, and around
+              unsightly areas such as a trash or equipment storage area, or an outdoor industrial or
+              commercial activity.
+
+       5.     Landscaping that is required by a land use approval shall be irrigated to ensure the
+              survivability of the landscaping.
+
+       6.     At least seventy-five percent (75%) of the required landscaped area shall be planted with
+              a suitable combination of trees, shrubs, or evergreen groundcover.
+
+       7.     Plant Material:
+              a.     Trees shall be species having an average mature spread of crown of greater than
+                     fifteen (15) feet and trunks which can be maintained in a clean condition with over
+                     five (5) feet of clear wood. Trees having an average mature spread of crown less
+                     than fifteen (15) feet may be substituted by grouping the same so as to create the
+                     equivalent of a fifteen (15) foot crown spread.
+              b.     Trees shall be a minimum of seven (7) feet in overall height or one and one half (1
+                     ½) inches in caliper immediately after planting. Adjacent to any public right-of-way
+                     or easement, the following species shall be prohibited: poplar, willow, cottonwood,
+                     fruit trees, nut trees, and ailanthus. Selected conifers may be planted adjacent to
+                     public rights-of-way or easements if approved by the Director. See the City's list of
+                     recommended tree species.
+
+Supp. No. 1                                                 TDC8-8
+                                DEVELOPMENT AND DESIGN STANDARDS                                                   8.060
+
+             c.     Shrubs shall be a minimum of one (1) gallon in size or two (2) feet in height when
+                    measured immediately after planting. Hedges, where required to screen and buffer
+                    off-street parking from adjoining properties, shall be planted with an evergreen
+                    species maintained so as to form a continuous, solid, visual screen at time of
+                    planting.
+             d.     Vines for screening purposes shall be a minimum of one (1) gallon in size or thirty
+                    (30) inches in height immediately after planting and may be used in conjunction with
+                    fences, screens, or walls to meet physical barrier requirements as specified.
+             e.     Groundcovers used in lieu of turf, in whole or in part, shall be planted in such a
+                    manner as to provide complete coverage within one (1) year.
+             f.      Turf areas shall be planted in species normally grown as permanent lawns in
+                    Troutdale. Acceptable varieties include improved perennial rye and fescues.
+             g.     The use of native plants throughout the site is encouraged if the site abuts
+                    vegetation corridors, steep slopes, wetlands, or floodplain. If native plants are used
+                    exclusively, a reduction of five percent (5%) of the minimum landscaping require-
+                    ment will be authorized.
+
+             h.     Plants listed in the current Oregon Department of Fish & Wildlife Oregon Invasive
+                    Species Action Plan as invasive are prohibited.
+
+      8.     Landscaped areas may include architectural features or artificial groundcovers such as
+             sculptures, benches, masonry or stone walls, fences, rock groupings, bark dust (medium
+             coarse), decorative hard paving, and gravel areas, interspersed with planted areas. The
+             exposed area developed with such features shall not exceed twenty-five percent (25%) of
+             the required landscaped area. Artificial plants are prohibited in any required landscaped
+             area.
+
+      9.     Existing trees with a six (6) inch DBH or greater shall be preserved except when removal
+             is specifically authorized by the Site and Design Review Committee or in the develop-
+             ment approval.
+
+      10.   The area of the vegetation corridor on a site being developed counts toward the required
+             landscape area.
+
+B.     Garbage and Recycling Container Enclosures. All enclosures used to contain garbage and
+      recycling containers at multiple-family, commercial, industrial, or institutional developments
+      must conform to the following minimum standards:
+
+      1.     Screening. All enclosures for garbage and recycling containers must be screened from
+             public view. Screening shall consist of six (6) foot-high walls constructed of any of the
+             following materials:
+             a.     Cyclone fencing with slats.
+             b.     Wooden fencing.
+
+             c.     Concrete blocks.
+
+Supp. No. 1                                             TDC8-9
+8.060                                      TROUTDALE DEVELOPMENT CODE
+
+             d.     Materials other than the above-mentioned as approved on a case-by-case basis.
+
+      2.     Gates. Gates must meet the following requirements:
+
+             a.     Must have a latch or some type of device which will keep the gate shut after it is
+                    closed. The device can be above or below ground.
+
+             b.     Must have a mechanism to keep gates open during trash removal. The device can
+                    be above or below ground.
+
+             c.     Wheels are not required; however, the hinge must be adequate to support the
+                    weight of the gate.
+
+      3.     Base Material/Flooring. The entire base dimension must meet the following require-
+             ments:
+
+             a.     Must be made out of concrete. Concrete shall have a nominal thickness of four (4)
+                    inches. Exceptions to the base materials may be approved by the Director where
+                    warranted.
+
+             b.     Must be positively sloped to the drainage system.
+
+C.     Installation and Performance Bond or Security Requirements.
+
+      1.     Landscaping must be installed prior to final occupancy.
+
+      2.     If weather conditions or other circumstances beyond the control of the developer or
+             owner make completion of the landscaping impossible, an extension of up to six (6)
+             months may be applied for by posting "security" equal to forty percent (40%) of the cost
+             of the landscaping with the City, assuring installation within six (6) months. "Security" may
+             consist of a performance bond payable to the City, cash, certified check, time certificates
+             of deposit, assignment of a savings account, or other such assurance of access to funds
+             necessary for completion as shall meet the approval of the City Attorney.
+
+      3.     Upon acceptance of the approved security, the owner may be allowed occupancy for a
+             period of one hundred eighty (180) days. If the installation of the landscaping improve-
+             ment is not completed within one hundred eighty (180) days, the City shall have access
+             to the security to complete the installation and/or revoke occupancy.
+
+      4.     Upon completion of the installation, any portion of the remaining security minus admin-
+             istrative charges of twenty-five percent (25%) shall be returned to the owner. Costs in
+             excess of posted security shall be assessed against the property, and the City shall
+             thereupon have a valid lien against the property which will come due and payable.
+
+D.     Guarantee. All landscape materials and workmanship shall be guaranteed by the installer
+      and/or developer for a period of time not to exceed two (2) years. This guarantee shall ensure
+      that all plant materials survive in good condition and shall guarantee prompt replacement of
+      dead or dying plant materials.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+Supp. No. 1                                            TDC8-10
+                           DEVELOPMENT AND DESIGN STANDARDS                                      8.080
+
+8.070  Reserved.
+
+8.080  Reserved.
+
+Supp. No. 1                                   TDC8-11
+8.110                                      TROUTDALE DEVELOPMENT CODE
+
+                                      8.100  RESIDENTIAL STANDARDS
+
+8.110  Single-Family Detached and Duplex Dwellings.
+
+A.     Approval Standards. Single-family detached and duplex dwellings are permitted outright.
+      Alternatively, an applicant may choose to submit an application for a duplex subject to
+      discretionary standards and criteria adopted in accordance with ORS 197.307(6), if such a
+      process is available.
+
+B.     Development Standards.
+
+      1.     Single-family detached dwellings and duplexes shall meet the development standards
+             contained within the dimensional standards table in Section 3.130.C of this Code.
+
+      2.     Duplex dwellings are subject to the off-street parking regulations in Chapter 9.010,
+             Off-Street Parking Requirements.
+
+C.     Design Standards.
+
+      1.     All dwellings shall utilize at least six (6) of the following design features:
+
+             a.     Dormers.
+
+             b.     Recessed entries.
+
+             c.     Cupolas.
+
+             d.     Bay or bow windows.
+
+             e.     Window shutters.
+
+             f.      Offsets on building face or roof (minimum twelve (12) inches).
+
+             g.     Gables.
+
+             h.     Covered porch entry.
+
+             i.      Pillars or posts.
+
+             j.      Eaves (minimum six (6) inches).
+
+             k.     Tile, shake, or architectural composition roofing.
+
+             l.      Horizontal lap siding.
+
+      2.     Windows. A minimum of fifteen percent (15%) of the area of one (1) street frontage. For
+             corner lots, this standard shall apply to at least one (1) side.
+
+D.     Duplex Conversions. Conversion of an existing detached single-family structure to a duplex is
+      allowed, pursuant to Chapter 1, Section C (Applicability), provided that the conversion does not
+      increase nonconformance with applicable clear and objective standards.
+(Ord. No. 894, § 5, 12-10-2024; Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+Supp. No. 1                                            TDC8-12
+                                DEVELOPMENT AND DESIGN STANDARDS                                                  8.120
+
+8.120  Triplex and Quadplex Dwellings.
+
+A.     Approval process.
+
+      1.     Triplexes and quadplexes are subject to the same approval process as that for detached
+             single-family dwellings in the same zone and are subject only to clear and objective
+             standards, approval criteria, conditions, and procedures, unless discretionary standards
+             and criteria have been adopted in accordance with ORS 197.307(5).
+      2.     Applicants must demonstrate that sufficient infrastructure as defined in Section 1.020 of
+             this Code is provided, or will be provided, upon submittal of a triplex or quadplex
+             development application.
+
+B.     Development standards.
+      1.     Applicability
+             a.     Triplexes and quadplexes shall meet:
+                    i.      The development standards contained within the dimensional standards table
+                           in Section 3.130.C of this Division.
+                    ii.      All other clear and objective development standards that apply to detached
+                           single-family dwellings in the same zone (including, but not limited to, lot size
+                           and dimensions, minimum and maximum setbacks, and building height),
+                           unless those standards conflict with this Code and except as specified in this
+                           Subsection B.
+             b.     The following standards are invalid and do not apply to triplexes or quadplexes
+                    allowed by this Code: Maximum lot coverage, minimum landscape area, or mini-
+                    mum open space standards.
+      2.     Number of Units. This Code does not allow for the creation of more than four (4) dwelling
+             units on a lot, including accessory dwelling units.
+
+      3.     Off-Street Parking.
+             a.     Required Off-street Parking. The minimum number of required off-street parking
+                    spaces is:
+                    i.      In zones with a minimum lot size of less than five thousand (5,000) square
+                           feet, a minimum of two (2) off-street parking spaces per triplex or quadplex
+                           development.
+                    ii.      In zones with a minimum lot size between five thousand (5,000) square feet
+                           and six thousand nine hundred and ninety-nine (6,999) square feet, a mini-
+                           mum of three (3) off-street parking spaces per triplex or quadplex develop-
+                           ment.
+                    iii.     In zones with a minimum lots size of seven thousand (7,000) square feet or
+                           greater:
+                           (a)    A minimum of three (3) off-street parking spaces per triplex.
+                           (b)    A minimum of four (4) off-street parking spaces per quadplex
+
+Supp. No. 1                                            TDC8-13
+8.120                                      TROUTDALE DEVELOPMENT CODE
+
+                    iv.     A credit for on-street parking shall be granted for some or all the required
+                           off-street parking as provided in Subsection 3.b. No additional parking spaces
+                           shall be required for conversion of a detached single-family dwelling to a
+                           triplex or quadplex, including those created through the addition of detached
+                           units.
+             b.     On-Street Credit. If on-street parking spaces meet all the following standards, they
+                    shall be counted toward the minimum off-street parking requirement.
+                    i.      The space must be abutting the subject site;
+                    ii.      The space must be in a location where on-street parking is allowed by the
+                           jurisdiction;
+                    iii.     The space must be a minimum of twenty-two (22) feet long; and
+                    iv.     The space must not obstruct a required sight distance area.
+
+C.     Design Standards.
+
+      1.     Applicability.
+             a.     New triplexes and quadplexes, including those created by adding building square
+                    footage on a site occupied by an existing dwelling, shall meet the design standards
+                    in Subsections 2. through 5. of this Subsection C.
+             b.     The following standards are invalid and do not apply to triplexes or quadplexes
+                    allowed by this Code:
+                    i.      Mandates for construction of a garage or carport.
+                    ii.      The jurisdiction's design standards other than those in this Subsection C. that
+                           apply only to triplexes, quadplexes, or multifamily development.
+      2.     Entry Orientation. At least one (1) main entrance for each triplex or quadplex structure
+             must meet the standards in Subsections a. and b. below. Any detached structure for
+             which more than fifty percent (50%) of its street-facing facade is separated from the street
+             property line by a dwelling is exempt from meeting these standards.
+             a.     The entrance must be within eight (8) feet of the longest street-facing wall of the
+                    dwelling unit; and
+             b.     The entrance must either:
+                    i.      Face the street (see Figure 8.120.C.2.b.i at the end of this Section);
+                    ii.      Be at an angle of up to forty-five (45) degrees from the street (see Figure
+                           8.120.C.2.b.ii at the end of this Section);
+                    iii.     Face a common open space that is adjacent to the street and is abutted by
+                           dwellings on at least two (2) sides (see Figure 8.120.C.2.b.iii at the end of this
+                           Section); or
+                    iv.     Open onto a porch (see Figure 8.120.C.2.b.iv at the end of this Section). The
+                           porch must:
+                           (a)    Be at least twenty-five (25) square feet in area; and
+
+Supp. No. 1                                             TDC8-14
+                                DEVELOPMENT AND DESIGN STANDARDS                                                     8.120
+
+                           (b)    Have at least one (1) entrance facing the street or have a roof.
+      3.     Windows. A minimum of fifteen percent (15%) of the area of all street-facing facades must
+             include windows or entrance doors. Facades separated from the street property line by a
+             dwelling are exempt from meeting this standard (see Figure 8.120.C.3 at the end of this
+             Section).
+      4.     Garages, Carports, and Off-Street Parking Areas.
+             a.     Garages and carports are not required for residential developments.
+             b.     Garages and off-street parking areas shall not be located between a building and a
+                    public street (other than an alley), except in compliance with the standards in
+                    Subsections a. and b. of this Subsection C.4.
+             c.     The garage or off-street parking area is separated from the street property line by a
+                    dwelling; or
+             d.     The combined width of all garages and outdoor on-site parking and maneuvering
+                    areas does not exceed a total of fifty percent (50%) of the street frontage (see
+                    Figure 8.120.C.4 at the end of this Section).
+      5.     Driveway Approach. Driveway approaches must comply with the following:
+             a.     The total width of all driveway approaches must not exceed thirty-two (32) feet per
+                    frontage, as measured at the property line (see Figure 8.120.C.5.b at the end of this
+                    Section). For lots or parcels with more than one (1) frontage, see Subsection 5.c. of
+                    this Subsection C.
+             b.     Driveway approaches may be separated when located on a local street (see Figure
+                    8.120.C.5.b at the end of this Section). If approaches are separated, they must meet
+                    the jurisdiction's driveway spacing standards applicable to local streets.
+             c.     In addition, lots or parcels with more than one (1) frontage must comply with the
+                    following:
+                    i.      Lots or parcels must access the street with the lowest transportation classifi-
+                           cation for vehicle traffic. For lots or parcels abutting an improved alley (defined
+                           as an alley that meets the jurisdiction's standards for width and pavement),
+                           access must be taken from the alley (see Figure 8.120.C.5.c.i at the end of this
+                           Section).
+                    ii.      Lots or parcels with frontages only on collectors and/or arterial streets must
+                           meet the jurisdiction's access standards applicable to collectors and/or arte-
+                           rials.
+                    iii.     Triplexes and quadplexes on lots or parcels with frontages only on local
+                           streets may have either:
+                           (a)    Two (2) driveway approaches not exceeding thirty-two (32) feet in total
+                                  width on one (1) frontage; or
+                           (b)    One (1) maximum sixteen (16) foot-wide driveway approach per front-
+                                  age (see Figure 8.120.C.5.c.iii at the end of this Section).
+
+Supp. No. 1                                             TDC8-15
+8.120                                      TROUTDALE DEVELOPMENT CODE
+
+D.     Conversions to Triplex and Quadplex. Internal conversion of an existing detached single-family
+      structure or duplex to a triplex or quadplex is allowed, pursuant to Chapter 1, Section C
+      (Applicability), provided that the conversion does not increase nonconformance with applica-
+      ble clear and objective standards, unless increasing nonconformance is otherwise permitted
+      by the development code.
+
+                                Figure for 8.120.C.2.b.i
+                       Main Entrance Facing the Street
+
+Supp. No. 1                                            TDC8-16
+                             DEVELOPMENT AND DESIGN STANDARDS                                             8.120
+
+                           Figure for 8.120.C.4.b.iii
+           Main Entrance at 45 Degree Angle from the Street
+
+Supp. No. 1                                        TDC8-17
+8.120                                      TROUTDALE DEVELOPMENT CODE
+
+                                      Figure for 8.120.C.2.b.iii
+                      Main Entrance Facing the Common Open Space
+
+Supp. No. 1                                            TDC8-18
+                            DEVELOPMENT AND DESIGN STANDARDS                                           8.120
+
+                          Figure for 8.120.C.4.b.iv
+                  Main Entrance Opening onto a Porch
+
+Supp. No. 1                                      TDC8-19
+8.120                                      TROUTDALE DEVELOPMENT CODE
+
+                            Figure for Figure 8.120.C.3
+                               Window Coverage
+
+Supp. No. 1                                            TDC8-20
+                            DEVELOPMENT AND DESIGN STANDARDS                                          8.120
+
+                            Figure for 8.120.C.4
+                  Width of Garages and Parking Areas
+
+Supp. No. 1                                     TDC8-21
+8.120                                      TROUTDALE DEVELOPMENT CODE
+
+                                 Figure for 8.120.C.5.b.
+          Driveway Approach Width and Separation on Local Street
+
+Supp. No. 1                                            TDC8-22
+                            DEVELOPMENT AND DESIGN STANDARDS                                          8.120
+
+                   Figure for 8.120.C.5.c.i.
+                       Alley Access
+
+Supp. No. 1                                      TDC8-23
+8.120                                      TROUTDALE DEVELOPMENT CODE
+
+                                                Figure for 8.120.C.5.c.i.
+                     Driveway Approach Options for Multiple Local Street Frontages
+(Ord. No. 894, § 5, 12-10-2024; Ord. No. 899, § 2(Att. A), 6-24-2025)
+8.130  Townhouse Projects and Dwellings.
+A.     Approval Process.
+      1.     Townhouse dwellings are subject to the same approval process as that for detached
+             single-family dwellings in the same zone.
+
+Supp. No. 1                                            TDC8-24
+                                DEVELOPMENT AND DESIGN STANDARDS                                                   8.130
+
+      2.     Townhouse projects.
+             a.     Townhouse projects are subject only to clear and objective standards, approval
+                    criteria, conditions, and procedures, unless discretionary standards and criteria
+                    have been adopted in accordance with ORS 197.307(5). Alternatively, an applicant
+                    may choose to submit an application for a townhouse project subject to discretion-
+                    ary standards and criteria adopted in accordance with ORS 197.307(6), if such a
+                    process is available.
+             b.     Creation of new lots or parcels as part of a townhouse project is subject to the
+                    applicable land division approval process in accordance with Chapter 7 of this
+                    Code.
+             c.     Applicants must demonstrate that sufficient infrastructure as defined in Section
+                    1.020 of this Code is provided, or will be provided, upon submittal of a townhouse
+                    development application.
+
+B.     Development Standards.
+      1.     Applicability.
+             a.     Townhouses shall meet the development standards contained within the dimen-
+                    sional standards table in Section 3.130.C of this Division.
+             b.     Townhouse projects shall meet:
+                    i.      The development standards contained within the dimensional standards table
+                           in Section 3.130.C of this Code.
+                    ii.      Any applicable general development standards contained within Division
+                           8.000 of this Chapter.
+                    iii.     Any applicable clear and objective platting standards contained within Chap-
+                           ter 7 of this Code or otherwise required by state law.
+                    iv.     The additional development standards contained within this Section (8.130.B).
+             c.     The following standards are invalid and do not apply to townhouses or townhouse
+                    projects allowed by this Code, except as specified within this Section 8.130:
+                    i.      Additional development standards of the applicable base zone related to the
+                           standards addressed under Subsections 2. and 3. of this Section B.
+                    ii.      Development standards of the applicable base zone related to lot dimensions,
+                           lot coverage, landscape or open space area, or the siting or design of
+                           dwellings.
+                    iii.     The jurisdiction's other development standards that apply only to townhouses
+                           and that conflict with provisions of this Code.
+
+      2.     Off-Street Parking.
+             a.     Garages and carports are not required for residential development
+             b.     Required Off-Street Parking. The minimum number of required off-street parking
+                    spaces for a townhouse project is one (1) space per unit. Spaces may be provided
+
+Supp. No. 1                                            TDC8-25
+8.130                                      TROUTDALE DEVELOPMENT CODE
+
+                    on individual lots or in a shared parking area on a common tract. A credit for
+                    on-street parking shall be granted for some or all of the required off-street parking as
+                    provided in Subsection b.
+
+      3.     On-Street Parking.
+             a.     On-Street Credit. If on-street parking spaces meet all the standards in Subsections
+                    i. through iv. below, they shall be counted toward the minimum off-street parking
+                    requirement.
+                    i.      The space must be abutting the subject site;
+                    ii.      The space must be in a location where on-street parking is allowed by the
+                           jurisdiction;
+                    iii.     The space must be a minimum of twenty-two (22) feet long; and
+                    iv.     The space must not obstruct a required sight distance area.
+
+      4.     Areas Owned in Common. Common areas must be maintained by a homeowners
+             association or other legal entity. A homeowners association may also be responsible for
+             exterior building maintenance. A copy of any applicable covenants, restrictions and
+             conditions must be recorded and provided to the jurisdiction prior to issuance of a building
+             permit.
+
+C.     Design Standards. New townhouses shall meet the following design standards. Mandates for
+      construction of a garage or carport and any other design standards are invalid.
+
+      1.     Entry Orientation. The main entrance of each townhouse must:
+             a.     Be within eight (8) feet of the longest street-facing wall of the dwelling unit, if the lot
+                    has public street frontage; and
+             b.     Either:
+                    i.      Face the street (see Figure 8.120.C.2.b.i in the preceding Section);
+                    ii.      Be at an angle of up to forty-five (45) degrees from the street (see Figure
+                           8.120.C.4.b.iii in the preceding Section);
+                    iii.     Face a common open space or private access or driveway that is abutted by
+                           dwellings on at least two (2) sides; or
+                    iv.     Open onto a porch (see Figure 8.120.C.4.b.iv in the preceding Section). The
+                           porch must:
+                           (a)    Be at least twenty-five (25) square feet in area; and
+                           (b)    Have at least one (1) entrance facing the street or have a roof.
+
+      2.     Unit Definition. Each townhouse must include at least two (2) of the following on at least
+             one (1) street-facing façade (see Figure 8.130.C.2 at the end of this Section):
+             a.     A roof dormer a minimum of four (4) feet in width.
+             b.     A balcony a minimum of two (2) feet in depth and four (4) feet in width and
+                    accessible from an interior room, which may encroach into a required setback area.
+
+Supp. No. 1                                             TDC8-26
+                                DEVELOPMENT AND DESIGN STANDARDS                                                   8.130
+
+             c.     A bay window that extends from the facade a minimum of two (2) feet, which may
+                    encroach into a required setback area.
+             d.     An offset of the facade of a minimum of two (2) feet in depth, either from the
+                    neighboring townhouse or within the façade of a single townhouse.
+             e.     An entryway that is recessed a minimum of three (3) feet.
+             f.      A covered entryway with a minimum depth of four (4) feet.
+             g.     A porch meeting the standards contained in Subsection 8.130.C.1.b.iv of this Code.
+      3.     Windows. A minimum of fifteen percent (15%) of the area of all street-facing facades on
+             each individual unit must include windows or entrance doors. Half (½) of the window area
+             in the door of an attached garage may count toward meeting this standard. (see Figure
+             8.120.C.3 in the preceding Section).
+
+      4.     Driveway Access and Parking. Townhouses with frontage on a public street shall meet
+             the following standards:
+             a.     Garages on the front façade of a townhouse, off-street parking areas in the front
+                    yard, and driveways in front of a townhouse are allowed if they meet the following
+                    standards (see Figure 8.130.C.4.b at the end of this Section):
+                    i.      Each townhouse lot has a street frontage of at least fifteen (15) feet on a local
+                           street.
+                    ii.      A maximum of one (1) driveway approach is allowed for every townhouse.
+                           Driveway approaches and/or driveways may be shared.
+                    iii.     Outdoor on-site parking and maneuvering areas do not exceed twelve (12)
+                           feet wide on any lot.
+                    iv.     The garage width does not exceed twelve (12) feet, as measured from the
+                           inside of the garage door frame.
+             b.     The following standards apply to driveways and parking areas for townhouse
+                    projects that do not meet all of the standards in Subsection (a).
+                    i.      Off-street parking areas shall be accessed on the back façade or located in the
+                           rear yard. No off-street parking shall be allowed in the front yard or side yard
+                           of a townhouse.
+                    ii.      A townhouse project that includes a corner lot shall take access from a single
+                           driveway approach on the side of the corner lot (see Figure 8.130.C.4.b.ii at
+                           the end of this Section).
+                    iii.     Townhouse projects that do not include a corner lot shall consolidate access
+                           for all lots into a single driveway. The driveway and approach are not allowed
+                           in the area directly between the front façade and front lot line of any of the
+                           townhouses (see Figure 8.130.C.4.b.iii at the end of this Section).
+                    iv.     A townhouse project that includes consolidated access or shared driveways
+                           shall grant access easements to allow normal vehicular access and emer-
+                           gency access.
+
+Supp. No. 1                                            TDC8-27
+8.130                                      TROUTDALE DEVELOPMENT CODE
+
+             c.     Townhouse projects in which all units take exclusive access from a rear alley are
+                    exempt from compliance with Subsection b.
+
+                         Figure for 8.130.C.2
+             Townhouse Unit Definition Features
+
+Supp. No. 1                                             TDC8-28
+                            DEVELOPMENT AND DESIGN STANDARDS                                           8.130
+
+                            Figure for 8.130.C.4.a
+                 Townhouses with Parking in Front Yard
+
+Supp. No. 1                                      TDC8-29
+8.130                                      TROUTDALE DEVELOPMENT CODE
+
+                              Figure for 8.130.C.4.b.ii
+               Townhouses on Corner Lot with Shared Access
+
+Supp. No. 1                                             TDC8-30
+                               DEVELOPMENT AND DESIGN STANDARDS                                                  8.140
+
+                              Figure for 8.130.C.4.b.iii
+                   Townhouses with Consolidated Access
+(Ord. No. 894, § 5, 12-10-2024; Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+8.140  Cottage Cluster Projects and Dwellings.
+
+A.     Approval Process.
+
+      1.     Cottage cluster projects are subject to the same approval process as that for detached
+             single-family dwellings in the same zone and are subject only to clear and objective
+             standards, approval criteria, conditions, and procedures, unless discretionary standards
+             and criteria have been adopted in accordance with ORS 197.307(5). Alternatively, an
+             applicant may choose to submit an application for a cottage cluster project subject to
+             discretionary standards and criteria adopted in accordance with ORS 197.307(6), if such
+             a process is available.
+
+Supp. No. 1                                           TDC8-31
+8.140                                      TROUTDALE DEVELOPMENT CODE
+
+      2.     Applicants must demonstrate that Sufficient Infrastructure as defined in Section 1.020 of
+             this Code is provided, or will be provided, upon submittal of a cottage cluster development
+             application.
+
+B.     Development Standards.
+
+      1.     Applicability. Cottage clusters shall meet the development standards contained herein
+             and within the dimensional standards table in Section 3.130.D of this Code.
+
+      2.     Average Unit Size. The maximum average floor area for a cottage cluster is one thousand
+             four hundred (1,400) square feet per dwelling unit. Community buildings shall be included
+             in the average floor area calculation for a cottage cluster.
+
+      3.     Off-Street Parking.
+             a.     Required Off-Street Parking. The minimum number of required off-street parking
+                    spaces for a cottage cluster project is zero (0) spaces per unit with a floor area of
+                    less than one thousand (1,000) square feet and one (1) space per unit with a floor
+                    area of one thousand (1,000) square feet or more. Spaces may be provided for
+                    individual cottages or in shared parking clusters. A credit for on-street parking shall
+                    be granted for some or all of the required off-street parking as provided in Subsec-
+                    tion b.
+             b.     On-Street Credit. If on-street parking spaces meet all the standards in Subsections
+                    i. through iv. below, they shall be counted toward the minimum off-street parking
+                    requirement.
+                    i.      The space must be abutting the subject site;
+                    ii.      The space must be in a location where on-street parking is allowed by the
+                           jurisdiction;
+                    iii.     The space must be a minimum of twenty-two (22) feet long; and
+                    iv.     The space must not obstruct a required sight distance area.
+
+C.     Design Standards. Cottage clusters shall meet the following design standards. No other design
+      standards shall apply to cottage clusters unless noted in this Section. Mandates for construc-
+      tion of a garage or carport and any other design standards are invalid, except as specified in
+      this Section.
+      1.     Cottage Orientation. Cottages must be clustered around a common courtyard, meaning
+             they abut the associated common courtyard or are directly connected to it by a pedestrian
+             path, and must meet the following standards (see Figure 8.140.C.1 at the end of this
+             Section):
+             a.     Each cottage within a cluster must either abut the common courtyard or must be
+                    directly connected to it by a pedestrian path.
+             b.     A minimum of fifty percent (50%) of cottages within a cluster must be oriented to the
+                    common courtyard and must:
+                    i.      Have a main entrance facing the common courtyard;
+
+Supp. No. 1                                             TDC8-32
+                               DEVELOPMENT AND DESIGN STANDARDS                                                  8.140
+
+                   ii.      Be within ten (10) feet from the common courtyard, measured from the façade
+                          of the cottage to the nearest edge of the common courtyard; and
+                   iii.     Be connected to the common courtyard by a pedestrian path.
+
+             c.     Cottages within twenty (20) feet of a street property line may have their entrances
+                   facing the street.
+
+             d.     Cottages not facing the common courtyard or the street must have their main
+                   entrances facing a pedestrian path that is directly connected to the common
+                   courtyard.
+
+      2.     Common Courtyard Design Standards. Each cottage cluster must share a common
+             courtyard in order to provide a sense of openness and community of residents. Common
+             courtyards must meet the following standards (see Figure 8.140.C.1 at the end of this
+             Section):
+
+             a.     The common courtyard must be a single, contiguous piece.
+
+             b.     Cottages must abut the common courtyard on at least two (2) sides of the courtyard.
+
+             c.     The common courtyard must contain a minimum of one hundred fifty (150) square
+                   feet per cottage within the associated cluster (as defined in Subsection 1. of this
+                   Section C.).
+
+             d.     The common courtyard must be a minimum of fifteen (15) feet wide at its narrowest
+                   dimension.
+
+             e.     The common courtyard shall be developed with a mix of landscaping, lawn area,
+                   pedestrian paths, and/or paved courtyard area, and may also include recreational
+                   amenities. Impervious elements of the common courtyard shall not exceed seventy-
+                   five percent (75%) of the total common courtyard area.
+
+             f.      Pedestrian paths must be included in a common courtyard. Paths that are contig-
+                   uous to a courtyard shall count toward the courtyard's minimum dimension and
+                   area. Parking areas, required setbacks, and driveways do not qualify as part of a
+                   common courtyard.
+
+      3.     Community Buildings. Cottage cluster projects may include community buildings for the
+             shared use of residents that provide space for accessory uses such as community
+             meeting rooms, guest housing, exercise rooms, day care, or community eating areas.
+             Community buildings must meet the following standards:
+
+             a.     Each cottage cluster is permitted one (1) community building, which shall count
+                   towards the maximum average floor area, pursuant to Subsection B.5.
+
+             b.     A community building that meets the development code's definition of a dwelling
+                   unit must meet the maximum nine hundred (900) square foot footprint limitation that
+                   applies to cottages, unless a covenant is recorded against the property stating that
+                   the structure is not a legal dwelling unit and will not be used as a primary dwelling.
+
+Supp. No. 1                                           TDC8-33
+8.140                                      TROUTDALE DEVELOPMENT CODE
+
+      4.     Pedestrian Access.
+             a.     An accessible pedestrian path must be provided that connects the main entrance of
+                    each cottage to the following:
+                    i.      The common courtyard;
+                    ii.      Shared parking areas;
+                    iii.     Community buildings; and
+                    iv.     Sidewalks in public rights-of-way abutting the site or rights-of-way if there are
+                           no sidewalks.
+             b.     The pedestrian path must be hard-surfaced and a minimum of four (4) feet wide.
+
+      5.     Windows. Cottages within twenty (20) feet of a street property line must meet any window
+             coverage requirement that applies to detached single-family dwellings in the same zone.
+
+      6.     Parking Design (see Figure 8.140.C.6 at the end of this Section).
+             a.     Clustered Parking. Off-street parking may be arranged in clusters, subject to the
+                    following standards:
+                    i.      Cottage cluster projects with fewer than sixteen (16) cottages are permitted
+                           parking clusters of not more than five (5) contiguous spaces.
+                    ii.      Cottage cluster projects with sixteen (16) cottages or more are permitted
+                           parking clusters of not more than eight (8) contiguous spaces.
+                    iii.     Parking clusters must be separated from other spaces by at least four (4) feet
+                           of landscaping.
+                    iv.     Clustered parking areas may be covered.
+             b.     Parking Location and Access.
+                    i.      Off-street parking spaces and vehicle maneuvering areas shall not be located:
+                           (a)    Within twenty (20) feet from any street property line, except alley
+                                  property lines;
+                           (b)    Between a street property line and the front façade of cottages located
+                                  closest to the street property line. This standard does not apply to alleys.
+                    ii.      Off-street parking spaces shall not be located within ten (10) feet of any other
+                           property line, except alley property lines. Driveways and drive aisles are
+                           permitted within ten (10) feet of other property lines.
+             c.     Screening. Landscaping, fencing, or walls at least three (3) feet tall shall separate
+                    clustered parking areas and parking structures from common courtyards and public
+                    streets.
+             d.     Garages and Carports.
+                    i.      Garages and carports are not required for residential developments.
+                    ii.      Garages and carports (whether shared or individual) must not abut common
+                           courtyards.
+
+Supp. No. 1                                             TDC8-34
+                                DEVELOPMENT AND DESIGN STANDARDS                                                   8.140
+
+                    iii.     Individual attached garages up to two hundred (200) square feet shall be
+                           exempted from the calculation of maximum building footprint for cottages.
+
+                    iv.     Individual detached garages must not exceed four hundred (400) square feet
+                           in floor area.
+
+                    v.      Garage doors for attached and detached individual garages must not exceed
+                           twenty (20) feet in width.
+
+      7.     Accessory Structures. Accessory structures must not exceed four hundred (400) square
+             feet in floor area.
+
+      8.     Existing Structures. On a lot or parcel to be used for a cottage cluster project, an existing
+             detached single-family dwelling on the same lot at the time of proposed development of
+             the cottage cluster may remain within the cottage cluster project area under the following
+             conditions:
+
+             a.     The existing dwelling may be nonconforming with respect to the requirements of
+                    this Code.
+
+             b.     The existing dwelling may be expanded up to the maximum height in Subsection
+                    B.4. or the maximum building footprint in Chapter 1, Subsection B.1.; however,
+                    existing dwellings that exceed the maximum height and/or footprint of this Code
+                    may not be expanded.
+
+             c.     The floor area of the existing dwelling shall not count towards the maximum average
+                    floor area of a cottage cluster.
+
+             d.     The existing dwelling shall be excluded from the calculation of orientation toward
+                    the common courtyard, per Subsection 1.a. of this Subsection C.
+
+Supp. No. 1                                            TDC8-35
+8.140                                      TROUTDALE DEVELOPMENT CODE
+
+                                         Figure 8.140.C.1
+           Cottage Cluster Orientation and Common Courtyard Standards
+
+Supp. No. 1                                            TDC8-36
+                               DEVELOPMENT AND DESIGN STANDARDS                                                8.150
+
+                                    Figure 8.140.C.6.
+                  Cottage Cluster Parking Design Standards
+(Ord. No. 894, § 5, 12-10-2024; Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+8.150  Multi-Family Residential Projects and Dwellings.
+A.     Approval Process. Multi-family residential projects and dwellings are subject to a Site Devel-
+      opment Review land use application in accordance with Section 6.900 of this Code.
+
+Supp. No. 1                                          TDC8-37
+8.150                                      TROUTDALE DEVELOPMENT CODE
+
+B.     Design Standards.
+
+       1.     Building Entrances. The primary entrance to buildings that do not have residential units
+              above or below other residential units shall face toward a public or private street, unless
+              the lot configuration, site characteristics, onsite circulation, or other conditions make it
+              impractical to face a building's primary entrance to the street. Exception: A primary
+              entrance is not required to face a street designated as an arterial.
+
+       2.     Building Separation. Multiple residential buildings on a single lot shall be separated at
+              least fifteen (15) feet from one another.
+
+       3.     Pedestrian Access and Circulation.
+
+              a.     Private streets or driveways greater than twenty (20) feet in length and that serve
+                     more than one (1) dwelling unit shall have sidewalks on at least one (1) side that
+                     connect to the nearest public street.
+
+              b.     Each primary entrance to a residential building shall be connected to a sidewalk
+                     onsite that connects to either a public street, private street, or driveway.
+
+              c.     Onsite pedestrian circulation shall be continuous and connect streets abutting the
+                     site, ground level entrances, common buildings such as laundry and recreation
+                     facilities, parking areas, shared open space and play areas, abutting transit stops,
+                     and any pedestrian amenities such as plazas, resting areas, and viewpoints. There
+                     shall be at least one (1) pedestrian connection to an abutting street frontage for
+                     each two hundred (200) linear feet of street frontage.
+
+              d.     Vehicle/pedestrian conflicts shall be minimized by providing pedestrian routes that
+                     are separated from parking lots, including onsite sidewalks that connect to garbage
+                     enclosures or recycling areas and mailboxes.
+
+       4.     Architectural Elements and Building Facades. Residential units shall be designed with
+              vertical and horizontal offsets to break up rooflines, define private outdoor areas, allow
+              greater views, and admit light and air to unit interiors. Large, blank walls shall be avoided.
+              Windows and projecting walls shall be used to break up larger walls in order to establish
+              visual interest.
+
+              a.     No wall of a residential building shall exceed a length of fifty (50) feet without a
+                     foundation offset of at least four (4) feet for a distance of at least sixteen (16) feet.
+
+              b.     The wall of a building that faces a public street shall incorporate architectural
+                     features including, but not limited to, at least three (3) of the following:
+                     i.      Porches.
+                     ii.      Balconies.
+                     iii.     Dormer windows.
+                     iv.     Recesses/alcoves.
+                     v.      Unique entry areas, such as porticos or atriums.
+
+Supp. No. 1                                              TDC8-38
+                                 DEVELOPMENT AND DESIGN STANDARDS                                                    8.150
+
+             c.     The same level of architectural design and quality of materials shall be applied to all
+                    sides of the building.
+
+             d.     The following window detail shall be incorporated into the building design:
+                    i.      Windows shall account for at least fifteen percent (15%) of any rear or front
+                           building elevation no matter what the building's orientation on the lot is.
+                    ii.      Windows shall account for at least ten percent (10%) of any side building
+                           elevation no matter what the building's orientation is.
+                    iii.     All windows shall have outer casings or frames.
+
+             e.     Garages, carports, and accessory structures shall maintain the same level of
+                    design, aesthetic quality, and architectural compatibility as the residential struc-
+                    ture(s).
+
+             f.      Roofline offsets shall be provided at intervals of forty (40) feet or less to create
+                    variety in the massing of structures and relieve the effect of a single, long roof.
+                    Roofline offsets shall be a minimum four (4) foot variation either vertically from the
+                    gutter line, or horizontally.
+
+             g.     The rooflines of attached dwellings shall be multi-gabled or have varied parapets
+                    over every unit's main entrance.
+
+             h.     Rooflines, porches, and doors shall have trim.
+
+      5.     Off-Street Parking, Garages, and Carports. In addition to the standards of Chapter 9,
+             Off-Street Parking and Loading, off-street parking for attached dwellings on a single lot
+             shall include these design standards:
+
+             a.     Garages and carports are not required for residential developments.
+             b.     Parking lots may not be located between a multiple-family structure and the
+                    right-of-way the structure fronts on.
+
+             c.     If there is no parking lot or alley access to attached dwellings, and motor vehicle
+                    access is from the street, parking must be either in an attached garage that is set
+                    back a minimum of five (5) feet behind the front door of the residential structure, in
+                    a detached accessory structure located at least fifty (50) feet from the front property
+                    line, or in a parking area at the side or rear of the site, or shall comply with the
+                    following standards:
+                    i.      The garage door width of the dwelling is fifty percent (50%) or less of the width
+                           of the street facing elevation, and does not extend beyond the front door; or
+                    ii.      The garage door is behind or even with the front door and the dwelling has a
+                           roofed front porch, which is at least one-third (1/3) as wide as the front
+                           elevation and at least five (5) feet deep. The porch may encroach within the
+                           required front yard setback a maximum of five (5) feet without a variance
+                           provided the foundation for the dwelling complies with the minimum front
+                           setback standard; and
+
+Supp. No. 1                                             TDC8-39
+8.150                                      TROUTDALE DEVELOPMENT CODE
+
+                    iii.     The street facing wall of the dwelling contains at least one (1) window on the
+                           ground floor that allows visibility of the street.
+             d.     Side and rear yard setbacks for parking lots and/or garages shall be the same as the
+                    minimum building setbacks of the underlying zoning district or the same as the
+                    minimum building setback of any adjacent residential zoning district, whichever is
+                    more restrictive. Side and rear yard setbacks based on building height shall not be
+                    applied to parking lots or the access driveways.
+      6.     Outdoor Private Space. Outdoor private space is required for each residential dwelling
+             unit.
+             a.     Each ground level dwelling unit shall have an attached accessible outdoor private
+                    space of not less than sixty (60) square feet in area. Individual outdoor areas for
+                    ground level units must be visually screened from each other by walls, fences, or
+                    vegetation screening that is at least six (6) feet high and totally sight-obscuring.
+             b.     Each upper level unit shall have an attached outdoor private space, such as a
+                    balcony, of not less than sixty (60) square feet in area. The area shall be enclosed,
+                    screened, or otherwise designed to provide privacy from adjacent units by walls,
+                    building offsets, or similar sight-obscuring screening.
+      7.     Recreation Areas.
+             a.     Recreational facilities or open space areas are required for attached dwelling
+                    developments that contain six (6) or more dwelling units on one (1) lot. Such
+                    recreational facilities and open space areas must be located on the development
+                    site or on a lot adjacent to the site. Common recreation areas, whether indoor,
+                    outdoor, or both, shall be provided at the rate of at least two hundred (200) square
+                    feet per dwelling unit. No more than fifty percent (50%) of the required recreation
+                    area may be in passive open space. Recreation facilities may include children's play
+                    structures and play equipment and shall be located outside of bioswales, detention
+                    ponds, steep slopes, or a vegetation corridor as defined in this Code. More than one
+                    (1) recreation area may be developed on the site. Any play structure exceeding ten
+                    (10) feet in height must comply with the underlying zoning district setbacks.
+             b.     Recreation facilities or open space areas are not required for development within
+                    the area between Historic Columbia River Highway and 2nd Street extended west
+                    to its intersection with 257th Drive from 257th Avenue to the SE Sandy Street
+                    right-of-way.
+(Ord. No. 894, § 5, 12-10-2024; Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+8.155  Age-Restricted Units (Reserved).
+
+8.160  Manufactured Home Parks.
+
+A.     Purpose. A single-family residential manufactured home park is intended for manufactured
+      homes on separate spaces within a manufactured home park. The purpose of these provisions
+      is to extend the opportunity for low and moderately priced single-family homes, to ensure a
+
+Supp. No. 1                                            TDC8-40
+                                DEVELOPMENT AND DESIGN STANDARDS                                                   8.160
+
+      high-quality living environment within manufactured home parks, to ensure that manufactured
+      homes in manufactured home parks are safe and durable, and to protect property values within
+      and adjacent to manufactured home parks.
+
+B.     Establishment of a Manufactured Home Park. A manufactured home park may be established
+      as a permitted use in the MDR residential districts.
+
+C.     Locational Criteria. Access to manufactured home parks shall be from abutting public streets.
+      No manufactured home space shall have direct vehicular access to a street bordering the park.
+
+D.     Density, Minimum Site Size, and Dimensions of Park. All manufactured home parks shall meet
+      the following minimum requirements:
+
+      1.     The minimum size of a manufactured home park shall be one (1) acre.
+      2.     The number of permitted units allowed in a manufactured home park shall not exceed the
+             density permitted in the underlying zone.
+
+      3.     Minimum park street frontage—One hundred (100) feet.
+      4.     Minimum park depth—One hundred fifty (150) feet.
+
+E.     Standards and Criteria. Manufactured home parks must comply with the following standards
+      and criteria:
+      1.     Perimeter Setback and Buffer Area.
+             a.     A perimeter setback and buffer area of at least twenty (20) feet shall be provided.
+                    This area shall remain unoccupied by any structure, street, parking, or driveway
+                    area, except that private street entrances may cross the perimeter buffer where
+                    necessary to provide access to the park.
+             b.     Within that portion of the perimeter setback and buffer area which abuts a public
+                    street right-of-way, screening shall be achieved through one (1) of the following:
+                    i.      A three (3) foot high earthen berm with seventy-five percent (75%) of the area
+                           planted with evergreen and deciduous trees, shrubs, and groundcover ar-
+                           ranged so as to achieve an effective sight and sound buffer of at least six (6)
+                           feet in height to screen the park at the time of completion.
+                    ii.      A six (6) foot high decorative masonry wall, wooden fence, and a combination
+                           of evergreen and deciduous trees, shrubs, and groundcover arranged so as to
+                           achieve an effective sight and sound buffer to screen the park at time of
+                           completion.
+             c.     Within that portion of the perimeter setback and buffer area which abuts adjacent
+                    parcels, a sight-obscuring wooden fence or a decorative masonry wall at least six
+                    (6) feet in height shall be installed to screen the park from adjacent properties.
+      2.     Dimensional Standards—Per Space.
+             a.     Front yard—Ten (10) feet.
+             b.     Rear yard—Twenty (20) feet, if not abutting a perimeter strip.
+
+Supp. No. 1                                            TDC8-41
+8.160                                      TROUTDALE DEVELOPMENT CODE
+
+             c.     Side yard—Seven and one-half (7 ½) feet.
+             d.     Minimum distance between dwellings—Fifteen (15) feet.
+             e.     Lot coverage not to exceed seventy-five percent (75%).
+
+      3.     Minimum Dwelling Requirements.
+             a.     All manufactured homes shall have a gross floor area of at least six hundred (600)
+                    square feet.
+             b.     Any manufactured home established under this Code shall have been manufac-
+                    tured after June 15, 1976, and bear the Oregon Department of Commerce "Insignia
+                    of Compliance" indicating conformance with construction standards promulgated
+                    by the U.S. Department of Housing and Urban Development.
+             c.     Any manufactured home built before June 15, 1976, may be permitted if the owner
+                    obtains certification from the Oregon Department of Commerce that the home
+                    conforms with the U.S. Department of Housing and Urban Development construc-
+                    tion standards.
+      4.     Landscaping/Open Space/Recreation Areas. All required landscaped areas shall comply
+             with the general landscaping and vision clearance standards of this Code and the City's
+             Development Standards.
+             a.     A minimum of twenty percent (20%) of the manufactured home park area shall be
+                    reserved for open space.
+             b.     Such open space may include the perimeter setback and buffer area, and improved
+                    outdoor recreation facilities.
+             c.     Ten percent (10%) of the manufactured home park area shall be reserved and
+                    developed for common recreation space or structure.
+             d.     Streets, access drives, parking lots, and unoccupied portions of manufactured
+                    home spaces shall not be considered open space.
+
+      5.     Public Facilities and Services.
+             a.     All developments are subject to the applicable requirements of the Development
+                    Standards and Public Facilities Standards.
+             b.     If a manufactured home space or permanent structure in the park is more than five
+                    hundred (500) feet from a public fire hydrant, the park shall have water supply mains
+                    designed to serve fire hydrants within five hundred (500) feet of such space or
+                    structure. Each fire hydrant shall be located along a vehicular way.
+      6.     Mail Delivery. Each manufactured home space shall be provided with a mailbox located
+             on each manufactured home space or in a central mail station designed as an integral
+             part of the manufactured home park, or in a stand containing clustered (four (4) or more)
+             mailboxes located near the dwellings being served.
+
+      7.     Accessory Structures. Each manufactured home space shall be provided with an
+             accessory storage building with one hundred (100) square feet of enclosed floor area. All
+
+Supp. No. 1                                           TDC8-42
+                                DEVELOPMENT AND DESIGN STANDARDS                                                  8.160
+
+             such storage buildings within the park shall be of uniform design and constructed of the
+             same materials. There shall be no outdoor storage of furniture, tools, equipment, building
+             materials, or supplies belonging to the occupants or management of the park.
+
+      8.     Sidewalks/Pedestrian Pathways. A system of sidewalks or pathways shall be installed
+             linking all manufactured home spaces, recreation areas, parking lots, and common
+             buildings. This system may consist of conventional sidewalks paralleling the street, or an
+             independent network of pathways. The system shall be linked with the sidewalks along
+             perimeter streets bordering the manufactured home park. Pedestrian pathways and
+             sidewalks shall be paved with a durable all-weather surface no less than four (4) feet in
+             width.
+
+      9.     Internal Circulation System/Parking. Internal roads and driveways shall be designed to
+             provide safe and convenient access to manufactured home spaces and other facilities in
+             the manufactured home park for service and emergency vehicles, but shall not be
+             designed to encourage outside traffic to traverse the development.
+
+             a.     All interior roadways shall be designed and constructed in accordance with the
+                    standards established by OAR 814-28-060(8) for manufactured home park roads
+                    and streets.
+
+             b.     Pavement Width. All interior streets shall have a minimum pavement width of
+                    twenty-four (24) feet, exclusive of any pedestrian circulation systems.
+
+             c.     Curbs shall be installed on both sides of interior streets if built with a raised crown.
+                    If streets are built with an inverted crown, curbs are not required.
+
+             d.     Dead-end (cul-de-sac) streets shall serve no more than eighteen (18) manufac-
+                    tured home sites and have a minimum turning radius of forty (40) feet.
+
+             e.     On-street parking shall be prohibited. Off-street parking and loading facilities shall
+                    be provided in accordance with the requirements of Chapter 9 of this Code.
+
+             f.      Required resident off-street parking spaces may be provided either on the manu-
+                    factured home space or in an off-street parking bay within one hundred (100) feet
+                    from the dwelling served.
+
+             g.     Guest parking shall be provided in off-street parking bays in close proximity to the
+                    dwelling units served.
+
+             h.     Off-street parking shall be provided for all non-residential uses within the manufac-
+                    tured home park at the rate provided for in the City's off-street parking standards.
+                    These parking spaces shall be provided within one hundred (100) feet of the
+                    non-residential use.
+
+             i.      Recreational vehicles such as camping trailers, boats, campers, motor homes, and
+                    other such vehicles shall be parked or stored within an area specifically designated
+                    for such use and enclosed by a six (6) foot high sight-obscuring wooden fence or
+                    decorative masonry wall with a gate.
+
+Supp. No. 1                                            TDC8-43
+8.160                                      TROUTDALE DEVELOPMENT CODE
+
+             j.      Off-street loading bays and maneuvering areas shall be provided for all uses
+                    receiving delivery vehicles on a regular basis in conformance with City standards.
+
+      10.   Signs. Park identification signs shall comply with the City sign regulations. In addition, the
+             following standards apply:
+
+             a.     Each manufactured home park shall provide one (1) sign immediately inside the
+                    main entrance identifying the location of all interior streets and drives, visitor parking
+                    areas, storage areas, all manufactured home sites by number, and all other
+                    buildings and structures within the park, provided that the face of the sign does not
+                    exceed City standards, and is either backlighted or indirectly lighted.
+
+             b.     Each manufactured home site shall have a sign not larger than one (1) square foot
+                    identifying the number of each manufactured home site.
+
+             c.     Traffic control signs shall be installed as required by the City or other governmental
+                    agency.
+
+             d.     Lighting, utility system, decks, play areas, park sanitation, and maintenance.
+                    Requirements not specified within this Section shall be those specified in OAR
+                    814-23 and 814-28.
+
+F.     Manufactured Home Installation Standards.
+
+      1.     Prior to the occupancy of any manufactured home space, the owner of the manufactured
+             home park shall obtain a certificate of occupancy from the City.
+
+      2.     Wheels shall be removed from the manufactured home upon placement within a
+             manufactured home park. Hubs and axles may remain.
+
+      3.     All manufactured homes shall be skirted and tied down in accordance with state
+             standards.
+
+G.    Manufactured Home Park Maintenance. The manufactured home park shall be maintained in
+      a neat appearance at all times. Except for fully functioning vehicles, there shall be no outside
+      storage of materials or equipment belonging to the park or to any guest of the park. All
+      approved on-site improvements shall be the ongoing responsibility of the owner of the park.
+      The owner shall be responsible for the maintenance of all landscaping which shall be
+      maintained in good condition in order to present a healthy, neat, and orderly appearance that
+      is free of refuse and debris.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+8.165  Manufactured Home Dwellings.
+
+A.     Purpose. This Section establishes standards for manufactured homes, whether located on
+      separate lots or within manufactured housing parks, to assure compatibility with other site built
+      structures.
+
+Supp. No. 1                                           TDC8-44
+                               DEVELOPMENT AND DESIGN STANDARDS                                                  8.165
+
+B.     Manufactured homes shall comply with the following standards:
+
+      1.     Be multi-sectional and enclose a space of not less than one thousand (1,000) square
+             feet.
+
+      2.     Foundations for manufactured homes shall comply with current Oregon Administrative
+             Rules regulations. Homes shall be placed on an excavated and back-filled foundation
+             and enclosed at the perimeter such that the manufactured home is located not less than
+             eight (8) inches nor more than twelve (12) inches above grade. If the manufactured home
+             is placed on a basement, the twelve (12) inch limitation shall not apply.
+
+      3.     The manufactured home shall have a pitched roof. The minimum slope shall be not less
+             than a nominal three (3) feet in height for each twelve (12) feet in width.
+
+      4.     The manufactured home shall have exterior siding and roofing which in color, material,
+             and appearance is similar to the exterior siding and roofing material commonly used on
+             residential dwellings within the community, or which is comparable to the predominant
+             materials used on surrounding dwellings as determined by the Director.
+
+      5.     The manufactured home shall be certified by the manufacturer to have an exterior
+             thermal envelope meeting performance standards which reduce levels equivalent to the
+             performance standards required for single-family dwellings constructed under the State
+             Code as defined in ORS 455.010.
+
+      6.     Garages and carports are not required for residential developments.
+
+      7.     The towing tongue, axles, wheels, and traveling lights shall be removed from the
+             manufactured home when installed or within thirty (30) days of delivery to an individual lot
+             that outright permits a manufactured home. Wheels shall be removed from the manufac-
+             tured home upon placement within a manufactured home park, but hubs and axles may
+             remain.
+
+      8.     The manufactured home shall not be sited adjacent to any structure listed on the Register
+             of Historic Landmarks and Districts, or a structure designated Community Resource
+             (CR), by the City.
+
+      9.     The manufactured home shall be connected to the City's public water supply and public
+             sewer unless otherwise permitted by law.
+
+      10.   If the manufactured home is removed from its foundation, the owner shall either replace
+             the manufactured home with another approved manufactured home, or remove the
+             foundation, manufactured home accessory structures, and other structures on the
+             property and disconnect sewer, water, and other utilities within thirty (30) days. If the
+             owner fails to perform the work within thirty (30) days, the City may make the removal and
+             disconnection and place a lien against the property for the cost of the work.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+Supp. No. 1                                           TDC8-45
+8.170                                      TROUTDALE DEVELOPMENT CODE
+
+8.170  Accessory Dwelling Units.
+
+A.     Purpose. This Section provides standards for the establishment of an accessory dwelling unit
+      as defined in Section 1.020 of this Code in relation to a primary single-family dwelling. This
+      Section is intended to enable a unit to be a complete, independent living facility with provisions
+      within the unit for a separate kitchen, bathroom, and sleeping area.
+
+B.     Review Procedures.
+
+      1.     Accessory dwelling units shall be considered through a Type I review procedure in
+             accordance with Section 6.900 of this Code.
+
+C.     Number of Units. A maximum of two (2) accessory dwelling units are allowed per legal primary
+      dwelling, provided that one (1) unit is either an interior conversion or attached to the primary
+      dwelling and the other unit is detached from the primary dwelling.
+
+D.     Development Standards.
+
+      1.     All accessory dwelling units shall comply with the primary dwelling's building setbacks
+             and height standards of the underlying zoning district and overlay district, if applicable.
+
+      2.     Accessory dwelling units shall not exceed eight hundred (800) square feet in area or fifty
+             percent (50%) of the primary dwelling's floor area, whichever is smaller. For interior
+             conversions only, accessory dwelling units that result from conversion of a floor may
+             occupy the entire floor area, even if that area exceeds eight hundred (800) square feet.
+
+      3.     Detached units shall be positioned within the side or rear yards of the primary dwelling.
+
+      4.     Detached units may not exceed the height of primary dwelling.
+      5.     Attached units shall utilize the same paint color as the primary dwelling. Attached units
+             shall utilize the same exterior materials and roofing materials as the primary dwelling,
+             except in instances where the primary dwelling has an exterior or roofing constructed with
+             non-fire-resistant materials. In such situations, the applicant may elect to utilize fire-
+             resistant materials to construct attached units.
+
+      6.     All accessory dwelling units shall meet all applicable health, fire, and building codes.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+8.180  Shared Dwellings.
+
+Shared Dwelling units as defined in Section 1.020 of this Code are intended to be a flexible housing
+arrangement that typically have less impact on surrounding properties than typical housing arrange-
+ments that provide a similar number of units. As a result, consideration is given in the following
+standards to provide flexibility:
+
+      A.     The maximum number of units allowed in a shared housing facility shall be fifty percent
+             (50%) above the standard density of the underlying zoning district.
+
+      B.     Social and recreational space shall be provided at a minimum of fifteen (15) square feet
+             per occupant, based on one (1) person per bedroom.
+
+Supp. No. 1                                             TDC8-46
+                                DEVELOPMENT AND DESIGN STANDARDS                                                  8.180
+
+      C.     General storage area spaces at a minimum of ten (10) square feet within each unit, not
+             including regular kitchen, bedroom, and linen storage.
+      D.     Laundry facilities shall be provided either in each unit or in an accessible space within the
+             shared housing facility.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+Supp. No. 1                                           TDC8-47
+8.210                                      TROUTDALE DEVELOPMENT CODE
+
+                                        8.200  MIXED-USE STANDARDS
+
+8.210  Standards in the MU-1 (Downtown Mixed-Use) Zoning District (Reserved).
+
+8.220  Standards in the MU-2 (General Mixed-Use) Zoning District (Reserved).
+
+8.230  Standards in the MU-3 (Urban Mixed-Use) Zoning District.
+
+A.     Middle housing dwelling units shall have a minimum building height of twenty-five (25) feet.
+
+B.     Accessory dwelling units shall either be attached to the primary dwelling or interior conversions
+      of existing space.
+
+C.     General retail uses above fifteen thousand (15,000) square feet of gross floor area shall be
+      subject to a Type III site development review.
+
+D.     Office uses.
+      1.     Office uses fifteen thousand (15,000) square feet or less of gross floor area shall be
+             located within a multi-story structure unless the office space is temporary in nature or an
+             accessory or incidental use to a primary land use.
+      2.     Office uses above fifteen thousand (15,000) square feet or greater shall be subject to a
+             Type III site development review.
+
+E.     Restaurants containing a drive-thru or similar set-up for food pick-up shall have adjacent dining
+      facilities and be located within eight hundred (800) linear feet of the 257th Avenue right-of-way.
+
+F.     Financial institutions with a drive-thru ATM or similar set-up for transactions shall have adjacent
+      offices or public-facing services related to that use.
+
+G.    Personal services uses above fifteen thousand (15,000) square feet of gross floor area shall be
+      subject to a Type III site development review.
+
+H.     Live-Work units are required to be multi-story structures.
+(Ord. No. 894, § 5, 12-10-2024; Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+8.240  Standards for All Other Mixed-Use Development (Reserved).
+
+Supp. No. 1                                             TDC8-48
+                          DEVELOPMENT AND DESIGN STANDARDS                                      8.240
+
+                           8.300  Commercial Standards (Reserved).
+
+Supp. No. 1                                   TDC8-49
+8.240                                      TROUTDALE DEVELOPMENT CODE
+
+                                  8.400  Industrial Standards (Reserved).
+
+Supp. No. 1                                           TDC8-50
+                                DEVELOPMENT AND DESIGN STANDARDS                                                   8.510
+
+                                          8.500  OTHER STANDARDS
+
+8.510  257th Avenue Corridor Standards.
+
+A.     Purpose. The purpose of these development standards is to enhance the streetscape associ-
+      ated with 257th Avenue. Currently, 257th Avenue creates a tunnel-like effect as a result of
+      sound walls and fences adjacent to the sidewalk. The location of the sidewalk immediately next
+      to the street puts pedestrians in close proximity to high-volume, high-speed traffic without any
+      landscape buffer. These development standards are intended to promote more pedestrian-
+      friendly site designs by providing a more comfortable street environment for pedestrians.
+
+B.     Applicability. These development standards apply to new development of properties abutting
+      257th Avenue between Stark Street and Sturges Drive/Cherry Park Road (North) which meet
+      any of the following criteria:
+      1.     Any vacant property.
+      2.     Redevelopment of any commercial or apartment site that expands the building footprint
+             of an existing structure.
+      3.     Any underdeveloped site that undergoes development to a more intensive use (i.e.,
+             single-family dwelling to duplex).
+
+C.     Standards. In addition to any other standard of this Title applicable to the development, the
+      following standards shall also apply:
+      1.     The sidewalk on 257th Avenue shall be a minimum of nine (9) feet wide.
+      2.     A minimum area of five (5) feet in width adjacent to the sidewalk must be landscaped.
+      3.     Fences along 257th Drive must be set back a minimum of five (5) feet from the back of the
+             sidewalk.
+      4.     Within the required building setback area along 257th Avenue, the maximum height of a
+             fence or berm, or the combined height of both when a fence is placed upon a berm, shall
+             be forty-two (42) inches.
+      5.     Sight-obscuring hedges or landscaping shall not exceed a height of forty-two (42) inches
+             from ground level. Trees separated by at least fifteen (15) feet are not subject to a height
+             limitation.
+      6.     Street trees shall be planted in sidewalk tree wells meeting City specifications and
+             spaced every forty (40) feet. The developer of the property shall be responsible for
+             planting tree varieties approved by the City, or in lieu of the developer planting the street
+             trees, the developer of the property may pay an assessment to the City to provide for
+             street tree planting.
+(Ord. No. 894, § 5, 12-10-2024; Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+Supp. No. 1                                            TDC8-51
