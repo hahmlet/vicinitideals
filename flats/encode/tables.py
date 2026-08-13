@@ -26,6 +26,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
+from dataclasses import field as dc_field
 from typing import Iterable, Sequence
 
 from flats.encode.extract import _PAGE_NUMBER, Candidate, _furniture, _subject
@@ -66,7 +67,12 @@ _UNIT_KIND = {
 
 @dataclass(frozen=True, slots=True)
 class Column:
-    """One zone column and where it starts."""
+    """One column and where it starts.
+
+    ``zone`` holds a zone code in the usual layout and a standard's label in
+    the transposed one, because which of the two runs across the top is a
+    property of the table, not of the code.
+    """
 
     zone: str
     offset: int
@@ -74,22 +80,30 @@ class Column:
 
 @dataclass(frozen=True, slots=True)
 class Row:
-    """One standard, its cells by zone, and the line it was read from.
+    """One standard, its cells by zone, and the line each was read from.
 
     ``contested`` names zones two cells both landed on. Which of the two is
     that zone's standard is not knowable from the layout, so neither is
     offered — an ambiguous row is review work, not a value.
+
+    ``lines`` exists for transposed tables, where one standard's values are
+    spread down a column and each zone's number sits on its own line. A quote
+    has to open the line the number is actually on.
     """
 
     label: str
     line: int
     cells: dict[str, str]
     contested: frozenset[str] = frozenset()
+    lines: dict[str, int] = dc_field(default_factory=dict)
 
     def value_for(self, zone: str) -> str:
         if zone in self.contested:
             return ""
         return self.cells.get(zone, "")
+
+    def line_for(self, zone: str) -> int:
+        return self.lines.get(zone, self.line)
 
 
 def _cells(line: str) -> list[tuple[int, str]]:
@@ -104,11 +118,40 @@ def _cells(line: str) -> list[tuple[int, str]]:
 
 def columns(line: str) -> tuple[Column, ...]:
     """Zone columns from a header line, or empty when this is not one."""
+    head = header(line)
+    return head[1] if head and head[0] == ZONES_ACROSS else ()
+
+
+def header(line: str) -> tuple[str, tuple[Column, ...]] | None:
+    """What this line is the header of, and its columns.
+
+    Two layouts, both real and both in the same chapter. Portland's Table 110-4
+    runs zones across the top, one column each. Table 110-7 — the fourplex
+    minimum lot area, which decides whether a pod is permitted at all — runs
+    zones down the side instead, with the standard across the top. Reading only
+    the first layout leaves that gate unencoded, and a gate nobody encoded is a
+    gate nobody applies.
+    """
     found = _cells(line)
     if not found or not _HEADER_HINT.search(found[0][1]):
-        return ()
-    zones = [Column(text, offset) for offset, text in found[1:] if _ZONE.match(text)]
-    return tuple(zones) if len(zones) >= 2 else ()
+        return None
+    rest = found[1:]
+    zones = [Column(text, offset) for offset, text in rest if _ZONE.match(text)]
+    if len(zones) >= 2:
+        return ZONES_ACROSS, tuple(zones)
+    # A heading is only taken as a standard when it names a field this system
+    # has — otherwise any two-column list with the word "zone" in it becomes a
+    # table of values.
+    labels = [Column(text, offset) for offset, text in rest if _subject(text)]
+    if labels:
+        return ZONES_DOWN, tuple(labels)
+    return None
+
+
+#: Zones across the top, one column each — the usual layout.
+ZONES_ACROSS = "zones-across"
+#: Zones down the side, standards across the top.
+ZONES_DOWN = "zones-down"
 
 
 def _pitch(cols: Sequence[Column]) -> int:
@@ -151,14 +194,14 @@ def _span(lines: Sequence[str], start: int = 0) -> tuple[int | None, int]:
     column of labels.
     """
     first: int | None = None
-    zones: tuple[str, ...] = ()
+    shape: tuple[str, tuple[str, ...]] = ("", ())
     for i, line in enumerate(lines[start:], start=start):
-        header = columns(line)
-        if header:
-            found = tuple(c.zone for c in header)
+        head = header(line)
+        if head:
+            found = (head[0], tuple(c.zone for c in head[1]))
             if first is None:
-                first, zones = i, found
-            elif found != zones:
+                first, shape = i, found
+            elif found != shape:
                 return first, i
             continue
         if first is not None and _ends_table(line.strip()):
@@ -262,9 +305,11 @@ def _read_span(
     lines: Sequence[str], first: int, last: int, start_line: int
 ) -> tuple[Row, ...]:
     junk = _furniture_outside(lines, first, last)
+    kind = ""
     cols: tuple[Column, ...] = ()
     reach = _MIN_REACH
     rows: list[Row] = []
+    down: dict[str, dict[str, tuple[str, int]]] = {}
 
     for n, line in enumerate(lines[first:last], start=start_line + first):
         stripped = line.strip()
@@ -274,14 +319,17 @@ def _read_span(
             # one page and the first row of the next.
             continue
 
-        header = columns(line)
-        if header:
-            zones = tuple(c.zone for c in header)
-            if cols and zones != tuple(c.zone for c in cols):
+        head = header(line)
+        if head:
+            if cols and (head[0], tuple(c.zone for c in head[1])) != (
+                kind,
+                tuple(c.zone for c in cols),
+            ):
                 break  # a different table has started
             # Re-anchored on every header: a table continued onto a new page
             # is the same table, but its columns rarely land on the same offsets.
-            cols, reach = header, _pitch(header)
+            kind, cols = head[0], head[1]
+            reach = _pitch(cols)
             continue
         if not cols:
             continue
@@ -292,6 +340,19 @@ def _read_span(
             break
 
         found = _cells(line)
+        if kind == ZONES_DOWN:
+            # The first cell names the zone; the rest are its values, one per
+            # standard column.
+            zone_code = found[0][1] if found else ""
+            if not _ZONE.match(zone_code):
+                continue
+            for offset, cell in found[1:]:
+                label = _column_for(offset, cols, reach)
+                if label is None:
+                    continue
+                down.setdefault(label, {})[zone_code] = (_FOOTNOTE.sub("", cell), n)
+            continue
+
         label_parts: list[str] = []
         values: dict[str, str] = {}
         contested: set[str] = set()
@@ -326,6 +387,16 @@ def _read_span(
                 cells=previous.cells,
                 contested=previous.contested,
             )
+
+    for label, per_zone in down.items():
+        rows.append(
+            Row(
+                label=label,
+                line=min(line for _, line in per_zone.values()),
+                cells={zone: text for zone, (text, _) in per_zone.items()},
+                lines={zone: line for zone, (_, line) in per_zone.items()},
+            )
+        )
     return tuple(rows)
 
 
@@ -381,9 +452,10 @@ def candidates_for(
             Candidate(
                 field=name,
                 value=value,
-                line=row.line,
+                line=row.line_for(zone),
                 text=f"{row.label}: {row.value_for(zone)} ({zone})",
-                quote=f"{path}#L{row.line}",
+                quote=f"{path}#L{row.line_for(zone)}",
+                source="table",
             )
         )
     return out

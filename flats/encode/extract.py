@@ -121,6 +121,10 @@ class Candidate:
     quote: str
     #: Another candidate proposes a different value for the same field.
     conflict: bool = False
+    #: Where it was read: ``"prose"`` or ``"table"``. Load-bearing, not a
+    #: label — a table cell is written for one zone and a sentence is not, so
+    #: only a table reading can confirm or contradict a zone's encoded value.
+    source: str = "prose"
 
     @property
     def kind(self) -> str:
@@ -421,7 +425,15 @@ def _mark(candidates: Iterable[Candidate]) -> list[Candidate]:
     for c in listed:
         values.setdefault(c.field, set()).add(float(c.value))
     return [
-        Candidate(c.field, c.value, c.line, c.text, c.quote, conflict=len(values[c.field]) > 1)
+        Candidate(
+            c.field,
+            c.value,
+            c.line,
+            c.text,
+            c.quote,
+            conflict=len(values[c.field]) > 1,
+            source=c.source,
+        )
         for c in listed
     ]
 

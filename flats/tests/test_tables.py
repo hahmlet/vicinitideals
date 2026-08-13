@@ -17,11 +17,15 @@ from typing import Sequence
 import pytest
 
 from flats.encode.tables import (
+    ZONES_ACROSS,
+    ZONES_DOWN,
     Row,
     candidates_for,
     columns,
+    header,
     measure,
     read_table,
+    read_tables,
 )
 
 pytestmark = pytest.mark.unit
@@ -353,3 +357,89 @@ def test_a_zone_column_survives_the_whole_chapter() -> None:
     got = {c.field: c.value for c in candidates_for(read_table(CHAPTER), "R2.5", path=DOC)}
 
     assert got["max_height_ft"] == 35, "R5's 30 ft. is not R2.5's height"
+
+
+# --- the other layout: zones down the side ----------------------------
+#
+# Portland's Table 110-7 states the triplex/fourplex minimum lot area with the
+# zones running down the rows. It is the gate that decides whether a pod is
+# permitted on the lot at all, so a reader that only knows one layout leaves
+# the most consequential standard in the chapter unencoded.
+
+TRANSPOSED = "\n".join(
+    [
+        "Table 110-7",
+        "Triplex and Fourplex Minimum Lot Area Standard",
+        "Zone                    Minimum Lot Area",
+        "R20                     12,000 sq. ft.",
+        "R10                     6,000 sq. ft.",
+        "R7                      4,200 sq. ft.",
+        "R5                      3,000 sq. ft.",
+        "R2.5                    1,500 sq. ft.",
+    ]
+)
+
+
+def test_the_two_layouts_are_told_apart() -> None:
+    assert header(HEADER)[0] == ZONES_ACROSS
+    assert header("Zone                    Minimum Lot Area")[0] == ZONES_DOWN
+
+
+def test_a_transposed_table_gives_each_zone_its_own_value() -> None:
+    row = read_table(TRANSPOSED)[0]
+
+    assert row.label == "Minimum Lot Area"
+    assert row.value_for("R5") == "3,000 sq. ft."
+    assert row.value_for("R2.5") == "1,500 sq. ft."
+
+
+def test_a_transposed_row_quotes_the_line_its_zone_sits_on() -> None:
+    # Every value in this table is on a different line, so one line number for
+    # the row would send a reviewer to another zone's number.
+    row = read_table(TRANSPOSED)[0]
+    lines = TRANSPOSED.splitlines()
+
+    assert "3,000" in lines[row.line_for("R5") - 1]
+    assert "1,500" in lines[row.line_for("R2.5") - 1]
+
+
+def test_a_transposed_table_proposes_per_zone_values() -> None:
+    rows = read_table(TRANSPOSED)
+
+    assert [(c.field, c.value) for c in candidates_for(rows, "R5", path=DOC)] == [
+        ("min_lot_sqft", 3000)
+    ]
+    assert [c.value for c in candidates_for(rows, "R20", path=DOC)] == [12000]
+
+
+def test_a_transposed_candidate_quotes_its_own_row() -> None:
+    found = candidates_for(read_table(TRANSPOSED), "R7", path=DOC)[0]
+    line = int(found.quote.rsplit("#L", 1)[1])
+
+    assert "4,200" in TRANSPOSED.splitlines()[line - 1]
+
+
+def test_a_heading_naming_no_field_is_not_a_table() -> None:
+    # "Zone / Comment" is a two-column list, not a table of standards, and
+    # reading its second column as values invents numbers from prose.
+    listing = "Zone            Comment\nR5              See the map.\n"
+
+    assert read_table(listing) == ()
+
+
+def test_a_zone_row_that_is_not_a_zone_is_skipped() -> None:
+    text = TRANSPOSED + "\nTotal                   99,000 sq. ft."
+
+    assert read_table(text)[0].value_for("Total") == ""
+
+
+def test_both_layouts_in_one_document_are_both_read() -> None:
+    # Exactly the shape of chapter 33.110: setbacks in one grid, the fourplex
+    # lot-size gate in another with the axes swapped.
+    document = TABLE + "\n\n" + TRANSPOSED
+    found = {}
+    for rows in read_tables(document):
+        found.update({c.field: c.value for c in candidates_for(rows, "R5", path=DOC)})
+
+    assert found["setback_front_ft"] == 10
+    assert found["min_lot_sqft"] == 3000
