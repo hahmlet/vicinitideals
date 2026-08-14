@@ -121,11 +121,27 @@ class ProvenanceStore:
 
     # --- paths -------------------------------------------------------
 
+    def _under_root(self, path: str) -> Path:
+        """``root / path``, refusing anything that leaves the store.
+
+        A quote reference is text: it comes out of a YAML file an encoder
+        wrote, and — since the review pages — out of a query string as well.
+        Joining it onto a root is a filesystem read, so the join is checked
+        rather than trusted. "or/multnomah/portland/33.110.txt" resolves under
+        the root; "../../.env" and "/etc/passwd" do not, and neither is a
+        citation any document could carry.
+        """
+        candidate = (self.root / path).resolve()
+        root = self.root.resolve()
+        if candidate != root and root not in candidate.parents:
+            raise ProvenanceError(f"{path!r} is outside the provenance store")
+        return candidate
+
     def text_path(self, path: str) -> Path:
-        return self.root / path
+        return self._under_root(path)
 
     def meta_path(self, path: str) -> Path:
-        return self.root / f"{path}.meta.json"
+        return self._under_root(f"{path}.meta.json")
 
     def exists(self, path: str) -> bool:
         return self.text_path(path).is_file() and self.meta_path(path).is_file()

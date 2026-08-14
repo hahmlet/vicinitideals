@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}FLATS Rules — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div class="topbar">
+</div>
+
+<div class="content">
+  {% if missing %}
+    <div class="alert alert-warning">No rule layer called <code>{{ missing }}</code>.</div>
+  {% endif %}
+
+  <div class="toolbar">
+    <div>
+      <h2 style="margin:0">Zoning rules</h2>
+      <p class="muted" style="margin:4px 0 0">
+        Every standard FLATS screens against, and the line of code it was read from.
+        A value counts as <strong>verified</strong> only once a person has compared it
+        to that line.
+      </p>
+    </div>
+  </div>
+
+  {% if totals %}
+  <div class="toolbar" style="gap:24px">
+    <div><span class="muted">Jurisdictions</span> <strong>{{ totals.layers }}</strong></div>
+    <div><span class="muted">Zones</span> <strong>{{ totals.zones }}</strong></div>
+    <div><span class="muted">Values</span> <strong>{{ totals.values }}</strong></div>
+    <div><span class="muted">Quoted</span> <strong>{{ totals.quoted }}</strong></div>
+    <div><span class="muted">Verified</span> <strong>{{ totals.verified }}</strong></div>
+  </div>
+  {% endif %}
+
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Jurisdiction</th>
+          <th>Kind</th>
+          <th class="col-right">Zones</th>
+          <th class="col-right">Values</th>
+          <th class="col-right">Quoted</th>
+          <th class="col-right">Verified</th>
+          <th class="col-right">Documents</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in summaries %}
+        <tr>
+          <td><a href="/flats/{{ s.id }}">{{ s.label }}</a>
+            <div class="muted" style="font-size:11px">{{ s.id }}</div></td>
+          <td>{{ s.kind }}</td>
+          <td class="col-right">{{ s.zones }}</td>
+          <td class="col-right">{{ s.values }}</td>
+          <td class="col-right">{{ s.quoted }}</td>
+          <td class="col-right">{{ s.verified }}</td>
+          <td class="col-right">{{ s.documents }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

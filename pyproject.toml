@@ -135,7 +135,9 @@ e2e = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["app"]
+# `flats` ships with the app: the rule-review pages import it to read the
+# encoded standards and the documents they are quoted from.
+packages = ["app", "flats"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

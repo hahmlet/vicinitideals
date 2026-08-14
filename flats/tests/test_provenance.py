@@ -455,3 +455,18 @@ def test_drift_and_staleness_compose(store: ProvenanceStore) -> None:
 
     assert r5(out).status is Status.stale
     assert [r.reason for r in report] == [SOURCE_CHANGED]
+
+
+def test_a_citation_cannot_reach_outside_the_store(tmp_path) -> None:
+    # A quote reference is text an encoder wrote, and since the review pages
+    # it is also text a browser sent. Joining it onto the store root is a
+    # filesystem read, so the join is checked rather than trusted.
+    from flats.provenance.store import ProvenanceError, ProvenanceStore
+
+    store = ProvenanceStore(tmp_path)
+
+    for escape in ("../secrets.txt", "or/../../secrets.txt", "/etc/passwd"):
+        with pytest.raises(ProvenanceError):
+            store.text_path(escape)
+
+    assert store.text_path("or/multnomah/portland/33.110.txt").is_relative_to(tmp_path)

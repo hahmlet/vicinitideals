@@ -1,0 +1,9 @@
+{% if error %}
+  <div class="muted" style="font-size:12px;padding:6px 0">Source unavailable: {{ error }}</div>
+{% else %}
+  <pre style="margin:6px 0;padding:8px;background:#0f172a;color:#e2e8f0;border-radius:6px;
+              font-size:11px;line-height:1.45;overflow-x:auto;white-space:pre">{% for line in lines %}<span
+    style="{% if line.quoted %}background:#1d4ed8;color:#fff;{% else %}opacity:.65;{% endif %}display:block"
+  >{% if line.n %}{{ "%5d" | format(line.n) }}  {% endif %}{{ line.text }}</span>{% endfor %}</pre>
+  <div class="muted" style="font-size:11px">{{ path }}</div>
+{% endif %}

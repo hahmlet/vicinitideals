@@ -41,6 +41,7 @@ _UI_PATH_PREFIXES = (
     "/portfolios",
     "/brokers",
     "/dedup",
+    "/flats",
     "/settings",
     "/ui/",
     "/ui/panel/",
@@ -577,6 +578,10 @@ def create_app() -> FastAPI:
     # Email ingest UI router — inbox and review pages, no /api prefix
     from app.api.routers.email_ingest import ui_router as email_ingest_ui_router
     app.include_router(email_ingest_ui_router)
+
+    # FLATS rule review — read-only pages over the encoded zoning standards
+    from app.api.routers.ui_flats import router as ui_flats_router
+    app.include_router(ui_flats_router)
 
     # Static files (CSS, etc.) — must be mounted after routes
     if _static_dir.exists():

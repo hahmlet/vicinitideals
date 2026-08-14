@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}{{ layer.label }} rules — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div class="topbar">
+</div>
+
+<div class="content">
+  <div class="toolbar">
+    <div>
+      <h2 style="margin:0">{{ layer.label }}</h2>
+      <div class="muted" style="font-size:12px">
+        <a href="/flats">All jurisdictions</a> · {{ layer.id }} · {{ layer.kind }}
+        {% if not layer.eligible %} · <strong>not screened</strong>{% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="toolbar" style="gap:24px">
+    <div><span class="muted">Zones</span> <strong>{{ layer.zones }}</strong></div>
+    <div><span class="muted">Values</span> <strong>{{ layer.values }}</strong></div>
+    <div><span class="muted">Quoted</span> <strong>{{ layer.quoted }}</strong></div>
+    <div><span class="muted">Verified</span> <strong>{{ layer.verified }}</strong></div>
+    <div><span class="muted">Zones borrowing standards</span> <strong>{{ layer.borrowed }}</strong></div>
+  </div>
+
+  {% if documents %}
+  <div class="toolbar" style="flex-wrap:wrap;gap:8px">
+    <span class="muted">Code documents:</span>
+    {% for doc in documents %}
+      <a class="btn btn-secondary btn-sm" href="{{ doc.url }}" target="_blank" rel="noopener">{{ doc.title or doc.id }}</a>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if notes %}
+  <details style="margin:8px 0 16px">
+    <summary class="muted">Encoding notes</summary>
+    <p style="white-space:pre-wrap;margin:8px 0 0">{{ notes }}</p>
+  </details>
+  {% endif %}
+
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Zone</th>
+          <th>Standard</th>
+          <th class="col-right">Value</th>
+          <th>Status</th>
+          <th>Exceptions</th>
+          <th>Source</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+        <tr>
+          <td>{{ row.zone }}</td>
+          <td>{{ row.field }}</td>
+          <td class="col-right">{{ row.value }}</td>
+          <td>
+            {% if row.trusted %}
+              <span class="badge badge-success">verified</span>
+              {% if row.reviewer %}<span class="muted" style="font-size:11px">{{ row.reviewer }}</span>{% endif %}
+            {% else %}
+              <span class="badge">{{ row.status }}</span>
+            {% endif %}
+          </td>
+          <td>{% if row.variants %}{{ row.variants }}{% endif %}</td>
+          <td>
+            {% if row.quote %}
+              <button class="btn btn-secondary btn-sm"
+                      hx-get="/ui/flats/quote?ref={{ row.quote | urlencode }}"
+                      hx-target="#quote-{{ loop.index }}"
+                      hx-swap="innerHTML">Show source</button>
+              <div class="muted" style="font-size:11px">{{ row.quote }}</div>
+              <div id="quote-{{ loop.index }}"></div>
+            {% else %}
+              <span class="muted" title="{{ row.cite }}">no quote — {{ row.cite }}</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

@@ -11,12 +11,17 @@ COPY pyproject.toml uv.lock ./
 # Install the locked dependency set — the exact versions the test suite ran
 # against. Never fresh-resolve here: a rebuild once pulled a brand-new mcp 2.0
 # and crash-looped the API (fastapi-mcp 0.4.x incompatibility, 2026-07-29).
-RUN uv export --frozen --no-dev --no-emit-project --extra api -o /tmp/requirements-api.txt \
+RUN uv export --frozen --no-dev --no-emit-project --extra api --extra flats -o /tmp/requirements-api.txt \
     && uv pip install --system -r /tmp/requirements-api.txt \
     && uv pip install --system --no-deps -e .
 
 # Copy application source
 COPY app/ app/
+
+# FLATS ships its rules and the code documents they are quoted from: the review
+# pages show a value beside the line of code it was read from, and that line
+# lives in flats/provenance/docs.
+COPY flats/ flats/
 
 # Copy alembic for migration support in api container
 COPY alembic/ alembic/
