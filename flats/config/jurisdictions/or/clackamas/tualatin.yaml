@@ -30,33 +30,88 @@ zones:
   RL:
     section: ["40."]
     cite_default:
-      cite: Tualatin Development Code Ch.40 (RL), Tables 40-2/40-3; detached SFD permitted P/L, quadplex
-        permitted P
-      url: https://www.zoneomics.com/code/tualatin-OR/chapter_11
-      retrieved: '2026-07-28'
-    quadplex_allowed: true
-    setback_front_ft: 15
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    min_lot_sqft: 6500
-    min_frontage_ft: 50
-    max_coverage_pct: 60
-    notes: 'quadfit confidence: verified | Detached SFD outright -> mandate attaches; quadplex outright.
-      Coverage 60% for quadplex (SFD base 45%). Front 15 ft (12 ft to porch). Min lot 6,500 sf avg. Min
-      width 50 ft (30 ft on cul-de-sac bulb). Corner/street-side is front-door-orientation based (garage
-      ~20 / house ~12) - omitted as single value.'
+      cite: TDC 40.220 Table (Minimum Lot Size, Lot Width, Setbacks, Height, Coverage); quadplex permitted
+        outright per TDC 40.210
+      url: https://api.municode.com/PublicationPdfDownload/1818
+      retrieved: '2026-08-14'
+    quadplex_allowed:
+      value: true
+      quote: "or/clackamas/tualatin/40-41.residential.txt#L120"
+    setback_front_ft:
+      value: 15
+      quote: "or/clackamas/tualatin/40-41.residential.txt#L211"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/tualatin/40-41.residential.txt#L220"
+    setback_rear_ft:
+      value: 15
+      quote: "or/clackamas/tualatin/40-41.residential.txt#L224"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/clackamas/tualatin/40-41.residential.txt#L213-L214"
+    setback_garage_entrance_ft:
+      value: 20
+      quote: "or/clackamas/tualatin/40-41.residential.txt#L219"
+    min_lot_sqft:
+      value: 6500
+      quote: "or/clackamas/tualatin/40-41.residential.txt#L171"
+    min_lot_width_ft:
+      value: 50
+      quote: "or/clackamas/tualatin/40-41.residential.txt#L190-L191"
+    max_coverage_pct:
+      value: 60
+      quote: "or/clackamas/tualatin/40-41.residential.txt#L248"
+    max_height_ft:
+      value: 35
+      quote: "or/clackamas/tualatin/40-41.residential.txt#L237"
+    notes: 'Every value is now read off the adopted Development Code rather than an aggregator, and
+      every one is the quadplex row where the table states standards by housing type — the single-family
+      rows differ (45% coverage, and a 6,500 sq ft lot stated as a subdivision average). min_frontage_ft
+      50 is dropped: the table states a minimum lot WIDTH, not a frontage, and the two are not the same
+      test on a flag or cul-de-sac lot. Relief the table states and this file does not encode: front
+      12 ft to an unenclosed porch, lot width 30 ft on a cul-de-sac, zero side setback where townhouse
+      units attach, height to 50 ft through Type II Architectural Review. Corner-lot street side is 10
+      ft measured from the secondary frontage, which the code determines by where the front door faces.'
   RML:
     section: ["41."]
     cite_default:
-      cite: Tualatin Development Code Ch.41 (RML), Tables 41-2/41-3; quadplex permitted P
-      url: https://www.zoneomics.com/code/tualatin-OR/chapter_12
-      retrieved: '2026-07-28'
-    quadplex_allowed: true
-    setback_front_ft: 10
-    setback_side_ft: 5
-    setback_rear_ft: 10
-    setback_street_side_ft: 10
-    max_coverage_pct: 60
-    notes: 'quadfit confidence: needs_verification | Quadplex permitted OUTRIGHT. Detached SFD NOT outright
-      - only within a flexible-lot subdivision (TDC 36.410). Coverage: quadplex 60%. Min lot/width (3,000
-      sf / 26 ft) apply to flexible-lot subdivision only - verify base quadplex min lot before relying.'
+      cite: TDC 41.220 Table (Minimum Lot Size, Average Lot Width, Setbacks, Height, Coverage); quadplex
+        permitted outright per TDC 41.210
+      url: https://api.municode.com/PublicationPdfDownload/1818
+      retrieved: '2026-08-14'
+    quadplex_allowed:
+      value: true
+      quote: "or/clackamas/tualatin/40-41.residential.txt#L417"
+    setback_front_ft:
+      value: 10
+      quote: "or/clackamas/tualatin/40-41.residential.txt#L532"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/tualatin/40-41.residential.txt#L534"
+    setback_rear_ft:
+      value: 10
+      quote: "or/clackamas/tualatin/40-41.residential.txt#L537"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/clackamas/tualatin/40-41.residential.txt#L548-L553"
+    setback_garage_entrance_ft:
+      value: 20
+      quote: "or/clackamas/tualatin/40-41.residential.txt#L533"
+    min_lot_sqft:
+      value: 4500
+      quote: "or/clackamas/tualatin/40-41.residential.txt#L478"
+    max_coverage_pct:
+      value: 60
+      quote: "or/clackamas/tualatin/40-41.residential.txt#L586"
+    max_height_ft:
+      value: 35
+      quote: "or/clackamas/tualatin/40-41.residential.txt#L577"
+    notes: 'The RML quadplex minimum lot is 4,500 sq ft, which this file did not carry at all — the
+      prior note guessed 3,000 sq ft off the flexible-lot subdivision standard and said to verify it.
+      min_lot_width_ft is deliberately absent: RML states a minimum AVERAGE lot width (50 ft for
+      duplex, triplex, quadplex and cottage cluster), which is a subdivision-wide test and not a
+      standard any single lot passes or fails. Street side comes from the corner-lot rule, which sets
+      the front-yard setback on any street-facing side except for duplexes, triplexes and quadplexes,
+      where it is 10 ft. Relief not encoded: lot size and width reductions for Flexible Lot
+      Subdivisions under TDC 36.410, width 30 ft on a cul-de-sac, zero side setback where townhouse
+      units attach, height to 50 ft where setbacks are 1.5x the height.'
