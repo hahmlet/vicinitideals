@@ -34,7 +34,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, Sequence
 
-from flats.encode.extract import extract
+from flats.encode.extract import extract, states_a_rule
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.fields import FIELDS
 from flats.rules.loader import CONFIG_ROOT, load_rules
@@ -161,6 +161,25 @@ def check_zone(
             out.append(Finding(layer, zone, name, Verdict.unsupported, encoded))
             continue
         agrees = any(float(c.value) == float(encoded) for c in candidates)
+        if not agrees and not any(_authoritative(c) for c in candidates):
+            # Every number here comes from conditional or unclear prose — a
+            # scoped variant, an adjustment, a criterion. That text can
+            # corroborate a value it happens to state; it cannot contradict
+            # one, because none of its numbers is the base standard. The
+            # numbers still print, so a reader can see what was dismissed.
+            out.append(
+                Finding(
+                    layer,
+                    zone,
+                    name,
+                    Verdict.unsupported,
+                    encoded,
+                    numbers,
+                    candidates[0].quote,
+                    _notes(candidates),
+                )
+            )
+            continue
         match = next((c for c in candidates if float(c.value) == float(encoded)), candidates[0])
         out.append(
             Finding(
@@ -177,6 +196,11 @@ def check_zone(
 
     for name, candidates in sorted(by_field.items()):
         if name in values or name not in FIELDS or FIELDS[name].kind not in CHECKABLE:
+            continue
+        if not any(_authoritative(c) for c in candidates):
+            # An unencoded row is an invitation to encode. Conditional-only
+            # numbers would invite encoding a scoped variant as the base
+            # standard — the exact mistake the notes mechanism exists to stop.
             continue
         numbers = tuple(sorted({c.value for c in candidates}))
         out.append(
@@ -229,6 +253,16 @@ def _select_housing(candidates: Sequence) -> list:
         elif "default" in types and not explicit_quadplex:
             kept.append(c)
     return kept + [c for c in candidates if not getattr(c, "housing_type", "")]
+
+
+def _authoritative(candidate) -> bool:
+    """Whether this reading may contradict an encoded value.
+
+    A table cell or a stacked pair was written for the zone — structure keys
+    it. A sentence earns the same standing only by stating a base standard
+    (:func:`states_a_rule`): conditional prose corroborates, never contradicts.
+    """
+    return candidate.source in ("table", "pair") or states_a_rule(candidate.text)
 
 
 def _notes(candidates: Sequence) -> tuple[str, ...]:

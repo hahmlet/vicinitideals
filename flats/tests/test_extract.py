@@ -388,3 +388,52 @@ def test_a_plain_side_setback_is_still_the_interior_side() -> None:
     found = candidates_in("Side Setback - 10 feet.", 1, DOC)
 
     assert [(c.field, c.value) for c in found] == [("setback_side_ft", 10)]
+
+
+# --- section attribution ----------------------------------------------------
+
+
+def test_furniture_glued_before_a_heading_does_not_steal_its_section() -> None:
+    # Rivergrove's compilation stamps an unpunctuated disclaimer and page
+    # number ahead of every article; without a split at the heading the
+    # paragraph starts before it and the candidate files under the previous
+    # section.
+    text = (
+        "Section 4.120.  Procedures.  Applications are heard quarterly.\n"
+        "THIS IS A COMPILATION OF ENACTMENTS AND IS NOT THE OFFICIAL ORDINANCE TEXT AT ALL\n"
+        "15\n"
+        "Section 5.010.  Land Use.  The minimum lot size is 10,000 square feet.\n"
+    )
+    result = extract(text, path=DOC)
+
+    found = [c for c in result.candidates if c.field == "min_lot_sqft"]
+    assert [(c.value, c.section) for c in found] == [(10000, "5.010")]
+
+
+def test_a_wrapped_citation_does_not_move_the_section_cursor() -> None:
+    # "TDC 36.410, or Greenway areas" is a sentence resuming after a line
+    # wrap, not a heading — filing what follows under 36.410 attributes the
+    # next standard to a cross-reference.
+    text = (
+        "40.210 Residential Districts\n"
+        "Flexible lots are allowed pursuant to.\n"
+        "TDC 36.410, or Greenway areas described elsewhere.\n"
+        "The minimum front setback is 15 feet.\n"
+    )
+    result = extract(text, path=DOC)
+
+    found = [c for c in result.candidates if c.field == "setback_front_ft"]
+    assert [(c.value, c.section) for c in found] == [(15, "40.210")]
+
+
+def test_a_bare_citation_line_is_not_a_heading_either() -> None:
+    text = (
+        "40.210 Residential Districts\n"
+        "Small lots are governed by.\n"
+        "TDC 36.410.\n"
+        "The minimum front setback is 15 feet.\n"
+    )
+    result = extract(text, path=DOC)
+
+    found = [c for c in result.candidates if c.field == "setback_front_ft"]
+    assert [(c.value, c.section) for c in found] == [(15, "40.210")]

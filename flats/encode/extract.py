@@ -108,7 +108,9 @@ _REQUIREMENT = re.compile(
     r"\b(shall|must|may not|no .{0,40} shall|required|minimum|maximum|at least|no more than)\b",
     re.I,
 )
-_SELECTION = re.compile(r"\b(corner lot|through lot|flag lot|abutting|adjacent to|where the)\b", re.I)
+_SELECTION = re.compile(
+    r"\b(corner lot|through lot|flag lot|abut(?:s|ting)|adjacent to|where the)\b", re.I
+)
 _APPLICABILITY = re.compile(
     r"\b(this (?:section|chapter) applies|applies to|in the .{1,30} zones?|are the standards)\b",
     re.I,
@@ -254,6 +256,19 @@ def tag_of(text: str) -> Rase | None:
     return None
 
 
+def states_a_rule(text: str) -> bool:
+    """Whether a sentence states a base standard, rather than qualifying one.
+
+    The asymmetry corroboration needs: a number in conditional text — "when a
+    side or rear yard abuts a more restrictive zone, setbacks shall be 15 ft"
+    — is real evidence that the number appears in the code, but it is not the
+    zone's base standard, so it may corroborate an encoded value and must
+    never contradict one. Only a clause that tags as a requirement with no
+    selection keyword in it speaks with enough authority to disagree.
+    """
+    return tag_of(text) is Rase.requirement and not _SELECTION.search(text)
+
+
 def _match_subject(text: str) -> tuple[int, int, str] | None:
     lowered = text.lower()
     best: tuple[int, int, str] | None = None
@@ -346,6 +361,24 @@ def candidates_in(text: str, line: int, path: str, *, quote: str = "") -> list[C
 #: A line that opens a new clause: "A.", "1.", "a.", "(2)", a bullet, or a
 #: section number. Codes are outlines, and the outline marker is the boundary.
 _OPENER = re.compile(r"^(?:[A-Za-z]\.|\(?\d+\)|\d+\.|[•\-•▪]|\d{1,3}\.\d{2,3})\s")
+#: What follows a section number in a real heading: optional punctuation, then
+#: a word that starts a title — "Section 5.010.  Land Use", "40.210 Residential
+#: Districts". A wrapped citation resumes lowercase or with a comma ("TDC
+#: 36.410, or Greenway and"), a subsection address with a paren ("36.410(2)(b)"),
+#: and a bare "TDC 36.410." with nothing at all — none of those name a section.
+_HEADING_TEXT = re.compile(r"^[.:]?\s+[A-Z0-9]")
+
+
+def _heading_like(line: str) -> bool:
+    """Whether a line is a section heading rather than a citation to one.
+
+    Load-bearing twice over: a heading opens a new paragraph, and it is the
+    only thing allowed to move the section cursor. A wrapped citation taken
+    for a heading does not just split a sentence — it mis-attributes every
+    clause after it until the next real heading.
+    """
+    m = _SECTION.match(line)
+    return bool(m) and bool(_HEADING_TEXT.match(line[m.end() :]))
 #: Running page numbers like "110-14".
 _PAGE_NUMBER = re.compile(r"^\d{2,3}-\d{1,3}$")
 #: A line repeated this often across a document is a header or footer, not text.
@@ -394,7 +427,12 @@ def paragraphs(text: str) -> list[tuple[int, int, str]]:
             # Furniture does not end a sentence; it interrupts one. Skipping it
             # without flushing lets the sentence continue across the page break.
             continue
-        opens = bool(_OPENER.match(line))
+        # A line that begins "Section 5.010.  Land Use" starts a section,
+        # whatever came before it — page furniture without terminal
+        # punctuation otherwise glues itself to the heading, and the paragraph
+        # then starts before the heading line, which mis-attributes every
+        # candidate in it to the previous section.
+        opens = bool(_OPENER.match(line)) or _heading_like(line)
         ends = buffer and buffer[-1].endswith((".", ";", ":"))
         if buffer and (opens or ends):
             flush()
@@ -442,7 +480,12 @@ def extract(
         n = first
         quote = f"{path}#L{first}" if first == last else f"{path}#L{first}-L{last}"
         found = _SECTION.match(stripped)
-        if found:
+        if found and _heading_like(stripped):
+            # Only a heading moves the section cursor. A paragraph that opens
+            # on a wrapped citation — "TDC 36.410, or Greenway and ..." —
+            # matches the section pattern too, and taking its number would
+            # file everything until the next real heading under a
+            # cross-reference.
             current = found.group("sec")
         if _TOP_LEVEL.match(stripped):
             # Codes are outlines, and scope is inherited. Everything under

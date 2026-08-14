@@ -35,7 +35,9 @@ zones:
     setback_street_side_ft:
       value: 15
       quote: "or/clackamas/rivergrove/rldo.composite.txt#L1034"
-    min_lot_sqft: 10000
+    min_lot_sqft:
+      value: 10000
+      quote: "or/clackamas/rivergrove/rldo.composite.txt#L844-L846"
     notes: 'quadfit confidence: needs_verification | NOT subject to HB 2001 — city pop <=1,000 exempt.
       Single SFR district; no middle-housing code. Metro ZONE ''R10'' verified (ZONE_CLASS SFR1). ~half
       the city is floodplain (0.5 ac min there).'

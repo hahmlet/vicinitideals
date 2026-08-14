@@ -413,3 +413,76 @@ def test_a_four_digit_section_number_is_still_a_heading() -> None:
 
     assert _SECTION.match("4.0101 PURPOSE").group("sec") == "4.0101"
     assert _SECTION.match("33.110.220 Development Standards").group("sec") == "33.110.220"
+
+
+# --- conditional text corroborates, never contradicts -----------------------
+
+SECTIONED = """Section 5.080  General Building Setbacks
+The minimum rear setback is 25 feet.
+When a side or rear yard abuts a more restrictive zone the rear setback shall be 40 feet.
+Structures on corner lots shall observe a street side setback of 15 feet.
+"""
+
+
+def sectioned_verdicts(values: dict[str, Value]) -> dict[str, Verdict]:
+    found = check_zone(
+        SECTIONED,
+        layer="or/clackamas/rivergrove",
+        zone="R10",
+        values=values,
+        path="or/clackamas/rivergrove/rldo.composite.txt",
+        sections=("5.080",),
+    )
+    return {f.field: f.verdict for f in found}
+
+
+def test_a_base_standard_still_contradicts() -> None:
+    # "The minimum rear setback is 25 feet" is unconditional; encoding 30
+    # disagrees with it and must block.
+    got = sectioned_verdicts({"setback_rear_ft": value(30, "setback_rear_ft")})
+
+    assert got["setback_rear_ft"] is Verdict.differs
+
+
+def test_conditional_text_cannot_contradict() -> None:
+    # The abutting-zone variant states 40; the encoded 15 matches nothing.
+    # A scoped variant is not the base standard, so the verdict is
+    # unsupported — a reader problem, not a stop-and-read.
+    got = check_zone(
+        "Section 5.080  General Building Setbacks\n"
+        "When a side or rear yard abuts a more restrictive zone the rear setback shall be 40 feet.\n",
+        layer="or/clackamas/rivergrove",
+        zone="R10",
+        values={"setback_rear_ft": value(15, "setback_rear_ft")},
+        path="or/clackamas/rivergrove/rldo.composite.txt",
+        sections=("5.080",),
+    )
+
+    assert {f.field: f.verdict for f in got}["setback_rear_ft"] is Verdict.unsupported
+
+
+def test_conditional_text_still_corroborates() -> None:
+    # The corner-lot sentence is a selection clause, but the street-side
+    # standard only exists on a corner — when the number matches, it counts.
+    got = sectioned_verdicts(
+        {"setback_street_side_ft": value(15, "setback_street_side_ft")}
+    )
+
+    assert got["setback_street_side_ft"] is Verdict.agrees
+
+
+def test_conditional_only_numbers_are_not_an_invitation_to_encode() -> None:
+    # Nothing encoded for the rear setback, and the only unconditional
+    # sentence about it agrees with nothing — the scoped 40 must not print as
+    # an unencoded standard for somebody to copy in.
+    got = check_zone(
+        "Section 5.080  General Building Setbacks\n"
+        "When a side or rear yard abuts a more restrictive zone the rear setback shall be 40 feet.\n",
+        layer="or/clackamas/rivergrove",
+        zone="R10",
+        values={},
+        path="or/clackamas/rivergrove/rldo.composite.txt",
+        sections=("5.080",),
+    )
+
+    assert got == []
