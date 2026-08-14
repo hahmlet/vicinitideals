@@ -570,6 +570,7 @@ def extract(
     from flats.encode.tables import (
         blank_tables,
         candidates_for,
+        read_collapsed_grids,
         read_pairs,
         read_stacked_grids,
         read_tables,
@@ -634,6 +635,15 @@ def extract(
                 found = [replace(c, section=_section_at(text, c.line)) for c in found]
             proposed.extend(found)
         proposed.extend(stacked_candidates_for(read_stacked_grids(text, path=path), zone))
+        # A grid whose column spacing did not survive extraction. Zone-keyed
+        # like the others — the header names the columns and the count says
+        # which is which — so it reads as cell evidence, but only where no
+        # spacing survived at all: a table this reader can see the geometry
+        # of belongs to the readers that use it.
+        proposed.extend(
+            replace(candidate, section=_section_at(text, candidate.line))
+            for candidate in stacked_candidates_for(read_collapsed_grids(text, path=path), zone)
+        )
 
     # Stacked label/value pairs — a table that lost its geometry to HTML
     # linearisation. Zone-blind like prose, so they carry their section and

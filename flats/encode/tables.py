@@ -2328,6 +2328,209 @@ def _defined(candidate: Candidate, blocks: Sequence[tuple[int, dict[int, str]]])
     )
 
 
+#: One cell of a grid whose column spacing was lost — a number and the unit
+#: printed beside it, or the start of one ("10,000 square") where the unit
+#: wrapped onto the next line.
+_COLLAPSED_CELL = re.compile(
+    r"(?P<n>\d{1,3}(?:,\d{3})+|\d+(?:\.\d+)?)\s*"
+    r"(?P<u>%|percent|square\s+feet|square|sq\.?\s*ft\.?|feet|ft\.?)",
+    re.I,
+)
+#: The unit half of a cell, printed on the line below its number.
+_COLLAPSED_UNIT = re.compile(r"^(?:feet|ft|square|sq)[.,]?$", re.I)
+#: A cell whose unit is still missing: "10,000 square" wants "feet".
+_UNFINISHED = re.compile(r"(?:square|sq\.?)[.,]?$", re.I)
+
+
+#: An accessory dwelling case printed as its own row — "With ADU 60% 65%".
+#: The zone's coverage is the row above it; this is what it becomes when an
+#: ADU is added, and it is not the standard a pod is measured against.
+_ACCESSORY = re.compile(r"\bADU|accessory dwelling", re.I)
+#: The words a row uses to name a standard. Compared against the block
+#: heading: a row may qualify the block's standard, never name another.
+_STANDARD_WORDS = (
+    "depth",
+    "width",
+    "height",
+    "coverage",
+    "size",
+    "area",
+    "frontage",
+    "front",
+    "rear",
+    "side",
+    "corner",
+    "street",
+    "garage",
+    "density",
+)
+
+
+def _heading_words(lines: Sequence[str]) -> str:
+    """A wrapped heading, joined, with its footnote marker dropped.
+
+    "Minimum lot" over ". 1 size" is one heading with a superscript 1 landing
+    between its halves; joined verbatim it names nothing.
+    """
+    words = " ".join(lines).split()
+    return " ".join(w for w in words if any(ch.isalpha() for ch in w))
+
+
+def _names_another(label: str, block: str) -> bool:
+    """Whether the row names a standard its block heading does not."""
+    said = set(re.findall(r"[a-z]+", block.lower()))
+    return any(w in re.findall(r"[a-z]+", label.lower()) and w not in said for w in _STANDARD_WORDS)
+
+
+def _collapsed_zones(line: str) -> tuple[str, ...]:
+    """The zone codes a collapsed header names, in print order.
+
+    Read off the end of the line so a label cell — "Standard" — is skipped
+    without having to recognise it. Two distinct codes minimum: one is a
+    tier table, and a repeated token is a wrapped label.
+    """
+    run: list[str] = []
+    for token in reversed(line.split()):
+        if _ZONE.match(token) and token not in run and not _NOT_A_NUMBER.match(token):
+            run.insert(0, token)
+        else:
+            break
+    return tuple(run) if len(run) >= 2 else ()
+
+
+def _collapsed_cells(line: str, count: int) -> list[re.Match[str]] | None:
+    """This line's cells, or None when it is not one row of ``count`` columns.
+
+    Cells must be adjacent. A word standing between two of them is the rest
+    of a cell that wrapped — "5 feet Alley 5 feet Alley" is a garage setback
+    of 20 ft from the right-of-way with a 5 ft exception at an alley, and
+    reading the alley figure as the standard is off by fifteen feet. Stray
+    single characters are let through: this shape comes out of OCR, and
+    "40% I 40% , 40%" is three cells and a speck.
+    """
+    found = list(_COLLAPSED_CELL.finditer(line))
+    if len(found) != count:
+        return None
+    for left, right in zip(found, found[1:]):
+        between = line[left.end() : right.start()]
+        if [w for w in between.split() if len(w.strip(".,;:()/-")) > 1]:
+            return None
+    return found
+
+
+def read_collapsed_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
+    """Zone-keyed values from a grid whose column spacing did not survive.
+
+    The sixth table shape, and the one that has no geometry at all. Oregon
+    City's Title 17 is a scan: layout-mode extraction shreds it, plain mode
+    collapses every run of spaces to one, and Table 17.08.040 arrives as
+
+        Standard R-10 R-8 R-6
+        Minimum lot size 1
+        Quadplex a nd cottage 10,000 square 8,000 square 7,000 square
+        cluster feet feet feet
+
+    Nothing here says where a column starts. What stands in for that is
+    counting: the header names n zones, and a row is read only when it
+    states exactly n measurements of one kind, adjacent, in print order.
+    Anything else — a cell that wrapped, a footnote, an exception clause —
+    is one of the ways a row can be shifted, and a shifted row hands one
+    zone's standard to another under the wrong number.
+
+    Four refusals carry it. A row containing "except" is not read: this
+    table prints its relief inline, and the base and the exception are
+    indistinguishable once the columns are gone. A row whose cells are not
+    adjacent is not read. A block heading answers once per housing type, so
+    the first row that resolves it wins and the exception rows printed under
+    it do not overwrite it. And a header of fewer than two distinct zones is
+    not a header.
+    """
+    lines = text.splitlines()
+    grids: dict[str, list[Candidate]] = {}
+    zones: tuple[str, ...] = ()
+    block = ""
+    pending: list[str] = []
+    answered: set[tuple[str, str]] = set()
+    consumed = 0
+    for n, raw in enumerate(lines, start=1):
+        if n == consumed:
+            continue
+        stripped = raw.strip()
+        if not stripped:
+            continue
+        header_zones = () if len(_cells(stripped)) > 1 else _collapsed_zones(stripped)
+        if header_zones:
+            # A reprinted header is the same table continuing over a page
+            # break; a different one is a new table. Either way the rows
+            # under it answer for these zones and nothing above them.
+            zones, block, pending, answered = header_zones, "", [], set()
+            continue
+        if not zones:
+            continue
+        found = _collapsed_cells(stripped, len(zones))
+        if found is None:
+            pending.append(stripped)
+            # A heading wraps as readily as a cell does: Oregon City prints
+            # "Minimum lot" over ". 1 size", the footnote marker landing
+            # between the two halves of the standard's name.
+            for size in (1, 2, 3):
+                joined = _heading_words(pending[-size:])
+                if _subject(joined) is not None:
+                    block = joined
+                    break
+            continue
+        label = " ".join(pending[-2:] + [stripped[: found[0].start()]]).strip()
+        cells = [m.group(0) for m in found]
+        follow = lines[n].strip() if n < len(lines) else ""
+        units = [w for w in follow.split() if _COLLAPSED_UNIT.match(w)]
+        if len(units) == len(cells) and all(_UNFINISHED.search(c) for c in cells):
+            # "10,000 square 8,000 square 6,000 square" over "triplex feet
+            # feet feet": the unit half of every cell wrapped together, and
+            # what is left on that line beside the units belongs to the
+            # label.
+            cells = [f"{c} {u}" for c, u in zip(cells, units)]
+            label = f"{label} {' '.join(w for w in follow.split() if not _COLLAPSED_UNIT.match(w))}"
+            consumed = n + 1
+        row = f"{label} {stripped}"
+        pending = []
+        if _EXCEPT.search(row) or _ACCESSORY.search(row):
+            continue
+        field = _subject(label)
+        if field is None and not _names_another(label, block):
+            field = _subject(f"{block} {label}")
+        if field is None and not _names_another(label, block):
+            # The block answers for rows that only say who or how many —
+            # "All", "Quadplex and cottage cluster". A row naming a standard
+            # of its own that this reader cannot resolve is not one of them:
+            # "Minimum lot depth" under "Minimum lot width" is a different
+            # dimension, and there is no lot depth field to put it in.
+            field = _subject(block)
+        if field is None:
+            continue
+        parsed = [measure(c) for c in cells]
+        if any(p is None for p in parsed) or len({p[1] for p in parsed}) != 1:
+            continue
+        if FIELDS[field].kind != parsed[0][1]:
+            continue
+        housing = _housing_type(label) or ""
+        if (field, housing) in answered:
+            continue
+        answered.add((field, housing))
+        for zone, (number, _) in zip(zones, parsed):
+            grids.setdefault(zone, []).append(
+                Candidate(
+                    field=field,
+                    value=int(number) if number.is_integer() else number,
+                    line=n,
+                    text=f"{label.strip()}: {stripped}",
+                    quote=f"{path}#L{n}",
+                    source="grid",
+                    housing_type=housing,
+                )
+            )
+    return grids
+
+
 def stacked_candidates_for(
     grids: dict[str, list[Candidate]], zone: str
 ) -> list[Candidate]:

@@ -2128,3 +2128,87 @@ def test_the_dwelling_types_a_block_is_written_for_type_its_rows() -> None:
     front = next(c for c in read_pairs(TUALATIN_SETBACKS, path="doc.txt") if c.field == "setback_front_ft")
 
     assert "quadplex" in front.housing_type
+
+
+#: Oregon City's Table 17.08.040 as its scan produces it: no column spacing
+#: survives, cells wrap, and the relief is printed inline with the standard.
+COLLAPSED_GRID = """
+Table 17.08.040
+Standard R-10 R-8 R-6
+Minimum lot size 1
+Single-family detached, duplex and 10,000 square 8,000 square 6,000 square
+triplex feet feet feet
+Quadplex and cottage 10,000 square 8,000 square 7,000 square
+cluster feet feet feet
+Maximum height: All 35 feet 35 feet 35 feet
+Except cottage cluster unit 25 feet 25 feet 25 feet
+Maximum building lot
+coverage 40% I 40% , 40% ,
+With ADU 45% 45% 45%
+Minimum lot width:
+All 65 feet 60 feet 50 feet
+Minimum lot depth:
+All 80 feet 75 feet 70 feet
+Garage setback 5 feet Alley 5 feet Alley 5 feet Alley
+"""
+
+
+def _collapsed(text: str) -> dict[str, dict[str, float]]:
+    from flats.encode.tables import read_collapsed_grids
+
+    grids = read_collapsed_grids(text, path="doc.txt")
+    return {zone: {c.field: c.value for c in cs} for zone, cs in grids.items()}
+
+
+def test_a_grid_with_no_column_spacing_reads_by_counting() -> None:
+    # Nothing in this table says where a column starts. The header names
+    # three zones, so a row states three measurements, in print order.
+    grids = _collapsed(COLLAPSED_GRID)
+
+    assert grids["R-10"]["min_lot_width_ft"] == 65
+    assert grids["R-8"]["min_lot_width_ft"] == 60
+    assert grids["R-6"]["min_lot_width_ft"] == 50
+
+
+def test_a_cell_whose_unit_wrapped_is_still_one_cell() -> None:
+    # "10,000 square 8,000 square 7,000 square" over "cluster feet feet feet".
+    # The quadplex row is the one the pod is measured against, and in R-6 it
+    # is a thousand square feet larger than the row above it.
+    grids = _collapsed(COLLAPSED_GRID)
+
+    assert grids["R-6"]["min_lot_sqft"] == 7000
+
+
+def test_a_block_heading_answers_once_per_housing_type() -> None:
+    # "Except cottage cluster unit 25 feet" is printed under the height row
+    # and reads as a complete row. Letting it answer the block again would
+    # replace a 35 ft height limit with a cottage cluster's 25.
+    assert _collapsed(COLLAPSED_GRID)["R-10"]["max_height_ft"] == 35
+
+
+def test_an_accessory_dwelling_row_is_not_the_zones_coverage() -> None:
+    # "With ADU 45%" is what the coverage becomes with an accessory dwelling
+    # added, not what the zone allows.
+    assert _collapsed(COLLAPSED_GRID)["R-10"]["max_coverage_pct"] == 40
+
+
+def test_a_row_may_not_name_a_standard_its_block_does_not() -> None:
+    # "Minimum lot depth: / All 80 feet 75 feet 70 feet" sits under the lot
+    # width block. There is no lot depth field, and filed as width it makes
+    # every lot in R-10 fifteen feet wider than the code says.
+    assert _collapsed(COLLAPSED_GRID)["R-10"]["min_lot_width_ft"] == 65
+
+
+def test_cells_with_a_word_between_them_are_not_cells() -> None:
+    # "Garage setback 5 feet Alley 5 feet Alley" is a 20 ft setback from the
+    # right-of-way with a 5 ft exception at an alley. The word between the
+    # numbers is the rest of a cell that wrapped.
+    assert "setback_garage_entrance_ft" not in _collapsed(COLLAPSED_GRID)["R-10"]
+
+
+def test_a_grid_that_kept_its_spacing_is_left_to_the_other_readers() -> None:
+    # Two spaces between cells is geometry, and a reader that counts cells
+    # would read a table another reader can measure.
+    spaced = COLLAPSED_GRID.replace("Standard R-10 R-8 R-6", "Standard   R-10   R-8   R-6")
+
+    assert _collapsed(spaced) == {}
