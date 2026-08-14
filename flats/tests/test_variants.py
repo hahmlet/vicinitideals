@@ -635,3 +635,39 @@ def test_a_variant_selected_by_nothing_is_still_refused(root: Path) -> None:
 
     with pytest.raises(RuleLoadError, match="band"):
         load_rules(root)
+
+
+def test_resolution_selects_the_band_the_lot_falls_in(root: Path) -> None:
+    portland(
+        root,
+        "  R5:\n"
+        "    setback_street_side_ft:\n"
+        "      value: 20\n"
+        "      variants:\n"
+        "        - value: 5\n"
+        "          band: {measure: lot_sqft, at_least: 1500, at_most: 2999}\n",
+    )
+    rules = RuleSet(load_rules(root))
+
+    got = rules.resolve(LAYER, "R5", lot={"lot_sqft": 2400})
+
+    assert got.values["setback_street_side_ft"].value == 5
+    assert got.values["setback_street_side_ft"].when == ("lot_sqft:1500-2999",)
+
+
+def test_resolution_without_the_lot_reports_the_bands_it_could_not_choose(root: Path) -> None:
+    # A batch run that forgot to pass the area must not read as an answer.
+    portland(
+        root,
+        "  R5:\n"
+        "    setback_street_side_ft:\n"
+        "      value: 20\n"
+        "      variants:\n"
+        "        - value: 5\n"
+        "          band: {measure: lot_sqft, at_least: 1500, at_most: 2999}\n",
+    )
+    rules = RuleSet(load_rules(root))
+
+    got = rules.resolve(LAYER, "R5")
+
+    assert got.values["setback_street_side_ft"].ambiguous == ("lot_sqft:1500-2999",)

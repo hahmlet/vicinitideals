@@ -32,7 +32,7 @@ from __future__ import annotations
 
 import enum
 from dataclasses import dataclass, field as _dc_field
-from typing import Any, Collection
+from typing import Any, Collection, Mapping
 
 from flats.rules.fields import REQUIRED_FIELDS
 from flats.rules.model import LIKE, Layer, Provenance, Status, Value, Zone
@@ -234,7 +234,11 @@ class RuleSet:
     # -- resolution ---------------------------------------------------
 
     def resolve(
-        self, layer_id: str, zone: str, conditions: Collection[str] = ()
+        self,
+        layer_id: str,
+        zone: str,
+        conditions: Collection[str] = (),
+        lot: Mapping[str, float] | None = None,
     ) -> ZoneResolution:
         """The standards that apply to a lot in this zone under these conditions.
 
@@ -242,6 +246,13 @@ class RuleSet:
         corner lot, an affordable project, a transit-served site. Each standard
         answers for itself which of its numbers that selects; most carry only
         one and ignore the question entirely.
+
+        ``lot`` is what has been measured about it — ``{"lot_sqft": 4200}`` —
+        for the zones whose tables are banded by lot size. Omitting it where a
+        standard is banded is not a smaller answer but an ambiguous one: the
+        base of a banded standard is the table's last column, and quietly
+        handing a small lot the largest column's numbers is the error this
+        whole path exists to prevent.
         """
         held = tuple(sorted(set(conditions)))
         chain = self.chain_for(layer_id)
@@ -266,7 +277,7 @@ class RuleSet:
             values: dict[str, Value], layer: str, origin: str, via: str | None = None
         ) -> None:
             for name, val in values.items():
-                eff = val.under(held)
+                eff = val.under(held, lot)
                 if name in locked:
                     # A preempting ancestor already fixed this field. Record what
                     # was displaced so the UI can say why the local number lost.
