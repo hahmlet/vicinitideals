@@ -53,6 +53,7 @@ from flats.geom.edges import Tier as GeometryTier
 from flats.rules.conditions import Tier
 from flats.rules.fields import REQUIRED_FIELDS
 from flats.rules.resolver import Verdict as RuleVerdict, ZoneResolution
+from flats.score.configure import Configuration
 from flats.score.relief import (
     RELIEF_UNCONFIRMED,
     ReliefOutcome,
@@ -88,6 +89,13 @@ NO_FRONTAGE = "NO_FRONTAGE"
 GEOMETRY_UNREADABLE = "GEOMETRY_UNREADABLE"
 STANDARD_NOT_ENCODED = "STANDARD_NOT_ENCODED"
 USE_NOT_ENCODED = "USE_NOT_ENCODED"
+#: A standard here is written per corner, per alley, per slope — and the
+#: fact deciding which number applies was assumed rather than observed.
+FACT_ASSUMED = "FACT_ASSUMED"
+#: The same, except nobody would even assume it. Sewer is the case: a
+#: standard turns on it, no layer answered, and guessing either way is
+#: wrong in a different direction.
+FACT_UNOBSERVED = "FACT_UNOBSERVED"
 
 #: The zone forbids the use outright and lists no conditional-use path.
 USE_PROHIBITED = "USE_PROHIBITED"
@@ -313,8 +321,17 @@ def screen(
     *,
     policy: SlackPolicy,
     relief: ReliefPolicy | None = None,
+    config: Configuration | None = None,
 ) -> Screening:
-    """Turn measurements into GREEN / YELLOW / RED / UNKNOWN for one lot and design."""
+    """Turn measurements into GREEN / YELLOW / RED / UNKNOWN for one lot and design.
+
+    ``config`` is what the resolution was asked under — see
+    :func:`flats.score.configure.configure`. Passing it is what lets the
+    verdict tell a number the code states from a number that depended on a
+    site fact we guessed at. Omitting it does not change any check; it only
+    means the guesses go unreported, which is why every batch caller should
+    pass one.
+    """
     reasons: list[str] = []
     paths = relief if relief is not None else ReliefPolicy()
 
@@ -375,6 +392,17 @@ def screen(
 
     if allowed is None:
         reasons.append(USE_NOT_ENCODED)
+    if config is not None:
+        # An assumption only matters where a standard here turns on it.
+        # Wilsonville states no corner-lot exception in most zones, so
+        # assuming a lot is not a corner changes nothing there and must not
+        # cost it a GREEN; where the exception exists, the same assumption is
+        # load-bearing and the lot cannot be certified on it.
+        leaning = config.leans_on(rules.levers)
+        if any(name in config.unknown for name in leaning):
+            reasons.append(FACT_UNOBSERVED)
+        if any(name in config.assumed for name in leaning):
+            reasons.append(FACT_ASSUMED)
     if lot.landlocked:
         reasons.append(NO_FRONTAGE)
     if lot.geometry is GeometryTier.irregular:

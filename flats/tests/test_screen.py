@@ -33,7 +33,10 @@ from flats.score.relief import (  # noqa: E402
     ReliefPath,
     ReliefPolicy,
 )
+from flats.score.configure import configure  # noqa: E402
 from flats.score.screen import (  # noqa: E402
+    FACT_ASSUMED,
+    FACT_UNOBSERVED,
     GEOMETRY_UNREADABLE,
     NO_FRONTAGE,
     STANDARD_NOT_ENCODED,
@@ -568,3 +571,78 @@ def test_an_ambiguous_rule_set_cannot_delete_a_lot() -> None:
 
 def test_ambiguity_is_counted_as_encoding_work() -> None:
     assert backlog([run(rules(RuleVerdict.ambiguous))])["RULE_AMBIGUOUS"] == 1
+
+
+# --- what the answer rested on ---------------------------------------
+#
+# A batch run assumes half a dozen things about every parcel — no corner, no
+# alley, no slope — because there is nobody to ask. The assumptions are fine.
+# Certifying a lot GREEN on one is not, and neither is downgrading every lot
+# for holding assumptions that no standard in its zone turns on.
+
+
+def levered(*names: str, **overrides) -> ZoneResolution:
+    """A rule set where one standard states a different number under `names`."""
+    got = rules(**overrides)
+    got.values["min_lot_sqft"] = Resolved(
+        name="min_lot_sqft",
+        value=3000,
+        status=Status.verified,
+        prov=PROV,
+        layer=WHERE,
+        origin="zone",
+        levers=frozenset(names),
+    )
+    return got
+
+
+def test_a_lot_clears_green_with_assumptions_nothing_turns_on() -> None:
+    # The default state of every batch lot. If this went yellow the screen
+    # would be useless: no lot anywhere would ever be certified.
+    config = configure(LOT, DESIGN)
+
+    got = screen(rules(), LOT, DESIGN, fit(), policy=POLICY, config=config)
+
+    assert got.triage is Triage.green
+
+
+def test_an_assumption_a_standard_turns_on_costs_the_green() -> None:
+    # Here the zone states a different lot minimum for corners, and nobody
+    # looked at whether this lot is one. The number used may be the wrong one,
+    # so the lot is our question, not the developer's.
+    config = configure(LOT, DESIGN)
+
+    got = screen(levered("corner_lot"), LOT, DESIGN, fit(), policy=POLICY, config=config)
+
+    assert got.triage is Triage.unknown
+    assert FACT_ASSUMED in got.reasons
+
+
+def test_observing_the_fact_restores_the_green() -> None:
+    # The fix for the case above is data, and the screen has to reflect that:
+    # once the corner layer answers, the same lot certifies.
+    config = configure(LOT, DESIGN, observed={"corner_lot": False})
+
+    got = screen(levered("corner_lot"), LOT, DESIGN, fit(), policy=POLICY, config=config)
+
+    assert got.triage is Triage.green
+
+
+def test_a_standard_turning_on_a_fact_nobody_will_guess_is_unknown() -> None:
+    # Sewer. No layer answered and the registry refuses to assume, so the
+    # standard's own number is in doubt.
+    config = configure(LOT, DESIGN)
+
+    got = screen(levered("public_sewer"), LOT, DESIGN, fit(), policy=POLICY, config=config)
+
+    assert got.triage is Triage.unknown
+    assert FACT_UNOBSERVED in got.reasons
+
+
+def test_without_a_configuration_nothing_changes() -> None:
+    # Passing one is how a caller opts into the report. Omitting it must not
+    # silently invent guesses the caller never made.
+    got = screen(levered("corner_lot"), LOT, DESIGN, fit(), policy=POLICY)
+
+    assert got.triage is Triage.green
+    assert FACT_ASSUMED not in got.reasons
