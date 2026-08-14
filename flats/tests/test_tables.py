@@ -1572,6 +1572,20 @@ NA
 30 feet
 30 feet
 30 feet
+19.30.030(B)(1)(b)
+9. Rear Yard Setback
+15 feet
+16 feet
+17 feet
+18 feet
+19 feet
+19.30.030(C)
+11. Street Side Yard (corner) Setback Minimum
+5 feet
+6 feet
+7 feet
+8 feet
+9 feet
 """
 
 
@@ -1627,3 +1641,34 @@ def test_a_cell_stating_another_basis_does_not_refuse_the_row() -> None:
     # nothing may be filed from it, and breaking on it would discard the three
     # plain lot sizes printed beside it.
     assert [c.value for c in _grid(FAIRVIEW_GRID)["R-10"] if c.field == "min_lot_sqft"] == [10000]
+
+
+def test_a_cross_reference_cell_does_not_end_the_table() -> None:
+    # "19.30.030(B)(1)(b)" is what Fairview prints in the "Additional
+    # Standards and Exceptions" column, and it reads as a section heading.
+    # Taking it for one cleared the zone header mid-table, so every row
+    # under it — rear setbacks, side setbacks, coverage — went unread
+    # inside a table that was being read correctly a line earlier.
+    grids = _grid(FAIRVIEW_GRID)
+
+    assert [c.value for c in grids["R-6"] if c.field == "setback_rear_ft"] == [15]
+    assert [c.value for c in grids["R-7.5"] if c.field == "setback_rear_ft"] == [16]
+
+
+def test_a_maximum_row_files_under_the_maximum_field() -> None:
+    # Vetoing "8. Front Yard Setback Maximum" kept it out of the minimum,
+    # which was the safe half. The row states a real standard and belongs
+    # under the field that holds build-to lines.
+    grids = _grid(FAIRVIEW_GRID)
+
+    assert [c.value for c in grids["R-6"] if c.field == "setback_front_max_ft"] == [30]
+
+
+def test_a_street_side_yard_row_is_the_street_side_setback() -> None:
+    # "Street Side Yard (corner) Setback Minimum" — the yard between the
+    # standard's name and the word setback, and a corner qualifier that
+    # qualifies nothing: a street side yard only exists on a corner.
+    grids = _grid(FAIRVIEW_GRID)
+
+    assert [c.value for c in grids["R-6"] if c.field == "setback_street_side_ft"] == [5]
+    assert [c.value for c in grids["RM"] if c.field == "setback_street_side_ft"] == [9]

@@ -36,13 +36,24 @@ zones:
     setback_front_ft:
       value: 10
       quote: "or/multnomah/fairview/19.30.txt#L362"
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    setback_street_side_ft: 10
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/fairview/19.30.txt#L387"
+    setback_rear_ft:
+      value: 15
+      quote: "or/multnomah/fairview/19.30.txt#L377"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/multnomah/fairview/19.30.txt#L399"
     min_lot_sqft:
       value: 6000
       quote: "or/multnomah/fairview/19.30.txt#L257"
-    max_coverage_pct: 50
+    min_lot_width_ft:
+      value: 30
+      quote: "or/multnomah/fairview/19.30.txt#L343"
+    max_coverage_pct:
+      value: 50
+      quote: "or/multnomah/fairview/19.30.txt#L428"
     notes: 'quadfit confidence: needs_verification | Quadplex outright; min lot = SFD min 6,000 sf. Max
       FAR 0.7. Height 35 ft.'
   R-7.5:
@@ -54,13 +65,24 @@ zones:
     setback_front_ft:
       value: 10
       quote: "or/multnomah/fairview/19.30.txt#L363"
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    setback_street_side_ft: 10
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/fairview/19.30.txt#L389"
+    setback_rear_ft:
+      value: 15
+      quote: "or/multnomah/fairview/19.30.txt#L379"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/multnomah/fairview/19.30.txt#L400"
     min_lot_sqft:
       value: 7500
       quote: "or/multnomah/fairview/19.30.txt#L258"
-    max_coverage_pct: 50
+    min_lot_width_ft:
+      value: 30
+      quote: "or/multnomah/fairview/19.30.txt#L345"
+    max_coverage_pct:
+      value: 50
+      quote: "or/multnomah/fairview/19.30.txt#L429"
     notes: 'quadfit confidence: needs_verification | Quadplex min lot 7,500 sf.'
   R-10:
     cite_default:
@@ -71,13 +93,24 @@ zones:
     setback_front_ft:
       value: 10
       quote: "or/multnomah/fairview/19.30.txt#L364"
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    setback_street_side_ft: 10
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/fairview/19.30.txt#L391"
+    setback_rear_ft:
+      value: 15
+      quote: "or/multnomah/fairview/19.30.txt#L381"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/multnomah/fairview/19.30.txt#L401"
     min_lot_sqft:
       value: 10000
       quote: "or/multnomah/fairview/19.30.txt#L259"
-    max_coverage_pct: 50
+    min_lot_width_ft:
+      value: 30
+      quote: "or/multnomah/fairview/19.30.txt#L347"
+    max_coverage_pct:
+      value: 50
+      quote: "or/multnomah/fairview/19.30.txt#L430"
     notes: 'quadfit confidence: needs_verification | Quadplex min lot 10,000 sf (= zone min).'
   RM:
     cite_default:
@@ -88,11 +121,22 @@ zones:
     setback_front_ft:
       value: 10
       quote: "or/multnomah/fairview/19.30.txt#L366"
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    setback_street_side_ft: 10
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/fairview/19.30.txt#L395"
+    setback_rear_ft:
+      value: 15
+      quote: "or/multnomah/fairview/19.30.txt#L384"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/multnomah/fairview/19.30.txt#L403"
     min_lot_sqft: 10000
-    max_coverage_pct: 60
+    min_lot_width_ft:
+      value: 60
+      quote: "or/multnomah/fairview/19.30.txt#L350"
+    max_coverage_pct:
+      value: 60
+      quote: "or/multnomah/fairview/19.30.txt#L432"
     notes: 'quadfit confidence: needs_verification | Quadplex needs 2,500 sf/unit = 10,000 sf — standard
       6-7.5k RM lots cannot hold a quad without assembly. Height 45 ft.'
   RM/TOZ:

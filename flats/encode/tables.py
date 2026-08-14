@@ -1149,6 +1149,9 @@ def read_pairs(text: str, *, path: str) -> list[Candidate]:
 _PAREN_NOTE = re.compile(r"\((?P<n>\d{1,2})\)")
 #: A line that is only a cross-reference or comment cell — "(See 210.340)".
 _PAREN_LINE = re.compile(r"^\(.*\)$")
+#: What is left of a line after its section number and any subsection it
+#: names. A heading has a title here; a cross-reference has nothing.
+_SUBSECTIONS = re.compile(r"^(?:\s*\([A-Za-z0-9]{1,4}\))*\s*[.,;]?\s*$")
 #: A cell stating the standard does not apply in this column.
 _DASH = re.compile(r"^[—–-]$")
 #: A row label may open with a list dash: "– Min. lot area(2)".
@@ -1374,6 +1377,14 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
     while i < len(live):
         n, stripped = live[i]
         found = _SECTION.match(stripped)
+        if found and zones and _SUBSECTIONS.match(stripped[found.end() :]):
+            # A cross-reference in the table's own commentary column, not a
+            # heading: Fairview's "Additional Standards and Exceptions" prints
+            # "19.30.030(B)(1)(b)" beside the front setback row, and treating
+            # that as the start of a new section cleared the zone header — so
+            # every row below it, rear and side setbacks and coverage
+            # included, went unread inside a table already being read.
+            found = None
         if found:
             section = found.group("sec")
             zones = ()

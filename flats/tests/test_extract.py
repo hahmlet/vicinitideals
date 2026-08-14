@@ -561,3 +561,18 @@ def test_a_row_naming_both_bounds_is_read_as_the_minimum() -> None:
     )
 
     assert [c.field for c in found] == ["min_lot_sqft"]
+
+
+def test_a_setback_qualified_after_its_name_reads_as_the_qualified_field() -> None:
+    # A numbered table states the standard first and qualifies it after:
+    # "Front Yard Setback Maximum". Read left to right it is a front
+    # setback, which is the one thing it is not.
+    found = candidates_in("The front yard setback maximum is 30 feet.", 1, DOC)
+
+    assert [c.field for c in found] == ["setback_front_max_ft"]
+
+
+def test_a_street_side_yard_is_the_street_side_setback() -> None:
+    found = candidates_in("The street side yard setback is 10 feet.", 1, DOC)
+
+    assert [c.field for c in found] == ["setback_street_side_ft"]

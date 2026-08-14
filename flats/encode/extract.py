@@ -39,14 +39,17 @@ from flats.rules.ledger import Clause, Rase
 
 #: Bumped when the patterns change — extraction output is reproducible, and a
 #: candidate set that moved because the harness changed is not new evidence.
-EXTRACTOR = "flats-rase/1"
+EXTRACTOR = "flats-rase/2"
 
 _NUM = r"(?P<n>\d{1,3}(?:,\d{3})+|\d+(?:\.\d+)?)"
 
 #: Phrase → field. Ordered: the first match on a line wins, so the more
 #: specific phrasings are listed before the ones that would swallow them.
 _SUBJECTS: tuple[tuple[str, str], ...] = (
-    (r"street[ -]side (?:building )?setback", "setback_street_side_ft"),
+    # "(corner)" between the yard and the standard is Fairview's phrasing —
+    # "Street Side Yard (corner) Setback Minimum" — and it qualifies nothing
+    # this reader has to carry: a street side yard only exists on a corner.
+    (r"street[ -]side (?:building |yard )?(?:\(corner\) )?setback", "setback_street_side_ft"),
     # The corner-lot phrasings of the same standard — "Side Setback on a
     # Corner Lot", "Side Setback (corner lot)", "corner side setback",
     # "exterior side setback". Listed before the plain side pattern because
@@ -57,7 +60,15 @@ _SUBJECTS: tuple[tuple[str, str], ...] = (
         r"|(?:corner|exterior)[ -]side (?:building |yard )?setback",
         "setback_street_side_ft",
     ),
-    (r"(?:maximum|max\.?) front (?:building )?setback", "setback_front_max_ft"),
+    (
+        # Both orders. A table that numbers its rows states the standard
+        # first and qualifies it after — "8. Front Yard Setback Maximum" —
+        # and read as a front setback that is a maximum going unrecognised,
+        # the row was vetoed rather than filed, which is safe and blind.
+        r"(?:maximum|max\.?) front (?:building |yard )?setback"
+        r"|front (?:building |yard )?setback (?:maximum|max\.?)",
+        "setback_front_max_ft",
+    ),
     (r"garage (?:entrance|door)", "setback_garage_entrance_ft"),
     (r"front (?:building |yard )?setback", "setback_front_ft"),
     (r"(?:interior )?side (?:building |yard )?setback", "setback_side_ft"),
