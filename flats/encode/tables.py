@@ -1104,6 +1104,10 @@ def read_pairs(text: str, *, path: str) -> list[Candidate]:
     out: list[Candidate] = []
     section = ""
     group = ""
+    #: A standard named by an all-capitals heading over a block of typed rows,
+    #: which is how a two-column requirements table prints: the heading says
+    #: what is being required and each row says for whom.
+    caps_field = ""
     label: str | None = None
     #: Consecutive lines that are nothing but a housing-type name. Two in a
     #: row is a type-column header — Wood Village's Table 220-3 linearises
@@ -1121,15 +1125,34 @@ def read_pairs(text: str, *, path: str) -> list[Candidate]:
     #: as one would put some other housing type's number under the pod's.
     pending_type = ""
     typed_stack = False
+    #: A typed row whose type list wrapped: "Duplex, Triplex, Quadplex, and"
+    #: over "Cottage Clusters 50 feet". Read a line at a time the number
+    #: answers for cottage clusters alone, and the quadplex standard — the
+    #: one the pod is measured against — goes missing from a table that
+    #: states it.
+    type_carry = ""
 
     for n, raw in enumerate(lines, start=1):
         stripped = raw.strip()
         if not stripped or stripped in junk or _PAGE_NUMBER.match(stripped):
             continue
+        # A wrapped type list reaches exactly one line — the rest of its own
+        # row. Held any longer it types every row under it: Tualatin's
+        # townhouse coverage came back as the duplex, triplex and quadplex
+        # standard, off a type list six rows above.
+        carry, type_carry = type_carry, ""
         found = _SECTION.match(stripped)
+        if found and not _titled(stripped[found.end() :]):
+            # A cross-reference, not a heading. Tualatin's limitations column
+            # wraps mid-sentence onto "TDC 36.410, or Greenway and", and read
+            # as a new section it cleared the heading that scoped the block —
+            # so the duplex, townhouse, triplex and quadplex lot minimums
+            # printed underneath went unread, three rows at a time.
+            found = None
         if found:
             section = found.group("sec")
             group = ""
+            caps_field = ""
             label = None
             type_run = 0
             types_across = False
@@ -1157,10 +1180,60 @@ def read_pairs(text: str, *, path: str) -> list[Candidate]:
                 types_across = True
             label = None
             pending_type = ""
+            type_carry = stripped if _CONTINUES.search(stripped) else ""
             continue
         type_run = 0
         if types_across:
             continue
+        if _caps_head(stripped):
+            # "MINIMUM LOT SIZE" over a block of rows, one housing type each.
+            # A block heading, not a label: Tualatin prints an unreadable row
+            # first — "Single-Family Dwelling Average of 6,500 square feet",
+            # an averaging basis rather than a per-lot minimum — and a label
+            # that dies on the first row it cannot read took the duplex,
+            # triplex and quadplex minimums with it.
+            # A heading stating another basis — "MINIMUM AVERAGE LOT WIDTH"
+            # — still ends the block above it. Left to fall through, its rows
+            # were filed under the previous heading's standard, which is how
+            # an average width became a minimum.
+            caps_field = "" if _ROW_SCOPED.search(stripped) else (_subject(stripped) or "")
+            label = None
+            typed_stack = False
+            pending_type = ""
+            continue
+        scope = (_subject(label) if label is not None else None) or caps_field
+        if scope:
+            typed = _typed_row(f"{carry} {stripped}") if carry else None
+            if typed is None:
+                typed = _typed_row(stripped)
+            if typed is not None:
+                # "Quadplex 6,500 square feet" under "MINIMUM LOT SIZE" —
+                # Tualatin's two-column layout, where the heading names the
+                # standard and every row under it answers for one housing
+                # type on one line. Neither reader saw it: the prose reader
+                # finds no field in a line whose subject is a dwelling type,
+                # and the pair reader wants the label and the number on
+                # separate lines.
+                htype, (number, kind) = typed
+                if FIELDS[scope].kind == kind:
+                    out.append(
+                        Candidate(
+                            field=scope,
+                            value=int(number) if number.is_integer() else number,
+                            line=n,
+                            text=f"{label or scope}: {stripped}",
+                            quote=f"{path}#L{n}",
+                            source="pair",
+                            section=section,
+                            housing_type=htype,
+                        )
+                    )
+                # The heading scopes every row under it, so it survives —
+                # and the stack is typed, which stops a stray untyped
+                # measurement below from reading as the zone's own standard.
+                typed_stack = True
+                pending_type = ""
+                continue
         if label is not None:
             parsed = _measure_line(stripped)
             if pending_type and _measure_line(_after(lines, n, junk)) is not None:
@@ -1259,6 +1332,76 @@ _PAREN_CTX = re.compile(r"\([^)]*\)")
 #: A cell stating the standard is set case-by-case rather than as a number —
 #: Happy Valley prints "Variable4" down the whole MUR-S column.
 _VARIABLE = re.compile(r"^variable$", re.I)
+
+
+#: A row whose number is stated on some basis other than the standard's:
+#: Tualatin's "Average of 6,500 square feet" is a subdivision average, not a
+#: per-lot minimum, and "may be reduced to 30 feet" is relief. Both would file
+#: as the standard for the housing type named beside them.
+_ROW_SCOPED = re.compile(
+    r"\b(?:average|may be|per unit|per dwelling|combined|total|up to|at least one)\b",
+    re.I,
+)
+#: How many words of a row may name the housing type before the number. Four
+#: covers "Duplex, Triplex, Quadplex, and Cottage Clusters"; more than that and
+#: a sentence about townhouses starts reading as a table row.
+_ROW_TYPE_WORDS = 8
+
+
+#: A type list that has not finished — the row wrapped and the rest of the
+#: types are on the next line.
+_CONTINUES = re.compile(r"(?:,|\band)\s*$", re.I)
+
+
+def _typed_row(line: str) -> tuple[str, tuple[float, str]] | None:
+    """A row that names a housing type and its number on one line.
+
+    The whole line, split: the longest leading phrase that names housing types
+    and a remainder that is exactly a measurement. Anything else in the line —
+    a code reference, a relief clause, an averaging basis — and there is no
+    row here, because the number would be filed as a standard it is not.
+    """
+    if _ROW_SCOPED.search(line):
+        return None
+    words = line.split()
+    for k in range(min(_ROW_TYPE_WORDS, len(words) - 1), 0, -1):
+        head = " ".join(words[:k])
+        htype = _housing_type(head)
+        if htype is None or any(ch.isdigit() for ch in head):
+            continue
+        measured = _measure_line(" ".join(words[k:]))
+        if measured is not None:
+            return htype, measured
+    return None
+
+
+def _titled(rest: str) -> bool:
+    """Whether what follows a section number opens a heading.
+
+    A heading has a title — "40.220 Low Density Residential" — or nothing but
+    subsection markers. A sentence that happens to begin with a code reference
+    continues in lower case or in punctuation, and there is no heading in it.
+    """
+    rest = rest.strip()
+    if not rest or _SUBSECTIONS.match(rest):
+        return True
+    return rest[0].isupper()
+
+
+def _caps_head(line: str) -> bool:
+    """An all-capitals heading naming a standard — "MINIMUM LOT SIZE".
+
+    The capitals are the whole claim: they are how a codifier prints the
+    header of a requirements table, and a sentence in a chapter is never
+    written in them. Without that signal a heading is a label, and a label
+    lasts one row.
+    """
+    if any(ch.isdigit() for ch in line) or len(line.split()) > _PAIR_WORDS:
+        return False
+    letters = [ch for ch in line if ch.isalpha()]
+    if len(letters) < 6 or not all(ch.isupper() for ch in letters):
+        return False
+    return _subject(line) is not None
 
 
 def _grid_value(line: str, label: str, group: str = "") -> tuple[float, str, tuple[str, ...]] | None:

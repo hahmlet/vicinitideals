@@ -1964,3 +1964,86 @@ def test_a_refused_row_does_not_take_the_unit_with_it() -> None:
 
     assert street["lot_sqft:1500-2999"] == 5
     assert street["lot_sqft:7000+"] == 20
+
+
+#: Tualatin's Chapter 40 requirements table, linearised. Two columns — the
+#: standard on the left, the limitation on the right — so a row's number and
+#: the relief that qualifies it land on separate lines, and the standard
+#: itself is named by an all-capitals heading over the block.
+TUALATIN_ROWS = """
+40.220 Low Density Residential
+
+STANDARD REQUIREMENT LIMITATIONS AND CODE
+REFERENCES
+MINIMUM LOT SIZE
+Single-Family Dwelling Average of 6,500 square feet
+May be reduced for Flexible
+Lot Subdivisions, subject to
+TDC 36.410, or Greenway and
+Natural Area dedications, sub-
+ject to TDC 36.420.
+Duplex 6,500 square feet
+Quadplex 6,500 square feet
+MINIMUM LOT WIDTH
+Duplex, Triplex, Quadplex, and
+Cottage Clusters 50 feet
+MINIMUM AVERAGE LOT WIDTH
+Townhouse 14 feet
+"""
+
+
+def _typed_rows(text: str) -> list[tuple[str, float, str]]:
+    from flats.encode.tables import read_pairs
+
+    return [
+        (c.field, c.value, c.housing_type)
+        for c in read_pairs(text, path="doc.txt")
+        if c.housing_type
+    ]
+
+
+def test_a_heading_over_typed_rows_names_the_standard_for_all_of_them() -> None:
+    # The row says who and how much and nothing else — "Quadplex 6,500 square
+    # feet" — so the field is only ever stated by the heading above the block.
+    assert ("min_lot_sqft", 6500, "quadplex") in _typed_rows(TUALATIN_ROWS)
+
+
+def test_a_block_survives_the_row_it_cannot_read() -> None:
+    # The first row states an average, not a per-lot minimum, and is refused.
+    # A label dies on the row it cannot read; a heading may not, or the
+    # duplex, quadplex and cottage cluster rows under it go unread.
+    fields = _typed_rows(TUALATIN_ROWS)
+
+    assert ("min_lot_sqft", 6500, "duplex") in fields
+    assert not [f for f in fields if f[2] == "single_family_detached"]
+
+
+def test_a_wrapped_cross_reference_does_not_end_the_block() -> None:
+    # "TDC 36.410, or Greenway and" is the limitations column wrapping
+    # mid-sentence. Read as a new section it cleared the heading, and the two
+    # rows printed under it were the duplex and quadplex minimums.
+    assert ("min_lot_sqft", 6500, "quadplex") in _typed_rows(TUALATIN_ROWS)
+
+
+def test_a_wrapped_type_list_types_the_row_it_belongs_to() -> None:
+    # "Duplex, Triplex, Quadplex, and" / "Cottage Clusters 50 feet" is one
+    # row. Read a line at a time the 50 ft answers for cottage clusters
+    # alone, and the quadplex width — what the pod is measured against —
+    # is missing from a table that states it.
+    assert ("min_lot_width_ft", 50, "duplex+triplex+quadplex+cottage_cluster") in _typed_rows(
+        TUALATIN_ROWS
+    )
+
+
+def test_a_wrapped_type_list_reaches_one_row_only() -> None:
+    # Held past its own row it types every row under it: the townhouse
+    # coverage standard came back as the duplex, triplex and quadplex one.
+    assert not [f for f in _typed_rows(TUALATIN_ROWS) if f[2].startswith("duplex+") and f[1] != 50]
+
+
+def test_a_heading_stating_another_basis_scopes_nothing() -> None:
+    # "MINIMUM AVERAGE LOT WIDTH" is a subdivision average. Filed as the
+    # minimum it hands a townhouse a 14 ft lot; left to fall through, its
+    # rows are filed under whatever heading came before it, which is how an
+    # average width became a minimum width.
+    assert not [f for f in _typed_rows(TUALATIN_ROWS) if f[1] == 14]
