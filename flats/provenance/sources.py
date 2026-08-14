@@ -26,6 +26,7 @@ being named here, which is a one-line change somebody makes deliberately.
 from __future__ import annotations
 
 import enum
+import re
 from dataclasses import dataclass, replace
 from typing import Sequence
 
@@ -133,6 +134,45 @@ def _registrable(host: str) -> list[str]:
     """Candidate parent domains, longest first — ``library.municode.com`` matches ``municode.com``."""
     parts = host.split(".")
     return [".".join(parts[i:]) for i in range(len(parts) - 1)]
+
+
+#: Publishers whose reader-facing URL and whose fetchable URL are different
+#: strings for the same text, with no key in common. Municode's library page is
+#: ``library.municode.com/...?nodeId=CH3ZODI`` and the document that actually
+#: downloads is ``api.municode.com/PublicationPdfDownload/1813``; nothing in
+#: either names the other. Two URLs from here are not comparable, and guessing
+#: that they differ would report every correctly-declared Municode chapter as
+#: a chapter nobody fetched.
+OPAQUE: frozenset[str] = frozenset({"municode.com"})
+
+
+def document_key(url: str) -> tuple[str, str] | None:
+    """A key two URLs share when they serve the same document, or ``None``.
+
+    Comparing citation URLs to declared ones by string equality answers the
+    wrong question. A value cites the address a person opens; ``code:`` declares
+    the address a fetcher can read, and for eCode360 those are
+    ``ecode360.com/43076426`` and ``ecode360.com/print/LA4508?guid=43076426`` —
+    the same node, reached two ways.
+
+    ``None`` means "cannot tell", which callers must treat as *declared*. The
+    cost of a false "you never fetched this" is somebody re-declaring a chapter
+    that is already in the store; the cost of a false silence is one gap going
+    unreported, and only the first wastes an afternoon on a document that was
+    never missing.
+    """
+    host = host_of(url)
+    domains = _registrable(host)
+    if any(d in OPAQUE for d in domains):
+        return None
+    path = url.split("://", 1)[-1].split("/", 1)[-1] if "/" in url.split("://", 1)[-1] else ""
+    if "ecode360.com" in domains:
+        # The node id, wherever it is: a `guid` query on the print endpoint, a
+        # bare path segment for the reader. The code id (LA4508) is a number
+        # too, so the query is read by name rather than by position.
+        guid = re.search(r"guid=(\d+)", path) or re.search(r"(?:^|/)(\d{5,})", path)
+        return ("ecode360.com", guid.group(1)) if guid else None
+    return (domains[-1], path.rstrip("/").lower()) if path.rstrip("/") else None
 
 
 def authority_for(url: str) -> Authority:

@@ -14,6 +14,7 @@ from flats.provenance.sources import (
     Authority,
     FetchFailed,
     authority_for,
+    document_key,
     fetch,
     host_of,
 )
@@ -130,3 +131,35 @@ def test_the_strategy_used_is_reported_not_hidden(monkeypatch) -> None:
 
     assert got.strategy == "chrome124"
     assert got.status == 200
+
+
+# --- one document, two addresses --------------------------------------
+
+
+def test_the_reader_url_and_the_fetchable_url_are_one_document() -> None:
+    # A value cites the page a person opens; `code:` declares the endpoint a
+    # fetcher can read. Comparing those as strings reports every correctly
+    # declared eCode360 chapter as a chapter nobody ever fetched.
+    assert document_key("https://ecode360.com/43076426") == document_key(
+        "https://ecode360.com/print/LA4508?guid=43076426"
+    )
+
+
+def test_the_code_id_is_not_mistaken_for_the_node_id() -> None:
+    assert document_key("https://ecode360.com/print/LA4508?guid=43076426")[1] == "43076426"
+
+
+def test_two_chapters_of_one_codifier_are_two_documents() -> None:
+    assert document_key(
+        "https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html"
+    ) != document_key(
+        "https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19115.html"
+    )
+
+
+def test_municode_answers_cannot_tell_rather_than_guessing() -> None:
+    # The library page carries a nodeId and the download carries a publication
+    # number; neither names the other. Silence beats a confident wrong answer,
+    # because the wrong answer sends somebody re-fetching a stored chapter.
+    assert document_key("https://library.municode.com/or/troutdale/codes?nodeId=CH3ZODI") is None
+    assert document_key("https://api.municode.com/PublicationPdfDownload/1813") is None

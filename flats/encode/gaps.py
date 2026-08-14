@@ -23,9 +23,10 @@ it is eight, and they need opposite things:
                  encoding as a variant, not a citation stapled to one half.
 ``multi``        the document states more than one number for the field, for
                  the same reason.
-``undeclared``   the value names its chapter and that chapter is not in
-                 ``code:``, so nothing has ever fetched it. One line and a
-                 fetch, not a hunt.
+``undeclared``   the value names a document and ``code:`` does not, so nothing
+                 has ever fetched it. Usually one line and a fetch; sometimes
+                 the sign that the citation points at something that is not the
+                 code at all.
 ``unsourced``    no stored document states it and the value names no chapter
                  that would. The next action is to find the chapter — or to
                  admit the value came from the quadfit port with nothing behind
@@ -36,9 +37,9 @@ it is eight, and they need opposite things:
 
 The last three are what matter at corpus scale, because from inside the ladder
 they look identical to each other and to everything above them. Splitting them
-turned "385 values nothing supports" into 148 chapters waiting to be declared,
-96 fields no reader was ever going to have an opinion about, and 83 that are
-genuinely unsourced — three different afternoons, only one of them long.
+turned "385 values nothing supports" into 51 waiting on a chapter already named
+on the value, 96 fields no reader was ever going to have an opinion about, and
+180 genuinely unsourced — three different afternoons, only one of them long.
 
 ``unofficial`` is the one that is not about workload. Forty-one values cite a
 zoning aggregator's restatement of the code. They corroborate, they would
@@ -58,7 +59,7 @@ from typing import Iterable, Mapping, Sequence
 
 from flats.encode.attach import unquoted
 from flats.encode.corroborate import Finding, Verdict, check_layer, checkable
-from flats.provenance.sources import authority_for, host_of
+from flats.provenance.sources import authority_for, document_key, host_of
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.fields import FIELDS
 from flats.rules.model import Layer
@@ -88,8 +89,9 @@ NEXT = {
     "conditional": "encode as a variant — the document footnotes this number",
     "multi": "encode as variants — the document states more than one number",
     "undeclared": (
-        "the value already cites the chapter — declare that URL under `code:` "
-        "and fetch it"
+        "the value names a document nothing has fetched — declare that URL under "
+        "`code:`, or re-cite it if that URL is not the adopted code (one of the "
+        "three in the corpus points at a model-home application form)"
     ),
     "unsourced": (
         "no stored document states this. Find the chapter that does, declare it "
@@ -172,7 +174,7 @@ def gaps(layer: Layer, findings: Sequence[Finding]) -> list[Gap]:
     grouped: dict[tuple[str, str], list[Finding]] = {}
     for finding in findings:
         grouped.setdefault((finding.zone, finding.field), []).append(finding)
-    declared = {d.url for d in layer.code}
+    declared = {document_key(d.url) for d in layer.code} - {None}
     out: list[Gap] = []
     for zone, field in sorted(unquoted(layer)):
         value = layer.zones[zone].values[field]
@@ -192,10 +194,13 @@ def gaps(layer: Layer, findings: Sequence[Finding]) -> list[Gap]:
             out.append(Gap(layer.layer, zone, field, "uncheckable", kind))
             continue
         cause, detail = classify(grouped.get((zone, field), ()))
-        if cause == "unsourced" and url not in declared:
+        key = document_key(url)
+        if cause == "unsourced" and key is not None and key not in declared:
             # Not missing — never fetched. The chapter is named on the value
             # itself and simply absent from `code:`, which is a one-line fix
-            # and nothing like the hunt "unsourced" describes.
+            # and nothing like the hunt "unsourced" describes. `key is None`
+            # is Municode, whose reader URL and fetchable URL share nothing:
+            # unprovable, so unclaimed.
             cause, detail = "undeclared", url
         out.append(Gap(layer.layer, zone, field, cause, detail))
     return sorted(out, key=lambda g: (CAUSES.index(g.cause), g.zone, g.field))
