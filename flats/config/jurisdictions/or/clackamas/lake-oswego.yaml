@@ -84,13 +84,26 @@ zones:
       url: https://ecode360.com/43076426
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 25
+    setback_front_ft:
+      value: 25
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L116"
     setback_side_ft: 7.5
-    setback_rear_ft: 30
+    setback_rear_ft:
+      value: 30
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L138"
     setback_street_side_ft: 15
-    min_lot_sqft: 7500
+    min_lot_sqft:
+      value: 7500
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L59"
+    min_lot_width_ft:
+      value: 50
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L65"
     max_coverage_pct: 35
-    notes: 'quadfit confidence: verified | One envelope for all primary structures (same as detached SFD):
-      25 front / 30 rear. Code sides: 5 ft min one side, 15 ft TOTAL both — modeled as uniform 7.5/7.5,
-      which gives the exact max buildable width (lot - 15). Street side 15 local / 20 arterial. Steep-slope
-      front 18 ft.'
+    notes: 'Read against LOC Table 50.04.001-1 on 2026-08-14: lot area 7,500 (L59), lot width 50
+      (L65), front 25 (L116) and rear 30 (L138), each quoted to its own cell under the table''s
+      Primary Structure block; the Accessory Structure block below it states 25 front and 10 rear
+      and is not this zone''s envelope. Side stays unquoted: the code states 5 ft minimum on one
+      side and 15 ft total across both, and 7.5/7.5 is this file''s modelling of that, not a
+      number the table prints. Street side stays unquoted too: 15 ft on a local street, 20 ft on
+      an arterial or collector, which is a variant and not one value. Steep-slope front is 18 ft
+      (LOC 50.04.001.1.e). quadfit confidence: verified.'

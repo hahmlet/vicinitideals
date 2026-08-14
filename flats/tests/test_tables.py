@@ -2287,3 +2287,132 @@ def test_a_two_tier_cell_is_still_refused() -> None:
     from flats.encode.tables import _measure_line
 
     assert _measure_line("7.5 ft or 5 ft due to irregular shaped lots") is None
+
+
+#: Lake Oswego's Table 50.04.001-1, verbatim through the primary structure's
+#: setbacks and into the accessory structure's. The nesting is the point:
+#: "Front (ft.)" names a direction, "Primary Structure" names whose, and only
+#: "YARD SETBACKS" names the standard.
+NESTED_SCOPE_GRID = """
+TABLE 50.04.001-1: RESIDENTIAL LOW DENSITY ZONES DIMENSIONS
+TABLE 50.04.001-1: RESIDENTIAL LOW DENSITY ZONES DIMENSIONS
+TABLE 50.04.001-1: RESIDENTIAL LOW DENSITY ZONES DIMENSIONS
+R-7.5
+R-10
+R-15
+Comments/Additional Standards
+[2]
+MIN. LOT DIMENSIONS [3]
+MIN. LOT DIMENSIONS [3]
+§ 50.04.001.1.c
+Single-Family, Duplex, Triplex, Quadplex, and Cottage Cluster Developments; Townhouse Projects
+Single-Family, Duplex, Triplex, Quadplex, and Cottage Cluster Developments; Townhouse Projects
+Area (sq. ft.)
+Area (sq. ft.)
+7,500
+10,000
+15,000
+Except PD [3]
+Width (ft.)
+Width (ft.)
+50
+65
+80
+Except PD [3]
+YARD SETBACKS
+YARD SETBACKS
+§ 50.04.001.1.e
+Primary Structure
+Primary Structure
+Front (ft.)
+Front (ft.)
+25
+25
+25
+Side Adjacent to Street (ft.)
+Side Adjacent to Street (ft.)
+Arterial/Collector
+Arterial/Collector
+20
+20
+20
+Local
+Local
+15
+15
+15
+Interior Side (ft.)
+Interior Side (ft.)
+Total 15, 5 min.
+10
+10
+Rear (ft.)
+Rear (ft.)
+30
+30
+30
+Accessory Structure
+Accessory Structure
+Front (ft.)
+Front (ft.)
+25
+15
+15
+15
+Height ≤ 18 ft.
+Side
+5
+10
+10
+Rear
+10
+15
+15
+Height > 18 ft.
+"""
+
+
+def _nested(text: str) -> dict[str, dict[str, float]]:
+    from flats.encode.tables import read_stacked_grids
+
+    return {
+        zone: {c.field: c.value for c in cs}
+        for zone, cs in read_stacked_grids(text, path="doc.txt").items()
+    }
+
+
+def test_a_structure_scope_leaves_the_standards_heading_in_force() -> None:
+    # A scope that replaced the heading left every setback in this table
+    # unread: "Front (ft.)" under "Primary Structure" names no standard at
+    # all, and the one that does is two headings up.
+    grids = _nested(NESTED_SCOPE_GRID)
+
+    assert grids["R-7.5"]["setback_front_ft"] == 25
+    assert grids["R-15"]["setback_rear_ft"] == 30
+
+
+def test_an_accessory_structures_setbacks_are_not_the_dwellings() -> None:
+    # The accessory block prints the same rows in the same columns under the
+    # same heading, and its rear setback is ten feet where the dwelling's is
+    # thirty. Read as the zone's, a pod could be built twenty feet closer to
+    # the back line than the code allows.
+    grids = _nested(NESTED_SCOPE_GRID)
+
+    assert grids["R-7.5"]["setback_rear_ft"] == 30
+    assert grids["R-10"]["setback_rear_ft"] == 30
+
+
+def test_the_street_side_variants_stay_unread() -> None:
+    # "Side Adjacent to Street (ft.)" is stated twice, once for an
+    # arterial/collector and once for a local street. One number cannot carry
+    # both, and picking either would be an invention.
+    assert "setback_street_side_ft" not in _nested(NESTED_SCOPE_GRID)["R-7.5"]
+
+
+def test_a_scope_still_opens_the_rows_its_heading_scopes() -> None:
+    # A heading is only taken as one when a row follows it, and what follows
+    # "YARD SETBACKS" is "Primary Structure".
+    from flats.encode.tables import _looks_like_label
+
+    assert _looks_like_label("Primary Structure")
+    assert _looks_like_label("Accessory Structure")

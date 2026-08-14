@@ -1675,6 +1675,17 @@ _NUMBERED_HEAD = re.compile(r"^\d{1,2}\.\s+\S")
 #: a number of nothing.
 _UNIT_HEAD = re.compile(r"\((?:ft\.?|feet|sq\.?\s*ft\.?|square feet|percent|%)\)\s*$", re.I)
 
+#: A heading that names whose structure the rows under it state, rather
+#: than what they state: Lake Oswego prints "Front (ft.)" under "Primary
+#: Structure" under "YARD SETBACKS", and prints the whole block again under
+#: "Accessory Structure". Taken for an ordinary heading it replaces the one
+#: naming the standard, and every setback in the table goes unread; ignored,
+#: a shed's five feet is filed as the dwelling's.
+_STRUCTURE_SCOPE = re.compile(
+    r"^(?:primary|principal|main|accessory)\s+(?:structure|building)s?$", re.I
+)
+_ACCESSORY_STRUCTURE = re.compile(r"^accessory\b", re.I)
+
 _COMMENTARY = re.compile(r"\b(?:additional standards?|exceptions?|notes?|cross.references?)\b", re.I)
 
 #: Any of the dashes a code uses to write a range. The en dash is the common
@@ -1785,6 +1796,12 @@ def _looks_like_label(line: str) -> bool:
     if _ENUMERATOR.match(label) or _GROUP_HEAD.match(label):
         return True
     if _housing_type(label) or _subject(label):
+        return True
+    if _STRUCTURE_SCOPE.match(label):
+        # "Primary Structure" opens the rows a standards heading scopes as
+        # surely as a row label does — it is what stands between "YARD
+        # SETBACKS" and "Front (ft.)" — and a heading followed by nothing
+        # that looks like a row is not taken as a heading at all.
         return True
     bare = " ".join(_PAREN_CTX.sub("", label).split()).strip(" .:").lower()
     return bare in _GROUPED_SUBJECTS or bare in _BARE_GROUPED or bare in _LOT_GROUPED
@@ -1976,6 +1993,9 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
     #: Without it those rows read as the zone's own minimum, and a townhouse
     #: unit lot is a tenth of one.
     block_type = ""
+    #: Whose structure the rows below state a standard for, where the table
+    #: distinguishes them: "primary", "accessory", or "" where it never did.
+    structure = ""
     i = 0
     while i < len(live):
         n, stripped = live[i]
@@ -1996,6 +2016,7 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
             block_refs = ()
             block_field = ""
             block_type = ""
+            structure = ""
             i += 1
             continue
         run = []
@@ -2016,6 +2037,7 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
                 block_refs = ()
                 block_field = ""
                 block_type = ""
+                structure = ""
                 continue
         if len(run) >= 2 and any(ch.isdigit() for z in run for ch in z):
             # A run of bare letters is not a header: lettered subsection
@@ -2038,6 +2060,7 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
             block_refs = ()
             block_field = ""
             block_type = ""
+            structure = ""
             i = j
             continue
         label = _LABEL_DASH.sub("", _PAREN_NOTE.sub("", stripped)).strip()
@@ -2158,10 +2181,22 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
             # "None") stranded by a refused row are cells, not headings.
             # Refs glued to a heading ("Building setbacks (minimum)6")
             # condition every row scoped by it.
-            block = label
-            block_refs = refs
-            block_field = ""
-            block_type = ""
+            if _STRUCTURE_SCOPE.match(label):
+                # A scope, not a block: it says whose the rows below it are
+                # and leaves the heading that names the standard in force.
+                structure = "accessory" if _ACCESSORY_STRUCTURE.match(label) else "primary"
+            else:
+                block = label
+                block_refs = refs
+                block_field = ""
+                block_type = ""
+                structure = ""
+        if zones and name is not None and _labelish(label) and structure == "accessory":
+            # An accessory structure's setbacks print in the same shape, in
+            # the same columns, under the same standards heading. Reading them
+            # files a shed's five feet as the dwelling's.
+            i += 1
+            continue
         if zones and name is not None and _labelish(label):
             in_corner_block = _CORNER_BLOCK.search(block) and name.startswith("setback_")
             if (
