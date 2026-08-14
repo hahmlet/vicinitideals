@@ -1,8 +1,16 @@
 label: Oregon City
 kind: city
 eligible: true
-notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s verification was against a
-  coarser standard (one citation per row) and does not carry over. UNPORTED: orientation_constraint=''entrance_only''.
+notes: 'Ported from quadfit rules.yaml, then re-read value by value against Title 17 itself (2026-08-14):
+  every value quotes the row of Table 17.08.040 or 17.10.040 it comes from. Three things changed. (1)
+  R-5 and R-3.5 coverage was the single-family detached row (50%/55%); the quadplex is on the triplex/quadplex/townhouse
+  row at 70%/80%, and the low figure was rejecting lots the code allows. (2) min_frontage_ft becomes
+  min_lot_width_ft — what the tables state is a minimum lot width, and no chapter states a frontage standard.
+  (3) max_height_ft 35 is encoded for all five zones; it was in the notes and in no field. Relief the
+  tables state and this file does not encode: the porch exceptions to the front setback, the 10 ft rear
+  for an ADU or cottage cluster, the 0 ft attached side for townhouses, the 25 ft height for a cottage
+  cluster unit, and coverage +5% with an ADU. OCMC 17.16.155 adds standards inside the Thimble Creek
+  Concept Plan Area of R-5 that supersede the zone; they are geographic and not encoded. UNPORTED: orientation_constraint=''entrance_only''.
   quadfit justified this in a YAML comment with no citation; it needs its own encoding rather than invented
   provenance.'
 ingest:
@@ -32,84 +40,182 @@ zones:
   R-10:
     section: ["17.08.", "17.16."]
     cite_default:
-      cite: OCMC 17.08.020 (quadplex a permitted use) & Table 17.08.040; middle housing 17.16.060
+      cite: OCMC 17.08.020 (quadplex a permitted use) and Table 17.08.040 (dimensional
+        standards); middle housing standards OCMC 17.16.060
       url: https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.08LODEREDI
-      retrieved: '2026-07-28'
-    quadplex_allowed: true
-    setback_front_ft: 20
-    setback_side_ft: 8
-    setback_rear_ft: 20
-    setback_street_side_ft: 10
-    min_lot_sqft: 10000
-    min_frontage_ft: 65
-    max_coverage_pct: 40
+      retrieved: '2026-08-14'
+    quadplex_allowed:
+      value: true
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4053"
+    setback_front_ft:
+      value: 20
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4138"
+    setback_side_ft:
+      value: 8
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4143"
+    setback_rear_ft:
+      value: 20
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4149"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4148"
+    min_lot_sqft:
+      value: 10000
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4118"
+    min_lot_width_ft:
+      value: 65
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4133"
+    max_coverage_pct:
+      value: 40
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4126"
+    max_height_ft:
+      value: 35
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4122"
     notes: 'quadfit confidence: verified | Height 35 ft. Front 15 ft for a porch. Rear 10 ft for ADU/cottage
       cluster. No FAR. Quadplex uses base-zone dimensions per 17.16.060.A; >=1 street-facing main entrance
       req''d (17.16.060.C). Coverage 45% only with an ADU.'
   R-8:
     section: ["17.08.", "17.16."]
     cite_default:
-      cite: OCMC 17.08.020 & Table 17.08.040; middle housing 17.16.060
+      cite: OCMC 17.08.020 (quadplex a permitted use) and Table 17.08.040 (dimensional
+        standards); middle housing standards OCMC 17.16.060
       url: https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.08LODEREDI
-      retrieved: '2026-07-28'
-    quadplex_allowed: true
-    setback_front_ft: 15
-    setback_side_ft: 7
-    setback_rear_ft: 20
-    setback_street_side_ft: 10
-    min_lot_sqft: 8000
-    min_frontage_ft: 60
-    max_coverage_pct: 40
+      retrieved: '2026-08-14'
+    quadplex_allowed:
+      value: true
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4053"
+    setback_front_ft:
+      value: 15
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4138"
+    setback_side_ft:
+      value: 7
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4143"
+    setback_rear_ft:
+      value: 20
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4149"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4148"
+    min_lot_sqft:
+      value: 8000
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4118"
+    min_lot_width_ft:
+      value: 60
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4133"
+    max_coverage_pct:
+      value: 40
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4126"
+    max_height_ft:
+      value: 35
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4122"
     notes: 'quadfit confidence: verified | Height 35 ft. Front 10 ft for a porch. No FAR. One street-facing
       entrance per quadplex (17.16.060.C). Coverage 45% only with an ADU.'
   R-6:
     section: ["17.08.", "17.16."]
     cite_default:
-      cite: OCMC 17.08.020 & Table 17.08.040; middle housing 17.16.060
+      cite: OCMC 17.08.020 (quadplex a permitted use) and Table 17.08.040 (dimensional
+        standards); middle housing standards OCMC 17.16.060
       url: https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.08LODEREDI
-      retrieved: '2026-07-28'
-    quadplex_allowed: true
-    setback_front_ft: 10
-    setback_side_ft: 5
-    setback_rear_ft: 20
-    setback_street_side_ft: 10
-    min_lot_sqft: 7000
-    min_frontage_ft: 50
-    max_coverage_pct: 40
+      retrieved: '2026-08-14'
+    quadplex_allowed:
+      value: true
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4053"
+    setback_front_ft:
+      value: 10
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4138"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4143"
+    setback_rear_ft:
+      value: 20
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4149"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4148"
+    min_lot_sqft:
+      value: 7000
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4118"
+    min_lot_width_ft:
+      value: 50
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4133"
+    max_coverage_pct:
+      value: 40
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4126"
+    max_height_ft:
+      value: 35
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4122"
     notes: 'quadfit confidence: verified | Height 35 ft. Front 5 ft for a porch. Quadplex min lot (7,000)
       exceeds detached-SFD min (6,000). No FAR. Coverage 45% only with an ADU.'
   R-5:
     section: ["17.10.", "17.16."]
     cite_default:
-      cite: OCMC 17.10.020.E (quadplex permitted) & Table 17.10.040 (Medium Density Residential); middle
-        housing 17.16.060
+      cite: OCMC 17.10.020 (quadplex a permitted use) and Table 17.10.040 (dimensional
+        standards); middle housing standards OCMC 17.16.060
       url: https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.10MEDEREDI
-      retrieved: '2026-07-28'
-    quadplex_allowed: true
-    setback_front_ft: 10
-    setback_side_ft: 5
-    setback_rear_ft: 20
-    setback_street_side_ft: 7
-    min_lot_sqft: 7000
-    min_frontage_ft: 35
-    max_coverage_pct: 50
+      retrieved: '2026-08-14'
+    quadplex_allowed:
+      value: true
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4246"
+    setback_front_ft:
+      value: 10
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4331"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4333"
+    setback_rear_ft:
+      value: 20
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4340"
+    setback_street_side_ft:
+      value: 7
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4338"
+    min_lot_sqft:
+      value: 7000
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4313"
+    min_lot_width_ft:
+      value: 35
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4328"
+    max_coverage_pct:
+      value: 70
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4324"
+    max_height_ft:
+      value: 35
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4318"
     notes: 'quadfit confidence: verified | Height 35 ft. Ch 17.10 ''Medium Density'' but permits detached
       SFD (17.10.020.A) so HB 2001 attaches. Quadplex min lot 7,000 > detached 5,000. Coverage 50%.'
   R-3.5:
     section: ["17.10.", "17.16."]
     cite_default:
-      cite: OCMC 17.10.020.E (quadplex permitted) & Table 17.10.040 (Medium Density Residential); middle
-        housing 17.16.060
+      cite: OCMC 17.10.020 (quadplex a permitted use) and Table 17.10.040 (dimensional
+        standards); middle housing standards OCMC 17.16.060
       url: https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.10MEDEREDI
-      retrieved: '2026-07-28'
-    quadplex_allowed: true
-    setback_front_ft: 5
-    setback_side_ft: 5
-    setback_rear_ft: 20
-    setback_street_side_ft: 7
-    min_lot_sqft: 7000
-    min_frontage_ft: 25
-    max_coverage_pct: 55
+      retrieved: '2026-08-14'
+    quadplex_allowed:
+      value: true
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4246"
+    setback_front_ft:
+      value: 5
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4331"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4333"
+    setback_rear_ft:
+      value: 20
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4340"
+    setback_street_side_ft:
+      value: 7
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4338"
+    min_lot_sqft:
+      value: 7000
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4313"
+    min_lot_width_ft:
+      value: 25
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4328"
+    max_coverage_pct:
+      value: 80
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4324"
+    max_height_ft:
+      value: 35
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4318"
     notes: 'quadfit confidence: verified | Height 35 ft. Permits detached SFD (17.10.020.A). Quadplex
       min lot 7,000 >> detached 3,500. Coverage 55%. NOT the multi-family zone (that is R-2 / Ch 17.12,
       excluded).'
