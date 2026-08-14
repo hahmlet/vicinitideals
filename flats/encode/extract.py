@@ -47,6 +47,16 @@ _NUM = r"(?P<n>\d{1,3}(?:,\d{3})+|\d+(?:\.\d+)?)"
 #: specific phrasings are listed before the ones that would swallow them.
 _SUBJECTS: tuple[tuple[str, str], ...] = (
     (r"street[ -]side (?:building )?setback", "setback_street_side_ft"),
+    # The corner-lot phrasings of the same standard — "Side Setback on a
+    # Corner Lot", "Side Setback (corner lot)", "corner side setback",
+    # "exterior side setback". Listed before the plain side pattern because
+    # both match at the same offset and the tie goes to the earlier entry.
+    (
+        r"side (?:building |yard )?setback (?:on|of|for) a corner lot"
+        r"|side (?:building |yard )?setback \(corner lot\)"
+        r"|(?:corner|exterior)[ -]side (?:building |yard )?setback",
+        "setback_street_side_ft",
+    ),
     (r"(?:maximum|max\.?) front (?:building )?setback", "setback_front_max_ft"),
     (r"garage (?:entrance|door)", "setback_garage_entrance_ft"),
     (r"front (?:building |yard )?setback", "setback_front_ft"),

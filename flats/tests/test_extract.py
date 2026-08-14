@@ -351,3 +351,40 @@ def test_a_table_the_prose_defers_to_is_named() -> None:
     # 110-4, and this harness cannot read a grid with one column per zone.
     # Naming it queues the work; guessing a column encodes another zone's rule.
     assert one(CHAPTER).tables == ("110-4",)
+
+
+def test_a_corner_lot_side_setback_is_the_street_side() -> None:
+    # Rivergrove's RLDO 5.080 phrases the street-side standard as "Side
+    # Setback on a Corner Lot - 15 feet". The side that abuts the street is
+    # the street-side setback; reading it as the interior side hands a
+    # corner-only number to every lot in the zone.
+    found = candidates_in(
+        "Side Setback on a Corner Lot - 15 feet (to insure better visibility).", 1, DOC
+    )
+
+    assert [(c.field, c.value) for c in found] == [("setback_street_side_ft", 15)]
+
+
+def test_the_parenthesised_corner_phrasing_is_also_the_street_side() -> None:
+    found = candidates_in("Side Setback (corner lot) - 10 feet.", 1, DOC)
+
+    assert [(c.field, c.value) for c in found] == [("setback_street_side_ft", 10)]
+
+
+def test_a_corner_side_setback_is_the_street_side() -> None:
+    found = candidates_in("The corner side setback is 12 feet.", 1, DOC)
+
+    assert [c.field for c in found] == ["setback_street_side_ft"]
+
+
+def test_an_exterior_side_setback_is_the_street_side() -> None:
+    found = candidates_in("The exterior-side setback is 20 feet.", 1, DOC)
+
+    assert [c.field for c in found] == ["setback_street_side_ft"]
+
+
+def test_a_plain_side_setback_is_still_the_interior_side() -> None:
+    # The corner patterns must not swallow the base standard.
+    found = candidates_in("Side Setback - 10 feet.", 1, DOC)
+
+    assert [(c.field, c.value) for c in found] == [("setback_side_ft", 10)]
