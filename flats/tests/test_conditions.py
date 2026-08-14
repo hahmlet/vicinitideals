@@ -18,6 +18,7 @@ from flats.rules.conditions import (
     Tier,
     condition,
     deepest,
+    design_facts,
     electives,
     reliefs,
     site_facts,
@@ -30,7 +31,11 @@ pytestmark = pytest.mark.unit
 
 
 def test_every_condition_is_named_once() -> None:
-    assert len(CONDITIONS) == len(electives()) + len(site_facts()) + len(reliefs())
+    # The kinds partition the registry: a condition nobody can place in one of
+    # them is one nothing downstream knows how to ask about.
+    assert len(CONDITIONS) == len(electives()) + len(site_facts()) + len(
+        design_facts()
+    ) + len(reliefs())
 
 
 def test_an_unregistered_condition_is_refused_by_name() -> None:
@@ -123,3 +128,25 @@ def test_an_assumed_site_fact_is_marked_as_ours_not_observed() -> None:
     # Sewer is never assumed: it is the one site fact that flipped thousands of
     # Clackamas lots, so guessing at it would be guessing at the answer.
     assert "public_sewer" not in ASSUMED
+
+
+def test_a_design_fact_is_about_the_building_not_the_lot() -> None:
+    # Storey count decides Wilsonville's side setback, and no survey of the
+    # parcel answers it. Registering it as a site fact would put it in the
+    # batch view's list of things to observe, where nobody could ever observe
+    # it; registering it as elective would offer the user a lever that is
+    # really a different pod.
+    names = [c.name for c in design_facts()]
+
+    assert "multi_story" in names
+    assert condition("multi_story").kind == "design_fact"
+    assert "multi_story" not in [c.name for c in site_facts()]
+    assert "multi_story" not in [c.name for c in electives()]
+
+
+def test_a_design_fact_is_never_assumed() -> None:
+    # ASSUMED is what a GREEN may not rest on. A design fact is read off the
+    # catalog entry, so it is known outright and does not belong there.
+    assert "multi_story" not in ASSUMED
+    with pytest.raises(ValueError, match="site fact"):
+        ConditionDef("two_storey", "design_fact", "x", assume=True)

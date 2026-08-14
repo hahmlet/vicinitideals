@@ -183,8 +183,8 @@ def _parse_variants(
         if raw_band is not None:
             if not isinstance(raw_band, dict):
                 problems.append(
-                    f"{at}.band: expected a mapping — "
-                    f"measure, and at_least and/or at_most"
+                    f"{at}.band: expected a mapping — measure, and a bound: "
+                    f"at_least or more_than, and/or at_most"
                 )
                 continue
             try:

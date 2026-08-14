@@ -603,6 +603,86 @@ def test_a_banded_variant_is_addressed_by_its_band() -> None:
     assert variant_for(value(v), ["lot_sqft:1500-2999"]) is v
 
 
+# --- a band split on one figure ---------------------------------------
+#
+# Wilsonville 4.113(.02) states its setbacks twice: "for lots over 10,000
+# square feet" and "for lots not exceeding 10,000 square feet". Both columns
+# name the same figure, and only one of them can include a lot that measures
+# it exactly. Written with two inclusive bounds the encoding is wrong either
+# way — 10,000 sq ft lands in both columns, or, moved a foot apart, in neither.
+
+
+def test_an_exclusive_lower_bound_excludes_the_figure_it_names() -> None:
+    over = Band(measure="lot_sqft", more_than=10000)
+
+    assert over.holds({"lot_sqft": 10000.5}) is True
+    assert over.holds({"lot_sqft": 10000}) is False
+    assert Band(measure="lot_sqft", at_least=10000).holds({"lot_sqft": 10000}) is True
+
+
+def test_the_two_columns_of_a_split_meet_without_overlapping() -> None:
+    # The point of the exclusive bound: no lot is in both columns, and no lot
+    # between them falls through to the base unseen.
+    v = value(
+        Variant(value=20, prov=PROV, band=Band(measure="lot_sqft", more_than=10000)),
+        Variant(value=15, prov=PROV, band=Band(measure="lot_sqft", at_most=10000)),
+        base=15,
+    )
+
+    assert v.under(lot={"lot_sqft": 10000}).value == 15
+    assert v.under(lot={"lot_sqft": 10000.5}).value == 20
+
+
+def test_an_inclusive_bound_still_collides_at_the_shared_figure() -> None:
+    with pytest.raises(ValueError, match="overlap"):
+        value(
+            Variant(value=20, prov=PROV, band=Band(measure="lot_sqft", at_least=10000)),
+            Variant(value=15, prov=PROV, band=Band(measure="lot_sqft", at_most=10000)),
+        )
+
+
+def test_a_band_has_one_lower_bound() -> None:
+    with pytest.raises(ValueError, match="one lower bound"):
+        Band(measure="lot_sqft", at_least=10000, more_than=10000)
+
+
+def test_an_empty_exclusive_band_is_refused() -> None:
+    with pytest.raises(ValueError, match="empty"):
+        Band(measure="lot_sqft", more_than=10000, at_most=10000)
+
+
+def test_a_band_token_says_which_side_the_figure_is_on() -> None:
+    # The token is what a reviewer types to sign that column, so the two halves
+    # of a split may not address the same way.
+    assert Band(measure="lot_sqft", more_than=10000).token == "lot_sqft:>10000+"
+    assert Band(measure="lot_sqft", at_most=10000).token == "lot_sqft:<=10000"
+
+
+def test_a_storey_split_inside_a_band_resolves_to_one_number(root: Path) -> None:
+    # Wilsonville's small-lot column splits again on the building: five feet at
+    # one storey, seven at two. The pod is two storeys, so the number that
+    # applies to it is not the one printed first.
+    portland(
+        root,
+        "  R5:\n"
+        "    setback_side_ft:\n"
+        "      value: 5\n"
+        "      variants:\n"
+        "        - value: 7\n"
+        "          when: [multi_story]\n"
+        "          band: {measure: lot_sqft, at_most: 10000}\n"
+        "        - value: 10\n"
+        "          band: {measure: lot_sqft, more_than: 10000}\n",
+    )
+    v = load_rules(root)[LAYER].zones["R5"].values["setback_side_ft"]
+
+    assert v.under(("multi_story",), {"lot_sqft": 6000}).value == 7
+    assert v.under((), {"lot_sqft": 6000}).value == 5
+    # Over 10,000 sq ft the code stops asking about storeys, so the storey
+    # variant must not reach across the split.
+    assert v.under(("multi_story",), {"lot_sqft": 12000}).value == 10
+
+
 def test_a_band_is_authored_as_a_range_on_a_measure(root: Path) -> None:
     portland(
         root,

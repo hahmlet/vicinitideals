@@ -4,7 +4,31 @@ eligible: true
 notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s verification was against a
   coarser standard (one citation per row) and does not carry over. UNPORTED: orientation_constraint=''entrance_only''.
   quadfit justified this in a YAML comment with no citation; it needs its own encoding rather than invented
-  provenance.'
+  provenance.
+
+
+  SETBACKS COME FROM LOT SIZE, NOT FROM THE ZONE. Section 4.113(.02) states one
+  set of setbacks for residential development in any zone, and PDR Table 2''s
+  Setbacks column says only "Per Section 4.113 (.02)" — so all nine zones carry
+  the same banded encoding. Lots over 10,000 sq ft take 20/10/20; lots not
+  exceeding 10,000 take 15/5/15, with the side and rear numbers rising to 7 and
+  20 at two storeys or more. The split is exact: the ''over'' band excludes
+  10,000 sq ft and the other includes it, so no lot sits in both or in neither.
+  A pod is two storeys, so on a small lot it is bound by 15/7/20.
+
+
+  NOT ENCODED: on a lot over 10,000 sq ft the corner-lot street side setback is
+  20 percent of the lot width with a ten-foot floor (4.113(.02)A.2). That is a
+  function of the lot, not a number, and setback_street_side_ft carries the
+  ten-foot floor from the small-lot column (A.2/B.2) instead. Wide corner lots
+  are therefore screened against a setback smaller than the code requires —
+  worth a rule shape that can hold a percentage-of-width standard.
+
+
+  ALSO NOT ENCODED: the key-lot front setback (half the sum of two neighbouring
+  yards), the future-street reservation, and the cottage-cluster/ADU and
+  attached-townhouse setback exceptions, none of which apply to a four-unit pod
+  on its own lot.'
 ingest:
   geoid: null
   juris_city_codes:
@@ -33,10 +57,45 @@ zones:
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.122REZO
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 15
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    setback_street_side_ft: 10
+    setback_front_ft:
+      value: 15
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
+      variants:
+        - value: 20
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3011-L3012"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+      variants:
+        - value: 7
+          when: [multi_story]
+          band: {measure: lot_sqft, at_most: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+        - value: 10
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3013"
+    setback_rear_ft:
+      value: 15
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+      variants:
+        - value: 20
+          when: [multi_story]
+          band: {measure: lot_sqft, at_most: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+        - value: 20
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3025"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3038-L3039"
+    setback_garage_entrance_ft:
+      value: 20
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3047"
+      variants:
+        - value: 4
+          when: [abuts_alley]
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3049-L3050"
     min_lot_sqft: 7000
     min_frontage_ft: 30
     max_coverage_pct: 50
@@ -50,10 +109,45 @@ zones:
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.123OLTOREOTZO
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 15
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    setback_street_side_ft: 10
+    setback_front_ft:
+      value: 15
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
+      variants:
+        - value: 20
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3011-L3012"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+      variants:
+        - value: 7
+          when: [multi_story]
+          band: {measure: lot_sqft, at_most: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+        - value: 10
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3013"
+    setback_rear_ft:
+      value: 15
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+      variants:
+        - value: 20
+          when: [multi_story]
+          band: {measure: lot_sqft, at_most: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+        - value: 20
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3025"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3038-L3039"
+    setback_garage_entrance_ft:
+      value: 20
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3047"
+      variants:
+        - value: 4
+          when: [abuts_alley]
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3049-L3050"
     min_lot_sqft: 7000
     min_frontage_ft: 35
     notes: 'quadfit confidence: needs_verification | Zone code + quadplex use VERIFIED (Middle Housing
@@ -67,11 +161,48 @@ zones:
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 20
-    setback_side_ft: 10
-    setback_rear_ft: 20
-    setback_street_side_ft: 10
-    min_lot_sqft: 20000
+    setback_front_ft:
+      value: 15
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
+      variants:
+        - value: 20
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3011-L3012"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+      variants:
+        - value: 7
+          when: [multi_story]
+          band: {measure: lot_sqft, at_most: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+        - value: 10
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3013"
+    setback_rear_ft:
+      value: 15
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+      variants:
+        - value: 20
+          when: [multi_story]
+          band: {measure: lot_sqft, at_most: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+        - value: 20
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3025"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3038-L3039"
+    setback_garage_entrance_ft:
+      value: 20
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3047"
+      variants:
+        - value: 4
+          when: [abuts_alley]
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3049-L3050"
+    min_lot_sqft:
+      value: 20000
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4713"
     min_frontage_ft: 80
     max_coverage_pct: 20
     notes: 'quadfit confidence: verified | PDR-1 base min lot 20,000sf (>10,000 -> 20/10/20 setbacks).
@@ -83,11 +214,48 @@ zones:
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 15
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    setback_street_side_ft: 10
-    min_lot_sqft: 7000
+    setback_front_ft:
+      value: 15
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
+      variants:
+        - value: 20
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3011-L3012"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+      variants:
+        - value: 7
+          when: [multi_story]
+          band: {measure: lot_sqft, at_most: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+        - value: 10
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3013"
+    setback_rear_ft:
+      value: 15
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+      variants:
+        - value: 20
+          when: [multi_story]
+          band: {measure: lot_sqft, at_most: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+        - value: 20
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3025"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3038-L3039"
+    setback_garage_entrance_ft:
+      value: 20
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3047"
+      variants:
+        - value: 4
+          when: [abuts_alley]
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3049-L3050"
+    min_lot_sqft:
+      value: 7000
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4718"
     min_frontage_ft: 30
     max_coverage_pct: 45
     notes: 'quadfit confidence: verified | Base min lot 7,000sf. Depth 70ft, height 35ft. Coverage curve
@@ -99,11 +267,48 @@ zones:
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 15
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    setback_street_side_ft: 10
-    min_lot_sqft: 7000
+    setback_front_ft:
+      value: 15
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
+      variants:
+        - value: 20
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3011-L3012"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+      variants:
+        - value: 7
+          when: [multi_story]
+          band: {measure: lot_sqft, at_most: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+        - value: 10
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3013"
+    setback_rear_ft:
+      value: 15
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+      variants:
+        - value: 20
+          when: [multi_story]
+          band: {measure: lot_sqft, at_most: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+        - value: 20
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3025"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3038-L3039"
+    setback_garage_entrance_ft:
+      value: 20
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3047"
+      variants:
+        - value: 4
+          when: [abuts_alley]
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3049-L3050"
+    min_lot_sqft:
+      value: 7000
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4731-L4733"
     min_frontage_ft: 40
     max_coverage_pct: 50
     notes: 'quadfit confidence: verified | Quadplex needs 7,000sf (note B, PDR-3..7; base lot min 4,500).
@@ -115,11 +320,48 @@ zones:
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 15
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    setback_street_side_ft: 10
-    min_lot_sqft: 7000
+    setback_front_ft:
+      value: 15
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
+      variants:
+        - value: 20
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3011-L3012"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+      variants:
+        - value: 7
+          when: [multi_story]
+          band: {measure: lot_sqft, at_most: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+        - value: 10
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3013"
+    setback_rear_ft:
+      value: 15
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+      variants:
+        - value: 20
+          when: [multi_story]
+          band: {measure: lot_sqft, at_most: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+        - value: 20
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3025"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3038-L3039"
+    setback_garage_entrance_ft:
+      value: 20
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3047"
+      variants:
+        - value: 4
+          when: [abuts_alley]
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3049-L3050"
+    min_lot_sqft:
+      value: 7000
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4731-L4733"
     min_frontage_ft: 35
     max_coverage_pct: 75
     notes: 'quadfit confidence: verified | Quadplex needs 7,000sf (base lot min 3,000). Depth 60ft, height
@@ -131,11 +373,48 @@ zones:
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 15
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    setback_street_side_ft: 10
-    min_lot_sqft: 7000
+    setback_front_ft:
+      value: 15
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
+      variants:
+        - value: 20
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3011-L3012"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+      variants:
+        - value: 7
+          when: [multi_story]
+          band: {measure: lot_sqft, at_most: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+        - value: 10
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3013"
+    setback_rear_ft:
+      value: 15
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+      variants:
+        - value: 20
+          when: [multi_story]
+          band: {measure: lot_sqft, at_most: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+        - value: 20
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3025"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3038-L3039"
+    setback_garage_entrance_ft:
+      value: 20
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3047"
+      variants:
+        - value: 4
+          when: [abuts_alley]
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3049-L3050"
+    min_lot_sqft:
+      value: 7000
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4731-L4733"
     min_frontage_ft: 30
     max_coverage_pct: 75
     notes: 'quadfit confidence: verified | Quadplex needs 7,000sf (base lot min 2,000). Depth 60ft, height
@@ -147,11 +426,48 @@ zones:
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 15
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    setback_street_side_ft: 10
-    min_lot_sqft: 7000
+    setback_front_ft:
+      value: 15
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
+      variants:
+        - value: 20
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3011-L3012"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+      variants:
+        - value: 7
+          when: [multi_story]
+          band: {measure: lot_sqft, at_most: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+        - value: 10
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3013"
+    setback_rear_ft:
+      value: 15
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+      variants:
+        - value: 20
+          when: [multi_story]
+          band: {measure: lot_sqft, at_most: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+        - value: 20
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3025"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3038-L3039"
+    setback_garage_entrance_ft:
+      value: 20
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3047"
+      variants:
+        - value: 4
+          when: [abuts_alley]
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3049-L3050"
+    min_lot_sqft:
+      value: 7000
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4731-L4733"
     min_frontage_ft: 30
     max_coverage_pct: 75
     notes: 'quadfit confidence: verified | Quadplex needs 7,000sf (no base lot minimum). Depth 60ft, height
@@ -164,10 +480,45 @@ zones:
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.127RENERNZO
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 15
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    setback_street_side_ft: 10
+    setback_front_ft:
+      value: 15
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
+      variants:
+        - value: 20
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3011-L3012"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+      variants:
+        - value: 7
+          when: [multi_story]
+          band: {measure: lot_sqft, at_most: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
+        - value: 10
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3013"
+    setback_rear_ft:
+      value: 15
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+      variants:
+        - value: 20
+          when: [multi_story]
+          band: {measure: lot_sqft, at_most: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
+        - value: 20
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3025"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3038-L3039"
+    setback_garage_entrance_ft:
+      value: 20
+      quote: "or/clackamas/wilsonville/4.planning.txt#L3047"
+      variants:
+        - value: 4
+          when: [abuts_alley]
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3049-L3050"
     min_lot_sqft:
       value: 7000
       quote: "or/clackamas/wilsonville/4.planning.txt#L7244"

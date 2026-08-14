@@ -7,7 +7,7 @@ and third of those, and it exists for the same reason
 :mod:`flats.rules.fields` does — so that nothing invents a condition inline.
 An unregistered condition is a typo waiting to split one concept into two.
 
-Three kinds, and the difference is *who can change the answer*:
+Four kinds, and the difference is *who can change the answer*:
 
 ``elective``    the developer decides. Affordable units, ground-floor
                 commercial, a bonus program. Electing one is a business
@@ -17,6 +17,16 @@ Three kinds, and the difference is *who can change the answer*:
                 corner, an alley, sewer in the street, a slope. We observe
                 these, and on a single lot the user may override us, because
                 they have stood on it and we have not.
+
+``design_fact`` true of the building we are trying to place, and read off the
+                catalog entry rather than the lot. Codes routinely state a
+                deeper setback for the second storey — Wilsonville 4.113(.02)
+                asks seven feet where one storey asks five. Nobody elects that
+                and no survey settles it: the pod either has two storeys or it
+                does not, and the same lot answers differently for two designs.
+                Separate from ``elective`` because choosing a different pod is
+                choosing a different screen, not taking an incentive within
+                this one.
 
 ``relief``      an approval the developer applies for. An adjustment to a
                 setback is elective in exactly the way affordability is — a
@@ -35,7 +45,7 @@ import enum
 from dataclasses import dataclass
 from typing import Iterable, Literal
 
-Kind = Literal["elective", "site_fact", "relief"]
+Kind = Literal["elective", "site_fact", "design_fact", "relief"]
 
 
 class Tier(str, enum.Enum):
@@ -199,6 +209,16 @@ _C: tuple[ConditionDef, ...] = (
         evidence="parcel geometry — pole detection in flats.geom",
         assume=False,
     ),
+    # --- design facts: true of the building, not of the parcel ---------
+    ConditionDef(
+        "multi_story",
+        "design_fact",
+        "The building is two storeys or more. Side and rear setbacks are "
+        "commonly written per storey, and a pod screened against the "
+        "single-storey column is screened against a standard it can never "
+        "meet.",
+        evidence="the design catalog entry — Design.stories",
+    ),
     # --- relief: an approval the developer applies for ------------------
     ConditionDef(
         "adjustment",
@@ -263,6 +283,11 @@ def site_facts() -> tuple[ConditionDef, ...]:
     return of_kind("site_fact")
 
 
+def design_facts() -> tuple[ConditionDef, ...]:
+    """Conditions about the building — settled by the catalog, not the lot."""
+    return of_kind("design_fact")
+
+
 def reliefs() -> tuple[ConditionDef, ...]:
     """Approvals the developer may apply for."""
     return of_kind("relief")
@@ -290,6 +315,7 @@ __all__ = [
     "Tier",
     "condition",
     "deepest",
+    "design_facts",
     "electives",
     "of_kind",
     "reliefs",

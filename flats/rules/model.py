@@ -122,7 +122,10 @@ class Band(BaseModel):
 
     Bounds are inclusive, because codes write inclusive bands ("3,000–4,999")
     and the next band starts at the next whole foot. An open end is ``None``:
-    "7,000 and up" is ``at_least=7000`` with no ceiling.
+    "7,000 and up" is ``at_least=7000`` with no ceiling. Where a code splits on
+    a single figure instead — "over 10,000" against "not exceeding 10,000" —
+    the exclusive side is ``more_than``, so the two columns meet exactly and
+    neither shares a lot with the other nor leaves a gap between them.
     """
 
     model_config = ConfigDict(frozen=True)
@@ -130,6 +133,14 @@ class Band(BaseModel):
     measure: str
     at_least: float | None = None
     at_most: float | None = None
+    #: An exclusive lower bound, for the codes that write "over 10,000 square
+    #: feet" against "not exceeding 10,000". Wilsonville 4.113(.02) is the
+    #: pattern, and it is the commonest two-column banding in Oregon. Written
+    #: with inclusive bounds it can only be wrong: ``at_least: 10000`` beside
+    #: ``at_most: 10000`` hands a 10,000 sq ft lot to whichever variant sorted
+    #: first, and ``at_least: 10001`` leaves a 1 sq ft hole a lot falls
+    #: silently through to the base value in.
+    more_than: float | None = None
 
     @model_validator(mode="after")
     def _is_a_range_on_a_known_measure(self) -> Band:
@@ -138,7 +149,12 @@ class Band(BaseModel):
                 f"unknown lot measure {self.measure!r} — "
                 f"one of {', '.join(LOT_MEASURES)}"
             )
-        if self.at_least is None and self.at_most is None:
+        if self.at_least is not None and self.more_than is not None:
+            raise ValueError(
+                f"{self.measure}: a band has one lower bound — "
+                f"'at_least' includes it, 'more_than' does not"
+            )
+        if self.at_least is None and self.at_most is None and self.more_than is None:
             # A band with no bounds is every lot, which is the base value
             # written twice under a name that hides it.
             raise ValueError(f"{self.measure}: a band needs at least one bound")
@@ -147,7 +163,28 @@ class Band(BaseModel):
                 raise ValueError(
                     f"{self.measure}: band {self.at_least}–{self.at_most} is empty"
                 )
+        if self.more_than is not None and self.at_most is not None:
+            if self.more_than >= self.at_most:
+                raise ValueError(
+                    f"{self.measure}: band over {self.more_than} to {self.at_most} is empty"
+                )
         return self
+
+    @property
+    def lower(self) -> tuple[float, bool]:
+        """The lower bound and whether a lot sitting exactly on it is in.
+
+        Read by the overlap check, which has to tell "10,000 and up" beside
+        "up to 10,000" (they share a lot) from "over 10,000" beside the same
+        (they do not).
+        """
+        if self.more_than is not None:
+            return self.more_than, False
+        return (self.at_least if self.at_least is not None else float("-inf")), True
+
+    @property
+    def upper(self) -> float:
+        return self.at_most if self.at_most is not None else float("inf")
 
     @property
     def token(self) -> str:
@@ -157,8 +194,16 @@ class Band(BaseModel):
         is one column. ``--when lot_sqft:3000-4999`` addresses it the way
         ``--when affordable`` addresses a footnote.
         """
-        low = _num(self.at_least) if self.at_least is not None else ""
         high = _num(self.at_most) if self.at_most is not None else ""
+        if self.more_than is not None:
+            low = f">{_num(self.more_than)}"
+        elif self.at_least is not None:
+            low = _num(self.at_least)
+        else:
+            # A ceiling with no floor. Written as the comparison rather than as
+            # an empty low end, because "lot_sqft:-10000" reads as a range
+            # somebody forgot to finish typing.
+            return f"{self.measure}:<={high}"
         return f"{self.measure}:{low}-{high}" if high else f"{self.measure}:{low}+"
 
     def holds(self, lot: Mapping[str, float] | None) -> bool | None:
@@ -173,6 +218,8 @@ class Band(BaseModel):
             return None
         got = lot[self.measure]
         if self.at_least is not None and got < self.at_least:
+            return False
+        if self.more_than is not None and got <= self.more_than:
             return False
         if self.at_most is not None and got > self.at_most:
             return False
@@ -362,10 +409,18 @@ class Value(BaseModel):
                     continue
                 if frozenset(a.when) != frozenset(b.when):
                     continue
-                low = max(a.band.at_least or 0.0, b.band.at_least or 0.0)
-                ceilings = [x.band.at_most for x in (a, b) if x.band.at_most is not None]
-                high = min(ceilings) if ceilings else float("inf")
-                if low <= high:
+                (lo_a, closed_a), (lo_b, closed_b) = a.band.lower, b.band.lower
+                if lo_a == lo_b:
+                    low, closed = lo_a, closed_a and closed_b
+                elif lo_a > lo_b:
+                    low, closed = lo_a, closed_a
+                else:
+                    low, closed = lo_b, closed_b
+                high = min(a.band.upper, b.band.upper)
+                # Touching at a single point is an overlap only when the lower
+                # bound includes that point: "over 10,000" and "up to 10,000"
+                # meet at 10,000 and share no lot.
+                if low < high or (low == high and closed):
                     raise ValueError(
                         f"{self.name}: lot bands {a.band.token} and {b.band.token} "
                         f"overlap — a lot in both would take whichever sorted first"

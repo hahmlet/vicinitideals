@@ -31,6 +31,8 @@ from typing import Any, Iterable, Iterator
 import yaml
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
+from flats.rules.conditions import condition
+
 CATALOG_ROOT = Path(__file__).resolve().parents[1] / "config" / "pods"
 
 
@@ -157,6 +159,26 @@ class Design(BaseModel):
     @property
     def unit_ground_sqft(self) -> float:
         return self.footprint.area_sqft / self.units
+
+    @property
+    def conditions(self) -> frozenset[str]:
+        """Registered condition names this building satisfies by its own shape.
+
+        The one place a catalog entry becomes something the rule layer can
+        read. A code that states a deeper setback for the second storey is
+        asking about the building, and the answer is in the design, not on the
+        parcel — so the screen hands these to
+        :meth:`flats.rules.model.Value.under` beside the lot's site facts.
+
+        Kept here rather than in the rule layer because it is a fact about
+        buildings, and because a design gaining a fourth storey should change
+        one file. Names are checked against the registry so a typo cannot
+        become a condition no variant will ever match.
+        """
+        facts = {"multi_story"} if self.stories >= 2 else set()
+        for name in facts:
+            condition(name)
+        return frozenset(facts)
 
     @property
     def stalls_required(self) -> float:

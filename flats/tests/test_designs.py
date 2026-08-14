@@ -240,3 +240,18 @@ def test_unconfirmed_values_are_declared_not_hidden() -> None:
 def test_catalog_root_points_at_the_shipped_pods() -> None:
     assert CATALOG_ROOT.is_dir()
     assert sorted(p.stem for p in CATALOG_ROOT.glob("*.yaml")) == ["pod56x36", "pod80x25"]
+
+
+def test_a_two_storey_pod_carries_the_storey_condition() -> None:
+    # The one place a catalog entry becomes something the rule layer can read.
+    # Every pod in the shipped catalog is two storeys, so a screen that never
+    # asked would take Wilsonville's single-storey setbacks for all of them.
+    assert design(stories=2).conditions == frozenset({"multi_story"})
+    assert design(stories=3).conditions == frozenset({"multi_story"})
+    assert design(stories=1).conditions == frozenset()
+
+
+def test_the_shipped_pods_are_all_multi_storey() -> None:
+    catalog = load_catalog()
+
+    assert all("multi_story" in d.conditions for d in catalog.active())
