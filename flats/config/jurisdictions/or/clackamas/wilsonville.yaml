@@ -168,7 +168,9 @@ zones:
     setback_side_ft: 5
     setback_rear_ft: 15
     setback_street_side_ft: 10
-    min_lot_sqft: 7000
+    min_lot_sqft:
+      value: 7000
+      quote: "or/clackamas/wilsonville/4.planning.txt#L7244"
     min_frontage_ft: 35
     max_coverage_pct: 60
     notes: 'quadfit confidence: needs_verification | RN allows detached SFD so the HB 2001 mandate attaches

@@ -36,6 +36,7 @@ from datetime import date
 from pathlib import Path
 from typing import Sequence
 
+from flats.encode.gaps import CAUSES, NEXT, Gap, by_cause, gaps, read_layer, summarise
 from flats.encode.load import load_trusted
 from flats.encode.readiness import by_stage, readiness
 from flats.encode.verify import (
@@ -195,6 +196,46 @@ def cmd_plan(args: argparse.Namespace) -> int:
                 print(line)
             if args.limit and len(detail) > args.limit:
                 print(f"    ... {len(detail) - args.limit} more")
+    return 0
+
+
+def cmd_gaps(args: argparse.Namespace) -> int:
+    """Why the unquoted values are unquoted, which is five answers, not one."""
+    store = ProvenanceStore(args.docs)
+    layers = load_rules(args.root, strict=False)
+    wanted = {
+        name: layer
+        for name, layer in sorted(layers.items())
+        if layer.zones and (not args.layer or name.startswith(args.layer))
+    }
+    if not wanted:
+        print(f"no jurisdiction matching {args.layer!r}", file=sys.stderr)
+        return 1
+
+    found: dict[str, list[Gap]] = {}
+    for name, layer in wanted.items():
+        items = gaps(layer, read_layer(layer, store))
+        if args.cause:
+            items = [g for g in items if g.cause == args.cause]
+        if items:
+            found[name] = items
+
+    totals = summarise(found)
+    print(
+        f"{sum(totals.values())} unquoted value(s) in {len(found)} jurisdiction(s): "
+        + ", ".join(f"{k}={v}" for k, v in totals.items())
+    )
+    for cause, n in totals.items():
+        print(f"  {cause:12} {n:>4}  -> {NEXT[cause].format(layer='<layer>', doc='<document>')}")
+
+    for name, items in found.items():
+        print(f"\n{name}: " + ", ".join(f"{k}={v}" for k, v in by_cause(items).items()))
+        if not args.verbose:
+            continue
+        for gap in items[: args.limit or None]:
+            print(gap.line())
+        if args.limit and len(items) > args.limit:
+            print(f"  ... {len(items) - args.limit} more")
     return 0
 
 
@@ -382,6 +423,13 @@ def build_parser() -> argparse.ArgumentParser:
     plan.add_argument("--verbose", action="store_true", help="list what is blocking, item by item")
     plan.add_argument("--limit", type=int, default=10, help="detail lines per jurisdiction")
     plan.set_defaults(func=cmd_plan)
+
+    gap = sub.add_parser("gaps", help="why the unquoted values are unquoted")
+    gap.add_argument("--layer", default="", help="jurisdiction prefix filter")
+    gap.add_argument("--cause", default="", choices=("", *CAUSES), help="one cause only")
+    gap.add_argument("--verbose", action="store_true", help="list the values, item by item")
+    gap.add_argument("--limit", type=int, default=20, help="detail lines per jurisdiction")
+    gap.set_defaults(func=cmd_gaps)
 
     queue = sub.add_parser("queue", help="values awaiting review")
     queue.add_argument("--layer", default="", help="jurisdiction prefix filter")

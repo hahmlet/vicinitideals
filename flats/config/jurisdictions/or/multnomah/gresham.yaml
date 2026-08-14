@@ -112,7 +112,9 @@ zones:
     setback_side_ft: 5
     setback_rear_ft: 10
     setback_street_side_ft: 10
-    min_lot_sqft: 5000
+    min_lot_sqft:
+      value: 5000
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L283"
     notes: 'quadfit confidence: verified | Pleasant Valley plan district. Rear 10 ft (vs 15 in base LDR).'
   LDR-SW:
     section: ["4.15", "7.042"]
@@ -125,7 +127,9 @@ zones:
     setback_side_ft: 5
     setback_rear_ft: 15
     setback_street_side_ft: 10
-    min_lot_sqft: 5000
+    min_lot_sqft:
+      value: 5000
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L267"
     notes: 'quadfit confidence: verified | Springwater. Min lot width 45 ft, min depth 80 ft (not separately
       modeled — envelope test dominates).'
   MDR-12:

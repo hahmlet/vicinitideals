@@ -447,3 +447,39 @@ def test_a_zone_that_borrows_nothing_has_no_reference_to_show(bench: dict) -> No
 def test_a_reference_has_no_exceptions_to_sign(borrowing: dict) -> None:
     with pytest.raises(SystemExit, match="no exceptions"):
         run(borrowing, "sign", PORTLAND, "VSF", "like", "--reviewer", "sjk", "--when", "affordable")
+
+
+# --- gaps: why the uncited values are uncited ------------------------
+
+
+UNCITED = (
+    "label: Fairview\n"
+    "cite_default:\n"
+    '  cite: "FMC 19.100"\n'
+    '  url: "https://www.fairvieworegon.gov/code"\n'
+    "  retrieved: 2026-08-12\n"
+    "zones:\n"
+    "  LDR:\n"
+    "    min_lot_sqft: 7000\n"
+    "    quadplex_allowed: true\n"
+)
+
+
+def test_gaps_separates_a_missing_chapter_from_an_unreadable_field(bench: dict, capsys) -> None:
+    # Both values are uncited and the ladder calls both `unquoted`. One needs a
+    # document nobody has fetched; the other needs a person, because no reader
+    # has an opinion about booleans. Sending them to the same command is how a
+    # jurisdiction looks 90% cited when it is barely sourced.
+    (bench["root"] / "or" / "multnomah" / "fairview.yaml").write_text(UNCITED, encoding="utf-8")
+
+    assert run(bench, "gaps", "--layer", "or/multnomah/fairview", "--verbose") == 0
+
+    out = capsys.readouterr().out
+    assert "unsourced" in out and "min_lot_sqft" in out
+    assert "uncheckable" in out and "quadplex_allowed" in out
+
+
+def test_gaps_reports_nothing_for_a_jurisdiction_whose_values_all_cite(bench: dict, capsys) -> None:
+    assert run(bench, "gaps", "--layer", PORTLAND) == 0
+
+    assert "0 unquoted value(s)" in capsys.readouterr().out

@@ -91,6 +91,19 @@ def _scalar(value: Value) -> float | int | None:
     return raw if isinstance(raw, (int, float)) and not isinstance(raw, bool) else None
 
 
+def checkable(name: str, value: Value) -> bool:
+    """Whether corroboration can say anything about this value at all.
+
+    A boolean, an enum and a curve are real standards that this reader cannot
+    state as one number, so it emits no finding for them. Silence there means
+    "not read", never "not stated", and anything counting evidence has to know
+    the difference — otherwise ``quadplex_allowed`` reads as a value no
+    document supports, when no document was ever consulted about it.
+    """
+    field = FIELDS.get(name)
+    return field is not None and field.kind in CHECKABLE and _scalar(value) is not None
+
+
 def check_zone(
     text: str,
     *,

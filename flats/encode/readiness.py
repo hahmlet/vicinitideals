@@ -61,7 +61,12 @@ ACTION = {
     "no_zones": "encode this jurisdiction's zones: nothing is written yet",
     "no_source": "find the URL that serves the ordinance text, and declare it under `code:`",
     "unfetched": "python -m flats.provenance.fetch --layer {layer}",
-    "unquoted": "python -m flats.encode.attach {layer} --doc {doc} (what it refuses, quote by hand)",
+    # Not attach. Most unquoted values are not attachable — the document
+    # footnotes the number, states two of them, or never mentions it — and
+    # sending every jurisdiction to a command that will refuse them reads as
+    # citation work remaining when the real work is finding a chapter. `gaps`
+    # sorts them by cause and names attach only where attach can act.
+    "unquoted": "python -m flats.encode.review gaps --layer {layer} --verbose",
     "no_evidence": "python -m flats.provenance.fetch --layer {layer} (quotes point at text that is not stored)",
     "misquoted": (
         "python -m flats.encode.attach {layer} --doc {doc} — quotes resolve to text that "
