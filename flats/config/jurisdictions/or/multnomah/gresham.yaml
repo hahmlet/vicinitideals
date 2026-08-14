@@ -4,7 +4,26 @@ eligible: true
 notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s verification was against a
   coarser standard (one citation per row) and does not carry over. UNPORTED: orientation_constraint=''entrance_only''.
   quadfit justified this in a YAML comment with no citation; it needs its own encoding rather than invented
-  provenance.'
+  provenance.
+
+
+  Table 4.0131 (Minimum Setbacks in Residential Districts) states the setbacks with the standards across
+  the top and the districts down the side, and states each district group twice: once under "Single Detached
+  Dwelling, Duplex, Triplex, and Quadplex" and once under "Townhouse". The quadplex row is the one encoded,
+  because FLATS screens a four-unit building placed on one lot. The townhouse row is looser for the MDR
+  group (rear 10 not 15, street side 8 not 20) and would apply only to a plat that gave each unit its own
+  lot -- a different product, and not one this screen models.
+
+
+  Eleven of that table''s twelve columns are setbacks and most are variants the screen does not use: the
+  front porch may stand two feet nearer the street than the wall, the common-wall and zero-lot-line options
+  state a party wall rather than an envelope, "Rear With Alley" depends on an alley existing, and "Street
+  Side Garage Access" is the garage setback measured from the side street. Only the facade/wall, garage,
+  interior side, street-side wall and rear-no-alley columns are encoded.
+
+
+  Footnote 5 on the LDR front setback (a garage or carport entry set at 20 ft.) is carried as
+  setback_garage_entrance_ft rather than folded into the front setback.'
 ingest:
   geoid: null
   juris_city_codes:
@@ -48,10 +67,21 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
       retrieved: '2026-07-24'
     quadplex_allowed: true
-    setback_front_ft: 10
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    setback_street_side_ft: 10
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+    setback_garage_entrance_ft:
+      value: 20
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+    setback_rear_ft:
+      value: 15
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
     min_lot_sqft:
       value: 5000
       quote: "or/multnomah/gresham/4.0100.residential.txt#L243"
@@ -64,10 +94,21 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
       retrieved: '2026-07-24'
     quadplex_allowed: true
-    setback_front_ft: 10
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    setback_street_side_ft: 10
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+    setback_garage_entrance_ft:
+      value: 20
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+    setback_rear_ft:
+      value: 15
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
     min_lot_sqft:
       value: 7000
       quote: "or/multnomah/gresham/4.0100.residential.txt#L243"
@@ -80,10 +121,21 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
       retrieved: '2026-07-24'
     quadplex_allowed: true
-    setback_front_ft: 10
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    setback_street_side_ft: 10
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+    setback_garage_entrance_ft:
+      value: 20
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+    setback_rear_ft:
+      value: 15
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
     notes: 'quadfit confidence: verified | NO minimum lot size, no FAR, no max density — most permissive
       LDR-family zone.'
   TR:
@@ -93,10 +145,21 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
       retrieved: '2026-07-24'
     quadplex_allowed: true
-    setback_front_ft: 10
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    setback_street_side_ft: 10
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+    setback_garage_entrance_ft:
+      value: 20
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+    setback_rear_ft:
+      value: 15
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
     min_lot_sqft:
       value: 4000
       quote: "or/multnomah/gresham/4.0100.residential.txt#L243"
@@ -139,10 +202,21 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
       retrieved: '2026-07-24'
     quadplex_allowed: true
-    setback_front_ft: 10
-    setback_side_ft: 10
-    setback_rear_ft: 15
-    setback_street_side_ft: 20
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
+    setback_garage_entrance_ft:
+      value: 20
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
+    setback_side_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
+    setback_rear_ft:
+      value: 15
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
+    setback_street_side_ft:
+      value: 20
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
     min_lot_sqft:
       value: 3600
       quote: "or/multnomah/gresham/4.0100.residential.txt#L243"
@@ -155,10 +229,21 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
       retrieved: '2026-07-24'
     quadplex_allowed: true
-    setback_front_ft: 10
-    setback_side_ft: 10
-    setback_rear_ft: 15
-    setback_street_side_ft: 20
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
+    setback_garage_entrance_ft:
+      value: 20
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
+    setback_side_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
+    setback_rear_ft:
+      value: 15
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
+    setback_street_side_ft:
+      value: 20
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
     min_lot_sqft: 7200
     notes: 'quadfit confidence: verified | SFD is NP — quadplex permitted natively. 11,000 sf site min
       waived for existing lots of record; but middle housing COUNTS toward max density here (24.2 u/ac):

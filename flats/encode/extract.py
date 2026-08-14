@@ -574,6 +574,7 @@ def extract(
         read_pairs,
         read_stacked_grids,
         read_tables,
+        read_transposed_grids,
         stacked_candidates_for,
     )
 
@@ -643,6 +644,14 @@ def extract(
         proposed.extend(
             replace(candidate, section=_section_at(text, candidate.line))
             for candidate in stacked_candidates_for(read_collapsed_grids(text, path=path), zone)
+        )
+        # A table with the standards across the top and the districts down
+        # the side. Zone-keyed like the others, because the row names the
+        # districts — what differs is that the column names the standard, so
+        # most of a setback table's columns are variants it has to refuse.
+        proposed.extend(
+            replace(candidate, section=_section_at(text, candidate.line))
+            for candidate in stacked_candidates_for(read_transposed_grids(text, path=path), zone)
         )
 
     # Stacked label/value pairs — a table that lost its geometry to HTML

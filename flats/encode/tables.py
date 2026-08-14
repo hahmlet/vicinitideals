@@ -2596,6 +2596,311 @@ def read_collapsed_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
     return grids
 
 
+#: How far a header token may sit from a column's values and still be that
+#: column's heading. Headers are centred over their columns and values are
+#: not, so the drift is real and small: Gresham's "Front" prints at 51 over
+#: values at 46.
+_HEAD_REACH = 12
+#: A row label starts at the left margin. A cell further in than this is a
+#: value, whatever it says.
+_MARGIN = 12
+#: How many lines of heading may stack over one column. Gresham's is four
+#: deep ("Street" / "Side" / "Garage" / "Access").
+_HEAD_LINES = 6
+#: How far above a row this reader will look for that header, counting the
+#: blank line and the housing-type heading it steps over on the way.
+_HEAD_WALK = 12
+#: A block heading is short. "Single Detached Dwelling, Duplex, Triplex,
+#: and Quadplex:" is eight words and prints across two columns; the prose
+#: around the table is longer than this and clears nothing.
+_HEADING_WORDS = 10
+
+
+def _transposed_field(label: str) -> str:
+    """The field a standards column names, or "" for a column with no field.
+
+    The refusals are the substance. A table that runs the standards across
+    the top prints every variant of a setback as its own column — the porch
+    that may sit closer than the wall, the party-wall option, the alley case
+    — and each of those is a different standard from the one FLATS screens
+    against. Reading "Front Porch" as the front setback would let a pod stand
+    two feet closer to the street than the code allows, in every district in
+    the table at once.
+    """
+    text = " ".join(label.lower().replace("/", " ").replace(".", " ").split())
+    text = re.sub(r"[0-9,\s]+$", "", text).strip()
+    if "porch" in text:
+        # A porch is allowed nearer the line than the wall behind it.
+        return ""
+    if "zero lot" in text or "common wall" in text:
+        # The party-wall options: a standard for a wall shared with the
+        # neighbour, not for the building envelope.
+        return ""
+    if "alley" in text and "no alley" not in text:
+        # "Rear With Alley" is the standard where an alley exists, which is a
+        # site fact this table does not know and this reader must not assume.
+        return ""
+    if "street side" in text and "garage" in text:
+        # "Street Side Garage Access" is neither the street side setback nor
+        # the garage one: it is the garage setback measured from the side
+        # street, and filing it as either would state that standard twice.
+        return ""
+    if text.startswith("front"):
+        return "setback_front_ft"
+    if "street side" in text:
+        return "setback_street_side_ft"
+    if "garage" in text:
+        return "setback_garage_entrance_ft"
+    if "interior side" in text or text == "side":
+        return "setback_side_ft"
+    if text.startswith("rear"):
+        return "setback_rear_ft"
+    return ""
+
+
+def _standalone_zones(lines: Sequence[str]) -> frozenset[str]:
+    """Every zone code this document prints as a cell of its own.
+
+    The set is what lets a footnote be split off a district name. "LDR-54" is
+    LDR-5 wearing footnote 4 and "MDR-12" is a district; nothing in either
+    string says which, and guessing wrong either loses a district or invents
+    one. What settles it is the rest of the document — LDR-5 is a column
+    header in the table before this one, and MDR-1 is nowhere.
+    """
+    return frozenset(text for line in lines for _, text in _cells(line) if _ZONE.match(text))
+
+
+def _known_zone(token: str, known: Container[str]) -> str:
+    """One row-label token as a district this document names, or "".
+
+    A footnote marker is split off a district name only when the name without
+    it is a district the document names elsewhere, and one digit at a time,
+    because a marker may be two digits and a district's own number may be as
+    well: "LDR-54" is LDR-5 wearing footnote 4, and taking every trailing
+    digit at once leaves "LDR-".
+    """
+    token = token.strip(" .;:")
+    if not token:
+        return ""
+    if token in known:
+        return token
+    for cut in (1, 2):
+        bare = token[:-cut]
+        if token[-cut:].isdigit() and bare in known:
+            return bare
+    return ""
+
+
+def _row_zones(label: str, known: Container[str]) -> tuple[str, ...]:
+    """The districts a row label names, or () when it names something else.
+
+    Refused whole rather than in part: "All zones" and "All Districts" are
+    real row labels, and a rule that took what it recognised and dropped the
+    rest would read "LDR-5 and the CMF district" as a row about LDR-5 alone.
+    """
+    out: list[str] = []
+    for token in re.split(r",|\band\b", label):
+        if not token.strip(" .;:"):
+            continue
+        found = _known_zone(token, known)
+        if not found:
+            return ()
+        out.append(found)
+    return tuple(dict.fromkeys(out))
+
+
+def _continues_row(text: str, known: Container[str]) -> bool:
+    """Whether this line is more districts for the row above it.
+
+    The test is membership, not shape. "and MDR-24" and "Multi-family6, 7"
+    are both short lines at the left margin under a row of setbacks, and the
+    first is the rest of that row's district list while the second is the
+    heading of the next block. Reading the second as the first swallows the
+    heading, and every row below it inherits a housing type it was never
+    written for.
+    """
+    tokens = [t for t in re.split(r",|\band\b", text) if t.strip(" .;:")]
+    return bool(tokens) and all(_known_zone(t, known) for t in tokens)
+
+
+def _transposed_columns(lines: Sequence[str], row: int) -> tuple[tuple[int, str], ...]:
+    """(offset, field) per column, read from the header stacked above a row.
+
+    The header is reconstructed from the row rather than parsed on its own.
+    A header this deep is not one line, and its lines do not agree with each
+    other on where a column starts — "Street Side Wall" prints at 220 over
+    "Street" at 224 over values at 220 — so what the columns *are* comes from
+    the values, and the header lines are read onto them.
+    """
+    anchors = [offset for offset, _ in _cells(lines[row]) if offset >= _MARGIN]
+    if len(anchors) < 3:
+        return ()
+    heads: dict[int, list[str]] = {offset: [] for offset in anchors}
+    seen = 0
+    n = row - 1
+    walked = 0
+    while n >= 0 and seen < _HEAD_LINES and walked < _HEAD_WALK:
+        stripped = lines[n].strip()
+        cells = _cells(lines[n])
+        walked += 1
+        n -= 1
+        if not stripped or _transposed_type(stripped):
+            # The blank line and the housing-type heading that stand between
+            # a header and the first row it heads. Neither is part of the
+            # header and stopping at either leaves the table unread.
+            continue
+        if _TABLE_CAPTION.match(stripped) or any(measure(text) is not None for _, text in cells):
+            # A row of values, not a heading: this table's header has ended
+            # and what is above it belongs to the row above.
+            break
+        for offset, text in cells:
+            nearest = min(anchors, key=lambda a: abs(offset - a))
+            if abs(offset - nearest) <= _HEAD_REACH:
+                heads[nearest].insert(0, text)
+        seen += 1
+    if not seen or any(not heads[offset] for offset in anchors):
+        # Every column names its own standard, or this is not the header —
+        # it is the group heading above it. Gresham reprints Table 4.1508
+        # across a page break with "FRONT SIDE REAR" at the top of the second
+        # page and the eleven sub-headings left on the first, and three
+        # labels stretched over twelve columns read the porch column as the
+        # front setback of every district in the Springwater plan district.
+        return ()
+    columns = tuple((offset, _transposed_field(" ".join(heads[offset]))) for offset in anchors)
+    fields = [field for _, field in columns if field]
+    if len(fields) < 2 or len(set(fields)) != len(fields):
+        # Two columns claiming one field is a header this reader has read
+        # wrong, and one column resolving alone is no evidence that it read
+        # the rest of them right either.
+        return ()
+    return columns
+
+
+def _transposed_row(lines: Sequence[str], row: int, known: Container[str]) -> tuple[str, int]:
+    """A row's label with its wrapped lines joined, and the last line it used.
+
+    The line count is returned because those lines have to be *consumed*: a
+    district list wrapping onto "and MDR-24" reads, standing alone, exactly
+    like the block heading that ends a housing type — and a reader that took
+    it for one would drop the block for every row below it.
+    """
+    cells = _cells(lines[row])
+    label = cells[0][1] if cells and cells[0][0] < _MARGIN else ""
+    last = row
+    for n in range(row + 1, min(row + 3, len(lines))):
+        following = _cells(lines[n])
+        if not following or following[0][0] >= _MARGIN:
+            break
+        # The row label's own cell, not the whole line: a line carrying the
+        # tail of a wrapped *value* prints that tail beside the label, and
+        # judging the label by what shares its line refuses every district on
+        # it ("TLDR4, and TR4" sits beside "zero / 6").
+        text = following[0][1]
+        if any(measure(cell) is not None for _, cell in following):
+            # The next row. A line carrying the tail of a wrapped *cell* is
+            # not one — "TLDR4, and TR4" prints beside "ft. other" — and
+            # stopping at it drops half the districts the row is about.
+            break
+        if not _continues_row(text, known):
+            # The heading of the next block, which is not more of this label:
+            # "MDR-12, OFR" wraps onto "and MDR-24", and then "Townhouse"
+            # starts the block below.
+            break
+        label = f"{label} {following[0][1]}"
+        last = n
+    return " ".join(label.split()), last
+
+
+def _transposed_type(line: str) -> str:
+    """The housing type a block heading names, for a heading with no values."""
+    text = re.sub(r"[0-9,\s]+$", "", line.strip().rstrip(":")).strip()
+    for word in ("quadplex", "fourplex", "townhouse", "townhome"):
+        if word in text.lower():
+            return _housing_type(text) or word
+    return ""
+
+
+def read_transposed_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
+    """Zone-keyed values from a table that runs the standards across the top.
+
+    The seventh table shape, and the one a setbacks table is most often
+    written in: eleven columns of setback, one row per group of districts,
+    the housing type as a heading between the rows. Gresham states the
+    setbacks of every residential district this way in Table 4.0131 — thirty
+    values of a jurisdiction FLATS covers, none of them readable before this.
+
+    What makes it readable is that the row names the districts and the column
+    names the standard, the transpose of every other reader here. What makes
+    it dangerous is that most of its columns are variants — a porch, a party
+    wall, an alley — and :func:`_transposed_field` refuses those by name.
+
+    Only rows under a heading naming a quadplex or a townhouse are read. The
+    same table states the multi-family and "All Other Uses" envelopes in the
+    same columns, and those are different numbers for a different building.
+    """
+    lines = text.splitlines()
+    known = _standalone_zones(lines)
+    out: dict[str, list[Candidate]] = {}
+    columns: tuple[tuple[int, str], ...] = ()
+    housing = ""
+    #: The last line a row's label wrapped onto. Lines through it are the
+    #: row's own and are not headings, however much they look like one.
+    consumed = -1
+    for n, line in enumerate(lines):
+        stripped = line.strip()
+        if not stripped or n <= consumed:
+            continue
+        cells = _cells(line)
+        if _TABLE_CAPTION.match(stripped):
+            columns = ()
+            housing = ""
+            continue
+        values = [(offset, cell) for offset, cell in cells if offset >= _MARGIN]
+        if len(values) < 3 or not any(measure(cell) is not None for _, cell in values):
+            if cells and cells[0][0] < _MARGIN and len(stripped.split()) <= _HEADING_WORDS:
+                # A heading naming who the rows below it are for. One naming
+                # a building FLATS does not screen — a cottage cluster, a
+                # multi-family block, "All Other Uses" — clears the last
+                # heading rather than letting its rows inherit it, which is
+                # the difference between a quadplex's setbacks and an
+                # apartment block's.
+                housing = _transposed_type(stripped)
+            elif len(cells) <= 1 and _SECTION.match(stripped):
+                columns = ()
+                housing = ""
+            continue
+        if not columns or len(values) != len(columns):
+            columns = _transposed_columns(lines, n)
+        if not columns or len(values) != len(columns) or not housing:
+            continue
+        label, consumed = _transposed_row(lines, n, known)
+        zones = _row_zones(label, known)
+        if not zones:
+            continue
+        for (offset, field), (cell_offset, cell) in zip(columns, values):
+            if abs(offset - cell_offset) > _HEAD_REACH or not field:
+                continue
+            parsed = measure(cell)
+            if parsed is None or FIELDS[field].kind != parsed[1]:
+                continue
+            number, _ = parsed
+            value = int(number) if number.is_integer() else number
+            for zone in zones:
+                out.setdefault(zone, []).append(
+                    Candidate(
+                        field=field,
+                        value=value,
+                        line=n + 1,
+                        text=f"{stripped[:60]} ({zone})",
+                        quote=f"{path}#L{n + 1}",
+                        source="table",
+                        notes=_marks(cell),
+                        housing_type=housing,
+                    )
+                )
+    return out
+
+
 def stacked_candidates_for(
     grids: dict[str, list[Candidate]], zone: str
 ) -> list[Candidate]:

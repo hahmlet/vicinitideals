@@ -2416,3 +2416,160 @@ def test_a_scope_still_opens_the_rows_its_heading_scopes() -> None:
 
     assert _looks_like_label("Primary Structure")
     assert _looks_like_label("Accessory Structure")
+
+
+#: Gresham's Table 4.0131, verbatim from the stored code, under the district
+#: header of the table before it. The standards run across the top and the
+#: districts down the side, which is the transpose of every other table in
+#: this file — and eleven of its twelve columns are setbacks, most of them
+#: variants of one another. The header above it is what tells the reader that
+#: "LDR-54" is LDR-5 wearing a footnote rather than a district of its own.
+TRANSPOSED_GRID = """  Table 4.0130 - Development Standards in Residential Districts
+                          LDR-5        LDR-7        TLDR         TR         MDR-12       MDR-24       OFR
+
+  Table 4.0131 - Minimum Setbacks in Residential Districts1
+                                                                             FRONT2                                                                                                                                 SIDE                                                                                                                                                                                              REAR
+                                                   Front                        Front                      Garage                      Interior                   Common                        Zero Lot                        Street                       Street                       Street                     Rear No                          Rear
+                                                Façade/                        Porch                                                       Side                         Wall                         Line                   Side Wall                          Side                         Side                        Alley                         With
+                                                    Wall                                                                                                                                         Option3                                                      Porch                      Garage                                                      Alley
+                                                                                                                                                                                                                                                                                         Access
+
+  Single Detached Dwelling,                                     Duplex, Triplex, and Quadplex:
+  LDR-54, LDR-74,                             10 ft.5                      8 ft.                        20 ft.                       5 ft.                        NA                           6 in. on                     10 ft.                       8 ft.                        20 ft.                       15 ft.                       8 ft.
+  TLDR4, and TR4                                                                                                                                                                               zero / 6
+                                                                                                                                                                                               ft. other
+  MDR-12, OFR                                 10 ft.                       10 ft.                       20 ft.                       10 ft.                       NA                           NA                           20 ft.                       20 ft.                       20 ft.                       15 ft.                       NA
+  and MDR-24
+  Townhouse
+  LDR-54, LDR-74,                             10 ft.5                      8 ft.                        20 ft.                       5 ft.                        NA                           NA                           10 ft.                       8 ft.                        20 ft.                       15 ft.                       8 ft.
+  TLDR4, and TR4
+  MDR-12, OFR,                                10 ft.                       8 ft.                        20 ft.                       5 ft.                        NA                           NA                           8 ft.                        8 ft.                        20 ft.                       10 ft.                       8 ft.
+  and MDR-24
+  Cottage Cluster
+  All zones                                   10 ft.5                      8 feet                       20 ft.                       5 ft.                        NA                           NA                           10 ft.                       8 ft.                        20 ft.                       10 ft.                       10 ft.
+  Multi-family6, 7
+
+  MDR-12, MDR-                                10 ft.                       8 ft.                        20 ft.                       10 ft.                       NA                           NA                           8 ft.                        8 ft.                        20 ft.                       15 ft.                       15 ft.
+  24, OFR
+  All Other Uses
+  All Districts                               10 ft.                       8 ft.                        20 ft.                       10 ft.                       NA                           NA                           8 ft.                        8 ft.                        20 ft.                       15 ft.                       15 ft.
+Table 4.0131 Notes:
+1.                                    In cases where sidewalk access is provided by easement, the setback shall be measured from the easement line closest to the house or garage per Table
+"""
+
+GRESHAM = "or/multnomah/gresham/4.0100.residential.txt"
+
+
+def _transposed(text: str) -> dict[str, dict[tuple[str, str], float]]:
+    """{zone: {(field, housing type): value}} from the transposed reader."""
+    from flats.encode.tables import read_transposed_grids
+
+    out: dict[str, dict[tuple[str, str], float]] = {}
+    for zone, found in read_transposed_grids(text, path=GRESHAM).items():
+        for candidate in found:
+            out.setdefault(zone, {})[(candidate.field, candidate.housing_type)] = candidate.value
+    return out
+
+
+def test_the_quadplex_row_is_read_across_its_district_group() -> None:
+    # One row states the envelope for four districts at once, and the row
+    # above states which four. Reading the row without the label is reading
+    # numbers with nothing to attach them to.
+    grids = _transposed(TRANSPOSED_GRID)
+    quad = "single_detached+duplex+triplex+quadplex"
+
+    for zone in ("LDR-5", "LDR-7", "TLDR", "TR"):
+        assert grids[zone][("setback_front_ft", quad)] == 10
+        assert grids[zone][("setback_garage_entrance_ft", quad)] == 20
+        assert grids[zone][("setback_side_ft", quad)] == 5
+        assert grids[zone][("setback_rear_ft", quad)] == 15
+
+
+def test_the_townhouse_block_states_its_own_numbers() -> None:
+    # The same districts appear twice, once per housing type, and the numbers
+    # differ: MDR-12's rear is fifteen feet for a quadplex and ten for a
+    # townhouse. A reader that kept one row per zone would keep whichever it
+    # met last.
+    grids = _transposed(TRANSPOSED_GRID)
+    quad = "single_detached+duplex+triplex+quadplex"
+
+    assert grids["MDR-12"][("setback_rear_ft", quad)] == 15
+    assert grids["MDR-12"][("setback_rear_ft", "townhouse")] == 10
+    assert grids["MDR-12"][("setback_street_side_ft", quad)] == 20
+    assert grids["MDR-12"][("setback_street_side_ft", "townhouse")] == 8
+
+
+def test_the_variant_setback_columns_are_refused_by_name() -> None:
+    # The heart of this shape. A porch may stand two feet nearer the street
+    # than the wall behind it, a party wall sits on the line itself, and the
+    # alley cases depend on whether an alley exists. Each is a real standard
+    # and none of them is the one a pod is screened against.
+    from flats.encode.tables import _transposed_field
+
+    assert _transposed_field("Front Facade/ Wall") == "setback_front_ft"
+    assert _transposed_field("Front Porch") == ""
+    assert _transposed_field("Common Wall") == ""
+    assert _transposed_field("Zero Lot Line Option3") == ""
+    assert _transposed_field("Rear With Alley") == ""
+    assert _transposed_field("Street Side Garage Access") == ""
+    assert _transposed_field("Street Side Wall") == "setback_street_side_ft"
+    assert _transposed_field("Rear No Alley") == "setback_rear_ft"
+
+
+def test_a_header_that_labels_only_some_columns_is_refused() -> None:
+    # The page-break continuation prints "FRONT SIDE REAR" over twelve
+    # columns: three group headings, not three column labels. Assigning each
+    # to its nearest column read a porch as a front setback in every district
+    # on the page.
+    from flats.encode.tables import _transposed_columns
+
+    lines = [
+        "                    FRONT              SIDE               REAR",
+        "  LDR-5             10 ft.   8 ft.     5 ft.    10 ft.    15 ft.   8 ft.",
+    ]
+
+    assert _transposed_columns(lines, 1) == ()
+
+
+def test_a_footnote_is_split_off_a_district_only_when_the_district_is_known() -> None:
+    # "LDR-54" is LDR-5 wearing footnote 4 and "MDR-12" is a district in its
+    # own right. Nothing in either string says which; what settles it is
+    # whether the document names the shorter one elsewhere.
+    from flats.encode.tables import _row_zones
+
+    known = {"LDR-5", "LDR-7", "MDR-12", "MDR-24", "OFR", "TLDR", "TR"}
+
+    assert _row_zones("LDR-54, LDR-74,", known) == ("LDR-5", "LDR-7")
+    assert _row_zones("MDR-12, OFR,", known) == ("MDR-12", "OFR")
+    # Refused whole: a row about districts this reader cannot name is not a
+    # row about the ones it can.
+    assert _row_zones("All zones", known) == ()
+    assert _row_zones("LDR-5 and the CMF district", known) == ()
+
+
+def test_a_wrapped_district_list_is_not_the_next_blocks_heading() -> None:
+    # "and MDR-24" and "Multi-family6, 7" are both short lines at the left
+    # margin under a row of setbacks. The first finishes that row's district
+    # list; the second ends the block. Swallowing the second gives every row
+    # below it a housing type it was never written for.
+    from flats.encode.tables import _continues_row
+
+    known = {"LDR-5", "MDR-12", "MDR-24", "OFR", "TLDR", "TR"}
+
+    assert _continues_row("and MDR-24", known)
+    assert _continues_row("TLDR4, and TR4", known)
+    assert not _continues_row("Multi-family6, 7", known)
+    assert not _continues_row("Townhouse", known)
+
+
+def test_the_blocks_this_table_states_for_other_buildings_stay_unread() -> None:
+    # The same columns state a cottage cluster's setbacks, a multi-family
+    # block's and "All Other Uses". Those are different buildings, and their
+    # rows carry district names that would otherwise land on the pod.
+    grids = _transposed(TRANSPOSED_GRID)
+    types = {housing for found in grids.values() for _, housing in found}
+
+    assert types == {"single_detached+duplex+triplex+quadplex", "townhouse"}
+    # The multi-family row states a fifteen-foot rear for MDR-12; the
+    # townhouse row states ten. Only the townhouse number survives.
+    assert grids["MDR-12"][("setback_rear_ft", "townhouse")] == 10
