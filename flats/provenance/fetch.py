@@ -57,7 +57,7 @@ from flats.rules.model import CodeDocument, Layer
 
 #: Bumped when the extraction algorithm changes. A hash that moves because the
 #: extractor changed is not an amendment, and the two must be tellable apart.
-EXTRACTOR = "flats-html-text/1"
+EXTRACTOR = "flats-html-text/2"
 #: A slice shorter than this is reported. Legitimate one-line sections exist;
 #: a marker that hit the table of contents is far more common.
 SHORT_SLICE = 3
@@ -99,6 +99,107 @@ _SPACES = re.compile(r"[ \t   ]+")
 _BLANKS = re.compile(r"\n{3,}")
 
 
+#: Widest a rendered table line may run. A zoning table is a dozen short
+#: cells; a "table" wider than this is page layout wearing table markup, and
+#: gridding it would weld navigation junk into kilometer lines.
+_GRID_LINE_MAX = 400
+
+
+class _Table:
+    """One <table>'s cells, collected and rendered as an aligned grid.
+
+    Text extraction is where table geometry dies: Wood Village's Table 220-3
+    linearises into type labels over ragged value runs no reader can
+    attribute, and ZDO 315-2's one merged setback cell speaks for nine zones
+    the flat text no longer names. Rendering rows as aligned columns — with a
+    spanned cell's text repeated in every column it covers — keeps the
+    geometry in plain text, where the column-aware readers and a human
+    reviewer see the same thing.
+    """
+
+    def __init__(self) -> None:
+        self.rows: list[list[tuple[str, int, int]]] = []
+        self.caption: list[str] = []
+        self._row: list[tuple[str, int, int]] | None = None
+        self._cell: list[str] | None = None
+        self._colspan = 1
+        self._rowspan = 1
+
+    def open_row(self) -> None:
+        self.close_row()
+        self._row = []
+
+    def open_cell(self, attrs) -> None:
+        self.close_cell()
+        if self._row is None:
+            self._row = []
+        got = {name: value for name, value in attrs if value is not None}
+
+        def span(name: str) -> int:
+            try:
+                return max(1, min(int(got.get(name, "1")), 30))
+            except ValueError:
+                return 1
+
+        self._colspan = span("colspan")
+        self._rowspan = span("rowspan")
+        self._cell = []
+
+    def data(self, text: str) -> None:
+        if self._cell is not None:
+            self._cell.append(text)
+        elif text.strip():
+            # Text inside the table but outside any cell — a <caption>,
+            # which usually carries the table's number and name.
+            self.caption.append(text)
+
+    def close_cell(self) -> None:
+        if self._cell is not None and self._row is not None:
+            text = " ".join("".join(self._cell).split())
+            self._row.append((text, self._colspan, self._rowspan))
+        self._cell = None
+
+    def close_row(self) -> None:
+        self.close_cell()
+        if self._row is not None:
+            self.rows.append(self._row)
+        self._row = None
+
+    def render(self) -> str:
+        self.close_row()
+        grid: list[list[str]] = []
+        carry: dict[int, tuple[str, int]] = {}
+        for cells in self.rows:
+            row: dict[int, str] = {c: t for c, (t, _n) in carry.items()}
+            carry = {c: (t, n - 1) for c, (t, n) in carry.items() if n > 1}
+            col = 0
+            for text, colspan, rowspan in cells:
+                while col in row:
+                    col += 1
+                for i in range(colspan):
+                    row[col + i] = text
+                    if rowspan > 1:
+                        carry[col + i] = (text, rowspan - 1)
+                col += colspan
+            width = max(row) + 1 if row else 0
+            grid.append([row.get(i, "") for i in range(width)])
+        caption = " ".join(" ".join(self.caption).split())
+        cols = max((len(r) for r in grid), default=0)
+        widths = [max((len(r[i]) for r in grid if i < len(r)), default=0) for i in range(cols)]
+        if len(grid) < 2 or cols < 2 or sum(widths) + 2 * cols > _GRID_LINE_MAX:
+            # Not tabular (or too wide to be) — flow the cells as block
+            # lines, which is what the extractor always did with them.
+            body = "\n".join(c for r in grid for c in r if c)
+        else:
+            body = "\n".join(
+                "  ".join(
+                    (r[i] if i < len(r) else "").ljust(widths[i]) for i in range(cols)
+                ).rstrip()
+                for r in grid
+            )
+        return f"{caption}\n{body}" if caption else body
+
+
 class _Extractor(html.parser.HTMLParser):
     """Tags out, text kept, block elements broken onto their own lines."""
 
@@ -106,25 +207,61 @@ class _Extractor(html.parser.HTMLParser):
         super().__init__(convert_charrefs=True)
         self.parts: list[str] = []
         self._skip = 0
+        self._tables: list[_Table] = []
 
     def handle_starttag(self, tag: str, attrs) -> None:
         if tag in _DROP:
             self._skip += 1
+        elif tag == "table":
+            self._tables.append(_Table())
+        elif self._tables:
+            table = self._tables[-1]
+            if tag == "tr":
+                table.open_row()
+            elif tag in ("td", "th"):
+                table.open_cell(attrs)
+            elif tag in _BLOCK:
+                table.data(" ")
         elif tag in _BLOCK:
             self.parts.append("\n")
 
     def handle_endtag(self, tag: str) -> None:
         if tag in _DROP:
             self._skip = max(0, self._skip - 1)
+        elif tag == "table" and self._tables:
+            rendered = self._tables.pop().render()
+            if self._tables:
+                # A nested table is layout, not data — flatten it into the
+                # enclosing cell so the outer grid stays one line per row.
+                self._tables[-1].data(" " + " ".join(rendered.split()) + " ")
+            else:
+                # Sentinel-prefix each grid line so the whitespace collapse
+                # below leaves column alignment alone — the runs of spaces
+                # ARE the geometry.
+                marked = "\n".join("\x00" + line for line in rendered.split("\n"))
+                self.parts.append("\n" + marked + "\n")
+        elif self._tables:
+            table = self._tables[-1]
+            if tag in ("td", "th"):
+                table.close_cell()
+            elif tag == "tr":
+                table.close_row()
+            elif tag in _BLOCK:
+                table.data(" ")
         elif tag in _BLOCK:
             self.parts.append("\n")
 
     def handle_data(self, data: str) -> None:
-        if not self._skip:
-            # Newlines inside a block are HTML formatting, not text. Keeping
-            # them would let a reflow of the markup renumber every quote line
-            # in the document without a word of the law changing.
-            self.parts.append(data.replace("\r", " ").replace("\n", " "))
+        if self._skip:
+            return
+        # Newlines inside a block are HTML formatting, not text. Keeping
+        # them would let a reflow of the markup renumber every quote line
+        # in the document without a word of the law changing.
+        clean = data.replace("\r", " ").replace("\n", " ").replace("\x00", " ")
+        if self._tables:
+            self._tables[-1].data(clean)
+        else:
+            self.parts.append(clean)
 
 
 def html_to_text(source: str) -> str:
@@ -138,7 +275,13 @@ def html_to_text(source: str) -> str:
     parser.feed(source)
     parser.close()
     text = "".join(parser.parts).replace("\r\n", "\n").replace("\r", "\n")
-    lines = [_SPACES.sub(" ", line).strip() for line in text.split("\n")]
+    lines = [
+        # A grid line carries its geometry in its spaces — collapse them and
+        # the columns the readers align on are gone. Everything else is prose,
+        # where a run of whitespace is markup indentation.
+        line[1:].rstrip() if line.startswith("\x00") else _SPACES.sub(" ", line).strip()
+        for line in text.split("\n")
+    ]
     return _BLANKS.sub("\n\n", "\n".join(lines)).strip() + "\n"
 
 
@@ -336,7 +479,9 @@ def store_document(
     *,
     retrieved: date | None = None,
 ) -> Document:
-    return store.save(path, url=url, text=text, retrieved=retrieved or date.today())
+    return store.save(
+        path, url=url, text=text, retrieved=retrieved or date.today(), extractor=EXTRACTOR
+    )
 
 
 def fetch_one(
@@ -537,6 +682,12 @@ class Evidence:
     declared: frozenset[str] = frozenset()
     stored: frozenset[str] = frozenset()
     cited: frozenset[str] = frozenset()
+    #: Stored documents whose text came out of an older extraction algorithm.
+    #: Not wrong — just not what today's reader would produce, so their line
+    #: numbers and table shapes may differ from a fresh fetch of the same
+    #: unamended page. Refetching one moves every quote into it, which is why
+    #: this is reported rather than done.
+    stale_extraction: frozenset[str] = frozenset()
 
     @property
     def undeclared(self) -> tuple[str, ...]:
@@ -549,6 +700,10 @@ class Evidence:
     @property
     def uncited(self) -> tuple[str, ...]:
         return tuple(sorted(self.stored - self.cited))
+
+    @property
+    def outdated(self) -> tuple[str, ...]:
+        return tuple(sorted(self.stale_extraction))
 
     @property
     def clean(self) -> bool:
@@ -565,6 +720,8 @@ class Evidence:
             out.append(f"  UNFETCHED  {path} — declared, never stored")
         for path in self.uncited:
             out.append(f"  uncited    {path} — stored, no value points at it")
+        for path in self.outdated:
+            out.append(f"  re-extract {path} — stored by an older extractor than {EXTRACTOR}")
         return out
 
 
@@ -572,6 +729,13 @@ def evidence(layers: dict[str, Layer], store: ProvenanceStore) -> Evidence:
     """Reconcile declared, stored and cited documents across the hierarchy."""
     declared_paths = {path for _, path, _ in declared(layers)}
     stored = {p for p in store.documents() if p.endswith('.txt')}
+    outdated = set()
+    for path in stored:
+        try:
+            if store.load(path).extractor != EXTRACTOR:
+                outdated.add(path)
+        except ProvenanceError:
+            continue
     cited = set()
     for layer in layers.values():
         blocks = [layer.defaults, *(z.values for z in layer.zones.values())]
@@ -584,7 +748,9 @@ def evidence(layers: dict[str, Layer], store: ProvenanceStore) -> Evidence:
         for zone in layer.zones.values():
             if zone.like is not None and zone.like.prov.quote:
                 cited.add(zone.like.prov.quote.split("#", 1)[0])
-    return Evidence(frozenset(declared_paths), frozenset(stored), frozenset(cited))
+    return Evidence(
+        frozenset(declared_paths), frozenset(stored), frozenset(cited), frozenset(outdated)
+    )
 
 
 def main(argv: Sequence[str] | None = None, *, get: Callable[[str], bytes | str] | None = None) -> int:

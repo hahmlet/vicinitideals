@@ -85,6 +85,11 @@ class Document:
     retrieved: date
     sha256: str
     text: str
+    #: Which extraction algorithm produced this text. Empty for documents
+    #: stored before the field existed. A hash that moves because the
+    #: extractor changed is not an amendment, and telling the two apart
+    #: needs the algorithm on the record beside the hash.
+    extractor: str = ""
 
     def lines(self, ref: QuoteRef) -> str:
         """The quoted span, or the whole document when no span is given."""
@@ -135,7 +140,9 @@ class ProvenanceStore:
 
     # --- read / write ------------------------------------------------
 
-    def save(self, path: str, *, url: str, text: str, retrieved: date) -> Document:
+    def save(
+        self, path: str, *, url: str, text: str, retrieved: date, extractor: str = ""
+    ) -> Document:
         """Write a document and its sidecar. Overwrites — re-fetching is normal."""
         text_path = self.text_path(path)
         text_path.parent.mkdir(parents=True, exist_ok=True)
@@ -146,13 +153,18 @@ class ProvenanceStore:
         text_path.write_text(normalized, encoding="utf-8", newline="")
 
         doc = Document(
-            path=path, url=url, retrieved=retrieved, sha256=sha256(normalized), text=normalized
+            path=path,
+            url=url,
+            retrieved=retrieved,
+            sha256=sha256(normalized),
+            text=normalized,
+            extractor=extractor,
         )
+        meta = {"url": url, "retrieved": retrieved.isoformat(), "sha256": doc.sha256}
+        if extractor:
+            meta["extractor"] = extractor
         self.meta_path(path).write_text(
-            json.dumps(
-                {"url": url, "retrieved": retrieved.isoformat(), "sha256": doc.sha256},
-                indent=2,
-            )
+            json.dumps(meta, indent=2)
             + "\n",
             encoding="utf-8",
             newline="",
@@ -177,6 +189,7 @@ class ProvenanceStore:
             retrieved=date.fromisoformat(meta["retrieved"]),
             sha256=meta["sha256"],
             text=text,
+            extractor=meta.get("extractor", ""),
         )
 
     def quote(self, quote: str) -> str:

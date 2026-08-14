@@ -357,3 +357,128 @@ def test_extraction_mode_is_declared_per_document_and_validated() -> None:
     assert CodeDocument(id="a", url="https://x.gov/c").extraction == "layout"
     with _pytest.raises(ValidationError):
         CodeDocument(id="a", url="https://x.gov/c", extraction="ocr")
+
+
+# --- table geometry ---------------------------------------------------
+
+# Wood Village's Table 220-3 shape: the columns are housing types, and a type
+# with no standard in a row leaves an empty cell. Flattened to one cell per
+# line, the empties vanish and nothing can say which type a value belongs to.
+TYPE_COLUMNS = """<p>220.320 Lot Size.</p>
+<table><caption>Table 220-3. Standards</caption>
+<tr><th>Standard</th><th>Townhouse</th><th>Detached Single Dwelling</th></tr>
+<tr><td>Minimum lot area</td><td>1,500 sq ft</td><td>10,000 sq ft</td></tr>
+<tr><td>Minimum front setback</td><td>10 ft</td><td></td></tr>
+</table>"""
+
+# Clackamas ZDO Table 315-2 shape: one setback cell spanning every R zone.
+MERGED_CELL = """<table>
+<tr><th>Zone</th><th>Minimum lot area</th><th>Minimum front setback</th></tr>
+<tr><td>R-5</td><td>5,000 sq ft</td><td rowspan="3">20 ft</td></tr>
+<tr><td>R-7</td><td>7,000 sq ft</td></tr>
+<tr><td>R-10</td><td>10,000 sq ft</td></tr>
+</table>"""
+
+
+def _grid(source: str) -> list[str]:
+    return [line for line in html_to_text(source).splitlines() if line.strip()]
+
+
+def test_a_table_renders_as_aligned_columns() -> None:
+    lines = _grid(TYPE_COLUMNS)
+
+    assert "Table 220-3. Standards" in lines
+    header = next(line for line in lines if line.startswith("Standard"))
+    area = next(line for line in lines if line.startswith("Minimum lot area"))
+    assert header.index("Townhouse") == area.index("1,500")
+    assert header.index("Detached") == area.index("10,000")
+
+
+def test_an_empty_cell_keeps_its_column_open() -> None:
+    # The failure the whole change exists to prevent: without the empty cell,
+    # "10 ft" slides under the detached-single column and corroborates a
+    # standard it was never written for.
+    lines = _grid(TYPE_COLUMNS)
+    header = next(line for line in lines if line.startswith("Standard"))
+    setback = next(line for line in lines if line.startswith("Minimum front setback"))
+
+    assert setback.index("10 ft") == header.index("Townhouse")
+    assert len(setback.split()) == 5, "no value under the second type"
+
+
+def test_a_spanned_cell_speaks_in_every_row_it_covers() -> None:
+    # ZDO 315-2 prints the setbacks once for nine zones. Flat text drops it
+    # onto one of them and the other eight lose their setbacks entirely.
+    lines = _grid(MERGED_CELL)
+    rows = [line for line in lines if line.startswith(("R-5", "R-7", "R-10"))]
+
+    assert len(rows) == 3
+    assert all(row.endswith("20 ft") for row in rows)
+
+
+def test_a_spanned_table_reads_back_as_one_row_per_zone() -> None:
+    from flats.encode.extract import extract
+
+    text = html_to_text(MERGED_CELL)
+    for zone, area in (("R-5", 5000), ("R-7", 7000), ("R-10", 10000)):
+        read = extract(text, path="doc.txt", jurisdiction="or/clackamas/x", zone=zone)
+        got = {(c.field, c.value) for c in read.candidates if c.source == "table"}
+        assert ("min_lot_sqft", area) in got
+        assert ("setback_front_ft", 20) in got
+
+
+def test_column_alignment_survives_the_whitespace_collapse() -> None:
+    # Prose keeps its runs of spaces collapsed — the alignment exemption is
+    # for grid lines only, and a document that leaked it would churn its own
+    # hash every time a codifier reindented a paragraph.
+    assert "a b c" in html_to_text("<p>a     b\n\n\tc</p>")
+
+
+def test_a_layout_table_is_not_gridded() -> None:
+    # Codifiers wrap whole pages in tables. Aligning one produces a line
+    # thousands of characters wide and welds navigation into the ordinance.
+    wide = "<table><tr>" + "".join(f"<td>{'x' * 90}</td>" for _ in range(6)) + "</tr>"
+    wide += "<tr>" + "".join(f"<td>{'y' * 90}</td>" for _ in range(6)) + "</tr></table>"
+
+    assert max(len(line) for line in _grid(wide)) < 400
+
+
+def test_a_nested_table_does_not_break_the_row_it_sits_in() -> None:
+    source = (
+        "<table><tr><th>Zone</th><th>Minimum lot area</th></tr>"
+        "<tr><td>R-5</td><td><table><tr><td>5,000 sq ft</td></tr></table></td></tr></table>"
+    )
+    rows = [line for line in _grid(source) if line.startswith("R-5")]
+
+    assert len(rows) == 1
+    assert "5,000 sq ft" in rows[0]
+
+
+def test_the_same_table_extracts_to_the_same_bytes() -> None:
+    assert html_to_text(TYPE_COLUMNS) == html_to_text(TYPE_COLUMNS)
+
+
+def test_a_stored_document_records_which_extractor_read_it(tmp_path: Path) -> None:
+    from flats.provenance.fetch import EXTRACTOR, store_document
+
+    store = ProvenanceStore(tmp_path)
+    store_document(
+        store, "or/x/y.txt", "https://example.gov/y", "10 feet\n", retrieved=date(2026, 1, 1)
+    )
+
+    assert store.load("or/x/y.txt").extractor == EXTRACTOR
+
+
+def test_a_document_from_an_older_extractor_is_reported(tmp_path: Path) -> None:
+    # Old sidecars have no extractor field, and the fix is a re-fetch that
+    # moves every quote into the document — reported, never done quietly.
+    from flats.provenance.fetch import Evidence
+
+    store = ProvenanceStore(tmp_path)
+    store.save(
+        "or/x/y.txt", url="https://example.gov/y", text="10 feet\n", retrieved=date(2026, 1, 1)
+    )
+
+    assert store.load("or/x/y.txt").extractor == ""
+    report = Evidence(stale_extraction=frozenset({"or/x/y.txt"}))
+    assert any("re-extract" in line for line in report.lines())
