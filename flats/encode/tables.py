@@ -1172,7 +1172,7 @@ _PAREN_CTX = re.compile(r"\([^)]*\)")
 _VARIABLE = re.compile(r"^variable$", re.I)
 
 
-def _grid_value(line: str, label: str) -> tuple[float, str, tuple[str, ...]] | None:
+def _grid_value(line: str, label: str, group: str = "") -> tuple[float, str, tuple[str, ...]] | None:
     """One stacked-grid cell as (number, kind, notes), or None.
 
     Whole-line like a pair's value, after setting aside paren and glued
@@ -1183,7 +1183,7 @@ def _grid_value(line: str, label: str) -> tuple[float, str, tuple[str, ...]] | N
     cell = _PAREN_NOTE.sub("", line).strip()
     cell, glued = _unglue(cell)
     marks += tuple(f"footnote {n} (text not captured)" for n in glued)
-    parsed = _measure_line(cell) or _measure_bare(cell, label, "")
+    parsed = _measure_line(cell) or _measure_bare(cell, label, group)
     if parsed is None:
         return None
     number, kind = parsed
@@ -1210,6 +1210,100 @@ def _grid_vocab(line: str) -> bool:
     if bare in _GROUPED_SUBJECTS:
         return True
     return not any(ch.isdigit() for ch in label) and 0 < len(label.split()) <= 4
+
+
+#: A zone code named inside a column heading — "Residential Medium (RM)".
+_PARENTHESISED_ZONE = re.compile(r"\(([A-Z][A-Z0-9./-]{0,7})\)")
+
+#: The number or letter a printed table uses to order its rows.
+_ENUMERATOR = re.compile(r"^(?:\d{1,2}|[a-z])\.\s+")
+
+#: A numbered standard — the level Code Publishing numbers, with lettered
+#: housing-type rows beneath it.
+_NUMBERED_HEAD = re.compile(r"^\d{1,2}\.\s+\S")
+
+#: A column of commentary rather than of standards. Present in most rows and
+#: absent from the rest, so counting it makes every sparse row look short.
+_COMMENTARY = re.compile(r"\b(?:additional standards?|exceptions?|notes?|cross.references?)\b", re.I)
+
+
+def _looks_like_label(line: str) -> bool:
+    """Whether this line could open a row — the thing a heading is followed by."""
+    label = _LABEL_DASH.sub("", _PAREN_NOTE.sub("", line)).strip()
+    # Both enumerator cases: "1. Minimum Lot Size" numbers the standards and
+    # "a. Single Unit" letters the housing types under it, in the same table.
+    if _ENUMERATOR.match(label) or _GROUP_HEAD.match(label):
+        return True
+    if _housing_type(label) or _subject(label):
+        return True
+    bare = " ".join(_PAREN_CTX.sub("", label).split()).strip(" .:").lower()
+    return bare in _GROUPED_SUBJECTS or bare in _BARE_GROUPED
+
+
+def _scoped_cell(cell: str) -> bool:
+    """A cell stating a number on some other basis than the row's.
+
+    "2,500 per unit" under minimum lot size, "10,000 for single unit detached"
+    under maximum lot size: the column answers, and its answer is not this
+    row's standard for this zone. Nothing may be filed from it — but it holds
+    a column, and treating it as a broken row discards the plain numbers
+    printed beside it.
+    """
+    words = cell.split()
+    return len(words) > 1 and len(words) <= 5 and words[0][:1].isdigit()
+
+
+def _labelish(label: str) -> bool:
+    """Whether a line could be a row label rather than one of the cells.
+
+    A digit anywhere used to disqualify it, which is right for cells and wrong
+    for the tables that number their rows: "7. Front Yard Setback Minimum" is a
+    label with an enumerator, and Code Publishing prints every Oregon chapter
+    that way. The enumerator comes off before the question is asked; what is
+    left has to read like prose.
+    """
+    return not any(ch.isdigit() for ch in _ENUMERATOR.sub("", label, count=1))
+
+
+def _column_heading(line: str, following: str) -> bool:
+    """Whether this line is one more column of a header run, not the first row.
+
+    A dimensional table's columns are not all zones. Fairview's is five zone
+    columns wide plus "Townhouse Overlay" and "Additional Standards and
+    Exceptions"; counting only the zone codes makes every row look three cells
+    wide, and a five-value row read three-wide either mis-attributes two
+    columns or — because of the overrun refusal — reads nothing at all. It read
+    nothing, which is why thirty-six Fairview values had no evidence behind a
+    chapter that states all of them.
+
+    The line after is what separates a column from a row: a row label is
+    followed by its values, a column heading by another heading or by the first
+    row. So "Min. lot area" over "12,000 sq ft" is a row, and "Townhouse
+    Overlay" over "Residential Medium (RM)" is a column.
+    """
+    label = " ".join(line.split())
+    return (
+        len(label.split()) >= 2
+        and label[0].isupper()
+        and not any(ch.isdigit() for ch in label)
+        and not _GROUP_HEAD.match(label)
+        and _subject(label) is None
+        and _measure_line(label) is None
+        and not _NOT_A_NUMBER.match(label)
+        and not _DASH.match(following)
+        and _grid_value(following, label) is None
+    )
+
+
+def _column_zone(line: str) -> str:
+    """The zone a column heading names, or "" for a column that names none.
+
+    An unnamed column still has to be counted — it is what makes the row's
+    arity right — but nothing may be filed under it. "" is that column: it
+    holds a place and takes no value.
+    """
+    found = _PARENTHESISED_ZONE.search(line)
+    return found.group(1) if found and _ZONE.match(found.group(1)) else ""
 
 
 def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
@@ -1254,7 +1348,15 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
     junk = {
         j
         for j in _furniture([line.strip() for line in lines])
-        if _measure_line(j) is None and not _ZONE.match(j) and not _grid_vocab(j)
+        if _measure_line(j) is None
+        and not _ZONE.match(j)
+        and not _grid_vocab(j)
+        # A cell whose unit is in the row label rather than in the cell —
+        # "6,000" under "Minimum Lot Size (sq. ft.)" — is a bare number, and
+        # bare numbers repeat: Fairview's three zones state the same lot size
+        # for six housing types apiece. Frequency junked them, which deleted
+        # the cells and left every row one value short of its header.
+        and not _BARE_NUMBER.match(j)
     }
     live = [
         (n, line.strip())
@@ -1287,11 +1389,21 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
             # A run of bare letters is not a header: lettered subsection
             # fragments match _ZONE too, and a real district run carries a
             # digit somewhere (R-40, LR7.5, MUR-S beside R-5).
-            zones = tuple(run)
+            j = i + len(run)
+            named: list[str] = []
+            while j + 1 < len(live) and _column_heading(live[j][1], live[j + 1][1]):
+                # A commentary column is consumed and not counted. "Additional
+                # Standards and Exceptions" holds a cross-reference in three
+                # rows of fifteen and nothing in the rest, so counting it makes
+                # every other row one cell short of its header.
+                if not _COMMENTARY.search(live[j][1]):
+                    named.append(_column_zone(live[j][1]))
+                j += 1
+            zones = tuple(run) + tuple(named)
             block = ""
             block_refs = ()
             block_field = ""
-            i += len(run)
+            i = j
             continue
         label = _LABEL_DASH.sub("", _PAREN_NOTE.sub("", stripped)).strip()
         refs: tuple[str, ...] = ()
@@ -1319,6 +1431,16 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
                         name == "setback_street_side_ft" and _CORNER_BLOCK.search(m)
                     )
                 )
+        if _NUMBERED_HEAD.match(label):
+            # A numbered standard ends the one above it, whether or not this
+            # reader knows what it is. Fairview prints "3. Minimum Net Density
+            # (units/acre)" under the lot-size table's numbering, and letting
+            # the previous block survive read 5.8 units per acre as a 5.8
+            # square foot minimum lot — a standard nobody could satisfy,
+            # attached to the right zone with the right citation.
+            block = label
+            block_field = _subject(label) or ""
+            block_refs = refs
         if name is None and block_field and len(label.split()) <= _GROUP_WORDS:
             if _housing_type(label):
                 # "Duplex, triplex, quadplex, townhome" under a heading whose
@@ -1328,12 +1450,19 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
                 name = block_field
         next_is_cell = i + 1 < len(live) and (
             bool(_DASH.match(live[i + 1][1]))
-            or _grid_value(live[i + 1][1], label) is not None
+            or _grid_value(live[i + 1][1], label, block) is not None
         )
+        scopes_a_row = i + 1 < len(live) and _looks_like_label(live[i + 1][1])
         if (
             zones
             and name is None
             and not next_is_cell
+            # A heading is followed by the row it scopes. "Existing only",
+            # stranded mid-row when its row was refused, is followed by
+            # "NA" — another orphaned cell — and taking it for a heading
+            # cleared the block that grouped the housing-type rows above it,
+            # which is how Fairview's lot sizes went unread.
+            and scopes_a_row
             and not any(ch.isdigit() for ch in label)
             and len(label.split()) <= 4
             and _housing_type(label) is None
@@ -1353,7 +1482,7 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
             block = label
             block_refs = refs
             block_field = ""
-        if zones and name is not None and not any(ch.isdigit() for ch in label):
+        if zones and name is not None and _labelish(label):
             in_corner_block = _CORNER_BLOCK.search(block) and name.startswith("setback_")
             if (
                 in_corner_block or _CORNER_BLOCK.search(label)
@@ -1388,15 +1517,40 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
                     cells.append(None)
                     j += 1
                     continue
-                parsed = _grid_value(cell_line, label)
+                if _NOT_A_NUMBER.match(bare_cell):
+                    # "NA", "None", "No maximum" — the table answers for this
+                    # column and the answer is not a number. Breaking here
+                    # threw away every row of a table that has an NA in it,
+                    # which in a housing-type grid is most of them.
+                    cells.append(None)
+                    j += 1
+                    continue
+                parsed = _grid_value(cell_line, label, block)
                 if parsed is None:
-                    break
+                    if _scoped_cell(bare_cell):
+                        # "2,500 per unit" beside three plain lot sizes: the
+                        # column states a standard on a different basis, so it
+                        # yields no candidate — but it is a cell, and breaking
+                        # on it would throw away the three columns that are
+                        # exactly what was being read.
+                        cells.append(None)
+                        j += 1
+                        continue
+                    if zones[len(cells)]:
+                        break
+                    # Prose in a column that names no zone — "Existing only"
+                    # under "Townhouse Overlay". Nothing can be filed under it
+                    # either way, and stopping would refuse the named columns
+                    # beside it over a cell that was never going to be read.
+                    cells.append(None)
+                    j += 1
+                    continue
                 cells.append((cell_no, parsed))
                 j += 1
             overrun = (
                 j < len(live)
                 and not _PAREN_LINE.match(live[j][1])
-                and _grid_value(live[j][1], label) is not None
+                and _grid_value(live[j][1], label, block) is not None
             )
             if len(cells) == len(zones) and not overrun:
                 htype = _housing_type(label) or ""
@@ -1404,7 +1558,7 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
                     f"footnote {r} (text not captured)" for r in (*refs, *block_refs)
                 )
                 for zone, cell in zip(zones, cells):
-                    if cell is None:
+                    if cell is None or not zone:
                         continue
                     cell_no, (number, kind, marks) = cell
                     if FIELDS[name].kind != kind:
@@ -1425,7 +1579,7 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
                     )
                 i = j
                 continue
-            if _subject(label) is not None and not any(ch.isdigit() for ch in label):
+            if _subject(label) is not None and _labelish(label):
                 # The walk failed under a label that names a standard outright
                 # — "Lot coverage (maximum)" over typed sub-rows. The label
                 # becomes the block and its field scopes the typed rows under

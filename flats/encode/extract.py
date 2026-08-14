@@ -302,9 +302,28 @@ def _match_subject(text: str) -> tuple[int, int, str] | None:
     return best
 
 
+#: A ceiling, said in any of the ways a table says it.
+_MAXIMUM = re.compile(r"\bmax(?:imum|\.)?\b", re.I)
+#: A floor, likewise. A row saying both — Happy Valley's "Lot size (minimum
+#: and maximum density)" — is a minimum that mentions a ceiling on something
+#: else, and reading it as a ceiling deletes the base standard of six zones.
+_MINIMUM = re.compile(r"\bmin(?:imum|\.)?\b", re.I)
+
+
 def _subject(text: str) -> str | None:
     found = _match_subject(text)
-    return found[2] if found else None
+    if found is None:
+        return None
+    name = found[2]
+    is_minimum = (name.startswith("setback_") or name.startswith("min_")) and "max" not in name
+    if is_minimum and _MAXIMUM.search(text) and not _MINIMUM.search(text):
+        # "Front Yard Setback Maximum" is a build-to line, the opposite
+        # standard from the front setback minimum and printed on the very next
+        # row of the same table. Reading it as the minimum puts two numbers on
+        # one field, which surfaces as a value the document supposedly states
+        # twice — a disagreement invented by the reader.
+        return None
+    return name
 
 
 def _subject_span(text: str) -> tuple[int, int] | None:

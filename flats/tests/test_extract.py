@@ -549,3 +549,15 @@ def test_a_frontage_rate_is_not_a_frontage_minimum() -> None:
         )
         == []
     )
+
+
+def test_a_row_naming_both_bounds_is_read_as_the_minimum() -> None:
+    # "Lot size (minimum and maximum density)" is a minimum that mentions a
+    # ceiling on something else. Reading it as a ceiling deleted the base
+    # standard of six Happy Valley zones and left the townhouse row to
+    # contradict them.
+    found = candidates_in(
+        "Lot size (minimum and maximum density): quadplex 40,000 sq. ft.", 1, DOC
+    )
+
+    assert [c.field for c in found] == ["min_lot_sqft"]

@@ -1526,3 +1526,104 @@ def test_a_flowed_note_block_defines_the_markers_above_it() -> None:
     assert sfa.notes == (
         "Each townhouse lot shall have a minimum size of 2,000 square feet.",
     )
+
+
+# --- columns that are not zones ---------------------------------------
+
+
+FAIRVIEW_GRID = """
+Table 19.30.030.A Dimensional Standards for Residential Districts
+R-6
+R-7.5
+R-10
+Townhouse Overlay
+Residential Medium (RM)
+Additional Standards and Exceptions
+1. Minimum Lot Size (sq. ft.)
+a. Single Unit
+6,000
+7,500
+10,000
+Existing only
+NA
+d. Quadplex
+6,000
+7,500
+10,000
+NA
+2,500 per unit
+3. Minimum Net Density (units/acre)
+a. Single Unit
+5.8
+4.6
+3.5
+NA
+NA
+7. Front Yard Setback Minimum
+10 feet
+11 feet
+12 feet
+13 feet
+14 feet
+19.30.030(B)(1)(b)
+8. Front Yard Setback Maximum
+30 feet
+30 feet
+30 feet
+30 feet
+30 feet
+"""
+
+
+def test_a_named_column_that_is_not_a_zone_still_holds_its_place() -> None:
+    # Three zone codes, then "Townhouse Overlay" — counting only the codes
+    # makes a five-value row look three wide, and the overrun refusal then
+    # throws the row away. Thirty-six Fairview values sat behind that.
+    grids = _grid(FAIRVIEW_GRID)
+
+    assert [c.value for c in grids["R-6"] if c.field == "setback_front_ft"] == [10]
+    assert [c.value for c in grids["R-7.5"] if c.field == "setback_front_ft"] == [11]
+    assert [c.value for c in grids["R-10"] if c.field == "setback_front_ft"] == [12]
+
+
+def test_a_column_naming_no_zone_files_nothing() -> None:
+    grids = _grid(FAIRVIEW_GRID)
+
+    # The Townhouse Overlay column's 13 feet belongs to no zone in the file
+    # and is filed under none, while the RM column's 14 feet is filed under RM.
+    assert 13 not in [c.value for zone in grids for c in grids[zone]]
+    assert [c.value for c in grids["RM"] if c.field == "setback_front_ft"] == [14]
+
+
+def test_a_maximum_row_is_not_the_minimum_field() -> None:
+    # "8. Front Yard Setback Maximum" is a build-to line printed on the next
+    # row of the same table. Read as the minimum it becomes a second number
+    # for one field — a disagreement the document never states.
+    grids = _grid(FAIRVIEW_GRID)
+
+    assert [c.value for c in grids["R-6"] if c.field == "setback_front_ft"] == [10]
+
+
+def test_the_row_label_may_carry_its_enumerator() -> None:
+    assert any(c.field == "setback_front_ft" for c in _grid(FAIRVIEW_GRID)["R-6"])
+
+
+def test_a_typed_sub_row_takes_its_unit_from_the_heading_above_it() -> None:
+    # "d. Quadplex" says nothing about square feet; "1. Minimum Lot Size
+    # (sq. ft.)" does. Without the heading the bare 6,000 parses as nothing.
+    quad = [c for c in _grid(FAIRVIEW_GRID)["R-6"] if c.housing_type == "quadplex"]
+
+    assert [(c.field, c.value) for c in quad] == [("min_lot_sqft", 6000)]
+
+
+def test_a_new_numbered_standard_ends_the_one_above_it() -> None:
+    # Density is numbered like lot size and is not lot size. Letting the block
+    # survive filed 5.8 units per acre as a 5.8 square foot minimum lot.
+    assert 5.8 not in [c.value for c in _grid(FAIRVIEW_GRID)["R-6"]]
+
+
+def test_a_cell_stating_another_basis_does_not_refuse_the_row() -> None:
+    # "2,500 per unit" under the RM column is a standard on a different basis:
+    # nothing may be filed from it, and breaking on it would discard the three
+    # plain lot sizes printed beside it.
+    assert [c.value for c in _grid(FAIRVIEW_GRID)["R-10"] if c.field == "min_lot_sqft"] == [10000]

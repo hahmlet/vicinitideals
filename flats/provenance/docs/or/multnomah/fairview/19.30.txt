@@ -1,0 +1,1035 @@
+Chapter 19.30
+
+RESIDENTIAL (R) DISTRICTS1
+
+Sections:
+
+19.30.010 Purpose.
+
+19.30.020 Permitted land uses.
+
+19.30.030 Dimensional standards.
+
+19.30.040 Design standards for single-unit dwellings, duplexes, triplexes and quadplexes.
+
+19.30.050 Design standards for townhouses.
+
+19.30.060 Design standards for cottage clusters.
+
+19.30.070 Flag lots and lots accessed by mid-block lanes.
+
+19.30.080 Special standards for certain uses.
+
+19.30.090 Residential medium density (RM) district.
+
+19.30.100 Residential manufactured home park district (MH).
+
+19.30.010 Purpose.
+
+A. The residential districts (zones) are intended to promote the livability, stability and improvement of the city’s neighborhoods. This chapter provides standards for the orderly expansion and improvement of neighborhoods based on the following principles:
+
+1. Make efficient use of land and public services, implement the Comprehensive Plan, and provide minimum and maximum density standards for housing.
+
+2. Accommodate a range of housing needs, including owner-occupied and rental housing.
+
+3. Provide for compatible building and site design at an appropriate neighborhood scale.
+
+4. Reduce reliance on the automobile for neighborhood travel and provide options for walking, bicycling, and transit use.
+
+5. Provide direct and convenient access to schools, parks and neighborhood services.
+
+6. Utilize overlay districts to add or limit uses in the underlying base district.
+
+B. The R-6, R-7.5, and R-10 zones are established to provide single-unit detached, duplex, triplex, quadplex, townhouse and cottage cluster residential uses on parent lots with minimum sizes ranging from 6,000 to 10,000 square feet in area.
+
+C. The manufactured home park (MH) zone is established to provide land for manufactured home parks on parcels at least one acre in size.
+
+D. The residential medium density (RM) zone is established to provide an area dedicated to medium density housing including muti-unit dwellings (apartments, condominiums), townhouses, triplexes and quadplexes. (Ord. 1-2024 § 1 (Att. A))
+
+19.30.020 Permitted land uses.
+
+A. Permitted Uses. The land uses listed in Table 19.30.020.A are permitted in the residential district, subject to the provisions of this chapter. Only land uses which are specifically listed in Table 19.30.020.A, and land uses which are approved as “similar” to those in Table 19.30.020.A, may be permitted. The land uses identified with a “CU” in Table 19.30.020.A require conditional use permit approval prior to development or a change in use, in accordance with Article IV of this title.
+
+B. Determination of Similar Land Use. Similar use determinations shall be made in conformance with the procedures in Chapter 19.480 FMC.
+
+Table 19.30.020.A Land Uses and Building Types Permitted in the Residential Districts
+ZONES
+ZONES
+R-6
+R-7.5
+R-10
+Medium Density (RM)
+Manufactured Home Park (MH)
+Townhouse Overlay (TOZ)
+USES
+RESIDENTIAL
+a. Single-unit detached dwellings
+X(5)
+X(5)
+X(5)
+RESIDENTIAL
+b. Accessory dwelling unit (ADU)
+X(1)
+X(1)
+X(1)
+X(1)
+RESIDENTIAL
+c. Accessory uses and structures (other than accessory dwellings)
+X(1)
+X(1)
+X(1)
+X(1)
+X(1)
+X(1)
+RESIDENTIAL
+d. Manufactured homes
+X(1)
+X(1)
+X(1)
+RESIDENTIAL
+e. Townhouse
+X(4)
+X(4)
+X(4)
+X(4)
+X(4)
+RESIDENTIAL
+f. Duplex
+X(5)
+X(5)
+X(5)
+RESIDENTIAL
+g. Triplex
+X(5)
+X(5)
+X(5)
+X(5)
+RESIDENTIAL
+h. Quadplex
+X(5)
+X(5)
+X(5)
+X(5)
+RESIDENTIAL
+i. Cottage cluster
+X(6)
+X(6)
+X(6)
+RESIDENTIAL
+j. Multi-unit dwellings
+X(1) (2)
+RESIDENTIAL
+k. Manufactured home park
+X(1)
+RESIDENTIAL CARE
+l. Residential care homes
+X(1)
+X(1)
+X(1)
+X(1)
+X(1)
+X(1)
+RESIDENTIAL CARE
+m. Residential care facilities
+X(CU) (1)
+X(1) (2)
+RESIDENTIAL CARE
+n. Family day care (16 or fewer children)
+X
+X
+X
+X
+X
+X
+RESIDENTIAL CARE
+o. Child care center (more than 16 children)
+X(2)
+RESIDENTIAL COMMERCIAL
+p. Small-scale retail goods and services
+X(2)
+RESIDENTIAL COMMERCIAL
+q. Medical and dental offices and clinics
+X(2)
+RESIDENTIAL COMMERCIAL
+r. Personal services (e.g., barber shops, salons, similar uses)
+X(2)
+RESIDENTIAL COMMERCIAL
+s. Repair services, conducted entirely within building; auto repair and similar uses excluded
+X(2)
+RESIDENTIAL COMMERCIAL
+t. Mixed use building – Residential with other permitted use
+X(2)
+RESIDENTIAL COMMERCIAL
+u. Bed and breakfast inns
+X(CU) (1)
+OTHER
+v. Home occupations and temporary uses
+X(3)
+X(3)
+X(3)
+X(3)
+X(3)
+X(3)
+OTHER
+w. Community services/parks
+X(CU) (1)
+X(CU) (1)
+X(CU) (1)
+X(CU) (1)
+X(CU) (1)
+X(CU) (1)
+(1) Subject to standards in FMC 19.30.080, Special standards for certain uses.
+(2) Subject to additional standards in FMC 19.30.090, Residential medium density district (RM).
+(3) Subject to standards in Chapter 19.490 FMC, Miscellaneous Permits (Temporary Uses, Home Occupations, Others).
+(4) Subject to standards in FMC 19.30.050, Design standards for townhouses.
+(5) Subject to standards in FMC 19.30.040, Design standards for single-unit, duplexes, triplexes and quadplexes.
+(6) Subject to standards in FMC 19.30.060, Design standards for cottage clusters.
+(1) Subject to standards in FMC 19.30.080, Special standards for certain uses.
+(2) Subject to additional standards in FMC 19.30.090, Residential medium density district (RM).
+(3) Subject to standards in Chapter 19.490 FMC, Miscellaneous Permits (Temporary Uses, Home Occupations, Others).
+(4) Subject to standards in FMC 19.30.050, Design standards for townhouses.
+(5) Subject to standards in FMC 19.30.040, Design standards for single-unit, duplexes, triplexes and quadplexes.
+(6) Subject to standards in FMC 19.30.060, Design standards for cottage clusters.
+(1) Subject to standards in FMC 19.30.080, Special standards for certain uses.
+(2) Subject to additional standards in FMC 19.30.090, Residential medium density district (RM).
+(3) Subject to standards in Chapter 19.490 FMC, Miscellaneous Permits (Temporary Uses, Home Occupations, Others).
+(4) Subject to standards in FMC 19.30.050, Design standards for townhouses.
+(5) Subject to standards in FMC 19.30.040, Design standards for single-unit, duplexes, triplexes and quadplexes.
+(6) Subject to standards in FMC 19.30.060, Design standards for cottage clusters.
+(1) Subject to standards in FMC 19.30.080, Special standards for certain uses.
+(2) Subject to additional standards in FMC 19.30.090, Residential medium density district (RM).
+(3) Subject to standards in Chapter 19.490 FMC, Miscellaneous Permits (Temporary Uses, Home Occupations, Others).
+(4) Subject to standards in FMC 19.30.050, Design standards for townhouses.
+(5) Subject to standards in FMC 19.30.040, Design standards for single-unit, duplexes, triplexes and quadplexes.
+(6) Subject to standards in FMC 19.30.060, Design standards for cottage clusters.
+(1) Subject to standards in FMC 19.30.080, Special standards for certain uses.
+(2) Subject to additional standards in FMC 19.30.090, Residential medium density district (RM).
+(3) Subject to standards in Chapter 19.490 FMC, Miscellaneous Permits (Temporary Uses, Home Occupations, Others).
+(4) Subject to standards in FMC 19.30.050, Design standards for townhouses.
+(5) Subject to standards in FMC 19.30.040, Design standards for single-unit, duplexes, triplexes and quadplexes.
+(6) Subject to standards in FMC 19.30.060, Design standards for cottage clusters.
+(1) Subject to standards in FMC 19.30.080, Special standards for certain uses.
+(2) Subject to additional standards in FMC 19.30.090, Residential medium density district (RM).
+(3) Subject to standards in Chapter 19.490 FMC, Miscellaneous Permits (Temporary Uses, Home Occupations, Others).
+(4) Subject to standards in FMC 19.30.050, Design standards for townhouses.
+(5) Subject to standards in FMC 19.30.040, Design standards for single-unit, duplexes, triplexes and quadplexes.
+(6) Subject to standards in FMC 19.30.060, Design standards for cottage clusters.
+(1) Subject to standards in FMC 19.30.080, Special standards for certain uses.
+(2) Subject to additional standards in FMC 19.30.090, Residential medium density district (RM).
+(3) Subject to standards in Chapter 19.490 FMC, Miscellaneous Permits (Temporary Uses, Home Occupations, Others).
+(4) Subject to standards in FMC 19.30.050, Design standards for townhouses.
+(5) Subject to standards in FMC 19.30.040, Design standards for single-unit, duplexes, triplexes and quadplexes.
+(6) Subject to standards in FMC 19.30.060, Design standards for cottage clusters.
+
+(Ord. 3-2026 § 1 (Att. A); Ord. 2-2025 § 1 (Att. A); Ord. 1-2024 § 1 (Att. A))
+
+19.30.030 Dimensional standards.
+
+A. Dimensional Standards. All standards for the Manufactured Home Park District are located in FMC 19.30.100. The standards in Table 19.30.030-A apply to all other residential zones. Notes and/or cross references to other applicable code sections are listed in the “Additional Standards” column.
+
+Table 19.30.030.A Dimensional Standards for Residential Districts
+R-6
+R-7.5
+R-10
+Townhouse Overlay
+Residential Medium (RM)
+Additional Standards and Exceptions
+1. Minimum Lot Size (sq. ft.)
+a. Single Unit
+6,000
+7,500
+10,000
+Existing only
+NA
+b. Duplex
+6,000
+7,500
+10,000
+NA
+NA
+c. Triplex
+6,000
+7,500
+10,000
+NA
+2,000 per unit
+d. Quadplex
+6,000
+7,500
+10,000
+NA
+2,500 per unit
+e. Townhouse
+2,000
+2,000
+See Table 19.30.030.A.4, Maximum Density
+f. Cottage Cluster
+6,000
+7,500
+10,000
+NA
+NA
+g. Multi-Unit
+NA
+NA
+NA
+NA
+2,500 per unit
+h. Residential Commercial
+NA
+NA
+NA
+NA
+None
+2. Maximum Lot Size (sq. ft.)
+10,000 for single unit detached
+No maximum for other housing types
+10,000 for single unit detached
+No maximum for other housing types
+None
+4,500
+4,500 for townhomes
+3. Minimum Net Density (units/acre) [1]
+a. Single Unit
+5.8
+4.6
+3.5
+NA
+NA
+b. Duplex, Triplex, Quadplex, Cottage Cluster
+5.8
+4.6
+3.5
+NA
+14 (Triplexes and Quadplexes)
+c. Townhouse
+5.8
+4.6
+3.5
+9.7
+14
+d. Multi-Unit
+NA
+NA
+NA
+NA
+14
+4. Maximum Net Density (units/acre)
+a. Single Unit
+7.3
+5.8
+4.4
+NA
+NA
+b. Duplex, Triplex, Quadplex, Cottage Cluster
+None
+None
+None
+NA
+21.8
+c. Townhouse
+25
+23.2
+17.6
+21.8
+21.8
+d. Multi-Unit
+NA
+NA
+NA
+NA
+17.4
+5. Minimum Lot Width at Front Property Line
+30 feet
+20 feet for townhouses
+30 feet
+20 feet for townhouses
+30 feet
+20 feet for townhouses
+20 feet
+60 feet
+20 feet for townhouses
+6. Maximum Lot Depth
+3 times the lot width
+Townhomes and cottage clusters none
+3 times the lot width
+Townhomes and cottage clusters none
+3 times the lot width
+Townhomes and cottage clusters none
+None
+None
+7. Front Yard Setback Minimum
+10 feet
+10 feet
+10 feet
+10 feet
+10 feet
+Residential commercial buildings none
+8. Front Yard Setback Maximum
+30 feet
+30 feet
+30 feet
+30 feet
+30 feet
+Residential commercial buildings 10 feet
+19.30.030(B)(1)(b)
+9. Rear Yard Setback
+15 feet
+Cottage clusters: 10 feet
+15 feet
+Cottage clusters: 10 feet
+15 feet
+Cottage clusters: 10 feet
+15 feet
+15 feet
+19.30.030(B)(1)(b)
+10. Interior Side Yard Setback
+5 feet
+Townhomes No setback on attached side(s)
+5 feet
+Townhomes No setback on attached side(s)
+5 feet
+Townhomes No setback on attached side(s)
+5 feet
+Townhomes No setback on attached side(s)
+5 feet
+Townhomes No setback on attached side(s)
+19.30.030(C)
+11. Street Side Yard (corner) Setback Minimum
+10 feet
+10 feet
+10 feet
+10 feet
+10 feet
+12. Special Yards (distance between primary buildings on the same lot)
+10 feet
+10 feet
+10 feet
+10 feet
+10 feet
+19.30.030(E)
+13. Setbacks for Accessory Structures
+See 19.30.080(G)
+See 19.30.080(G)
+See 19.30.080(G)
+See 19.30.080(G)
+See 19.30.080(G)
+14. Maximum Floor Area Ratio (FAR)
+0.7 to 1
+Cottage clusters none
+0.7 to 1
+Cottage clusters none
+0.7 to 1
+Cottage clusters none
+0.7 to 1
+0.7 to 1
+Multi-unit none
+15. Maximum Building Coverage
+50%
+50%
+50%
+50%
+60%
+16. Maximum Impervious Area Coverage
+65%
+65%
+65%
+65%
+70%
+17. Maximum Building Height
+2.5 stories, but not more than 35 ft.
+2.5 stories, but not more than 35 ft.
+2.5 stories, but not more than 35 ft.
+2.5 stories, but not more than 35 ft.
+4 stories, but not more than 45 ft.
+[1] Minimum density requirements apply when new primary dwelling units are added to a property, and to the creation of new lots. Exception: Residential care homes/facilities and 2-lot partitions are exempt from minimum density requirements.
+[1] Minimum density requirements apply when new primary dwelling units are added to a property, and to the creation of new lots. Exception: Residential care homes/facilities and 2-lot partitions are exempt from minimum density requirements.
+[1] Minimum density requirements apply when new primary dwelling units are added to a property, and to the creation of new lots. Exception: Residential care homes/facilities and 2-lot partitions are exempt from minimum density requirements.
+[1] Minimum density requirements apply when new primary dwelling units are added to a property, and to the creation of new lots. Exception: Residential care homes/facilities and 2-lot partitions are exempt from minimum density requirements.
+[1] Minimum density requirements apply when new primary dwelling units are added to a property, and to the creation of new lots. Exception: Residential care homes/facilities and 2-lot partitions are exempt from minimum density requirements.
+[1] Minimum density requirements apply when new primary dwelling units are added to a property, and to the creation of new lots. Exception: Residential care homes/facilities and 2-lot partitions are exempt from minimum density requirements.
+[1] Minimum density requirements apply when new primary dwelling units are added to a property, and to the creation of new lots. Exception: Residential care homes/facilities and 2-lot partitions are exempt from minimum density requirements.
+
+B. Building Setbacks: Additional Standards
+
+1. Residential Uses.
+
+a. Applicability. These standards apply to all dwellings in all residential districts, with the exception of the manufactured home park district. Setbacks for manufactured home parks are located in FMC 19.30.100.
+
+b. Garages and carports shall be accessed from rear alleys or otherwise recessed behind the front building elevation (facade or porch) by a minimum of six feet. Alternatively, garage and carport entrances may be built flush with the front building elevation when the building is set back at least 20 feet.
+
+2. Residential Commercial Buildings.
+
+a. A minimum front setback is not required, except as necessary to comply with the vision clearance standards in FMC 19.162.020.
+
+b. A maximum setback of 10 feet is required. This standard is met when a minimum of 50 percent of the front building elevation is placed 10 feet or closer to the front property line. On parcels with more than one building, this standard applies to the largest building. Exception: The setback may be increased when an expanded sidewalk, outdoor seating area, plaza, pocket park, or town square is provided between the building and front property line.
+
+3. Public and Institutional Buildings. The standards in subsection (B)(2) of this section (residential commercial buildings) shall also apply to public and institutional buildings, except that the maximum setback standard in subsection (B)(2)(b) shall not be required for buildings that do not receive the public (e.g., buildings used solely for storage or housing mechanical equipment, and similar uses).
+
+C. Setback Exceptions. The following architectural features are allowed to encroach into the setback yards: Eaves, chimneys, bay windows, overhangs, and similar architectural features may encroach into setbacks by no more than three feet. Decks and similar structures not exceeding 36 inches in height (attached railings not included) may encroach into setbacks by no more than five feet, subject to the front yard setback provisions in subsection A of this section. Walls and fences may be placed on property lines, subject to the standards in Chapter 19.163 FMC, Landscaping, Street Trees, Fences and Walls. Walls and fences within front yards shall additionally comply with the vision clearance standards in FMC 19.162.020.
+
+D. Front Yard Setbacks for Infill Housing in Established Residential Areas. “Established residential area” means an area within the residential district that was platted prior to November 17, 2001. In such areas, the following setback standards shall apply:
+
+Figure 19.30.030.D – Infill/Established Residential Area Setbacks
+
+1. When an existing single-unit dwelling on the same street is located within 30 feet of the subject site, a front yard setback similar to that of the nearest single-unit dwelling shall be used. “Similar” means the setback is within five feet of the setback provided by the nearest single-unit dwelling on the same street. For example, if the existing single-unit dwelling has a front yard setback of 20 feet, then the new building shall have a front yard setback between 15 feet and 25 feet. If the new building is to be located between two existing residences, then the setback for the new building shall be based on the average setback of both adjacent residences, plus or minus five feet.
+
+2. In no case shall a front yard setback be less than 10 feet.
+
+3. In no case shall the required setback be greater than 40 feet.
+
+E. Building Height Transition. To provide compatible building scale and privacy between developments, taller buildings shall “step-down” to create a building height transition to adjacent single-story building(s).
+
+1. This standard applies to new and vertically expanded buildings within 20 feet (as measured horizontally) of an existing single-story building with a height of 20 feet or less, as shown in Figure 19.30.030.E.
+
+2. The building height transition standard is met when the height of the taller building (“x”) does not exceed one foot of additional height for every one foot separating the two buildings (“y”), as shown in Figure 19.30.030.E.
+
+Figure 19.30.030.E – Building Height Transition
+
+F. Building Orientation.
+
+Figure 19.30.030.F(1) – Typical Building Orientation (Multi-Unit Housing)
+
+Figure 19.30.030.F(2) – Typical Building Orientation (Residential Commercial Building)
+
+1. Purpose. The following standards are intended to orient buildings close to streets to promote human-scale development, slow traffic down, and encourage walking in neighborhoods. Placing residences and other buildings close to the street also encourages security and safety by having more “eyes-on-the-street.”
+
+2. Applicability. This section applies to: multi-unit housing; residential commercial buildings; and public and institutional buildings, except that the standard shall not apply to public and institutional buildings which do not receive the public (e.g., buildings used solely for storage or for housing mechanical equipment; and similar uses.)
+
+3. Building Orientation Standards. All developments listed in subsection B of this section shall be oriented to a street. The building orientation standard is met when all of the following criteria are met:
+
+a. Compliance with the setback standards in this section.
+
+b. All buildings shall have their primary entrance(s) oriented to the street. Multi-unit housing and neighborhood commercial building entrances may include entrances to individual units, lobby entrances, or breezeway/courtyard entrances (i.e., to a cluster of units or commercial spaces). Alternatively, a building may have its entrance oriented to a side yard when a direct pedestrian walkway is provided between the building entrance and the street in accordance with the standards in Chapter 19.162 FMC, Access and Circulation. In this case, at least one entrance shall be provided not more than 20 feet from the closest sidewalk or street.
+
+c. Off-street parking, drives or other vehicle areas shall not be placed between buildings and streets where building placement complies with this standard. (Ord. 1-2024 § 1 (Att. A))
+
+19.30.040 Design standards for single-unit dwellings, duplexes, triplexes and quadplexes.
+
+A. Applicability.
+
+1. New single-unit dwellings, duplexes, triplexes and quadplexes, including those created by adding building square footage on a site occupied by an existing dwelling, shall meet:
+
+a. The design standards in subsections B through H of this section.
+
+B. Entry Orientation. At least one main entrance for each single-unit dwelling, duplex, triplex or quadplex structure must meet the standards in subsections (B)(1) and (2) of this section. Any detached structure for which more than 50 percent of its street-facing facade is separated from the street property line by a dwelling is exempt from meeting these standards.
+
+1. The entrance must be within eight feet of the longest street-facing wall of the dwelling unit; and
+
+2. The entrance must either:
+
+a. Face the street (see Figure 1);
+
+b. Be at an angle of up to 45 degrees from the street (see Figure 2);
+
+c. Face a common open space that is adjacent to the street and is abutted by dwellings on at least two sides (see Figure 3); or
+
+d. Open onto a porch (see Figure 4). The porch must:
+
+i. Be at least 25 square feet in area; and
+
+ii. Have at least one entrance facing the street or have a roof.
+
+Figure 1. Main Entrance Facing the Street
+
+Figure 2. Main Entrance at 45° Angle from the Street
+
+Figure 3. Main Entrance Facing Common Open Space
+
+Figure 4. Main Entrance Opening onto a Porch
+
+Figure 5. Facade Design Elements
+
+C. Each street-facing facade must include at least two of the following (see Figure 5):
+
+1. A roof dormer a minimum of four feet in width;
+
+2. A balcony a minimum of two feet in depth and four feet in width and accessible from an interior room;
+
+3. A bay window that extends from the facade a minimum of two feet;
+
+4. An offset of the facade of a minimum of two feet in depth;
+
+5. An entryway that is recessed a minimum of three feet;
+
+6. A covered entryway with a minimum depth of four feet;
+
+7. A porch meeting the standards of subsection (B)(2)(d) of this section;
+
+8. Eaves with 12-inch minimum overhang;
+
+9. Window trim that is a minimum width of four inches or windows with panes recessed at least two inches from the adjacent facade wall.
+
+D. Windows. A minimum of 15 percent of the area of all street-facing facades must include windows or entrance doors. Facades separated from the street property line by a dwelling are exempt from meeting this standard. See Figure 6.
+
+Figure 6. Window Coverage
+
+E. Garages and Off-Street Parking Areas. Garages and off-street parking areas shall not be located between a building and a public street (other than an alley), except in compliance with the standards in subsections (E)(1), (2) and (3) of this section.
+
+1. The garage or off-street parking area is separated from the street property line by a dwelling; or
+
+2. Garages do not exceed a total of 50 percent of the front facade of the building and the total garage and outdoor on-site parking and maneuvering areas do not exceed 50 percent of the property street frontage (see Figure 7).
+
+3. When garages face the street, they shall be recessed behind the front elevation (i.e., living area or covered front porch) by a minimum of six feet. Alternatively, garage and carport entrances may be built flush with the front building elevation when the building is set back at least 20 feet.
+
+Figure 7. Width of Garages and Parking Areas
+
+F. Driveway Approach. Driveway approaches must comply with the following:
+
+1. The total width of all driveway approaches must not exceed 32 feet per frontage, as measured at the property line (see Figure 8). For lots or parcels with more than one frontage, see subsection (F)(3) of this section.
+
+2. Driveway approaches may be separated when located on a local street (see Figure 8). If approaches are separated, they must meet the jurisdiction’s driveway spacing standards applicable to local streets.
+
+3. In addition, lots or parcels with more than one frontage must comply with the following:
+
+a. Lots or parcels must access the street with the lowest transportation classification for vehicle traffic. For lots or parcels abutting an improved alley (defined as an alley that meets the jurisdiction’s standards for width and pavement), access must be taken from the alley (see Figure 9).
+
+b. Lots or parcels with frontages only on collectors and/or arterial streets must meet the jurisdiction’s access standards applicable to collectors and/or arterials.
+
+c. Triplexes and quadplexes on lots or parcels with frontages only on local streets may have either:
+
+i. Two driveway approaches not exceeding 32 feet in total width on one frontage; or
+
+ii. One maximum 16-foot-wide driveway approach per frontage (see Figure 10).
+
+Figure 8. Driveway Approach Width and Separation on Local Street
+
+Figure 9. Alley Access
+
+Figure 10. Driveway Approach Options for Multiple Local Street Frontages
+
+G. Pedestrian Access.
+
+1. An accessible pedestrian path must be provided that connects the main entrance of the dwelling unit to the street.
+
+2. The pedestrian path must be hard-surfaced and a minimum of three feet wide.
+
+3. The pedestrian path must not be located in vehicle parking and driveway areas. The pedestrian path may be located adjacent to the driveway.
+
+H. Conversions to Triplex and Quadplex. Internal conversion of an existing detached single-unit dwelling or duplex to a triplex or quadplex is allowed; provided, that the conversion does not increase nonconformance with applicable clear and objective siting and design standards, unless increasing nonconformance is otherwise permitted by the development code. (Ord. 1-2024 § 1 (Att. A))
+
+19.30.050 Design standards for townhouses.
+
+New townhouses in all zones shall meet the design standards in subsections A through D of this section.
+
+A. Entry Orientation. The main entrance of each townhouse must:
+
+1. Be within eight feet of the longest street-facing wall of the dwelling unit, if the lot has public street frontage; and
+
+2. Either:
+
+a. Face the street (see FMC 19.30.040 Figure 1);
+
+b. Be at an angle of up to 45 degrees from the street (see GMC 19.30.040 Figure 2);
+
+c. Face a common open space or private access or driveway that is abutted by dwellings on at least two sides; or
+
+d. Open onto a porch (see FMC 19.30.040 Figure 4). The porch must:
+
+i. Be at least 25 square feet in area; and
+
+ii. Have at least one entrance facing the street or have a roof.
+
+B. Unit Definition. Each townhouse must include at least one of the following on at least one street-facing facade (see Figure 11):
+
+1. A roof dormer a minimum of four feet in width; or
+
+2. A balcony a minimum of two feet in depth and four feet in width and accessible from an interior room; or
+
+3. A bay window that extends from the facade a minimum of two feet; or
+
+4. An offset of the facade of a minimum of two feet in depth, either from the neighboring townhouse or within the facade of a single townhouse; or
+
+5. An entryway that is recessed a minimum of three feet; or
+
+6. A covered entryway with a minimum depth of four feet; or
+
+7. A porch meeting the standards of subsection (A)(2)(d) of this section.
+
+Note: Balconies and bay windows may encroach into a required setback area.
+
+Figure 11. Townhouse Unit Definition
+
+C. Windows. A minimum of 15 percent of the area of all street-facing facades on each individual unit must include windows or entrance doors. Half of the window area in the door of an attached garage may count toward meeting this standard. See Figure 6.
+
+D. Driveway Access and Parking. Townhouses with frontage on a public street shall meet the following standards:
+
+1. Garages on the front facade of a townhouse, off-street parking areas in the front yard, and driveways in front of a townhouse are allowed if they meet the following standards (see Figure 12).
+
+a. Each townhouse lot has a street frontage of at least 15 feet on a local street.
+
+b. A maximum of one driveway approach is allowed for every townhouse. Driveway approaches and/or driveways may be shared.
+
+c. Outdoor on-site parking and maneuvering areas do not exceed 12 feet wide on any lot.
+
+d. The garage width does not exceed 12 feet, as measured from the inside of the garage door frame.
+
+Figure 12. Townhouses With Parking in Front Yard
+
+2. The following standards apply to driveways and parking areas for townhouse projects that do not meet all of the standards in subsection (D)(1) of this section:
+
+a. Off-street parking areas shall be accessed on the back facade or located in the rear yard. No off-street parking shall be allowed in the front yard or side yard of a townhouse.
+
+b. A townhouse project that includes a corner lot shall take access from a single driveway approach on the side of the corner lot. See Figure 13.
+
+Figure 13. Townhouses on Corner Lot With Shared Access
+
+c. Townhouse projects that do not include a corner lot shall consolidate access for all lots into a single driveway. The driveway and approach are not allowed in the area directly between the front facade and front lot line of any of the townhouses. See Figure 14.
+
+Figure 14. Townhouses With Consolidated Access
+
+d. A townhouse project that includes consolidated access or shared driveways shall grant access easements to allow normal vehicular access and emergency access.
+
+3. Townhouse projects in which all units take exclusive access from a rear alley are exempt from compliance with subsection (D)(2) of this section.
+
+E. Pedestrian Access.
+
+1. An accessible pedestrian path must be provided that connects the main entrance of the dwelling unit to the street.
+
+2. The pedestrian path must be hard-surfaced and a minimum of three feet wide.
+
+3. The pedestrian path must not be located in vehicle parking and driveway areas. The pedestrian path may be located adjacent to the driveway. (Ord. 1-2024 § 1 (Att. A))
+
+19.30.060 Design standards for cottage clusters.
+
+Cottage clusters shall meet the design standards in subsections A through H of this section. No other design standards shall apply to cottage clusters unless noted in this section.
+
+A. Cottage Orientation. Cottages must be clustered around a common courtyard, meaning they abut the associated common courtyard or are directly connected to it by a pedestrian path, and must meet the following standards (see Figure 15):
+
+1. Each cottage within a cluster must either abut the common courtyard or must be directly connected to it by a pedestrian path.
+
+2. A minimum of 50 percent of cottages within a cluster must be oriented to the common courtyard and must:
+
+a. Have a main entrance facing the common courtyard;
+
+b. Be within 10 feet from the common courtyard, measured from the facade of the cottage to the nearest edge of the common courtyard; and
+
+c. Be connected to the common courtyard by a pedestrian path.
+
+3. Cottages within 20 feet of a street property line may have their entrances facing the street.
+
+4. Cottages not facing the common courtyard or the street must have their main entrances facing a pedestrian path that is directly connected to the common courtyard.
+
+5. Cottages shall have a footprint of less than 900 square feet.
+
+B. Common Courtyard Design Standards. Each cottage cluster must share a common courtyard. Common courtyards must meet the following standards (see Figure 15):
+
+1. The common courtyard must be a single, contiguous piece.
+
+2. Cottages must abut the common courtyard on at least two sides of the courtyard. Cottages may abut the common courtyard on one side when all cottages abut a natural resource.
+
+3. The common courtyard must contain a minimum of 150 square feet per cottage within the associated cluster (as defined in subsection A of this section).
+
+4. The common courtyard must be a minimum of 15 feet wide at its narrowest dimension.
+
+5. The common courtyard shall be developed with a mix of landscaping, lawn area, pedestrian paths, and/or paved courtyard area, and may also include recreational amenities. Impervious elements of the common courtyard shall not exceed 75 percent of the total common courtyard area.
+
+6. Pedestrian paths must be included in a common courtyard. Paths that are contiguous to a courtyard shall count toward the courtyard’s minimum dimension and area. Parking areas, required setbacks, and driveways do not qualify as part of a common courtyard. The pedestrian path must not be located in vehicle parking and driveway areas.
+
+Figure 15. Cottage Cluster Orientation and Common Courtyard Standards
+
+C. Community Buildings. Cottage cluster projects may include community buildings for the shared use of residents that provide space for accessory uses such as community meeting rooms, guest housing, exercise rooms, day care, or community eating areas. Community buildings must meet the following standards:
+
+1. Each cottage cluster is permitted one community building.
+
+2. A community building that meets the development code’s definition of a dwelling unit must meet the maximum 900 square foot footprint limitation that applies to cottages, unless a covenant is recorded against the property stating that the structure is not a legal dwelling unit and will not be used as a primary dwelling.
+
+D. Pedestrian Access.
+
+1. An accessible pedestrian path must be provided that connects the main entrance of each cottage to the following:
+
+a. The common courtyard;
+
+b. Shared parking areas;
+
+c. Community buildings; and
+
+d. Sidewalks in public rights-of-way abutting the site or rights-of-way if there are no sidewalks.
+
+2. The pedestrian path must be hard-surfaced and a minimum of four feet wide.
+
+E. Windows. Cottages within 20 feet of a street property line must meet any window coverage requirement that applies to detached single-unit dwellings in the same zone.
+
+F. Parking Design (see Figure 16).
+
+1. Clustered Parking. Off-street parking may be arranged in clusters, subject to the following standards:
+
+a. Cottage cluster projects with fewer than 16 cottages are permitted parking clusters of not more than five contiguous spaces.
+
+b. Cottage cluster projects with 16 cottages or more are permitted parking clusters of not more than eight contiguous spaces.
+
+c. Parking clusters must be separated from other spaces by at least four feet of landscaping.
+
+d. Clustered parking areas may be covered.
+
+2. Parking Location and Access.
+
+a. Off-street parking spaces and vehicle maneuvering areas shall not be located:
+
+i. Within of 20 feet from any street property line, except alley property lines;
+
+ii. Between a street property line and the front facade of cottages located closest to the street property line. This standard does not apply to alleys.
+
+b. Off-street parking spaces shall not be located within 10 feet of any other property line, except alley property lines. Driveways and drive aisles are permitted within 10 feet of other property lines.
+
+3. Screening. Landscaping, fencing, or walls at least three feet tall shall separate clustered parking areas and parking structures from common courtyards and public streets.
+
+4. Garages and Carports.
+
+a. Garages and carports (whether shared or individual) must not abut common courtyards.
+
+b. Individual attached garages up to 200 square feet shall be exempted from the calculation of maximum building footprint for cottages.
+
+c. Individual detached garages must not exceed 400 square feet in floor area.
+
+d. Garage doors for attached and detached individual garages must not exceed 20 feet in width.
+
+G. Accessory Structures. Accessory structures must not exceed 400 square feet in floor area.
+
+H. Existing Structures. On a lot or parcel to be used for a cottage cluster project, an existing detached single-unit dwelling on the same lot at the time of proposed development of the cottage cluster may remain within the cottage cluster project area under the following conditions:
+
+1. The existing dwelling may be nonconforming with respect to the requirements of this code.
+
+2. The existing dwelling may be expanded up to the maximum height in Table 19.30.030.A or the maximum building footprint; however, existing dwellings that exceed the maximum height and/or footprint of this code may not be expanded.
+
+3. The floor area of the existing dwelling shall not count towards the maximum average floor area of a cottage cluster.
+
+4. The existing dwelling shall be excluded from the calculation of orientation toward the common courtyard, per subsection (A)(1) of this section.
+
+Figure 16. Cottage Cluster Parking Design Standards
+
+(Ord. 1-2024 § 1 (Att. A))
+
+19.30.070 Flag lots and lots accessed by mid-block lanes.
+
+As shown below, some lots in existing neighborhoods may have standard widths but may be unusually deep compared to other lots in the area. Essentially unused space at the back of a lot may provide room for one or more lots for infill housing. Infill lots may be developed as “flag lots” or “mid-block developments,” as defined below:
+
+Figure 19.30.070 – Mid-Block Infill
+
+A. Mid-Block Lanes. Lots may be developed without frontage onto a public street when lot access is provided by a series of mid-block lanes, as shown above. Lots without frontage must be served by a mid-block lane that meets the standards for alleys, per subsections B through E of this section. Exceptions to this requirement may be requested for the purpose of preserving natural resources, or where access to a mid-block lane from the street is not available from the development parcel.
+
+B. Driveway and Lane Width. The minimum width of all shared drives and lanes shall be 12 feet; the maximum width is 20 feet, except as required by the Uniform Fire Code.
+
+C. Dedication of Drive Lane. The owner shall dedicate 12 feet of right-of-way or record a 12-foot easement (i.e., six feet for each property sharing a drive) for vehicle access similar to an alley. The dedication or recording, as applicable, shall be so indicated on the face of the subdivision or partition plat.
+
+D. Maximum Drive Lane Length. The maximum drive lane length is 400 feet unless a greater length is approved based upon the requirements of the Uniform Fire Code.
+
+E. Future Street Plans. Building placement and alignment of shared drives shall be designed so that future street connections can be made as surrounding properties develop (i.e., as shown in Figure 19.30.070). (Ord. 1-2024 § 1 (Att. A))
+
+19.30.080 Special standards for certain uses.
+
+This section supplements the standards contained in FMC 19.30.010 through 19.30.100. It provides standards for the following land uses in order to control the scale and compatibility of those uses within the residential district:
+
+A. Accessory Dwelling. An accessory dwelling is an interior, attached, or detached dwelling unit that is used in connection with, or that is accessory to, a single-unit dwelling. The housing density standard of the residential district does not apply to accessory dwellings, due to the small size and low occupancy level of the use. The following standards are intended to control the size and number of accessory dwellings on individual lots, to promote compatibility with adjacent land uses. Accessory dwellings shall comply with all of the following standards:
+
+1. One Unit. A maximum of one accessory dwelling unit is allowed per single-unit dwelling;
+
+2. Floor Area. The total square footage of an accessory dwelling shall not exceed 800 square feet, except where the entire floor of a dwelling existing as of January 18, 2019, is converted to an accessory dwelling and there is no maximum square footage for the converted floor;
+
+3. Building Height. The building height of detached accessory dwellings (i.e., separate cottages) shall not exceed 20 feet, as measured in accordance with FMC 19.13.020, except ADUs located above a detached garage shall comply with the building height standards for accessory uses and structures in subsections (E)(6)(d)(ii) and (iii) of this section;
+
+4. Lot Coverage and Floor Area Ratio. The accessory dwelling and all other buildings shall not exceed the floor area ratio requirements in FMC 19.30.030(A)(14).
+
+B. Manufactured Homes. Manufactured homes are permitted, subject to the following additional standards. Exception: The following standards do not apply to units which existed on site prior to the effective date of the ordinance codified in this title:
+
+1. Thermal Envelope. The manufactured home shall be certified by the manufacturer to meet the thermal envelope requirements equivalent to those for a single-unit dwelling constructed under the State Building Code.
+
+2. Prohibited. The manufactured home shall not be located in a designated historic district or immediately adjacent to a historic landmark (as is allowed by ORS 197.314).
+
+C. Residential Care Homes and Facilities. Residential care homes are residential treatment or training homes or adult foster homes licensed by the state of Oregon. They may provide residential care alone, or in conjunction with treatment and/or training, for five or fewer individuals (“homes”) or six to 15 individuals (“facilities”) who need not be related. Staff persons required to meet state licensing requirements shall not be counted in the number of facility residents and need not be related to each other or the residents. Residential care homes and facilities shall comply with the following standards, consistent with Oregon statutes:
+
+1. Licensing. All residential care homes shall be duly licensed by the state of Oregon.
+
+2. Zoning. Residential care facilities in the R-10 zone are permitted subject to the approval of a conditional use permit. The facility must be sited on a property that abuts and takes primary access from a minor arterial road.
+
+3. Residential care homes and facilities are subject to the standards applicable to single-unit dwellings.
+
+D. Community Services/Parks. Public and institutional uses (as listed in Table 19.30.020.A) are allowed in the residential district subject to the following land use standards, which are intended to control the scale of these developments and their compatibility with nearby residences:
+
+1. Development Site Area. The maximum development site area shall be eight acres, except that this standard shall not apply to parks and open space uses. Larger developments may be approved as a conditional use, in accordance with Chapter 19.440 FMC, Conditional Use Permits, or as part of a master planned development, in accordance with Chapter 19.450 FMC.
+
+2. Vehicle Areas and Trash Receptacles. All vehicle areas (i.e., parking, drives, storage, etc.) and trash receptacles shall be oriented away from adjacent residences to the greatest extent practicable, and shall be screened with an evergreen hedge or solid fence or wall of not less than six feet in height.
+
+E. Accessory Uses and Structures. Accessory uses and structures are of a nature customarily incidental and subordinate to the principal use or structure on the same lot, except for accessory dwelling units. Typical accessory structures in the residential district include detached garages, sheds, workshops, greenhouses and similar structures. (For standards applicable to accessory dwellings, please refer to subsection A of this section.) All accessory structures shall comply with all of the following standards:
+
+1. Primary Use Required. An accessory structure shall not be allowed without another permitted use (e.g., as listed in Table 19.30.020.A) pre-existing or developed simultaneously.
+
+2. Restrictions. A structure shall not be placed over an easement that prohibits such placement. No structure shall encroach into the public right-of-way.
+
+3. Compliance with Land Division Standards. The owner may be required to remove an accessory structure as a condition of land division approval when removal of the structure is necessary to comply with setback standards.
+
+4. Buffering. A minimum four-foot hedge or fence may be required to screen the accessory structure from dwellings on adjacent lots, unless a similar screen is provided or the distance to adjacent dwelling(s) is greater than 50 feet.
+
+5. Lot Coverage. Existing lot coverage standards for the applicable district would apply.
+
+6. Accessory structures are allowed subject to the following standards:
+
+a. Accessory structures must comply with the setback requirements of the main building, except where specifically modified by this section.
+
+b. Accessory structures 200 square feet or smaller must be located behind the front facade of the main building, but may be placed on the site with zero side and/or rear setbacks if in compliance with the Oregon Building Codes.
+
+c. No accessory structure shall be erected or maintained and no existing accessory structure shall be altered, modified, converted, enlarged or moved unless such accessory structure is located on the lot in conformance with the following:
+
+i. No accessory structure shall be located in a required front yard, nor shall an accessory structure be constructed on a lot which lacks a principal building.
+
+ii. If attached to the principal building they shall fulfill the same front, side and rear yard setbacks as required of the principal building.
+
+iii. No accessory structure shall encroach onto an easement of record unless detached, portable and written permission has been granted by the entity which is the grantee under the easement.
+
+iv. The maximum size of an accessory structure on a lot up to one acre in size is 1,000 square feet. Lots larger than one acre shall have no accessory building size limit except as provided elsewhere in this code. An accessory dwelling unit may be combined with a detached garage as a second level unit on a lot up to one acre in size, provided the floor area of the accessory dwelling unit does not exceed 800 square feet and the floor area of the garage, excluding the accessory unit, does not exceed 1,000 square feet.
+
+v. No accessory structure may be located closer than six feet from any other structure unless constructed to conform with the Oregon Building Codes.
+
+vi. Lot coverage requirements apply to all accessory structures.
+
+vii. Accessory structures situated on a corner lot and detached from the main building shall have a minimum side yard setback of 10 feet, except for accessory structures where private vehicles are stored and have an entrance from the street side yard, where a minimum street side yard setback of 20 feet shall be required.
+
+viii. All accessory structures attached to the principal building shall meet the requirements of the Oregon Building Codes.
+
+d. Accessory structures larger than 200 square feet must meet the following standards:
+
+i. If located within five feet of the property line accessory structures shall be no more than 10 feet in height.
+
+ii. If located at five feet or more, but less than the setback required for the principal structure, the building may be as tall as the main building or 20 feet in height, whichever is less.
+
+iii. If located at a greater distance from the property line than the setback required for the principal building, the accessory structure may be as tall as the principal structure or 25 feet, whichever is less.
+
+iv. Accessory structures 450 square feet or larger shall be constructed of materials that provide the same appearance, and be of a similar design to the main building.
+
+F. Bed and Breakfast Inns.
+
+1. Purpose. The purpose of this section is to provide standards for the establishment of a bed and breakfast inn.
+
+2. Accessory Use. A bed and breakfast inn must be accessory to a household already occupying the structure.
+
+3. Maximum Size. The bed and breakfast structure is limited to a maximum of five bedrooms for guests and a maximum of six guests per night.
+
+4. Employees. The bed and breakfast facility may have up to two nonresident employees for the facility.
+
+5. Food Service. Food services may only be provided to overnight guests of the bed and breakfast inn.
+
+6. Owner-Occupied. The bed and breakfast inn shall be owner-occupied and shall maintain the exterior physical characteristics of a single-unit dwelling. No separate structures shall be allowed (except for usual residential accessory buildings such as sheds or detached garages).
+
+7. Signs. One non-illuminated on-premises sign identifying the name of the bed and breakfast and the operator shall be permitted. The sign shall not exceed four square feet in area.
+
+8. Monitoring. All bed and breakfast inns must maintain a guest logbook. It must include the names and home address of the guests, guests’ license plate number if traveling by car, dates of stay and the room number of each guest. The log must be available for inspection by city staff upon request. (Ord. 3-2026 § 1 (Att. A); Ord. 1-2024 § 1 (Att. A))
+
+19.30.090 Residential medium density (RM) district.
+
+A. Purpose/Intent Statement. The residential medium density district is designed to provide land for larger multiple-unit housing and residential commercial uses to implement the Comprehensive Plan-identified need for maintaining higher density development, providing small commercial services within residential neighborhoods, and encouraging the development of multi-unit housing. New multi-unit developments shall comply with all of the following standards:
+
+Figure 19.30.090.A – Multi-Unit Housing (Typical Site Layout)
+
+B. Multi-Unit Housing Development Standards.
+
+1. Common Open Space. Inclusive of required yard setbacks, a minimum of 10 percent of the site area shall be designated and permanently reserved as usable common open space in all multiple-unit developments. The site area is defined as the lot or parcel on which the development is planned, after subtracting any required dedication of street right-of-way and other land for public purposes (e.g., public park or school grounds, etc.). Sensitive lands (e.g., wetlands, floodplains, steep hillsides) and historic buildings or landmarks open to the public and designated by the Comprehensive Plan or by the U.S. Department of the Interior may be counted toward meeting the common open space requirements.
+
+2. Private Open Space. Private open space areas shall be required for ground-floor and upper-floor housing units based on all of the following standards:
+
+a. Ground-floor housing units shall have front or rear patios or decks measuring at least 48 square feet. “Ground-floor housing” means the housing unit entrance (front or rear) is within five feet of the finished ground elevation (i.e., after grading and landscaping);
+
+b. A minimum of 50 percent of all upper-floor housing units shall have balconies or porches measuring at least 48 square feet. “Upper-floor housing” means housing units which are more than five feet above the finished grade; and
+
+c. Private open space areas shall be oriented toward common open space areas and away from adjacent single-unit residences, and adjacent and on-site trash receptacles, parking and drives, to the greatest extent practicable.
+
+3. Exemptions. Exemptions may be granted for the first 50 units of a larger project when these developments are within one-quarter mile (measured walking distance) of a public park; and there is a direct, accessible (i.e., Americans with Disabilities Act-compliant), lighted, and maintained pedestrian trail or sidewalk between the site and the park. An exemption shall be granted only when the nearby park provides active recreation areas such as play fields, children’s play area, sports courts, walking/fitness course, or similar facilities.
+
+4. Trash Receptacles. Trash receptacles shall be oriented away from adjacent residences and shall be screened with an evergreen hedge or solid fence or wall of not less than six feet in height. Receptacles must be accessible to trash pickup trucks.
+
+C. Residential Commercial Standards.
+
+1. Permitted Uses. Only those residential commercial uses specifically listed in Section 2 of Table 19.30.020.A are permitted. Residential and residential commercial uses may be mixed “vertically,” meaning that a residential use is developed above the commercial use (i.e., ground floor retail/office with upper-story apartments, townhomes, or condominiums), or may be mixed “horizontally,” meaning commercial and residential uses both occupy ground floor space. Automobile-oriented uses, as defined in FMC 19.65.100(D) or where only service vehicles are parked.
+
+2. Location. Residential commercial uses shall locate the front facade of the building along a city-designated collector or arterial street.
+
+3. Building Mass Supplemental Standard. The maximum width or length of a residential commercial or mixed use (residential and commercial) building shall not exceed 80 feet (from end-wall to end-wall).
+
+4. Floor Area Supplemental Standards. The maximum commercial floor area shall not exceed 5,000 square feet total per residential commercial site within the residential commercial district. Floor area is measured by totaling the interior floor area of all building stories, except crawl spaces (i.e., with less than seven and one-half feet of vertical clearance).
+
+5. Hours of Operation. Residential commercial land uses shall be limited to the following hours of operation: 7:00 a.m. to 10:00 p.m. with alternative hours proposed as a conditional use.
+
+Figure 19.30.090.C – Residential Commercial (Typical Site Layout)
+
+D. Design Standards for Muti-Unit Housing, Public and Institutional Buildings, Residential Commercial/Mixed Use Buildings.
+
+1. Purpose. The architectural standards are intended to provide detailed, human-scale design, while affording flexibility to use a variety of building styles.
+
+2. Applicability. This section applies to all of the following types of buildings, and shall be applied during site design review:
+
+a. Multi-unit housing;
+
+b. Public and institutional buildings;
+
+c. Residential commercial and mixed use buildings.
+
+3. Standards. All buildings which are subject to this section shall comply with all of the following standards. The graphics provided with each standard are intended to show examples of how to comply. Other building styles and designs can be used to comply, so long as they are consistent with the text of this section. An architectural feature (as shown in Figures 19.30.090.D(1) and 19.30.090.D(2)) may be used to comply with more than one standard.
+
+Figure 19.30.090.D – Building Form (Multi-Unit Housing Example)
+
+a. Building Form. The continuous horizontal distance (i.e., as measured from end-wall to end-wall) of individual buildings shall not exceed 120 feet. All buildings shall incorporate design features such as offsets, balconies, projections, window reveals, or similar elements to preclude large expanses of uninterrupted building surfaces, as shown in the above figure. Along the vertical face of a structure, such features shall occur at a minimum of every 35 feet, and on each floor shall contain at least two of the following features:
+
+i. Recess (e.g., deck, patio, courtyard, entrance or similar feature) that has a minimum depth of five feet;
+
+ii. Extension (e.g., floor area, deck, patio, entrance, or similar feature) that projects a minimum of two feet and runs horizontally for a minimum length of four feet; and/or
+
+iii. Offsets or breaks in roof elevation of two feet or greater in height.
+
+b. Eyes on the Street. All building elevations visible from a street right-of-way shall provide doors, porches, balconies, and/or windows. A minimum of 60 percent of front (i.e., street-facing) elevations, and a minimum of 30 percent of side and rear building elevations shall meet this standard. “Percent of elevation” is measured as the horizontal plane (lineal feet) containing doors, porches, balconies, terraces and/or windows. The standard applies to each full and partial building story.
+
+Figure 19.30.090.D(1) – Examples of Design Details on a Duplex
+
+c. Detailed Design. All buildings shall provide detailed design along all elevations (i.e., front, rear and sides). Detailed design shall be provided by using at least three of the following architectural features on all elevations, as appropriate for the proposed building type and style (may vary features on rear/side/front elevations):
+
+i. Dormers;
+
+ii. Gables;
+
+iii. Recessed entries;
+
+iv. Covered porch entries;
+
+v. Cupolas or towers;
+
+vi. Pillars or posts;
+
+vii. Eaves (minimum six-inch projection);
+
+viii. Off-sets in building face or roof (minimum 16 inches);
+
+ix. Window trim (minimum four inches wide);
+
+x. Bay windows;
+
+xi. Balconies;
+
+xii. Decorative patterns on exterior finish (e.g., scales/shingles, wainscoting, ornamentation, and similar features);
+
+xiii. Decorative cornices and rooflines (e.g., for flat roofs);
+
+xiv. An alternative feature providing visual relief, similar to options in subsections (D)(3)(c)(i) through (xiii) of this section.
+
+Figure 19.30.090.D(2) – Examples of Architectural Details
+
+(Ord. 1-2024 § 1 (Att. A))
+
+19.30.100 Residential manufactured home park district (MH).
+
+A. Manufactured Home Park. Manufactured home parks are permitted on parcels of one acre or larger within the manufactured home park (MH) district, subject to compliance with subsections (A)(1) through (5) of this section (in cases of conflict with state statutes, the statutes shall prevail; see ORS Chapters 197 and 446):
+
+1. Permitted Uses. Manufactured homes, prefabricated homes, manufactured home park manager’s office, home occupations, and accessory structures which are necessary for the operation and maintenance of the manufactured home park (e.g., landscape maintenance). Recreational vehicles are permitted in manufactured home parks provided they are connected to utilities (per ORS 197.493). Home occupations shall comply with FMC 19.490.200, Home occupation permits.
+
+2. Space. The minimum size pad or space for each home is 2,500 square feet; provided, that the overall density of the park does not exceed 14 units per acre. Each space shall be at least 30 feet wide and 40 feet long, in accordance with ORS 446.100(c).
+
+3. Setbacks and Building Separation. The minimum setback between park structures and abutting properties is five feet. The minimum setback between park structures and public street rights-of-way is 15 feet. At least a 10-foot separation shall be provided between all dwellings. Dwellings shall be placed a minimum of 14 feet apart where flammable or combustible fuel is stored between units. Park structures shall be placed no closer than five feet to a park street or sidewalk/pathway. An accessory structure shall not be located closer than six feet to any other structure or dwelling, except that a double carport or garage may be built which serves two dwellings. When a double carport/garage is built, the carport/garage shall be separated from all adjacent structures by at least three feet.
+
+4. Perimeter Landscaping. When manufactured homes are oriented with their back or side yards facing a public right-of-way, the city may require installation of fencing and planting of a 10-foot to 15-foot wide landscape buffer between the right-of-way and a manufactured home park for the privacy and security of residents or aesthetics of the streetscape.
+
+5. House Design. Manufactured homes in parks shall meet the following design standards, consistent with ORS 197.314(6):
+
+a. The manufactured home shall have a pitched roof with a slope not less than three feet in height for each 12 feet in width (14 degrees).
+
+b. Exception. Subsection (A)(5)(a) of this section does not apply to manufactured homes sited within the city prior to the effective date of the ordinance codified in this title. (Ord. 1-2024 § 1 (Att. A))
+
+1
+
+Prior legislation: Ords. 6-2001, 3-2002, 3-2003, 3-2010, 1-2012 and 7-2018.
