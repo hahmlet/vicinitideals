@@ -25,12 +25,23 @@ zones:
       url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 22
+    setback_front_ft:
+      value: 22
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L290"
     setback_side_ft: 15
-    setback_rear_ft: 22
-    setback_street_side_ft: 15
+    setback_rear_ft:
+      value: 22
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L291"
+    setback_street_side_ft:
+      value: 15
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L293"
     min_lot_sqft: 40000
-    max_coverage_pct: 20
+    min_lot_width_ft:
+      value: 100
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L282"
+    max_coverage_pct:
+      value: 20
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L288"
     notes: 'quadfit confidence: verified | Setbacks/coverage from City Model Home Application form (LDC
       eff 3/19/2024). Height 45 ft front elev / 49 ft side+rear. Covered porch >=20% of bldg line cuts
       front to 15 ft. Quadplex by-right per HV Middle Housing amendments. min_lot is the nominal density
@@ -43,12 +54,23 @@ zones:
       url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 22
+    setback_front_ft:
+      value: 22
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L290"
     setback_side_ft: 10
-    setback_rear_ft: 22
-    setback_street_side_ft: 15
+    setback_rear_ft:
+      value: 22
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L291"
+    setback_street_side_ft:
+      value: 15
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L293"
     min_lot_sqft: 20000
-    max_coverage_pct: 30
+    min_lot_width_ft:
+      value: 80
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L282"
+    max_coverage_pct:
+      value: 30
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L288"
     notes: 'quadfit confidence: verified | Height 45 ft front / 49 ft side+rear. Porch >=20% bldg line
       -> front 15 ft. min_lot nominal.'
   R15:
@@ -59,12 +81,23 @@ zones:
       url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 22
+    setback_front_ft:
+      value: 22
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L290"
     setback_side_ft: 7
-    setback_rear_ft: 22
-    setback_street_side_ft: 15
+    setback_rear_ft:
+      value: 22
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L291"
+    setback_street_side_ft:
+      value: 15
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L293"
     min_lot_sqft: 15000
-    max_coverage_pct: 35
+    min_lot_width_ft:
+      value: 70
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L282"
+    max_coverage_pct:
+      value: 35
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L288"
     notes: 'quadfit confidence: verified | Height 45/49 ft. Porch >=20% bldg line -> front 15 ft. min_lot
       nominal.'
   R10:
@@ -75,12 +108,23 @@ zones:
       url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 22
+    setback_front_ft:
+      value: 22
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L481"
     setback_side_ft: 7
-    setback_rear_ft: 22
-    setback_street_side_ft: 15
+    setback_rear_ft:
+      value: 22
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L482"
+    setback_street_side_ft:
+      value: 15
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L485"
     min_lot_sqft: 10000
-    max_coverage_pct: 40
+    min_lot_width_ft:
+      value: 60
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L472"
+    max_coverage_pct:
+      value: 40
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L479"
     notes: 'quadfit confidence: verified | Height 45/49 ft. Porch >=20% bldg line -> front 15 ft. min_lot
       nominal.'
   R8.5:
@@ -91,12 +135,23 @@ zones:
       url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 22
+    setback_front_ft:
+      value: 22
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L481"
     setback_side_ft: 5
-    setback_rear_ft: 22
-    setback_street_side_ft: 15
+    setback_rear_ft:
+      value: 22
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L482"
+    setback_street_side_ft:
+      value: 15
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L485"
     min_lot_sqft: 8500
-    max_coverage_pct: 45
+    min_lot_width_ft:
+      value: 50
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L472"
+    max_coverage_pct:
+      value: 45
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L479"
     notes: 'quadfit confidence: verified | Layer value is ''R8.5'' (code text ''R-8.5''). Height 45/49
       ft. Porch >=20% -> front 15 ft. min_lot nominal.'
   R7:
@@ -107,12 +162,23 @@ zones:
       url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 22
+    setback_front_ft:
+      value: 22
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L481"
     setback_side_ft: 5
-    setback_rear_ft: 22
-    setback_street_side_ft: 15
+    setback_rear_ft:
+      value: 22
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L482"
+    setback_street_side_ft:
+      value: 15
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L485"
     min_lot_sqft: 7000
-    max_coverage_pct: 50
+    min_lot_width_ft:
+      value: 50
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L472"
+    max_coverage_pct:
+      value: 50
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L479"
     notes: 'quadfit confidence: verified | Height 45/49 ft. Porch >=20% -> front 15 ft. Coverage never
       binds a ~1,000 sf/unit fourplex footprint. min_lot nominal.'
   R5:
@@ -125,10 +191,19 @@ zones:
     quadplex_allowed: true
     setback_front_ft: 20
     setback_side_ft: 5
-    setback_rear_ft: 20
-    setback_street_side_ft: 8
+    setback_rear_ft:
+      value: 20
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L660"
+    setback_street_side_ft:
+      value: 8
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L662"
     min_lot_sqft: 7000
-    max_coverage_pct: 60
+    min_lot_width_ft:
+      value: 40
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L648"
+    max_coverage_pct:
+      value: 60
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L656"
     notes: 'quadfit confidence: verified | Front 20 ft street-access / 10 ft alley-access. Height 45/49
       ft. Densest std SF zone. CORRECTED 2026-08-13 against Table 16.22.040-2: quadfit encoded the
       single-family tiers (5,000 sf lot / 50% coverage); the table splits by housing type and the
