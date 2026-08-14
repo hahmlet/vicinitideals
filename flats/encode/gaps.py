@@ -26,7 +26,9 @@ it is eight, and they need opposite things:
 ``undeclared``   the value names a document and ``code:`` does not, so nothing
                  has ever fetched it. Usually one line and a fetch; sometimes
                  the sign that the citation points at something that is not the
-                 code at all.
+                 code at all — of the fifty-one this first caught, fifty were
+                 a model-home application form and a Title 17 index page
+                 standing in for chapters already in the store.
 ``unsourced``    no stored document states it and the value names no chapter
                  that would. The next action is to find the chapter — or to
                  admit the value came from the quadfit port with nothing behind
@@ -90,8 +92,9 @@ NEXT = {
     "multi": "encode as variants — the document states more than one number",
     "undeclared": (
         "the value names a document nothing has fetched — declare that URL under "
-        "`code:`, or re-cite it if that URL is not the adopted code (one of the "
-        "three in the corpus points at a model-home application form)"
+        "`code:`, or re-cite it if that URL is not the adopted code: the two this "
+        "cause first caught were a model-home application form and a title index "
+        "page, neither of which states a standard"
     ),
     "unsourced": (
         "no stored document states this. Find the chapter that does, declare it "

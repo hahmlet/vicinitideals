@@ -22,7 +22,7 @@ zones:
     - '16.22.020'
     cite_default:
       cite: HV LDC 16.22.020 Table 16.22.020-2 (Very Low Density)
-      url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
+      url: https://ecode360.com/print/HA4934?guid=43529907
       retrieved: '2026-07-28'
     quadplex_allowed: true
     setback_front_ft:
@@ -51,7 +51,7 @@ zones:
     - '16.22.020'
     cite_default:
       cite: HV LDC 16.22.020 Table 16.22.020-2
-      url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
+      url: https://ecode360.com/print/HA4934?guid=43529907
       retrieved: '2026-07-28'
     quadplex_allowed: true
     setback_front_ft:
@@ -78,7 +78,7 @@ zones:
     - '16.22.020'
     cite_default:
       cite: HV LDC 16.22.020 Table 16.22.020-2
-      url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
+      url: https://ecode360.com/print/HA4934?guid=43529907
       retrieved: '2026-07-28'
     quadplex_allowed: true
     setback_front_ft:
@@ -105,7 +105,7 @@ zones:
     - '16.22.030'
     cite_default:
       cite: HV LDC 16.22.030 Table 16.22.030-2 (Low Density)
-      url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
+      url: https://ecode360.com/print/HA4934?guid=43529907
       retrieved: '2026-07-28'
     quadplex_allowed: true
     setback_front_ft:
@@ -132,7 +132,7 @@ zones:
     - '16.22.030'
     cite_default:
       cite: HV LDC 16.22.030 Table 16.22.030-2
-      url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
+      url: https://ecode360.com/print/HA4934?guid=43529907
       retrieved: '2026-07-28'
     quadplex_allowed: true
     setback_front_ft:
@@ -159,7 +159,7 @@ zones:
     - '16.22.030'
     cite_default:
       cite: HV LDC 16.22.030 Table 16.22.030-2
-      url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
+      url: https://ecode360.com/print/HA4934?guid=43529907
       retrieved: '2026-07-28'
     quadplex_allowed: true
     setback_front_ft:
@@ -186,7 +186,7 @@ zones:
     - '16.22.040'
     cite_default:
       cite: HV LDC 16.22.040 Table 16.22.040-2 (Medium Density)
-      url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
+      url: https://ecode360.com/print/HA4934?guid=43529907
       retrieved: '2026-07-28'
     quadplex_allowed: true
     setback_front_ft: 20
@@ -214,7 +214,7 @@ zones:
     - '16.22.040'
     cite_default:
       cite: HV LDC 16.22.040 (MUR-S, Mixed Use Residential-Single-Family); allows detached SFD
-      url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
+      url: https://ecode360.com/print/HA4934?guid=43529907
       retrieved: '2026-07-28'
     quadplex_allowed: true
     setback_front_ft: 20
@@ -229,7 +229,7 @@ zones:
     - '16.22.020'
     cite_default:
       cite: Assumed R-20 variant (unexplained 'CC' suffix in layer)
-      url: https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf
+      url: https://ecode360.com/print/HA4934?guid=43529907
       retrieved: '2026-07-28'
     quadplex_allowed: true
     setback_front_ft: 22
