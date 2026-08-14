@@ -1103,3 +1103,53 @@ Front yard
 
     assert ("setback_front_ft", 10) not in fields
     assert ("setback_front_ft", 15) in fields
+
+
+# --- digit-less zone families -----------------------------------------------
+
+SPRINGWATER = "\n".join(
+    [
+        "Table 4.1508:      Development Standards in Springwater Residential Sub-Districts",
+        "                                        VLDR-SW                 LDR-SW                  THR-SW",
+        "A. Minimum Buildable Lot Size (square feet)",
+        "     Townhouse                          None                    None                    1,800 sq. ft.",
+        "     All Other Uses                     10,000 sq. ft.          5,000 sq. ft.           None",
+    ]
+)
+
+
+def test_a_digit_less_zone_family_is_a_header() -> None:
+    # Springwater's sub-districts carry no digits at all — VLDR-SW, LDR-SW,
+    # THR-SW. Requiring a digit somewhere in the family refused the header
+    # and dropped the whole table to the prose reader, which read the
+    # townhouse 1,800 as every zone's lot size.
+    kind, cols = header("                    VLDR-SW                 LDR-SW                  THR-SW")
+
+    assert kind == ZONES_ACROSS
+    assert tuple(c.zone for c in cols) == ("VLDR-SW", "LDR-SW", "THR-SW")
+
+
+def test_a_repeated_digit_less_token_is_not_a_header() -> None:
+    # A wrapped label row repeats one token; a header names distinct
+    # districts.
+    assert header("                    MR                 MR") is None
+
+
+def test_a_row_of_empty_cells_is_still_not_a_header() -> None:
+    assert header("                    NA                 NA                  NA") is None
+
+
+def test_the_springwater_table_reads_the_middle_column() -> None:
+    found = candidates_for(read_tables(SPRINGWATER)[0], "LDR-SW", path=DOC)
+
+    got = {(c.field, c.value, c.housing_type) for c in found}
+    assert ("min_lot_sqft", 5000, "default") in got
+    assert not any(c.value == 1800 for c in found)
+
+
+def test_the_springwater_table_gives_the_townhouse_row_to_its_zone() -> None:
+    found = candidates_for(read_tables(SPRINGWATER)[0], "THR-SW", path=DOC)
+
+    assert ("min_lot_sqft", 1800, "townhouse") in {
+        (c.field, c.value, c.housing_type) for c in found
+    }

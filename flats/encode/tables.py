@@ -219,14 +219,24 @@ def header(line: str) -> tuple[str, tuple[Column, ...]] | None:
         return None
     if not _HEADER_HINT.search(found[0][1]):
         # Gresham's header is nothing but district names — no "Standard", no
-        # label cell at all. All cells must be zone codes, and at least one
-        # must carry a digit: "NA  NA  NA" is a row of empty cells whose label
+        # label cell at all. All cells must be zone codes, and none may read
+        # as an empty value: "NA  NA  NA" is a row of empty cells whose label
         # wrapped onto another line, and _ZONE cannot tell it from a district.
-        zones = [Column(text, offset) for offset, text in found if _ZONE.match(text)]
+        # Digit-less families — Springwater's VLDR-SW / LDR-SW / THR-SW —
+        # are real headers too, but only when the names differ: a wrapped
+        # label row repeats one token, a header names distinct districts.
+        zones = [
+            Column(text, offset)
+            for offset, text in found
+            if _ZONE.match(text) and not _NOT_A_NUMBER.match(text)
+        ]
         if (
             len(zones) >= 2
             and len(zones) == len(found)
-            and any(any(ch.isdigit() for ch in c.zone) for c in zones)
+            and (
+                any(any(ch.isdigit() for ch in c.zone) for c in zones)
+                or len({c.zone for c in zones}) > 1
+            )
         ):
             return ZONES_ACROSS, tuple(zones)
         return None

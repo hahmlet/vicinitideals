@@ -62,12 +62,19 @@ _SUBJECTS: tuple[tuple[str, str], ...] = (
     (r"front (?:building |yard )?setback", "setback_front_ft"),
     (r"(?:interior )?side (?:building |yard )?setback", "setback_side_ft"),
     (r"rear (?:building |yard )?setback", "setback_rear_ft"),
-    (r"lot (?:area|size)", "min_lot_sqft"),
+    # "average lot size" is a purpose statement — Springwater's VLDR preamble
+    # describes character at "an average lot size of 12,000 square feet" —
+    # not a minimum anybody may hold a permit to.
+    (r"(?<!average )lot (?:area|size)", "min_lot_sqft"),
     # "Width at building line" is Gresham's name for lot width — the heading
     # "E. Minimum Lot Width" is real but its sub-headings replace it as the
     # group, and they say "1. Width at building line: Interior lot" instead.
     (r"lot width|width at building line", "min_lot_width_ft"),
-    (r"(?:street )?frontage", "min_frontage_ft"),
+    # Qualified on purpose: bare "frontage" is a unit of counting in driveway
+    # rules — "approaches must not exceed 32 feet per frontage" — and the
+    # driveway width lands as a frontage standard on every zone in the
+    # chapter.
+    (r"(?:lot|street|minimum) frontage|frontage of at least", "min_frontage_ft"),
     (r"(?:building )?height", "max_height_ft"),
     (r"floor area ratio|\bFAR\b", "max_far"),
     (r"(?:building|lot|site) coverage", "max_coverage_pct"),
@@ -96,8 +103,11 @@ _EXCEPTION = re.compile(
     # 5-foot fallback for when it cannot be used; neither number is the base
     # standard, and reading the fallback as one contradicts every zone whose
     # real side setback is larger.
+    # "may be permitted" is the same family — Springwater's "the maximum
+    # front or street side setback of up to 20 feet may be permitted when
+    # enhanced pedestrian spaces are provided" grants relief, not a standard.
     r"|may be reduced|is reduced|may extend|is lowered|is allowed if|may be increased"
-    r"|shall not be employed)\b",
+    r"|may be permitted|shall not be employed)\b",
     re.I,
 )
 #: An outline heading that puts everything under it in exception scope.
@@ -109,7 +119,12 @@ _REQUIREMENT = re.compile(
     re.I,
 )
 _SELECTION = re.compile(
-    r"\b(corner lot|through lot|flag lot|abut(?:s|ting)|adjacent to|where the)\b", re.I
+    # "in zones with ..." selects by a property of the zone — Troutdale keys
+    # its parking minimums to lot-size classes that way, and the thresholds
+    # are not lot-size standards.
+    r"\b(corner lot|through lot|flag lot|abut(?:s|ting)|adjacent to|where the"
+    r"|in (?:zones|districts) with)\b",
+    re.I,
 )
 _APPLICABILITY = re.compile(
     r"\b(this (?:section|chapter) applies|applies to|in the .{1,30} zones?|are the standards)\b",

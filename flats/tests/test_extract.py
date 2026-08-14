@@ -14,6 +14,7 @@ from flats.encode.extract import (
     Extraction,
     candidates_in,
     extract,
+    states_a_rule,
     tag_of,
     to_yaml,
 )
@@ -437,3 +438,58 @@ def test_a_bare_citation_line_is_not_a_heading_either() -> None:
 
     found = [c for c in result.candidates if c.field == "setback_front_ft"]
     assert [(c.value, c.section) for c in found] == [(15, "40.210")]
+
+
+# --- vocabulary earned on real text -----------------------------------------
+
+
+def test_a_driveway_width_per_frontage_is_not_a_frontage_standard() -> None:
+    # Troutdale and Wilsonville both cap driveway approaches at "32 feet per
+    # frontage"; the bare noun handed the driveway width to min_frontage_ft
+    # on every zone in the chapter.
+    found = candidates_in(
+        "The total width of all driveway approaches must not exceed 32 feet per frontage.",
+        1,
+        DOC,
+    )
+
+    assert found == []
+
+
+def test_a_qualified_frontage_is_still_read() -> None:
+    found = candidates_in("The minimum street frontage is 35 feet.", 1, DOC)
+
+    assert [(c.field, c.value) for c in found] == [("min_frontage_ft", 35)]
+
+
+def test_an_average_lot_size_is_not_a_minimum() -> None:
+    # Springwater's purpose paragraph describes character "at an average lot
+    # size of 12,000 square feet" — nobody may hold a permit to an average.
+    found = candidates_in(
+        "The district provides Middle Housing at an average lot size of 12,000 square feet.",
+        1,
+        DOC,
+    )
+
+    assert found == []
+
+
+def test_a_lot_size_class_selector_is_not_a_standard() -> None:
+    # "In zones with a minimum lot size of less than 5,000 square feet ..."
+    # keys a parking rule to a lot-size class; the threshold may corroborate
+    # nothing and contradict nothing.
+    assert not states_a_rule(
+        "In zones with a minimum lot size of less than 5,000 square feet, a minimum of "
+        "two off-street parking spaces per quadplex development is required."
+    )
+
+
+def test_relief_that_may_be_permitted_is_an_exception() -> None:
+    found = candidates_in(
+        "The maximum front or street side setback of up to 20 feet may be permitted "
+        "when enhanced pedestrian spaces and amenities are provided.",
+        1,
+        DOC,
+    )
+
+    assert found == []
