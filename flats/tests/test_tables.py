@@ -2047,3 +2047,84 @@ def test_a_heading_stating_another_basis_scopes_nothing() -> None:
     # rows are filed under whatever heading came before it, which is how an
     # average width became a minimum width.
     assert not [f for f in _typed_rows(TUALATIN_ROWS) if f[1] == 14]
+
+
+#: The same chapter's setback table, with the page break that runs through
+#: it: a running head restating the section, the reprinted column headers,
+#: the dwelling types the block is written for, and a use category whose
+#: standards follow the dwellings' in the same block.
+TUALATIN_SETBACKS = """
+41.300. Development Standards.
+
+MINIMUM SETBACKS
+TDC 41.300 TUALATIN DEVELOPMENT CODE
+STANDARD REQUIREMENT
+LIMITATIONS AND CODE
+REFERENCES
+Single Family Detached,
+Duplex, Townhouse, Triplex,
+or Quadplex
+Front 10 feet
+Garage Door 20 feet
+Side 5 feet Zero-foot side setbacks permitted for
+lot or parcel lines where Townhouse
+units are attached.
+Rear 10 feet
+Multi-family (5 or more
+units), Conditional Uses,
+and Other Permitted Uses
+Not Listed
+Side 25 feet
+TDC 41.300 TUALATIN DEVELOPMENT CODE
+"""
+
+
+def _setbacks(text: str) -> dict[str, float]:
+    from flats.encode.tables import read_pairs
+
+    return {c.field: c.value for c in read_pairs(text, path="doc.txt") if "setback" in c.field}
+
+
+def test_a_setbacks_heading_scopes_the_directions_under_it() -> None:
+    # A bare "Front" / "10 ft." pair is refused everywhere else — nothing in
+    # it names a zone. Under an all-capitals "MINIMUM SETBACKS" the heading
+    # is the anchor, and the row states which setback it answers.
+    assert _setbacks(TUALATIN_SETBACKS) == {
+        "setback_front_ft": 10,
+        "setback_garage_entrance_ft": 20,
+        "setback_side_ft": 5,
+        "setback_rear_ft": 10,
+    }
+
+
+def test_a_row_keeps_its_number_when_the_limitations_column_shares_the_line() -> None:
+    # "Side 5 feet Zero-foot side setbacks permitted for" is one row of a
+    # two-column table linearised. The tail is relief, not a second standard,
+    # and refusing the whole line lost the side setback.
+    assert _setbacks(TUALATIN_SETBACKS)["setback_side_ft"] == 5
+
+
+def test_a_use_category_ends_the_block_it_follows() -> None:
+    # The multi-family side setback is printed in the same block, under a
+    # scope line four lines long. Read untyped it is the zone's own standard,
+    # and 25 ft would replace the 5 ft the dwelling rows state.
+    assert _setbacks(TUALATIN_SETBACKS)["setback_side_ft"] != 25
+
+
+def test_a_running_head_is_not_a_new_section() -> None:
+    # "TDC 41.300 TUALATIN DEVELOPMENT CODE" heads every page of 41.300. Read
+    # as a heading it cleared the block, and Tualatin's setback table is
+    # longer than a page.
+    from flats.encode.tables import read_pairs
+
+    rows = read_pairs(TUALATIN_SETBACKS, path="doc.txt")
+
+    assert rows and {c.section for c in rows} == {"41.300"}
+
+
+def test_the_dwelling_types_a_block_is_written_for_type_its_rows() -> None:
+    from flats.encode.tables import read_pairs
+
+    front = next(c for c in read_pairs(TUALATIN_SETBACKS, path="doc.txt") if c.field == "setback_front_ft")
+
+    assert "quadplex" in front.housing_type

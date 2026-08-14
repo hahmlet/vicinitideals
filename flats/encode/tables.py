@@ -25,6 +25,7 @@ apply here rather than that it is large.
 from __future__ import annotations
 
 import re
+from collections import Counter
 from dataclasses import dataclass
 from dataclasses import field as dc_field
 from dataclasses import replace
@@ -918,6 +919,15 @@ _BARE_GROUPED = {
     "street side": "setback_street_side_ft",
     "rear": "setback_rear_ft",
 }
+#: What a row may name under an all-capitals setbacks heading. The heading is
+#: the anchor a bare direction otherwise lacks: "MINIMUM SETBACKS" over
+#: "Front 15 feet" states the zone's front setback, where a bare "Front" /
+#: "10 ft." pair inside a structure-type table states one sub-type's.
+_CAPS_GROUPED = {
+    "garage door": "setback_garage_entrance_ft",
+    "garage": "setback_garage_entrance_ft",
+}
+
 #: A heading naming the lot itself, scoping rows that name only an axis.
 #: Lake Oswego prints "MIN. LOT DIMENSIONS" over "Area (sq. ft.)", "Width
 #: (ft.)" and "Depth (ft.)" — the same division of labour the setback
@@ -1101,6 +1111,21 @@ def read_pairs(text: str, *, path: str) -> list[Candidate]:
         and _subject(j) is None
         and j.strip(" .:").lower() not in _GROUPED_SUBJECTS
     }
+    #: The document's own name, printed under a section number at the top of
+    #: every page — "TDC 41.220 TUALATIN DEVELOPMENT CODE". Two marks
+    #: together: the title is set in capitals, where a real heading is
+    #: "41.220. Housing Types.", and it repeats under one section number
+    #: after another, where a heading appears once.
+    titles = Counter()
+    for line in lines:
+        head = _SECTION.match(line.strip())
+        if head:
+            titles[line.strip()[head.end() :].strip()] += 1
+    running_heads = {
+        title
+        for title, count in titles.items()
+        if count > 1 and any(ch.isalpha() for ch in title) and title.upper() == title
+    }
     out: list[Candidate] = []
     section = ""
     group = ""
@@ -1108,6 +1133,9 @@ def read_pairs(text: str, *, path: str) -> list[Candidate]:
     #: which is how a two-column requirements table prints: the heading says
     #: what is being required and each row says for whom.
     caps_field = ""
+    #: The same heading naming a group rather than a standard — "MINIMUM
+    #: SETBACKS" over "Front 15 feet", "Side 5 feet", "Rear 15 feet".
+    caps_group = False
     label: str | None = None
     #: Consecutive lines that are nothing but a housing-type name. Two in a
     #: row is a type-column header — Wood Village's Table 220-3 linearises
@@ -1149,10 +1177,25 @@ def read_pairs(text: str, *, path: str) -> list[Candidate]:
             # so the duplex, townhouse, triplex and quadplex lot minimums
             # printed underneath went unread, three rows at a time.
             found = None
+        if found and stripped[found.end() :].strip() in running_heads:
+            # A running head, not a heading: "TDC 41.220 TUALATIN DEVELOPMENT
+            # CODE" and "TDC 41.300 MEDIUM LOW DENSITY RESIDENTIAL ZONE
+            # (RML)" head every page of their section, and what gives them
+            # away is that the title repeats under a different number each
+            # time. Read as headings they cleared the block in force, and
+            # Tualatin's lot size and setback tables are long enough to
+            # cross a page break — which is where its quadplex minimum lot
+            # and every RML setback went. The number is still the section
+            # the page is in, and worth having: the alternative is a stale
+            # cross-reference standing as the section a whole table was
+            # read under.
+            section = found.group("sec")
+            found = None
         if found:
             section = found.group("sec")
             group = ""
             caps_field = ""
+            caps_group = False
             label = None
             type_run = 0
             types_across = False
@@ -1175,6 +1218,20 @@ def read_pairs(text: str, *, path: str) -> list[Candidate]:
                 # which is double the lot a quadplex there actually needs.
                 pending_type = _housing_type(stripped)
                 continue
+            if caps_group:
+                # Inside a group block a run of type lines is the scope of
+                # the rows below — "Single Family Detached, / Duplex,
+                # Townhouse, Triplex, / or Quadplex" over Front, Side and
+                # Rear. Counted as a type-column header instead, it stopped
+                # the reader at every RML setback in the chapter.
+                pending_type = "+".join(
+                    dict.fromkeys(
+                        [p for p in pending_type.split("+") if p]
+                        + _housing_type(stripped).split("+")
+                    )
+                )
+                label = None
+                continue
             type_run += 1
             if type_run >= 2:
                 types_across = True
@@ -1184,7 +1241,13 @@ def read_pairs(text: str, *, path: str) -> list[Candidate]:
             continue
         type_run = 0
         if types_across:
-            continue
+            if not (_caps_head(stripped) or _caps_group_head(stripped)):
+                continue
+            # A type-column header governs its own table, not the rest of the
+            # chapter. Tualatin's use table lists dwelling types down a
+            # column, and with nothing to end it every requirements table
+            # printed after it went unread.
+            types_across = False
         if _caps_head(stripped):
             # "MINIMUM LOT SIZE" over a block of rows, one housing type each.
             # A block heading, not a label: Tualatin prints an unreadable row
@@ -1197,10 +1260,48 @@ def read_pairs(text: str, *, path: str) -> list[Candidate]:
             # were filed under the previous heading's standard, which is how
             # an average width became a minimum.
             caps_field = "" if _ROW_SCOPED.search(stripped) else (_subject(stripped) or "")
+            caps_group = False
             label = None
             typed_stack = False
             pending_type = ""
             continue
+        if _caps_group_head(stripped):
+            caps_group = True
+            caps_field = ""
+            label = None
+            typed_stack = False
+            pending_type = ""
+            continue
+        if caps_group and label is None:
+            grouped = _grouped_row(stripped)
+            if grouped is not None:
+                # "MINIMUM SETBACKS" over "Front 15 feet" — the heading names
+                # the group, the row names which setback, and the limitations
+                # column ("May be reduced to 12 feet if to an unenclosed
+                # porch") shares the line with it.
+                field, (number, _) = grouped
+                out.append(
+                    Candidate(
+                        field=field,
+                        value=int(number) if number.is_integer() else number,
+                        line=n,
+                        text=stripped,
+                        quote=f"{path}#L{n}",
+                        source="pair",
+                        section=section,
+                        housing_type=pending_type,
+                    )
+                )
+                continue
+            if _OTHER_SCOPE.search(stripped):
+                # A scope line naming something the pod is not — "Multi-family
+                # (5 or more units), Conditional Uses, and Other Permitted
+                # Uses" — ends the block. The rows under it are that
+                # category's standards, and read untyped they file as the
+                # zone's own: Tualatin states a 5 ft side setback for
+                # multi-family directly under the dwelling rows.
+                caps_group = False
+                pending_type = ""
         scope = (_subject(label) if label is not None else None) or caps_field
         if scope:
             typed = _typed_row(f"{carry} {stripped}") if carry else None
@@ -1353,6 +1454,38 @@ _ROW_TYPE_WORDS = 8
 _CONTINUES = re.compile(r"(?:,|\band)\s*$", re.I)
 
 
+#: How the limitations column starts once the two columns merge onto one
+#: line: "Quadplex 4,500 square feet May be reduced for Flexible Lot". The
+#: capital opens a sentence about relief, which is a different claim from
+#: "7.5 ft or 5 ft due to irregular shaped lots" — that one states two
+#: standards in one cell and must still be refused whole.
+_LIMITATION = re.compile(
+    r"^(?:May|Must|Only|Limited|Subject|Zero|If|As|No|Not|Minimum|Determined|The|Permitted"
+    r"|On|For|Applies|Where|Except|Conditional|Average)\b"
+)
+
+
+def _row_measure(rest: str) -> tuple[float, str] | None:
+    """The measurement a row states, with its limitations column set aside.
+
+    A table printed in two columns and linearised puts the standard and the
+    relief that qualifies it on one line. The relief is not an alternative
+    value — the number before it is the standard — but only a tail that opens
+    a sentence about relief may be dropped. Anything else and the row is
+    refused, because a cell stating two standards states neither.
+    """
+    whole = _measure_line(rest)
+    if whole is not None:
+        return whole
+    m = _MEASURE.match(rest.strip())
+    if not m:
+        return None
+    tail = rest.strip()[m.end() :].strip()
+    if not tail or not _LIMITATION.match(tail):
+        return None
+    return measure(rest.strip()[: m.end()])
+
+
 def _typed_row(line: str) -> tuple[str, tuple[float, str]] | None:
     """A row that names a housing type and its number on one line.
 
@@ -1361,18 +1494,31 @@ def _typed_row(line: str) -> tuple[str, tuple[float, str]] | None:
     a code reference, a relief clause, an averaging basis — and there is no
     row here, because the number would be filed as a standard it is not.
     """
-    if _ROW_SCOPED.search(line):
-        return None
     words = line.split()
     for k in range(min(_ROW_TYPE_WORDS, len(words) - 1), 0, -1):
         head = " ".join(words[:k])
         htype = _housing_type(head)
         if htype is None or any(ch.isdigit() for ch in head):
             continue
-        measured = _measure_line(" ".join(words[k:]))
-        if measured is not None:
-            return htype, measured
+        rest = " ".join(words[k:])
+        measured = _row_measure(rest)
+        if measured is None:
+            continue
+        # The veto reads the standard, not the relief beside it: "Average of
+        # 6,500 square feet" is a subdivision average and no row at all,
+        # while "6,500 square feet May be reduced for Flexible Lot" is the
+        # standard with its limitations column attached.
+        stated = rest[: len(rest) - len(rest.lstrip())] + rest.strip()
+        if _ROW_SCOPED.search(head) or _ROW_SCOPED.search(_stated_part(stated)):
+            return None
+        return htype, measured
     return None
+
+
+def _stated_part(rest: str) -> str:
+    """A row's value with its limitations column removed."""
+    m = _MEASURE.match(rest.strip())
+    return rest.strip() if not m else rest.strip()[: m.end()]
 
 
 def _titled(rest: str) -> bool:
@@ -1402,6 +1548,42 @@ def _caps_head(line: str) -> bool:
     if len(letters) < 6 or not all(ch.isupper() for ch in letters):
         return False
     return _subject(line) is not None
+
+
+#: A scope line naming a use category rather than a dwelling type. What
+#: follows it is that category's standards, not the zone's.
+_OTHER_SCOPE = re.compile(
+    r"\b(?:conditional use|other permitted|multi-?family|infrastructure"
+    r"|utilit(?:y|ies)|institutional|non-?residential|commercial|industrial)",
+    re.I,
+)
+
+
+def _caps_group_head(line: str) -> bool:
+    """An all-capitals heading naming a group of standards — "MINIMUM SETBACKS".
+
+    A group heading names no standard of its own; the rows under it do, one
+    direction each. Distinguished from a heading that names a standard only
+    by ``_subject`` finding nothing in it.
+    """
+    if not _PAIR_GROUP.search(line) or _ROW_SCOPED.search(line):
+        return False
+    letters = [ch for ch in line if ch.isalpha()]
+    return bool(letters) and all(ch.isupper() for ch in letters) and len(line.split()) <= _PAIR_WORDS
+
+
+def _grouped_row(line: str) -> tuple[str, tuple[float, str]] | None:
+    """A row naming one setback and its number on one line — "Front 15 feet"."""
+    words = line.split()
+    for k in range(min(3, len(words) - 1), 0, -1):
+        name = " ".join(words[:k]).strip(" .:").lower()
+        field = _BARE_GROUPED.get(name) or _CAPS_GROUPED.get(name)
+        if field is None:
+            continue
+        measured = _row_measure(" ".join(words[k:]))
+        if measured is not None and FIELDS[field].kind == measured[1]:
+            return field, measured
+    return None
 
 
 def _grid_value(line: str, label: str, group: str = "") -> tuple[float, str, tuple[str, ...]] | None:
