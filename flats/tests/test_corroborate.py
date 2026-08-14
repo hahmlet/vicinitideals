@@ -486,3 +486,55 @@ def test_conditional_only_numbers_are_not_an_invitation_to_encode() -> None:
     )
 
     assert got == []
+
+
+# --- typed prose speaks for its type, not the zone --------------------------
+
+
+def test_prose_typed_to_another_housing_type_cannot_corroborate() -> None:
+    # Wilsonville § 4.113 A.7 states cottage-cluster and ADU setbacks in a
+    # clause whose outline citations ("in 5. above") happen to contain the
+    # encoded side setback. A number inside another type's standard matching
+    # the zone's is a coincidence, not corroboration.
+    got = check_zone(
+        "Section 5.080  General Building Setbacks\n"
+        "For cottage clusters, the minimum side setback is 5 feet.\n",
+        layer="or/clackamas/rivergrove",
+        zone="R10",
+        values={"setback_side_ft": value(5, "setback_side_ft")},
+        path="or/clackamas/rivergrove/rldo.composite.txt",
+        sections=("5.080",),
+    )
+
+    assert {f.field: f.verdict for f in got}["setback_side_ft"] is Verdict.unsupported
+
+
+def test_prose_typed_to_the_pod_still_corroborates() -> None:
+    # The pod is an attached townhome — a townhouse standard is its standard.
+    got = check_zone(
+        "Section 5.080  Lot Standards\n"
+        "For townhouses, the minimum lot size shall be 1,500 square feet.\n",
+        layer="or/clackamas/rivergrove",
+        zone="R10",
+        values={"min_lot_sqft": value(1500, "min_lot_sqft")},
+        path="or/clackamas/rivergrove/rldo.composite.txt",
+        sections=("5.080",),
+    )
+
+    assert {f.field: f.verdict for f in got}["min_lot_sqft"] is Verdict.agrees
+
+
+def test_pod_typed_prose_still_contradicts() -> None:
+    # Wilsonville's townhouse rows differing from encoded SFD tiers are true
+    # signal, not noise — a pod-typed base standard must still block.
+    got = check_zone(
+        "Section 5.080  Lot Standards\n"
+        "For townhouses, the minimum lot size shall be 1,500 square feet.\n",
+        layer="or/clackamas/rivergrove",
+        zone="R10",
+        values={"min_lot_sqft": value(5000, "min_lot_sqft")},
+        path="or/clackamas/rivergrove/rldo.composite.txt",
+        sections=("5.080",),
+    )
+
+    assert {f.field: f.verdict for f in got}["min_lot_sqft"] is Verdict.differs

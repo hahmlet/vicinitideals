@@ -493,3 +493,20 @@ def test_relief_that_may_be_permitted_is_an_exception() -> None:
     )
 
     assert found == []
+
+
+def test_a_sentence_naming_its_housing_type_carries_it() -> None:
+    # Wilsonville § 4.113 states cottage-cluster setbacks and townhouse lot
+    # minimums as prose. The type travels on the candidate so selection can
+    # decide whether it speaks for the pod, exactly as for a typed table row.
+    found = candidates_in(
+        "For townhouses, the minimum lot size shall be 1,500 square feet.", 4, DOC
+    )
+
+    assert [c.housing_type for c in found] == ["townhouse"]
+
+
+def test_an_untyped_sentence_carries_no_type() -> None:
+    found = candidates_in("The minimum lot area is 3,000 square feet.", 6, DOC)
+
+    assert [c.housing_type for c in found] == [""]

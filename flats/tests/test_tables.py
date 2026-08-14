@@ -1153,3 +1153,71 @@ def test_the_springwater_table_gives_the_townhouse_row_to_its_zone() -> None:
     assert ("min_lot_sqft", 1800, "townhouse") in {
         (c.field, c.value, c.housing_type) for c in found
     }
+
+
+# --- type-column headers: a run of housing types refuses the block ----------
+
+# Wood Village Table 220-3 as municipal.codes linearises it: the header row
+# becomes a run of housing-type names, then each row label prints over a
+# ragged run of values whose empty cells vanished with the geometry. Flat
+# text can no longer say which type a value belongs to.
+WOOD_VILLAGE_TYPE_COLUMNS = """220.320 Lot Size and Dimensional Standards.
+
+Townhouse
+
+Detached Single Dwelling
+
+Duplex
+
+Minimum Lot Size
+
+- Min. lot area
+
+1,500 sq ft
+
+10,000 sq ft
+
+Minimum Setbacks
+
+- Front setback
+
+10 ft
+
+20 ft
+"""
+
+
+def test_a_run_of_housing_types_suppresses_all_pairing() -> None:
+    # Two values land under one label — whichever pairing the reader guessed,
+    # some type's number would corroborate the wrong standard by coincidence.
+    # Wood Village's MR block did exactly that: the duplex column's 10,000
+    # "agreed" with the encoded SFD minimum.
+    assert _pairs(WOOD_VILLAGE_TYPE_COLUMNS) == {}
+
+
+def test_the_type_column_refusal_ends_at_the_next_section() -> None:
+    text = WOOD_VILLAGE_TYPE_COLUMNS + "\n220.330 Fences.\n\nMaximum height\n\n6 ft\n"
+
+    assert _pairs(text) == {"max_height_ft": 6}
+
+
+def test_one_type_line_is_a_sub_label_not_a_header() -> None:
+    # A single housing-type line is a sub-row label (Gladstone's "Detached
+    # single household"), not a column header — pairing continues after it.
+    text = """220.320 Standards.
+
+Townhouse
+
+Minimum front setback
+
+15 ft
+"""
+
+    assert _pairs(text) == {"setback_front_ft": 15}
+
+
+def test_wood_village_type_spellings_are_recognised() -> None:
+    from flats.encode.tables import _housing_type
+
+    assert _housing_type("Detached Single Dwelling") == "single_detached"
+    assert _housing_type("Cottage Housing") == "cottage_cluster"

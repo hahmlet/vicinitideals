@@ -746,11 +746,15 @@ _HOUSING_TYPES: tuple[tuple[re.Pattern[str], str], ...] = (
     # would read a cul-de-sac tier as the pod's default row.
     (re.compile(r"\ball other uses?\b|\bother uses\b", re.I), "default"),
     (re.compile(r"\ball (?:residential )?uses\b", re.I), "all"),
-    (re.compile(r"\bsingle[ -](?:family[ -])?detached\b", re.I), "single_detached"),
+    # Wood Village writes the same type "Detached Single Dwelling".
+    (
+        re.compile(r"\bsingle[ -](?:family[ -])?detached\b|\bdetached single\b", re.I),
+        "single_detached",
+    ),
     (re.compile(r"\bduplex(?:es)?\b", re.I), "duplex"),
     (re.compile(r"\btriplex(?:es)?\b", re.I), "triplex"),
     (re.compile(r"\b(?:quad|four)-?plex(?:es)?\b", re.I), "quadplex"),
-    (re.compile(r"\bcottage\s+clusters?\b", re.I), "cottage_cluster"),
+    (re.compile(r"\bcottage\s+(?:clusters?|housing)\b", re.I), "cottage_cluster"),
     (re.compile(r"\bmulti-?family\b|\bapartments?\b", re.I), "multifamily"),
     (re.compile(r"\bmanufactured\b|\bmobile\s+home\b", re.I), "manufactured"),
 )
@@ -846,6 +850,15 @@ def read_pairs(text: str, *, path: str) -> list[Candidate]:
     section = ""
     group = ""
     label: str | None = None
+    #: Consecutive lines that are nothing but a housing-type name. Two in a
+    #: row is a type-column header — Wood Village's Table 220-3 linearises
+    #: "Townhouse / Detached Single Dwelling / Duplex / ..." then prints each
+    #: label over a ragged run of values whose empties vanished with the
+    #: geometry. Nothing after that header can say which type a value
+    #: belongs to, so nothing after it is read — a wrong-column number that
+    #: happens to agree is a coincidence detector, not corroboration.
+    type_run = 0
+    types_across = False
 
     for n, raw in enumerate(lines, start=1):
         stripped = raw.strip()
@@ -856,6 +869,22 @@ def read_pairs(text: str, *, path: str) -> list[Candidate]:
             section = found.group("sec")
             group = ""
             label = None
+            type_run = 0
+            types_across = False
+            continue
+        if (
+            _housing_type(stripped) is not None
+            and not any(ch.isdigit() for ch in stripped)
+            and len(stripped.split()) <= _GROUP_WORDS
+            and not stripped.endswith(".")
+        ):
+            type_run += 1
+            if type_run >= 2:
+                types_across = True
+            label = None
+            continue
+        type_run = 0
+        if types_across:
             continue
         if label is not None:
             parsed = _measure_line(stripped)

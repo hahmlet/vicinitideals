@@ -358,6 +358,15 @@ def candidates_in(text: str, line: int, path: str, *, quote: str = "") -> list[C
     if not _units_allow(text, FIELDS[name].kind):
         return []
 
+    # A sentence that names its housing type states that type's standard,
+    # not the zone's — "For townhouses the minimum lot size ... is 1,500
+    # square feet" — and which type speaks for the pod is decided at
+    # selection, exactly as for a typed table row. Imported here because
+    # tables imports this module at load.
+    from flats.encode.tables import _housing_type
+
+    htype = _housing_type(text) or ""
+
     out: list[Candidate] = []
     for number in _numbers(text, subject=_subject_span(text)):
         value = int(number) if number.is_integer() else number
@@ -368,6 +377,7 @@ def candidates_in(text: str, line: int, path: str, *, quote: str = "") -> list[C
                 line=line,
                 text=text.strip(),
                 quote=quote or f"{path}#L{line}",
+                housing_type=htype,
             )
         )
     return out
