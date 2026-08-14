@@ -2212,3 +2212,78 @@ def test_a_grid_that_kept_its_spacing_is_left_to_the_other_readers() -> None:
     spaced = COLLAPSED_GRID.replace("Standard R-10 R-8 R-6", "Standard   R-10   R-8   R-6")
 
     assert _collapsed(spaced) == {}
+
+
+ZDO_315 = """
+Table 315-2: Dimensional and Building Design Standards in the Urban Low Density
+Residential Zoning Districts
+
+Standard
+R-5
+R-7
+R-10
+Maximum Lot Coverage
+50 percent5,6
+50 percent5,6
+50 percent5,6
+Minimum Front Setback
+15 feet, except 20 feet to garage and carport motor vehicle entries7
+15 feet, except 20 feet to garage and carport motor vehicle entries7
+15 feet, except 20 feet to garage and carport motor vehicle entries7
+Minimum Rear Setback
+20 feet7,8,9,10,11
+20 feet7,8,9,10,11
+20 feet7,8,9,10,11
+"""
+
+
+def _zdo(text: str) -> dict[str, dict[str, float]]:
+    from flats.encode.tables import read_stacked_grids
+
+    return {
+        zone: {c.field: c.value for c in cs}
+        for zone, cs in read_stacked_grids(text, path="doc.txt").items()
+    }
+
+
+def test_a_cell_footnoted_several_times_is_still_a_measurement() -> None:
+    # "20 feet7,8,9,10,11" is the rear setback of every low density district
+    # in Clackamas County. Reading one marker leaves the cell ending in
+    # digits, no measure matches, and — because the cell is identical in
+    # every column — the whole row is junked as repeated furniture.
+    assert _zdo(ZDO_315)["R-5"]["setback_rear_ft"] == 20
+    assert _zdo(ZDO_315)["R-10"]["setback_rear_ft"] == 20
+
+
+def test_a_percentage_carries_its_footnote_run_too() -> None:
+    # "50 percent5,6" — the same glue on a unit the pattern did not list.
+    assert _zdo(ZDO_315)["R-7"]["max_coverage_pct"] == 50
+
+
+def test_a_footnote_run_is_read_as_every_marker_it_names() -> None:
+    from flats.encode.tables import _marks
+
+    assert _marks("20 feet7,8,9,10,11") == (7, 8, 9, 10, 11)
+
+
+def test_a_cell_that_excepts_a_vehicle_entry_states_its_own_standard() -> None:
+    # "15 feet, except 20 feet to garage and carport motor vehicle entries" is
+    # the front setback and the garage entry setback in one cell. 15 is the
+    # building's; the 20 belongs to a field of its own.
+    assert _zdo(ZDO_315)["R-5"]["setback_front_ft"] == 15
+
+
+def test_a_cell_that_excepts_two_more_numbers_is_refused() -> None:
+    # One exception is another field. Two are a table inside a cell, and
+    # cutting at the first would hide the second behind a clean read.
+    from flats.encode.tables import _measure_line
+
+    assert _measure_line("15 feet, except 20 feet to garage in R-5 and 25 feet in R-7") is None
+
+
+def test_a_two_tier_cell_is_still_refused() -> None:
+    # The refusal the exception cut must not weaken: this states two
+    # standards for the same field, and neither one is the cell's answer.
+    from flats.encode.tables import _measure_line
+
+    assert _measure_line("7.5 ft or 5 ft due to irregular shaped lots") is None

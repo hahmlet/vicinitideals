@@ -853,14 +853,21 @@ def _read_span(lines: Sequence[str], first: int, last: int, start_line: int) -> 
 #: Anchored on the unit so a decimal never donates its fraction: "7.5 ft"
 #: has no digits after the unit, and "35 ft.12" cannot be 35.12 because the
 #: number a unit follows is already complete.
-_GLUED_NOTE = re.compile(r"^(?P<body>.*?(?:sq\.?\s*ft\.?|sf|ft\.|feet|%))\s?(?P<n>\d{1,2})$")
+#: A footnote marker glued to the end of a cell, and the reference *runs*
+#: codes write when a standard carries several: "20 feet7,8,9,10,11". Reading
+#: only the first marker leaves a cell that still ends in digits, which no
+#: measure regex will match — so a row every column of which is footnoted four
+#: times reads as prose, and the standard behind it goes unsourced.
+_GLUED_NOTE = re.compile(
+    r"^(?P<body>.*?(?:sq\.?\s*ft\.?|sf|ft\.|feet|percent|%))\s?(?P<n>\d{1,2}(?:,\s?\d{1,2})*)$"
+)
 
 
 def _unglue(cell: str) -> tuple[str, tuple[int, ...]]:
     """A cell with any glued footnote split off: ("35 ft.", (12,))."""
     m = _GLUED_NOTE.match(cell.strip())
     if m:
-        return m.group("body"), (int(m.group("n")),)
+        return m.group("body"), tuple(int(n) for n in m.group("n").split(","))
     return cell, ()
 
 
@@ -877,7 +884,7 @@ def measure(raw: str) -> tuple[float, str] | None:
     something real that a number cannot carry, and turning either into a value
     would encode a fact nobody wrote.
     """
-    cell = _FOOTNOTE.sub("", raw).strip()
+    cell = _unglue(_FOOTNOTE.sub("", raw).strip())[0].strip()
     if not cell or _NOT_A_NUMBER.match(cell):
         return None
     if re.search(r"\bx\b", cell, re.I):
@@ -1051,6 +1058,23 @@ _PAIR_GROUP = re.compile(r"\bsetbacks?\b", re.I)
 _PAIR_WORDS = 8
 
 
+#: A cell that states its standard and then excepts a different subject:
+#: "15 feet, except 20 feet to garage and carport motor vehicle entries". The
+#: exception is not a condition on this standard — it is another standard, for
+#: the vehicle entry, which is its own field. Refusing the whole cell loses the
+#: front setback of every district in the table; reading it whole would encode
+#: the garage number as the building's.
+#: A footnote reference run at the end of a prose tail: the "7" on
+#: "...motor vehicle entries7". It is not part of the sentence and it is not
+#: another number in it either, which is the distinction the cut below needs.
+_TAIL_REFS = re.compile(r"(?<=[A-Za-z])\d{1,2}(?:,\s?\d{1,2})*$")
+
+_EXCEPT_ENTRY = re.compile(
+    r",?\s*except\s+\d+(?:\.\d+)?\s*(?:ft\.?|feet)\s+to\s+(?:the\s+)?(?:garage|carport)",
+    re.I,
+)
+
+
 def _measure_line(line: str) -> tuple[float, str] | None:
     """A line that is one measurement and nothing else.
 
@@ -1059,9 +1083,15 @@ def _measure_line(line: str) -> tuple[float, str] | None:
     measurement and does not state one. A pair's value line must be consumed
     whole — that refusal is what keeps a two-tier standard out of the file.
     """
-    cell = _FOOTNOTE.sub("", line).strip()
+    cell = _unglue(_FOOTNOTE.sub("", line).strip())[0].strip()
     if not cell or _NOT_A_NUMBER.match(cell):
         return None
+    excepted = _EXCEPT_ENTRY.search(cell)
+    if excepted and not any(ch.isdigit() for ch in _TAIL_REFS.sub("", cell[excepted.end() :])):
+        # Only where nothing numeric follows: "except 20 feet to garage in
+        # R-5 and 25 feet in R-7" states two more standards, and cutting at
+        # the first would hide the second behind a cell that read cleanly.
+        cell = cell[: excepted.start()].strip()
     m = _MEASURE.match(cell)
     if not m or m.end() != len(cell):
         return None
