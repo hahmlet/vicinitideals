@@ -456,7 +456,7 @@ UNCITED = (
     "label: Fairview\n"
     "cite_default:\n"
     '  cite: "FMC 19.100"\n'
-    '  url: "https://www.fairvieworegon.gov/code"\n'
+    '  url: "https://www.cityoffairview-or.gov/code/19.30"\n'
     "  retrieved: 2026-08-12\n"
     "zones:\n"
     "  LDR:\n"
@@ -475,7 +475,7 @@ def test_gaps_separates_a_missing_chapter_from_an_unreadable_field(bench: dict, 
     assert run(bench, "gaps", "--layer", "or/multnomah/fairview", "--verbose") == 0
 
     out = capsys.readouterr().out
-    assert "unsourced" in out and "min_lot_sqft" in out
+    assert "undeclared" in out and "min_lot_sqft" in out
     assert "uncheckable" in out and "quadplex_allowed" in out
 
 
@@ -483,3 +483,33 @@ def test_gaps_reports_nothing_for_a_jurisdiction_whose_values_all_cite(bench: di
     assert run(bench, "gaps", "--layer", PORTLAND) == 0
 
     assert "0 unquoted value(s)" in capsys.readouterr().out
+
+
+# --- no signing a restatement ----------------------------------------
+
+
+RESTATED = (
+    "label: West Linn\n"
+    "cite_default:\n"
+    '  cite: "West Linn CDC 13.070"\n'
+    '  url: "https://www.zoneomics.com/code/west-linn-OR/chapter_9"\n'
+    "  retrieved: 2026-08-12\n"
+    f'  quote: "{DOC}#L2"\n'
+    "zones:\n  R-5:\n    setback_front_ft: 10\n"
+)
+
+
+def test_a_citation_to_an_aggregator_cannot_be_signed(bench: dict, capsys) -> None:
+    # The quote resolves, so the reviewer would read real text and sign in good
+    # faith. What they cannot see from the number is that the text is somebody
+    # else's transcription of the ordinance.
+    (bench["root"] / "or" / "clackamas").mkdir(parents=True, exist_ok=True)
+    (bench["root"] / "or" / "clackamas" / "west-linn.yaml").write_text(RESTATED, encoding="utf-8")
+
+    code = run(
+        bench, "sign", "or/clackamas/west-linn", "R-5", "setback_front_ft", "--reviewer", "sjk"
+    )
+
+    assert code == 1
+    assert "zoneomics.com" in capsys.readouterr().err
+    assert not bench["log"].exists()

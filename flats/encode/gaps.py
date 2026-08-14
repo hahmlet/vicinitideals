@@ -8,8 +8,11 @@ is pointing at a command that cannot help, which is worse than pointing at
 nothing — it reads as work remaining when the work is finished.
 
 That is a framework hole, not an encoding one. ``unquoted`` is not one state,
-it is six, and they need opposite things:
+it is eight, and they need opposite things:
 
+``unofficial``   the value cites a third party restating the code — an
+                 aggregator, a form, a landing page. No fetch and no reviewer
+                 can rescue it; the citation itself is what is wrong.
 ``quotable``     a document states this number, cleanly, for this zone. attach
                  can write the citation. If any survive here, attach's refusals
                  and this module's reading of them disagree, which is a bug in
@@ -20,22 +23,28 @@ it is six, and they need opposite things:
                  encoding as a variant, not a citation stapled to one half.
 ``multi``        the document states more than one number for the field, for
                  the same reason.
-``unsourced``    no stored document states it at all. No amount of citation
-                 work will fix this: the chapter that states the standard is
-                 not in the store, so the next action is to find it, declare it
-                 under ``code:``, and fetch — or to admit the value came from
-                 the quadfit port with nothing behind it and delete it.
+``undeclared``   the value names its chapter and that chapter is not in
+                 ``code:``, so nothing has ever fetched it. One line and a
+                 fetch, not a hunt.
+``unsourced``    no stored document states it and the value names no chapter
+                 that would. The next action is to find the chapter — or to
+                 admit the value came from the quadfit port with nothing behind
+                 it and delete it.
 ``uncheckable``  a boolean, an enum or a curve. Corroboration emits no finding
                  for these at all, so their silence is not evidence of anything
                  and only a person can cite them.
 
-The last two are the ones that matter at corpus scale, because from inside the
-ladder they look identical to each other and to everything above them. A
-jurisdiction whose values are 90% ``unsourced`` is not nearly-cited; it is
-barely sourced, and saying so is the difference between a week of citation work
-and an afternoon of finding the right chapter. And counting an ``uncheckable``
-value as unsourced sends somebody hunting for a chapter that is already in the
-store — the reader simply never had an opinion about booleans.
+The last three are what matter at corpus scale, because from inside the ladder
+they look identical to each other and to everything above them. Splitting them
+turned "385 values nothing supports" into 148 chapters waiting to be declared,
+96 fields no reader was ever going to have an opinion about, and 83 that are
+genuinely unsourced — three different afternoons, only one of them long.
+
+``unofficial`` is the one that is not about workload. Forty-one values cite a
+zoning aggregator's restatement of the code. They corroborate, they would
+attach cleanly, and signing one would put a reviewer's name on somebody's
+transcription. :func:`flats.provenance.sources.authority_for` has always known
+this; until now nothing asked it.
 
 Run::
 
@@ -49,6 +58,7 @@ from typing import Iterable, Mapping, Sequence
 
 from flats.encode.attach import unquoted
 from flats.encode.corroborate import Finding, Verdict, check_layer, checkable
+from flats.provenance.sources import authority_for, host_of
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.fields import FIELDS
 from flats.rules.model import Layer
@@ -57,13 +67,30 @@ from flats.rules.model import Layer
 #: document, so a single disagreement outranks four agreements: attaching a
 #: quote from the agreeing chapter would bury the one finding a person has to
 #: resolve.
-CAUSES = ("contested", "quotable", "conditional", "multi", "unsourced", "uncheckable")
+CAUSES = (
+    "unofficial",
+    "contested",
+    "quotable",
+    "conditional",
+    "multi",
+    "undeclared",
+    "unsourced",
+    "uncheckable",
+)
 
 NEXT = {
+    "unofficial": (
+        "re-cite against the adopted text — this citation is a third party's "
+        "restatement, and no reviewer may sign it"
+    ),
     "contested": "read both: the file and the document state different numbers",
     "quotable": "python -m flats.encode.attach {layer} --doc {doc} --apply",
     "conditional": "encode as a variant — the document footnotes this number",
     "multi": "encode as variants — the document states more than one number",
+    "undeclared": (
+        "the value already cites the chapter — declare that URL under `code:` "
+        "and fetch it"
+    ),
     "unsourced": (
         "no stored document states this. Find the chapter that does, declare it "
         "under `code:`, and fetch — or delete a value nothing backs"
@@ -145,9 +172,18 @@ def gaps(layer: Layer, findings: Sequence[Finding]) -> list[Gap]:
     grouped: dict[tuple[str, str], list[Finding]] = {}
     for finding in findings:
         grouped.setdefault((finding.zone, finding.field), []).append(finding)
+    declared = {d.url for d in layer.code}
     out: list[Gap] = []
     for zone, field in sorted(unquoted(layer)):
         value = layer.zones[zone].values[field]
+        url = value.prov.url
+        if not authority_for(url).may_verify:
+            # First, ahead of everything a document could say. A value citing
+            # an aggregator cannot be signed however well it corroborates, and
+            # attaching a quote to it would leave a value that reads cited,
+            # reads confirmed, and points at somebody's transcription.
+            out.append(Gap(layer.layer, zone, field, "unofficial", host_of(url)))
+            continue
         if not checkable(field, value):
             # No finding was ever emitted for this field, so its silence says
             # nothing. Calling that unsourced would send somebody hunting for a
@@ -155,7 +191,13 @@ def gaps(layer: Layer, findings: Sequence[Finding]) -> list[Gap]:
             kind = FIELDS[field].kind if field in FIELDS else "not in the field registry"
             out.append(Gap(layer.layer, zone, field, "uncheckable", kind))
             continue
-        out.append(Gap(layer.layer, zone, field, *classify(grouped.get((zone, field), ()))))
+        cause, detail = classify(grouped.get((zone, field), ()))
+        if cause == "unsourced" and url not in declared:
+            # Not missing — never fetched. The chapter is named on the value
+            # itself and simply absent from `code:`, which is a one-line fix
+            # and nothing like the hunt "unsourced" describes.
+            cause, detail = "undeclared", url
+        out.append(Gap(layer.layer, zone, field, cause, detail))
     return sorted(out, key=lambda g: (CAUSES.index(g.cause), g.zone, g.field))
 
 

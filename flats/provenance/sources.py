@@ -76,14 +76,20 @@ OFFICIAL: frozenset[str] = frozenset(
         "ci.oswego.or.us",
         "cityoffairview-or.gov",
         "troutdaleoregon.gov",
-        "ci.wood-village.or.us",
+        "ci.wood-village.or.us",  # redirects to woodvillageor.gov
+        "woodvillageor.gov",
         "milwaukieoregon.gov",
         "orcity.org",
         "westlinnoregon.gov",
         "wilsonvilleoregon.gov",
         "tualatinoregon.gov",
         "ci.gladstone.or.us",
-        "rivergroveoregon.gov",
+        # Not rivergroveoregon.gov, which was guessed here and resolves
+        # nowhere. Thirty Rivergrove and Wood Village values were reading as
+        # unknown-authority for that reason alone — a typo in this set is
+        # indistinguishable, from every other module, from a city that
+        # publishes nothing.
+        "cityofrivergrove.org",
         # State
         "oregonlegislature.gov",
         "sos.state.or.us",

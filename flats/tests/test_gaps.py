@@ -40,6 +40,9 @@ FILE = {
     "label": "Portland",
     "kind": "city",
     "eligible": True,
+    #: Declared, so a value citing it is one the fetcher knows about — which is
+    #: what separates "no document says this" from "nobody fetched the chapter".
+    "code": [{"id": "33.110", "url": CITE["url"], "title": "Chapter 33.110"}],
     "zones": {
         "R5": {
             "cite_default": CITE,
@@ -190,3 +193,75 @@ def test_worst_cause_first(layer) -> None:
         (g.cause for g in found), key=CAUSES.index
     )
     assert found[0].cause == "contested"
+
+
+# --- the citation itself -----------------------------------------------
+
+
+AGGREGATOR = {
+    "label": "West Linn",
+    "kind": "city",
+    "eligible": True,
+    "zones": {
+        "R-5": {
+            "cite_default": {
+                "cite": "West Linn CDC 13.070",
+                "url": "https://www.zoneomics.com/code/west-linn-OR/chapter_9",
+                "retrieved": "2026-08-12",
+            },
+            "min_lot_sqft": 5000,
+        },
+    },
+}
+
+
+def test_an_aggregator_citation_outranks_a_document_that_agrees(tmp_path: Path) -> None:
+    # It corroborates. It would attach cleanly. Signing it would put a name on
+    # a third party's transcription, so the citation is the finding, not the
+    # number — and it has to outrank the agreement rather than hide behind it.
+    root = tmp_path / "jurisdictions" / "or" / "clackamas"
+    root.mkdir(parents=True)
+    (root / "west-linn.yaml").write_text(yaml.safe_dump(AGGREGATOR), encoding="utf-8")
+    layer = load_rules(tmp_path / "jurisdictions", strict=False)["or/clackamas/west-linn"]
+
+    found = gaps(
+        layer,
+        [
+            Finding(
+                layer="or/clackamas/west-linn",
+                zone="R-5",
+                field="min_lot_sqft",
+                verdict=Verdict.agrees,
+                encoded=5000,
+                found=(5000,),
+                quote="or/clackamas/west-linn/13.txt#L4",
+            )
+        ],
+    )
+
+    assert [(g.cause, g.detail) for g in found] == [("unofficial", "zoneomics.com")]
+
+
+OTHER_CHAPTER = "https://www.portland.gov/code/33/200s/266"
+
+
+def test_a_value_naming_an_undeclared_chapter_is_not_a_hunt(tmp_path: Path) -> None:
+    # The zone cites a real chapter of the real code, and `code:` does not list
+    # it, so nothing has ever fetched it. That is one line of YAML away from
+    # readable; calling it unsourced sends somebody hunting for a URL that is
+    # already written on the value.
+    file = dict(FILE)
+    file["zones"] = {
+        "R2.5": {
+            "cite_default": {**CITE, "url": OTHER_CHAPTER},
+            "min_lot_sqft": 1600,
+        }
+    }
+    root = tmp_path / "jurisdictions" / "or" / "multnomah"
+    root.mkdir(parents=True)
+    (root / "portland.yaml").write_text(yaml.safe_dump(file), encoding="utf-8")
+    layer = load_rules(tmp_path / "jurisdictions", strict=False)[LAYER]
+
+    found = gaps(layer, [])
+
+    assert [(g.cause, g.detail) for g in found] == [("undeclared", OTHER_CHAPTER)]

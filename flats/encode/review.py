@@ -12,12 +12,18 @@ let the reviewer put their name on it or not::
 ``plan`` is where a session starts: one line per jurisdiction naming what blocks
 it and the command that unblocks it, worst first.
 
-Three rules the tool enforces, because they are the ones that fail quietly.
+Four rules the tool enforces, because they are the ones that fail quietly.
 
 *No signing what you cannot read.* A value whose quote does not resolve to
 stored text cannot be verified here at all. The point of the signature is that
 a human compared two things; if one of them is missing there is nothing to
 compare, and a signature over it would be a lie with a name on it.
+
+*No signing a restatement.* A citation pointing at a zoning aggregator rather
+than the jurisdiction's own publisher fails in the opposite direction: the
+reviewer can read it, and what they read is a third party's transcription of
+the ordinance. It is the one failure mode that survives careful review, so the
+tool refuses it rather than trusting anyone to notice the hostname.
 
 *Fields are named, never globbed.* Several may be signed in one command,
 because a reviewer reads one table and confirms a row of numbers from it — but
@@ -48,6 +54,7 @@ from flats.encode.verify import (
     sign_like,
     variant_for,
 )
+from flats.provenance.sources import authority_for, host_of
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.loader import CONFIG_ROOT, load_rules
 from flats.rules.model import LIKE, Incorporation, Layer, Status, Value, Variant
@@ -350,6 +357,20 @@ def cmd_sign(args: argparse.Namespace) -> int:
             # Nothing is written. A partial batch would leave the reviewer
             # unsure which of the fields they named actually got signed.
             print(f"refusing {_label(field, when)}: {err}", file=sys.stderr)
+            return 1
+        authority = authority_for(part.prov.url)
+        if not authority.may_verify:
+            # A third party restating the code is how a summary becomes a
+            # citation. The reviewer would be reading real text and signing it
+            # in good faith; what they could not see is that the text is
+            # somebody's transcription of the ordinance rather than the
+            # ordinance. 81 values in the corpus cite one aggregator.
+            print(
+                f"refusing {_label(field, when)}: {host_of(part.prov.url)} is "
+                f"{authority.value}, not the jurisdiction's own publisher — "
+                f"re-cite this against the adopted text",
+                file=sys.stderr,
+            )
             return 1
         # Whether this is already verified is a question for the log, not for
         # the file — the file always loads draft, by design.
