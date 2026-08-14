@@ -40,7 +40,7 @@ from flats.rules.ledger import Clause, Rase
 
 #: Bumped when the patterns change — extraction output is reproducible, and a
 #: candidate set that moved because the harness changed is not new evidence.
-EXTRACTOR = "flats-rase/2"
+EXTRACTOR = "flats-rase/3"
 
 _NUM = r"(?P<n>\d{1,3}(?:,\d{3})+|\d+(?:\.\d+)?)"
 
@@ -371,6 +371,58 @@ def _subject_span(text: str) -> tuple[int, int] | None:
     return (found[0], found[1]) if found else None
 
 
+#: The words a code writes its small measures in. Kept to what actually
+#: appears: "four feet", "twenty-five feet", "one hundred feet". A code that
+#: needed "three hundred seventy-two" would be stating an address.
+_ONES = (
+    "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+    "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
+    "seventeen", "eighteen", "nineteen",
+)
+_TENS = ("twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety")
+_WORD_VALUE = {word: n + 1 for n, word in enumerate(_ONES)}
+_WORD_VALUE.update({word: 20 + n * 10 for n, word in enumerate(_TENS)})
+
+#: A measure written as a word, and only where a unit follows it. The unit is
+#: what separates a standard from prose that counts something else: "four
+#: feet" is a setback and "four out of five attached garages" is a proportion,
+#: and the second is the sentence this pattern must leave alone. A digit in
+#: parentheses after the word — "four (4) feet" — is the same number said
+#: twice, and the digit is already readable.
+_WORD_NUMBER = re.compile(
+    r"\b(?P<word>(?:" + "|".join(_TENS) + r")(?:[- ](?:" + "|".join(_ONES[:9]) + r"))?"
+    r"|one hundred(?:[- ](?:" + "|".join(_ONES) + r"))?"
+    r"|(?:" + "|".join(_ONES) + r"))\s+"
+    r"(?!\(\d)(?=(?:square )?(?:feet|foot|ft\.?|percent|inches|inch)\b)",
+    re.I,
+)
+
+
+def _word_value(text: str) -> int:
+    """The number a spelled-out measure states."""
+    lowered = text.lower().replace("-", " ")
+    if lowered.startswith("one hundred"):
+        rest = lowered[len("one hundred") :].strip()
+        return 100 + (_WORD_VALUE.get(rest, 0) if rest else 0)
+    parts = lowered.split()
+    return sum(_WORD_VALUE.get(part, 0) for part in parts)
+
+
+def _digits(text: str) -> str:
+    """The line with its spelled-out measures written as digits.
+
+    Same length in, same length out. Every other rule in this module reasons
+    about where a number sits relative to the subject it governs, and a
+    substitution that moved the rest of the line would move the standard out
+    from under its subject.
+    """
+
+    def swap(m: re.Match[str]) -> str:
+        return str(_word_value(m.group("word"))).rjust(len(m.group(0)) - 1) + " "
+
+    return _WORD_NUMBER.sub(swap, text)
+
+
 def _units_allow(text: str, kind: str) -> bool:
     lowered = text.lower()
     for pattern, kinds in _UNITS:
@@ -393,7 +445,7 @@ def _numbers(text: str, *, subject: tuple[int, int] | None = None) -> list[float
     how "cisterns that are 6 feet or less in height" becomes a 6-foot height
     limit for the entire zone.
     """
-    scrubbed = _CITATION.sub(lambda m: " " * len(m.group(0)), text)
+    scrubbed = _CITATION.sub(lambda m: " " * len(m.group(0)), _digits(text))
     start, end = subject if subject else (0, 0)
     return [
         float(m.group("n").replace(",", ""))

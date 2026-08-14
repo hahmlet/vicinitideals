@@ -597,3 +597,57 @@ def test_a_yard_named_without_the_word_setback_is_not_read_from_prose() -> None:
     # a column of numbers — and they are matched whole for that reason. A
     # sentence mentioning a front yard is not a standard.
     assert candidates_in("Parking is prohibited in the front yard within 5 feet.", 9, DOC) == []
+
+
+def test_a_measure_written_as_a_word_is_read() -> None:
+    # Wilsonville states half its setbacks in words -- "Minimum side yard
+    # setback: Ten feet." -- and a reader that saw only digits read the
+    # sentence, found no number in it, and left the standard unread.
+    found = candidates_in("Minimum side yard setback: Ten feet.", 3, DOC)
+
+    assert [(c.field, c.value) for c in found] == [("setback_side_ft", 10)]
+
+
+def test_a_word_measure_keeps_the_rest_of_the_line_where_it_was() -> None:
+    # Every other rule here reasons about where a number sits relative to the
+    # subject it governs. The substitution pads to the same width so that a
+    # sentence with a word in it is measured exactly like one with a digit.
+    from flats.encode.extract import _digits
+
+    line = "The minimum front yard setback shall be twenty-five feet."
+
+    assert len(_digits(line)) == len(line)
+    assert [(c.field, c.value) for c in candidates_in(line, 4, DOC)] == [("setback_front_ft", 25)]
+
+
+def test_a_counted_word_is_not_a_measure() -> None:
+    # "Four out of five attached garages ... shall be set back a minimum of 20
+    # feet" counts garages, and the count is not a setback. The unit after the
+    # word is what separates the two, so only a word a unit follows is read.
+    from flats.encode.extract import _digits
+
+    assert _digits("Four out of five attached garages") == "Four out of five attached garages"
+    values = {c.value for c in candidates_in(
+        "Four out of five attached garage doors shall be set back a minimum of 20 "
+        "feet from the front facade.",
+        5,
+        DOC,
+    )}
+
+    assert values == {20}
+
+
+def test_a_number_said_twice_is_read_once() -> None:
+    # "four (4) feet" is the same measure written both ways, and the digit is
+    # already readable. Converting the word as well would state it twice.
+    from flats.encode.extract import _digits
+
+    assert _digits("a minimum of four (4) feet") == "a minimum of four (4) feet"
+
+
+def test_a_hundred_is_read_whole() -> None:
+    from flats.encode.extract import _word_value
+
+    assert _word_value("one hundred") == 100
+    assert _word_value("thirty-five") == 35
+    assert _word_value("seven") == 7
