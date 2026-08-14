@@ -28,7 +28,7 @@ from flats.encode.verify import (
     variant_for,
 )
 from flats.rules.loader import RuleLoadError, load_rules
-from flats.rules.model import Layer, Provenance, Status, Value, Variant, Zone
+from flats.rules.model import Band, Layer, Provenance, Status, Value, Variant, Zone
 from flats.rules.resolver import RuleSet, Verdict
 
 pytestmark = pytest.mark.unit
@@ -487,3 +487,151 @@ def test_conditions_are_recorded_on_the_resolution() -> None:
 @pytest.fixture()
 def root(tmp_path: Path) -> Path:
     return tmp_path / "jurisdictions"
+
+
+# --- a standard banded by lot size ------------------------------------
+#
+# Milwaukie consolidated its single-family zones into one R-MD and then wrote
+# Table 19.301.4 as four columns of that same zone, split by how big the lot
+# already is: 1,500–2,999 sq ft, 3,000–4,999, 5,000–6,999, and 7,000 and up.
+# The street side setback runs 5, 15, 15, 20. None of those four numbers is
+# "the R-MD street side setback", and the encoding has to be able to say so.
+
+
+def band(low: object = None, high: object = None, measure: str = "lot_sqft") -> Band:
+    return Band(measure=measure, at_least=low, at_most=high)
+
+
+def banded(val: object, low: object = None, high: object = None, **over) -> Variant:
+    return Variant(value=val, prov=PROV, band=band(low, high), **over)
+
+
+def test_a_band_selects_the_column_the_lot_falls_in() -> None:
+    v = value(banded(5, 1500, 2999), banded(15, 3000, 6999), base=20)
+
+    assert v.under(lot={"lot_sqft": 2400}).value == 5
+    assert v.under(lot={"lot_sqft": 4000}).value == 15
+
+
+def test_the_base_is_the_residual_column() -> None:
+    # "7,000 and up" is open-ended, so it is the base and the narrower columns
+    # are the exceptions — which is also why a lot larger than every band is
+    # not a miss.
+    v = value(banded(5, 1500, 2999), banded(15, 3000, 6999), base=20)
+
+    assert v.under(lot={"lot_sqft": 12000}).value == 20
+
+
+def test_a_band_is_inclusive_at_both_ends() -> None:
+    # Codes write "3,000–4,999" and start the next column at 5,000. Reading
+    # either bound as exclusive puts a hole between the columns, and a lot in
+    # the hole silently takes the residual.
+    v = value(banded(15, 3000, 4999), base=20)
+
+    assert v.under(lot={"lot_sqft": 3000}).value == 15
+    assert v.under(lot={"lot_sqft": 4999}).value == 15
+    assert v.under(lot={"lot_sqft": 5000}).value == 20
+
+
+def test_an_unmeasured_lot_does_not_fall_through_to_the_base() -> None:
+    # The base of a banded standard is the last column, not a safe default.
+    # A lot whose area we do not have is not a 7,000 sq ft lot.
+    v = value(banded(5, 1500, 2999), base=20)
+
+    got = v.under()
+
+    assert got.ambiguous == ("lot_sqft:1500-2999",)
+    assert not got.trusted
+
+
+def test_a_lot_measured_on_a_different_axis_is_still_unmeasured() -> None:
+    v = value(banded(5, 1500, 2999), base=20)
+
+    assert v.under(lot={"lot_width_ft": 40}).ambiguous == ("lot_sqft:1500-2999",)
+
+
+def test_a_band_and_a_condition_narrow_together() -> None:
+    # The affordable exception to one column is one sentence, and it beats
+    # both the column and the plain affordable exception.
+    v = value(
+        variant(10, "affordable"),
+        banded(15, 3000, 4999),
+        banded(8, 3000, 4999, when=("affordable",)),
+        base=20,
+    )
+
+    assert v.under({"affordable"}, lot={"lot_sqft": 4000}).value == 8
+    assert v.under(lot={"lot_sqft": 4000}).value == 15
+    assert v.under({"affordable"}, lot={"lot_sqft": 9000}).value == 10
+
+
+def test_overlapping_bands_are_refused() -> None:
+    # A transcription that types 5,999 where the code says 4,999 leaves two
+    # columns claiming the same lot, and whichever sorted first would win —
+    # silently, and differently per field.
+    with pytest.raises(ValueError, match="overlap"):
+        value(banded(5, 1500, 3999), banded(15, 3000, 6999))
+
+
+def test_bands_on_different_measures_may_overlap() -> None:
+    # A width band and an area band are different axes; both applying to one
+    # lot is a code that stated both, not a transcription error.
+    v = value(banded(5, 1500, 2999), banded(8, 20, 30, measure="lot_width_ft"))
+
+    assert len(v.variants) == 2
+
+
+def test_a_band_needs_a_bound() -> None:
+    with pytest.raises(ValueError, match="at least one bound"):
+        Band(measure="lot_sqft")
+
+
+def test_a_band_names_a_registered_measure() -> None:
+    # Same refusal as the field and condition registries: "lot_size" beside
+    # "lot_sqft" would be two axes nobody can reconcile.
+    with pytest.raises(ValueError, match="unknown lot measure"):
+        Band(measure="lot_size", at_least=1500)
+
+
+def test_a_banded_variant_is_addressed_by_its_band() -> None:
+    # Signing is over one sentence, and for a banded table the sentence is one
+    # column. Without the band in the key it would address as the base.
+    v = banded(5, 1500, 2999)
+
+    assert v.key == ("lot_sqft:1500-2999",)
+    assert banded(20, 7000).key == ("lot_sqft:7000+",)
+    assert variant_for(value(v), ["lot_sqft:1500-2999"]) is v
+
+
+def test_a_band_is_authored_as_a_range_on_a_measure(root: Path) -> None:
+    portland(
+        root,
+        "  R5:\n"
+        "    setback_street_side_ft:\n"
+        "      value: 20\n"
+        "      variants:\n"
+        "        - value: 5\n"
+        "          band: {measure: lot_sqft, at_least: 1500, at_most: 2999}\n",
+    )
+
+    v = load_rules(root)[LAYER].zones["R5"].values["setback_street_side_ft"]
+
+    assert v.banded
+    assert v.under(lot={"lot_sqft": 2000}).value == 5
+    assert v.variants[0].prov.cite == "PCC 33.110.220, Table 110-4"
+
+
+def test_a_variant_selected_by_nothing_is_still_refused(root: Path) -> None:
+    # Dropping the `when` requirement to let bands through must not let a
+    # second base in behind it.
+    portland(
+        root,
+        "  R5:\n"
+        "    setback_front_ft:\n"
+        "      value: 5\n"
+        "      variants:\n"
+        "        - value: 10\n",
+    )
+
+    with pytest.raises(RuleLoadError, match="band"):
+        load_rules(root)

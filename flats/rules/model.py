@@ -34,7 +34,7 @@ import enum
 import re
 from dataclasses import dataclass
 from datetime import date
-from typing import Any, Collection
+from typing import Any, Collection, Mapping
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
@@ -99,6 +99,90 @@ class Provenance(BaseModel):
     )
 
 
+#: Lot measurements a standard may be banded on. Registered for the same
+#: reason conditions and fields are: "lot_size" beside "lot_sqft" would be two
+#: axes nobody can reconcile, and the units have to be unambiguous — a band
+#: read in square feet and applied in acres is off by 43,560.
+LOT_MEASURES: tuple[str, ...] = ("lot_sqft", "lot_width_ft", "lot_depth_ft")
+
+
+class Band(BaseModel):
+    """A range of lot sizes one column of a banded table was written for.
+
+    Milwaukie's Table 19.301.4 is one zone, R-MD, in four columns: lots of
+    1,500–2,999 sq ft, 3,000–4,999, 5,000–6,999, and 7,000 and up. The street
+    side setback is 5 ft in the first and 20 ft in the last. Neither number is
+    "the R-MD street side setback", and encoding either one as though it were
+    applies a four-times error to most of the city.
+
+    That is not a condition. Nobody elects it, nobody applies for it, and it
+    is not observed the way a corner or an alley is — it is arithmetic on the
+    lot we are already screening. So it selects a variant the way a condition
+    does, and is expressed as what it is: a range on a measurement.
+
+    Bounds are inclusive, because codes write inclusive bands ("3,000–4,999")
+    and the next band starts at the next whole foot. An open end is ``None``:
+    "7,000 and up" is ``at_least=7000`` with no ceiling.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    measure: str
+    at_least: float | None = None
+    at_most: float | None = None
+
+    @model_validator(mode="after")
+    def _is_a_range_on_a_known_measure(self) -> Band:
+        if self.measure not in LOT_MEASURES:
+            raise ValueError(
+                f"unknown lot measure {self.measure!r} — "
+                f"one of {', '.join(LOT_MEASURES)}"
+            )
+        if self.at_least is None and self.at_most is None:
+            # A band with no bounds is every lot, which is the base value
+            # written twice under a name that hides it.
+            raise ValueError(f"{self.measure}: a band needs at least one bound")
+        if self.at_least is not None and self.at_most is not None:
+            if self.at_least > self.at_most:
+                raise ValueError(
+                    f"{self.measure}: band {self.at_least}–{self.at_most} is empty"
+                )
+        return self
+
+    @property
+    def token(self) -> str:
+        """How a reviewer names this band on the command line.
+
+        A signature is over one sentence, and for a banded table the sentence
+        is one column. ``--when lot_sqft:3000-4999`` addresses it the way
+        ``--when affordable`` addresses a footnote.
+        """
+        low = _num(self.at_least) if self.at_least is not None else ""
+        high = _num(self.at_most) if self.at_most is not None else ""
+        return f"{self.measure}:{low}-{high}" if high else f"{self.measure}:{low}+"
+
+    def holds(self, lot: Mapping[str, float] | None) -> bool | None:
+        """Whether a lot falls in this band — ``None`` when it cannot be told.
+
+        ``None`` rather than ``False``, and the difference decides a lot's
+        colour. A lot we have not measured is not outside the band; it is a
+        lot we cannot place, and treating that as "outside" would hand it the
+        residual column's numbers with no warning.
+        """
+        if lot is None or self.measure not in lot:
+            return None
+        got = lot[self.measure]
+        if self.at_least is not None and got < self.at_least:
+            return False
+        if self.at_most is not None and got > self.at_most:
+            return False
+        return True
+
+
+def _num(v: float) -> str:
+    return str(int(v)) if float(v).is_integer() else str(v)
+
+
 class Variant(BaseModel):
     """The same standard, at a different number, under stated conditions.
 
@@ -115,9 +199,14 @@ class Variant(BaseModel):
     model_config = ConfigDict(frozen=True)
 
     value: Any
-    #: Registered condition names, all of which must hold. An empty tuple is
-    #: rejected: that is the base value, and two bases cannot be told apart.
-    when: tuple[str, ...]
+    #: Registered condition names, all of which must hold. Empty is allowed
+    #: only alongside a band: a variant with neither is the base value written
+    #: twice, and two bases cannot be told apart.
+    when: tuple[str, ...] = ()
+    #: The lot sizes this number was written for, where the table bands them.
+    #: A band narrows the same way a condition does, and both may apply: the
+    #: affordable exception to the 3,000–4,999 sq ft column is one sentence.
+    band: Band | None = None
     prov: Provenance
     status: Status = Status.draft
     reviewer: str | None = None
@@ -126,6 +215,18 @@ class Variant(BaseModel):
     @property
     def trusted(self) -> bool:
         return self.status.trusted
+
+    @property
+    def key(self) -> tuple[str, ...]:
+        """What addresses this variant — its conditions, plus its band.
+
+        Signing, orphan detection and the review queue all identify a variant
+        by the set of things that select it. Before bands that set was the
+        conditions alone, and a banded variant carrying none of them would
+        have addressed as the base.
+        """
+        names = self.when + ((self.band.token,) if self.band else ())
+        return tuple(sorted(names))
 
     @model_validator(mode="after")
     def _conditions_are_registered(self) -> Variant:
@@ -226,21 +327,49 @@ class Value(BaseModel):
 
     @model_validator(mode="after")
     def _variants_are_distinguishable(self) -> Value:
-        seen: set[frozenset[str]] = set()
+        seen: set[tuple[str, ...]] = set()
         for variant in self.variants:
-            if not variant.when:
-                # A variant with no conditions is the base value written twice,
-                # and nothing downstream could say which one applies.
+            if not variant.when and variant.band is None:
+                # A variant with nothing selecting it is the base value written
+                # twice, and nothing downstream could say which one applies.
                 raise ValueError(
-                    f"{self.name}: a variant must state the condition(s) it applies under"
+                    f"{self.name}: a variant must state the condition(s) or the "
+                    f"lot band it applies under"
                 )
-            key = frozenset(variant.when)
+            key = variant.key
             if key in seen:
                 raise ValueError(
                     f"{self.name}: two variants apply under the same conditions "
                     f"{sorted(key)} — one of them is wrong"
                 )
             seen.add(key)
+        return self
+
+    @model_validator(mode="after")
+    def _bands_do_not_overlap(self) -> Value:
+        """Two columns of a banded table may not both claim the same lot.
+
+        The bands are read off a table row by row, and a transcription that
+        types 4,999 as 4,099 leaves a hole, while one that types 5,999 leaves
+        an overlap. The hole is visible — a lot in it falls through to the
+        base. The overlap is not: whichever variant sorted first would win,
+        silently and differently per field.
+        """
+        banded = [v for v in self.variants if v.band is not None]
+        for i, a in enumerate(banded):
+            for b in banded[i + 1 :]:
+                if a.band.measure != b.band.measure:
+                    continue
+                if frozenset(a.when) != frozenset(b.when):
+                    continue
+                low = max(a.band.at_least or 0.0, b.band.at_least or 0.0)
+                ceilings = [x.band.at_most for x in (a, b) if x.band.at_most is not None]
+                high = min(ceilings) if ceilings else float("inf")
+                if low <= high:
+                    raise ValueError(
+                        f"{self.name}: lot bands {a.band.token} and {b.band.token} "
+                        f"overlap — a lot in both would take whichever sorted first"
+                    )
         return self
 
     # -- reading a value under a configuration -------------------------
@@ -254,27 +383,70 @@ class Value(BaseModel):
         """
         return frozenset(c for variant in self.variants for c in variant.when)
 
-    def under(self, active: Collection[str] = ()) -> Effective:
-        """The value that applies when these conditions hold.
 
-        A variant applies when every condition it names is active. The most
-        specific match wins — "affordable and corner" beats "affordable" —
-        because a code that states both meant the pair to be different from
-        either alone.
+
+    @property
+    def banded(self) -> bool:
+        """True when the code states this standard per lot-size column.
+
+        Load-bearing at the call site: the base of a banded standard is the
+        residual column, not a safe default, so a screen that cannot measure
+        the lot must not quietly use it.
+        """
+        return any(v.band is not None for v in self.variants)
+
+    def under(
+        self,
+        active: Collection[str] = (),
+        lot: Mapping[str, float] | None = None,
+    ) -> Effective:
+        """The value that applies when these conditions hold, on this lot.
+
+        A variant applies when every condition it names is active and its band,
+        if it has one, contains the lot. The most specific match wins —
+        "affordable and corner" beats "affordable" — because a code that states
+        both meant the pair to be different from either alone. A band counts
+        toward specificity for the same reason a condition does.
 
         Two equally-specific matches are not resolved. Picking one would mean
         guessing which of two encoded rules the drafters meant, and that guess
         would be invisible in the output. The ambiguity is reported instead and
         the screen routes the lot to UNKNOWN, which is what not knowing is.
+
+        An unmeasured lot against a banded standard is that same refusal. The
+        base is the table's last column, so falling through to it would hand a
+        2,000 sq ft lot the setbacks written for 7,000 sq ft ones and call the
+        answer known.
         """
         if not self.variants:
             return Effective(self.value, self.prov, self.status, self.reviewer, self.reviewed)
         held = set(active)
-        matches = [v for v in self.variants if set(v.when) <= held]
+        matches = []
+        unmeasured: list[Variant] = []
+        for v in self.variants:
+            if not set(v.when) <= held:
+                continue
+            if v.band is None:
+                matches.append(v)
+                continue
+            holds = v.band.holds(lot)
+            if holds:
+                matches.append(v)
+            elif holds is None:
+                unmeasured.append(v)
+        if unmeasured:
+            return Effective(
+                self.value,
+                self.prov,
+                self.status,
+                self.reviewer,
+                self.reviewed,
+                ambiguous=tuple(sorted(v.band.token for v in unmeasured)),
+            )
         if not matches:
             return Effective(self.value, self.prov, self.status, self.reviewer, self.reviewed)
-        deepest = max(len(v.when) for v in matches)
-        best = [v for v in matches if len(v.when) == deepest]
+        deepest = max(_depth(v) for v in matches)
+        best = [v for v in matches if _depth(v) == deepest]
         if len(best) > 1:
             return Effective(
                 self.value,
@@ -282,7 +454,7 @@ class Value(BaseModel):
                 self.status,
                 self.reviewer,
                 self.reviewed,
-                ambiguous=tuple(sorted("+".join(sorted(v.when)) for v in best)),
+                ambiguous=tuple(sorted("+".join(v.key) for v in best)),
             )
         winner = best[0]
         return Effective(
@@ -291,8 +463,13 @@ class Value(BaseModel):
             winner.status,
             winner.reviewer,
             winner.reviewed,
-            when=tuple(sorted(winner.when)),
+            when=winner.key,
         )
+
+
+def _depth(v: Variant) -> int:
+    """How specific a variant is — every thing that had to be true to pick it."""
+    return len(v.when) + (1 if v.band is not None else 0)
 
 
 def check_kind(name: str, v: Any) -> None:

@@ -251,9 +251,9 @@ def variant_for(value: Value, when: Sequence[str]) -> Variant:
     """
     want = frozenset(when)
     for variant in value.variants:
-        if frozenset(variant.when) == want:
+        if frozenset(variant.key) == want:
             return variant
-    known = [" + ".join(sorted(v.when)) for v in value.variants] or ["(none encoded)"]
+    known = [" + ".join(v.key) for v in value.variants] or ["(none encoded)"]
     raise VerificationError(
         f"{value.name}: no variant under {sorted(want)} — encoded variants are {known}"
     )
@@ -375,7 +375,7 @@ def apply_verifications(
                 # half-reviewed standards, and it has to survive this pass.
                 variants = []
                 for variant in value.variants:
-                    key = (layer_id, zone_name, name, tuple(sorted(variant.when)))
+                    key = (layer_id, zone_name, name, variant.key)
                     v = active.get(key)
                     if v is None or not _matches(layer_id, zone_name, name, variant, v):
                         variants.append(variant)
@@ -469,7 +469,7 @@ def apply_verifications(
                 # that matters: there is no longer any sentence this signature
                 # could stand over, so it reads the same as a deleted field.
                 present = value is not None and (
-                    not when or any(frozenset(x.when) == frozenset(when) for x in value.variants)
+                    not when or any(frozenset(x.key) == frozenset(when) for x in value.variants)
                 )
         orphans.append(
             Orphan(

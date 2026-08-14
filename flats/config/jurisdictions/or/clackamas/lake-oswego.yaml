@@ -71,7 +71,9 @@ zones:
     setback_side_ft: 10
     setback_rear_ft: 10
     setback_street_side_ft: 10
-    min_lot_sqft: 7000
+    min_lot_sqft:
+      value: 7000
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L536"
     max_coverage_pct: 45
     notes: 'quadfit confidence: verified | Coverage is height-tiered (45% at <=22 ft — applies to a 2-story
       quadplex). Floor-area formula cap noted, never binds ~1,000 sf building.'

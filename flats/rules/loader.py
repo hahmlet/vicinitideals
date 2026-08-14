@@ -35,6 +35,7 @@ from flats.rules.model import (
     Provenance,
     Status,
     Value,
+    Band,
     Variant,
     Zone,
 )
@@ -172,8 +173,30 @@ def _parse_variants(
         when = body.pop("when", None)
         if isinstance(when, str):
             when = [when]
-        if not isinstance(when, list) or not when:
+        if when is None:
+            when = []
+        if not isinstance(when, list):
             problems.append(f"{at}: 'when' must list the condition(s) this applies under")
+            continue
+        raw_band = body.pop("band", None)
+        band: Band | None = None
+        if raw_band is not None:
+            if not isinstance(raw_band, dict):
+                problems.append(
+                    f"{at}.band: expected a mapping — "
+                    f"measure, and at_least and/or at_most"
+                )
+                continue
+            try:
+                band = Band(**raw_band)
+            except Exception as exc:
+                problems.append(f"{at}.band: {_terse(exc)}")
+                continue
+        if not when and band is None:
+            problems.append(
+                f"{at}: 'when' must list the condition(s) this applies under, "
+                f"or 'band' the lot sizes it was written for"
+            )
             continue
         unknown = set(body) - set(_PROV_KEYS) - set(_REVIEW_KEYS)
         if unknown:
@@ -197,6 +220,7 @@ def _parse_variants(
                 Variant(
                     value=value,
                     when=tuple(str(c) for c in when),
+                    band=band,
                     prov=Provenance(**{k: merged.get(k) for k in _PROV_KEYS}),
                     status=Status(declared),
                     reviewer=body.get("reviewer"),

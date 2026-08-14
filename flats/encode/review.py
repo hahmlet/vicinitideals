@@ -284,7 +284,7 @@ def cmd_queue(args: argparse.Namespace) -> int:
                 continue
             print(
                 f"{part.status.value:8} {layer_id} {zone} "
-                f"{_label(field, getattr(part, 'when', ()))} = {part.value}"
+                f"{_label(field, getattr(part, 'key', ()))} = {part.value}"
                 f"  [{part.prov.cite}]"
             )
             shown += 1
@@ -334,8 +334,8 @@ def cmd_show(args: argparse.Namespace) -> int:
             print("  exceptions:")
             for other in value.variants:
                 print(
-                    f"    {other.value} when {'+'.join(sorted(other.when))}"
-                    f"  ({other.status.value}) — sign with --when {' '.join(sorted(other.when))}"
+                    f"    {other.value} when {'+'.join(other.key)}"
+                    f"  ({other.status.value}) — sign with --when {' '.join(other.key)}"
                 )
     return _print_evidence(store, part)
 
