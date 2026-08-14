@@ -312,3 +312,66 @@ def test_a_jurisdiction_with_no_document_still_renders_an_action(bench: dict) ->
     # no_source names no document, and formatting must not blow up reaching for
     # one that does not exist.
     assert "code:" in report(bench).action
+
+
+# --- misquoted: the citation that resolves and says nothing ------------------
+
+
+def test_a_layer_whose_quotes_drifted_stops_at_misquoted(bench: dict) -> None:
+    # Every value quoted and resolvable, and every citation pointing at the
+    # wrong line — the state a re-extraction leaves behind. The ladder has to
+    # name it, or the next rung says "waiting on a signature" over evidence
+    # nobody can sign.
+    evidence(bench)
+    city(
+        bench,
+        CODE
+        + CITE
+        + "zones:\n  R5:\n    setback_front_ft:\n      value: 10\n"
+        + f'      quote: "{DOC}#L3"\n',
+    )
+
+    got = report(bench)
+
+    assert got.stage == "misquoted"
+    assert got.misquoted == (("R5", "setback_front_ft"),)
+    assert "attach" in got.action
+
+
+def test_a_quote_that_states_its_number_is_not_misquoted(bench: dict) -> None:
+    evidence(bench)
+    city(
+        bench,
+        CODE
+        + CITE
+        + "zones:\n  R5:\n    setback_front_ft:\n      value: 10\n"
+        + f'      quote: "{DOC}#L2"\n',
+    )
+
+    got = report(bench)
+
+    assert got.misquoted == ()
+    assert got.stage == "unsigned"
+
+
+def test_a_quote_that_does_not_state_its_number_is_misquoted(tmp_path: Path) -> None:
+    # Re-extracting a document moves every line in it, so a citation keeps
+    # pointing at line 3 while line 3 becomes something else. Nothing else in
+    # the ladder can see that: the value has a quote, and the quote resolves.
+    from flats.encode.readiness import quotes_the_number
+
+    assert quotes_the_number("Minimum lot area: 7,500 sq ft", 7500)
+    assert quotes_the_number("The front setback is 7.5 feet", 7.5)
+    assert quotes_the_number("Maximum floor area ratio 0.60", 0.6)
+    assert not quotes_the_number("Maximum lot coverage", 30)
+    assert not quotes_the_number("13.090 OTHER APPLICABLE DEVELOPMENT STANDARDS", 20)
+
+
+def test_a_non_numeric_value_is_never_misquoted() -> None:
+    # Permission flags and enums have no number to look for, and flagging
+    # them would bury the citations that really did drift.
+    from flats.encode.readiness import quotes_the_number
+
+    assert quotes_the_number("Quadplexes are permitted outright.", True)
+    assert quotes_the_number("Buildings shall face the street.", "axis_required")
+    assert quotes_the_number("anything", None)

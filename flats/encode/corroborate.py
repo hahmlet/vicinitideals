@@ -139,7 +139,7 @@ def check_zone(
         # whose every number the prose reader files under lot size, and
         # Gladstone's cottage-cluster sentences would otherwise outvote the
         # base-zone row they are the exception to.
-        for rung in ("table", "pair"):
+        for rung in ("table", "typed-table", "pair"):
             best = [c for c in candidates if c.source == rung]
             if best:
                 by_field[name] = best
@@ -275,7 +275,9 @@ def _authoritative(candidate) -> bool:
     it. A sentence earns the same standing only by stating a base standard
     (:func:`states_a_rule`): conditional prose corroborates, never contradicts.
     """
-    return candidate.source in ("table", "pair") or states_a_rule(candidate.text)
+    return candidate.source in ("table", "typed-table", "pair") or states_a_rule(
+        candidate.text
+    )
 
 
 def _notes(candidates: Sequence) -> tuple[str, ...]:

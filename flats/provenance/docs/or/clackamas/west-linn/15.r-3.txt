@@ -157,88 +157,52 @@ The following uses are conditional uses which may be allowed in this zoning dist
 Except as may be otherwise provided by the provisions of this code, the following are requirements for uses within this zone:
 
 STANDARD
-
+STANDARD
 REQUIREMENT
-
 ADDITIONAL NOTES
-
 Minimum lot size
-
+Minimum lot size
 For single-family detached units
-
 3,000 sf
-
 For single-family attached units
-
 3,000 sf
-
 Multifamily dwelling units
-
 3,000 sf
-
 Average minimum lot or parcel size for a townhouse project
-
 1,500 sf
-
 Minimum lot width at front lot line
-
+Minimum lot width at front lot line
 35 ft
-
 Does not apply to townhouses or cottage clusters
-
 Minimum yard dimensions or minimum building setbacks
-
+Minimum yard dimensions or minimum building setbacks
 Front, rear, and side yard setbacks for a cottage cluster project are 10 ft. There are no additional setbacks for individual structures on individual lots, but minimum distance between structures shall follow applicable building code requirements.
-
 Front yard
-
 15 ft
-
 Except for steeply sloped lots where the provisions of CDC 41.010 shall apply
-
 Garage
-
 20 ft
-
+Except for steeply sloped lots where the provisions of CDC 41.010 shall apply
 Interior side yard
-
 5 ft
-
 Townhouse common walls that are attached may have a 0-ft side setback.
-
 Street side yard
-
 15 ft
-
 Rear yard
-
 15 ft
-
 Except that in the case of an apartment structure in this district, an additional yard area may be required between the structure in this district and any adjacent low density residential uses.
-
 Maximum building height
-
+Maximum building height
 35 ft
-
 Except for steeply sloped lots in which case the provisions of Chapter 41 CDC shall apply.
-
 Maximum lot coverage
-
+Maximum lot coverage
 50%
-
-Maximum lot coverage does not apply to duplexes, triplexes, quadplexes, townhouses or cottage clusters. However, the maximum building footprint for a cottage cluster is less than 900 sf per dwelling unit.
-
-• This does not include detached garages, carports, or accessory structures.
-
-• A developer may deduct up to 200 sf for an attached garage or carport.
-
+Maximum lot coverage does not apply to duplexes, triplexes, quadplexes, townhouses or cottage clusters. However, the maximum building footprint for a cottage cluster is less than 900 sf per dwelling unit. • This does not include detached garages, carports, or accessory structures. • A developer may deduct up to 200 sf for an attached garage or carport.
 Maximum floor area ratio
-
+Maximum floor area ratio
 0.45
-
-Maximum FAR does not apply to duplexes, triplexes, quadplexes, multifamily units, townhouses or cottage clusters.
-
-Type I and II lands shall not be counted toward lot area when determining allowable floor area ratio, except that a minimum floor area ratio of 0.30 shall be allowed regardless of the classification of lands within the property. That 30 percent shall be based upon the entire property including Type I and II lands. Existing residences in excess of this standard may be replaced to their prior dimensions when damaged without the requirement that the homeowner obtain a non-conforming structures permit under Chapter 66 CDC.
+Maximum FAR does not apply to duplexes, triplexes, quadplexes, multifamily units, townhouses or cottage clusters. Type I and II lands shall not be counted toward lot area when determining allowable floor area ratio, except that a minimum floor area ratio of 0.30 shall be allowed regardless of the classification of lands within the property. That 30 percent shall be based upon the entire property including Type I and II lands. Existing residences in excess of this standard may be replaced to their prior dimensions when damaged without the requirement that the homeowner obtain a non-conforming structures permit under Chapter 66 CDC.
 
 A. The sidewall provisions of Chapter 43 CDC shall apply. (Ord. 1538, 2006; Ord. 1622 § 24, 2014; Ord. 1675 § 20, 2018; Ord. 1736 § 1 (Exh. A), 2022; Ord. 1745 § 1 (Exh. A), 2023)
 

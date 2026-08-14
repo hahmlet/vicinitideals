@@ -187,6 +187,7 @@ def cmd_plan(args: argparse.Namespace) -> int:
             [f"    unfetched  {p}" for p in r.unfetched]
             + [f"    unquoted   {z} {f}" for z, f in r.unquoted]
             + [f"    no text    {z} {f}" for z, f in r.no_evidence]
+            + [f"    misquoted  {z} {f}" for z, f in r.misquoted]
         )
         if detail:
             print(f"\n  {r.layer}")

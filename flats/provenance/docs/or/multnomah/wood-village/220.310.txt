@@ -59,65 +59,17 @@ This section is included in your selections.
 
 Housing types are limited in the multi-residential zones in order to maintain and enhance the overall character of multi-dwelling neighborhoods. The housing types allowed are shown in Table 220-2, along with references to the additional regulations which are stated in Section 220.400 and Section 300.
 
-Table 220-2. Housing Types Allowed
-
-MR4
-
-MR2
-
-Detached House
-
-Y
-
-Y
-
-Attached or Detached Duplex
-
-Y
-
-Y
-
-Townhouse
-
-Y
-
-Y
-
-Attached or Detached Tri- or Quadplex
-
-Y
-
-Y
-
-Manufactured Home (See Section 340.010)
-
-Y
-
-Y
-
-Manufactured Home Park (See Section 340.020)
-
-N
-
-Y
-
-Multi-Dwelling Structure
-
-Y
-
-Y
-
-Cottage Style Housing
-
-Y
-
-Y
-
-Accessory Dwelling Unit (See Section 395)
-
-Y
-
-Y
+Table 220-2. Housing Types Allowed
+                                              MR4  MR2
+Detached House                                Y    Y
+Attached or Detached Duplex                   Y    Y
+Townhouse                                     Y    Y
+Attached or Detached Tri- or Quadplex         Y    Y
+Manufactured Home (See Section 340.010)       Y    Y
+Manufactured Home Park (See Section 340.020)  N    Y
+Multi-Dwelling Structure                      Y    Y
+Cottage Style Housing                         Y    Y
+Accessory Dwelling Unit (See Section 395)     Y    Y
 
 Y = Yes, Permitted Type
 

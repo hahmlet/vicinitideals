@@ -552,7 +552,14 @@ def extract(
 
     if zone:
         for table in read_tables(text):
-            proposed.extend(candidates_for(table, zone, path=path))
+            found = candidates_for(table, zone, path=path)
+            if table.typed:
+                # A housing-type table names no zone; the section it is
+                # printed under is what says whose standards these are, so
+                # its candidates carry that section and count only where a
+                # zone declares it — the same rule prose lives under.
+                found = [replace(c, section=_section_at(text, c.line)) for c in found]
+            proposed.extend(found)
         proposed.extend(stacked_candidates_for(read_stacked_grids(text, path=path), zone))
 
     # Stacked label/value pairs — a table that lost its geometry to HTML
@@ -561,6 +568,25 @@ def extract(
     proposed.extend(read_pairs(blank_tables(text), path=path))
 
     return Extraction(path=path, clauses=tuple(clauses), candidates=tuple(_mark(proposed)))
+
+
+def _section_at(text: str, line: int) -> str:
+    """The section heading in force at a line.
+
+    Table rows are read out of the grid rather than off the paragraph walk,
+    so they miss the section cursor that walk maintains. Same rule as the
+    walk: only a heading-shaped line counts, or a wrapped citation inside a
+    table note would rename the section under it.
+    """
+    section = ""
+    for n, raw in enumerate(text.splitlines(), start=1):
+        if n > line:
+            break
+        stripped = raw.strip()
+        found = _SECTION.match(stripped)
+        if found and _heading_like(stripped):
+            section = found.group("sec")
+    return section
 
 
 def _mark(candidates: Iterable[Candidate]) -> list[Candidate]:

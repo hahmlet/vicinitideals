@@ -27,6 +27,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from dataclasses import field as dc_field
+from dataclasses import replace
 from typing import Iterable, Sequence
 
 from flats.encode.extract import _PAGE_NUMBER, _SECTION, Candidate, _furniture, _subject
@@ -62,6 +63,14 @@ _MEASURE = re.compile(
 _FOOTNOTE = re.compile(r"\s*\[(?P<n>\d+)\]\s*$")
 #: "[3] Additional FAR and height may be allowed. See 33.110.265.F."
 _NOTE = re.compile(r"^\[(?P<n>\d+)\]\s+(?P<text>.+)$")
+#: A table's own caption and the number that identifies it — "Table 220-4.
+#: Development Standards ...". Two tables under one section heading run
+#: together otherwise, and the second one's rows read under the first one's
+#: columns: Wood Village's unit-count table put "60 ft" under the townhouse
+#: column of the table above it. Only a *different* number ends the table:
+#: a chapter PDF reprints the same caption at every page break, and treating
+#: that as a new table cuts the grid off at the first page boundary.
+_TABLE_CAPTION = re.compile(r"^Table\s+(?P<id>[\w.-]+)", re.I)
 #: What follows the last row: the footnote block, or the next section heading.
 #: A section *number* is not enough — rows carry wrapped cross-references like
 #: "33.110.265)", and treating one as the end truncates the table mid-grid.
@@ -85,6 +94,17 @@ class Column:
 
     zone: str
     offset: int
+
+
+def zone_key(zone: str) -> str:
+    """A zone name reduced to what identifies it.
+
+    Spacing, hyphens and case are typography: the GIS layer writes "LR 7.5",
+    the table header prints "LR7.5", and the code writes "R-7.2" where the
+    layer says "R7.2". Everything else has to match exactly — R5 and R7 are
+    not the same district however similar they look.
+    """
+    return zone.replace(" ", "").replace("-", "").lower()
 
 
 @dataclass(frozen=True, slots=True)
@@ -120,16 +140,34 @@ class Row:
     #: canonical types, empty when no type heading is in scope.
     block: str = ""
 
+    def _key(self, mapping, zone: str, default):
+        """One zone's entry, matched loosely on spelling.
+
+        The GIS layer writes "LR 7.5" and the table header prints "LR7.5";
+        the code writes "R-7.2" where the layer says "R7.2". Spacing and
+        hyphens are typography, not identity — everything else has to match
+        exactly. The stacked reader has always matched this way; the column
+        reader got the same rule the day a table's header stopped being one
+        zone code per line and started being a real grid.
+        """
+        if zone in mapping:
+            return mapping[zone]
+        want = zone_key(zone)
+        for name, value in mapping.items():
+            if zone_key(name) == want:
+                return value
+        return default
+
     def marks_for(self, zone: str) -> tuple[int, ...]:
-        return self.marks.get(zone, ())
+        return self._key(self.marks, zone, ())
 
     def value_for(self, zone: str) -> str:
-        if zone in self.contested:
+        if any(zone_key(z) == zone_key(zone) for z in self.contested):
             return ""
-        return self.cells.get(zone, "")
+        return self._key(self.cells, zone, "")
 
     def line_for(self, zone: str) -> int:
-        return self.lines.get(zone, self.line)
+        return self._key(self.lines, zone, self.line)
 
 
 @dataclass(frozen=True, slots=True)
@@ -137,6 +175,12 @@ class Table:
     """The rows of one table and the footnotes printed beneath it."""
 
     rows: tuple[Row, ...] = ()
+    #: True when the columns are housing types rather than zones — Wood
+    #: Village's Table 220-3 states one column per type for the whole MR
+    #: family. Which zones such a table speaks for is not in the table; it
+    #: comes from the section it is printed under, so these rows are read
+    #: zone-blind and gated by the declared section, like prose.
+    typed: bool = False
     notes: dict[int, str] = dc_field(default_factory=dict)
     #: Line each note was read from, so a condition can be quoted like a value.
     note_lines: dict[int, int] = dc_field(default_factory=dict)
@@ -244,6 +288,17 @@ def header(line: str) -> tuple[str, tuple[Column, ...]] | None:
     zones = [Column(text, offset) for offset, text in rest if _ZONE.match(text)]
     if len(zones) >= 2:
         return ZONES_ACROSS, tuple(zones)
+    # Columns naming housing types rather than districts — "Townhouse |
+    # Detached Single Dwelling | Duplex Triplex Quadplex". Every cell must
+    # name a type: one type column beside three zone columns is a zone table
+    # with a stray label, and reading it as typed would drop the zones.
+    types = [
+        Column(found_type, offset)
+        for offset, text in rest
+        if (found_type := _housing_type(text)) is not None
+    ]
+    if len(types) >= 2 and len(types) == len(rest):
+        return TYPES_ACROSS, tuple(types)
     # A heading is only taken as a standard when it names a field this system
     # has — otherwise any two-column list with the word "zone" in it becomes a
     # table of values.
@@ -257,6 +312,9 @@ def header(line: str) -> tuple[str, tuple[Column, ...]] | None:
 ZONES_ACROSS = "zones-across"
 #: Zones down the side, standards across the top.
 ZONES_DOWN = "zones-down"
+#: Housing types across the top, standards down the side, and no zone named
+#: anywhere in the table.
+TYPES_ACROSS = "types-across"
 
 
 def _pitch(cols: Sequence[Column]) -> int:
@@ -450,6 +508,15 @@ def _read_span(lines: Sequence[str], first: int, last: int, start_line: int) -> 
             if found_type:
                 block = found_type
                 break
+    # The caption in force. Seeded from just above the header, because that is
+    # where a table's own title is printed — anything found later that names a
+    # different table ends this one.
+    caption = ""
+    for prev in reversed(lines[max(0, first - 6) : first]):
+        found_caption = _TABLE_CAPTION.match(prev.strip())
+        if found_caption:
+            caption = found_caption.group("id").strip(".:")
+            break
     reach = _MIN_REACH
     rows: list[Row] = []
     down: dict[str, dict[str, tuple[str, int, tuple[int, ...]]]] = {}
@@ -481,7 +548,15 @@ def _read_span(lines: Sequence[str], first: int, last: int, start_line: int) -> 
             # Re-anchored on every header: a table continued onto a new page
             # is the same table, but its columns rarely land on the same offsets.
             kind, cols = head[0], head[1]
-            slots = _slots(line) if kind == ZONES_ACROSS else ()
+            if kind == ZONES_ACROSS:
+                slots = _slots(line)
+            elif kind == TYPES_ACROSS:
+                # Every header cell after the label is a type column — the
+                # shape was only accepted when they all were — so print order
+                # places a structurally complete row without offsets.
+                slots = tuple(c.zone for c in cols)
+            else:
+                slots = ()
             reach = _pitch(cols)
             continue
         if not cols:
@@ -491,6 +566,13 @@ def _read_span(lines: Sequence[str], first: int, last: int, start_line: int) -> 
             num = int(found_note.group("n"))
             notes[num] = found_note.group("text").strip()
             note_lines[num] = n
+            continue
+        found_caption = _TABLE_CAPTION.match(stripped)
+        if found_caption:
+            name = found_caption.group("id").strip(".:")
+            if caption and name != caption:
+                break  # a different table's caption
+            caption = caption or name
             continue
         if _ENDS_TABLE.match(stripped):
             # The next section number is outside the grid. Without this the
@@ -619,7 +701,9 @@ def _read_span(lines: Sequence[str], first: int, last: int, start_line: int) -> 
                 marks={zone: seen for zone, (_, _, seen) in per_zone.items() if seen},
             )
         )
-    return Table(rows=tuple(rows), notes=notes, note_lines=note_lines)
+    return Table(
+        rows=tuple(rows), notes=notes, note_lines=note_lines, typed=kind == TYPES_ACROSS
+    )
 
 
 #: A footnote number glued straight onto the unit — "35 ft.12", "16 ft.7",
@@ -1225,10 +1309,9 @@ def stacked_candidates_for(
     typography, not identity — everything else has to match exactly.
     """
 
-    def norm(z: str) -> str:
-        return z.replace(" ", "").replace("-", "").lower()
-
-    return [c for header, cs in grids.items() if norm(header) == norm(zone) for c in cs]
+    return [
+        c for header, cs in grids.items() if zone_key(header) == zone_key(zone) for c in cs
+    ]
 
 
 def candidates_for(table: Table | Iterable[Row], zone: str, *, path: str) -> list[Candidate]:
@@ -1245,6 +1328,8 @@ def candidates_for(table: Table | Iterable[Row], zone: str, *, path: str) -> lis
     turns a lot that could be built taller into a red that nobody revisits.
     """
     table = table if isinstance(table, Table) else Table(rows=tuple(table))
+    if table.typed:
+        return _typed_candidates(table, path=path)
     out: list[Candidate] = []
     for row in table.rows:
         htype = ""
@@ -1303,4 +1388,29 @@ def candidates_for(table: Table | Iterable[Row], zone: str, *, path: str) -> lis
                 housing_type=htype,
             )
         )
+    return out
+
+
+def _typed_candidates(table: Table, *, path: str) -> list[Candidate]:
+    """Values a housing-type table states, one reading per type column.
+
+    The table names no zone, so nothing here is zone-keyed: these candidates
+    carry the type they were written for and are gated by the section the
+    table sits under, exactly as prose is. Which type speaks for the pod is
+    selection's decision downstream — a quadplex column and a townhouse
+    column are different standards, and reading only one of them here would
+    make that choice silently, in the reader, where nobody can see it.
+    """
+    columns = list(dict.fromkeys(name for row in table.rows for name in row.cells))
+    plain = Table(rows=table.rows, notes=table.notes, note_lines=table.note_lines)
+    out: list[Candidate] = []
+    for htype in columns:
+        for candidate in candidates_for(plain, htype, path=path):
+            out.append(
+                replace(
+                    candidate,
+                    source="typed-table",
+                    housing_type=candidate.housing_type or htype,
+                )
+            )
     return out

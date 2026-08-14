@@ -1221,3 +1221,141 @@ def test_wood_village_type_spellings_are_recognised() -> None:
 
     assert _housing_type("Detached Single Dwelling") == "single_detached"
     assert _housing_type("Cottage Housing") == "cottage_cluster"
+
+
+# --- the sixth shape: housing types across the top ---------------------------
+
+# Wood Village Table 220-3 as the table-aware extractor renders it: the columns
+# are housing types and no zone is named anywhere in the grid. Which zones it
+# speaks for comes from the section it is printed under. Carries the shapes
+# that broke the reader: an empty cell (townhouse has no lot depth), a second
+# table below it, and a group heading glued to the row above.
+WOOD_VILLAGE_TYPES = "\n".join(
+    [
+        "220.320 Lot Size and Dimensional Standards.",
+        "",
+        "Table 220-3. Housing Types Allowed",
+        "Standard                      Townhouse    Detached Single Dwelling  Duplex Triplex Quadplex",
+        "Minimum Lot Size              1,500 sq ft  7,500 sq ft               7,500 sq ft",
+        "- Min. lot depth              20 ft                                  80 ft",
+        "- Front setback               10 ft        10 ft                     10 ft",
+        "Maximum Site Coverage         75%          45%                       45%",
+        "",
+        "Table 220-4. Development Standards for Multi-Dwelling Structures",
+        "Number of Units  Minimum Lot Area  Min. Width",
+        "5                16,500 sq ft      60 ft",
+    ]
+)
+
+
+def _typed(text: str, path: str = "doc.txt"):
+    from flats.encode.tables import read_tables
+
+    return read_tables(text)[0]
+
+
+def test_a_header_of_housing_types_is_its_own_shape() -> None:
+    from flats.encode.tables import TYPES_ACROSS, header
+
+    kind, cols = header(WOOD_VILLAGE_TYPES.splitlines()[3])
+
+    assert kind == TYPES_ACROSS
+    assert [c.zone for c in cols] == [
+        "townhouse",
+        "single_detached",
+        "duplex+triplex+quadplex",
+    ]
+
+
+def test_one_type_column_beside_zone_columns_is_not_a_typed_table() -> None:
+    # A zone table with a stray type label still has zones in it, and reading
+    # it as typed would drop every zone the columns name.
+    from flats.encode.tables import ZONES_ACROSS, header
+
+    kind, cols = header("Standard          R-5        R-7        Townhouse")
+
+    assert kind == ZONES_ACROSS
+    assert [c.zone for c in cols] == ["R-5", "R-7"]
+
+
+def test_a_typed_table_keeps_each_type_in_its_own_column() -> None:
+    table = _typed(WOOD_VILLAGE_TYPES)
+
+    assert table.typed
+    area = next(r for r in table.rows if r.label == "Minimum Lot Size")
+    assert area.value_for("townhouse") == "1,500 sq ft"
+    assert area.value_for("duplex+triplex+quadplex") == "7,500 sq ft"
+
+
+def test_an_empty_cell_in_a_typed_row_stays_empty() -> None:
+    # The reason the extractor renders grids at all: without the gap, the
+    # detached column's 80 ft slides one column left and becomes the
+    # townhouse's lot depth.
+    table = _typed(WOOD_VILLAGE_TYPES)
+    depth = next(r for r in table.rows if "lot depth" in r.label)
+
+    assert depth.value_for("single_detached") == ""
+    assert depth.value_for("duplex+triplex+quadplex") == "80 ft"
+
+
+def test_the_next_table_s_caption_ends_this_one() -> None:
+    table = _typed(WOOD_VILLAGE_TYPES)
+
+    assert max(r.line for r in table.rows) < 10, "Table 220-4's rows are not in 220-3"
+
+
+def test_a_reprinted_caption_does_not_end_the_table() -> None:
+    # A chapter PDF stamps the same caption at every page break. Treating it
+    # as a new table cuts Gresham's grid off at the first page boundary and
+    # loses every standard printed after it.
+    text = "\n".join(
+        [
+            "Table 4.0130: Development Requirements",
+            "Standard              R-5      R-7",
+            "Minimum lot area      5,000    7,000",
+            "Table 4.0130: Development Requirements",
+            "Minimum front setback  20 ft   20 ft",
+        ]
+    )
+    from flats.encode.tables import read_tables
+
+    rows = read_tables(text)[0].rows
+
+    assert [r.label for r in rows] == ["Minimum lot area", "Minimum front setback"]
+    assert rows[-1].value_for("R-5") == "20 ft"
+
+
+def test_a_typed_table_reads_zone_blind_and_carries_its_section() -> None:
+    from flats.encode.extract import extract
+
+    read = extract(
+        WOOD_VILLAGE_TYPES, path="doc.txt", jurisdiction="or/multnomah/wood-village", zone="MR 2"
+    )
+    typed = [c for c in read.candidates if c.source == "typed-table"]
+
+    assert {c.section for c in typed} == {"220.320"}
+    assert ("min_lot_sqft", 7500, "duplex+triplex+quadplex") in {
+        (c.field, c.value, c.housing_type) for c in typed
+    }
+    assert ("min_lot_sqft", 1500, "townhouse") in {
+        (c.field, c.value, c.housing_type) for c in typed
+    }
+
+
+def test_a_zone_spelled_with_a_space_still_finds_its_column() -> None:
+    # The GIS layer writes "LR 7.5" and the header prints "LR7.5". The stacked
+    # reader always matched loosely; the column reader had to once a rendered
+    # grid replaced the one-code-per-line linearisation.
+    from flats.encode.tables import read_tables
+
+    text = "\n".join(
+        [
+            "Standard              LR12          LR7.5",
+            "Minimum lot area      12,000 sq ft  7,500 sq ft",
+        ]
+    )
+    row = read_tables(text)[0].rows[0]
+
+    assert row.value_for("LR 7.5") == "7,500 sq ft"
+    assert row.value_for("LR 12") == "12,000 sq ft"
+    assert row.value_for("LR 8") == ""

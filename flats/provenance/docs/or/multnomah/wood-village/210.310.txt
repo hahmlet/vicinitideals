@@ -59,63 +59,16 @@ This section is included in your selections.
 
 Housing types are flexible but limited in the light residential zones in order to maintain and enhance the overall character of less dense neighborhoods compared to other mixed use or higher density areas. The housing types allowed are shown in Table 210-2, along with references to the additional regulations which are stated in Section 300.
 
-Table 210-2. Housing Types Allowed
-
-LR12
-
-LR7.5
-
-Detached House
-
-Y
-
-Y
-
-Attached or Detached Duplex
-
-Y
-
-Y
-
-Townhouse
-
-Y
-
-Y
-
-Attached or Detached Tri- or Quadplex
-
-Y
-
-Y
-
-Cottage Housing*
-
-Y
-
-Y
-
-Manufactured Home
-
-(See Section 340.010)
-
-Y
-
-Y
-
-Manufactured Home Park
-
-N
-
-N
-
-Accessory Dwelling Unit
-
-(See Section 395)
-
-Y
-
-Y
+Table 210-2. Housing Types Allowed
+                                           LR12  LR7.5
+Detached House                             Y     Y
+Attached or Detached Duplex                Y     Y
+Townhouse                                  Y     Y
+Attached or Detached Tri- or Quadplex      Y     Y
+Cottage Housing*                           Y     Y
+Manufactured Home (See Section 340.010)    Y     Y
+Manufactured Home Park                     N     N
+Accessory Dwelling Unit (See Section 395)  Y     Y
 
 Y = Yes, Permitted Type
 

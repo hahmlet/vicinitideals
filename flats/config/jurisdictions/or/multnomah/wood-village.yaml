@@ -51,23 +51,21 @@ zones:
       retrieved: '2026-07-24'
     quadplex_allowed: true
     setback_front_ft:
+      quote: "or/multnomah/wood-village/210.320.txt#L71"
       value: 10
-      quote: "or/multnomah/wood-village/210.320.txt#L136"
     setback_side_ft:
       value: 5
-      quote: "or/multnomah/wood-village/210.320.txt#L124"
     setback_rear_ft:
       value: 15
-      quote: "or/multnomah/wood-village/210.320.txt#L130"
     setback_street_side_ft:
+      quote: "or/multnomah/wood-village/210.320.txt#L77"
       value: 10
-      quote: "or/multnomah/wood-village/210.320.txt#L144"
     min_lot_sqft:
+      quote: "or/multnomah/wood-village/210.320.txt#L65"
       value: 7500
-      quote: "or/multnomah/wood-village/210.320.txt#L76"
     max_coverage_pct:
+      quote: "or/multnomah/wood-village/210.320.txt#L80"
       value: 45
-      quote: "or/multnomah/wood-village/210.320.txt#L166"
     notes: 'quadfit confidence: verified | Quadplex Y outright; zone min lot 7,500 sf (no quad-specific
       larger min). Garage face 22 ft. Height 35 ft.'
   LR 12:
@@ -78,23 +76,22 @@ zones:
       retrieved: '2026-07-24'
     quadplex_allowed: true
     setback_front_ft:
+      quote: "or/multnomah/wood-village/210.320.txt#L71"
       value: 10
-      quote: "or/multnomah/wood-village/210.320.txt#L136"
     setback_side_ft:
+      quote: "or/multnomah/wood-village/210.320.txt#L73"
       value: 10
-      quote: "or/multnomah/wood-village/210.320.txt#L122"
     setback_rear_ft:
       value: 15
-      quote: "or/multnomah/wood-village/210.320.txt#L128"
     setback_street_side_ft:
+      quote: "or/multnomah/wood-village/210.320.txt#L77"
       value: 20
-      quote: "or/multnomah/wood-village/210.320.txt#L142"
     min_lot_sqft:
+      quote: "or/multnomah/wood-village/210.320.txt#L65"
       value: 12000
-      quote: "or/multnomah/wood-village/210.320.txt#L74"
     max_coverage_pct:
+      quote: "or/multnomah/wood-village/210.320.txt#L80"
       value: 45
-      quote: "or/multnomah/wood-village/210.320.txt#L164"
     notes: 'quadfit confidence: verified | Corner STREET-SIDE 20 ft (vs 10 in LR 7.5). Zone min lot 12,000
       sf.'
   MR 2:
@@ -105,14 +102,30 @@ zones:
       retrieved: '2026-07-24'
     quadplex_allowed: true
     setback_front_ft:
+      quote: "or/multnomah/wood-village/220.320.txt#L72"
       value: 10
-      quote: "or/multnomah/wood-village/220.320.txt#L124"
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    min_lot_sqft: 8000
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/wood-village/220.320.txt#L74"
+    setback_rear_ft:
+      value: 15
+      quote: "or/multnomah/wood-village/220.320.txt#L75"
+    min_lot_sqft:
+      value: 7500
+      quote: "or/multnomah/wood-village/220.320.txt#L67"
+    min_lot_width_ft:
+      value: 60
+      quote: "or/multnomah/wood-village/220.320.txt#L68"
+    max_height_ft:
+      value: 35
+      quote: "or/multnomah/wood-village/220.320.txt#L70"
     max_coverage_pct: 45
-    notes: 'quadfit confidence: verified | Quadplex min lot 8,000 sf (SFD 7,500). MR tables have NO corner-lot
-      street-side rows — genuinely unspecified in code text; no street-side elevation applied.'
+    notes: 'Re-encoded 2026-08-13 from WVDC Table 220-3 (Ord. 2-2022) once the table-aware extractor made
+      its housing-type columns readable. min_lot 8,000 -> 7,500: the table states 7,500 sf for the
+      "Duplex Triplex Quadplex" column, which is the pod''s column; quadfit''s 8,000 appears nowhere in
+      the current code text. Coverage 45% is that same column (the townhouse column states 75%, a
+      different plat path). MR tables have NO corner-lot street-side rows — genuinely unspecified in code
+      text; no street-side elevation applied.'
   MR 4:
     section: ["220."]
     cite_default:
@@ -121,10 +134,24 @@ zones:
       retrieved: '2026-07-24'
     quadplex_allowed: true
     setback_front_ft:
+      quote: "or/multnomah/wood-village/220.320.txt#L72"
       value: 10
-      quote: "or/multnomah/wood-village/220.320.txt#L124"
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    min_lot_sqft: 8000
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/wood-village/220.320.txt#L74"
+    setback_rear_ft:
+      value: 15
+      quote: "or/multnomah/wood-village/220.320.txt#L75"
+    min_lot_sqft:
+      value: 7500
+      quote: "or/multnomah/wood-village/220.320.txt#L67"
+    min_lot_width_ft:
+      value: 60
+      quote: "or/multnomah/wood-village/220.320.txt#L68"
+    max_height_ft:
+      value: 35
+      quote: "or/multnomah/wood-village/220.320.txt#L70"
     max_coverage_pct: 45
-    notes: 'quadfit confidence: verified | Identical to MR 2 for quads (combined table column).'
+    notes: 'Identical to MR 2 for quads — Table 220-3 heads every column "MR4 and MR2", so one column
+      states both zones. Re-encoded 2026-08-13 from that table: min_lot 8,000 -> 7,500, width 60, height
+      35, all from the "Duplex Triplex Quadplex" column.'

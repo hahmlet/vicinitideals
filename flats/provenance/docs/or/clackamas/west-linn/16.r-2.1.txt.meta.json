@@ -1,5 +1,6 @@
 {
   "url": "https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC16.html",
   "retrieved": "2026-08-13",
-  "sha256": "cd13def7ffe9b542f2441ab77e2a965c8613f68055bd7c050d781abc3466cb3e"
+  "sha256": "c4dc5337d42ce30a4cf3e87a88e36c22acff642c81b0eaeb2f3daa8a3fe7e1e2",
+  "extractor": "flats-html-text/2"
 }

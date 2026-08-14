@@ -1,5 +1,6 @@
 {
   "url": "https://woodvillage.municipal.codes/WVDC/220.310",
   "retrieved": "2026-08-13",
-  "sha256": "21f454df67d690757ebd2630e89a7112239f5931639f3ff7cf4289ace42e9d62"
+  "sha256": "8c8a6e4e6db83c80f8245e9a9443baa4bc8ca69a59e96b7b472f1455c3776307",
+  "extractor": "flats-html-text/2"
 }

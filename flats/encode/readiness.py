@@ -20,6 +20,7 @@ stage            what it means
 ``unfetched``    documents declared, not in the store
 ``unquoted``     values that point at no text — unreviewable as written
 ``no_evidence``  quotes that do not resolve to stored text
+``misquoted``    quotes that resolve, to text that does not state the number
 ``unsigned``     everything present; waiting on somebody to read it
 ``stale``        read, but the source has moved since
 ``ready``        every value verified against text that still says it
@@ -47,6 +48,7 @@ STAGES = (
     "unfetched",
     "unquoted",
     "no_evidence",
+    "misquoted",
     "unsigned",
     "stale",
     "ready",
@@ -61,6 +63,10 @@ ACTION = {
     "unfetched": "python -m flats.provenance.fetch --layer {layer}",
     "unquoted": "python -m flats.encode.attach {layer} --doc {doc} (what it refuses, quote by hand)",
     "no_evidence": "python -m flats.provenance.fetch --layer {layer} (quotes point at text that is not stored)",
+    "misquoted": (
+        "python -m flats.encode.attach {layer} --doc {doc} — quotes resolve to text that "
+        "does not state the number, which is what a re-fetch does to line numbers"
+    ),
     "unsigned": "python -m flats.encode.review queue --layer {layer}, then read and sign",
     "stale": "re-read the values whose source moved, then re-sign",
     "ready": "nothing: every value is verified against text that still says it",
@@ -83,6 +89,12 @@ class Readiness:
     unquoted: tuple[tuple[str, str], ...] = ()
     #: (zone, field) pairs whose quote does not resolve.
     no_evidence: tuple[tuple[str, str], ...] = ()
+    #: (zone, field) pairs whose quote resolves to text without the number in
+    #: it. The silent one: re-extracting a document moves every line, so a
+    #: citation keeps pointing at line 136 while line 136 becomes a nav bar.
+    #: Nothing else in the ladder can see that, because the value still has a
+    #: quote and the quote still resolves.
+    misquoted: tuple[tuple[str, str], ...] = ()
     #: Values demoted because their evidence moved.
     stale: int = 0
     #: A declared document, for actions that name one. The first is as good as
@@ -113,21 +125,53 @@ class Readiness:
         )
 
 
-def _quoted_parts(layer: Layer) -> Iterable[tuple[str, str, str | None]]:
-    """Every (zone, field, quote) in a layer, exceptions and references included.
+def _quoted_parts(layer: Layer) -> Iterable[tuple[str, str, str | None, object]]:
+    """Every (zone, field, quote, number) in a layer, exceptions included.
 
     A variant citing a different chapter and an incorporation clause are both
     values somebody has to read, so both are counted here. Leaving either out
     would report a jurisdiction as finished with unread rules in it.
     """
-    yield from ((("defaults"), name, v.prov.quote) for name, v in layer.defaults.items())
+    yield from (
+        ("defaults", name, v.prov.quote, getattr(v, "value", None))
+        for name, v in layer.defaults.items()
+    )
     for zone_code, zone in layer.zones.items():
         for name, value in zone.values.items():
-            yield zone_code, name, value.prov.quote
+            yield zone_code, name, value.prov.quote, getattr(value, "value", None)
             for variant in value.variants:
-                yield zone_code, f"{name} [{'+'.join(sorted(variant.when))}]", variant.prov.quote
+                yield (
+                    zone_code,
+                    f"{name} [{'+'.join(sorted(variant.when))}]",
+                    variant.prov.quote,
+                    getattr(variant, "value", None),
+                )
         if zone.like is not None:
-            yield zone_code, LIKE, zone.like.prov.quote
+            yield zone_code, LIKE, zone.like.prov.quote, None
+
+
+#: How a number can be printed in an ordinance: 7500, 7,500, 7500.0, 7.5.
+def _renderings(number: float | int) -> tuple[str, ...]:
+    whole = int(number)
+    exact = whole if float(number) == whole else number
+    out = {str(exact), f"{exact:,}" if isinstance(exact, int) else str(exact)}
+    if isinstance(exact, float):
+        out.add(f"{exact:g}")
+    return tuple(out)
+
+
+def quotes_the_number(text: str, value) -> bool:
+    """Whether the cited text actually states the value's number.
+
+    Deliberately generous: a code writes "7,500 sq ft" and "0.60" and "7.5
+    ft", and a check that demanded one spelling would flag half the corpus.
+    Non-numeric values — permission flags, enums, curves — are nothing this
+    can check, so they pass. What it does catch is the citation that no
+    longer points at its own sentence.
+    """
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return True
+    return any(shape in text for shape in _renderings(value))
 
 
 def _statuses(layer: Layer) -> list[Status]:
@@ -151,17 +195,21 @@ def readiness_for(
     unfetched = tuple(sorted(p for p in layer.documents() if not store.exists(p)))
     unquoted: list[tuple[str, str]] = []
     no_evidence: list[tuple[str, str]] = []
-    for zone_code, name, quote in _quoted_parts(layer):
+    misquoted: list[tuple[str, str]] = []
+    for zone_code, name, quote, number in _quoted_parts(layer):
         if not quote:
             unquoted.append((zone_code, name))
             continue
         try:
-            store.quote(quote)
+            cited = store.quote(quote)
         except (ProvenanceError, KeyError, ValueError):
             # Whatever went wrong — document absent, line range past the end,
             # malformed reference — the reviewer's problem is the same: there
             # is nothing on screen to compare the number against.
             no_evidence.append((zone_code, name))
+            continue
+        if not quotes_the_number(cited, number):
+            misquoted.append((zone_code, name))
 
     if not layer.zones and not layer.defaults:
         stage = "no_zones"
@@ -173,6 +221,8 @@ def readiness_for(
         stage = "unquoted"
     elif no_evidence:
         stage = "no_evidence"
+    elif misquoted:
+        stage = "misquoted"
     elif verified < len(statuses):
         stage = "unsigned"
     elif stale:
@@ -190,6 +240,7 @@ def readiness_for(
         unfetched=unfetched,
         unquoted=tuple(unquoted),
         no_evidence=tuple(no_evidence),
+        misquoted=tuple(misquoted),
         stale=stale,
         doc=next(iter(layer.documents()), ""),
     )

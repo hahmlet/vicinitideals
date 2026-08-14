@@ -54,20 +54,20 @@ zones:
       retrieved: '2026-07-28'
     quadplex_allowed: true
     setback_front_ft:
+      quote: "or/clackamas/west-linn/08.r-40.txt#L147"
       value: 30
-      quote: "or/clackamas/west-linn/08.r-40.txt#L161"
     setback_side_ft:
+      quote: "or/clackamas/west-linn/08.r-40.txt#L150"
       value: 10
-      quote: "or/clackamas/west-linn/08.r-40.txt#L167"
     setback_rear_ft:
+      quote: "or/clackamas/west-linn/08.r-40.txt#L155"
       value: 30
-      quote: "or/clackamas/west-linn/08.r-40.txt#L181"
     setback_street_side_ft: 30
     min_lot_sqft: 40000
     min_frontage_ft: 150
     max_coverage_pct:
+      quote: "or/clackamas/west-linn/08.r-40.txt#L162"
       value: 25
-      quote: "or/clackamas/west-linn/08.r-40.txt#L191"
     notes: 'quadfit confidence: verified | Detached SFD + quadplex outright. Coverage 25% applies to quadplex
       (only cottage clusters exempt). Corner side-yard read as 30 ft.'
   R-20:
@@ -78,22 +78,22 @@ zones:
       retrieved: '2026-07-28'
     quadplex_allowed: true
     setback_front_ft:
+      quote: "or/clackamas/west-linn/09.r-20.txt#L151"
       value: 20
-      quote: "or/clackamas/west-linn/09.r-20.txt#L165"
     setback_side_ft:
+      quote: "or/clackamas/west-linn/09.r-20.txt#L154"
       value: 7.5
-      quote: "or/clackamas/west-linn/09.r-20.txt#L171"
     setback_rear_ft:
+      quote: "or/clackamas/west-linn/09.r-20.txt#L159"
       value: 20
-      quote: "or/clackamas/west-linn/09.r-20.txt#L181"
     setback_street_side_ft:
+      quote: "or/clackamas/west-linn/09.r-20.txt#L157"
       value: 15
-      quote: "or/clackamas/west-linn/09.r-20.txt#L177"
     min_lot_sqft: 20000
     min_frontage_ft: 100
     max_coverage_pct:
+      quote: "or/clackamas/west-linn/09.r-20.txt#L166"
       value: 25
-      quote: "or/clackamas/west-linn/09.r-20.txt#L191"
     notes: 'quadfit confidence: verified | Detached SFD + quadplex outright. Coverage 25% applies to quadplex.'
   R-15:
     section: ["10."]
@@ -103,22 +103,22 @@ zones:
       retrieved: '2026-07-28'
     quadplex_allowed: true
     setback_front_ft:
+      quote: "or/clackamas/west-linn/10.r-15.txt#L147"
       value: 20
-      quote: "or/clackamas/west-linn/10.r-15.txt#L161"
     setback_side_ft:
+      quote: "or/clackamas/west-linn/10.r-15.txt#L150"
       value: 7.5
-      quote: "or/clackamas/west-linn/10.r-15.txt#L167"
     setback_rear_ft:
+      quote: "or/clackamas/west-linn/10.r-15.txt#L155"
       value: 20
-      quote: "or/clackamas/west-linn/10.r-15.txt#L177"
     setback_street_side_ft:
+      quote: "or/clackamas/west-linn/10.r-15.txt#L153"
       value: 15
-      quote: "or/clackamas/west-linn/10.r-15.txt#L173"
     min_lot_sqft: 15000
     min_frontage_ft: 45
     max_coverage_pct:
+      quote: "or/clackamas/west-linn/10.r-15.txt#L162"
       value: 30
-      quote: "or/clackamas/west-linn/10.r-15.txt#L187"
     notes: 'quadfit confidence: verified | Width 45 ft at front line / 80 ft avg (frontage=45). Coverage
       30% applies to quadplex.'
   R-10:
@@ -129,22 +129,22 @@ zones:
       retrieved: '2026-07-28'
     quadplex_allowed: true
     setback_front_ft:
+      quote: "or/clackamas/west-linn/11.r-10.txt#L148"
       value: 20
-      quote: "or/clackamas/west-linn/11.r-10.txt#L169"
     setback_side_ft:
+      quote: "or/clackamas/west-linn/11.r-10.txt#L151"
       value: 7.5
-      quote: "or/clackamas/west-linn/11.r-10.txt#L175"
     setback_rear_ft:
+      quote: "or/clackamas/west-linn/11.r-10.txt#L156"
       value: 20
-      quote: "or/clackamas/west-linn/11.r-10.txt#L185"
     setback_street_side_ft:
+      quote: "or/clackamas/west-linn/11.r-10.txt#L154"
       value: 15
-      quote: "or/clackamas/west-linn/11.r-10.txt#L181"
     min_lot_sqft: 10000
     min_frontage_ft: 35
     max_coverage_pct:
+      quote: "or/clackamas/west-linn/11.r-10.txt#L161"
       value: 35
-      quote: "or/clackamas/west-linn/11.r-10.txt#L195"
     notes: 'quadfit confidence: verified | Width 35 ft at front line / 50 ft avg (frontage=35). Coverage
       35% applies to quadplex.'
   R-7:
@@ -155,22 +155,22 @@ zones:
       retrieved: '2026-07-28'
     quadplex_allowed: true
     setback_front_ft:
+      quote: "or/clackamas/west-linn/12.r-7.txt#L153"
       value: 20
-      quote: "or/clackamas/west-linn/12.r-7.txt#L171"
     setback_side_ft:
+      quote: "or/clackamas/west-linn/12.r-7.txt#L156"
       value: 7.5
-      quote: "or/clackamas/west-linn/12.r-7.txt#L177"
     setback_rear_ft:
+      quote: "or/clackamas/west-linn/12.r-7.txt#L161"
       value: 20
-      quote: "or/clackamas/west-linn/12.r-7.txt#L187"
     setback_street_side_ft:
+      quote: "or/clackamas/west-linn/12.r-7.txt#L159"
       value: 15
-      quote: "or/clackamas/west-linn/12.r-7.txt#L183"
     min_lot_sqft: 7000
     min_frontage_ft: 35
     max_coverage_pct:
+      quote: "or/clackamas/west-linn/12.r-7.txt#L166"
       value: 35
-      quote: "or/clackamas/west-linn/12.r-7.txt#L197"
     notes: 'quadfit confidence: verified | Detached SFD + quadplex outright. Coverage 35% applies to quadplex;
       max FAR 0.60 for duplex/triplex/quadplex.'
   R-5:
@@ -181,17 +181,17 @@ zones:
       retrieved: '2026-07-28'
     quadplex_allowed: true
     setback_front_ft:
+      quote: "or/clackamas/west-linn/13.r-5.txt#L162"
       value: 20
-      quote: "or/clackamas/west-linn/13.r-5.txt#L177"
     setback_side_ft:
+      quote: "or/clackamas/west-linn/13.r-5.txt#L165"
       value: 5
-      quote: "or/clackamas/west-linn/13.r-5.txt#L183"
     setback_rear_ft:
+      quote: "or/clackamas/west-linn/13.r-5.txt#L170"
       value: 20
-      quote: "or/clackamas/west-linn/13.r-5.txt#L193"
     setback_street_side_ft:
+      quote: "or/clackamas/west-linn/13.r-5.txt#L168"
       value: 15
-      quote: "or/clackamas/west-linn/13.r-5.txt#L189"
     min_lot_sqft: 5000
     min_frontage_ft: 35
     notes: 'quadfit confidence: verified | Max lot coverage does NOT apply to quadplexes (CDC 13.070)
@@ -204,17 +204,17 @@ zones:
       retrieved: '2026-07-28'
     quadplex_allowed: true
     setback_front_ft:
+      quote: "or/clackamas/west-linn/14.r-4.5.txt#L188"
       value: 20
-      quote: "or/clackamas/west-linn/14.r-4.5.txt#L201"
     setback_side_ft:
+      quote: "or/clackamas/west-linn/14.r-4.5.txt#L191"
       value: 5
-      quote: "or/clackamas/west-linn/14.r-4.5.txt#L207"
     setback_rear_ft:
+      quote: "or/clackamas/west-linn/14.r-4.5.txt#L196"
       value: 20
-      quote: "or/clackamas/west-linn/14.r-4.5.txt#L217"
     setback_street_side_ft:
+      quote: "or/clackamas/west-linn/14.r-4.5.txt#L194"
       value: 15
-      quote: "or/clackamas/west-linn/14.r-4.5.txt#L213"
     min_lot_sqft: 4500
     min_frontage_ft: 35
     notes: 'quadfit confidence: verified | Coverage max does NOT apply to quadplexes (CDC 14.070); SFD
@@ -227,17 +227,17 @@ zones:
       retrieved: '2026-07-28'
     quadplex_allowed: true
     setback_front_ft:
+      quote: "or/clackamas/west-linn/15.r-3.txt#L181"
       value: 15
-      quote: "or/clackamas/west-linn/15.r-3.txt#L195"
     setback_side_ft:
+      quote: "or/clackamas/west-linn/15.r-3.txt#L187"
       value: 5
-      quote: "or/clackamas/west-linn/15.r-3.txt#L205"
     setback_rear_ft:
+      quote: "or/clackamas/west-linn/15.r-3.txt#L192"
       value: 15
-      quote: "or/clackamas/west-linn/15.r-3.txt#L215"
     setback_street_side_ft:
+      quote: "or/clackamas/west-linn/15.r-3.txt#L190"
       value: 15
-      quote: "or/clackamas/west-linn/15.r-3.txt#L211"
     min_lot_sqft: 3000
     min_frontage_ft: 35
     notes: 'quadfit confidence: verified | Coverage max does NOT apply to quadplexes (CDC 15.070); SFD
@@ -251,17 +251,17 @@ zones:
       retrieved: '2026-07-28'
     quadplex_allowed: true
     setback_front_ft:
+      quote: "or/clackamas/west-linn/16.r-2.1.txt#L203"
       value: 15
-      quote: "or/clackamas/west-linn/16.r-2.1.txt#L221"
     setback_side_ft:
+      quote: "or/clackamas/west-linn/16.r-2.1.txt#L206"
       value: 5
-      quote: "or/clackamas/west-linn/16.r-2.1.txt#L227"
     setback_rear_ft:
+      quote: "or/clackamas/west-linn/16.r-2.1.txt#L211"
       value: 15
-      quote: "or/clackamas/west-linn/16.r-2.1.txt#L237"
     setback_street_side_ft:
+      quote: "or/clackamas/west-linn/16.r-2.1.txt#L209"
       value: 15
-      quote: "or/clackamas/west-linn/16.r-2.1.txt#L233"
     min_lot_sqft: 4000
     min_frontage_ft: 35
     notes: 'quadfit confidence: needs_verification | ATTACHED quadplex permitted OUTRIGHT. Detached SFD/detached

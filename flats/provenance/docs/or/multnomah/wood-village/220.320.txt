@@ -61,235 +61,28 @@ A. Minimum Lot Size & Dimension. The minimum lot size and dimensions are shown
 
 B. Exceptions to Minimum Lot Size & Dimension. In the MR4 & MR2 zones reductions to the minimum lot size & dimensions for detached single dwelling units may be approved through the variance process (see Section 660).
 
-Table 220-3. Housing Types Allowed
-
-Standard
-
-MR4 and MR2
-
-Townhouse
-
-Detached Single Dwelling
-
-Duplex
-
-Triplex
-
-Quadplex
-
-Cottage Housing
-
-Minimum Lot Size
-
-1,500 sq ft
-
-7,500 sq ft
-
-7,500 sq ft
-
-7,500 sq ft
-
-- Min. lot width
-
-20 ft
-
-60 ft
-
-60 ft
-
-- Min. lot depth
-
-(See 220.320)
-
-80 ft
-
-80 ft
-
-Maximum Height
-
-(See 220.340)
-
-35 ft
-
-35 ft
-
-35 ft
-
-35 ft
-
+Table 220-3. Housing Types Allowed
+Standard                                     MR4 and MR2                                MR4 and MR2               MR4 and MR2              MR4 and MR2
+Standard                                     Townhouse                                  Detached Single Dwelling  Duplex Triplex Quadplex  Cottage Housing
+Minimum Lot Size                             1,500 sq ft                                7,500 sq ft               7,500 sq ft              7,500 sq ft
+- Min. lot width                             20 ft                                      60 ft                     60 ft
+- Min. lot depth (See 220.320)                                                          80 ft                     80 ft
+Maximum Height (See 220.340)                 35 ft                                      35 ft                     35 ft                    35 ft
 Minimum Setbacks
-
-- Front setback
-
-10 ft
-
-10 ft
-
-10 ft
-
-10 ft
-
-- Garage setback
-
-22 ft
-
-22 ft
-
-22 ft
-
-5 ft
-
-- Side setback
-
-5 ft; 0 ft on the attached townhouse side
-
-5 ft
-
-5 ft
-
-- Rear setback
-
-(See 220.330)
-
-15 ft
-
-15 ft
-
-15 ft
-
-Maximum Site Coverage
-
-(See 220.350)
-
-75%
-
-45%
-
-45%
-
-Minimum No. of Dwellings Per Net Acre (.80)
-
-8.7
-
-4.6
-
-8.7
-
-Table 220-4. Development Standards for Multi-Dwelling Structures in the MR2 Zone(3)
-
-Number of Units
-
-Minimum Lot Size
-
-(See 220.320)
-
-Maximum Building Height(1)
-
-(See 220.340)
-
-Minimum Building Setbacks (See 220.330)
-
-Maximum Site Coverage
-
-(See 220.350)
-
-Minimum Landscape Required(2)
-
-Minimum Lot Area
-
-Min. Width
-
-Min. Depth
-
-Front Bldg. Setback
-
-Side Bldg. Setback(1)
-
-Rear Bldg. Setback
-
-5
-
-16,500 sq ft
-
-60 ft
-
-100 ft
-
-35 ft
-
-20 ft
-
-5 ft or 10 ft
-
-15 ft
-
-45%
-
-25%/L1
-
-6
-
-19,000 sq ft
-
-60 ft
-
-100 ft
-
-35 ft
-
-20 ft
-
-5 ft or 10 ft
-
-15 ft
-
-45%
-
-25%/L1
-
-7 – 10
-
-21,500 sq ft+
-
-2,250 sq ft unit over 7
-
-60 ft
-
-100 ft
-
-35 ft
-
-20 ft
-
-5 ft or 10 ft
-
-15 ft
-
-45%
-
-25%/L1
-
-11 and more
-
-30,500 sq ft+
-
-2,000 sq ft unit over 11
-
-60 ft
-
-100 ft
-
-35 ft
-
-20 ft
-
-5 ft or 10 ft
-
-15 ft
-
-50%
-
-25%/L1
+- Front setback                              10 ft                                      10 ft                     10 ft                    10 ft
+- Garage setback                             22 ft                                      22 ft                     22 ft                    5 ft
+- Side setback                               5 ft; 0 ft on the attached townhouse side  5 ft                      5 ft
+- Rear setback (See 220.330)                 15 ft                                      15 ft                     15 ft
+Maximum Site Coverage (See 220.350)          75%                                        45%                       45%
+Minimum No. of Dwellings Per Net Acre (.80)  8.7                                        4.6                       8.7
+
+Table 220-4. Development Standards for Multi-Dwelling Structures in the MR2 Zone (3)
+Number of Units  Minimum Lot Size (See 220.320)          Minimum Lot Size (See 220.320)  Minimum Lot Size (See 220.320)  Maximum Building Height(1) (See 220.340)  Minimum Building Setbacks (See 220.330)  Minimum Building Setbacks (See 220.330)  Minimum Building Setbacks (See 220.330)  Maximum Site Coverage (See 220.350)  Minimum Landscape Required(2)
+Number of Units  Minimum Lot Area                        Min. Width                      Min. Depth                      Maximum Building Height(1) (See 220.340)  Front Bldg. Setback                      Side Bldg. Setback(1)                    Rear Bldg. Setback                       Maximum Site Coverage (See 220.350)  Minimum Landscape Required(2)
+5                16,500 sq ft                            60 ft                           100 ft                          35 ft                                     20 ft                                    5 ft or 10 ft                            15 ft                                    45%                                  25%/L1
+6                19,000 sq ft                            60 ft                           100 ft                          35 ft                                     20 ft                                    5 ft or 10 ft                            15 ft                                    45%                                  25%/L1
+7 – 10           21,500 sq ft+ 2,250 sq ft unit over 7   60 ft                           100 ft                          35 ft                                     20 ft                                    5 ft or 10 ft                            15 ft                                    45%                                  25%/L1
+11 and more      30,500 sq ft+ 2,000 sq ft unit over 11  60 ft                           100 ft                          35 ft                                     20 ft                                    5 ft or 10 ft                            15 ft                                    50%                                  25%/L1
 
 (1)For multifamily structures on sites which abut MR, C or M zones the minimum side setback shall be five (5) feet. For multi-unit structures on sites which abut LR zones the minimum side setback shall be ten (10) feet.
 
