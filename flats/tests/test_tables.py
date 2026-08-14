@@ -1760,3 +1760,75 @@ def test_two_measurements_in_a_row_are_a_lost_column_not_a_stack() -> None:
     ]
 
     assert found == []
+
+
+LAKE_OSWEGO_GRID = """
+TABLE 50.04.001-1: RESIDENTIAL LOW DENSITY ZONES DIMENSIONS
+R-7.5
+R-10
+R-15
+Comments/Additional Standards
+MIN. LOT DIMENSIONS [3]
+MIN. LOT DIMENSIONS [3]
+§ 50.04.001.1.c
+Single-Family, Duplex, Triplex, Quadplex, and Cottage Cluster Developments
+Single-Family, Duplex, Triplex, Quadplex, and Cottage Cluster Developments
+Area (sq. ft.)
+Area (sq. ft.)
+7,500
+10,000
+15,000
+Except PD [3]
+Width (ft.)
+Width (ft.)
+50
+65
+80
+Except PD [3]
+Townhouses (one per lot)
+Townhouses (one per lot)
+Area (sq. ft.)
+Area (sq. ft.)
+1,500
+1,500
+1,500
+"""
+
+
+def test_a_reprinted_heading_is_one_heading_not_a_cell() -> None:
+    # A cell spanning two rows prints its text once per row it spans. Read
+    # as the row's first cell it refused every row in the table.
+    grids = _grid(LAKE_OSWEGO_GRID)
+
+    assert 7500 in [c.value for c in grids["R-7.5"] if c.field == "min_lot_sqft"]
+
+
+def test_a_lot_heading_names_the_standard_its_rows_only_axis() -> None:
+    # "Area (sq. ft.)" and "Width (ft.)" name a dimension, not a standard.
+    # "MIN. LOT DIMENSIONS" above them says which lot standard they are —
+    # the division of labour the setback headings already made.
+    grids = _grid(LAKE_OSWEGO_GRID)
+
+    assert [c.value for c in grids["R-10"] if c.field == "min_lot_width_ft"] == [65]
+
+
+def test_a_commentary_cell_after_a_row_is_not_the_next_heading() -> None:
+    # "Except PD [3]" holds the comments column for the row just read.
+    # Taken for a heading it replaced "MIN. LOT DIMENSIONS" and every row
+    # under it lost its field.
+    grids = _grid(LAKE_OSWEGO_GRID)
+
+    assert [c.value for c in grids["R-15"] if c.field == "min_lot_width_ft"] == [80]
+
+
+def test_a_heading_that_names_who_types_the_rows_under_it() -> None:
+    # Lake Oswego prints the townhouse unit-lot minimum four lines under the
+    # minimum for everything else, in the same column of the same table.
+    # Untyped, 1,500 sq ft reads as the zone's minimum lot area.
+    grids = _grid(LAKE_OSWEGO_GRID)
+    areas = {
+        c.value: c.housing_type for c in grids["R-7.5"] if c.field == "min_lot_sqft"
+    }
+
+    assert "quadplex" in areas[7500]
+    assert areas[1500] == "townhouse"

@@ -918,6 +918,19 @@ _BARE_GROUPED = {
     "street side": "setback_street_side_ft",
     "rear": "setback_rear_ft",
 }
+#: A heading naming the lot itself, scoping rows that name only an axis.
+#: Lake Oswego prints "MIN. LOT DIMENSIONS" over "Area (sq. ft.)", "Width
+#: (ft.)" and "Depth (ft.)" — the same division of labour the setback
+#: headings make, one standard split across its own dimensions.
+_LOT_BLOCK = re.compile(r"\blot\b.*\b(?:dimensions?|standards?|sizes?|areas?)\b", re.I)
+_LOT_GROUPED = {
+    "area": "min_lot_sqft",
+    "size": "min_lot_sqft",
+    "lot area": "min_lot_sqft",
+    "width": "min_lot_width_ft",
+    "lot width": "min_lot_width_ft",
+    "frontage": "min_frontage_ft",
+}
 #: The unit when it is printed in the label — "Minimum lot width (ft.)" over
 #: cells that are bare digits — rather than beside each number.
 _LABEL_UNIT = re.compile(r"\((?P<u>sq\.?\s*ft\.?|square feet|ft\.?|feet|%|percent)\.?\)", re.I)
@@ -1276,7 +1289,7 @@ def _grid_vocab(line: str) -> bool:
     the overrun refusal then silently eats both rows. Anything the grid could
     consume as a label or heading is exempt from the junk set.
     """
-    label = _LABEL_DASH.sub("", _PAREN_NOTE.sub("", line)).strip()
+    label = _FOOTNOTE.sub("", _LABEL_DASH.sub("", _PAREN_NOTE.sub("", line))).strip()
     refs = _LABEL_REFS.search(label)
     if refs:
         label = label[: refs.start()].strip()
@@ -1313,7 +1326,38 @@ def _looks_like_label(line: str) -> bool:
     if _housing_type(label) or _subject(label):
         return True
     bare = " ".join(_PAREN_CTX.sub("", label).split()).strip(" .:").lower()
-    return bare in _GROUPED_SUBJECTS or bare in _BARE_GROUPED
+    return bare in _GROUPED_SUBJECTS or bare in _BARE_GROUPED or bare in _LOT_GROUPED
+
+
+#: A cell that is only a pointer — "§ 50.04.001.1.c", "(See 210.340)". It
+#: holds a comment column, and a heading is often followed by one before the
+#: rows it scopes begin.
+_POINTER_CELL = re.compile(r"^[^\w\s]?\s*(?:See\s+)?\d{1,3}\.\d{2,4}(?:\.\d{1,4})*\b", re.I)
+
+
+def _pointer_cell(line: str) -> bool:
+    return bool(_PAREN_LINE.match(line) or _POINTER_CELL.match(line))
+
+
+def _reprinted(line: str) -> bool:
+    """Whether a line repeated immediately above is the same cell twice.
+
+    A cell spanning two rows comes back from the HTML with its text printed
+    once per row it spans, so Lake Oswego's table reads "MIN. LOT DIMENSIONS"
+    twice, then "Area (sq. ft.)" twice, then its three values. Taking the
+    second copy for the row's first cell refused every row in the table.
+
+    Only headings and labels qualify. Cells repeat legitimately — three zones
+    stating "15" or "NA" is three cells, not one printed three times — and
+    collapsing those would shorten the row and shift every value in it.
+    """
+    return (
+        _grid_vocab(line)
+        and _measure_line(line) is None
+        and not _BARE_NUMBER.match(line)
+        and not _DASH.match(line)
+        and not _NOT_A_NUMBER.match(line)
+    )
 
 
 def _scoped_cell(cell: str) -> bool:
@@ -1439,13 +1483,27 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
         for n, line in enumerate(lines, start=1)
         if line.strip() and line.strip() not in junk and not _PAGE_NUMBER.match(line.strip())
     ]
+    live = [
+        pair
+        for k, pair in enumerate(live)
+        if k == 0 or pair[1] != live[k - 1][1] or not _reprinted(pair[1])
+    ]
 
     out: dict[str, list[Candidate]] = {}
     zones: tuple[str, ...] = ()
+    #: Columns the header declared and this reader does not count — the
+    #: "Comments/Additional Standards" column. Their cells still print, after
+    #: the cells that were counted.
+    spare = 0
     section = ""
     block = ""
     block_refs: tuple[str, ...] = ()
     block_field = ""
+    #: A heading naming who the rows under it are for rather than what they
+    #: state — "Townhouses (one per lot)" over an area row and a width row.
+    #: Without it those rows read as the zone's own minimum, and a townhouse
+    #: unit lot is a tenth of one.
+    block_type = ""
     i = 0
     while i < len(live):
         n, stripped = live[i]
@@ -1464,6 +1522,7 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
             block = ""
             block_refs = ()
             block_field = ""
+            block_type = ""
             i += 1
             continue
         run = []
@@ -1484,13 +1543,23 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
                     named.append(_column_zone(live[j][1]))
                 j += 1
             zones = tuple(run) + tuple(named)
+            spare = j - (i + len(run)) - len(named)
             block = ""
             block_refs = ()
             block_field = ""
+            block_type = ""
             i = j
             continue
         label = _LABEL_DASH.sub("", _PAREN_NOTE.sub("", stripped)).strip()
         refs: tuple[str, ...] = ()
+        bracketed = _FOOTNOTE.search(label)
+        if bracketed:
+            # "MIN. LOT DIMENSIONS [3]" — the bracketed form of the same
+            # superscript _LABEL_REFS takes off the glued form. Left on, its
+            # digit fails the no-digit rule and the heading never scopes the
+            # rows under it.
+            refs = (bracketed.group("n"),)
+            label = label[: bracketed.start()].strip()
         glued = _LABEL_REFS.search(label)
         if glued:
             refs = tuple(glued.group("refs").split(","))
@@ -1515,6 +1584,13 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
                         name == "setback_street_side_ft" and _CORNER_BLOCK.search(m)
                     )
                 )
+        if name is None and _LOT_BLOCK.search(block):
+            # "Area (sq. ft.)" under "MIN. LOT DIMENSIONS": the heading names
+            # the lot, the row names which of its dimensions. Kept separate
+            # from the setback lookup because the two vocabularies collide —
+            # "width" under a setback heading is not a lot width.
+            bare = " ".join(_PAREN_CTX.sub("", label).split()).strip(" .:").lower()
+            name = _LOT_GROUPED.get(bare)
         if _NUMBERED_HEAD.match(label):
             # A numbered standard ends the one above it, whether or not this
             # reader knows what it is. Fairview prints "3. Minimum Net Density
@@ -1525,6 +1601,7 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
             block = label
             block_field = _subject(label) or ""
             block_refs = refs
+            block_type = ""
         if name is None and block_field and len(label.split()) <= _GROUP_WORDS:
             if _housing_type(label):
                 # "Duplex, triplex, quadplex, townhome" under a heading whose
@@ -1536,7 +1613,31 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
             bool(_DASH.match(live[i + 1][1]))
             or _grid_value(live[i + 1][1], label, block) is not None
         )
-        scopes_a_row = i + 1 < len(live) and _looks_like_label(live[i + 1][1])
+        # A heading may be separated from the rows it scopes by the comment
+        # column's cross-reference — Lake Oswego prints "§ 50.04.001.1.c"
+        # between "MIN. LOT DIMENSIONS" and "Area (sq. ft.)" — so the test
+        # for what follows a heading steps over pointer cells.
+        ahead = next(
+            (k for k in range(i + 1, min(i + 4, len(live))) if not _pointer_cell(live[k][1])),
+            None,
+        )
+        scopes_a_row = ahead is not None and _looks_like_label(live[ahead][1])
+        if (
+            zones
+            and name is None
+            and not block_field
+            and _housing_type(label) is not None
+            and not next_is_cell
+            and scopes_a_row
+            and len(label.split()) <= _GROUP_WORDS
+            and not any(ch.isdigit() for ch in label)
+        ):
+            # "Townhouses (one per lot)" over "Area (sq. ft.)" — the heading
+            # says whose standard the rows beneath it state, the way a
+            # setback heading says which standard. Lake Oswego prints the
+            # townhouse unit-lot minimum this way, four lines under the
+            # minimum for everything else, in the same column.
+            block_type = _housing_type(label) or ""
         if (
             zones
             and name is None
@@ -1566,6 +1667,7 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
             block = label
             block_refs = refs
             block_field = ""
+            block_type = ""
         if zones and name is not None and _labelish(label):
             in_corner_block = _CORNER_BLOCK.search(block) and name.startswith("setback_")
             if (
@@ -1637,7 +1739,7 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
                 and _grid_value(live[j][1], label, block) is not None
             )
             if len(cells) == len(zones) and not overrun:
-                htype = _housing_type(label) or ""
+                htype = _housing_type(label) or block_type
                 placeholders = ctx_notes + tuple(
                     f"footnote {r} (text not captured)" for r in (*refs, *block_refs)
                 )
@@ -1662,6 +1764,21 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
                         )
                     )
                 i = j
+                skipped = 0
+                while (
+                    skipped < spare
+                    and i < len(live)
+                    and not _looks_like_label(live[i][1])
+                    and not _ZONE.match(live[i][1])
+                    and _grid_value(live[i][1], label, block) is None
+                ):
+                    # The commentary column's cell for the row just read.
+                    # Left in place it becomes the next line the reader sees,
+                    # and Lake Oswego's "Except PD [3]" was then taken for a
+                    # block heading — which replaced "MIN. LOT DIMENSIONS"
+                    # and cost every row under it its field.
+                    i += 1
+                    skipped += 1
                 continue
             if _subject(label) is not None and _labelish(label):
                 # The walk failed under a label that names a standard outright
