@@ -19,8 +19,9 @@ it is eight, and they need opposite things:
                  one of the two.
 ``contested``    a document states a *different* number. Nothing may be
                  attached and nothing may be signed until a person reads both.
-``conditional``  the number is footnoted: a base case with an exit. It needs
-                 encoding as a variant, not a citation stapled to one half.
+``conditional``  the number is qualified: footnoted, or printed in one column
+                 of a table banded by lot size. It needs encoding as a
+                 variant, not a citation stapled to one half.
 ``multi``        the document states more than one number for the field, for
                  the same reason.
 ``undeclared``   the value names a document and ``code:`` does not, so nothing
@@ -88,7 +89,10 @@ NEXT = {
     ),
     "contested": "read both: the file and the document state different numbers",
     "quotable": "python -m flats.encode.attach {layer} --doc {doc} --apply",
-    "conditional": "encode as a variant — the document footnotes this number",
+    "conditional": (
+        "encode as a variant — the document qualifies this number, by footnote "
+        "or by the lot sizes the column was written for"
+    ),
     "multi": "encode as variants — the document states more than one number",
     "undeclared": (
         "the value names a document nothing has fetched — declare that URL under "

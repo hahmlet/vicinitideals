@@ -70,6 +70,15 @@ _SUBJECTS: tuple[tuple[str, str], ...] = (
         "setback_front_max_ft",
     ),
     (r"garage (?:entrance|door)", "setback_garage_entrance_ft"),
+    # The whole label, and nothing else. A dimensional table headed "Minimum
+    # yard requirements" names its rows by the yard alone — "c. Street side
+    # yard" — and the word "setback" appears nowhere in the table. Anchored at
+    # both ends because unanchored it would swallow "Front Yard Minimum
+    # Vegetation", which is a landscaping rule printed in the same chapter.
+    (r"^(?:minimum )?street[ -]side yard$", "setback_street_side_ft"),
+    (r"^(?:minimum )?front yard$", "setback_front_ft"),
+    (r"^(?:minimum )?(?:interior )?side yard$", "setback_side_ft"),
+    (r"^(?:minimum )?rear yard$", "setback_rear_ft"),
     (r"front (?:building |yard )?setback", "setback_front_ft"),
     (r"(?:interior )?side (?:building |yard )?setback", "setback_side_ft"),
     (r"rear (?:building |yard )?setback", "setback_rear_ft"),
@@ -210,10 +219,16 @@ class Candidate:
     #: A typed value is not the zone's standard; it is one housing type's, and
     #: which type speaks for the pod is decided at selection, not here.
     housing_type: str = ""
+    #: The lot-size column this was read from — "lot_sqft:3000-4999" — where
+    #: the table states its standards per lot size rather than per zone. Like
+    #: a housing type it says the number is not the zone's standard; unlike
+    #: one it also says which lots it *is* the standard for, so it addresses a
+    #: variant directly (see flats.rules.model.Band).
+    band: str = ""
 
     @property
     def conditional(self) -> bool:
-        return bool(self.notes)
+        return bool(self.notes or self.band)
 
     @property
     def kind(self) -> str:
@@ -303,7 +318,20 @@ def states_a_rule(text: str) -> bool:
     return tag_of(text) is Rase.requirement and not _SELECTION.search(text)
 
 
+#: Labels naming something adjacent to a standard, which the subject patterns
+#: would otherwise take for the standard itself. A height plane is a sloped
+#: envelope over the side yard, not the zone's height limit — Milwaukie's is
+#: 20 ft where its height limit is 35 — and reading the row as a height limit
+#: halves the building on every lot in the zone.
+_NOT_A_SUBJECT = re.compile(
+    r"height plane|above ground at|height of (?:a |the )?fence|fence height",
+    re.I,
+)
+
+
 def _match_subject(text: str) -> tuple[int, int, str] | None:
+    if _NOT_A_SUBJECT.search(text):
+        return None
     lowered = text.lower()
     best: tuple[int, int, str] | None = None
     for pattern, name in _SUBJECTS:

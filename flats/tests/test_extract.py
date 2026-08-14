@@ -576,3 +576,24 @@ def test_a_street_side_yard_is_the_street_side_setback() -> None:
     found = candidates_in("The street side yard setback is 10 feet.", 1, DOC)
 
     assert [c.field for c in found] == ["setback_street_side_ft"]
+
+
+def test_a_height_plane_is_not_a_height_limit() -> None:
+    # Milwaukie's side yard height plane starts 20 ft above ground where the
+    # zone's height limit is 35 — a sloped envelope over the side yard, not a
+    # ceiling. Filed as the limit it halves the building on every lot.
+    assert (
+        candidates_in(
+            "The height above ground at the minimum required side yard depth is 20 feet.",
+            4,
+            DOC,
+        )
+        == []
+    )
+
+
+def test_a_yard_named_without_the_word_setback_is_not_read_from_prose() -> None:
+    # The bare-yard labels are a table row shape — "c. Street side yard" over
+    # a column of numbers — and they are matched whole for that reason. A
+    # sentence mentioning a front yard is not a standard.
+    assert candidates_in("Parking is prohibited in the front yard within 5 feet.", 9, DOC) == []

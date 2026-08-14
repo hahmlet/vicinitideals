@@ -294,16 +294,34 @@ def _authoritative(candidate) -> bool:
     A table cell or a stacked pair was written for the zone — structure keys
     it. A sentence earns the same standing only by stating a base standard
     (:func:`states_a_rule`): conditional prose corroborates, never contradicts.
+
+    A banded cell is written for the zone and for one range of lot sizes, and
+    the encoded value it is being compared against is written for neither. It
+    can show that the file picked one column of four; it cannot show the file
+    is wrong, because there is no single number it could be wrong about.
     """
+    if getattr(candidate, "band", ""):
+        return False
     return candidate.source in ("table", "typed-table", "pair") or states_a_rule(
         candidate.text
     )
 
 
 def _notes(candidates: Sequence) -> tuple[str, ...]:
+    """What qualifies these numbers — footnotes, and the lot bands they sit in.
+
+    A band belongs here for the same reason a footnote does: it is the reason
+    the number beside it is not the zone's standard, and the reason nothing
+    may quote it against an unconditional value. It prints as the token that
+    addresses the variant, so the note doubles as the fix.
+    """
     seen: list[str] = []
     for candidate in candidates:
-        for note in candidate.notes:
+        marks = list(candidate.notes)
+        band = getattr(candidate, "band", "")
+        if band:
+            marks.append(f"lot band {band}")
+        for note in marks:
             if note not in seen:
                 seen.append(note)
     return tuple(seen)

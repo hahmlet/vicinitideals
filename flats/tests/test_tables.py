@@ -1832,3 +1832,135 @@ def test_a_heading_that_names_who_types_the_rows_under_it() -> None:
 
     assert "quadplex" in areas[7500]
     assert areas[1500] == "townhouse"
+
+
+MILWAUKIE_BANDED = """
+Table 19.301.4
+Moderate Density Residential Development Standards
+Standard
+R-MD
+R-MD
+R-MD
+R-MD
+Standards/ Additional Provisions
+Standard
+Lot size (square feet)
+Lot size (square feet)
+Standards/ Additional Provisions
+Standard
+1,500 \u2013 2,999
+3,000\u20134,999
+5,000-6,9992
+7,000 and up
+Standards/ Additional Provisions
+B. Lot Standards
+1. Minimum lot width (ft)
+20
+30
+50
+60
+C. Development Standards
+1. Minimum yard requirements for primary structures (ft)
+a. Front yard
+20
+20
+20
+20
+b. Side yard
+5
+5
+5
+5/10
+c. Street side yard
+5
+15
+15
+20
+3. Side yard height plane limit
+a. Height above ground at minimum required side yard depth (ft)
+20
+20
+20
+20
+"""
+
+
+def test_one_zone_over_four_columns_reads_as_four_bands() -> None:
+    # Milwaukie consolidated its single-family zones into one R-MD and then
+    # split the table by how big the lot already is. Read as one zone and one
+    # column, every row of it is four values under one header and refused.
+    grids = _grid(MILWAUKIE_BANDED)
+    widths = {c.band: c.value for c in grids["R-MD"] if c.field == "min_lot_width_ft"}
+
+    assert widths == {
+        "lot_sqft:1500-2999": 20,
+        "lot_sqft:3000-4999": 30,
+        "lot_sqft:5000-6999": 50,
+        "lot_sqft:7000+": 60,
+    }
+
+
+def test_a_banded_cell_is_conditional() -> None:
+    # None of the four numbers is the zone's standard, so none may be quoted
+    # against an unconditional value — the same refusal a footnote earns.
+    grids = _grid(MILWAUKIE_BANDED)
+
+    assert all(c.conditional for c in grids["R-MD"])
+
+
+def test_a_footnote_glued_to_a_band_is_not_part_of_the_number() -> None:
+    # "5,000-6,9992" is the third column with footnote 2 stuck to it. Read
+    # whole it makes a band of sixty-nine thousand.
+    grids = _grid(MILWAUKIE_BANDED)
+
+    assert "lot_sqft:5000-6999" in {c.band for c in grids["R-MD"]}
+
+
+def test_bands_with_no_axis_named_are_not_read() -> None:
+    # Ranges alone do not say whether they are square feet or feet of width,
+    # and guessing square feet mis-scales a width-banded table by a hundred.
+    grids = _grid(MILWAUKIE_BANDED.replace("Lot size (square feet)", "Standard"))
+
+    assert grids == {}
+
+
+def test_a_repeated_zone_without_bands_is_still_one_column() -> None:
+    # The zone name printed twice is not evidence of anything on its own — a
+    # wrapped label row repeats a token too. The band row is the evidence.
+    grids = _grid(
+        MILWAUKIE_BANDED.replace("1,500 \u2013 2,999\n", "")
+        .replace("3,000\u20134,999\n", "")
+        .replace("5,000-6,9992\n", "")
+        .replace("7,000 and up\n", "")
+    )
+
+    assert grids == {}
+
+
+def test_a_row_named_for_its_yard_is_a_setback() -> None:
+    # The word "setback" appears nowhere in this table: the heading says
+    # "Minimum yard requirements" and the rows say "a. Front yard".
+    grids = _grid(MILWAUKIE_BANDED)
+    front = {c.band: c.value for c in grids["R-MD"] if c.field == "setback_front_ft"}
+
+    assert front["lot_sqft:1500-2999"] == 20
+
+
+def test_a_height_plane_is_not_the_height_limit() -> None:
+    # A sloped envelope over the side yard, 20 ft where the zone's height
+    # limit is 35. Read as the height limit it halves every building.
+    grids = _grid(MILWAUKIE_BANDED)
+
+    assert not [c for c in grids["R-MD"] if c.field == "max_height_ft"]
+
+
+def test_a_refused_row_does_not_take_the_unit_with_it() -> None:
+    # The side yard row refuses on its asymmetric "5/10" cell. When "Side
+    # yard" then replaced "Minimum yard requirements ... (ft)" as the block,
+    # every bare number under it was measured in nothing, and one awkward
+    # cell cost the street side and rear rows too.
+    grids = _grid(MILWAUKIE_BANDED)
+    street = {c.band: c.value for c in grids["R-MD"] if c.field == "setback_street_side_ft"}
+
+    assert street["lot_sqft:1500-2999"] == 5
+    assert street["lot_sqft:7000+"] == 20

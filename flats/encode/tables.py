@@ -1313,7 +1313,113 @@ _NUMBERED_HEAD = re.compile(r"^\d{1,2}\.\s+\S")
 
 #: A column of commentary rather than of standards. Present in most rows and
 #: absent from the rest, so counting it makes every sparse row look short.
+#: A heading that declares the unit its rows are measured in — "1. Minimum
+#: yard requirements for primary structures (ft)". Longer than a heading is
+#: normally allowed to be, and doing a job only a heading can do: the rows
+#: under it are "Front yard" and a bare "20", and without the unit the cell is
+#: a number of nothing.
+_UNIT_HEAD = re.compile(r"\((?:ft\.?|feet|sq\.?\s*ft\.?|square feet|percent|%)\)\s*$", re.I)
+
 _COMMENTARY = re.compile(r"\b(?:additional standards?|exceptions?|notes?|cross.references?)\b", re.I)
+
+#: Any of the dashes a code uses to write a range. The en dash is the common
+#: one and the hyphen and the minus sign both turn up in the same table.
+_DASHES = "\\-\u2010\u2011\u2012\u2013\u2014\u2015\u2212"
+#: "1,500 – 2,999" — a closed band. The high bound absorbs a glued footnote
+#: marker ("5,000-6,9992"), which is stripped by comma grouping below.
+_BAND_CLOSED = re.compile(
+    r"^(?P<low>\d{1,3}(?:,\d{3})*)\s*(?:[" + _DASHES + r"]|to)\s*(?P<high>[\d,]+)$",
+    re.I,
+)
+#: "7,000 and up" — the residual column, which has no ceiling.
+_BAND_OPEN = re.compile(
+    r"^(?P<low>\d{1,3}(?:,\d{3})*)\s*(?:and (?:up|over|above|greater)|or (?:more|greater)|\+)$",
+    re.I,
+)
+#: What the row of bands is measuring, named by the label above it. Required:
+#: a run of ranges with no axis is a column of lot sizes or a column of widths
+#: and nothing in the text says which.
+_BAND_MEASURES: tuple[tuple[re.Pattern[str], str], ...] = (
+    (re.compile(r"\blot\s+(?:size|area)\b", re.I), "lot_sqft"),
+    (re.compile(r"\blot\s+width\b", re.I), "lot_width_ft"),
+    (re.compile(r"\blot\s+depth\b", re.I), "lot_depth_ft"),
+)
+
+
+def _band_bounds(cell: str) -> tuple[float, float | None] | None:
+    """One banded column's range, or ``None`` when this is not one."""
+    open_ended = _BAND_OPEN.match(cell)
+    if open_ended:
+        return float(open_ended.group("low").replace(",", "")), None
+    closed = _BAND_CLOSED.match(cell)
+    if not closed:
+        return None
+    high = closed.group("high")
+    if "," in high:
+        # "6,9992" — the footnote marker glued to the last cell of the row,
+        # the same way _LABEL_REFS takes one off a label. A comma group is
+        # exactly three digits, so anything past the third is not the number.
+        head, _, tail = high.rpartition(",")
+        high = f"{head},{tail[:3]}"
+    return (
+        float(closed.group("low").replace(",", "")),
+        float(high.replace(",", "")),
+    )
+
+
+def _band_measure(lines: Sequence[tuple[int, str]], upto: int) -> str:
+    """The axis the bands above this point are measured on, if one is named."""
+    for _, line in reversed(lines[max(0, upto - 6) : upto]):
+        for pattern, measure in _BAND_MEASURES:
+            if pattern.search(line):
+                return measure
+    return ""
+
+
+def _banded_header(
+    live: Sequence[tuple[int, str]], start: int, count: int
+) -> tuple[tuple[str, ...], int] | None:
+    """The lot-size bands of a one-zone table, and where its rows begin.
+
+    Milwaukie's Table 19.301.4 is one zone printed n times — R-MD, R-MD,
+    R-MD, R-MD — over four columns split by how big the lot already is. The
+    zone name repeated is not evidence of anything on its own; a wrapped
+    label row repeats a token too. The band row is the evidence: n ranges in
+    a row, under a label naming what is being ranged.
+
+    Without this the table reads as one zone and one column, so every row of
+    it is n values under 1 header and refused — which is the right refusal,
+    and the reason this shape was invisible rather than wrong.
+    """
+    for k in range(start + 1, min(start + 14, len(live))):
+        bounds = _band_bounds(live[k][1])
+        if bounds is None:
+            continue
+        run = []
+        while k + len(run) < len(live):
+            got = _band_bounds(live[k + len(run)][1])
+            if got is None:
+                break
+            run.append(got)
+        if len(run) != count:
+            return None
+        measure = _band_measure(live, k)
+        if not measure:
+            # The ranges are there and the axis is not. Reading them as square
+            # feet because square feet is the common case would silently
+            # mis-scale a table banded on width by a factor of a hundred.
+            return None
+        return tuple(_band_token(measure, low, high) for low, high in run), k + len(run)
+    return None
+
+
+def _band_token(measure: str, low: float, high: float | None) -> str:
+    """``lot_sqft:3000-4999`` — how the model names one band."""
+    lo = str(int(low)) if float(low).is_integer() else str(low)
+    if high is None:
+        return f"{measure}:{lo}+"
+    hi = str(int(high)) if float(high).is_integer() else str(high)
+    return f"{measure}:{lo}-{hi}"
 
 
 def _looks_like_label(line: str) -> bool:
@@ -1483,14 +1589,25 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
         for n, line in enumerate(lines, start=1)
         if line.strip() and line.strip() not in junk and not _PAGE_NUMBER.match(line.strip())
     ]
-    live = [
-        pair
-        for k, pair in enumerate(live)
-        if k == 0 or pair[1] != live[k - 1][1] or not _reprinted(pair[1])
-    ]
+    kept: list[tuple[int, str]] = []
+    #: How many identical copies of a surviving line were collapsed into it,
+    #: by index into `kept`. A rowspan reprint is noise everywhere except in a
+    #: header, where the count is the number of columns that zone was printed
+    #: over — which is the only thing that distinguishes a banded table from a
+    #: table with one column.
+    repeats: dict[int, int] = {}
+    for k, pair in enumerate(live):
+        if kept and pair[1] == live[k - 1][1] and _reprinted(pair[1]):
+            repeats[len(kept) - 1] = repeats.get(len(kept) - 1, 1) + 1
+            continue
+        kept.append(pair)
+    live = kept
 
     out: dict[str, list[Candidate]] = {}
     zones: tuple[str, ...] = ()
+    #: One band token per column, where the table states its standards per lot
+    #: size rather than per zone. Empty strings elsewhere — most tables.
+    bands: tuple[str, ...] = ()
     #: Columns the header declared and this reader does not count — the
     #: "Comments/Additional Standards" column. Their cells still print, after
     #: the cells that were counted.
@@ -1519,6 +1636,7 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
         if found:
             section = found.group("sec")
             zones = ()
+            bands = ()
             block = ""
             block_refs = ()
             block_field = ""
@@ -1528,6 +1646,22 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
         run = []
         while i + len(run) < len(live) and _ZONE.match(live[i + len(run)][1]):
             run.append(live[i + len(run)][1])
+        if len(run) == 1 and repeats.get(i, 1) >= 2 and _ZONE.match(stripped):
+            banded = _banded_header(live, i, repeats[i])
+            if banded is not None:
+                # One zone over n columns, split by lot size. The rows below
+                # are read positionally exactly as a zone header's are — what
+                # differs is that every cell is one column's standard and none
+                # of them is the zone's, so each carries the band it was
+                # written for and nothing may encode one as unconditional.
+                bands, i = banded
+                zones = (stripped,) * len(bands)
+                spare = 1
+                block = ""
+                block_refs = ()
+                block_field = ""
+                block_type = ""
+                continue
         if len(run) >= 2 and any(ch.isdigit() for z in run for ch in z):
             # A run of bare letters is not a header: lettered subsection
             # fragments match _ZONE too, and a real district run carries a
@@ -1543,6 +1677,7 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
                     named.append(_column_zone(live[j][1]))
                 j += 1
             zones = tuple(run) + tuple(named)
+            bands = ()
             spare = j - (i + len(run)) - len(named)
             block = ""
             block_refs = ()
@@ -1551,6 +1686,10 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
             i = j
             continue
         label = _LABEL_DASH.sub("", _PAREN_NOTE.sub("", stripped)).strip()
+        # "a. Front yard" — the enumerator is the table's numbering, not part
+        # of what the row states, and the labels that name a yard rather than
+        # a setback are matched whole.
+        label = _ENUMERATOR.sub("", label, count=1)
         refs: tuple[str, ...] = ()
         bracketed = _FOOTNOTE.search(label)
         if bracketed:
@@ -1649,7 +1788,7 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
             # which is how Fairview's lot sizes went unread.
             and scopes_a_row
             and not any(ch.isdigit() for ch in label)
-            and len(label.split()) <= 4
+            and (len(label.split()) <= 4 or _UNIT_HEAD.search(label))
             and _housing_type(label) is None
             and not _VARIABLE.match(label)
             and not _NOT_A_NUMBER.match(label)
@@ -1743,7 +1882,7 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
                 placeholders = ctx_notes + tuple(
                     f"footnote {r} (text not captured)" for r in (*refs, *block_refs)
                 )
-                for zone, cell in zip(zones, cells):
+                for pos, (zone, cell) in enumerate(zip(zones, cells)):
                     if cell is None or not zone:
                         continue
                     cell_no, (number, kind, marks) = cell
@@ -1760,6 +1899,7 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
                             source="table",
                             notes=marks + placeholders,
                             housing_type=htype,
+                            band=bands[pos] if bands else "",
                             section=section,
                         )
                     )
@@ -1786,9 +1926,16 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
                 # becomes the block and its field scopes the typed rows under
                 # it. Grouped labels ("Interior side") whose rows refuse do
                 # not: their standard came from the block they are already in.
-                block = label
                 block_field = name
                 block_refs = refs
+                if _UNIT_HEAD.search(label) or not _UNIT_HEAD.search(block):
+                    # ...and a label that declares no unit does not replace a
+                    # heading that does. Milwaukie's side yard row refuses on
+                    # its "5/10" cell, and "Side yard" taking the block from
+                    # "Minimum yard requirements ... (ft)" left every bare
+                    # number under it measured in nothing — so one asymmetric
+                    # cell cost the street side and rear rows too.
+                    block = label
         i += 1
     blocks = _stacked_notes(lines)
     return {zone: [_defined(c, blocks) for c in cands] for zone, cands in out.items()}
