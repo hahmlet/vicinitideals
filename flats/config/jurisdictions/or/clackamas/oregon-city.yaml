@@ -24,6 +24,10 @@ code:
     # This publication is a scan with OCR text; layout mode shreds it into
     # padded fragments ("authori z ed"). Plain mode reads it, OCR noise and all.
     extraction: plain
+    # ...and OCR noise here means letter-spacing: "1 0 , 000 squ are f eet"
+    # for ten thousand square feet. Declared rather than detected — see
+    # CodeDocument.spaced.
+    spaced: true
 zones:
   R-10:
     section: ["17.08.", "17.16."]

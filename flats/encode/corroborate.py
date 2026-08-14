@@ -113,6 +113,7 @@ def check_zone(
     path: str,
     zoned: bool = False,
     sections: Sequence[str] = (),
+    spaced: bool = False,
 ) -> list[Finding]:
     """Compare one zone's encoded values against the document.
 
@@ -134,7 +135,7 @@ def check_zone(
     means which zone attributes one zone's setback to another — silently, and in
     the direction that turns lots red.
     """
-    read = extract(text, path=path, jurisdiction=layer, zone=zone)
+    read = extract(text, path=path, jurisdiction=layer, zone=zone, spaced=spaced)
     wanted = tuple(str(s).strip() for s in sections if str(s).strip())
     by_field: dict[str, list] = {}
     for candidate in read.candidates:
@@ -335,8 +336,15 @@ def check_layer(
     zones: Sequence[str] = (),
     zoned: bool = False,
 ) -> list[Finding]:
-    """Compare every zone of one jurisdiction against one document."""
+    """Compare every zone of one jurisdiction against one document.
+
+    Whether the document's text needs repairing before anything reads it is
+    the layer's own declaration — ``spaced: true`` on the ``code:`` entry —
+    found here by matching the stored path back to the entry that fetched it.
+    """
     wanted = set(zones) if zones else set(layer.zones)
+    stem = path.rsplit("/", 1)[-1].removesuffix(".txt")
+    spaced = any(doc.id == stem and doc.spaced for doc in layer.code)
     out: list[Finding] = []
     for code, zone in sorted(layer.zones.items()):
         if code in wanted:
@@ -349,6 +357,7 @@ def check_layer(
                     path=path,
                     zoned=zoned,
                     sections=zone.section,
+                    spaced=spaced,
                 )
             )
     return out

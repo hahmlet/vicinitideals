@@ -192,3 +192,24 @@ def test_a_broken_rule_file_is_reported_when_asked_not_to_raise(
 
     assert any("unknown rule field" in p for p in t.problems)
     assert not t.clean
+
+
+def test_a_document_may_declare_that_its_text_is_letter_spaced(tmp_path: Path) -> None:
+    # Declared, never detected. The repair joins digits across a space, and in
+    # a table whose cells are single digits that is two cells rather than one
+    # number — a judgement no statistic over the document makes safely.
+    p = tmp_path / "or" / "county" / "city.yaml"
+    p.parent.mkdir(parents=True)
+    p.write_text(
+        "label: City\n"
+        "code:\n"
+        '  - id: "17.zoning"\n'
+        "    url: https://example.gov/17\n"
+        "    spaced: true\n"
+        "zones: {}\n",
+        encoding="utf-8",
+    )
+
+    layer = load_rules(tmp_path)["or/county/city"]
+
+    assert layer.code[0].spaced

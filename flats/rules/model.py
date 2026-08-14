@@ -644,6 +644,13 @@ class CodeDocument(BaseModel):
     #: ("areasintheCity..."), which blinds every subject phrase; declared by
     #: whoever measured the document, like everything else in this block.
     extraction: str = Field(default="layout", pattern="^(layout|plain)$")
+    #: True where this document's text layer is letter-spaced — kerning pairs
+    #: come out as spaces, so "10,000 square feet" arrives as "1 0 , 000 squ
+    #: are f eet" and no reader can key on it. Declared, never guessed: the
+    #: repair joins digits across a single space, and in a table whose cells
+    #: are single digits that is two cells, not one number. Somebody looks at
+    #: the stored text and says so.
+    spaced: bool = False
     #: Set only for a genuinely short section, and only by somebody who has read
     #: it. Never to silence a URL that is serving the wrong thing.
     allow_thin: bool = False

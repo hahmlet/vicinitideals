@@ -33,6 +33,7 @@ from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Iterable, Sequence
 
+from flats.encode.despace import repair_text
 from flats.provenance.store import ProvenanceStore
 from flats.rules.fields import FIELDS, field
 from flats.rules.ledger import Clause, Rase
@@ -541,7 +542,13 @@ def paragraphs(text: str) -> list[tuple[int, int, str]]:
 
 
 def extract(
-    text: str, *, path: str, jurisdiction: str = "", section: str = "", zone: str = ""
+    text: str,
+    *,
+    path: str,
+    jurisdiction: str = "",
+    section: str = "",
+    zone: str = "",
+    spaced: bool = False,
 ) -> Extraction:
     """Read a stored document into tagged clauses and candidate values.
 
@@ -549,7 +556,15 @@ def extract(
     Portland's states almost everything the prose defers to. It is a zone
     argument because a table row holds one value per zone and only the column
     written for this zone may be read.
+
+    ``spaced`` says this document's text layer is letter-spaced and has to be
+    put back together first (:mod:`flats.encode.despace`). It is passed in
+    rather than detected because the repair joins digits across a space, and
+    in a table of single-digit cells that is two cells rather than one number
+    — a judgement no statistic over the document makes safely.
     """
+    if spaced:
+        text = repair_text(text)
     # Imported here because the table reader is built on this module's subject
     # matching: prose and grid ask the same question of a label.
     from flats.encode.tables import (
