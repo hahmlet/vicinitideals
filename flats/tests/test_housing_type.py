@@ -168,15 +168,18 @@ def test_an_explicit_quadplex_row_silences_the_default() -> None:
     assert 99 not in found.found
 
 
-def test_both_pod_classifications_survive_to_disagree() -> None:
-    # Townhouse says 16, the quadplex compound says 35. Which one is the
-    # pod's is a plat-path decision; the field reads as multi-value and
-    # attach refuses, rather than either number being picked silently.
+def test_a_townhouse_lot_width_is_another_denominator() -> None:
+    # Townhouse says 16, the quadplex compound says 35. Lot dimensions are
+    # measured on the parcel the screen judges, and a townhouse is by
+    # definition a dwelling on its own lot — its 16 prices the unit lot
+    # after platting. Only the quadplex number speaks, and an encoding that
+    # copied the townhouse tier in must be flagged, not corroborated.
     found = verdicts({"min_lot_width_ft": value(16, "min_lot_width_ft")})[
         "min_lot_width_ft"
     ]
 
-    assert found.found == (16, 35)
+    assert found.verdict is Verdict.differs
+    assert found.found == (35,)
 
 
 def test_rows_for_other_types_alone_are_no_evidence() -> None:

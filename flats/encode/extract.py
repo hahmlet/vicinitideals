@@ -73,8 +73,10 @@ _SUBJECTS: tuple[tuple[str, str], ...] = (
     # Qualified on purpose: bare "frontage" is a unit of counting in driveway
     # rules — "approaches must not exceed 32 feet per frontage" — and the
     # driveway width lands as a frontage standard on every zone in the
-    # chapter.
-    (r"(?:lot|street|minimum) frontage|frontage of at least", "min_frontage_ft"),
+    # chapter. The genitive "of street frontage" measures frontage as a
+    # quantity rather than stating its minimum — "one connection for every
+    # 200 linear feet of street frontage" is a pedestrian-connection rate.
+    (r"(?<!of )(?:lot|street|minimum) frontage|frontage of at least", "min_frontage_ft"),
     (r"(?:building )?height", "max_height_ft"),
     (r"floor area ratio|\bFAR\b", "max_far"),
     (r"(?:building|lot|site) coverage", "max_coverage_pct"),
@@ -122,8 +124,14 @@ _SELECTION = re.compile(
     # "in zones with ..." selects by a property of the zone — Troutdale keys
     # its parking minimums to lot-size classes that way, and the thresholds
     # are not lot-size standards.
+    # A sentence that names which zones or sub-districts it covers is scoped
+    # by that list, and the prose reader cannot resolve the list against the
+    # zone it is checking — Wilsonville's "For the PDR 3 through PDR 7
+    # zones..." footnote must not contradict PDR-1's minimum.
     r"\b(corner lot|through lot|flag lot|abut(?:s|ting)|adjacent to|where the"
-    r"|in (?:zones|districts) with)\b",
+    r"|in (?:zones|districts) with"
+    r"|through [A-Z]{1,5}[- ]?\d{1,2} zones"
+    r"|sub-?districts?)\b",
     re.I,
 )
 _APPLICABILITY = re.compile(

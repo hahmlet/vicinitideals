@@ -145,7 +145,9 @@ def check_zone(
                 by_field[name] = best
                 break
     by_field = {
-        name: kept for name, cands in by_field.items() if (kept := _select_housing(cands))
+        name: kept
+        for name, cands in by_field.items()
+        if (kept := _select_housing(cands, name))
     }
 
     out: list[Finding] = []
@@ -227,8 +229,18 @@ def check_zone(
 #: attach refuses — the plat-path choice is a decision, not a coin flip.
 _POD_TYPES = frozenset({"quadplex", "townhouse", "all"})
 
+#: Fields measured on the lot the pod occupies. A townhouse is by definition
+#: a dwelling on its own lot, so a townhouse-typed number for one of these —
+#: "For townhouses the minimum lot size is 1,500 square feet" — describes the
+#: individual unit lot after platting, not the parcel the screen is judging.
+#: The registry names min_lot_sqft "minimum lot area for a fourplex": the
+#: fourplex path is the one-lot path the screen models, and a per-unit-lot
+#: number is another denominator, not pod evidence. Setbacks, height, and
+#: coverage bind the building the same either way and are unaffected.
+_UNIT_LOT_FIELDS = frozenset({"min_lot_sqft", "min_lot_width_ft", "min_frontage_ft"})
 
-def _select_housing(candidates: Sequence) -> list:
+
+def _select_housing(candidates: Sequence, field: str = "") -> list:
     """The candidates that speak for the pod when a table stratifies by type.
 
     Untyped candidates pass through untouched — most tables state one number
@@ -241,6 +253,7 @@ def _select_housing(candidates: Sequence) -> list:
     evidence for or against the pod's standard, and letting it corroborate
     one turns the check into a coincidence detector.
     """
+    pod_types = _POD_TYPES - {"townhouse"} if field in _UNIT_LOT_FIELDS else _POD_TYPES
     typed = [c for c in candidates if getattr(c, "housing_type", "")]
     if not typed:
         return list(candidates)
@@ -248,7 +261,7 @@ def _select_housing(candidates: Sequence) -> list:
     kept = []
     for c in typed:
         types = set(c.housing_type.split("+"))
-        if types & _POD_TYPES:
+        if types & pod_types:
             kept.append(c)
         elif "default" in types and not explicit_quadplex:
             kept.append(c)

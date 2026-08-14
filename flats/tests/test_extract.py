@@ -510,3 +510,42 @@ def test_an_untyped_sentence_carries_no_type() -> None:
     found = candidates_in("The minimum lot area is 3,000 square feet.", 6, DOC)
 
     assert [c.housing_type for c in found] == [""]
+
+
+def test_a_zone_list_sentence_is_a_selection_not_a_base_standard() -> None:
+    # Wilsonville footnote B: "For the PDR 3 through PDR 7 zones, the minimum
+    # lot size for quadplexes ... is 7,000 square feet." The prose reader
+    # cannot resolve the zone list against the zone it is checking, so the
+    # sentence may corroborate but must never contradict — PDR-1's 20,000
+    # is not wrong because a PDR-3-through-7 footnote says 7,000.
+    assert not states_a_rule(
+        "For the PDR 3 through PDR 7 zones, the minimum lot size for "
+        "quadplexes is 7,000 square feet."
+    )
+
+
+def test_a_sub_district_sentence_is_a_selection() -> None:
+    assert not states_a_rule(
+        "In R-5 and R-7 sub-districts the minimum lot size for quadplexes "
+        "and cottage clusters is 7,000 square feet."
+    )
+
+
+def test_a_plain_minimum_is_still_a_base_standard() -> None:
+    assert states_a_rule("The minimum lot area is 7,000 square feet.")
+
+
+def test_a_frontage_rate_is_not_a_frontage_minimum() -> None:
+    # Wilsonville 4.113: "At least one connection shall be made to each
+    # adjacent street and sidewalk for every 200 linear feet of street
+    # frontage." The genitive measures frontage as a quantity — reading it
+    # puts a 200-foot minimum on every zone in the chapter.
+    assert (
+        candidates_in(
+            "At least one connection shall be made to each adjacent street "
+            "and sidewalk for every 200 linear feet of street frontage.",
+            1,
+            DOC,
+        )
+        == []
+    )

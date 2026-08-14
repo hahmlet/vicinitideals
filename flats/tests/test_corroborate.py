@@ -510,29 +510,66 @@ def test_prose_typed_to_another_housing_type_cannot_corroborate() -> None:
 
 
 def test_prose_typed_to_the_pod_still_corroborates() -> None:
-    # The pod is an attached townhome — a townhouse standard is its standard.
+    # The pod is an attached townhome — a townhouse setback is its setback.
     got = check_zone(
-        "Section 5.080  Lot Standards\n"
-        "For townhouses, the minimum lot size shall be 1,500 square feet.\n",
+        "Section 5.080  General Building Setbacks\n"
+        "For townhouses, the minimum front setback shall be 15 feet.\n",
         layer="or/clackamas/rivergrove",
         zone="R10",
-        values={"min_lot_sqft": value(1500, "min_lot_sqft")},
+        values={"setback_front_ft": value(15, "setback_front_ft")},
         path="or/clackamas/rivergrove/rldo.composite.txt",
         sections=("5.080",),
     )
 
-    assert {f.field: f.verdict for f in got}["min_lot_sqft"] is Verdict.agrees
+    assert {f.field: f.verdict for f in got}["setback_front_ft"] is Verdict.agrees
 
 
 def test_pod_typed_prose_still_contradicts() -> None:
-    # Wilsonville's townhouse rows differing from encoded SFD tiers are true
-    # signal, not noise — a pod-typed base standard must still block.
+    # A pod-typed base standard must still block when it disagrees.
+    got = check_zone(
+        "Section 5.080  General Building Setbacks\n"
+        "For townhouses, the minimum front setback shall be 15 feet.\n",
+        layer="or/clackamas/rivergrove",
+        zone="R10",
+        values={"setback_front_ft": value(25, "setback_front_ft")},
+        path="or/clackamas/rivergrove/rldo.composite.txt",
+        sections=("5.080",),
+    )
+
+    assert {f.field: f.verdict for f in got}["setback_front_ft"] is Verdict.differs
+
+
+# --- lot fields: a townhouse number is another denominator ------------------
+
+
+def test_a_townhouse_lot_minimum_is_not_the_pod_lot_minimum() -> None:
+    # A townhouse is by definition a dwelling on its own lot — "For
+    # townhouses the minimum lot size is 1,500 square feet" prices the unit
+    # lot after platting, not the parcel the screen is judging. Wilsonville
+    # encodes the quadplex 7,000; the townhouse 1,500 must neither
+    # corroborate nor contradict it.
     got = check_zone(
         "Section 5.080  Lot Standards\n"
         "For townhouses, the minimum lot size shall be 1,500 square feet.\n",
         layer="or/clackamas/rivergrove",
         zone="R10",
-        values={"min_lot_sqft": value(5000, "min_lot_sqft")},
+        values={"min_lot_sqft": value(7000, "min_lot_sqft")},
+        path="or/clackamas/rivergrove/rldo.composite.txt",
+        sections=("5.080",),
+    )
+
+    assert {f.field: f.verdict for f in got}["min_lot_sqft"] is Verdict.unsupported
+
+
+def test_a_quadplex_lot_minimum_still_contradicts() -> None:
+    # The quadplex minimum IS the pod's lot standard — the one-lot path the
+    # registry names — so it keeps full authority over lot fields.
+    got = check_zone(
+        "Section 5.080  Lot Standards\n"
+        "The minimum lot size for quadplexes shall be 7,000 square feet.\n",
+        layer="or/clackamas/rivergrove",
+        zone="R10",
+        values={"min_lot_sqft": value(4000, "min_lot_sqft")},
         path="or/clackamas/rivergrove/rldo.composite.txt",
         sections=("5.080",),
     )

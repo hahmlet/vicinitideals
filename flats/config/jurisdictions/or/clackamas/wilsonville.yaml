@@ -168,10 +168,15 @@ zones:
     setback_side_ft: 5
     setback_rear_ft: 15
     setback_street_side_ft: 10
-    min_lot_sqft: 4000
+    min_lot_sqft: 7000
     min_frontage_ft: 35
     max_coverage_pct: 60
     notes: 'quadfit confidence: needs_verification | RN allows detached SFD so the HB 2001 mandate attaches
       BY STATE PREEMPTION, BUT the adopted Frog Pond West master plan caps attached units at 2 and bars
       multi-family — a 4-plex is likely NOT locally permitted. Kept true+needs_verification (preemption
-      is a real legal argument); confirm before relying. Setbacks = FPW R-5 small-lot sub-district.'
+      is a real legal argument); confirm before relying. Setbacks = FPW R-5 small-lot sub-district.
+      min_lot 7,000 is the QUADPLEX minimum (Table 2 note C, R-5/R-7 sub-districts) — the registry basis
+      is fourplex-on-one-lot; the prior 4,000 was the R-5 SFD base tier, wrong denominator for the pod.
+      R-10 sub-district states no quadplex minimum (SFD base 8,000 would govern there). KNOWN differs:
+      max_coverage_pct 60 vs doc 90 — the 90 is the Commercial Main Street block, which shares section
+      4.127 with RN and cannot be scoped out until fetch-layer geometry; the 60 is FPW R-5 residential.'
