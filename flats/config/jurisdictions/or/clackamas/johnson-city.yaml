@@ -12,6 +12,16 @@ ingest:
   zoning_layer: zoning_metro
   zone_field: ZONE
   strip_lowercase_suffix: false
+code:
+# The city publishes no zoning ordinance — no code library, no documents page,
+# a city hall open three days a week. The one encoded value rests on state
+# law: ORS 197A.420's middle-housing mandate stops at cities of 1,000 or
+# fewer outside Tillamook County, and no local allowance exists to override.
+- id: ors.197a.420
+  url: https://oregon.public.law/statutes/ors_197a.420
+  title: ORS 197A.420 Duplexes; middle housing (mandate + small-city exemption)
+  # Statute prose: few dimensioned standards per line. Read 2026-08-13.
+  allow_thin: true
 zones:
   MR1:
     cite_default:

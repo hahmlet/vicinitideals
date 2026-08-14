@@ -21,6 +21,8 @@ code:
   title: Clackamas County ZDO Section 315 - Low Density Residential Districts (Tables 315-1/2/3)
   start: "315.01 Purpose"
   end: "Return to the Zoning and Development Ordinance main page"
+  # Table 315-1's ~1,900 use-name lines dilute the density ratio. Read 2026-08-12.
+  allow_thin: true
 zones:
   R5:
     cite_default:

@@ -11,6 +11,14 @@ notes: >-
   ORS 197.307(4), operative 2025-07-01) requires local governments to apply only
   clear and objective standards to housing development, which is what makes this
   screen tractable at all.
+code:
+# oregon.public.law serves each OAR rule as one page. 660-046-0220 is the
+# Large City siting standard: its (2)(e)(B) parking tier caps what any Large
+# City may require for a quadplex at 1/2/3/4 total spaces by lot size, which
+# is at most one space per unit — the preempting ceiling encoded below.
+- id: oar.660-046-0220
+  url: https://oregon.public.law/rules/oar_660-046-0220
+  title: OAR 660-046-0220 Middle Housing Siting Standards in Large Cities
 defaults:
   parking_min_per_unit:
     value: 1.0
