@@ -44,10 +44,12 @@ zones:
     setback_street_side_ft:
       value: 20
       quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L183"
-    min_lot_sqft: 7200
+    min_lot_sqft:
+      value: 3600
+      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L161"
     notes: 'quadfit confidence: needs_verification | GIS literal ''R7.2'' (code writes ''R-7.2''). Height
       35 ft. NO max lot coverage, NO min lot width in code. Middle housing (incl. quadplex) permitted
-      outright. min_lot is the detached-SFD minimum. Street-side setback read via mirror; confirm 17.10.050.'
+      outright. min_lot is the middle-housing minimum (17.10.050); the detached-SFD row is 7,200. Street-side setback read via mirror; confirm 17.10.050.'
   R5:
     section: ["17.12."]
     cite_default:
@@ -68,10 +70,12 @@ zones:
     setback_street_side_ft:
       value: 20
       quote: "or/clackamas/gladstone/17.12.r-5.txt#L197"
-    min_lot_sqft: 5000
+    min_lot_sqft:
+      value: 7000
+      quote: "or/clackamas/gladstone/17.12.r-5.txt#L168"
     notes: 'quadfit confidence: needs_verification | GIS literal ''R5'' (code writes ''R-5''). Height
       35 ft. NO max lot coverage, NO min lot width. Middle housing outright. Front drops to ~10-15 ft
-      inside Gladstone Town Center overlay. min_lot is detached-SFD minimum. Street-side read via mirror;
+      inside Gladstone Town Center overlay. min_lot is the quadplex row (17.12.050); detached is 5,000 and a townhouse project 5,000. Street-side read via mirror;
       confirm 17.12.050.'
   R10:
     section: ["17.10."]
@@ -93,7 +97,9 @@ zones:
     setback_street_side_ft:
       value: 20
       quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L183"
-    min_lot_sqft: 7200
+    min_lot_sqft:
+      value: 3600
+      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L161"
     notes: 'quadfit confidence: needs_verification | DISCREPANCY: Gladstone''s adopted code defines only
       R-7.2 and R-5 single-household districts — there is NO R-10 district in Title 17. Exactly one layer
       polygon carries ZONE=''R10''. SFD zone, so HB 2001 attaches. Standards are placeholders copied from

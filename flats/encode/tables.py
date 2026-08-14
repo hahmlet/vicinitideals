@@ -28,7 +28,7 @@ import re
 from dataclasses import dataclass
 from dataclasses import field as dc_field
 from dataclasses import replace
-from typing import Iterable, Sequence
+from typing import Container, Iterable, Sequence
 
 from flats.encode.extract import _PAGE_NUMBER, _SECTION, Candidate, _furniture, _subject
 from flats.rules.fields import FIELDS
@@ -978,6 +978,12 @@ _HOUSING_TYPES: tuple[tuple[re.Pattern[str], str], ...] = (
     (re.compile(r"\btriplex(?:es)?\b", re.I), "triplex"),
     (re.compile(r"\b(?:quad|four)-?plex(?:es)?\b", re.I), "quadplex"),
     (re.compile(r"\bcottage\s+(?:clusters?|housing)\b", re.I), "cottage_cluster"),
+    # Oregon's statutory umbrella (ORS 197.758): duplexes, triplexes,
+    # quadplexes, townhouses and cottage clusters, named as one class. A
+    # city that reduces a standard for middle housing has reduced it for
+    # the pod — Gladstone's R-7.2 minimum lot area is 7,200 sf detached
+    # and 3,600 sf middle housing, and only the second is the pod's.
+    (re.compile(r"\bmiddle\s+housing\b", re.I), "middle_housing"),
     (re.compile(r"\bmulti-?family\b|\bapartments?\b", re.I), "multifamily"),
     (re.compile(r"\bmanufactured\b|\bmobile\s+home\b", re.I), "manufactured"),
 )
@@ -992,6 +998,19 @@ _EXCEPT = re.compile(r"\bexcept\b", re.I)
 #: direction: a value that was unconditional gains a note and attach refuses
 #: it, rather than a conditional one being quoted clean.
 _SEE_NOTE = re.compile(r"\bsee note (\d+)\b", re.I)
+
+
+def _after(lines: Sequence[str], n: int, junk: Container[str]) -> str:
+    """The next line that carries anything, or ``""`` at the end.
+
+    ``n`` is 1-based, matching the enumeration the readers walk in, so this
+    starts at the line after it.
+    """
+    for raw in lines[n:]:
+        stripped = raw.strip()
+        if stripped and stripped not in junk and not _PAGE_NUMBER.match(stripped):
+            return stripped
+    return ""
 
 
 def _housing_type(label: str) -> str | None:
@@ -1082,6 +1101,13 @@ def read_pairs(text: str, *, path: str) -> list[Candidate]:
     #: happens to agree is a coincidence detector, not corroboration.
     type_run = 0
     types_across = False
+    #: The housing type the next measurement answers for, and whether the
+    #: label above is being answered type by type. Once a stack is typed,
+    #: an untyped measurement under it is not the zone's standard — it is a
+    #: row whose type line this reader failed to recognise — and filing it
+    #: as one would put some other housing type's number under the pod's.
+    pending_type = ""
+    typed_stack = False
 
     for n, raw in enumerate(lines, start=1):
         stripped = raw.strip()
@@ -1094,6 +1120,8 @@ def read_pairs(text: str, *, path: str) -> list[Candidate]:
             label = None
             type_run = 0
             types_across = False
+            pending_type = ""
+            typed_stack = False
             continue
         if (
             _housing_type(stripped) is not None
@@ -1101,17 +1129,39 @@ def read_pairs(text: str, *, path: str) -> list[Candidate]:
             and len(stripped.split()) <= _GROUP_WORDS
             and not stripped.endswith(".")
         ):
+            if label is not None and _measure_line(_after(lines, n, junk)) is not None:
+                # A type sub-row of the standard above it: "Minimum Lot Area"
+                # over "Detached single household" over "7,200 sf" over
+                # "Middle housing" over "3,600 sf". The label survives — every
+                # sub-row answers the same standard — and what changes is
+                # whose answer it is. Refusing these read Gladstone's R-7.2 as
+                # a 7,200 sq ft minimum with no middle-housing row at all,
+                # which is double the lot a quadplex there actually needs.
+                pending_type = _housing_type(stripped)
+                continue
             type_run += 1
             if type_run >= 2:
                 types_across = True
             label = None
+            pending_type = ""
             continue
         type_run = 0
         if types_across:
             continue
         if label is not None:
             parsed = _measure_line(stripped)
-            if parsed is not None:
+            if pending_type and _measure_line(_after(lines, n, junk)) is not None:
+                # Two measurements in a row under two labels is not a stack,
+                # it is a two-column header that lost its columns: West Linn
+                # prints "Street side yard / Townhouse street side yard / 30
+                # ft / 15 ft", and reading it as a stack files the first
+                # column's number under the second column's type. It agreed
+                # with the encoded value, which is the worst way to be wrong.
+                label = None
+                pending_type = ""
+                typed_stack = False
+                continue
+            if parsed is not None and (pending_type or not typed_stack):
                 number, kind = parsed
                 name = _subject(label)
                 if name is None and group:
@@ -1127,11 +1177,27 @@ def read_pairs(text: str, *, path: str) -> list[Candidate]:
                             quote=f"{path}#L{n}",
                             source="pair",
                             section=section,
+                            housing_type=pending_type,
                         )
                     )
+                if pending_type:
+                    # The stack continues: the next type line answers the same
+                    # standard. Only a new label or a heading ends it.
+                    typed_stack = True
+                    pending_type = ""
+                    continue
                 label = None
                 continue
-            label = None
+            pending_type = ""
+            if not typed_stack:
+                label = None
+            # Otherwise the stack survives the line. Gladstone prints
+            # "2,500 sf within Gladstone Town Center" under the detached row
+            # and then goes on to duplex, quadplex and cottage cluster;
+            # ending the stack on the qualifier lost the quadplex row, which
+            # is the only row of the six written for the pod. Nothing can be
+            # filed from an untyped line while a stack is live, so keeping
+            # the label costs no attribution.
         has_digit = any(ch.isdigit() for ch in stripped)
         words = len(stripped.split())
         if not has_digit and words <= _PAIR_WORDS and not stripped.endswith("."):
@@ -1139,8 +1205,15 @@ def read_pairs(text: str, *, path: str) -> list[Candidate]:
                 group and stripped.strip(" .:").lower() in _GROUPED_SUBJECTS
             ):
                 label = stripped
+                # A new standard, so whatever the last one was answered type
+                # by type stops applying: the next measurement under this
+                # label is its own, untyped, and belongs to the zone.
+                typed_stack = False
+                pending_type = ""
         if not has_digit and words <= _PAIR_WORDS + 2 and _PAIR_GROUP.search(stripped):
             group = stripped
+            typed_stack = False
+            pending_type = ""
     return out
 
 

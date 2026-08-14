@@ -240,7 +240,10 @@ def check_zone(
 #: keeps every row either classification claims; when the two paths state
 #: different numbers, both survive, the field reads as multi-value, and
 #: attach refuses — the plat-path choice is a decision, not a coin flip.
-_POD_TYPES = frozenset({"quadplex", "townhouse", "all"})
+#: "Middle housing" is the third: ORS 197.758's class name, which contains
+#: the quadplex by statute, so a standard written for it is written for the
+#: pod whichever plat path the pod takes.
+_POD_TYPES = frozenset({"quadplex", "townhouse", "all", "middle_housing"})
 
 #: Fields measured on the lot the pod occupies. A townhouse is by definition
 #: a dwelling on its own lot, so a townhouse-typed number for one of these —
@@ -260,23 +263,27 @@ def _select_housing(candidates: Sequence, field: str = "") -> list:
     per zone and this function is not about them. A typed candidate survives
     when its types intersect the pod's. "All other uses" is the subtle one:
     quadplexes are usually in it *implicitly*, so it speaks for the pod —
-    until some row of the same field names quadplexes explicitly, at which
-    point "other" provably excludes them and the row falls silent. A row
-    naming only other types (a duplex's lot width) never counts: it is not
-    evidence for or against the pod's standard, and letting it corroborate
-    one turns the check into a coincidence detector.
+    until some row of the same field names the pod's own class, at which
+    point "other" provably excludes it and the row falls silent. Gladstone
+    prints middle housing at 3,600 sq ft and other uses at 7,200: read
+    together they are two numbers for one field, and only one of them was
+    written about a quadplex. A row naming only other types (a duplex's lot
+    width) never counts: it is not evidence for or against the pod's
+    standard, and letting it corroborate one turns the check into a
+    coincidence detector.
     """
     pod_types = _POD_TYPES - {"townhouse"} if field in _UNIT_LOT_FIELDS else _POD_TYPES
     typed = [c for c in candidates if getattr(c, "housing_type", "")]
     if not typed:
         return list(candidates)
-    explicit_quadplex = any("quadplex" in c.housing_type.split("+") for c in typed)
+    named = pod_types - {"all"}
+    explicit_pod = any(set(c.housing_type.split("+")) & named for c in typed)
     kept = []
     for c in typed:
         types = set(c.housing_type.split("+"))
         if types & pod_types:
             kept.append(c)
-        elif "default" in types and not explicit_quadplex:
+        elif "default" in types and not explicit_pod:
             kept.append(c)
     return kept + [c for c in candidates if not getattr(c, "housing_type", "")]
 

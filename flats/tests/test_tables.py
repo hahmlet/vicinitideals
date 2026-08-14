@@ -673,11 +673,31 @@ def test_a_two_tier_value_line_is_refused_whole() -> None:
     assert _pairs(GLADSTONE_PAIRS)["setback_side_ft"] == 5
 
 
-def test_a_sub_labelled_stack_produces_nothing() -> None:
+def test_a_sub_labelled_stack_reads_as_a_typed_row() -> None:
     # "Minimum Lot Area" over "Detached single household" over "7,200 sf" is
-    # a housing-type row. The line under the label is not a measurement, and
-    # whose 7,200 it is is not this reader's call.
-    assert "min_lot_sqft" not in _pairs(GLADSTONE_PAIRS)
+    # a housing-type row: the number is real and it is not the zone's. It
+    # reads with the type attached, and selection decides whether the pod is
+    # in it — refusing it outright hid every middle-housing minimum in the
+    # corpus behind a detached-house one.
+    from flats.encode.tables import read_pairs
+
+    found = [
+        c for c in read_pairs(GLADSTONE_PAIRS, path="doc.txt") if c.field == "min_lot_sqft"
+    ]
+
+    assert [(c.value, c.housing_type) for c in found] == [(7200, "single_detached")]
+
+
+def test_a_typed_stack_does_not_swallow_the_standard_after_it() -> None:
+    # The stack ends at "Minimum Setbacks"; the front setback below it is an
+    # ordinary pair and must not inherit the lot area's housing type.
+    from flats.encode.tables import read_pairs
+
+    found = [
+        c for c in read_pairs(GLADSTONE_PAIRS, path="doc.txt") if c.field == "setback_front_ft"
+    ]
+
+    assert [(c.value, c.housing_type) for c in found] == [(20, "")]
 
 
 def test_a_grouped_label_reads_through_the_setback_heading() -> None:
@@ -1672,3 +1692,71 @@ def test_a_street_side_yard_row_is_the_street_side_setback() -> None:
 
     assert [c.value for c in grids["R-6"] if c.field == "setback_street_side_ft"] == [5]
     assert [c.value for c in grids["RM"] if c.field == "setback_street_side_ft"] == [9]
+
+
+TYPED_STACK = """
+17.12.050 Dimensional standards.
+
+Minimum Lot Area
+
+Detached single household
+
+5,000 sf
+
+2,500 sf within the Town Center
+
+Duplex and triplex
+
+5,000 sf
+
+Quadplex
+
+7,000 sf
+"""
+
+TWO_COLUMN_HEADER = """
+8.070 Dimensional standards.
+
+Street side yard
+
+Townhouse street side yard
+
+30 ft
+
+15 ft
+
+Rear yard
+
+30 ft
+"""
+
+
+def test_a_qualifier_under_a_typed_row_does_not_end_the_stack() -> None:
+    # Gladstone prints "2,500 sf within the Town Center" under the detached
+    # row and then carries on to duplex and quadplex. Ending the stack there
+    # lost the quadplex row, which is the only one of the three written for
+    # the pod.
+    from flats.encode.tables import read_pairs
+
+    found = [
+        (c.value, c.housing_type)
+        for c in read_pairs(TYPED_STACK, path="doc.txt")
+        if c.field == "min_lot_sqft"
+    ]
+
+    assert (7000, "quadplex") in found
+
+
+def test_two_measurements_in_a_row_are_a_lost_column_not_a_stack() -> None:
+    # "Street side yard / Townhouse street side yard / 30 ft / 15 ft" is one
+    # row of a two-column table. Read as a stack the first column's 30 ft
+    # files under the second column's type — and it agreed with the encoded
+    # value, which is the worst way for a check to be wrong.
+    from flats.encode.tables import read_pairs
+
+    found = [
+        c for c in read_pairs(TWO_COLUMN_HEADER, path="doc.txt")
+        if c.field == "setback_street_side_ft"
+    ]
+
+    assert found == []
