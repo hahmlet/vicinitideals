@@ -25,17 +25,74 @@ zones:
       url: https://ecode360.com/43860500
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 20
-    setback_side_ft: 5
-    setback_rear_ft: 20
-    setback_street_side_ft: 20
-    min_lot_sqft: 5000
-    max_coverage_pct: 30
-    notes: 'quadfit confidence: verified | Milwaukie consolidated former R-5/R-7/R-10 SF zones into R-MD;
-      this is the by-right quadplex zone. Values are the lots>=7,000-sf tier (Table 19.301.4): side 5
-      ft + 10 ft (asymmetric), corner street-side 20 ft, height 35 ft, coverage 30%. Lots <7,000 sf use
-      a smaller-setback tier (verify). Min lot 5,000 sf; middle housing allowed on any SFD lot (density
-      cap waived).'
+    setback_front_ft:
+      value: 20
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L184"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L194"
+    setback_rear_ft:
+      value: 20
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L215"
+      variants:
+        - value: 15
+          band: {measure: lot_sqft, at_least: 1500, at_most: 2999}
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L214"
+    setback_street_side_ft:
+      value: 20
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L207"
+      variants:
+        - value: 5
+          band: {measure: lot_sqft, at_least: 1500, at_most: 2999}
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L204"
+        - value: 15
+          band: {measure: lot_sqft, at_least: 3000, at_most: 4999}
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L205"
+        - value: 15
+          band: {measure: lot_sqft, at_least: 5000, at_most: 6999}
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L206"
+    min_lot_sqft:
+      value: 3000
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L120"
+    min_lot_width_ft:
+      value: 60
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L145"
+      variants:
+        - value: 20
+          band: {measure: lot_sqft, at_least: 1500, at_most: 2999}
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L142"
+        - value: 30
+          band: {measure: lot_sqft, at_least: 3000, at_most: 4999}
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L143"
+        - value: 50
+          band: {measure: lot_sqft, at_least: 5000, at_most: 6999}
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L144"
+    max_coverage_pct:
+      value: 30
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L245"
+      variants:
+        - value: 45
+          band: {measure: lot_sqft, at_least: 1500, at_most: 2999}
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L242"
+        - value: 35
+          band: {measure: lot_sqft, at_least: 3000, at_most: 4999}
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L243"
+        - value: 35
+          band: {measure: lot_sqft, at_least: 5000, at_most: 6999}
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L244"
+    max_height_ft:
+      value: 35
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L224"
+    notes: 'Table 19.301.4 is one zone in four columns, split by how big the lot already is: 1,500-2,999
+      sq ft, 3,000-4,999, 5,000-6,999, and 7,000 and up. The base value here is the last column and the
+      variants are the other three, so a lot FLATS has not measured comes back ambiguous rather than
+      taking the standards written for the largest lots. min_lot_sqft 3,000 is read off the Permitted
+      Dwelling Type row, not a stated minimum: the 1,500-2,999 column permits townhouses only, and a
+      quadplex first appears in the 3,000-4,999 column. UNENCODED: side yards are asymmetric above 7,000
+      sq ft — one side 5 ft and the other 10 — and a single setback_side_ft cannot say that, so 5 is
+      encoded and a pod sized against it consumes 5 ft less width than the code allows on a large lot.
+      Minimum lot depth (70 ft, then 80) has no field. quadplex_allowed is by-right: middle housing is
+      permitted on any lot meeting its column.'
   R-HD:
     section: ["19.302"]
     cite_default:
