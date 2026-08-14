@@ -71,6 +71,22 @@ _NOTE = re.compile(r"^\[(?P<n>\d+)\]\s+(?P<text>.+)$")
 #: a chapter PDF reprints the same caption at every page break, and treating
 #: that as a new table cuts the grid off at the first page boundary.
 _TABLE_CAPTION = re.compile(r"^Table\s+(?P<id>[\w.-]+)", re.I)
+#: The heading over a footnote block that numbers its definitions without
+#: brackets. Written to survive a colspan repeat — a caption cell spanning the
+#: whole table prints "NOTES:  NOTES:" once per column it covers.
+#: The identifier is allowed because Gresham heads its block "Table 4.0130
+#: Notes:" — which the caption rule would otherwise swallow, taking the whole
+#: block with it.
+_NOTES_HEAD = re.compile(
+    r"^(?:table\s+[\w.-]+\s+|table\s+)?notes?\s*[:.]?"
+    r"(?:\s+(?:table\s+[\w.-]+\s+|table\s+)?notes?\s*[:.]?)*$",
+    re.I,
+)
+#: One such definition, in either spelling: "2<gap>Townhomes are exempt from
+#: the lot width requirements." or "2. Zero lot line dwellings shall have...".
+#: A number alone is not enough — either the period or the column gap has to
+#: be there, or "3.130 TROUTDALE DEVELOPMENT CODE" defines footnote 3.
+_BARE_NOTE = re.compile(r"^(?P<n>\d{1,2})(?:\.\s+|\s{2,})(?P<text>\S.*)$")
 #: What follows the last row: the footnote block, or the next section heading.
 #: A section *number* is not enough — rows carry wrapped cross-references like
 #: "33.110.265)", and treating one as the end truncates the table mid-grid.
@@ -367,6 +383,11 @@ def _span(lines: Sequence[str], start: int = 0) -> tuple[int | None, int]:
             elif found != shape:
                 return first, i
             continue
+        if first is not None and _NOTES_HEAD.match(line.strip()):
+            # A headed footnote block reads as prose to the sentence rule
+            # below, which would end the span on the first definition long
+            # enough to close like a sentence — and Troutdale's do.
+            return first, _end_of_bare_notes(lines, i)
         if first is not None and _ends_table(line.strip()):
             if _NOTE.match(line.strip()):
                 # The footnote block belongs to the table. It ends the rows and
@@ -375,6 +396,46 @@ def _span(lines: Sequence[str], start: int = 0) -> tuple[int | None, int]:
                 return first, _end_of_notes(lines, i)
             return first, i
     return first, len(lines)
+
+
+#: How far past a notes heading the span may run. The reader inside the span
+#: refuses anything that is not a definition or the wrap of one, so an
+#: over-long span costs nothing; the cap is only here so a document with no
+#: heading after its notes cannot swallow the rest of the chapter.
+_NOTES_REACH = 120
+
+
+def _end_of_bare_notes(lines: Sequence[str], start: int) -> int:
+    """Index just past a footnote block that heads itself.
+
+    Generous on purpose. Such a block survives page breaks, running headers
+    and a reprinted column header — Troutdale's notes 3 through 5 are printed
+    on the page after notes 1 and 2, with the table's own header line between
+    them. What genuinely ends it is a heading: a lettered one, or the next
+    section number, or the caption of the next table.
+    """
+    seen = False
+    for i, line in enumerate(lines[start : start + _NOTES_REACH], start=start):
+        stripped = line.strip()
+        if i == start:
+            continue
+        if _BARE_NOTE.match(stripped):
+            seen = True
+            continue
+        if (
+            _GROUP_HEAD.match(stripped)
+            or _ENDS_TABLE.match(stripped)
+            or _TABLE_CAPTION.match(stripped)
+        ):
+            return i
+        if seen and header(line) is not None:
+            # A header inside the block is a page reprint only if the block
+            # carries on beneath it. When the next thing printed is a row, the
+            # notes are over and the next table has started.
+            following = next((n.strip() for n in lines[i + 1 : i + 4] if n.strip()), "")
+            if not _BARE_NOTE.match(following):
+                return i
+    return min(len(lines), start + _NOTES_REACH)
 
 
 def _end_of_notes(lines: Sequence[str], start: int) -> int:
@@ -522,23 +583,37 @@ def _read_span(lines: Sequence[str], first: int, last: int, start_line: int) -> 
     down: dict[str, dict[str, tuple[str, int, tuple[int, ...]]]] = {}
     notes: dict[int, str] = {}
     note_lines: dict[int, int] = {}
+    in_notes = False
+    last_note: int | None = None
+    wrap_ok = False
 
     for n, line in enumerate(lines[first:last], start=start_line + first):
         stripped = line.strip()
-        if stripped.endswith(":"):
+        if stripped.endswith(":") or _NOTES_HEAD.match(stripped):
             # Exempt from the furniture check below: "Setbacks (ft):" repeats
             # in every housing-type table of the chapter, which reads as page
             # decoration by frequency — but it is the heading that says the
             # rows under it are setbacks at all. Running headers and revision
-            # stamps do not end with a colon.
+            # stamps do not end with a colon. "Table Notes" earns the same
+            # exemption for the same reason: every table in the chapter prints
+            # one, which is precisely what makes frequency mistake it for
+            # decoration and drop the whole footnote block with it.
             pass
         elif not stripped or stripped in junk or _PAGE_NUMBER.match(stripped):
             # Page furniture interrupts a table without ending it: a chapter
             # PDF stamps its title and revision date between the last row of
             # one page and the first row of the next.
+            wrap_ok = False
             continue
 
         head = header(line)
+        if head and in_notes:
+            # A page break inside the footnote block reprints the column
+            # header, sometimes only its second row. That is not a new table
+            # and it does not end this one — Troutdale's notes 3 through 5
+            # are printed after exactly such a reprint.
+            wrap_ok = False
+            continue
         if head:
             if cols and (head[0], tuple(c.zone for c in head[1])) != (
                 kind,
@@ -566,6 +641,48 @@ def _read_span(lines: Sequence[str], first: int, last: int, start_line: int) -> 
             num = int(found_note.group("n"))
             notes[num] = found_note.group("text").strip()
             note_lines[num] = n
+            continue
+        if _NOTES_HEAD.match(stripped):
+            # Happy Valley and Gresham head the footnote block instead of
+            # bracketing each definition. Without the heading there is nothing
+            # to tell "2  Townhomes are exempt..." from a row, and every
+            # condition under it reads as a placeholder — which makes the
+            # value it qualifies unquotable and the standard unreviewable.
+            in_notes = True
+            continue
+        if in_notes:
+            found_bare = _BARE_NOTE.match(stripped)
+            if found_bare is not None:
+                last_note = int(found_bare.group("n"))
+                notes[last_note] = found_bare.group("text").strip()
+                note_lines[last_note] = n
+                wrap_ok = True
+                continue
+            if _GROUP_HEAD.match(stripped) or _ENDS_TABLE.match(stripped):
+                break  # a heading: the block is over, and so is the table
+            # A definition wraps — Troutdale's note 1 runs onto a second line,
+            # and a condition cut in half reads as a different condition. Only
+            # the line *immediately* after a definition can be its wrap: a page
+            # stamp or a reprinted header between the two means whatever comes
+            # next is on the far side of a page break and belongs to nothing.
+            broken = last_note is not None and notes[last_note].endswith("-")
+            if (
+                wrap_ok
+                and last_note is not None
+                and len(_cells(stripped)) == 1
+                and (len(stripped.split()) > 1 or broken)
+            ):
+                # A word split across the line break is rejoined without its
+                # hyphen — "abutting zoning dis-" / "trict." is one word, and
+                # a one-word wrap is only credible when something is waiting
+                # for it.
+                notes[last_note] = (
+                    notes[last_note][:-1] + stripped
+                    if broken
+                    else f"{notes[last_note]} {stripped}".strip()
+                )
+            else:
+                wrap_ok = False
             continue
         found_caption = _TABLE_CAPTION.match(stripped)
         if found_caption:
@@ -1318,7 +1435,70 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
                 block_field = name
                 block_refs = refs
         i += 1
-    return out
+    blocks = _stacked_notes(lines)
+    return {zone: [_defined(c, blocks) for c in cands] for zone, cands in out.items()}
+
+
+#: A note this reader could not define. Written once, matched here, so a later
+#: pass can fill in the text without the reader that made it holding the block.
+_PLACEHOLDER = re.compile(r"^(?:footnote|see note) (?P<n>\d{1,2}) \(text not captured\)$")
+#: A marker on its own line — how a footnote block linearises when the grid
+#: was too wide to align and each cell became a line of its own.
+_MARKER_LINE = re.compile(r"^\d{1,2}$")
+
+
+def _stacked_notes(lines: Sequence[str]) -> list[tuple[int, dict[int, str]]]:
+    """Footnote blocks in a linearised grid, each with the line it opens on.
+
+    The flowed form prints a marker and its definition on separate lines, and
+    the numbering restarts with every table: Happy Valley's note 3 exempts
+    cottage clusters from lot coverage under one table and sets a townhouse
+    side setback under the next. So a block is kept with its position rather
+    than merged into one dictionary, and a value takes the first block printed
+    *below* it — which is where a table's own footnotes are.
+    """
+    blocks: list[tuple[int, dict[int, str]]] = []
+    current: dict[int, str] | None = None
+    pending: int | None = None
+    for n, raw in enumerate(lines, start=1):
+        stripped = raw.strip()
+        if not stripped:
+            continue
+        if _NOTES_HEAD.match(stripped):
+            if current is None:
+                current = {}
+                blocks.append((n, current))
+            pending = None
+            continue
+        if current is None:
+            continue
+        if _MARKER_LINE.match(stripped):
+            pending = int(stripped)
+            continue
+        if pending is not None:
+            current[pending] = stripped
+            pending = None
+            continue
+        current = None  # past the definitions
+    return blocks
+
+
+def _defined(candidate: Candidate, blocks: Sequence[tuple[int, dict[int, str]]]) -> Candidate:
+    """The same candidate with any placeholder note replaced by its text."""
+    if not any(_PLACEHOLDER.match(note) for note in candidate.notes):
+        return candidate
+    found: dict[int, str] = next(
+        (defs for start, defs in blocks if start > candidate.line), {}
+    )
+    return replace(
+        candidate,
+        notes=tuple(
+            found.get(int(m.group("n")), note)
+            if (m := _PLACEHOLDER.match(note))
+            else note
+            for note in candidate.notes
+        ),
+    )
 
 
 def stacked_candidates_for(
@@ -1413,7 +1593,9 @@ def candidates_for(table: Table | Iterable[Row], zone: str, *, path: str) -> lis
             continue
         value = int(number) if number.is_integer() else number
         refs = tuple(dict.fromkeys(_SEE_NOTE.findall(row.label)))
-        glued = tuple(f"see note {n} (text not captured)" for n in refs)
+        glued = tuple(
+            table.notes.get(int(n), f"see note {n} (text not captured)") for n in refs
+        )
         out.append(
             Candidate(
                 field=name,

@@ -1420,3 +1420,109 @@ def test_row_context_on_a_grouped_setback_is_kept_as_a_condition() -> None:
     # A corner is the only place a street-side setback exists, so saying so
     # conditions nothing.
     assert by_value[8].notes == ()
+
+
+def test_a_headed_note_block_gives_a_marked_cell_its_condition() -> None:
+    # "35 ft.5" says the standard has an exit. Without the definition the
+    # value is conditional on nothing anybody can read, which is unreviewable
+    # and unquotable — and a reviewer cannot sign what they cannot see.
+    text = "\n".join(
+        [
+            "Standard              R-5      R-7",
+            "Maximum height        35 ft.5  35 ft.5",
+            "Table Notes",
+            "5. Height may be increased to 45 feet for affordable housing.",
+        ]
+    )
+    found = candidates_for(read_tables(text)[0], zone="R-5", path="d.txt")
+
+    assert [c.notes for c in found] == [
+        ("Height may be increased to 45 feet for affordable housing.",)
+    ]
+
+
+def test_a_definition_that_wraps_is_rejoined_across_its_hyphen() -> None:
+    # A condition cut in half reads as a different condition, and a PDF breaks
+    # words at the margin: "abutting zoning dis-" / "trict." is one word.
+    text = "\n".join(
+        [
+            "Standard              R-5      R-7",
+            "Maximum height        35 ft.1  35 ft.1",
+            "Table Notes",
+            "1. Height is the same height as required by the abutting zoning dis-",
+            "trict.",
+        ]
+    )
+    note = candidates_for(read_tables(text)[0], zone="R-5", path="d.txt")[0].notes[0]
+
+    assert note == "Height is the same height as required by the abutting zoning district."
+
+
+def test_a_page_break_inside_the_note_block_does_not_end_it() -> None:
+    # Troutdale prints notes 1-2, breaks the page, reprints the column header
+    # — sometimes only its second row — and carries on with notes 3 and up.
+    text = "\n".join(
+        [
+            "Standard              LDR-1    LDR-2",
+            "Maximum height        35 ft.3  35 ft.3",
+            "Table Notes",
+            "1. Front yard setback may be reduced with rear access.",
+            "TDC3-7",
+            "LDR-1                 LDR-2",
+            "3. Rear yard setbacks are 15 feet unless access is from a rear yard",
+            "(20 feet).",
+        ]
+    )
+    table = read_tables(text)[0]
+
+    assert table.notes[3] == (
+        "Rear yard setbacks are 15 feet unless access is from a rear yard (20 feet)."
+    )
+    # The page stamp is not the wrap of note 1: a definition's wrap is the
+    # line immediately after it, and nothing survives a page break to claim it.
+    assert table.notes[1] == "Front yard setback may be reduced with rear access."
+
+
+def test_each_table_numbers_its_own_notes() -> None:
+    # Happy Valley's note 3 exempts cottage clusters from lot coverage under
+    # one table and sets a townhouse side setback under the next. One shared
+    # dictionary hands a value the wrong condition entirely.
+    text = "\n".join(
+        [
+            "Standard              R-5      R-7",
+            "Maximum height        35 ft.1  35 ft.1",
+            "Table Notes",
+            "1. The first table's condition.",
+            "Standard              R-9      R-11",
+            "Maximum height        45 ft.1  45 ft.1",
+            "Table Notes",
+            "1. The second table's condition.",
+        ]
+    )
+    first, second = read_tables(text)[:2]
+
+    assert first.notes[1] == "The first table's condition."
+    assert second.notes[1] == "The second table's condition."
+
+
+def test_a_flowed_note_block_defines_the_markers_above_it() -> None:
+    # Where the grid was too wide to align, every cell is its own line — and
+    # so is every footnote marker, with its text on the line after.
+    text = "\n".join(
+        [
+            "R-5",
+            "R-7",
+            "Lot size (minimum)",
+            "2,000 sf9",
+            "3,000 sf",
+            "NOTES:",
+            "9",
+            "Each townhouse lot shall have a minimum size of 2,000 square feet.",
+        ]
+    )
+    sfa = next(c for c in _grid(text)["R-5"] if c.field == "min_lot_sqft")
+
+    assert sfa.value == 2000
+    assert sfa.notes == (
+        "Each townhouse lot shall have a minimum size of 2,000 square feet.",
+    )
