@@ -133,8 +133,10 @@ Except as may be otherwise provided by the provisions of this code, the followin
 STANDARD
 REQUIREMENT
 ADDITIONAL NOTES
-Minimum lot size Average minimum lot or parcel size for a townhouse project
-10,000 sf 1,500 sf
+Minimum lot size
+Average minimum lot or parcel size for a townhouse project
+10,000 sf
+1,500 sf
 For a single-family attached or detached unit
 Minimum lot width at front lot line
 35 ft
@@ -143,7 +145,8 @@ Average minimum lot width
 50 ft
 Does not apply to townhouses or cottage clusters
 Minimum yard dimensions or minimum building setbacks
-Except as specified in CDC 25.070(C)(1) through (4) for the Willamette Historic District. Front, rear, and side yard setbacks in a cottage cluster project are 10 ft. There are no additional setbacks for individual structures on individual lots, but minimum distance between structures shall follow applicable building code requirements.
+Except as specified in CDC 25.070(C)(1) through (4) for the Willamette Historic District.
+Front, rear, and side yard setbacks in a cottage cluster project are 10 ft. There are no additional setbacks for individual structures on individual lots, but minimum distance between structures shall follow applicable building code requirements.
 Front yard
 20 ft
 Except for steeply sloped lots where the provisions of CDC 41.010 shall apply
@@ -159,7 +162,9 @@ Maximum building height
 Except for steeply sloped lots in which case the provisions of Chapter 41 CDC shall apply.
 Maximum lot coverage
 35%
-Maximum lot coverage does not apply to cottage clusters. However, the maximum building footprint for a cottage cluster is less than 900 sf per dwelling unit. • This does not include detached garages, carports, or accessory structures. • A developer may deduct up to 200 sf for an attached garage or carport.
+Maximum lot coverage does not apply to cottage clusters. However, the maximum building footprint for a cottage cluster is less than 900 sf per dwelling unit.
+• This does not include detached garages, carports, or accessory structures.
+• A developer may deduct up to 200 sf for an attached garage or carport.
 Minimum accessway width to a lot which does not abut a street or a flag lot
 15 ft
 Maximum floor area ratio

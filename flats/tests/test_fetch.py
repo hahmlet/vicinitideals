@@ -482,3 +482,66 @@ def test_a_document_from_an_older_extractor_is_reported(tmp_path: Path) -> None:
     assert store.load("or/x/y.txt").extractor == ""
     report = Evidence(stale_extraction=frozenset({"or/x/y.txt"}))
     assert any("re-extract" in line for line in report.lines())
+
+
+def test_an_unchanged_document_is_restamped_when_the_extractor_moved(bench: dict, capsys) -> None:
+    # Same bytes, newer algorithm. Without the re-stamp the document sits on
+    # the re-extract list forever, and a list that never empties stops being
+    # read — which is how the one document that really did need re-extracting
+    # gets missed.
+    from flats.provenance.fetch import EXTRACTOR
+
+    run(bench)
+    store = ProvenanceStore(bench["docs"])
+    store.save(
+        DOC,
+        url=URL,
+        text=store.load(DOC).text,
+        retrieved=date(2026, 8, 12),
+        extractor="flats-html-text/1",
+    )
+    capsys.readouterr()
+
+    assert run(bench) == 0
+    assert store.load(DOC).extractor == EXTRACTOR
+    assert "re-stamped" in capsys.readouterr().out
+
+
+def test_a_cell_of_two_paragraphs_stays_one_cell_in_a_grid() -> None:
+    # Where the columns survive, the geometry is what says which zone a cell
+    # belongs to, and a cell is one line by definition.
+    source = (
+        "<table><tr><th>Standard</th><th>R-5</th><th>R-7</th></tr>"
+        "<tr><td>Front setback</td><td><p>20 ft</p><p>10 ft within Town Center</p></td>"
+        "<td>20 ft</td></tr></table>"
+    )
+    rows = [line for line in _grid(source) if line.startswith("Front setback")]
+
+    assert len(rows) == 1
+    assert "20 ft 10 ft within Town Center" in rows[0]
+
+
+def test_a_cell_of_two_paragraphs_flows_as_two_lines_when_the_grid_is_given_up() -> None:
+    # Gladstone's requirement cell holds the base standard and its Town
+    # Center variant as separate paragraphs. The table is too wide to align,
+    # and joined into one line it states two numbers at once — which the pair
+    # reader refuses, losing the base standard along with the variant.
+    exceptions = "e" * 380
+    source = (
+        "<table><tr><td>Standard</td><td>Requirement</td><td>Exceptions</td></tr>"
+        "<tr><td>Front setback</td>"
+        "<td><p>20 ft</p><p>10 ft within Gladstone Town Center</p></td>"
+        f"<td>{exceptions}</td></tr></table>"
+    )
+    lines = _grid(source)
+
+    assert "20 ft" in lines
+    assert "10 ft within Gladstone Town Center" in lines
+
+
+def test_the_cell_marker_never_reaches_the_stored_text() -> None:
+    # The separator is this module's own bookkeeping. A page that shipped one
+    # as content would rewrite the geometry the marker describes.
+    source = "<p>a\x01b</p><table><tr><td>c\x01d</td><td>e</td></tr></table>"
+
+    assert "\x01" not in html_to_text(source)

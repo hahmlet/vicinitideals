@@ -34,16 +34,16 @@ zones:
     quadplex_allowed: true
     setback_front_ft:
       value: 20
-      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L181"
+      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L169"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L203"
+      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L190"
     setback_rear_ft:
       value: 15
-      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L207"
+      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L197"
     setback_street_side_ft:
       value: 20
-      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L199"
+      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L183"
     min_lot_sqft: 7200
     notes: 'quadfit confidence: needs_verification | GIS literal ''R7.2'' (code writes ''R-7.2''). Height
       35 ft. NO max lot coverage, NO min lot width in code. Middle housing (incl. quadplex) permitted
@@ -58,16 +58,16 @@ zones:
     quadplex_allowed: true
     setback_front_ft:
       value: 20
-      quote: "or/clackamas/gladstone/17.12.r-5.txt#L203"
+      quote: "or/clackamas/gladstone/17.12.r-5.txt#L182"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/gladstone/17.12.r-5.txt#L219"
+      quote: "or/clackamas/gladstone/17.12.r-5.txt#L190"
     setback_rear_ft:
       value: 15
-      quote: "or/clackamas/gladstone/17.12.r-5.txt#L229"
+      quote: "or/clackamas/gladstone/17.12.r-5.txt#L205"
     setback_street_side_ft:
       value: 20
-      quote: "or/clackamas/gladstone/17.12.r-5.txt#L223"
+      quote: "or/clackamas/gladstone/17.12.r-5.txt#L197"
     min_lot_sqft: 5000
     notes: 'quadfit confidence: needs_verification | GIS literal ''R5'' (code writes ''R-5''). Height
       35 ft. NO max lot coverage, NO min lot width. Middle housing outright. Front drops to ~10-15 ft
@@ -83,16 +83,16 @@ zones:
     quadplex_allowed: true
     setback_front_ft:
       value: 20
-      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L181"
+      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L169"
     setback_side_ft:
       value: 5
-      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L203"
+      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L190"
     setback_rear_ft:
       value: 15
-      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L207"
+      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L197"
     setback_street_side_ft:
       value: 20
-      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L199"
+      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L183"
     min_lot_sqft: 7200
     notes: 'quadfit confidence: needs_verification | DISCREPANCY: Gladstone''s adopted code defines only
       R-7.2 and R-5 single-household districts — there is NO R-10 district in Title 17. Exactly one layer

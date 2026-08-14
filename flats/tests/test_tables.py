@@ -1359,3 +1359,64 @@ def test_a_zone_spelled_with_a_space_still_finds_its_column() -> None:
     assert row.value_for("LR 7.5") == "7,500 sq ft"
     assert row.value_for("LR 12") == "12,000 sq ft"
     assert row.value_for("LR 8") == ""
+
+
+def test_a_capitalised_block_heading_scopes_the_rows_under_it() -> None:
+    # Happy Valley's HTML grid heads each block with a label row whose cells
+    # are empty — no leading letter, no colon. Without a heading rule that
+    # catches it, "Rear" and "Interior side" name a direction and nothing
+    # else, and every setback in the chapter goes unread.
+    text = "\n".join(
+        [
+            "Standard                      R-5      MUR-S",
+            "Building setbacks (minimum)8",
+            "Rear                          20 feet  20 feet",
+            "Interior side                 5 feet   5 feet",
+        ]
+    )
+    found = candidates_for(read_tables(text)[0], zone="R-5", path="d.txt")
+
+    assert {(c.field, c.value) for c in found} == {
+        ("setback_rear_ft", 20),
+        ("setback_side_ft", 5),
+    }
+
+
+def test_the_tail_of_a_wrapped_label_is_not_a_block_heading() -> None:
+    # Portland wraps "- Front building setback" across two lines, and its
+    # tail says "setback" as loudly as any heading does. Read as one, the
+    # heading swallows the row it belongs to and the setback disappears.
+    text = "\n".join(
+        [
+            "Standard              R5       R7",
+            "Minimum Setbacks",
+            "- Front building      10 ft.   15 ft.",
+            " setback",
+        ]
+    )
+    found = candidates_for(read_tables(text)[0], zone="R5", path="d.txt")
+
+    assert [(c.field, c.value) for c in found] == [("setback_front_ft", 10)]
+
+
+def test_row_context_on_a_grouped_setback_is_kept_as_a_condition() -> None:
+    # "Front (street access garage)" beside "Front (alley access garage)" is
+    # one standard with two cases, not two readings. The parenthesis is
+    # dropped for the lookup and kept as the note that says which case.
+    text = "\n".join(
+        [
+            "Standard                      R-5      MUR-S",
+            "Building setbacks (minimum)",
+            "Front (street access garage)  20 feet  20 feet",
+            "Front (alley access garage)   10 feet  10 feet",
+            "Street side (corner lot)      8 feet   8 feet",
+        ]
+    )
+    found = candidates_for(read_tables(text)[0], zone="R-5", path="d.txt")
+    by_value = {c.value: c for c in found}
+
+    assert by_value[20].notes == ("(street access garage) (row context)",)
+    assert by_value[10].notes == ("(alley access garage) (row context)",)
+    # A corner is the only place a street-side setback exists, so saying so
+    # conditions nothing.
+    assert by_value[8].notes == ()

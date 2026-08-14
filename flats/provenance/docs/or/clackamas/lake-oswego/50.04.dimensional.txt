@@ -4,7 +4,7 @@ Resize:
 
 City of Lake Oswego, OR
 
-Thursday, August 13, 2026
+Friday, August 14, 2026
 
 Chapter 50. Community Development Code
 
@@ -27,333 +27,226 @@ Dimensional Standards.
 Development in the R-7.5, R-10, and R-15 zones shall conform to the dimensional standards in Table 50.04.001-1 except as modified below.
 
 TABLE 50.04.001-1: RESIDENTIAL LOW DENSITY ZONES DIMENSIONS
-
+TABLE 50.04.001-1: RESIDENTIAL LOW DENSITY ZONES DIMENSIONS
+TABLE 50.04.001-1: RESIDENTIAL LOW DENSITY ZONES DIMENSIONS
+TABLE 50.04.001-1: RESIDENTIAL LOW DENSITY ZONES DIMENSIONS
+TABLE 50.04.001-1: RESIDENTIAL LOW DENSITY ZONES DIMENSIONS
+TABLE 50.04.001-1: RESIDENTIAL LOW DENSITY ZONES DIMENSIONS
 R-7.5
-
 R-10
-
 R-15
-
 Comments/Additional Standards
-
 DENSITY
-
+DENSITY
 § 50.04.001.1.b
-
 Minimum [1]
-
+Minimum [1]
 80% of max
-
 80% of max
-
 80% of max
-
 Maximum (units/acre)
-
+Maximum (units/acre)
 [2]
-
 [2]
-
 [2]
-
 MIN. LOT DIMENSIONS [3]
-
+MIN. LOT DIMENSIONS [3]
 § 50.04.001.1.c
-
 Single-Family, Duplex, Triplex, Quadplex, and Cottage Cluster Developments; Townhouse Projects
-
+Single-Family, Duplex, Triplex, Quadplex, and Cottage Cluster Developments; Townhouse Projects
 Area (sq. ft.)
-
+Area (sq. ft.)
 7,500
-
 10,000
-
 15,000
-
 Except PD [3]
-
 Width (ft.)
-
+Width (ft.)
 50
-
 65
-
 80
-
+Except PD [3]
 Depth (ft.)
-
+Depth (ft.)
 —
-
 —
-
 —
-
+Except PD [3]
 Townhouses (one per lot)
-
+Townhouses (one per lot)
 Area (sq. ft.)
-
+Area (sq. ft.)
 1,500
-
 1,500
-
 1,500
-
 Width (ft.)
-
+Width (ft.)
 15
-
 15
-
 15
-
 Depth (ft.)
-
+Depth (ft.)
 —
-
 —
-
 —
-
 MAX. FLOOR AREA [7][8]
-
+MAX. FLOOR AREA [7][8]
 § 50.04.001.1.d
-
 Base Calculation:
-
 3,000 sq. ft. + [(actual lot size – 5,800 sq. ft.) x 0.19]
-
+Base Calculation:
+3,000 sq. ft. + [(actual lot size – 5,800 sq. ft.) x 0.19]
 Additional floor area allowance per primary residential unit providing a garage (sq. ft.)
-
+Additional floor area allowance per primary residential unit providing a garage (sq. ft.)
+Additional floor area allowance per primary residential unit providing a garage (sq. ft.)
+Base Calculation:
+3,000 sq. ft. + [(actual lot size – 5,800 sq. ft.) x 0.19]
+Base Calculation:
+3,000 sq. ft. + [(actual lot size – 5,800 sq. ft.) x 0.19]
 600
-
 750
-
 850
-
 YARD SETBACKS
-
+YARD SETBACKS
 § 50.04.001.1.e
-
 Primary Structure
-
+Primary Structure
 Front (ft.)
-
+Front (ft.)
 25
-
 25
-
 25
-
 Side Adjacent to Street (ft.)
-
+Side Adjacent to Street (ft.)
 Arterial/Collector
-
+Arterial/Collector
 20
-
 20
-
 20
-
 Local
-
+Local
 15
-
 15
-
 15
-
 Interior Side (ft.)
-
+Interior Side (ft.)
 Total 15, 5 min.
-
 10
-
 10
-
 Rear (ft.)
-
+Rear (ft.)
 30
-
 30
-
 30
-
 Accessory Structure
-
+Accessory Structure
 Front (ft.)
-
+Front (ft.)
 25
-
 25
-
 25
-
 Side Adjacent to Street (ft.)
-
+Side Adjacent to Street (ft.)
 Arterial/Collector
-
+Arterial/Collector
 20
-
 20
-
 20
-
 Local
-
 15
-
 15
-
 15
-
 Height ≤ 18 ft.
-
 Side
-
 5
-
 10
-
 10
-
 Rear
-
 10
-
 15
-
 15
-
 Height > 18 ft.
-
 Side
-
 5
-
 10
-
 10
-
 Rear
-
 15
-
 15
-
 15
-
 Cottage Clusters
-
+Cottage Clusters
 Front (ft.)
-
+Front (ft.)
 10
-
 10
-
 10
-
 Interior Side/Side Adjacent to Street (ft.)
-
+Interior Side/Side Adjacent to Street (ft.)
 10
-
 10
-
 10
-
 Rear (ft.)
-
+Rear (ft.)
 10
-
 10
-
 10
-
 MAX. LOT COVERAGE
-
+MAX. LOT COVERAGE
 § 50.04.001.1.f
-
 MAX. BASE HEIGHT (FT.)
-
+MAX. BASE HEIGHT (FT.)
 Primary Structure
-
+Primary Structure
 [4]
-
 [4]
-
 [4]
-
 § 50.04.001.1.g
-
 Flat Lot
-
+Flat Lot
 28
-
 30
-
 35
-
 Lot with Sloping Topography
-
+Lot with Sloping Topography
 28 – 32 [5]
-
 30 – 34 [5]
-
 35
-
 Footprint, Sloped
-
+Footprint, Sloped
 35
-
 35
-
 35
-
 Accessory Structure
-
+Accessory Structure
 Lesser of 24 ft. or height of roof form of primary structure
-
 Lesser of 24 ft. or height of roof form of primary structure
-
 Lesser of 24 ft. or height of roof form of primary structure
-
 § 50.04.001.1.g [6]
-
 Additional Standards and Modifications
-
+Additional Standards and Modifications
+§ 50.04.001.1.b – g
+§ 50.04.001.1.b – g
+§ 50.04.001.1.b – g
 § 50.04.001.1.b – g
 
 Notes:
-
+Notes:
 [1]
-
 When subdivisions are proposed, the number of lots required shall be determined by dividing the net developable area by the minimum lot size per unit required in the underlying zone, and multiplying this number by 0.8. The result shall be rounded up for any product with a fraction of 0.5 or greater and rounded down for any product with a fraction of less than 0.5. The requirements of this section are subject to the exceptions contained in LOC § 50.04.003.10, Exceptions to the Minimum Density Requirement for All Zones.
-
 [2]
-
 Net developable area divided by the minimum lot area per unit and rounded down to the nearest whole number. The actual density allowed on a site will be determined at the time of development review. Maximum density will be allowed to the extent that facts presented to the hearing body show that development at that density can occur within requirements set forth in the Development Standards. Duplexes, triplexes, quadplexes, and cottage cluster developments are exempt from maximum density standards. For townhouse projects, the maximum density is four dwelling units per equivalent minimum lot area required per single-family dwelling in that zone.
-
 [3]
-
 Up to a 25% reduction in minimum required lot area for each dwelling unit shall be allowed to permit the relocation of a designated historic landmark, when relocation has been approved by the designated hearing body.
-
 [4]
-
 Base building height of single-family and middle housing dwellings may be increased by one ft. for every five additional ft. in yard setback on all sides.
-
 [5]
-
 Maximum base height across the site shall be established by a flat plane measured at 28 ft. (R-7.5 zone) or 30 ft. (R-10 zone) above the highest point of the natural ground surface within the building envelope, unless the natural ground surface is lowered, in which case the height is measured from the lowered ground surface per the definition of "height of building" in LOC § 50.10.003.2. In no case shall the base height exceed 32 ft. (R-7.5 zone) or 34 ft. (R-10 zone). See Figure 50.04.001-A: Height Adjustment for Sloping Topography.
-
 [6]
-
 Building height exceptions shall not exceed the building height of the primary structure.
-
 [7]
-
 Cottage cluster developments are exempt from maximum floor area standards, but maximum average floor area standards shall be applied to individual cottage cluster dwellings. See LOC § 50.04.001.1.d.iv, Maximum Average Floor Area of Units in a Cottage Cluster, and LOC § 50.03.003.1.d, use-specific standards for cottage clusters.
-
 [8]
-
 Maximum floor area standards for townhouses shall be applied to a townhouse project, and not to individual townhouse lots or dwellings. See also LOC § 50.04.001.1.d.v, Maximum Floor Area of Townhouses.
 
 [Cross-References: Height Limitation: see Charter Section 46A for 50 ft. Maximum Height of Structures in Residential Areas; Height Measure: see LOC § 50.04.003.4, General Exception to Structure Height Limitations.]
@@ -496,129 +389,23 @@ Maximum Lot Coverage.
 
 Maximum lot coverage for the R-7.5, R-10, and R-15 districts shall be based on the "height of building"as defined in LOC § 50.10.003.2, as follows:
 
-TABLE 50.04.001-2: RESIDENTIAL LOW DENSITY LOT COVERAGES
-
-Height (ft.) of primary structure
-
-Maximum Lot Coverage (%)
-
-R-7.5
-
-R-10
-
-R-15
-
-22 or less
-
-35
-
-35
-
-35
-
->22 to 23
-
-33
-
-34
-
-34
-
->23 to 24
-
-30
-
-32
-
-33
-
->24 to 25
-
-28
-
-30
-
-32
-
->25 to 26
-
-25
-
-28
-
-30
-
->26 to 27
-
-25
-
-27
-
-29
-
->27 to 28
-
-25
-
-25
-
-28
-
->28 to 29
-
-25
-
-25
-
-27
-
->29 to 30
-
-25
-
-25
-
-25
-
->30 to 31
-
-25
-
-25
-
-25
-
->31 to 32
-
-25
-
-25
-
-25
-
->32 to 33
-
-25
-
-25
-
-25
-
->33 to 34
-
-25
-
-25
-
-25
-
->34
-
-25
-
-25
-
-25
+TABLE 50.04.001-2: RESIDENTIAL LOW DENSITY LOT COVERAGES  TABLE 50.04.001-2: RESIDENTIAL LOW DENSITY LOT COVERAGES  TABLE 50.04.001-2: RESIDENTIAL LOW DENSITY LOT COVERAGES  TABLE 50.04.001-2: RESIDENTIAL LOW DENSITY LOT COVERAGES
+Height (ft.) of primary structure                         Maximum Lot Coverage (%)                                  Maximum Lot Coverage (%)                                  Maximum Lot Coverage (%)
+Height (ft.) of primary structure                         R-7.5                                                     R-10                                                      R-15
+22 or less                                                35                                                        35                                                        35
+>22 to 23                                                 33                                                        34                                                        34
+>23 to 24                                                 30                                                        32                                                        33
+>24 to 25                                                 28                                                        30                                                        32
+>25 to 26                                                 25                                                        28                                                        30
+>26 to 27                                                 25                                                        27                                                        29
+>27 to 28                                                 25                                                        25                                                        28
+>28 to 29                                                 25                                                        25                                                        27
+>29 to 30                                                 25                                                        25                                                        25
+>30 to 31                                                 25                                                        25                                                        25
+>31 to 32                                                 25                                                        25                                                        25
+>32 to 33                                                 25                                                        25                                                        25
+>33 to 34                                                 25                                                        25                                                        25
+>34                                                       25                                                        25                                                        25
 
 (1)
 
@@ -713,189 +500,118 @@ Dimensions.
 Development in the R-DD, R-5, and R-6 zones shall conform to the dimensional standards in Table 50.04.001-3 except as modified below:
 
 TABLE 50.04.001-3: RESIDENTIAL MEDIUM DENSITY ZONES DIMENSIONS
-
+TABLE 50.04.001-3: RESIDENTIAL MEDIUM DENSITY ZONES DIMENSIONS
+TABLE 50.04.001-3: RESIDENTIAL MEDIUM DENSITY ZONES DIMENSIONS
+TABLE 50.04.001-3: RESIDENTIAL MEDIUM DENSITY ZONES DIMENSIONS
+TABLE 50.04.001-3: RESIDENTIAL MEDIUM DENSITY ZONES DIMENSIONS
 R-6
-
 R-5
-
 R-DD
-
 Comments/Additional Standards
-
 DENSITY
-
 § 50.04.001.2.b
-
 Minimum [1]
-
 80% of max
-
 80% of max
-
 SF Subdivisions: 5 lots/acre; Duplex Subdivisions: 10 units/acre; Multi-Family Subdivisions: 14 units/acre
-
 Maximum (units/acre)
-
 —
-
 [2]
-
 [2],[3]
-
 MIN. LOT DIMENSIONS
-
 § 50.04.001.2.c
-
 Single-Family, Duplex and Triplex Dwellings; Townhouse Projects
-
 Area (sq. ft.)
-
 6,000
-
 5,000
-
 5,000 [4]
-
 Except PD
-
 Width (ft.)
-
 50
-
 —
-
 —
-
 Cottage Clusters and Quadplexes
-
 Area (sq. ft.)
-
 7,000
-
 7,000
-
 7,000
-
 Width (ft.)
-
 50
-
 —
-
 —
-
 Townhouses (one per lot)
-
 Area (sq. ft.)
-
 1,500
-
 1,500
-
 1,500
-
 Width (ft.)
-
 15
-
 15
-
 15
-
 MAX. FLOOR AREA [6]
-
 § 50.04.001.2.d
-
 2,750 sq. ft. + [(actual lot size – 6,000 sq. ft.) x 0.19]
-
 Lot ≥ 5,000 sq. ft.
-
 —
-
 R-5 and R-6 districts: + 500 sq. ft. floor area allowance per primary residential unit providing a garage
-
+2,750 sq. ft. + [(actual lot size – 6,000 sq. ft.) x 0.19]
 2,850 sq. ft. + [(actual lot size – 5,000 sq. ft.) x 0.28]
-
+—
+R-5 and R-6 districts: + 500 sq. ft. floor area allowance per primary residential unit providing a garage
+2,750 sq. ft. + [(actual lot size – 6,000 sq. ft.) x 0.19]
 Lot < 5,000 sq. ft.
-
+—
+R-5 and R-6 districts: + 500 sq. ft. floor area allowance per primary residential unit providing a garage
+2,750 sq. ft. + [(actual lot size – 6,000 sq. ft.) x 0.19]
 2,850 sq. ft. + [(actual lot size – 5,000 sq. ft.) x 0.48]
-
+—
+R-5 and R-6 districts: + 500 sq. ft. floor area allowance per primary residential unit providing a garage
 YARD SETBACKS
-
 See § 50.04.001.2.e
-
+See § 50.04.001.2.e
+See § 50.04.001.2.e
+See § 50.04.001.2.e
 MAX. LOT COVERAGE
-
 See § 50.04.001.2.f
-
+See § 50.04.001.2.f
+See § 50.04.001.2.f
+See § 50.04.001.2.f
 MAX. BASE HEIGHT (FT.)
-
 § 50.04.001.2.g
-
 Primary Structure
-
 28
-
 —
-
 28
-
 Flat Lot
-
 28
-
 28
-
 —
-
 Lot with Sloping Topography
-
 28 – 32[5]
-
 28 – 32[5]
-
 —
-
 Footprint, Sloped
-
 32
-
 35
-
 —
-
 Accessory Structure
-
 Lesser of 24 ft. or height of roof form of primary structure
-
 Lesser of 24 ft. or height of roof form of primary structure
-
 28
 
 Notes:
-
+Notes:
 [1]
-
 When subdivisions are proposed in the R-5 and R-6 zones or multi-family development is proposed in the R5 zone, the number of lots or dwelling units required shall be determined by dividing the net developable area by the minimum lot size per unit required in the underlying zone, and multiplying this number by 0.8. The result shall be rounded up for any product with a fraction of 0.5 or greater and rounded down for any product with a fraction of less than 0.5. The requirements of this section are subject to the exceptions contained in LOC § 50.04.003.10, Exceptions to the Minimum Density Requirement for All Zones. When subdivisions are proposed in the R-DD zone, the density is computed by multiplying the net developable area by either five, ten, or 14 per the applicable type of development. The result shall be rounded up for any product with a fraction of 0.5 or greater and rounded down for any product with a fraction of less than 0.5.
-
 [2]
-
 Net developable area divided by the minimum lot area per unit and rounded down to the nearest whole number. The actual density allowed on a site will be determined at the time of development review. Maximum density will be allowed to the extent that facts presented to the hearing body show that development at that density can occur within requirements set forth in the Development Standards. Duplexes, triplexes, quadplexes, and cottage clusters in residential zones are exempt from maximum density standards. For townhouse projects in residential zones, the maximum density is four dwelling units per equivalent minimum lot area required per single-family dwelling in that zone.
-
 [3]
-
 R-DD zone maximum density expressed in number of dwelling units per net developable area is computed by dividing the net developable area by 2,000 sq. ft. and rounding down to the nearest whole number. Duplexes, triplexes, quadplexes, and cottage clusters in the R-DD zone are exempt from maximum density standards. For townhouse projects in the R-DD zone, the maximum density is four dwelling units per equivalent minimum lot area required per single-family dwelling in that zone.
-
 [4]
-
 Except for structures that have been determined by the State or National Register of Historic Places as being of historic significance.
-
 [5]
-
 Lots with sloping topography – Maximum base height across the site shall be established by a flat plane measured at 28 ft. above the highest point of the natural ground surface within the building envelope, unless the natural ground surface is lowered, in which case the height is measured from the lowered ground surface per the definition of "height of building" in LOC § 50.10.003.2. In no case shall the base height exceed 32 ft. See Figure 50.04.001-A: Height Adjustment for Sloping Topography.
-
 [6]
-
 Cottage cluster developments are exempt from maximum floor area standards, but maximum average floor area standards shall be applied to individual cottage cluster dwellings. See LOC § 50.04.001.2.d.iv, Maximum Average Floor Area of Units in a Cottage Cluster, and LOC § 50.03.003.1.d, use-specific standards for cottage clusters.
 
 [Cross-Reference: Height Limitation: see Charter Section 46A for 50 ft. Maximum Height of Structures in Residential Areas; LOC § 50.04.003.4, General Exception to Structure Height Limitations; LOC § 50.06.001.5.b.]
@@ -1032,51 +748,12 @@ R-5 Yard Setback Standards.
 
 Required Setbacks.
 
-TABLE 50.04.001-4: YARD SETBACK REQUIREMENTS
-
-Structure Type
-
-Front (ft.)
-
-Side (ft.)
-
-Rear (ft.)
-
-Attached Dwellings, Including Duplexes, Triplexes, Quadplexes, and Townhouse Projects
-
-10
-
-10 – Exterior Wall
-
-0 – Attached Wall
-
-10
-
-Detached Dwelling
-
-20
-
-5 – Side Yard
-
-10 – Street Side Yard
-
-20
-
-Cottage Clusters
-
-10
-
-10
-
-10
-
-Other Types of Primary Structures and All Accessory Structures
-
-10
-
-10
-
-10
+TABLE 50.04.001-4: YARD SETBACK REQUIREMENTS                                           TABLE 50.04.001-4: YARD SETBACK REQUIREMENTS  TABLE 50.04.001-4: YARD SETBACK REQUIREMENTS  TABLE 50.04.001-4: YARD SETBACK REQUIREMENTS
+Structure Type                                                                         Front (ft.)                                   Side (ft.)                                    Rear (ft.)
+Attached Dwellings, Including Duplexes, Triplexes, Quadplexes, and Townhouse Projects  10                                            10 – Exterior Wall 0 – Attached Wall          10
+Detached Dwelling                                                                      20                                            5 – Side Yard 10 – Street Side Yard           20
+Cottage Clusters                                                                       10                                            10                                            10
+Other Types of Primary Structures and All Accessory Structures                         10                                            10                                            10
 
 (2)
 
@@ -1100,89 +777,17 @@ R-6 Yard Setback Standards.
 
 Required Setbacks.
 
-TABLE 50.04.001-5: MINIMUM YARD SETBACKS – R-6 ZONE
+TABLE 50.04.001-5: MINIMUM YARD SETBACKS – R-6 ZONE  TABLE 50.04.001-5: MINIMUM YARD SETBACKS – R-6 ZONE  TABLE 50.04.001-5: MINIMUM YARD SETBACKS – R-6 ZONE  TABLE 50.04.001-5: MINIMUM YARD SETBACKS – R-6 ZONE  TABLE 50.04.001-5: MINIMUM YARD SETBACKS – R-6 ZONE  TABLE 50.04.001-5: MINIMUM YARD SETBACKS – R-6 ZONE
+                                                     Primary Structures (ft.)                             Cottage Clusters                                     Accessory Structures (ft.) [1]                       Other Accessory Structures (ft.)                     Garage-Vehicle Opening (ft.)
+Front                                                20 [3]                                               10                                                   20 [3]                                               20 [3]                                               15 [2]
+Side Adjacent to a Street                            Arterial/Collector: 20; Local: 7.5                   10                                                   Arterial/Collector: 20; Local: 7.5                   Arterial/Collector: 20 Local: 7.5                    Arterial/Collector: 20; Local: 15
+Side                                                 7.5 – Exterior Wall 0 – Attached Wall                10                                                   5                                                    7.5                                                  7.5
+Rear                                                 15                                                   10                                                   5                                                    15                                                   15
 
-Primary Structures (ft.)
-
-Cottage Clusters
-
-Accessory Structures (ft.) [1]
-
-Other Accessory Structures (ft.)
-
-Garage-Vehicle Opening (ft.)
-
-Front
-
-20 [3]
-
-10
-
-20 [3]
-
-20 [3]
-
-15 [2]
-
-Side Adjacent to a Street
-
-Arterial/Collector: 20;
-
-Local: 7.5
-
-10
-
-Arterial/Collector: 20;
-
-Local: 7.5
-
-Arterial/Collector: 20
-
-Local: 7.5
-
-Arterial/Collector: 20;
-
-Local: 15
-
-Side
-
-7.5 – Exterior Wall
-
-0 – Attached Wall
-
-10
-
-5
-
-7.5
-
-7.5
-
-Rear
-
-15
-
-10
-
-5
-
-15
-
-15
-
-Notes:
-
-[1]
-
-< 600 sq. ft. and with walls < 10 ft. in height below the eave.
-
-[2]
-
-Behind the front building line of the house (excluding a porch).
-
-[3]
-
-On corner lots, the front setback shall be measured on the narrow street frontage.
+Notes:  Notes:
+[1]     < 600 sq. ft. and with walls < 10 ft. in height below the eave.
+[2]     Behind the front building line of the house (excluding a porch).
+[3]     On corner lots, the front setback shall be measured on the narrow street frontage.
 
 (2)
 
@@ -1196,15 +801,9 @@ A projecting covered front porch may extend into the front yard setback up to si
 
 Additions to primary and accessory structures built before July 1, 2010, are subject to the following minimum side yard setbacks:
 
-TABLE 50.04.001-6: MINIMUM SIDE YARD SETBACKS
-
-Structures ≤ 18 ft. in height
-
-Structures > 18 ft. in height
-
-5 ft.
-
-5 ft. minimum width on a side, 15 ft. cumulative, except a multi-story structure may have a smaller side yard setback than required by this section where the ground floor is set back a minimum of 5 ft. and the remainder of the structure is stepped back from the building line by at least 4 ft. on each side.
+TABLE 50.04.001-6: MINIMUM SIDE YARD SETBACKS  TABLE 50.04.001-6: MINIMUM SIDE YARD SETBACKS
+Structures ≤ 18 ft. in height                  Structures > 18 ft. in height
+5 ft.                                          5 ft. minimum width on a side, 15 ft. cumulative, except a multi-story structure may have a smaller side yard setback than required by this section where the ground floor is set back a minimum of 5 ft. and the remainder of the structure is stepped back from the building line by at least 4 ft. on each side.
 
 iii.
 
@@ -1286,31 +885,13 @@ Maximum Lot Coverage.
 
 The following maximum lot coverage percentages are applicable to townhouse projects and single-family detached, duplex, triplex, and quadplex structures in the R-5 zone and shall be based on the "height of building" as defined in LOC § 50.10.003.2, as follows:
 
-TABLE 50.04.001-7: R-5 MAXIMUM LOT COVERAGE
-
-Height (ft.)
-
-Maximum Lot Coverage (%)
-
-22 or less
-
-45
-
->22 to 25
-
-42
-
->25 to 28
-
-38
-
->28 to 30
-
-35
-
->30
-
-35
+TABLE 50.04.001-7: R-5 MAXIMUM LOT COVERAGE  TABLE 50.04.001-7: R-5 MAXIMUM LOT COVERAGE
+Height (ft.)                                 Maximum Lot Coverage (%)
+22 or less                                   45
+>22 to 25                                    42
+>25 to 28                                    38
+>28 to 30                                    35
+>30                                          35
 
 (b)
 
@@ -1369,127 +950,84 @@ R-6 Lot Coverage/Impervious Surfaces.
 Lot coverage in the R-6 zone shall be based on the "height of building" as defined in LOC § 50.10.003.2, and shall not exceed the following:
 
 TABLE 50.04.001-8: LOT COVERAGE IN THE R-6 ZONE
-
+TABLE 50.04.001-8: LOT COVERAGE IN THE R-6 ZONE
+TABLE 50.04.001-8: LOT COVERAGE IN THE R-6 ZONE
+TABLE 50.04.001-8: LOT COVERAGE IN THE R-6 ZONE
+TABLE 50.04.001-8: LOT COVERAGE IN THE R-6 ZONE
+TABLE 50.04.001-8: LOT COVERAGE IN THE R-6 ZONE
+TABLE 50.04.001-8: LOT COVERAGE IN THE R-6 ZONE
+TABLE 50.04.001-8: LOT COVERAGE IN THE R-6 ZONE
+TABLE 50.04.001-8: LOT COVERAGE IN THE R-6 ZONE
+TABLE 50.04.001-8: LOT COVERAGE IN THE R-6 ZONE
 Lot size in sq. ft.
-
 Height of Structure
-
+Height of Structure
+Height of Structure
+Height of Structure
+Height of Structure
+Height of Structure
+Height of Structure
+Height of Structure
+Height of Structure
+Lot size in sq. ft.
 20' or less
-
 >20' to 21'
-
 >21' to 22'
-
 >22' to 23'
-
 >23' to 24'
-
 >24' to 25'
-
 >25' to 26'
-
 >26' to 27'
-
 >27'
-
 7,000 or less
-
 45%
-
 43%
-
 42%
-
 40%
-
 38%
-
 36%
-
 35%
-
 35%
-
 35%
-
 >7,000 – 8,500
-
 36%
-
 36%
-
 36%
-
 36%
-
 36%
-
 36%
-
 35%
-
 34%
-
 33%
-
 >8,500 – 10,000
-
 35%
-
 35%
-
 35%
-
 35%
-
 34%
-
 33%
-
 32%
-
 31%
-
 30%
-
 >10,000 – 11,500
-
 35%
-
 35%
-
 35%
-
 33%
-
 31%
-
 30%
-
 29%
-
 28%
-
 27%
-
 >11,500
-
 35%
-
 34%
-
 33%
-
 30%
-
 28%
-
 27%
-
 25%
-
 25%
-
 25%
 
 (2)
@@ -1524,23 +1062,11 @@ R-DD Lot Coverage/Impervious Surfaces.
 
 The following maximum lot coverage shall be permitted in the R-DD zone:
 
-TABLE 50.04.001-9: R-DD MAXIMUM LOT COVERAGE
-
-Dwelling Type
-
-Maximum Lot Coverage
-
-Single-Family Detached
-
-35%
-
-Middle Housing
-
-45%
-
-Multi-Family Dwelling
-
-55%
+TABLE 50.04.001-9: R-DD MAXIMUM LOT COVERAGE  TABLE 50.04.001-9: R-DD MAXIMUM LOT COVERAGE
+Dwelling Type                                 Maximum Lot Coverage
+Single-Family Detached                        35%
+Middle Housing                                45%
+Multi-Family Dwelling                         55%
 
 (2)
 
@@ -1568,17 +1094,9 @@ Projects Greater Than One-Half Acre.
 
 For attached development in the R-5 zone, the primary structure height shall not exceed:
 
-No. of Primary Structures on Site
-
-Maximum Base Height for Primary Structures
-
-One:
-
-50 ft.
-
-Two or more:
-
-40 ft. average, with no individual primary structure exceeding 50 ft. base building height.
+No. of Primary Structures on Site  Maximum Base Height for Primary Structures
+One:                               50 ft.
+Two or more:                       40 ft. average, with no individual primary structure exceeding 50 ft. base building height.
 
 (2)
 
@@ -1679,395 +1197,269 @@ Dimensions.
 Development in the R-W, R-3, R-2, and R-0 zones shall conform to the development standards in Table 50.04.001-11 except as modified below:
 
 TABLE 50.04.001-11: RESIDENTIAL HIGH DENSITY ZONES DIMENSIONS
-
+TABLE 50.04.001-11: RESIDENTIAL HIGH DENSITY ZONES DIMENSIONS
+TABLE 50.04.001-11: RESIDENTIAL HIGH DENSITY ZONES DIMENSIONS
+TABLE 50.04.001-11: RESIDENTIAL HIGH DENSITY ZONES DIMENSIONS
+TABLE 50.04.001-11: RESIDENTIAL HIGH DENSITY ZONES DIMENSIONS
+TABLE 50.04.001-11: RESIDENTIAL HIGH DENSITY ZONES DIMENSIONS
+TABLE 50.04.001-11: RESIDENTIAL HIGH DENSITY ZONES DIMENSIONS
 R-W
-
 R-3
-
 R-2
-
 R-0 [6]
-
 Comments/ Additional Standards
-
 DENSITY
-
+DENSITY
 § 50.04.001.3.b
-
 Minimum
-
+Minimum
 80% of max. [1]
-
 80% of max. [1]
-
 12 lots or units/acre [2]
-
 20 lots or units/ acre [2]
-
 Maximum (units/acre)
-
+Maximum (units/acre)
 [3]
-
 [3]
-
 —
-
 —
-
 MIN. LOT DIMENSIONS
-
+MIN. LOT DIMENSIONS
 § 50.04.001.3.c
-
 Single-Family and Duplex Dwellings; Townhouse Projects
-
+Single-Family and Duplex Dwellings; Townhouse Projects
 Area (sq. ft.)
-
+Area (sq. ft.)
 3,375
-
 3,375
-
 No min.
-
 No min.
-
 No min. for PD
-
 Triplexes
-
+Triplexes
 Area (sq. ft.)
-
+Area (sq. ft.)
 5,000
-
 5,000
-
 5,000
-
 5,000
-
 Cottage Clusters and Quadplexes
-
+Cottage Clusters and Quadplexes
 Area (sq. ft.)
-
+Area (sq. ft.)
 7,000
-
 7,000
-
 7,000
-
 7,000
-
 Townhouses (one per lot)
-
+Townhouses (one per lot)
 Area (sq. ft.)
-
+Area (sq. ft.)
 1,500
-
 1,500
-
 1,500
-
 1,500
-
 Multi-Family Dwellings
-
+Multi-Family Dwellings
 Area (sq. ft.)
-
+Area (sq. ft.)
 –
-
 3,375
-
 –
-
 No min.
-
 Per Dwelling
-
+Per Dwelling
 –
-
 3,375
-
 –
-
 No min.
-
 MAX. FLOOR AREA [7]
-
+MAX. FLOOR AREA [7]
 § 50.04.001.3.c
-
 Residential
-
+Residential
 No max.
-
 1:01
-
 1.2:1
-
 1.2:1
-
 Conditional Use
-
+Conditional Use
 Established as part of the conditional use process
-
+Established as part of the conditional use process
+Established as part of the conditional use process
+Established as part of the conditional use process
 Nonresidential
-
+Nonresidential
 1:01
-
 1:01
-
 1:01
-
 1:01
-
 MAX. LOT COVERAGE
-
+MAX. LOT COVERAGE
 § 50.04.001.3.d
-
 § 50.10.003.2
-
 Lot Coverage
-
+Lot Coverage
 100
-
 50
-
 Table 50.04.001-12
-
 55
-
 See Definition "Height of Building"
-
 YARD SETBACKS
-
+YARD SETBACKS
 § 50.04.001.3.e
-
 Primary Dwelling (Detached)
-
+Primary Dwelling (Detached)
 Front (ft.)
-
+Front (ft.)
 0
-
 20
-
 Table 50.04.001-13
-
 20
-
 Side Adjacent to Street (ft.)
-
+Side Adjacent to Street (ft.)
 0
-
 10
-
+Table 50.04.001-13
 10
-
 Side (ft.)
-
+Side (ft.)
 0
-
 5
-
+Table 50.04.001-13
 5
-
 Rear (ft.)
-
+Rear (ft.)
 0
-
 20
-
+Table 50.04.001-13
 20
-
 Primary Dwelling (Attached)
-
+Primary Dwelling (Attached)
 Front
-
+Front
 0
-
 10
-
 Table 50.04.001-13
-
 10
-
 Side
-
+Side
 0
-
 10 (exterior wall);
-
 0 (attached wall)
-
+Table 50.04.001-13
 10
-
 Rear
-
+Rear
 0
-
 10
-
+Table 50.04.001-13
 10
-
 Other Types of Primary Structures and All Accessory Structures
-
+Other Types of Primary Structures and All Accessory Structures
 Front (ft.)
-
+Front (ft.)
 0
-
 10
-
 Table 50.04.001-13
-
 10
-
 Side Adjacent to Street (ft.)
-
+Side Adjacent to Street (ft.)
 0
-
 —
-
-—
-
-Arterial/Collector
-
-0
-
-—
-
-—
-
-Local
-
-0
-
-—
-
-—
-
-Height
-
-Side
-
-0
-
-10
-
-10
-
-Rear
-
-0
-
-10
-
-10
-
-Cottage Clusters
-
-Front (ft.)
-
-0
-
-10
-
 Table 50.04.001-13
-
+—
+Arterial/Collector
+Arterial/Collector
+0
+—
+Table 50.04.001-13
+—
+Local
+Local
+0
+—
+Table 50.04.001-13
+—
+Height
+Side
+0
 10
-
+Table 50.04.001-13
+10
+Rear
+0
+10
+Table 50.04.001-13
+10
+Cottage Clusters
+Cottage Clusters
+Front (ft.)
+Front (ft.)
+0
+10
+Table 50.04.001-13
+10
 Interior Side/Side Adjacent to Street (ft.)
-
+Interior Side/Side Adjacent to Street (ft.)
 0
-
 10
-
+Table 50.04.001-13
 10
-
 Rear (ft.)
-
+Rear (ft.)
 0
-
 10
-
+Table 50.04.001-13
 10
-
 MAX. BASE HEIGHT (FT.)
-
+MAX. BASE HEIGHT (FT.)
 § 50.04.001.3.f
-
 Flat Lot
-
+Flat Lot
 —
-
 28
-
 28
-
 28
-
 Lots with Sloping Topography
-
+Lots with Sloping Topography
 —
-
 28 – 32 [4]
-
 28 – 32 [4]
-
 28 – 32 [4]
-
 Footprint, Sloped
-
+Footprint, Sloped
 —
-
 35
-
 35
-
 35
-
 From Oswego Lake Surface Elevation
-
+From Oswego Lake Surface Elevation
 25/27 [5]
-
 —
-
 —
-
 —
-
 Accessory Structure
-
+Accessory Structure
 Lesser of 24 ft. or height of roof form of primary structure
-
 Lesser of 24 ft. or height of roof form of primary structure
-
 Lesser of 24 ft. or height of roof form of primary structure
 
 Notes:
-
+Notes:
 [1]
-
 When subdivisions are proposed in the R-W and R-3 zones or multi-family development is proposed in the R-3 zone, the number of lots or dwelling units required shall be determined by dividing the net developable area by the minimum lot size or units required in the underlying zone, and multiplying this number by 0.8. The result shall be rounded up for any product with a fraction of 0.5 or greater and rounded down for any product with a fraction of less than 0.5. The requirements of this subsection are subject to the exceptions contained in LOC § 50.04.003, Exceptions, Projections, and Encroachments.
-
 [2]
-
 When subdivisions are proposed in the R-2 or R-0 zones or multi-family development is proposed in the R-0 zone, minimum density is computed by multiplying the net developable area by either 20 or 12 per the applicable zone. The result shall be rounded up for any product with a fraction of 0.5 or greater and rounded down for any product with a fraction of less than 0.5. The requirements of this subsection are subject to the exceptions contained in LOC § 50.04.003, Exceptions, Projections and Encroachments.
-
 [3]
-
 Computed by dividing the net developable area by the minimum lot area per unit and rounding down to the nearest whole number. Duplexes, triplexes, quadplexes, and cottage clusters are exempt from maximum density standards. For townhouse projects, the maximum density is four dwelling units per equivalent minimum lot area required per single-family dwelling in that zone.
-
 [4]
-
 Maximum base height across the site shall be established by a flat plane measured at 28 ft. above the highest point of the natural ground surface within the building envelope, unless the natural ground surface is lowered, in which case the height is measured from the lowered ground surface per the definition of "height of building" in LOC § 50.10.003.2. In no case shall the base height exceed 32 ft. See Figure 50.04.001-A: Height Adjustment for Sloping Topography.
-
 [5]
-
 For any portion of the lot above the Oswego Lake surface elevation, maximum building height shall not exceed 25 ft. For any portion of the lot at or below the Oswego Lake surface elevation, maximum building height shall not exceed 27 ft. above the Oswego Lake surface elevation. The maximum building height of 27 ft. above the Oswego Lake surface elevation shall extend landward until it meets the 25 ft. height limit for the portion of the lot above the Oswego Lake surface elevation. See Figure 50.04.001-11[5].
-
 [6]
-
 Site-specific dimensional standards, see LOC § 50.02.002.2.c.
-
 [7]
-
 Cottage cluster developments are exempt from maximum floor area standards, but maximum average floor area standards shall be applied to individual cottage cluster dwellings. See LOC § 50.04.001.2.d.iv, Maximum Average Floor Area of Units in a Cottage Cluster, and LOC § 50.03.003.1.d, use-specific standards for cottage clusters.
 
 Figure 50.04.001-11[5]: Height Measurement for R-W Zoned Lots
@@ -2116,27 +1508,12 @@ i.
 
 R-2 Lot Coverage.
 
-TABLE 50.04.001-12: R-2 MAXIMUM LOT COVERAGE
-
-Structure Type
-
-Max. Lot Coverage (%)
-
-Single-Family Detached
-
-35
-
-Townhouse Project
-
-55
-
-Duplex, Triplex, and Quadplex
-
-55
-
-Other Structures
-
-50
+TABLE 50.04.001-12: R-2 MAXIMUM LOT COVERAGE  TABLE 50.04.001-12: R-2 MAXIMUM LOT COVERAGE
+Structure Type                                Max. Lot Coverage (%)
+Single-Family Detached                        35
+Townhouse Project                             55
+Duplex, Triplex, and Quadplex                 55
+Other Structures                              50
 
 ii.
 
@@ -2204,101 +1581,20 @@ R-2 Yard Setbacks.
 
 Development in the R-2 districts shall meet the following setbacks:
 
-TABLE 50.04.001-13: R-2 YARD SETBACKS
+TABLE 50.04.001-13: R-2 YARD SETBACKS  TABLE 50.04.001-13: R-2 YARD SETBACKS  TABLE 50.04.001-13: R-2 YARD SETBACKS                                                              TABLE 50.04.001-13: R-2 YARD SETBACKS  TABLE 50.04.001-13: R-2 YARD SETBACKS
+Structure Type                         Front (ft.)                            Side (ft.)                                                                                         Side (ft.)                             Rear (ft.)
+Structure Type                         Front (ft.)                            Exterior                                                                                           Attached                               Rear (ft.)
+Duplex                                 10                                     7                                                                                                  0                                      10
+Townhouse Project                      10                                     7                                                                                                  –                                      10
+Triplex                                10                                     7                                                                                                  –                                      10
+Quadplex                               10                                     7                                                                                                  –                                      10
+Cottage Cluster                        10                                     10                                                                                                 –                                      10
+Detached Dwelling                      20                                     Single-story dwelling: 5 ft. Multi-story dwelling: 15 ft. cumulative, 5 ft. minimum on a side [1]                                         20
+Other Primary Structures               10                                     10                                                                                                 10                                     10
+Accessory Structures                   Same as for primary structure type     Same as for primary structure type                                                                                                        10
 
-Structure Type
-
-Front (ft.)
-
-Side (ft.)
-
-Rear (ft.)
-
-Exterior
-
-Attached
-
-Duplex
-
-10
-
-7
-
-0
-
-10
-
-Townhouse Project
-
-10
-
-7
-
-–
-
-10
-
-Triplex
-
-10
-
-7
-
-–
-
-10
-
-Quadplex
-
-10
-
-7
-
-–
-
-10
-
-Cottage Cluster
-
-10
-
-10
-
-–
-
-10
-
-Detached Dwelling
-
-20
-
-Single-story dwelling: 5 ft. Multi-story dwelling: 15 ft. cumulative, 5 ft. minimum on a side [1]
-
-20
-
-Other Primary Structures
-
-10
-
-10
-
-10
-
-10
-
-Accessory Structures
-
-Same as for primary structure type
-
-Same as for primary structure type
-
-10
-
-Notes:
-
-[1]
-
-Multi-story dwelling: Cumulative yard may be reduced where ground floor is set back minimum of 5 ft. and the remainder of the dwelling is set back a minimum of 9 ft. from the side lot line.
+Notes:  Notes:
+[1]     Multi-story dwelling: Cumulative yard may be reduced where ground floor is set back minimum of 5 ft. and the remainder of the dwelling is set back a minimum of 9 ft. from the side lot line.
 
 iii.
 
@@ -2330,33 +1626,17 @@ Projects Greater Than One-Half Acre.
 
 On a lot or lots developed as one project of one-half acre or greater in total area for the R-0 and R-3 zones, the primary structure height shall not exceed:
 
-No. of Primary Structures on Site
-
-Maximum Base Height for Primary Structures
-
-One:
-
-50 ft.
-
-Two or more:
-
-40 ft. average, with no individual primary structure exceeding 50 ft. base building height.
+No. of Primary Structures on Site  Maximum Base Height for Primary Structures
+One:                               50 ft.
+Two or more:                       40 ft. average, with no individual primary structure exceeding 50 ft. base building height.
 
 (2)
 
 On a lot or lots being developed as one project of one-half acre or greater in total area for the R-2 zone, the primary structure height shall not exceed:
 
-No. of Primary Structures on Site
-
-Maximum Base Height for Primary Structures
-
-One:
-
-35 ft.
-
-Two or more:
-
-32 ft. average, with no individual primary structure exceeding 35 ft. base building height.
+No. of Primary Structures on Site  Maximum Base Height for Primary Structures
+One:                               35 ft.
+Two or more:                       32 ft. average, with no individual primary structure exceeding 35 ft. base building height.
 
 ii.
 
@@ -2419,447 +1699,259 @@ Dimensions.
 Development in the commercial, mixed use, and industrial zones shall conform to the following dimensional standards except as modified below:
 
 TABLE 50.04.001-14: COMMERCIAL, MIXED USE, AND INDUSTRIAL DIMENSIONS
-
+TABLE 50.04.001-14: COMMERCIAL, MIXED USE, AND INDUSTRIAL DIMENSIONS
+TABLE 50.04.001-14: COMMERCIAL, MIXED USE, AND INDUSTRIAL DIMENSIONS
+TABLE 50.04.001-14: COMMERCIAL, MIXED USE, AND INDUSTRIAL DIMENSIONS
+TABLE 50.04.001-14: COMMERCIAL, MIXED USE, AND INDUSTRIAL DIMENSIONS
+TABLE 50.04.001-14: COMMERCIAL, MIXED USE, AND INDUSTRIAL DIMENSIONS
+TABLE 50.04.001-14: COMMERCIAL, MIXED USE, AND INDUSTRIAL DIMENSIONS
+TABLE 50.04.001-14: COMMERCIAL, MIXED USE, AND INDUSTRIAL DIMENSIONS
+TABLE 50.04.001-14: COMMERCIAL, MIXED USE, AND INDUSTRIAL DIMENSIONS
+TABLE 50.04.001-14: COMMERCIAL, MIXED USE, AND INDUSTRIAL DIMENSIONS
+TABLE 50.04.001-14: COMMERCIAL, MIXED USE, AND INDUSTRIAL DIMENSIONS
+TABLE 50.04.001-14: COMMERCIAL, MIXED USE, AND INDUSTRIAL DIMENSIONS
 Standard [1]
-
 NC [19]
-
 GC [19]
-
 HC [19]
-
 OC
-
 EC
-
 FMU
-
 WLG See 50.04.001.4.b
-
 CR&D
-
 MC
-
 I
-
 IP
-
 If a dimension or requirement is not shown it means there is no minimum or maximum, but that a requirement may be established at the time of Development Review Commission review.
-
 FLOOR AREA RATIO
-
 Maximum
-
 0.25:1
-
 —
-
 —
-
 0.30:1
-
 3.0:1
-
 4.0:1 [16], [17]
-
 —
-
 1.0:1
-
 1.0:1
-
 Minimum
-
 —
-
 —
-
 —
-
 —
-
 —
-
 1.0:1 [15], [17]
-
 —
-
 —
-
 —
-
 LOT COVERAGE (%)
-
 Maximum
-
 100
-
 50
-
 50
-
 25
-
 100
-
 100
-
 55 [5]
-
 100
-
 —
-
 —
-
 Minimum
-
 None
-
 None
-
 None
-
 None
-
 None
-
 50
-
 None
-
 None
-
 None
-
 None
-
 None
-
 SETBACK (FT.)
-
 [14]
-
 Front
-
 —
-
 —
-
 —
-
 —
-
 —
-
 15 [12]
-
 15 [6]
-
 20 min. adj. to R zone; see LOC Article 45, Building Code [10]
-
 Front and any yard with street frontage: 20 [10]
-
 Side
-
 —
-
 —
-
 —
-
 —
-
 —
-
 15 [4][12]
-
 0 [7]
-
 10 [9]
-
 Rear
-
 —
-
 —
-
 —
-
 —
-
 —
-
 15 [4][12]
-
 0 [7]
-
 10 [9]
-
 Location – From Lot Line to:
-
 See 50.06.001.6
-
 When Adjacent to R-DD, R-5, R-6, R-7.5, R-10 or R-15
-
 Structure
-
 25
-
 25
-
 25
-
 25
-
 25
-
 —
-
 —
-
 —
-
 Surface Parking
-
 10
-
 10
-
 10
-
 10
-
 10
-
 —
-
 —
-
 —
-
 Vehicular Accessway
-
 5
-
 5
-
 5
-
 5
-
 5
-
 —
-
 —
-
 —
-
 When Adjacent to R-0, R-2 or R-3 Zone
-
 Structure
-
 10
-
 10
-
 10
-
 10
-
 10
-
 —
-
 —
-
 —
-
 Surface Parking
-
 10
-
 10
-
 10
-
 10
-
 10
-
 —
-
 —
-
 —
-
 Vehicular Accessway
-
 5
-
 5
-
 5
-
 5
-
 5
-
 —
-
 —
-
 —
-
 When Not Adjacent to Residential Zone
-
 All Setbacks
-
 0
-
 0
-
 0
-
 0
-
 0
-
 —
-
 —
-
 —
-
 HEIGHT (FT.)
-
 See § 50.04.001.4.c, Additional Standards and Exceptions
-
 Max. Height
-
 35 [3]
-
 45 [3]
-
 60 [3]
-
 45 [3]
-
 50.04.001.4.c.i
-
 45 [18]; 90
-
 [11]
-
 95 [13]
-
 60 [8]
-
 45
-
 Accessory Structures
-
 24
-
 60
 
 Notes:
-
+Notes:
+Notes:
 [1]
-
 Standards in this table may be modified by the Lake Grove Village Center Overlay District.
-
+Standards in this table may be modified by the Lake Grove Village Center Overlay District.
 [2]
-
 (Reserved)
-
+(Reserved)
 [3]
-
 Structures placed closer than 60 ft. to the property line of a lot which carries any residential zone designation have a maximum height of 28 ft. or 40 ft. minus one ft. for each ft. less than 60 ft. the portion of the structure is from the residential zone, whichever is greater.
-
+Structures placed closer than 60 ft. to the property line of a lot which carries any residential zone designation have a maximum height of 28 ft. or 40 ft. minus one ft. for each ft. less than 60 ft. the portion of the structure is from the residential zone, whichever is greater.
 [4]
-
 Except along interior lot lines on a unified site.
-
+Except along interior lot lines on a unified site.
 [5]
-
 Percent of the net site area after any required dedications for roadway purposes. A minimum of 25% of the site area shall be used for landscaping, natural areas, or outdoor recreational use areas.
-
+Percent of the net site area after any required dedications for roadway purposes. A minimum of 25% of the site area shall be used for landscaping, natural areas, or outdoor recreational use areas.
 [6]
-
 Structures on corner lots shall observe the minimum setback on both streets.
-
+Structures on corner lots shall observe the minimum setback on both streets.
 [7]
-
 When a side or rear yard abuts a more restrictive zone setbacks shall be 15 ft. Ten ft. shall be added to the side or rear yard setback for each ten-ft. increment in building height over 35 ft.
-
+When a side or rear yard abuts a more restrictive zone setbacks shall be 15 ft. Ten ft. shall be added to the side or rear yard setback for each ten-ft. increment in building height over 35 ft.
 [8]
-
 Structures placed closer than 60 ft. from the property line of a lot which carries any residential zone designation shall have a maximum height of 40 ft. minus one ft. for each ft. less than 60 ft. the structure is from the residential zone.
-
+Structures placed closer than 60 ft. from the property line of a lot which carries any residential zone designation shall have a maximum height of 40 ft. minus one ft. for each ft. less than 60 ft. the structure is from the residential zone.
 [9]
-
 Zero for common wall development.
-
+Zero for common wall development.
 [10]
-
 Front lot lines on corner lots may face either street. The City Manager shall determine the front lot line after taking into consideration the orientation of structures on the site and nearby lots, the ability to meet setbacks without variances, and physical site or solar access limitations. Street access should be to local streets.
-
+Front lot lines on corner lots may face either street. The City Manager shall determine the front lot line after taking into consideration the orientation of structures on the site and nearby lots, the ability to meet setbacks without variances, and physical site or solar access limitations. Street access should be to local streets.
 [11]
-
 See LOC § 50.04.001.4.c.ii.
-
+See LOC § 50.04.001.4.c.ii.
 [12]
-
 See LOC § 50.04.001.4.c.iii.
-
+See LOC § 50.04.001.4.c.iii.
 [13]
-
 See LOC § 50.04.001.4.c.iv.
-
+See LOC § 50.04.001.4.c.iv.
 [14]
-
 Oswego Pointe Setback. Structures in the FMU zone shall maintain the following minimum setback measured from the structure listed below (as they existed on January 17, 2013):
-
+Oswego Pointe Setback. Structures in the FMU zone shall maintain the following minimum setback measured from the structure listed below (as they existed on January 17, 2013):
 a.
-
 Habitable structures – 85 ft.;
-
 b.
-
 Nonhabitable structures – ten ft.
-
 [15]
-
 Applies only to sites abutting a primary street.
-
+Applies only to sites abutting a primary street.
 [16]
-
 FMU FAR Transfer. FAR may be transferred from any site zoned FMU to another site zoned FMU as follows:
-
+FMU FAR Transfer. FAR may be transferred from any site zoned FMU to another site zoned FMU as follows:
 a.
-
 The total FAR averaged between transfer sites shall not exceed 4.0:1.
-
 b.
-
 The FAR shall not be less than 1.0:1 on any site abutting a primary street.
-
 c.
-
 The property owner(s) shall execute and record a covenant with the City on all sites reflecting the respective increase and decrease of the FAR.
-
 [17]
-
 In the FMU, "Floor Area": (1) Includes the area devoted to structured parking that is above ground level; (2) Does not include areas where the elevation of the floor is four ft. or more below the lowest elevation of an adjacent right-of-way.
-
+In the FMU, "Floor Area": (1) Includes the area devoted to structured parking that is above ground level; (2) Does not include areas where the elevation of the floor is four ft. or more below the lowest elevation of an adjacent right-of-way.
 [18]
-
 FMU State Street Height. For any area of a site that is located within 100 ft. of the centerline of State Street, the maximum height is 45 ft.
-
+FMU State Street Height. For any area of a site that is located within 100 ft. of the centerline of State Street, the maximum height is 45 ft.
 [19]
-
+Site-specific dimensional standards, see LOC § 50.02.002.2.c.
 Site-specific dimensional standards, see LOC § 50.02.002.2.c.
 
 [Cross-References: In EC zone, see also Downtown Redevelopment Design District, LOC § 50.05.004; Height Limitation: see also LOC § 50.06.001.5.b.]
@@ -2880,61 +1972,19 @@ Site Development Limitations.
 
 Yard Setbacks. The following exterior wall setbacks shall be required in the WLG R-2.5 zone, except as modified by LOC § 50.04.003.1, Additional Dimensional Exceptions.
 
-TABLE 50.04.001-15: WLG R-2.5 YARD SETBACKS
-
-Structure Type
-
-Yard Type
-
-Setback Distance
-
-Abutting Single-Family Residential Zone
-
-Primary Use
-
-Front (from property line)
-
-10 ft.
-
-Rear and Side
-
-25 ft.
-
-Accessory Structures
-
-Front, Rear, and Side
-
-15 ft.
-
-Not Abutting Single-Family Residential Zone
-
-Primary Use
-
-Front
-
-10 ft.
-
-Rear
-
-10 ft.
-
-Side – exterior wall
-
-10 ft.
-
-Side – common wall
-
-0 ft.
-
-Accessory Structures
-
-Front
-
-10 ft.
-
-Rear and Side
-
-0 ft.
+TABLE 50.04.001-15: WLG R-2.5 YARD SETBACKS  TABLE 50.04.001-15: WLG R-2.5 YARD SETBACKS  TABLE 50.04.001-15: WLG R-2.5 YARD SETBACKS
+Structure Type                               Yard Type                                    Setback Distance
+Abutting Single-Family Residential Zone      Abutting Single-Family Residential Zone      Abutting Single-Family Residential Zone
+Primary Use                                  Front (from property line)                   10 ft.
+Primary Use                                  Rear and Side                                25 ft.
+Accessory Structures                         Front, Rear, and Side                        15 ft.
+Not Abutting Single-Family Residential Zone  Not Abutting Single-Family Residential Zone  Not Abutting Single-Family Residential Zone
+Primary Use                                  Front                                        10 ft.
+Primary Use                                  Rear                                         10 ft.
+Primary Use                                  Side – exterior wall                         10 ft.
+Primary Use                                  Side – common wall                           0 ft.
+Accessory Structures                         Front                                        10 ft.
+Accessory Structures                         Rear and Side                                0 ft.
 
 (2)
 
@@ -2974,69 +2024,19 @@ Yard Setbacks.
 
 The following yard setbacks are required in this zone, except as modified by LOC § 50.04.003.1, Additional Dimensional Exceptions.
 
-TABLE 50.04.001-17: WLG RMU YARD SETBACKS
-
-Structure Type
-
-Yard Type
-
-Setback Distance
-
-Special Setback Distance
-
-Attached Townhomes
-
-Front (from property line)
-
-10 ft.
-
-Rear and Side (abutting a single-family residential zone)
-
-25 ft.
-
-Rear and Side (not abutting a single-family residential zone)
-
-10 ft.
-
-Primary Structures (all other)
-
-Setbacks of structures abutting residential zones
-
-25 ft.
-
-Structures shall be set back at least six ft. from the meandering pathway or sidewalk along Boones Ferry Road (see Figure 50.05.005-D, WLG Street Pedestrian Facilities and Pathways)
-
-Setbacks of structures not abutting residential zones
-
-0 ft.
-
-Accessory Structures – Not Abutting Residential Zones
-
-Front
-
-10 ft.
-
-Rear
-
-0 ft.
-
-Side
-
-0 ft.
-
-Accessory Structures – Abutting Residential Zones
-
-Front
-
-15 ft.
-
-Rear
-
-15 ft.
-
-Side
-
-15 ft.
+TABLE 50.04.001-17: WLG RMU YARD SETBACKS              TABLE 50.04.001-17: WLG RMU YARD SETBACKS                      TABLE 50.04.001-17: WLG RMU YARD SETBACKS  TABLE 50.04.001-17: WLG RMU YARD SETBACKS
+Structure Type                                         Yard Type                                                      Setback Distance                           Special Setback Distance
+Attached Townhomes                                     Front (from property line)                                     10 ft.
+Attached Townhomes                                     Rear and Side (abutting a single-family residential zone)      25 ft.
+Attached Townhomes                                     Rear and Side (not abutting a single-family residential zone)  10 ft.
+Primary Structures (all other)                         Setbacks of structures abutting residential zones              25 ft.                                     Structures shall be set back at least six ft. from the meandering pathway or sidewalk along Boones Ferry Road (see Figure 50.05.005-D, WLG Street Pedestrian Facilities and Pathways)
+Primary Structures (all other)                         Setbacks of structures not abutting residential zones          0 ft.                                      Structures shall be set back at least six ft. from the meandering pathway or sidewalk along Boones Ferry Road (see Figure 50.05.005-D, WLG Street Pedestrian Facilities and Pathways)
+Accessory Structures – Not Abutting Residential Zones  Front                                                          10 ft.
+Accessory Structures – Not Abutting Residential Zones  Rear                                                           0 ft.
+Accessory Structures – Not Abutting Residential Zones  Side                                                           0 ft.
+Accessory Structures – Abutting Residential Zones      Front                                                          15 ft.
+Accessory Structures – Abutting Residential Zones      Rear                                                           15 ft.
+Accessory Structures – Abutting Residential Zones      Side                                                           15 ft.
 
 (c)
 
@@ -3094,37 +2094,16 @@ i.
 
 EC Zone Height Measurement.
 
-TABLE 50.04.001-18: EC MAXIMUM HEIGHT
+TABLE 50.04.001-18: EC MAXIMUM HEIGHT                                                       TABLE 50.04.001-18: EC MAXIMUM HEIGHT
+Structure Location                                                                          Max. Height (ft.)
+Lot abuts R-DD zone                                                                         40
+Structure is within 120 ft. of a lot zoned R-6 or R-7.5                                     35 for the portion of the structure within 120 ft. of a lot zoned R-6 or R-7.5 [2]
+Structure is within 120 ft. to 240 ft. of a lot zoned R-6 or R-7.5                          45 for the portion of the structure within 120 ft. to 240 ft. of a lot zoned R-6 or R-7.5 [2]
+All other lots and those portions of structures beyond 240 ft. of a lot zoned R-6 or R-7.5  60
 
-Structure Location
-
-Max. Height (ft.)
-
-Lot abuts R-DD zone
-
-40
-
-Structure is within 120 ft. of a lot zoned R-6 or R-7.5
-
-35 for the portion of the structure within 120 ft. of a lot zoned R-6 or R-7.5 [2]
-
-Structure is within 120 ft. to 240 ft. of a lot zoned R-6 or R-7.5
-
-45 for the portion of the structure within 120 ft. to 240 ft. of a lot zoned R-6 or R-7.5 [2]
-
-All other lots and those portions of structures beyond 240 ft. of a lot zoned R-6 or R-7.5
-
-60
-
-Notes:
-
-[1]
-
-(Reserved)
-
-[2]
-
-The measured distance is exclusive of intervening public right-of-way if any exists.
+Notes:  Notes:
+[1]     (Reserved)
+[2]     The measured distance is exclusive of intervening public right-of-way if any exists.
 
 ii.
 
@@ -3234,275 +2213,51 @@ Special Street Setback List.
 
 The special street setbacks set forth in Table 50.04.002-1 shall not be reduced, except as provided in the table.
 
-TABLE 50.04.002-1: SPECIAL STREET SETBACKS
-
-Affected Streets
-
-From
-
-To
-
-Special Setback
-
-Bangy Rd.
-
-South of Alyssa Terrace
-
-30 ft.
-
-Bergis Rd.
-
-Cornell St.
-
-Stafford Rd.
-
-30 ft.
-
-Bergis Rd.
-
-Cornell St.
-
-Skylands Rd.
-
-25 ft.
-
-Boones Ferry Rd.
-
-Mercantile Dr.
-
-Madrona St.
-
-50 ft., unless reduced by the City Engineer, finding that the purpose is met by a lesser amount.
-
-Boones Ferry Rd.
-
-Madrona St.
-
-West Sunset Dr.
-
-50 ft.
-
-Bonita Rd.
-
-30 ft.
-
-Bryant Rd.
-
-Boones Ferry Rd.
-
-Lake View Blvd.
-
-40 ft.
-
-Bryant Rd.
-
-Lake View Blvd.
-
-Childs Rd.
-
-30 ft.
-
-Burma Rd.
-
-25 ft.
-
-Carman Drive
-
-South and west of Kruse Way
-
-40 ft.
-
-Cornell St.
-
-Larch St.
-
-Bergis Rd.
-
-30 ft.
-
-Egan Way
-
-East/west leg only
-
-20 ft.
-
-Fielding Rd.
-
-20 ft.
-
-Firwood Road
-
-30 ft. between Boones Ferry Rd. and Waluga Dr.; 20 ft. west of Waluga Dr.
-
-Gassner Ln.
-
-20 ft.
-
-Inverurie Rd.
-
-North of Washington Ct.
-
-20 ft.
-
-Knaus Rd.
-
-30 ft.
-
-Lake Grove Ave.
-
-20 ft.
-
-Lake View Blvd.
-
-Bryant Rd.
-
-Iron Mt. Blvd.
-
-25 ft., except between South Shore Blvd. and Summit Ct.
-
-Lamont Way
-
-20 ft.
-
-Lanewood St.
-
-Through south leg of Douglas Circle
-
-20 ft.
-
-Laurel St.
-
-Dyer St.
-
-Hallinan St.
-
-30 ft.
-
-Lower Dr.
-
-25 ft.
-
-McVey Ave.
-
-State St.
-
-South Shore Blvd.
-
-40 ft.
-
-Madrona St.
-
-25 ft.
-
-North Shore Rd.
-
-Abutting the railroad right-of-way
-
-30 ft. measured from the south line of the railroad right-of-way.
-
-Oakridge Rd.
-
-Quarry Rd.
-
-Bonaire Ave.
-
-25 ft.
-
-Oakridge Rd.
-
-Quarry Rd.
-
-Boones Ferry Rd.
-
-30 ft.
-
-Overlook Dr.
-
-30 ft.
-
-Pilkington Road
-
-South of Rosewood St.
-
-Special street setback line shall be measured 30 ft. from the east line of Rosewood Plat.
-
-Quarry Rd.
-
-Boones Ferry Rd.
-
-Galewood St. and extension to Carman Dr.
-
-30 ft.
-
-Reese Rd.
-
-Boones Ferry Rd.
-
-Upper Dr.
-
-30 ft.
-
-Rosewood St.
-
-Pilkington Rd.
-
-Tualatin St.
-
-25 ft.
-
-South Shore Blvd.
-
-40 ft., except between Lakeview Blvd. and Blue Heron Road.
-
-Stafford Rd.
-
-40 ft.
-
-State Street
-
-50 ft., unless reduced by the City Engineer through the minor development procedure, finding that applicable ODOT standards and the purpose in LOC § 50.04.002.1 are met by a lesser amount.
-
-Summit Dr.
-
-Lake View Blvd.
-
-Ridgewood Rd.
-
-20 ft.
-
-Sunset Dr.
-
-20 ft.
-
-Tualatin St.
-
-20 ft.
-
-Twin Fir Rd.
-
-Boones Ferry Rd.
-
-Upper Dr.
-
-30 ft.
-
-Upper Dr.
-
-25 ft.
-
-Waluga Dr.
-
-South of Oakridge Rd.
-
-North of Madrona St.
-
-20 ft.
-
-West Sunset Dr.
-
-West of West Lake Grove Design District Boundary
-
-20 ft.
+TABLE 50.04.002-1: SPECIAL STREET SETBACKS  TABLE 50.04.002-1: SPECIAL STREET SETBACKS        TABLE 50.04.002-1: SPECIAL STREET SETBACKS  TABLE 50.04.002-1: SPECIAL STREET SETBACKS
+Affected Streets                            From                                              To                                          Special Setback
+Bangy Rd.                                   South of Alyssa Terrace                                                                       30 ft.
+Bergis Rd.                                  Cornell St.                                       Stafford Rd.                                30 ft.
+Bergis Rd.                                  Cornell St.                                       Skylands Rd.                                25 ft.
+Boones Ferry Rd.                            Mercantile Dr.                                    Madrona St.                                 50 ft., unless reduced by the City Engineer, finding that the purpose is met by a lesser amount.
+Boones Ferry Rd.                            Madrona St.                                       West Sunset Dr.                             50 ft.
+Bonita Rd.                                                                                                                                30 ft.
+Bryant Rd.                                  Boones Ferry Rd.                                  Lake View Blvd.                             40 ft.
+Bryant Rd.                                  Lake View Blvd.                                   Childs Rd.                                  30 ft.
+Burma Rd.                                                                                                                                 25 ft.
+Carman Drive                                                                                  South and west of Kruse Way                 40 ft.
+Cornell St.                                 Larch St.                                         Bergis Rd.                                  30 ft.
+Egan Way                                    East/west leg only                                                                            20 ft.
+Fielding Rd.                                                                                                                              20 ft.
+Firwood Road                                                                                                                              30 ft. between Boones Ferry Rd. and Waluga Dr.; 20 ft. west of Waluga Dr.
+Gassner Ln.                                                                                                                               20 ft.
+Inverurie Rd.                               North of Washington Ct.                                                                       20 ft.
+Knaus Rd.                                                                                                                                 30 ft.
+Lake Grove Ave.                                                                                                                           20 ft.
+Lake View Blvd.                             Bryant Rd.                                        Iron Mt. Blvd.                              25 ft., except between South Shore Blvd. and Summit Ct.
+Lamont Way                                                                                                                                20 ft.
+Lanewood St.                                                                                  Through south leg of Douglas Circle         20 ft.
+Laurel St.                                  Dyer St.                                          Hallinan St.                                30 ft.
+Lower Dr.                                                                                                                                 25 ft.
+McVey Ave.                                  State St.                                         South Shore Blvd.                           40 ft.
+Madrona St.                                                                                                                               25 ft.
+North Shore Rd.                             Abutting the railroad right-of-way                                                            30 ft. measured from the south line of the railroad right-of-way.
+Oakridge Rd.                                Quarry Rd.                                        Bonaire Ave.                                25 ft.
+Oakridge Rd.                                Quarry Rd.                                        Boones Ferry Rd.                            30 ft.
+Overlook Dr.                                                                                                                              30 ft.
+Pilkington Road                             South of Rosewood St.                                                                         Special street setback line shall be measured 30 ft. from the east line of Rosewood Plat.
+Quarry Rd.                                  Boones Ferry Rd.                                  Galewood St. and extension to Carman Dr.    30 ft.
+Reese Rd.                                   Boones Ferry Rd.                                  Upper Dr.                                   30 ft.
+Rosewood St.                                Pilkington Rd.                                    Tualatin St.                                25 ft.
+South Shore Blvd.                                                                                                                         40 ft., except between Lakeview Blvd. and Blue Heron Road.
+Stafford Rd.                                                                                                                              40 ft.
+State Street                                                                                                                              50 ft., unless reduced by the City Engineer through the minor development procedure, finding that applicable ODOT standards and the purpose in LOC § 50.04.002.1 are met by a lesser amount.
+Summit Dr.                                  Lake View Blvd.                                   Ridgewood Rd.                               20 ft.
+Sunset Dr.                                                                                                                                20 ft.
+Tualatin St.                                                                                                                              20 ft.
+Twin Fir Rd.                                Boones Ferry Rd.                                  Upper Dr.                                   30 ft.
+Upper Dr.                                                                                                                                 25 ft.
+Waluga Dr.                                  South of Oakridge Rd.                             North of Madrona St.                        20 ft.
+West Sunset Dr.                             West of West Lake Grove Design District Boundary                                              20 ft.
 
 § 50.04.003. Exceptions, Projections, and Encroachments.
 
@@ -3633,47 +2388,28 @@ General Exceptions.
 In addition to any other exceptions permitted to the maximum building height limitation of a zone, the following type of structures or structural parts are not subject to the structure height limitations of this Code in the following zones:
 
 TABLE 50.04.003-1: EXCEPTIONS TO HEIGHT LIMITATIONS
-
+TABLE 50.04.003-1: EXCEPTIONS TO HEIGHT LIMITATIONS
 Zone
-
 Structures or Structural Parts Exempt from Height Limitations
-
 Residential Zones – Residential Uses
-
-a. Chimneys, flagpoles, radio and television antennas, ham radio aerials, and other structures.
-
-b. Roof-mounted solar energy system1.
-
+a. Chimneys, flagpoles, radio and television antennas, ham radio aerials, and other structures.
+b. Roof-mounted solar energy system1.
 Residential Zones – Nonresidential Uses
-
-a. Chimneys, church spires, belfries, domes, monuments, radio and television antennas, fire and hose towers, flagpoles, and other similar structures.
-
-b. Roof-mounted solar energy system1.
-
+a. Chimneys, church spires, belfries, domes, monuments, radio and television antennas, fire and hose towers, flagpoles, and other similar structures.
+b. Roof-mounted solar energy system1.
 Commercial, Public Use, and Industrial Zones
-
-a. Chimneys, tanks, church spires, belfries, domes, monuments, radio and television antennas, fire and hose towers, observation towers, masts, ham radio aerials, cooling towers, elevator shafts, smokestacks, flagpoles, radio and television towers, and other similar structures.
-
-b. Roof-mounted solar energy system1.
-
+a. Chimneys, tanks, church spires, belfries, domes, monuments, radio and television antennas, fire and hose towers, observation towers, masts, ham radio aerials, cooling towers, elevator shafts, smokestacks, flagpoles, radio and television towers, and other similar structures.
+b. Roof-mounted solar energy system1.
 FMU Zone
-
-a. Radio and television antennas and other similar structures, and public safety facilities.
-
-b. Any structure exempt from height limitation in residential zone (residential or nonresidential use) in subsection (a) above that has a width, depth, or diameter of five ft. or less may exceed the zone’s height limitation by no more than ten ft., or five ft. above the highest point of the roof, whichever is greater.
-
-c. Rooftop elevator mechanical equipment may extend up to 16 ft. above the height limit.
-
-d. Stairwell enclosures and rooftop mechanical equipment (excluding elevator mechanical equipment) which cumulatively covers no more than 10% of the roof area may extend ten ft. above the height limit.
-
-e. Small wind turbines2.
-
-f. Roof-mounted solar energy system1.
+a. Radio and television antennas and other similar structures, and public safety facilities.
+b. Any structure exempt from height limitation in residential zone (residential or nonresidential use) in subsection (a) above that has a width, depth, or diameter of five ft. or less may exceed the zone’s height limitation by no more than ten ft., or five ft. above the highest point of the roof, whichever is greater.
+c. Rooftop elevator mechanical equipment may extend up to 16 ft. above the height limit.
+d. Stairwell enclosures and rooftop mechanical equipment (excluding elevator mechanical equipment) which cumulatively covers no more than 10% of the roof area may extend ten ft. above the height limit.
+e. Small wind turbines2.
+f. Roof-mounted solar energy system1.
 
 Notes:
-
 1See LOC § 50.04.003.4.b.ii for maximum height exception.
-
 2See LOC § 50.04.003.4.b.iii for maximum height exception.
 
 b.
@@ -3768,55 +2504,33 @@ b.
 The following uses and structures are permitted within the Oswego Lake setback:
 
 TABLE 50.04.003-2: USES AND STRUCTURES PERMITTED WITHIN OSWEGO LAKE SETBACK
-
+TABLE 50.04.003-2: USES AND STRUCTURES PERMITTED WITHIN OSWEGO LAKE SETBACK
+TABLE 50.04.003-2: USES AND STRUCTURES PERMITTED WITHIN OSWEGO LAKE SETBACK
+TABLE 50.04.003-2: USES AND STRUCTURES PERMITTED WITHIN OSWEGO LAKE SETBACK
 Uses and Structures
-
 Maximum Height
-
 Height Limitations
-
 Other Standards
-
 Barbeque; fireplace
-
 6 ft.
-
 Height exceptions in LOC § 50.04.003.4 are NOT applicable
-
 Lights; steps; dock; deck; patio; pool; spa/Jacuzzi
-
 30 in.
-
 Height exceptions in LOC § 50.04.003.4 are NOT applicable
-
 Outdoor shower
-
 8 ft.
-
 Height exceptions in LOC § 50.04.003.4 are NOT applicable
-
 Boathouse
-
 13.5 ft., measure from Oswego Lake surface elevation
-
 Height exceptions in LOC § 50.04.003.4 are NOT applicable
-
-• Wall height: 10 ft., measured from Oswego Lake surface elevation, to eave
-
-• Maximum 560 sq. ft. footprint
-
-• Side and rear yard setbacks do not apply within Oswego Lake setback
-
+• Wall height: 10 ft., measured from Oswego Lake surface elevation, to eave
+• Maximum 560 sq. ft. footprint
+• Side and rear yard setbacks do not apply within Oswego Lake setback
 Lake-related infrastructure structures and uses
-
 None
-
 None
-
 Fences and retaining walls (including seawalls)
-
 See LOC § 50.06.004.2
-
 Only as permitted by LOC § 50.06.004.2
 
 8.

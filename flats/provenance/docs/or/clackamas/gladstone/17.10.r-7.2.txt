@@ -155,87 +155,67 @@ History: Ord. 1131 §2, 1990; Ord. 1323 §1, 2002; Ord. 1499 §1 (Exh. A), 2020;
 Except as provided in GMC Chapters 17.38 (Planned Unit Development), 17.72 (Variances) and 17.76 (Exceptions), the following dimensional standards shall apply in an R-7.2 zoning district:
 
 Minimum Lot Area
-
 Detached single household
-
 7,200 sf
-
 Middle housing
-
 3,600 sf
-
 Multi-household dwellings
-
 3,600 sf per dwelling unit
-
 Other uses
-
 7,200 sf
-
 Or as established by the Planning Commission, as provided by GMC Chapter 17.70 (Conditional Uses).
-
 Minimum Setbacks
-
 Front setback
-
 20 ft
-
 Except that a front porch may project a maximum of five feet into a required front setback area.
-
 Architectural features such as cornices, eaves, gutters, chimneys and flues may project a maximum of two feet into a required setback area.
-
 Townhouse projects are allowed a zero-foot side setback for lot lines where townhouse units are attached.
-
 Cottage cluster minimum setbacks can be reduced to five feet, if there is more than 150 square feet per dwelling unit of common open space provided, as defined in GMC Section 17.12.065(2).
-
 Setbacks for manufactured homes in a mobile home park are subject to the standards in GMC Section 17.62.070(4).
-
 Side setback
-
 7.5 ft or 5 ft due to irregular shaped lots
-
+Except that a front porch may project a maximum of five feet into a required front setback area.
+Architectural features such as cornices, eaves, gutters, chimneys and flues may project a maximum of two feet into a required setback area.
+Townhouse projects are allowed a zero-foot side setback for lot lines where townhouse units are attached.
+Cottage cluster minimum setbacks can be reduced to five feet, if there is more than 150 square feet per dwelling unit of common open space provided, as defined in GMC Section 17.12.065(2).
+Setbacks for manufactured homes in a mobile home park are subject to the standards in GMC Section 17.62.070(4).
 Street side setback
-
 20 ft
-
+Except that a front porch may project a maximum of five feet into a required front setback area.
+Architectural features such as cornices, eaves, gutters, chimneys and flues may project a maximum of two feet into a required setback area.
+Townhouse projects are allowed a zero-foot side setback for lot lines where townhouse units are attached.
+Cottage cluster minimum setbacks can be reduced to five feet, if there is more than 150 square feet per dwelling unit of common open space provided, as defined in GMC Section 17.12.065(2).
+Setbacks for manufactured homes in a mobile home park are subject to the standards in GMC Section 17.62.070(4).
 Interior side setback
-
 5 ft
-
+Except that a front porch may project a maximum of five feet into a required front setback area.
+Architectural features such as cornices, eaves, gutters, chimneys and flues may project a maximum of two feet into a required setback area.
+Townhouse projects are allowed a zero-foot side setback for lot lines where townhouse units are attached.
+Cottage cluster minimum setbacks can be reduced to five feet, if there is more than 150 square feet per dwelling unit of common open space provided, as defined in GMC Section 17.12.065(2).
+Setbacks for manufactured homes in a mobile home park are subject to the standards in GMC Section 17.62.070(4).
 Rear setback
-
 15 ft
-
+Except that a front porch may project a maximum of five feet into a required front setback area.
+Architectural features such as cornices, eaves, gutters, chimneys and flues may project a maximum of two feet into a required setback area.
+Townhouse projects are allowed a zero-foot side setback for lot lines where townhouse units are attached.
+Cottage cluster minimum setbacks can be reduced to five feet, if there is more than 150 square feet per dwelling unit of common open space provided, as defined in GMC Section 17.12.065(2).
+Setbacks for manufactured homes in a mobile home park are subject to the standards in GMC Section 17.62.070(4).
 Maximum Building Height
-
 35 ft
-
 Vertical projections such as chimneys, spires, domes, elevator shaft housings, towers, aerials, flagpoles and similar objects not used for human occupancy are not subject to building height limitations of this subsection.
-
 Minimum Density
-
 Subdivisions and PUDs shall provide a minimum density of 80 percent of the maximum density per net acre.
-
 Cottage clusters shall have a minimum density of four dwelling units per acre.
-
 Maximum Density
-
 Detached single-household
-
 One dwelling unit per 7,200 square feet of lot area or eight units per net acre
-
 This code does not allow for the creation of more than four dwelling units on a lot, including accessory dwelling units. Cottage clusters and townhomes are exempt.
-
 Middle housing
-
 None
-
 Sufficient Infrastructure
-
 Applicants must demonstrate that sufficient infrastructure is provided, or will be provided, upon submittal of a residential development application.
-
 Off-Street Parking
-
+See GMC Chapter 17.48, Off-Street Parking and Loading
 See GMC Chapter 17.48, Off-Street Parking and Loading
 
 (1) All PUDs with residential uses must include a mix of two or more middle housing types for a minimum of 25 percent of the total dwelling units proposed.

@@ -164,7 +164,9 @@ Maximum building height
 Except for steeply sloped lots in which case the provisions of Chapter 41 CDC shall apply.
 Maximum lot coverage
 35%
-Maximum lot cover does not apply to cottage clusters. However, the maximum building footprint for a cottage cluster is less than 900 sf per dwelling unit. • This does not include detached garages, carports, or accessory structures. • A developer may deduct up to 200 sf for an attached garage or carport.
+Maximum lot cover does not apply to cottage clusters. However, the maximum building footprint for a cottage cluster is less than 900 sf per dwelling unit.
+• This does not include detached garages, carports, or accessory structures.
+• A developer may deduct up to 200 sf for an attached garage or carport.
 Minimum accessway width to a lot which does not abut a street or a flag lot
 15 ft
 Maximum floor area ratio

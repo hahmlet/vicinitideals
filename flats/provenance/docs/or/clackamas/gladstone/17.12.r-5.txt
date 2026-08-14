@@ -159,99 +159,68 @@ History: Ord. 1131 §2, 1990; Ord. 1323 §1, 2002; Ord. 1499 §1 (Exh. B), 2020;
 Except as provided in GMC Chapters 17.38 (Planned Unit Development), 17.72 (Variances) and 17.76 (Exceptions), the following dimensional standards shall apply in an R-5 zoning district:
 
 Minimum Lot Area
-
 Detached single household
-
 5,000 sf
-
 2,500 sf within Gladstone Town Center
-
 Duplex and triplex
-
 5,000 sf
-
 Quadplex
-
 7,000 sf
-
 Cottage cluster
-
 7,000 sf
-
 Townhouse project
-
 5,000 sf
-
 The average minimum lot area for a townhouse dwelling shall be 1,500 sf.
-
 Multi-household dwellings
-
 2,500 sf per dwelling
-
 1,500 sf per dwelling unit within Gladstone Town Center
-
 Other uses
-
 5,000 sf
-
 Or as established by the Planning Commission, as provided by GMC Chapter 17.70 (Conditional Uses).
-
 Minimum Setbacks
-
 Front setback
-
 20 ft
-
 10 ft within Gladstone Town Center
-
 Except that a front porch may project a maximum of five feet into a required front setback area.
-
 Architectural features such as cornices, eaves, gutters, chimneys and flues may project a maximum of two feet into a required setback area.
-
 Townhouse projects are allowed a zero-foot side setback for lot lines where townhouse units are attached.
-
 Cottage cluster minimum setbacks can be reduced to five feet, if there is more than 150 square feet per dwelling unit of common open space provided, as defined in GMC Section 17.12.065(2).
-
 Setbacks for manufactured homes in a mobile home park are subject to the standards in GMC Section 17.62.070(4).
-
 Side setback
-
 5 ft
-
+Except that a front porch may project a maximum of five feet into a required front setback area.
+Architectural features such as cornices, eaves, gutters, chimneys and flues may project a maximum of two feet into a required setback area.
+Townhouse projects are allowed a zero-foot side setback for lot lines where townhouse units are attached.
+Cottage cluster minimum setbacks can be reduced to five feet, if there is more than 150 square feet per dwelling unit of common open space provided, as defined in GMC Section 17.12.065(2).
+Setbacks for manufactured homes in a mobile home park are subject to the standards in GMC Section 17.62.070(4).
 Street side setback
-
 20 ft
-
 10 ft within Gladstone Town Center
-
+Except that a front porch may project a maximum of five feet into a required front setback area.
+Architectural features such as cornices, eaves, gutters, chimneys and flues may project a maximum of two feet into a required setback area.
+Townhouse projects are allowed a zero-foot side setback for lot lines where townhouse units are attached.
+Cottage cluster minimum setbacks can be reduced to five feet, if there is more than 150 square feet per dwelling unit of common open space provided, as defined in GMC Section 17.12.065(2).
+Setbacks for manufactured homes in a mobile home park are subject to the standards in GMC Section 17.62.070(4).
 Rear setback
-
 15 ft
-
+Except that a front porch may project a maximum of five feet into a required front setback area.
+Architectural features such as cornices, eaves, gutters, chimneys and flues may project a maximum of two feet into a required setback area.
+Townhouse projects are allowed a zero-foot side setback for lot lines where townhouse units are attached.
+Cottage cluster minimum setbacks can be reduced to five feet, if there is more than 150 square feet per dwelling unit of common open space provided, as defined in GMC Section 17.12.065(2).
+Setbacks for manufactured homes in a mobile home park are subject to the standards in GMC Section 17.62.070(4).
 Maximum Building Height
-
 35 ft
-
 Vertical projections such as chimneys, spires, domes, elevator shaft housings, towers, aerials, flagpoles and similar objects not used for human occupancy are not subject to building height limitations of this subsection.
-
 Minimum Vegetation
-
 Multi-household dwelling
-
 At least 20 percent of the total area of the lot
-
 The minimum area that must be left or planted with trees, shrubs, grass, etc.
-
 Minimum Density
-
 Cottage clusters shall have a minimum density of four dwelling units per acre.
-
 Sufficient Infrastructure
-
 Applicants must demonstrate that sufficient infrastructure is provided, or will be provided, upon submittal of a residential development application.
-
 Off-Street Parking
-
+See GMC Chapter 17.48, Off-Street Parking and Loading
 See GMC Chapter 17.48, Off-Street Parking and Loading
 
 (1) All PUDs with residential uses must include a mix of two or more middle housing types for a minimum of 25 percent of the total dwelling units proposed.

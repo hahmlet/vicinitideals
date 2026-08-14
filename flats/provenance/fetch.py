@@ -57,7 +57,7 @@ from flats.rules.model import CodeDocument, Layer
 
 #: Bumped when the extraction algorithm changes. A hash that moves because the
 #: extractor changed is not an amendment, and the two must be tellable apart.
-EXTRACTOR = "flats-html-text/2"
+EXTRACTOR = "flats-html-text/3"
 #: A slice shorter than this is reported. Legitimate one-line sections exist;
 #: a marker that hit the table of contents is far more common.
 SHORT_SLICE = 3
@@ -98,6 +98,18 @@ _BLOCK = frozenset(
 _SPACES = re.compile(r"[ \t   ]+")
 _BLANKS = re.compile(r"\n{3,}")
 
+
+#: Newlines inside a block are HTML formatting, not text, and the two markers
+#: this module writes into the stream are its own — a page that shipped either
+#: one as content would rewrite the geometry it claims to describe.
+_CONTROL = re.compile(r"[\r\n\x00\x01]")
+
+#: A block boundary *inside* a table cell — Gladstone's requirement cells hold
+#: two paragraphs, "20 ft" and "10 ft within Gladstone Town Center". Joined
+#: with a space the cell states two numbers on one line and the pair reader
+#: refuses it, which loses the base standard entirely. The mark is a space
+#: everywhere the geometry is kept and a line break where it is given up.
+_CELL_BLOCK = "\x01"
 
 #: Widest a rendered table line may run. A zoning table is a dozen short
 #: cells; a "table" wider than this is page layout wearing table markup, and
@@ -155,7 +167,11 @@ class _Table:
 
     def close_cell(self) -> None:
         if self._cell is not None and self._row is not None:
-            text = " ".join("".join(self._cell).split())
+            blocks = [
+                " ".join(part.split())
+                for part in "".join(self._cell).split(_CELL_BLOCK)
+            ]
+            text = _CELL_BLOCK.join(part for part in blocks if part)
             self._row.append((text, self._colspan, self._rowspan))
         self._cell = None
 
@@ -183,19 +199,24 @@ class _Table:
                 col += colspan
             width = max(row) + 1 if row else 0
             grid.append([row.get(i, "") for i in range(width)])
-        caption = " ".join(" ".join(self.caption).split())
+        caption = " ".join(" ".join(self.caption).replace(_CELL_BLOCK, " ").split())
         cols = max((len(r) for r in grid), default=0)
-        widths = [max((len(r[i]) for r in grid if i < len(r)), default=0) for i in range(cols)]
+        flat = [[c.replace(_CELL_BLOCK, " ") for c in r] for r in grid]
+        widths = [max((len(r[i]) for r in flat if i < len(r)), default=0) for i in range(cols)]
         if len(grid) < 2 or cols < 2 or sum(widths) + 2 * cols > _GRID_LINE_MAX:
             # Not tabular (or too wide to be) — flow the cells as block
-            # lines, which is what the extractor always did with them.
-            body = "\n".join(c for r in grid for c in r if c)
+            # lines, which is what the extractor always did with them. Nothing
+            # here is aligned any more, so a cell's own paragraphs become
+            # lines too rather than one run-on line.
+            body = "\n".join(
+                part for r in grid for c in r for part in c.split(_CELL_BLOCK) if part
+            )
         else:
             body = "\n".join(
                 "  ".join(
                     (r[i] if i < len(r) else "").ljust(widths[i]) for i in range(cols)
                 ).rstrip()
-                for r in grid
+                for r in flat
             )
         return f"{caption}\n{body}" if caption else body
 
@@ -221,7 +242,7 @@ class _Extractor(html.parser.HTMLParser):
             elif tag in ("td", "th"):
                 table.open_cell(attrs)
             elif tag in _BLOCK:
-                table.data(" ")
+                table.data(_CELL_BLOCK)
         elif tag in _BLOCK:
             self.parts.append("\n")
 
@@ -247,7 +268,7 @@ class _Extractor(html.parser.HTMLParser):
             elif tag == "tr":
                 table.close_row()
             elif tag in _BLOCK:
-                table.data(" ")
+                table.data(_CELL_BLOCK)
         elif tag in _BLOCK:
             self.parts.append("\n")
 
@@ -257,7 +278,7 @@ class _Extractor(html.parser.HTMLParser):
         # Newlines inside a block are HTML formatting, not text. Keeping
         # them would let a reflow of the markup renumber every quote line
         # in the document without a word of the law changing.
-        clean = data.replace("\r", " ").replace("\n", " ").replace("\x00", " ")
+        clean = _CONTROL.sub(" ", data)
         if self._tables:
             self._tables[-1].data(clean)
         else:
@@ -574,7 +595,15 @@ def fetch_one(
         print(f"stored {path} ({lines} lines, {EXTRACTOR})")
         return 0
 
-    if sha256(text) == store.load(path).sha256:
+    stored = store.load(path)
+    if sha256(text) == stored.sha256:
+        if stored.extractor != EXTRACTOR and not check:
+            # Same bytes, newer algorithm. Recording that is the whole point
+            # of versioning the extractor: without it the document stays on
+            # the re-extract list forever and the list stops being read.
+            store_document(store, path, url, text, retrieved=retrieved)
+            print(f"unchanged {path} ({lines} lines, re-stamped {EXTRACTOR})")
+            return 0
         print(f"unchanged {path} ({lines} lines)")
         return 0
 

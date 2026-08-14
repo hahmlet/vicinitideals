@@ -1,5 +1,6 @@
 {
   "url": "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf",
   "retrieved": "2026-08-13",
-  "sha256": "97075a32c88ea04316d0954feed47e569d2f1a13074b9b98a5f76f160b2cf4be"
+  "sha256": "97075a32c88ea04316d0954feed47e569d2f1a13074b9b98a5f76f160b2cf4be",
+  "extractor": "flats-html-text/3"
 }

@@ -258,37 +258,14 @@ Secondary Sources
 
 Privacy Policy
 
-California:
-
-Codes
-
-Colorado:
-
-C.R.S.
-
-Florida:
-
-Statutes
-
-Nevada:
-
-NRS
-
-New York:
-
-Laws
-
-Oregon:
-
-OAR, ORS
-
-Texas:
-
-Statutes
-
-World:
-
-Rome Statute, International Dictionary
+California:  Codes
+Colorado:    C.R.S.
+Florida:     Statutes
+Nevada:      NRS
+New York:    Laws
+Oregon:      OAR, ORS
+Texas:       Statutes
+World:       Rome Statute, International Dictionary
 
 Location: https://oregon.public.law/rules/oar_660-046-0220
 

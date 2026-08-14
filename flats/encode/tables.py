@@ -665,6 +665,28 @@ def _read_span(lines: Sequence[str], first: int, last: int, start_line: int) -> 
             else:
                 group = joined
             continue
+        if (
+            joined
+            and not values
+            and joined[0].isupper()
+            and (_subject(joined) is not None or _PAIR_GROUP.search(joined))
+            and len(joined.split()) <= _GROUP_WORDS
+            and not joined.endswith(".")
+        ):
+            # "Building setbacks (minimum)8", "Lot coverage (maximum)5,8,9" —
+            # Happy Valley's HTML grid heads each block with a label row whose
+            # cells are empty. No leading letter and no colon, so neither
+            # heading rule above catches it, and without this one the line
+            # glues onto the row above as a continuation: the block boundary
+            # vanishes and every sub-row under it ("Rear", "Interior side")
+            # loses the heading that says which standard it states.
+            #
+            # The capital is what separates the two: Portland wraps "- Front
+            # building setback" across lines, and its tail — " setback" — says
+            # "setback" as loudly as any heading does. A heading is written as
+            # one; the back half of a wrapped label is not.
+            group = joined
+            continue
         if values:
             rows.append(
                 Row(
@@ -1333,14 +1355,30 @@ def candidates_for(table: Table | Iterable[Row], zone: str, *, path: str) -> lis
     out: list[Candidate] = []
     for row in table.rows:
         htype = ""
+        ctx_notes: tuple[str, ...] = ()
         name = _subject(row.label)
         if name is None and "setback" in row.group.lower():
             # "Front yard" under "Setbacks (ft.):" — the group heading, not
             # the row label, is what says these are setbacks at all. Glued
             # note refs are stripped before the exact match: "Front yard see
-            # note 1 see note 1" is still the front yard row.
+            # note 1 see note 1" is still the front yard row. Parenthesised
+            # context — "Front (street access garage)" — is dropped for the
+            # lookup and kept as a note, the reading the stacked grid already
+            # gives it: the 10 ft alley variant beside the 20 ft street
+            # variant is a conditional pair, not two clean readings. Bare
+            # directions are safe here for the same reason they are there —
+            # the column the cell sits in names the zone.
             clean = " ".join(_SEE_NOTE.sub("", row.label).split())
-            name = _GROUPED_SUBJECTS.get(clean.strip(" .").lower())
+            bare = " ".join(_PAREN_CTX.sub("", clean).split()).strip(" .:").lower()
+            name = _GROUPED_SUBJECTS.get(bare) or _BARE_GROUPED.get(bare)
+            if name is not None:
+                ctx_notes = tuple(
+                    f"{m} (row context)"
+                    for m in _PAREN_CTX.findall(clean)
+                    if not (
+                        name == "setback_street_side_ft" and _CORNER_BLOCK.search(m)
+                    )
+                )
         if name is None:
             # "Townhouse" under "B. Minimum Lot Size2" — the row names who the
             # standard is for and the group heading names the standard. The
@@ -1384,7 +1422,7 @@ def candidates_for(table: Table | Iterable[Row], zone: str, *, path: str) -> lis
                 text=f"{row.label}: {row.value_for(zone)} ({zone})",
                 quote=f"{path}#L{row.line_for(zone)}",
                 source="table",
-                notes=table.notes_for(row, zone) + glued,
+                notes=table.notes_for(row, zone) + glued + ctx_notes,
                 housing_type=htype,
             )
         )

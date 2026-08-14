@@ -4,7 +4,7 @@ Resize:
 
 City of Milwaukie, OR
 
-Thursday, August 13, 2026
+Friday, August 14, 2026
 
 Title 19. Zoning
 
@@ -26,153 +26,34 @@ Uses allowed, either allowed by right or conditionally, in the moderate density 
 
 See Section 19.201 Definitions for specific descriptions of the uses listed in the table.
 
-Table 19.301.2
-
-Moderate Density Residential Uses Allowed
-
-Use
-
-R-MD
-
-Standards/Additional Provisions
-
-Residential Uses
-
-Single detached dwelling
-
-P
-
-Subsection 19.505.1 Single Detached and Middle Housing Residential Development
-
-Duplex
-
-P
-
-Subsection 19.505.1 Single Detached and Middle Housing Residential Development
-
-Triplex
-
-P
-
-Subsection 19.505.1 Single Detached and Middle Housing Residential Development
-
-Quadplex
-
-P
-
-Subsection 19.505.1 Single Detached and Middle Housing Residential Development
-
-Townhouse
-
-P
-
-Subsection 19.505.1 Single Detached and Middle Housing Residential Development
-
-Subsection 19.505.5 Standards for Town-houses
-
-Cottage Cluster
-
-P
-
-Subsection 19.505.1 Single Detached and Middle Housing Residential Development
-
-Subsection 19.505.4 Cottage Cluster Housing
-
-Adult foster/care home
-
-P
-
-Subsection 19.505.1 Single Detached and Middle Housing Residential Development
-
-Accessory dwelling unit
-
-P
-
-Subsection 19.910.1 Accessory Dwelling Units
-
-Manufactured dwelling park
-
-III
-
-Subsection 19.910.3 Manufactured dwelling parks
-
-Residential care facility Examples include: assisted living, nursing facilities, and memory care communities
-
-CSU
-
-Subsection 19.904.8 Specific Standards for Residential Care Facilities
-
-Commercial Uses
-
-Bed and breakfast or Vacation rental
-
-CU
-
-Section 19.905 Conditional Uses
-
-Accessory and Other Uses
-
-Accessory use
-
-P
-
-Section 19.503 Accessory Uses
-
-Agricultural or horticultural use
-
-P
-
-Subsection 19.301.3 Use Limitations and Restrictions
-
-Community service use
-
-CSU
-
-Section 19.904 Community Service Uses
-
-Home occupation
-
-P
-
-Section 19.507 Home Occupation Standards
-
-Short-term rental
-
-P
-
-Section 19.507 Home Occupation Standards
-
-Notes:
-
-P
-
-=
-
-Permitted/allowed by right
-
-N
-
-=
-
-Not permitted.
-
-CSU
-
-=
-
-Permitted with Community Service Use approval subject to provisions of Section 19.904. Type III review required to establish a new CSU or for major modification of an existing CSU. Type I review required for a minor modification of an existing CSU.
-
-CU
-
-=
-
-Permitted with conditional use approval subject to the provisions of Section 19.905. Type III review required to establish a new CU or for major modification of an existing CU. Type I review required for a minor modification of an existing CU.
-
-III
-
-=
-
-Type III review required.
+Table 19.301.2 Moderate Density Residential Uses Allowed                                                      Table 19.301.2 Moderate Density Residential Uses Allowed  Table 19.301.2 Moderate Density Residential Uses Allowed
+Use                                                                                                           R-MD                                                      Standards/Additional Provisions
+Residential Uses                                                                                              Residential Uses                                          Residential Uses
+Single detached dwelling                                                                                      P                                                         Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+Duplex                                                                                                        P                                                         Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+Triplex                                                                                                       P                                                         Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+Quadplex                                                                                                      P                                                         Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+Townhouse                                                                                                     P                                                         Subsection 19.505.1 Single Detached and Middle Housing Residential Development Subsection 19.505.5 Standards for Town-houses
+Cottage Cluster                                                                                               P                                                         Subsection 19.505.1 Single Detached and Middle Housing Residential Development Subsection 19.505.4 Cottage Cluster Housing
+Adult foster/care home                                                                                        P                                                         Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+Accessory dwelling unit                                                                                       P                                                         Subsection 19.910.1 Accessory Dwelling Units
+Manufactured dwelling park                                                                                    III                                                       Subsection 19.910.3 Manufactured dwelling parks
+Residential care facility Examples include: assisted living, nursing facilities, and memory care communities  CSU                                                       Subsection 19.904.8 Specific Standards for Residential Care Facilities
+Commercial Uses                                                                                               Commercial Uses                                           Commercial Uses
+Bed and breakfast or Vacation rental                                                                          CU                                                        Section 19.905 Conditional Uses
+Accessory and Other Uses                                                                                      Accessory and Other Uses                                  Accessory and Other Uses
+Accessory use                                                                                                 P                                                         Section 19.503 Accessory Uses
+Agricultural or horticultural use                                                                             P                                                         Subsection 19.301.3 Use Limitations and Restrictions
+Community service use                                                                                         CSU                                                       Section 19.904 Community Service Uses
+Home occupation                                                                                               P                                                         Section 19.507 Home Occupation Standards
+Short-term rental                                                                                             P                                                         Section 19.507 Home Occupation Standards
+
+Notes:  Notes:  Notes:
+P       =       Permitted/allowed by right
+N       =       Not permitted.
+CSU     =       Permitted with Community Service Use approval subject to provisions of Section 19.904. Type III review required to establish a new CSU or for major modification of an existing CSU. Type I review required for a minor modification of an existing CSU.
+CU      =       Permitted with conditional use approval subject to the provisions of Section 19.905. Type III review required to establish a new CU or for major modification of an existing CU. Type I review required for a minor modification of an existing CU.
+III     =       Type III review required.
 
 § 19.301.3. Use Limitations and Restrictions.
 
@@ -211,242 +92,195 @@ In the moderate density residential zone, the development standards in Table 19.
 See Sections 19.201 Definitions and 19.202 Measurements for specific descriptions of standards and measurements listed in the table.
 
 Table 19.301.4
-
 Moderate Density Residential Development Standards
-
+Table 19.301.4
+Moderate Density Residential Development Standards
+Table 19.301.4
+Moderate Density Residential Development Standards
+Table 19.301.4
+Moderate Density Residential Development Standards
+Table 19.301.4
+Moderate Density Residential Development Standards
+Table 19.301.4
+Moderate Density Residential Development Standards
 Standard
-
 R-MD
-
+R-MD
+R-MD
+R-MD
 Standards/ Additional Provisions
-
+Standard
 Lot size (square feet)
-
+Lot size (square feet)
+Lot size (square feet)
+Lot size (square feet)
+Standards/ Additional Provisions
+Standard
 1,500 – 2,999
-
 3,000–4,999
-
 5,000-6,9992
-
 7,000 and up
-
+Standards/ Additional Provisions
 A. Permitted Dwelling Type
-
+A. Permitted Dwelling Type
+A. Permitted Dwelling Type
+A. Permitted Dwelling Type
+A. Permitted Dwelling Type
+A. Permitted Dwelling Type
 Townhouse1
-
 Duplex, Triplex, Quadplex
-
 Single Detached Dwelling, Single Detached Dwelling, with up to 2 ADUs, Duplex, Triplex, Quadplex
-
 Single Detached Dwelling, Single Detached Dwelling, with 2 ADUs, Duplex, Triplex, Quadplex, Cottage Cluster
-
 Subsection 19.501.1 Lot Size Exceptions
-
 B. Lot Standards
-
+B. Lot Standards
+B. Lot Standards
+B. Lot Standards
+B. Lot Standards
+B. Lot Standards
 1. Minimum lot width (ft)
-
 20
-
 30
-
 50
-
 60
-
 2. Minimum lot depth (ft)
-
 70
-
 80
-
 80
-
 80
-
 3. Minimum street frontage requirements (ft)
-
 a. Townhouse
-
 20
-
 b. Standard lot
-
 35
-
 30
-
 35
-
 35
-
 c. Flag lot
-
 NA3
-
 25
-
 25
-
 25
-
 Subsection 19.504.6 Flag Lot and Back Lot Design and Development Standards
-
 d. Double flag lot
-
 NA3
-
 25
-
 25
-
 25
-
-C. Development Standards
-
-1. Minimum yard requirements for primary structures (ft)
-
-Subsection 19.301.5.A Yards
-
-Subsection 19.501.2 Yard Exceptions
-
 Subsection 19.504.6 Flag Lot and Back Lot Design and Development Standards
-
+C. Development Standards
+C. Development Standards
+C. Development Standards
+C. Development Standards
+C. Development Standards
+C. Development Standards
+1. Minimum yard requirements for primary structures (ft)
+Subsection 19.301.5.A Yards
+Subsection 19.501.2 Yard Exceptions
+Subsection 19.504.6 Flag Lot and Back Lot Design and Development Standards
 Subsection 19.505.4 Cottage Cluster Housing
-
 Subsection 19.505.5 Townhouses
-
 a. Front yard
-
 20
-
 20
-
 20
-
 20
-
+Subsection 19.301.5.A Yards
+Subsection 19.501.2 Yard Exceptions
+Subsection 19.504.6 Flag Lot and Back Lot Design and Development Standards
+Subsection 19.505.4 Cottage Cluster Housing
+Subsection 19.505.5 Townhouses
 b. Side yard
-
 5
-
 5
-
 5
-
 5/10
-
+Subsection 19.301.5.A Yards
+Subsection 19.501.2 Yard Exceptions
+Subsection 19.504.6 Flag Lot and Back Lot Design and Development Standards
+Subsection 19.505.4 Cottage Cluster Housing
+Subsection 19.505.5 Townhouses
 c. Street side yard
-
 5
-
 15
-
 15
-
 20
-
+Subsection 19.301.5.A Yards
+Subsection 19.501.2 Yard Exceptions
+Subsection 19.504.6 Flag Lot and Back Lot Design and Development Standards
+Subsection 19.505.4 Cottage Cluster Housing
+Subsection 19.505.5 Townhouses
 d. Rear yard
-
 15
-
 20
-
 20
-
 20
-
+Subsection 19.301.5.A Yards
+Subsection 19.501.2 Yard Exceptions
+Subsection 19.504.6 Flag Lot and Back Lot Design and Development Standards
+Subsection 19.505.4 Cottage Cluster Housing
+Subsection 19.505.5 Townhouses
 2. Maximum building height for primary structures
-
 35 ft
-
+35 ft
+35 ft
+35 ft
 Subsection 19.501.3 Building Height and Side Yard Height Plane Exceptions
-
 3. Side yard height plane limit
-
 Subsection 19.501.3 Building Height and Side Yard Height Plane Exceptions
-
 a. Height above ground at minimum required side yard depth (ft)
-
 20
-
+20
+20
+20
 b. Slope of plane (degrees)
-
 45
-
+45
+45
+45
 4. Maximum lot coverage (percent of total lot area)
-
 45%
-
 35%
-
 35%
-
 30%
-
 Section 19.201 "Lot coverage" definition
-
 Subsection 19.301.5.B Lot Coverage
-
 5. Minimum vegetation (percent of total lot area)
-
 15%
-
 25%
-
 25%
-
 30%
-
 Subsection 19.301.5.C Front Yard Minimum Vegetation
-
 Subsection 19.504.5 Minimum Vegetation
-
 D. Other Standards
-
+D. Other Standards
+D. Other Standards
+D. Other Standards
+D. Other Standards
+D. Other Standards
 1. Density requirements (dwelling units per acre)
-
 Subsection 19.301.5.D Residential Densities
-
+Subsection 19.501.4 Density Exceptions For Cottage Clusters and Townhouse Density Exceptions, see 19.501.4
+a. Minimum
+25
+7.0
+7.0
+5.0
+Subsection 19.301.5.D Residential Densities
+Subsection 19.501.4 Density Exceptions For Cottage Clusters and Townhouse Density Exceptions, see 19.501.4
+b. Maximum4
+25
+8.7
+8.7
+6.2
+Subsection 19.301.5.D Residential Densities
 Subsection 19.501.4 Density Exceptions For Cottage Clusters and Townhouse Density Exceptions, see 19.501.4
 
-a. Minimum
-
-25
-
-7.0
-
-7.0
-
-5.0
-
-b. Maximum4
-
-25
-
-8.7
-
-8.7
-
-6.2
-
-Notes:
-
-1
-
-A townhouse is permitted on a corner lot up to 3,500 sq ft in area.
-
-2
-
-Minimum lot size for single detached dwelling applies to lots created on or after June 3, 2022, the effective date of Ordinance #2218.
-
-3
-
-Townhouses are not permitted on flag lots.
-
-4
-
-Townhouses are allowed at 4 times the maximum density allowed for single detached dwellings in the same zone or 25 dwelling units per acre, whichever is less. Duplexes, triplexes, quadplexes, and cottage clusters are exempt from density maximums.
+Notes:  Notes:
+1       A townhouse is permitted on a corner lot up to 3,500 sq ft in area.
+2       Minimum lot size for single detached dwelling applies to lots created on or after June 3, 2022, the effective date of Ordinance #2218.
+3       Townhouses are not permitted on flag lots.
+4       Townhouses are allowed at 4 times the maximum density allowed for single detached dwellings in the same zone or 25 dwelling units per acre, whichever is less. Duplexes, triplexes, quadplexes, and cottage clusters are exempt from density maximums.
 
 § 19.301.5. Additional Development Standards.
 
@@ -477,7 +311,6 @@ The maximum lot coverage percentage in Subsection 19.301.4.C.4 is increased by 1
 A Type II variance per Subsection 19.911.4.A, to further increase this lot coverage allowance, is prohibited.
 
 Figure 19.301.5.B.2 Increased Lot Coverage for Single Detached Dwellings and Middle Housing
-
 Figure 19.301.5.B.2 illustrates an example of increased lot coverage for lots in Residential Zone R-MD.
 
 2.
@@ -562,203 +395,38 @@ Uses allowed, either allowed by right or conditionally, in the high density resi
 
 See Section 19.201 Definitions for specific descriptions of the uses listed in the table.
 
-Table 19.302.2
-
-High Density Residential Uses Allowed
-
-Use
-
-R-HD
-
-Standards/ Additional Provisions
-
-Residential Uses
-
-Single detached dwelling
-
-P
-
-Subsection 19.505.1 Single Detached and Middle Housing Residential Development
-
-Duplex
-
-P
-
-Subsection 19.505.1 Single Detached and Middle Housing Residential Development
-
-Triplex
-
-P
-
-Subsection 19.505.1 Single Detached and Middle Housing Residential Development
-
-Quadplex
-
-P
-
-Subsection 19.505.1 Single Detached and Middle Housing Residential Development
-
-Adult foster/care home
-
-P
-
-Subsection 19.505.1 Single Detached and Middle Housing Residential Development
-
-Accessory dwelling unit
-
-P
-
-Subsection 19.910.1 Accessory Dwelling Units
-
-Manufactured dwelling park
-
-III
-
-Subsection 19.910.3 Manufactured Dwelling Parks
-
-Townhouse
-
-P
-
-Subsection 19.505.1 Single Detached and Middle Housing Residential Development
-
-Subsection 19.505.5 Standards for Townhouses
-
-Cottage cluster
-
-P
-
-Subsection 19.505.1 Single Detached and Middle Housing Residential Development
-
-Subsection 19.505.4 Cottage Cluster Housing
-
-Mixed use
-
-P
-
-Subsection 19.505.7 Nonresidential Development
-
-Multi-unit housing
-
-P
-
-Subsection 19.505.3 Multi-Unit Housing
-
-Subsection 19.302.5.F Residential Densities
-
-Subsection 19.302.5.H Building Limitations
-
-Single room occupancy Housing
-
-P
-
-Subsection 19.505.3 Multi-Unit Housing
-
-Subsection 19.302.5.F Residential Densities
-
-Subsection 19.302.5.H Building Limitations
-
-Residential care facility Examples include: assisted living, nursing facilities, and memory care communities
-
-P
-
-Subsection 19.505.3 Multi-Unit Housing
-
-Subsection 19.302.5.F Residential Densities
-
-Subsection 19.302.5.H Building Limitations
-
-Office:
-
-Production-related office and Professional and Administrative office
-
-P
-
-Subsection 19.302.3 Use Limitations and Restrictions
-
-Subsection 19.505.7 Nonresidential Development
-
-Personal/business services
-
-P
-
-Subsection 19.302.3 Use Limitations and Restrictions
-
-Subsection 19.505.7 Nonresidential Development
-
-Hotel or motel
-
-CU
-
-Section 19.905 Conditional Uses
-
-Bed and breakfast or vacation rental
-
-CU
-
-Section 19.905 Conditional Uses
-
-Accessory use
-
-P
-
-Section 19.503 Accessory Uses
-
-Agricultural or horticultural use
-
-P
-
-Subsection 19.302.3 Use Limitations and Restrictions
-
-Community service use
-
-CSU
-
-Section 19.904 Community Service Uses
-
-Home occupation
-
-P
-
-Section 19.507 Home Occupation Standards
-
-Short-term rental
-
-P
-
-Section 19.507 Home Occupation Standards
-
-Notes:
-
-P
-
-=
-
-Permitted.
-
-N
-
-=
-
-Not permitted.
-
-CSU
-
-=
-
-Permitted with Community Service Use approval subject to provisions of Section 19.904. Type III review required to establish a new CSU or for major modification of an existing CSU. Type I review required for a minor modification of an existing CSU.
-
-CU
-
-=
-
-Permitted with conditional use approval subject to the provisions of Section 19.905. Type III review required to establish a new CU or for major modification of an existing CU. Type I review required for a minor modification of an existing CU.
-
-III
-
-=
-
-Type III review required.
+Table 19.302.2 High Density Residential Uses Allowed                                                          Table 19.302.2 High Density Residential Uses Allowed  Table 19.302.2 High Density Residential Uses Allowed
+Use                                                                                                           R-HD                                                  Standards/ Additional Provisions
+Residential Uses                                                                                              Residential Uses                                      Residential Uses
+Single detached dwelling                                                                                      P                                                     Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+Duplex                                                                                                        P                                                     Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+Triplex                                                                                                       P                                                     Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+Quadplex                                                                                                      P                                                     Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+Adult foster/care home                                                                                        P                                                     Subsection 19.505.1 Single Detached and Middle Housing Residential Development
+Accessory dwelling unit                                                                                       P                                                     Subsection 19.910.1 Accessory Dwelling Units
+Manufactured dwelling park                                                                                    III                                                   Subsection 19.910.3 Manufactured Dwelling Parks
+Townhouse                                                                                                     P                                                     Subsection 19.505.1 Single Detached and Middle Housing Residential Development Subsection 19.505.5 Standards for Townhouses
+Cottage cluster                                                                                               P                                                     Subsection 19.505.1 Single Detached and Middle Housing Residential Development Subsection 19.505.4 Cottage Cluster Housing
+Mixed use                                                                                                     P                                                     Subsection 19.505.7 Nonresidential Development
+Multi-unit housing                                                                                            P                                                     Subsection 19.505.3 Multi-Unit Housing Subsection 19.302.5.F Residential Densities Subsection 19.302.5.H Building Limitations
+Single room occupancy Housing                                                                                 P                                                     Subsection 19.505.3 Multi-Unit Housing Subsection 19.302.5.F Residential Densities Subsection 19.302.5.H Building Limitations
+Residential care facility Examples include: assisted living, nursing facilities, and memory care communities  P                                                     Subsection 19.505.3 Multi-Unit Housing Subsection 19.302.5.F Residential Densities Subsection 19.302.5.H Building Limitations
+Office: Production-related office and Professional and Administrative office                                  P                                                     Subsection 19.302.3 Use Limitations and Restrictions Subsection 19.505.7 Nonresidential Development
+Personal/business services                                                                                    P                                                     Subsection 19.302.3 Use Limitations and Restrictions Subsection 19.505.7 Nonresidential Development
+Hotel or motel                                                                                                CU                                                    Section 19.905 Conditional Uses
+Bed and breakfast or vacation rental                                                                          CU                                                    Section 19.905 Conditional Uses
+Accessory use                                                                                                 P                                                     Section 19.503 Accessory Uses
+Agricultural or horticultural use                                                                             P                                                     Subsection 19.302.3 Use Limitations and Restrictions
+Community service use                                                                                         CSU                                                   Section 19.904 Community Service Uses
+Home occupation                                                                                               P                                                     Section 19.507 Home Occupation Standards
+Short-term rental                                                                                             P                                                     Section 19.507 Home Occupation Standards
+
+Notes:  Notes:  Notes:
+P       =       Permitted.
+N       =       Not permitted.
+CSU     =       Permitted with Community Service Use approval subject to provisions of Section 19.904. Type III review required to establish a new CSU or for major modification of an existing CSU. Type I review required for a minor modification of an existing CSU.
+CU      =       Permitted with conditional use approval subject to the provisions of Section 19.905. Type III review required to establish a new CU or for major modification of an existing CU. Type I review required for a minor modification of an existing CU.
+III     =       Type III review required.
 
 § 19.302.3. Use Limitations and Restrictions.
 
@@ -805,160 +473,43 @@ See Sections 19.201 Definitions and 19.202 Measurements for specific description
 In the high density residential zone the following housing types are permitted on lot sizes as follows:
 
 Between 1,500 to 2,999 sq ft: Townhouse; a townhouse is permitted on a corner lot up to 3,500 sq ft in area.
-
 Between 3,000 to 4,999 sq ft: Duplex, Triplex, and Quadplex.
-
 Between 5,000 to 6,999 sq ft: Single Detached Dwelling, Single Detached Dwelling with up to 2 ADUs, Duplex, Triplex, and Quadplex.1
-
 7,000 sq ft and up: Single Detached Dwelling, Single Detached Dwelling with up to 2 ADUs, Duplex, Triplex, Quadplex, Cottage Cluster, Multi-Unit Housing
 
 All other uses require a minimum lot size of 5,000 sq ft.
 
-Table 19.302.4
-
-High Density Residential Development Standards
-
-Standard
-
-R-HD
-
-Standards/Additional Provisions
-
+Table 19.302.4 High Density Residential Development Standards  Table 19.302.4 High Density Residential Development Standards  Table 19.302.4 High Density Residential Development Standards
+Standard                                                       R-HD                                                           Standards/Additional Provisions
 A. Lot Standards
-
-Minimum lot size (sq ft)
-
-1,500
-
-Subsection 19.501.1 Lot Size Exceptions
-
-Subsection 19.505.4 Cottage Cluster Housing
-
-Subsection 19.505.5 Townhouses
-
-Minimum lot width (ft)
-
-20
-
-Minimum lot depth (ft)
-
-70
-
-Minimum street frontage requirements (ft)
-
-Subsection 19.504.6 Flag Lots
-
-Townhouse
-
-20
-
-Standard lot
-
-35
-
-Flag lot
-
-25
-
-Double flag lot
-
-25
-
+Minimum lot size (sq ft)                                       1,500                                                          Subsection 19.501.1 Lot Size Exceptions Subsection 19.505.4 Cottage Cluster Housing Subsection 19.505.5 Townhouses
+Minimum lot width (ft)                                         20
+Minimum lot depth (ft)                                         70
+Minimum street frontage requirements (ft)                                                                                     Subsection 19.504.6 Flag Lots
+Townhouse                                                      20                                                             Subsection 19.504.6 Flag Lots
+Standard lot                                                   35                                                             Subsection 19.504.6 Flag Lots
+Flag lot                                                       25                                                             Subsection 19.504.6 Flag Lots
+Double flag lot                                                25                                                             Subsection 19.504.6 Flag Lots
 B. Development Standards
+Minimum yard requirements for primary structures (ft)          -                                                              Subsection 19.504.5 Transition Area Measures
+Front yard                                                     20                                                             Subsection 19.504.5 Transition Area Measures
+Side yard                                                      See Subsection 19.302.5.A                                      Subsection 19.504.5 Transition Area Measures
+Street side yard                                               154                                                            Subsection 19.504.5 Transition Area Measures
+Rear yard                                                      15                                                             Subsection 19.504.5 Transition Area Measures
+Maximum building height for primary structures                 45 ft                                                          Subsection 19.302.5.E Height Exceptions Subsection 19.501.3 Building Height and Side Yard Height Plane Exceptions Subsection 19.505.7 Nonresidential Development
+Side yard height plane limit                                                                                                  Subsection 19.501.3 Building Height and Side Yard Height Plane Exceptions
+Height above ground at minimum required side yard depth (ft)   25                                                             Subsection 19.501.3 Building Height and Side Yard Height Plane Exceptions
+Slope of plane (degrees)                                       45                                                             Subsection 19.501.3 Building Height and Side Yard Height Plane Exceptions
+Maximum lot coverage (percent of total lot area)               50%                                                            Section 19.201 "Lot coverage" definition
+Minimum vegetation (percent of total lot area)                 15%                                                            Subsection 19.504.5 Minimum Vegetation Subsection 19.302.5.C Minimum Vegetation Subsection 19.302.5.D Front Yard Minimum Vegetation
+Density requirements (Dwelling units per acre)                 -                                                              Subsection 19.202.4 Density Calculations
+Minimum                                                        25.0                                                           Subsection 19.302.5.F Residential Densities
+Maximum2, 3                                                    32.0                                                           Subsection 19.501.4 Density Exceptions
 
-Minimum yard requirements for primary structures (ft)
-
--
-
-Subsection 19.504.5 Transition Area Measures
-
-Front yard
-
-20
-
-Side yard
-
-See Subsection 19.302.5.A
-
-Street side yard
-
-154
-
-Rear yard
-
-15
-
-Maximum building height for primary structures
-
-45 ft
-
-Subsection 19.302.5.E Height Exceptions
-
-Subsection 19.501.3 Building Height and Side Yard Height Plane Exceptions
-
-Subsection 19.505.7 Nonresidential Development
-
-Side yard height plane limit
-
-Subsection 19.501.3 Building Height and Side Yard Height Plane Exceptions
-
-Height above ground at minimum required side yard depth (ft)
-
-25
-
-Slope of plane (degrees)
-
-45
-
-Maximum lot coverage (percent of total lot area)
-
-50%
-
-Section 19.201 "Lot coverage" definition
-
-Minimum vegetation (percent of total lot area)
-
-15%
-
-Subsection 19.504.5 Minimum Vegetation
-
-Subsection 19.302.5.C Minimum Vegetation
-
-Subsection 19.302.5.D Front Yard Minimum Vegetation
-
-Density requirements (Dwelling units per acre)
-
--
-
-Subsection 19.202.4 Density Calculations
-
-Minimum
-
-25.0
-
-Subsection 19.302.5.F Residential Densities
-
-Maximum2, 3
-
-32.0
-
-Subsection 19.501.4 Density Exceptions
-
-1
-
-Minimum lot size for single detached dwelling applies to lots created on or after June 3, 2022, the effective date of Ordinance #2218.
-
-2
-
-Townhouses are allowed at 4 times the maximum density allowed for single detached dwellings in the same zone or 25 dwelling units per acre, whichever is less. Duplexes, triplexes, quadplexes, and cottage clusters are exempt from density maximums.
-
-3
-
-The density for single room occupancy (SRO) developments is calculated as follows: four SRO rooms equal one dwelling unit.
-
-4
-
-The street side yard setback for townhouses is 5 ft.
+1  Minimum lot size for single detached dwelling applies to lots created on or after June 3, 2022, the effective date of Ordinance #2218.
+2  Townhouses are allowed at 4 times the maximum density allowed for single detached dwellings in the same zone or 25 dwelling units per acre, whichever is less. Duplexes, triplexes, quadplexes, and cottage clusters are exempt from density maximums.
+3  The density for single room occupancy (SRO) developments is calculated as follows: four SRO rooms equal one dwelling unit.
+4  The street side yard setback for townhouses is 5 ft.
 
 Table 19.302.4 is supplemented by Figure 19.302.4. For those properties identified in Figure 19.302.4, the minimum front yard setback is 5 ft.
 
@@ -999,7 +550,6 @@ The maximum lot coverage percentage in Subsection 19.302.4 is increased by 10 pe
 A Type II variance per Subsection 19.911.4.A, to further increase this lot coverage allowance, is prohibited.
 
 Figure 19.302.5.B.1 Increased Lot Coverage for Single Detached Dwellings
-
 Figure 19.302.5.B.1 illustrates an example of increased lot coverage for lots in the high density zones based on 5,000-sq-ft lot area.
 
 2.
@@ -1159,387 +709,230 @@ G.
 Similar Uses. The Planning Manager through a Type I review, may determine that a use that is not listed is considered similar to an example use listed in Table 19.303.2. The unlisted use shall be subject to the standards applicable to the similar example use.
 
 Table 19.303.2
-
 Uses Allowed in Commercial Mixed-Use Zones
-
+Table 19.303.2
+Uses Allowed in Commercial Mixed-Use Zones
+Table 19.303.2
+Uses Allowed in Commercial Mixed-Use Zones
+Table 19.303.2
+Uses Allowed in Commercial Mixed-Use Zones
+Table 19.303.2
+Uses Allowed in Commercial Mixed-Use Zones
 Uses and Use Categories
-
 GMU
-
 NMU
-
 SMU
-
 Standards/Additional Provisions
-
 Residential
-
+Residential
+Residential
+Residential
+Residential
 Single detached dwelling
-
 N
-
 CU
-
 CU
-
 Subsection 19.505.1 One- to Four-Unit Residential Development
-
 Section 19.905 Conditional Uses
-
 Townhouses1
-
 P
-
 CU
-
 CU
-
 Subsection 19.505.5 Townhouses
-
 Duplex, Triplex, Quadplex
-
 CU
-
 CU
-
 CU
-
 Section 19.905 Conditional Uses
-
 Multi-unit housing
-
 P
-
 CU
-
 CU
-
 Subsection 19.505.3 Multi-Unit Housing
-
 Cottage cluster housing
-
 P
-
 CU
-
 CU
-
 Subsection 19.505.4 Cottage Cluster Housing
-
 Mixed use2
-
 P
-
 P
-
 P
-
 Subsection 19.505.7 Nonresidential Development
-
 Live/work units
-
 P
-
 P
-
 P
-
 Subsection 19.505.6 Live/Work Units
-
 Accessory dwelling units
-
 N
-
 CU
-
 CU
-
 Section 19.905 Conditional Uses
-
 Subsection 19.910.1 Accessory Dwelling Units
-
 Boarding house
-
 CU
-
 CU
-
 CU
-
 Section 19.905 Conditional Uses
-
 Commercial3, 4
-
+Commercial3, 4
+Commercial3, 4
+Commercial3, 4
+Commercial3, 4
 Production-related office
-
 Professional and administrative office
-
 P
-
 P
-
 P
-
 Subsection 19.303.6.C Marijuana testing and research facilities
-
 Drinking establishments
-
 Drinking establishments primarily involve the sale of alcoholic beverages for on-site consumption.
-
 Examples include taverns, bars, or cocktail lounges.
-
 P
-
 P
-
 CU
-
 Section 19.905 Conditional Uses
-
 Eating establishments
-
 Eating establishments primarily involve the sale of prepared food and beverages for on-site consumption or takeout. Eating establishments may include incidental sales of alcoholic beverages.
-
 Examples include restaurants, delicatessens, retail bakeries, coffee shops, concession stands, and espresso bars.
-
 P
-
 P
-
 P
-
 Mobile food trucks and food carts on private property
-
 P
-
 P
-
 P
-
 Indoor recreation
-
 Indoor recreation consists of facilities providing active recreational uses of a primarily indoor nature.
-
 Examples include gyms; dance studios; tennis, racquetball, and soccer centers; recreational centers; skating rinks; bowling alleys; arcades; shooting ranges, movie theaters, live theaters, and playhouses.
-
 P
-
 P
-
 P
-
 Retail-oriented sales
-
 Sales-oriented retail firms are involved in the sale, leasing, and rental of new or used products to the general public.
-
 Examples include stores selling, leasing, or renting consumer, home, and business goods including art, art supplies, bicycles, clothing, dry goods, electronics, fabric, gifts, groceries, hardware, household products, jewelry, pets and pet products, pharmaceuticals, plants, printed materials, stationery, and printed and electronic media.
-
 P
-
 P
-
 P
-
 Marijuana retailer
-
 Marijuana retailer means a state-licensed business that sells or distributes marijuana and marijuana-derived products to consumers. A marijuana retailer may sell or distribute recreational or medical marijuana.
-
 P
-
 P
-
 N
-
 Subsection 19.303.6.A Marijuana retailers
-
 Vehicle sales and rentals5
-
 Vehicle sales and rentals means a business that sells or leases consumer vehicles, including passenger vehicles, motorcycles, light and medium trucks, boats, and other recreational vehicles.
-
 P
-
 N
-
 N
-
 Personal/business services
-
 Personal/business services are involved in providing consumer services.
-
 Examples include hair, tanning, and spa services; pet grooming; photo and laundry drop-off; dry cleaners; and quick printing
-
 P
-
 P
-
 P
-
 Repair-oriented
-
 Repair-oriented uses are establishments providing product repair of consumer and business goods.
-
 Examples include repair of televisions and radios, bicycles, clocks, jewelry, guns, small appliances, and office equipment; tailors and seamstresses; shoe repair; locksmiths; and upholsterers.
-
 P
-
 P
-
 P
-
 Vehicle repair and service6
-
 Firms servicing passenger vehicles; light and medium trucks; and other consumer motor vehicles such as motorcycles, boats and recreational vehicles. Also includes quick-servicing activities, where the driver generally waits in the car before and while the service is performed.
-
 Examples include gas stations, quick oil change shops, car washes, vehicle repair, transmission or muffler shops, auto body shops, alignment shops, auto upholstery shop, auto detailing, and tire sales and mounting.
-
 P
-
 CU
-
 N
-
 Section 19.905 Conditional Uses
-
 Day care7
-
 Day care is the provision of regular child care, with or without compensation, to 4 or more children by a person or person(s) who are not the child's parent, guardian, or person acting in place of the parent, in a facility meeting all State requirements.
-
 Examples include nursery schools, before- and after-school care facilities, and child development centers.
-
 P
-
 P
-
 P
-
 Commercial lodging
-
 Commercial lodging includes for-profit residential facilities where tenancy is typically less than one month.
-
 Examples include hotels, motels, vacation rentals, and bed-and-breakfast establishments.
-
 P
-
 P
-
 CU
-
 Automobile parking facility
-
 Parking facilities provide automobile parking that is not accessory to a specific use. A fee may or may not be charged. A facility that provides both accessory parking for a specific use and regular fee parking for people not connected to the use is also classified as a commercial parking facility.
-
 Examples include structured parking, short- and long-term fee parking facilities, commercial district shared parking lots, and commercial shuttle parking.
-
 N
-
 CU
-
 N
-
 Section 19.611 Parking Structures
-
 Manufacturing and Production
-
+Manufacturing and Production
+Manufacturing and Production
+Manufacturing and Production
+Manufacturing and Production
 Manufacturing and production8
-
 Manufacturing and production uses are involved in the manufacturing, processing, fabrication, packaging, or assembly of goods. Natural, man-made, raw, secondary, or partially completed materials may be used.
-
 Examples include processing of food and related products; catering establishments; breweries, distilleries, and wineries; marijuana processors; weaving or production of textiles or apparel; wood/working, including cabinet makers; manufacture or assembly of machinery, equipment, instruments, including musical instruments, vehicles, appliances, precision items, and other electrical items; and production of artwork and toys. Marijuana production is prohibited.
-
 Within the SMU, the following manufacturing and production uses are also prohibited: marijuana processing, automotive manufacture and assembly, and auto-repair shops.
-
 P
-
 P
-
 P
-
 Subsection 19.509.2 Security and odor control for certain marijuana businesses
-
 Institutional
-
+Institutional
+Institutional
+Institutional
+Institutional
 Community service uses
-
 CSU
-
 CSU
-
 CSU
-
 Section 19.904 Community Service Uses
-
 Accessory and Other
-
+Accessory and Other
+Accessory and Other
+Accessory and Other
+Accessory and Other
 Accessory use
-
 P
-
 P
-
 P
-
 Section 19.503 Accessory Uses
-
 Home occupation
-
 P
-
 P
-
 P
-
 Section 19.507 Home Occupation Standards
-
 Short-term rentals
-
 P
-
 P
-
 P
-
 Section 19.507 Home Occupation Standards
 
 Notes:
-
+Notes:
 P = Permitted.
-
+P = Permitted.
 N = Not permitted.
-
+N = Not permitted.
 CSU = Permitted with community service use approval subject to provisions of Section 19.904. Type III review required to establish a new CSU or for major modification of an existing CSU. Type I review required for a minor modification of an existing CSU.
-
+CSU = Permitted with community service use approval subject to provisions of Section 19.904. Type III review required to establish a new CSU or for major modification of an existing CSU. Type I review required for a minor modification of an existing CSU.
 CU = Permitted with conditional use approval subject to the provisions of Section 19.905. Type III review required to establish a new CU or for major modification of an existing CU. Type I review required for a minor modification of an existing CU.
-
+CU = Permitted with conditional use approval subject to the provisions of Section 19.905. Type III review required to establish a new CU or for major modification of an existing CU. Type I review required for a minor modification of an existing CU.
 1.
-
 The limit of 4 consecutive townhouses established in 19.505.5 does not apply in the GMU Zone. In the GMU Zone, there is no limit on the number of consecutive rowhouses.
-
 2.
-
 Residential uses built as part of a vertical mixed-use building are not subject to conditional use review in the NMU Zone.
-
 3.
-
 In the NMU Zone, unless otherwise specified in this section, all nonresidential uses listed in Table 19.303.2 shall be no greater than 10,000 sq ft in area per use. A nonresidential use greater than 10,000 sq ft in area may be approved through a conditional use review pursuant to Section 19.905.
-
 4.
-
 The 10,000 sq ft size limitation in Footnote 3 of Table 19.303.2 does not apply to "retail-oriented sales" uses established within the existing lot and building situated at 4320 SE King Rd, within the lot's boundaries that exist on February 13, 2016, the effective date of Ordinance #2112. Redevelopment of the site is subject to all standards of Table 19.303.2.
-
 5.
-
 Vehicle retail sales are permitted in the GMU Zone only when conducted within a completely enclosed building (including inventory display and storage).
-
 6.
-
 Vehicle repair and service uses are permitted in the commercial mixed-use zones only when conducted within a completely enclosed building.
-
 7.
-
 Day care and child care uses are limited to 5,000 sq ft.
-
 8.
-
 Manufacturing and production uses are limited to 5,000 sq ft in floor area per use on the ground floor and are only permitted when associated with, and accessory to, a related retail-oriented sales or eating/drinking establishment use. For purposes of this subsection, manufacturing and production involve goods that are sold or distributed beyond or outside of the associated on-site eating or drinking establishment or retail trade use. For example, a brewing facility that distributes or sells its products elsewhere would be considered a manufacturing and production use, while a restaurant kitchen that prepares food that is purchased on the site would not be considered manufacturing or production.
 
 § 19.303.3. Development Standards.
@@ -1549,224 +942,134 @@ These development standards are intended to ensure that new development in the c
 Table 19.303.3 summarizes some of the development standards that apply in the commercial mixed-use zones. Development standards are presented in detail in Subsection 19.303.4.
 
 Table 19.303.3
-
 Commercial Mixed Use Zones—Summary of Development Standards
-
+Table 19.303.3
+Commercial Mixed Use Zones—Summary of Development Standards
+Table 19.303.3
+Commercial Mixed Use Zones—Summary of Development Standards
+Table 19.303.3
+Commercial Mixed Use Zones—Summary of Development Standards
+Table 19.303.3
+Commercial Mixed Use Zones—Summary of Development Standards
 Standard
-
 GMU
-
 NMU
-
 SMU
-
 Standards/Additional Provisions
-
 A. Lot Standards
-
+A. Lot Standards
+A. Lot Standards
+A. Lot Standards
+A. Lot Standards
 1. Minimum lot size (sq ft)
-
 1,500
-
 1,500
-
 1,500
-
 2. Minimum street frontage (ft)
-
 25
-
 25
-
 25
-
 B. Development Standards
-
+B. Development Standards
+B. Development Standards
+B. Development Standards
+B. Development Standards
 1. Minimum floor area ratio
-
 0.5:1
-
 0.5:1
-
 0.5:1
-
 Subsection 19.303.4.A Floor Area Ratio
-
 2. Building height (ft)
-
 Subsection 19.303.4.B Building Height
-
 a. Base maximum
-
 45
-
 45
-
 35
-
 Section 19.510 Green Building Standards
-
 b. Maximum with height bonus
-
 57—69
-
 Height bonus not available
-
 Height bonus not available
-
 Subsection 19.911.7 Building Height Variance in the General Mixed Use Zone
-
 3. Street setbacks (ft)
-
 Subsection 19.303.4.C Street Setbacks
-
 a. Minimum street setback
-
 0—151
-
 None
-
 10
-
 b. Maximum street setback
-
 10—202
-
 10
-
 15
-
 Section 19.501.2 Yard Exceptions
-
 c. Side and rear setbacks
-
 None
-
 None
-
 5/10
-
 4. Frontage occupancy
-
 50%
-
 None
-
 None
-
 Subsection 19.303.4.D Frontage Occupancy Requirements
-
 Figure 19.303.4.D Frontage Occupancy Requirements
-
 5. Maximum lot coverage
-
 85%
-
 85%
-
 85%
-
 6. Minimum vegetation
-
 15%
-
 15%
-
 15%
-
 Subsection 19.504.6 Minimum Vegetation
-
 7. Primary building entrances
-
 Yes
-
 Yes
-
 Yes
-
 Subsection 19.303.4.E Primary Building Entrances
-
 8. Off-street parking standards
-
 Yes
-
 Yes
-
 Yes
-
 Chapter 19.600 Off-Street Parking and Loading
-
 9. Transit street
-
 Yes
-
 Yes
-
 Yes
-
 Subsection 19.505.8 Building Orientation to Transit
-
 10. Transition measures
-
 Yes
-
 Yes
-
 Yes
-
 Subsection 19.504.5 Transition Area Measures
-
 C. Other Standards
-
+C. Other Standards
+C. Other Standards
+C. Other Standards
+C. Other Standards
 1. Residential density requirements (dwelling units per acre)
-
 Subsection 19.202.4 Density Calculations
-
 a. Stand-alone residential
-
 (1) Minimum
-
 25
-
 11.6
-
 7.0
-
 Subsection 19.303.4.F Residential Density
-
 (2) Maximum
-
 50
-
 14.5
-
 b. Mixed-use buildings
-
 None
-
 None
-
 Subsection 19.501.4 Density Exceptions
-
 2. Signs
-
 Yes
-
 Yes
-
 Yes
-
 Subsection 14.16.040 Commercial Zones
 
-Notes:
-
-1.
-
-Residential edge treatments apply to properties as shown in Figure 19.303.5.
-
-2.
-
-Commercial edge treatments apply to properties as shown in Figure 19.303.4.C.2.b.
+Notes:  Notes:
+1.      Residential edge treatments apply to properties as shown in Figure 19.303.5.
+2.      Commercial edge treatments apply to properties as shown in Figure 19.303.4.C.2.b.
 
 § 19.303.4. Detailed Development Standards.
 
@@ -2111,320 +1414,165 @@ Similar Uses
 Similar uses not listed in Table 19.304.2 may be allowed through a Director determination pursuant to Section 19.903.
 
 Table 19.304.2
-
 Uses Allowed in Downtown Zones
-
+Table 19.304.2
+Uses Allowed in Downtown Zones
+Table 19.304.2
+Uses Allowed in Downtown Zones
+Table 19.304.2
+Uses Allowed in Downtown Zones
 Uses and Use Categories
-
 DMU
-
 OS
-
 Standards/ Additional Provisions
-
 Residential
-
 Boarding house
-
 CU
-
 N
-
 Section 19.905 Conditional Uses
-
 Townhouse
-
 P
-
 N
-
 Subsection 19.304.3.A.1 Downtown residential use limitations
-
 Figure 19.304-2 Downtown Residential Use Limitations
-
 Subsection 19.505.5 Townhouses
-
 Multifamily
-
 P
-
 N
-
 Figure 19.304-2 Downtown Residential Use Limitations
-
 Subsection 19.304.3.A.1 Downtown residential use limitations
-
 Live/work units
-
 P
-
 N
-
 Subsection 19.304.3.A.1 Downtown residential use limitations
-
 Subsection 19.505.6 Live/Work Units
-
 Second-story housing
-
 P
-
 N
-
 Section 19.508 Downtown Site and Building Design Standards
-
 Senior and retirement housing
-
 P
-
 N
-
 Subsection 19.304.3.A.1 Downtown residential use limitations
-
 Commercial
-
+Commercial
+Commercial
+Commercial
 Traditional office
-
 Traditional office uses are characterized by activities that generally focus on business, government, professional, medical, or financial services. These office uses generally involve a high level of face-to-face customer contact and are typically expected to generate foot traffic.
-
 Examples include: professional services such as lawyers, architects, or accountants; financial businesses such as lenders, brokerage houses, bank headquarters, or real estate agents; sales offices; government offices and public utility offices; and medical and dental clinics.
-
 P/CU
-
 N
-
 Subsection 19.304.3.A.3 Commercial use limitations
-
 Section 19.905 Conditional Uses
-
 Production-related office
-
 Production-related office uses are characterized by activities that, while conducted in an office-like setting, involve less face-to-face customer contact and do not tend to generate foot traffic. Their operations are less service-oriented than traditional office uses and focus on the development, testing, research, production, processing, packaging, or assembly of goods and products.
-
 Examples include: software and internet content development and publishing; telecommunication service providers; data processing; television, video, radio, and internet studios and broadcasting; scientific and technical services; call centers, marijuana testing and research facilities, and medical and dental labs.
-
 P/CU
-
 N
-
 Subsection 19.304.3.A.2 Main Street limitations
-
 Subsection 19.304.3.A.3 Commercial use limitations
-
 Subsection 19.509.2 Security and odor control for certain marijuana business
-
 Section 19.905 Conditional Uses
-
 Note: Production, processing, packaging, and assembly uses must meet the standards listed below under Manufacturing.
-
 Eating and drinking establishment
-
 Eating and drinking establishments primarily involve the sale of prepared food and beverages for on-site consumption or takeaway.
-
 Examples include restaurants, delicatessens, retail bakeries, taverns, brewpubs, coffee shops, concession stands, wine bars, and espresso bars.
-
 P/CU
-
 CU
-
 Subsection 19.304.3.A.3 Commercial use limitations
-
 Section 19.905 Conditional Uses
-
 Indoor recreation
-
 Indoor recreation consists of facilities providing active recreational uses of a primarily indoor nature.
-
 Examples include gyms; dance studios; tennis, racquetball, and soccer centers; recreational centers; skating rinks; bowling alleys; arcades; shooting ranges; and movie theaters.
-
 P/CU
-
 N
-
 Subsection 19.304.3.A.3 Commercial use limitations
-
 Section 19.905 Conditional Uses
-
 Retail-oriented sales
-
 Sales-oriented retail firms are involved in the sale, leasing, and rental of new or used products to the general public.
-
 Examples include stores selling, leasing, or renting consumer, home, and business goods including art, art supplies, bicycles, clothing, dry goods, electronics, fabric, gifts, groceries, hardware, household products, jewelry, pets and pet products, pharmaceuticals, plants, printed materials, stationery, and printed and electronic media.
-
 P/CU
-
 P/CU
-
 Subsection 19.304.3.A.3 Commercial use limitations
-
 Section 19.905 Conditional Uses
-
 Personal/business services
-
 Personal/business services are involved in providing consumer services.
-
 Examples include hair, tanning, and spa services; pet grooming; photo and laundry drop-off; dry cleaners; and quick printing.
-
 P/CU
-
 N
-
 Subsection 19.304.3.A.3 Commercial use limitations
-
 Section 19.905 Conditional Uses
-
 Repair-oriented
-
 Repair-oriented uses are establishments providing product repair of consumer and business goods.
-
 Examples include repair of televisions and radios, bicycles, clocks, jewelry, guns, small appliances, office equipment, tailors and seamstresses, shoe repair, locksmiths, upholsterers, and some automobile service and repair.
-
 P/CU
-
 N
-
 Subsection 19.304.3.A.3 Commercial use limitations
-
 Section 19.905 Conditional Uses
-
 Day care
-
 Day care is the provision of regular child care, with or without compensation, to 4 or more children by a person or person(s) who are not the child's parent, guardian, or person acting in place of the parent, in a facility meeting all State requirements.
-
 Examples include nursery schools, beforeand after-school care facilities, and child development centers.
-
 P
-
 N
-
 Subsection 19.304.3.A.5 Day care limitation
-
 Commercial lodging
-
 Commercial lodging includes for-profit residential facilities where tenancy is typically less than 1 month.
-
 Examples include hotels, motels, vacation rentals, and bed-and-breakfast establishments. Does not include senior and retirement housing.
-
 P/CU
-
 N
-
 Section 19.905 Conditional Uses (for vacation rentals only)
-
 Parking facility
-
 Parking facilities provide parking that is not accessory to a specific use. A fee may or may not be charged. A facility that provides both accessory parking for a specific use and regular fee parking for people not connected to the use is also classified as a parking facility.
-
 Examples include shortand longterm fee parking facilities, commercial district shared parking lots, and commercial shuttle parking.
-
 CU
-
 P
-
 Subsection 19.304.3.A.6 OS Zone parking limitations
-
 Section 19.905 Conditional Uses
-
 Chapter 19.600 Off-Street Parking and Loading
-
 Marijuana retailer
-
 Marijuana retailer means a statelicensed business that sells or distributes marijuana and marijuanaderived products to consumers. A marijuana retailer may sell or distribute recreational or medical marijuana.
-
 P/CU
-
 N
-
 Subsection 19.509.1 Standards for Marijuana Retailers
-
 Manufacturing
-
 Manufacturing and production
-
 Uses are involved in the manufacturing, processing, fabrication, packaging, or assembly of goods. Natural, man-made, raw, secondary, or partially completed materials may be used.
-
 Examples include processing of food and related products; catering establishments; breweries, distilleries, and wineries; marijuana processors; weaving or production of textiles or apparel; woodworking, including cabinet makers; manufacture or assembly of machinery, equipment, instruments (including musical instruments), vehicles, appliances, precision items, and other electrical items; and production of artwork and toys.
-
 P
-
 N
-
 Subsection 19.304.3.A.8 Manufacturing and production limitations
-
 Subsection 19.509.2 Security and odor control for certain marijuana businesses
-
 Institutional
-
 Parks and open space
-
 Parks and open space uses are lands focusing on natural areas, large areas consisting mostly of vegetative landscaping or outdoor recreation, community gardens, or public squares. Lands tend to have few buildings.
-
 Examples include parks, public squares, plazas, recreational trails, botanical gardens, farmers markets, boat launching areas, nature preserves, and community gardens.
-
 P
-
 P
-
 Community service uses
-
 CSU
-
 CSU
-
 Section 19.904 Community Service Uses
-
 Accessory and Other
-
 Accessory use
-
 P
-
 P
-
 Subsection 19.304.2.E Accessory Uses
-
 Section 19.503 Accessory Uses
-
 Home occupation
-
 P
-
 N
-
 Section 19.507 Home Occupation Standards
-
 Short-term rentals
-
 P
-
 P
-
 Section 19.507 Home Occupation Standards
 
-Notes:
-
-P
-
-=
-
-Permitted.
-
-N
-
-=
-
-Not permitted.
-
-CSU
-
-=
-
-Permitted with community service use approval subject to provisions of Section 19.904. Type III review required to establish a new CSU or for major modification of an existing CSU. Type I review required for a minor modification of an existing CSU.
-
-CU
-
-=
-
-Permitted with conditional use approval subject to the provisions of Section 19.905. Type III review required to establish a new CU or for major modification of an existing CU. Type I review required for a minor modification of an existing CU.
+Notes:  Notes:  Notes:
+P       =       Permitted.
+N       =       Not permitted.
+CSU     =       Permitted with community service use approval subject to provisions of Section 19.904. Type III review required to establish a new CSU or for major modification of an existing CSU. Type I review required for a minor modification of an existing CSU.
+CU      =       Permitted with conditional use approval subject to the provisions of Section 19.905. Type III review required to establish a new CU or for major modification of an existing CU. Type I review required for a minor modification of an existing CU.
 
 § 19.304.3. Use Limitations, Restrictions, and Provisions.
 
@@ -2537,159 +1685,126 @@ See Sections 19.201 Definitions and 19.202 Measurements for specific description
 The development standards address several issues of particular importance to maintaining the appropriate character for the downtown. Table 19.304.4 summarizes some of the development standards that apply downtown. Development standards are presented in full in Subsection 19.304.5.
 
 Table 19.304.4
-
 Downtown Zones—Summary of Development Standards
-
+Table 19.304.4
+Downtown Zones—Summary of Development Standards
+Table 19.304.4
+Downtown Zones—Summary of Development Standards
+Table 19.304.4
+Downtown Zones—Summary of Development Standards
 Standard
-
 DMU
-
 OS
-
 Standards/Additional Provisions
-
 A. Lot Standards
-
+A. Lot Standards
+A. Lot Standards
+A. Lot Standards
 1. Minimum lot size (sq ft)
-
 750
-
 None
-
 2. Minimum street frontage (ft)
-
 15
-
 None
-
 Section 19.201 Definitions
-
 B. Development Standards
-
+B. Development Standards
+B. Development Standards
+B. Development Standards
 1. Floor area ratio
-
 Section 19.201 Definitions
-
 Subsection 19.304.5.A Floor Area Ratios
-
 Figure 19.304-3 Minimum Floor Area Ratios
-
 Subsection 19.611.4 incentives for Provision of Structured Parking
-
 a. Minimum
-
 0.5:1–1:1
-
 None
-
+Section 19.201 Definitions
+Subsection 19.304.5.A Floor Area Ratios
+Figure 19.304-3 Minimum Floor Area Ratios
+Subsection 19.611.4 incentives for Provision of Structured Parking
 b. Maximum
-
 6:1 (FAR bonus available)
-
 None
-
+Section 19.201 Definitions
+Subsection 19.304.5.A Floor Area Ratios
+Figure 19.304-3 Minimum Floor Area Ratios
+Subsection 19.611.4 incentives for Provision of Structured Parking
 2. Building height (ft)
-
 Subsection 19.304.5.B Building Height
-
 Figure 19.304-4 Base Maximum Building Heights
-
 Subsection 19.304.5.B.3 Height Bonuses
-
 Section 19.510 Green Building Standards
-
 Subsection 19.911.6 Building Height Variance in the Downtown Mixed Use Zone
-
 a. Minimum
-
 25
-
 None
-
+Subsection 19.304.5.B Building Height
+Figure 19.304-4 Base Maximum Building Heights
+Subsection 19.304.5.B.3 Height Bonuses
+Section 19.510 Green Building Standards
+Subsection 19.911.6 Building Height Variance in the Downtown Mixed Use Zone
 b. Maximum
-
 45–55 (height bonus available)
-
 15
-
+Subsection 19.304.5.B Building Height
+Figure 19.304-4 Base Maximum Building Heights
+Subsection 19.304.5.B.3 Height Bonuses
+Section 19.510 Green Building Standards
+Subsection 19.911.6 Building Height Variance in the Downtown Mixed Use Zone
 3. Street setbacks (ft)
-
 Subsection 19.304.5.C Street Setbacks
-
 Subsection 19.501.2 Yard Exceptions
-
 a. Minimum street setback
-
 0
-
 0
-
+Subsection 19.304.5.C Street Setbacks
+Subsection 19.501.2 Yard Exceptions
 b. Side and rear setbacks
-
 None
-
 None
-
+Subsection 19.304.5.C Street Setbacks
+Subsection 19.501.2 Yard Exceptions
 4. Off-street parking standards
-
 Yes, where applicable
-
 Yes, where applicable
-
 Subsection 19.304.5.D Off-Street Parking
-
 Chapter 19.600 Off-Street Parking and Loading
-
 C. Other Standards
-
+C. Other Standards
+C. Other Standards
+C. Other Standards
 1. Residential density requirements (dwelling units per acre)
-
 Subsection 19.202.4 Density Calculations
-
 Subsection 19.304.5.E Residential Density
-
 a. Townhouses and live/work units
-
+Subsection 19.202.4 Density Calculations
+Subsection 19.304.5.E Residential Density
 (1) Minimum
-
 25
-
 n/a
-
 Subsection 19.501.4 Density Exceptions
-
 (2) Maximum
-
 None
-
 n/a
-
+Subsection 19.501.4 Density Exceptions
 b. Stand-alone multifamily
-
+Subsection 19.501.4 Density Exceptions
 (1) Minimum
-
 30
-
 n/a
-
+Subsection 19.501.4 Density Exceptions
 (2) Maximum
-
 None
-
 n/a
-
+Subsection 19.501.4 Density Exceptions
 c. Mixed-use buildings
-
 None
-
 n/a
-
+Subsection 19.501.4 Density Exceptions
 2. Signs
-
 Yes
-
 Yes
-
 Section 14.16.060 Downtown Zones
 
 Figure 19.304-3 Minimum Floor Area Ratios
@@ -4407,415 +3522,305 @@ Similar Uses
 The Planning Director, through a Type I review, may determine that a use that is not listed is considered similar to an example use listed in Table 19.312.2. The unlisted use shall be subject to the standards applicable to the similar example use.
 
 Table 19.312.2
-
 Uses Allowed in the North Milwaukie Innovation Area
-
+Table 19.312.2
+Uses Allowed in the North Milwaukie Innovation Area
+Table 19.312.2
+Uses Allowed in the North Milwaukie Innovation Area
+Table 19.312.2
+Uses Allowed in the North Milwaukie Innovation Area
+Table 19.312.2
+Uses Allowed in the North Milwaukie Innovation Area
 Uses and Use Categories
-
+Uses and Use Categories
 NME
-
 MUTSA
-
 Standards/Additional provisions
-
 Residential1
-
+Residential1
+Residential1
+Residential1
+Residential1
 Multifamily
-
+Multifamily
 N
-
 P
-
 Subsection 19.312.6 Detailed Development Standards
-
 Subsection 19.505.3 Multifamily Housing
-
 Mixed use residential
-
+Mixed use residential
 N
-
 P
-
 Subsection 19.312.6 Detailed Development Standards
-
 Live/work units
-
+Live/work units
 N
-
 P
-
 Subsection 19.312.6 Detailed Development Standards
-
 Subsection 19.505.6 Live/Work Units
-
 Commercial
-
+Commercial
+Commercial
+Commercial
+Commercial
 Office
-
+Office
 P
-
 P
-
 1. Production-related office
-
+1. Production-related office
 2. Professional and administrative office
-
+2. Professional and administrative office
 L
-
 L
-
 Subsection 19.312.4.A standards for Limited Uses
-
 Drinking establishments
-
 Drinking establishments primarily involve the sale of alcoholic beverages for on-site consumption.
-
 Examples include taverns, bars, or cocktail lounges.
-
+Drinking establishments
+Drinking establishments primarily involve the sale of alcoholic beverages for on-site consumption.
+Examples include taverns, bars, or cocktail lounges.
 L
-
 L/CU
-
 Subsection 19.312.4.A standards for Limited Uses
-
 Eating establishments
-
 Eating establishments primarily involve the sale of prepared food and beverages for on-site consumption or takeout. Eating establishments may include incidental sales of alcoholic beverages.
-
 Examples include restaurants, delicatessens, retail bakeries, coffee shops, concession stands, and espresso bars.
-
+Eating establishments
+Eating establishments primarily involve the sale of prepared food and beverages for on-site consumption or takeout. Eating establishments may include incidental sales of alcoholic beverages.
+Examples include restaurants, delicatessens, retail bakeries, coffee shops, concession stands, and espresso bars.
 L
-
 L/CU
-
 Subsection 19.312.4.A standards for Limited Uses
-
 Retail-oriented sales
-
 Sales-oriented retail firms are involved in the sale, leasing, and rental of new or used products to the general public.
-
 Examples include stores selling, leasing, or renting consumer, home, and business goods including art, art supplies, bicycles, clothing, dry goods, electronics, fabric, gifts, groceries, hardware, household products, jewelry, pets and pet products, pharmaceuticals, plants, printed materials, stationery, and printed and electronic media.
-
+Retail-oriented sales
+Sales-oriented retail firms are involved in the sale, leasing, and rental of new or used products to the general public.
+Examples include stores selling, leasing, or renting consumer, home, and business goods including art, art supplies, bicycles, clothing, dry goods, electronics, fabric, gifts, groceries, hardware, household products, jewelry, pets and pet products, pharmaceuticals, plants, printed materials, stationery, and printed and electronic media.
 L
-
 L
-
 Subsection 19.312.4.A standards for Limited Uses
-
 Personal service
-
 Personal service firms are involved in providing consumer services.
-
 Examples include hair, tanning, and spa services; pet grooming; photo and laundry drop-off; dry cleaners; and quick printing.
-
+Personal service
+Personal service firms are involved in providing consumer services.
+Examples include hair, tanning, and spa services; pet grooming; photo and laundry drop-off; dry cleaners; and quick printing.
 L
-
 L
-
 Subsection 19.312.4.A standards for Limited Uses
-
 Day care
-
 Day care is the provision of regular childcare, with or without compensation, to 4 or more children by a person or person(s) who are not the child's parent, guardian, or person acting in place of the parent, in a facility meeting all State requirements.
-
 Examples include nursery schools, beforeand after-school care facilities, and child development centers.
-
+Day care
+Day care is the provision of regular childcare, with or without compensation, to 4 or more children by a person or person(s) who are not the child's parent, guardian, or person acting in place of the parent, in a facility meeting all State requirements.
+Examples include nursery schools, beforeand after-school care facilities, and child development centers.
 L
-
 L
-
 Subsection 19.312.4.B.2 Standards for Limited Uses
-
 Hotel/motel
-
+Hotel/motel
 N
-
 CU
-
 Subsection 19.905 Conditional Uses
-
 Adult entertainment businesses2
-
+Adult entertainment businesses2
 N
-
 CU
-
 Subsection 19.905 Conditional Uses
-
 Industrial, Manufacturing and Production
-
+Industrial, Manufacturing and Production
+Industrial, Manufacturing and Production
+Industrial, Manufacturing and Production
+Industrial, Manufacturing and Production
 Manufacturing and production
-
 This category comprises establishments engaged in the mechanical, physical, or chemical transformation of materials, substances, or components into new products, including the assembly of component parts.
-
+Manufacturing and production
+This category comprises establishments engaged in the mechanical, physical, or chemical transformation of materials, substances, or components into new products, including the assembly of component parts.
 P
-
 L
-
 Subsection 19.312.4.B.1 Standards for Limited Uses
-
 Examples include: alternative energy development; biosciences; food and beverage processing; software and electronics production; printing; fabrication of metal products; products made from manufactured glass; products made from rubber, plastic, or resin; converted paper and cardboard products; and microchip fabrication. Manufacturing may also include high-tech and research and development companies.
-
+Examples include: alternative energy development; biosciences; food and beverage processing; software and electronics production; printing; fabrication of metal products; products made from manufactured glass; products made from rubber, plastic, or resin; converted paper and cardboard products; and microchip fabrication. Manufacturing may also include high-tech and research and development companies.
 Construction: contractors and related businesses
-
 This category comprises businesses whose primary activity is performing specific building or other constructionrelated work, on-or off-site.
-
 Examples include: residential and nonresidential building construction; utility/civil engineering construction; specialty trade contractors; and moving companies.
-
+Construction: contractors and related businesses
+This category comprises businesses whose primary activity is performing specific building or other constructionrelated work, on-or off-site.
+Examples include: residential and nonresidential building construction; utility/civil engineering construction; specialty trade contractors; and moving companies.
 P
-
 P
-
 Wholesale trade, warehousing, distribution
-
 This category comprises establishments engaged in selling and/or distributing merchandise to retailers; to industrial, commercial, or professional business users; or to other wholesalers, generally without transformation, and rendering services incidental to the sale of merchandise. Wholesalers sell or distribute merchandise exclusively to other businesses, not the general public, and normally operate from a warehouse or office and are not intended for walk-in traffic.
-
 Examples include: operating wareHousing and storage facilities for general merchandise, refrigerated goods, and other products and materials that have been manufactured and are generally being stored in anticipation of delivery to final customer. Includes fleet parking.
-
 Ministorage facilities (generally used by many individual customers to store personal property) are not considered Industrial warehousing and storage and are not permitted.
-
+Wholesale trade, warehousing, distribution
+This category comprises establishments engaged in selling and/or distributing merchandise to retailers; to industrial, commercial, or professional business users; or to other wholesalers, generally without transformation, and rendering services incidental to the sale of merchandise. Wholesalers sell or distribute merchandise exclusively to other businesses, not the general public, and normally operate from a warehouse or office and are not intended for walk-in traffic.
+Examples include: operating wareHousing and storage facilities for general merchandise, refrigerated goods, and other products and materials that have been manufactured and are generally being stored in anticipation of delivery to final customer. Includes fleet parking.
+Ministorage facilities (generally used by many individual customers to store personal property) are not considered Industrial warehousing and storage and are not permitted.
 P
-
 P
-
 Repair and service
-
 This category comprises firms involved in repair and servicing of industrial, business, or consumer electronic equipment, machinery, and related equipment, products, or by-products. Few customers come to the site, particularly not general public daily customers. Auto service and repair shops for personal vehicles are not included in this category and are not permitted.
-
 Examples include: welding shops; machine shops; tool, electric motor, and industrial instrument repair; sales, repair, or storage of heavy machinery, metal, and building materials; heavy truck servicing and repair; tire retreading or recapping; exterminators, including chemical mixing or storage and fleet storage and maintenance; janitorial and building maintenance services that include storage of materials and fleet storage and maintenance; fuel oil distributors; solid fuel yards; and largescale laundry, dry-cleaning, and carpet cleaning plants.
-
-P
-
-L
-
-Subsection 19.312.4.B.1 Standards for Limited Uses
-
-Trade schools and training facilities3
-
-This category comprises establishments whose primary purpose is to provide training for industrial needs and jobspecific certification.
-
-Examples include: electronic equipment repair training; truck-driving school; welding school; training for repair of industrial machinery; job skills training classrooms; and other industrial/employment skills training.
-
-P
-
-P
-
 Repair and service
-
 This category comprises firms involved in repair and servicing of industrial, business, or consumer electronic equipment, machinery, and related equipment, products, or by-products. Few customers come to the site, particularly not general public daily customers. Auto service and repair shops for personal vehicles are not included in this category and are not permitted.
-
 Examples include: welding shops; machine shops; tool, electric motor, and industrial instrument repair; sales, repair, or storage of heavy machinery, metal, and building materials; heavy truck servicing and repair; tire retreading or recapping; exterminators, including chemical mixing or storage and fleet storage and maintenance; janitorial and building maintenance services that include storage of materials and fleet storage and maintenance; fuel oil distributors; solid fuel yards; and largescale laundry, dry-cleaning, and carpet cleaning plants.
-
 P
-
 L
-
 Subsection 19.312.4.B.1 Standards for Limited Uses
-
 Trade schools and training facilities3
-
 This category comprises establishments whose primary purpose is to provide training for industrial needs and jobspecific certification.
-
 Examples include: electronic equipment repair training; truck-driving school; welding school; training for repair of industrial machinery; job skills training classrooms; and other industrial/employment skills training.
-
+Trade schools and training facilities3
+This category comprises establishments whose primary purpose is to provide training for industrial needs and jobspecific certification.
+Examples include: electronic equipment repair training; truck-driving school; welding school; training for repair of industrial machinery; job skills training classrooms; and other industrial/employment skills training.
 P
-
 P
-
+Repair and service
+This category comprises firms involved in repair and servicing of industrial, business, or consumer electronic equipment, machinery, and related equipment, products, or by-products. Few customers come to the site, particularly not general public daily customers. Auto service and repair shops for personal vehicles are not included in this category and are not permitted.
+Examples include: welding shops; machine shops; tool, electric motor, and industrial instrument repair; sales, repair, or storage of heavy machinery, metal, and building materials; heavy truck servicing and repair; tire retreading or recapping; exterminators, including chemical mixing or storage and fleet storage and maintenance; janitorial and building maintenance services that include storage of materials and fleet storage and maintenance; fuel oil distributors; solid fuel yards; and largescale laundry, dry-cleaning, and carpet cleaning plants.
+Repair and service
+This category comprises firms involved in repair and servicing of industrial, business, or consumer electronic equipment, machinery, and related equipment, products, or by-products. Few customers come to the site, particularly not general public daily customers. Auto service and repair shops for personal vehicles are not included in this category and are not permitted.
+Examples include: welding shops; machine shops; tool, electric motor, and industrial instrument repair; sales, repair, or storage of heavy machinery, metal, and building materials; heavy truck servicing and repair; tire retreading or recapping; exterminators, including chemical mixing or storage and fleet storage and maintenance; janitorial and building maintenance services that include storage of materials and fleet storage and maintenance; fuel oil distributors; solid fuel yards; and largescale laundry, dry-cleaning, and carpet cleaning plants.
+P
+L
+Subsection 19.312.4.B.1 Standards for Limited Uses
+Trade schools and training facilities3
+This category comprises establishments whose primary purpose is to provide training for industrial needs and jobspecific certification.
+Examples include: electronic equipment repair training; truck-driving school; welding school; training for repair of industrial machinery; job skills training classrooms; and other industrial/employment skills training.
+Trade schools and training facilities3
+This category comprises establishments whose primary purpose is to provide training for industrial needs and jobspecific certification.
+Examples include: electronic equipment repair training; truck-driving school; welding school; training for repair of industrial machinery; job skills training classrooms; and other industrial/employment skills training.
+P
+P
 Creative space
-
 Industrial/manufacturing space specifically for artist-type uses.
-
 Examples include: artist manufacturing studios (welding, pottery, ceramics, painting, glass, etc.); sound stage and/or film production; set design and production; music studio/production.
-
+Creative space
+Industrial/manufacturing space specifically for artist-type uses.
+Examples include: artist manufacturing studios (welding, pottery, ceramics, painting, glass, etc.); sound stage and/or film production; set design and production; music studio/production.
 P
-
 P
-
 Waste management4
-
 This category comprises businesses that provide garbage and recycling hauling, including fleet parking and maintenance. Storage of waste or recycling materials collected by a waste management business for any period of time is not permitted.
-
+Waste management4
+This category comprises businesses that provide garbage and recycling hauling, including fleet parking and maintenance. Storage of waste or recycling materials collected by a waste management business for any period of time is not permitted.
 CUP
-
 P
-
 Community Service Use
-
+Community Service Use
+Community Service Use
+Community Service Use
+Community Service Use
 Only the following community service uses are included in this district:
-
+Only the following community service uses are included in this district:
+Only the following community service uses are included in this district:
+Only the following community service uses are included in this district:
 Section 19.904 Community Service Uses
-
 1.
-
 Institutions
-
 a. Government offices
-
 P
-
 P
-
 b. Public transit facilities or passenger terminal
-
 CSU
-
 CSU
-
 c. Schools (public or private)
-
 CSU
-
 CSU
-
 d. Recreation facilities (public or private)
-
 CSU P
-
 CSU P
-
 e. Parks and open space
-
 CSU
-
 CSU
-
 f. Transitional or correctional facilities (public or private)
-
 See Trade Schools and Training Facilities
-
 g. Hospitals
-
 CSU
-
 CSU
-
 2.
-
 Infrastructure
-
 a. Utilities (water, sewer, and storm sewer facilities, including, but not limited to, sewage pumping stations, water wells, pump stations, sewer mining)
-
 P
-
 P
-
 b. Communication facilities (includes WCF)
-
 P
-
 P
-
 c. Electrical power substations; solar facilities
-
 P
-
 P
-
 Marijuana and Psilocybin Businesses
-
+Marijuana and Psilocybin Businesses
+Marijuana and Psilocybin Businesses
+Marijuana and Psilocybin Businesses
+Marijuana and Psilocybin Businesses
 1.
-
 Marijuana retailers subject to the standards of Subsections 19.312.4 and 19.509.1.
-
 N
-
 CU
-
 Subsection 19.509.2 Security and Odor Control for Certain Marijuana Businesses
-
 Subsection 19.312.4.A.5 Standards for Limited Uses
-
 2.
-
 Marijuana processing, testing, research, and warehousing subject to the standards of Subsection 19.509.2.
-
 P
-
 P
-
 Subsection 19.509.2 Security and Odor Control for Certain Marijuana Businesses
-
 3.
-
 Marijuana production subject to the conditional use process and the standards of Subsections 19.509.2 and 19.509.3.
-
 CU
-
 CU
-
 Subsection 19.509.2 Security and Odor Control for Certain Marijuana Businesses
-
 Subsection 19.509.3 Marijuana Production Limitations
-
 Section 19.905 Conditional Uses
-
 4.
-
 Psilocybin cultivation only, as defined in ORS 475A, including planting, growing, harvesting, and propagation.
-
 CU
-
 CU
-
 Subsection 19.509.4 Psilocybin Cultivation Limitations
-
 Section 19.905 Conditional Uses
 
 Notes:
-
+Notes:
+Notes:
+Notes:
 P
-
 =
-
 Permitted.
-
+Permitted.
 N
-
 =
-
 Not permitted.
-
+Not permitted.
 L
-
 =
-
 Limited.
-
+Limited.
 CSU
-
 =
-
 Permitted with community service use approval subject to provisions of Section 19.904. Type III review required to establish a new CSU or for major modification of an existing CSU. Type I review required for a minor modification of an existing CSU.
-
+Permitted with community service use approval subject to provisions of Section 19.904. Type III review required to establish a new CSU or for major modification of an existing CSU. Type I review required for a minor modification of an existing CSU.
 CU
-
 =
-
 Permitted with conditional use approval subject to the provisions of Section 19.905. Type III review required to establish a new CU or for major modification of an existing CU. Type I review required for a minor modification of an existing CU.
-
+Permitted with conditional use approval subject to the provisions of Section 19.905. Type III review required to establish a new CU or for major modification of an existing CU. Type I review required for a minor modification of an existing CU.
 1.
-
 Multifamily residential is permitted outright in a stand-alone building or in stories above a groundfloor commercial or office use. Deed restrictions will apply to residential development in order to reduce potential conflicts between residential uses and surrounding manufacturing uses, which will serve as actual and constructive notice to potential purchasers and tenants of the owner's property that the residential use is located within a zone that permits and encourages industrial uses.
-
+Multifamily residential is permitted outright in a stand-alone building or in stories above a groundfloor commercial or office use. Deed restrictions will apply to residential development in order to reduce potential conflicts between residential uses and surrounding manufacturing uses, which will serve as actual and constructive notice to potential purchasers and tenants of the owner's property that the residential use is located within a zone that permits and encourages industrial uses.
 2.
-
 When considering an adult entertainment business, the following criteria shall be used:
-
+When considering an adult entertainment business, the following criteria shall be used:
 a.
-
 The proposed location of an adult entertainment business shall not be within 500 ft of an existing or previously approved adult entertainment business or within 500 ft of either a public park, a church, a day-care center, a primary, elementary, junior high, or high school, or any residentially zoned property.
-
 b.
-
 Distances shall be measured in a straight line, without regard to intervening structures, between the closest structural wall of the adult entertainment business and either the closest property line of the applicable property or the closest structural wall of any preexisting or previously approved adult entertainment business.
-
 3.
-
 All activities related to trade schools must be conducted inside an enclosed building.
-
+All activities related to trade schools must be conducted inside an enclosed building.
 4.
-
+Waste Management uses in existence prior to December 31, 2017 are Permitted; uses proposed after that date are permitted as a Conditional Use.
 Waste Management uses in existence prior to December 31, 2017 are Permitted; uses proposed after that date are permitted as a Conditional Use.
 
 § 19.312.3. Specific Prohibited Uses.
@@ -4873,172 +3878,103 @@ These development standards are intended to ensure that new development is appro
 Table 19.312.5 summarizes some of the development standards that apply in the NMIA. Development standards are presented in detail in Subsection 19.312.6.
 
 Table 19.312.5
-
 North Milwaukie Innovation Area — Summary of Development Standards
-
+Table 19.312.5
+North Milwaukie Innovation Area — Summary of Development Standards
+Table 19.312.5
+North Milwaukie Innovation Area — Summary of Development Standards
+Table 19.312.5
+North Milwaukie Innovation Area — Summary of Development Standards
 Standard
-
 NME
-
 MUTSA
-
 Standards/Additional Provisions
-
 A. Lot Standards
-
+A. Lot Standards
+A. Lot Standards
+A. Lot Standards
 1. Minimum lot size (sq ft)
-
 None
-
 None
-
 2. Minimum street frontage (ft)
-
 None
-
 None
-
 B. Development Standards
-
+B. Development Standards
+B. Development Standards
+B. Development Standards
 1. Floor area ratio (min/max)
-
 0.5:1/3:1
-
 0.5:1/3:1
-
 2. Building height (ft)
-
 a. Minimum
-
 25
-
 25
-
 b. Maximum (Height bonus available)
-
 45-90
-
 45-90
-
 Subsection 19.312.6.A Building height bonus
-
 Subsection 19.510 Green Building Standards
-
 3. Setbacks (ft)
-
 Subsection 19.501.2 Yard exceptions
-
 a. Minimum front yard setback
-
 None
-
 None
-
 b. Maximum front yard setback
-
 10-301
-
 10-301
-
 c. Side and rear setbacks
-
 None2
-
 None2
-
 4. Maximum lot coverage
-
 85%
-
 85%
-
 5. Minimum landscaping
-
 15%
-
 15%
-
 Subsection 19.312.6.G Landscaping
-
 6. Flexible ground-floor space
-
 Yes, where applicable
-
 Yes, where applicable
-
 Subsection 19.312.7.A.6 Flexible ground-floor space
-
 7. Off-street parking standards
-
 Yes
-
 Yes
-
 Subsection 19.312.6.C Loading and Unloading Areas
-
 Subsection 19.312.7.C Parking, Loading and Unloading Areas
-
 Chapter 19.600 Off-Street Parking and Loading
-
 8. Frontage occupancy
-
 50%
-
 50%
-
 Subsection 19.312.7.A.7 Frontage occupancy
-
 C. Other Standards
-
+C. Other Standards
+C. Other Standards
+C. Other Standards
 1. Residential density requirements (dwelling units per acre)
-
 Subsection 19.202.4 Density Calculations
-
 a. Stand-alone residential
-
 (1) Minimum
-
 N/A
-
 None
-
 (2) Maximum
-
 N/A
-
 None
-
 b. Mixed-use buildings
-
 N/A
-
 None
-
 2. Signs
-
 Yes
-
 Yes
-
 Subsection 14.16.050 Commercial Zone
-
 Subsection 19.312.6.F Signage for Non-manufacturing Uses
-
 3. Design Standards
-
 Yes
-
 Yes
-
 Subsection 19.312.7.A Design Standards for All New Construction and Major Exterior Alterations
 
-1.
-
-Properties in the MUTSA have a maximum front yard setback of 10 ft. Properties on key streets in the NME have a maximum front yard setback of 30 ft. Refer to 19.312.7 for key streets.
-
-2.
-
-Side and rear lot lines abutting a residential zone have a minimum 10-ft setback. Side and rear lot lines not abutting a residential zone have no required setback.
+1.  Properties in the MUTSA have a maximum front yard setback of 10 ft. Properties on key streets in the NME have a maximum front yard setback of 30 ft. Refer to 19.312.7 for key streets.
+2.  Side and rear lot lines abutting a residential zone have a minimum 10-ft setback. Side and rear lot lines not abutting a residential zone have no required setback.
 
 § 19.312.6. Detailed Development Standards.
 
@@ -5292,105 +4228,30 @@ Buildings shall not utilize materials listed as (N) prohibited material.
 
 For existing development, façade modifications that affect more than 50% of the façade shall comply with standards in this subsection. The Planning Director may waive this requirement if application of the standards would create an incongruous appearance of existing and new materials.
 
-Table 19.312.7.A.4
+Table 19.312.7.A.4 Commercial Exterior Building Materials                                                                  Table 19.312.7.A.4 Commercial Exterior Building Materials
+Material Type                                                                                                              Nonresidential and Mixed-Use
+Brick                                                                                                                      P
+Stone/masonry                                                                                                              P
+Stucco, when installed over concrete                                                                                       P
+Glass (transparent, spandrel)                                                                                              P
+Concrete (poured in place or precast)                                                                                      P
+Finished wood, wood veneers, and wood siding                                                                               P
+Finished metal panels—such as anodized aluminum, stainless steel, or copper—featuring polished, brushed, or patina finish  S
+Concrete blocks with integral color (ground, polished, or split-face finish)                                               S
+Fiber-reinforced cement siding and panels                                                                                  S
+Ceramic tile                                                                                                               S
+Concrete blocks with integral color (glazed finish)                                                                        A
+Standing seam and corrugated metal                                                                                         A
+Glass block                                                                                                                A
+Vegetated wall panels or trellises                                                                                         A
+Vinyl siding                                                                                                               N
+Exterior insulation finishing system (EIFS)                                                                                N
+Plywood paneling                                                                                                           N
 
-Commercial Exterior Building Materials
-
-Material Type
-
-Nonresidential and Mixed-Use
-
-Brick
-
-P
-
-Stone/masonry
-
-P
-
-Stucco, when installed over concrete
-
-P
-
-Glass (transparent, spandrel)
-
-P
-
-Concrete (poured in place or precast)
-
-P
-
-Finished wood, wood veneers, and wood siding
-
-P
-
-Finished metal panels—such as anodized aluminum, stainless steel, or copper—featuring polished, brushed, or patina finish
-
-S
-
-Concrete blocks with integral color (ground, polished, or split-face finish)
-
-S
-
-Fiber-reinforced cement siding and panels
-
-S
-
-Ceramic tile
-
-S
-
-Concrete blocks with integral color (glazed finish)
-
-A
-
-Standing seam and corrugated metal
-
-A
-
-Glass block
-
-A
-
-Vegetated wall panels or trellises
-
-A
-
-Vinyl siding
-
-N
-
-Exterior insulation finishing system (EIFS)
-
-N
-
-Plywood paneling
-
-N
-
-P
-
-=
-
-Primary material
-
-S
-
-=
-
-Secondary material
-
-A
-
-=
-
-Accent material
-
-N
-
-=
-
-Prohibited material
+P  =  Primary material
+S  =  Secondary material
+A  =  Accent material
+N  =  Prohibited material
 
 5.
 

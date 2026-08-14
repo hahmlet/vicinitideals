@@ -1,5 +1,6 @@
 {
   "url": "https://www.cityofrivergrove.org/s/RLDOComposite-with-cover.pdf",
   "retrieved": "2026-08-13",
-  "sha256": "f677014edc472e1c03160141325c930525b7d5d80b1fb56a2b84b81fc25a0919"
+  "sha256": "f677014edc472e1c03160141325c930525b7d5d80b1fb56a2b84b81fc25a0919",
+  "extractor": "flats-html-text/3"
 }

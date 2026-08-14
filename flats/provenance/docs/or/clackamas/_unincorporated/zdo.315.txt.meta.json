@@ -1,5 +1,6 @@
 {
   "url": "https://www.clackamas.us/planning/zdo315",
   "retrieved": "2026-08-13",
-  "sha256": "65241b6c8e1b56eb998791580ca20d514b98af55ac11a35d98b25ae4d910138f"
+  "sha256": "783c3d6dbf8945b8d7f7cbefe549219998e122670e72cd43ced2bf7bea13d00e",
+  "extractor": "flats-html-text/3"
 }

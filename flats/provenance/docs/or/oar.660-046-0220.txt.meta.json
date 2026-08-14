@@ -1,5 +1,6 @@
 {
   "url": "https://oregon.public.law/rules/oar_660-046-0220",
   "retrieved": "2026-08-13",
-  "sha256": "03ffaf83632746dca53d2148087264d747ce9238dc72c30881ea8423a2ea150b"
+  "sha256": "6560f4ae9ebf34885eeb98877164b50c5b664f3cdaaf8b3421c472ab639adff0",
+  "extractor": "flats-html-text/3"
 }

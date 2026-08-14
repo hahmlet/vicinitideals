@@ -4,7 +4,7 @@ Resize:
 
 City of Lake Oswego, OR
 
-Thursday, August 13, 2026
+Friday, August 14, 2026
 
 Chapter 50. Community Development Code
 
@@ -67,710 +67,429 @@ Residential Use Table.
 [Ord. No. 2579, Repealed and Replaced, 3-20-2012; Ord. No. 2526, Amended, 12-18-2012; Ord. No. 2643, Amended, 11-4-2014; Ord. No. 2667, Amended, 10-20-2015; Ord. No. 2668, Amended, 12-1-2015; Ord. No. 2723, Amended, 10-18-2016; Ord. No. 2784, Amended, 7-3-2018; Ord. No. 2815, Amended, 7-16-2019; Ord. No. 2892, Amended, 6-7-2022; Ord. No. 2909, Amended, 2-7-2023; Amended, 2-17-2026 by Ord. No. 2964]
 
 TABLE 50.03.002-1: RESIDENTIAL DISTRICTS USE TABLE
-
 P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
-
 [x] Table notes located at the end of the table
-
+TABLE 50.03.002-1: RESIDENTIAL DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
+TABLE 50.03.002-1: RESIDENTIAL DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
+TABLE 50.03.002-1: RESIDENTIAL DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
+TABLE 50.03.002-1: RESIDENTIAL DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
+TABLE 50.03.002-1: RESIDENTIAL DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
+TABLE 50.03.002-1: RESIDENTIAL DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
+TABLE 50.03.002-1: RESIDENTIAL DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
+TABLE 50.03.002-1: RESIDENTIAL DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
+TABLE 50.03.002-1: RESIDENTIAL DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
+TABLE 50.03.002-1: RESIDENTIAL DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
+TABLE 50.03.002-1: RESIDENTIAL DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
+TABLE 50.03.002-1: RESIDENTIAL DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
 Use Category
-
 Use Type
-
 Residential
-
+Residential
+Residential
+Residential
+Residential
+Residential
+Residential
+Residential
+Residential
+Residential
 Use-Specific Standards
-
+Use Category
+Use Type
 R-15
-
 R-10
-
 R-7.5
-
 R-6
-
 R-5
-
 R-DD
-
 R-W
-
 R-3 [3]
-
 R-2
-
 R-0 [3] [4]
-
+Use-Specific Standards
 RESIDENTIAL USES
-
+RESIDENTIAL USES
 Household Living
-
 Dwelling, single-family detached dwelling (one per lot)
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P [1]
-
 P
-
 P
-
 P
-
+Household Living
 Dwelling, duplex (one per lot)
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
+Household Living
 Townhouse project
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 § 50.03.003.1.e
-
+Household Living
 Cottage cluster (one per lot)
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 § 50.03.003.1.d
-
+Household Living
 Dwelling, multi-family
-
 P
-
 P
-
 P
-
 P
-
+Household Living
 Dwelling, quadplex
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
+Household Living
 Dwelling, triplex
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
+Household Living
 Manufactured home (one per lot)
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 § 50.03.003.1.b
-
+Household Living
 Manufactured home park or subdivision
-
 P
-
 P
-
 P
-
 § 50.03.003.1.c
-
 Group and Institutional Housing
-
 Congregate housing
-
 C
-
 C
-
 C
-
 P
-
 P
-
 P
-
 P
-
 § 50.03.003.4.a and b; R-2 zone: § 50.03.003.3
-
+Group and Institutional Housing
 Group care home
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
+Group and Institutional Housing
 Residential care housing
-
 C
-
 C
-
 C
-
 P
-
 P
-
 P
-
 P
-
 § 50.03.003.4.a and b; R-2 zone: § 50.03.003.3
-
+Group and Institutional Housing
 Skilled nursing facility
-
 C
-
 C
-
 C
-
 C
-
 C
-
 § 50.03.003.4.c; R-2 zone: § 50.03.003.3
-
 PUBLIC, INSTITUTIONAL, AND CIVIC USES
-
+PUBLIC, INSTITUTIONAL, AND CIVIC USES
 § 50.03.003.5
-
 Day Care
-
 Certified or registered family child care home
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
+Day Care
 Day care center
-
 C
-
 C
-
 C
-
 C
-
 C
-
 C
-
 C
-
 C
-
 C
-
 § 50.03.003.5
-
 Institutional Uses
-
 Institutional use
-
 C
-
 C
-
 C
-
 C
-
 C
-
 C
-
 C
-
 C
-
 C
-
 § 50.03.003.5; R-2 and R-6 zones: § 50.03.003.3
-
 Education
-
 Educational institutions, private
-
 C
-
 C
-
 C
-
 C
-
 C
-
 C
-
 C
-
 C
-
 C
-
 § 50.03.003.5
-
 Public Facility/Utility
-
 Major
-
 C
-
 C
-
 C
-
 C
-
 C
-
 C
-
 C
-
 C
-
 C
-
 § 50.03.003.5.c; R-2 and R-6 zones: § 50.03.003.3
-
+Public Facility/Utility
 Minor
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 § 50.03.003.5.b
-
+Public Facility/Utility
 Telecommunications facilities, new
-
 C
-
 C
-
 C
-
 C
-
 C
-
 C
-
 C
-
 C
-
 C
-
 § 50.03.003.5.g; R-2 and R-6 zones: § 50.03.003.3
-
+Public Facility/Utility
 Telecommunications facility, collocated
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 § 50.03.003.5.g
-
 NONRESIDENTIAL USES
-
+NONRESIDENTIAL USES
 Agricultural
-
 Community garden
-
 P/C
-
 P/C
-
 P/C
-
 P/C
-
 P/C
-
 P/C
-
 § 50.03.003.6.j; R-6 zone: § 50.03.003.3
-
 Office Uses
-
 Office, business, or professional
-
 C
-
 C
-
 C
-
 C
-
 C
-
 C
-
 C
-
 C
-
 C
-
 § 50.03.003.6.p; R-2 and R-6 zones: § 50.03.003.3
-
 Recreation and Entertainment
-
 Golf course, hunt club, or similar open land private recreational uses
-
 C
-
 C
-
 C
-
 C
-
 R-6 zone: § 50.03.003.3
-
+Recreation and Entertainment
 Social, recreational, or cultural facilities, nonprofit
-
 P/C
-
 P/C
-
 P/C
-
 P/C
-
 § 50.03.003.6.y; R-2 zone: § 50.03.003.3
-
 ACCESSORY USES
-
+ACCESSORY USES
 Accessory Uses
-
 Community garden
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 § 50.03.003.6.j
-
+Accessory Uses
 Urban agriculture
-
 C
-
 C
-
 § 50.03.004.1.b.vii
-
+Accessory Uses
 Home occupation
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 § 50.03.004.1.b.ii
-
+Accessory Uses
 Short-term rental lodging
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 § 50.03.004.1.b.ii
-
+Accessory Uses
 Large animals kept for owner’s personal use
-
 A
-
 A
-
 § 50.03.004.1.b.iii
-
+Accessory Uses
 Small animals kept for owner’s personal use [2]
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
+Accessory Uses
 Accessory dwelling unit
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 § 50.03.004.1.b.vi
 
-Notes:
-
-[1]
-
-Erected on pilings over the water of Oswego Lake.
-
-[2]
-
-No commercial activity allowed.
-
-[3]
-
-If lot has multiple zones, e.g., R-0/EC, see LOC § 50.02.002.2.e.
-
-[4]
-
-Site-specific use limitations, see LOC § 50.02.002.2.c.
+Notes:  Notes:
+[1]     Erected on pilings over the water of Oswego Lake.
+[2]     No commercial activity allowed.
+[3]     If lot has multiple zones, e.g., R-0/EC, see LOC § 50.02.002.2.e.
+[4]     Site-specific use limitations, see LOC § 50.02.002.2.c.
 
 3.
 
@@ -779,1277 +498,794 @@ Commercial, Mixed Use, Industrial, and Special Purpose Districts Use Table.
 [Ord. No. 2579, Repealed and Replaced, 3-20-2012; Ord. No. 2583, Amended, 6-19-2012; Ord. No. 2526, Amended, 12-18-2012; Ord. No. 2599, Amended, 12-18-2012; Ord. No. 2611, Amended, 4-16-2013; Ord. No. 2612-A, Amended, 5-21-2013; Ord. No. 2612-B, Amended, 8-13-2013; Ord. No. 2639, Amended, 6-3-2014; Ord. No. 2643, Amended, 11-4-2014; Ord. No. 2668, Amended, 12-1-2015; Ord. No. 2707, Amended, 5-17-2016; Ord. No. 2723, Amended, 10-18-2016; Ord. No. 2736, Amended, 3-7-2017; Ord. No. 2783, Amended, 6-19-2018; Ord. No. 2853, Amended, 11-3-2020; Ord. No. 2855, Amended, 12-15-2020; Ord. No. 2872, Amended, 10-5-2021; Ord. No. 2909, Amended, 2-7-2023, Amended 12-5-2023 by Ord. No. 2928; Amended by memo 1-24-2025; Amended 4-15-2025 by Ord. No. 2959]
 
 TABLE 50.03.002-2: COMMERCIAL, MIXED USE, INDUSTRIAL AND SPECIAL PURPOSE DISTRICTS USE TABLE
-
 P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
-
 [x] Table notes located at the end of the table
-
+TABLE 50.03.002-2: COMMERCIAL, MIXED USE, INDUSTRIAL AND SPECIAL PURPOSE DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
+TABLE 50.03.002-2: COMMERCIAL, MIXED USE, INDUSTRIAL AND SPECIAL PURPOSE DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
+TABLE 50.03.002-2: COMMERCIAL, MIXED USE, INDUSTRIAL AND SPECIAL PURPOSE DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
+TABLE 50.03.002-2: COMMERCIAL, MIXED USE, INDUSTRIAL AND SPECIAL PURPOSE DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
+TABLE 50.03.002-2: COMMERCIAL, MIXED USE, INDUSTRIAL AND SPECIAL PURPOSE DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
+TABLE 50.03.002-2: COMMERCIAL, MIXED USE, INDUSTRIAL AND SPECIAL PURPOSE DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
+TABLE 50.03.002-2: COMMERCIAL, MIXED USE, INDUSTRIAL AND SPECIAL PURPOSE DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
+TABLE 50.03.002-2: COMMERCIAL, MIXED USE, INDUSTRIAL AND SPECIAL PURPOSE DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
+TABLE 50.03.002-2: COMMERCIAL, MIXED USE, INDUSTRIAL AND SPECIAL PURPOSE DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
+TABLE 50.03.002-2: COMMERCIAL, MIXED USE, INDUSTRIAL AND SPECIAL PURPOSE DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
+TABLE 50.03.002-2: COMMERCIAL, MIXED USE, INDUSTRIAL AND SPECIAL PURPOSE DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
+TABLE 50.03.002-2: COMMERCIAL, MIXED USE, INDUSTRIAL AND SPECIAL PURPOSE DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
+TABLE 50.03.002-2: COMMERCIAL, MIXED USE, INDUSTRIAL AND SPECIAL PURPOSE DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
+TABLE 50.03.002-2: COMMERCIAL, MIXED USE, INDUSTRIAL AND SPECIAL PURPOSE DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
+TABLE 50.03.002-2: COMMERCIAL, MIXED USE, INDUSTRIAL AND SPECIAL PURPOSE DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
+TABLE 50.03.002-2: COMMERCIAL, MIXED USE, INDUSTRIAL AND SPECIAL PURPOSE DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
+TABLE 50.03.002-2: COMMERCIAL, MIXED USE, INDUSTRIAL AND SPECIAL PURPOSE DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
+TABLE 50.03.002-2: COMMERCIAL, MIXED USE, INDUSTRIAL AND SPECIAL PURPOSE DISTRICTS USE TABLE
+P = Permitted Use | Blank = Not Permitted | C = Conditional Use | A = Accessory Use
+[x] Table notes located at the end of the table
 Use Category
-
 Use Type
-
 Commercial, Mixed Use, Industrial
-
+Commercial, Mixed Use, Industrial
+Commercial, Mixed Use, Industrial
+Commercial, Mixed Use, Industrial
+Commercial, Mixed Use, Industrial
+Commercial, Mixed Use, Industrial
+Commercial, Mixed Use, Industrial
+Commercial, Mixed Use, Industrial
+Commercial, Mixed Use, Industrial
+Commercial, Mixed Use, Industrial
+Commercial, Mixed Use, Industrial
+Commercial, Mixed Use, Industrial
+Commercial, Mixed Use, Industrial
 Special Purpose
-
+Special Purpose
+Special Purpose
 Use-Specific Standards
-
+Use Category
+Use Type
 NC [8], [9]
-
 GC
-
 HC [9]
-
 OC [8]
-
 EC [8]
-
 CR&D
-
 MC
-
 WLG [4]
-
+WLG [4]
+WLG [4]
 FMU [4], [7]
-
 I
-
 IP [5]
-
 CI
-
 PF [3]
-
 PNA
-
+Use-Specific Standards
+Use Category
+Use Type
+NC [8], [9]
+GC
+HC [9]
+OC [8]
+EC [8]
+CR&D
+MC
 OC
-
 RMU
-
 R-2.5
-
+FMU [4], [7]
+I
+IP [5]
+CI
+PF [3]
+PNA
+Use-Specific Standards
 RESIDENTIAL USES
-
+RESIDENTIAL USES
 Household Living
-
 Residential use at R-5 density or greater
-
 P
-
 P [10]
-
 P
-
 P
-
 P
-
 P
-
 P [11]
-
 P [1]
-
 P [2]
-
 P
-
 P
-
 WLG zones: § 50.03.003.1.a; NC, GC, EC and CI zones: § 50.03.003.2
-
+Household Living
 Dwelling, live-work
-
 P
-
 P [10]
-
 P
-
 P
-
 P
-
 P
-
 P
-
 Group and Institutional Housing
-
 Congregate housing
-
 C
-
 C [10]
-
 C
-
 P
-
 P
-
 § 50.03.003.4.a
-
+Group and Institutional Housing
 Continuing care retirement community (CCRC)
-
 P
-
+Group and Institutional Housing
 Group care home
-
 P
-
 P
-
+Group and Institutional Housing
 Residential care housing
-
 C
-
 C [10]
-
 C
-
 P
-
 P
-
 P
-
 § 50.03.003.4.a
-
+Group and Institutional Housing
 Skilled nursing facility
-
 P
-
 P
-
 PUBLIC, INSTITUTIONAL, AND CIVIC USES
-
+PUBLIC, INSTITUTIONAL, AND CIVIC USES
 § 50.03.003.5
-
 Community and Cultural Facility
-
 Cemetery
-
 C
-
+Community and Cultural Facility
 Community garden
-
 P/C
-
 P/C [10]
-
 § 50.03.003.6.j
-
+Community and Cultural Facility
 Institutional Use
-
 P [10]
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 [5]
-
 P
-
 § 50.03.003.5.a
-
 Day Care
-
 Day care centers
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 § 50.03.003.5.f
-
+Day Care
 Certified or registered family child care home
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 Education
-
 Educational institutions, private
-
 C
-
 P
-
 P
-
 P
-
 P
-
 P
-
 § 50.03.003.5.f
-
 Health Care Facilities
-
 Ambulance services
-
 P
-
 P
-
 P
-
 P
-
 P
-
+Health Care Facilities
 Hospitals
-
 P [10]
-
 P
-
+Health Care Facilities
 Medical and dental clinic or laboratory
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 § 50.03.003.6.n
-
 Public Facilities/Utilities
-
 Major
-
 C
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 C
-
 C
-
 C
-
 P
-
 P
-
 P
-
 C
-
 C
-
 P/C
-
 § 50.03.003.5.c, § 50.03.003.5.d
-
+Public Facilities/Utilities
 Minor
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 § 50.03.003.5.b, § 50.03.003.5.d
-
+Public Facilities/Utilities
 Telecommunications facilities, new
-
 C
-
 C
-
 C
-
 C
-
 C
-
 § 50.03.003.5.g
-
+Public Facilities/Utilities
 Telecommunications facilities, collocated
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 § 50.03.003.5.g
-
 COMMERCIAL USES
-
+COMMERCIAL USES
 [6]
-
 § 50.03.003.6
-
 Agricultural
-
 Agriculture
-
 P
-
 P
-
 § 50.03.003.6.b
-
+Agricultural
 Farm stand
-
 P
-
 P
-
 P
-
 § 50.03.004.1.b.i
-
 Animal and Related Services
-
 Equestrian facility
-
 C
-
+Animal and Related Services
 Kennel
-
 C
-
 C
-
+Animal and Related Services
 Pet day care
-
 C
-
 P/C
-
 P/C
-
 C
-
 P/C
-
 C
-
 C
-
 P/C
-
 P/C
-
 P/C [5]
-
 § 50.03.003.6.s
-
+Animal and Related Services
 Veterinary clinic
-
 P/C
-
 P/C
-
 P/C
-
 P/C
-
 P/C
-
 § 50.03.003.6.z
-
 Food and Beverage Services
-
 Bakery
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 § 50.03.003.6.g
-
+Food and Beverage Services
 Bar
-
 P [10]
-
 P
-
 P
-
 P
-
 P
-
 § 50.03.003.6.h
-
+Food and Beverage Services
 Food markets < 25,000 sq. ft. gross floor area
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
+Food and Beverage Services
 Food markets 25,000 sq. ft. gross floor area or more
-
 P/C
-
 P
-
 P
-
 P
-
 P/C
-
 § 50.03.003.6.l
-
+Food and Beverage Services
 Restaurant
-
 P
-
 P/C [10]
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 § 50.03.003.6.u
-
 Lodging Facilities
-
 Hotels or motels
-
 P [10]
-
 P
-
 P
-
 P
-
 P
-
 Business or Professional Services
-
 Office, business or professional
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 § 50.03.003.6.p
-
+Business or Professional Services
 Psilocybin Service Center12
-
 C
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 C
-
 C
-
 P
-
 P
-
 P
-
 § 50.03.003.6.t12
-
+Business or Professional Services
 Research and development laboratories
-
 P
-
 P
-
 Commercial Services
-
 Commercial education
-
 C
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 § 50.03.003.5.f
-
+Commercial Services
 Crematorium
-
 P
-
 P
-
+Commercial Services
 Mortuary
-
 P/C [10]
-
 P/C
-
 § 50.03.003.6.o
-
+Commercial Services
 Personal services
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 [5]
-
 P
-
 WLG OC and CI zones: § 50.03.003.6.r
-
+Commercial Services
 Repair, rental, and service
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 § 50.03.003.6.u
-
 Recreation and Entertainment
-
 Arcade gaming
-
 P/C
-
 P
-
 P
-
 P
-
 § 50.03.003.6.c
-
+Recreation and Entertainment
 Commercial recreational facility < 5,000 sq. ft. gross floor area
-
 P [10]
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 C [5]
-
+Recreation and Entertainment
 Commercial recreational facility ≥ 5,000 sq. ft. and < 20,000 sq. ft. gross floor area
-
 P [10]
-
 C
-
 P
-
 C
-
 C
-
 C
-
 P
-
 C
-
+Recreation and Entertainment
 Commercial recreational facility ≥ 20,000 sq. ft. gross floor area
-
 P [10]
-
 C
-
+Recreation and Entertainment
 Fitness and exercise facilities, > 5,000 sq. ft. gross floor area
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
+Recreation and Entertainment
 Fitness and exercise facilities, ≥ 5,000 sq. ft. and < 20,000 sq. ft. gross floor area
-
 C
-
 P
-
 C
-
 C
-
 C
-
 P
-
 P
-
 C
-
 P
-
+Recreation and Entertainment
 Fitness and exercise facilities, ≥ 20,000 sq. ft. gross floor area
-
 P
-
 C
-
 C
-
 C
-
 P
-
 C
-
+Recreation and Entertainment
 Theaters, indoor
-
 P [10]
-
 P
-
 P
-
 P
-
 P
-
 Retail Sales
-
 Retail < 10,000 sq. ft. gross floor area
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P/C [5]
-
 § 50.03.003.6.w
-
+Retail Sales
 Retail ≥ 10,000 and < 20,000 sq. ft. gross floor area
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P/C [5]
-
 § 50.03.003.6.x
-
+Retail Sales
 Retail ≥ 20,000 sq. ft. gross floor area
-
 P/C
-
 P
-
 P
-
 P
-
 P [5]
-
 § 50.03.003.6.y
-
 Vehicle and Equipment Sales and Services
-
 Auto and light vehicle rental
-
 P [10]
-
 P
-
 P
-
 P
-
 P
-
 P
-
 P
-
 § 50.03.003.6.d
-
+Vehicle and Equipment Sales and Services
 Auto and light vehicle sales
-
 P [10]
-
 P
-
 P
-
 P
-
 § 50.03.003.6.e
-
+Vehicle and Equipment Sales and Services
 Auto service station and light vehicle repair
-
 C
-
 P/C [10]
-
 P
-
 P
-
 P
-
 P
-
 § 50.03.003.6.f
-
+Vehicle and Equipment Sales and Services
 Boat sales and boat repair
-
 P
-
 P
-
+Vehicle and Equipment Sales and Services
 Car wash
-
 C [10]
-
 P
-
 C
-
 P
-
 § 50.03.003.6.i
-
+Vehicle and Equipment Sales and Services
 Heavy vehicle repair
-
 P
-
 § 50.03.003.6.m
-
+Vehicle and Equipment Sales and Services
 Parking facilities, off-street
-
 C
-
 P [10]
-
 P
-
 P
-
 P
-
 P
-
 § 50.03.003.6.q
-
+Vehicle and Equipment Sales and Services
 Towing service and tow yard
-
 P
-
+Vehicle and Equipment Sales and Services
 Truck and trailer rental and sales of accessories
-
 P
-
 P
-
 INDUSTRIAL/MANUFACTURING USES
-
+INDUSTRIAL/MANUFACTURING USES
 § 50.03.003.7
-
 Industrial Service and Storage
-
 Dry cleaning or laundry plant
-
 P
-
 P
-
 § 50.03.003.7.b
-
+Industrial Service and Storage
 General storage
-
 P
-
 P
-
+Industrial Service and Storage
 Lumber yards
-
 P
-
+Industrial Service and Storage
 Nursery stock production and wholesale
-
 P
-
+Industrial Service and Storage
 Wholesale distribution
-
 P
-
 P
-
 Manufacturing
-
 Light manufacturing
-
 C
-
 C
-
 P
-
 C
-
 P
-
 P
-
 § 50.03.003.7.a
-
+Manufacturing
 Heavy manufacturing
-
 P
-
 § 50.03.003.7.a
-
+Manufacturing
 Psilocybin production12
-
 P
-
 P
-
 § 50.03.003.7.c12
-
 Storage
-
 Self-storage facility
-
 P
-
 Transportation
-
 Railroad facilities
-
 P
-
+Transportation
 Transportation depot
-
 P
-
 C
-
 ACCESSORY USES
-
+ACCESSORY USES
 General standards: § 50.03.004.1.a
-
 Accessory Uses
-
 Community garden
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 § 50.03.003.6.j
-
+Accessory Uses
 Dwelling, caretaker or watchperson
-
 A
-
 A
-
+Accessory Uses
 Farm stand
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 § 50.03.004.1.b.i
-
+Accessory Uses
 Food services concessions
-
 A
-
+Accessory Uses
 Minor park improvements
-
 A
-
+Accessory Uses
 Retail
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 A
-
 § 50.03.004.1.b.v
-
+Accessory Uses
 Restaurant
-
 A
-
 § 50.03.004.1.b.iv
-
 TEMPORARY USES
-
+TEMPORARY USES
 Temporary Uses
-
 Temporary private uses of public properties
-
 C
 
 Notes:
-
+Notes:
 [1]
-
 At a net site density of 2,500 sq. ft./lot area per unit area allowed in conjunction with office uses in the same building.
-
 [2]
-
 Attached townhomes only.
-
 [3]
-
 Wholly conducted within an enclosed structure.
-
 [4]
-
 No drive-through businesses are allowed in the West Lake Grove Design District or FMU zone.
-
 [5]
-
 In the portion of the IP zone depicted on Figure 50.03.003-B, additional permitted uses are: institutional use, personal services, commercial recreational facility < 5,000 sq. ft. gross floor area, and retail ≤ 35,000 sq. ft. gross floor area subject to use-specific limitations in LOC § 50.03.003.6. Additional conditional uses are: pet day care partially conducted outside during daytime hours.
-
 [6]
-
 Outright permitted use if the gross floor area and exterior display area are 5,000 sq. ft. or less; conditional use if the gross floor area and exterior display are more than 5,000 sq. ft.
-
 [7]
-
 FMU uses allowed only if the primary building on site was constructed after January 17, 2013.
-
 [8]
-
 If lot has multiple zones, e.g., R-0/EC, see LOC § 50.02.002.2.e.
-
 [9]
-
 Site-specific use limitations, see LOC § 50.02.002.2.c.
-
 [10]
-
 In the GC-zoned area in the vicinity of Jean Way and Boones Ferry Road, as depicted on Figure 50.03.003-C, the following uses are not permitted: residential, congregate housing, community institution, residential care housing, community garden, hospitals, mortuaries, bars, drive-through restaurants, hotels, commercial recreational facilities, theaters, auto and light vehicle rental and sales, auto service station, car wash, and parking facilities (primary use).
-
 Editor’s note: Italicized text is added for reader’s convenience. It will be proposed for adoption in a future code update.
-
 [11]
-
 Limited to multifamily residences in the vicinity of Boones Ferry Road and West Sunset Drive, as depicted on Figure 50.03.003-A.1.
-
 [12]
-
 Editor’s Note: Ord. 2903 bans all psilocybin service centers and production in the City, and the voters approved continuation of the ban on Nov. 5, 2024.
