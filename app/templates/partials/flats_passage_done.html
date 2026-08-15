@@ -3,7 +3,10 @@
 {% elif verdict == "verified" %}
   <span class="badge badge-green">{{ signed }} confirmed</span>
   <span class="muted" style="font-size:11px">queued for the next release</span>
+{% elif verdict == "unclear" %}
+  <span class="badge">{{ signed }} flagged</span>
+  <span class="muted" style="font-size:11px">in the feedback bundle</span>
 {% else %}
   <span class="badge badge-red">{{ signed }} marked wrong</span>
-  <span class="muted" style="font-size:11px">queued for the encoder</span>
+  <span class="muted" style="font-size:11px">in the feedback bundle</span>
 {% endif %}

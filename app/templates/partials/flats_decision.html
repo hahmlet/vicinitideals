@@ -5,7 +5,10 @@
   {% if row.pending %}<div class="muted" style="font-size:11px">queued for the next release</div>{% endif %}
 {% elif row.decision == "rejected" %}
   <span class="badge badge-red">wrong</span>
-  {% if row.pending %}<div class="muted" style="font-size:11px">queued for the encoder</div>{% endif %}
+  {% if row.pending %}<div class="muted" style="font-size:11px">in the feedback bundle</div>{% endif %}
+{% elif row.decision == "unclear" %}
+  <span class="badge">unanswered</span>
+  {% if row.pending %}<div class="muted" style="font-size:11px">in the feedback bundle</div>{% endif %}
 {% else %}
   <span class="muted" style="font-size:11px">not reviewed</span>
 {% endif %}

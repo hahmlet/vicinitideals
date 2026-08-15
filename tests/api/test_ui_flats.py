@@ -509,3 +509,161 @@ async def test_a_card_covers_only_the_lines_it_showed():
     assert not _within("doc.txt#L63", "doc.txt", window), "outside the window"
     assert not _within("doc.txt#L155-L170", "doc.txt", window), "runs past the end"
     assert not _within("other.txt#L142", "doc.txt", window), "another document"
+
+
+# --- feedback, and the bundle it becomes -------------------------------
+#
+# A bare "wrong" is not actionable, and a note that outlives the page it was
+# written on is only readable if the page came with it. So a verdict carries
+# the reviewer's words, the code text that was on screen, and a fingerprint of
+# the exact value — enough for someone who was not there to act on it later.
+
+
+async def _problem(client: AsyncClient, **over):
+    body = {
+        "layer_id": "or/clackamas/wilsonville",
+        "zone": "R",
+        "field": "setback_side_ft",
+        "when": "",
+        "verdict": "rejected",
+        "note": "this is the townhouse column, not this zone's",
+        "ref": "",
+    }
+    body.update(over)
+    return await client.post("/ui/flats/sign", data=body, headers={"hx-request": "true"})
+
+
+async def test_a_rejection_without_a_reason_is_refused(
+    client: AsyncClient, session: AsyncSession
+):
+    # A queue of bare rejections is a queue nobody can work from.
+    await _login(client, session)
+
+    response = await _problem(client, note="   ")
+
+    assert response.status_code == 400
+    assert "say what is wrong" in response.text
+    assert (await session.execute(text_query())).all() == []
+
+
+async def test_a_problem_keeps_the_words_and_the_page(
+    client: AsyncClient, session: AsyncSession
+):
+    from sqlalchemy import select
+
+    from app.models.flats import FlatsRuleSignature as S
+
+    await _login(client, session)
+    page = await client.get("/flats/review/or/clackamas/wilsonville")
+    ref = _first_ref(page.text)
+
+    await _problem(client, ref=ref, note="the 15 is the townhouse column")
+
+    row = (await session.execute(select(S))).scalars().one()
+    assert row.verdict == "rejected"
+    assert row.note == "the 15 is the townhouse column"
+    assert row.shown_ref == ref
+    # The evidence is rebuilt server-side: what the browser sent was an
+    # address and an opinion.
+    assert row.shown.strip(), "the code text that was on screen is kept verbatim"
+    assert len(row.fingerprint) == 64
+
+
+async def test_the_fingerprint_is_of_the_value_not_of_the_field(
+    client: AsyncClient, session: AsyncSession
+):
+    from sqlalchemy import select
+
+    from app.models.flats import FlatsRuleSignature as S
+
+    await _login(client, session)
+    await _problem(client, note="base is wrong")
+    await _problem(client, when="lot_sqft:<=10000+multi_story", note="and so is the exception")
+
+    marks = [r.fingerprint for r in (await session.execute(select(S))).scalars()]
+    assert len(set(marks)) == 2, "a variant signs apart from its base"
+
+
+async def test_an_unanswerable_passage_is_its_own_verdict(
+    client: AsyncClient, session: AsyncSession
+):
+    from sqlalchemy import select
+
+    from app.models.flats import FlatsRuleSignature as S
+
+    # Not the same as a wrong number: the page does not answer the question.
+    # Collapsing the two loses which of them an encoder has to go and read.
+    await _login(client, session)
+
+    response = await _problem(client, verdict="unclear", note="this table is the plan district's")
+
+    assert response.status_code == 200
+    assert (await session.execute(select(S.verdict))).scalars().one() == "unclear"
+
+
+async def test_a_passage_problem_needs_a_reason_too(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+    page = await client.get("/flats/review/or/clackamas/wilsonville")
+
+    response = await client.post(
+        "/ui/flats/sign-passage",
+        data={
+            "layer_id": "or/clackamas/wilsonville",
+            "ref": _first_ref(page.text),
+            "verdict": "rejected",
+        },
+        headers={"hx-request": "true"},
+    )
+
+    assert response.status_code == 400
+    assert (await session.execute(text_query())).all() == []
+
+
+async def test_the_bundle_carries_its_own_evidence(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+    page = await client.get("/flats/review/or/clackamas/wilsonville")
+    await _problem(client, ref=_first_ref(page.text), note="the 15 is the townhouse column")
+
+    bundle = await client.get("/flats/feedback")
+
+    assert bundle.status_code == 200
+    # Address, value, citation, the reviewer's words and the text they read.
+    assert "setback_side_ft" in bundle.text
+    assert "the 15 is the townhouse column" in bundle.text
+    assert "What was on screen" in bundle.text
+
+
+async def test_confirmations_stay_out_of_the_bundle(
+    client: AsyncClient, session: AsyncSession
+):
+    # Six hundred confirmations would bury the dozen items somebody has to act
+    # on. They travel the other road: the drain, into the repository.
+    await _login(client, session)
+    await _sign(client)
+
+    bundle = await client.get("/flats/feedback")
+
+    assert "Nothing open" in bundle.text
+
+
+async def test_handing_the_bundle_on_clears_it_without_erasing_it(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+    await _problem(client, note="wrong column")
+
+    await client.post("/ui/flats/bundle", headers={"hx-request": "true"})
+    open_now = await client.get("/flats/feedback")
+    ever = await client.get("/flats/feedback?all=1")
+
+    assert "Nothing open" in open_now.text
+    assert "wrong column" in ever.text
+
+
+async def test_the_bundle_needs_a_session(client: AsyncClient):
+    assert (await client.get("/flats/feedback")).status_code == 303
+    assert (await client.post("/ui/flats/bundle")).status_code == 303

@@ -11,7 +11,8 @@
       <h2 style="margin:0">Review {{ layer.label }}</h2>
       <div class="muted" style="font-size:12px">
         <a href="/flats">All jurisdictions</a> ·
-        <a href="/flats/{{ layer.id }}">Full rules table</a> · {{ layer.id }}
+        <a href="/flats/{{ layer.id }}">Full rules table</a> ·
+        <a href="/flats/feedback">Feedback bundle</a> · {{ layer.id }}
       </div>
     </div>
   </div>
@@ -23,14 +24,15 @@
     <div><span class="muted">Standards in all</span> <strong>{{ layer.standards }}</strong></div>
   </div>
 
-  <p class="muted" style="font-size:12px;margin:4px 0 16px;max-width:70ch">
+  <p class="muted" style="font-size:12px;margin:4px 0 16px;max-width:74ch">
     One card per passage of code, in the order the document prints them. Read the
-    highlighted lines — those are the ones something was read out of — then check
-    the numbers beside them. <strong>Confirm all</strong> signs every number on the
-    card at once, which is honest because it is one reading: they came off the table
-    you are looking at. Confirm or reject one on its own where the card disagrees
-    with itself. Nothing changes on the spot: decisions are collected and applied in
-    the next release.
+    highlighted lines — those are the ones something was read out of — then check the
+    numbers beside them. <strong>Confirm all</strong> signs every number on the card at
+    once, which is honest because it is one reading: they came off the table you are
+    looking at. Where something is wrong, or the passage does not answer the question,
+    say so in your own words — the note, the value and the exact text above it are kept
+    together, and the <a href="/flats/feedback">feedback bundle</a> hands the batch on.
+    Nothing changes on the spot.
   </p>
 
   {% if not passages %}
@@ -82,13 +84,24 @@
               <form hx-post="/ui/flats/sign"
                     hx-target="#d-{{ pi }}-{{ loop.index }}"
                     hx-swap="innerHTML"
-                    style="display:inline-flex;gap:4px">
+                    style="display:inline-flex;gap:4px;align-items:flex-start">
                 <input type="hidden" name="layer_id" value="{{ layer.id }}">
                 <input type="hidden" name="zone" value="{{ row.zone }}">
                 <input type="hidden" name="field" value="{{ row.field }}">
                 <input type="hidden" name="when" value="{{ row.when }}">
+                <input type="hidden" name="ref" value="{{ p.ref }}">
                 <button class="btn btn-sm" name="verdict" value="verified">Confirm</button>
-                <button class="btn btn-secondary btn-sm" name="verdict" value="rejected">Wrong</button>
+                <details style="display:inline-block">
+                  <summary class="btn btn-secondary btn-sm" style="list-style:none">Problem…</summary>
+                  <div style="position:relative;z-index:5;margin-top:6px;padding:8px;border:1px solid var(--border,#cbd5e1);border-radius:6px;background:var(--surface,#fff);min-width:320px">
+                    <textarea name="note" rows="4" style="width:100%"
+                              placeholder="What is wrong with this one? e.g. the 15 is the townhouse column, not this zone's — the row above it is the one that applies."></textarea>
+                    <div style="display:flex;gap:6px;margin-top:6px">
+                      <button class="btn btn-sm" name="verdict" value="rejected">This value is wrong</button>
+                      <button class="btn btn-secondary btn-sm" name="verdict" value="unclear">Page doesn't answer it</button>
+                    </div>
+                  </div>
+                </details>
               </form>
             </td>
           </tr>
@@ -100,13 +113,24 @@
     <form hx-post="/ui/flats/sign-passage"
           hx-target="#passage-result-{{ pi }}"
           hx-swap="innerHTML"
-          style="display:flex;gap:8px;align-items:center;margin-top:8px">
+          style="margin-top:8px">
       <input type="hidden" name="layer_id" value="{{ layer.id }}">
       <input type="hidden" name="ref" value="{{ p.ref }}">
-      <input type="text" name="note" placeholder="note (optional)" style="flex:0 1 260px">
-      <button class="btn btn-sm" name="verdict" value="verified">Confirm all {{ p.rows | length }}</button>
-      <button class="btn btn-secondary btn-sm" name="verdict" value="rejected">All wrong</button>
-      <span id="passage-result-{{ pi }}"></span>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn btn-sm" name="verdict" value="verified">Confirm all {{ p.rows | length }}</button>
+        <details>
+          <summary class="btn btn-secondary btn-sm" style="list-style:none;display:inline-block">Problem with the whole passage…</summary>
+          <div style="margin-top:6px;padding:8px;border:1px solid var(--border,#cbd5e1);border-radius:6px">
+            <textarea name="note" rows="4" style="width:100%;min-width:420px"
+                      placeholder="What is wrong with this passage? e.g. these columns are the plan district's, not the base zone's — the whole card is citing the wrong table."></textarea>
+            <div style="display:flex;gap:6px;margin-top:6px">
+              <button class="btn btn-sm" name="verdict" value="rejected">All {{ p.rows | length }} are wrong</button>
+              <button class="btn btn-secondary btn-sm" name="verdict" value="unclear">Passage doesn't answer it</button>
+            </div>
+          </div>
+        </details>
+        <span id="passage-result-{{ pi }}"></span>
+      </div>
     </form>
   </div>
   {% endfor %}

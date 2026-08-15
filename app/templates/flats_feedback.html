@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}Feedback bundle — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div class="topbar">
+</div>
+
+<div class="content">
+  <div class="toolbar">
+    <div>
+      <h2 style="margin:0">Feedback bundle</h2>
+      <div class="muted" style="font-size:12px">
+        <a href="/flats">All jurisdictions</a> ·
+        {% if showing_all %}<a href="/flats/feedback">just the open items</a>
+        {% else %}<a href="/flats/feedback?all=1">everything ever raised</a>{% endif %}
+      </div>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+      <button class="btn btn-sm" onclick="copyBundle()">Copy the bundle</button>
+      {% if not showing_all and rows %}
+      <form hx-post="/ui/flats/bundle" hx-target="#handed" hx-swap="innerHTML" style="display:inline">
+        <button class="btn btn-secondary btn-sm">Mark as handed on</button>
+      </form>
+      {% endif %}
+      <span id="handed"></span>
+    </div>
+  </div>
+
+  <p class="muted" style="font-size:12px;max-width:74ch">
+    Everything you marked wrong or unanswered, with the value, its citation and the exact
+    text you were shown. Copy the block below and paste it back to whoever is doing the
+    encoding. Confirmations are not here — they travel a different road, and mixing them in
+    would bury the handful of items somebody has to act on.
+  </p>
+
+  {% if not rows %}
+    <p>Nothing open. Either nothing has been marked wrong, or it has all been handed on —
+      <a href="/flats/feedback?all=1">see everything</a>.</p>
+  {% else %}
+
+  <div class="toolbar" style="gap:24px">
+    <div><span class="muted">Items</span> <strong>{{ rows | length }}</strong></div>
+    <div><span class="muted">Wrong</span> <strong>{{ rows | selectattr("verdict", "equalto", "rejected") | list | length }}</strong></div>
+    <div><span class="muted">Unanswered</span> <strong>{{ rows | selectattr("verdict", "equalto", "unclear") | list | length }}</strong></div>
+  </div>
+
+  <div class="table-wrap" style="margin:8px 0 16px">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Reviewed</th>
+          <th>Jurisdiction</th>
+          <th>Zone</th>
+          <th>Standard</th>
+          <th class="col-right">Value</th>
+          <th>Verdict</th>
+          <th>Note</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+        <tr>
+          <td class="muted" style="font-size:11px">{{ row.decided_at.strftime("%b %d") }}</td>
+          <td>{{ row.layer }}</td>
+          <td>{{ row.zone }}</td>
+          <td>{{ row.field }}{% if row.when_key %} <span class="muted" style="font-size:11px">[{{ row.when_key }}]</span>{% endif %}</td>
+          <td class="col-right">{{ row.value }}</td>
+          <td>
+            {% if row.verdict == "rejected" %}<span class="badge badge-red">wrong</span>
+            {% else %}<span class="badge">unanswered</span>{% endif %}
+          </td>
+          <td style="max-width:38ch">{{ row.note }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="margin:16px 0 6px">The bundle</h3>
+  <textarea id="bundle" readonly rows="24"
+            style="width:100%;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px">{{ bundle }}</textarea>
+  {% endif %}
+</div>
+
+<script>
+function copyBundle() {
+  const box = document.getElementById('bundle');
+  if (!box) return;
+  box.select();
+  navigator.clipboard.writeText(box.value);
+}
+</script>
+{% endblock %}

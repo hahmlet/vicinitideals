@@ -30,12 +30,14 @@ townhouse lots, cities state different standards for the two, and which one
 is being built is a decision about the product.
 
 Routes: /flats, /flats/plans, /flats/plans/{design}, /flats/review/{layer},
-/flats/{layer}, /ui/flats/quote, /ui/flats/sign, /ui/flats/sign-passage
+/flats/feedback, /flats/{layer}, /ui/flats/quote, /ui/flats/sign,
+/ui/flats/sign-passage, /ui/flats/bundle
 """
 from __future__ import annotations
 
+from datetime import datetime, timezone
 from functools import lru_cache
-from typing import Any
+from typing import Any, Sequence
 
 from fastapi import APIRouter, Form, Query, Request
 from fastapi.responses import HTMLResponse
@@ -45,6 +47,7 @@ from app.api.deps import DBSession
 from app.api.routers.ui_helpers import _base_ctx, _get_counts, _get_user, templates
 from app.models.flats import FlatsRuleSignature
 from flats.designs.model import Design, DesignStatus, Plat, load_catalog
+from flats.encode.verify import fingerprint
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.loader import load_rules
 from flats.rules.model import Incorporation, Layer, Status, Value
@@ -62,7 +65,18 @@ _CONTEXT = 4
 #: be drained; "rejected" is the other half of a review — the number does not
 #: match the line it cites — and it is recorded rather than dropped, because a
 #: review whose only recordable outcome is agreement is not a review.
-_VERDICTS = frozenset({"verified", "rejected"})
+#:
+#: "unclear" is the third thing a real reviewer says: the page does not answer
+#: the question. That is a finding about the encoding — a quote pointing at the
+#: wrong table, a standard that turns out to be conditional — and collapsing it
+#: into "rejected" loses the distinction between a wrong number and an
+#: unanswerable one.
+_VERDICTS = frozenset({"verified", "rejected", "unclear"})
+
+#: Verdicts that mean nothing without an explanation. Recording "wrong" with no
+#: word about what is wrong produces a queue an encoder cannot act on, which is
+#: the same as producing nothing.
+_NEEDS_NOTE = frozenset({"rejected", "unclear"})
 
 #: The layer-wide block's zone label. Not a zone code, so it cannot collide.
 _DEFAULTS = "(layer defaults)"
@@ -525,6 +539,118 @@ def _window(document: str, chain: list[tuple[int, int]]) -> list[dict[str, Any]]
     ]
 
 
+# --- the feedback bundle -----------------------------------------------
+
+
+def _bundle_text(rows: Sequence[Any]) -> str:
+    """A reviewer's problems as one block of text an encoder can work from.
+
+    Self-contained on purpose. Each item carries the address, the number, its
+    citation, the code text that was on screen and the note — so it can be read
+    by someone who was not there, after the document has been re-fetched and
+    every line number in it has moved. A bundle that said "see the review page"
+    would be worth nothing a week later.
+
+    The fingerprint is included because it is how the fix gets checked: change
+    the encoding and it stops matching, which is what makes the item resurface
+    as answered rather than merely old.
+    """
+    out = [
+        "# FLATS rule review — feedback",
+        "",
+        f"{len(rows)} item(s). Each is one encoded value, the text it was read from, "
+        "and what the reviewer found wrong with it.",
+        "",
+    ]
+    for n, row in enumerate(rows, 1):
+        when = f" [{row.when_key.replace('+', ', ')}]" if row.when_key else ""
+        out += [
+            "---",
+            "",
+            f"## {n}. {row.layer} · {row.zone} · {row.field}{when}",
+            "",
+            f"- **encoded value:** `{row.value}`",
+            f"- **verdict:** {row.verdict}",
+            f"- **citation:** {row.cite}",
+            f"- **quote:** `{row.quote}`",
+            f"- **reviewed:** {row.decided_at:%Y-%m-%d} by {row.reviewer}",
+            f"- **fingerprint:** `{row.fingerprint or '(none recorded)'}`",
+            "",
+            "**Reviewer note**",
+            "",
+            (row.note or "(none)").strip(),
+            "",
+            "**What was on screen**",
+            "",
+            "```",
+            (row.shown or "(not recorded — this verdict predates the feedback capture)").rstrip(),
+            "```",
+            "",
+        ]
+    return "\n".join(out)
+
+
+@router.get("/flats/feedback", response_class=HTMLResponse)
+async def flats_feedback(
+    request: Request, session: DBSession, all: int = Query(0)
+) -> HTMLResponse:
+    """Everything a reviewer found wrong and has not yet handed on.
+
+    Confirmations are not here. They travel a different road — the drain writes
+    them into the repository's verification log — and mixing them in would bury
+    the twelve items somebody has to act on under six hundred that need nothing.
+    """
+    user = await _get_user(session, request)
+    dedup_count, conflicts_count = await _get_counts(session)
+    query = (
+        select(FlatsRuleSignature)
+        .where(FlatsRuleSignature.verdict.in_(("rejected", "unclear")))
+        .order_by(FlatsRuleSignature.decided_at)
+    )
+    if not all:
+        query = query.where(FlatsRuleSignature.bundled_at.is_(None))
+    rows = list((await session.execute(query)).scalars())
+    return templates.TemplateResponse(
+        request,
+        "flats_feedback.html",
+        {
+            **_base_ctx(user, dedup_count, "flats", conflicts_count=conflicts_count),
+            "rows": rows,
+            "bundle": _bundle_text(rows),
+            "showing_all": bool(all),
+        },
+    )
+
+
+@router.post("/ui/flats/bundle", response_class=HTMLResponse)
+async def flats_bundle(request: Request, session: DBSession) -> HTMLResponse:
+    """Mark the open feedback as handed on.
+
+    Stamping rather than deleting. The item stays readable, and the stamp is
+    what lets the next bundle be the next batch rather than the same one again.
+    """
+    await _get_user(session, request)
+    rows = list(
+        (
+            await session.execute(
+                select(FlatsRuleSignature).where(
+                    FlatsRuleSignature.verdict.in_(("rejected", "unclear")),
+                    FlatsRuleSignature.bundled_at.is_(None),
+                )
+            )
+        ).scalars()
+    )
+    stamped = datetime.now(timezone.utc)
+    for row in rows:
+        row.bundled_at = stamped
+    await session.commit()
+    return templates.TemplateResponse(
+        request,
+        "partials/flats_bundled.html",
+        {"count": len(rows)},
+    )
+
+
 @router.get("/flats/review/{layer_id:path}", response_class=HTMLResponse)
 async def flats_review(request: Request, session: DBSession, layer_id: str) -> HTMLResponse:
     user = await _get_user(session, request)
@@ -586,8 +712,21 @@ async def flats_sign_passage(
             status_code=400,
         )
 
+    if verdict in _NEEDS_NOTE and not note.strip():
+        return templates.TemplateResponse(
+            request,
+            "partials/flats_passage_done.html",
+            {
+                "signed": 0,
+                "verdict": "",
+                "error": "say what is wrong with it — a bare rejection is not actionable",
+            },
+            status_code=400,
+        )
+
     decided = await _decisions(session, layer.layer)
     document, span = ref.partition("#L")[0], _span(ref)
+    shown = _shown(ref)
     signed = 0
     for row in _value_rows(layer):
         if not _within(row["quote"], document, span):
@@ -610,6 +749,9 @@ async def flats_sign_passage(
                 note=note[:2000],
                 reviewer=(user.email or str(user.id))[:80],
                 reviewer_user_id=user.id,
+                shown=shown,
+                shown_ref=ref,
+                fingerprint=_mark(layer.layer, row["zone"], row["field"], row["when"], number),
             )
         )
         signed += 1
@@ -660,6 +802,34 @@ async def flats_layer(request: Request, session: DBSession, layer_id: str) -> HT
     )
 
 
+def _shown(ref: str) -> str:
+    """The code text a card displayed, rebuilt from its citation.
+
+    Rebuilt rather than posted back, for the same reason the number is: what
+    the browser sends is an address and an opinion, and evidence that arrives
+    from the browser is evidence somebody could have written. Stored verbatim
+    so a note stays readable months later, by someone who was not there, after
+    the document has been re-fetched and every line in it has moved.
+    """
+    span = _span(ref)
+    document = ref.partition("#L")[0]
+    lines = _window(document, [span]) if span else _cited_lines(ref)[0]
+    return "\n".join(f"{line['n']:>6}  {line['text']}" for line in lines)
+
+
+def _mark(layer_id: str, zone: str, field: str, when: str, number: Any) -> str:
+    """The fingerprint of exactly what a reviewer was looking at."""
+    return fingerprint(
+        layer_id,
+        zone,
+        field,
+        number.value,
+        cite=number.prov.cite,
+        quote=number.prov.quote,
+        when=tuple(when.split("+")) if when else (),
+    )
+
+
 @router.post("/ui/flats/sign", response_class=HTMLResponse)
 async def flats_sign(
     request: Request,
@@ -670,13 +840,14 @@ async def flats_sign(
     when: str = Form(""),
     verdict: str = Form(...),
     note: str = Form(""),
+    ref: str = Form(""),
 ) -> HTMLResponse:
-    """Record what a reviewer decided about one number.
+    """Record what a reviewer decided about one number, and why.
 
-    The value, citation and quote are read from the loaded rules rather than
-    from the form. What the browser sends is an address and an opinion; if it
-    could send the number as well, a signature could be recorded over text
-    nobody displayed.
+    The value, citation, quote and the code text that was on screen are all
+    read from the server's own copies rather than from the form. What the
+    browser sends is an address and an opinion; if it could send the evidence
+    as well, a signature could be recorded over text nobody displayed.
     """
     user = await _get_user(session, request)
     layer = _layers().get(layer_id.strip("/"))
@@ -686,6 +857,16 @@ async def flats_sign(
             request,
             "partials/flats_decision.html",
             {"row": {"decision": "", "pending": False}, "error": "not a value we hold"},
+            status_code=400,
+        )
+    if verdict in _NEEDS_NOTE and not note.strip():
+        return templates.TemplateResponse(
+            request,
+            "partials/flats_decision.html",
+            {
+                "row": {"decision": "", "pending": False},
+                "error": "say what is wrong with it — a bare rejection is not actionable",
+            },
             status_code=400,
         )
 
@@ -702,6 +883,9 @@ async def flats_sign(
             note=note[:2000],
             reviewer=(user.email or str(user.id))[:80],
             reviewer_user_id=user.id,
+            shown=_shown(ref or number.prov.quote or ""),
+            shown_ref=ref or number.prov.quote or "",
+            fingerprint=_mark(layer.layer, zone, field, when, number),
         )
     )
     await session.commit()

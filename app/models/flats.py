@@ -427,6 +427,12 @@ class FlatsRuleSignature(Base):
             "decided_at",
             postgresql_where=text("exported_at IS NULL"),
         ),
+        Index(
+            "ix_flats_rule_signatures_unbundled",
+            "decided_at",
+            postgresql_where=text("bundled_at IS NULL"),
+        ),
+        Index("ix_flats_rule_signatures_fingerprint", "fingerprint"),
         Index("ix_flats_rule_signatures_value", "layer", "zone", "field", "when_key"),
         {"schema": SCHEMA},
     )
@@ -447,7 +453,9 @@ class FlatsRuleSignature(Base):
     cite: Mapped[str] = mapped_column(Text, nullable=False, server_default="")
     quote: Mapped[str] = mapped_column(Text, nullable=False, server_default="")
 
-    #: verified | rejected.
+    #: verified | rejected | unclear. The third is not indecision — it is
+    #: the reviewer saying the page does not answer the question, which is a
+    #: finding about the encoding and not about the number.
     verdict: Mapped[str] = mapped_column(String(10), nullable=False)
     note: Mapped[str] = mapped_column(Text, nullable=False, server_default="")
 
@@ -460,3 +468,23 @@ class FlatsRuleSignature(Base):
     )
     #: When a drain wrote this into the repository log. NULL is the queue.
     exported_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+    #: The code text that was on screen, verbatim, and the citation it was
+    #: shown under. Kept so a note can be read months later by someone who
+    #: was not there — and so a bundle handed to an encoder carries its own
+    #: evidence rather than a reference to a page that has since changed.
+    shown: Mapped[str] = mapped_column(Text, nullable=False, server_default="")
+    shown_ref: Mapped[str] = mapped_column(Text, nullable=False, server_default="")
+
+    #: Hash over the address, the value, its citation and its quote — the
+    #: same one the verification log signs with. It is what makes iteration
+    #: legible: change the encoding in response to a note and the
+    #: fingerprint stops matching, so the item resurfaces as changed rather
+    #: than sitting in a list nobody can tell is stale.
+    fingerprint: Mapped[str] = mapped_column(String(64), nullable=False, server_default="")
+
+    #: When a reviewer handed this on to whoever will fix it. Separate from
+    #: ``exported_at``: that is the drain writing a confirmation into the
+    #: repository, this is a problem leaving the reviewer's desk. A row can
+    #: be one, the other, both or neither.
+    bundled_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
