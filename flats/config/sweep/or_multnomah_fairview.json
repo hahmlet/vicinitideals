@@ -1,0 +1,107 @@
+{
+  "layer": "or/multnomah/fairview",
+  "documents": [
+    "or/multnomah/fairview/19.115.txt",
+    "or/multnomah/fairview/19.30.txt",
+    "or/multnomah/fairview/19.120.txt"
+  ],
+  "found": 42,
+  "recall": 0.5,
+  "covered": [
+    "or/multnomah/fairview/19.115.txt#L35 min_lot_sqft",
+    "or/multnomah/fairview/19.115.txt#L39 max_coverage_pct",
+    "or/multnomah/fairview/19.115.txt#L55 setback_rear_ft",
+    "or/multnomah/fairview/19.30.txt#L343 min_lot_width_ft",
+    "or/multnomah/fairview/19.30.txt#L345 min_lot_width_ft",
+    "or/multnomah/fairview/19.30.txt#L347 min_lot_width_ft",
+    "or/multnomah/fairview/19.30.txt#L362 setback_front_ft",
+    "or/multnomah/fairview/19.30.txt#L363 setback_front_ft",
+    "or/multnomah/fairview/19.30.txt#L364 setback_front_ft",
+    "or/multnomah/fairview/19.30.txt#L366 setback_front_ft",
+    "or/multnomah/fairview/19.30.txt#L377 setback_rear_ft",
+    "or/multnomah/fairview/19.30.txt#L379 setback_rear_ft",
+    "or/multnomah/fairview/19.30.txt#L387 setback_side_ft",
+    "or/multnomah/fairview/19.30.txt#L389 setback_side_ft",
+    "or/multnomah/fairview/19.30.txt#L391 setback_side_ft",
+    "or/multnomah/fairview/19.30.txt#L428 max_coverage_pct",
+    "or/multnomah/fairview/19.30.txt#L429 max_coverage_pct",
+    "or/multnomah/fairview/19.30.txt#L430 max_coverage_pct"
+  ],
+  "missed": [
+    "or/multnomah/fairview/19.115.txt#L47 setback_front_ft",
+    "or/multnomah/fairview/19.115.txt#L53 setback_street_side_ft",
+    "or/multnomah/fairview/19.30.txt#L257 min_lot_sqft",
+    "or/multnomah/fairview/19.30.txt#L258 min_lot_sqft",
+    "or/multnomah/fairview/19.30.txt#L259 min_lot_sqft",
+    "or/multnomah/fairview/19.30.txt#L350 min_lot_width_ft",
+    "or/multnomah/fairview/19.30.txt#L369 setback_front_max_ft",
+    "or/multnomah/fairview/19.30.txt#L370 setback_front_max_ft",
+    "or/multnomah/fairview/19.30.txt#L371 setback_front_max_ft",
+    "or/multnomah/fairview/19.30.txt#L373 setback_front_max_ft",
+    "or/multnomah/fairview/19.30.txt#L381 setback_rear_ft",
+    "or/multnomah/fairview/19.30.txt#L384 setback_rear_ft",
+    "or/multnomah/fairview/19.30.txt#L395 setback_side_ft",
+    "or/multnomah/fairview/19.30.txt#L399 setback_street_side_ft",
+    "or/multnomah/fairview/19.30.txt#L400 setback_street_side_ft",
+    "or/multnomah/fairview/19.30.txt#L401 setback_street_side_ft",
+    "or/multnomah/fairview/19.30.txt#L403 setback_street_side_ft",
+    "or/multnomah/fairview/19.30.txt#L432 max_coverage_pct"
+  ],
+  "common": [
+    [
+      "maximum lot depth",
+      2
+    ],
+    [
+      "lot depth",
+      1
+    ],
+    [
+      "access easements",
+      1
+    ]
+  ],
+  "holes": [
+    {
+      "document": "or/multnomah/fairview/19.30.txt",
+      "line": 681,
+      "standard": "access easements",
+      "applies_to": "townhouse projects that include consolidated access or shared driveways",
+      "states": "shall grant access easements to allow normal vehicular access and emergency access.",
+      "lenses": [
+        "access",
+        "relief"
+      ]
+    },
+    {
+      "document": "or/multnomah/fairview/19.115.txt",
+      "line": 38,
+      "standard": "lot depth",
+      "applies_to": "lots in the VSF zone",
+      "states": "all lots in the VSF zone shall have a minimum depth of 70 feet; pie-shaped lots shall have a minimum midpoint depth of 70 feet",
+      "lenses": [
+        "dimension"
+      ]
+    },
+    {
+      "document": "or/multnomah/fairview/19.30.txt",
+      "line": 353,
+      "standard": "maximum lot depth",
+      "applies_to": "townhomes and cottage clusters",
+      "states": "3 times the lot width",
+      "lenses": [
+        "relief"
+      ]
+    },
+    {
+      "document": "or/multnomah/fairview/19.30.txt",
+      "line": 353,
+      "standard": "maximum lot depth",
+      "applies_to": "lot",
+      "states": "3 times the lot width",
+      "lenses": [
+        "dimension"
+      ]
+    }
+  ]
+}
