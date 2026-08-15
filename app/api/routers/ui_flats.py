@@ -35,6 +35,7 @@ Routes: /flats, /flats/plans, /flats/plans/{design}, /flats/review/{layer},
 """
 from __future__ import annotations
 
+import re
 from datetime import datetime, timezone
 from functools import lru_cache
 from typing import Any, Sequence
@@ -414,6 +415,91 @@ async def flats_plan(
 # --- review: one passage of code, and every number read out of it -------
 
 
+#: A table caption, wherever the codifier put it. Municode repeats it across
+#: three columns and eCode prints it once; either way it is the line that says
+#: which zones the columns below belong to, and it is the single most useful
+#: thing to show above a window of cells.
+_CAPTION = re.compile(r"^\s*Table\s+[0-9A-Z]", re.I)
+
+#: A section heading: "19.302.4 Development Standards", "§ 4.0130", "Section
+#: 4.122". The same shape the encoder tracks, kept separately here because a
+#: reviewer needs the words after the number and the encoder does not.
+_HEADING = re.compile(
+    r"^\s*(?:§\s*)?(?:Sec(?:tion|\.)?\s+)?(?P<sec>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)"
+    r"(?P<rest>[ .\u2014-]+\S.*)?$"
+)
+
+#: How far above the window to look. Far enough to clear a long table, close
+#: enough that the heading found is plausibly the one governing these lines.
+_LOOK_BACK = 400
+
+
+#: A capitalised word — what separates a heading from a wrapped line of
+#: prose that happens to open on a number. Gresham prints "14.52 units per
+#: acre" mid-paragraph, and read as a heading it files everything below it
+#: under a section that does not exist.
+_TITLED = re.compile(r"\b[A-Z][a-zA-Z]{2,}\b")
+
+
+def _titled(line: str) -> bool:
+    """Whether a line is a section heading rather than a sentence."""
+    found = _HEADING.match(line)
+    rest = found.group("rest") if found else None
+    return bool(rest) and len(line) <= 120 and bool(_TITLED.search(rest))
+
+
+def _above(document: str, first: int) -> dict[str, str]:
+    """The section heading and table caption a window sits under.
+
+    A setback read off a table row means one thing under "Table 19.302.4 High
+    Density Residential Development Standards" and another under the plan
+    district's table three pages later, and the window itself — cells and
+    numbers — says neither. The reviewer is being asked whether a number
+    belongs to this zone, which is a question about the heading.
+
+    Both are reported when both exist: the caption says which columns, the
+    section says which chapter, and a mismatch between them is itself a
+    finding.
+    """
+    try:
+        whole = _store().load(document).text.splitlines()
+    except (ProvenanceError, OSError):
+        return {}
+    out: dict[str, str] = {}
+    for n in range(min(first, len(whole)) - 1, max(first - _LOOK_BACK, 0) - 1, -1):
+        line = whole[n].strip()
+        if not line:
+            continue
+        if "caption" not in out and _CAPTION.match(line):
+            out["caption"] = line[:160]
+        if "section" not in out and _titled(line):
+            out["section"] = line[:160]
+        if len(out) == 2:
+            break
+    return out
+
+
+#: A line of a grid: a label, a gap wide enough to be a column boundary, and
+#: something in the next column. Cheap and deliberately loose — it decides
+#: whether a card is flagged for a closer look, not whether a value is trusted.
+_GRID = re.compile(r"^\S.*\S\s{3,}\S")
+
+
+def _from_a_table(lines: Sequence[dict[str, Any]]) -> bool:
+    """Whether the cited lines are grid rows rather than sentences.
+
+    Worth saying out loud on the card. Extraction flattens a grid: the columns
+    are gone, and which one a number belonged to is inferred from a heading
+    rather than from where the ink sat. Every silent failure this system has
+    had — rotated headers dropped, a footnote marker welded onto a value, a
+    letter-spaced scan — has been in a table. A sentence carries its own
+    context and a cell does not.
+    """
+    cited = [line for line in lines if line.get("quoted")]
+    hits = sum(1 for line in cited if _GRID.match(line["text"].strip()))
+    return bool(cited) and hits * 2 >= len(cited)
+
+
 def _span(ref: str) -> tuple[int, int] | None:
     """The line range a citation names, or None if it names no lines."""
     _, _, fragment = ref.partition("#L")
@@ -488,6 +574,7 @@ def _passages(layer: Layer, decided: dict) -> list[dict[str, Any]]:
             by_span.setdefault(_span(row["quote"]), []).append(row)
         for chain in _cluster(list(by_span)):
             here = [row for span in chain for row in by_span[span]]
+            lines = _window(document, chain)
             cards.append(
                 {
                     "ref": f"{document}#L{chain[0][0]}-L{max(x[1] for x in chain)}",
@@ -495,9 +582,11 @@ def _passages(layer: Layer, decided: dict) -> list[dict[str, Any]]:
                     "document": document,
                     "cite": here[0]["cite"],
                     "url": here[0]["url"],
-                    "lines": _window(document, chain),
+                    "lines": lines,
                     "error": "",
                     "rows": sorted(here, key=lambda r: (r["line"], r["zone"], r["field"])),
+                    **_above(document, chain[0][0]),
+                    "gridded": _from_a_table(lines),
                 }
             )
     for row in loose:

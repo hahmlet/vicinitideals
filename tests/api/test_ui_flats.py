@@ -667,3 +667,53 @@ async def test_handing_the_bundle_on_clears_it_without_erasing_it(
 async def test_the_bundle_needs_a_session(client: AsyncClient):
     assert (await client.get("/flats/feedback")).status_code == 303
     assert (await client.post("/ui/flats/bundle")).status_code == 303
+
+
+# --- the context a cell does not carry ---------------------------------
+
+
+async def test_a_card_says_which_table_the_cells_came_from(
+    client: AsyncClient, session: AsyncSession
+):
+    # A setback read off a row means one thing under "Table 19.302.4 High
+    # Density Residential Development Standards" and another under the plan
+    # district's table three pages later. The window itself — cells and
+    # numbers — says neither.
+    await _login(client, session)
+
+    page = await client.get("/flats/review/or/clackamas/milwaukie")
+
+    assert "the heading and table this passage sits under" in page.text
+    assert "Table 19.301.4" in page.text
+
+
+async def test_a_wrapped_line_of_prose_is_not_read_as_a_heading():
+    # Gresham prints "14.52 units per acre" mid-paragraph. Taken for a
+    # heading it files every card below it under a section that does not
+    # exist, which is worse than showing none.
+    from app.api.routers.ui_flats import _titled
+
+    assert _titled("19.301.4. Development Standards.")
+    assert _titled("4.0120                              PERMITTED USES")
+    assert not _titled("14.52 units per")
+
+
+async def test_a_card_of_grid_rows_says_so(client: AsyncClient, session: AsyncSession):
+    # Every silent failure this system has had was in a table: rotated
+    # headers dropped, a footnote marker welded onto a value, a letter-spaced
+    # scan. A sentence carries its own context; a cell does not.
+    await _login(client, session)
+
+    page = await client.get("/flats/review/or/multnomah/troutdale")
+
+    assert "read off a table" in page.text
+
+
+async def test_prose_is_not_flagged_as_a_table():
+    from app.api.routers.ui_flats import _from_a_table
+
+    prose = [{"text": "The side yard shall be at least 5 ft.", "quoted": True}]
+    grid = [{"text": "Minimum lot size (sq ft)      1,500      Subsection 19.501.1", "quoted": True}]
+
+    assert not _from_a_table(prose)
+    assert _from_a_table(grid)

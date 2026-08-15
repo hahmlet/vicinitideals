@@ -50,10 +50,21 @@
           {% if p.url %} · <a href="{{ p.url }}" target="_blank" rel="noopener">open the code</a>{% endif %}
         </div>
       </div>
-      <div style="margin-left:auto">
+      <div style="margin-left:auto;text-align:right">
         <span class="muted" style="font-size:11px">{{ p.rows | length }} number{{ "" if p.rows | length == 1 else "s" }}</span>
+        {% if p.gridded %}
+        <div><span class="badge" title="These lines are grid rows. Extraction flattens a table: the columns are gone, and which one a number belonged to is inferred from the heading rather than from where the ink sat. Worth opening the real document.">read off a table</span></div>
+        {% endif %}
       </div>
     </div>
+
+    {% if p.section or p.caption %}
+    <div style="margin:0 0 6px;padding:6px 8px;border-left:3px solid var(--accent,#2563eb);background:var(--muted-bg,#f1f5f9)">
+      {% if p.section %}<div style="font-size:12px"><strong>{{ p.section }}</strong></div>{% endif %}
+      {% if p.caption %}<div style="font-size:12px">{{ p.caption }}</div>{% endif %}
+      <div class="muted" style="font-size:11px">the heading and table this passage sits under</div>
+    </div>
+    {% endif %}
 
     {% with error = p.error, lines = p.lines, path = p.document %}
       {% include "partials/flats_quote.html" %}
