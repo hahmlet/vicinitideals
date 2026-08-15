@@ -52,10 +52,19 @@ defaults:
     retrieved: 2026-08-14
     status: draft
     quote: "or/ors.92.031.txt#L7"
+  # OAR 660-046-0220(2)(e)(B) caps quadplex parking as a total per lot, tiered
+  # by lot size: 1 space under 3,000 sq ft, then 2, 3, and 4 at 7,000 and up.
+  # Encoded as the loosest tier — one space per unit — because that ceiling
+  # holds at every lot size, and a screen that assumes more parking than a city
+  # could demand fails the pod in, never out. The tighter tiers are real and
+  # would help small lots; encoding them as bands is deferred, because a band
+  # cannot be chosen without a lot area and would make every jurisdiction
+  # resolve ambiguous anywhere a lot has not been measured.
   parking_min_per_unit:
     value: 1.0
     preempts: true
-    cite: "OAR 660-046-0220"
+    cite: "OAR 660-046-0220(2)(e)(B)(iv)"
     url: "https://oregon.public.law/rules/oar_660-046-0220"
     retrieved: 2026-08-12
     status: draft
+    quote: "or/oar.660-046-0220.txt#L79-L91"

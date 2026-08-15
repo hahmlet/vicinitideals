@@ -29,6 +29,7 @@ CITE = (
     '  cite: "GRC 9.0100, Table 9.0100"\n'
     '  url: "https://example.gov/9.0100"\n'
     "  retrieved: 2026-08-14\n"
+    "  quote: \"or/multnomah/gresham/9.0100.txt#L2\"\n"
 )
 
 #: Front 20, rear 20, side 5. Broadside the pod wants 66 x 76; end-on 46 x 96,

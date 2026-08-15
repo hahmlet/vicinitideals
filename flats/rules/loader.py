@@ -37,6 +37,7 @@ from flats.rules.model import (
     Value,
     Band,
     Variant,
+    Wanted,
     Zone,
 )
 
@@ -79,8 +80,17 @@ def _parse_values(
     cite_default: dict[str, Any] | None,
     where: str,
     problems: list[str],
+    wanted: list[Wanted] | None = None,
+    zone: str = "",
 ) -> dict[str, Value]:
-    """Turn a mapping of field name → (scalar | full object) into Values."""
+    """Turn a mapping of field name → (scalar | full object) into Values.
+
+    A value with no ``quote`` does not become one. It has a citation naming a
+    chapter and nothing in the store that says the chapter states it, which
+    means nobody has read it against the code — and FLATS screening on a number
+    nobody read is the failure the whole provenance chain exists to prevent. It
+    goes to ``wanted`` instead, and becomes work rather than an answer.
+    """
     out: dict[str, Value] = {}
     for key, node in raw.items():
         try:
@@ -127,7 +137,7 @@ def _parse_values(
         try:
             prov = Provenance(**{k: prov_src.get(k) for k in _PROV_KEYS})
             variants = _parse_variants(raw_variants, prov_src, f"{where}.{key}", problems)
-            out[key] = Value(
+            built = Value(
                 name=key,
                 value=value,
                 prov=prov,
@@ -137,6 +147,13 @@ def _parse_values(
                 preempts=bool(body.get("preempts", False)),
                 variants=variants,
             )
+            if not (built.prov.quote or "").strip():
+                # Not an error in the file — encoding debt. The honest place for
+                # it is a queue somebody can work, not a zone somebody screens.
+                if wanted is not None:
+                    wanted.append(Wanted(zone=zone, field=key, value=built))
+                continue
+            out[key] = built
         except Exception as exc:  # pydantic ValidationError or ValueError
             problems.append(f"{where}.{key}: {_terse(exc)}")
     return out
@@ -359,7 +376,17 @@ def load_layer(path: Path, root: Path, problems: list[str]) -> Layer | None:
         problems.append(f"{where}: unknown top-level key(s) {sorted(unknown)}")
 
     layer_cite = raw.get("cite_default")
-    defaults = _parse_values(raw.get("defaults") or {}, layer_cite, f"{where}.defaults", problems)
+    wanted: list[Wanted] = []
+    defaults = _parse_values(
+        raw.get("defaults") or {},
+        layer_cite,
+        f"{where}.defaults",
+        problems,
+        wanted,
+        # The same word every review command uses for a layer-wide standard, so
+        # a queued default is addressable exactly like a read one.
+        "defaults",
+    )
 
     zones: dict[str, Zone] = {}
     for zname, zraw in (raw.get("zones") or {}).items():
@@ -369,7 +396,9 @@ def load_layer(path: Path, root: Path, problems: list[str]) -> Layer | None:
             continue
         zone_cite = {**(layer_cite or {}), **(zraw.get("cite_default") or {})}
         value_keys = {k: v for k, v in zraw.items() if k not in ZONE_META}
-        values = _parse_values(value_keys, zone_cite, f"{where}.zones.{zname}", problems)
+        values = _parse_values(
+            value_keys, zone_cite, f"{where}.zones.{zname}", problems, wanted, str(zname)
+        )
         zones[str(zname)] = Zone(
             zone=str(zname),
             values=values,
@@ -388,6 +417,7 @@ def load_layer(path: Path, root: Path, problems: list[str]) -> Layer | None:
             defaults=defaults,
             zones=zones,
             notes=raw.get("notes"),
+            wanted=tuple(wanted),
             ingest=raw.get("ingest") or {},
             code=_parse_code(raw.get("code"), where, problems),
         )

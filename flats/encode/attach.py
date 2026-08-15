@@ -89,12 +89,7 @@ def unquoted(layer: Layer) -> set[tuple[str, str]]:
     it, which is rarely the line stating the base number, and assuming it is
     would attach the wrong sentence to the value most likely to be misread.
     """
-    return {
-        (code, name)
-        for code, zone in layer.zones.items()
-        for name, value in zone.values.items()
-        if not value.prov.quote
-    }
+    return {(w.zone, w.field) for w in layer.wanted}
 
 
 def plan(findings, layer: Layer) -> tuple[list[Attachment], list[Skipped]]:

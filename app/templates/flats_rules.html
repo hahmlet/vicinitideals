@@ -19,8 +19,8 @@
         to that line.
       </p>
       <p class="muted" style="margin:4px 0 0;font-size:12px">
-        <a href="/flats/gaps">What is not encoded</a> — the standards with nothing behind
-        them, which never reach a review queue ·
+        <a href="/flats/gaps">What is not encoded</a> — standards claimed with no passage
+        behind them, held out of screening until somebody finds one ·
         <a href="/flats/feedback">Feedback bundle</a>
       </p>
     </div>
@@ -31,7 +31,7 @@
     <div><span class="muted">Jurisdictions</span> <strong>{{ totals.layers }}</strong></div>
     <div><span class="muted">Zones</span> <strong>{{ totals.zones }}</strong></div>
     <div><span class="muted">Standards</span> <strong>{{ totals.standards }}</strong></div>
-    <div><span class="muted">Quoted</span> <strong>{{ totals.quoted }}</strong></div>
+    <div><span class="muted">Held out, unread</span> <strong>{{ totals.unread }}</strong></div>
     <div><span class="muted">Verified</span> <strong>{{ totals.verified }}</strong></div>
   </div>
   {% endif %}
@@ -44,7 +44,7 @@
           <th>Kind</th>
           <th class="col-right">Zones</th>
           <th class="col-right">Standards</th>
-          <th class="col-right">Quoted</th>
+          <th class="col-right">Held out</th>
           <th class="col-right">Verified</th>
           <th class="col-right">Documents</th>
           <th></th>
@@ -58,7 +58,7 @@
           <td>{{ s.kind }}</td>
           <td class="col-right">{{ s.zones }}</td>
           <td class="col-right">{{ s.standards }}</td>
-          <td class="col-right">{{ s.quoted }}</td>
+          <td class="col-right">{% if s.unread %}<a href="/flats/gaps">{{ s.unread }}</a>{% else %}0{% endif %}</td>
           <td class="col-right">{{ s.verified }}</td>
           <td class="col-right">{{ s.documents }}</td>
           <td class="col-right">

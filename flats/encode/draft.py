@@ -221,7 +221,10 @@ def apply(text: str, additions: Sequence[Addition]) -> tuple[str, list[Skipped]]
 
 
 def _existing(layer) -> dict[str, set[str]]:
-    return {code: set(zone.values) for code, zone in layer.zones.items()}
+    out = {code: set(zone.values) for code, zone in layer.zones.items()}
+    for w in layer.wanted:
+        out.setdefault(w.zone, set()).add(w.field)
+    return out
 
 
 def main(argv: Sequence[str] | None = None) -> int:

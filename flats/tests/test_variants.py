@@ -48,6 +48,7 @@ CITE = (
     '  cite: "PCC 33.110.220, Table 110-4"\n'
     '  url: "https://www.portland.gov/code/33/100s/110"\n'
     "  retrieved: 2026-08-12\n"
+    "  quote: \"pdx/33.110.txt#L42-L48\"\n"
 )
 
 

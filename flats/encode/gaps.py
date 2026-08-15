@@ -68,7 +68,7 @@ from flats.encode.corroborate import Finding, Verdict, check_layer, checkable
 from flats.provenance.sources import authority_for, document_key, host_of
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.fields import FIELDS
-from flats.rules.model import Layer
+from flats.rules.model import Layer, Value
 
 #: Worst first. A value is reported under the first cause that fits any
 #: document, so a single disagreement outranks four agreements: attaching a
@@ -123,6 +123,11 @@ class Gap:
     field: str
     cause: str
     detail: str = ""
+    #: What the encoding believed, kept as a lead. A searcher told the answer is
+    #: probably "10" finds the sentence stating 10 far faster than one reading a
+    #: chapter cold, and a searcher who finds 15 instead has found something
+    #: more valuable than a citation.
+    believed: str = ""
 
     @property
     def action(self) -> str:
@@ -130,6 +135,12 @@ class Gap:
 
     def line(self) -> str:
         return f"  {self.cause:12} {self.zone:8} {self.field:28} {self.detail}"
+
+
+def _lead(value: Value) -> str:
+    """What the file claimed, printed the way a searcher would scan for it."""
+    got = getattr(value, "value", None)
+    return "" if got is None else str(got)
 
 
 def _cause(finding: Finding) -> tuple[str, str] | None:
@@ -186,22 +197,23 @@ def gaps(layer: Layer, findings: Sequence[Finding]) -> list[Gap]:
         grouped.setdefault((finding.zone, finding.field), []).append(finding)
     declared = {document_key(d.url) for d in layer.code} - {None}
     out: list[Gap] = []
+    unread = layer.unread()
     for zone, field in sorted(unquoted(layer)):
-        value = layer.zones[zone].values[field]
+        value = unread[(zone, field)]
         url = value.prov.url
         if not authority_for(url).may_verify:
             # First, ahead of everything a document could say. A value citing
             # an aggregator cannot be signed however well it corroborates, and
             # attaching a quote to it would leave a value that reads cited,
             # reads confirmed, and points at somebody's transcription.
-            out.append(Gap(layer.layer, zone, field, "unofficial", host_of(url)))
+            out.append(Gap(layer.layer, zone, field, "unofficial", host_of(url), _lead(value)))
             continue
         if not checkable(field, value):
             # No finding was ever emitted for this field, so its silence says
             # nothing. Calling that unsourced would send somebody hunting for a
             # chapter that is very likely already in the store.
             kind = FIELDS[field].kind if field in FIELDS else "not in the field registry"
-            out.append(Gap(layer.layer, zone, field, "uncheckable", kind))
+            out.append(Gap(layer.layer, zone, field, "uncheckable", kind, _lead(value)))
             continue
         cause, detail = classify(grouped.get((zone, field), ()))
         key = document_key(url)
@@ -212,7 +224,7 @@ def gaps(layer: Layer, findings: Sequence[Finding]) -> list[Gap]:
             # is Municode, whose reader URL and fetchable URL share nothing:
             # unprovable, so unclaimed.
             cause, detail = "undeclared", url
-        out.append(Gap(layer.layer, zone, field, cause, detail))
+        out.append(Gap(layer.layer, zone, field, cause, detail, _lead(value)))
     return sorted(out, key=lambda g: (CAUSES.index(g.cause), g.zone, g.field))
 
 
@@ -277,9 +289,14 @@ def digest(layers: Mapping[str, Layer]) -> str:
     parts: list[str] = []
     for layer_id in sorted(layers):
         layer = layers[layer_id]
-        blocks = [("(defaults)", layer.defaults)] + [
-            (code, layer.zones[code].values) for code in sorted(layer.zones)
-        ]
+        queued: dict[str, dict[str, object]] = {}
+        for w in layer.wanted:
+            queued.setdefault(f"{w.zone} (unread)", {})[w.field] = w.value
+        blocks = (
+            [("(defaults)", layer.defaults)]
+            + [(code, layer.zones[code].values) for code in sorted(layer.zones)]
+            + [(zone, queued[zone]) for zone in sorted(queued)]
+        )
         for zone, values in blocks:
             for name in sorted(values):
                 value = values[name]
@@ -325,6 +342,7 @@ def snapshot(layers: Mapping[str, Layer], store: ProvenanceStore) -> dict:
                     "field": g.field,
                     "cause": g.cause,
                     "detail": g.detail,
+                    "believed": g.believed,
                     "action": g.action,
                 }
                 for g in items

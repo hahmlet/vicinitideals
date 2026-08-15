@@ -1201,3 +1201,39 @@ async def test_the_book_route_needs_a_session(client: AsyncClient):
     served = await client.get("/flats/book/or/multnomah/portland/33.110.txt")
 
     assert served.status_code in (302, 303, 401, 403)
+
+
+async def test_an_unread_standard_is_not_screened_and_is_not_hidden_either(
+    client: AsyncClient, session: AsyncSession
+):
+    """The two failures a queue sits between.
+
+    Screening on a number nobody read is the one the provenance chain exists to
+    stop. Dropping it silently is the other, and it is worse in one way: the
+    jurisdiction then reads as small rather than as thin, and nobody goes
+    looking. So it leaves the zone and appears here, counted.
+    """
+    await _login(client, session)
+
+    page = await client.get("/flats")
+
+    assert "Held out" in page.text
+    assert "held out of screening" in page.text
+
+
+async def test_the_queue_keeps_the_number_somebody_believed(
+    client: AsyncClient, session: AsyncSession
+):
+    """A lead, not an answer.
+
+    Somebody typed 10 from a table they had open. That is worthless as a rule
+    and valuable as a search: whoever opens the chapter knows what to scan for,
+    and a searcher who finds 15 instead has found something better than a
+    citation — a wrong number, before it decided a lot.
+    """
+    await _login(client, session)
+
+    page = await client.get("/flats/gaps")
+
+    assert "Believed" in page.text
+    assert "What it would take to make it a rule" in page.text

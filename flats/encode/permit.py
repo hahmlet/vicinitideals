@@ -205,12 +205,9 @@ def permissions_in(
 
 def unquoted_zones(layer: Layer) -> list[str]:
     """Zones whose permission is asserted with nothing to read."""
-    out = []
-    for code, zone in sorted(layer.zones.items()):
-        got = zone.values.get("quadplex_allowed")
-        if got is not None and got.value is True and not got.prov.quote:
-            out.append(code)
-    return out
+    return sorted(
+        w.zone for w in layer.wanted if w.field == "quadplex_allowed" and w.value.value is True
+    )
 
 
 def search(layer: Layer, store: ProvenanceStore) -> list[Found]:

@@ -38,6 +38,7 @@ CITE = (
     '  cite: "FMC 19.115.030"\n'
     '  url: "https://fairvieworegon.gov/code/19.115"\n'
     "  retrieved: 2026-08-12\n"
+    "  quote: \"or/multnomah/fairview/19.115.txt#L2\"\n"
 )
 #: Ready for review. The signing helper promotes exactly these.
 READY = "      status: encoded\n"
@@ -171,7 +172,7 @@ def test_state_preemption_still_beats_a_borrowed_number(root: Path) -> None:
         "or/_state.yaml",
         "label: Oregon\n"
         'cite_default:\n  cite: "OAR 660-046-0220"\n'
-        '  url: "https://oregon.gov/oar/660-046"\n  retrieved: 2026-08-12\n'
+        '  url: "https://oregon.gov/oar/660-046"\n  retrieved: 2026-08-12\n  quote: "or/oar.660-046-0220.txt#L79"\n'
         "defaults:\n"
         "  parking_min_per_unit:\n    value: 1.0\n    preempts: true\n",
     )

@@ -618,6 +618,42 @@ class Incorporation(BaseModel):
         return self
 
 
+class Wanted(BaseModel):
+    """A standard somebody believed, that no stored passage says.
+
+    It is not a rule. A number with a citation but no quote has never been read
+    against the code — the citation names a chapter, and nothing in the store
+    proves the chapter says it. FLATS will not screen on it and will not print
+    it: a value that cannot be shown to a planner is a value that cannot be
+    defended, and one that quietly decides a lot is buildable is worse than a
+    gap, because a gap is visible.
+
+    So it is loaded here instead of into the zone, and becomes work: find the
+    passage, quote it, and the number turns back into a rule. What it was
+    believed to be is kept, because a searcher who knows the answer is probably
+    "10 feet" finds it faster than one starting from nothing.
+    """
+
+    model_config = ConfigDict(frozen=True)
+
+    zone: str
+    field: str
+    #: The rule it would have been, kept whole: the number somebody believed,
+    #: the chapter they cited, the exceptions they wrote. A searcher who knows
+    #: the answer is probably "10 feet" in PCC 33.110.220 finds the passage far
+    #: faster than one starting from nothing, and every encoding tool that
+    #: hunts quotes already knows how to read a Value.
+    value: Value
+
+    @property
+    def cite(self) -> str:
+        return self.value.prov.cite
+
+    @property
+    def url(self) -> str:
+        return self.value.prov.url
+
+
 class Zone(BaseModel):
     """One base zone within one jurisdiction layer."""
 
@@ -734,6 +770,10 @@ class Layer(BaseModel):
     defaults: dict[str, Value] = Field(default_factory=dict)
     zones: dict[str, Zone] = Field(default_factory=dict)
     notes: str | None = None
+    #: Standards this layer claimed but cannot show — see :class:`Wanted`. Held
+    #: on the layer rather than dropped silently, so "we do not know" is a thing
+    #: the system can say out loud rather than an absence somebody has to notice.
+    wanted: tuple[Wanted, ...] = ()
     #: Ingest hints — which GIS zoning layer and attribute carry this layer's
     #: zone codes. Not a zoning standard; kept beside them for locality.
     ingest: dict[str, Any] = Field(default_factory=dict)
@@ -759,6 +799,15 @@ class Layer(BaseModel):
     def document_path(self, doc_id: str) -> str:
         """Store path for one of this layer's documents."""
         return f"{self.doc_root}/{doc_id}.txt"
+
+    def unread(self) -> dict[tuple[str, str], Value]:
+        """The queue, keyed the way every encoding tool addresses a value.
+
+        ``(zone, field) -> the Value it would have been``. Corroboration, quote
+        attachment and the gaps ladder all work on these and only these: a zone
+        holds what has been read, and this holds what has not.
+        """
+        return {(w.zone, w.field): w.value for w in self.wanted}
 
     def documents(self) -> dict[str, CodeDocument]:
         """Declared documents keyed by the store path each lands at."""

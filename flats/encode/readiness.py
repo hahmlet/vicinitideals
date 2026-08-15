@@ -156,6 +156,10 @@ def _quoted_parts(layer: Layer) -> Iterable[tuple[str, str, str | None, object]]
                 )
         if zone.like is not None:
             yield zone_code, LIKE, zone.like.prov.quote, None
+    for w in layer.wanted:
+        # Quarantined out of the zones, still owed. Dropping them here would
+        # report a jurisdiction as finished the moment its worst values left.
+        yield w.zone, w.field, None, getattr(w.value, "value", None)
 
 
 #: How a number can be printed in an ordinance: 7500, 7,500, 7500.0, 7.5.

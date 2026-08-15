@@ -15,15 +15,17 @@
       </div>
     </div>
     <div style="margin-left:auto">
-      <span class="muted">Values with nothing behind them</span> <strong>{{ total }}</strong>
+      <span class="muted">Standards held out of screening</span> <strong>{{ total }}</strong>
     </div>
   </div>
 
   <p class="muted" style="font-size:12px;max-width:74ch">
-    The review queue can only show a number that cites something. These are the ones that
-    cite nothing — so without this page they are invisible, and a jurisdiction can look
-    finished because the half nobody encoded never appears. Each is grouped by what would
-    unstick it, worst first.
+    A citation names a chapter. A quote proves the chapter says it. These have the first
+    and not the second, so FLATS does not treat them as rules at all: they are held out
+    of screening, out of the review queue and out of anything printed for a planner, and
+    a lot one of them would have decided comes back as a gap instead. What somebody
+    believed the number to be is kept as a lead for whoever goes looking. Grouped by what
+    would unstick it, worst first.
   </p>
 
   {% if not current %}
@@ -124,10 +126,10 @@
   </div>
   {% endif %}
 
-  <h3 style="margin:24px 0 4px">Standards with no citation</h3>
+  <h3 style="margin:24px 0 4px">Standards nobody has read against the code</h3>
 
   {% if not rows %}
-    <p>Nothing missing. Every encoded value cites a document.</p>
+    <p>Nothing waiting. Every encoded value quotes the text it came from.</p>
   {% endif %}
 
   {% for row in rows %}
@@ -154,7 +156,8 @@
           <tr>
             <th>Zone</th>
             <th>Standard</th>
-            <th>Why it has no citation</th>
+            <th class="col-right">Believed</th>
+            <th>What it would take to make it a rule</th>
           </tr>
         </thead>
         <tbody>
@@ -162,6 +165,7 @@
           <tr>
             <td>{{ gap.zone }}</td>
             <td>{{ gap.field }}</td>
+            <td class="col-right muted">{{ gap.believed or "—" }}</td>
             <td style="font-size:12px">
               {{ causes.get(gap.cause, gap.cause) }}
               {% if gap.detail %}<div class="muted" style="font-size:11px">{{ gap.detail }}</div>{% endif %}

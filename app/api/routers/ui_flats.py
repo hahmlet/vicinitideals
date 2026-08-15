@@ -224,6 +224,10 @@ def _layer_summary(layer: Layer) -> dict[str, Any]:
         "standards": len(rows),
         "verified": sum(1 for row in rows if row["trusted"]),
         "quoted": sum(1 for row in rows if row["quote"]),
+        # Standards this jurisdiction claims and cannot show. They are not in
+        # `standards` — they are not rules — and a page that omitted them would
+        # report a thinly encoded jurisdiction as a small one.
+        "unread": len(layer.wanted),
         "borrowed": borrowed,
         "documents": len(layer.code),
     }
@@ -240,6 +244,7 @@ async def flats_index(request: Request, session: DBSession) -> HTMLResponse:
         "standards": sum(s["standards"] for s in summaries),
         "verified": sum(s["verified"] for s in summaries),
         "quoted": sum(s["quoted"] for s in summaries),
+        "unread": sum(s["unread"] for s in summaries),
     }
     return templates.TemplateResponse(
         request,

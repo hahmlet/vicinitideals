@@ -26,6 +26,7 @@ CITE = (
     '  cite: "PCC 33.110.220, Table 110-4"\n'
     '  url: "https://www.portland.gov/code/33/100s/110"\n'
     "  retrieved: 2026-08-12\n"
+    "  quote: \"or/multnomah/portland/33.110.txt#L2\"\n"
 )
 #: Ready for review. The signing helper promotes exactly these.
 REVIEWED = "status: encoded"
@@ -167,6 +168,7 @@ def hierarchy(root: Path) -> RuleSet:
         "cite_default:\n"
         '  cite: "OAR 660-046-0220"\n'
         '  url: "https://oregon.public.law/rules/oar_660-046-0220"\n'
+        '  quote: "or/oar.660-046-0220.txt#L79"\n'
         "  retrieved: 2026-08-12\n"
         "defaults:\n"
         "  parking_min_per_unit: {value: 1.0, preempts: true}\n"

@@ -64,10 +64,20 @@ PENDING = (Status.draft, Status.encoded, Status.stale)
 
 
 def _block(layer: Layer, zone: str) -> dict[str, Value]:
+    """One zone's values, read and unread alike.
+
+    A reviewer asking to see a standard is asking about the standard, not about
+    whether it cleared the quote gate — and the ones that did not are precisely
+    the ones somebody has been sent to look at. They are shown here with their
+    missing evidence stated out loud; screening never sees them.
+    """
     if zone == "defaults":
-        return dict(layer.defaults)
-    z = layer.zones.get(zone)
-    return dict(z.values) if z else {}
+        out = dict(layer.defaults)
+    else:
+        z = layer.zones.get(zone)
+        out = dict(z.values) if z else {}
+    out.update({w.field: w.value for w in layer.wanted if w.zone == zone})
+    return out
 
 
 def _find(layers: dict[str, Layer], layer_id: str, zone: str, field: str) -> Value | Incorporation:

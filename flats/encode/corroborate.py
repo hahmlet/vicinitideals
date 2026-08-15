@@ -358,14 +358,19 @@ def check_layer(
     stem = path.rsplit("/", 1)[-1].removesuffix(".txt")
     spaced = any(doc.id == stem and doc.spaced for doc in layer.code)
     out: list[Finding] = []
+    unread = layer.unread()
     for code, zone in sorted(layer.zones.items()):
         if code in wanted:
+            # Read what the zone holds and what it is missing in one pass. The
+            # unread half is the half this search exists to close.
+            values = dict(zone.values)
+            values.update({f: v for (z, f), v in unread.items() if z == code})
             out.extend(
                 check_zone(
                     text,
                     layer=layer.layer,
                     zone=code,
-                    values=zone.values,
+                    values=values,
                     path=path,
                     zoned=zoned,
                     sections=zone.section,
