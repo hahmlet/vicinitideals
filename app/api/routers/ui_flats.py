@@ -30,7 +30,8 @@ townhouse lots, cities state different standards for the two, and which one
 is being built is a decision about the product.
 
 Routes: /flats, /flats/plans, /flats/plans/{design}, /flats/review/{layer},
-/flats/gaps, /flats/feedback, /flats/why/{layer}, /flats/{layer}, /ui/flats/quote,
+/flats/gaps, /flats/find/{layer}, /flats/feedback, /flats/why/{layer}, /flats/{layer},
+/ui/flats/quote,
 /ui/flats/sign, /ui/flats/sign-passage, /ui/flats/bundle, /ui/flats/book,
 /flats/book/{document}
 """
@@ -1005,6 +1006,158 @@ async def flats_gaps(request: Request, session: DBSession) -> HTMLResponse:
             "causes": _CAUSE_WORDS,
             "coverage": _coverage(),
             "misattributed": wrong,
+        },
+    )
+
+
+def _queue() -> dict[tuple[str, str, str], dict[str, Any]]:
+    """Every standard held out of screening, addressed the way a link is.
+
+    Keyed by (layer, zone, field) because that is what a row on the gaps page
+    knows about itself and all a URL needs to carry.
+    """
+    out: dict[tuple[str, str, str], dict[str, Any]] = {}
+    for layer_id, layer in _layers().items():
+        for want in layer.wanted:
+            out[(layer_id, want.zone, want.field)] = {
+                "layer": layer_id,
+                "label": layer.label,
+                "zone": want.zone,
+                "field": want.field,
+                "believed": want.value.value,
+                "cite": want.cite,
+                "url": want.url,
+                "documents": [layer.document_path(doc.id) for doc in layer.code],
+            }
+    return out
+
+
+#: A number as a code prints one, and as a searcher would scan for it: 7,500 and
+#: 7500 and 7500.0 are the same standard, and a search that matched only the
+#: spelling in the YAML would miss the one on the page.
+_PRINTED = re.compile(r"(?<![\d.,])\d[\d,]*(?:\.\d+)?")
+
+
+def _states(line: str, number: float) -> bool:
+    """Whether a line prints this number, compared by value not by spelling."""
+    for found in _PRINTED.finditer(line):
+        try:
+            if float(found.group(0).replace(",", "")) == number:
+                return True
+        except ValueError:
+            continue
+    return False
+
+
+def _wording(field: str, believed: Any) -> re.Pattern[str] | None:
+    """What to look for when the standard is not a number.
+
+    A boolean has no digits. What it has is a housing type and a word granting
+    or refusing it, which is the sentence a searcher is actually hunting.
+    """
+    if field == "quadplex_allowed":
+        return re.compile(r"quad[- ]?plex|four[- ]?plex|middle housing", re.I)
+    if isinstance(believed, bool) or not isinstance(believed, (int, float)):
+        words = FIELDS[field].label if field in FIELDS else field.replace("_", " ")
+        return re.compile(r"|".join(re.escape(w) for w in words.split() if len(w) > 3), re.I)
+    return None
+
+
+#: A line that opens with what it is about, which is how a table row reads.
+_ROW_START = re.compile(
+    r"^(?:quad[- ]?plex|four[- ]?plex|minimum|maximum|front|rear|side|street|lot|building)\b",
+    re.I,
+)
+
+#: How many matching lines to read before giving up on reading them all. A
+#: jurisdiction whose code says "lot" nine hundred times is not a search worth
+#: finishing, and by then the ranking has found what it was going to find.
+_SWEEP = 600
+
+
+def _candidates(item: dict[str, Any], limit: int = 60) -> tuple[list[dict[str, Any]], int]:
+    """Lines in this jurisdiction's fetched code that could be the passage.
+
+    Deliberately unfiltered by section: a searcher is looking precisely because
+    the encoding's own citation did not lead anywhere, so narrowing the hunt to
+    what the citation claims would hide the answer in the usual case.
+
+    Ranked before it is cut, which is the difference between a list and a useful
+    one: Gresham prints "quadplex" sixty times in prose before the use table
+    that answers the question, and a cap applied while reading throws the answer
+    away to keep the preamble.
+
+    Returns the page's worth and how many more there were, because a list that
+    silently ends reads as a corpus that ends there.
+    """
+    believed = item["believed"]
+    pattern = _wording(item["field"], believed)
+    number = None
+    if pattern is None and isinstance(believed, (int, float)) and not isinstance(believed, bool):
+        number = float(believed)
+    out: list[dict[str, Any]] = []
+    for document in item["documents"]:
+        for n, line in enumerate(_document_lines(document), 1):
+            text = line.strip()
+            if not text:
+                continue
+            if number is not None and not _states(text, number):
+                continue
+            if pattern is not None and not pattern.search(text):
+                continue
+            pages = _pages(document, n, n)
+            out.append(
+                {
+                    "document": document,
+                    "line": n,
+                    "text": text[:400],
+                    "quote": f"{document}#L{n}",
+                    "page": pages[0]["n"] if pages else 0,
+                    "page_label": pages[0]["label"] if pages else "",
+                }
+            )
+            if len(out) >= _SWEEP:
+                break
+        if len(out) >= _SWEEP:
+            break
+    # A use-table row — the housing type opening the line, its cells after —
+    # is the answer; a paragraph mentioning the same word is context. Both are
+    # worth showing and only one is worth showing first.
+    out.sort(key=lambda one: 0 if _ROW_START.match(one["text"]) else 1)
+    return out[:limit], max(0, len(out) - limit)
+
+
+@router.get("/flats/find/{layer_id:path}", response_class=HTMLResponse)
+async def flats_find(
+    request: Request,
+    session: DBSession,
+    layer_id: str,
+    zone: str = Query(""),
+    field: str = Query(""),
+) -> HTMLResponse:
+    """The hunt for one held-out standard, with the fetched code searched for it.
+
+    The queue says a number has no passage behind it. This says where the
+    passage might be: every line in the jurisdiction's own documents that
+    prints that number, each with the page it sits on and the citation to
+    paste. Where the answer is there, it is a minute's work; where it is not,
+    that is the finding — the chapter stating it has never been fetched, and
+    no amount of reading the ones that have will produce it.
+    """
+    user = await _get_user(session, request)
+    dedup_count, conflicts_count = await _get_counts(session)
+    item = _queue().get((layer_id, zone, field))
+    if item is None:
+        return HTMLResponse("no such standard in the queue", status_code=404)
+    candidates, dropped = _candidates(item)
+    return templates.TemplateResponse(
+        request,
+        "flats_find.html",
+        {
+            **_base_ctx(user, dedup_count, "flats", conflicts_count=conflicts_count),
+            "item": item,
+            "candidates": candidates,
+            "dropped": dropped,
         },
     )
 

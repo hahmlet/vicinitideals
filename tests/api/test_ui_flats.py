@@ -1237,3 +1237,98 @@ async def test_the_queue_keeps_the_number_somebody_believed(
 
     assert "Believed" in page.text
     assert "What it would take to make it a rule" in page.text
+
+
+async def test_the_queue_sends_a_searcher_to_the_lines_that_could_be_it(
+    client: AsyncClient, session: AsyncSession
+):
+    """A held-out standard is a hunt, and the hunt is mostly reading.
+
+    Portland R5's front setback is believed to be 20 feet. Whether that is the
+    code's answer is settled by looking at the lines in Portland's own chapter
+    that print a 20 — which is a search anybody can run and nobody should have
+    to run at a terminal.
+    """
+    await _login(client, session)
+
+    page = await client.get(
+        "/flats/find/or/multnomah/fairview", params={"zone": "RM", "field": "min_lot_sqft"}
+    )
+
+    assert page.status_code == 200
+    assert "Believed to be" in page.text
+    assert "10000" in page.text
+
+
+async def test_a_standard_that_is_not_in_the_queue_has_no_hunt(
+    client: AsyncClient, session: AsyncSession
+):
+    """The address comes from a link, which means it comes from a URL bar too.
+
+    A value that is encoded and quoted is not work; offering a search page for
+    it would invite somebody to re-cite a standard that already has a citation,
+    against a line they picked out of a list.
+    """
+    await _login(client, session)
+
+    page = await client.get(
+        "/flats/find/or/multnomah/portland", params={"zone": "R5", "field": "setback_front_ft"}
+    )
+
+    assert page.status_code == 404
+
+
+async def test_the_hunt_says_so_when_the_chapter_was_never_fetched(
+    client: AsyncClient, session: AsyncSession
+):
+    """No line stating it is not a dead end — it is the finding.
+
+    Either the chapter that states this standard has never been fetched, or the
+    number was never in this code at all, and both are worth more to a reviewer
+    than another afternoon reading the documents that are there.
+    """
+    await _login(client, session)
+
+    page = await client.get(
+        "/flats/find/or/multnomah/fairview", params={"zone": "R/SFLD", "field": "min_lot_sqft"}
+    )
+
+    assert page.status_code == 200
+    assert "never been fetched" in page.text or "line" in page.text
+
+
+async def test_the_table_row_is_offered_before_the_prose_that_mentions_it(
+    client: AsyncClient, session: AsyncSession
+):
+    """Ranking has to happen before the list is cut, or it does nothing.
+
+    Gresham's code says "quadplex" in twenty paragraphs of definitions and
+    procedure before Table 4.0120 answers the question at line 134. A searcher
+    handed the first sixty matches in file order reads the preamble and never
+    reaches the table, which is the one line that decides the standard.
+    """
+    from app.api.routers import ui_flats as ui
+
+    item = ui._queue()[("or/multnomah/gresham", "LDR-PV", "quadplex_allowed")]
+
+    candidates, _ = ui._candidates(item)
+
+    assert candidates[0]["text"].lower().startswith("quadplex ")
+    assert candidates[0]["line"] == 134
+
+
+async def test_a_cut_list_says_how_much_it_cut(client: AsyncClient, session: AsyncSession):
+    """A list that stops at sixty reads as a corpus with sixty matches in it.
+
+    Which would send somebody to declare a missing chapter that is not missing,
+    on the evidence of a page that was only ever showing them the top of a pile.
+    """
+    from app.api.routers import ui_flats as ui
+
+    item = ui._queue()[("or/multnomah/gresham", "LDR-PV", "quadplex_allowed")]
+
+    candidates, dropped = ui._candidates(item, limit=3)
+
+    assert len(candidates) == 3
+    assert dropped > 0
+

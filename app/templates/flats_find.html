@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Find the passage — {{ item.zone }} {{ item.field }}{% endblock %}
+
+{% block content %}
+<div class="topbar">
+</div>
+
+<div class="content">
+  <div class="toolbar">
+    <div>
+      <h2 style="margin:0">{{ item.zone }} · {{ item.field }}</h2>
+      <div class="muted" style="font-size:12px">
+        <a href="/flats/gaps">What is not encoded</a> ·
+        <a href="/flats/{{ item.layer }}">{{ item.label }}</a> · {{ item.layer }}
+      </div>
+    </div>
+    <div style="margin-left:auto;text-align:right">
+      <span class="muted">Believed to be</span>
+      <strong>{{ item.believed }}</strong>
+    </div>
+  </div>
+
+  <p class="muted" style="font-size:12px;max-width:74ch">
+    This standard is held out of screening: it names a chapter and quotes nothing, so
+    nobody has read it against the code. Below is every line in this jurisdiction's
+    fetched documents that prints that answer. Open the page beside one to see the
+    column and the footnote, and the citation to paste is the grey text under it.
+  </p>
+
+  <div class="toolbar" style="gap:24px">
+    <div><span class="muted">Cited as</span> <strong>{{ item.cite or "—" }}</strong></div>
+    {% if item.url %}
+    <div><a href="{{ item.url }}" target="_blank" rel="noopener">at the source</a></div>
+    {% endif %}
+    <div><span class="muted">Documents fetched</span> <strong>{{ item.documents | length }}</strong></div>
+  </div>
+
+  {% if not candidates %}
+  <div class="card" style="padding:12px;margin-top:12px">
+    <strong>No line in this jurisdiction's fetched code states it.</strong>
+    <p class="muted" style="font-size:12px;max-width:74ch;margin:6px 0 0">
+      Which is itself the answer: either the chapter that states this standard has never
+      been fetched — declare its URL under <code>code:</code> in
+      <code>{{ item.layer }}.yaml</code> and re-run the loader — or the number was never
+      in this code at all, and what it needs is deleting rather than citing.
+    </p>
+  </div>
+  {% endif %}
+
+  {% for one in candidates %}
+  <div class="card" style="padding:10px;margin:8px 0">
+    <div class="toolbar" style="margin:0 0 6px;font-size:11px">
+      <span class="muted">
+        {{ one.document.rsplit("/", 1)[-1] }} · line {{ one.line }}
+        {% if one.page %} · page {{ one.page_label or one.page }}{% endif %}
+      </span>
+      <span style="margin-left:auto">
+        {% if one.page %}
+        <button class="btn btn-secondary btn-sm"
+                hx-get="/ui/flats/book?ref={{ one.document | urlencode }}&page={{ one.page }}"
+                hx-target="#book-{{ loop.index }}" hx-swap="innerHTML">show the page</button>
+        {% endif %}
+      </span>
+    </div>
+    <pre style="margin:0;white-space:pre-wrap;font-size:12px">{{ one.text }}</pre>
+    <div class="muted" style="font-size:11px;margin-top:6px">
+      <code>quote: "{{ one.quote }}"</code>
+    </div>
+    <div id="book-{{ loop.index }}"></div>
+  </div>
+  {% endfor %}
+
+  {% if dropped %}
+  <p class="muted" style="font-size:12px;max-width:74ch">
+    {{ dropped }} more line{{ "" if dropped == 1 else "s" }} match and are not shown.
+    Table rows are listed first, so what is missing here is prose that happens to
+    print the same words. If the answer is not above, it is worth reading the
+    chapter itself rather than a longer list.
+  </p>
+  {% endif %}
+</div>
+{% endblock %}

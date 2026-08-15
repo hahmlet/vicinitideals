@@ -164,7 +164,7 @@
           {% for gap in row.gaps %}
           <tr>
             <td>{{ gap.zone }}</td>
-            <td>{{ gap.field }}</td>
+            <td><a href="/flats/find/{{ row.layer }}?zone={{ gap.zone | urlencode }}&field={{ gap.field | urlencode }}">{{ gap.field }}</a></td>
             <td class="col-right muted">{{ gap.believed or "—" }}</td>
             <td style="font-size:12px">
               {{ causes.get(gap.cause, gap.cause) }}
