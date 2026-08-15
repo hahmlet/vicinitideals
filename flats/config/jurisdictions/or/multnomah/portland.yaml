@@ -3,7 +3,7 @@ kind: city
 eligible: true
 notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s verification was against a coarser standard
   (one citation per row) and does not carry over. UNPORTED: orientation_constraint=''entrance_only''. quadfit justified
-  this in a YAML comment with no citation; it needs its own encoding rather than invented provenance.'
+  this in a YAML comment with no citation; it needs its own encoding rather than invented provenance. SUNSET: the min_lot_sqft `adjustment` variants on the Table 110-7 zones are the 10 percent reduction 33.110.240.B.2 allows, and that paragraph ends it — requests are barred from January 1, 2032. Nothing in the model expires a variant on a date, so on that day these five variants become wrong and have to be deleted by hand.'
 ingest:
   geoid: null
   juris_city_codes:
@@ -60,6 +60,10 @@ zones:
     min_lot_sqft:
       value: 12000
       quote: "or/multnomah/portland/33.110.txt#L1550"
+      variants:
+        - value: 10800
+          when: [adjustment]
+          quote: "or/multnomah/portland/33.110.txt#L1544"
     coverage_curve:
     - - 0
       - 0
@@ -98,6 +102,10 @@ zones:
     min_lot_sqft:
       value: 6000
       quote: "or/multnomah/portland/33.110.txt#L1551"
+      variants:
+        - value: 5400
+          when: [adjustment]
+          quote: "or/multnomah/portland/33.110.txt#L1544"
     coverage_curve:
     - - 0
       - 0
@@ -136,6 +144,10 @@ zones:
     min_lot_sqft:
       value: 4200
       quote: "or/multnomah/portland/33.110.txt#L1552"
+      variants:
+        - value: 3780
+          when: [adjustment]
+          quote: "or/multnomah/portland/33.110.txt#L1544"
     coverage_curve:
     - - 0
       - 0
@@ -173,6 +185,10 @@ zones:
     min_lot_sqft:
       value: 3000
       quote: "or/multnomah/portland/33.110.txt#L1553"
+      variants:
+        - value: 2700
+          when: [adjustment]
+          quote: "or/multnomah/portland/33.110.txt#L1544"
     coverage_curve:
     - - 0
       - 0
@@ -210,6 +226,10 @@ zones:
     min_lot_sqft:
       value: 1500
       quote: "or/multnomah/portland/33.110.txt#L1554"
+      variants:
+        - value: 1350
+          when: [adjustment]
+          quote: "or/multnomah/portland/33.110.txt#L1544"
     coverage_curve:
     - - 0
       - 0
