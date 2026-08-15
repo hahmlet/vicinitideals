@@ -115,19 +115,29 @@ def _number(rules: "ZoneResolution", name: str) -> float | None:
 def _lot_standard(
     rules: "ZoneResolution", name: str, *, per_unit: bool, lots: int
 ) -> tuple[float | None, bool]:
-    """A per-lot standard, and whether the encoding answers for this plat path.
+    """A lot standard for this plat path, and whether the encoding answers.
 
-    ``min_lot_sqft`` is defined as the minimum lot area *for a fourplex*. On the
-    split path it is the wrong standard: what governs is the zone's minimum for
-    the dwelling that ends up on each lot, which the code states in a different
-    row. Multiplying the fourplex number by four would not approximate that —
-    it would invent a 28,000 sq ft requirement out of a 7,000 sq ft one.
+    ``min_lot_sqft`` is defined as the minimum lot area *for a fourplex*, so on
+    the split path there are three things it could mean, and only one of them
+    is right.
 
-    So the number is scaled only where the encoding says it is the per-unit
-    one, by carrying the ``unit_lots`` condition on the variant. Where the zone
-    states a number that is plainly about the whole building, this returns
-    nothing and reports the standard as one we do not have — which is true, and
-    is the encoding task it should turn into.
+    It is not four of them. Multiplying a 7,000 sq ft minimum by four invents a
+    28,000 sq ft requirement out of a standard that says nothing of the kind.
+
+    It is not a per-child-lot number either, in Oregon. A middle housing land
+    division is judged against the land use regulations "applicable to the
+    original lot or parcel" (ORS 92.031(2)(b)), and a city may not add approval
+    criteria of its own for the resulting lots (92.031(4)(c)). The parent lot
+    meets the zone; the children inherit no standards to meet. So where a layer
+    encodes ``land_division_parent_standards``, the split path reads the same
+    number as the one-lot path — which is what the statute says, and why 76 of
+    86 fourplex zones were reporting a hole that was never in the code.
+
+    Where a jurisdiction is outside that regime, or states its own townhouse
+    lot standards for a conventional subdivision, it encodes them by carrying
+    the ``unit_lots`` condition on a variant, and those *are* per-lot: four of
+    them side by side. Where neither is true this returns nothing and reports
+    the standard as one we do not have, which is honest and is an encoding task.
     """
     got = rules.values.get(name)
     value = getattr(got, "value", None)
@@ -137,6 +147,8 @@ def _lot_standard(
         return float(value), True
     if "unit_lots" in tuple(getattr(got, "when", ()) or ()):
         return float(value) * lots, True
+    if rules.get("land_division_parent_standards") is True:
+        return float(value), True
     return None, False
 
 

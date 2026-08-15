@@ -257,3 +257,71 @@ def test_the_split_is_a_condition_the_rule_layer_can_read(tmp_path: Path) -> Non
     # which product this is. The design says so; nothing on the parcel can.
     assert "unit_lots" in SPLIT.conditions
     assert "unit_lots" not in POD.conditions
+
+
+# --- the statute behind the plat path ---------------------------------
+#
+# Left to itself, the split path reported a hole in 76 of the 86 zones that
+# allow a fourplex: no townhouse lot standard encoded, so no answer. The hole
+# was never in the codes. Oregon answers it once, for all of them.
+
+
+def test_the_parent_lots_minimum_governs_a_middle_housing_land_division(
+    tmp_path: Path,
+) -> None:
+    # ORS 92.031(2)(b): the plan must comply with the regulations "applicable
+    # to the original lot or parcel". One 7,000 sq ft lot meets the zone and
+    # the four lots inside it inherit nothing further to meet.
+    got = fit(
+        tmp_path,
+        design=SPLIT,
+        min_lot_sqft=7000,
+        land_division_parent_standards=True,
+    )
+
+    assert got.min_area_sqft == 7000
+    assert got.complete, "the standard is stated; the statute says which one applies"
+
+
+def test_the_parent_lot_rule_is_not_four_parent_lots(tmp_path: Path) -> None:
+    # The failure this exists to prevent: reading "the original lot's standard
+    # applies" as "and once per resulting lot". A city may not charge four
+    # minimum lot sizes for splitting one building.
+    whole = fit(tmp_path, min_lot_sqft=7000)
+    split = fit(
+        tmp_path, design=SPLIT, min_lot_sqft=7000, land_division_parent_standards=True
+    )
+
+    assert split.min_area_sqft == whole.min_area_sqft
+
+
+def test_a_citys_own_townhouse_row_still_wins(tmp_path: Path) -> None:
+    # The statute says which lot the zone's standards attach to. It does not
+    # erase a townhouse lot standard a city states for a conventional
+    # subdivision — a different path to the same building. Where the encoding
+    # carries one, it is the one asked, four times.
+    got = fit(
+        tmp_path,
+        design=SPLIT,
+        min_lot_sqft=(7000, 1500),
+        land_division_parent_standards=True,
+    )
+
+    assert got.min_area_sqft == 6000
+
+
+def test_without_the_statute_the_split_path_still_admits_it_does_not_know(
+    tmp_path: Path,
+) -> None:
+    # Not every jurisdiction is inside the middle-housing regime — outside a
+    # UGB, under 1,000 people, unincorporated without urban services. Where no
+    # layer states the rule, the answer stays "we do not have that standard".
+    assert "min_lot_sqft" in fit(tmp_path, design=SPLIT, min_lot_sqft=7000).unknown
+
+
+def test_the_one_lot_path_is_untouched_by_the_statute(tmp_path: Path) -> None:
+    # It is a rule about land division. A quadplex on one lot divides nothing,
+    # and its answer must not move because the flag is present.
+    assert fit(tmp_path, min_lot_sqft=7000).min_area_sqft == fit(
+        tmp_path, min_lot_sqft=7000, land_division_parent_standards=True
+    ).min_area_sqft

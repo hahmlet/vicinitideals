@@ -82,6 +82,15 @@ _F: tuple[FieldDef, ...] = (
     FieldDef("min_lot_sqft", "area_sqft", "Minimum lot area for a fourplex.", False, "min_lot_size"),
     FieldDef("min_lot_width_ft", "length_ft", "Minimum lot width.", False, "min_lot_width"),
     FieldDef("min_frontage_ft", "length_ft", "Minimum street frontage.", False, "min_frontage"),
+    FieldDef(
+        "land_division_parent_standards",
+        "bool",
+        "True where splitting the building onto one lot per unit is judged "
+        "against the standards for the ORIGINAL lot, not against a fresh set "
+        "for each resulting lot. Oregon states this for every middle housing "
+        "land division (ORS 92.031(2)(b)), which is why the split-plat path "
+        "does not multiply a zone's minimum lot area by four.",
+    ),
     # --- bulk -----------------------------------------------------------
     FieldDef("max_height_ft", "length_ft", "Maximum building height.", True, "max_height"),
     FieldDef("max_far", "ratio", "Maximum floor area ratio.", True, "max_far"),
@@ -130,6 +139,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "setback_garage_entrance_ft",
         "min_lot_width_ft",
         "min_frontage_ft",
+        "land_division_parent_standards",
         "max_far",
         "max_coverage_pct",
         "coverage_curve",

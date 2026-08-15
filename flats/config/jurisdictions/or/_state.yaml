@@ -19,7 +19,39 @@ code:
 - id: oar.660-046-0220
   url: https://oregon.public.law/rules/oar_660-046-0220
   title: OAR 660-046-0220 Middle Housing Siting Standards in Large Cities
+# The middle housing land division statute, from the Legislature's own ORS
+# chapter page rather than a restatement — oregon.public.law is an unknown
+# authority, and nothing citing it may ever be signed. Sliced from the section
+# heading to the next section; the ORS chapter page is one long HTML document.
+- id: ors.92.031
+  url: https://www.oregonlegislature.gov/bills_laws/ors/ors092.html
+  title: ORS 92.031 Middle housing land division; conditions of approval
+  start: "92.031 Middle housing land division"
+  end: "92.040 Application for approval"
+  # One section of statute is prose, not a table of dimensions, so it does not
+  # read like code to the plausibility check. Read before storing.
+  allow_thin: true
 defaults:
+  # Splitting the four units onto four lots does not create four lots that each
+  # have to meet the zone. ORS 92.031(2)(b) requires the plan to comply with the
+  # land use regulations "applicable to the original lot or parcel", and
+  # 92.031(4)(c) bars a city from adding approval criteria of its own, naming
+  # driveways, vehicle access, parking and street frontage. So the split-plat
+  # path is measured against the same standards as the one-lot path, and a
+  # zone's minimum lot area is emphatically not multiplied by four.
+  #
+  # This is a statement about which standards apply, not a number, which is why
+  # it preempts: a city may not answer it differently. What a city MAY still do
+  # is state its own townhouse lot standards for a conventional subdivision —
+  # a different path to the same building, encoded per zone where it exists.
+  land_division_parent_standards:
+    value: true
+    preempts: true
+    cite: "ORS 92.031(2)(b), (4)(c)"
+    url: "https://www.oregonlegislature.gov/bills_laws/ors/ors092.html"
+    retrieved: 2026-08-14
+    status: draft
+    quote: "or/ors.92.031.txt#L7"
   parking_min_per_unit:
     value: 1.0
     preempts: true
