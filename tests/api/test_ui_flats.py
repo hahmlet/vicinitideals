@@ -230,3 +230,24 @@ async def test_signing_requires_a_session(client: AsyncClient):
     )
 
     assert response.status_code == 303
+
+
+# --- what the page must never print ------------------------------------
+#
+# Jinja resolves an attribute before a key, so a summary dict with a "values"
+# key renders `dict.values` — the bound method — once per row. It reads as
+# "<built-in method values of dict object at 0x7ff...>" where a count belongs,
+# and nothing fails: the page returns 200 with a table full of addresses.
+
+
+async def test_no_page_renders_a_python_object_where_a_number_belongs(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+
+    for url in ("/flats", "/flats/or/clackamas/wilsonville"):
+        page = await client.get(url)
+
+        assert page.status_code == 200
+        assert "built-in method" not in page.text
+        assert "object at 0x" not in page.text

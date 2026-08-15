@@ -151,7 +151,10 @@ def _layer_summary(layer: Layer) -> dict[str, Any]:
         "kind": layer.kind,
         "eligible": layer.eligible,
         "zones": len(layer.zones),
-        "values": len(rows),
+        # Not "values". Jinja resolves an attribute before a key, so a dict
+        # with a "values" key renders dict.values — the bound method, printed
+        # as "<built-in method values of dict object at 0x...>" once per row.
+        "standards": len(rows),
         "verified": sum(1 for row in rows if row["trusted"]),
         "quoted": sum(1 for row in rows if row["quote"]),
         "borrowed": borrowed,
@@ -167,7 +170,7 @@ async def flats_index(request: Request, session: DBSession) -> HTMLResponse:
     totals = {
         "layers": len(summaries),
         "zones": sum(s["zones"] for s in summaries),
-        "values": sum(s["values"] for s in summaries),
+        "standards": sum(s["standards"] for s in summaries),
         "verified": sum(s["verified"] for s in summaries),
         "quoted": sum(s["quoted"] for s in summaries),
     }
