@@ -183,6 +183,60 @@ def _states(text: str, number: float) -> bool:
     return False
 
 
+#: An ordinance written as prose spells its numbers: Wilsonville's OTR zone
+#: says "Minimum side yard setback: One story: five feet; Two or more stories:
+#: seven feet". Encoded as 5 and 7, correctly, against a line in which neither
+#: digit appears — 46 of that jurisdiction's values read as misquoted for this
+#: reason alone, which is the check disagreeing with the language rather than
+#: with the encoding.
+_UNITS = (
+    "zero", "one", "two", "three", "four", "five", "six", "seven", "eight",
+    "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen",
+    "sixteen", "seventeen", "eighteen", "nineteen",
+)
+_TENS = {
+    20: "twenty", 30: "thirty", 40: "forty", 50: "fifty",
+    60: "sixty", 70: "seventy", 80: "eighty", 90: "ninety",
+}
+
+#: What a spelled number has to be followed by to count. "One" and "two" are
+#: ordinary English words — "one story", "two or more" — and a bare match on
+#: them would let a citation about anything at all corroborate a setback of 1.
+#: A dimension in a code is always said with its unit close behind.
+_UNIT_WORD = re.compile(
+    r"^[\s.,:;)\-]{0,3}(?:and\s+)?(?:feet|foot|ft|inch|inches|stor(?:y|ies)|percent"
+    r"|unit|units|space|spaces|square|sq|acre|acres|dwelling|dwellings|percent|%)\b",
+    re.I,
+)
+
+
+def _spelled(number: float) -> str:
+    """How a code would write this number out in words, or "" for none.
+
+    Whole numbers to ninety-nine, and halves, which is the whole of what any
+    ordinance in this corpus spells. Beyond that they print digits.
+    """
+    whole = int(number)
+    if whole != number:
+        return f"{_spelled(whole)} and one-half" if abs(number - whole - 0.5) < 1e-9 else ""
+    if 0 <= whole < len(_UNITS):
+        return _UNITS[whole]
+    if whole in _TENS:
+        return _TENS[whole]
+    if 20 < whole < 100:
+        return f"{_TENS[whole // 10 * 10]}-{_UNITS[whole % 10]}"
+    return ""
+
+
+def _says(text: str, number: float) -> bool:
+    """Whether the text states this number in words, with a unit behind it."""
+    word = _spelled(number)
+    if not word:
+        return False
+    pattern = re.compile(r"\b" + word.replace("-", "[- ]").replace(" ", r"\s+") + r"\b", re.I)
+    return any(_UNIT_WORD.match(text[found.end():]) for found in pattern.finditer(text))
+
+
 #: How an ordinance prints a standard it does not impose. A zero encoded
 #: against one of these is not a misquote — it is the only way this system has
 #: to say "the code states no minimum here", and the alternative (leaving the
@@ -199,6 +253,9 @@ def quotes_the_number(text: str, value, *, spaced: bool = False) -> bool:
     can check, so they pass. What it does catch is the citation that no
     longer points at its own sentence.
 
+    Spelled numbers count too, where a unit follows them: half this corpus is
+    prose rather than tables, and prose says "five feet".
+
     ``spaced`` repairs a letter-spaced OCR line before looking. Oregon City's
     Title 17 is a scan, and its ten-thousand square feet is stored as
     "1 0 , 000 squ are f eet" — a correct quote that no spelling of 10000
@@ -209,7 +266,7 @@ def quotes_the_number(text: str, value, *, spaced: bool = False) -> bool:
     if isinstance(value, bool) or not isinstance(value, (int, float)):
         return True
     hay = repair_text(text) if spaced else text
-    if _states(hay, float(value)):
+    if _states(hay, float(value)) or _says(hay, float(value)):
         return True
     return value == 0 and any(word in hay.lower() for word in _STATES_NONE)
 

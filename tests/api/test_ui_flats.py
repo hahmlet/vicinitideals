@@ -1001,3 +1001,33 @@ async def test_a_field_nobody_registered_is_refused(
     )
 
     assert page.status_code == 404
+
+
+async def test_a_card_says_when_the_citation_points_at_another_section(
+    client: AsyncClient, session: AsyncSession
+):
+    """The failure no other check can see.
+
+    The quote resolves and the text states the number, so nothing upstream
+    objects — but the citation names a section where none of it is printed.
+    Wilsonville's Old Town setbacks say 4.123 and quote 4.113, the citywide
+    provisions that apply only where a master plan does not provide otherwise.
+    """
+    await _login(client, session)
+
+    page = await client.get("/flats/review/or/clackamas/wilsonville")
+
+    assert "The citation and the text disagree" in page.text
+    assert "§ 4.113" in page.text
+
+
+async def test_a_citation_naming_several_tables_is_not_flagged_for_the_wrong_one():
+    """Gresham reads a use standard off "Tables 4.0120/4.0130/4.0131"."""
+    from app.api.routers import ui_flats as ui
+
+    cite = "Gresham Development Code Tables 4.0120/4.0130/4.0131"
+    quote = "or/multnomah/gresham/4.0100.residential.txt#L400"
+
+    found = ui._misattributed(cite, quote)
+
+    assert found is None or found["found"] not in cite

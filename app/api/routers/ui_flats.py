@@ -48,6 +48,7 @@ from app.api.deps import DBSession
 from app.api.routers.ui_helpers import _base_ctx, _get_counts, _get_user, templates
 from app.models.flats import FlatsRuleSignature
 from flats.designs.model import Design, DesignStatus, Plat, load_catalog
+from flats.encode.attribution import claimed_sections, section_at
 from flats.encode.verify import fingerprint
 from flats.provenance import pages as page_map
 from flats.provenance.store import ProvenanceError, ProvenanceStore
@@ -562,6 +563,38 @@ def _page_note(quote: str) -> str:
     )
 
 
+@lru_cache(maxsize=64)
+def _document_lines(document: str) -> tuple[str, ...]:
+    """A whole stored document, cached. Empty where it cannot be read."""
+    try:
+        return tuple(_store().load(document).text.splitlines())
+    except (ProvenanceError, OSError):
+        return ()
+
+
+def _misattributed(cite: str, quote: str) -> dict[str, str] | None:
+    """Whether a citation names a section its own quoted text is not in.
+
+    The failure no other check can see. The quote resolves, the text states the
+    number, and the citation sends a reader to a section where none of it is
+    printed — Wilsonville's RN zone cited 4.127 against lines that are 4.113,
+    the citywide setbacks, which apply only where a master plan does not
+    provide otherwise. Right number, wrong authority, and the reviewer is the
+    only one who can say which half to correct.
+    """
+    span = _span(quote)
+    lines = _document_lines(quote.partition("#L")[0]) if span else ()
+    if not lines:
+        return None
+    claimed = claimed_sections(cite or "")
+    found = section_at(lines, span[0])
+    if not claimed or not found:
+        return None
+    if any(one.startswith(found) or found.startswith(one) for one in claimed):
+        return None
+    return {"claimed": ", ".join(claimed), "found": found}
+
+
 def _span(ref: str) -> tuple[int, int] | None:
     """The line range a citation names, or None if it names no lines."""
     _, _, fragment = ref.partition("#L")
@@ -668,6 +701,7 @@ def _passages(layer: Layer, decided: dict) -> list[dict[str, Any]]:
                     "url": here[0]["url"],
                     "lines": lines,
                     "pages": _pages(document, chain[0][0], max(x[1] for x in chain)),
+                    "misattributed": _misattributed(here[0]["cite"], here[0]["quote"]),
                     "error": "",
                     "rows": sorted(here, key=lambda r: (r["line"], r["zone"], r["field"])),
                     **_above(document, chain[0][0]),

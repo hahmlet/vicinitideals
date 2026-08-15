@@ -65,6 +65,17 @@
       </div>
     </div>
 
+    {% if p.misattributed %}
+    <div style="margin:0 0 6px;padding:6px 8px;border-left:3px solid #dc2626;font-size:12px">
+      <strong>The citation and the text disagree.</strong>
+      This says it comes from § {{ p.misattributed.claimed }}, but the lines below are
+      printed under § {{ p.misattributed.found }}. That can be right — a zone's standards
+      are often set out in a general section — but it means anyone who opens
+      § {{ p.misattributed.claimed }} to check the number will not find it there.
+      Worth saying which one you would cite.
+    </div>
+    {% endif %}
+
     {% if p.rows | selectattr("was") | list %}
     <div style="margin:0 0 6px;padding:6px 8px;border-left:3px solid #d97706;font-size:12px">
       {{ p.rows | selectattr("was") | list | length }} of these were changed after you last
