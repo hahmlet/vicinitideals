@@ -1376,3 +1376,24 @@ async def test_the_book_url_is_not_swallowed_by_the_jurisdiction_page(
     assert "no such stored document" in response.text
     assert "No rule layer called" not in response.text
     assert "Zoning rules" not in response.text
+
+
+async def test_a_citation_to_a_sentence_highlights_all_of_it(
+    client: AsyncClient, session: AsyncSession
+):
+    """A rule is often a sentence, and a sentence is often three lines.
+
+    Portland's 10 percent lot-area adjustment reads across three lines of the
+    extracted text: the allowance starts on one, the size of it is on the next,
+    and the date it ends on is on the third. Highlighting only the first shows
+    a reviewer a fragment that does not state the standard, and the natural
+    reading of a single highlighted line is that the line is the whole rule.
+    """
+    await _login(client, session)
+
+    ref = "or/multnomah/portland/33.110.txt%23L1544-L1546"
+    response = await client.get(f"/ui/flats/quote?ref={ref}")
+
+    assert response.status_code == 200
+    lit = response.text.count("background:#1d4ed8")
+    assert lit == 3, f"three lines cited, {lit} highlighted"
