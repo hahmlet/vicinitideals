@@ -76,8 +76,8 @@
   <p class="muted" style="font-size:12px;max-width:74ch">
     <strong>{{ coverage.uncounted | length }} encoded jurisdiction(s) appear nowhere above</strong>,
     because no lot has ever been counted against them — the parcel corpus this was
-    measured from covers Multnomah County. That is not zero lots blocked; it is a
-    number nobody has taken yet:
+    measured from covers {{ coverage.counties | join(" and ") }} County. That is not
+    zero lots blocked; it is a number nobody has taken yet:
     {% for one in coverage.uncounted %}<a href="/flats/{{ one }}">{{ one }}</a>{{ ", " if not loop.last }}{% endfor %}.
   </p>
   {% endif %}

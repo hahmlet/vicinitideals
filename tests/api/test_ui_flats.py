@@ -1118,7 +1118,7 @@ async def test_the_holes_are_ranked_by_what_they_cost(
 async def test_a_jurisdiction_nobody_counted_is_not_a_jurisdiction_with_no_lots(
     client: AsyncClient, session: AsyncSession
 ):
-    """The parcel corpus covers one county; the rules cover nineteen.
+    """The parcel corpus covers two counties; the rules cover more than that.
 
     Leaving the other eighteen out of a page headed "what the holes cost" would
     report them as costing nothing, which is the exact mistake — an unencoded
@@ -1129,7 +1129,10 @@ async def test_a_jurisdiction_nobody_counted_is_not_a_jurisdiction_with_no_lots(
     page = await client.get("/flats/gaps")
 
     assert "appear nowhere above" in page.text
-    assert "or/clackamas/wilsonville" in page.text
+    # Encoded, and outside the counties the parcel corpus reaches.
+    assert "or/clackamas/lake-oswego" in page.text
+    # The state layer holds no lots and is nobody's uncounted jurisdiction.
+    assert ">or</a>" not in page.text
 
 
 async def test_the_wrong_section_citations_are_a_list_not_only_a_banner(

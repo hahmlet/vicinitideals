@@ -918,7 +918,24 @@ def _coverage() -> dict[str, Any]:
         # Encoded, but no lot has ever been counted against it. Silence about
         # these would read as "nothing blocked here", which is the exact
         # mistake the coverage ledger exists to prevent.
-        "uncounted": sorted(set(_layers()) - {row.jurisdiction for row in rows}),
+        "uncounted": sorted(
+            {
+                layer_id
+                for layer_id, layer in _layers().items()
+                if layer.kind in ("city", "unincorporated")
+            }
+            - {row.jurisdiction for row in rows}
+        ),
+        # Which counties the corpus actually reached, read off the data rather
+        # than written down — the sentence that says what is not covered has to
+        # move when the coverage does, or it becomes the lie it was warning about.
+        "counties": sorted(
+            {
+                row.jurisdiction.split("/")[1].replace("-", " ").title()
+                for row in rows
+                if row.jurisdiction.count("/") >= 2
+            }
+        ),
         "lots": sum(row.lots for row in rows),
         "blocked": sum(row.blocking for row in rows),
     }
