@@ -37,6 +37,7 @@ from __future__ import annotations
 
 import argparse
 import html.parser
+import logging
 import re
 import sys
 from dataclasses import dataclass
@@ -338,7 +339,29 @@ def slice_between(text: str, start: str = "", end: str = "", *, nth: int = 1) ->
     return out.strip() + "\n"
 
 
-def pdf_to_text(data: bytes, *, extraction: str = "layout") -> str:
+#: What pypdf says, on a logger nobody was listening to, when layout mode
+#: meets text the page rotates. It does not fail; it drops the text. Gresham
+#: prints the column headers of its plan-district setback tables sideways, so
+#: eleven columns of numbers reached the store with nothing naming them and no
+#: error anywhere. Plain mode reads them.
+_ROTATED = "rotated text"
+
+
+class _Dropped(logging.Handler):
+    """Counts the pages an extraction admitted it could not fully read."""
+
+    def __init__(self) -> None:
+        super().__init__(level=logging.WARNING)
+        self.rotated = 0
+
+    def emit(self, record: logging.LogRecord) -> None:
+        if _ROTATED in record.getMessage().lower():
+            self.rotated += 1
+
+
+def pdf_to_text(
+    data: bytes, *, extraction: str = "layout", lost: list[str] | None = None
+) -> str:
     """Text out of a PDF, in reading order, one page after another.
 
     Oregon codifiers publish chapters as PDF — Portland's Title 33 among them —
@@ -358,6 +381,9 @@ def pdf_to_text(data: bytes, *, extraction: str = "layout") -> str:
     mode = {} if extraction == "plain" else {"extraction_mode": "layout"}
     reader = PdfReader(BytesIO(data))
     pages = []
+    dropped = _Dropped()
+    logger = logging.getLogger("pypdf")
+    logger.addHandler(dropped)
     for page in reader.pages:
         if "/Contents" not in page:
             # A page with no content stream is a legal, genuinely blank page —
@@ -368,6 +394,11 @@ def pdf_to_text(data: bytes, *, extraction: str = "layout") -> str:
             pages.append("")
             continue
         pages.append((page.extract_text(**mode) or "").replace("\r\n", "\n"))
+    logger.removeHandler(dropped)
+    if lost is not None and dropped.rotated:
+        lost.append(
+            f"{dropped.rotated} page(s) carry rotated text that layout mode drops"
+        )
     # Internal spacing is kept, unlike the HTML path. Portland states its
     # standards in a grid with one column per zone, and the gaps between
     # columns are the only thing that says which number belongs to which zone.
@@ -384,11 +415,13 @@ def _http_get(url: str) -> bytes:
     return response.content
 
 
-def _to_text(raw: bytes | str, *, extraction: str = "layout") -> str:
+def _to_text(
+    raw: bytes | str, *, extraction: str = "layout", lost: list[str] | None = None
+) -> str:
     """Whatever came back, reduced to the stored form."""
     if isinstance(raw, bytes):
         if raw[:5] == b"%PDF-":
-            return pdf_to_text(raw, extraction=extraction)
+            return pdf_to_text(raw, extraction=extraction, lost=lost)
         raw = raw.decode("utf-8", errors="replace")
     return html_to_text(raw) if "<" in raw[:2048] else raw.replace("\r\n", "\n")
 
@@ -430,10 +463,18 @@ def fetch_text(
     end: str = "",
     nth: int = 1,
     extraction: str = "layout",
+    lost: list[str] | None = None,
 ) -> str:
-    """Fetch a URL and reduce it to the stored form."""
+    """Fetch a URL and reduce it to the stored form.
+
+    ``lost`` collects what the extraction is known to have thrown away, so
+    the caller can say so. Silence here is the failure it exists to prevent.
+    """
     return slice_between(
-        _to_text((get or _http_get)(url), extraction=extraction), start, end, nth=nth
+        _to_text((get or _http_get)(url), extraction=extraction, lost=lost),
+        start,
+        end,
+        nth=nth,
     )
 
 
@@ -540,8 +581,11 @@ def fetch_one(
         def get(_url: str, _content: bytes = got.content) -> bytes:
             return _content
 
+    lost: list[str] = []
     try:
-        text = fetch_text(url, get=get, start=start, end=end, nth=nth, extraction=extraction)
+        text = fetch_text(
+            url, get=get, start=start, end=end, nth=nth, extraction=extraction, lost=lost
+        )
     except ProvenanceError as exc:
         print(f"{path}: {exc}", file=sys.stderr)
         return 1
@@ -577,6 +621,17 @@ def fetch_one(
     bulky = _bulky(text, start, end)
     if bulky:
         print(f"note: {path} — {bulky}", file=sys.stderr)
+
+    for note in lost:
+        # Not a warning about formatting. Text the extraction dropped is text no
+        # reviewer will ever see and no value can ever cite, and the drop is
+        # silent: pypdf logs it and returns a document that looks complete.
+        print(
+            f"note: {path} — {note}. Declare `extraction: plain` on the `code:` "
+            "entry if the rotated text is a table's column headers, which is what "
+            "it usually is.",
+            file=sys.stderr,
+        )
 
     if extraction == "layout" and fused(text):
         print(

@@ -545,3 +545,76 @@ def test_the_cell_marker_never_reaches_the_stored_text() -> None:
     source = "<p>a\x01b</p><table><tr><td>c\x01d</td><td>e</td></tr></table>"
 
     assert "\x01" not in html_to_text(source)
+
+
+# --- text the extraction threw away ------------------------------------
+#
+# The worst failure in this module is not an error. It is a document that
+# stores clean, parses fine, and is missing the part that named the columns.
+
+
+def test_a_page_that_lost_text_reaches_the_caller(monkeypatch) -> None:
+    # pypdf does not fail on rotated text; it logs a warning on a logger
+    # nobody listened to and returns a page that looks whole. Gresham prints
+    # the column headers of its plan-district setback tables sideways, so
+    # eleven columns of setbacks reached the store with nothing naming them
+    # and no error anywhere in the pipeline.
+    import logging
+
+    import pypdf
+
+    from flats.provenance.fetch import pdf_to_text
+
+    class _Page(dict):
+        def __init__(self) -> None:
+            super().__init__({"/Contents": object()})
+
+        def extract_text(self, **_: object) -> str:
+            logging.getLogger("pypdf").warning(
+                "Rotated text discovered. Output will be incomplete."
+            )
+            return "10 ft. 8 ft. 20 ft. 5 ft."
+
+    monkeypatch.setattr(pypdf, "PdfReader", lambda _stream: type("R", (), {"pages": [_Page()]})())
+    lost: list[str] = []
+
+    text = pdf_to_text(b"%PDF-not-really", lost=lost)
+
+    assert "10 ft." in text, "the text it did read is still stored"
+    assert lost == ["1 page(s) carry rotated text that layout mode drops"]
+
+
+def test_the_handler_counts_only_what_it_is_for() -> None:
+    import logging
+
+    from flats.provenance.fetch import _Dropped
+
+    handler = _Dropped()
+    handler.emit(
+        logging.LogRecord(
+            "pypdf", logging.WARNING, "", 0, "Rotated text discovered. Output will be incomplete.", (), None
+        )
+    )
+    handler.emit(
+        logging.LogRecord("pypdf", logging.WARNING, "", 0, "Xref table not zero-indexed.", (), None)
+    )
+
+    assert handler.rotated == 1
+
+
+def test_a_document_that_lost_nothing_says_nothing() -> None:
+    from io import BytesIO
+
+    from pypdf import PdfWriter
+
+    from flats.provenance.fetch import pdf_to_text
+
+    writer = PdfWriter()
+    writer.add_blank_page(width=200, height=200)
+    buf = BytesIO()
+    writer.write(buf)
+    lost: list[str] = []
+
+    pdf_to_text(buf.getvalue(), lost=lost)
+
+    assert lost == []
