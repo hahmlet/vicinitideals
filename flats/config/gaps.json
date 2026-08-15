@@ -2,11 +2,13 @@
   "digest": "b91d7c61fd19dd8a1220ca83ebe0dd57ecb5ddc851323a2ca6c13c6e1a46cf5c",
   "layers": {
     "or": {
+      "misattributed": [],
       "label": "Oregon",
       "counts": {},
       "gaps": []
     },
     "or/clackamas/_unincorporated": {
+      "misattributed": [],
       "label": "Clackamas Unincorporated",
       "counts": {
         "unsourced": 8,
@@ -135,6 +137,22 @@
       ]
     },
     "or/clackamas/gladstone": {
+      "misattributed": [
+        {
+          "zone": "R5",
+          "field": "setback_garage_entrance_ft",
+          "claimed": "17.12.020 17.12.050",
+          "found": "17.12.065",
+          "quote": "or/clackamas/gladstone/17.12.r-5.txt#L388"
+        },
+        {
+          "zone": "R7.2",
+          "field": "setback_garage_entrance_ft",
+          "claimed": "17.10.020 17.10.050",
+          "found": "17.10.065",
+          "quote": "or/clackamas/gladstone/17.10.r-7.2.txt#L381"
+        }
+      ],
       "label": "Gladstone",
       "counts": {
         "uncheckable": 3
@@ -164,6 +182,7 @@
       ]
     },
     "or/clackamas/happy-valley": {
+      "misattributed": [],
       "label": "Happy Valley",
       "counts": {
         "conditional": 4,
@@ -413,6 +432,7 @@
       ]
     },
     "or/clackamas/johnson-city": {
+      "misattributed": [],
       "label": "Johnson City",
       "counts": {
         "uncheckable": 1
@@ -428,6 +448,22 @@
       ]
     },
     "or/clackamas/lake-oswego": {
+      "misattributed": [
+        {
+          "zone": "R-0",
+          "field": "max_coverage_pct",
+          "claimed": "50.04.001 50.04.001 50.03.002 50.03.002",
+          "found": "50.10.003",
+          "quote": "or/clackamas/lake-oswego/50.04.dimensional.txt#L1306"
+        },
+        {
+          "zone": "R-3",
+          "field": "max_coverage_pct",
+          "claimed": "50.04.001 50.04.001 50.03.002 50.03.002",
+          "found": "50.10.003",
+          "quote": "or/clackamas/lake-oswego/50.04.dimensional.txt#L1304"
+        }
+      ],
       "label": "Lake Oswego",
       "counts": {
         "unsourced": 12,
@@ -549,6 +585,7 @@
       ]
     },
     "or/clackamas/milwaukie": {
+      "misattributed": [],
       "label": "Milwaukie",
       "counts": {
         "uncheckable": 2
@@ -571,11 +608,49 @@
       ]
     },
     "or/clackamas/oregon-city": {
+      "misattributed": [
+        {
+          "zone": "R-10",
+          "field": "setback_garage_entrance_ft",
+          "claimed": "17.08.020 17.08.040 17.16.060",
+          "found": "17.16.070",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L5706-L5707"
+        },
+        {
+          "zone": "R-3.5",
+          "field": "setback_garage_entrance_ft",
+          "claimed": "17.10.020 17.10.040 17.16.060",
+          "found": "17.16.070",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L5706-L5707"
+        },
+        {
+          "zone": "R-5",
+          "field": "setback_garage_entrance_ft",
+          "claimed": "17.10.020 17.10.040 17.16.060",
+          "found": "17.16.070",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L5706-L5707"
+        },
+        {
+          "zone": "R-6",
+          "field": "setback_garage_entrance_ft",
+          "claimed": "17.08.020 17.08.040 17.16.060",
+          "found": "17.16.070",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L5706-L5707"
+        },
+        {
+          "zone": "R-8",
+          "field": "setback_garage_entrance_ft",
+          "claimed": "17.08.020 17.08.040 17.16.060",
+          "found": "17.16.070",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L5706-L5707"
+        }
+      ],
       "label": "Oregon City",
       "counts": {},
       "gaps": []
     },
     "or/clackamas/rivergrove": {
+      "misattributed": [],
       "label": "Rivergrove",
       "counts": {
         "multi": 3,
@@ -613,16 +688,203 @@
       ]
     },
     "or/clackamas/tualatin": {
+      "misattributed": [
+        {
+          "zone": "RL",
+          "field": "quadplex_allowed",
+          "claimed": "40.220 40.210",
+          "found": "34.400",
+          "quote": "or/clackamas/tualatin/40-41.residential.txt#L120"
+        },
+        {
+          "zone": "RML",
+          "field": "min_lot_sqft",
+          "claimed": "41.220 41.210",
+          "found": "34.190",
+          "quote": "or/clackamas/tualatin/40-41.residential.txt#L478"
+        },
+        {
+          "zone": "RML",
+          "field": "min_lot_sqft [unit_lots]",
+          "claimed": "41.220 41.210",
+          "found": "34.190",
+          "quote": "or/clackamas/tualatin/40-41.residential.txt#L475"
+        },
+        {
+          "zone": "RML",
+          "field": "quadplex_allowed",
+          "claimed": "41.220 41.210",
+          "found": "34.030",
+          "quote": "or/clackamas/tualatin/40-41.residential.txt#L417"
+        }
+      ],
       "label": "Tualatin",
       "counts": {},
       "gaps": []
     },
     "or/clackamas/west-linn": {
+      "misattributed": [],
       "label": "West Linn",
       "counts": {},
       "gaps": []
     },
     "or/clackamas/wilsonville": {
+      "misattributed": [
+        {
+          "zone": "OTR",
+          "field": "setback_front_ft",
+          "claimed": "4.123",
+          "found": "4.113",
+          "quote": "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
+        },
+        {
+          "zone": "OTR",
+          "field": "setback_front_ft [lot_sqft:>10000+]",
+          "claimed": "4.123",
+          "found": "4.113",
+          "quote": "or/clackamas/wilsonville/4.planning.txt#L3011-L3012"
+        },
+        {
+          "zone": "OTR",
+          "field": "setback_garage_entrance_ft",
+          "claimed": "4.123",
+          "found": "4.113",
+          "quote": "or/clackamas/wilsonville/4.planning.txt#L3047"
+        },
+        {
+          "zone": "OTR",
+          "field": "setback_garage_entrance_ft [abuts_alley]",
+          "claimed": "4.123",
+          "found": "4.113",
+          "quote": "or/clackamas/wilsonville/4.planning.txt#L3049-L3050"
+        },
+        {
+          "zone": "OTR",
+          "field": "setback_rear_ft",
+          "claimed": "4.123",
+          "found": "4.113",
+          "quote": "or/clackamas/wilsonville/4.planning.txt#L3051"
+        },
+        {
+          "zone": "OTR",
+          "field": "setback_rear_ft [lot_sqft:<=10000+multi_story]",
+          "claimed": "4.123",
+          "found": "4.113",
+          "quote": "or/clackamas/wilsonville/4.planning.txt#L3051"
+        },
+        {
+          "zone": "OTR",
+          "field": "setback_rear_ft [lot_sqft:>10000+]",
+          "claimed": "4.123",
+          "found": "4.113",
+          "quote": "or/clackamas/wilsonville/4.planning.txt#L3025"
+        },
+        {
+          "zone": "OTR",
+          "field": "setback_side_ft",
+          "claimed": "4.123",
+          "found": "4.113",
+          "quote": "or/clackamas/wilsonville/4.planning.txt#L3037"
+        },
+        {
+          "zone": "OTR",
+          "field": "setback_side_ft [lot_sqft:<=10000+multi_story]",
+          "claimed": "4.123",
+          "found": "4.113",
+          "quote": "or/clackamas/wilsonville/4.planning.txt#L3037"
+        },
+        {
+          "zone": "OTR",
+          "field": "setback_side_ft [lot_sqft:>10000+]",
+          "claimed": "4.123",
+          "found": "4.113",
+          "quote": "or/clackamas/wilsonville/4.planning.txt#L3013"
+        },
+        {
+          "zone": "OTR",
+          "field": "setback_street_side_ft",
+          "claimed": "4.123",
+          "found": "4.113",
+          "quote": "or/clackamas/wilsonville/4.planning.txt#L3038-L3039"
+        },
+        {
+          "zone": "RN",
+          "field": "setback_front_ft",
+          "claimed": "4.127",
+          "found": "4.113",
+          "quote": "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
+        },
+        {
+          "zone": "RN",
+          "field": "setback_front_ft [lot_sqft:>10000+]",
+          "claimed": "4.127",
+          "found": "4.113",
+          "quote": "or/clackamas/wilsonville/4.planning.txt#L3011-L3012"
+        },
+        {
+          "zone": "RN",
+          "field": "setback_garage_entrance_ft",
+          "claimed": "4.127",
+          "found": "4.113",
+          "quote": "or/clackamas/wilsonville/4.planning.txt#L3047"
+        },
+        {
+          "zone": "RN",
+          "field": "setback_garage_entrance_ft [abuts_alley]",
+          "claimed": "4.127",
+          "found": "4.113",
+          "quote": "or/clackamas/wilsonville/4.planning.txt#L3049-L3050"
+        },
+        {
+          "zone": "RN",
+          "field": "setback_rear_ft",
+          "claimed": "4.127",
+          "found": "4.113",
+          "quote": "or/clackamas/wilsonville/4.planning.txt#L3051"
+        },
+        {
+          "zone": "RN",
+          "field": "setback_rear_ft [lot_sqft:<=10000+multi_story]",
+          "claimed": "4.127",
+          "found": "4.113",
+          "quote": "or/clackamas/wilsonville/4.planning.txt#L3051"
+        },
+        {
+          "zone": "RN",
+          "field": "setback_rear_ft [lot_sqft:>10000+]",
+          "claimed": "4.127",
+          "found": "4.113",
+          "quote": "or/clackamas/wilsonville/4.planning.txt#L3025"
+        },
+        {
+          "zone": "RN",
+          "field": "setback_side_ft",
+          "claimed": "4.127",
+          "found": "4.113",
+          "quote": "or/clackamas/wilsonville/4.planning.txt#L3037"
+        },
+        {
+          "zone": "RN",
+          "field": "setback_side_ft [lot_sqft:<=10000+multi_story]",
+          "claimed": "4.127",
+          "found": "4.113",
+          "quote": "or/clackamas/wilsonville/4.planning.txt#L3037"
+        },
+        {
+          "zone": "RN",
+          "field": "setback_side_ft [lot_sqft:>10000+]",
+          "claimed": "4.127",
+          "found": "4.113",
+          "quote": "or/clackamas/wilsonville/4.planning.txt#L3013"
+        },
+        {
+          "zone": "RN",
+          "field": "setback_street_side_ft",
+          "claimed": "4.127",
+          "found": "4.113",
+          "quote": "or/clackamas/wilsonville/4.planning.txt#L3038-L3039"
+        }
+      ],
       "label": "Wilsonville",
       "counts": {
         "contested": 1,
@@ -829,6 +1091,7 @@
       ]
     },
     "or/multnomah/_unincorporated": {
+      "misattributed": [],
       "label": "Multnomah Unincorporated",
       "counts": {
         "unsourced": 5,
@@ -936,6 +1199,7 @@
       ]
     },
     "or/multnomah/fairview": {
+      "misattributed": [],
       "label": "Fairview",
       "counts": {
         "unsourced": 18,
@@ -1134,6 +1398,442 @@
       ]
     },
     "or/multnomah/gresham": {
+      "misattributed": [
+        {
+          "zone": "DRL-1",
+          "field": "quadplex_allowed",
+          "claimed": "4.1120 4.1130 7.0420",
+          "found": "4.1100",
+          "quote": "or/multnomah/gresham/4.1100.downtown.txt#L246"
+        },
+        {
+          "zone": "DRL-2",
+          "field": "quadplex_allowed",
+          "claimed": "4.1120 4.1130 7.0420",
+          "found": "4.1100",
+          "quote": "or/multnomah/gresham/4.1100.downtown.txt#L246"
+        },
+        {
+          "zone": "LDR-5",
+          "field": "min_frontage_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "14.52",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L314"
+        },
+        {
+          "zone": "LDR-5",
+          "field": "min_frontage_ft [unit_lots]",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "14.52",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L313"
+        },
+        {
+          "zone": "LDR-5",
+          "field": "min_lot_width_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "14.52",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L274"
+        },
+        {
+          "zone": "LDR-5",
+          "field": "min_lot_width_ft [unit_lots]",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "14.52",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L277"
+        },
+        {
+          "zone": "LDR-5",
+          "field": "setback_front_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L400"
+        },
+        {
+          "zone": "LDR-5",
+          "field": "setback_garage_entrance_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L400"
+        },
+        {
+          "zone": "LDR-5",
+          "field": "setback_rear_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L400"
+        },
+        {
+          "zone": "LDR-5",
+          "field": "setback_side_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L400"
+        },
+        {
+          "zone": "LDR-5",
+          "field": "setback_street_side_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L400"
+        },
+        {
+          "zone": "LDR-7",
+          "field": "max_height_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "14.52",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L332"
+        },
+        {
+          "zone": "LDR-7",
+          "field": "min_frontage_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "14.52",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L314"
+        },
+        {
+          "zone": "LDR-7",
+          "field": "min_frontage_ft [unit_lots]",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "14.52",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L313"
+        },
+        {
+          "zone": "LDR-7",
+          "field": "min_lot_width_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "14.52",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L274"
+        },
+        {
+          "zone": "LDR-7",
+          "field": "min_lot_width_ft [unit_lots]",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "14.52",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L277"
+        },
+        {
+          "zone": "LDR-7",
+          "field": "setback_front_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L400"
+        },
+        {
+          "zone": "LDR-7",
+          "field": "setback_garage_entrance_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L400"
+        },
+        {
+          "zone": "LDR-7",
+          "field": "setback_rear_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L400"
+        },
+        {
+          "zone": "LDR-7",
+          "field": "setback_side_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L400"
+        },
+        {
+          "zone": "LDR-7",
+          "field": "setback_street_side_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L400"
+        },
+        {
+          "zone": "MDR-12",
+          "field": "max_height_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "14.52",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L332"
+        },
+        {
+          "zone": "MDR-12",
+          "field": "min_frontage_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "14.52",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L314"
+        },
+        {
+          "zone": "MDR-12",
+          "field": "min_frontage_ft [unit_lots]",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "14.52",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L313"
+        },
+        {
+          "zone": "MDR-12",
+          "field": "min_lot_width_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "14.52",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L274"
+        },
+        {
+          "zone": "MDR-12",
+          "field": "min_lot_width_ft [unit_lots]",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "14.52",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L277"
+        },
+        {
+          "zone": "MDR-12",
+          "field": "setback_front_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L403"
+        },
+        {
+          "zone": "MDR-12",
+          "field": "setback_garage_entrance_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L403"
+        },
+        {
+          "zone": "MDR-12",
+          "field": "setback_rear_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L403"
+        },
+        {
+          "zone": "MDR-12",
+          "field": "setback_side_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L403"
+        },
+        {
+          "zone": "MDR-12",
+          "field": "setback_street_side_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L403"
+        },
+        {
+          "zone": "MDR-24",
+          "field": "max_height_ft",
+          "claimed": "4.0120 4.0130 4.0131 3.0103",
+          "found": "14.52",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L332"
+        },
+        {
+          "zone": "MDR-24",
+          "field": "min_frontage_ft",
+          "claimed": "4.0120 4.0130 4.0131 3.0103",
+          "found": "14.52",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L314"
+        },
+        {
+          "zone": "MDR-24",
+          "field": "min_frontage_ft [unit_lots]",
+          "claimed": "4.0120 4.0130 4.0131 3.0103",
+          "found": "14.52",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L313"
+        },
+        {
+          "zone": "MDR-24",
+          "field": "setback_front_ft",
+          "claimed": "4.0120 4.0130 4.0131 3.0103",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L403"
+        },
+        {
+          "zone": "MDR-24",
+          "field": "setback_garage_entrance_ft",
+          "claimed": "4.0120 4.0130 4.0131 3.0103",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L403"
+        },
+        {
+          "zone": "MDR-24",
+          "field": "setback_rear_ft",
+          "claimed": "4.0120 4.0130 4.0131 3.0103",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L403"
+        },
+        {
+          "zone": "MDR-24",
+          "field": "setback_side_ft",
+          "claimed": "4.0120 4.0130 4.0131 3.0103",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L403"
+        },
+        {
+          "zone": "MDR-24",
+          "field": "setback_street_side_ft",
+          "claimed": "4.0120 4.0130 4.0131 3.0103",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L403"
+        },
+        {
+          "zone": "THR-SW",
+          "field": "max_height_ft",
+          "claimed": "4.1507",
+          "found": "4.1508",
+          "quote": "or/multnomah/gresham/4.1500.springwater.txt#L278"
+        },
+        {
+          "zone": "THR-SW",
+          "field": "min_lot_width_ft",
+          "claimed": "4.1507",
+          "found": "4.1508",
+          "quote": "or/multnomah/gresham/4.1500.springwater.txt#L260"
+        },
+        {
+          "zone": "TLDR",
+          "field": "max_height_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "14.52",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L332"
+        },
+        {
+          "zone": "TLDR",
+          "field": "min_frontage_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "14.52",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L314"
+        },
+        {
+          "zone": "TLDR",
+          "field": "min_frontage_ft [unit_lots]",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "14.52",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L313"
+        },
+        {
+          "zone": "TLDR",
+          "field": "min_lot_sqft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "4.0137",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L593"
+        },
+        {
+          "zone": "TLDR",
+          "field": "min_lot_width_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "14.52",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L274"
+        },
+        {
+          "zone": "TLDR",
+          "field": "min_lot_width_ft [unit_lots]",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "14.52",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L277"
+        },
+        {
+          "zone": "TLDR",
+          "field": "setback_front_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L400"
+        },
+        {
+          "zone": "TLDR",
+          "field": "setback_garage_entrance_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L400"
+        },
+        {
+          "zone": "TLDR",
+          "field": "setback_rear_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L400"
+        },
+        {
+          "zone": "TLDR",
+          "field": "setback_side_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L400"
+        },
+        {
+          "zone": "TLDR",
+          "field": "setback_street_side_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L400"
+        },
+        {
+          "zone": "TR",
+          "field": "max_height_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "14.52",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L332"
+        },
+        {
+          "zone": "TR",
+          "field": "min_frontage_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "14.52",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L314"
+        },
+        {
+          "zone": "TR",
+          "field": "min_frontage_ft [unit_lots]",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "14.52",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L313"
+        },
+        {
+          "zone": "TR",
+          "field": "min_lot_width_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "14.52",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L274"
+        },
+        {
+          "zone": "TR",
+          "field": "min_lot_width_ft [unit_lots]",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "14.52",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L277"
+        },
+        {
+          "zone": "TR",
+          "field": "setback_front_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L400"
+        },
+        {
+          "zone": "TR",
+          "field": "setback_garage_entrance_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L400"
+        },
+        {
+          "zone": "TR",
+          "field": "setback_rear_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L400"
+        },
+        {
+          "zone": "TR",
+          "field": "setback_side_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L400"
+        },
+        {
+          "zone": "TR",
+          "field": "setback_street_side_ft",
+          "claimed": "4.0120 4.0130 4.0131 7.0420",
+          "found": "9.0100",
+          "quote": "or/multnomah/gresham/4.0100.residential.txt#L400"
+        }
+      ],
       "label": "Gresham",
       "counts": {
         "conditional": 3,
@@ -1312,11 +2012,13 @@
       ]
     },
     "or/multnomah/maywood-park": {
+      "misattributed": [],
       "label": "Maywood Park",
       "counts": {},
       "gaps": []
     },
     "or/multnomah/portland": {
+      "misattributed": [],
       "label": "Portland",
       "counts": {
         "uncheckable": 11
@@ -1402,6 +2104,36 @@
       ]
     },
     "or/multnomah/troutdale": {
+      "misattributed": [
+        {
+          "zone": "HDR",
+          "field": "max_height_ft",
+          "claimed": "3.120",
+          "found": "3.130",
+          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L365"
+        },
+        {
+          "zone": "HDR",
+          "field": "min_frontage_ft",
+          "claimed": "3.120",
+          "found": "3.130",
+          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L409"
+        },
+        {
+          "zone": "HDR",
+          "field": "setback_front_ft",
+          "claimed": "3.120",
+          "found": "3.130",
+          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L427"
+        },
+        {
+          "zone": "HDR",
+          "field": "setback_side_ft",
+          "claimed": "3.120",
+          "found": "3.130",
+          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L352"
+        }
+      ],
       "label": "Troutdale",
       "counts": {
         "conditional": 6,
@@ -1475,6 +2207,183 @@
       ]
     },
     "or/multnomah/wood-village": {
+      "misattributed": [
+        {
+          "zone": "LR 12",
+          "field": "max_coverage_pct",
+          "claimed": "210.310 210.375",
+          "found": "210.320",
+          "quote": "or/multnomah/wood-village/210.320.txt#L80"
+        },
+        {
+          "zone": "LR 12",
+          "field": "max_height_ft",
+          "claimed": "210.310 210.375",
+          "found": "210.320",
+          "quote": "or/multnomah/wood-village/210.320.txt#L69"
+        },
+        {
+          "zone": "LR 12",
+          "field": "min_lot_sqft",
+          "claimed": "210.310 210.375",
+          "found": "210.320",
+          "quote": "or/multnomah/wood-village/210.320.txt#L65"
+        },
+        {
+          "zone": "LR 12",
+          "field": "min_lot_width_ft",
+          "claimed": "210.310 210.375",
+          "found": "210.320",
+          "quote": "or/multnomah/wood-village/210.320.txt#L66"
+        },
+        {
+          "zone": "LR 12",
+          "field": "setback_front_ft",
+          "claimed": "210.310 210.375",
+          "found": "210.320",
+          "quote": "or/multnomah/wood-village/210.320.txt#L71"
+        },
+        {
+          "zone": "LR 12",
+          "field": "setback_side_ft",
+          "claimed": "210.310 210.375",
+          "found": "210.320",
+          "quote": "or/multnomah/wood-village/210.320.txt#L73"
+        },
+        {
+          "zone": "LR 12",
+          "field": "setback_street_side_ft",
+          "claimed": "210.310 210.375",
+          "found": "210.320",
+          "quote": "or/multnomah/wood-village/210.320.txt#L77"
+        },
+        {
+          "zone": "LR 7.5",
+          "field": "max_coverage_pct",
+          "claimed": "210.310 210.375",
+          "found": "210.320",
+          "quote": "or/multnomah/wood-village/210.320.txt#L80"
+        },
+        {
+          "zone": "LR 7.5",
+          "field": "max_height_ft",
+          "claimed": "210.310 210.375",
+          "found": "210.320",
+          "quote": "or/multnomah/wood-village/210.320.txt#L69"
+        },
+        {
+          "zone": "LR 7.5",
+          "field": "min_lot_sqft",
+          "claimed": "210.310 210.375",
+          "found": "210.320",
+          "quote": "or/multnomah/wood-village/210.320.txt#L65"
+        },
+        {
+          "zone": "LR 7.5",
+          "field": "min_lot_width_ft",
+          "claimed": "210.310 210.375",
+          "found": "210.320",
+          "quote": "or/multnomah/wood-village/210.320.txt#L66"
+        },
+        {
+          "zone": "LR 7.5",
+          "field": "setback_front_ft",
+          "claimed": "210.310 210.375",
+          "found": "210.320",
+          "quote": "or/multnomah/wood-village/210.320.txt#L71"
+        },
+        {
+          "zone": "LR 7.5",
+          "field": "setback_street_side_ft",
+          "claimed": "210.310 210.375",
+          "found": "210.320",
+          "quote": "or/multnomah/wood-village/210.320.txt#L77"
+        },
+        {
+          "zone": "MR 2",
+          "field": "max_height_ft",
+          "claimed": "220.310 220.355",
+          "found": "220.320",
+          "quote": "or/multnomah/wood-village/220.320.txt#L70"
+        },
+        {
+          "zone": "MR 2",
+          "field": "min_lot_sqft",
+          "claimed": "220.310 220.355",
+          "found": "220.320",
+          "quote": "or/multnomah/wood-village/220.320.txt#L67"
+        },
+        {
+          "zone": "MR 2",
+          "field": "min_lot_width_ft",
+          "claimed": "220.310 220.355",
+          "found": "220.320",
+          "quote": "or/multnomah/wood-village/220.320.txt#L68"
+        },
+        {
+          "zone": "MR 2",
+          "field": "setback_front_ft",
+          "claimed": "220.310 220.355",
+          "found": "220.320",
+          "quote": "or/multnomah/wood-village/220.320.txt#L72"
+        },
+        {
+          "zone": "MR 2",
+          "field": "setback_rear_ft",
+          "claimed": "220.310 220.355",
+          "found": "220.320",
+          "quote": "or/multnomah/wood-village/220.320.txt#L75"
+        },
+        {
+          "zone": "MR 2",
+          "field": "setback_side_ft",
+          "claimed": "220.310 220.355",
+          "found": "220.320",
+          "quote": "or/multnomah/wood-village/220.320.txt#L74"
+        },
+        {
+          "zone": "MR 4",
+          "field": "max_height_ft",
+          "claimed": "220.310 220.355",
+          "found": "220.320",
+          "quote": "or/multnomah/wood-village/220.320.txt#L70"
+        },
+        {
+          "zone": "MR 4",
+          "field": "min_lot_sqft",
+          "claimed": "220.310 220.355",
+          "found": "220.320",
+          "quote": "or/multnomah/wood-village/220.320.txt#L67"
+        },
+        {
+          "zone": "MR 4",
+          "field": "min_lot_width_ft",
+          "claimed": "220.310 220.355",
+          "found": "220.320",
+          "quote": "or/multnomah/wood-village/220.320.txt#L68"
+        },
+        {
+          "zone": "MR 4",
+          "field": "setback_front_ft",
+          "claimed": "220.310 220.355",
+          "found": "220.320",
+          "quote": "or/multnomah/wood-village/220.320.txt#L72"
+        },
+        {
+          "zone": "MR 4",
+          "field": "setback_rear_ft",
+          "claimed": "220.310 220.355",
+          "found": "220.320",
+          "quote": "or/multnomah/wood-village/220.320.txt#L75"
+        },
+        {
+          "zone": "MR 4",
+          "field": "setback_side_ft",
+          "claimed": "220.310 220.355",
+          "found": "220.320",
+          "quote": "or/multnomah/wood-village/220.320.txt#L74"
+        }
+      ],
       "label": "Wood Village",
       "counts": {
         "multi": 5,

@@ -292,12 +292,31 @@ def digest(layers: Mapping[str, Layer]) -> str:
 
 
 def snapshot(layers: Mapping[str, Layer], store: ProvenanceStore) -> dict:
-    """Measure every layer's gaps, once."""
+    """Measure every layer's gaps and mis-attributed citations, once.
+
+    Both in one pass because both read every stored document, and because they
+    are two halves of the same question: a value with no citation and a value
+    whose citation names the wrong section are equally unusable in front of a
+    planner, and equally invisible to a review queue built on quotes.
+    """
+    from flats.encode.attribution import check as attribution_check
+
     out: dict = {"digest": digest(layers), "layers": {}}
     for layer_id in sorted(layers):
         layer = layers[layer_id]
         items = gaps(layer, read_layer(layer, store))
+        wrong = [one for one in attribution_check(layer, store) if not one.agrees]
         out["layers"][layer_id] = {
+            "misattributed": [
+                {
+                    "zone": one.zone,
+                    "field": one.field,
+                    "claimed": one.claimed,
+                    "found": one.found,
+                    "quote": one.quote,
+                }
+                for one in wrong
+            ],
             "label": layer.label,
             "counts": by_cause(items),
             "gaps": [
@@ -348,6 +367,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     for cause in CAUSES:
         if counts[cause]:
             print(f"  {cause:12} {counts[cause]:>4}  {NEXT[cause].split(chr(10))[0][:80]}")
+    wrong = sum(len(one["misattributed"]) for one in built["layers"].values())
+    print(f"\n{wrong} citation(s) name a section their quoted text is not in")
     return 0
 
 

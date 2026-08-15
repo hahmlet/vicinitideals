@@ -965,6 +965,11 @@ async def flats_gaps(request: Request, session: DBSession) -> HTMLResponse:
         for layer_id, one in sorted(ledger["layers"].items())
         if one["gaps"]
     ]
+    wrong = [
+        {"layer": layer_id, "label": one["label"], **item}
+        for layer_id, one in sorted(ledger["layers"].items())
+        for item in one.get("misattributed", ())
+    ]
     return templates.TemplateResponse(
         request,
         "flats_gaps.html",
@@ -975,6 +980,7 @@ async def flats_gaps(request: Request, session: DBSession) -> HTMLResponse:
             "current": ledger["current"],
             "causes": _CAUSE_WORDS,
             "coverage": _coverage(),
+            "misattributed": wrong,
         },
     )
 

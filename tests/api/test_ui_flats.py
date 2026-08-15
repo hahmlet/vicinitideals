@@ -1130,3 +1130,20 @@ async def test_a_jurisdiction_nobody_counted_is_not_a_jurisdiction_with_no_lots(
 
     assert "appear nowhere above" in page.text
     assert "or/clackamas/wilsonville" in page.text
+
+
+async def test_the_wrong_section_citations_are_a_list_not_only_a_banner(
+    client: AsyncClient, session: AsyncSession
+):
+    """A warning on a card is only seen by whoever happens to open that card.
+
+    126 of them is an afternoon's work, and an afternoon's work needs a list —
+    otherwise the only way to find the next one is to page through a review
+    queue looking for red.
+    """
+    await _login(client, session)
+
+    page = await client.get("/flats/gaps")
+
+    assert "Citations that name the wrong section" in page.text
+    assert "Text is in" in page.text

@@ -11,6 +11,7 @@
       <h2 style="margin:0">What is not encoded</h2>
       <div class="muted" style="font-size:12px">
         <a href="/flats">All jurisdictions</a> · <a href="/flats/feedback">Feedback bundle</a>
+        · <a href="#citations">Citations naming the wrong section</a>
       </div>
     </div>
     <div style="margin-left:auto">
@@ -85,6 +86,42 @@
     No lot count has been taken, so nothing here is ranked by what it costs. Run
     <code>python -m flats.encode.backlog</code> to generate one.
   </p>
+  {% endif %}
+
+  {% if misattributed %}
+  <h3 id="citations" style="margin:24px 0 4px">Citations that name the wrong section</h3>
+  <p class="muted" style="font-size:12px;max-width:74ch">
+    {{ misattributed | length }} values quote text that resolves and states the number,
+    under a citation naming a section the text is not printed in. Nothing upstream
+    objects, and anyone who opens the cited section to check finds nothing there —
+    which is the whole of what a citation is for. Fixing one is a judgement about
+    which of the two is right, so they are listed rather than repaired.
+  </p>
+
+  <div class="table-wrap" style="margin-bottom:16px">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Jurisdiction</th>
+          <th>Zone</th>
+          <th>Standard</th>
+          <th>Cites</th>
+          <th>Text is in</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for one in misattributed %}
+        <tr>
+          <td><a href="/flats/review/{{ one.layer }}">{{ one.label }}</a></td>
+          <td>{{ one.zone }}</td>
+          <td>{{ one.field }}</td>
+          <td>{{ one.claimed }}</td>
+          <td>§ {{ one.found }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
   {% endif %}
 
   <h3 style="margin:24px 0 4px">Standards with no citation</h3>
