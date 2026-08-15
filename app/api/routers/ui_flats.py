@@ -16,7 +16,21 @@ confirmations into ``flats/config/verifications.jsonl`` for commit, and the next
 deploy is what promotes the value. An undrained signature is visibly pending
 rather than silently ineffective.
 
-Routes: /flats, /flats/{layer}, /ui/flats/quote, /ui/flats/sign
+There is a second surface here. **Plans** asks the question the other way
+round: not "what does this zone require" but "what would a lot have to be
+for this building to be legal here". A design is a fixed thing — 56 ft by
+36, four units, two storeys, 26 ft — so the smallest lot it could sit on in
+a zone is arithmetic over the encoded standards, and it needs no parcel
+data at all. Laid out across every zone, it says which markets a design can
+play in before a single lot is screened.
+
+The plat path is a control on that page rather than a fact about a city: a
+four-unit attached building can be permitted as one quadplex lot or as four
+townhouse lots, cities state different standards for the two, and which one
+is being built is a decision about the product.
+
+Routes: /flats, /flats/plans, /flats/plans/{design}, /flats/{layer},
+/ui/flats/quote, /ui/flats/sign
 """
 from __future__ import annotations
 
@@ -30,9 +44,12 @@ from sqlalchemy import select
 from app.api.deps import DBSession
 from app.api.routers.ui_helpers import _base_ctx, _get_counts, _get_user, templates
 from app.models.flats import FlatsRuleSignature
+from flats.designs.model import Design, DesignStatus, Plat, load_catalog
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.loader import load_rules
 from flats.rules.model import Incorporation, Layer, Status, Value
+from flats.rules.resolver import RuleSet
+from flats.score.paper import paper_fit
 
 router = APIRouter(include_in_schema=False)
 
@@ -199,6 +216,185 @@ async def _decisions(session: DBSession, layer_id: str) -> dict[tuple[str, str, 
         )
     ).scalars()
     return {(r.zone, r.field, r.when_key): r for r in rows}
+
+
+# --- plans: what a lot would have to be ------------------------------
+
+
+@lru_cache(maxsize=1)
+def _catalog() -> Any:
+    """The design catalog, parsed once. Same reasoning as ``_layers``."""
+    return load_catalog()
+
+
+@lru_cache(maxsize=1)
+def _ruleset() -> RuleSet:
+    return RuleSet(_layers())
+
+
+def _designs() -> list[Design]:
+    """Catalog entries a plan may be drawn for, active ones first.
+
+    Archived designs stay listed. Results on disk name them, and a page that
+    hid them would make an old answer unreadable rather than superseded.
+    """
+    got = list(_catalog())
+    return sorted(got, key=lambda d: (d.status is not DesignStatus.active, d.label, d.version))
+
+
+def _for_plat(design: Design, plat: str) -> Design:
+    """The same building costed for the other plat path.
+
+    Not a second catalog entry. The building has not changed — only how its
+    four units are being platted — and making that a catalog entry would double
+    the design matrix every screening run walks.
+    """
+    want = Plat.unit_lots if plat == Plat.unit_lots.value else Plat.one_lot
+    return design if design.plat is want else design.model_copy(update={"plat": want})
+
+
+def _plan_rows(design: Design) -> list[dict[str, Any]]:
+    """One row per encoded zone: the lot this design would need there.
+
+    Every zone is listed, including the ones that do not allow a fourplex at
+    all. A zone that says no is a fact about the market and belongs on the
+    page; dropping it would make the list read as though nobody had looked.
+    """
+    rules = _ruleset()
+    rows: list[dict[str, Any]] = []
+    for layer_id, layer in sorted(_layers().items()):
+        for zone_code in sorted(layer.zones):
+            got = rules.resolve(layer_id, zone_code, design.conditions)
+            fit = paper_fit(design, got)
+            allowed = got.get("quadplex_allowed")
+            cap = got.get("max_units")
+            stalls = got.get("parking_min_per_unit")
+            rows.append(
+                {
+                    "layer": layer_id,
+                    "jurisdiction": layer.label,
+                    "zone": zone_code,
+                    "allowed": allowed,
+                    "capped": bool(isinstance(cap, (int, float)) and cap < design.units),
+                    "width": fit.min_width_ft,
+                    "depth": fit.min_depth_ft,
+                    "area": fit.min_area_sqft,
+                    "binding": fit.binding,
+                    "orientation": fit.orientation,
+                    "height_ok": fit.height_ok,
+                    "unknown": fit.unknown,
+                    "complete": fit.complete,
+                    # Stated but unread. The number is used and labelled —
+                    # a corpus of 650 encoded standards and no signatures
+                    # would otherwise render as an empty page.
+                    "unsigned": len(fit.unsigned),
+                    "certain": fit.certain,
+                    # A stall minimum above what the design parks is not a no —
+                    # it is the number the site plan has to find room for.
+                    "stalls_short": (
+                        round(stalls * design.units - design.stalls_required, 2)
+                        if isinstance(stalls, (int, float))
+                        and stalls * design.units > design.stalls_required
+                        else 0
+                    ),
+                }
+            )
+    return rows
+
+
+def _plan_tally(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    """What the rows add up to. Counted here so the template stays a table."""
+    allowed = [r for r in rows if r["allowed"] and not r["capped"]]
+    # Not "clear". A dict key that shadows a dict method renders the method:
+    # Jinja resolves the attribute first, so `tally.clear` prints
+    # "<built-in method clear of dict object at 0x...>" where a count belongs.
+    on_paper = [r for r in allowed if r["height_ok"] is not False and r["complete"]]
+    areas = sorted(r["area"] for r in on_paper if r["area"] is not None)
+    return {
+        "zones": len(rows),
+        "allowed": len(allowed),
+        "on_paper": len(on_paper),
+        "too_tall": sum(1 for r in allowed if r["height_ok"] is False),
+        "incomplete": sum(1 for r in allowed if not r["complete"]),
+        "reviewed": sum(1 for r in on_paper if r["certain"]),
+        "smallest": areas[0] if areas else None,
+        "median": areas[len(areas) // 2] if areas else None,
+    }
+
+
+def _design_card(design: Design, plat: str) -> dict[str, Any]:
+    costed = _for_plat(design, plat)
+    return {
+        "key": design.key,
+        "label": design.label,
+        "status": design.status.value,
+        "width": design.footprint.width_ft,
+        "depth": design.footprint.depth_ft,
+        "ground": design.ground_sqft,
+        "units": design.units,
+        "stories": design.stories,
+        "height": design.height_ft,
+        "stalls": design.stalls_required,
+        "typology": design.typology.value,
+        "delivery": design.delivery.method.value,
+        "plat": costed.plat.value,
+        **_plan_tally(_plan_rows(costed)),
+    }
+
+
+@router.get("/flats/plans", response_class=HTMLResponse)
+async def flats_plans(
+    request: Request, session: DBSession, plat: str = Query("one_lot")
+) -> HTMLResponse:
+    user = await _get_user(session, request)
+    dedup_count, conflicts_count = await _get_counts(session)
+    cards = [_design_card(d, plat) for d in _designs()]
+    return templates.TemplateResponse(
+        request,
+        "flats_plans.html",
+        {
+            **_base_ctx(user, dedup_count, "flats_plans", conflicts_count=conflicts_count),
+            "designs": cards,
+            "plat": plat if plat == Plat.unit_lots.value else Plat.one_lot.value,
+        },
+    )
+
+
+@router.get("/flats/plans/{design_key}", response_class=HTMLResponse)
+async def flats_plan(
+    request: Request, session: DBSession, design_key: str, plat: str = Query("one_lot")
+) -> HTMLResponse:
+    user = await _get_user(session, request)
+    dedup_count, conflicts_count = await _get_counts(session)
+    catalog = _catalog()
+    base = catalog.get(design_key) if design_key in catalog else None
+    if base is None:
+        return templates.TemplateResponse(
+            request,
+            "flats_plans.html",
+            {
+                **_base_ctx(user, dedup_count, "flats_plans", conflicts_count=conflicts_count),
+                "designs": [_design_card(d, plat) for d in _designs()],
+                "plat": Plat.one_lot.value,
+                "missing": design_key,
+            },
+            status_code=404,
+        )
+    design = _for_plat(base, plat)
+    rows = _plan_rows(design)
+    return templates.TemplateResponse(
+        request,
+        "flats_plan.html",
+        {
+            **_base_ctx(user, dedup_count, "flats_plans", conflicts_count=conflicts_count),
+            "design": _design_card(base, plat),
+            "assumptions": list(base.assumptions),
+            "notes": base.notes,
+            "rows": rows,
+            "tally": _plan_tally(rows),
+            "plat": design.plat.value,
+        },
+    )
 
 
 @router.get("/flats/{layer_id:path}", response_class=HTMLResponse)

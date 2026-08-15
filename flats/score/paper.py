@@ -22,7 +22,9 @@ side rather than one answer somebody had to choose.
 
 What this deliberately does not do: decide GREEN or RED. A lot that clears
 every number here can still fail on slope, sewer, access, or the site plan.
-Paper fit is necessary, never sufficient.
+Paper fit is necessary, never sufficient — and every answer carries which of
+the standards behind it a reviewer has actually signed, so a planning view
+built on draft encoding is legible as one rather than mistaken for a verdict.
 """
 
 from __future__ import annotations
@@ -64,10 +66,20 @@ class PaperFit:
     #: Which plat path was costed. The same building on the same zone answers
     #: differently under the two, which is the point of asking.
     plat: str = ""
-    #: Standards this calculation needed and the zone does not supply, or
-    #: supplies at a status nothing may be decided on. A number here is a
-    #: lower bound: the real requirement can only be larger.
+    #: Standards this calculation needed and cannot get for this plat path —
+    #: either the zone does not state them, or it states them for the other
+    #: path and the number on file is about a different thing. A number
+    #: computed without one is a lower bound: the real requirement can only be
+    #: larger.
     unknown: tuple[str, ...] = ()
+    #: Standards used here that no reviewer has signed. Separate from
+    #: ``unknown`` on purpose. A screening verdict may not rest on these — that
+    #: is what the signature exists for — but a planning question ("which
+    #: markets could this pod play in") is worth answering from the encoding we
+    #: have, as long as the answer says what it rests on. Refusing to compute
+    #: would not be caution; it would be a blank page describing a corpus of
+    #: 650 encoded standards as though it held none.
+    unsigned: tuple[str, ...] = ()
     #: Standards left out on purpose, with why. A street-side setback binds
     #: corner lots only, and applying it to every lot would overstate the
     #: frontage this design needs everywhere.
@@ -79,22 +91,53 @@ class PaperFit:
         return not self.unknown
 
     @property
+    def signed(self) -> bool:
+        """Whether every standard behind this has been through review."""
+        return not self.unsigned
+
+    @property
+    def certain(self) -> bool:
+        """Complete and signed — the only state a decision may rest on."""
+        return self.complete and self.signed
+
+    @property
     def fits_height(self) -> bool:
         """False only where a height limit is held and the design exceeds it."""
         return self.height_ok is not False
 
 
 def _number(rules: "ZoneResolution", name: str) -> float | None:
-    """A standard's number, or None where nothing usable answers.
-
-    Untrusted is treated as absent on purpose. This module reports a
-    requirement to somebody deciding where to buy; a draft number quoted as a
-    requirement is the same mistake as a draft number producing a RED.
-    """
-    if name in rules.untrusted:
-        return None
+    """A standard's number, or None where the zone does not state one."""
     got = rules.get(name)
     return float(got) if isinstance(got, (int, float)) else None
+
+
+def _lot_standard(
+    rules: "ZoneResolution", name: str, *, per_unit: bool, lots: int
+) -> tuple[float | None, bool]:
+    """A per-lot standard, and whether the encoding answers for this plat path.
+
+    ``min_lot_sqft`` is defined as the minimum lot area *for a fourplex*. On the
+    split path it is the wrong standard: what governs is the zone's minimum for
+    the dwelling that ends up on each lot, which the code states in a different
+    row. Multiplying the fourplex number by four would not approximate that —
+    it would invent a 28,000 sq ft requirement out of a 7,000 sq ft one.
+
+    So the number is scaled only where the encoding says it is the per-unit
+    one, by carrying the ``unit_lots`` condition on the variant. Where the zone
+    states a number that is plainly about the whole building, this returns
+    nothing and reports the standard as one we do not have — which is true, and
+    is the encoding task it should turn into.
+    """
+    got = rules.values.get(name)
+    value = getattr(got, "value", None)
+    if not isinstance(value, (int, float)):
+        return None, True
+    if not per_unit:
+        return float(value), True
+    if "unit_lots" in tuple(getattr(got, "when", ()) or ()):
+        return float(value) * lots, True
+    return None, False
 
 
 def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
@@ -104,38 +147,56 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
     that will not fit broadside may fit end-on, and a requirement stated for
     the worse orientation is a requirement nobody has to meet.
     """
-    per_unit = design.plat is Plat.unit_lots
     # Under unit lots the lot-size and lot-width standards read once per
     # dwelling, so the project needs that many of them side by side. Setbacks
     # do not scale: the walls between units are shared, and only the two ends
-    # of the row see a side yard either way.
-    lots = design.units if per_unit else 1
+    # of the row see a side yard either way. Nor does the coverage cap — the
+    # same building over the same ground is the same share of it however the
+    # ground is divided.
+    per_unit = design.plat is Plat.unit_lots
+    lots = design.units
 
     front = _number(rules, "setback_front_ft")
     rear = _number(rules, "setback_rear_ft")
     side = _number(rules, "setback_side_ft")
-    min_lot = _number(rules, "min_lot_sqft")
-    min_width = _number(rules, "min_lot_width_ft")
+    min_lot, lot_answered = _lot_standard(rules, "min_lot_sqft", per_unit=per_unit, lots=lots)
+    min_width, width_answered = _lot_standard(
+        rules, "min_lot_width_ft", per_unit=per_unit, lots=lots
+    )
     coverage = _number(rules, "max_coverage_pct")
     height = _number(rules, "max_height_ft")
+    # A code that makes the building face the street has taken one of the
+    # two orientations away, and the cheaper lot may have been that one.
+    axis = rules.get("orientation_constraint") == "axis_required"
 
-    if min_lot is not None:
-        min_lot *= lots
-    if min_width is not None:
-        min_width *= lots
-
-    unknown = tuple(
+    needed = (
+        ("setback_front_ft", front),
+        ("setback_rear_ft", rear),
+        ("setback_side_ft", side),
+    )
+    unknown = tuple(name for name, got in needed if got is None) + tuple(
+        name
+        for name, answered in (
+            ("min_lot_sqft", lot_answered),
+            ("min_lot_width_ft", width_answered),
+        )
+        if not answered
+    )
+    used = [name for name, got in needed if got is not None]
+    used += [
         name
         for name, got in (
-            ("setback_front_ft", front),
-            ("setback_rear_ft", rear),
-            ("setback_side_ft", side),
+            ("min_lot_sqft", min_lot),
+            ("min_lot_width_ft", min_width),
+            ("max_coverage_pct", coverage),
+            ("max_height_ft", height),
         )
-        if got is None
-    )
+        if got is not None
+    ]
+    unsigned = tuple(name for name in used if name in rules.untrusted)
 
     best: PaperFit | None = None
-    for orientation, width_ft, depth_ft in design.oriented():
+    for orientation, width_ft, depth_ft in design.oriented(axis_required=axis):
         needed_width = width_ft + 2 * side if side is not None else None
         if needed_width is not None and min_width is not None:
             needed_width = max(needed_width, min_width)
@@ -167,6 +228,7 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
             orientation=orientation.value,
             plat=design.plat.value,
             unknown=unknown,
+            unsigned=unsigned,
             excluded=(
                 "setback_street_side_ft (corner lots only)",
                 "min_frontage_ft (measured at the street, not the envelope)",

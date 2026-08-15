@@ -55,10 +55,27 @@ SPLIT = POD.model_copy(update={"plat": Plat.unit_lots})
 
 
 def rules(root: Path, draft: str, fields: dict[str, object]) -> RuleSet:
-    """Resolve R5 with these standards. ``draft`` names one left unsigned."""
+    """Resolve R5 with these standards. ``draft`` names one left unsigned.
+
+    A value written as ``(base, per_unit)`` states the whole-building number
+    and, as a variant keyed on ``unit_lots``, the number the code states for a
+    townhouse lot — which is how a real encoding carries both.
+    """
     body = ["  R5:\n"]
     for name, value in {**BASE, **fields}.items():
+        if value is None:
+            continue
         status = "" if name == draft else "      status: encoded\n"
+        if isinstance(value, tuple):
+            base, split = value
+            body.append(
+                f"    {name}:\n      value: {base}\n{status}"
+                "      variants:\n"
+                f"        - value: {split}\n"
+                "          when: [unit_lots]\n"
+                f"{'' if name == draft else '          status: encoded'}\n"
+            )
+            continue
         body.append(f"    {name}:\n      value: {value}\n{status}")
     path = root / f"{GRESHAM}.yaml"
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -120,12 +137,33 @@ def test_a_width_minimum_can_flip_which_orientation_is_cheaper(tmp_path: Path) -
 # --- what may be used ------------------------------------------------
 
 
-def test_a_number_nobody_has_signed_is_not_a_requirement(tmp_path: Path) -> None:
-    # A draft side setback is a number somebody typed. Quoting it as the lot
-    # a market demands is the same mistake as screening a parcel on it.
+def test_a_number_nobody_has_read_yet_is_used_and_named(tmp_path: Path) -> None:
+    # A draft side setback is a number somebody typed and nobody has checked.
+    # Refusing to use it would blank the page; using it silently would dress a
+    # draft as a requirement. It is used, and the answer says it rests on it.
     got = fit(tmp_path, draft="setback_side_ft")
 
+    assert got.min_width_ft == 46
+    assert got.unsigned == ("setback_side_ft",)
+    assert got.complete, "stated but unread is not missing"
+    assert not got.signed
+    assert not got.certain
+
+
+def test_only_a_signed_and_complete_answer_is_certain(tmp_path: Path) -> None:
+    got = fit(tmp_path)
+
+    assert got.certain
+    assert got.signed
+
+
+def test_a_standard_the_zone_never_states_is_missing_not_unsigned(tmp_path: Path) -> None:
+    # The whole point of the split: "the code has no such rule" and "nobody has
+    # verified this rule" are different problems with different fixes.
+    got = fit(tmp_path, setback_side_ft=None)
+
     assert got.unknown == ("setback_side_ft",)
+    assert got.unsigned == ()
     assert got.min_width_ft is None
     assert not got.complete
     # Depth is unaffected — one missing standard does not void the others.
@@ -135,7 +173,7 @@ def test_a_number_nobody_has_signed_is_not_a_requirement(tmp_path: Path) -> None
 def test_an_orientation_that_could_not_be_costed_never_wins(tmp_path: Path) -> None:
     # With no envelope, both orientations tie on the area floor the code
     # states, and the answer is that floor rather than nothing.
-    got = fit(tmp_path, draft="setback_side_ft", min_lot_sqft=7000)
+    got = fit(tmp_path, setback_side_ft=None, min_lot_sqft=7000)
 
     assert got.min_area_sqft == 7000
     assert got.binding == BY_MIN_LOT
@@ -169,11 +207,26 @@ def test_a_two_storey_pod_fails_a_limit_it_exceeds(tmp_path: Path) -> None:
 # --- the plat path ---------------------------------------------------
 
 
-def test_four_lots_need_four_of_every_per_lot_standard(tmp_path: Path) -> None:
-    # 1,500 sq ft is a townhouse lot. Four of them is the project, and reading
-    # that number once would say this pod fits on a 4,416 sq ft parcel.
-    assert fit(tmp_path, design=SPLIT, min_lot_sqft=1500).min_area_sqft == 6000
-    assert fit(tmp_path, min_lot_sqft=1500).min_area_sqft == 4416
+def test_four_lots_need_four_of_the_codes_townhouse_minimum(tmp_path: Path) -> None:
+    # The zone says 7,000 for a fourplex and 1,500 for a townhouse lot. Split,
+    # the project needs four of the 1,500s; whole, it needs the 7,000.
+    banded = {"min_lot_sqft": (7000, 1500)}
+
+    assert fit(tmp_path, design=SPLIT, **banded).min_area_sqft == 6000
+    assert fit(tmp_path, **banded).min_area_sqft == 7000
+
+
+def test_the_fourplex_minimum_is_not_multiplied_into_a_townhouse_one(tmp_path: Path) -> None:
+    # 7,000 sq ft is the lot a fourplex needs. On four lots it is not the
+    # standard at all, and x4 would invent a 28,000 sq ft requirement out of
+    # it. Where the code's townhouse row is not encoded, the honest answer is
+    # that we do not have that standard — which is an encoding job, not a
+    # number to guess.
+    got = fit(tmp_path, design=SPLIT, min_lot_sqft=7000)
+
+    assert "min_lot_sqft" in got.unknown
+    assert got.min_area_sqft == 4416, "the envelope still answers"
+    assert not got.complete
 
 
 def test_shared_walls_do_not_multiply_the_side_yards(tmp_path: Path) -> None:
@@ -181,6 +234,15 @@ def test_shared_walls_do_not_multiply_the_side_yards(tmp_path: Path) -> None:
     # platted. Scaling setbacks with the lots would invent six yards.
     assert fit(tmp_path, design=SPLIT).min_depth_ft == fit(tmp_path).min_depth_ft
     assert fit(tmp_path, design=SPLIT).min_width_ft == 46
+
+
+def test_the_coverage_cap_does_not_care_how_the_ground_is_divided(tmp_path: Path) -> None:
+    # The same building over the same ground is the same share of it whether
+    # that ground is one lot or four.
+    whole = fit(tmp_path, max_coverage_pct=20)
+    split = fit(tmp_path, design=SPLIT, max_coverage_pct=20)
+
+    assert whole.min_area_sqft == split.min_area_sqft == pytest.approx(10080)
 
 
 def test_the_plat_path_is_carried_on_the_answer(tmp_path: Path) -> None:

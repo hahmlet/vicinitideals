@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% block title %}{{ design.label }} — Plans — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div class="topbar">
+</div>
+
+<div class="content">
+  <div class="toolbar">
+    <div>
+      <h2 style="margin:0">{{ design.label }}</h2>
+      <div class="muted" style="font-size:12px">
+        <a href="/flats/plans?plat={{ plat }}">All plans</a> · {{ design.key }} ·
+        {{ design.typology }} · {{ design.delivery }}
+        {% if design.status != 'active' %} · <strong>{{ design.status }}</strong>{% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="toolbar" style="gap:24px;flex-wrap:wrap">
+    <div><span class="muted">Footprint</span> <strong>{{ design.width }} × {{ design.depth }} ft</strong></div>
+    <div><span class="muted">Ground floor</span> <strong>{{ "{:,.0f}".format(design.ground) }} sf</strong></div>
+    <div><span class="muted">Units</span> <strong>{{ design.units }}</strong></div>
+    <div><span class="muted">Storeys</span> <strong>{{ design.stories }}</strong></div>
+    <div><span class="muted">Height</span> <strong>{{ design.height }} ft</strong></div>
+    <div><span class="muted">Stalls provided</span> <strong>{{ design.stalls }}</strong></div>
+  </div>
+
+  <div class="toolbar" style="gap:8px">
+    <span class="muted">Platted as</span>
+    <a class="btn btn-sm {% if plat == 'one_lot' %}btn-primary{% else %}btn-secondary{% endif %}"
+       href="/flats/plans/{{ design.key }}?plat=one_lot">One lot (quadplex)</a>
+    <a class="btn btn-sm {% if plat == 'unit_lots' %}btn-primary{% else %}btn-secondary{% endif %}"
+       href="/flats/plans/{{ design.key }}?plat=unit_lots">Four lots (townhouses)</a>
+    <span class="muted" style="font-size:12px">
+      On four lots the minimum lot area and lot width are asked once per home, so the
+      project needs four of each. The side yards do not change — the walls between the
+      homes are shared and only the two ends of the row see one.
+    </span>
+  </div>
+
+  <div class="toolbar" style="gap:24px;flex-wrap:wrap">
+    <div><span class="muted">Zones checked</span> <strong>{{ tally.zones }}</strong></div>
+    <div><span class="muted">Allow a fourplex</span> <strong>{{ tally.allowed }}</strong></div>
+    <div><span class="muted">Clear on paper</span> <strong>{{ tally.on_paper }}</strong></div>
+    <div><span class="muted">Too tall</span> <strong>{{ tally.too_tall }}</strong></div>
+    <div><span class="muted">Missing a standard</span> <strong>{{ tally.incomplete }}</strong></div>
+    <div><span class="muted">Built on reviewed numbers</span> <strong>{{ tally.reviewed }}</strong></div>
+  </div>
+
+  {% if assumptions %}
+  <details style="margin:8px 0 12px">
+    <summary class="muted">What this plan assumes</summary>
+    <ul style="margin:8px 0 0">
+      {% for a in assumptions %}<li>{{ a }}</li>{% endfor %}
+    </ul>
+  </details>
+  {% endif %}
+  {% if notes %}
+  <p class="muted" style="white-space:pre-wrap;margin:4px 0 12px">{{ notes }}</p>
+  {% endif %}
+
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Jurisdiction</th>
+          <th>Zone</th>
+          <th>Fourplex</th>
+          <th class="col-right">Lot width</th>
+          <th class="col-right">Lot depth</th>
+          <th class="col-right">Lot area</th>
+          <th>What sets the size</th>
+          <th>Facing</th>
+          <th>Height</th>
+          <th>Parking</th>
+          <th>Missing</th>
+          <th>Reviewed</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+        <tr>
+          <td><a href="/flats/{{ row.layer }}">{{ row.jurisdiction }}</a></td>
+          <td>{{ row.zone }}</td>
+          <td>
+            {% if row.capped %}
+              <span class="badge badge-red">unit cap</span>
+            {% elif row.allowed %}
+              <span class="badge badge-green">allowed</span>
+            {% elif row.allowed is none %}
+              <span class="badge">not encoded</span>
+            {% else %}
+              <span class="badge badge-red">no</span>
+            {% endif %}
+          </td>
+          <td class="col-right">{% if row.width %}{{ "{:,.0f}".format(row.width) }} ft{% else %}—{% endif %}</td>
+          <td class="col-right">{% if row.depth %}{{ "{:,.0f}".format(row.depth) }} ft{% else %}—{% endif %}</td>
+          <td class="col-right">{% if row.area %}<strong>{{ "{:,.0f}".format(row.area) }} sf</strong>{% else %}—{% endif %}</td>
+          <td class="muted" style="font-size:11px">
+            {% if row.binding == 'min_lot_sqft' %}minimum lot size
+            {% elif row.binding == 'max_coverage_pct' %}coverage cap
+            {% elif row.binding == 'envelope' %}the building and its yards
+            {% else %}—{% endif %}
+          </td>
+          <td class="muted" style="font-size:11px">
+            {% if row.orientation == 'width_facing' %}long side to street
+            {% elif row.orientation == 'depth_facing' %}end to street
+            {% else %}—{% endif %}
+          </td>
+          <td>
+            {% if row.height_ok is none %}<span class="muted">no limit encoded</span>
+            {% elif row.height_ok %}<span class="badge badge-green">fits</span>
+            {% else %}<span class="badge badge-red">too tall</span>{% endif %}
+          </td>
+          <td class="muted" style="font-size:11px">
+            {% if row.stalls_short %}{{ row.stalls_short }} stalls short{% else %}ok{% endif %}
+          </td>
+          <td class="muted" style="font-size:11px">
+            {% if row.unknown %}{{ row.unknown | join(", ") }}{% endif %}
+          </td>
+          <td>
+            {% if row.certain %}<span class="badge badge-green">signed</span>
+            {% elif row.unsigned %}<span class="badge badge-yellow">{{ row.unsigned }} unread</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <p class="muted" style="font-size:12px;margin:12px 0 0">
+    A blank lot size means a setback this calculation needs is not in the encoding
+    yet. <strong>Unread</strong> means it is encoded but nobody has compared it to the
+    code text — the number is used here and it is not to be relied on. Nothing on this
+    page is a green light either way: it says the lot has to be at least this big, not
+    that a lot this big will work.
+  </p>
+</div>
+{% endblock %}

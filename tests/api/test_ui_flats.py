@@ -251,3 +251,87 @@ async def test_no_page_renders_a_python_object_where_a_number_belongs(
         assert page.status_code == 200
         assert "built-in method" not in page.text
         assert "object at 0x" not in page.text
+
+
+# --- plans: the question asked the other way round ---------------------
+#
+# The rule pages say what a zone requires. The plan pages say what a lot would
+# have to be for a building we can actually deliver to be legal there — the
+# same standards, read from the product end. Nothing on them touches parcel
+# data, so they answer for markets we hold no parcels in.
+
+
+async def test_the_plans_page_lists_the_catalog(client: AsyncClient, session: AsyncSession):
+    await _login(client, session)
+
+    page = await client.get("/flats/plans")
+
+    assert page.status_code == 200
+    assert "Plans" in page.text
+    # The catalog ships two pods. A page that loaded no designs still renders,
+    # which is why the count is asserted rather than the status code alone.
+    assert page.text.count("/flats/plans/pod") >= 2
+
+
+async def test_plans_is_not_swallowed_by_the_layer_route(
+    client: AsyncClient, session: AsyncSession
+):
+    # /flats/{layer_id:path} matches "plans" happily and would 404 it as a
+    # jurisdiction. Registration order is the only thing keeping this route.
+    await _login(client, session)
+
+    page = await client.get("/flats/plans")
+
+    assert page.status_code == 200
+    assert "No rule layer" not in page.text
+
+
+async def test_a_plan_page_says_what_lot_the_building_needs(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+
+    page = await client.get("/flats/plans/pod56x36@1")
+
+    assert page.status_code == 200
+    assert "Lot area" in page.text
+    assert "What sets the size" in page.text
+    # Every encoded zone is listed, including ones that say no — a zone that
+    # refuses a fourplex is a fact about the market, not a row to hide.
+    assert "Portland" in page.text
+
+
+async def test_the_plat_path_is_a_control_not_a_second_catalog_entry(
+    client: AsyncClient, session: AsyncSession
+):
+    # Four townhouse lots ask for the minimum lot area four times. The same
+    # building, the same zones, a different number.
+    await _login(client, session)
+
+    one = await client.get("/flats/plans/pod56x36@1?plat=one_lot")
+    four = await client.get("/flats/plans/pod56x36@1?plat=unit_lots")
+
+    assert one.status_code == four.status_code == 200
+    assert one.text != four.text
+
+
+async def test_an_unknown_plan_says_so(client: AsyncClient, session: AsyncSession):
+    await _login(client, session)
+
+    page = await client.get("/flats/plans/nosuchpod@1")
+
+    assert page.status_code == 404
+    assert "nosuchpod@1" in page.text
+
+
+async def test_the_plan_pages_print_no_python_objects_either(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+
+    for url in ("/flats/plans", "/flats/plans/pod56x36@1"):
+        page = await client.get(url)
+
+        assert page.status_code == 200
+        assert "built-in method" not in page.text
+        assert "object at 0x" not in page.text

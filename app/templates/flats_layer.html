@@ -69,7 +69,7 @@
           <td class="col-right">{{ row.value }}</td>
           <td>
             {% if row.trusted %}
-              <span class="badge badge-success">verified</span>
+              <span class="badge badge-green">verified</span>
               {% if row.reviewer %}<span class="muted" style="font-size:11px">{{ row.reviewer }}</span>{% endif %}
             {% else %}
               <span class="badge">{{ row.status }}</span>

@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}Plans — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div class="topbar">
+</div>
+
+<div class="content">
+  {% if missing %}
+    <div class="alert alert-warning">No plan called <code>{{ missing }}</code>.</div>
+  {% endif %}
+
+  <div class="toolbar">
+    <div>
+      <h2 style="margin:0">Plans</h2>
+      <p class="muted" style="margin:4px 0 0">
+        A plan is a building we can actually deliver — its size, its unit count, its
+        height, how it parks, and how its units are platted. This page asks what a lot
+        would have to be for each plan to be legal in every zone we have encoded.
+        No parcel is involved: it is the plan against the code.
+      </p>
+    </div>
+  </div>
+
+  <div class="toolbar" style="gap:8px">
+    <span class="muted">Platted as</span>
+    <a class="btn btn-sm {% if plat == 'one_lot' %}btn-primary{% else %}btn-secondary{% endif %}"
+       href="/flats/plans?plat=one_lot">One lot (quadplex)</a>
+    <a class="btn btn-sm {% if plat == 'unit_lots' %}btn-primary{% else %}btn-secondary{% endif %}"
+       href="/flats/plans?plat=unit_lots">Four lots (townhouses)</a>
+    <span class="muted" style="font-size:12px">
+      Cities state different lot minimums for the two. Switching this re-asks every zone.
+    </span>
+  </div>
+
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Plan</th>
+          <th class="col-right">Footprint</th>
+          <th class="col-right">Units</th>
+          <th class="col-right">Height</th>
+          <th class="col-right">Stalls</th>
+          <th class="col-right">Zones</th>
+          <th class="col-right">Fourplex allowed</th>
+          <th class="col-right">Clears on paper</th>
+          <th class="col-right">On reviewed numbers</th>
+          <th class="col-right">Smallest lot</th>
+          <th class="col-right">Typical lot</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for d in designs %}
+        <tr>
+          <td>
+            <a href="/flats/plans/{{ d.key }}?plat={{ plat }}">{{ d.label }}</a>
+            <div class="muted" style="font-size:11px">
+              {{ d.key }} · {{ d.delivery }}
+              {% if d.status != 'active' %} · <strong>{{ d.status }}</strong>{% endif %}
+            </div>
+          </td>
+          <td class="col-right">{{ d.width }} × {{ d.depth }} ft</td>
+          <td class="col-right">{{ d.units }}</td>
+          <td class="col-right">{{ d.height }} ft</td>
+          <td class="col-right">{{ d.stalls }}</td>
+          <td class="col-right">{{ d.zones }}</td>
+          <td class="col-right">{{ d.allowed }}</td>
+          <td class="col-right"><strong>{{ d.on_paper }}</strong></td>
+          <td class="col-right">{{ d.reviewed }}</td>
+          <td class="col-right">{% if d.smallest %}{{ "{:,.0f}".format(d.smallest) }} sf{% else %}—{% endif %}</td>
+          <td class="col-right">{% if d.median %}{{ "{:,.0f}".format(d.median) }} sf{% else %}—{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <p class="muted" style="font-size:12px;margin:12px 0 0">
+    <strong>Clears on paper</strong> counts zones that allow a fourplex, do not cap the
+    unit count below four, do not rule the plan out on height, and state every setback
+    the lot size depends on. <strong>On reviewed numbers</strong> is the subset where
+    every standard behind that answer has been checked against the code text by a
+    person. Neither is a green light — slope, sewer, access and the site plan are all
+    still ahead of it.
+  </p>
+</div>
+{% endblock %}
