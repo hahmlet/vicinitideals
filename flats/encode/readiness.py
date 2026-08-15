@@ -34,9 +34,12 @@ however few documents are missing. That ordering is the whole product: it turns
 
 from __future__ import annotations
 
+import math
+import re
 from dataclasses import dataclass
 from typing import Iterable
 
+from flats.encode.despace import repair_text
 from flats.encode.load import Trusted
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.model import LIKE, Layer, Status
@@ -156,16 +159,38 @@ def _quoted_parts(layer: Layer) -> Iterable[tuple[str, str, str | None, object]]
 
 
 #: How a number can be printed in an ordinance: 7500, 7,500, 7500.0, 7.5.
-def _renderings(number: float | int) -> tuple[str, ...]:
-    whole = int(number)
-    exact = whole if float(number) == whole else number
-    out = {str(exact), f"{exact:,}" if isinstance(exact, int) else str(exact)}
-    if isinstance(exact, float):
-        out.add(f"{exact:g}")
-    return tuple(out)
+#: A number as an ordinance prints one: grouped by commas, possibly decimal,
+#: and not preceded by a digit or a dot — the second guard is what keeps the
+#: tail of a citation like 33.110.220 from reading as the number 220.
+_NUMBER = re.compile(r"(?<![\d.,])\d[\d,]*(?:\.\d+)?")
 
 
-def quotes_the_number(text: str, value) -> bool:
+def _states(text: str, number: float) -> bool:
+    """Whether the text states this number, as a number.
+
+    Compared by value rather than by spelling, because a code prints 0.60 for
+    six tenths and 7,500 for seven and a half thousand, and every attempt to
+    enumerate the spellings either misses one or matches inside a longer
+    number — 350 reading as 35, or any line with a 20 in it reading as a
+    zero, which matters now that zero is how the corpus says "no minimum".
+    """
+    for found in _NUMBER.finditer(text):
+        try:
+            if math.isclose(float(found.group(0).replace(",", "")), number):
+                return True
+        except ValueError:  # pragma: no cover - the pattern only matches numbers
+            continue
+    return False
+
+
+#: How an ordinance prints a standard it does not impose. A zero encoded
+#: against one of these is not a misquote — it is the only way this system has
+#: to say "the code states no minimum here", and the alternative (leaving the
+#: field out) inherits the standard for a different housing type.
+_STATES_NONE = ("none", "n/a", "no min", "—", "--")
+
+
+def quotes_the_number(text: str, value, *, spaced: bool = False) -> bool:
     """Whether the cited text actually states the value's number.
 
     Deliberately generous: a code writes "7,500 sq ft" and "0.60" and "7.5
@@ -173,10 +198,20 @@ def quotes_the_number(text: str, value) -> bool:
     Non-numeric values — permission flags, enums, curves — are nothing this
     can check, so they pass. What it does catch is the citation that no
     longer points at its own sentence.
+
+    ``spaced`` repairs a letter-spaced OCR line before looking. Oregon City's
+    Title 17 is a scan, and its ten-thousand square feet is stored as
+    "1 0 , 000 squ are f eet" — a correct quote that no spelling of 10000
+    appears in. Fifteen of its values read as misquoted for that reason alone,
+    which is a check disagreeing with itself: the same flag that tells the
+    readers to repair this document told this one to compare it raw.
     """
     if isinstance(value, bool) or not isinstance(value, (int, float)):
         return True
-    return any(shape in text for shape in _renderings(value))
+    hay = repair_text(text) if spaced else text
+    if _states(hay, float(value)):
+        return True
+    return value == 0 and any(word in hay.lower() for word in _STATES_NONE)
 
 
 def _statuses(layer: Layer) -> list[Status]:
@@ -198,6 +233,7 @@ def readiness_for(
     verified = sum(1 for s in statuses if s is Status.verified)
 
     unfetched = tuple(sorted(p for p in layer.documents() if not store.exists(p)))
+    spaced = frozenset(p for p, doc in layer.documents().items() if doc.spaced)
     unquoted: list[tuple[str, str]] = []
     no_evidence: list[tuple[str, str]] = []
     misquoted: list[tuple[str, str]] = []
@@ -213,7 +249,7 @@ def readiness_for(
             # is nothing on screen to compare the number against.
             no_evidence.append((zone_code, name))
             continue
-        if not quotes_the_number(cited, number):
+        if not quotes_the_number(cited, number, spaced=quote.split("#", 1)[0] in spaced):
             misquoted.append((zone_code, name))
 
     if not layer.zones and not layer.defaults:

@@ -378,3 +378,39 @@ def test_a_non_numeric_value_is_never_misquoted() -> None:
     assert quotes_the_number("Quadplexes are permitted outright.", True)
     assert quotes_the_number("Buildings shall face the street.", "axis_required")
     assert quotes_the_number("anything", None)
+
+
+# --- a check that disagrees with the rest of the system -----------------
+
+
+def test_a_letter_spaced_scan_is_repaired_before_the_number_is_looked_for() -> None:
+    # Oregon City's Title 17 is a scan. Ten thousand square feet is stored as
+    # "1 0 , 000 squ are f eet", which the readers repair and this check did
+    # not, so fifteen correctly-quoted values read as citations pointing at
+    # the wrong text. The same `spaced:` flag now governs both.
+    from flats.encode.readiness import quotes_the_number
+
+    cited = "Quad pl ex a nd co t tage 1 0 , 000 squ are 8 , 000 squ are"
+
+    assert not quotes_the_number(cited, 10000)
+    assert quotes_the_number(cited, 10000, spaced=True)
+
+
+def test_a_standard_the_table_states_as_none_supports_a_zero() -> None:
+    # Gresham's townhouse minimum lot size and Tualatin's townhouse lot width
+    # are printed "None". Zero is how this system says the code imposes no
+    # minimum, and the alternative — leaving the field out — inherits the
+    # standard written for a different housing type, which is worse than
+    # wrong because it looks encoded.
+    from flats.encode.readiness import quotes_the_number
+
+    assert quotes_the_number("T ownhouse None", 0)
+    assert quotes_the_number("Townhouse N/A", 0)
+    assert not quotes_the_number("T ownhouse None", 16), "only zero reads this way"
+
+
+def test_a_number_the_cited_line_does_not_state_is_still_caught() -> None:
+    from flats.encode.readiness import quotes_the_number
+
+    assert not quotes_the_number("Minimum lot width 20 feet", 35)
+    assert not quotes_the_number("Minimum lot width 20 feet", 0)
