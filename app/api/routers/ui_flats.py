@@ -29,8 +29,8 @@ four-unit attached building can be permitted as one quadplex lot or as four
 townhouse lots, cities state different standards for the two, and which one
 is being built is a decision about the product.
 
-Routes: /flats, /flats/plans, /flats/plans/{design}, /flats/{layer},
-/ui/flats/quote, /ui/flats/sign
+Routes: /flats, /flats/plans, /flats/plans/{design}, /flats/review/{layer},
+/flats/{layer}, /ui/flats/quote, /ui/flats/sign, /ui/flats/sign-passage
 """
 from __future__ import annotations
 
@@ -397,6 +397,230 @@ async def flats_plan(
     )
 
 
+# --- review: one passage of code, and every number read out of it -------
+
+
+def _span(ref: str) -> tuple[int, int] | None:
+    """The line range a citation names, or None if it names no lines."""
+    _, _, fragment = ref.partition("#L")
+    if not fragment:
+        return None
+    try:
+        parts = [int(x) for x in fragment.replace("L", "").split("-")]
+    except ValueError:
+        return None
+    return parts[0], parts[-1]
+
+
+#: How far apart two citations may sit and still be one reading. A zone's
+#: dimensional standards are cited line by line — Tualatin's RL lot size at
+#: L166, its front setback at L211 — and shown separately they are eleven
+#: openings of one table. Sixteen lines is wide enough to chain a table and
+#: narrow enough that the next section starts a new card.
+_GAP = 16
+
+#: The longest window a card will show. Past this the chain has stopped being
+#: a passage and become a chapter, and the reviewer loses the highlighted
+#: lines in the scroll.
+_SPAN = 140
+
+
+def _cluster(spans: list[tuple[int, int]]) -> list[list[tuple[int, int]]]:
+    """Citations chained into readings, in the order the document prints them."""
+    out: list[list[tuple[int, int]]] = []
+    for first, last in sorted(spans):
+        if out:
+            running = out[-1]
+            reach = max(x[1] for x in running)
+            if first - reach <= _GAP and last - running[0][0] <= _SPAN:
+                running.append((first, last))
+                continue
+        out.append([(first, last)])
+    return out
+
+
+def _passages(layer: Layer, decided: dict) -> list[dict[str, Any]]:
+    """The layer's unreviewed numbers, gathered under the text they were read from.
+
+    A zoning table states a dozen standards, and the rules table makes a
+    reviewer open it a dozen times — once per value, scattered down a list
+    ordered by zone, each opening four lines of the same page. Grouping
+    inverts it: the passage is shown once and every number claiming it sits
+    beside it. That is both far less clicking and a better check, because two
+    numbers read off the same table that disagree with each other are only
+    visible when they are adjacent.
+
+    Citations are clustered by proximity rather than by exact match, since a
+    table row is cited line by line and no two of those lines are the same
+    reference. Ordered by document and line, so a pass reads the code front to
+    back.
+    """
+    quoted: dict[str, list[dict[str, Any]]] = {}
+    loose: list[dict[str, Any]] = []
+    for row in _value_rows(layer):
+        if not row["quote"] or decided.get((row["zone"], row["field"], row["when"])):
+            continue
+        span = _span(row["quote"])
+        row["line"] = span[0] if span else 0
+        if span is None:
+            loose.append(row)
+        else:
+            quoted.setdefault(row["quote"].partition("#L")[0], []).append(row)
+
+    cards: list[dict[str, Any]] = []
+    for document, rows in quoted.items():
+        by_span: dict[tuple[int, int], list[dict[str, Any]]] = {}
+        for row in rows:
+            by_span.setdefault(_span(row["quote"]), []).append(row)
+        for chain in _cluster(list(by_span)):
+            here = [row for span in chain for row in by_span[span]]
+            cards.append(
+                {
+                    "ref": f"{document}#L{chain[0][0]}-L{max(x[1] for x in chain)}",
+                    "refs": [f"{document}#L{a}-L{b}" for a, b in chain],
+                    "document": document,
+                    "cite": here[0]["cite"],
+                    "url": here[0]["url"],
+                    "lines": _window(document, chain),
+                    "error": "",
+                    "rows": sorted(here, key=lambda r: (r["line"], r["zone"], r["field"])),
+                }
+            )
+    for row in loose:
+        lines, error = _cited_lines(row["quote"])
+        cards.append(
+            {
+                "ref": row["quote"],
+                "refs": [row["quote"]],
+                "document": row["quote"].partition("#L")[0],
+                "cite": row["cite"],
+                "url": row["url"],
+                "lines": lines,
+                "error": error,
+                "rows": [row],
+            }
+        )
+    return sorted(cards, key=lambda c: (c["document"], _span(c["ref"]) or (0, 0)))
+
+
+def _window(document: str, chain: list[tuple[int, int]]) -> list[dict[str, Any]]:
+    """One stretch of the document, with every cited line in it marked.
+
+    Marking them all is the point of showing them together: the reviewer sees
+    which lines of the table are claimed and, just as usefully, which are not.
+    """
+    try:
+        whole = _store().load(document).text.splitlines()
+    except (ProvenanceError, OSError):
+        return []
+    start = max(min(x[0] for x in chain) - _CONTEXT, 1)
+    end = min(max(x[1] for x in chain) + _CONTEXT, len(whole))
+    return [
+        {
+            "n": n,
+            "text": whole[n - 1],
+            "quoted": any(first <= n <= last for first, last in chain),
+        }
+        for n in range(start, end + 1)
+    ]
+
+
+@router.get("/flats/review/{layer_id:path}", response_class=HTMLResponse)
+async def flats_review(request: Request, session: DBSession, layer_id: str) -> HTMLResponse:
+    user = await _get_user(session, request)
+    dedup_count, conflicts_count = await _get_counts(session)
+    layer = _layers().get(layer_id.strip("/"))
+    if layer is None:
+        return templates.TemplateResponse(
+            request,
+            "flats_rules.html",
+            {
+                **_base_ctx(user, dedup_count, "flats", conflicts_count=conflicts_count),
+                "summaries": [_layer_summary(x) for _, x in sorted(_layers().items())],
+                "totals": {},
+                "missing": layer_id,
+            },
+            status_code=404,
+        )
+    decided = await _decisions(session, layer.layer)
+    passages = _passages(layer, decided)
+    return templates.TemplateResponse(
+        request,
+        "flats_review.html",
+        {
+            **_base_ctx(user, dedup_count, "flats", conflicts_count=conflicts_count),
+            "layer": _layer_summary(layer),
+            "passages": passages,
+            "left": sum(len(p["rows"]) for p in passages),
+            "reviewed": len(decided),
+        },
+    )
+
+
+@router.post("/ui/flats/sign-passage", response_class=HTMLResponse)
+async def flats_sign_passage(
+    request: Request,
+    session: DBSession,
+    layer_id: str = Form(...),
+    ref: str = Form(...),
+    verdict: str = Form(...),
+    note: str = Form(""),
+) -> HTMLResponse:
+    """Record one verdict over every number the displayed passage states.
+
+    The command line refuses to glob field names, and is right to: signing
+    what you did not display is how a signature comes to certify text nobody
+    read. Here the passage *is* the display — the card shows the lines and
+    every number claiming them — so a verdict over that set is a verdict over
+    what was on screen. The set is rebuilt from the rules rather than sent by
+    the browser, for the same reason the single-value route rebuilds the
+    number: the form carries an address and an opinion, never the evidence.
+    """
+    user = await _get_user(session, request)
+    layer = _layers().get(layer_id.strip("/"))
+    if layer is None or verdict not in _VERDICTS:
+        return templates.TemplateResponse(
+            request,
+            "partials/flats_passage_done.html",
+            {"signed": 0, "error": "not a passage we hold", "verdict": ""},
+            status_code=400,
+        )
+
+    decided = await _decisions(session, layer.layer)
+    document, span = ref.partition("#L")[0], _span(ref)
+    signed = 0
+    for row in _value_rows(layer):
+        if not _within(row["quote"], document, span):
+            continue
+        if decided.get((row["zone"], row["field"], row["when"])):
+            continue
+        number = _number(layer, row["zone"], row["field"], row["when"])
+        if number is None:
+            continue
+        session.add(
+            FlatsRuleSignature(
+                layer=layer.layer,
+                zone=row["zone"],
+                field=row["field"],
+                when_key=row["when"],
+                value=number.value,
+                cite=number.prov.cite,
+                quote=number.prov.quote or "",
+                verdict=verdict,
+                note=note[:2000],
+                reviewer=(user.email or str(user.id))[:80],
+                reviewer_user_id=user.id,
+            )
+        )
+        signed += 1
+    await session.commit()
+    return templates.TemplateResponse(
+        request,
+        "partials/flats_passage_done.html",
+        {"signed": signed, "error": "", "verdict": verdict},
+    )
+
+
 @router.get("/flats/{layer_id:path}", response_class=HTMLResponse)
 async def flats_layer(request: Request, session: DBSession, layer_id: str) -> HTMLResponse:
     user = await _get_user(session, request)
@@ -499,22 +723,35 @@ async def flats_sign(
     )
 
 
-@router.get("/ui/flats/quote", response_class=HTMLResponse)
-async def flats_quote(request: Request, ref: str = Query(...)) -> HTMLResponse:
-    """The stored text a value cites, with a few lines either side of it.
+def _within(quote: str, document: str, span: tuple[int, int] | None) -> bool:
+    """Whether a value's citation falls inside the card's window.
+
+    The card addresses a stretch of one document, and this is what decides
+    which numbers that stretch covers. It is deliberately containment rather
+    than string equality: the window was widened to hold them, and a value
+    whose lines sit outside it was not on screen.
+    """
+    if not quote or quote.partition("#L")[0] != document:
+        return False
+    if span is None:
+        return quote == document
+    here = _span(quote)
+    return here is not None and span[0] <= here[0] and here[1] <= span[1]
+
+
+def _cited_lines(ref: str) -> tuple[list[dict[str, Any]], str]:
+    """The stored text a citation points at, with a few lines either side.
 
     The surrounding lines are the point. A setback read off a table row means
     one thing under the heading above it and another under the footnote below,
     and a reviewer shown the row alone cannot tell which.
+
+    Returns the lines and an error message; never both.
     """
     store = _store()
     path, _, fragment = ref.partition("#L")
     if path not in _known_documents():
-        return templates.TemplateResponse(
-            request,
-            "partials/flats_quote.html",
-            {"ref": ref, "error": "no such stored document", "lines": []},
-        )
+        return [], "no such stored document"
 
     first = last = 0
     try:
@@ -529,24 +766,30 @@ async def flats_quote(request: Request, ref: str = Query(...)) -> HTMLResponse:
         # error carrying a filesystem path back to the browser answers
         # questions about the server that a review page has no business
         # answering.
-        return templates.TemplateResponse(
-            request,
-            "partials/flats_quote.html",
-            {"ref": ref, "error": "this citation does not resolve to stored text", "lines": []},
-        )
+        return [], "this citation does not resolve to stored text"
 
-    if first:
-        start = max(first - _CONTEXT, 1)
-        end = min(last + _CONTEXT, len(whole))
-        lines = [
-            {"n": n, "text": whole[n - 1], "quoted": first <= n <= last}
-            for n in range(start, end + 1)
-        ]
-    else:
-        lines = [{"n": 0, "text": quoted, "quoted": True}]
+    if not first:
+        return [{"n": 0, "text": quoted, "quoted": True}], ""
 
+    start = max(first - _CONTEXT, 1)
+    end = min(last + _CONTEXT, len(whole))
+    return [
+        {"n": n, "text": whole[n - 1], "quoted": first <= n <= last}
+        for n in range(start, end + 1)
+    ], ""
+
+
+@router.get("/ui/flats/quote", response_class=HTMLResponse)
+async def flats_quote(request: Request, ref: str = Query(...)) -> HTMLResponse:
+    """One citation's stored text, fetched on demand from the rules table."""
+    lines, error = _cited_lines(ref)
     return templates.TemplateResponse(
         request,
         "partials/flats_quote.html",
-        {"ref": ref, "error": "", "lines": lines, "path": path},
+        {
+            "ref": ref,
+            "error": error,
+            "lines": lines,
+            "path": ref.partition("#L")[0],
+        },
     )

@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block title %}Review {{ layer.label }} — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div class="topbar">
+</div>
+
+<div class="content">
+  <div class="toolbar">
+    <div>
+      <h2 style="margin:0">Review {{ layer.label }}</h2>
+      <div class="muted" style="font-size:12px">
+        <a href="/flats">All jurisdictions</a> ·
+        <a href="/flats/{{ layer.id }}">Full rules table</a> · {{ layer.id }}
+      </div>
+    </div>
+  </div>
+
+  <div class="toolbar" style="gap:24px">
+    <div><span class="muted">Passages left</span> <strong>{{ passages | length }}</strong></div>
+    <div><span class="muted">Numbers left</span> <strong>{{ left }}</strong></div>
+    <div><span class="muted">Already reviewed</span> <strong>{{ reviewed }}</strong></div>
+    <div><span class="muted">Standards in all</span> <strong>{{ layer.standards }}</strong></div>
+  </div>
+
+  <p class="muted" style="font-size:12px;margin:4px 0 16px;max-width:70ch">
+    One card per passage of code, in the order the document prints them. Read the
+    highlighted lines — those are the ones something was read out of — then check
+    the numbers beside them. <strong>Confirm all</strong> signs every number on the
+    card at once, which is honest because it is one reading: they came off the table
+    you are looking at. Confirm or reject one on its own where the card disagrees
+    with itself. Nothing changes on the spot: decisions are collected and applied in
+    the next release.
+  </p>
+
+  {% if not passages %}
+    <p>Nothing left to review here. Every quoted number in this jurisdiction has a verdict.</p>
+  {% endif %}
+
+  {% for p in passages %}
+  {% set pi = loop.index %}
+  <div class="card" id="passage-{{ pi }}" style="margin-bottom:20px;padding:12px">
+    <div class="toolbar" style="margin:0 0 8px">
+      <div>
+        <strong>{{ p.cite or p.document }}</strong>
+        <div class="muted" style="font-size:11px">
+          {{ p.document }} · lines {{ p.lines[0].n if p.lines else "?" }}–{{ p.lines[-1].n if p.lines else "?" }}
+          {% if p.url %} · <a href="{{ p.url }}" target="_blank" rel="noopener">open the code</a>{% endif %}
+        </div>
+      </div>
+      <div style="margin-left:auto">
+        <span class="muted" style="font-size:11px">{{ p.rows | length }} number{{ "" if p.rows | length == 1 else "s" }}</span>
+      </div>
+    </div>
+
+    {% with error = p.error, lines = p.lines, path = p.document %}
+      {% include "partials/flats_quote.html" %}
+    {% endwith %}
+
+    <div class="table-wrap" style="margin-top:8px">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th class="col-right">Line</th>
+            <th>Zone</th>
+            <th>Standard</th>
+            <th>Applies when</th>
+            <th class="col-right">Value</th>
+            <th>Verdict</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in p.rows %}
+          <tr>
+            <td class="col-right muted" style="font-size:11px">{{ row.line or "" }}</td>
+            <td>{{ row.zone }}</td>
+            <td>{{ row.field }}</td>
+            <td class="muted" style="font-size:11px">{{ row.when_label or "always" }}</td>
+            <td class="col-right"><strong>{{ row.value }}</strong></td>
+            <td>
+              <span id="d-{{ pi }}-{{ loop.index }}" style="display:inline-block;min-width:88px"></span>
+              <form hx-post="/ui/flats/sign"
+                    hx-target="#d-{{ pi }}-{{ loop.index }}"
+                    hx-swap="innerHTML"
+                    style="display:inline-flex;gap:4px">
+                <input type="hidden" name="layer_id" value="{{ layer.id }}">
+                <input type="hidden" name="zone" value="{{ row.zone }}">
+                <input type="hidden" name="field" value="{{ row.field }}">
+                <input type="hidden" name="when" value="{{ row.when }}">
+                <button class="btn btn-sm" name="verdict" value="verified">Confirm</button>
+                <button class="btn btn-secondary btn-sm" name="verdict" value="rejected">Wrong</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <form hx-post="/ui/flats/sign-passage"
+          hx-target="#passage-result-{{ pi }}"
+          hx-swap="innerHTML"
+          style="display:flex;gap:8px;align-items:center;margin-top:8px">
+      <input type="hidden" name="layer_id" value="{{ layer.id }}">
+      <input type="hidden" name="ref" value="{{ p.ref }}">
+      <input type="text" name="note" placeholder="note (optional)" style="flex:0 1 260px">
+      <button class="btn btn-sm" name="verdict" value="verified">Confirm all {{ p.rows | length }}</button>
+      <button class="btn btn-secondary btn-sm" name="verdict" value="rejected">All wrong</button>
+      <span id="passage-result-{{ pi }}"></span>
+    </form>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

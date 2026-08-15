@@ -42,6 +42,7 @@
           <th class="col-right">Quoted</th>
           <th class="col-right">Verified</th>
           <th class="col-right">Documents</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -55,6 +56,11 @@
           <td class="col-right">{{ s.quoted }}</td>
           <td class="col-right">{{ s.verified }}</td>
           <td class="col-right">{{ s.documents }}</td>
+          <td class="col-right">
+            {% if s.quoted > s.verified %}
+            <a class="btn btn-secondary btn-sm" href="/flats/review/{{ s.id }}">Review</a>
+            {% endif %}
+          </td>
         </tr>
         {% endfor %}
       </tbody>

@@ -14,6 +14,9 @@
         {% if not layer.eligible %} · <strong>not screened</strong>{% endif %}
       </div>
     </div>
+    <div style="margin-left:auto">
+      <a class="btn btn-sm" href="/flats/review/{{ layer.id }}">Review by passage</a>
+    </div>
   </div>
 
   <div class="toolbar" style="gap:24px">
@@ -41,10 +44,12 @@
   {% endif %}
 
   <p class="muted" style="font-size:12px;margin:4px 0 12px">
-    Read the number, press <strong>Show source</strong>, and compare it to the highlighted
-    line. <strong>Confirm</strong> if they match, <strong>Wrong</strong> if they do not.
-    Decisions are collected here and applied in the next release — nothing changes
-    on the spot.
+    Every encoded number in this jurisdiction, whether reviewed or not. Read the
+    number, press <strong>Show source</strong>, and compare it to the highlighted line.
+    Decisions are collected here and applied in the next release — nothing changes on
+    the spot. To work through what is left, <a href="/flats/review/{{ layer.id }}">review
+    by passage</a> instead: same reading, one card per table row rather than one per
+    number.
   </p>
 
   <div class="table-wrap">

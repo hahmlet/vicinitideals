@@ -1,0 +1,9 @@
+{% if error %}
+  <span class="muted" style="font-size:12px">{{ error }}</span>
+{% elif verdict == "verified" %}
+  <span class="badge badge-green">{{ signed }} confirmed</span>
+  <span class="muted" style="font-size:11px">queued for the next release</span>
+{% else %}
+  <span class="badge badge-red">{{ signed }} marked wrong</span>
+  <span class="muted" style="font-size:11px">queued for the encoder</span>
+{% endif %}

@@ -335,3 +335,177 @@ async def test_the_plan_pages_print_no_python_objects_either(
         assert page.status_code == 200
         assert "built-in method" not in page.text
         assert "object at 0x" not in page.text
+
+
+# --- review by passage -------------------------------------------------
+#
+# The rules table is ordered by zone, so a table row that states a dozen
+# standards is a dozen entries scattered down it, each opening the same lines
+# of the same document. Grouped by the passage they cite, that is one card:
+# the text once, every number claiming it beside it. These tests hold to the
+# grouping being real (the card signs what it displayed and nothing else) and
+# to what it hides being only what is already decided.
+
+
+async def test_the_review_page_groups_numbers_under_the_text_they_cite(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+
+    response = await client.get("/flats/review/or/clackamas/wilsonville")
+
+    assert response.status_code == 200
+    assert "Confirm all" in response.text
+    assert "setback_side_ft" in response.text
+
+
+async def test_review_is_not_swallowed_by_the_layer_route(
+    client: AsyncClient, session: AsyncSession
+):
+    # /flats/{layer:path} is greedy and would answer this with a 404 index.
+    await _login(client, session)
+
+    response = await client.get("/flats/review/or/clackamas/wilsonville")
+
+    assert "Review Wilsonville" in response.text
+
+
+async def test_signing_a_passage_signs_every_number_it_displayed(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+    page = await client.get("/flats/review/or/clackamas/wilsonville")
+    ref = _first_ref(page.text)
+
+    response = await client.post(
+        "/ui/flats/sign-passage",
+        data={"layer_id": "or/clackamas/wilsonville", "ref": ref, "verdict": "verified"},
+        headers={"hx-request": "true"},
+    )
+
+    assert response.status_code == 200
+    rows = (await session.execute(text_query())).all()
+    assert len(rows) > 1, "a code passage states more than one standard"
+    # Every one of them cites the passage that was on screen, and the numbers
+    # come from the rule files rather than from the form.
+    assert {r[5] for r in rows} == {"verified"}
+
+
+async def test_a_passage_verdict_never_reaches_a_number_it_did_not_show(
+    client: AsyncClient, session: AsyncSession
+):
+    # The set is rebuilt from the rules, so what it must not do is widen: a
+    # value citing a different passage stays untouched, and a value already
+    # decided is not signed a second time under a verdict it did not get.
+    await _login(client, session)
+    page = await client.get("/flats/review/or/clackamas/wilsonville")
+    ref = _first_ref(page.text)
+
+    await client.post(
+        "/ui/flats/sign-passage",
+        data={"layer_id": "or/clackamas/wilsonville", "ref": ref, "verdict": "verified"},
+        headers={"hx-request": "true"},
+    )
+    signed = {(r[1], r[2], r[3]) for r in (await session.execute(text_query())).all()}
+
+    await client.post(
+        "/ui/flats/sign-passage",
+        data={"layer_id": "or/clackamas/wilsonville", "ref": ref, "verdict": "rejected"},
+        headers={"hx-request": "true"},
+    )
+    after = (await session.execute(text_query())).all()
+
+    assert {(r[1], r[2], r[3]) for r in after} == signed, "no second verdict on a decided value"
+    assert {r[5] for r in after} == {"verified"}
+
+
+async def test_a_decided_number_leaves_the_queue(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+    before = await client.get("/flats/review/or/clackamas/wilsonville")
+    ref = _first_ref(before.text)
+
+    await client.post(
+        "/ui/flats/sign-passage",
+        data={"layer_id": "or/clackamas/wilsonville", "ref": ref, "verdict": "verified"},
+        headers={"hx-request": "true"},
+    )
+    after = await client.get("/flats/review/or/clackamas/wilsonville")
+
+    assert ref not in after.text
+    assert before.text.count("Confirm all") - after.text.count("Confirm all") == 1
+
+
+async def test_a_passage_verdict_on_a_layer_we_do_not_hold_is_refused(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+
+    response = await client.post(
+        "/ui/flats/sign-passage",
+        data={"layer_id": "or/atlantis", "ref": "x#L1", "verdict": "verified"},
+        headers={"hx-request": "true"},
+    )
+
+    assert response.status_code == 400
+    assert (await session.execute(text_query())).all() == []
+
+
+async def test_reviewing_requires_a_session(client: AsyncClient):
+    assert (await client.get("/flats/review/or/clackamas/wilsonville")).status_code == 303
+    assert (
+        await client.post(
+            "/ui/flats/sign-passage",
+            data={"layer_id": "or/clackamas/wilsonville", "ref": "x#L1", "verdict": "verified"},
+        )
+    ).status_code == 303
+
+
+def _first_ref(html: str) -> str:
+    """The citation of the first card on the page."""
+    import re
+
+    found = re.search(r'name="ref" value="([^"]+)"', html)
+    assert found, "the review page renders no passage to sign"
+    return found.group(1)
+
+
+async def test_citations_a_few_lines_apart_are_one_reading():
+    # A zone's dimensional standards are cited line by line — no two of the
+    # references are equal, and grouping on the string alone leaves a table
+    # row as a dozen separate cards showing a dozen overlapping windows.
+    from app.api.routers.ui_flats import _cluster
+
+    table = [(138, 138), (142, 142), (151, 151), (154, 154), (159, 159), (161, 161)]
+
+    assert _cluster(table) == [table]
+
+
+async def test_a_citation_in_another_section_starts_its_own_card():
+    from app.api.routers.ui_flats import _cluster
+
+    # West Linn states the use permission at L63 and the dimensions at L138.
+    assert _cluster([(63, 63), (138, 138), (142, 142)]) == [[(63, 63)], [(138, 138), (142, 142)]]
+
+
+async def test_a_chain_stops_before_it_becomes_a_chapter():
+    from app.api.routers.ui_flats import _SPAN, _cluster
+
+    walk = [(n, n) for n in range(1, 400, 10)]
+    spans = [max(c[-1][1] for c in [chain]) - chain[0][0] for chain in _cluster(walk)]
+
+    assert len(_cluster(walk)) > 1
+    assert max(spans) <= _SPAN
+
+
+async def test_a_card_covers_only_the_lines_it_showed():
+    from app.api.routers.ui_flats import _within
+
+    window = (138, 161)
+
+    assert _within("doc.txt#L142", "doc.txt", window)
+    assert _within("doc.txt#L138-L140", "doc.txt", window)
+    assert not _within("doc.txt#L63", "doc.txt", window), "outside the window"
+    assert not _within("doc.txt#L155-L170", "doc.txt", window), "runs past the end"
+    assert not _within("other.txt#L142", "doc.txt", window), "another document"
