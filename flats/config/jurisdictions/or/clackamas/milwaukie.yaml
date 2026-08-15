@@ -54,6 +54,10 @@ zones:
     min_lot_sqft:
       value: 3000
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L120"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L119-L130"
     min_lot_width_ft:
       value: 60
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L145"
@@ -100,12 +104,50 @@ zones:
       url: https://ecode360.com/43860500
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 5
-    setback_side_ft: 5
-    setback_rear_ft: 20
-    min_lot_sqft: 5000
-    max_coverage_pct: 50
-    notes: 'quadfit confidence: needs_verification | Multi-dwelling zone (min density 25 units/acre) —
-      apartments allowed outright, so quadplex trivially permitted. Verified: side 5 ft (0 for townhouse
-      common wall), coverage 50%, min lot 5,000 sf, height 45 ft. Front 5 ft applies only to properties
-      mapped in Fig 19.302.4 — general front and rear setbacks NOT confirmed (rear assumed 20; verify).'
+    setback_front_ft:
+      value: 20
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L495"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L526"
+    setback_rear_ft:
+      value: 15
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L498"
+    setback_street_side_ft:
+      value: 15
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L497"
+      variants:
+        - value: 5
+          when: [unit_lots]
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L512"
+    min_lot_sqft:
+      value: 3000
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L476"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L475"
+    min_lot_width_ft:
+      value: 20
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L486"
+    max_height_ft:
+      value: 45
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L499"
+    max_coverage_pct:
+      value: 50
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L503"
+    notes: 'Re-read against the adopted Table 19.302.4; the ported quadfit row disagreed with it on four
+      standards and is replaced. Front was 5 and is 20: the 5 ft front yard applies only to properties
+      identified in Figure 19.302.4, a mapped subset this screen cannot evaluate, so the general standard
+      is what a lot is held to and the exception is relief a specific address may turn out to have. Rear
+      was 20 and is 15. Minimum lot size was 5,000, which is the "all other uses" figure — the table
+      minimum is 1,500 and the permitted-dwelling-type list is what binds: a quadplex first appears in
+      the 3,000-4,999 sq ft band, a townhouse in 1,500-2,999, which is the unit_lots variant. Street side
+      is 15 with a townhouse exception of 5 (footnote 4). CHECKER NOTE: the extracted table cell reads
+      "154" — 15 with its footnote marker run onto it — so the quote check reports this value as
+      misquoted. The number is right; the stored text is mangled, and a reviewer looking at the line can
+      see both. UNENCODED: side yards for townhouses are zero on a shared wall and 5 ft on an exterior
+      one (19.302.5.A.2), which for a four-unit attached building still leaves 5 ft on each outer wall,
+      so the encoded 5 is what the building needs either way. Minimum lot depth (70 ft) has no field.
+      Minimum density is 25 units/acre and maximum 32, but quadplexes are exempt from the maximum
+      (footnote 2).'
