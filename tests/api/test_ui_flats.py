@@ -923,3 +923,81 @@ async def test_a_quote_into_an_unmapped_document_says_nothing_rather_than_guessi
     from app.api.routers import ui_flats as ui
 
     assert ui._page_note("or/clackamas/milwaukie/19.300.base-zones.txt#L100-L120") == ""
+
+
+# --- the chain of authority ---------------------------------------------
+
+
+async def test_the_chain_page_shows_every_layer_and_the_page_it_cites(
+    client: AsyncClient, session: AsyncSession
+):
+    """What gets handed to a planner, an architect or a lawyer.
+
+    The rules table says what the setback is. This says why: which document,
+    which section, which page, and what the sentence actually reads.
+    """
+    await _login(client, session)
+
+    page = await client.get(
+        "/flats/why/or/multnomah/gresham?zone=LDR-5&field=setback_front_ft"
+    )
+
+    assert page.status_code == 200
+    assert "Gresham" in page.text
+    assert "p. [4.0100]-" in page.text, "the page as the codifier prints it"
+    assert "#page=" in page.text, "and a link that opens the document there"
+    assert "Oregon" in page.text, "the state layer is listed even where it is silent"
+
+
+async def test_the_chain_page_prints_an_exception_with_its_own_citation(
+    client: AsyncClient, session: AsyncSession
+):
+    """An exception is a different sentence in the book and cites its own page."""
+    await _login(client, session)
+
+    page = await client.get(
+        "/flats/why/or/clackamas/wilsonville?zone=OTR&field=setback_front_ft"
+    )
+
+    assert page.status_code == 200
+    assert "What would change it" in page.text
+    assert "lot_sqft" in page.text, "the condition that selects the other number"
+
+
+async def test_the_chain_page_is_not_swallowed_by_the_layer_route(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+
+    page = await client.get(
+        "/flats/why/or/clackamas/milwaukie?zone=R-HD&field=setback_front_ft"
+    )
+
+    assert page.status_code == 200
+    assert "The chain" in page.text
+
+
+async def test_a_standard_nobody_has_encoded_says_so_rather_than_nothing(
+    client: AsyncClient, session: AsyncSession
+):
+    """Silence is not "no limit" — it is the reason a zone cannot be screened."""
+    await _login(client, session)
+
+    page = await client.get(
+        "/flats/why/or/clackamas/milwaukie?zone=R-HD&field=height_max_ft_stories"
+    )
+
+    assert page.status_code in (200, 404)
+
+
+async def test_a_field_nobody_registered_is_refused(
+    client: AsyncClient, session: AsyncSession
+):
+    """The registry is the one place a standard is named; unknown is not a page."""
+    await _login(client, session)
+
+    page = await client.get(
+        "/flats/why/or/multnomah/gresham?zone=LDR-5&field=vibes_max_ft"
+    )
+
+    assert page.status_code == 404

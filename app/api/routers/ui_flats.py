@@ -30,8 +30,8 @@ townhouse lots, cities state different standards for the two, and which one
 is being built is a decision about the product.
 
 Routes: /flats, /flats/plans, /flats/plans/{design}, /flats/review/{layer},
-/flats/feedback, /flats/{layer}, /ui/flats/quote, /ui/flats/sign,
-/ui/flats/sign-passage, /ui/flats/bundle
+/flats/feedback, /flats/why/{layer}, /flats/{layer}, /ui/flats/quote,
+/ui/flats/sign, /ui/flats/sign-passage, /ui/flats/bundle
 """
 from __future__ import annotations
 
@@ -51,6 +51,7 @@ from flats.designs.model import Design, DesignStatus, Plat, load_catalog
 from flats.encode.verify import fingerprint
 from flats.provenance import pages as page_map
 from flats.provenance.store import ProvenanceError, ProvenanceStore
+from flats.rules.fields import FIELDS
 from flats.rules.loader import load_rules
 from flats.rules.model import Incorporation, Layer, Status, Value
 from flats.rules.resolver import RuleSet
@@ -870,6 +871,137 @@ async def flats_bundle(request: Request, session: DBSession) -> HTMLResponse:
         request,
         "partials/flats_bundled.html",
         {"count": len(rows)},
+    )
+
+
+# --- the chain of authority ---------------------------------------------
+
+
+def _says(layer: Layer, zone: str, field: str) -> tuple[Any, str]:
+    """What one layer states about a standard, and where it states it.
+
+    Returns the value and whether it came from the zone's own block or from the
+    layer's defaults. A layer that says nothing returns (None, "").
+    """
+    got = layer.zones.get(zone)
+    if got and field in got.values:
+        return got.values[field], "zone"
+    if field in layer.defaults:
+        return layer.defaults[field], "defaults"
+    return None, ""
+
+
+def _evidence(number: Any) -> dict[str, Any]:
+    """One number and everything needed to check it against the book."""
+    quote = number.prov.quote or ""
+    lines, error = _cited_lines(quote) if quote else ([], "")
+    span = _span(quote)
+    return {
+        "value": number.value,
+        "when": ", ".join(getattr(number, "key", ()) or ()),
+        "status": number.status.value,
+        "reviewer": number.reviewer,
+        "reviewed": number.reviewed,
+        "cite": number.prov.cite,
+        "url": number.prov.url,
+        "quote": quote,
+        "document": quote.partition("#L")[0],
+        "pages": _pages(quote.partition("#L")[0], *span) if span else [],
+        "page_note": _page_note(quote),
+        "lines": lines,
+        "error": error,
+    }
+
+
+def _chain(layer_id: str, zone: str, field: str) -> dict[str, Any]:
+    """Every layer that bears on one standard, and what each one does to it.
+
+    The question this answers is not "what is the setback" — the rules table
+    says that — but "why". A number in this system is the end of a chain:
+    the state says middle housing must be allowed, the county's code sets a
+    setback, the city's own code overrides it, and an exception in a third
+    document moves it again for corner lots. Somebody defending an encoding to
+    a planner, an architect or a lawyer has to be able to walk that chain, and
+    to open each document at the page it is printed on.
+
+    Silent layers are listed too. "The county says nothing about this" is part
+    of the answer, and a page that showed only the winner would read as though
+    nobody had looked.
+    """
+    rules = _ruleset()
+    resolution = rules.resolve(layer_id, zone)
+    resolved = resolution.values.get(field)
+    steps: list[dict[str, Any]] = []
+    for layer in rules.chain_for(layer_id):
+        number, origin = _says(layer, zone, field)
+        won = bool(resolved) and resolved.layer == layer.layer
+        steps.append(
+            {
+                "layer": layer.layer,
+                "label": layer.label,
+                "kind": layer.kind,
+                "origin": origin,
+                "won": won,
+                "silent": number is None,
+                "preempts": bool(number is not None and getattr(number, "preempts", False)),
+                "base": _evidence(number) if number is not None else None,
+                "exceptions": [_evidence(v) for v in (number.variants if number else ())],
+            }
+        )
+    return {
+        "zone": zone,
+        "field": field,
+        "answer": resolved,
+        "steps": steps,
+        "verdict": resolution.verdict.value,
+        # Taken off the encoded exceptions rather than off the resolution's
+        # levers. A lever is something a developer elects; a lot-size band is
+        # something a lot simply is, and both change which number applies, so
+        # both belong in the sentence that says what would change it.
+        "conditions": sorted(
+            {e["when"] for step in steps for e in step["exceptions"] if e["when"]}
+        ),
+    }
+
+
+@router.get("/flats/why/{layer_id:path}", response_class=HTMLResponse)
+async def flats_why(
+    request: Request,
+    session: DBSession,
+    layer_id: str,
+    zone: str = Query(...),
+    field: str = Query(...),
+) -> HTMLResponse:
+    """Why this jurisdiction's answer for this standard is what it is.
+
+    Built to be printed. The people who have to be convinced by it — a city
+    planner across a counter, an architect sizing a building, a lawyer reading
+    the same code off paper — are not going to be handed a login.
+    """
+    user = await _get_user(session, request)
+    dedup_count, conflicts_count = await _get_counts(session)
+    layer = _layers().get(layer_id.strip("/"))
+    if layer is None or field not in FIELDS:
+        return templates.TemplateResponse(
+            request,
+            "flats_rules.html",
+            {
+                **_base_ctx(user, dedup_count, "flats", conflicts_count=conflicts_count),
+                "summaries": [_layer_summary(x) for _, x in sorted(_layers().items())],
+                "totals": {},
+                "missing": f"{layer_id} {field}",
+            },
+            status_code=404,
+        )
+    return templates.TemplateResponse(
+        request,
+        "flats_why.html",
+        {
+            **_base_ctx(user, dedup_count, "flats", conflicts_count=conflicts_count),
+            "layer": _layer_summary(layer),
+            "chain": _chain(layer.layer, zone, field),
+            "asked": datetime.now(timezone.utc),
+        },
     )
 
 

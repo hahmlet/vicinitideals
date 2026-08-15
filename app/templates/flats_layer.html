@@ -69,7 +69,12 @@
         {% for row in rows %}
         <tr>
           <td>{{ row.zone }}</td>
-          <td>{{ row.field }}</td>
+          <td>
+            {% if row.zone != "(layer defaults)" %}
+            <a href="/flats/why/{{ layer.id }}?zone={{ row.zone | urlencode }}&field={{ row.field | urlencode }}"
+               title="every document and page behind this number">{{ row.field }}</a>
+            {% else %}{{ row.field }}{% endif %}
+          </td>
           <td class="muted" style="font-size:11px">{{ row.when_label or "always" }}</td>
           <td class="col-right">{{ row.value }}</td>
           <td>

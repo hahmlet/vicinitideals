@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+{% block title %}{{ chain.zone }} {{ chain.field }} — {{ layer.label }} — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div class="topbar">
+</div>
+
+<div class="content">
+  <div class="toolbar">
+    <div>
+      <h2 style="margin:0">{{ chain.field }} in {{ chain.zone }}</h2>
+      <div class="muted" style="font-size:12px">
+        {{ layer.label }} ·
+        <a href="/flats/{{ layer.id }}">Full rules table</a> ·
+        <a href="/flats/review/{{ layer.id }}">Review queue</a>
+      </div>
+    </div>
+    <div style="margin-left:auto" class="no-print">
+      <button class="btn btn-secondary btn-sm" onclick="window.print()">Print</button>
+    </div>
+  </div>
+
+  <div class="card" style="padding:12px;margin:8px 0 16px">
+    {% if chain.answer %}
+    <div style="font-size:22px"><strong>{{ chain.answer.value }}</strong></div>
+    <div class="muted" style="font-size:12px">
+      as resolved for {{ chain.zone }}, {{ layer.label }}, with no conditions elected.
+      {% if chain.answer.when %}This is the exception for {{ chain.answer.when | join(", ") }}.{% endif %}
+      {% if chain.answer.via %}Read from {{ chain.answer.via }}, which this zone's code adopts by reference.{% endif %}
+      {% if chain.answer.preempted %}A less specific layer's rule preempts the local one.{% endif %}
+    </div>
+    <div style="margin-top:6px">
+      {% if chain.answer.status == "verified" %}
+        <span class="badge badge-green">confirmed against the source</span>
+      {% else %}
+        <span class="badge">{{ chain.answer.status }} — read off the source, not yet confirmed by a person</span>
+      {% endif %}
+      {% if chain.answer.ambiguous %}
+        <span class="badge badge-red">two exceptions tie — not an answer</span>
+      {% endif %}
+    </div>
+    {% else %}
+    <div style="font-size:18px"><strong>Nothing in the chain states this standard.</strong></div>
+    <div class="muted" style="font-size:12px">
+      Not the same as "no limit". It means nobody has encoded it yet, and it is why
+      {{ chain.zone }} cannot be screened on this standard.
+    </div>
+    {% endif %}
+  </div>
+
+  {% if chain.conditions %}
+  <p style="font-size:12px;max-width:74ch">
+    <strong>What would change it:</strong> {{ chain.conditions | join("; ") }}. Each is a
+    condition the code itself names — a lot that is one of these, or a project that elects
+    one, is bound by a different number, quoted below with its own citation.
+  </p>
+  {% endif %}
+
+  <h3 style="margin:16px 0 4px">The chain</h3>
+  <p class="muted" style="font-size:12px;max-width:74ch">
+    Least specific first. Every layer that could bear on this standard is listed, including
+    the ones that say nothing about it — silence is part of the answer.
+  </p>
+
+  <div class="table-wrap" style="margin-bottom:16px">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th></th>
+          <th class="col-right">States</th>
+          <th>Effect</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for step in chain.steps %}
+        <tr{% if step.won %} style="background:var(--ok-bg,#f0fdf4)"{% endif %}>
+          <td>{{ step.label }}</td>
+          <td class="muted" style="font-size:11px">{{ step.kind }}{% if step.origin == "defaults" %} · layer default{% endif %}</td>
+          <td class="col-right">{{ step.base.value if step.base else "—" }}</td>
+          <td style="font-size:12px">
+            {% if step.silent %}says nothing about this standard
+            {% elif step.won %}<strong>this is the answer</strong>
+            {% elif step.preempts %}preempts anything more local
+            {% else %}overridden by a more specific layer{% endif %}
+            {% if step.exceptions %}
+              <div class="muted" style="font-size:11px">
+                and {{ step.exceptions | length }} exception{{ "" if step.exceptions | length == 1 else "s" }}
+              </div>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="margin:16px 0 4px">The sources</h3>
+  <p class="muted" style="font-size:12px;max-width:74ch">
+    Each number below is printed with the section it was read from, the page it appears on,
+    and the text itself. Open the document at that page and the sentence is there.
+  </p>
+
+  {% for step in chain.steps %}
+    {% if not step.silent %}
+      {% for item in [step.base] + step.exceptions %}
+      <div class="card" style="margin-bottom:14px;padding:12px">
+        <div class="toolbar" style="margin:0 0 8px">
+          <div>
+            <strong>{{ item.cite or item.document }}</strong>
+            <div class="muted" style="font-size:11px">
+              {{ step.label }} ·
+              {% if item.when %}applies when {{ item.when }}{% else %}the base standard{% endif %} ·
+              value <strong>{{ item.value }}</strong>
+            </div>
+          </div>
+          <div style="margin-left:auto;text-align:right;font-size:11px">
+            {% if item.pages %}
+              {% for page in item.pages %}
+                <a href="{{ item.url }}#page={{ page.n }}" target="_blank" rel="noopener">{{ page.cite }}</a>{{ ", " if not loop.last }}
+              {% endfor %}
+            {% elif item.url %}
+              <a href="{{ item.url }}" target="_blank" rel="noopener">open the code</a>
+            {% endif %}
+            <div class="muted">{{ item.quote }}</div>
+          </div>
+        </div>
+
+        {% with error = item.error, lines = item.lines, path = item.document %}
+          {% include "partials/flats_quote.html" %}
+        {% endwith %}
+
+        <div class="muted" style="font-size:11px;margin-top:6px">
+          {% if item.status == "verified" %}
+            Confirmed by {{ item.reviewer or "a reviewer" }}{% if item.reviewed %} on {{ item.reviewed }}{% endif %}.
+          {% else %}
+            {{ item.status }} — read off the source, not yet confirmed by a person.
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+
+  <p class="muted" style="font-size:11px;max-width:74ch">
+    Assembled {{ asked.strftime("%Y-%m-%d %H:%M UTC") }} from the code text held in this
+    system, fetched from the sources named above and hashed so an amendment to any of them
+    is detected. This is a reading of the code, not legal advice, and not a determination by
+    any jurisdiction.
+  </p>
+</div>
+
+<style>
+@media print {
+  .no-print, .sidebar, .topbar, nav { display: none !important; }
+  .content { margin: 0; padding: 0; }
+  .card { break-inside: avoid; }
+}
+</style>
+{% endblock %}
