@@ -1075,6 +1075,29 @@ _ROW_START = re.compile(
 _SWEEP = 600
 
 
+#: How far under a match to read. A use-table row answers for as many zones as
+#: the table has columns, and eleven is the widest in this corpus.
+_UNDER = 12
+
+
+def _around(lines: Sequence[str], n: int) -> list[str]:
+    """The lines directly under a match, where a flattened table keeps its cells.
+
+    Trimmed at the next line long enough to be prose: a run of one-word cells
+    is the row this match belongs to, and the sentence after it is the next
+    thing the document says rather than more of this answer.
+    """
+    out: list[str] = []
+    for line in lines[n : n + _UNDER]:
+        text = line.strip()
+        if not text:
+            continue
+        if len(text) > 40:
+            break
+        out.append(text)
+    return out
+
+
 def _candidates(item: dict[str, Any], limit: int = 60) -> tuple[list[dict[str, Any]], int]:
     """Lines in this jurisdiction's fetched code that could be the passage.
 
@@ -1092,12 +1115,16 @@ def _candidates(item: dict[str, Any], limit: int = 60) -> tuple[list[dict[str, A
     """
     believed = item["believed"]
     pattern = _wording(item["field"], believed)
+    # The whole document, because the lines under a match are part of the
+    # evidence: half this corpus is HTML flattened one cell to a line, where
+    # "Quadplexes" is the row and the answer is the six lines beneath it.
     number = None
     if pattern is None and isinstance(believed, (int, float)) and not isinstance(believed, bool):
         number = float(believed)
     out: list[dict[str, Any]] = []
     for document in item["documents"]:
-        for n, line in enumerate(_document_lines(document), 1):
+        lines = list(_document_lines(document))
+        for n, line in enumerate(lines, 1):
             text = line.strip()
             if not text:
                 continue
@@ -1114,6 +1141,7 @@ def _candidates(item: dict[str, Any], limit: int = 60) -> tuple[list[dict[str, A
                     "quote": f"{document}#L{n}",
                     "page": pages[0]["n"] if pages else 0,
                     "page_label": pages[0]["label"] if pages else "",
+                    "after": _around(lines, n),
                 }
             )
             if len(out) >= _SWEEP:

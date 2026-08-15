@@ -63,6 +63,11 @@
       </span>
     </div>
     <pre style="margin:0;white-space:pre-wrap;font-size:12px">{{ one.text }}</pre>
+    {% if one.after %}
+    <div class="muted" style="font-size:11px;margin-top:4px">
+      under it: {{ one.after | join(" · ") }}
+    </div>
+    {% endif %}
     <div class="muted" style="font-size:11px;margin-top:6px">
       <code>quote: "{{ one.quote }}"</code>
     </div>

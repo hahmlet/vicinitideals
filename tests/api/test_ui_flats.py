@@ -1332,3 +1332,23 @@ async def test_a_cut_list_says_how_much_it_cut(client: AsyncClient, session: Asy
     assert len(candidates) == 3
     assert dropped > 0
 
+
+async def test_a_flattened_row_is_shown_with_the_cells_under_it(
+    client: AsyncClient, session: AsyncSession
+):
+    """In a linearised table the match is the label and the answer is below it.
+
+    Clackamas prints "Quadplexes" and then eleven cells, one to a line. Shown
+    alone the candidate is a word; shown with its cells it is the row, and a
+    reviewer can see that the first two columns say P and the third says X
+    without opening anything.
+    """
+    from app.api.routers import ui_flats as ui
+
+    item = ui._queue()[("or/clackamas/_unincorporated", "R5", "quadplex_allowed")]
+
+    candidates, _ = ui._candidates(item)
+
+    assert candidates[0]["text"] == "Quadplexes"
+    assert candidates[0]["after"][:3] == ["P7,8", "P7,8", "X"]
+
