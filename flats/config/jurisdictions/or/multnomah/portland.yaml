@@ -45,7 +45,9 @@ zones:
       cite: PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-07-24'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/multnomah/portland/33.110.txt#L313"
     setback_front_ft:
       value: 20
       quote: "or/multnomah/portland/33.110.txt#L458"
@@ -81,7 +83,9 @@ zones:
       cite: PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-07-24'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/multnomah/portland/33.110.txt#L313"
     setback_front_ft:
       value: 20
       quote: "or/multnomah/portland/33.110.txt#L458"
@@ -117,7 +121,9 @@ zones:
       cite: PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-07-24'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/multnomah/portland/33.110.txt#L313"
     setback_front_ft:
       value: 15
       quote: "or/multnomah/portland/33.110.txt#L458"
@@ -152,7 +158,9 @@ zones:
       cite: PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-07-24'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/multnomah/portland/33.110.txt#L313"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/portland/33.110.txt#L458"
@@ -187,7 +195,9 @@ zones:
       cite: PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-07-24'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/multnomah/portland/33.110.txt#L313"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/portland/33.110.txt#L458"

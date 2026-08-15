@@ -40,7 +40,9 @@ zones:
         33.418
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-07-24'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/multnomah/_unincorporated/33.110.txt#L313"
     setback_front_ft:
       value: 20
       quote: "or/multnomah/_unincorporated/33.110.txt#L458"
@@ -77,7 +79,9 @@ zones:
         R20); 33.418
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-07-24'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/multnomah/_unincorporated/33.110.txt#L313"
     setback_front_ft:
       value: 20
       quote: "or/multnomah/_unincorporated/33.110.txt#L458"
@@ -135,7 +139,9 @@ zones:
       cite: Portland Zoning Code 33.110 Tables 110-2/110-4/110-5/110-7
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-07-24'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/multnomah/_unincorporated/33.110.txt#L313"
     setback_front_ft:
       value: 15
       quote: "or/multnomah/_unincorporated/33.110.txt#L458"

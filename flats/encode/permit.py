@@ -103,6 +103,60 @@ _ROW = re.compile(
 )
 
 
+#: A cell in a layout-extracted table. Codifiers separate columns with runs of
+#: spaces and words within a cell with one, so two spaces is the boundary.
+_CELL = re.compile(r"[^ ](?:[^ ]| (?! ))*")
+
+#: What a use-table cell says. "Yes", "P" and "A" grant; "No", "N" and "NP"
+#: refuse. Anything else — "CU", "III", a footnote marker — is neither, and a
+#: cell this cannot read is left for a person rather than guessed at.
+_CELL_YES = re.compile(r"^(?:yes|y|p|a|permitted|allowed)\b", re.I)
+_CELL_NO = re.compile(r"^(?:no|n|np|not permitted|prohibited)\b", re.I)
+
+#: How far a data cell may sit from its header cell and still be that column.
+#: Extraction shifts a cell by a character or two where the printed text is
+#: centred; a column over is a different zone's answer.
+_DRIFT = 12
+
+
+def _cells(line: str) -> list[tuple[int, int, str]]:
+    """One line of a table as ``(start, end, text)`` per cell."""
+    return [(m.start(), m.end(), m.group(0)) for m in _CELL.finditer(line)]
+
+
+def _columns(line: str, siblings: Sequence[str]) -> dict[str, tuple[int, int]]:
+    """The zone each column of a table header belongs to, by character span.
+
+    A cell naming two zones names neither column: "R20 through R2.5" is a range
+    printed in one cell, and the cells beneath it answer for a set this cannot
+    split.
+    """
+    out: dict[str, tuple[int, int]] = {}
+    for start, end, text in _cells(line):
+        named = [z for z in siblings if _names_zone(text, z)]
+        if len(named) == 1:
+            out[named[0]] = (start, end)
+    return out
+
+
+def _cell_at(line: str, span: tuple[int, int]) -> str:
+    """The cell of this row printed under that column, or "".
+
+    Position is the only thing that says which zone a "Yes" answers for once a
+    grid has been flattened to text, so a cell that does not line up is not
+    read at all.
+    """
+    want = (span[0] + span[1]) / 2
+    best_text, best_gap = "", None
+    for start, end, text in _cells(line):
+        gap = 0.0 if start < span[1] and end > span[0] else min(
+            abs(start - span[1]), abs(span[0] - end)
+        )
+        if best_gap is None or gap < best_gap or (gap == best_gap and abs((start + end) / 2 - want) < 1):
+            best_text, best_gap = text, gap
+    return best_text if best_gap is not None and best_gap <= _DRIFT else ""
+
+
 @dataclass(frozen=True, slots=True)
 class Found:
     """A line proposed as the evidence for one zone's permission."""
@@ -181,19 +235,29 @@ def permissions_in(
 
     The third is the column header, which is where most codes put it. A caption
     reading "Table 19.301.2 Moderate Density Residential Uses Allowed" names no
-    zone at all; the row beneath it — "Use | R-MD | Standards" — names exactly
-    one, and every row after that is that zone's answer. It anchors only when
-    the header names *one* of the layer's zones: a grid with four columns
-    flattens to "Quadplex  P  N  P  N" and no reader, human or otherwise, can
-    say from the text which column is which.
+    zone at all; the row beneath it — "Use | R-MD | Standards" — names the zone
+    the columns answer for, and Portland's "Housing Type | RF | R20 | R10 | R7 |
+    R5 | R2.5" names six.
+
+    Which is why a row is read by position rather than as a sentence. Layout
+    extraction keeps the columns where the codifier printed them, so the cell
+    under RF in "Fourplex | No | Yes | Yes | Yes | Yes | Yes" is the one that
+    answers for RF, and the anchoring claim is "this cell, in this column" — a
+    claim a reviewer can check in one glance at the page. A cell that does not
+    line up under a header is not read: a column over is a different zone's
+    answer, and citing it would evidence a permission that was refused.
+
+    A refusal is reported and never written. The value it contradicts may be
+    right — a code amended after the encoding, a table this reader mis-columned
+    — and either way it is a question for a person, not a citation to staple on.
 
     Returns ``(quote, text, strength, named)``.
     """
     out: list[tuple[str, str, str, str]] = []
     section = ""
     scoped = False
-    columned = False
-    header_next = False
+    columns: dict[str, tuple[int, int]] = {}
+    header_window = 0
     for n, raw in enumerate((repair_text(text) if spaced else text).splitlines(), 1):
         line = raw.strip()
         if not line:
@@ -206,12 +270,22 @@ def permissions_in(
             # the table it opens is a new set of columns, and inheriting the
             # last table's would attribute its rows to whatever came before.
             scoped = _names_zone(line, zone)
-            columned = False
-            header_next = bool(_TABLE.match(line)) and not scoped
-        elif header_next:
-            header_next = False
-            named_here = [z for z in siblings if _names_zone(line, z)]
-            columned = named_here == [zone]
+            columns = {}
+            # A caption is not always the header: Portland prints the table
+            # number, then its title, then the columns. Three lines of grace,
+            # and the first that names zones in cells wins.
+            header_window = 3 if _TABLE.match(line) else 0
+        elif header_window and not columns:
+            header_window -= 1
+            columns = _columns(raw, siblings)
+
+        if columns.get(zone) and _ROW.match(line):
+            cell = _cell_at(raw, columns[zone])
+            if _CELL_YES.match(cell):
+                out.append((f"{path}#L{n}", line[:200], "anchored", cell))
+            elif _CELL_NO.match(cell):
+                out.append((f"{path}#L{n}", line[:200], "contradicted", cell))
+            continue
         if _NEGATED.search(line) or _ABOUT_SOMETHING_ELSE.search(line):
             continue
         if not _ALLOWS.search(line):
@@ -219,15 +293,13 @@ def permissions_in(
         named = _TYPE.search(line) or _BROADER.search(line)
         if named is None:
             continue
+        # Rows under a header were answered above, by column. What is left is
+        # prose: a sentence granting the permission in words, which is scoped
+        # by the section it sits in or by a heading naming the zone — never by
+        # a table header, whose columns say nothing about the paragraph printed
+        # beneath the grid.
         anchored = (
-            _in_section(section, claimed)
-            or scoped
-            or _names_zone(line, zone)
-            # A column header says which column the cells in a *row* belong to,
-            # and nothing about the prose printed under the same table. Lake
-            # Oswego's density notes sit thirty lines below the grid and
-            # mention quadplexes while granting nothing.
-            or (columned and bool(_ROW.match(line)))
+            _in_section(section, claimed) or scoped or _names_zone(line, zone)
         ) and bool(_TYPE.search(line))
         out.append(
             (
@@ -399,7 +471,16 @@ def main(argv: Sequence[str] | None = None) -> int:
                 print(f"  {code:14} {pick.quote}")
                 print(f"  {'':14} {pick.text[:110]}")
             else:
-                loose = [f for f in found if f.zone == code]
+                near = [f for f in found if f.zone == code]
+                against = [f for f in near if f.strength == "contradicted"]
+                loose = [f for f in near if f.strength == "loose"]
+                if against:
+                    # Louder than a gap, because it is not one. The file says
+                    # the fourplex is allowed and the table it should have been
+                    # read from says it is not, and until somebody settles that
+                    # the zone is worse than unencoded.
+                    print(f"  {code:14} !! table says {against[0].named!r} — {against[0].quote}")
+                    continue
                 why = (
                     f"{len(loose)} line(s) found, none inside this zone's sections"
                     if loose

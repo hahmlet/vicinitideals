@@ -4,14 +4,13 @@ This tool writes citations onto the single most consequential value in the
 corpus. A wrong number makes a lot fail a standard it would have met; a wrong
 citation on ``quadplex_allowed`` makes a permission that was never granted look
 evidenced, and every lot in the zone follows it. So most of what is tested here
-is refusal.
-"""
+is refusal.\n"""
 
 from __future__ import annotations
 
 import pytest
 
-from flats.encode.permit import _names_zone, apply, best, permissions_in
+from flats.encode.permit import Found, _names_zone, apply, best, permissions_in
 
 pytestmark = pytest.mark.unit
 
@@ -22,8 +21,7 @@ Table 4.0120 Uses in the LDR-5, LDR-7 and TLDR districts
 Use                          LDR-5     LDR-7     TLDR
 Single detached dwelling     P         P         P
 Quadplex                     P         P         NP
-Accessory dwelling unit      P         P         P
-"""
+Accessory dwelling unit      P         P         P\n"""
 
 
 def found(text: str, *, zone: str, claimed=("4.0120",), path: str = DOC, siblings=()):
@@ -116,8 +114,7 @@ zones:
     setback_front_ft: 10
   MDR-12:
     cite_default: {cite: c, url: u, retrieved: 2026-07-24}
-    quadplex_allowed: true
-"""
+    quadplex_allowed: true\n"""
 
 
 def test_the_citation_lands_in_the_zone_it_belongs_to() -> None:
@@ -174,8 +171,7 @@ Single detached dwelling     P         Subsection 19.505.1
 Quadplex                     P         Subsection 19.505.1
 Notes:
 Net developable area divided by the minimum lot area per unit. Quadplexes are
-allowed to exceed the maximum density standard.
-"""
+allowed to exceed the maximum density standard.\n"""
 
 
 def test_the_column_header_scopes_the_rows_under_it() -> None:
@@ -191,18 +187,49 @@ def test_the_column_header_scopes_the_rows_under_it() -> None:
     assert [(q, s) for q, _t, s, _n in got if s == "anchored"] == [(f"{DOC}#L5", "anchored")]
 
 
-def test_a_header_naming_several_zones_scopes_nothing() -> None:
-    """Four columns flatten to "Quadplex  P  N  P  N" and no reader can say
-    which cell is which zone's. The row stays loose, which is the honest state
-    — a citation pointing at another zone's answer is worse than none."""
-    text = ONE_COLUMN.replace(
-        "Use                          R-MD      Standards/Additional Provisions",
-        "Use                          R-MD      R-HD      Standards",
+def test_a_row_is_read_in_the_column_its_zone_heads() -> None:
+    """Portland's Table 110-2 is six zones wide and flattens to one line.
+
+    "Fourplex | No | Yes | Yes | Yes | Yes | Yes" is the whole permission for
+    six zones at once, and which one a cell answers for is a fact about where
+    it is printed. RF is refused on the same line that grants R5.
+    """
+    grid = (
+        "Table 110-2\n"
+        "Housing Types Allowed In The Single-Dwelling Zones\n"
+        "Housing Type      RF     R20    R10    R7     R5\n"
+        "House             Yes    Yes    Yes    Yes    Yes\n"
+        "Fourplex          No     Yes    Yes    Yes    Yes\n"
+    )
+    zones = ("RF", "R20", "R10", "R7", "R5")
+
+    granted = found(grid, zone="R5", claimed=(), siblings=zones)
+    refused = found(grid, zone="RF", claimed=(), siblings=zones)
+
+    assert [(q, s) for q, _t, s, _n in granted] == [(f"{DOC}#L5", "anchored")]
+    assert [(q, s) for q, _t, s, _n in refused] == [(f"{DOC}#L5", "contradicted")]
+
+
+def test_a_refusal_is_reported_and_never_written() -> None:
+    """The encoding says the fourplex is allowed and the table says it is not.
+
+    One of them is wrong, and nothing here can say which — a code amended since
+    the encoding reads exactly like a table this mis-columned. Writing the
+    citation either way would staple evidence to a value it contradicts.
+    """
+    grid = (
+        "Table 110-2\n"
+        "Housing Type      RF     R5\n"
+        "Fourplex          No     Yes\n"
     )
 
-    got = found(text, zone="R-MD", claimed=(), siblings=("R-MD", "R-HD"))
+    got = found(grid, zone="RF", claimed=(), siblings=("RF", "R5"))
 
-    assert not [q for q, _t, s, _n in got if s == "anchored"]
+    assert [s for _q, _t, s, _n in got] == ["contradicted"]
+    assert not best(
+        Found(layer="or/x", zone="RF", quote=q, text=t, strength=s, named=nm)
+        for q, t, s, nm in got
+    ), "nothing writable"
 
 
 def test_the_header_scopes_rows_and_not_the_prose_beneath_the_table() -> None:
