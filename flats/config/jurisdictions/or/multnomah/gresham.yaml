@@ -90,7 +90,9 @@ zones:
       cite: Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
       retrieved: '2026-07-24'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L134"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
@@ -135,7 +137,9 @@ zones:
       cite: Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
       retrieved: '2026-07-24'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L134"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
@@ -183,7 +187,9 @@ zones:
       cite: Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
       retrieved: '2026-07-24'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L134"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
@@ -231,7 +237,9 @@ zones:
       cite: Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
       retrieved: '2026-07-24'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L134"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
@@ -354,7 +362,9 @@ zones:
       cite: Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
       retrieved: '2026-07-24'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L134"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
@@ -402,7 +412,9 @@ zones:
       cite: Gresham Development Code Tables 4.0120/4.0130 n.5/4.0131; Sec 3.0103
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
       retrieved: '2026-07-24'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L134"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
@@ -438,7 +450,9 @@ zones:
       cite: Gresham Development Code Tables 4.1120/4.1130 (Downtown); 7.0420(J)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
       retrieved: '2026-07-24'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L246"
     setback_front_ft: 10
     setback_side_ft: 5
     setback_rear_ft: 10
@@ -454,7 +468,9 @@ zones:
       cite: Gresham Development Code Tables 4.1120/4.1130 (Downtown); 7.0420(J)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
       retrieved: '2026-07-24'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L246"
     setback_front_ft: 10
     setback_side_ft: 5
     setback_rear_ft: 10
@@ -468,7 +484,9 @@ zones:
       cite: Gresham Development Code Tables 4.0420/4.0430 (Corridor); 7.0420(J)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0400.pdf
       retrieved: '2026-07-24'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L148"
     setback_front_ft: 5
     setback_side_ft: 0
     setback_rear_ft: 15

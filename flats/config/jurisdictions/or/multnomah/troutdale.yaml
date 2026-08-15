@@ -34,7 +34,9 @@ zones:
       cite: Troutdale Development Code 3.120, 3.130.B, 8.120 (Municode, through Ord. 899)
       url: https://library.municode.com/or/troutdale/codes/development_code?nodeId=CH3ZODI
       retrieved: '2026-07-24'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L232"
     setback_front_ft: 10
     setback_side_ft: 10
     setback_rear_ft:
@@ -61,7 +63,9 @@ zones:
       cite: Troutdale Development Code 3.120, 3.130.B, 8.120 (Municode, through Ord. 899)
       url: https://library.municode.com/or/troutdale/codes/development_code?nodeId=CH3ZODI
       retrieved: '2026-07-24'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L232"
     setback_front_ft: 10
     setback_side_ft: 7.5
     setback_rear_ft:
@@ -87,7 +91,9 @@ zones:
       cite: Troutdale Development Code 3.120, 3.130.B, 8.120 (Municode, through Ord. 899)
       url: https://library.municode.com/or/troutdale/codes/development_code?nodeId=CH3ZODI
       retrieved: '2026-07-24'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L232"
     setback_front_ft: 10
     setback_side_ft:
       value: 5
