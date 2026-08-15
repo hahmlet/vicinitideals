@@ -2573,3 +2573,203 @@ def test_the_blocks_this_table_states_for_other_buildings_stay_unread() -> None:
     # The multi-family row states a fifteen-foot rear for MDR-12; the
     # townhouse row states ten. Only the townhouse number survives.
     assert grids["MDR-12"][("setback_rear_ft", "townhouse")] == 10
+
+
+# --- headings that stack, columns that point elsewhere ---------------------
+#
+# Lake Oswego's Table 50.04.001-11 states the standards for both zones this
+# city allows a quadplex in, and the reader that could not hold its shape read
+# none of them. Four things had to be true at once: a footnoted zone code is a
+# zone, a column may answer by naming another table, a heading may scope
+# another heading, and a row may state its number with the unit left to the
+# registry.
+
+LAKE_OSWEGO_HIGH_DENSITY = """
+TABLE 50.04.001-11: RESIDENTIAL HIGH DENSITY ZONES DIMENSIONS
+TABLE 50.04.001-11: RESIDENTIAL HIGH DENSITY ZONES DIMENSIONS
+R-W
+R-3
+R-2
+R-0 [6]
+Comments/ Additional Standards
+DENSITY
+DENSITY
+Minimum
+Minimum
+80% of max. [1]
+80% of max. [1]
+12 lots or units/acre [2]
+20 lots or units/ acre [2]
+MIN. LOT DIMENSIONS
+MIN. LOT DIMENSIONS
+Single-Family and Duplex Dwellings; Townhouse Projects
+Single-Family and Duplex Dwellings; Townhouse Projects
+Area (sq. ft.)
+Area (sq. ft.)
+3,375
+3,375
+No min.
+No min.
+No min. for PD
+Cottage Clusters and Quadplexes
+Cottage Clusters and Quadplexes
+Area (sq. ft.)
+Area (sq. ft.)
+7,000
+7,000
+7,000
+7,000
+MAX. LOT COVERAGE
+MAX. LOT COVERAGE
+Lot Coverage
+Lot Coverage
+100
+50
+Table 50.04.001-12
+55
+See Definition "Height of Building"
+YARD SETBACKS
+YARD SETBACKS
+Primary Dwelling (Detached)
+Primary Dwelling (Detached)
+Front (ft.)
+Front (ft.)
+0
+20
+Table 50.04.001-13
+20
+Primary Dwelling (Attached)
+Primary Dwelling (Attached)
+Front
+Front
+0
+10
+Table 50.04.001-13
+10
+Rear
+Rear
+0
+10
+Table 50.04.001-13
+10
+Other Types of Primary Structures and All Accessory Structures
+Other Types of Primary Structures and All Accessory Structures
+Front (ft.)
+Front (ft.)
+0
+99
+Table 50.04.001-13
+99
+Notes:
+Notes:
+[6]
+Site-specific dimensional standards, see LOC 50.02.002.2.c.
+"""
+
+
+def _by(grids, zone: str, field: str, housing: str = "") -> list:
+    return [c for c in grids.get(zone, []) if c.field == field and c.housing_type == housing]
+
+
+def test_a_footnoted_zone_header_is_still_a_zone() -> None:
+    # "R-0 [6]" heads the fourth column. Read raw it is not a zone code, the
+    # header runs three wide against rows four cells wide, and the overrun
+    # refusal throws away every row in the table.
+    grids = _grid(LAKE_OSWEGO_HIGH_DENSITY)
+
+    # R-0 is the column after the one that answers by pointer, and the only
+    # way to reach it is to have counted the header four wide.
+    assert set(grids) == {"R-W", "R-3", "R-2", "R-0"}
+    assert _by(grids, "R-0", "min_lot_sqft", "quadplex+cottage_cluster")[0].value == 7000
+
+
+def test_the_columns_note_travels_onto_every_value_in_it() -> None:
+    # A note on the column conditions every value in it, exactly as a note on
+    # the row conditions every value across it.
+    grids = _grid(LAKE_OSWEGO_HIGH_DENSITY)
+    quad = _by(grids, "R-0", "min_lot_sqft", "quadplex+cottage_cluster")[0]
+
+    assert quad.value == 7000
+    assert quad.conditional
+    assert "Site-specific" in quad.notes[0]
+    assert not _by(grids, "R-3", "min_lot_sqft", "quadplex+cottage_cluster")[0].conditional
+
+
+def test_a_column_that_names_another_table_is_a_cell_not_a_stop() -> None:
+    # R-2 answers "Table 50.04.001-13" where its neighbours print a number.
+    # That column yields nothing — and stopping on it lost the three columns
+    # that were exactly what was being read.
+    grids = _grid(LAKE_OSWEGO_HIGH_DENSITY)
+
+    assert _by(grids, "R-0", "max_coverage_pct")[0].value == 55
+    assert _by(grids, "R-3", "max_coverage_pct")[0].value == 50
+    assert not _by(grids, "R-2", "max_coverage_pct")
+
+
+def test_a_pointer_repeated_down_a_column_is_not_furniture() -> None:
+    # The same pointer prints once per row. Frequency took the run for a
+    # running head and deleted it, which left every row a cell short.
+    from flats.encode.tables import _POINTER_CELL
+
+    assert _POINTER_CELL.match("Table 50.04.001-13")
+    assert _by(_grid(LAKE_OSWEGO_HIGH_DENSITY), "R-0", "setback_rear_ft", "attached")
+
+
+def test_the_attached_block_is_the_pods_and_the_detached_one_is_not() -> None:
+    # The pod is four dwellings sharing three walls. Where a code states one
+    # envelope for attached dwellings and another for detached, both are read
+    # and each carries which it is; selection keeps one of them.
+    from flats.encode.corroborate import _select_housing
+
+    grids = _grid(LAKE_OSWEGO_HIGH_DENSITY)
+    fronts = [c for c in grids["R-3"] if c.field == "setback_front_ft"]
+
+    assert {c.housing_type: c.value for c in fronts} == {"detached": 20, "attached": 10}
+    assert [c.value for c in _select_housing(fronts, "setback_front_ft")] == [10]
+
+
+def test_rows_under_a_heading_naming_an_accessory_structure_are_refused() -> None:
+    # "Other Types of Primary Structures and All Accessory Structures" scopes
+    # two kinds of building at once, which is a standard for neither.
+    grids = _grid(LAKE_OSWEGO_HIGH_DENSITY)
+
+    assert 99 not in [c.value for c in grids["R-3"]]
+
+
+def test_a_coverage_row_may_state_its_percentage_bare() -> None:
+    # "Lot Coverage" over 100, 50, 55 — no unit anywhere. Refusing the row
+    # left it to become the block heading, which cost the setbacks under it
+    # the standard they were being read under.
+    grids = _grid(LAKE_OSWEGO_HIGH_DENSITY)
+
+    assert _by(grids, "R-W", "max_coverage_pct")[0].value == 100
+
+
+def test_a_setback_row_may_state_its_feet_bare() -> None:
+    # "Front" over a bare 10, under "YARD SETBACKS". The registry already says
+    # a front setback is measured in feet.
+    grids = _grid(LAKE_OSWEGO_HIGH_DENSITY)
+
+    assert _by(grids, "R-0", "setback_front_ft", "attached")[0].value == 10
+
+
+def test_two_columns_answering_no_min_are_two_columns() -> None:
+    # Unnamed, "No min." was neither a cell nor a reprint: the two columns
+    # stating it collapsed into one line and the row came up short.
+    grids = _grid(LAKE_OSWEGO_HIGH_DENSITY)
+
+    assert _by(grids, "R-W", "min_lot_sqft", "townhouse+duplex")[0].value == 3375
+    assert not _by(grids, "R-0", "min_lot_sqft", "townhouse+duplex")
+
+
+def test_attachment_qualifies_a_housing_type_it_does_not_replace_one() -> None:
+    from flats.encode.tables import _housing_type
+
+    assert _housing_type("Primary Dwelling (Attached)") == "attached"
+    assert _housing_type("Primary Dwelling (Detached)") == "detached"
+    # Gresham names four types and says how the first is built. Tagging the
+    # row "detached" as well would say the quadplex in it is detached.
+    assert (
+        _housing_type("Single Detached Dwelling, Duplex, Triplex, and Quadplex")
+        == "single_detached+duplex+triplex+quadplex"
+    )

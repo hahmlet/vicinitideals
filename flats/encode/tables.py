@@ -48,7 +48,14 @@ _ZONE = re.compile(r"^[A-Z]{1,4}[0-9]{0,2}(?:\.[0-9])?(?:-(?:[A-Z]{1,3}|[0-9]{1,
 #: A row's label column has to name a standard before anything is read from it.
 _HEADER_HINT = re.compile(r"\bstandard\b|\bzone\b", re.I)
 #: Values that are not measurements. Each means something a number cannot say.
-_NOT_A_NUMBER = re.compile(r"^(?:na|n/a|no limit|none|see\b.*)$", re.I)
+#: "No min." is one of them, and had to be named: unmatched it was neither a
+#: cell nor a reprint, so two columns answering it in a row were collapsed
+#: into one line, the row came up a cell short of its header, and the comment
+#: beside it — "No min. for PD" — was taken for the heading that had been
+#: naming the standard, which cost every row under it its field.
+_NOT_A_NUMBER = re.compile(
+    r"^(?:na|n/a|no limit|none|no\s+(?:min|max)(?:imum)?\.?|see\b.*)$", re.I
+)
 #: "20 ft.", "3,000 sq. ft.", "45 percent", "12 ft. x 12 ft." (which is not one number).
 _MEASURE = re.compile(
     r"^(?P<n>\d{1,3}(?:,\d{3})+|\d+(?:\.\d+)?)\s*"
@@ -911,6 +918,8 @@ _GROUPED_SUBJECTS = {
     "side yard": "setback_side_ft",
     "interior side yard": "setback_side_ft",
     "street side yard": "setback_street_side_ft",
+    # How Lake Oswego words the same standard, in every one of its tables.
+    "side adjacent to street": "setback_street_side_ft",
     "rear yard": "setback_rear_ft",
 }
 #: Happy Valley's stacked grid drops the word "yard": "Front", "Interior
@@ -921,6 +930,7 @@ _GROUPED_SUBJECTS = {
 #: sub-zone's setbacks on every zone that declares the section.
 _BARE_GROUPED = {
     "front": "setback_front_ft",
+    "side adjacent to street": "setback_street_side_ft",
     "side": "setback_side_ft",
     "interior side": "setback_side_ft",
     "street side": "setback_street_side_ft",
@@ -954,19 +964,36 @@ _LABEL_UNIT = re.compile(r"\((?P<u>sq\.?\s*ft\.?|square feet|ft\.?|feet|%|percen
 _BARE_NUMBER = re.compile(r"^(?P<n>\d{1,3}(?:,\d{3})+|\d+(?:\.\d+)?)$")
 
 
-def _measure_bare(cell: str, label: str, group: str) -> tuple[float, str] | None:
+def _measure_bare(
+    cell: str, label: str, group: str, field: str = ""
+) -> tuple[float, str] | None:
     """A bare-digit cell, measured in the unit its label or group declares.
 
     Troutdale's grid prints "70" under "Minimum lot width (ft.)" and "5" under
-    "Setbacks (ft.):" — the unit is stated once, in the heading. A bare number
-    with no declared unit anywhere still produces nothing: guessing feet is
-    how an acreage becomes a setback.
+    "Setbacks (ft.):" — the unit is stated once, in the heading.
+
+    Where no heading declares one, the standard the row resolved to can: Lake
+    Oswego's attached-dwelling block prints "Front" over a bare 10, and the
+    registry already says a front setback is measured in feet. That is not the
+    guess the refusal was written against. Areas keep refusing, because an area
+    written bare may be acres and reading it as square feet is off by a factor
+    of forty-three thousand; a length in a zoning table is feet, and a coverage
+    between nought and a hundred is a percentage.
     """
     m = _BARE_NUMBER.match(cell.strip())
     if not m:
         return None
     unit = _LABEL_UNIT.search(label) or _LABEL_UNIT.search(group)
     if not unit:
+        named = field or _subject(label) or _subject(group)
+        if not named:
+            return None
+        kind = FIELDS[named].kind
+        got = float(m.group("n").replace(",", ""))
+        if kind == _UNIT_KIND["ft"]:
+            return got, kind
+        if kind == _UNIT_KIND["pct"] and 0 <= got <= 100:
+            return got, kind
         return None
     u = unit.group("u").lower().replace(" ", "").rstrip(".")
     kind = "sqft" if u.startswith("sq") else "pct" if u in ("%", "percent") else "ft"
@@ -1014,6 +1041,19 @@ _HOUSING_TYPES: tuple[tuple[re.Pattern[str], str], ...] = (
     # the pod — Gladstone's R-7.2 minimum lot area is 7,200 sf detached
     # and 3,600 sf middle housing, and only the second is the pod's.
     (re.compile(r"\bmiddle\s+housing\b", re.I), "middle_housing"),
+    # "Primary Dwelling (Attached)" over one block of setbacks and
+    # "(Detached)" over another: the distinction the code draws there is
+    # exactly the pod's — four dwellings sharing three walls. Only the
+    # parenthesised form and an explicit "attached dwelling" are read; a bare
+    # "attached" is usually a garage or a wall ("0 (attached wall)").
+    (
+        re.compile(r"\(attached\)|\battached\s+(?:dwelling|housing|units?|homes?)", re.I),
+        "attached",
+    ),
+    (
+        re.compile(r"\(detached\)|\bdetached\s+(?:dwelling|housing|units?|homes?)", re.I),
+        "detached",
+    ),
     (re.compile(r"\bmulti-?family\b|\bapartments?\b", re.I), "multifamily"),
     (re.compile(r"\bmanufactured\b|\bmobile\s+home\b", re.I), "manufactured"),
 )
@@ -1048,6 +1088,14 @@ def _housing_type(label: str) -> str | None:
     if _EXCEPT.search(label):
         return None
     found = [name for pattern, name in _HOUSING_TYPES if pattern.search(label)]
+    if len(found) > 1:
+        # Attachment is a qualifier, not a type. "Single Detached Dwelling,
+        # Duplex, Triplex, and Quadplex" names four types and says how the
+        # first of them is built; tagging the row "detached" as well would say
+        # the quadplex in it is detached. It stands as a class of its own only
+        # where the code names nothing else — "Primary Dwelling (Attached)",
+        # which is Lake Oswego's whole heading for the block the pod is in.
+        found = [name for name in found if name not in ("attached", "detached")] or found
     return "+".join(found) if found else None
 
 
@@ -1616,7 +1664,9 @@ def _grouped_row(line: str) -> tuple[str, tuple[float, str]] | None:
     return None
 
 
-def _grid_value(line: str, label: str, group: str = "") -> tuple[float, str, tuple[str, ...]] | None:
+def _grid_value(
+    line: str, label: str, group: str = "", field: str = ""
+) -> tuple[float, str, tuple[str, ...]] | None:
     """One stacked-grid cell as (number, kind, notes), or None.
 
     Whole-line like a pair's value, after setting aside paren and glued
@@ -1627,7 +1677,7 @@ def _grid_value(line: str, label: str, group: str = "") -> tuple[float, str, tup
     cell = _PAREN_NOTE.sub("", line).strip()
     cell, glued = _unglue(cell)
     marks += tuple(f"footnote {n} (text not captured)" for n in glued)
-    parsed = _measure_line(cell) or _measure_bare(cell, label, group)
+    parsed = _measure_line(cell) or _measure_bare(cell, label, group, field)
     if parsed is None:
         return None
     number, kind = parsed
@@ -1649,6 +1699,14 @@ def _grid_vocab(line: str) -> bool:
     if refs:
         label = label[: refs.start()].strip()
     if _subject(label) is not None:
+        return True
+    if _UNIT_HEAD.search(line):
+        # A line ending in its unit — "Side Adjacent to Street (ft.)" — is a
+        # label or a heading whatever else it is; no running head declares a
+        # unit. Without this the five-word ones were junked, and a deleted
+        # label merges two rows: the row above reached past its own columns
+        # into the next row's first value, and the overrun refusal threw both
+        # away. Lake Oswego's high-density setbacks went unread that way.
         return True
     bare = " ".join(_PAREN_CTX.sub("", label).split()).strip(" .:").lower()
     if bare in _GROUPED_SUBJECTS:
@@ -1685,6 +1743,29 @@ _STRUCTURE_SCOPE = re.compile(
     r"^(?:primary|principal|main|accessory)\s+(?:structure|building)s?$", re.I
 )
 _ACCESSORY_STRUCTURE = re.compile(r"^accessory\b", re.I)
+#: An accessory structure named anywhere in a heading, however the heading is
+#: worded. Lake Oswego runs "Other Types of Primary Structures and All
+#: Accessory Structures" over one block of setbacks: two structures under one
+#: heading is not a standard for either, and the rows under it may not be
+#: filed. Refusing them is the conservative direction — a shed's ten feet
+#: encoded as the dwelling's is a number nobody can find in the code.
+_ACCESSORY_MENTION = re.compile(r"\baccessory\b", re.I)
+
+
+def _scope_heading(line: str) -> bool:
+    """Whether this line is itself a scope heading — a structure or a type.
+
+    A heading is recognised by what follows it, and two headings may stack:
+    Lake Oswego prints "YARD SETBACKS", then "Primary Dwelling (Attached)",
+    then "Front". Requiring a row label directly under the first refuses it,
+    and the standard it names never reaches the rows three lines down — which
+    is how a table that prints the attached-dwelling setbacks for both zones
+    this city allows a quadplex in was read as stating none.
+    """
+    label = " ".join(line.split())
+    if _STRUCTURE_SCOPE.match(label) or _ACCESSORY_MENTION.search(label):
+        return True
+    return _housing_type(label) is not None and len(label.split()) <= _GROUP_WORDS
 
 _COMMENTARY = re.compile(r"\b(?:additional standards?|exceptions?|notes?|cross.references?)\b", re.I)
 
@@ -1810,7 +1891,11 @@ def _looks_like_label(line: str) -> bool:
 #: A cell that is only a pointer — "§ 50.04.001.1.c", "(See 210.340)". It
 #: holds a comment column, and a heading is often followed by one before the
 #: rows it scopes begin.
-_POINTER_CELL = re.compile(r"^[^\w\s]?\s*(?:See\s+)?\d{1,3}\.\d{2,4}(?:\.\d{1,4})*\b", re.I)
+_POINTER_CELL = re.compile(
+    r"^(?:(?:See\s+)?(?:Table|Chapter|Section)s?\s+)?"
+    r"[^\w\s]?\s*(?:See\s+)?\d{1,3}\.\d{2,4}(?:[.-]\d{1,4})*\b",
+    re.I,
+)
 
 
 def _pointer_cell(line: str) -> bool:
@@ -1893,6 +1978,30 @@ def _column_heading(line: str, following: str) -> bool:
     )
 
 
+def _header_zone(line: str) -> tuple[str, tuple[str, ...]] | None:
+    """The zone a header cell names, and the footnotes glued to it.
+
+    A table may footnote the column rather than the row — Lake Oswego heads its
+    high-density table "R-W R-3 R-2 R-0 [6]", where note 6 says the R-0 zone is
+    only applied by the comprehensive plan. Matched raw the bracket makes the
+    cell not a zone code, so the header ran three columns wide against rows four
+    cells wide, and the overrun refusal threw away every row of the table that
+    states the quadplex minimum lot for both zones this jurisdiction allows one
+    in.
+
+    Only the bracketed form is taken off. A superscript glued to a zone code —
+    "R-52" — cannot be told from a zone whose code ends in a digit, and reading
+    it either way invents a district or drops a footnote, so it is left alone.
+    """
+    bare = " ".join(line.split())
+    refs: tuple[str, ...] = ()
+    found = _FOOTNOTE.search(bare)
+    if found:
+        refs = (found.group("n"),)
+        bare = bare[: found.start()].strip()
+    return (bare, refs) if _ZONE.match(bare) else None
+
+
 def _column_zone(line: str) -> str:
     """The zone a column heading names, or "" for a column that names none.
 
@@ -1935,12 +2044,15 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
     Labels must name their standard, either outright ("– Front setback") or
     through the one block heading above them that does — "Front" under
     "Building setbacks (minimum)" reads, because the heading names the
-    standard and the row the direction. Nested blocks — Lake Oswego's
-    "Front (ft.)" under "Primary Structure" under "YARD SETBACKS", printed
-    again under "Accessory Structure" — still produce nothing: the nearest
-    heading there names a structure, not a standard, and an
-    accessory-structure setback wearing the zone's citation is the
-    expensive kind of wrong.
+    standard and the row the direction. Headings stack, and only one of them
+    names the standard: Lake Oswego prints "Front (ft.)" under "Primary
+    Dwelling (Attached)" under "YARD SETBACKS". The middle heading says whose
+    the rows are — a structure, a housing type, or both — and is kept as a
+    scope rather than replacing the standard above it. Rows scoped to an
+    accessory structure are refused outright: an accessory-structure setback
+    wearing the zone's citation is the expensive kind of wrong. Rows scoped to
+    a housing type are read and carry it, and selection decides whether that
+    type is the pod's.
     """
     lines = text.splitlines()
     junk = {
@@ -1955,6 +2067,12 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
         # for six housing types apiece. Frequency junked them, which deleted
         # the cells and left every row one value short of its header.
         and not _BARE_NUMBER.match(j)
+        # And neither is a pointer cell. Lake Oswego answers one whole column
+        # with "Table 50.04.001-13", once per row — nine identical lines, which
+        # frequency took for a running head. Deleting them left every setback
+        # row of that table one cell short, so the row reached into the next
+        # row for a fourth value and the overrun refusal threw both away.
+        and not _POINTER_CELL.match(j)
     }
     live = [
         (n, line.strip())
@@ -1977,6 +2095,10 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
 
     out: dict[str, list[Candidate]] = {}
     zones: tuple[str, ...] = ()
+    #: The footnotes the header glued to each column, positionally. A note on
+    #: the column conditions every value in it exactly as a note on the row
+    #: conditions every value across it.
+    zone_refs: tuple[tuple[str, ...], ...] = ()
     #: One band token per column, where the table states its standards per lot
     #: size rather than per zone. Empty strings elsewhere — most tables.
     bands: tuple[str, ...] = ()
@@ -2011,6 +2133,7 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
         if found:
             section = found.group("sec")
             zones = ()
+            zone_refs = ()
             bands = ()
             block = ""
             block_refs = ()
@@ -2020,8 +2143,13 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
             i += 1
             continue
         run = []
-        while i + len(run) < len(live) and _ZONE.match(live[i + len(run)][1]):
-            run.append(live[i + len(run)][1])
+        run_refs: list[tuple[str, ...]] = []
+        while i + len(run) < len(live):
+            header = _header_zone(live[i + len(run)][1])
+            if header is None:
+                break
+            run.append(header[0])
+            run_refs.append(header[1])
         if len(run) == 1 and repeats.get(i, 1) >= 2 and _ZONE.match(stripped):
             banded = _banded_header(live, i, repeats[i])
             if banded is not None:
@@ -2032,6 +2160,7 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
                 # written for and nothing may encode one as unconditional.
                 bands, i = banded
                 zones = (stripped,) * len(bands)
+                zone_refs = ((),) * len(bands)
                 spare = 1
                 block = ""
                 block_refs = ()
@@ -2054,6 +2183,7 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
                     named.append(_column_zone(live[j][1]))
                 j += 1
             zones = tuple(run) + tuple(named)
+            zone_refs = tuple(run_refs) + ((),) * len(named)
             bands = ()
             spare = j - (i + len(run)) - len(named)
             block = ""
@@ -2138,7 +2268,24 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
             (k for k in range(i + 1, min(i + 4, len(live))) if not _pointer_cell(live[k][1])),
             None,
         )
-        scopes_a_row = ahead is not None and _looks_like_label(live[ahead][1])
+        scopes_a_row = ahead is not None and (
+            _looks_like_label(live[ahead][1]) or _scope_heading(live[ahead][1])
+        )
+        if (
+            zones
+            and name is None
+            and not next_is_cell
+            and scopes_a_row
+            and _ACCESSORY_MENTION.search(label)
+            and len(label.split()) <= _GROUP_WORDS
+        ):
+            # A scope, like "Accessory Structure" — and reached the same way,
+            # except that this heading may name a primary structure in the same
+            # breath. It leaves the heading naming the standard in force and
+            # refuses every row until the next block says whose they are.
+            structure = "accessory"
+            i += 1
+            continue
         if (
             zones
             and name is None
@@ -2155,6 +2302,9 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
             # townhouse unit-lot minimum this way, four lines under the
             # minimum for everything else, in the same column.
             block_type = _housing_type(label) or ""
+            # ...and whose structure the last block was about is no longer in
+            # force: a heading naming a type starts its own rows.
+            structure = ""
         if (
             zones
             and name is None
@@ -2222,6 +2372,15 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
                     cells.append(None)
                     j += 1
                     continue
+                if _POINTER_CELL.match(cell_line):
+                    # "Table 50.04.001-13" where the other three columns print
+                    # a number: the column answers by naming the table that
+                    # states its standard. It yields no candidate — but it is a
+                    # cell, and stopping on it refused every setback row of Lake
+                    # Oswego's high-density table, both zones included.
+                    cells.append(None)
+                    j += 1
+                    continue
                 bare_cell = _PAREN_NOTE.sub("", cell_line).strip()
                 trail = _LABEL_REFS.search(bare_cell)
                 if trail:
@@ -2240,7 +2399,7 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
                     cells.append(None)
                     j += 1
                     continue
-                parsed = _grid_value(cell_line, label, block)
+                parsed = _grid_value(cell_line, label, block, name)
                 if parsed is None:
                     if _scoped_cell(bare_cell):
                         # "2,500 per unit" beside three plain lot sizes: the
@@ -2265,7 +2424,7 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
             overrun = (
                 j < len(live)
                 and not _PAREN_LINE.match(live[j][1])
-                and _grid_value(live[j][1], label, block) is not None
+                and _grid_value(live[j][1], label, block, name) is not None
             )
             if len(cells) == len(zones) and not overrun:
                 htype = _housing_type(label) or block_type
@@ -2278,6 +2437,10 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
                     cell_no, (number, kind, marks) = cell
                     if FIELDS[name].kind != kind:
                         continue
+                    column = tuple(
+                        f"footnote {r} (text not captured)"
+                        for r in (zone_refs[pos] if pos < len(zone_refs) else ())
+                    )
                     value = int(number) if number.is_integer() else number
                     out.setdefault(zone, []).append(
                         Candidate(
@@ -2287,7 +2450,7 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
                             text=f"{stripped} ({zone})",
                             quote=f"{path}#L{cell_no}",
                             source="table",
-                            notes=marks + placeholders,
+                            notes=marks + placeholders + column,
                             housing_type=htype,
                             band=bands[pos] if bands else "",
                             section=section,
@@ -2318,6 +2481,10 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
                 # not: their standard came from the block they are already in.
                 block_field = name
                 block_refs = refs
+                # ...and the type the last block was written for is over. A
+                # heading that names a standard starts its own rows, and the
+                # types come from those rows, not from the block above it.
+                block_type = ""
                 if _UNIT_HEAD.search(label) or not _UNIT_HEAD.search(block):
                     # ...and a label that declares no unit does not replace a
                     # heading that does. Milwaukie's side yard row refuses on
@@ -2335,8 +2502,11 @@ def read_stacked_grids(text: str, *, path: str) -> dict[str, list[Candidate]]:
 #: pass can fill in the text without the reader that made it holding the block.
 _PLACEHOLDER = re.compile(r"^(?:footnote|see note) (?P<n>\d{1,2}) \(text not captured\)$")
 #: A marker on its own line — how a footnote block linearises when the grid
-#: was too wide to align and each cell became a line of its own.
-_MARKER_LINE = re.compile(r"^\d{1,2}$")
+#: was too wide to align and each cell became a line of its own. Lake Oswego
+#: brackets it, and unmatched every note under its tables stayed a
+#: placeholder: the value carried "footnote 6 (text not captured)" where the
+#: block three hundred lines below says the R-0 standards are site-specific.
+_MARKER_LINE = re.compile(r"^\[?(?P<n>\d{1,2})\]?$")
 
 
 def _stacked_notes(lines: Sequence[str]) -> list[tuple[int, dict[int, str]]]:
@@ -2364,8 +2534,17 @@ def _stacked_notes(lines: Sequence[str]) -> list[tuple[int, dict[int, str]]]:
             continue
         if current is None:
             continue
-        if _MARKER_LINE.match(stripped):
-            pending = int(stripped)
+        inline = _NOTE.match(stripped)
+        if inline:
+            # "[1]     < 600 sq. ft. and with walls < 10 ft." — the marker and
+            # its definition kept the same line, which happens wherever the
+            # note column was narrow enough not to wrap.
+            current[int(inline.group("n"))] = inline.group("text").strip()
+            pending = None
+            continue
+        marker = _MARKER_LINE.match(stripped)
+        if marker:
+            pending = int(marker.group("n"))
             continue
         if pending is not None:
             current[pending] = stripped

@@ -36,15 +36,21 @@ zones:
       url: https://ecode360.com/43076426
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 10
+    setback_front_ft:
+      value: 10
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1344"
     setback_side_ft: 10
-    setback_rear_ft: 10
+    setback_rear_ft:
+      value: 10
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1357"
     setback_street_side_ft: 10
-    min_lot_sqft: 7000
-    max_coverage_pct: 55
-    notes: 'quadfit confidence: verified | Attached-dwelling setbacks (detached SFD is 20/5/20). Quadplex
-      min lot 7,000 sf. R-0 carries site-specific limitations per LOC 50.02.002.2.c — per-parcel check
-      flagged.'
+    min_lot_sqft:
+      value: 7000
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1253"
+    max_coverage_pct:
+      value: 55
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1306"
+    notes: "Read against LOC Table 50.04.001-11 on 2026-08-14: the quadplex minimum lot area (7,000, L1253, the \"Cottage Clusters and Quadplexes\" row), lot coverage (55, L1306) and the front (10, L1344) and rear (10, L1357) setbacks under the table's \"Primary Dwelling (Attached)\" block, which is the pod's block — the \"(Detached)\" block above it states 20/5/20 and is not this building. Note [6] on the R-0 column reads \"Site-specific dimensional standards, see LOC 50.02.002.2.c\", so every standard here is subject to a per-parcel check. Side stays unquoted: the attached block's cell states two numbers, 10 ft to an exterior wall and 0 to an attached wall, which is a variant and not one value. Street side stays unquoted: the attached block prints no such row, and the 10 encoded here is the detached block's. quadfit confidence: verified | Attached-dwelling setbacks (detached SFD is 20/5/20). Quadplex min lot 7,000 sf. R-0 carries site-specific limitations per LOC 50.02.002.2.c — per-parcel check flagged."
   R-3:
     section: ["50.04.", "50.03.002"]
     cite_default:
@@ -52,14 +58,21 @@ zones:
       url: https://ecode360.com/43076426
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 10
+    setback_front_ft:
+      value: 10
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1342"
     setback_side_ft: 10
-    setback_rear_ft: 10
+    setback_rear_ft:
+      value: 10
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1355"
     setback_street_side_ft: 10
-    min_lot_sqft: 7000
-    max_coverage_pct: 50
-    notes: 'quadfit confidence: verified | Steep-slope lots: front 18 ft. Height-based buffer where abutting
-      R-6/7.5/10/15.'
+    min_lot_sqft:
+      value: 7000
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1251"
+    max_coverage_pct:
+      value: 50
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1304"
+    notes: "Read against LOC Table 50.04.001-11 on 2026-08-14: the quadplex minimum lot area (7,000, L1251), lot coverage (50, L1304) and the front (10, L1342) and rear (10, L1355) setbacks under the table's \"Primary Dwelling (Attached)\" block, which is the pod's block — the \"(Detached)\" block above it states 20/5/20. Side stays unquoted: the attached block's cell states 10 ft to an exterior wall and 0 to an attached wall, a variant rather than one value. Street side stays unquoted: the attached block prints no such row, and the 10 encoded here is the detached block's. quadfit confidence: verified | Steep-slope lots: front 18 ft. Height-based buffer where abutting R-6/7.5/10/15."
   R-5:
     section: ["50.04.", "50.03.002"]
     cite_default:

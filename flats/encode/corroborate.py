@@ -244,7 +244,12 @@ def check_zone(
 #: "Middle housing" is the third: ORS 197.758's class name, which contains
 #: the quadplex by statute, so a standard written for it is written for the
 #: pod whichever plat path the pod takes.
-_POD_TYPES = frozenset({"quadplex", "townhouse", "all", "middle_housing"})
+#: "Attached" is the fourth: Lake Oswego states one block of setbacks for
+#: "Primary Dwelling (Attached)" and another for "(Detached)", and never names
+#: a quadplex in either. Four dwellings sharing three walls are attached on any
+#: reading of that word, so the attached block is the pod's block — and the
+#: detached one, which states different numbers, is provably not.
+_POD_TYPES = frozenset({"quadplex", "townhouse", "all", "middle_housing", "attached"})
 
 #: Fields measured on the lot the pod occupies. A townhouse is by definition
 #: a dwelling on its own lot, so a townhouse-typed number for one of these —
@@ -273,7 +278,14 @@ def _select_housing(candidates: Sequence, field: str = "") -> list:
     standard, and letting it corroborate one turns the check into a
     coincidence detector.
     """
-    pod_types = _POD_TYPES - {"townhouse"} if field in _UNIT_LOT_FIELDS else _POD_TYPES
+    # "Attached" goes the same way as a townhouse on a lot-size field, and for
+    # the same reason: West Linn states 5,000 sq ft for a single-family
+    # detached unit and 4,500 for an attached one, and the attached number is
+    # the lot a single unit sits on once the project is platted — not the
+    # parcel a four-unit building is being screened against. On setbacks,
+    # height and coverage it stays the pod's: those bind the building.
+    unit_lot = {"townhouse", "attached"}
+    pod_types = _POD_TYPES - unit_lot if field in _UNIT_LOT_FIELDS else _POD_TYPES
     typed = [c for c in candidates if getattr(c, "housing_type", "")]
     if not typed:
         return list(candidates)
