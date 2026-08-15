@@ -129,6 +129,28 @@ def test_a_field_no_document_mentions_is_unsourced(layer) -> None:
     assert "declare it" in gap.action
 
 
+def test_a_line_the_readers_refuse_is_unread_not_unsourced(layer) -> None:
+    """Two different afternoons, and the ledger has to say which.
+
+    "Unsourced" means find the chapter, fetch it, declare it. Eighty-eight of
+    the eighty-nine values under that heading were printed in a document
+    already in the store, in a shape no reader will claim: a cell reading
+    "15/04 feet", a row written for five housing types at once, a column headed
+    "R-5 – R-30". Those are two minutes of reading, not an afternoon of
+    hunting, and calling them the same thing buries them.
+    """
+    found = gaps(
+        layer,
+        [finding("setback_front_ft", Verdict.agrees, 10, 10)],
+        {("R5", "min_lot_sqft"): f"{DOC}#L42"},
+    )
+
+    gap = next(g for g in found if g.field == "min_lot_sqft")
+    assert gap.cause == "unread"
+    assert gap.detail == f"{DOC}#L42"
+    assert "read the line" in gap.action
+
+
 def test_a_boolean_is_uncheckable_never_unsourced(layer) -> None:
     # Corroboration emits no finding for a boolean at all, so its silence says
     # nothing about the store. Reporting it as unsourced would send a person

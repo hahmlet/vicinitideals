@@ -61,10 +61,12 @@ import hashlib
 import json
 from dataclasses import dataclass
 from pathlib import Path
+from types import MappingProxyType
 from typing import Iterable, Mapping, Sequence
 
 from flats.encode.attach import unquoted
 from flats.encode.corroborate import Finding, Verdict, check_layer, checkable
+from flats.encode.find import passages
 from flats.provenance.sources import authority_for, document_key, host_of
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.fields import FIELDS
@@ -81,6 +83,7 @@ CAUSES = (
     "conditional",
     "multi",
     "undeclared",
+    "unread",
     "unsourced",
     "uncheckable",
 )
@@ -102,6 +105,11 @@ NEXT = {
         "`code:`, or re-cite it if that URL is not the adopted code: the two this "
         "cause first caught were a model-home application form and a title index "
         "page, neither of which states a standard"
+    ),
+    "unread": (
+        "a stored document prints this answer and no reader will claim it — the "
+        "cell reads \"15/04 feet\", the row is written for five housing types at "
+        "once, the column header is a range. Open /flats/find and read the line"
     ),
     "unsourced": (
         "no stored document states this. Find the chapter that does, declare it "
@@ -186,11 +194,20 @@ def classify(findings: Iterable[Finding]) -> tuple[str, str]:
     return best or ("unsourced", "")
 
 
-def gaps(layer: Layer, findings: Sequence[Finding]) -> list[Gap]:
+def gaps(
+    layer: Layer,
+    findings: Sequence[Finding],
+    printed: Mapping[tuple[str, str], str] = MappingProxyType({}),
+) -> list[Gap]:
     """Every unquoted value in a layer, with the cause behind it.
 
     Pure: the findings are handed in, so this is testable without a store, a
-    document, or a network.
+    document, or a network. ``printed`` is the loose search's answer — the
+    first line in this layer's own documents that prints the value, where one
+    does — and it exists to keep the largest cause honest. "Unsourced" sends
+    somebody to hunt for a chapter, fetch it and declare it; that is the wrong
+    afternoon entirely when the chapter is already in the store and the only
+    thing missing is a person reading one line of it.
     """
     grouped: dict[tuple[str, str], list[Finding]] = {}
     for finding in findings:
@@ -224,8 +241,35 @@ def gaps(layer: Layer, findings: Sequence[Finding]) -> list[Gap]:
             # is Municode, whose reader URL and fetchable URL share nothing:
             # unprovable, so unclaimed.
             cause, detail = "undeclared", url
+        if cause == "unsourced" and (zone, field) in printed:
+            cause, detail = "unread", printed[(zone, field)]
         out.append(Gap(layer.layer, zone, field, cause, detail, _lead(value)))
     return sorted(out, key=lambda g: (CAUSES.index(g.cause), g.zone, g.field))
+
+
+def printed_in(layer: Layer, store: ProvenanceStore) -> dict[tuple[str, str], str]:
+    """Where each held-out value is printed, for the ones printed anywhere.
+
+    One line per value: the best-ranked passage, which is the one whoever opens
+    the hunt will be looking at first. The count is not kept — this decides
+    which of two afternoons somebody is being sent on, and one line is enough
+    to decide it.
+    """
+    documents = []
+    for doc in layer.code:
+        path = f"{layer.layer}/{doc.id}.txt"
+        try:
+            documents.append((path, store.load(path).text))
+        except (ProvenanceError, OSError):
+            continue
+    out: dict[tuple[str, str], str] = {}
+    for (zone, field), value in layer.unread().items():
+        for path, text in documents:
+            found, _ = passages(text, path=path, field=field, believed=value.value, limit=1)
+            if found:
+                out[(zone, field)] = found[0].quote
+                break
+    return out
 
 
 def read_layer(layer: Layer, store: ProvenanceStore) -> list[Finding]:
@@ -321,7 +365,7 @@ def snapshot(layers: Mapping[str, Layer], store: ProvenanceStore) -> dict:
     out: dict = {"digest": digest(layers), "layers": {}}
     for layer_id in sorted(layers):
         layer = layers[layer_id]
-        items = gaps(layer, read_layer(layer, store))
+        items = gaps(layer, read_layer(layer, store), printed_in(layer, store))
         wrong = [one for one in attribution_check(layer, store) if not one.agrees]
         out["layers"][layer_id] = {
             "misattributed": [
