@@ -68,6 +68,12 @@ zones:
       value: 45
     notes: 'quadfit confidence: verified | Quadplex Y outright; zone min lot 7,500 sf (no quad-specific
       larger min). Garage face 22 ft. Height 35 ft.'
+    max_height_ft:
+      value: 35
+      quote: "or/multnomah/wood-village/210.320.txt#L69"
+    min_lot_width_ft:
+      value: 60
+      quote: "or/multnomah/wood-village/210.320.txt#L66"
   LR 12:
     section: ["210."]
     cite_default:
@@ -94,6 +100,12 @@ zones:
       value: 45
     notes: 'quadfit confidence: verified | Corner STREET-SIDE 20 ft (vs 10 in LR 7.5). Zone min lot 12,000
       sf.'
+    max_height_ft:
+      value: 35
+      quote: "or/multnomah/wood-village/210.320.txt#L69"
+    min_lot_width_ft:
+      value: 80
+      quote: "or/multnomah/wood-village/210.320.txt#L66"
   MR 2:
     section: ["220."]
     cite_default:

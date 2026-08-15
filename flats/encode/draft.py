@@ -20,6 +20,13 @@ failure this whole subsystem exists to prevent.
 the reviewer queue grows by exactly what was added. Writing a number is not
 knowing it is right.
 
+And it edits rather than re-serialises. Parsing a rule file and dumping the
+result back would delete every ``#`` comment in it — the fetch quirks, the
+"UNPORTED" notes, the reasons a standard was left out — which is most of what
+the encoders wrote down about their own decisions. Every one of the eighteen
+files carries some. So the new keys are spliced into the text of the zone block
+they belong to and nothing else is touched.
+
 Run::
 
     python -m flats.encode.draft or/multnomah/portland \\
@@ -29,10 +36,12 @@ Run::
 from __future__ import annotations
 
 import argparse
+import json
+import re
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Sequence
+from typing import Sequence
 
 import yaml
 
@@ -118,25 +127,97 @@ def plan(findings, existing: dict[str, set[str]]) -> tuple[list[Addition], list[
     return additions, skipped
 
 
-def apply(raw: dict[str, Any], additions: Sequence[Addition]) -> tuple[dict[str, Any], list[Skipped]]:
-    """Add each value to the parsed YAML. Returns the document and what it refused."""
-    out = dict(raw)
-    zones = dict(out.get("zones") or {})
+#: A mapping key and the indent it sits at, with any YAML quoting removed.
+#: Zone codes are quoted in some files and bare in others — "R-2.5" has to be,
+#: R5 does not — and a writer that matched only one form would silently skip
+#: half the corpus.
+_KEY = re.compile(r"^(?P<indent> *)(?P<quote>['\"]?)(?P<name>[^'\":#]+)(?P=quote):(?P<rest>.*)$")
+
+
+def _zone_lines(lines: Sequence[str]) -> dict[str, tuple[int, int, int]]:
+    """Each zone block in the file: ``code -> (key line, end line, indent)``.
+
+    ``end`` is the line the block's last content sits on, so an insertion goes
+    at ``end + 1`` and lands inside the block rather than ahead of the next
+    zone's comment.
+    """
+    start = next((i for i, ln in enumerate(lines) if ln.rstrip() == "zones:"), None)
+    if start is None:
+        return {}
+    body = []
+    for i in range(start + 1, len(lines)):
+        stripped = lines[i].strip()
+        if stripped and not lines[i].startswith((" ", "\t")):
+            break
+        body.append(i)
+    keys = [
+        (i, m)
+        for i in body
+        if (m := _KEY.match(lines[i])) and not lines[i].lstrip().startswith("#")
+    ]
+    if not keys:
+        return {}
+    depth = min(len(m.group("indent")) for _, m in keys)
+    tops = [(i, m) for i, m in keys if len(m.group("indent")) == depth]
+
+    out: dict[str, tuple[int, int, int]] = {}
+    for n, (i, m) in enumerate(tops):
+        stop = tops[n + 1][0] if n + 1 < len(tops) else body[-1] + 1
+        last = i
+        for j in range(i + 1, stop):
+            if lines[j].strip() and not lines[j].lstrip().startswith("#"):
+                last = j
+        out[m.group("name").strip()] = (i, last, depth)
+    return out
+
+
+def apply(text: str, additions: Sequence[Addition]) -> tuple[str, list[Skipped]]:
+    """Splice each value into the file's text. Returns it and what it refused.
+
+    Textual rather than a re-dump so the comments survive — see the module
+    docstring. Everything the decision rests on still comes from the parsed
+    document; only the writing is done on lines.
+    """
+    raw = yaml.safe_load(text) or {}
+    zones = raw.get("zones") or {}
+    newline = "\r\n" if "\r\n" in text else "\n"
+    lines = text.splitlines()
+    blocks = _zone_lines(lines)
+
     refused: list[Skipped] = []
+    planned: dict[str, list[Addition]] = {}
     for add in additions:
-        zone = dict(zones.get(add.zone) or {})
-        if add.field in zone:
+        block = zones.get(add.zone)
+        if block is None or add.zone not in blocks:
+            # The zone resolves through a parent layer, or is written inline.
+            # Either way this file has no block to add a line to, and creating
+            # one would move where the standard lives.
+            refused.append(Skipped(add.zone, add.field, "no zone block in this file"))
+            continue
+        if add.field in block:
             refused.append(Skipped(add.zone, add.field, "already in the file"))
             continue
-        if not (zone.get("cite_default") or out.get("cite_default")):
+        if not (block.get("cite_default") or raw.get("cite_default")):
             # Without an inherited citation the value would load as unsourced,
             # and an unsourced number is not a draft — it is a rumour.
             refused.append(Skipped(add.zone, add.field, "no cite_default to inherit"))
             continue
-        zone[add.field] = {"value": add.value, "quote": add.quote}
-        zones[add.zone] = zone
-    out["zones"] = zones
-    return out, refused
+        planned.setdefault(add.zone, []).append(add)
+
+    # Bottom-up so an insertion never moves a line another one was measured to.
+    for zone in sorted(planned, key=lambda z: blocks[z][1], reverse=True):
+        _key, end, depth = blocks[zone]
+        pad = " " * (depth + 2)
+        written: list[str] = []
+        for add in planned[zone]:
+            written += [
+                f"{pad}{add.field}:",
+                f"{pad}  value: {add.value}",
+                f"{pad}  quote: {json.dumps(add.quote)}",
+            ]
+        lines[end + 1 : end + 1] = written
+
+    return newline.join(lines) + newline, refused
 
 
 def _existing(layer) -> dict[str, set[str]]:
@@ -192,14 +273,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 0
 
     path = layer_path(args.rules, args.layer)
-    raw = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-    updated, refused = apply(raw, additions)
+    updated, refused = apply(path.read_text(encoding="utf-8"), additions)
     for skip in refused:
         print(f"  ~ {skip}")
-    path.write_text(
-        yaml.safe_dump(updated, sort_keys=False, allow_unicode=True, width=110),
-        encoding="utf-8",
-    )
+    path.write_text(updated, encoding="utf-8")
     written = len(additions) - len(refused)
     print(f"{args.layer}: wrote {written} draft value(s) to {path}")
     print("  every one is unsigned — they are now review work, not encoded rules")

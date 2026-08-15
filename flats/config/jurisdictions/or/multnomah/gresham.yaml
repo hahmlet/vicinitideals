@@ -87,6 +87,12 @@ zones:
       quote: "or/multnomah/gresham/4.0100.residential.txt#L243"
     notes: 'quadfit confidence: verified | Quadplex P outright. Rear w/ alley 8 ft (not modeled). FAR
       1.0. Height 35 ft.'
+    min_frontage_ft:
+      value: 35
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L314"
+    min_lot_width_ft:
+      value: 35
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L274"
   LDR-7:
     section: ["4.01", "7.042"]
     cite_default:
@@ -114,6 +120,15 @@ zones:
       quote: "or/multnomah/gresham/4.0100.residential.txt#L243"
     notes: 'quadfit confidence: verified | Min lot 7,000 sf. FAR 0.7 (tightest in city; still >1,000 sf
       building on min lot).'
+    max_height_ft:
+      value: 35
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L332"
+    min_frontage_ft:
+      value: 40
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L314"
+    min_lot_width_ft:
+      value: 40
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L274"
   TLDR:
     section: ["4.01", "7.042"]
     cite_default:
@@ -138,6 +153,18 @@ zones:
       quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
     notes: 'quadfit confidence: verified | NO minimum lot size, no FAR, no max density — most permissive
       LDR-family zone.'
+    max_height_ft:
+      value: 35
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L332"
+    min_frontage_ft:
+      value: 35
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L314"
+    min_lot_sqft:
+      value: 8000
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L593"
+    min_lot_width_ft:
+      value: 16
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L274"
   TR:
     section: ["4.01", "7.042"]
     cite_default:
@@ -164,6 +191,15 @@ zones:
       value: 4000
       quote: "or/multnomah/gresham/4.0100.residential.txt#L243"
     notes: 'quadfit confidence: verified | Min lot 4,000 sf. FAR 1.0.'
+    max_height_ft:
+      value: 35
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L332"
+    min_frontage_ft:
+      value: 35
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L314"
+    min_lot_width_ft:
+      value: 35
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L274"
   LDR-PV:
     section: ["4.14", "7.042"]
     cite_default:
@@ -179,6 +215,9 @@ zones:
       value: 5000
       quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L283"
     notes: 'quadfit confidence: verified | Pleasant Valley plan district. Rear 10 ft (vs 15 in base LDR).'
+    max_height_ft:
+      value: 35
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L327"
   LDR-SW:
     section: ["4.15", "7.042"]
     cite_default:
@@ -195,6 +234,12 @@ zones:
       quote: "or/multnomah/gresham/4.1500.springwater.txt#L267"
     notes: 'quadfit confidence: verified | Springwater. Min lot width 45 ft, min depth 80 ft (not separately
       modeled — envelope test dominates).'
+    max_height_ft:
+      value: 35
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L298"
+    min_lot_width_ft:
+      value: 45
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L280"
   MDR-12:
     section: ["4.01", "7.042"]
     cite_default:
@@ -222,6 +267,15 @@ zones:
       quote: "or/multnomah/gresham/4.0100.residential.txt#L243"
     notes: 'quadfit confidence: verified | Interior side 10 ft; street-side wall 20 ft (corner lots modeled
       at max(F, street-side)).'
+    max_height_ft:
+      value: 35
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L332"
+    min_frontage_ft:
+      value: 45
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L314"
+    min_lot_width_ft:
+      value: 16
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L274"
   MDR-24:
     section: ["4.01", "7.042"]
     cite_default:
@@ -248,6 +302,12 @@ zones:
     notes: 'quadfit confidence: verified | SFD is NP — quadplex permitted natively. 11,000 sf site min
       waived for existing lots of record; but middle housing COUNTS toward max density here (24.2 u/ac):
       4 units need ~7,200 sf net — encoded as min_lot_sqft (approximation, net≈gross for existing lots).'
+    max_height_ft:
+      value: 35
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L332"
+    min_frontage_ft:
+      value: 45
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L314"
   DRL-1:
     section: ["4.11", "7.042"]
     cite_default:
@@ -314,3 +374,9 @@ zones:
     quadplex_allowed: false
     notes: 'quadfit confidence: verified | Quadplex NP and detached SFD also NP — OAR mandate does not
       attach (townhouse/cottage-cluster zone).'
+    max_height_ft:
+      value: 45
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L298"
+    min_lot_width_ft:
+      value: 20
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L280"

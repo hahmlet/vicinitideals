@@ -115,6 +115,38 @@ _UNITS: tuple[tuple[str, tuple[str, ...]], ...] = (
     (r"units", ("count",)),
 )
 
+#: A unit this system holds no field in. A number stated in one is about
+#: something else, whatever the sentence names: Gresham's middle-housing design
+#: chapter says "provide an offset between dwelling units of at least 12
+#: inches", and the words "dwelling units" beside a 12 read as a twelve-unit cap
+#: on eleven zones. Density is the same trap from the other side — "units per
+#: acre" is not a maximum number of units.
+#:
+#: Listed rather than inferred, because a number with no unit at all is a
+#: different fact: real standards state one bare under a heading that carries
+#: the unit, and refusing those would cost more than it saves.
+#: Up to four characters of punctuation may sit between the number and its
+#: unit. Wood Village writes "an angle of up to forty-five (45) degrees" — the
+#: word is respelled as a digit, so the text after the first 45 is "(45)
+#: degrees" and an anchor tight to the number reads a 45-unit maximum out of a
+#: rule about which way a door faces.
+_ALIEN_UNIT = re.compile(
+    r"^[^A-Za-z0-9]{0,6}\s*(?:inch(?:es)?|in\.|acres?|miles?|stor(?:y|ies)|degrees?"
+    r"|days?|weeks?|months?|years?"
+    r"|(?:dwelling\s+)?units?\s+per\s+(?:net\s+|gross\s+)?acre)\b",
+    re.I,
+)
+
+#: A number a formula produced rather than a sentence stated. Gresham's
+#: corridor chapter prints its density equation as text — "Number of Proposed
+#: Dwelling Units / Minimum Number of Units Required ... >= 1" — and the words
+#: on the left of it name a field. Read as evidence, the 1 becomes a one-unit
+#: cap on a multi-family zone, which turns every lot in it red.
+#:
+#: Codes state standards in words: "at least", "not more than", "no fewer
+#: than". A bare comparison glyph is arithmetic.
+_FORMULA_LEAD = re.compile(r"[≥≤<>=+×*/]\s*$")
+
 _EXCEPTION = re.compile(
     r"\b(except|unless|notwithstanding|does not apply|shall not apply|exempt"
     # Relief provisions are exceptions in everything but the word. Portland's
@@ -431,8 +463,11 @@ def _units_allow(text: str, kind: str) -> bool:
     return False
 
 
-def _numbers(text: str, *, subject: tuple[int, int] | None = None) -> list[float]:
-    """Numbers in the line, minus the ones that are addresses rather than sizes.
+def _numbers(
+    text: str, *, subject: tuple[int, int] | None = None
+) -> list[tuple[float, str, str]]:
+    """Numbers in the line with the text either side of each, minus the ones
+    that are addresses rather than sizes.
 
     Every false positive found on real Portland text came from here: a
     cross-reference to 33.110.275 reads as "33.11" and "275", and a chapter is
@@ -448,7 +483,11 @@ def _numbers(text: str, *, subject: tuple[int, int] | None = None) -> list[float
     scrubbed = _CITATION.sub(lambda m: " " * len(m.group(0)), _digits(text))
     start, end = subject if subject else (0, 0)
     return [
-        float(m.group("n").replace(",", ""))
+        (
+            float(m.group("n").replace(",", "")),
+            scrubbed[max(0, m.start() - 8) : m.start()],
+            scrubbed[m.end() : m.end() + 24],
+        )
         for m in re.finditer(_NUM, scrubbed)
         if m.start() >= end or m.end() >= start - QUANTITY_LEAD
     ]
@@ -487,7 +526,9 @@ def candidates_in(text: str, line: int, path: str, *, quote: str = "") -> list[C
     htype = _housing_type(text) or ""
 
     out: list[Candidate] = []
-    for number in _numbers(text, subject=_subject_span(text)):
+    for number, before, after in _numbers(text, subject=_subject_span(text)):
+        if _ALIEN_UNIT.match(after) or _FORMULA_LEAD.search(before):
+            continue
         value = int(number) if number.is_integer() else number
         out.append(
             Candidate(

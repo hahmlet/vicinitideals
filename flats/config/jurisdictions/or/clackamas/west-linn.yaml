@@ -85,6 +85,9 @@ zones:
       quote: "or/clackamas/west-linn/08.r-40.txt#L167"
     notes: 'quadfit confidence: verified | Detached SFD + quadplex outright. Coverage 25% applies to quadplex
       (only cottage clusters exempt). Corner side-yard read as 30 ft.'
+    max_height_ft:
+      value: 40
+      quote: "or/clackamas/west-linn/08.r-40.txt#L163"
   R-20:
     section: ["09."]
     cite_default:
@@ -117,6 +120,9 @@ zones:
       value: 25
       quote: "or/clackamas/west-linn/09.r-20.txt#L169"
     notes: 'quadfit confidence: verified | Detached SFD + quadplex outright. Coverage 25% applies to quadplex.'
+    max_height_ft:
+      value: 40
+      quote: "or/clackamas/west-linn/09.r-20.txt#L165"
   R-15:
     section: ["10."]
     cite_default:
@@ -150,6 +156,9 @@ zones:
       quote: "or/clackamas/west-linn/10.r-15.txt#L165"
     notes: 'quadfit confidence: verified | Width 45 ft at front line / 80 ft avg (frontage=45). Coverage
       30% applies to quadplex.'
+    max_height_ft:
+      value: 40
+      quote: "or/clackamas/west-linn/10.r-15.txt#L161"
   R-10:
     section: ["11."]
     cite_default:
@@ -183,6 +192,9 @@ zones:
       value: 35
     notes: 'quadfit confidence: verified | Width 35 ft at front line / 50 ft avg (frontage=35). Coverage
       35% applies to quadplex.'
+    max_height_ft:
+      value: 35
+      quote: "or/clackamas/west-linn/11.r-10.txt#L161"
   R-7:
     section: ["12."]
     cite_default:
@@ -216,6 +228,9 @@ zones:
       value: 35
     notes: 'quadfit confidence: verified | Detached SFD + quadplex outright. Coverage 35% applies to quadplex;
       max FAR 0.60 for duplex/triplex/quadplex.'
+    max_height_ft:
+      value: 35
+      quote: "or/clackamas/west-linn/12.r-7.txt#L163"
   R-5:
     section: ["13."]
     cite_default:
@@ -246,6 +261,12 @@ zones:
       quote: "or/clackamas/west-linn/13.r-5.txt#L152"
     notes: 'quadfit confidence: verified | Max lot coverage does NOT apply to quadplexes (CDC 13.070)
       -> no coverage cap for a 4-plex; SFD base coverage 40%.'
+    max_coverage_pct:
+      value: 40
+      quote: "or/clackamas/west-linn/13.r-5.txt#L178"
+    max_height_ft:
+      value: 35
+      quote: "or/clackamas/west-linn/13.r-5.txt#L174"
   R-4.5:
     section: ["14."]
     cite_default:
@@ -276,6 +297,12 @@ zones:
       quote: "or/clackamas/west-linn/14.r-4.5.txt#L178"
     notes: 'quadfit confidence: verified | Coverage max does NOT apply to quadplexes (CDC 14.070); SFD
       base 40%.'
+    max_coverage_pct:
+      value: 40
+      quote: "or/clackamas/west-linn/14.r-4.5.txt#L203"
+    max_height_ft:
+      value: 35
+      quote: "or/clackamas/west-linn/14.r-4.5.txt#L199"
   R-3:
     section: ["15."]
     cite_default:
@@ -306,6 +333,12 @@ zones:
       quote: "or/clackamas/west-linn/15.r-3.txt#L175"
     notes: 'quadfit confidence: verified | Coverage max does NOT apply to quadplexes (CDC 15.070); SFD
       base 50%. FAR 0.45 (n/a to middle housing).'
+    max_coverage_pct:
+      value: 50
+      quote: "or/clackamas/west-linn/15.r-3.txt#L200"
+    max_height_ft:
+      value: 35
+      quote: "or/clackamas/west-linn/15.r-3.txt#L196"
   R-2.1:
     section: ["16."]
     cite_default:
@@ -337,3 +370,9 @@ zones:
     notes: 'quadfit confidence: needs_verification | ATTACHED quadplex permitted OUTRIGHT. Detached SFD/detached
       quadplex are CONDITIONAL only (16.050(6)). Coverage max does not apply to quadplexes; SFD base 50%.
       Min lot 4,000 for detached SFD - verify.'
+    max_coverage_pct:
+      value: 50
+      quote: "or/clackamas/west-linn/16.r-2.1.txt#L221"
+    max_height_ft:
+      value: 35
+      quote: "or/clackamas/west-linn/16.r-2.1.txt#L215"

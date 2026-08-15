@@ -651,3 +651,60 @@ def test_a_hundred_is_read_whole() -> None:
     assert _word_value("one hundred") == 100
     assert _word_value("thirty-five") == 35
     assert _word_value("seven") == 7
+
+
+# --- a number in a unit we hold no field in ----------------------------
+#
+# The subject matcher works on words, and the words that name a field appear in
+# sentences that are about something else entirely. What separates them is what
+# the number is measured in.
+
+
+def test_an_offset_in_inches_is_not_a_cap_on_dwelling_units() -> None:
+    # Gresham's middle-housing design chapter, verbatim. Read as evidence it
+    # put a twelve-unit maximum on eleven zones, quoted to a facade rule.
+    assert candidates_in(
+        "Provide an offset between dwelling units of at least 12 inches; or", 423, DOC
+    ) == []
+
+
+def test_punctuation_between_the_number_and_its_unit_does_not_hide_it() -> None:
+    # Wood Village, verbatim. "forty-five" is respelled as a digit, so the
+    # text after the first 45 is "(45) degrees" — an anchor tight to the
+    # number reads a 45-unit maximum out of a rule about which way a door
+    # faces, and writes it onto two zones.
+    assert candidates_in(
+        "All street-facing units shall have the main entry facing the street "
+        "or be at an angle of up to forty-five (45) degrees from the street.",
+        64,
+        DOC,
+    ) == []
+
+
+def test_a_number_a_formula_produced_is_not_a_standard() -> None:
+    # Gresham prints its density equation as text, and the words on the left
+    # of it name a field. The 1 became a one-unit cap on a multi-family zone,
+    # which turns every lot in it red.
+    assert candidates_in(
+        "Number of Proposed Dwelling Units + Proposed Commercial Floor Area ≥ 1",
+        519,
+        DOC,
+    ) == []
+
+
+def test_a_density_is_not_a_maximum_number_of_units() -> None:
+    # "units per acre" names the same field words as a unit cap and states a
+    # different kind of thing. 24 units per acre is not 24 units.
+    assert candidates_in("The maximum density is 24 units per acre.", 12, DOC) == []
+
+
+def test_a_height_in_storeys_is_not_a_height_in_feet() -> None:
+    assert candidates_in("Maximum building height is 3 stories.", 14, DOC) == []
+
+
+def test_the_unit_it_does_model_still_reads() -> None:
+    # The refusal is a list, not a rule that a number needs a unit at all —
+    # half the corpus states them bare under a heading that carries the unit.
+    found = candidates_in("Maximum building height is 35 feet.", 15, DOC)
+
+    assert [c.value for c in found] == [35]

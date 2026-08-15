@@ -56,6 +56,9 @@ zones:
       quote: "or/multnomah/fairview/19.30.txt#L428"
     notes: 'quadfit confidence: needs_verification | Quadplex outright; min lot = SFD min 6,000 sf. Max
       FAR 0.7. Height 35 ft.'
+    setback_front_max_ft:
+      value: 30
+      quote: "or/multnomah/fairview/19.30.txt#L369"
   R-7.5:
     cite_default:
       cite: FMC 19.30.020/19.30.030 (2023-41-TA amendments)
@@ -84,6 +87,9 @@ zones:
       value: 50
       quote: "or/multnomah/fairview/19.30.txt#L429"
     notes: 'quadfit confidence: needs_verification | Quadplex min lot 7,500 sf.'
+    setback_front_max_ft:
+      value: 30
+      quote: "or/multnomah/fairview/19.30.txt#L370"
   R-10:
     cite_default:
       cite: FMC 19.30.020/19.30.030 (2023-41-TA amendments)
@@ -112,6 +118,9 @@ zones:
       value: 50
       quote: "or/multnomah/fairview/19.30.txt#L430"
     notes: 'quadfit confidence: needs_verification | Quadplex min lot 10,000 sf (= zone min).'
+    setback_front_max_ft:
+      value: 30
+      quote: "or/multnomah/fairview/19.30.txt#L371"
   RM:
     cite_default:
       cite: FMC 19.30.010.D/.020/.030 (2023-41-TA amendments)
@@ -139,6 +148,9 @@ zones:
       quote: "or/multnomah/fairview/19.30.txt#L432"
     notes: 'quadfit confidence: needs_verification | Quadplex needs 2,500 sf/unit = 10,000 sf — standard
       6-7.5k RM lots cannot hold a quad without assembly. Height 45 ft.'
+    setback_front_max_ft:
+      value: 30
+      quote: "or/multnomah/fairview/19.30.txt#L373"
   RM/TOZ:
     cite_default:
       cite: FMC 19.30.030 Table A (RM + Townhouse Overlay columns)

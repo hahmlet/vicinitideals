@@ -175,11 +175,58 @@ def test_the_conditional_height_stays_out_of_the_file(rules: Path, store: Path) 
 
 
 def test_a_zone_with_nothing_to_inherit_is_refused() -> None:
-    raw = {"zones": {"R5": {}}}
-    updated, refused = apply(raw, [plan([finding("R5", "max_height_ft", 30)], {})[0][0]])
+    text = "zones:\n  R5:\n    section: ['1.']\n"
+    updated, refused = apply(text, [plan([finding("R5", "max_height_ft", 30)], {})[0][0]])
 
-    assert "max_height_ft" not in updated["zones"]["R5"]
+    assert "max_height_ft" not in updated
     assert "cite_default" in refused[0].reason
+
+
+def test_a_zone_this_file_does_not_carry_gets_no_block_invented() -> None:
+    # The zone resolves through a parent layer. Writing it here would move
+    # where the standard lives, which is a decision and not a transcription.
+    text = (
+        "cite_default: {cite: c, url: u, retrieved: 2026-08-12}\n"
+        "zones:\n  R5:\n    section: ['1.']\n"
+    )
+    updated, refused = apply(text, [plan([finding("R2.5", "max_height_ft", 30)], {})[0][0]])
+
+    assert "R2.5" not in updated
+    assert "no zone block" in refused[0].reason
+
+
+# --- what it must not destroy ------------------------------------------
+
+
+def test_the_comments_in_the_file_survive(rules: Path, store: Path) -> None:
+    # Re-serialising the parsed file deletes every one of them, and the
+    # comments are where the encoders wrote down why a standard was left
+    # out, which host the fetch needs, what did not port. All eighteen
+    # files carry some.
+    path = rules / "or" / "multnomah" / "portland.yaml"
+    path.write_text(
+        path.read_text(encoding="utf-8")
+        .replace("zones:", "# fetch escalates to chrome124\nzones:", 1)
+        .replace("  R2.5:", "  # R-2.5 has no chapter of its own\n  R2.5:", 1),
+        encoding="utf-8",
+    )
+
+    run(rules, store, "--apply")
+    after = path.read_text(encoding="utf-8")
+
+    assert "chrome124" in after
+    assert "no chapter of its own" in after
+    assert loaded(rules)["zones"]["R2.5"]["max_height_ft"]["value"] == 35
+
+
+def test_a_value_lands_inside_the_zone_it_belongs_to(rules: Path, store: Path) -> None:
+    # Off by one line and the standard becomes the next zone's, or the file
+    # stops parsing. Neither shows up as an error anywhere else.
+    run(rules, store, "--apply")
+    after = loaded(rules)
+
+    assert "max_height_ft" not in after["zones"]["R5"], "R5 30 ft. carries footnote 3"
+    assert after["zones"]["R2.5"]["setback_front_ft"] == 10, "and it kept what it had"
 
 
 # --- the command -------------------------------------------------------

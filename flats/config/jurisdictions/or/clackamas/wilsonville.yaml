@@ -533,3 +533,6 @@ zones:
       R-10 sub-district states no quadplex minimum (SFD base 8,000 would govern there). KNOWN differs:
       max_coverage_pct 60 vs doc 90 — the 90 is the Commercial Main Street block, which shares section
       4.127 with RN and cannot be scoped out until fetch-layer geometry; the 60 is FPW R-5 residential.'
+    setback_front_max_ft:
+      value: 20
+      quote: "or/clackamas/wilsonville/4.planning.txt#L7965-L7968"

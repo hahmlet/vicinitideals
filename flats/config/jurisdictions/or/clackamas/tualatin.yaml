@@ -115,3 +115,6 @@ zones:
       where it is 10 ft. Relief not encoded: lot size and width reductions for Flexible Lot
       Subdivisions under TDC 36.410, width 30 ft on a cul-de-sac, zero side setback where townhouse
       units attach, height to 50 ft where setbacks are 1.5x the height.'
+    min_lot_width_ft:
+      value: 40
+      quote: "or/clackamas/tualatin/40-41.residential.txt#L515-L516"

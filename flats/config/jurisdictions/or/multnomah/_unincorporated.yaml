@@ -68,6 +68,9 @@ zones:
       - 7.5
     notes: 'quadfit confidence: verified | z Constrained Sites overlay voids fourplex allowance — gated
       in s3. Wooded west-hills pockets have heavy z coverage.'
+    setback_garage_entrance_ft:
+      value: 18
+      quote: "or/multnomah/_unincorporated/33.110.txt#L464"
   R20:
     cite_default:
       cite: Portland Zoning Code 33.110 Tables 110-2/110-4/110-5/110-7 (Dunthorpe-Riverdale is largely
@@ -101,6 +104,9 @@ zones:
       - 4500
       - 7.5
     notes: 'quadfit confidence: verified | Fourplex min lot 12,000 sf. z overlay gated in s3.'
+    setback_garage_entrance_ft:
+      value: 18
+      quote: "or/multnomah/_unincorporated/33.110.txt#L464"
   RF:
     cite_default:
       cite: Portland Zoning Code 33.110 Table 110-2 — fourplex prohibited in RF
@@ -109,6 +115,21 @@ zones:
     quadplex_allowed: false
     notes: 'quadfit confidence: verified | House + ADU only. Whether the state Model Code could override
       RF in county pockets is unresolved — treated as no-quadplex.'
+    max_height_ft:
+      value: 30
+      quote: "or/multnomah/_unincorporated/33.110.txt#L454"
+    setback_front_ft:
+      value: 20
+      quote: "or/multnomah/_unincorporated/33.110.txt#L458"
+    setback_garage_entrance_ft:
+      value: 18
+      quote: "or/multnomah/_unincorporated/33.110.txt#L464"
+    setback_rear_ft:
+      value: 10
+      quote: "or/multnomah/_unincorporated/33.110.txt#L462"
+    setback_side_ft:
+      value: 10
+      quote: "or/multnomah/_unincorporated/33.110.txt#L460"
   R7:
     cite_default:
       cite: Portland Zoning Code 33.110 Tables 110-2/110-4/110-5/110-7
@@ -142,6 +163,9 @@ zones:
       - 7.5
     notes: 'quadfit confidence: needs_verification | Zone standards verified from code text, but R7 occurrence
       in the pockets unconfirmed (33 lots observed in Metro layer).'
+    setback_garage_entrance_ft:
+      value: 18
+      quote: "or/multnomah/_unincorporated/33.110.txt#L464"
   LR7:
     cite_default:
       cite: MCC 39.4848-.4862 (S-1 2023) + OAR 660-046 Exhibit B Large Cities Model Code §B; OAR 660-046-0010/-0020
