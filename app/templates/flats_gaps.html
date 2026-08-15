@@ -33,6 +33,62 @@
   </div>
   {% endif %}
 
+  {% if coverage.measured %}
+  <h3 style="margin:20px 0 4px">What the holes cost, in lots</h3>
+  <p class="muted" style="font-size:12px;max-width:74ch">
+    The list below says what is missing. This says which missing thing is worth an
+    afternoon — every zone the parcel data has actually seen, ranked by how many lots
+    it blocks. A jurisdiction with four gaps over eleven lots is finished for any
+    purpose that matters; one unencoded zone can be sitting on fourteen thousand.
+  </p>
+
+  <div class="toolbar" style="gap:24px">
+    <div><span class="muted">Lots counted</span> <strong>{{ "{:,}".format(coverage.lots) }}</strong></div>
+    <div><span class="muted">Blocked by encoding</span> <strong>{{ "{:,}".format(coverage.blocked) }}</strong></div>
+    <div><span class="muted">Jurisdictions counted</span> <strong>{{ coverage.layers | length }}</strong></div>
+  </div>
+
+  <div class="table-wrap" style="margin-bottom:12px">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Jurisdiction</th>
+          <th>Zone</th>
+          <th class="col-right">Lots</th>
+          <th>What is in the way</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for one in coverage.worst %}
+        <tr>
+          <td>{% if one.known %}<a href="/flats/{{ one.layer }}">{{ one.layer }}</a>{% else %}{{ one.layer }}{% endif %}</td>
+          <td>{{ one.zone }}</td>
+          <td class="col-right">{{ "{:,}".format(one.lots) }}</td>
+          <td style="font-size:12px">{{ one.why }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  {% if coverage.uncounted %}
+  <p class="muted" style="font-size:12px;max-width:74ch">
+    <strong>{{ coverage.uncounted | length }} encoded jurisdiction(s) appear nowhere above</strong>,
+    because no lot has ever been counted against them — the parcel corpus this was
+    measured from covers Multnomah County. That is not zero lots blocked; it is a
+    number nobody has taken yet:
+    {% for one in coverage.uncounted %}<a href="/flats/{{ one }}">{{ one }}</a>{{ ", " if not loop.last }}{% endfor %}.
+  </p>
+  {% endif %}
+  {% else %}
+  <p class="muted" style="font-size:12px;max-width:74ch">
+    No lot count has been taken, so nothing here is ranked by what it costs. Run
+    <code>python -m flats.encode.backlog</code> to generate one.
+  </p>
+  {% endif %}
+
+  <h3 style="margin:24px 0 4px">Standards with no citation</h3>
+
   {% if not rows %}
     <p>Nothing missing. Every encoded value cites a document.</p>
   {% endif %}

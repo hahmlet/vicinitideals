@@ -132,6 +132,41 @@ def write_coverage(rows: Sequence[CoverageRow], path: Path) -> Path:
     return path
 
 
+#: Where the generated coverage ledger is written. Data rather than
+#: configuration — rebuilt by ``python -m flats.encode.backlog`` from the parcel
+#: corpus, and committed so that a deploy carries the counts with the rules.
+COVERAGE = Path(__file__).resolve().parents[2] / "data" / "flats" / "coverage.csv"
+
+
+def read_coverage(path: Path | None = None) -> list[CoverageRow] | None:
+    """The written ledger, read back, or None where nobody has generated one.
+
+    None and an empty list are opposite answers and must not be confused: the
+    first says nothing has counted the lots, the second says nothing is blocked.
+    Reading the ledger from disk rather than rebuilding it is deliberate — the
+    build reads a 62 MB parcel corpus, which is a command, not a page load.
+    """
+    try:
+        with (path or COVERAGE).open(newline="", encoding="utf-8") as fh:
+            return [
+                CoverageRow(
+                    jurisdiction=row["jurisdiction"],
+                    zone=row["zone"],
+                    lots=int(row["lots"] or 0),
+                    acres=float(row["acres"] or 0),
+                    status=row["status"],
+                    verified_fields=int(row["verified_fields"] or 0),
+                    total_fields=int(row["total_fields"] or 0),
+                    missing_required=row["missing_required"],
+                    untrusted_fields=row["untrusted_fields"],
+                    blocking=int(row["blocking"] or 0),
+                )
+                for row in csv.DictReader(fh)
+            ]
+    except (OSError, KeyError, ValueError):
+        return None
+
+
 def coverage_summary(rows: Sequence[CoverageRow]) -> dict[str, int]:
     """Headline counts for the dashboard and the run summary."""
     out: dict[str, int] = {"lots_total": 0, "lots_blocked": 0}

@@ -221,3 +221,35 @@ def test_section_is_complete_only_when_every_clause_is() -> None:
 
     assert sections_complete([done]) == {("portland", "PCC 33.110.220"): True}
     assert sections_complete([done, loose]) == {("portland", "PCC 33.110.220"): False}
+
+
+def test_a_coverage_file_nobody_generated_is_absent_not_empty(tmp_path) -> None:
+    """None and "nothing is blocked" are opposite answers.
+
+    A page that reads a missing ledger as an empty one reports every zone as
+    fully encoded, which is the failure the coverage ledger exists to prevent
+    wearing a different hat.
+    """
+    from flats.rules.ledger import read_coverage
+
+    assert read_coverage(tmp_path / "nothing.csv") is None
+
+
+def test_a_written_ledger_reads_back_as_what_was_written(tmp_path) -> None:
+    from flats.rules.ledger import CoverageRow, read_coverage, write_coverage
+
+    row = CoverageRow(
+        jurisdiction="or/multnomah/portland",
+        zone="RM1",
+        lots=14426,
+        acres=1234.5,
+        status="zone_missing",
+        verified_fields=0,
+        total_fields=0,
+        missing_required="",
+        untrusted_fields="",
+        blocking=14426,
+    )
+    path = write_coverage([row], tmp_path / "coverage.csv")
+
+    assert read_coverage(path) == [row]

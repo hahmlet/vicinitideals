@@ -30,7 +30,7 @@ townhouse lots, cities state different standards for the two, and which one
 is being built is a decision about the product.
 
 Routes: /flats, /flats/plans, /flats/plans/{design}, /flats/review/{layer},
-/flats/feedback, /flats/why/{layer}, /flats/{layer}, /ui/flats/quote,
+/flats/gaps, /flats/feedback, /flats/why/{layer}, /flats/{layer}, /ui/flats/quote,
 /ui/flats/sign, /ui/flats/sign-passage, /ui/flats/bundle
 """
 from __future__ import annotations
@@ -55,6 +55,7 @@ from flats.encode.verify import fingerprint
 from flats.provenance import pages as page_map
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.fields import FIELDS
+from flats.rules.ledger import CoverageRow, read_coverage
 from flats.rules.loader import load_rules
 from flats.rules.model import Incorporation, Layer, Status, Value
 from flats.rules.resolver import RuleSet
@@ -868,6 +869,85 @@ def _gaps() -> dict[str, Any]:
     return ledger
 
 
+@lru_cache(maxsize=1)
+def _coverage() -> dict[str, Any]:
+    """What the holes cost, in lots, from the generated coverage ledger.
+
+    The gap list says what is missing; this says which missing thing is worth
+    an afternoon. They rank differently and the difference is the whole point:
+    a jurisdiction with four gaps over eleven lots is finished for any purpose
+    that matters, and one with a single unencoded zone can be sitting on
+    fourteen thousand.
+
+    Only what the parcel corpus has seen is counted, so an encoded jurisdiction
+    with no rows is not a jurisdiction with no lots — it is one nothing has
+    counted yet, and the page has to say which is which.
+    """
+    rows = read_coverage()
+    if rows is None:
+        return {"measured": False, "layers": [], "worst": [], "uncounted": []}
+
+    layers = _layers()
+    by_layer: dict[str, dict[str, Any]] = {}
+    for row in rows:
+        one = by_layer.setdefault(
+            row.jurisdiction,
+            {
+                "layer": row.jurisdiction,
+                "label": getattr(layers.get(row.jurisdiction), "label", row.jurisdiction),
+                "known": row.jurisdiction in layers,
+                "lots": 0,
+                "blocked": 0,
+                "missing": [],
+                "partial": 0,
+            },
+        )
+        one["lots"] += row.lots
+        one["blocked"] += row.blocking
+        if row.status in ("zone_missing", "jurisdiction_missing"):
+            one["missing"].append({"zone": row.zone, "lots": row.lots})
+        elif row.blocking:
+            one["partial"] += 1
+    for one in by_layer.values():
+        one["missing"].sort(key=lambda z: -z["lots"])
+
+    return {
+        "measured": True,
+        "layers": sorted(by_layer.values(), key=lambda one: -one["blocked"]),
+        "worst": [_blocker(row) for row in rows if row.blocking][:15],
+        # Encoded, but no lot has ever been counted against it. Silence about
+        # these would read as "nothing blocked here", which is the exact
+        # mistake the coverage ledger exists to prevent.
+        "uncounted": sorted(set(_layers()) - {row.jurisdiction for row in rows}),
+        "lots": sum(row.lots for row in rows),
+        "blocked": sum(row.blocking for row in rows),
+    }
+
+
+def _blocker(row: CoverageRow) -> dict[str, Any]:
+    """One coverage row, said in the words a reviewer would use."""
+    missing = [one for one in row.missing_required.split(";") if one]
+    untrusted = [one for one in row.untrusted_fields.split(";") if one]
+    if row.status == "jurisdiction_missing":
+        why = "nothing at all is encoded for this jurisdiction"
+    elif row.status == "zone_missing":
+        why = "this zone has no encoding — the jurisdiction has others"
+    elif missing:
+        why = "no value for " + ", ".join(missing)
+    elif untrusted:
+        why = f"{len(untrusted)} value(s) encoded but not yet confirmed by a person"
+    else:
+        why = "a cited document has changed since this was confirmed"
+    return {
+        "layer": row.jurisdiction,
+        "zone": row.zone,
+        "lots": row.lots,
+        "status": row.status,
+        "why": why,
+        "known": row.jurisdiction in _layers(),
+    }
+
+
 @router.get("/flats/gaps", response_class=HTMLResponse)
 async def flats_gaps(request: Request, session: DBSession) -> HTMLResponse:
     """Every value nothing backs, sorted by what would unstick it.
@@ -894,6 +974,7 @@ async def flats_gaps(request: Request, session: DBSession) -> HTMLResponse:
             "total": sum(len(r["gaps"]) for r in rows),
             "current": ledger["current"],
             "causes": _CAUSE_WORDS,
+            "coverage": _coverage(),
         },
     )
 

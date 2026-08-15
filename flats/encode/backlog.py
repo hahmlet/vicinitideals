@@ -27,13 +27,19 @@ from pathlib import Path
 
 from flats.encode.port_quadfit import layer_id_for
 from flats.normalize.condo import classify_frame
-from flats.rules.ledger import ObservedZone, build_coverage, coverage_summary, write_coverage
+from flats.rules.ledger import (
+    COVERAGE,
+    ObservedZone,
+    build_coverage,
+    coverage_summary,
+    write_coverage,
+)
 from flats.rules.loader import load_rules
 from flats.rules.resolver import RuleSet
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 CORPUS = REPO_ROOT / "data" / "quadfit" / "s2_lots.parquet"
-OUT = REPO_ROOT / "data" / "flats" / "coverage.csv"
+OUT = COVERAGE
 
 _COLUMNS = [
     "jurisdiction",

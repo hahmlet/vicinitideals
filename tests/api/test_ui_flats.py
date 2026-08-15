@@ -1095,3 +1095,38 @@ async def test_the_written_ledger_matches_the_corpus_it_was_measured_from():
         )
     finally:
         ui._gaps.cache_clear()
+
+
+async def test_the_holes_are_ranked_by_what_they_cost(
+    client: AsyncClient, session: AsyncSession
+):
+    """A gap count and a lot count rank differently, and the difference is the point.
+
+    Four gaps over eleven lots is a finished jurisdiction; one unencoded zone can
+    be sitting on fourteen thousand. Portland RM1 is the row that cost quadfit
+    40,500 lots by being an absence rather than a top line.
+    """
+    await _login(client, session)
+
+    page = await client.get("/flats/gaps")
+
+    assert "What the holes cost, in lots" in page.text
+    assert "RM1" in page.text
+    assert "this zone has no encoding" in page.text
+
+
+async def test_a_jurisdiction_nobody_counted_is_not_a_jurisdiction_with_no_lots(
+    client: AsyncClient, session: AsyncSession
+):
+    """The parcel corpus covers one county; the rules cover nineteen.
+
+    Leaving the other eighteen out of a page headed "what the holes cost" would
+    report them as costing nothing, which is the exact mistake — an unencoded
+    zone vanishing into an absence — that the coverage ledger exists to prevent.
+    """
+    await _login(client, session)
+
+    page = await client.get("/flats/gaps")
+
+    assert "appear nowhere above" in page.text
+    assert "or/clackamas/wilsonville" in page.text
