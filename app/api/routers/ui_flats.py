@@ -49,6 +49,7 @@ from app.api.routers.ui_helpers import _base_ctx, _get_counts, _get_user, templa
 from app.models.flats import FlatsRuleSignature
 from flats.designs.model import Design, DesignStatus, Plat, load_catalog
 from flats.encode.verify import fingerprint
+from flats.provenance import pages as page_map
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.loader import load_rules
 from flats.rules.model import Incorporation, Layer, Status, Value
@@ -513,6 +514,53 @@ def _from_a_table(lines: Sequence[dict[str, Any]]) -> bool:
     return bool(cited) and hits * 2 >= len(cited)
 
 
+@lru_cache(maxsize=128)
+def _page_index(document: str) -> Any:
+    """A document's page map, if it has one and it still fits the stored text."""
+    try:
+        return page_map.read(_store(), document)
+    except (ProvenanceError, OSError):
+        return None
+
+
+def _pages(document: str, first: int, last: int) -> list[dict[str, Any]]:
+    """Which pages of the book a span of lines was printed on.
+
+    A line number is ours; a page number is the document's. The distinction
+    matters the moment an encoded standard has to be defended to somebody who
+    does not have this system in front of them — a planner, an architect, a
+    lawyer reading the same code off paper. They cannot check "line 3,041".
+    They can turn to page 28-5.
+
+    Empty for the HTML half of the corpus, which has no pages. Their citations
+    address a section anchor instead, which is what those codifiers give.
+    """
+    index = _page_index(document)
+    if index is None:
+        return []
+    return [
+        {"n": page.n, "label": page.label, "cite": page.cite}
+        for page in index.span(first, last)
+    ]
+
+
+def _page_note(quote: str) -> str:
+    """A quote's pages, as one phrase for a written citation."""
+    span = _span(quote)
+    if not span:
+        return ""
+    found = _pages(quote.partition("#L")[0], *span)
+    if not found:
+        return ""
+    # Both numbers, where both exist. The printed one is what a code cites and
+    # what somebody holding the book will look for; the PDF one is what opens
+    # the right sheet in a viewer, and the two are rarely the same.
+    return ", ".join(
+        f"p. {page['label']} (PDF page {page['n']})" if page["label"] else f"PDF page {page['n']}"
+        for page in found
+    )
+
+
 def _span(ref: str) -> tuple[int, int] | None:
     """The line range a citation names, or None if it names no lines."""
     _, _, fragment = ref.partition("#L")
@@ -618,6 +666,7 @@ def _passages(layer: Layer, decided: dict) -> list[dict[str, Any]]:
                     "cite": here[0]["cite"],
                     "url": here[0]["url"],
                     "lines": lines,
+                    "pages": _pages(document, chain[0][0], max(x[1] for x in chain)),
                     "error": "",
                     "rows": sorted(here, key=lambda r: (r["line"], r["zone"], r["field"])),
                     **_above(document, chain[0][0]),
@@ -697,6 +746,7 @@ def _bundle_text(rows: Sequence[Any]) -> str:
             f"- **verdict:** {row.verdict}",
             f"- **citation:** {row.cite}",
             f"- **quote:** `{row.quote}`",
+            f"- **printed at:** {_page_note(row.quote) or '(no page map for this source)'}",
             f"- **reviewed:** {row.decided_at:%Y-%m-%d} by {row.reviewer}",
             f"- **fingerprint:** `{row.fingerprint or '(none recorded)'}`",
             "",

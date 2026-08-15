@@ -875,3 +875,51 @@ async def test_the_feedback_page_says_which_notes_were_acted_on(
     assert "this one was fixed since" in page.text
     body = page.text.split("have been acted on")[-1].split("The bundle")[0]
     assert "nobody has touched it" not in body.split("Everything you marked")[0]
+
+
+# --- the page of the book ----------------------------------------------
+
+
+async def test_a_card_names_the_page_the_passage_was_printed_on(
+    client: AsyncClient, session: AsyncSession
+):
+    """A line number is ours; a page number is the document's.
+
+    Nobody can take "line 3,041 of 4.planning.txt" to a city planner. The page
+    is what makes the citation checkable by somebody who does not have this
+    system in front of them, which is the only kind of checking that counts.
+    """
+    await _login(client, session)
+
+    page = await client.get("/flats/review/or/clackamas/wilsonville")
+
+    assert "p. CD4:" in page.text, "the printed page, as the codifier prints it"
+    assert "#page=" in page.text, "and a link that opens the source there"
+
+
+async def test_a_source_with_no_pages_still_reviews(
+    client: AsyncClient, session: AsyncSession
+):
+    """Half the corpus is HTML, which has no pages and needs none."""
+    await _login(client, session)
+
+    page = await client.get("/flats/review/or/clackamas/milwaukie")
+
+    assert page.status_code == 200
+    assert "open the code" in page.text, "the plain link is still offered"
+
+
+async def test_the_bundle_says_where_to_look_in_the_book():
+    """What gets handed to an encoder has to survive leaving the app."""
+    from app.api.routers import ui_flats as ui
+
+    note = ui._page_note("or/clackamas/wilsonville/4.planning.txt#L3011-L3051")
+
+    assert note.startswith("p. CD4:")
+    assert "PDF page" in note, "both numbers — one to cite, one to open"
+
+
+async def test_a_quote_into_an_unmapped_document_says_nothing_rather_than_guessing():
+    from app.api.routers import ui_flats as ui
+
+    assert ui._page_note("or/clackamas/milwaukie/19.300.base-zones.txt#L100-L120") == ""

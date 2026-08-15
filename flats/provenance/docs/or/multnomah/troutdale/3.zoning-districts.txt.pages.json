@@ -1,0 +1,160 @@
+{
+  "sha256": "d2969dde07912f1a81e3827e1943fb9d00da4c43aa0b2021681c482f2ff7950f",
+  "extractor": "flats-html-text/3",
+  "pages": [
+    {
+      "n": 69,
+      "line": 1,
+      "label": "TDC3-1"
+    },
+    {
+      "n": 70,
+      "line": 46,
+      "label": "TDC3-2"
+    },
+    {
+      "n": 71,
+      "line": 56,
+      "label": "TDC3-3"
+    },
+    {
+      "n": 72,
+      "line": 107,
+      "label": "TDC3-4"
+    },
+    {
+      "n": 73,
+      "line": 148,
+      "label": "TDC3-5"
+    },
+    {
+      "n": 74,
+      "line": 196,
+      "label": "TDC3-6"
+    },
+    {
+      "n": 75,
+      "line": 245
+    },
+    {
+      "n": 77,
+      "line": 264,
+      "label": "TDC3-7"
+    },
+    {
+      "n": 78,
+      "line": 311,
+      "label": "TDC3-8"
+    },
+    {
+      "n": 79,
+      "line": 358,
+      "label": "TDC3-9"
+    },
+    {
+      "n": 80,
+      "line": 404,
+      "label": "TDC3-10"
+    },
+    {
+      "n": 81,
+      "line": 452,
+      "label": "TDC3-11"
+    },
+    {
+      "n": 82,
+      "line": 498,
+      "label": "TDC3-12"
+    },
+    {
+      "n": 83,
+      "line": 525,
+      "label": "TDC3-13"
+    },
+    {
+      "n": 84,
+      "line": 571,
+      "label": "TDC3-14"
+    },
+    {
+      "n": 85,
+      "line": 619,
+      "label": "TDC3-15"
+    },
+    {
+      "n": 86,
+      "line": 666,
+      "label": "TDC3-16"
+    },
+    {
+      "n": 87,
+      "line": 713,
+      "label": "TDC3-17"
+    },
+    {
+      "n": 88,
+      "line": 757,
+      "label": "TDC3-18"
+    },
+    {
+      "n": 89,
+      "line": 793,
+      "label": "TDC3-19"
+    },
+    {
+      "n": 90,
+      "line": 844,
+      "label": "TDC3-20"
+    },
+    {
+      "n": 91,
+      "line": 891,
+      "label": "TDC3-21"
+    },
+    {
+      "n": 92,
+      "line": 938,
+      "label": "TDC3-22"
+    },
+    {
+      "n": 93,
+      "line": 989,
+      "label": "TDC3-23"
+    },
+    {
+      "n": 94,
+      "line": 1036,
+      "label": "TDC3-24"
+    },
+    {
+      "n": 95,
+      "line": 1082,
+      "label": "TDC3-25"
+    },
+    {
+      "n": 96,
+      "line": 1129,
+      "label": "TDC3-26"
+    },
+    {
+      "n": 97,
+      "line": 1180,
+      "label": "TDC3-27"
+    },
+    {
+      "n": 98,
+      "line": 1230,
+      "label": "TDC3-28"
+    },
+    {
+      "n": 99,
+      "line": 1262,
+      "label": "TDC3-29"
+    },
+    {
+      "n": 101,
+      "line": 1298,
+      "label": "TDC4-1"
+    }
+  ]
+}

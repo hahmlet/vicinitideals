@@ -46,8 +46,15 @@
       <div>
         <strong>{{ p.cite or p.document }}</strong>
         <div class="muted" style="font-size:11px">
+          {% if p.pages %}
+            {% for page in p.pages %}
+              <a href="{{ p.url }}#page={{ page.n }}" target="_blank" rel="noopener"
+                 title="opens the source document at this page">{{ page.cite }}</a>{{ ", " if not loop.last }}
+            {% endfor %} ·
+          {% elif p.url %}
+            <a href="{{ p.url }}" target="_blank" rel="noopener">open the code</a> ·
+          {% endif %}
           {{ p.document }} · lines {{ p.lines[0].n if p.lines else "?" }}–{{ p.lines[-1].n if p.lines else "?" }}
-          {% if p.url %} · <a href="{{ p.url }}" target="_blank" rel="noopener">open the code</a>{% endif %}
         </div>
       </div>
       <div style="margin-left:auto;text-align:right">
