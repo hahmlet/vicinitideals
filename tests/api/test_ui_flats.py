@@ -1352,3 +1352,27 @@ async def test_a_flattened_row_is_shown_with_the_cells_under_it(
     assert candidates[0]["text"] == "Quadplexes"
     assert candidates[0]["after"][:3] == ["P7,8", "P7,8", "X"]
 
+
+
+async def test_the_book_url_is_not_swallowed_by_the_jurisdiction_page(
+    client: AsyncClient, session: AsyncSession
+):
+    """A catch-all registered above this one answers for everything under it.
+
+    ``/flats/{layer_id:path}`` matches ``/flats/book/or/.../33.110.txt`` as
+    happily as it matches ``/flats/or/multnomah/portland``, and FastAPI hands
+    the path to whichever route was registered first. Registered in the wrong
+    order, a reviewer clicking "show the page" gets the FLATS index rendered
+    inside the citation card — the app inside the app — instead of the page of
+    the code the standard was read from.
+    """
+    await _login(client, session)
+
+    response = await client.get("/flats/book/or/multnomah/portland/does-not-exist.txt")
+
+    # The book route's own answer for a document it does not hold. The point is
+    # that the book route is what answered: the catch-all would render a page.
+    assert response.status_code == 404
+    assert "no such stored document" in response.text
+    assert "No rule layer called" not in response.text
+    assert "Zoning rules" not in response.text

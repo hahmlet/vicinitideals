@@ -1429,6 +1429,50 @@ async def flats_sign_passage(
     )
 
 
+# Registered above the /flats/{layer_id:path} catch-all below, which is not
+# style: FastAPI matches routes in registration order, so the catch-all
+# answers /flats/book/... itself and tries to load the document path as a
+# jurisdiction, which is what a reviewer sees as the app inside the app.
+# --- the source page itself ----------------------------------------------
+
+
+@router.get("/flats/book/{document:path}", response_model=None)
+async def flats_book(
+    request: Request, session: DBSession, document: str
+) -> FileResponse | HTMLResponse:
+    """The PDF a document was read out of, so a browser can render its pages.
+
+    Served from here rather than linked to the codifier for two reasons. A city
+    web server is not a dependency a review session should have, and several of
+    these books answer an ordinary browser request with a redirect chain or a
+    rate limit. And the file served here is checked: its bytes hash to what the
+    page map recorded, so page 239 is the page the map counted, not page 239 of
+    a later edition that renumbered everything.
+    """
+    await _get_user(session, request)
+    if document not in _known_documents():
+        return HTMLResponse("no such stored document", status_code=404)
+    try:
+        # First view of a book is a twenty-megabyte download from a city web
+        # server. Doing that on the event loop would stall every other request
+        # in the worker behind one reviewer opening one page.
+        path = await run_in_threadpool(books.ensure, _store(), document)
+    except books.BookError as exc:
+        return HTMLResponse(str(exc), status_code=409)
+    return FileResponse(
+        path,
+        media_type="application/pdf",
+        # inline, or the browser downloads it instead of rendering it in place.
+        headers={
+            "Content-Disposition": "inline",
+            # The bytes are pinned to a hash, so a cached copy can never be the
+            # wrong edition. Re-downloading 20 MB per card would make the
+            # feature slower than the thing it replaces.
+            "Cache-Control": "private, max-age=86400",
+        },
+    )
+
+
 @router.get("/flats/{layer_id:path}", response_class=HTMLResponse)
 async def flats_layer(request: Request, session: DBSession, layer_id: str) -> HTMLResponse:
     user = await _get_user(session, request)
@@ -1637,46 +1681,6 @@ def _cited_lines(ref: str) -> tuple[list[dict[str, Any]], str]:
         {"n": n, "text": whole[n - 1], "quoted": first <= n <= last}
         for n in range(start, end + 1)
     ], ""
-
-
-# --- the source page itself ----------------------------------------------
-
-
-@router.get("/flats/book/{document:path}", response_model=None)
-async def flats_book(
-    request: Request, session: DBSession, document: str
-) -> FileResponse | HTMLResponse:
-    """The PDF a document was read out of, so a browser can render its pages.
-
-    Served from here rather than linked to the codifier for two reasons. A city
-    web server is not a dependency a review session should have, and several of
-    these books answer an ordinary browser request with a redirect chain or a
-    rate limit. And the file served here is checked: its bytes hash to what the
-    page map recorded, so page 239 is the page the map counted, not page 239 of
-    a later edition that renumbered everything.
-    """
-    await _get_user(session, request)
-    if document not in _known_documents():
-        return HTMLResponse("no such stored document", status_code=404)
-    try:
-        # First view of a book is a twenty-megabyte download from a city web
-        # server. Doing that on the event loop would stall every other request
-        # in the worker behind one reviewer opening one page.
-        path = await run_in_threadpool(books.ensure, _store(), document)
-    except books.BookError as exc:
-        return HTMLResponse(str(exc), status_code=409)
-    return FileResponse(
-        path,
-        media_type="application/pdf",
-        # inline, or the browser downloads it instead of rendering it in place.
-        headers={
-            "Content-Disposition": "inline",
-            # The bytes are pinned to a hash, so a cached copy can never be the
-            # wrong edition. Re-downloading 20 MB per card would make the
-            # feature slower than the thing it replaces.
-            "Cache-Control": "private, max-age=86400",
-        },
-    )
 
 
 @router.get("/ui/flats/book", response_class=HTMLResponse)
