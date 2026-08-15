@@ -121,3 +121,112 @@ async def test_a_quote_reference_cannot_walk_out_of_the_store(
     assert response.status_code == 200
     assert "no such stored document" in response.text
     assert "root:" not in response.text
+
+
+def text_query():
+    """Every recorded verdict, oldest first."""
+    from sqlalchemy import select
+
+    from app.models.flats import FlatsRuleSignature as S
+
+    return select(S.layer, S.zone, S.field, S.when_key, S.value, S.verdict).order_by(
+        S.decided_at
+    )
+
+
+# --- recording a reviewer's verdict -----------------------------------
+#
+# The verdict is not trust. It lands in an inbox, and a drain writes the
+# confirmations into the repository's verification log, where a signature is
+# hashed over the value and its citation. What these tests hold to is that the
+# inbox only ever accepts addresses the rule files actually hold, and that the
+# number signed is the one the server rendered rather than one the browser sent.
+
+
+async def _sign(client: AsyncClient, **over):
+    body = {
+        "layer_id": "or/clackamas/wilsonville",
+        "zone": "R",
+        "field": "setback_side_ft",
+        "when": "",
+        "verdict": "verified",
+    }
+    body.update(over)
+    return await client.post("/ui/flats/sign", data=body, headers={"hx-request": "true"})
+
+
+async def test_a_verdict_is_recorded_and_marked_pending(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+
+    response = await _sign(client)
+
+    assert response.status_code == 200
+    assert "confirmed" in response.text
+    # Pending is the honest state: nothing is verified until the drain writes
+    # it into the repository and the next release ships it.
+    assert "queued" in response.text
+
+    rows = (await session.execute(text_query())).all()
+    assert len(rows) == 1
+    layer, zone, field, when, value, verdict = rows[0]
+    assert (layer, zone, field, when, verdict) == (
+        "or/clackamas/wilsonville",
+        "R",
+        "setback_side_ft",
+        "",
+        "verified",
+    )
+    # Read from the rule files, not from the form.
+    assert value == 5
+
+
+async def test_a_variant_is_signed_on_its_own_address(
+    client: AsyncClient, session: AsyncSession
+):
+    # Wilsonville's small-lot side setback is five feet at one storey and seven
+    # at two. A reviewer reads one sentence and signs for that one.
+    await _login(client, session)
+
+    response = await _sign(client, when="lot_sqft:<=10000+multi_story")
+
+    assert response.status_code == 200
+    rows = (await session.execute(text_query())).all()
+    assert rows[0][3] == "lot_sqft:<=10000+multi_story"
+    assert rows[0][4] == 7
+
+
+async def test_a_verdict_on_a_value_we_do_not_hold_is_refused(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+
+    response = await _sign(client, field="setback_to_the_moon_ft")
+
+    assert response.status_code == 400
+    assert (await session.execute(text_query())).all() == []
+
+
+async def test_an_invented_verdict_is_refused(client: AsyncClient, session: AsyncSession):
+    await _login(client, session)
+
+    response = await _sign(client, verdict="brilliant")
+
+    assert response.status_code == 400
+    assert (await session.execute(text_query())).all() == []
+
+
+async def test_signing_requires_a_session(client: AsyncClient):
+    response = await client.post(
+        "/ui/flats/sign",
+        data={
+            "layer_id": "or/clackamas/wilsonville",
+            "zone": "R",
+            "field": "setback_side_ft",
+            "verdict": "verified",
+        },
+        follow_redirects=False,
+    )
+
+    assert response.status_code == 303

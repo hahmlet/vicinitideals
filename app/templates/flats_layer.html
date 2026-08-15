@@ -40,16 +40,24 @@
   </details>
   {% endif %}
 
+  <p class="muted" style="font-size:12px;margin:4px 0 12px">
+    Read the number, press <strong>Show source</strong>, and compare it to the highlighted
+    line. <strong>Confirm</strong> if they match, <strong>Wrong</strong> if they do not.
+    Decisions are collected here and applied in the next release — nothing changes
+    on the spot.
+  </p>
+
   <div class="table-wrap">
     <table class="data-table">
       <thead>
         <tr>
           <th>Zone</th>
           <th>Standard</th>
+          <th>Applies when</th>
           <th class="col-right">Value</th>
           <th>Status</th>
-          <th>Exceptions</th>
           <th>Source</th>
+          <th>Review</th>
         </tr>
       </thead>
       <tbody>
@@ -57,6 +65,7 @@
         <tr>
           <td>{{ row.zone }}</td>
           <td>{{ row.field }}</td>
+          <td class="muted" style="font-size:11px">{{ row.when_label or "always" }}</td>
           <td class="col-right">{{ row.value }}</td>
           <td>
             {% if row.trusted %}
@@ -66,7 +75,6 @@
               <span class="badge">{{ row.status }}</span>
             {% endif %}
           </td>
-          <td>{% if row.variants %}{{ row.variants }}{% endif %}</td>
           <td>
             {% if row.quote %}
               <button class="btn btn-secondary btn-sm"
@@ -77,6 +85,22 @@
               <div id="quote-{{ loop.index }}"></div>
             {% else %}
               <span class="muted" title="{{ row.cite }}">no quote — {{ row.cite }}</span>
+            {% endif %}
+          </td>
+          <td>
+            <div id="decision-{{ loop.index }}">
+              {% include "partials/flats_decision.html" %}
+            </div>
+            {% if row.quote %}
+            <form hx-post="/ui/flats/sign" hx-target="#decision-{{ loop.index }}" hx-swap="innerHTML"
+                  style="display:flex;gap:4px;margin-top:4px">
+              <input type="hidden" name="layer_id" value="{{ layer.id }}">
+              <input type="hidden" name="zone" value="{{ row.zone }}">
+              <input type="hidden" name="field" value="{{ row.field }}">
+              <input type="hidden" name="when" value="{{ row.when }}">
+              <button class="btn btn-sm" name="verdict" value="verified">Confirm</button>
+              <button class="btn btn-secondary btn-sm" name="verdict" value="rejected">Wrong</button>
+            </form>
             {% endif %}
           </td>
         </tr>

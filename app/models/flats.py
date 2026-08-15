@@ -401,3 +401,62 @@ class FlatsReviewDecision(Base):
         DateTime(timezone=True), server_default=func.now(), nullable=False
     )
     superseded_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class FlatsRuleSignature(Base):
+    """A reviewer's verdict on one encoded standard, captured in the browser.
+
+    Verification is a signature over a value, and the signature lives in the
+    repository (``flats/config/verifications.jsonl``) hashed over the number and
+    its citation, so editing either silently withdraws it. That property is the
+    reason the log cannot be replaced by a table: a database row survives an
+    edit to the YAML it was about, and a stale row certifying a number nobody
+    read is the worst failure this system has.
+
+    So this table is an inbox, not a source of truth. A reviewer comparing a
+    value to its quoted line records the verdict here; a later drain writes the
+    verified ones into the log for commit and stamps ``exported_at``. Rules load
+    from the repository either way — an undrained signature has simply not taken
+    effect yet, which is visible rather than silent.
+    """
+
+    __tablename__ = "rule_signatures"
+    __table_args__ = (
+        Index(
+            "ix_flats_rule_signatures_pending",
+            "decided_at",
+            postgresql_where=text("exported_at IS NULL"),
+        ),
+        Index("ix_flats_rule_signatures_value", "layer", "zone", "field", "when_key"),
+        {"schema": SCHEMA},
+    )
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+
+    #: Layer id, e.g. ``or/clackamas/wilsonville``.
+    layer: Mapped[str] = mapped_column(String(120), nullable=False)
+    #: Zone code, or ``(layer defaults)`` for a layer-wide value.
+    zone: Mapped[str] = mapped_column(String(40), nullable=False)
+    field: Mapped[str] = mapped_column(String(64), nullable=False)
+    #: Sorted condition and band tokens joined by ``+``, empty for the base
+    #: value. The same address the signing log uses, so a drain is a copy.
+    when_key: Mapped[str] = mapped_column(String(200), nullable=False, server_default="")
+
+    #: The number as it stood when the reviewer looked at it.
+    value: Mapped[Any] = mapped_column(JSONB, nullable=False)
+    cite: Mapped[str] = mapped_column(Text, nullable=False, server_default="")
+    quote: Mapped[str] = mapped_column(Text, nullable=False, server_default="")
+
+    #: verified | rejected.
+    verdict: Mapped[str] = mapped_column(String(10), nullable=False)
+    note: Mapped[str] = mapped_column(Text, nullable=False, server_default="")
+
+    reviewer: Mapped[str] = mapped_column(String(80), nullable=False)
+    reviewer_user_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL")
+    )
+    decided_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+    #: When a drain wrote this into the repository log. NULL is the queue.
+    exported_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))

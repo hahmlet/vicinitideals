@@ -1,0 +1,11 @@
+{% if error %}
+  <span class="muted" style="font-size:11px">{{ error }}</span>
+{% elif row.decision == "verified" %}
+  <span class="badge badge-success">confirmed</span>
+  {% if row.pending %}<div class="muted" style="font-size:11px">queued for the next release</div>{% endif %}
+{% elif row.decision == "rejected" %}
+  <span class="badge badge-danger">wrong</span>
+  {% if row.pending %}<div class="muted" style="font-size:11px">queued for the encoder</div>{% endif %}
+{% else %}
+  <span class="muted" style="font-size:11px">not reviewed</span>
+{% endif %}
