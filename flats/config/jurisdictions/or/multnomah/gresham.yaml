@@ -11,8 +11,9 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
   the top and the districts down the side, and states each district group twice: once under "Single Detached
   Dwelling, Duplex, Triplex, and Quadplex" and once under "Townhouse". The quadplex row is the one encoded,
   because FLATS screens a four-unit building placed on one lot. The townhouse row is looser for the MDR
-  group (rear 10 not 15, street side 8 not 20) and would apply only to a plat that gave each unit its own
-  lot -- a different product, and not one this screen models.
+  group (rear 10 not 15, street side 8 not 20) and applies to the split plat, where each unit gets its
+  own lot. Those setback rows are not yet encoded as `when: [unit_lots]` variants; the lot standards of
+  Table 4.0130 are.
 
 
   Eleven of that table''s twelve columns are setbacks and most are variants the screen does not use: the
@@ -22,6 +23,15 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
   interior side, street-side wall and rear-no-alley columns are encoded.
 
 
+  Table 4.0130 states a townhouse row beside the quadplex row for every lot standard, and those rows
+  are encoded as `when: [unit_lots]` variants on the six zones the table has a column for (LDR-5,
+  LDR-7, TLDR, TR, MDR-12, MDR-24). Townhouse minimum lot size is None in every column; width and
+  street frontage are 16 ft per lot. The plan districts (LDR-PV, LDR-SW, DRL-1, DRL-2, CMF) are
+  governed by their own chapters and get nothing from this table. Table note 7 is not encoded and
+  binds the split path everywhere it applies: a townhouse lot under 22 feet wide must take access
+  from an alley or a shared access, and 16 ft is always under 22. MDR-24''s min_lot_sqft is a density
+  derivation (24.2 u/ac, 4 units) rather than the table''s lot-size row, so the townhouse "None" does
+  not displace it — the unit count is what the density counts, and dividing the lot does not change it.
   Footnote 5 on the LDR front setback (a garage or carport entry set at 20 ft.) is carried as
   setback_garage_entrance_ft rather than folded into the front setback.'
 ingest:
@@ -85,14 +95,26 @@ zones:
     min_lot_sqft:
       value: 5000
       quote: "or/multnomah/gresham/4.0100.residential.txt#L243"
+      variants:
+        - value: 0
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L242"
     notes: 'quadfit confidence: verified | Quadplex P outright. Rear w/ alley 8 ft (not modeled). FAR
       1.0. Height 35 ft.'
     min_frontage_ft:
       value: 35
       quote: "or/multnomah/gresham/4.0100.residential.txt#L314"
+      variants:
+        - value: 16
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L313"
     min_lot_width_ft:
       value: 35
       quote: "or/multnomah/gresham/4.0100.residential.txt#L274"
+      variants:
+        - value: 16
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L277"
   LDR-7:
     section: ["4.01", "7.042"]
     cite_default:
@@ -118,6 +140,10 @@ zones:
     min_lot_sqft:
       value: 7000
       quote: "or/multnomah/gresham/4.0100.residential.txt#L243"
+      variants:
+        - value: 0
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L242"
     notes: 'quadfit confidence: verified | Min lot 7,000 sf. FAR 0.7 (tightest in city; still >1,000 sf
       building on min lot).'
     max_height_ft:
@@ -126,9 +152,17 @@ zones:
     min_frontage_ft:
       value: 40
       quote: "or/multnomah/gresham/4.0100.residential.txt#L314"
+      variants:
+        - value: 16
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L313"
     min_lot_width_ft:
       value: 40
       quote: "or/multnomah/gresham/4.0100.residential.txt#L274"
+      variants:
+        - value: 16
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L277"
   TLDR:
     section: ["4.01", "7.042"]
     cite_default:
@@ -159,12 +193,24 @@ zones:
     min_frontage_ft:
       value: 35
       quote: "or/multnomah/gresham/4.0100.residential.txt#L314"
+      variants:
+        - value: 16
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L313"
     min_lot_sqft:
       value: 8000
       quote: "or/multnomah/gresham/4.0100.residential.txt#L593"
+      variants:
+        - value: 0
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L242"
     min_lot_width_ft:
       value: 16
       quote: "or/multnomah/gresham/4.0100.residential.txt#L274"
+      variants:
+        - value: 16
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L277"
   TR:
     section: ["4.01", "7.042"]
     cite_default:
@@ -190,6 +236,10 @@ zones:
     min_lot_sqft:
       value: 4000
       quote: "or/multnomah/gresham/4.0100.residential.txt#L243"
+      variants:
+        - value: 0
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L242"
     notes: 'quadfit confidence: verified | Min lot 4,000 sf. FAR 1.0.'
     max_height_ft:
       value: 35
@@ -197,9 +247,17 @@ zones:
     min_frontage_ft:
       value: 35
       quote: "or/multnomah/gresham/4.0100.residential.txt#L314"
+      variants:
+        - value: 16
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L313"
     min_lot_width_ft:
       value: 35
       quote: "or/multnomah/gresham/4.0100.residential.txt#L274"
+      variants:
+        - value: 16
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L277"
   LDR-PV:
     section: ["4.14", "7.042"]
     cite_default:
@@ -265,6 +323,10 @@ zones:
     min_lot_sqft:
       value: 3600
       quote: "or/multnomah/gresham/4.0100.residential.txt#L243"
+      variants:
+        - value: 0
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L242"
     notes: 'quadfit confidence: verified | Interior side 10 ft; street-side wall 20 ft (corner lots modeled
       at max(F, street-side)).'
     max_height_ft:
@@ -273,9 +335,17 @@ zones:
     min_frontage_ft:
       value: 45
       quote: "or/multnomah/gresham/4.0100.residential.txt#L314"
+      variants:
+        - value: 16
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L313"
     min_lot_width_ft:
       value: 16
       quote: "or/multnomah/gresham/4.0100.residential.txt#L274"
+      variants:
+        - value: 16
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L277"
   MDR-24:
     section: ["4.01", "7.042"]
     cite_default:
@@ -308,6 +378,10 @@ zones:
     min_frontage_ft:
       value: 45
       quote: "or/multnomah/gresham/4.0100.residential.txt#L314"
+      variants:
+        - value: 16
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L313"
   DRL-1:
     section: ["4.11", "7.042"]
     cite_default:

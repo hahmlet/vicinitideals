@@ -55,12 +55,30 @@ zones:
     min_lot_sqft:
       value: 6500
       quote: "or/clackamas/tualatin/40-41.residential.txt#L171"
+      variants:
+        # The same table's townhouse row. Four of these is 5,600 sq ft against
+        # the quadplex row's 6,500 — the split plat buys a smaller lot here.
+        - value: 1400
+          when: [unit_lots]
+          quote: "or/clackamas/tualatin/40-41.residential.txt#L166"
     min_lot_width_ft:
       value: 50
       quote: "or/clackamas/tualatin/40-41.residential.txt#L190-L191"
+      variants:
+        # "T ownhouse None" — the table states no minimum lot width for a
+        # townhouse. Encoded as zero rather than left out, because left out
+        # would inherit the 50 ft quadplex row, which is the opposite of what
+        # the row says.
+        - value: 0
+          when: [unit_lots]
+          quote: "or/clackamas/tualatin/40-41.residential.txt#L196"
     max_coverage_pct:
       value: 60
       quote: "or/clackamas/tualatin/40-41.residential.txt#L248"
+      variants:
+        - value: 75
+          when: [unit_lots]
+          quote: "or/clackamas/tualatin/40-41.residential.txt#L246"
     max_height_ft:
       value: 35
       quote: "or/clackamas/tualatin/40-41.residential.txt#L237"
@@ -100,9 +118,17 @@ zones:
     min_lot_sqft:
       value: 4500
       quote: "or/clackamas/tualatin/40-41.residential.txt#L478"
+      variants:
+        - value: 1400
+          when: [unit_lots]
+          quote: "or/clackamas/tualatin/40-41.residential.txt#L475"
     max_coverage_pct:
       value: 60
       quote: "or/clackamas/tualatin/40-41.residential.txt#L586"
+      variants:
+        - value: 75
+          when: [unit_lots]
+          quote: "or/clackamas/tualatin/40-41.residential.txt#L584"
     max_height_ft:
       value: 35
       quote: "or/clackamas/tualatin/40-41.residential.txt#L577"
@@ -115,6 +141,3 @@ zones:
       where it is 10 ft. Relief not encoded: lot size and width reductions for Flexible Lot
       Subdivisions under TDC 36.410, width 30 ft on a cul-de-sac, zero side setback where townhouse
       units attach, height to 50 ft where setbacks are 1.5x the height.'
-    min_lot_width_ft:
-      value: 40
-      quote: "or/clackamas/tualatin/40-41.residential.txt#L515-L516"

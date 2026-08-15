@@ -47,6 +47,10 @@ zones:
     min_lot_sqft:
       value: 7000
       quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1253"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1261"
     max_coverage_pct:
       value: 55
       quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1306"
@@ -69,6 +73,10 @@ zones:
     min_lot_sqft:
       value: 7000
       quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1251"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1259"
     max_coverage_pct:
       value: 50
       quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1304"
@@ -87,6 +95,10 @@ zones:
     min_lot_sqft:
       value: 7000
       quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L536"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L545"
     max_coverage_pct: 45
     notes: 'quadfit confidence: verified | Coverage is height-tiered (45% at <=22 ft — applies to a 2-story
       quadplex). Floor-area formula cap noted, never binds ~1,000 sf building.'
@@ -108,9 +120,17 @@ zones:
     min_lot_sqft:
       value: 7500
       quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L59"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L79"
     min_lot_width_ft:
       value: 50
       quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L65"
+      variants:
+        - value: 15
+          when: [unit_lots]
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L84"
     max_coverage_pct: 35
     notes: 'Read against LOC Table 50.04.001-1 on 2026-08-14: lot area 7,500 (L59), lot width 50
       (L65), front 25 (L116) and rear 30 (L138), each quoted to its own cell under the table''s

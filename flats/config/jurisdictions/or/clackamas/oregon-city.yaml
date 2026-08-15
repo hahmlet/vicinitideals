@@ -189,9 +189,19 @@ zones:
     min_lot_sqft:
       value: 7000
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4313"
+      variants:
+        # Table 17.10.040's own townhouse row, one line above the quadplex
+        # row this value comes from. Four of these is 6,000 sq ft.
+        - value: 1500
+          when: [unit_lots]
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L4317"
     min_lot_width_ft:
       value: 35
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4328"
+      variants:
+        - value: 20
+          when: [unit_lots]
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L4329"
     max_coverage_pct:
       value: 70
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4324"
@@ -231,9 +241,19 @@ zones:
     min_lot_sqft:
       value: 7000
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4313"
+      variants:
+        # Table 17.10.040's own townhouse row, one line above the quadplex
+        # row this value comes from. Four of these is 6,000 sq ft.
+        - value: 1500
+          when: [unit_lots]
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L4317"
     min_lot_width_ft:
       value: 25
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4328"
+      variants:
+        - value: 20
+          when: [unit_lots]
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L4329"
     max_coverage_pct:
       value: 80
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4324"
