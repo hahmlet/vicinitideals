@@ -1,5 +1,5 @@
 {
-  "digest": "93620433b21dab2caa330e6674b3b0b9f8a79fe33b3bcb064d20803e81906536",
+  "digest": "82360f16649b2fd45c0a493094ca58033f3ac1ae496c29019d19dec579929d14",
   "layers": {
     "or": {
       "misattributed": [],
@@ -658,27 +658,8 @@
     "or/clackamas/milwaukie": {
       "misattributed": [],
       "label": "Milwaukie",
-      "counts": {
-        "uncheckable": 2
-      },
-      "gaps": [
-        {
-          "zone": "R-HD",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/milwaukie \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R-MD",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/milwaukie \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        }
-      ]
+      "counts": {},
+      "gaps": []
     },
     "or/clackamas/oregon-city": {
       "misattributed": [

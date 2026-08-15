@@ -95,6 +95,14 @@ _ABOUT_SOMETHING_ELSE = re.compile(
 )
 
 
+#: A use-table row: the housing type opens the line and its cells follow.
+#: "Quadplex   P   P   NP" is the whole answer in one line, and it is better
+#: evidence than any sentence — which is why it wins over one.
+_ROW = re.compile(
+    r"^(?:quad[- ]?plex|quadraplex|four[- ]?plex|four[- ]unit|middle housing)\b", re.I
+)
+
+
 @dataclass(frozen=True, slots=True)
 class Found:
     """A line proposed as the evidence for one zone's permission."""
@@ -150,7 +158,13 @@ def _names_zone(line: str, zone: str) -> bool:
 
 
 def permissions_in(
-    text: str, *, path: str, zone: str, claimed: Sequence[str], spaced: bool = False
+    text: str,
+    *,
+    path: str,
+    zone: str,
+    claimed: Sequence[str],
+    spaced: bool = False,
+    siblings: Sequence[str] = (),
 ) -> list[tuple[str, str, str, str]]:
     """Lines in one document that state this zone's permission.
 
@@ -159,17 +173,27 @@ def permissions_in(
     swallows the whole grid into a blob that cites forty lines and states
     nothing a reviewer can check against.
 
-    Two things scope a line to a zone, and either will do. A section the zone
-    claims is one. The other is the nearest heading above it that names the
-    zone: a use table headed "Table 16.22.020-1 Very Low Density Residential
-    (R-40, R-20, R-15) Permitted Uses" says which columns follow, and every
-    row under it belongs to those three zones and to no others.
+    Three things scope a line to a zone, and any will do. A section the zone
+    claims is one. The nearest heading above it that names the zone is another:
+    a use table headed "Table 16.22.020-1 Very Low Density Residential (R-40,
+    R-20, R-15) Permitted Uses" says which columns follow, and every row under
+    it belongs to those three zones and to no others.
+
+    The third is the column header, which is where most codes put it. A caption
+    reading "Table 19.301.2 Moderate Density Residential Uses Allowed" names no
+    zone at all; the row beneath it — "Use | R-MD | Standards" — names exactly
+    one, and every row after that is that zone's answer. It anchors only when
+    the header names *one* of the layer's zones: a grid with four columns
+    flattens to "Quadplex  P  N  P  N" and no reader, human or otherwise, can
+    say from the text which column is which.
 
     Returns ``(quote, text, strength, named)``.
     """
     out: list[tuple[str, str, str, str]] = []
     section = ""
     scoped = False
+    columned = False
+    header_next = False
     for n, raw in enumerate((repair_text(text) if spaced else text).splitlines(), 1):
         line = raw.strip()
         if not line:
@@ -182,6 +206,12 @@ def permissions_in(
             # the table it opens is a new set of columns, and inheriting the
             # last table's would attribute its rows to whatever came before.
             scoped = _names_zone(line, zone)
+            columned = False
+            header_next = bool(_TABLE.match(line)) and not scoped
+        elif header_next:
+            header_next = False
+            named_here = [z for z in siblings if _names_zone(line, z)]
+            columned = named_here == [zone]
         if _NEGATED.search(line) or _ABOUT_SOMETHING_ELSE.search(line):
             continue
         if not _ALLOWS.search(line):
@@ -190,7 +220,14 @@ def permissions_in(
         if named is None:
             continue
         anchored = (
-            _in_section(section, claimed) or scoped or _names_zone(line, zone)
+            _in_section(section, claimed)
+            or scoped
+            or _names_zone(line, zone)
+            # A column header says which column the cells in a *row* belong to,
+            # and nothing about the prose printed under the same table. Lake
+            # Oswego's density notes sit thirty lines below the grid and
+            # mention quadplexes while granting nothing.
+            or (columned and bool(_ROW.match(line)))
         ) and bool(_TYPE.search(line))
         out.append(
             (
@@ -228,18 +265,15 @@ def search(layer: Layer, store: ProvenanceStore) -> list[Found]:
         claimed = layer.zones[code].section
         for path, text, spaced in documents:
             for quote, line, strength, named in permissions_in(
-                text, path=path, zone=code, claimed=claimed, spaced=spaced
+                text,
+                path=path,
+                zone=code,
+                claimed=claimed,
+                spaced=spaced,
+                siblings=sorted(layer.zones),
             ):
                 out.append(Found(layer.layer, code, quote, line, strength, named))
     return out
-
-
-#: A use-table row: the housing type opens the line and its cells follow.
-#: "Quadplex   P   P   NP" is the whole answer in one line, and it is better
-#: evidence than any sentence — which is why it wins over one.
-_ROW = re.compile(
-    r"^(?:quad[- ]?plex|quadraplex|four[- ]?plex|four[- ]unit|middle housing)\b", re.I
-)
 
 
 def best(found: Iterable[Found]) -> dict[tuple[str, str], Found]:

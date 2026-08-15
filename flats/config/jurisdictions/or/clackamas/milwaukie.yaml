@@ -24,7 +24,9 @@ zones:
       cite: MMC 19.301 Moderate Density Residential, Table 19.301.4; use table 19.301.2
       url: https://ecode360.com/43860500
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L35"
     setback_front_ft:
       value: 20
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L184"
@@ -103,7 +105,9 @@ zones:
       cite: MMC 19.302 High Density Residential, Table 19.302.4
       url: https://ecode360.com/43860500
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L404"
     setback_front_ft:
       value: 20
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L495"

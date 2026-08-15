@@ -26,8 +26,8 @@ Accessory dwelling unit      P         P         P
 """
 
 
-def found(text: str, *, zone: str, claimed=("4.0120",), path: str = DOC):
-    return permissions_in(text, path=path, zone=zone, claimed=claimed)
+def found(text: str, *, zone: str, claimed=("4.0120",), path: str = DOC, siblings=()):
+    return permissions_in(text, path=path, zone=zone, claimed=claimed, siblings=siblings)
 
 
 # --- what it accepts ---------------------------------------------------
@@ -162,3 +162,54 @@ def test_a_value_already_written_as_a_block_is_not_rewritten() -> None:
 
     assert wrote == []
     assert updated.strip() == already.strip()
+
+
+# --- the column header, which is where most codes name the zone --------
+
+
+ONE_COLUMN = """§ 19.301.2. Allowed Uses in Moderate Density Residential Zones.
+Table 19.301.2 Moderate Density Residential Uses Allowed
+Use                          R-MD      Standards/Additional Provisions
+Single detached dwelling     P         Subsection 19.505.1
+Quadplex                     P         Subsection 19.505.1
+Notes:
+Net developable area divided by the minimum lot area per unit. Quadplexes are
+allowed to exceed the maximum density standard.
+"""
+
+
+def test_the_column_header_scopes_the_rows_under_it() -> None:
+    """A caption names the district in prose; the header names the zone.
+
+    "Moderate Density Residential Uses Allowed" is not a zone code, so nothing
+    above the grid ties it to R-MD — and the row below it, which is the entire
+    permission, would go unciteable in every code that lays its tables out this
+    way. The header row is what says which column the P is in.
+    """
+    got = found(ONE_COLUMN, zone="R-MD", claimed=(), siblings=("R-MD", "R-HD"))
+
+    assert [(q, s) for q, _t, s, _n in got if s == "anchored"] == [(f"{DOC}#L5", "anchored")]
+
+
+def test_a_header_naming_several_zones_scopes_nothing() -> None:
+    """Four columns flatten to "Quadplex  P  N  P  N" and no reader can say
+    which cell is which zone's. The row stays loose, which is the honest state
+    — a citation pointing at another zone's answer is worse than none."""
+    text = ONE_COLUMN.replace(
+        "Use                          R-MD      Standards/Additional Provisions",
+        "Use                          R-MD      R-HD      Standards",
+    )
+
+    got = found(text, zone="R-MD", claimed=(), siblings=("R-MD", "R-HD"))
+
+    assert not [q for q, _t, s, _n in got if s == "anchored"]
+
+
+def test_the_header_scopes_rows_and_not_the_prose_beneath_the_table() -> None:
+    """Lake Oswego's density note sits thirty lines under the grid, mentions
+    quadplexes, and grants nothing. A column header says which column a cell
+    belongs to; it says nothing about a sentence."""
+    got = found(ONE_COLUMN, zone="R-MD", claimed=(), siblings=("R-MD",))
+
+    anchored = [q for q, _t, s, _n in got if s == "anchored"]
+    assert f"{DOC}#L8" not in anchored, "the note is prose, not a cell"
