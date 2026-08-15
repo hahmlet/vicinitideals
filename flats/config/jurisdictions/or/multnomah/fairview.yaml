@@ -186,11 +186,19 @@ zones:
       url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19115.html
       retrieved: '2026-07-24'
     quadplex_allowed: true
-    setback_front_ft: 10
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/fairview/19.115.txt#L47"
     setback_side_ft: 4.5
-    setback_rear_ft: 15
-    setback_street_side_ft: 10
-    min_lot_sqft: 4000
+    setback_rear_ft:
+      value: 15
+      quote: "or/multnomah/fairview/19.115.txt#L55"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/multnomah/fairview/19.115.txt#L53"
+    min_lot_sqft:
+      value: 4000
+      quote: "or/multnomah/fairview/19.115.txt#L35"
     max_coverage_pct:
       value: 60
       quote: "or/multnomah/fairview/19.115.txt#L39"

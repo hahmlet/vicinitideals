@@ -179,9 +179,13 @@ zones:
       retrieved: '2026-07-24'
     quadplex_allowed: true
     setback_front_ft: 10
-    setback_side_ft: 5
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/_unincorporated/39.lr-7.txt#L411"
     setback_rear_ft: 10
-    setback_street_side_ft: 10
+    setback_street_side_ft:
+      value: 10
+      quote: "or/multnomah/_unincorporated/39.lr-7.txt#L411"
     min_lot_sqft: 7000
     notes: 'quadfit confidence: needs_verification | County plan areas (Interlachen). MCC has no middle-housing
       code; the un-adopted state Model Code pre-empts: front/street-side capped at 10 ft, rear capped
