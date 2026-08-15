@@ -63,6 +63,28 @@ class Delivery(str, enum.Enum):
     site_built = "site_built"
 
 
+class Plat(str, enum.Enum):
+    """How the four units reach the market on paper.
+
+    A four-unit attached building can be permitted as a quadplex on one lot or
+    as four townhouse lots each on its own. Cities state different standards
+    for the two — Gresham's townhouse lot width is 16 ft where the quadplex row
+    says 35 — so this is not a filing detail, it decides which numbers govern.
+
+    It lives on the design because it is a property of the product rather than
+    of the parcel, and because two plat paths are then two catalog entries with
+    two comparable answers, instead of one answer somebody had to choose once
+    inside a rule file and could not revisit per market.
+    """
+
+    #: All four units on the parcel being screened. What the rule files model
+    #: today, and what min_lot_sqft ("minimum lot area for a fourplex") means.
+    one_lot = "one_lot"
+    #: Each unit on its own lot after platting. Lot-size and lot-width
+    #: standards then read per unit, not per building.
+    unit_lots = "unit_lots"
+
+
 class DesignStatus(str, enum.Enum):
     #: Evaluated by new runs.
     active = "active"
@@ -134,6 +156,9 @@ class Design(BaseModel):
     height_ft: float = Field(gt=0)
     parking: Parking
     delivery: DeliverySpec
+    #: Which plat path this entry is costed for. Defaults to the path the rule
+    #: files already model, so an entry that says nothing keeps its meaning.
+    plat: Plat = Plat.one_lot
     status: DesignStatus = DesignStatus.active
     notes: str = ""
     #: Values taken as product intent rather than from a drawing set. Surfaced
@@ -176,6 +201,8 @@ class Design(BaseModel):
         become a condition no variant will ever match.
         """
         facts = {"multi_story"} if self.stories >= 2 else set()
+        if self.plat is Plat.unit_lots:
+            facts.add("unit_lots")
         for name in facts:
             condition(name)
         return frozenset(facts)

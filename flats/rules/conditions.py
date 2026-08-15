@@ -219,6 +219,16 @@ _C: tuple[ConditionDef, ...] = (
         "meet.",
         evidence="the design catalog entry — Design.stories",
     ),
+    ConditionDef(
+        "unit_lots",
+        "design_fact",
+        "The four units are being platted onto lots of their own rather than "
+        "sharing one. Cities state different standards for the two paths — a "
+        "townhouse lot width where the quadplex row states the parcel's — and "
+        "which set governs is decided by how the product is brought to "
+        "market, not by the parcel.",
+        evidence="the design catalog entry — Design.plat",
+    ),
     # --- relief: an approval the developer applies for ------------------
     ConditionDef(
         "adjustment",
