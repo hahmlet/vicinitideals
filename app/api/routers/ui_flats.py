@@ -49,6 +49,8 @@ from app.api.routers.ui_helpers import _base_ctx, _get_counts, _get_user, templa
 from app.models.flats import FlatsRuleSignature
 from flats.designs.model import Design, DesignStatus, Plat, load_catalog
 from flats.encode.attribution import claimed_sections, section_at
+from flats.encode.gaps import digest as gaps_digest
+from flats.encode.gaps import read_ledger
 from flats.encode.verify import fingerprint
 from flats.provenance import pages as page_map
 from flats.provenance.store import ProvenanceError, ProvenanceStore
@@ -81,6 +83,20 @@ _VERDICTS = frozenset({"verified", "rejected", "unclear"})
 #: word about what is wrong produces a queue an encoder cannot act on, which is
 #: the same as producing nothing.
 _NEEDS_NOTE = frozenset({"rejected", "unclear"})
+
+#: What each gap cause means, said to somebody who is not going to run a
+#: command about it. The encoder's phrasing names modules and flags; a reviewer
+#: deciding where to spend an afternoon needs the shape of the work.
+_CAUSE_WORDS = {
+    "unofficial": "cites somebody's restatement of the code, not the code",
+    "contested": "the file and the document state different numbers",
+    "quotable": "the document says it plainly — a citation can be attached",
+    "conditional": "the document qualifies it, by footnote or by lot size",
+    "multi": "the document states more than one number for it",
+    "undeclared": "cites a document nothing has fetched",
+    "unsourced": "no document we hold states it — the chapter is still to find",
+    "uncheckable": "a yes/no or a category, which only a person can cite",
+}
 
 #: The layer-wide block's zone label. Not a zone code, so it cannot collide.
 _DEFAULTS = "(layer defaults)"
@@ -832,6 +848,54 @@ def _answered(rows: Sequence[Any]) -> list[dict[str, Any]]:
             }
         )
     return out
+
+
+# --- what is not encoded -------------------------------------------------
+
+
+@lru_cache(maxsize=1)
+def _gaps() -> dict[str, Any]:
+    """The written answer to "what is missing", and whether it still holds.
+
+    Measuring is a minute per jurisdiction — every value corroborated against
+    every stored document — so it is written down by a command and read back
+    here. The digest is over the encoded values and their citations, so a page
+    can say the measurement has been overtaken instead of quietly presenting
+    last week's work list as today's.
+    """
+    ledger = read_ledger() or {"layers": {}, "digest": ""}
+    ledger["current"] = ledger.get("digest") == gaps_digest(_layers())
+    return ledger
+
+
+@router.get("/flats/gaps", response_class=HTMLResponse)
+async def flats_gaps(request: Request, session: DBSession) -> HTMLResponse:
+    """Every value nothing backs, sorted by what would unstick it.
+
+    The review queue can only show what has a quote. A standard with no
+    citation never reaches it — so without this page the holes are the one
+    thing the system does not show, and a jurisdiction can look finished
+    because the half nobody encoded is invisible.
+    """
+    user = await _get_user(session, request)
+    dedup_count, conflicts_count = await _get_counts(session)
+    ledger = _gaps()
+    rows = [
+        {"layer": layer_id, **one}
+        for layer_id, one in sorted(ledger["layers"].items())
+        if one["gaps"]
+    ]
+    return templates.TemplateResponse(
+        request,
+        "flats_gaps.html",
+        {
+            **_base_ctx(user, dedup_count, "flats", conflicts_count=conflicts_count),
+            "rows": sorted(rows, key=lambda r: -len(r["gaps"])),
+            "total": sum(len(r["gaps"]) for r in rows),
+            "current": ledger["current"],
+            "causes": _CAUSE_WORDS,
+        },
+    )
 
 
 @router.get("/flats/feedback", response_class=HTMLResponse)

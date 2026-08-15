@@ -1031,3 +1031,67 @@ async def test_a_citation_naming_several_tables_is_not_flagged_for_the_wrong_one
     found = ui._misattributed(cite, quote)
 
     assert found is None or found["found"] not in cite
+
+
+async def test_the_holes_have_a_page_of_their_own(
+    client: AsyncClient, session: AsyncSession
+):
+    """A review queue can only show what has a quote.
+
+    Which means the standards with no citation are the one thing the system
+    never puts in front of anybody — and a jurisdiction reads as finished
+    because the half nobody encoded is invisible.
+    """
+    await _login(client, session)
+
+    page = await client.get("/flats/gaps")
+
+    assert page.status_code == 200
+    assert "What is not encoded" in page.text
+
+
+async def test_a_gap_is_named_by_what_would_unstick_it(
+    client: AsyncClient, session: AsyncSession
+):
+    """"unquoted" is eight states that need opposite things.
+
+    A boolean nothing can corroborate and a chapter nobody has found are both
+    unquoted, and telling a reviewer to run the same command against each is
+    how the readiness ladder came to point at work that could not be done.
+    """
+    await _login(client, session)
+
+    page = await client.get("/flats/gaps")
+
+    assert "a yes/no or a category, which only a person can cite" in page.text
+    assert "the chapter is still to find" in page.text
+
+
+async def test_the_gaps_page_admits_when_its_measurement_is_stale(monkeypatch):
+    """The ledger is written by a command, so it can fall behind the encoding.
+
+    Presenting last week's work list as today's is the failure worth guarding:
+    it sends somebody to fix something already fixed, and hides what is new.
+    """
+    from app.api.routers import ui_flats as ui
+
+    ui._gaps.cache_clear()
+    monkeypatch.setattr(ui, "read_ledger", lambda: {"layers": {}, "digest": "moved on"})
+    try:
+        assert ui._gaps()["current"] is False
+    finally:
+        ui._gaps.cache_clear()
+
+
+async def test_the_written_ledger_matches_the_corpus_it_was_measured_from():
+    """Committed with the rules, so it should be current in a clean checkout."""
+    from app.api.routers import ui_flats as ui
+
+    ui._gaps.cache_clear()
+    try:
+        assert ui._gaps()["current"], (
+            "flats/config/gaps.json is behind the YAML — re-run "
+            "`python -m flats.encode.gaps`"
+        )
+    finally:
+        ui._gaps.cache_clear()

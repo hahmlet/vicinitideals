@@ -21,6 +21,7 @@ import yaml
 from flats.encode.corroborate import Finding, Verdict
 from flats.encode.gaps import CAUSES, by_cause, classify, gaps
 from flats.rules.loader import load_rules
+from flats.rules.model import Layer, Provenance, Value, Zone
 
 pytestmark = pytest.mark.unit
 
@@ -265,3 +266,52 @@ def test_a_value_naming_an_undeclared_chapter_is_not_a_hunt(tmp_path: Path) -> N
     found = gaps(layer, [])
 
     assert [(g.cause, g.detail) for g in found] == [("undeclared", OTHER_CHAPTER)]
+
+
+def _layer(setbacks: dict[str, int]) -> Layer:
+    """A layer of one standard per zone, built without touching the YAML."""
+    return Layer(
+        layer="or/x",
+        kind="city",
+        label="X",
+        zones={
+            code: Zone(
+                zone=code,
+                values={
+                    "setback_front_ft": Value(
+                        name="setback_front_ft", value=number, prov=Provenance(**CITE)
+                    )
+                },
+            )
+            for code, number in setbacks.items()
+        },
+    )
+
+
+def test_the_digest_ignores_a_file_being_tidied():
+    """It hashes answers, not bytes.
+
+    A digest over the YAML files would move for a comment, a re-indent or a
+    reordering, and a staleness warning that fires every time somebody tidies
+    is a staleness warning nobody reads.
+    """
+    from flats.encode.gaps import digest
+
+    def build(order):
+        return {"or/x": _layer({code: 10 for code in order})}
+
+    assert digest(build(["R1", "R2"])) == digest(build(["R2", "R1"]))
+
+
+def test_the_digest_moves_when_an_answer_does():
+    from flats.encode.gaps import digest
+
+    assert digest({"or/x": _layer({"R1": 10})}) != digest({"or/x": _layer({"R1": 15})})
+
+
+def test_a_ledger_nobody_has_written_is_absent_not_empty(tmp_path):
+    """None and "no gaps" are opposite answers; a missing file must not read as
+    a clean corpus."""
+    from flats.encode.gaps import read_ledger
+
+    assert read_ledger(tmp_path / "nothing.json") is None

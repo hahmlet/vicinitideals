@@ -1,0 +1,1550 @@
+{
+  "digest": "b91d7c61fd19dd8a1220ca83ebe0dd57ecb5ddc851323a2ca6c13c6e1a46cf5c",
+  "layers": {
+    "or": {
+      "label": "Oregon",
+      "counts": {},
+      "gaps": []
+    },
+    "or/clackamas/_unincorporated": {
+      "label": "Clackamas Unincorporated",
+      "counts": {
+        "unsourced": 8,
+        "uncheckable": 9
+      },
+      "gaps": [
+        {
+          "zone": "VR45",
+          "field": "max_coverage_pct",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "VR45",
+          "field": "setback_front_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "VR45",
+          "field": "setback_rear_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "VR45",
+          "field": "setback_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "VR57",
+          "field": "max_coverage_pct",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "VR57",
+          "field": "setback_front_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "VR57",
+          "field": "setback_rear_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "VR57",
+          "field": "setback_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R10",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R15",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R20",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R30",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R5",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R7",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R8.5",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "VR45",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "VR57",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        }
+      ]
+    },
+    "or/clackamas/gladstone": {
+      "label": "Gladstone",
+      "counts": {
+        "uncheckable": 3
+      },
+      "gaps": [
+        {
+          "zone": "R10",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/gladstone \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R5",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/gladstone \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R7.2",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/gladstone \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        }
+      ]
+    },
+    "or/clackamas/happy-valley": {
+      "label": "Happy Valley",
+      "counts": {
+        "conditional": 4,
+        "multi": 7,
+        "unsourced": 14,
+        "uncheckable": 9
+      },
+      "gaps": [
+        {
+          "zone": "MURS",
+          "field": "setback_front_ft",
+          "cause": "conditional",
+          "detail": "(street access garage) (row context)",
+          "action": "encode as a variant \u2014 the document qualifies this number, by footnote or by the lot sizes the column was written for"
+        },
+        {
+          "zone": "MURS",
+          "field": "setback_rear_ft",
+          "cause": "conditional",
+          "detail": "Standards may be proposed for amendment by Master Plan, PUD ",
+          "action": "encode as a variant \u2014 the document qualifies this number, by footnote or by the lot sizes the column was written for"
+        },
+        {
+          "zone": "MURS",
+          "field": "setback_street_side_ft",
+          "cause": "conditional",
+          "detail": "Standards may be proposed for amendment by Master Plan, PUD ",
+          "action": "encode as a variant \u2014 the document qualifies this number, by footnote or by the lot sizes the column was written for"
+        },
+        {
+          "zone": "R5",
+          "field": "setback_front_ft",
+          "cause": "conditional",
+          "detail": "(street access garage) (row context)",
+          "action": "encode as a variant \u2014 the document qualifies this number, by footnote or by the lot sizes the column was written for"
+        },
+        {
+          "zone": "R10",
+          "field": "min_lot_sqft",
+          "cause": "multi",
+          "detail": "1500, 10000",
+          "action": "encode as variants \u2014 the document states more than one number"
+        },
+        {
+          "zone": "R15",
+          "field": "min_lot_sqft",
+          "cause": "multi",
+          "detail": "1500, 15000",
+          "action": "encode as variants \u2014 the document states more than one number"
+        },
+        {
+          "zone": "R20",
+          "field": "min_lot_sqft",
+          "cause": "multi",
+          "detail": "1500, 20000",
+          "action": "encode as variants \u2014 the document states more than one number"
+        },
+        {
+          "zone": "R40",
+          "field": "min_lot_sqft",
+          "cause": "multi",
+          "detail": "1500, 40000",
+          "action": "encode as variants \u2014 the document states more than one number"
+        },
+        {
+          "zone": "R5",
+          "field": "min_lot_sqft",
+          "cause": "multi",
+          "detail": "1500, 5000, 7000",
+          "action": "encode as variants \u2014 the document states more than one number"
+        },
+        {
+          "zone": "R7",
+          "field": "min_lot_sqft",
+          "cause": "multi",
+          "detail": "1500, 7000",
+          "action": "encode as variants \u2014 the document states more than one number"
+        },
+        {
+          "zone": "R8.5",
+          "field": "min_lot_sqft",
+          "cause": "multi",
+          "detail": "1500, 8500",
+          "action": "encode as variants \u2014 the document states more than one number"
+        },
+        {
+          "zone": "MURS",
+          "field": "setback_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R10",
+          "field": "setback_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R15",
+          "field": "setback_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R20",
+          "field": "setback_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R20CC",
+          "field": "max_coverage_pct",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R20CC",
+          "field": "min_lot_sqft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R20CC",
+          "field": "setback_front_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R20CC",
+          "field": "setback_rear_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R20CC",
+          "field": "setback_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R20CC",
+          "field": "setback_street_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R40",
+          "field": "setback_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R5",
+          "field": "setback_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R7",
+          "field": "setback_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R8.5",
+          "field": "setback_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "MURS",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/happy-valley \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R10",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/happy-valley \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R15",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/happy-valley \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R20",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/happy-valley \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R20CC",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/happy-valley \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R40",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/happy-valley \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R5",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/happy-valley \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R7",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/happy-valley \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R8.5",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/happy-valley \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        }
+      ]
+    },
+    "or/clackamas/johnson-city": {
+      "label": "Johnson City",
+      "counts": {
+        "uncheckable": 1
+      },
+      "gaps": [
+        {
+          "zone": "MR1",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/johnson-city \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        }
+      ]
+    },
+    "or/clackamas/lake-oswego": {
+      "label": "Lake Oswego",
+      "counts": {
+        "unsourced": 12,
+        "uncheckable": 4
+      },
+      "gaps": [
+        {
+          "zone": "R-0",
+          "field": "setback_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R-0",
+          "field": "setback_street_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R-3",
+          "field": "setback_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R-3",
+          "field": "setback_street_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R-5",
+          "field": "max_coverage_pct",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R-5",
+          "field": "setback_front_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R-5",
+          "field": "setback_rear_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R-5",
+          "field": "setback_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R-5",
+          "field": "setback_street_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R-7.5",
+          "field": "max_coverage_pct",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R-7.5",
+          "field": "setback_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R-7.5",
+          "field": "setback_street_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R-0",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/lake-oswego \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R-3",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/lake-oswego \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R-5",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/lake-oswego \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R-7.5",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/lake-oswego \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        }
+      ]
+    },
+    "or/clackamas/milwaukie": {
+      "label": "Milwaukie",
+      "counts": {
+        "uncheckable": 2
+      },
+      "gaps": [
+        {
+          "zone": "R-HD",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/milwaukie \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R-MD",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/milwaukie \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        }
+      ]
+    },
+    "or/clackamas/oregon-city": {
+      "label": "Oregon City",
+      "counts": {},
+      "gaps": []
+    },
+    "or/clackamas/rivergrove": {
+      "label": "Rivergrove",
+      "counts": {
+        "multi": 3,
+        "uncheckable": 1
+      },
+      "gaps": [
+        {
+          "zone": "R10",
+          "field": "setback_front_ft",
+          "cause": "multi",
+          "detail": "3, 10, 25, 30",
+          "action": "encode as variants \u2014 the document states more than one number"
+        },
+        {
+          "zone": "R10",
+          "field": "setback_rear_ft",
+          "cause": "multi",
+          "detail": "3, 25",
+          "action": "encode as variants \u2014 the document states more than one number"
+        },
+        {
+          "zone": "R10",
+          "field": "setback_side_ft",
+          "cause": "multi",
+          "detail": "10, 19",
+          "action": "encode as variants \u2014 the document states more than one number"
+        },
+        {
+          "zone": "R10",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/rivergrove \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        }
+      ]
+    },
+    "or/clackamas/tualatin": {
+      "label": "Tualatin",
+      "counts": {},
+      "gaps": []
+    },
+    "or/clackamas/west-linn": {
+      "label": "West Linn",
+      "counts": {},
+      "gaps": []
+    },
+    "or/clackamas/wilsonville": {
+      "label": "Wilsonville",
+      "counts": {
+        "contested": 1,
+        "unsourced": 18,
+        "uncheckable": 9
+      },
+      "gaps": [
+        {
+          "zone": "RN",
+          "field": "max_coverage_pct",
+          "cause": "contested",
+          "detail": "file 60, document 10, 70, 90",
+          "action": "read both: the file and the document state different numbers"
+        },
+        {
+          "zone": "OTR",
+          "field": "min_frontage_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "OTR",
+          "field": "min_lot_sqft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "PDR1",
+          "field": "max_coverage_pct",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "PDR1",
+          "field": "min_frontage_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "PDR2",
+          "field": "max_coverage_pct",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "PDR2",
+          "field": "min_frontage_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "PDR3",
+          "field": "max_coverage_pct",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "PDR3",
+          "field": "min_frontage_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "PDR4",
+          "field": "max_coverage_pct",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "PDR4",
+          "field": "min_frontage_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "PDR5",
+          "field": "max_coverage_pct",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "PDR5",
+          "field": "min_frontage_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "PDR6",
+          "field": "max_coverage_pct",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "PDR6",
+          "field": "min_frontage_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R",
+          "field": "max_coverage_pct",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R",
+          "field": "min_frontage_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R",
+          "field": "min_lot_sqft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "RN",
+          "field": "min_frontage_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "OTR",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/wilsonville \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "PDR1",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/wilsonville \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "PDR2",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/wilsonville \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "PDR3",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/wilsonville \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "PDR4",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/wilsonville \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "PDR5",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/wilsonville \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "PDR6",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/wilsonville \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/wilsonville \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "RN",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/clackamas/wilsonville \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        }
+      ]
+    },
+    "or/multnomah/_unincorporated": {
+      "label": "Multnomah Unincorporated",
+      "counts": {
+        "unsourced": 5,
+        "uncheckable": 9
+      },
+      "gaps": [
+        {
+          "zone": "LR7",
+          "field": "min_lot_sqft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "LR7",
+          "field": "setback_front_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "LR7",
+          "field": "setback_rear_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "LR7",
+          "field": "setback_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "LR7",
+          "field": "setback_street_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "LR7",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R10",
+          "field": "coverage_curve",
+          "cause": "uncheckable",
+          "detail": "curve",
+          "action": "python -m flats.encode.review show or/multnomah/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R10",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R20",
+          "field": "coverage_curve",
+          "cause": "uncheckable",
+          "detail": "curve",
+          "action": "python -m flats.encode.review show or/multnomah/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R20",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R7",
+          "field": "coverage_curve",
+          "cause": "uncheckable",
+          "detail": "curve",
+          "action": "python -m flats.encode.review show or/multnomah/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R7",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "RF",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "RR",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        }
+      ]
+    },
+    "or/multnomah/fairview": {
+      "label": "Fairview",
+      "counts": {
+        "unsourced": 18,
+        "uncheckable": 9
+      },
+      "gaps": [
+        {
+          "zone": "R/SFLD",
+          "field": "max_coverage_pct",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R/SFLD",
+          "field": "min_lot_sqft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R/SFLD",
+          "field": "setback_front_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R/SFLD",
+          "field": "setback_rear_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R/SFLD",
+          "field": "setback_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R/SFLD",
+          "field": "setback_street_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "RM",
+          "field": "min_lot_sqft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "RM/TOZ",
+          "field": "max_coverage_pct",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "RM/TOZ",
+          "field": "min_lot_sqft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "RM/TOZ",
+          "field": "setback_front_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "RM/TOZ",
+          "field": "setback_rear_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "RM/TOZ",
+          "field": "setback_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "RM/TOZ",
+          "field": "setback_street_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "VSF",
+          "field": "min_lot_sqft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "VSF",
+          "field": "setback_front_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "VSF",
+          "field": "setback_rear_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "VSF",
+          "field": "setback_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "VSF",
+          "field": "setback_street_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "R-10",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/fairview \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R-6",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/fairview \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R-7.5",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/fairview \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R/MH",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/fairview \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R/SFLD",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/fairview \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "RM",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/fairview \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "RM/TOZ",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/fairview \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "VSF",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/fairview \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "VTH",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/fairview \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        }
+      ]
+    },
+    "or/multnomah/gresham": {
+      "label": "Gresham",
+      "counts": {
+        "conditional": 3,
+        "unsourced": 14,
+        "uncheckable": 7
+      },
+      "gaps": [
+        {
+          "zone": "CMF",
+          "field": "setback_side_ft",
+          "cause": "conditional",
+          "detail": "30, 50",
+          "action": "encode as a variant \u2014 the document qualifies this number, by footnote or by the lot sizes the column was written for"
+        },
+        {
+          "zone": "DRL-1",
+          "field": "setback_side_ft",
+          "cause": "conditional",
+          "detail": "30, 50",
+          "action": "encode as a variant \u2014 the document qualifies this number, by footnote or by the lot sizes the column was written for"
+        },
+        {
+          "zone": "DRL-2",
+          "field": "setback_side_ft",
+          "cause": "conditional",
+          "detail": "30, 50",
+          "action": "encode as a variant \u2014 the document qualifies this number, by footnote or by the lot sizes the column was written for"
+        },
+        {
+          "zone": "CMF",
+          "field": "min_frontage_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "CMF",
+          "field": "min_lot_sqft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "CMF",
+          "field": "setback_front_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "CMF",
+          "field": "setback_rear_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "CMF",
+          "field": "setback_street_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "DRL-1",
+          "field": "min_lot_sqft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "DRL-1",
+          "field": "setback_front_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "DRL-1",
+          "field": "setback_rear_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "DRL-1",
+          "field": "setback_street_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "DRL-2",
+          "field": "min_lot_sqft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "DRL-2",
+          "field": "setback_front_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "DRL-2",
+          "field": "setback_rear_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "DRL-2",
+          "field": "setback_street_side_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "MDR-24",
+          "field": "min_lot_sqft",
+          "cause": "unsourced",
+          "detail": "",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "CMF",
+          "field": "orientation_constraint",
+          "cause": "uncheckable",
+          "detail": "enum",
+          "action": "python -m flats.encode.review show or/multnomah/gresham \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "DRL-1",
+          "field": "orientation_constraint",
+          "cause": "uncheckable",
+          "detail": "enum",
+          "action": "python -m flats.encode.review show or/multnomah/gresham \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "DRL-2",
+          "field": "orientation_constraint",
+          "cause": "uncheckable",
+          "detail": "enum",
+          "action": "python -m flats.encode.review show or/multnomah/gresham \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "LDR-PV",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/gresham \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "LDR-SW",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/gresham \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "LDR/GB",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/gresham \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "THR-SW",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/gresham \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        }
+      ]
+    },
+    "or/multnomah/maywood-park": {
+      "label": "Maywood Park",
+      "counts": {},
+      "gaps": []
+    },
+    "or/multnomah/portland": {
+      "label": "Portland",
+      "counts": {
+        "uncheckable": 11
+      },
+      "gaps": [
+        {
+          "zone": "R10",
+          "field": "coverage_curve",
+          "cause": "uncheckable",
+          "detail": "curve",
+          "action": "python -m flats.encode.review show or/multnomah/portland \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R10",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/portland \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R2.5",
+          "field": "coverage_curve",
+          "cause": "uncheckable",
+          "detail": "curve",
+          "action": "python -m flats.encode.review show or/multnomah/portland \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R2.5",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/portland \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R20",
+          "field": "coverage_curve",
+          "cause": "uncheckable",
+          "detail": "curve",
+          "action": "python -m flats.encode.review show or/multnomah/portland \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R20",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/portland \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R5",
+          "field": "coverage_curve",
+          "cause": "uncheckable",
+          "detail": "curve",
+          "action": "python -m flats.encode.review show or/multnomah/portland \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R5",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/portland \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R7",
+          "field": "coverage_curve",
+          "cause": "uncheckable",
+          "detail": "curve",
+          "action": "python -m flats.encode.review show or/multnomah/portland \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "R7",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/portland \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "RF",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/portland \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        }
+      ]
+    },
+    "or/multnomah/troutdale": {
+      "label": "Troutdale",
+      "counts": {
+        "conditional": 6,
+        "multi": 2,
+        "uncheckable": 1
+      },
+      "gaps": [
+        {
+          "zone": "LDR-1",
+          "field": "setback_front_ft",
+          "cause": "conditional",
+          "detail": "Front yard setback is 20 feet if driveway access is taken fr",
+          "action": "encode as a variant \u2014 the document qualifies this number, by footnote or by the lot sizes the column was written for"
+        },
+        {
+          "zone": "LDR-1",
+          "field": "setback_street_side_ft",
+          "cause": "conditional",
+          "detail": "Street side yard setback is 20 feet if driveway access is ta",
+          "action": "encode as a variant \u2014 the document qualifies this number, by footnote or by the lot sizes the column was written for"
+        },
+        {
+          "zone": "LDR-2",
+          "field": "setback_front_ft",
+          "cause": "conditional",
+          "detail": "Front yard setback is 20 feet if driveway access is taken fr",
+          "action": "encode as a variant \u2014 the document qualifies this number, by footnote or by the lot sizes the column was written for"
+        },
+        {
+          "zone": "LDR-2",
+          "field": "setback_street_side_ft",
+          "cause": "conditional",
+          "detail": "Street side yard setback is 20 feet if driveway access is ta",
+          "action": "encode as a variant \u2014 the document qualifies this number, by footnote or by the lot sizes the column was written for"
+        },
+        {
+          "zone": "MDR",
+          "field": "setback_front_ft",
+          "cause": "conditional",
+          "detail": "Front yard setback is 20 feet if driveway access is taken fr",
+          "action": "encode as a variant \u2014 the document qualifies this number, by footnote or by the lot sizes the column was written for"
+        },
+        {
+          "zone": "MDR",
+          "field": "setback_street_side_ft",
+          "cause": "conditional",
+          "detail": "Street side yard setback is 20 feet if driveway access is ta",
+          "action": "encode as a variant \u2014 the document qualifies this number, by footnote or by the lot sizes the column was written for"
+        },
+        {
+          "zone": "LDR-1",
+          "field": "setback_side_ft",
+          "cause": "multi",
+          "detail": "5, 10",
+          "action": "encode as variants \u2014 the document states more than one number"
+        },
+        {
+          "zone": "LDR-2",
+          "field": "setback_side_ft",
+          "cause": "multi",
+          "detail": "5, 7.5",
+          "action": "encode as variants \u2014 the document states more than one number"
+        },
+        {
+          "zone": "HDR",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/troutdale \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        }
+      ]
+    },
+    "or/multnomah/wood-village": {
+      "label": "Wood Village",
+      "counts": {
+        "multi": 5,
+        "uncheckable": 4
+      },
+      "gaps": [
+        {
+          "zone": "LR 12",
+          "field": "setback_rear_ft",
+          "cause": "multi",
+          "detail": "15, 20",
+          "action": "encode as variants \u2014 the document states more than one number"
+        },
+        {
+          "zone": "LR 7.5",
+          "field": "setback_rear_ft",
+          "cause": "multi",
+          "detail": "15, 20",
+          "action": "encode as variants \u2014 the document states more than one number"
+        },
+        {
+          "zone": "LR 7.5",
+          "field": "setback_side_ft",
+          "cause": "multi",
+          "detail": "5, 10",
+          "action": "encode as variants \u2014 the document states more than one number"
+        },
+        {
+          "zone": "MR 2",
+          "field": "max_coverage_pct",
+          "cause": "multi",
+          "detail": "45, 75",
+          "action": "encode as variants \u2014 the document states more than one number"
+        },
+        {
+          "zone": "MR 4",
+          "field": "max_coverage_pct",
+          "cause": "multi",
+          "detail": "45, 75",
+          "action": "encode as variants \u2014 the document states more than one number"
+        },
+        {
+          "zone": "LR 12",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/wood-village \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "LR 7.5",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/wood-village \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "MR 2",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/wood-village \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        },
+        {
+          "zone": "MR 4",
+          "field": "quadplex_allowed",
+          "cause": "uncheckable",
+          "detail": "bool",
+          "action": "python -m flats.encode.review show or/multnomah/wood-village \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}What is not encoded — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div class="topbar">
+</div>
+
+<div class="content">
+  <div class="toolbar">
+    <div>
+      <h2 style="margin:0">What is not encoded</h2>
+      <div class="muted" style="font-size:12px">
+        <a href="/flats">All jurisdictions</a> · <a href="/flats/feedback">Feedback bundle</a>
+      </div>
+    </div>
+    <div style="margin-left:auto">
+      <span class="muted">Values with nothing behind them</span> <strong>{{ total }}</strong>
+    </div>
+  </div>
+
+  <p class="muted" style="font-size:12px;max-width:74ch">
+    The review queue can only show a number that cites something. These are the ones that
+    cite nothing — so without this page they are invisible, and a jurisdiction can look
+    finished because the half nobody encoded never appears. Each is grouped by what would
+    unstick it, worst first.
+  </p>
+
+  {% if not current %}
+  <div style="margin:8px 0;padding:8px;border-left:3px solid #d97706;font-size:12px;max-width:74ch">
+    <strong>This measurement has been overtaken.</strong> The encoding has changed since
+    these gaps were counted, so some of them may already be closed. Re-run
+    <code>python -m flats.encode.gaps</code> to re-measure.
+  </div>
+  {% endif %}
+
+  {% if not rows %}
+    <p>Nothing missing. Every encoded value cites a document.</p>
+  {% endif %}
+
+  {% for row in rows %}
+  <div class="card" style="margin-bottom:16px;padding:12px">
+    <div class="toolbar" style="margin:0 0 8px">
+      <div>
+        <strong>{{ row.label }}</strong>
+        <div class="muted" style="font-size:11px">
+          <a href="/flats/{{ row.layer }}">rules table</a> ·
+          <a href="/flats/review/{{ row.layer }}">review queue</a> · {{ row.layer }}
+        </div>
+      </div>
+      <div style="margin-left:auto;text-align:right">
+        <strong>{{ row.gaps | length }}</strong>
+        <div class="muted" style="font-size:11px">
+          {% for cause, count in row.counts.items() %}{{ count }} {{ cause }}{{ ", " if not loop.last }}{% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Zone</th>
+            <th>Standard</th>
+            <th>Why it has no citation</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for gap in row.gaps %}
+          <tr>
+            <td>{{ gap.zone }}</td>
+            <td>{{ gap.field }}</td>
+            <td style="font-size:12px">
+              {{ causes.get(gap.cause, gap.cause) }}
+              {% if gap.detail %}<div class="muted" style="font-size:11px">{{ gap.detail }}</div>{% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

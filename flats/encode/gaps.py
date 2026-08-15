@@ -57,7 +57,10 @@ Run::
 
 from __future__ import annotations
 
+import hashlib
+import json
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Iterable, Mapping, Sequence
 
 from flats.encode.attach import unquoted
@@ -244,3 +247,109 @@ def summarise(layers: Mapping[str, list[Gap]]) -> dict[str, int]:
         for gap in items:
             counts[gap.cause] += 1
     return {k: v for k, v in counts.items() if v}
+
+
+# --- the ledger ----------------------------------------------------------
+#
+# Reading a jurisdiction's gaps means corroborating every value against every
+# stored document: forty seconds for Wilsonville, a minute for Gresham. That is
+# fine for a command and impossible for a page, so the answer is written down
+# once and read back many times.
+#
+# What makes a written answer safe is knowing when it stopped being true. The
+# digest below is taken over exactly the inputs the answer depends on — the
+# encoded values and the citations, nothing else — so a page can say "measured
+# against a corpus that has since changed" instead of quietly showing last
+# week's work list as though it were today's.
+
+#: Where the ledger lives. Beside the rules rather than in the store: it is
+#: derived from the encoding, and it changes when the encoding does.
+LEDGER = Path(__file__).resolve().parents[1] / "config" / "gaps.json"
+
+
+def digest(layers: Mapping[str, Layer]) -> str:
+    """A hash of every encoded value and citation in the corpus.
+
+    Not of the files: a comment, a reordering or a re-indent changes a file
+    without changing a single answer, and a digest that moved for those would
+    cry stale every time somebody tidied a YAML.
+    """
+    parts: list[str] = []
+    for layer_id in sorted(layers):
+        layer = layers[layer_id]
+        blocks = [("(defaults)", layer.defaults)] + [
+            (code, layer.zones[code].values) for code in sorted(layer.zones)
+        ]
+        for zone, values in blocks:
+            for name in sorted(values):
+                value = values[name]
+                for number in [value, *value.variants]:
+                    key = "+".join(getattr(number, "key", ()) or ())
+                    parts.append(
+                        f"{layer_id}|{zone}|{name}|{key}|{number.value}|{number.prov.quote}"
+                    )
+    return hashlib.sha256("\n".join(parts).encode("utf-8")).hexdigest()
+
+
+def snapshot(layers: Mapping[str, Layer], store: ProvenanceStore) -> dict:
+    """Measure every layer's gaps, once."""
+    out: dict = {"digest": digest(layers), "layers": {}}
+    for layer_id in sorted(layers):
+        layer = layers[layer_id]
+        items = gaps(layer, read_layer(layer, store))
+        out["layers"][layer_id] = {
+            "label": layer.label,
+            "counts": by_cause(items),
+            "gaps": [
+                {
+                    "zone": g.zone,
+                    "field": g.field,
+                    "cause": g.cause,
+                    "detail": g.detail,
+                    "action": g.action,
+                }
+                for g in items
+            ],
+        }
+    return out
+
+
+def read_ledger(path: Path | None = None) -> dict | None:
+    """The written answer, or None where nobody has measured yet."""
+    file = path or LEDGER
+    try:
+        return json.loads(file.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+
+
+def main(argv: Sequence[str] | None = None) -> int:
+    """Measure the corpus and write the ledger.
+
+    Run after an encoding session, the way the page map is run after a fetch.
+    """
+    import argparse
+
+    from flats.rules.loader import load_rules
+
+    parser = argparse.ArgumentParser(prog="python -m flats.encode.gaps")
+    parser.add_argument("--out", default=str(LEDGER), help="where to write the ledger")
+    args = parser.parse_args(argv)
+
+    layers = load_rules(strict=False)
+    built = snapshot(layers, ProvenanceStore())
+    Path(args.out).write_text(json.dumps(built, indent=2) + "\n", encoding="utf-8", newline="")
+    total = sum(len(one["gaps"]) for one in built["layers"].values())
+    counts = {c: 0 for c in CAUSES}
+    for one in built["layers"].values():
+        for cause, count in one["counts"].items():
+            counts[cause] += count
+    print(f"{total} gap(s) across {len(built['layers'])} jurisdiction(s) -> {args.out}")
+    for cause in CAUSES:
+        if counts[cause]:
+            print(f"  {cause:12} {counts[cause]:>4}  {NEXT[cause].split(chr(10))[0][:80]}")
+    return 0
+
+
+if __name__ == "__main__":  # pragma: no cover
+    raise SystemExit(main())
