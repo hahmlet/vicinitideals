@@ -265,7 +265,15 @@ def printed_in(layer: Layer, store: ProvenanceStore) -> dict[tuple[str, str], st
     out: dict[tuple[str, str], str] = {}
     for (zone, field), value in layer.unread().items():
         for path, text in documents:
-            found, _ = passages(text, path=path, field=field, believed=value.value, limit=1)
+            found, _ = passages(
+                text,
+                path=path,
+                field=field,
+                believed=value.value,
+                zone=zone,
+                limit=1,
+                named=True,
+            )
             if found:
                 out[(zone, field)] = found[0].quote
                 break

@@ -1,5 +1,5 @@
 {
-  "digest": "5b948ed10b00f0a1a2690102b6c0051ef3c519a481cea62d3ea4d2d30cdd6abe",
+  "digest": "806e9320357d594f205b8b98e581a96146c5a4dc3844720ca79a9084f48b4bfa",
   "layers": {
     "or": {
       "misattributed": [],
@@ -11,23 +11,16 @@
       "misattributed": [],
       "label": "Clackamas Unincorporated",
       "counts": {
-        "unread": 8,
+        "unread": 6,
+        "unsourced": 2,
         "uncheckable": 9
       },
       "gaps": [
         {
           "zone": "VR45",
-          "field": "max_coverage_pct",
-          "cause": "unread",
-          "detail": "or/clackamas/_unincorporated/zdo.315.txt#L1161",
-          "believed": "50",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "VR45",
           "field": "setback_front_ft",
           "cause": "unread",
-          "detail": "or/clackamas/_unincorporated/zdo.315.txt#L1275",
+          "detail": "or/clackamas/_unincorporated/zdo.315.txt#L1261",
           "believed": "10",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -35,7 +28,7 @@
           "zone": "VR45",
           "field": "setback_rear_ft",
           "cause": "unread",
-          "detail": "or/clackamas/_unincorporated/zdo.315.txt#L1275",
+          "detail": "or/clackamas/_unincorporated/zdo.315.txt#L1549",
           "believed": "15",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -49,17 +42,9 @@
         },
         {
           "zone": "VR57",
-          "field": "max_coverage_pct",
-          "cause": "unread",
-          "detail": "or/clackamas/_unincorporated/zdo.315.txt#L1161",
-          "believed": "50",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "VR57",
           "field": "setback_front_ft",
           "cause": "unread",
-          "detail": "or/clackamas/_unincorporated/zdo.315.txt#L1275",
+          "detail": "or/clackamas/_unincorporated/zdo.315.txt#L1261",
           "believed": "10",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -67,7 +52,7 @@
           "zone": "VR57",
           "field": "setback_rear_ft",
           "cause": "unread",
-          "detail": "or/clackamas/_unincorporated/zdo.315.txt#L1275",
+          "detail": "or/clackamas/_unincorporated/zdo.315.txt#L1549",
           "believed": "15",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -78,6 +63,22 @@
           "detail": "or/clackamas/_unincorporated/zdo.315.txt#L1383",
           "believed": "5",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
+        },
+        {
+          "zone": "VR45",
+          "field": "max_coverage_pct",
+          "cause": "unsourced",
+          "detail": "",
+          "believed": "50",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "VR57",
+          "field": "max_coverage_pct",
+          "cause": "unsourced",
+          "detail": "",
+          "believed": "50",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
         },
         {
           "zone": "R10",
@@ -205,132 +206,11 @@
       "misattributed": [],
       "label": "Happy Valley",
       "counts": {
-        "conditional": 4,
-        "multi": 7,
-        "unread": 14,
+        "unread": 5,
+        "unsourced": 1,
         "uncheckable": 1
       },
       "gaps": [
-        {
-          "zone": "MURS",
-          "field": "setback_front_ft",
-          "cause": "conditional",
-          "detail": "(street access garage) (row context)",
-          "believed": "20",
-          "action": "encode as a variant \u2014 the document qualifies this number, by footnote or by the lot sizes the column was written for"
-        },
-        {
-          "zone": "MURS",
-          "field": "setback_rear_ft",
-          "cause": "conditional",
-          "detail": "Standards may be proposed for amendment by Master Plan, PUD ",
-          "believed": "20",
-          "action": "encode as a variant \u2014 the document qualifies this number, by footnote or by the lot sizes the column was written for"
-        },
-        {
-          "zone": "MURS",
-          "field": "setback_street_side_ft",
-          "cause": "conditional",
-          "detail": "Standards may be proposed for amendment by Master Plan, PUD ",
-          "believed": "8",
-          "action": "encode as a variant \u2014 the document qualifies this number, by footnote or by the lot sizes the column was written for"
-        },
-        {
-          "zone": "R5",
-          "field": "setback_front_ft",
-          "cause": "conditional",
-          "detail": "(street access garage) (row context)",
-          "believed": "20",
-          "action": "encode as a variant \u2014 the document qualifies this number, by footnote or by the lot sizes the column was written for"
-        },
-        {
-          "zone": "R10",
-          "field": "min_lot_sqft",
-          "cause": "multi",
-          "detail": "1500, 10000",
-          "believed": "10000",
-          "action": "encode as variants \u2014 the document states more than one number"
-        },
-        {
-          "zone": "R15",
-          "field": "min_lot_sqft",
-          "cause": "multi",
-          "detail": "1500, 15000",
-          "believed": "15000",
-          "action": "encode as variants \u2014 the document states more than one number"
-        },
-        {
-          "zone": "R20",
-          "field": "min_lot_sqft",
-          "cause": "multi",
-          "detail": "1500, 20000",
-          "believed": "20000",
-          "action": "encode as variants \u2014 the document states more than one number"
-        },
-        {
-          "zone": "R40",
-          "field": "min_lot_sqft",
-          "cause": "multi",
-          "detail": "1500, 40000",
-          "believed": "40000",
-          "action": "encode as variants \u2014 the document states more than one number"
-        },
-        {
-          "zone": "R5",
-          "field": "min_lot_sqft",
-          "cause": "multi",
-          "detail": "1500, 5000, 7000",
-          "believed": "7000",
-          "action": "encode as variants \u2014 the document states more than one number"
-        },
-        {
-          "zone": "R7",
-          "field": "min_lot_sqft",
-          "cause": "multi",
-          "detail": "1500, 7000",
-          "believed": "7000",
-          "action": "encode as variants \u2014 the document states more than one number"
-        },
-        {
-          "zone": "R8.5",
-          "field": "min_lot_sqft",
-          "cause": "multi",
-          "detail": "1500, 8500",
-          "believed": "8500",
-          "action": "encode as variants \u2014 the document states more than one number"
-        },
-        {
-          "zone": "MURS",
-          "field": "setback_side_ft",
-          "cause": "unread",
-          "detail": "or/clackamas/happy-valley/16.22.residential.txt#L298",
-          "believed": "5",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "R10",
-          "field": "setback_side_ft",
-          "cause": "unread",
-          "detail": "or/clackamas/happy-valley/16.22.residential.txt#L292",
-          "believed": "7",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "R15",
-          "field": "setback_side_ft",
-          "cause": "unread",
-          "detail": "or/clackamas/happy-valley/16.22.residential.txt#L292",
-          "believed": "7",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "R20",
-          "field": "setback_side_ft",
-          "cause": "unread",
-          "detail": "or/clackamas/happy-valley/16.22.residential.txt#L659",
-          "believed": "10",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
         {
           "zone": "R20CC",
           "field": "max_coverage_pct",
@@ -357,17 +237,9 @@
         },
         {
           "zone": "R20CC",
-          "field": "setback_rear_ft",
-          "cause": "unread",
-          "detail": "or/clackamas/happy-valley/16.22.residential.txt#L290",
-          "believed": "22",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "R20CC",
           "field": "setback_side_ft",
           "cause": "unread",
-          "detail": "or/clackamas/happy-valley/16.22.residential.txt#L659",
+          "detail": "or/clackamas/happy-valley/16.22.residential.txt#L105",
           "believed": "10",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -380,36 +252,12 @@
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
         {
-          "zone": "R40",
-          "field": "setback_side_ft",
-          "cause": "unread",
-          "detail": "or/clackamas/happy-valley/16.22.residential.txt#L113",
-          "believed": "15",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "R5",
-          "field": "setback_side_ft",
-          "cause": "unread",
-          "detail": "or/clackamas/happy-valley/16.22.residential.txt#L298",
-          "believed": "5",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "R7",
-          "field": "setback_side_ft",
-          "cause": "unread",
-          "detail": "or/clackamas/happy-valley/16.22.residential.txt#L298",
-          "believed": "5",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "R8.5",
-          "field": "setback_side_ft",
-          "cause": "unread",
-          "detail": "or/clackamas/happy-valley/16.22.residential.txt#L298",
-          "believed": "5",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
+          "zone": "R20CC",
+          "field": "setback_rear_ft",
+          "cause": "unsourced",
+          "detail": "",
+          "believed": "22",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
         },
         {
           "zone": "R20CC",
@@ -492,7 +340,7 @@
           "zone": "R-0",
           "field": "setback_side_ft",
           "cause": "unread",
-          "detail": "or/clackamas/lake-oswego/50.04.dimensional.txt#L244",
+          "detail": "or/clackamas/lake-oswego/50.04.dimensional.txt#L764",
           "believed": "10",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -500,7 +348,7 @@
           "zone": "R-0",
           "field": "setback_street_side_ft",
           "cause": "unread",
-          "detail": "or/clackamas/lake-oswego/50.04.dimensional.txt#L244",
+          "detail": "or/clackamas/lake-oswego/50.04.dimensional.txt#L764",
           "believed": "10",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -508,7 +356,7 @@
           "zone": "R-3",
           "field": "setback_side_ft",
           "cause": "unread",
-          "detail": "or/clackamas/lake-oswego/50.04.dimensional.txt#L244",
+          "detail": "or/clackamas/lake-oswego/50.04.dimensional.txt#L764",
           "believed": "10",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -516,7 +364,7 @@
           "zone": "R-3",
           "field": "setback_street_side_ft",
           "cause": "unread",
-          "detail": "or/clackamas/lake-oswego/50.04.dimensional.txt#L244",
+          "detail": "or/clackamas/lake-oswego/50.04.dimensional.txt#L764",
           "believed": "10",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -524,7 +372,7 @@
           "zone": "R-5",
           "field": "max_coverage_pct",
           "cause": "unread",
-          "detail": "or/clackamas/lake-oswego/50.04.dimensional.txt#L890",
+          "detail": "or/clackamas/lake-oswego/50.04.dimensional.txt#L1781",
           "believed": "45",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -532,7 +380,7 @@
           "zone": "R-5",
           "field": "setback_front_ft",
           "cause": "unread",
-          "detail": "or/clackamas/lake-oswego/50.04.dimensional.txt#L244",
+          "detail": "or/clackamas/lake-oswego/50.04.dimensional.txt#L782",
           "believed": "10",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -540,7 +388,7 @@
           "zone": "R-5",
           "field": "setback_rear_ft",
           "cause": "unread",
-          "detail": "or/clackamas/lake-oswego/50.04.dimensional.txt#L244",
+          "detail": "or/clackamas/lake-oswego/50.04.dimensional.txt#L764",
           "believed": "10",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -548,7 +396,7 @@
           "zone": "R-5",
           "field": "setback_side_ft",
           "cause": "unread",
-          "detail": "or/clackamas/lake-oswego/50.04.dimensional.txt#L244",
+          "detail": "or/clackamas/lake-oswego/50.04.dimensional.txt#L764",
           "believed": "10",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -556,7 +404,7 @@
           "zone": "R-5",
           "field": "setback_street_side_ft",
           "cause": "unread",
-          "detail": "or/clackamas/lake-oswego/50.04.dimensional.txt#L244",
+          "detail": "or/clackamas/lake-oswego/50.04.dimensional.txt#L764",
           "believed": "10",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -564,7 +412,7 @@
           "zone": "R-7.5",
           "field": "max_coverage_pct",
           "cause": "unread",
-          "detail": "or/clackamas/lake-oswego/50.04.dimensional.txt#L209",
+          "detail": "or/clackamas/lake-oswego/50.04.dimensional.txt#L350",
           "believed": "35",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -572,7 +420,7 @@
           "zone": "R-7.5",
           "field": "setback_side_ft",
           "cause": "unread",
-          "detail": "or/clackamas/lake-oswego/50.04.dimensional.txt#L244",
+          "detail": "or/clackamas/lake-oswego/50.04.dimensional.txt#L764",
           "believed": "7.5",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -580,7 +428,7 @@
           "zone": "R-7.5",
           "field": "setback_street_side_ft",
           "cause": "unread",
-          "detail": "or/clackamas/lake-oswego/50.04.dimensional.txt#L390",
+          "detail": "or/clackamas/lake-oswego/50.04.dimensional.txt#L764",
           "believed": "15",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         }
@@ -893,7 +741,7 @@
           "zone": "OTR",
           "field": "min_frontage_ft",
           "cause": "unread",
-          "detail": "or/clackamas/wilsonville/4.planning.txt#L359",
+          "detail": "or/clackamas/wilsonville/4.planning.txt#L4510",
           "believed": "35",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -901,7 +749,7 @@
           "zone": "OTR",
           "field": "min_lot_sqft",
           "cause": "unread",
-          "detail": "or/clackamas/wilsonville/4.planning.txt#L4453",
+          "detail": "or/clackamas/wilsonville/4.planning.txt#L4525",
           "believed": "7000",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -909,7 +757,7 @@
           "zone": "PDR1",
           "field": "max_coverage_pct",
           "cause": "unread",
-          "detail": "or/clackamas/wilsonville/4.planning.txt#L3015",
+          "detail": "or/clackamas/wilsonville/4.planning.txt#L7969",
           "believed": "20",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -941,7 +789,7 @@
           "zone": "PDR3",
           "field": "max_coverage_pct",
           "cause": "unread",
-          "detail": "or/clackamas/wilsonville/4.planning.txt#L8577",
+          "detail": "or/clackamas/wilsonville/4.planning.txt#L8736",
           "believed": "50",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -957,7 +805,7 @@
           "zone": "PDR4",
           "field": "max_coverage_pct",
           "cause": "unread",
-          "detail": "or/clackamas/wilsonville/4.planning.txt#L8904",
+          "detail": "or/clackamas/wilsonville/4.planning.txt#L5027",
           "believed": "75",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -965,7 +813,7 @@
           "zone": "PDR4",
           "field": "min_frontage_ft",
           "cause": "unread",
-          "detail": "or/clackamas/wilsonville/4.planning.txt#L359",
+          "detail": "or/clackamas/wilsonville/4.planning.txt#L4510",
           "believed": "35",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -973,7 +821,7 @@
           "zone": "PDR5",
           "field": "max_coverage_pct",
           "cause": "unread",
-          "detail": "or/clackamas/wilsonville/4.planning.txt#L8904",
+          "detail": "or/clackamas/wilsonville/4.planning.txt#L5027",
           "believed": "75",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -989,7 +837,7 @@
           "zone": "PDR6",
           "field": "max_coverage_pct",
           "cause": "unread",
-          "detail": "or/clackamas/wilsonville/4.planning.txt#L8904",
+          "detail": "or/clackamas/wilsonville/4.planning.txt#L5027",
           "believed": "75",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -1005,7 +853,7 @@
           "zone": "R",
           "field": "max_coverage_pct",
           "cause": "unread",
-          "detail": "or/clackamas/wilsonville/4.planning.txt#L8577",
+          "detail": "or/clackamas/wilsonville/4.planning.txt#L8736",
           "believed": "50",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -1021,7 +869,7 @@
           "zone": "R",
           "field": "min_lot_sqft",
           "cause": "unread",
-          "detail": "or/clackamas/wilsonville/4.planning.txt#L4453",
+          "detail": "or/clackamas/wilsonville/4.planning.txt#L4525",
           "believed": "7000",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -1029,7 +877,7 @@
           "zone": "RN",
           "field": "min_frontage_ft",
           "cause": "unread",
-          "detail": "or/clackamas/wilsonville/4.planning.txt#L359",
+          "detail": "or/clackamas/wilsonville/4.planning.txt#L4510",
           "believed": "35",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -1111,18 +959,11 @@
       "misattributed": [],
       "label": "Multnomah Unincorporated",
       "counts": {
-        "unread": 5,
+        "unread": 4,
+        "unsourced": 1,
         "uncheckable": 6
       },
       "gaps": [
-        {
-          "zone": "LR7",
-          "field": "min_lot_sqft",
-          "cause": "unread",
-          "detail": "or/multnomah/_unincorporated/33.110.txt#L82",
-          "believed": "7000",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
         {
           "zone": "LR7",
           "field": "setback_front_ft",
@@ -1143,7 +984,7 @@
           "zone": "LR7",
           "field": "setback_side_ft",
           "cause": "unread",
-          "detail": "or/multnomah/_unincorporated/33.110.txt#L388",
+          "detail": "or/multnomah/_unincorporated/33.110.txt#L374",
           "believed": "5",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -1154,6 +995,14 @@
           "detail": "or/multnomah/_unincorporated/33.110.txt#L376",
           "believed": "10",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
+        },
+        {
+          "zone": "LR7",
+          "field": "min_lot_sqft",
+          "cause": "unsourced",
+          "detail": "",
+          "believed": "7000",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
         },
         {
           "zone": "LR7",
@@ -1218,7 +1067,7 @@
           "zone": "R/SFLD",
           "field": "max_coverage_pct",
           "cause": "unread",
-          "detail": "or/multnomah/fairview/19.115.txt#L57",
+          "detail": "or/multnomah/fairview/19.30.txt#L465",
           "believed": "50",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -1242,7 +1091,7 @@
           "zone": "R/SFLD",
           "field": "setback_rear_ft",
           "cause": "unread",
-          "detail": "or/multnomah/fairview/19.115.txt#L47",
+          "detail": "or/multnomah/fairview/19.115.txt#L51",
           "believed": "15",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -1250,7 +1099,7 @@
           "zone": "R/SFLD",
           "field": "setback_side_ft",
           "cause": "unread",
-          "detail": "or/multnomah/fairview/19.115.txt#L77",
+          "detail": "or/multnomah/fairview/19.30.txt#L342",
           "believed": "5",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -1258,7 +1107,7 @@
           "zone": "R/SFLD",
           "field": "setback_street_side_ft",
           "cause": "unread",
-          "detail": "or/multnomah/fairview/19.115.txt#L47",
+          "detail": "or/multnomah/fairview/19.115.txt#L51",
           "believed": "10",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -1298,7 +1147,7 @@
           "zone": "RM/TOZ",
           "field": "setback_rear_ft",
           "cause": "unread",
-          "detail": "or/multnomah/fairview/19.115.txt#L47",
+          "detail": "or/multnomah/fairview/19.115.txt#L51",
           "believed": "15",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -1306,7 +1155,7 @@
           "zone": "RM/TOZ",
           "field": "setback_side_ft",
           "cause": "unread",
-          "detail": "or/multnomah/fairview/19.115.txt#L77",
+          "detail": "or/multnomah/fairview/19.30.txt#L342",
           "believed": "5",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -1314,7 +1163,7 @@
           "zone": "RM/TOZ",
           "field": "setback_street_side_ft",
           "cause": "unread",
-          "detail": "or/multnomah/fairview/19.115.txt#L47",
+          "detail": "or/multnomah/fairview/19.115.txt#L51",
           "believed": "10",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -1338,7 +1187,7 @@
           "zone": "VSF",
           "field": "setback_rear_ft",
           "cause": "unread",
-          "detail": "or/multnomah/fairview/19.115.txt#L47",
+          "detail": "or/multnomah/fairview/19.115.txt#L51",
           "believed": "15",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -1346,7 +1195,7 @@
           "zone": "VSF",
           "field": "setback_street_side_ft",
           "cause": "unread",
-          "detail": "or/multnomah/fairview/19.115.txt#L47",
+          "detail": "or/multnomah/fairview/19.115.txt#L51",
           "believed": "10",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -1872,7 +1721,8 @@
       "label": "Gresham",
       "counts": {
         "conditional": 3,
-        "unread": 14,
+        "unread": 11,
+        "unsourced": 3,
         "uncheckable": 7
       },
       "gaps": [
@@ -1904,7 +1754,7 @@
           "zone": "CMF",
           "field": "min_frontage_ft",
           "cause": "unread",
-          "detail": "or/multnomah/gresham/4.0100.residential.txt#L598",
+          "detail": "or/multnomah/gresham/4.0400.corridor.txt#L220",
           "believed": "100",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -1928,7 +1778,7 @@
           "zone": "CMF",
           "field": "setback_rear_ft",
           "cause": "unread",
-          "detail": "or/multnomah/gresham/4.0100.residential.txt#L601",
+          "detail": "or/multnomah/gresham/4.0400.corridor.txt#L334",
           "believed": "15",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
@@ -1942,14 +1792,6 @@
         },
         {
           "zone": "DRL-1",
-          "field": "min_lot_sqft",
-          "cause": "unread",
-          "detail": "or/multnomah/gresham/4.0100.residential.txt#L241",
-          "believed": "4000",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "DRL-1",
           "field": "setback_front_ft",
           "cause": "unread",
           "detail": "or/multnomah/gresham/4.0100.residential.txt#L76",
@@ -1970,14 +1812,6 @@
           "cause": "unread",
           "detail": "or/multnomah/gresham/4.0100.residential.txt#L76",
           "believed": "10",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "DRL-2",
-          "field": "min_lot_sqft",
-          "cause": "unread",
-          "detail": "or/multnomah/gresham/4.0100.residential.txt#L241",
-          "believed": "4000",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
         },
         {
@@ -2003,14 +1837,30 @@
           "detail": "or/multnomah/gresham/4.0100.residential.txt#L76",
           "believed": "10",
           "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
+        },
+        {
+          "zone": "DRL-1",
+          "field": "min_lot_sqft",
+          "cause": "unsourced",
+          "detail": "",
+          "believed": "4000",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
+        },
+        {
+          "zone": "DRL-2",
+          "field": "min_lot_sqft",
+          "cause": "unsourced",
+          "detail": "",
+          "believed": "4000",
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
         },
         {
           "zone": "MDR-24",
           "field": "min_lot_sqft",
-          "cause": "unread",
-          "detail": "or/multnomah/gresham/4.0100.residential.txt#L238",
+          "cause": "unsourced",
+          "detail": "",
           "believed": "7200",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
+          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
         },
         {
           "zone": "CMF",

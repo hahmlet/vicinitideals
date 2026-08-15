@@ -37,6 +37,7 @@ from pathlib import Path
 from typing import Iterable, Sequence
 
 from flats.encode.despace import repair_text
+from flats.encode.find import code_of, names_zone
 from flats.encode.extract import _SECTION, _heading_like
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.loader import CONFIG_ROOT, load_rules
@@ -301,30 +302,11 @@ def _in_section(section: str, claimed: Sequence[str]) -> bool:
     return bool(section) and any(section.startswith(prefix) for prefix in claimed)
 
 
-def _code(zone: str) -> str:
-    """A zone code in the one shape a rule file and a code document share.
-
-    The files write R40 and the ordinance prints R-40; the same zone, and a
-    comparison that respected the hyphen would find neither in the other.
-    The decimal stays — R8.5 and R85 are two zones.
-    """
-    return re.sub(r"[^A-Z0-9.]", "", zone.upper())
-
-
-def _names_zone(line: str, zone: str) -> bool:
-    """Whether a line names this zone, and not a longer code containing it.
-
-    R-5 sits inside R-50, and a table heading for the large-lot zones read
-    as naming the small-lot one scopes every row under it to the wrong
-    zone. Matched character by character with the separators optional, so
-    TLDR, MUR-S and R8.5 are all findable in whatever shape the codifier
-    chose to print them.
-    """
-    want = _code(zone)
-    if not want:
-        return False
-    body = ("[- ]?").join(re.escape(c) for c in want)
-    return re.search(rf"(?<![A-Za-z0-9]){body}(?![A-Za-z0-9])", line) is not None
+#: Matched character by character with the separators optional, so TLDR, MUR-S
+#: and R8.5 are all findable in whatever shape the codifier chose to print
+#: them. Shared with the loose search, which ranks by the same question.
+_code = code_of
+_names_zone = names_zone
 
 
 def permissions_in(

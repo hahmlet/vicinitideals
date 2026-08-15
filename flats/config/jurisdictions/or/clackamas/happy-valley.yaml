@@ -30,14 +30,18 @@ zones:
     setback_front_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L290"
-    setback_side_ft: 15
+    setback_side_ft:
+      value: 15
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L292"
     setback_rear_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L291"
     setback_street_side_ft:
       value: 15
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L293"
-    min_lot_sqft: 40000
+    min_lot_sqft:
+      value: 40000
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L279"
     min_lot_width_ft:
       value: 100
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L282"
@@ -61,14 +65,18 @@ zones:
     setback_front_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L290"
-    setback_side_ft: 10
+    setback_side_ft:
+      value: 10
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L292"
     setback_rear_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L291"
     setback_street_side_ft:
       value: 15
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L293"
-    min_lot_sqft: 20000
+    min_lot_sqft:
+      value: 20000
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L279"
     min_lot_width_ft:
       value: 80
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L282"
@@ -90,14 +98,18 @@ zones:
     setback_front_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L290"
-    setback_side_ft: 7
+    setback_side_ft:
+      value: 7
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L292"
     setback_rear_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L291"
     setback_street_side_ft:
       value: 15
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L293"
-    min_lot_sqft: 15000
+    min_lot_sqft:
+      value: 15000
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L279"
     min_lot_width_ft:
       value: 70
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L282"
@@ -119,14 +131,18 @@ zones:
     setback_front_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L481"
-    setback_side_ft: 7
+    setback_side_ft:
+      value: 7
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L483"
     setback_rear_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L482"
     setback_street_side_ft:
       value: 15
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L485"
-    min_lot_sqft: 10000
+    min_lot_sqft:
+      value: 10000
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L469"
     min_lot_width_ft:
       value: 60
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L472"
@@ -148,14 +164,18 @@ zones:
     setback_front_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L481"
-    setback_side_ft: 5
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L483"
     setback_rear_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L482"
     setback_street_side_ft:
       value: 15
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L485"
-    min_lot_sqft: 8500
+    min_lot_sqft:
+      value: 8500
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L469"
     min_lot_width_ft:
       value: 50
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L472"
@@ -177,14 +197,18 @@ zones:
     setback_front_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L481"
-    setback_side_ft: 5
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L483"
     setback_rear_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L482"
     setback_street_side_ft:
       value: 15
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L485"
-    min_lot_sqft: 7000
+    min_lot_sqft:
+      value: 7000
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L469"
     min_lot_width_ft:
       value: 50
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L472"
@@ -203,15 +227,21 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L535"
-    setback_front_ft: 20
-    setback_side_ft: 5
+    setback_front_ft:
+      value: 20
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L658"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L661"
     setback_rear_ft:
       value: 20
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L660"
     setback_street_side_ft:
       value: 8
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L662"
-    min_lot_sqft: 7000
+    min_lot_sqft:
+      value: 7000
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L644"
     min_lot_width_ft:
       value: 40
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L648"
@@ -233,10 +263,18 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L535"
-    setback_front_ft: 20
-    setback_side_ft: 5
-    setback_rear_ft: 20
-    setback_street_side_ft: 8
+    setback_front_ft:
+      value: 20
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L658"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L661"
+    setback_rear_ft:
+      value: 20
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L660"
+    setback_street_side_ft:
+      value: 8
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L662"
     notes: 'quadfit confidence: needs_verification | Layer value ''MURS'' = code ''MUR-S''. Setbacks from
       Model Home form (verified); max_coverage not shown in form (verify Table 16.22.040-2). Front 20
       street/10 alley. In HV middle-housing zone list.'

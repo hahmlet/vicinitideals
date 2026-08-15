@@ -1055,6 +1055,7 @@ def _candidates(item: dict[str, Any], limit: int = 60) -> tuple[list[dict[str, A
             path=document,
             field=item["field"],
             believed=item["believed"],
+            zone=item["zone"],
             limit=limit - len(out),
         )
         dropped += more
