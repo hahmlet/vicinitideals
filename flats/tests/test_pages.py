@@ -24,6 +24,11 @@ def _book(monkeypatch, pages: list[list[str]]) -> None:
     monkeypatch.setattr(P, "_pages_of", lambda data, *, extraction="layout": pages)
 
 
+def _text(pages: list[list[str]]) -> str:
+    """The stored text a book of these pages would produce."""
+    return "\n".join(line for page in pages for line in page if line.strip()) + "\n"
+
+
 BOOK = [
     ["SECTION 4.0100", "RESIDENTIAL DISTRICTS", "", "[4.0100]-1"],
     ["4.0113 TRANSITION RESIDENTIAL", "Minimum lot area 3,000 sq ft", "[4.0100]-2"],
@@ -164,3 +169,26 @@ def test_page_furniture_is_told_apart_from_a_standard(furniture, label):
     lines of a page are ever read this way.
     """
     assert P._label(["body text"] * 8 + [furniture]) == label
+
+
+def test_the_map_records_which_book_it_counted(monkeypatch, tmp_path):
+    """A page number is a claim about one specific PDF.
+
+    Without the book's own hash there is no way to tell, later, whether the file
+    about to be rendered is the edition the pages were counted in. Showing page
+    239 of a renumbered reprint under a citation is worse than showing no page at
+    all, because it looks like corroboration.
+    """
+    from flats.provenance.books import fingerprint
+
+    _book(monkeypatch, BOOK)
+    text = _text(BOOK)
+    data = b"%PDF-1.7 pretend this is a book"
+    store = ProvenanceStore(tmp_path)
+    store.save("x.txt", url="https://example.test/x.pdf", text=text, retrieved=date(2026, 8, 15))
+
+    built = P.index("x.txt", data, text)
+    P.write(store, built, extractor="test/1")
+
+    assert built.source_sha256 == fingerprint(data)
+    assert P.read(store, "x.txt").source_sha256 == fingerprint(data)

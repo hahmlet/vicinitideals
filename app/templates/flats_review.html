@@ -58,12 +58,24 @@
         </div>
       </div>
       <div style="margin-left:auto;text-align:right">
+        {% if p.pages %}
+        {# The extracted lines lose the table. Opening the sheet is how a reviewer
+           sees which column a number sat in, and it stays on this page. #}
+        <button class="btn btn-secondary btn-sm"
+                hx-get="/ui/flats/book?ref={{ p.document | urlencode }}&page={{ p.pages[0].n }}"
+                hx-target="#book-{{ pi }}"
+                hx-swap="innerHTML"
+                hx-indicator="#book-wait-{{ pi }}">show the page</button>
+        <span id="book-wait-{{ pi }}" class="htmx-indicator muted" style="font-size:11px">loading…</span>
+        {% endif %}
         <span class="muted" style="font-size:11px">{{ p.rows | length }} number{{ "" if p.rows | length == 1 else "s" }}</span>
         {% if p.gridded %}
         <div><span class="badge" title="These lines are grid rows. Extraction flattens a table: the columns are gone, and which one a number belonged to is inferred from the heading rather than from where the ink sat. Worth opening the real document.">read off a table</span></div>
         {% endif %}
       </div>
     </div>
+
+    <div id="book-{{ pi }}"></div>
 
     {% if p.misattributed %}
     <div style="margin:0 0 6px;padding:6px 8px;border-left:3px solid #dc2626;font-size:12px">

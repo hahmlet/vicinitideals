@@ -1150,3 +1150,54 @@ async def test_the_wrong_section_citations_are_a_list_not_only_a_banner(
 
     assert "Citations that name the wrong section" in page.text
     assert "Text is in" in page.text
+
+
+async def test_a_card_offers_the_page_itself(client: AsyncClient, session: AsyncSession):
+    """Extraction flattens a table; the sheet is where the columns still are.
+
+    A setback read off a grid means one thing in the RF column and another in
+    the R2.5 column, and the extracted lines cannot say which. The button that
+    puts the printed page beside the number is the shortest path from "is this
+    right" to knowing.
+    """
+    await _login(client, session)
+
+    page = await client.get("/flats/review/or/multnomah/gresham")
+
+    assert "show the page" in page.text
+    assert "/ui/flats/book?ref=" in page.text
+
+
+async def test_the_viewer_embeds_the_page_the_citation_lands_on(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+
+    view = await client.get(
+        "/ui/flats/book",
+        params={"ref": "or/multnomah/portland/33.110.txt", "page": 12},
+    )
+
+    assert view.status_code == 200
+    assert "/flats/book/or/multnomah/portland/33.110.txt#page=12" in view.text
+    assert "<iframe" in view.text
+
+
+async def test_the_viewer_refuses_a_document_the_store_does_not_hold(
+    client: AsyncClient, session: AsyncSession
+):
+    """The reference is a query parameter, so it is attacker-chosen text that
+    ends up as a filesystem path. Membership of the store is the gate."""
+    await _login(client, session)
+
+    view = await client.get("/ui/flats/book", params={"ref": "../../etc/passwd"})
+
+    assert view.status_code == 404
+
+
+async def test_the_book_route_needs_a_session(client: AsyncClient):
+    """The corpus is fetched code, but the route reads from disk and streams a
+    file; anonymous access to it is not a thing a review surface should offer."""
+    served = await client.get("/flats/book/or/multnomah/portland/33.110.txt")
+
+    assert served.status_code in (302, 303, 401, 403)

@@ -93,6 +93,9 @@ class PageIndex:
     sha256: str
     extractor: str
     pages: tuple[Page, ...]
+    #: SHA-256 of the PDF the map was built from. What lets a viewer prove the
+    #: book it is about to show page 239 of is the book page 239 was counted in.
+    source_sha256: str = ""
 
     def at(self, line: int) -> Page | None:
         """The page a line sits on.
@@ -215,6 +218,7 @@ def index(path: str, data: bytes, text: str, *, extraction: str = "layout") -> P
                 seen.add(page)
                 pages.append(Page(n=page, line=line_no, label=furniture.get(page, "")))
         else:
+            from flats.provenance.books import fingerprint
             from flats.provenance.store import sha256
 
             return PageIndex(
@@ -222,6 +226,7 @@ def index(path: str, data: bytes, text: str, *, extraction: str = "layout") -> P
                 sha256=sha256(text),
                 extractor="",
                 pages=tuple(pages),
+                source_sha256=fingerprint(data),
             )
     raise ProvenanceError(
         f"{path}: the stored text no longer matches what the source serves — "
@@ -254,6 +259,11 @@ def write(store: ProvenanceStore, page_index: PageIndex, *, extractor: str) -> N
             {
                 "sha256": page_index.sha256,
                 "extractor": extractor,
+                **(
+                    {"source_sha256": page_index.source_sha256}
+                    if page_index.source_sha256
+                    else {}
+                ),
                 "pages": [
                     {"n": p.n, "line": p.line, **({"label": p.label} if p.label else {})}
                     for p in page_index.pages
@@ -290,6 +300,7 @@ def read(store: ProvenanceStore, path: str) -> PageIndex | None:
         path=path,
         sha256=raw["sha256"],
         extractor=raw.get("extractor", ""),
+        source_sha256=raw.get("source_sha256", ""),
         pages=tuple(
             Page(n=p["n"], line=p["line"], label=p.get("label", "")) for p in raw["pages"]
         ),
@@ -352,6 +363,12 @@ def main(argv: Sequence[str] | None = None, *, get: Callable[[str], bytes] | Non
         )
         if not args.check:
             write(store, built, extractor=store.load(path).extractor)
+            # The bytes are already here and the review pages will want them.
+            # Fetching a 40 MB book a second time to show a page out of it is
+            # a rude thing to do to a city's web server.
+            from flats.provenance.books import save as cache_book
+
+            cache_book(document.url, data)
         mapped += 1
     print(f"{mapped} mapped, {skipped} not a PDF, {failed} unmapped")
     return 1 if failed else 0

@@ -1,0 +1,23 @@
+{# The source page itself, in the browser's own PDF viewer.
+
+   No library: every browser that runs this app already has a PDF reader with
+   zoom, scroll and search, and shipping a second one would be a megabyte of
+   JavaScript to reproduce what is built in. The fragment after the URL is the
+   standard open parameter set — the page the citation lands on, fitted to the
+   width the card gives it. #}
+<div class="card" style="padding:0;margin:8px 0;overflow:hidden">
+  <div class="toolbar" style="margin:0;padding:6px 8px;font-size:11px">
+    <span class="muted">
+      {% if pages %}page {{ page }} of the book this text was read from{% else %}the book this text was read from{% endif %}
+    </span>
+    <span style="margin-left:auto">
+      <a href="/flats/book/{{ document }}#page={{ page }}" target="_blank" rel="noopener">open full size</a>
+      · <a href="{{ url }}" target="_blank" rel="noopener">at the source</a>
+    </span>
+  </div>
+  <iframe
+    src="/flats/book/{{ document }}#page={{ page }}&view=FitH&zoom=page-width"
+    title="Source page {{ page }}"
+    loading="lazy"
+    style="width:100%;height:70vh;border:0;display:block"></iframe>
+</div>

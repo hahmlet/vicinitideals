@@ -119,12 +119,22 @@
               {% for page in item.pages %}
                 <a href="{{ item.url }}#page={{ page.n }}" target="_blank" rel="noopener">{{ page.cite }}</a>{{ ", " if not loop.last }}
               {% endfor %}
+              <div class="no-print">
+                <button class="btn btn-secondary btn-sm"
+                        hx-get="/ui/flats/book?ref={{ item.document | urlencode }}&page={{ item.pages[0].n }}"
+                        hx-target="#book-{{ loop.index }}-{{ item.pages[0].n }}"
+                        hx-swap="innerHTML">show the page</button>
+              </div>
             {% elif item.url %}
               <a href="{{ item.url }}" target="_blank" rel="noopener">open the code</a>
             {% endif %}
             <div class="muted">{{ item.quote }}</div>
           </div>
         </div>
+
+        {% if item.pages %}
+        <div id="book-{{ loop.index }}-{{ item.pages[0].n }}"></div>
+        {% endif %}
 
         {% with error = item.error, lines = item.lines, path = item.document %}
           {% include "partials/flats_quote.html" %}

@@ -1,6 +1,7 @@
 {
   "sha256": "371721b3cf8f2e19d9b1878b18cc7a1dcab3fbfa9e25a536ea605dd526edb9af",
   "extractor": "flats-html-text/3",
+  "source_sha256": "a7ce5491a7fb1a9a09018b393e35f51a2251f5f5a6bb5db500f73717763ef8e2",
   "pages": [
     {
       "n": 1,

@@ -31,7 +31,8 @@ is being built is a decision about the product.
 
 Routes: /flats, /flats/plans, /flats/plans/{design}, /flats/review/{layer},
 /flats/gaps, /flats/feedback, /flats/why/{layer}, /flats/{layer}, /ui/flats/quote,
-/ui/flats/sign, /ui/flats/sign-passage, /ui/flats/bundle
+/ui/flats/sign, /ui/flats/sign-passage, /ui/flats/bundle, /ui/flats/book,
+/flats/book/{document}
 """
 from __future__ import annotations
 
@@ -41,8 +42,9 @@ from functools import lru_cache
 from typing import Any, Sequence
 
 from fastapi import APIRouter, Form, Query, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import FileResponse, HTMLResponse
 from sqlalchemy import select
+from starlette.concurrency import run_in_threadpool
 
 from app.api.deps import DBSession
 from app.api.routers.ui_helpers import _base_ctx, _get_counts, _get_user, templates
@@ -52,7 +54,7 @@ from flats.encode.attribution import claimed_sections, section_at
 from flats.encode.gaps import digest as gaps_digest
 from flats.encode.gaps import read_ledger
 from flats.encode.verify import fingerprint
-from flats.provenance import pages as page_map
+from flats.provenance import books, pages as page_map
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.fields import FIELDS
 from flats.rules.ledger import CoverageRow, read_coverage
@@ -1527,6 +1529,75 @@ def _cited_lines(ref: str) -> tuple[list[dict[str, Any]], str]:
         {"n": n, "text": whole[n - 1], "quoted": first <= n <= last}
         for n in range(start, end + 1)
     ], ""
+
+
+# --- the source page itself ----------------------------------------------
+
+
+@router.get("/flats/book/{document:path}", response_model=None)
+async def flats_book(
+    request: Request, session: DBSession, document: str
+) -> FileResponse | HTMLResponse:
+    """The PDF a document was read out of, so a browser can render its pages.
+
+    Served from here rather than linked to the codifier for two reasons. A city
+    web server is not a dependency a review session should have, and several of
+    these books answer an ordinary browser request with a redirect chain or a
+    rate limit. And the file served here is checked: its bytes hash to what the
+    page map recorded, so page 239 is the page the map counted, not page 239 of
+    a later edition that renumbered everything.
+    """
+    await _get_user(session, request)
+    if document not in _known_documents():
+        return HTMLResponse("no such stored document", status_code=404)
+    try:
+        # First view of a book is a twenty-megabyte download from a city web
+        # server. Doing that on the event loop would stall every other request
+        # in the worker behind one reviewer opening one page.
+        path = await run_in_threadpool(books.ensure, _store(), document)
+    except books.BookError as exc:
+        return HTMLResponse(str(exc), status_code=409)
+    return FileResponse(
+        path,
+        media_type="application/pdf",
+        # inline, or the browser downloads it instead of rendering it in place.
+        headers={
+            "Content-Disposition": "inline",
+            # The bytes are pinned to a hash, so a cached copy can never be the
+            # wrong edition. Re-downloading 20 MB per card would make the
+            # feature slower than the thing it replaces.
+            "Cache-Control": "private, max-age=86400",
+        },
+    )
+
+
+@router.get("/ui/flats/book", response_class=HTMLResponse)
+async def flats_book_view(
+    request: Request,
+    session: DBSession,
+    ref: str = Query(...),
+    page: int = Query(1),
+) -> HTMLResponse:
+    """The embedded viewer for one citation, swapped in when a reviewer asks.
+
+    On demand rather than on load: a review queue is twenty-five cards, and
+    twenty-five embedded books is forty megabytes nobody asked for.
+    """
+    await _get_user(session, request)
+    document = ref.partition("#L")[0]
+    if document not in _known_documents():
+        return HTMLResponse("", status_code=404)
+    index = page_map.read(_store(), document)
+    return templates.TemplateResponse(
+        request,
+        "partials/flats_book.html",
+        {
+            "document": document,
+            "page": page,
+            "pages": len(index.pages) if index else 0,
+            "url": _store().load(document).url,
+        },
+    )
 
 
 @router.get("/ui/flats/quote", response_class=HTMLResponse)
