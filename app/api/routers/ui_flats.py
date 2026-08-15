@@ -137,6 +137,19 @@ def _value_rows(layer: Layer) -> list[dict[str, Any]]:
             for number, when in numbers:
                 rows.append(
                     {
+                        # What a verdict on this number would be a verdict
+                        # *about*. Change the number, its citation or its
+                        # quote and this moves, which is how a decision stops
+                        # applying to a value it was never made about.
+                        "mark": fingerprint(
+                            layer.layer,
+                            zone_code,
+                            name,
+                            number.value,
+                            cite=number.prov.cite,
+                            quote=number.prov.quote,
+                            when=when,
+                        ),
                         "zone": zone_code,
                         "field": name,
                         "value": number.value,
@@ -539,6 +552,21 @@ def _cluster(spans: list[tuple[int, int]]) -> list[list[tuple[int, int]]]:
     return out
 
 
+def _stands(seen: Any, mark: str) -> bool:
+    """Whether an existing verdict still covers this number.
+
+    A verdict is about a value, not about a field. Correct a setback in
+    response to somebody's note and their verdict no longer applies to what is
+    there — so the item returns to the queue rather than sitting decided, which
+    is what makes a round of fixes checkable instead of merely claimed.
+
+    A verdict recorded before fingerprints existed carries none, and is taken
+    at face value: resurfacing six hundred of them would bury the handful that
+    genuinely changed.
+    """
+    return bool(seen) and (not seen.fingerprint or seen.fingerprint == mark)
+
+
 def _passages(layer: Layer, decided: dict) -> list[dict[str, Any]]:
     """The layer's unreviewed numbers, gathered under the text they were read from.
 
@@ -558,8 +586,15 @@ def _passages(layer: Layer, decided: dict) -> list[dict[str, Any]]:
     quoted: dict[str, list[dict[str, Any]]] = {}
     loose: list[dict[str, Any]] = []
     for row in _value_rows(layer):
-        if not row["quote"] or decided.get((row["zone"], row["field"], row["when"])):
+        if not row["quote"]:
             continue
+        seen = decided.get((row["zone"], row["field"], row["when"]))
+        if _stands(seen, row["mark"]):
+            continue
+        # Decided once, then changed. The reviewer is owed what they said and
+        # what it says now, side by side — that comparison is the whole point
+        # of asking them to look again.
+        row["was"] = seen
         span = _span(row["quote"])
         row["line"] = span[0] if span else 0
         if span is None:
@@ -679,6 +714,41 @@ def _bundle_text(rows: Sequence[Any]) -> str:
     return "\n".join(out)
 
 
+def _answered(rows: Sequence[Any]) -> list[dict[str, Any]]:
+    """Raised problems whose value has since changed.
+
+    A round of fixes is worth nothing to a reviewer who cannot tell which of
+    their notes were acted on. The fingerprint answers it without anybody
+    having to claim anything: it covers the value, its citation and its quote,
+    so if what the repository now holds fingerprints differently, the encoding
+    moved after the note was written. What moved, and to what, is shown — the
+    reviewer still has to agree it moved the right way.
+
+    Notes taken before fingerprints existed carry none and are left out: they
+    cannot be told apart from notes nobody has touched, and guessing would
+    report fixes that never happened.
+    """
+    out: list[dict[str, Any]] = []
+    for row in rows:
+        layer = _layers().get(row.layer)
+        if layer is None or not row.fingerprint:
+            continue
+        number = _number(layer, row.zone, row.field, row.when_key)
+        mark = _mark(layer.layer, row.zone, row.field, row.when_key, number) if number else ""
+        if mark == row.fingerprint:
+            continue
+        out.append(
+            {
+                "was": row,
+                "gone": number is None,
+                "value": number.value if number else "",
+                "cite": number.prov.cite if number else "",
+                "quote": number.prov.quote if number else "",
+            }
+        )
+    return out
+
+
 @router.get("/flats/feedback", response_class=HTMLResponse)
 async def flats_feedback(
     request: Request, session: DBSession, all: int = Query(0)
@@ -699,12 +769,25 @@ async def flats_feedback(
     if not all:
         query = query.where(FlatsRuleSignature.bundled_at.is_(None))
     rows = list((await session.execute(query)).scalars())
+    # Every problem ever raised, open or handed on: a fix lands after the batch
+    # goes out, so the item to recheck is usually one the reviewer has already
+    # cleared off the open list.
+    raised = list(
+        (
+            await session.execute(
+                select(FlatsRuleSignature)
+                .where(FlatsRuleSignature.verdict.in_(("rejected", "unclear")))
+                .order_by(FlatsRuleSignature.decided_at)
+            )
+        ).scalars()
+    )
     return templates.TemplateResponse(
         request,
         "flats_feedback.html",
         {
             **_base_ctx(user, dedup_count, "flats", conflicts_count=conflicts_count),
             "rows": rows,
+            "answered": _answered(raised),
             "bundle": _bundle_text(rows),
             "showing_all": bool(all),
         },
@@ -820,7 +903,7 @@ async def flats_sign_passage(
     for row in _value_rows(layer):
         if not _within(row["quote"], document, span):
             continue
-        if decided.get((row["zone"], row["field"], row["when"])):
+        if _stands(decided.get((row["zone"], row["field"], row["when"])), row["mark"]):
             continue
         number = _number(layer, row["zone"], row["field"], row["when"])
         if number is None:
@@ -873,9 +956,11 @@ async def flats_layer(request: Request, session: DBSession, layer_id: str) -> HT
     rows = _value_rows(layer)
     for row in rows:
         seen = decided.get((row["zone"], row["field"], row["when"]))
-        row["decision"] = seen.verdict if seen else ""
-        row["decided_by"] = seen.reviewer if seen else ""
-        row["pending"] = bool(seen and seen.exported_at is None)
+        stands = _stands(seen, row["mark"])
+        row["decision"] = seen.verdict if stands else ""
+        row["decided_by"] = seen.reviewer if stands else ""
+        row["pending"] = bool(stands and seen.exported_at is None)
+        row["restated"] = bool(seen and not stands)
     return templates.TemplateResponse(
         request,
         "flats_layer.html",
@@ -907,7 +992,15 @@ def _shown(ref: str) -> str:
 
 
 def _mark(layer_id: str, zone: str, field: str, when: str, number: Any) -> str:
-    """The fingerprint of exactly what a reviewer was looking at."""
+    """The fingerprint of exactly what a reviewer was looking at.
+
+    The conditions come off the number itself, never off the address. A band
+    token is "lot_sqft:>10000+", so the "+" that joins a key into an address
+    also occurs inside one, and splitting it back apart does not always return
+    what went in. Rebuilding a fingerprint from a lossy round trip would make a
+    verdict stop matching the value it was just recorded against — the item
+    would resurface as changed the moment it was signed.
+    """
     return fingerprint(
         layer_id,
         zone,
@@ -915,7 +1008,7 @@ def _mark(layer_id: str, zone: str, field: str, when: str, number: Any) -> str:
         number.value,
         cite=number.prov.cite,
         quote=number.prov.quote,
-        when=tuple(when.split("+")) if when else (),
+        when=getattr(number, "key", ()),
     )
 
 

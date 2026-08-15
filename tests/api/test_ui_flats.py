@@ -717,3 +717,161 @@ async def test_prose_is_not_flagged_as_a_table():
 
     assert not _from_a_table(prose)
     assert _from_a_table(grid)
+
+
+# --- iteration: a verdict is about a value, not about a field ----------
+
+
+async def test_every_signable_number_signs_against_its_own_fingerprint():
+    """The queue and the signature must agree on what a verdict is about.
+
+    They compute the fingerprint by different roads — the queue from the row it
+    renders, the sign route from the number it looks up by address — and if the
+    two ever disagree, a verdict stops matching the moment it is recorded and
+    the item resurfaces as "changed" forever. A band token contains a "+", the
+    same character that joins an address, so this is a real trap rather than a
+    hypothetical one.
+    """
+    from app.api.routers import ui_flats as ui
+
+    off = []
+    for layer in ui._layers().values():
+        for row in ui._value_rows(layer):
+            number = ui._number(layer, row["zone"], row["field"], row["when"])
+            mark = number and ui._mark(
+                layer.layer, row["zone"], row["field"], row["when"], number
+            )
+            if mark != row["mark"]:
+                off.append(f"{layer.layer} {row['zone']} {row['field']} {row['when']}")
+    assert not off, off[:5]
+
+
+async def test_a_verdict_recorded_before_fingerprints_is_taken_at_face_value():
+    """Six hundred old verdicts resurfacing would bury the handful that moved."""
+    from app.api.routers import ui_flats as ui
+
+    class Seen:
+        fingerprint = ""
+
+    assert ui._stands(Seen(), "anything")
+    assert not ui._stands(None, "anything")
+
+
+async def test_a_changed_value_comes_back_with_what_the_reviewer_said(
+    client: AsyncClient, session: AsyncSession
+):
+    """The loop only closes if a fix is checkable rather than merely claimed."""
+    from app.api.routers import ui_flats as ui
+    from app.models.flats import FlatsRuleSignature as S
+
+    user = await _login(client, session)
+    layer = ui._layers()["or/clackamas/wilsonville"]
+    row = next(r for r in ui._value_rows(layer) if r["quote"])
+    session.add(
+        S(
+            layer=layer.layer,
+            zone=row["zone"],
+            field=row["field"],
+            when_key=row["when"],
+            value=row["value"],
+            cite=row["cite"],
+            quote=row["quote"],
+            verdict="rejected",
+            note="this is the townhouse column, not this zone's",
+            reviewer=user.email or str(user.id),
+            reviewer_user_id=user.id,
+            # Signed against a value that is no longer what the file holds.
+            fingerprint="0" * 64,
+        )
+    )
+    await session.commit()
+
+    page = await client.get("/flats/review/or/clackamas/wilsonville")
+
+    assert "Changed since you looked" in page.text
+    assert "this is the townhouse column" in page.text, "the note comes back with it"
+
+
+async def test_a_standing_verdict_does_not_come_back(
+    client: AsyncClient, session: AsyncSession
+):
+    from app.api.routers import ui_flats as ui
+    from app.models.flats import FlatsRuleSignature as S
+
+    user = await _login(client, session)
+    layer = ui._layers()["or/clackamas/wilsonville"]
+    row = next(r for r in ui._value_rows(layer) if r["quote"])
+    session.add(
+        S(
+            layer=layer.layer,
+            zone=row["zone"],
+            field=row["field"],
+            when_key=row["when"],
+            value=row["value"],
+            cite=row["cite"],
+            quote=row["quote"],
+            verdict="rejected",
+            note="wrong column",
+            reviewer=user.email or str(user.id),
+            reviewer_user_id=user.id,
+            fingerprint=row["mark"],
+        )
+    )
+    await session.commit()
+
+    page = await client.get("/flats/review/or/clackamas/wilsonville")
+
+    assert "Changed since you looked" not in page.text
+
+
+async def test_the_feedback_page_says_which_notes_were_acted_on(
+    client: AsyncClient, session: AsyncSession
+):
+    """The half of the loop that makes a round of fixes checkable."""
+    from app.api.routers import ui_flats as ui
+    from app.models.flats import FlatsRuleSignature as S
+
+    user = await _login(client, session)
+    layer = ui._layers()["or/clackamas/wilsonville"]
+    rows = [r for r in ui._value_rows(layer) if r["quote"]]
+    common = dict(
+        layer=layer.layer,
+        verdict="rejected",
+        reviewer=user.email or str(user.id),
+        reviewer_user_id=user.id,
+    )
+    # One note against the value as it stands, one against a value that moved.
+    session.add(
+        S(
+            zone=rows[0]["zone"],
+            field=rows[0]["field"],
+            when_key=rows[0]["when"],
+            value=rows[0]["value"],
+            cite=rows[0]["cite"],
+            quote=rows[0]["quote"],
+            note="still open, nobody has touched it",
+            fingerprint=rows[0]["mark"],
+            **common,
+        )
+    )
+    session.add(
+        S(
+            zone=rows[1]["zone"],
+            field=rows[1]["field"],
+            when_key=rows[1]["when"],
+            value=rows[1]["value"],
+            cite=rows[1]["cite"],
+            quote=rows[1]["quote"],
+            note="this one was fixed since",
+            fingerprint="0" * 64,
+            **common,
+        )
+    )
+    await session.commit()
+
+    page = await client.get("/flats/feedback")
+
+    assert "have been acted on" in page.text or "has been acted on" in page.text
+    assert "this one was fixed since" in page.text
+    body = page.text.split("have been acted on")[-1].split("The bundle")[0]
+    assert "nobody has touched it" not in body.split("Everything you marked")[0]

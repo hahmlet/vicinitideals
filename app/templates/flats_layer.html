@@ -79,6 +79,9 @@
             {% else %}
               <span class="badge">{{ row.status }}</span>
             {% endif %}
+            {% if row.restated %}
+              <div class="muted" style="font-size:11px">changed since it was reviewed</div>
+            {% endif %}
           </td>
           <td>
             {% if row.quote %}

@@ -26,6 +26,54 @@
     </div>
   </div>
 
+  {% if answered %}
+  <div class="card" style="margin:8px 0 16px;padding:12px;border-left:3px solid #16a34a">
+    <div style="margin-bottom:6px">
+      <strong>{{ answered | length }} of your notes {{ "has" if answered | length == 1 else "have" }} been acted on</strong>
+      <div class="muted" style="font-size:12px;max-width:74ch">
+        What the code holds for these is no longer what you were looking at when you
+        raised them. Go and check the new reading — the review page for that jurisdiction
+        puts your note beside it.
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Raised</th>
+            <th>Jurisdiction</th>
+            <th>Zone</th>
+            <th>Standard</th>
+            <th class="col-right">Was</th>
+            <th class="col-right">Now</th>
+            <th>Your note</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in answered %}
+          <tr>
+            <td class="muted" style="font-size:11px">{{ item.was.decided_at.strftime("%b %d") }}</td>
+            <td>{{ item.was.layer }}</td>
+            <td>{{ item.was.zone }}</td>
+            <td>{{ item.was.field }}{% if item.was.when_key %} <span class="muted" style="font-size:11px">[{{ item.was.when_key }}]</span>{% endif %}</td>
+            <td class="col-right muted">{{ item.was.value }}</td>
+            <td class="col-right">
+              {% if item.gone %}<span class="badge">removed</span>
+              {% else %}<strong>{{ item.value }}</strong>
+                {% if item.cite != item.was.cite %}<div class="muted" style="font-size:11px">re-cited</div>{% endif %}
+              {% endif %}
+            </td>
+            <td style="max-width:34ch">{{ item.was.note }}</td>
+            <td><a class="btn btn-secondary btn-sm" href="/flats/review/{{ item.was.layer }}">Recheck</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endif %}
+
   <p class="muted" style="font-size:12px;max-width:74ch">
     Everything you marked wrong or unanswered, with the value, its citation and the exact
     text you were shown. Copy the block below and paste it back to whoever is doing the

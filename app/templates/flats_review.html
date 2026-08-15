@@ -58,6 +58,13 @@
       </div>
     </div>
 
+    {% if p.rows | selectattr("was") | list %}
+    <div style="margin:0 0 6px;padding:6px 8px;border-left:3px solid #d97706;font-size:12px">
+      {{ p.rows | selectattr("was") | list | length }} of these were changed after you last
+      looked at them, and are back for a second reading. Your earlier note is beside each.
+    </div>
+    {% endif %}
+
     {% if p.section or p.caption %}
     <div style="margin:0 0 6px;padding:6px 8px;border-left:3px solid var(--accent,#2563eb);background:var(--muted-bg,#f1f5f9)">
       {% if p.section %}<div style="font-size:12px"><strong>{{ p.section }}</strong></div>{% endif %}
@@ -84,13 +91,28 @@
         </thead>
         <tbody>
           {% for row in p.rows %}
-          <tr>
+          <tr{% if row.was %} style="background:var(--warn-bg,#fffbeb)"{% endif %}>
             <td class="col-right muted" style="font-size:11px">{{ row.line or "" }}</td>
             <td>{{ row.zone }}</td>
             <td>{{ row.field }}</td>
             <td class="muted" style="font-size:11px">{{ row.when_label or "always" }}</td>
-            <td class="col-right"><strong>{{ row.value }}</strong></td>
+            <td class="col-right">
+              <strong>{{ row.value }}</strong>
+              {% if row.was %}
+                {% if row.was.value != row.value %}
+                <div class="muted" style="font-size:11px">was {{ row.was.value }}</div>
+                {% endif %}
+              {% endif %}
+            </td>
             <td>
+              {% if row.was %}
+              <div class="muted" style="font-size:11px;margin-bottom:4px;max-width:34ch">
+                Changed since you looked. On {{ row.was.decided_at.strftime("%b %d") }} you called it
+                <strong>{{ "wrong" if row.was.verdict == "rejected" else row.was.verdict }}</strong>{% if row.was.note %}:
+                “{{ row.was.note }}”{% endif %}
+                {% if row.was.quote != row.quote %}<div>The citation moved: {{ row.was.quote }} → {{ row.quote }}</div>{% endif %}
+              </div>
+              {% endif %}
               <span id="d-{{ pi }}-{{ loop.index }}" style="display:inline-block;min-width:88px"></span>
               <form hx-post="/ui/flats/sign"
                     hx-target="#d-{{ pi }}-{{ loop.index }}"
