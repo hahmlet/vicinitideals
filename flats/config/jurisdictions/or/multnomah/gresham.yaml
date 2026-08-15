@@ -63,9 +63,23 @@ code:
   - id: "4.1400.pleasant-valley"
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1400.pdf
     title: "Section 4.1400 - Pleasant Valley Plan District"
+    # The setback tables in this chapter print their column headers as
+    # rotated text, and layout extraction silently drops rotated text —
+    # "Front Facade/Wall", "Front Porch", "Garage", "Interior Side" and the
+    # rest never reached the store, leaving eleven columns of numbers with
+    # nothing naming them. Plain mode reads them. This is why 4.0100 keeps
+    # layout and these two do not: same publisher, different table.
+    extraction: plain
   - id: "4.1500.springwater"
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1500.pdf
     title: "Section 4.1500 - Springwater Plan District"
+    # The setback tables in this chapter print their column headers as
+    # rotated text, and layout extraction silently drops rotated text —
+    # "Front Facade/Wall", "Front Porch", "Garage", "Interior Side" and the
+    # rest never reached the store, leaving eleven columns of numbers with
+    # nothing naming them. Plain mode reads them. This is why 4.0100 keeps
+    # layout and these two do not: same publisher, different table.
+    extraction: plain
   - id: "7.0400.middle-housing-design"
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
     title: "Section 7.0400 - Middle Housing Design Standards"
@@ -265,21 +279,33 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1400.pdf
       retrieved: '2026-07-24'
     quadplex_allowed: true
-    setback_front_ft: 10
-    setback_side_ft: 5
-    setback_rear_ft: 10
-    setback_street_side_ft: 10
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L386-L392"
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L386-L392"
+    setback_rear_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L386-L392"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L386-L392"
+      variants:
+        - value: 8
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L395"
     min_lot_sqft:
       value: 5000
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L283"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L261"
       variants:
         - value: 1500
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L286"
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L262"
     notes: 'quadfit confidence: verified | Pleasant Valley plan district. Rear 10 ft (vs 15 in base LDR).'
     max_height_ft:
       value: 35
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L327"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L307"
   LDR-SW:
     section: ["4.15", "7.042"]
     cite_default:
@@ -287,29 +313,41 @@ zones:
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1500.pdf
       retrieved: '2026-07-24'
     quadplex_allowed: true
-    setback_front_ft: 10
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    setback_street_side_ft: 10
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L349-L353"
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L349-L353"
+    setback_rear_ft:
+      value: 15
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L349-L353"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L349-L353"
+      variants:
+        - value: 8
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L341"
     min_lot_sqft:
       value: 5000
-      quote: "or/multnomah/gresham/4.1500.springwater.txt#L267"
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L246"
       variants:
         - value: 0
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.1500.springwater.txt#L266"
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L245"
     notes: 'quadfit confidence: verified | Springwater. Min lot width 45 ft, min depth 80 ft (not separately
       modeled — envelope test dominates).'
     max_height_ft:
       value: 35
-      quote: "or/multnomah/gresham/4.1500.springwater.txt#L298"
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L278"
     min_lot_width_ft:
       value: 45
-      quote: "or/multnomah/gresham/4.1500.springwater.txt#L280"
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L260"
       variants:
         - value: 16
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.1500.springwater.txt#L279"
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L259"
   MDR-12:
     section: ["4.01", "7.042"]
     cite_default:
@@ -462,7 +500,7 @@ zones:
       attach (townhouse/cottage-cluster zone).'
     max_height_ft:
       value: 45
-      quote: "or/multnomah/gresham/4.1500.springwater.txt#L298"
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L278"
     min_lot_width_ft:
       value: 20
-      quote: "or/multnomah/gresham/4.1500.springwater.txt#L280"
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L260"
