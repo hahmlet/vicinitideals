@@ -35,7 +35,9 @@ zones:
       cite: LOC 50.04.001.3 Table 50.04.001-11; LOC 50.03.002 Table 50.03.002-1
       url: https://ecode360.com/43076426
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L193"
     setback_front_ft:
       value: 10
       quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1344"
@@ -61,7 +63,9 @@ zones:
       cite: LOC 50.04.001.3 Table 50.04.001-11; LOC 50.03.002 Table 50.03.002-1
       url: https://ecode360.com/43076426
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L193"
     setback_front_ft:
       value: 10
       quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1342"
@@ -87,7 +91,9 @@ zones:
       cite: LOC 50.04.001.2 Tables 50.04.001-3/-4/-7
       url: https://ecode360.com/43076426
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L193"
     setback_front_ft: 10
     setback_side_ft: 10
     setback_rear_ft: 10
@@ -108,7 +114,9 @@ zones:
       cite: LOC 50.04.001.1 Tables 50.04.001-1/-2
       url: https://ecode360.com/43076426
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L193"
     setback_front_ft:
       value: 25
       quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L116"

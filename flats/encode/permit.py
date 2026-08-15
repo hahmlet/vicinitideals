@@ -157,6 +157,122 @@ def _cell_at(line: str, span: tuple[int, int]) -> str:
     return best_text if best_gap is not None and best_gap <= _DRIFT else ""
 
 
+#: A cell of a linearised grid: a line that is nothing but the answer. Code
+#: Publishing renders a use table as HTML and the extractor emits one cell per
+#: line, so the row and its answers arrive as four lines rather than one.
+_STACK_YES = re.compile(r"^(?:p|yes|a|permitted|allowed)[0-9*]{0,3}[.]?$", re.I)
+_STACK_NO = re.compile(r"^(?:x|n|np|no|not permitted|prohibited)[0-9*]{0,3}[.]?$", re.I)
+#: Neither: a conditional use, a special review, a limited permission. Each is
+#: a yes with a process attached, which is a different standard from a yes and
+#: not one this reader is entitled to decide.
+_STACK_MAYBE = re.compile(r"^(?:c|cu|l|s|sur|pc)[0-9*]{0,3}[.]?$", re.I)
+#: A zone code standing alone on a line, as a stacked header prints one —
+#: with its footnote markers, which travel with the code and are not part of
+#: it. "R-3 [3]" rejected as a column is not one column lost: it is the seven
+#: after it read one place to the left, under the wrong districts.
+_CODE_LINE = re.compile(
+    r"^[A-Z][A-Z0-9]{0,3}(?:[-./][A-Z0-9.]{1,4})*(?:\s*(?:\[[0-9]+\]|\*+|[0-9]{1,2}))*$"
+)
+
+
+def _stack_cell(line: str) -> str:
+    """Which of the three a stacked cell is: "yes", "no", or "" for neither."""
+    if _STACK_MAYBE.match(line):
+        return ""
+    if _STACK_YES.match(line):
+        return "yes"
+    if _STACK_NO.match(line):
+        return "no"
+    return ""
+
+
+def _stacked_header(
+    lines: Sequence[tuple[int, str]], at: int, siblings: Sequence[str]
+) -> list[str] | None:
+    """The zones a run of solo code lines heads, in the order they are printed.
+
+    A column that names no zone this layer knows is kept as an empty string
+    rather than dropped. Position is the whole attribution: Clackamas heads
+    Table 315-2 with R-2.5 before R-5, and a reader that skipped the district
+    it has not encoded would read every remaining column one place to the left
+    and file eight zones' standards under their neighbours'.
+    """
+    run: list[str] = []
+    while at + len(run) < len(lines):
+        _, text = lines[at + len(run)]
+        if not _CODE_LINE.match(text) or len(text) > 20:
+            break
+        named = [z for z in siblings if _names_zone(text, z)]
+        run.append(named[0] if len(named) == 1 else "")
+    if len(run) < 2 or not any(run):
+        return None
+    return run
+
+
+def stacked_permissions(
+    lines: Sequence[tuple[int, str]], *, path: str, zone: str, siblings: Sequence[str]
+) -> list[tuple[str, str, str, str]]:
+    """Permissions from a use table that lost its geometry to HTML.
+
+    The columnar reader needs the printed gaps to say which zone a "P" answers
+    for. Half this corpus arrives without them: the codifier published HTML,
+    the extractor walked the table cell by cell, and
+
+        Land Use / R-40 / R-20 / R-15 / ... /
+        One single-family dwelling, townhome, duplex, triplex, quadplex ... / P / P / P
+
+    is a grid with every column intact and not one space between them. What
+    replaces the geometry is arithmetic: a header of *k* codes, then a label
+    and exactly *k* cells, and the zone at position *i* is answered by cell
+    *i*. A row that does not produce exactly *k* readable cells is skipped
+    rather than guessed at, because a row read one cell short files every
+    answer after the gap under the wrong district.
+
+    The line cited is the row's label, not its cell. "P" alone evidences
+    nothing a reviewer can check; the sentence naming the housing type, with
+    the printed page beside it, is the thing they can.
+    """
+    out: list[tuple[str, str, str, str]] = []
+    i = 0
+    columns: list[str] = []
+    while i < len(lines):
+        header = _stacked_header(lines, i, siblings)
+        if header is not None:
+            columns = header
+            i += len(header)
+            continue
+        if not columns or zone not in columns:
+            i += 1
+            continue
+        width = len(columns)
+        cells = [_stack_cell(text) for _, text in lines[i + 1 : i + 1 + width]]
+        over = lines[i + 1 + width : i + 2 + width]
+        if len(cells) < width or not all(cells):
+            i += 1
+            continue
+        if over and _stack_cell(over[0][1]):
+            # More answers than the header has columns, which means the header
+            # is the part this reader got wrong — a zone whose footnote marker
+            # or spelling it failed to recognise as a column. Every cell after
+            # that point answers for a district one place along, so the row is
+            # left alone rather than filed against the wrong one.
+            i += 1
+            continue
+        number, label = lines[i]
+        verdict = cells[columns.index(zone)]
+        if _TYPE.search(label) and not _NEGATED.search(label):
+            out.append(
+                (
+                    f"{path}#L{number}",
+                    label[:200],
+                    "anchored" if verdict == "yes" else "contradicted",
+                    lines[i + 1 + columns.index(zone)][1],
+                )
+            )
+        i += 1 + width
+    return out
+
+
 @dataclass(frozen=True, slots=True)
 class Found:
     """A line proposed as the evidence for one zone's permission."""
@@ -247,20 +363,37 @@ def permissions_in(
     line up under a header is not read: a column over is a different zone's
     answer, and citing it would evidence a permission that was refused.
 
+    The fourth shape has no columns left to read. A code published as HTML
+    linearises one cell to a line, and what pins the zone there is arithmetic
+    rather than geometry: *k* codes in the header, then a label and *k* cells.
+    See ``stacked_permissions``.
+
     A refusal is reported and never written. The value it contradicts may be
     right — a code amended after the encoding, a table this reader mis-columned
     — and either way it is a question for a person, not a citation to staple on.
 
     Returns ``(quote, text, strength, named)``.
     """
-    out: list[tuple[str, str, str, str]] = []
+    body = repair_text(text) if spaced else text
+    numbered = [
+        (n, line.strip())
+        for n, line in enumerate(body.splitlines(), 1)
+        if line.strip()
+    ]
+    out: list[tuple[str, str, str, str]] = list(
+        stacked_permissions(numbered, path=path, zone=zone, siblings=siblings)
+    )
+    read_as_a_stack = {quote for quote, _, _, _ in out}
     section = ""
     scoped = False
     columns: dict[str, tuple[int, int]] = {}
     header_window = 0
-    for n, raw in enumerate((repair_text(text) if spaced else text).splitlines(), 1):
+    for n, raw in enumerate(body.splitlines(), 1):
         line = raw.strip()
-        if not line:
+        if not line or f"{path}#L{n}" in read_as_a_stack:
+            # Already read as a row of a linearised grid, by position. Reading
+            # it a second time as prose would offer the same line twice, once
+            # with the cell that answers for this zone and once without.
             continue
         found = _SECTION.match(line)
         if found and _heading_like(line):

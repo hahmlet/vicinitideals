@@ -240,3 +240,99 @@ def test_the_header_scopes_rows_and_not_the_prose_beneath_the_table() -> None:
 
     anchored = [q for q, _t, s, _n in got if s == "anchored"]
     assert f"{DOC}#L8" not in anchored, "the note is prose, not a cell"
+
+# --- a table that lost its geometry -------------------------------------
+
+#: The extractor emits one cell to a line, so these fixtures are line-built.
+NL = "\n"
+
+STACKED = (
+    "16.22.020 Residential Land Use Districts" + NL
+    + "Land Use" + NL
+    + "R-40" + NL
+    + "R-20" + NL
+    + "R-15" + NL
+    + "Residential" + NL
+    + "Residential" + NL
+    + "Residential" + NL
+    + "Residential" + NL
+    + "One single-family dwelling, townhome, duplex, triplex, quadplex per lot" + NL
+    + "P" + NL
+    + "P" + NL
+    + "NP" + NL
+    + "Multiple-family units" + NL
+    + "NP" + NL
+    + "NP" + NL
+    + "P" + NL
+)
+
+HV = "or/clackamas/happy-valley/16.22.residential.txt"
+SIBS = ("R40", "R20", "R15")
+
+
+def test_a_linearised_grid_is_read_by_position() -> None:
+    """One cell to a line is still a table: k codes, then a label and k cells.
+
+    Code Publishing renders the use table as HTML and the extractor walks it
+    cell by cell, so the printed gaps that pin a "P" to its district are gone
+    before this reader sees the page. What is left is arithmetic, and it is
+    exact — the third cell answers for the third column and for nothing else.
+    """
+    got = found(STACKED, zone="R40", claimed=(), path=HV, siblings=SIBS)
+
+    assert [(q, s) for q, _t, s, _n in got] == [(f"{HV}#L10", "anchored")]
+
+
+def test_the_column_a_stacked_row_refuses_is_reported_and_never_written() -> None:
+    """R-15 is the third column, and the third cell says NP."""
+    got = found(STACKED, zone="R15", claimed=(), path=HV, siblings=SIBS)
+
+    assert [s for _q, _t, s, _n in got] == ["contradicted"]
+    assert not Found("l", "R15", "q", "t", "contradicted", "NP").writable
+
+
+def test_a_row_wider_than_its_header_is_left_alone() -> None:
+    """More answers than columns means the header is what was misread.
+
+    Lake Oswego heads ten columns and prints footnote markers on two of them.
+    A reader that lost those two would take the first eight cells of a ten-cell
+    row, and every district after the gap would be handed the answer printed
+    for its neighbour — which is exactly the error the geometry used to stop.
+    """
+    text = (
+        "Use Category" + NL + "R-40" + NL + "R-20" + NL
+        + "Dwelling, quadplex" + NL + "P" + NL + "P" + NL + "P" + NL
+    )
+
+    assert found(text, zone="R40", claimed=(), path=HV, siblings=SIBS) == []
+
+
+def test_a_conditional_cell_is_not_a_permission() -> None:
+    """"C" is a yes with a hearing attached, which is a different standard.
+
+    Encoding it as a by-right permission turns a lot that needs a conditional
+    use approval green, and the approval is the part that takes a year.
+    """
+    text = (
+        "Land Use" + NL + "R-40" + NL + "R-20" + NL + "R-15" + NL
+        + "Quadplex" + NL + "C" + NL + "P" + NL + "P" + NL
+    )
+
+    assert found(text, zone="R40", claimed=(), path=HV, siblings=SIBS) == []
+
+
+def test_a_column_this_layer_has_not_encoded_still_holds_its_place() -> None:
+    """Clackamas heads Table 315-2 with R-2.5, which FLATS does not encode.
+
+    Dropping the column rather than keeping it empty would read every district
+    after it one place to the left, and the encoding would be wrong in a way
+    that looks right: eight zones, eight citations, all off by one.
+    """
+    text = (
+        "Standard" + NL + "R-2.5" + NL + "R-40" + NL + "R-20" + NL
+        + "Quadplex" + NL + "NP" + NL + "P" + NL + "P" + NL
+    )
+
+    got = found(text, zone="R40", claimed=(), path=HV, siblings=SIBS)
+
+    assert [s for _q, _t, s, _n in got] == ["anchored"]

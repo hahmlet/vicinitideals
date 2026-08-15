@@ -1,5 +1,5 @@
 {
-  "digest": "641ecdf978720a67f4234e43a082f67adfd81ab77028f602765fbb725ec1af20",
+  "digest": "5b948ed10b00f0a1a2690102b6c0051ef3c519a481cea62d3ea4d2d30cdd6abe",
   "layers": {
     "or": {
       "misattributed": [],
@@ -208,7 +208,7 @@
         "conditional": 4,
         "multi": 7,
         "unsourced": 14,
-        "uncheckable": 9
+        "uncheckable": 1
       },
       "gaps": [
         {
@@ -412,71 +412,7 @@
           "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
         },
         {
-          "zone": "MURS",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/happy-valley \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R10",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/happy-valley \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R15",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/happy-valley \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R20",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/happy-valley \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
           "zone": "R20CC",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/happy-valley \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R40",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/happy-valley \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R5",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/happy-valley \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R7",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/happy-valley \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R8.5",
           "field": "quadplex_allowed",
           "cause": "uncheckable",
           "detail": "bool",
@@ -512,17 +448,44 @@
           "quote": "or/clackamas/lake-oswego/50.04.dimensional.txt#L1306"
         },
         {
+          "zone": "R-0",
+          "field": "quadplex_allowed",
+          "claimed": "50.04.001 50.04.001 50.03.002 50.03.002",
+          "found": "50.03.003",
+          "quote": "or/clackamas/lake-oswego/50.03.002.use-table.txt#L193"
+        },
+        {
           "zone": "R-3",
           "field": "max_coverage_pct",
           "claimed": "50.04.001 50.04.001 50.03.002 50.03.002",
           "found": "50.10.003",
           "quote": "or/clackamas/lake-oswego/50.04.dimensional.txt#L1304"
+        },
+        {
+          "zone": "R-3",
+          "field": "quadplex_allowed",
+          "claimed": "50.04.001 50.04.001 50.03.002 50.03.002",
+          "found": "50.03.003",
+          "quote": "or/clackamas/lake-oswego/50.03.002.use-table.txt#L193"
+        },
+        {
+          "zone": "R-5",
+          "field": "quadplex_allowed",
+          "claimed": "50.04.001 50.04.001",
+          "found": "50.03.003",
+          "quote": "or/clackamas/lake-oswego/50.03.002.use-table.txt#L193"
+        },
+        {
+          "zone": "R-7.5",
+          "field": "quadplex_allowed",
+          "claimed": "50.04.001 50.04.001",
+          "found": "50.03.003",
+          "quote": "or/clackamas/lake-oswego/50.03.002.use-table.txt#L193"
         }
       ],
       "label": "Lake Oswego",
       "counts": {
-        "unsourced": 12,
-        "uncheckable": 4
+        "unsourced": 12
       },
       "gaps": [
         {
@@ -620,38 +583,6 @@
           "detail": "",
           "believed": "15",
           "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
-        },
-        {
-          "zone": "R-0",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/lake-oswego \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R-3",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/lake-oswego \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R-5",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/lake-oswego \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R-7.5",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/lake-oswego \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
         }
       ]
     },

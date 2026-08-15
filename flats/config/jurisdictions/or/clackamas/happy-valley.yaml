@@ -24,7 +24,9 @@ zones:
       cite: HV LDC 16.22.020 Table 16.22.020-2 (Very Low Density)
       url: https://ecode360.com/print/HA4934?guid=43529907
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L160"
     setback_front_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L290"
@@ -53,7 +55,9 @@ zones:
       cite: HV LDC 16.22.020 Table 16.22.020-2
       url: https://ecode360.com/print/HA4934?guid=43529907
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L160"
     setback_front_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L290"
@@ -80,7 +84,9 @@ zones:
       cite: HV LDC 16.22.020 Table 16.22.020-2
       url: https://ecode360.com/print/HA4934?guid=43529907
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L160"
     setback_front_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L290"
@@ -107,7 +113,9 @@ zones:
       cite: HV LDC 16.22.030 Table 16.22.030-2 (Low Density)
       url: https://ecode360.com/print/HA4934?guid=43529907
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L353"
     setback_front_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L481"
@@ -134,7 +142,9 @@ zones:
       cite: HV LDC 16.22.030 Table 16.22.030-2
       url: https://ecode360.com/print/HA4934?guid=43529907
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L353"
     setback_front_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L481"
@@ -161,7 +171,9 @@ zones:
       cite: HV LDC 16.22.030 Table 16.22.030-2
       url: https://ecode360.com/print/HA4934?guid=43529907
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L353"
     setback_front_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L481"
@@ -188,7 +200,9 @@ zones:
       cite: HV LDC 16.22.040 Table 16.22.040-2 (Medium Density)
       url: https://ecode360.com/print/HA4934?guid=43529907
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L535"
     setback_front_ft: 20
     setback_side_ft: 5
     setback_rear_ft:
@@ -216,7 +230,9 @@ zones:
       cite: HV LDC 16.22.040 (MUR-S, Mixed Use Residential-Single-Family); allows detached SFD
       url: https://ecode360.com/print/HA4934?guid=43529907
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      value: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L535"
     setback_front_ft: 20
     setback_side_ft: 5
     setback_rear_ft: 20
