@@ -1397,3 +1397,88 @@ async def test_a_citation_to_a_sentence_highlights_all_of_it(
     assert response.status_code == 200
     lit = response.text.count("background:#1d4ed8")
     assert lit == 3, f"three lines cited, {lit} highlighted"
+
+
+# --- the verdict bar ------------------------------------------------------
+#
+# The why page grew until the evidence a reviewer is judging sits well below
+# the fold, and a decision control above it means scrolling away from the
+# thing being judged in order to judge it. The bar sticks to the bottom, so
+# these tests hold to the two things that make it usable rather than merely
+# present: it is on the page, and a verdict that needs a note and did not get
+# one comes back with the reviewer's half-written note still in it.
+
+
+async def _bar(client: AsyncClient, **over):
+    body = {
+        "layer_id": "or/multnomah/portland",
+        "zone": "R10",
+        "field": "min_lot_sqft",
+        "when": "",
+        "verdict": "verified",
+        "shape": "bar",
+    }
+    body.update(over)
+    return await client.post("/ui/flats/sign", data=body, headers={"hx-request": "true"})
+
+
+async def test_the_why_page_carries_the_three_decisions(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+
+    response = await client.get("/flats/why/or/multnomah/portland?zone=R10&field=min_lot_sqft")
+
+    assert response.status_code == 200
+    assert 'id="verdict-bar"' in response.text
+    for word in ("Confirm", "Query", "Problem"):
+        assert f">{word}<" in response.text, word
+    # Not on the printout. The planner across the counter cannot press them.
+    assert "no-print" in response.text
+
+
+async def test_confirming_from_the_bar_answers_in_the_bar(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+
+    response = await _bar(client)
+
+    assert response.status_code == 200
+    assert 'id="verdict-bar"' in response.text
+    assert "confirmed" in response.text
+    # A confirmation is not a problem, so it does not join the batch.
+    assert "in the batch" not in response.text
+
+
+async def test_a_query_without_a_note_keeps_what_was_typed(
+    client: AsyncClient, session: AsyncSession
+):
+    """The note is the whole content of a query, and losing it teaches Confirm.
+
+    A reviewer who types three sentences, clicks the wrong button and gets an
+    empty box back does not retype them.
+    """
+    await _login(client, session)
+
+    response = await _bar(client, verdict="unclear", note="   ")
+
+    assert response.status_code == 400
+    assert "a bare rejection is not actionable" in response.text
+    # Open, because the reviewer has to be shown the field they missed.
+    assert "<details" in response.text and "open" in response.text
+
+
+async def test_a_query_with_a_note_joins_the_batch(client: AsyncClient, session: AsyncSession):
+    await _login(client, session)
+
+    response = await _bar(
+        client, verdict="unclear", note="the paragraph above the table allows a 10 percent cut"
+    )
+
+    assert response.status_code == 200
+    assert "queried" in response.text
+    assert "in the batch" in response.text
+
+    bundle = await client.get("/flats/feedback")
+    assert "10 percent cut" in bundle.text

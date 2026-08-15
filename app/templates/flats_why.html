@@ -160,6 +160,12 @@
   </p>
 </div>
 
+{# Outside the printable card: a verdict control is for the reviewer, and a
+   planner handed the printout has no use for three buttons they cannot press. #}
+<div class="no-print">
+  {% include "partials/flats_verdict_bar.html" %}
+</div>
+
 <style>
 @media print {
   .no-print, .sidebar, .topbar, nav { display: none !important; }

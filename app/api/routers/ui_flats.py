@@ -89,6 +89,15 @@ _VERDICTS = frozenset({"verified", "rejected", "unclear"})
 #: the same as producing nothing.
 _NEEDS_NOTE = frozenset({"rejected", "unclear"})
 
+#: What the reviewer is told happened, in terms of what happens next rather
+#: than of what was stored. "Recorded" is true of all three and useful about
+#: none of them.
+_SAID = {
+    "verified": "confirmed — this one is done; the confirmation goes to the verification log",
+    "unclear": "queried — it joins the batch an agent works through, and comes back answered",
+    "rejected": "problem raised — it joins the batch as something to fix, not to explain",
+}
+
 #: What each gap cause means, said to somebody who is not going to run a
 #: command about it. The encoder's phrasing names modules and flags; a reviewer
 #: deciding where to spend an afternoon needs the shape of the work.
@@ -1261,6 +1270,7 @@ def _chain(layer_id: str, zone: str, field: str) -> dict[str, Any]:
             }
         )
     return {
+        "layer_id": layer_id,
         "zone": zone,
         "field": field,
         "answer": resolved,
@@ -1305,6 +1315,9 @@ async def flats_why(
             },
             status_code=404,
         )
+    number = _number(layer, zone, field, "")
+    seen = (await _decisions(session, layer.layer)).get((zone, field, ""))
+    stands = bool(number) and _stands(seen, _mark(layer.layer, zone, field, "", number))
     return templates.TemplateResponse(
         request,
         "flats_why.html",
@@ -1312,6 +1325,14 @@ async def flats_why(
             **_base_ctx(user, dedup_count, "flats", conflicts_count=conflicts_count),
             "layer": _layer_summary(layer),
             "chain": _chain(layer.layer, zone, field),
+            "decision": {
+                "verdict": seen.verdict if stands else "",
+                "by": seen.reviewer if stands else "",
+                "pending": bool(
+                    stands and seen.exported_at is None and seen.verdict in _NEEDS_NOTE
+                ),
+                "restated": bool(seen and not stands),
+            },
             "asked": datetime.now(timezone.utc),
         },
     )
@@ -1561,6 +1582,7 @@ async def flats_sign(
     verdict: str = Form(...),
     note: str = Form(""),
     ref: str = Form(""),
+    shape: str = Form(""),
 ) -> HTMLResponse:
     """Record what a reviewer decided about one number, and why.
 
@@ -1572,22 +1594,38 @@ async def flats_sign(
     user = await _get_user(session, request)
     layer = _layers().get(layer_id.strip("/"))
     number = _number(layer, zone, field, when) if layer else None
-    if number is None or verdict not in _VERDICTS:
+
+    def refused(why: str, *, keep: str = "") -> HTMLResponse:
+        """The same refusal in whichever shape asked for it.
+
+        The bar hands back the note the reviewer was in the middle of writing.
+        Losing it is how a reviewer learns to click Confirm instead.
+        """
+        if shape == "bar":
+            return templates.TemplateResponse(
+                request,
+                "partials/flats_verdict_bar.html",
+                {
+                    "chain": {"layer_id": layer_id.strip("/"), "zone": zone, "field": field},
+                    "decision": {"verdict": "", "by": "", "pending": False, "restated": False},
+                    "error": why,
+                    "note": keep,
+                    "note_open": verdict in _NEEDS_NOTE,
+                },
+                status_code=400,
+            )
         return templates.TemplateResponse(
             request,
             "partials/flats_decision.html",
-            {"row": {"decision": "", "pending": False}, "error": "not a value we hold"},
+            {"row": {"decision": "", "pending": False}, "error": why},
             status_code=400,
         )
+
+    if number is None or verdict not in _VERDICTS:
+        return refused("not a value we hold")
     if verdict in _NEEDS_NOTE and not note.strip():
-        return templates.TemplateResponse(
-            request,
-            "partials/flats_decision.html",
-            {
-                "row": {"decision": "", "pending": False},
-                "error": "say what is wrong with it — a bare rejection is not actionable",
-            },
-            status_code=400,
+        return refused(
+            "say what is wrong with it — a bare rejection is not actionable", keep=note
         )
 
     session.add(
@@ -1609,6 +1647,23 @@ async def flats_sign(
         )
     )
     await session.commit()
+    if shape == "bar":
+        return templates.TemplateResponse(
+            request,
+            "partials/flats_verdict_bar.html",
+            {
+                "chain": {"layer_id": layer.layer, "zone": zone, "field": field},
+                "decision": {
+                    "verdict": verdict,
+                    "by": user.email,
+                    "pending": verdict in _NEEDS_NOTE,
+                    "restated": False,
+                },
+                "error": "",
+                "note": "",
+                "said": _SAID.get(verdict, ""),
+            },
+        )
     return templates.TemplateResponse(
         request,
         "partials/flats_decision.html",
