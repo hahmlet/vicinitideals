@@ -272,6 +272,10 @@ zones:
     min_lot_sqft:
       value: 5000
       quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L283"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L286"
     notes: 'quadfit confidence: verified | Pleasant Valley plan district. Rear 10 ft (vs 15 in base LDR).'
     max_height_ft:
       value: 35
@@ -290,6 +294,10 @@ zones:
     min_lot_sqft:
       value: 5000
       quote: "or/multnomah/gresham/4.1500.springwater.txt#L267"
+      variants:
+        - value: 0
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L266"
     notes: 'quadfit confidence: verified | Springwater. Min lot width 45 ft, min depth 80 ft (not separately
       modeled — envelope test dominates).'
     max_height_ft:
@@ -298,6 +306,10 @@ zones:
     min_lot_width_ft:
       value: 45
       quote: "or/multnomah/gresham/4.1500.springwater.txt#L280"
+      variants:
+        - value: 16
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L279"
   MDR-12:
     section: ["4.01", "7.042"]
     cite_default:
