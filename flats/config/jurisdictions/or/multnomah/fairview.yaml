@@ -32,6 +32,13 @@ zones:
       cite: FMC 19.30.020 Table A / 19.30.030 Table A (2023-41-TA amendments, PC Final Review Draft 12-5-2023)
       url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html
       retrieved: '2026-07-24'
+    max_lot_depth_ratio:
+      value: 3
+      quote: "or/multnomah/fairview/19.30.txt#L353"
+      variants:
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/fairview/19.30.txt#L354"
     quadplex_allowed: true
     setback_front_ft:
       value: 10
@@ -64,6 +71,13 @@ zones:
       cite: FMC 19.30.020/19.30.030 (2023-41-TA amendments)
       url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html
       retrieved: '2026-07-24'
+    max_lot_depth_ratio:
+      value: 3
+      quote: "or/multnomah/fairview/19.30.txt#L355"
+      variants:
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/fairview/19.30.txt#L356"
     quadplex_allowed: true
     setback_front_ft:
       value: 10
@@ -95,6 +109,13 @@ zones:
       cite: FMC 19.30.020/19.30.030 (2023-41-TA amendments)
       url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html
       retrieved: '2026-07-24'
+    max_lot_depth_ratio:
+      value: 3
+      quote: "or/multnomah/fairview/19.30.txt#L357"
+      variants:
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/fairview/19.30.txt#L358"
     quadplex_allowed: true
     setback_front_ft:
       value: 10
@@ -185,6 +206,9 @@ zones:
       cite: FMC 19.115 Village Single-Family (.020 uses, .040 dimensional)
       url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19115.html
       retrieved: '2026-07-24'
+    min_lot_depth_ft:
+      value: 70
+      quote: "or/multnomah/fairview/19.115.txt#L37"
     quadplex_allowed: true
     setback_front_ft:
       value: 10

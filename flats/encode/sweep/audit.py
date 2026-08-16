@@ -54,6 +54,10 @@ _ALSO: dict[str, tuple[str, ...]] = {
     "min_lot_sqft": ("lot area", "lot size", "square feet per", "site area"),
     "min_lot_width_ft": ("lot width", "width at the building line"),
     "min_frontage_ft": ("frontage", "street frontage", "lot frontage"),
+    # Added after the sweep found depth stated in two jurisdictions and the
+    # registry had no name for it — the first hole this tool actually paid for.
+    "min_lot_depth_ft": ("lot depth", "depth of lot", "minimum depth"),
+    "max_lot_depth_ratio": ("maximum lot depth", "depth to width", "depth shall not exceed"),
     "land_division_parent_standards": ("land division", "partition", "unit lot", "subdivision"),
     "max_height_ft": ("height", "stories", "storeys"),
     "max_far": ("floor area ratio", "far"),

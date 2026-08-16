@@ -182,11 +182,12 @@ def _parse_variants(
     out: list[Variant] = []
     for i, node in enumerate(raw):
         at = f"{where}.variants[{i}]"
-        if not isinstance(node, dict) or "value" not in node:
-            problems.append(f"{at}: expected a mapping with a 'value'")
+        if not isinstance(node, dict) or not ({"value", "exempt"} & set(node)):
+            problems.append(f"{at}: expected a mapping with a 'value', or 'exempt: true'")
             continue
         body = dict(node)
-        value = body.pop("value")
+        value = body.pop("value", None)
+        exempt = bool(body.pop("exempt", False))
         when = body.pop("when", None)
         if isinstance(when, str):
             when = [when]
@@ -236,6 +237,7 @@ def _parse_variants(
             out.append(
                 Variant(
                     value=value,
+                    exempt=exempt,
                     when=tuple(str(c) for c in when),
                     band=band,
                     prov=Provenance(**{k: merged.get(k) for k in _PROV_KEYS}),

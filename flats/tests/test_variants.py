@@ -752,3 +752,89 @@ def test_resolution_without_the_lot_reports_the_bands_it_could_not_choose(root: 
     got = rules.resolve(LAYER, "R5")
 
     assert got.values["setback_street_side_ft"].ambiguous == ("lot_sqft:1500-2999",)
+
+
+# --- a standard that stops applying, rather than changing its number -------
+
+
+def test_an_exemption_is_not_a_number() -> None:
+    """Fairview caps lot depth at three times the width, then writes
+    "Townhomes and cottage clusters none" in the same cell. That is not a
+    larger cap. Encoding it as one would screen correctly and read as a lie."""
+    held = value(
+        Variant(exempt=True, when=("unit_lots",), prov=PROV),
+        base=3,
+        name="max_lot_depth_ratio",
+    )
+
+    on_one_lot = held.under()
+    assert on_one_lot.value == 3 and not on_one_lot.exempt
+
+    as_townhouses = held.under({"unit_lots"})
+    assert as_townhouses.exempt is True
+    assert as_townhouses.value is None, "there is no number to compare a lot against"
+
+
+def test_an_exempt_variant_may_not_also_state_a_number() -> None:
+    """Both would leave every reader guessing which half the engine honours."""
+    with pytest.raises(Exception):
+        Variant(value=3, exempt=True, when=("unit_lots",), prov=PROV)
+
+
+def test_a_variant_states_a_number_or_states_that_it_is_exempt() -> None:
+    with pytest.raises(Exception):
+        Variant(when=("unit_lots",), prov=PROV)
+
+
+def test_an_exemption_survives_the_file(tmp_path: Path) -> None:
+    """The loader is where this has to work — it is written in YAML, by hand."""
+    root = tmp_path / "or" / "multnomah"
+    root.mkdir(parents=True)
+    (tmp_path / "or" / "multnomah" / "somewhere.yaml").write_text(
+        "layer: or/multnomah/somewhere\n"
+        "kind: city\n"
+        "label: Somewhere\n"
+        "zones:\n"
+        "  R-6:\n"
+        "    cite_default:\n"
+        "      cite: FMC 19.30.030\n"
+        "      url: https://example.invalid/19.30\n"
+        "      retrieved: '2026-08-15'\n"
+        "    max_lot_depth_ratio:\n"
+        "      value: 3\n"
+        "      quote: 'or/multnomah/somewhere/19.30.txt#L353'\n"
+        "      variants:\n"
+        "        - exempt: true\n"
+        "          when: [unit_lots]\n"
+        "          quote: 'or/multnomah/somewhere/19.30.txt#L354'\n",
+        encoding="utf-8",
+    )
+    (tmp_path / "or" / "or.yaml").write_text(
+        "layer: or\nkind: state\nlabel: Oregon\nzones: {}\n", encoding="utf-8"
+    )
+
+    loaded = load_rules(tmp_path, strict=True)
+    held = loaded["or/multnomah/somewhere"].zones["R-6"].values["max_lot_depth_ratio"]
+
+    assert held.under().value == 3
+    assert held.under({"unit_lots"}).exempt is True
+
+
+def test_an_exempted_standard_leaves_the_resolution_entirely() -> None:
+    """A None sitting in `values` is a number-shaped hole. Something downstream
+    would eventually subtract from it and fail the lot on a standard the code
+    says does not apply to it, which is the worse of the two ways to be wrong."""
+    held = value(
+        Variant(exempt=True, when=("unit_lots",), prov=PROV),
+        base=3,
+        name="max_lot_depth_ratio",
+    )
+    rules = RuleSet(layers(max_lot_depth_ratio=held))
+
+    on_one_lot = rules.resolve(LAYER, "R5")
+    assert on_one_lot.values["max_lot_depth_ratio"].value == 3
+    assert on_one_lot.exempted == ()
+
+    as_townhouses = rules.resolve(LAYER, "R5", conditions=["unit_lots"])
+    assert "max_lot_depth_ratio" not in as_townhouses.values
+    assert as_townhouses.exempted == ("max_lot_depth_ratio",)

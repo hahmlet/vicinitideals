@@ -83,6 +83,24 @@ _F: tuple[FieldDef, ...] = (
     FieldDef("min_lot_width_ft", "length_ft", "Minimum lot width.", False, "min_lot_width"),
     FieldDef("min_frontage_ft", "length_ft", "Minimum street frontage.", False, "min_frontage"),
     FieldDef(
+        "min_lot_depth_ft",
+        "length_ft",
+        "Minimum lot depth, front line to rear line. Distinct from lot area: a "
+        "lot can hold the required square footage and still be too shallow to "
+        "fit the pod between its front and rear setbacks, which is the exact "
+        "shape a townhome on a wide-shallow lot fails in.",
+        False,
+    ),
+    FieldDef(
+        "max_lot_depth_ratio",
+        "ratio",
+        "Maximum lot depth as a multiple of lot width — Fairview 19.30 caps it "
+        "at three. A ceiling on depth rather than a floor, and it is written "
+        "against the width rather than in feet, so it cannot be folded into "
+        "`min_lot_depth_ft` without losing what it says.",
+        True,
+    ),
+    FieldDef(
         "land_division_parent_standards",
         "bool",
         "True where splitting the building onto one lot per unit is judged "
@@ -139,6 +157,11 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "setback_garage_entrance_ft",
         "min_lot_width_ft",
         "min_frontage_ft",
+        # Most Oregon codes state neither, and a zone that is silent about depth
+        # is not an incomplete zone. Where one does state it, the gap ledger
+        # still surfaces the omission through the clause ledger.
+        "min_lot_depth_ft",
+        "max_lot_depth_ratio",
         "land_division_parent_standards",
         "max_far",
         "max_coverage_pct",

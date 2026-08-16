@@ -126,6 +126,13 @@ class ZoneResolution:
     conditions: tuple[str, ...] = ()
     #: Fields where two exceptions tied. Encoding work, not review work.
     ambiguous: tuple[str, ...] = ()
+    #: Standards the code switches off for this configuration. Absent from
+    #: ``values`` on purpose: there is no number, and a None sitting in the
+    #: dict is a number-shaped hole that something downstream will eventually
+    #: subtract from. Named here so the screen can say "the code exempts this"
+    #: rather than "we never encoded it", which is a different sentence with a
+    #: different fix.
+    exempted: tuple[str, ...] = ()
     #: Zone codes whose standards this resolution read through a reference,
     #: least authoritative first.
     borrowed_from: tuple[str, ...] = ()
@@ -272,12 +279,21 @@ class RuleSet:
 
         resolved: dict[str, Resolved] = {}
         locked: set[str] = set()
+        exempted: set[str] = set()
 
         def apply(
             values: dict[str, Value], layer: str, origin: str, via: str | None = None
         ) -> None:
             for name, val in values.items():
                 eff = val.under(held, lot)
+                if eff.exempt:
+                    # Not a pass by a wide margin -- the test does not exist
+                    # here. Dropped so nothing can compare a lot against it,
+                    # and remembered so the absence is explainable.
+                    exempted.add(name)
+                    resolved.pop(name, None)
+                    continue
+                exempted.discard(name)
                 if name in locked:
                     # A preempting ancestor already fixed this field. Record what
                     # was displaced so the UI can say why the local number lost.
@@ -311,7 +327,9 @@ class RuleSet:
             apply(block.values, owner.layer, "zone", via=borrowed)
 
         untrusted = tuple(sorted(n for n, r in resolved.items() if not r.trusted))
-        missing = tuple(sorted(REQUIRED_FIELDS - set(resolved)))
+        # An exempted required field is answered, not missing. The code was
+        # read, and what it said was that this standard does not apply.
+        missing = tuple(sorted(REQUIRED_FIELDS - set(resolved) - exempted))
         ambiguous = tuple(sorted(n for n, r in resolved.items() if r.ambiguous))
         borrowed_from = tuple(b.zone for _, b in blocks if b.zone != zone)
         # The claim to borrow is a rule somebody read, and an unread one could
@@ -337,6 +355,7 @@ class RuleSet:
             values=resolved,
             untrusted=tuple(sorted(untrusted + unread)),
             missing_required=missing,
+            exempted=tuple(sorted(exempted)),
             chain=chain_ids,
             conditions=held,
             ambiguous=ambiguous,

@@ -245,7 +245,15 @@ class Variant(BaseModel):
 
     model_config = ConfigDict(frozen=True)
 
-    value: Any
+    value: Any = None
+    #: True where the conditions do not change this standard's number but
+    #: switch it off. Codes state this constantly and it is not a number:
+    #: Fairview caps lot depth at three times the width and then writes
+    #: "Townhomes and cottage clusters none" in the same cell; Lake Oswego
+    #: exempts cottage clusters from lot coverage outright. Encoding the
+    #: exemption as some very large number would be a lie that screens
+    #: correctly, right up until somebody reads it.
+    exempt: bool = False
     #: Registered condition names, all of which must hold. Empty is allowed
     #: only alongside a band: a variant with neither is the base value written
     #: twice, and two bases cannot be told apart.
@@ -295,6 +303,17 @@ class Variant(BaseModel):
             raise ValueError("a verified variant requires both 'reviewer' and 'reviewed'")
         return self
 
+    @model_validator(mode="after")
+    def _exempt_carries_no_number(self) -> Variant:
+        # The two are alternatives, not a value with a flag on it. A variant
+        # that said both "exempt" and "3" would leave every reader of the file
+        # to guess which half the engine honours.
+        if self.exempt and self.value is not None:
+            raise ValueError("an exempt variant states no value — the standard does not apply")
+        if not self.exempt and self.value is None:
+            raise ValueError("a variant states a value, or states that it is exempt")
+        return self
+
 
 @dataclass(frozen=True, slots=True)
 class Effective:
@@ -314,6 +333,12 @@ class Effective:
     #: Populated when two variants applied equally well. The number carried is
     #: the base, but nothing may treat it as an answer.
     ambiguous: tuple[str, ...] = ()
+    #: True where the standard does not apply to this configuration at all.
+    #: ``value`` is None and there is nothing to compare a lot against — not a
+    #: pass by a wide margin, an absence of the test. A screen that read the
+    #: None as a zero would fail every lot on a standard the code exempts it
+    #: from, which is the worst of the two ways to be wrong.
+    exempt: bool = False
 
     @property
     def trusted(self) -> bool:
@@ -369,7 +394,8 @@ class Value(BaseModel):
     def _value_matches_kind(self) -> Value:
         check_kind(self.name, self.value)
         for variant in self.variants:
-            check_kind(self.name, variant.value)
+            if not variant.exempt:
+                check_kind(self.name, variant.value)
         return self
 
     @model_validator(mode="after")
@@ -519,6 +545,7 @@ class Value(BaseModel):
             winner.reviewer,
             winner.reviewed,
             when=winner.key,
+            exempt=winner.exempt,
         )
 
 
