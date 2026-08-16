@@ -46,8 +46,20 @@ _SECTION = re.compile(r"(?<![\d.])(?P<n>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)(?![\d])"
 #: alone lost 57 values to it, its density rows reading as section "14.52
 #: units per acre" and a row of "9.0100" cross-references reading as a heading
 #: for everything below it.
+#: The other form is the heading itself, spelled out: "Section 4.124. Standards
+#: Applying to all Planned Development Residential Zones." Wilsonville writes
+#: every one of its headings that way, so the running header was the only
+#: marker the pattern could see and a quote landed on whichever section's page
+#: furniture it happened to sit under — 4.124's own permitted-use list read as
+#: 4.123. The trailing guard is the same in both branches: a heading is
+#: followed by its title, so a capital letter, a dash, or the end of the line.
+#: A cross-reference reads "Section 4.127(.09)(B)" and is followed by a
+#: parenthesis, which is how the two stay apart.
 _HEADING = re.compile(
-    r"^\s*(?:§|�)?\s*(?P<n>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)\s*(?:[A-Z§—-]|$)"
+    r"^\s*(?:"
+    r"Section\s+(?P<s>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)\.?\s*(?:[A-Z—-]|$)"
+    r"|(?:§|�)?\s*(?P<n>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)\s*(?:[A-Z§—-]|$)"
+    r")"
 )
 
 #: How far above a quote to look for the section it belongs to. A codifier
@@ -113,7 +125,7 @@ def section_at(lines: Sequence[str], line: int) -> str:
     """
     for n in range(min(line, len(lines)) - 1, max(line - _LOOK_BACK, 0) - 1, -1):
         if found := _HEADING.match(lines[n]):
-            return found.group("n")
+            return found.group("s") or found.group("n")
     return ""
 
 

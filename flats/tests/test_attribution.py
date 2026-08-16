@@ -137,3 +137,30 @@ def test_a_row_of_a_table_is_not_a_heading():
     assert section_at(["§ 4.113 WILSONVILLE CODE", "text"], 2) == "4.113"
     assert section_at(["39.4862  DIMENSIONAL REQUIREMENTS", "text"], 2) == "39.4862"
     assert section_at(["17.16.070", "text"], 2) == "17.16.070"
+
+
+def test_a_spelled_out_heading_beats_the_page_running_header():
+    """Wilsonville writes every heading as "Section 4.124. Title", and the
+    pattern could not see that form at all. So the nearest marker above a
+    quote was whatever page furniture it sat under, and 4.124's own permitted-
+    use list — the line directly below its heading — read as section 4.123.
+    Eight values misattributed for the shape of the heading above them.
+
+    A cross-reference is written the same way and is not a heading. What tells
+    them apart is what follows: a title, or a subsection in parentheses.
+    """
+    from flats.encode.attribution import section_at
+
+    page = [
+        " § 4.123PLANNING AND LAND DEVELOPMENT",
+        "CD4:119",
+        "Section 4.124. Standards Applying to all Planned Development Residential Zones.",
+        "(.01) Permitted Uses:",
+        "C. Duplexes, triplexes, quadplexes, townhouses.",
+    ]
+    assert section_at(page, 4) == "4.124"
+    assert section_at(page, 5) == "4.124"
+    assert section_at(page, 2) == "4.123"
+
+    reference = ["Waivers in compliance with Section 4.127(.09)(B)(2)(d);", "text"]
+    assert section_at(reference, 2) == ""
