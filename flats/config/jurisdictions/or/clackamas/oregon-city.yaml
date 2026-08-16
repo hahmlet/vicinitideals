@@ -46,7 +46,7 @@ zones:
     section: ["17.08.", "17.16."]
     cite_default:
       cite: OCMC 17.08.020 (quadplex a permitted use) and Table 17.08.040 (dimensional
-        standards); middle housing standards OCMC 17.16.060
+        standards); middle housing standards OCMC 17.16.060, 17.16.070 (garage setback)
       url: https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.08LODEREDI
       retrieved: '2026-08-14'
     quadplex_allowed:
@@ -90,7 +90,7 @@ zones:
     section: ["17.08.", "17.16."]
     cite_default:
       cite: OCMC 17.08.020 (quadplex a permitted use) and Table 17.08.040 (dimensional
-        standards); middle housing standards OCMC 17.16.060
+        standards); middle housing standards OCMC 17.16.060, 17.16.070 (garage setback)
       url: https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.08LODEREDI
       retrieved: '2026-08-14'
     quadplex_allowed:
@@ -133,7 +133,7 @@ zones:
     section: ["17.08.", "17.16."]
     cite_default:
       cite: OCMC 17.08.020 (quadplex a permitted use) and Table 17.08.040 (dimensional
-        standards); middle housing standards OCMC 17.16.060
+        standards); middle housing standards OCMC 17.16.060, 17.16.070 (garage setback)
       url: https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.08LODEREDI
       retrieved: '2026-08-14'
     quadplex_allowed:
@@ -176,7 +176,7 @@ zones:
     section: ["17.10.", "17.16."]
     cite_default:
       cite: OCMC 17.10.020 (quadplex a permitted use) and Table 17.10.040 (dimensional
-        standards); middle housing standards OCMC 17.16.060
+        standards); middle housing standards OCMC 17.16.060, 17.16.070 (garage setback)
       url: https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.10MEDEREDI
       retrieved: '2026-08-14'
     quadplex_allowed:
@@ -225,7 +225,7 @@ zones:
     section: ["17.10.", "17.16."]
     cite_default:
       cite: OCMC 17.10.020 (quadplex a permitted use) and Table 17.10.040 (dimensional
-        standards); middle housing standards OCMC 17.16.060
+        standards); middle housing standards OCMC 17.16.060, 17.16.070 (garage setback)
       url: https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.10MEDEREDI
       retrieved: '2026-08-14'
     quadplex_allowed:

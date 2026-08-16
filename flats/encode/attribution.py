@@ -37,8 +37,17 @@ _SECTION = re.compile(r"(?<![\d.])(?P<n>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)(?![\d])"
 #: page furniture the most reliable section marker in the document — it is
 #: repeated, machine-placed, and immune to a heading that got flattened into a
 #: table cell.
+#:
+#: What follows the number is what tells a heading from a table row, and the
+#: rule is narrow on purpose: a heading is followed by its title, so the next
+#: thing printed is a capital letter, a dash, or the end of the line. A row of
+#: a table is followed by more of the table. The earlier version of this
+#: pattern allowed a bare space there, which matched anything at all — Gresham
+#: alone lost 57 values to it, its density rows reading as section "14.52
+#: units per acre" and a row of "9.0100" cross-references reading as a heading
+#: for everything below it.
 _HEADING = re.compile(
-    r"^\s*(?:§|�)?\s*(?P<n>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)\s*(?:[A-Z—.\- ]|$)"
+    r"^\s*(?:§|�)?\s*(?P<n>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)\s*(?:[A-Z§—-]|$)"
 )
 
 #: How far above a quote to look for the section it belongs to. A codifier

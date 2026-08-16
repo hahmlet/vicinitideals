@@ -99,13 +99,41 @@ def test_the_corpus_is_measured_not_asserted():
         "quoted from the citywide section is cited to it"
     )
 
-    # The check is not blind: somewhere in the corpus a value still cites a
-    # section its text is not in, and this is what stops the assertion above
-    # from passing because nothing was measured.
-    misses = [
-        item
+    # The check is not blind. There is nothing left in the corpus that
+    # disagrees, so the guard against a check that has stopped seeing anything
+    # has to be a planted miss rather than a real one: every layer's values,
+    # re-read against a document they are definitely not in.
+    planted = [
+        Attribution(item.layer, item.zone, item.field, item.quote, "99.999", item.found)
         for layer in layers.values()
         for item in check(layer, store)
-        if not item.agrees
+        if item.found
     ]
-    assert misses, "no layer disagrees anywhere — the check went blind"
+    assert planted, "no value anywhere resolves to a section — the check went blind"
+    assert not any(item.agrees for item in planted)
+
+
+def test_a_row_of_a_table_is_not_a_heading():
+    """What follows the number is what tells the two apart.
+
+    The pattern used to accept a bare space after the section number, which
+    matches every table row that opens with a figure. Gresham lost 57 values
+    to it in one document: a density row reading "14.52 units per acre" became
+    section 14.52, and a row of "9.0100" cross-references became the heading
+    for everything printed below it. Both are two lines of a table, and both
+    sat above real quotes.
+    """
+    table = [
+        "  Table 4.0130: Development Requirements for Residential Land Use Districts",
+        "        All other uses            8.71 units per        6.22 units per",
+        "                                  14.52 units per       18.15 units per",
+        "        See also                  9.0100                9.0100",
+        "        Duplex, Triplex,          35 ft.                40 ft.",
+    ]
+    assert section_at(table, 5) == ""
+
+    # A real heading still reads, whether it is a running header, a numbered
+    # heading, or a bare section number on its own line.
+    assert section_at(["§ 4.113 WILSONVILLE CODE", "text"], 2) == "4.113"
+    assert section_at(["39.4862  DIMENSIONAL REQUIREMENTS", "text"], 2) == "39.4862"
+    assert section_at(["17.16.070", "text"], 2) == "17.16.070"

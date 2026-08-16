@@ -27,8 +27,8 @@ zones:
   R7.2:
     section: ["17.10."]
     cite_default:
-      cite: Gladstone Municipal Code 17.10.020 (middle housing allowed outright) & 17.10.050 (dimensional
-        standards)
+      cite: Gladstone Municipal Code 17.10.020 (middle housing allowed outright), 17.10.050 (dimensional
+        standards), 17.10.065 (garage setback)
       url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1710.html
       retrieved: '2026-07-28'
     quadplex_allowed: true
@@ -59,8 +59,8 @@ zones:
   R5:
     section: ["17.12."]
     cite_default:
-      cite: Gladstone Municipal Code 17.12.020 (middle housing allowed outright) & 17.12.050 (dimensional
-        standards)
+      cite: Gladstone Municipal Code 17.12.020 (middle housing allowed outright), 17.12.050 (dimensional
+        standards), 17.12.065 (garage setback)
       url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1712.html
       retrieved: '2026-07-28'
     quadplex_allowed: true

@@ -184,7 +184,8 @@ zones:
   TLDR:
     section: ["4.01", "7.042"]
     cite_default:
-      cite: Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420
+      cite: Gresham Development Code Tables 4.0120/4.0130/4.0131; 4.0137 (TLDR district standards);
+        7.0420
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
       retrieved: '2026-07-24'
     quadplex_allowed:
@@ -611,7 +612,7 @@ zones:
   THR-SW:
     section: ["4.15"]
     cite_default:
-      cite: Gresham Development Code Table 4.1507 (Springwater)
+      cite: Gresham Development Code Tables 4.1507/4.1508 (Springwater)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1500.pdf
       retrieved: '2026-07-24'
     quadplex_allowed: false

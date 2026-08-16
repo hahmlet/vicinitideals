@@ -47,7 +47,8 @@ defaults:
 zones:
   RF:
     cite_default:
-      cite: PCC 33.110.200 Table 110-2 — fourplex prohibited in RF (RIP2 extended middle housing to R10/R20 only)
+      cite: PCC 33.110.200 Table 110-2 — fourplex prohibited in RF (RIP2 extended middle housing to R10/R20
+        only); dimensional standards PCC 33.110.205
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-07-24'
     quadplex_allowed:

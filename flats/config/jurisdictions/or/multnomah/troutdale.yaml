@@ -358,7 +358,7 @@ zones:
   HDR:
     section: ["3.114", "3.120", "3.130", "8.120"]
     cite_default:
-      cite: Troutdale Development Code 3.120 (Quadplex = N in HDR)
+      cite: Troutdale Development Code 3.120 (Quadplex = N in HDR), 3.130 (dimensional standards)
       url: https://library.municode.com/or/troutdale/codes/development_code?nodeId=CH3ZODI
       retrieved: '2026-07-24'
     quadplex_allowed: false
