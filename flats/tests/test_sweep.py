@@ -17,7 +17,9 @@ import pytest
 
 from flats.encode.sweep.ask import Finding, merge, parse, prompt_for, scripted, sweep
 from flats.encode.sweep.audit import Report, field_for, judge
+from flats.encode.sweep.audit import run as sweep_run
 from flats.encode.sweep.chunk import Chunk, chunks
+from flats.encode.sweep.journal import Journal, Mismatch, Setup
 from flats.rules.model import Layer, Provenance, Value, Zone
 
 pytestmark = pytest.mark.unit
@@ -323,3 +325,102 @@ def test_a_model_that_answers_nothing_at_all_yields_nothing():
 from flats.encode.sweep.ask import LENSES  # noqa: E402 — read after the module's own names
 
 _LENS = LENSES[0]
+
+
+# --- the journal, which is what makes a county-scale run finishable ---------
+
+
+def _setup(**over) -> Setup:
+    base = {"model": "qwen2.5:7b", "size": 60, "overlap": 30, "context": 8192}
+    base.update(over)
+    return Setup(**base)
+
+
+def test_a_passage_already_read_is_not_asked_again(tmp_path):
+    """The whole point: an interrupted run resumes where it stopped."""
+    book = Journal(tmp_path / "run.jsonl", _setup())
+    book.open()
+    chunk = piece()
+    book.put(chunk, [Finding(document=DOC, line=4, standard="interior side yard",
+                             applies_to="", states="10 feet", lenses=("dimension",))])
+
+    again = Journal(tmp_path / "run.jsonl", _setup())
+    assert again.open() == 1
+    assert again.has(chunk)
+    assert [f.standard for f in again.get(chunk)] == ["interior side yard"]
+
+
+def test_a_passage_that_found_nothing_is_still_remembered(tmp_path):
+    """Most passages state nothing about a fourplex. Re-reading them never ends."""
+    book = Journal(tmp_path / "run.jsonl", _setup())
+    book.open()
+    book.put(piece(), [])
+
+    again = Journal(tmp_path / "run.jsonl", _setup())
+    again.open()
+    assert again.has(piece())
+    assert again.get(piece()) == []
+
+
+def test_a_journal_from_a_differently_shaped_run_is_refused(tmp_path):
+    """Recall only compares between runs of the same shape."""
+    book = Journal(tmp_path / "run.jsonl", _setup(size=60))
+    book.open()
+    book.put(piece(), [])
+
+    other = Journal(tmp_path / "run.jsonl", _setup(size=30))
+    with pytest.raises(Mismatch):
+        other.open()
+
+
+def test_a_half_written_last_line_does_not_lose_the_rest(tmp_path):
+    """A killed process leaves a torn line. Everything before it is still good."""
+    path = tmp_path / "run.jsonl"
+    book = Journal(path, _setup())
+    book.open()
+    book.put(piece(), [])
+    with path.open("a", encoding="utf-8") as fh:
+        fh.write('{"chunk": "or/x#L9-L16", "found": [{"stand')
+
+    again = Journal(path, _setup())
+    assert again.open() == 1
+
+
+class _Stored:
+    """Enough of a provenance store to answer one document."""
+
+    def __init__(self, text: str) -> None:
+        self.text = text
+
+    def load(self, path: str):  # noqa: ANN202 — duck-typed against ProvenanceStore
+        assert path == DOC
+        return self
+
+
+def test_a_resumed_run_does_not_re_ask_a_passage_it_already_read(tmp_path):
+    """Resume is measured in questions not asked, so count them."""
+    from flats.rules.model import CodeDocument
+
+    layer = _layer().model_copy(
+        update={"code": (CodeDocument(id="16.22", url="https://example.invalid/16.22"),)}
+    )
+    only = chunks(TEXT, document=DOC, size=60, overlap=30)
+    assert len(only) == 1, "the fixture is one passage, so 'all of it' is countable"
+
+    book = Journal(tmp_path / "run.jsonl", _setup())
+    book.open()
+    book.put(only[0], [])
+
+    asked: list[str] = []
+
+    def ask(prompt: str) -> str:
+        asked.append(prompt)
+        return '{"found": []}'
+
+    report = sweep_run(
+        layer, ask, store=_Stored(TEXT), journal=book, size=60, overlap=30
+    )
+    assert asked == []
+    assert report.documents == (DOC,)
+
+

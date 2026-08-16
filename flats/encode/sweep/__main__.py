@@ -18,6 +18,7 @@ from typing import Sequence
 
 from flats.encode.sweep.ask import ENDPOINT, MODEL, Ollama
 from flats.encode.sweep.audit import run, write
+from flats.encode.sweep.journal import Journal, Mismatch, Setup
 from flats.provenance.store import ProvenanceStore
 from flats.rules.loader import CONFIG_ROOT, load_rules
 
@@ -44,6 +45,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         "--tag",
         default="",
         help="suffix for the output file, so two configurations can be compared",
+    )
+    parser.add_argument(
+        "--resume",
+        action="store_true",
+        help="journal each passage as it is read, and skip ones already answered",
     )
     parser.add_argument("--out", type=Path, default=OUT)
     parser.add_argument("--rules", type=Path, default=CONFIG_ROOT)
@@ -80,6 +86,20 @@ def main(argv: Sequence[str] | None = None) -> int:
     worst = 0.0
     for layer in wanted:
         print(f"{layer.layer} ...")
+        stem = layer.layer.replace("/", "_") + (f".{args.tag}" if args.tag else "")
+        book = None
+        if args.resume:
+            setup = Setup(
+                model=args.model, size=args.size, overlap=args.overlap, context=args.context
+            )
+            book = Journal(args.out / f"{stem}.jsonl", setup)
+            try:
+                already = book.open()
+            except Mismatch as exc:
+                print(f"  ! {exc}", file=sys.stderr)
+                continue
+            if already:
+                print(f"  resuming — {already} passage(s) already read")
         try:
             report = run(
                 layer,
@@ -89,6 +109,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                 overlap=args.overlap,
                 limit=args.limit,
                 only=args.doc,
+                journal=book,
                 log=print,
             )
         except Exception as exc:  # noqa: BLE001 — one layer failing must not lose the rest
@@ -96,7 +117,6 @@ def main(argv: Sequence[str] | None = None) -> int:
             continue
         # Tagged, because an untagged second run overwrites the number the
         # first one was supposed to be compared against.
-        stem = layer.layer.replace("/", "_") + (f".{args.tag}" if args.tag else "")
         path = write(report, args.out / f"{stem}.json")
         print(f"  {report.summary()} -> {path}")
         worst = max(worst, 1 - report.recall)

@@ -34,6 +34,7 @@ from typing import Iterable
 
 from flats.encode.sweep.ask import Ask, Finding, sweep
 from flats.encode.sweep.chunk import chunks
+from flats.encode.sweep.journal import Journal
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.fields import FIELDS
 from flats.rules.model import Layer
@@ -277,6 +278,7 @@ def run(
     overlap: int = 60,
     limit: int = 0,
     only: str = "",
+    journal: Journal | None = None,
     log: object = None,
 ) -> Report:
     """Sweep every document this layer declares, and report what it establishes.
@@ -285,6 +287,11 @@ def run(
     routine use of this whole module — is a smaller chunk worth the wall-clock,
     is a larger model worth five times it — and a comparison across different
     documents measures the documents.
+
+    ``journal`` makes the run resumable: a passage already answered there is not
+    asked again. The scoring is unchanged either way, because a chunk read an
+    hour ago and a chunk read now produce the same findings — what changes is
+    that the run may be stopped.
     """
     keeper = store if store is not None else ProvenanceStore()
     documents: list[str] = []
@@ -307,7 +314,15 @@ def run(
             pieces = pieces[:limit]
         found: list[Finding] = []
         for n, piece in enumerate(pieces, 1):
-            found.extend(sweep(piece, ask))
+            if journal is not None and journal.has(piece):
+                found.extend(journal.get(piece))
+                continue
+            got = sweep(piece, ask)
+            if journal is not None:
+                # Before the next question, not after the document. A run that
+                # dies mid-document must not lose the passages it did read.
+                journal.put(piece, got)
+            found.extend(got)
             if callable(log):
                 log(f"  {path} {n}/{len(pieces)} — {len(found)} finding(s) so far")
         total += len(found)
