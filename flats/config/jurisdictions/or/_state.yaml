@@ -52,6 +52,20 @@ defaults:
     retrieved: 2026-08-14
     status: draft
     quote: "or/ors.92.031.txt#L7"
+  # NOT ENCODED, and looked for: Oregon's climate-friendly parking reform
+  # (OAR 660-012-0400 through -0450) removes parking mandates near frequent
+  # transit, which is a per-PARCEL question this file cannot answer and the
+  # screen currently never asks. Searched 2026-08-16 -- oregon.public.law
+  # serves no parking rule under Division 12, and four candidate slugs
+  # (-0400, -0430, -0435, -0440, -0445) all return the division landing page
+  # rather than rule text. Whether the rules were amended, renumbered or
+  # repealed is unsettled from here, so nothing is encoded: no citation, no
+  # rule. Encoding it needs (1) the current rule text from a source we trust,
+  # (2) a `near_frequent_transit` site fact in the conditions registry, and
+  # (3) something that measures distance to a stop per parcel -- which does
+  # not exist for ANY site fact yet. Until then the 1.0 stall/unit ceiling
+  # stands everywhere a city has not repealed its own minimum, which fails
+  # lots IN rather than out.
   # OAR 660-046-0220(2)(e)(B) caps quadplex parking as a total per lot, tiered
   # by lot size: 1 space under 3,000 sq ft, then 2, 3, and 4 at 7,000 and up.
   # Encoded as the loosest tier — one space per unit — because that ceiling
