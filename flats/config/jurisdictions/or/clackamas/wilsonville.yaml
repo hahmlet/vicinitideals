@@ -649,118 +649,129 @@ zones:
   RN:
     section: ["4.127", "4.113"]
     cite_default:
-      cite: Wilsonville Development Code 4.127 (Residential Neighborhood RN Zone), Table 8A (Frog Pond
-        West) + 4.113(.02) setbacks
+      cite: Wilsonville Development Code 4.127(.05)-(.06) Table 8A (Frog Pond West Neighborhood Lot
+        Development Standards), notes B, C, G, I, J, M
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.127RENERNZO
-      retrieved: '2026-07-28'
+      retrieved: '2026-08-16'
     quadplex_allowed: true
-    setback_front_ft:
-      value: 15
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
-      variants:
-        - value: 20
-          band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3011-L3012"
-    setback_side_ft:
-      value: 5
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
-      variants:
-        - value: 7
-          when: [multi_story]
-          band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3037"
-        - value: 10
-          band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3013"
-        - value: 0
-          when: [attached_wall]
-          band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3032"
-        - value: 0
-          when: [attached_wall]
-          band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3059-L3060"
-    setback_rear_ft:
-      value: 15
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
-      variants:
-        - value: 20
-          when: [multi_story]
-          band: {measure: lot_sqft, at_most: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
-        - value: 20
-          band: {measure: lot_sqft, more_than: 10000}
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3025"
-    setback_street_side_ft:
-      value: 10
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3038-L3039"
-    setback_garage_entrance_ft:
-      value: 20
-      quote: "or/clackamas/wilsonville/4.planning.txt#L3047"
-      variants:
-        - value: 4
-          when: [abuts_alley]
-          quote: "or/clackamas/wilsonville/4.planning.txt#L3049-L3050"
+    # Every dimension below is the R-10 Large Lot column: the binding row of
+    # three, taken because nothing published says which row a lot is in. Each
+    # quote spans the header block and all three rows so the choice is visible
+    # rather than asserted.
     min_lot_sqft:
-      value: 7000
-      quote: "or/clackamas/wilsonville/4.planning.txt#L7244"
+      # 8,000 is R-10's, and R-10 is the one sub-district note C does NOT give
+      # a quadplex figure for -- it states 7,000 for R-5 and R-7 only, so the
+      # single-family base governs in R-10 and it is the larger number besides.
+      value: 8000
+      quote: "or/clackamas/wilsonville/4.planning.txt#L7179-L7236"
+      variants:
+        # Note B, townhouses in all sub-districts.
+        - value: 1500
+          when: [unit_lots]
+          quote: "or/clackamas/wilsonville/4.planning.txt#L7243"
     min_lot_width_ft:
-      # The 40 is R-10, the widest of the three sub-district rows and so the
-      # binding one. The zone literal in the GIS is "RN" with no sub-district
-      # on it, and until something says which row a lot is in, the row that
-      # cannot turn a lot green by mistake is the one that governs. R-7 and
-      # R-5 both read 35.
       value: 40
       quote: "or/clackamas/wilsonville/4.planning.txt#L7179-L7236"
+      variants:
+        # Note I, townhouses in all sub-districts.
+        - value: 20
+          when: [unit_lots]
+          quote: "or/clackamas/wilsonville/4.planning.txt#L7253"
     min_lot_depth_ft:
-      # The one column where the three rows agree, so nothing turns on which
-      # sub-district a lot is in.
+      # The one column where all three rows agree, so the sub-district
+      # question does not reach it.
       value: 60
       quote: "or/clackamas/wilsonville/4.planning.txt#L7179-L7236"
+    min_frontage_ft:
+      # Restored, and it is the same column as lot width rather than a column
+      # of its own: the header reads "Min. Lot Width I, J, N" and both of those
+      # notes are about street frontage -- J reduces it to 24 ft on a cul-de-sac
+      # and waives it entirely for a lot fronting a platted private drive, N
+      # measures it at the front door for courtyard cluster housing. Table 8B
+      # spells the same column out as "Min. lot width/street frontage per lot".
+      # Neither relief is encoded: no condition names a cul-de-sac or a private
+      # drive, and both would loosen this.
+      value: 40
+      quote: "or/clackamas/wilsonville/4.planning.txt#L7179-L7236"
+      variants:
+        - value: 20
+          when: [unit_lots]
+          quote: "or/clackamas/wilsonville/4.planning.txt#L7253"
     max_coverage_pct:
-      # Table 8A, header and all three sub-district rows. Quoted as a block
-      # rather than a single line because the row is nine bare numbers and the
-      # only thing that says which one is coverage is the column header
-      # twenty lines above it.
-      value: 60
+      # 40 is R-10. The three rows read 40 / 45 / 60 and the file used to hold
+      # the 60 -- the loosest end of a twenty-point spread -- as the zone's one
+      # figure, which is the exact shape that turns a lot green by mistake.
+      value: 40
       quote: "or/clackamas/wilsonville/4.planning.txt#L7179-L7236"
-    notes: 'quadfit confidence: needs_verification | RN allows detached SFD so the HB 2001 mandate attaches
-      BY STATE PREEMPTION, BUT the adopted Frog Pond West master plan caps attached units at 2 and bars
-      multi-family — a 4-plex is likely NOT locally permitted. Kept true+needs_verification (preemption
-      is a real legal argument); confirm before relying. Setbacks = FPW R-5 small-lot sub-district.
-      min_lot 7,000 is the QUADPLEX minimum (Table 2 note C, R-5/R-7 sub-districts) — the registry basis
-      is fourplex-on-one-lot; the prior 4,000 was the R-5 SFD base tier, wrong denominator for the pod.
-      R-10 sub-district states no quadplex minimum (SFD base 8,000 would govern there). KNOWN differs:
-      max_coverage_pct 60 vs doc 90 — the 90 is the Commercial Main Street block, which shares section
-      4.127 with RN and cannot be scoped out until fetch-layer geometry; the 60 is FPW R-5 residential,
-      now quoted at the Table 8A row it was read from. REMOVED: setback_front_max_ft 20, which cited
-      L7965-L7968 — that is Table 23A, Commercial Main Street Development Standards, the same wrong
-      half of section 4.127 the 90 came from. Table 8A states no maximum front setback for any Frog
-      Pond West sub-district, and a maximum front setback is not harmless: it pushes every building to
-      within twenty feet of the street and would fail detached-house lots that comply perfectly well.
-      Table 8B (Frog Pond East and South) is unread; if it states one for RN, it belongs here with its
-      own quote.
+    setback_front_ft:
+      value: 20
+      quote: "or/clackamas/wilsonville/4.planning.txt#L7179-L7236"
+    setback_rear_ft:
+      value: 20
+      quote: "or/clackamas/wilsonville/4.planning.txt#L7179-L7236"
+    setback_side_ft:
+      # Table 8A prints "(note)" in this column and hands it to note M, which
+      # is three rules: 5 ft on an ordinary lot, 10 ft a side (20 combined) on
+      # a lot over 10,000 sq ft that also has 70 ft of frontage, and 10 ft on a
+      # corner lot. The frontage half of the large-lot test is dropped, so the
+      # band fires on area alone -- which is the stricter reading, since a wide
+      # lot inside the band gets the deeper yard either way.
+      value: 5
+      quote: "or/clackamas/wilsonville/4.planning.txt#L7263-L7265"
+      variants:
+        - value: 10
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L7263-L7265"
+        - value: 10
+          when: [corner_lot]
+          quote: "or/clackamas/wilsonville/4.planning.txt#L7263-L7265"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/clackamas/wilsonville/4.planning.txt#L7263-L7265"
+    setback_garage_entrance_ft:
+      value: 20
+      quote: "or/clackamas/wilsonville/4.planning.txt#L7179-L7236"
+      variants:
+        # Note G: 18 ft to a garage door facing an alley, to leave a parking
+        # apron. Same 18 the table's own alley column prints.
+        - value: 18
+          when: [abuts_alley]
+          quote: "or/clackamas/wilsonville/4.planning.txt#L7249-L7250"
+    notes: 'REBUILT 2026-08-16 on Table 8A, which is the table that governs: 4.127(.05)C says the lot
+      and development standards for Frog Pond West "are established by Table 8A", and 4.113(.02) --
+      where every setback here used to come from -- applies only "unless otherwise provided for by the
+      Code or a legislative master plan". Table 8A is that provision. Consequences worth naming: the
+      front setback goes 15 to 20, the rear 15 to 20, coverage 60 to 40, minimum lot size 7,000 to
+      8,000, and the 4.113 townhouse zero-lot-line allowance is gone from this zone, because Table 8A
+      supersedes the section that granted it and its own townhouse notes (B and I) give a lot size and
+      a width, not a zero setback.
 
-      TABLE 8A IS READABLE AFTER ALL (2026-08-16). The old note here said its columns could not be
-      settled by position, nine bare numbers against ten headers. The tenth header is "Side Min
-      (note)", which prints no number: nine numbers, nine numeric columns, in order, and all three
-      sub-district rows share the shape. REMOVED on the strength of that: min_frontage_ft 35, which
-      was the R-5 Min Lot WIDTH column wearing the wrong field name. Table 8A states no street
-      frontage at all, and frontage is not width — a flag lot has width and almost none of it — so
-      the pod''s access would have been checked against a number the code never wrote. Lot width and
-      lot depth are now encoded from their own columns.
+      THE SUB-DISTRICT PROBLEM, and why every number above is the strict one. Table 8A is three rows
+      -- R-10 Large Lot, R-7 Medium Lot, R-5 Small Lot -- and they disagree: coverage 40/45/60, front
+      20/15/12, lot size 8,000/6,000/4,000, width 40/35/35. 4.127(.05)A.1 makes Figure 6 of the Frog
+      Pond West Master Plan the official sub-district map. Checked the city GIS on 2026-08-16 and
+      nothing published carries it: the Zoning layer serves a flat RN across 31 polygons with only
+      ZONE_CODE on it, the Comprehensive Plan layer a flat "Residential Neighborhood", and
+      SA_FrogPondWest in Map___StudyAreas is one 179-acre polygon with no attributes. So the R-10
+      column governs everywhere. Table 6A sizes the neighborhood at 389 to 571 lots and puts only
+      about a fifth of them in R-10, so this screens roughly four lots in five against a stricter
+      sub-district than they are actually in. That fails lots IN, never out, which is the only
+      direction this is allowed to be wrong. The fix is Figure 6, digitised.
 
-      THE ONE DECISION THIS ZONE NEEDS. Table 8A is three rows, one per Frog Pond West sub-district,
-      and the GIS zone literal is "RN" with no sub-district on it. The three rows disagree: coverage
-      40 / 45 / 60 percent, width 40 / 35 / 35, front setback 20 / 15 / 12, lot size 8,000 / 6,000 /
-      4,000. Width and depth above take the binding row, which is the rule everywhere else in this
-      file. Coverage 60 and min lot 7,000 do NOT — they are the R-5 row and note C, encoded before
-      this was understood, and the loose end of a 40-to-60 spread is exactly the shape that turns a
-      lot green by mistake. Fixing that honestly is not a number edit: it wants either the
-      sub-district carried through from the GIS, or three registered sub-district conditions with no
-      assumed answer, so an RN lot resolves as unknown until somebody says which row it is in.
-      Neither is a five-minute change, so it is written here rather than guessed at.
+      TABLE 8B IS UNREAD, AND RN COVERS IT TOO. 4.127(.05)C sends Frog Pond East and South to Table
+      8B, which is a different table with different columns -- urban form types rather than lot-size
+      sub-districts, a maximum building width, a minimum distance between buildings, and coverage of
+      80 percent. Those lots are RN in the GIS and are being screened against Frog Pond West numbers
+      right now. Reading 8B is its own job: its cells wrap across a dozen lines each in the stored
+      text, so no column can be read by counting the way Table 8A''s could.
 
-      Setbacks continue to come from 4.113(.02) rather than Table 8A: the citywide section states
-      them per lot size with the townhouse zero, which is more of the answer than Table 8A''s single
-      front/rear pair, and the cite now names both chapters.'
+      NOT ENCODED, on purpose: note E (coverage may rise 10 percent where multiple buildings are
+      built -- the pod is one building), note J''s cul-de-sac and private-drive frontage reliefs (no
+      condition names either, and both loosen), note L (cottage cluster and ADU setbacks), note H
+      (vertical encroachments). KNOWN differs: the document also prints 90 percent coverage in section
+      4.127, which is the Commercial Main Street block sharing the section number with RN and cannot
+      be scoped out until fetch-layer geometry. quadfit confidence: needs_verification -- RN allows
+      detached single-family so the HB 2001 mandate attaches BY STATE PREEMPTION, but the adopted Frog
+      Pond West master plan caps attached units at 2 and bars multi-family, so a fourplex may not be
+      locally permitted at all. Kept true because preemption is a real legal argument; confirm before
+      relying on it.'

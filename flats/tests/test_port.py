@@ -212,7 +212,42 @@ def test_wilsonville_rn_carries_no_maximum_front_setback() -> None:
     res = RuleSet(load_rules()).resolve("or/clackamas/wilsonville", "RN")
 
     assert "setback_front_max_ft" not in res.values
-    assert res.values["max_coverage_pct"].value == 60, "the 90 is the commercial block"
+    assert res.values["max_coverage_pct"].value != 90, "the 90 is the commercial block"
+
+
+def test_wilsonville_rn_takes_the_binding_frog_pond_sub_district() -> None:
+    """RN's numbers come from Table 8A, which is three rows — R-10 Large Lot,
+    R-7 Medium Lot, R-5 Small Lot — and 4.127(.05)A.1 makes Figure 6 of the
+    Frog Pond West Master Plan the official map of which row a lot is in.
+    Figure 6 is a PDF: the city's Zoning layer serves a flat RN with only
+    ZONE_CODE on it, the Comprehensive Plan layer a flat "Residential
+    Neighborhood", and SA_FrogPondWest one attribute-free polygon. So the row
+    that cannot turn a lot green by mistake governs, and R-10 is that row on
+    every column the three disagree on.
+
+    These are the four the spread is widest on. If somebody digitises Figure 6
+    and carries the sub-district through, this test is what they change."""
+    res = RuleSet(load_rules()).resolve("or/clackamas/wilsonville", "RN")
+
+    strictest = {
+        "max_coverage_pct": 40,  # against 45 and 60
+        "min_lot_sqft": 8000,  # against 6,000 and 4,000
+        "setback_front_ft": 20,  # against 15 and 12
+        "min_lot_width_ft": 40,  # against 35 and 35
+    }
+    for name, value in strictest.items():
+        got = res.values[name]
+        assert got.value == value, f"{name} is not the binding sub-district row"
+        assert got.prov.quote, f"{name} must quote Table 8A"
+
+    # 4.113(.02), the citywide setback section, applies "unless otherwise
+    # provided for by the Code or a legislative master plan". Table 8A is that
+    # provision, so its townhouse zero does not reach into this zone: an RN pod
+    # owes a side yard on the wall it shares.
+    attached = RuleSet(load_rules()).resolve(
+        "or/clackamas/wilsonville", "RN", conditions=("attached_wall",), lot={"lot_sqft": 6000}
+    )
+    assert attached.values["setback_side_ft"].value == 5
 
 
 def test_lr7_yards_all_come_from_the_row_the_zone_already_quoted() -> None:
