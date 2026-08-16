@@ -156,7 +156,7 @@ zones:
       value: 10
       quote: "or/multnomah/fairview/19.30.txt#L409"
     cite_default:
-      cite: FMC 19.30.010.D/.020/.030 (2023-41-TA amendments)
+      cite: FMC 19.30.010.D, 19.30.020, 19.30.030 Table A (2023-41-TA amendments)
       url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html
       retrieved: '2026-07-24'
     quadplex_allowed: true
@@ -172,7 +172,9 @@ zones:
     setback_street_side_ft:
       value: 10
       quote: "or/multnomah/fairview/19.30.txt#L403"
-    min_lot_sqft: 10000
+    min_lot_sqft:
+      value: 10000
+      quote: "or/multnomah/fairview/19.30.txt#L256-L261"
     min_lot_width_ft:
       value: 60
       quote: "or/multnomah/fairview/19.30.txt#L350"
@@ -189,30 +191,26 @@ zones:
       cite: FMC 19.30.030 Table A (RM + Townhouse Overlay columns)
       url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html
       retrieved: '2026-07-24'
-    quadplex_allowed: true
-    setback_front_ft: 10
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    setback_street_side_ft: 10
-    min_lot_sqft: 10000
-    max_coverage_pct: 60
-    notes: 'quadfit confidence: needs_verification | Quadplex rides on the RM base (10,000 sf for 4 units);
-      the TOZ overlay itself is townhouse-oriented — parcel-level overlay effect unconfirmed.'
+    like: RM
+    notes: 'Metro layer label, not a Fairview zone: the RM base district with the townhouse overlay
+      mapped onto it. Adopted by reference rather than restated, so every number still cites the RM
+      row it was read from and an amendment to Table A moves this zone with it. What the TOZ overlay
+      itself changes at parcel level is unconfirmed — the overlay is townhouse-oriented, and if it
+      turns out to move a standard, that standard belongs here as a local value overriding the
+      reference. quadfit confidence: needs_verification.'
   R/SFLD:
     cite_default:
       cite: 'Mapping inference: Metro ''R/SFLD'' = old Lower Density Residential overlay -> current R-10;
         standards per amended 19.30.030'
       url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html
       retrieved: '2026-07-24'
-    quadplex_allowed: true
-    setback_front_ft: 10
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    setback_street_side_ft: 10
-    min_lot_sqft: 10000
-    max_coverage_pct: 50
-    notes: 'quadfit confidence: needs_verification | Metro label predates the 2024 recodification; R-10
-      row applied by inference.'
+    like: R-10
+    notes: 'Metro layer label, not a Fairview zone. The label predates the 2024 recodification and the
+      R-10 row is applied to it by inference — which is the part that needs a person, and the reason
+      the inference is in the cite where a reviewer will read it rather than buried in a number.
+      Adopted by reference rather than restated: the six standards that were hand-copied here matched
+      R-10 exactly and cited nothing, and would have gone on matching a superseded table forever.
+      quadfit confidence: needs_verification.'
   VSF:
     cite_default:
       cite: FMC 19.115 Village Single-Family (.020 uses, .040 dimensional)

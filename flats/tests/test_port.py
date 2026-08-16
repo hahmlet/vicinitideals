@@ -181,3 +181,35 @@ def test_ingest_metadata_survives_for_the_gis_stage() -> None:
 
     assert layer["ingest"]["zoning_layer"]
     assert layer["ingest"]["zone_field"]
+
+
+# --- corrections to what the port produced ----------------------------
+
+
+def test_metro_label_zones_adopt_a_base_zone_rather_than_copying_it() -> None:
+    """`RM/TOZ` and `R/SFLD` are labels in Metro's regional layer, not zones
+    Fairview wrote. The port hand-copied a base zone's numbers under each of
+    them with no citation on any of them. Copies stop tracking their source the
+    first time the table is amended, silently, and nobody reading the derived
+    zone has any way to notice — so the reference is the encoding."""
+    rules = RuleSet(load_rules())
+
+    for zone, base in (("RM/TOZ", "RM"), ("R/SFLD", "R-10")):
+        res = rules.resolve("or/multnomah/fairview", zone)
+        assert res.borrowed_from == (base,)
+        front = res.values["setback_front_ft"]
+        assert front.via == base
+        assert front.prov.quote, f"{zone} front setback must cite the {base} row"
+
+
+def test_wilsonville_rn_carries_no_maximum_front_setback() -> None:
+    """Section 4.127 covers two unrelated things: the Frog Pond West
+    residential sub-districts and the Commercial Main Street area. The port
+    read RN's maximum front setback off Table 23A, the commercial one. Table
+    8A, the residential table, states none — and a maximum front setback is
+    not a harmless extra, it pushes every building to within twenty feet of
+    the street and fails detached-house lots that comply perfectly well."""
+    res = RuleSet(load_rules()).resolve("or/clackamas/wilsonville", "RN")
+
+    assert "setback_front_max_ft" not in res.values
+    assert res.values["max_coverage_pct"].value == 60, "the 90 is the commercial block"

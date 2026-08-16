@@ -1,5 +1,5 @@
 {
-  "digest": "2529082374a5ecdc0800b355c20b195147c5509dd10d01e4dae9940132728d0d",
+  "digest": "59794e5473411868b35c45a6e60983909d6faa5d9aca0a8ed55ed871c4478f31",
   "layers": {
     "or": {
       "misattributed": [],
@@ -644,19 +644,10 @@
       ],
       "label": "Wilsonville",
       "counts": {
-        "contested": 1,
         "unread": 6,
         "uncheckable": 9
       },
       "gaps": [
-        {
-          "zone": "RN",
-          "field": "max_coverage_pct",
-          "cause": "contested",
-          "detail": "file 60, document 10, 70, 90",
-          "believed": "60",
-          "action": "read both: the file and the document state different numbers"
-        },
         {
           "zone": "OTR",
           "field": "min_frontage_ft",
@@ -881,115 +872,10 @@
       "misattributed": [],
       "label": "Fairview",
       "counts": {
-        "unread": 13,
         "unsourced": 1,
-        "uncheckable": 9
+        "uncheckable": 7
       },
       "gaps": [
-        {
-          "zone": "R/SFLD",
-          "field": "max_coverage_pct",
-          "cause": "unread",
-          "detail": "or/multnomah/fairview/19.30.txt#L465",
-          "believed": "50",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "R/SFLD",
-          "field": "min_lot_sqft",
-          "cause": "unread",
-          "detail": "or/multnomah/fairview/19.30.txt#L43",
-          "believed": "10000",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "R/SFLD",
-          "field": "setback_front_ft",
-          "cause": "unread",
-          "detail": "or/multnomah/fairview/19.115.txt#L47",
-          "believed": "10",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "R/SFLD",
-          "field": "setback_rear_ft",
-          "cause": "unread",
-          "detail": "or/multnomah/fairview/19.115.txt#L51",
-          "believed": "15",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "R/SFLD",
-          "field": "setback_side_ft",
-          "cause": "unread",
-          "detail": "or/multnomah/fairview/19.30.txt#L342",
-          "believed": "5",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "R/SFLD",
-          "field": "setback_street_side_ft",
-          "cause": "unread",
-          "detail": "or/multnomah/fairview/19.115.txt#L51",
-          "believed": "10",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "RM",
-          "field": "min_lot_sqft",
-          "cause": "unread",
-          "detail": "or/multnomah/fairview/19.30.txt#L43",
-          "believed": "10000",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "RM/TOZ",
-          "field": "max_coverage_pct",
-          "cause": "unread",
-          "detail": "or/multnomah/fairview/19.115.txt#L39",
-          "believed": "60",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "RM/TOZ",
-          "field": "min_lot_sqft",
-          "cause": "unread",
-          "detail": "or/multnomah/fairview/19.30.txt#L43",
-          "believed": "10000",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "RM/TOZ",
-          "field": "setback_front_ft",
-          "cause": "unread",
-          "detail": "or/multnomah/fairview/19.115.txt#L47",
-          "believed": "10",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "RM/TOZ",
-          "field": "setback_rear_ft",
-          "cause": "unread",
-          "detail": "or/multnomah/fairview/19.115.txt#L51",
-          "believed": "15",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "RM/TOZ",
-          "field": "setback_side_ft",
-          "cause": "unread",
-          "detail": "or/multnomah/fairview/19.30.txt#L342",
-          "believed": "5",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "RM/TOZ",
-          "field": "setback_street_side_ft",
-          "cause": "unread",
-          "detail": "or/multnomah/fairview/19.115.txt#L51",
-          "believed": "10",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
         {
           "zone": "VSF",
           "field": "setback_side_ft",
@@ -1031,23 +917,7 @@
           "action": "python -m flats.encode.review show or/multnomah/fairview \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
         },
         {
-          "zone": "R/SFLD",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/multnomah/fairview \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
           "zone": "RM",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/multnomah/fairview \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "RM/TOZ",
           "field": "quadplex_allowed",
           "cause": "uncheckable",
           "detail": "bool",
@@ -1576,59 +1446,8 @@
     "or/multnomah/portland": {
       "misattributed": [],
       "label": "Portland",
-      "counts": {
-        "uncheckable": 6
-      },
-      "gaps": [
-        {
-          "zone": "R10",
-          "field": "coverage_curve",
-          "cause": "uncheckable",
-          "detail": "curve",
-          "believed": "[[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]",
-          "action": "python -m flats.encode.review show or/multnomah/portland \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R2.5",
-          "field": "coverage_curve",
-          "cause": "uncheckable",
-          "detail": "curve",
-          "believed": "[[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]",
-          "action": "python -m flats.encode.review show or/multnomah/portland \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R20",
-          "field": "coverage_curve",
-          "cause": "uncheckable",
-          "detail": "curve",
-          "believed": "[[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]",
-          "action": "python -m flats.encode.review show or/multnomah/portland \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R5",
-          "field": "coverage_curve",
-          "cause": "uncheckable",
-          "detail": "curve",
-          "believed": "[[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]",
-          "action": "python -m flats.encode.review show or/multnomah/portland \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R7",
-          "field": "coverage_curve",
-          "cause": "uncheckable",
-          "detail": "curve",
-          "believed": "[[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]",
-          "action": "python -m flats.encode.review show or/multnomah/portland \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "RF",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "False",
-          "action": "python -m flats.encode.review show or/multnomah/portland \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        }
-      ]
+      "counts": {},
+      "gaps": []
     },
     "or/multnomah/troutdale": {
       "misattributed": [

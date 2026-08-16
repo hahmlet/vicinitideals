@@ -50,7 +50,9 @@ zones:
       cite: PCC 33.110.200 Table 110-2 — fourplex prohibited in RF (RIP2 extended middle housing to R10/R20 only)
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-07-24'
-    quadplex_allowed: false
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/portland/33.110.txt#L302-L313"
     notes: 'quadfit confidence: verified | Only house/ADU/manufactured home/houseboat/congregate allowed.'
     max_height_ft:
       value: 30
@@ -92,18 +94,12 @@ zones:
           when: [adjustment]
           quote: "or/multnomah/portland/33.110.txt#L1544-L1546"
     coverage_curve:
-    - - 0
-      - 0
-      - 50
-    - - 3000
-      - 1500
-      - 37.5
-    - - 5000
-      - 2250
-      - 15
-    - - 20000
-      - 4500
-      - 7.5
+      value:
+      - [0, 0, 50]
+      - [3000, 1500, 37.5]
+      - [5000, 2250, 15]
+      - [20000, 4500, 7.5]
+      quote: "or/multnomah/portland/33.110.txt#L780-L786"
     notes: 'quadfit confidence: verified | Fourplex min lot 12,000 sf (Table 110-7; -10% adjustment allowed until
       2032). No FAR cap on conforming lots (FAR applies only <10,000 sf in R20). Height 30 ft.'
     setback_garage_entrance_ft:
@@ -134,18 +130,12 @@ zones:
           when: [adjustment]
           quote: "or/multnomah/portland/33.110.txt#L1544-L1546"
     coverage_curve:
-    - - 0
-      - 0
-      - 50
-    - - 3000
-      - 1500
-      - 37.5
-    - - 5000
-      - 2250
-      - 15
-    - - 20000
-      - 4500
-      - 7.5
+      value:
+      - [0, 0, 50]
+      - [3000, 1500, 37.5]
+      - [5000, 2250, 15]
+      - [20000, 4500, 7.5]
+      quote: "or/multnomah/portland/33.110.txt#L780-L786"
     notes: 'quadfit confidence: verified | Fourplex min lot 6,000 sf. FAR 0.7 on lots 6,000-9,999 sf (never binds
       a 2-story 500 sf/floor plate). Height 30 ft.'
     setback_garage_entrance_ft:
@@ -176,18 +166,12 @@ zones:
           when: [adjustment]
           quote: "or/multnomah/portland/33.110.txt#L1544-L1546"
     coverage_curve:
-    - - 0
-      - 0
-      - 50
-    - - 3000
-      - 1500
-      - 37.5
-    - - 5000
-      - 2250
-      - 15
-    - - 20000
-      - 4500
-      - 7.5
+      value:
+      - [0, 0, 50]
+      - [3000, 1500, 37.5]
+      - [5000, 2250, 15]
+      - [20000, 4500, 7.5]
+      quote: "or/multnomah/portland/33.110.txt#L780-L786"
     notes: 'quadfit confidence: verified | Fourplex min lot 4,200 sf. FAR 0.7 for 4+ units. Height 30 ft.'
     setback_garage_entrance_ft:
       value: 18
@@ -217,18 +201,12 @@ zones:
           when: [adjustment]
           quote: "or/multnomah/portland/33.110.txt#L1544-L1546"
     coverage_curve:
-    - - 0
-      - 0
-      - 50
-    - - 3000
-      - 1500
-      - 37.5
-    - - 5000
-      - 2250
-      - 15
-    - - 20000
-      - 4500
-      - 7.5
+      value:
+      - [0, 0, 50]
+      - [3000, 1500, 37.5]
+      - [5000, 2250, 15]
+      - [20000, 4500, 7.5]
+      quote: "or/multnomah/portland/33.110.txt#L780-L786"
     notes: 'quadfit confidence: verified | Fourplex min lot 3,000 sf. FAR 0.8 for 4+ units. Height 30 ft.'
     setback_garage_entrance_ft:
       value: 18
@@ -258,18 +236,12 @@ zones:
           when: [adjustment]
           quote: "or/multnomah/portland/33.110.txt#L1544-L1546"
     coverage_curve:
-    - - 0
-      - 0
-      - 50
-    - - 3000
-      - 1500
-      - 37.5
-    - - 5000
-      - 2250
-      - 15
-    - - 20000
-      - 4500
-      - 7.5
+      value:
+      - [0, 0, 50]
+      - [3000, 1500, 37.5]
+      - [5000, 2250, 15]
+      - [20000, 4500, 7.5]
+      quote: "or/multnomah/portland/33.110.txt#L780-L786"
     notes: 'quadfit confidence: verified | Fourplex min lot 1,500 sf. FAR 1.0 for 4+ units. Height 35 ft. Narrow-lot
       standards <32 ft wide.'
     max_height_ft:

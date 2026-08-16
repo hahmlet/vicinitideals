@@ -547,7 +547,13 @@ zones:
       value: 7000
       quote: "or/clackamas/wilsonville/4.planning.txt#L7244"
     min_frontage_ft: 35
-    max_coverage_pct: 60
+    max_coverage_pct:
+      # Table 8A, header and all three sub-district rows. Quoted as a block
+      # rather than a single line because the row is nine bare numbers and the
+      # only thing that says which one is coverage is the column header
+      # twenty lines above it.
+      value: 60
+      quote: "or/clackamas/wilsonville/4.planning.txt#L7179-L7236"
     notes: 'quadfit confidence: needs_verification | RN allows detached SFD so the HB 2001 mandate attaches
       BY STATE PREEMPTION, BUT the adopted Frog Pond West master plan caps attached units at 2 and bars
       multi-family — a 4-plex is likely NOT locally permitted. Kept true+needs_verification (preemption
@@ -556,7 +562,13 @@ zones:
       is fourplex-on-one-lot; the prior 4,000 was the R-5 SFD base tier, wrong denominator for the pod.
       R-10 sub-district states no quadplex minimum (SFD base 8,000 would govern there). KNOWN differs:
       max_coverage_pct 60 vs doc 90 — the 90 is the Commercial Main Street block, which shares section
-      4.127 with RN and cannot be scoped out until fetch-layer geometry; the 60 is FPW R-5 residential.'
-    setback_front_max_ft:
-      value: 20
-      quote: "or/clackamas/wilsonville/4.planning.txt#L7965-L7968"
+      4.127 with RN and cannot be scoped out until fetch-layer geometry; the 60 is FPW R-5 residential,
+      now quoted at the Table 8A row it was read from. REMOVED: setback_front_max_ft 20, which cited
+      L7965-L7968 — that is Table 23A, Commercial Main Street Development Standards, the same wrong
+      half of section 4.127 the 90 came from. Table 8A states no maximum front setback for any Frog
+      Pond West sub-district, and a maximum front setback is not harmless: it pushes every building to
+      within twenty feet of the street and would fail detached-house lots that comply perfectly well.
+      Table 8B (Frog Pond East and South) is unread; if it states one for RN, it belongs here with its
+      own quote. The Table 8A setback columns are also still unquoted — the row is nine bare numbers
+      against ten headers, so which column is which cannot be settled by position, and the encoded
+      setbacks continue to come from 4.113(.02).'
