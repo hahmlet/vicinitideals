@@ -31,91 +31,330 @@ zones:
   LDR-1:
     section: ["3.111", "3.120", "3.130", "8.120"]
     cite_default:
-      cite: Troutdale Development Code 3.120, 3.130.B, 8.120 (Municode, through Ord. 899)
+      cite: Troutdale Development Code 3.120, 3.130.B (triplex and quadplex) and 3.130.C (townhouse),
+        8.120 (Municode, through Ord. 899)
       url: https://library.municode.com/or/troutdale/codes/development_code?nodeId=CH3ZODI
       retrieved: '2026-07-24'
     quadplex_allowed:
       value: true
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L232"
-    setback_front_ft: 10
-    setback_side_ft: 10
-    setback_rear_ft:
-      value: 10
-      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L334"
-    setback_street_side_ft: 10
+    # Base is 3.130.B, the triplex-and-quadplex table: one building, one lot.
+    # Every `unit_lots` variant is 3.130.C, the townhouse table, which is what
+    # applies if the four units are platted onto four lots.
     min_lot_sqft:
       value: 10000
-      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L323"
-    min_frontage_ft:
-      value: 20
-      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L290"
-    notes: 'quadfit confidence: verified | Quadplex-specific setbacks (SFD is 20 front / 15-20 rear).
-      Min lot 10,000 sf, min width 70 ft. Height 35 ft.'
-    max_height_ft:
-      value: 35
-      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L336"
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L323"
+      variants:
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L343-L344,L345"
     min_lot_width_ft:
       value: 70
-      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L324"
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L324"
+      variants:
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L343-L344,L346"
+    min_lot_depth_ft:
+      # Stated by 3.130.B and simply missing before. It is the column a
+      # fixed-depth pod fails on first: 100 feet of lot against a front and
+      # rear setback that take 20 of them.
+      value: 100
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L325"
+      variants:
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L343-L344,L347"
+    min_frontage_ft:
+      # Was quoted at L290, which is the same standard in 3.130.A, the DUPLEX
+      # table. Same number, wrong row.
+      value: 20
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L326"
+      variants:
+        # 3.130.C states no townhouse frontage and hands it to note 1: 15 feet
+        # where the driveway, garage or off-street parking is in the front
+        # yard. The pod parks somewhere, and 15 is the only number the note
+        # gives, so the variant carries it rather than exempting the standard
+        # on a lot whose parking has not been placed yet.
+        - value: 15
+          when: [unit_lots]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L343-L344,L348,L368"
+    setback_front_ft:
+      # 10, unqualified. Note 1 under this table -- "20 feet if driveway
+      # access is taken from front yard" -- attaches to the MDR (TC) and HDR
+      # (TC) columns, which print "10 or 20 see note 1"; this column prints a
+      # bare 10. The quote opens on the header row so the count is checkable.
+      value: 10
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L328-L329"
+    setback_side_ft:
+      value: 10
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L330"
+      variants:
+        # The Building Side row, 0 across every column: the wall the units
+        # share owes no yard. Without it the pod is charged a side setback on
+        # each of its three interior walls.
+        - value: 0
+          when: [attached_wall]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L331"
+        - value: 5
+          when: [unit_lots]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L343-L344,L352"
+        - value: 0
+          when: [unit_lots, attached_wall]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L343-L344,L353"
+    setback_street_side_ft:
+      # Also unqualified here. Note 2 reaches only HDR (TC).
+      value: 10
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L332-L333"
+    setback_rear_ft:
+      value: 10
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L334"
+      variants:
+        # Note 4: a townhouse lot with rear alley access owes no rear yard.
+        - value: 0
+          when: [unit_lots, abuts_alley]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L343-L344,L362-L363,L371"
+    max_height_ft:
+      value: 35
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L336"
+    notes: 'quadfit confidence: verified. Quadplex-specific standards from 3.130.B; single-family
+      detached is 20 front and 15 to 20 rear, which is not this table.
+
+      QUOTED AND CORRECTED 2026-08-16. Four values -- front and street side setbacks, and the side
+      yard -- were bare numbers the gap ledger flagged as conditional, on the strength of the notes
+      printed under the table. They are not conditional in this zone: 3.130.B is six columns and both
+      driveway-access notes attach to the Town Center ones, which print "10 or 20" where this column
+      prints a bare 10. Every quote now opens on the column header line so the column can be counted.
+
+      Minimum frontage was quoted at L290 and MDR''s side yard at L294, both of which are 3.130.A, the
+      DUPLEX table. The numbers agreed by coincidence of layout. Repointed at 3.130.B.
+
+      ADDED: minimum lot depth, which 3.130.B states and nothing carried; the Building Side zero,
+      which is what lets four units share three walls; and the whole of 3.130.C behind `unit_lots`,
+      for the one-lot-per-unit plat -- it removes lot size, width and depth outright, drops the side
+      yard to 5, and zeroes the rear yard on an alley.
+
+      NOT ENCODED: 3.130.B''s density standards (see 3.140) and accessory-structure setbacks (see
+      5.010), neither of which the pod turns on, and the zero-lot-line note under 3.130.A, which
+      belongs to the duplex table.'
   LDR-2:
     section: ["3.112", "3.120", "3.130", "8.120"]
     cite_default:
-      cite: Troutdale Development Code 3.120, 3.130.B, 8.120 (Municode, through Ord. 899)
+      cite: Troutdale Development Code 3.120, 3.130.B (triplex and quadplex) and 3.130.C (townhouse),
+        8.120 (Municode, through Ord. 899)
       url: https://library.municode.com/or/troutdale/codes/development_code?nodeId=CH3ZODI
       retrieved: '2026-07-24'
     quadplex_allowed:
       value: true
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L232"
-    setback_front_ft: 10
-    setback_side_ft: 7.5
-    setback_rear_ft:
-      value: 10
-      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L334"
-    setback_street_side_ft: 10
+    # Base is 3.130.B, the triplex-and-quadplex table: one building, one lot.
+    # Every `unit_lots` variant is 3.130.C, the townhouse table, which is what
+    # applies if the four units are platted onto four lots.
     min_lot_sqft:
       value: 7000
-      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L323"
-    min_frontage_ft:
-      value: 20
-      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L290"
-    notes: 'quadfit confidence: verified | Min lot 7,000 sf, width 60 ft. Height 35 ft.'
-    max_height_ft:
-      value: 35
-      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L336"
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L323"
+      variants:
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L343-L344,L345"
     min_lot_width_ft:
       value: 60
-      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L324"
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L324"
+      variants:
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L343-L344,L346"
+    min_lot_depth_ft:
+      # Stated by 3.130.B and simply missing before. It is the column a
+      # fixed-depth pod fails on first: 80 feet of lot against a front and
+      # rear setback that take 20 of them.
+      value: 80
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L325"
+      variants:
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L343-L344,L347"
+    min_frontage_ft:
+      # Was quoted at L290, which is the same standard in 3.130.A, the DUPLEX
+      # table. Same number, wrong row.
+      value: 20
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L326"
+      variants:
+        # 3.130.C states no townhouse frontage and hands it to note 1: 15 feet
+        # where the driveway, garage or off-street parking is in the front
+        # yard. The pod parks somewhere, and 15 is the only number the note
+        # gives, so the variant carries it rather than exempting the standard
+        # on a lot whose parking has not been placed yet.
+        - value: 15
+          when: [unit_lots]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L343-L344,L348,L368"
+    setback_front_ft:
+      # 10, unqualified. Note 1 under this table -- "20 feet if driveway
+      # access is taken from front yard" -- attaches to the MDR (TC) and HDR
+      # (TC) columns, which print "10 or 20 see note 1"; this column prints a
+      # bare 10. The quote opens on the header row so the count is checkable.
+      value: 10
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L328-L329"
+    setback_side_ft:
+      value: 7.5
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L330"
+      variants:
+        # The Building Side row, 0 across every column: the wall the units
+        # share owes no yard. Without it the pod is charged a side setback on
+        # each of its three interior walls.
+        - value: 0
+          when: [attached_wall]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L331"
+        - value: 5
+          when: [unit_lots]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L343-L344,L352"
+        - value: 0
+          when: [unit_lots, attached_wall]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L343-L344,L353"
+    setback_street_side_ft:
+      # Also unqualified here. Note 2 reaches only HDR (TC).
+      value: 10
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L332-L333"
+    setback_rear_ft:
+      value: 10
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L334"
+      variants:
+        # Note 4: a townhouse lot with rear alley access owes no rear yard.
+        - value: 0
+          when: [unit_lots, abuts_alley]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L343-L344,L362-L363,L371"
+    max_height_ft:
+      value: 35
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L336"
+    notes: 'quadfit confidence: verified. Quadplex-specific standards from 3.130.B; single-family
+      detached is 20 front and 15 to 20 rear, which is not this table.
+
+      QUOTED AND CORRECTED 2026-08-16. Four values -- front and street side setbacks, and the side
+      yard -- were bare numbers the gap ledger flagged as conditional, on the strength of the notes
+      printed under the table. They are not conditional in this zone: 3.130.B is six columns and both
+      driveway-access notes attach to the Town Center ones, which print "10 or 20" where this column
+      prints a bare 10. Every quote now opens on the column header line so the column can be counted.
+
+      Minimum frontage was quoted at L290 and MDR''s side yard at L294, both of which are 3.130.A, the
+      DUPLEX table. The numbers agreed by coincidence of layout. Repointed at 3.130.B.
+
+      ADDED: minimum lot depth, which 3.130.B states and nothing carried; the Building Side zero,
+      which is what lets four units share three walls; and the whole of 3.130.C behind `unit_lots`,
+      for the one-lot-per-unit plat -- it removes lot size, width and depth outright, drops the side
+      yard to 5, and zeroes the rear yard on an alley.
+
+      NOT ENCODED: 3.130.B''s density standards (see 3.140) and accessory-structure setbacks (see
+      5.010), neither of which the pod turns on, and the zero-lot-line note under 3.130.A, which
+      belongs to the duplex table.'
   MDR:
     section: ["3.113", "3.120", "3.130", "8.120"]
     cite_default:
-      cite: Troutdale Development Code 3.120, 3.130.B, 8.120 (Municode, through Ord. 899)
+      cite: Troutdale Development Code 3.120, 3.130.B (triplex and quadplex) and 3.130.C (townhouse),
+        8.120 (Municode, through Ord. 899)
       url: https://library.municode.com/or/troutdale/codes/development_code?nodeId=CH3ZODI
       retrieved: '2026-07-24'
     quadplex_allowed:
       value: true
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L232"
-    setback_front_ft: 10
-    setback_side_ft:
-      value: 5
-      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L294"
-    setback_rear_ft:
-      value: 10
-      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L334"
-    setback_street_side_ft: 10
+    # Base is 3.130.B, the triplex-and-quadplex table: one building, one lot.
+    # Every `unit_lots` variant is 3.130.C, the townhouse table, which is what
+    # applies if the four units are platted onto four lots.
     min_lot_sqft:
       value: 5000
-      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L323"
-    min_frontage_ft:
-      value: 20
-      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L290"
-    notes: 'quadfit confidence: verified | ADOPTED min lot 5,000 sf / width 50 (2022 hearing-draft PDF
-      says 4,000/40 — superseded). Town Center frontage 16 ft not split out.'
-    max_height_ft:
-      value: 35
-      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L336"
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L323"
+      variants:
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L343-L344,L345"
     min_lot_width_ft:
       value: 50
-      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L324"
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L324"
+      variants:
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L343-L344,L346"
+    min_lot_depth_ft:
+      # Stated by 3.130.B and simply missing before. It is the column a
+      # fixed-depth pod fails on first: 70 feet of lot against a front and
+      # rear setback that take 20 of them.
+      value: 70
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L325"
+      variants:
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L343-L344,L347"
+    min_frontage_ft:
+      # Was quoted at L290, which is the same standard in 3.130.A, the DUPLEX
+      # table. Same number, wrong row.
+      value: 20
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L326"
+      variants:
+        # 3.130.C states no townhouse frontage and hands it to note 1: 15 feet
+        # where the driveway, garage or off-street parking is in the front
+        # yard. The pod parks somewhere, and 15 is the only number the note
+        # gives, so the variant carries it rather than exempting the standard
+        # on a lot whose parking has not been placed yet.
+        - value: 15
+          when: [unit_lots]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L343-L344,L348,L368"
+    setback_front_ft:
+      # 10, unqualified. Note 1 under this table -- "20 feet if driveway
+      # access is taken from front yard" -- attaches to the MDR (TC) and HDR
+      # (TC) columns, which print "10 or 20 see note 1"; this column prints a
+      # bare 10. The quote opens on the header row so the count is checkable.
+      value: 10
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L328-L329"
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L330"
+      variants:
+        # The Building Side row, 0 across every column: the wall the units
+        # share owes no yard. Without it the pod is charged a side setback on
+        # each of its three interior walls.
+        - value: 0
+          when: [attached_wall]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L331"
+        - value: 5
+          when: [unit_lots]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L343-L344,L352"
+        - value: 0
+          when: [unit_lots, attached_wall]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L343-L344,L353"
+    setback_street_side_ft:
+      # Also unqualified here. Note 2 reaches only HDR (TC).
+      value: 10
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L332-L333"
+    setback_rear_ft:
+      value: 10
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L334"
+      variants:
+        # Note 4: a townhouse lot with rear alley access owes no rear yard.
+        - value: 0
+          when: [unit_lots, abuts_alley]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L343-L344,L362-L363,L371"
+    max_height_ft:
+      value: 35
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L336"
+    notes: 'quadfit confidence: verified. Quadplex-specific standards from 3.130.B; single-family
+      detached is 20 front and 15 to 20 rear, which is not this table.
+
+      QUOTED AND CORRECTED 2026-08-16. Four values -- front and street side setbacks, and the side
+      yard -- were bare numbers the gap ledger flagged as conditional, on the strength of the notes
+      printed under the table. They are not conditional in this zone: 3.130.B is six columns and both
+      driveway-access notes attach to the Town Center ones, which print "10 or 20" where this column
+      prints a bare 10. Every quote now opens on the column header line so the column can be counted.
+
+      Minimum frontage was quoted at L290 and MDR''s side yard at L294, both of which are 3.130.A, the
+      DUPLEX table. The numbers agreed by coincidence of layout. Repointed at 3.130.B.
+
+      ADDED: minimum lot depth, which 3.130.B states and nothing carried; the Building Side zero,
+      which is what lets four units share three walls; and the whole of 3.130.C behind `unit_lots`,
+      for the one-lot-per-unit plat -- it removes lot size, width and depth outright, drops the side
+      yard to 5, and zeroes the rear yard on an alley.
+
+      NOT ENCODED: 3.130.B''s density standards (see 3.140) and accessory-structure setbacks (see
+      5.010), neither of which the pod turns on, and the zero-lot-line note under 3.130.A, which
+      belongs to the duplex table.'
   HDR:
     section: ["3.114", "3.120", "3.130", "8.120"]
     cite_default:

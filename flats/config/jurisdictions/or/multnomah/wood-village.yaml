@@ -46,124 +46,345 @@ zones:
   LR 7.5:
     section: ["210."]
     cite_default:
-      cite: WVDC 210.310 Tables 210-2/210-3, 210.375 (Ord. 2-2022)
+      cite: WVDC 210.310 Table 210-2 (housing types), 210.320 Table 210-3 (development standards),
+        210.375 (Ord. 2-2022)
       url: https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf
       retrieved: '2026-07-24'
     quadplex_allowed: true
-    setback_front_ft:
-      quote: "or/multnomah/wood-village/210.320.txt#L71"
-      value: 10
-    setback_side_ft:
-      value: 5
-    setback_rear_ft:
-      value: 15
-    setback_street_side_ft:
-      quote: "or/multnomah/wood-village/210.320.txt#L77"
-      value: 10
     min_lot_sqft:
-      quote: "or/multnomah/wood-village/210.320.txt#L65"
       value: 7500
-    max_coverage_pct:
-      quote: "or/multnomah/wood-village/210.320.txt#L80"
-      value: 45
-    notes: 'quadfit confidence: verified | Quadplex Y outright; zone min lot 7,500 sf (no quad-specific
-      larger min). Garage face 22 ft. Height 35 ft.'
-    max_height_ft:
-      value: 35
-      quote: "or/multnomah/wood-village/210.320.txt#L69"
+      quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L65"
+      variants:
+        # Footnote (2), which the table marks on lot area, width, depth and
+        # side setback: a townhouse lot is 1,500 sq ft with a 20-foot width,
+        # no depth requirement and no side yard where units attach.
+        - value: 1500
+          when: [unit_lots]
+          quote: "or/multnomah/wood-village/210.320.txt#L84"
     min_lot_width_ft:
       value: 60
-      quote: "or/multnomah/wood-village/210.320.txt#L66"
+      quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L66"
+      variants:
+        - value: 20
+          when: [unit_lots]
+          quote: "or/multnomah/wood-village/210.320.txt#L84"
+    min_lot_depth_ft:
+      # Stated by Table 210-3 and carried by nothing. 100 feet of lot
+      # against a 10-foot front and 15-foot rear yard is what a fixed-length
+      # pod is actually measured against.
+      value: 100
+      quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L67"
+      variants:
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/wood-village/210.320.txt#L84"
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L71"
+    setback_garage_entrance_ft:
+      # Footnote (1) adds that a garage may not sit forward of the plane of
+      # the street-facing facade, which is a design rule rather than a
+      # distance and is not encoded.
+      value: 22
+      quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L72,L82"
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L73"
+      variants:
+        # The Corner Lots block: on a corner lot the side yard is 10 in both
+        # zones, which only moves LR 7.5.
+        - value: 10
+          when: [corner_lot]
+          quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L75-L78"
+        - value: 0
+          when: [unit_lots, attached_wall]
+          quote: "or/multnomah/wood-village/210.320.txt#L84"
+    setback_rear_ft:
+      value: 15
+      quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L74"
+      variants:
+        # Corner Lots block again: 20 feet, both zones.
+        - value: 20
+          when: [corner_lot]
+          quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L75-L79"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L75-L77"
+    max_coverage_pct:
+      value: 45
+      quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L80"
+      variants:
+        - value: 70
+          when: [unit_lots]
+          quote: "or/multnomah/wood-village/210.320.txt#L84"
+    max_height_ft:
+      value: 35
+      quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L69"
+    notes: 'quadfit confidence: verified. Quadplex is allowed outright and the zone minimum lot applies
+      to it -- no quadplex-specific larger minimum.
+
+      QUOTED AND EXTENDED 2026-08-16. The side and rear setbacks were bare numbers the ledger flagged
+      as stating two numbers each. Both second numbers are the Corner Lots block that Table 210-3
+      prints under the ordinary setbacks: on a corner lot the side yard is 10 and the rear 20, so they
+      are `corner_lot` variants rather than an unexplained pair.
+
+      ADDED: minimum lot depth and the 22-foot garage setback, both stated by the table and carried by
+      nothing, and the whole of footnote (2) behind `unit_lots` -- a townhouse lot is 1,500 sq ft at 20
+      feet wide with no depth requirement, no side yard where units attach, and 70 percent coverage.
+
+      The cite named 210.310 and 210.375, the housing-type and design sections, while every number
+      quoted here is in 210.320. Corrected, which is 13 of the corpus''s misattribution warnings.
+
+      NOT ENCODED: footnote (3), which gives cottage housing a 10-foot rear and street side yard and
+      exempts it from coverage outright. A cottage cluster is not the pod.'
   LR 12:
     section: ["210."]
     cite_default:
-      cite: WVDC 210.310 Tables 210-2/210-3, 210.375 (Ord. 2-2022)
+      cite: WVDC 210.310 Table 210-2 (housing types), 210.320 Table 210-3 (development standards),
+        210.375 (Ord. 2-2022)
       url: https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf
       retrieved: '2026-07-24'
     quadplex_allowed: true
-    setback_front_ft:
-      quote: "or/multnomah/wood-village/210.320.txt#L71"
-      value: 10
-    setback_side_ft:
-      quote: "or/multnomah/wood-village/210.320.txt#L73"
-      value: 10
-    setback_rear_ft:
-      value: 15
-    setback_street_side_ft:
-      quote: "or/multnomah/wood-village/210.320.txt#L77"
-      value: 20
     min_lot_sqft:
-      quote: "or/multnomah/wood-village/210.320.txt#L65"
       value: 12000
-    max_coverage_pct:
-      quote: "or/multnomah/wood-village/210.320.txt#L80"
-      value: 45
-    notes: 'quadfit confidence: verified | Corner STREET-SIDE 20 ft (vs 10 in LR 7.5). Zone min lot 12,000
-      sf.'
-    max_height_ft:
-      value: 35
-      quote: "or/multnomah/wood-village/210.320.txt#L69"
+      quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L65"
+      variants:
+        # Footnote (2), which the table marks on lot area, width, depth and
+        # side setback: a townhouse lot is 1,500 sq ft with a 20-foot width,
+        # no depth requirement and no side yard where units attach.
+        - value: 1500
+          when: [unit_lots]
+          quote: "or/multnomah/wood-village/210.320.txt#L84"
     min_lot_width_ft:
       value: 80
-      quote: "or/multnomah/wood-village/210.320.txt#L66"
+      quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L66"
+      variants:
+        - value: 20
+          when: [unit_lots]
+          quote: "or/multnomah/wood-village/210.320.txt#L84"
+    min_lot_depth_ft:
+      # Stated by Table 210-3 and carried by nothing. 120 feet of lot
+      # against a 10-foot front and 15-foot rear yard is what a fixed-length
+      # pod is actually measured against.
+      value: 120
+      quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L67"
+      variants:
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/wood-village/210.320.txt#L84"
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L71"
+    setback_garage_entrance_ft:
+      # Footnote (1) adds that a garage may not sit forward of the plane of
+      # the street-facing facade, which is a design rule rather than a
+      # distance and is not encoded.
+      value: 22
+      quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L72,L82"
+    setback_side_ft:
+      value: 10
+      quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L73"
+      variants:
+        # The Corner Lots block: on a corner lot the side yard is 10 in both
+        # zones, which only moves LR 7.5.
+        - value: 10
+          when: [corner_lot]
+          quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L75-L78"
+        - value: 0
+          when: [unit_lots, attached_wall]
+          quote: "or/multnomah/wood-village/210.320.txt#L84"
+    setback_rear_ft:
+      value: 15
+      quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L74"
+      variants:
+        # Corner Lots block again: 20 feet, both zones.
+        - value: 20
+          when: [corner_lot]
+          quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L75-L79"
+    setback_street_side_ft:
+      value: 20
+      quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L75-L77"
+    max_coverage_pct:
+      value: 45
+      quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L80"
+      variants:
+        - value: 70
+          when: [unit_lots]
+          quote: "or/multnomah/wood-village/210.320.txt#L84"
+    max_height_ft:
+      value: 35
+      quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L69"
+    notes: 'quadfit confidence: verified. Quadplex is allowed outright and the zone minimum lot applies
+      to it -- no quadplex-specific larger minimum.
+
+      QUOTED AND EXTENDED 2026-08-16. The side and rear setbacks were bare numbers the ledger flagged
+      as stating two numbers each. Both second numbers are the Corner Lots block that Table 210-3
+      prints under the ordinary setbacks: on a corner lot the side yard is 10 and the rear 20, so they
+      are `corner_lot` variants rather than an unexplained pair.
+
+      ADDED: minimum lot depth and the 22-foot garage setback, both stated by the table and carried by
+      nothing, and the whole of footnote (2) behind `unit_lots` -- a townhouse lot is 1,500 sq ft at 20
+      feet wide with no depth requirement, no side yard where units attach, and 70 percent coverage.
+
+      The cite named 210.310 and 210.375, the housing-type and design sections, while every number
+      quoted here is in 210.320. Corrected, which is 13 of the corpus''s misattribution warnings.
+
+      NOT ENCODED: footnote (3), which gives cottage housing a 10-foot rear and street side yard and
+      exempts it from coverage outright. A cottage cluster is not the pod.'
   MR 2:
     section: ["220."]
     cite_default:
-      cite: WVDC 220.310 Tables 220-2/220-3, 220.355 (Ord. 2-2022)
+      cite: WVDC 220.310 Table 220-2 (housing types), 220.320 Table 220-3 (development standards),
+        220.355 (Ord. 2-2022)
       url: https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf
       retrieved: '2026-07-24'
     quadplex_allowed: true
-    setback_front_ft:
-      quote: "or/multnomah/wood-village/220.320.txt#L72"
-      value: 10
-    setback_side_ft:
-      value: 5
-      quote: "or/multnomah/wood-village/220.320.txt#L74"
-    setback_rear_ft:
-      value: 15
-      quote: "or/multnomah/wood-village/220.320.txt#L75"
     min_lot_sqft:
       value: 7500
-      quote: "or/multnomah/wood-village/220.320.txt#L67"
+      quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L67"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L67"
     min_lot_width_ft:
       value: 60
-      quote: "or/multnomah/wood-village/220.320.txt#L68"
+      quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L68"
+      variants:
+        - value: 20
+          when: [unit_lots]
+          quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L68"
+    min_lot_depth_ft:
+      value: 80
+      quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L69"
+      variants:
+        # The townhouse column is blank on this row, which LR's footnote (2)
+        # spells out as "no minimum depth".
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L69"
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L72"
+    setback_garage_entrance_ft:
+      value: 22
+      quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L73"
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L74"
+      variants:
+        # The townhouse cell is two standards in one: "5 ft; 0 ft on the
+        # attached townhouse side".
+        - value: 5
+          when: [unit_lots]
+          quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L74"
+        - value: 0
+          when: [unit_lots, attached_wall]
+          quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L74"
+    setback_rear_ft:
+      value: 15
+      quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L75"
+    max_coverage_pct:
+      value: 45
+      quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L76"
+      variants:
+        - value: 75
+          when: [unit_lots]
+          quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L76"
     max_height_ft:
       value: 35
-      quote: "or/multnomah/wood-village/220.320.txt#L70"
-    max_coverage_pct: 45
-    notes: 'Re-encoded 2026-08-13 from WVDC Table 220-3 (Ord. 2-2022) once the table-aware extractor made
-      its housing-type columns readable. min_lot 8,000 -> 7,500: the table states 7,500 sf for the
-      "Duplex Triplex Quadplex" column, which is the pod''s column; quadfit''s 8,000 appears nowhere in
-      the current code text. Coverage 45% is that same column (the townhouse column states 75%, a
-      different plat path). MR tables have NO corner-lot street-side rows — genuinely unspecified in code
-      text; no street-side elevation applied.'
+      quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L70"
+    notes: 'Re-encoded 2026-08-13 from WVDC Table 220-3 (Ord. 2-2022) once the table-aware extractor
+      made its housing-type columns readable, then quoted and extended 2026-08-16. min_lot 8,000 ->
+      7,500: the table states 7,500 for the "Duplex Triplex Quadplex" column, which is the pod''s
+      column, and quadfit''s 8,000 appears nowhere in the current code text.
+
+      COVERAGE. It held a bare 45 and the ledger flagged the table as stating two numbers. Both are
+      real and neither is a footnote: 75 percent is the Townhouse column and 45 is the pod''s, so the
+      75 is now the `unit_lots` variant. The townhouse column also carries the 1,500 sq ft lot, the
+      20-foot width and the zero side yard where units attach.
+
+      ADDED: minimum lot depth 80 and the 22-foot garage setback, both stated and both missing. The
+      depth row prints two values under four housing-type columns -- townhouse and cottage housing are
+      blank, which agrees with LR''s footnote saying a townhouse lot has no minimum depth -- so the 80
+      is read as detached and quadplex. That reading only ever adds a constraint, so it fails lots out
+      rather than in, but it is a reading and not a count.
+
+      The cite named 220.310 and 220.355 while every number is in 220.320. Corrected -- 13 of the
+      corpus''s misattribution warnings.
+
+      NOT ENCODED: Table 220-4, the multi-dwelling standards for the MR2 zone, which starts at five
+      units. The pod is four. MR tables also state no corner-lot rows at all, so no street-side
+      setback is applied here -- genuinely unstated rather than assumed away.'
   MR 4:
     section: ["220."]
     cite_default:
-      cite: WVDC 220.310 Tables 220-2/220-3, 220.355 (Ord. 2-2022)
+      cite: WVDC 220.310 Table 220-2 (housing types), 220.320 Table 220-3 (development standards),
+        220.355 (Ord. 2-2022)
       url: https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf
       retrieved: '2026-07-24'
     quadplex_allowed: true
-    setback_front_ft:
-      quote: "or/multnomah/wood-village/220.320.txt#L72"
-      value: 10
-    setback_side_ft:
-      value: 5
-      quote: "or/multnomah/wood-village/220.320.txt#L74"
-    setback_rear_ft:
-      value: 15
-      quote: "or/multnomah/wood-village/220.320.txt#L75"
     min_lot_sqft:
       value: 7500
-      quote: "or/multnomah/wood-village/220.320.txt#L67"
+      quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L67"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L67"
     min_lot_width_ft:
       value: 60
-      quote: "or/multnomah/wood-village/220.320.txt#L68"
+      quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L68"
+      variants:
+        - value: 20
+          when: [unit_lots]
+          quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L68"
+    min_lot_depth_ft:
+      value: 80
+      quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L69"
+      variants:
+        # The townhouse column is blank on this row, which LR's footnote (2)
+        # spells out as "no minimum depth".
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L69"
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L72"
+    setback_garage_entrance_ft:
+      value: 22
+      quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L73"
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L74"
+      variants:
+        # The townhouse cell is two standards in one: "5 ft; 0 ft on the
+        # attached townhouse side".
+        - value: 5
+          when: [unit_lots]
+          quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L74"
+        - value: 0
+          when: [unit_lots, attached_wall]
+          quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L74"
+    setback_rear_ft:
+      value: 15
+      quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L75"
+    max_coverage_pct:
+      value: 45
+      quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L76"
+      variants:
+        - value: 75
+          when: [unit_lots]
+          quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L76"
     max_height_ft:
       value: 35
-      quote: "or/multnomah/wood-village/220.320.txt#L70"
-    max_coverage_pct: 45
-    notes: 'Identical to MR 2 for quads — Table 220-3 heads every column "MR4 and MR2", so one column
-      states both zones. Re-encoded 2026-08-13 from that table: min_lot 8,000 -> 7,500, width 60, height
-      35, all from the "Duplex Triplex Quadplex" column.'
+      quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L70"
+    notes: 'Identical to MR 2 for quadplexes -- Table 220-3 heads every column "MR4 and MR2", so one
+      column states both zones. Re-encoded 2026-08-13 from that table and quoted 2026-08-16 the same
+      way: coverage 45 is the "Duplex Triplex Quadplex" column and the 75 the ledger saw is the
+      Townhouse one, now a `unit_lots` variant along with the 1,500 sq ft lot, the 20-foot width and
+      the zero side yard where units attach. Minimum lot depth 80 and the 22-foot garage setback were
+      stated and missing.
+
+      The cite named 220.310 and 220.355 while every number is in 220.320. Corrected.
+
+      Table 220-4 does not reach MR 4 at all -- it is written for the MR2 zone and starts at five
+      units. No corner-lot rows exist in the MR tables, so no street-side setback is applied.'

@@ -383,3 +383,94 @@ def test_clackamas_vr_rows_are_read_by_counting_their_values() -> None:
     for zone in ("VR45", "VR57"):
         res = rules.resolve("or/clackamas/_unincorporated", zone)
         assert "min_lot_sqft" not in res.values
+
+
+def test_the_three_derived_numbers_now_come_from_documents() -> None:
+    """Three values reached the ledger's `unsourced` bucket -- no stored
+    document stated them and they named no chapter that would. Each was a
+    number somebody worked out rather than read, and each was loose:
+
+      LR-7's 7,000 was the OAR 660-046-0220 cap, from an unstored rule that
+      governs "Large Cities" while this layer is unincorporated county. MCC
+      39.4862(C) states 5,000 sq ft per multiplex unit -- 20,000 for the pod.
+
+      Fairview VSF's 4.5 was the average of a four-foot side and a five-foot
+      side. The field holds one number for both sides, so 4.5 puts a wall six
+      inches inside the five-foot line.
+
+      Gresham MDR-24's 7,200 was four units divided by the 24.2-per-acre
+      maximum density. Table 4.0130 states an 11,000 sq ft minimum site size.
+
+    All three were answerable from documents already in the store. The
+    assertion that matters is not the number but the quote beside it."""
+    rules = RuleSet(load_rules())
+
+    for layer, zone, field, value in (
+        ("or/multnomah/_unincorporated", "LR7", "min_lot_sqft", 20000),
+        ("or/multnomah/fairview", "VSF", "setback_side_ft", 5),
+        ("or/multnomah/gresham", "MDR-24", "min_lot_sqft", 11000),
+    ):
+        got = rules.resolve(layer, zone).values[field]
+        assert got.value == value, f"{zone}.{field}"
+        assert got.prov.quote, f"{zone}.{field} is back to a bare number"
+
+
+def test_troutdale_reads_the_quadplex_table_not_the_duplex_one() -> None:
+    """3.130 is four tables -- duplex, triplex-and-quadplex, townhouse,
+    cottage cluster -- printing nearly the same standards in nearly the same
+    order. Three quotes pointed at the duplex table and agreed with the
+    quadplex one by coincidence of layout. Six more values were bare, and the
+    gap ledger read them as conditional because the driveway-access notes sit
+    a few lines below the row. They are not: 3.130.B is six columns and both
+    notes attach to the Town Center ones, which print "10 or 20" where these
+    columns print a bare 10."""
+    rules = RuleSet(load_rules())
+
+    for zone, depth in (("LDR-1", 100), ("LDR-2", 80), ("MDR", 70)):
+        res = rules.resolve("or/multnomah/troutdale", zone)
+        assert res.values["setback_front_ft"].value == 10
+        assert res.values["setback_street_side_ft"].value == 10
+        assert res.values["min_lot_depth_ft"].value == depth
+        for name in ("setback_front_ft", "setback_side_ft", "setback_street_side_ft"):
+            assert res.values[name].prov.quote, f"{zone}.{name} is a bare number"
+
+        # 3.130.C, the townhouse table, is the one-lot-per-unit path: lot
+        # size, width and depth go away and the rear yard zeroes on an alley.
+        split = rules.resolve("or/multnomah/troutdale", zone, conditions=("unit_lots",))
+        assert "min_lot_sqft" not in split.values
+        assert "min_lot_depth_ft" not in split.values
+        assert split.values["setback_side_ft"].value == 5
+
+        alley = rules.resolve(
+            "or/multnomah/troutdale", zone, conditions=("unit_lots", "abuts_alley")
+        )
+        assert alley.values["setback_rear_ft"].value == 0
+
+
+def test_wood_village_second_numbers_are_corner_lots_and_townhouses() -> None:
+    """Five values stated two numbers each and one of them got written down.
+    Neither number was wrong; the second was a different kind of lot. Table
+    210-3 prints a Corner Lots block under the ordinary setbacks, and Table
+    220-3's 75 percent coverage is the Townhouse column rather than the
+    Duplex-Triplex-Quadplex one the pod is measured in."""
+    rules = RuleSet(load_rules())
+
+    plain = rules.resolve("or/multnomah/wood-village", "LR 7.5")
+    corner = rules.resolve("or/multnomah/wood-village", "LR 7.5", conditions=("corner_lot",))
+    assert (plain.values["setback_side_ft"].value, plain.values["setback_rear_ft"].value) == (5, 15)
+    assert (corner.values["setback_side_ft"].value, corner.values["setback_rear_ft"].value) == (
+        10,
+        20,
+    )
+
+    for zone in ("MR 2", "MR 4"):
+        res = rules.resolve("or/multnomah/wood-village", zone)
+        assert res.values["max_coverage_pct"].value == 45
+        split = rules.resolve("or/multnomah/wood-village", zone, conditions=("unit_lots",))
+        assert split.values["max_coverage_pct"].value == 75
+
+    # Both tables state a lot depth and a garage setback that nothing carried.
+    for zone, depth in (("LR 7.5", 100), ("LR 12", 120), ("MR 2", 80), ("MR 4", 80)):
+        res = rules.resolve("or/multnomah/wood-village", zone)
+        assert res.values["min_lot_depth_ft"].value == depth
+        assert res.values["setback_garage_entrance_ft"].value == 22

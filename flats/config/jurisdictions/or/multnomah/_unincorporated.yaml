@@ -199,7 +199,15 @@ zones:
     min_frontage_ft:
       value: 30
       quote: "or/multnomah/_unincorporated/39.lr-7.txt#L403-L404"
-    min_lot_sqft: 7000
+    min_lot_sqft:
+      # MCC 39.4862(C): 5,000 square feet for EACH dwelling unit in a multiplex
+      # dwelling structure. Four units, so 20,000. The article states its lot
+      # sizes by housing type -- (A) single family 7,000, (B) two-unit 10,000,
+      # (C) multiplex 5,000 per unit -- and the pod is the third of those. It
+      # is not a townhouse question: the word "townhouse" does not appear
+      # anywhere in 39.4848 through 39.4868.
+      value: 20000
+      quote: "or/multnomah/_unincorporated/39.lr-7.txt#L397-L399"
     notes: 'County plan areas (Interlachen). CORRECTED: the yards were encoded front 10 / rear 10 from
       the state Model Code Exhibit B, which is not a stored document, while side 5 and street-side 10
       were quoted from MCC 39.4862(H) — two columns read off a row and two overridden from an uncited
@@ -213,10 +221,16 @@ zones:
       if it does it may not set one BELOW the detached-SFD figure, so the 40 percent is the number the
       rule protects rather than one it invalidates.
 
-      TWO OPEN QUESTIONS, both needing a human. (1) min_lot_sqft 7,000 is the OAR 660-046-0220(2)(a)(B)(i)
-      cap. MCC 39.4862(C) states 5,000 square feet PER UNIT for a multiplex — 20,000 for four. The gap
-      between those two numbers decides nearly every LR-7 lot, and the cap only reaches this layer if
-      the county is reached at all. (2) MCC 39.4856(C) lists a multiplex as a CONDITIONAL use, not a
+      MINIMUM LOT SIZE, RESOLVED 2026-08-16 the conservative way. It held 7,000, which was the OAR
+      660-046-0220(2)(a)(B)(i) cap and came from a document that is not stored. MCC 39.4862(C) IS
+      stored and states 5,000 square feet per unit for a multiplex, so 20,000 for the pod. The gap
+      between those decides nearly every LR-7 lot, and the cap only reaches this layer if the county
+      is reached at all — 660-046-0220 governs "Large Cities" by its own terms. So the county''s own
+      number governs until the statute is fetched and says otherwise, because 7,000 against a real
+      20,000 passes lots that cannot be built on. If ORS 197A.420 turns out to reach unincorporated
+      county, 7,000 comes back as a preemption on the state layer rather than as this zone''s base.
+
+      STILL OPEN, and needing a human: MCC 39.4856(C) lists a multiplex as a CONDITIONAL use, not a
       permitted one; quadplex_allowed: true rests on the HB 2001 mandate overriding that, not on the
       county code. Both turn on ORS 197A.420, which is not stored — 660-046-0220 governs "Large Cities"
       by its own terms and this layer is unincorporated county. Fetch the statute before signing

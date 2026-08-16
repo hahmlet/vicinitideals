@@ -223,7 +223,15 @@ zones:
     setback_front_ft:
       value: 10
       quote: "or/multnomah/fairview/19.115.txt#L47"
-    setback_side_ft: 4.5
+    setback_side_ft:
+      # 19.115.040(E)(1)(d) is four feet on one side and five on the opposite,
+      # combined at least nine. The field carries one number for both sides,
+      # so the five governs: it clears both stated minimums and the combined
+      # test at ten. The four is one lot line's worth and a pod that wants it
+      # has to say which side, which is a site-plan question rather than a
+      # rules one.
+      value: 5
+      quote: "or/multnomah/fairview/19.115.txt#L53"
     setback_rear_ft:
       value: 15
       quote: "or/multnomah/fairview/19.115.txt#L55"
@@ -236,9 +244,20 @@ zones:
     max_coverage_pct:
       value: 60
       quote: "or/multnomah/fairview/19.115.txt#L39"
-    notes: 'quadfit confidence: needs_verification | Code sides: 4 ft one / 5 ft opposite (combined 9)
-      — modeled uniform 4.5 (exact max width). Front is ''either 10 or 15 ft''. Quadplex use flows in
-      via amended 19.30.020 linkage (the needs_verification part). Village design standards apply.'
+    notes: 'quadfit confidence: needs_verification. Quadplex use flows in via the amended 19.30.020
+      linkage, which is the needs_verification part; village design standards apply on top.
+
+      SIDE SETBACK CORRECTED 2026-08-16. It held 4.5, which is not a number the code states — it was
+      the average of the four-foot side and the five-foot side, chosen for the widest building
+      envelope, and it puts a wall six inches inside the five-foot line. Now 5, quoted.
+
+      Front is encoded at 10 because 19.115.040(E)(1)(a) states "either 10 or 15 feet" and the choice
+      is the developer''s, so 10 is a number the code allows rather than the loose end of a range.
+
+      NOT ENCODED: the townhouse lot size. 19.115.040(A) exempts townhomes from the 4,000-square-foot
+      minimum and sends them to FMC 19.30.030, whose Table 19.30.030.A has columns for R-6, R-7.5,
+      R-10, the Townhouse Overlay and RM — and none for VSF. The cross-reference lands nowhere, so
+      the encoded 4,000 stands and the exemption is left for a person.'
   VTH:
     cite_default:
       cite: FMC 19.120 Village Townhouse Residential

@@ -1,5 +1,5 @@
 {
-  "digest": "293a0f3437c4186a1e7491c35e1c5a7ae56c72a90dd72524fab17f306f29dee7",
+  "digest": "45f125ecebe019f354c1eb5c84d8e294455d0b3e322ef81914a652d31f64766e",
   "layers": {
     "or": {
       "misattributed": [],
@@ -424,18 +424,9 @@
       "misattributed": [],
       "label": "Multnomah Unincorporated",
       "counts": {
-        "unsourced": 1,
         "uncheckable": 6
       },
       "gaps": [
-        {
-          "zone": "LR7",
-          "field": "min_lot_sqft",
-          "cause": "unsourced",
-          "detail": "",
-          "believed": "7000",
-          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
-        },
         {
           "zone": "LR7",
           "field": "quadplex_allowed",
@@ -490,18 +481,9 @@
       "misattributed": [],
       "label": "Fairview",
       "counts": {
-        "unsourced": 1,
         "uncheckable": 7
       },
       "gaps": [
-        {
-          "zone": "VSF",
-          "field": "setback_side_ft",
-          "cause": "unsourced",
-          "detail": "",
-          "believed": "4.5",
-          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
-        },
         {
           "zone": "R-10",
           "field": "quadplex_allowed",
@@ -985,18 +967,9 @@
       ],
       "label": "Gresham",
       "counts": {
-        "unsourced": 1,
         "uncheckable": 7
       },
       "gaps": [
-        {
-          "zone": "MDR-24",
-          "field": "min_lot_sqft",
-          "cause": "unsourced",
-          "detail": "",
-          "believed": "7200",
-          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
-        },
         {
           "zone": "CMF",
           "field": "orientation_constraint",
@@ -1100,75 +1073,9 @@
       ],
       "label": "Troutdale",
       "counts": {
-        "conditional": 6,
-        "multi": 2,
         "uncheckable": 1
       },
       "gaps": [
-        {
-          "zone": "LDR-1",
-          "field": "setback_front_ft",
-          "cause": "conditional",
-          "detail": "Front yard setback is 20 feet if driveway access is taken fr",
-          "believed": "10",
-          "action": "encode as a variant \u2014 the document qualifies this number, by footnote or by the lot sizes the column was written for"
-        },
-        {
-          "zone": "LDR-1",
-          "field": "setback_street_side_ft",
-          "cause": "conditional",
-          "detail": "Street side yard setback is 20 feet if driveway access is ta",
-          "believed": "10",
-          "action": "encode as a variant \u2014 the document qualifies this number, by footnote or by the lot sizes the column was written for"
-        },
-        {
-          "zone": "LDR-2",
-          "field": "setback_front_ft",
-          "cause": "conditional",
-          "detail": "Front yard setback is 20 feet if driveway access is taken fr",
-          "believed": "10",
-          "action": "encode as a variant \u2014 the document qualifies this number, by footnote or by the lot sizes the column was written for"
-        },
-        {
-          "zone": "LDR-2",
-          "field": "setback_street_side_ft",
-          "cause": "conditional",
-          "detail": "Street side yard setback is 20 feet if driveway access is ta",
-          "believed": "10",
-          "action": "encode as a variant \u2014 the document qualifies this number, by footnote or by the lot sizes the column was written for"
-        },
-        {
-          "zone": "MDR",
-          "field": "setback_front_ft",
-          "cause": "conditional",
-          "detail": "Front yard setback is 20 feet if driveway access is taken fr",
-          "believed": "10",
-          "action": "encode as a variant \u2014 the document qualifies this number, by footnote or by the lot sizes the column was written for"
-        },
-        {
-          "zone": "MDR",
-          "field": "setback_street_side_ft",
-          "cause": "conditional",
-          "detail": "Street side yard setback is 20 feet if driveway access is ta",
-          "believed": "10",
-          "action": "encode as a variant \u2014 the document qualifies this number, by footnote or by the lot sizes the column was written for"
-        },
-        {
-          "zone": "LDR-1",
-          "field": "setback_side_ft",
-          "cause": "multi",
-          "detail": "5, 10",
-          "believed": "10",
-          "action": "encode as variants \u2014 the document states more than one number"
-        },
-        {
-          "zone": "LDR-2",
-          "field": "setback_side_ft",
-          "cause": "multi",
-          "detail": "5, 7.5",
-          "believed": "7.5",
-          "action": "encode as variants \u2014 the document states more than one number"
-        },
         {
           "zone": "HDR",
           "field": "quadplex_allowed",
@@ -1180,229 +1087,12 @@
       ]
     },
     "or/multnomah/wood-village": {
-      "misattributed": [
-        {
-          "zone": "LR 12",
-          "field": "max_coverage_pct",
-          "claimed": "210.310 210.375",
-          "found": "210.320",
-          "quote": "or/multnomah/wood-village/210.320.txt#L80"
-        },
-        {
-          "zone": "LR 12",
-          "field": "max_height_ft",
-          "claimed": "210.310 210.375",
-          "found": "210.320",
-          "quote": "or/multnomah/wood-village/210.320.txt#L69"
-        },
-        {
-          "zone": "LR 12",
-          "field": "min_lot_sqft",
-          "claimed": "210.310 210.375",
-          "found": "210.320",
-          "quote": "or/multnomah/wood-village/210.320.txt#L65"
-        },
-        {
-          "zone": "LR 12",
-          "field": "min_lot_width_ft",
-          "claimed": "210.310 210.375",
-          "found": "210.320",
-          "quote": "or/multnomah/wood-village/210.320.txt#L66"
-        },
-        {
-          "zone": "LR 12",
-          "field": "setback_front_ft",
-          "claimed": "210.310 210.375",
-          "found": "210.320",
-          "quote": "or/multnomah/wood-village/210.320.txt#L71"
-        },
-        {
-          "zone": "LR 12",
-          "field": "setback_side_ft",
-          "claimed": "210.310 210.375",
-          "found": "210.320",
-          "quote": "or/multnomah/wood-village/210.320.txt#L73"
-        },
-        {
-          "zone": "LR 12",
-          "field": "setback_street_side_ft",
-          "claimed": "210.310 210.375",
-          "found": "210.320",
-          "quote": "or/multnomah/wood-village/210.320.txt#L77"
-        },
-        {
-          "zone": "LR 7.5",
-          "field": "max_coverage_pct",
-          "claimed": "210.310 210.375",
-          "found": "210.320",
-          "quote": "or/multnomah/wood-village/210.320.txt#L80"
-        },
-        {
-          "zone": "LR 7.5",
-          "field": "max_height_ft",
-          "claimed": "210.310 210.375",
-          "found": "210.320",
-          "quote": "or/multnomah/wood-village/210.320.txt#L69"
-        },
-        {
-          "zone": "LR 7.5",
-          "field": "min_lot_sqft",
-          "claimed": "210.310 210.375",
-          "found": "210.320",
-          "quote": "or/multnomah/wood-village/210.320.txt#L65"
-        },
-        {
-          "zone": "LR 7.5",
-          "field": "min_lot_width_ft",
-          "claimed": "210.310 210.375",
-          "found": "210.320",
-          "quote": "or/multnomah/wood-village/210.320.txt#L66"
-        },
-        {
-          "zone": "LR 7.5",
-          "field": "setback_front_ft",
-          "claimed": "210.310 210.375",
-          "found": "210.320",
-          "quote": "or/multnomah/wood-village/210.320.txt#L71"
-        },
-        {
-          "zone": "LR 7.5",
-          "field": "setback_street_side_ft",
-          "claimed": "210.310 210.375",
-          "found": "210.320",
-          "quote": "or/multnomah/wood-village/210.320.txt#L77"
-        },
-        {
-          "zone": "MR 2",
-          "field": "max_height_ft",
-          "claimed": "220.310 220.355",
-          "found": "220.320",
-          "quote": "or/multnomah/wood-village/220.320.txt#L70"
-        },
-        {
-          "zone": "MR 2",
-          "field": "min_lot_sqft",
-          "claimed": "220.310 220.355",
-          "found": "220.320",
-          "quote": "or/multnomah/wood-village/220.320.txt#L67"
-        },
-        {
-          "zone": "MR 2",
-          "field": "min_lot_width_ft",
-          "claimed": "220.310 220.355",
-          "found": "220.320",
-          "quote": "or/multnomah/wood-village/220.320.txt#L68"
-        },
-        {
-          "zone": "MR 2",
-          "field": "setback_front_ft",
-          "claimed": "220.310 220.355",
-          "found": "220.320",
-          "quote": "or/multnomah/wood-village/220.320.txt#L72"
-        },
-        {
-          "zone": "MR 2",
-          "field": "setback_rear_ft",
-          "claimed": "220.310 220.355",
-          "found": "220.320",
-          "quote": "or/multnomah/wood-village/220.320.txt#L75"
-        },
-        {
-          "zone": "MR 2",
-          "field": "setback_side_ft",
-          "claimed": "220.310 220.355",
-          "found": "220.320",
-          "quote": "or/multnomah/wood-village/220.320.txt#L74"
-        },
-        {
-          "zone": "MR 4",
-          "field": "max_height_ft",
-          "claimed": "220.310 220.355",
-          "found": "220.320",
-          "quote": "or/multnomah/wood-village/220.320.txt#L70"
-        },
-        {
-          "zone": "MR 4",
-          "field": "min_lot_sqft",
-          "claimed": "220.310 220.355",
-          "found": "220.320",
-          "quote": "or/multnomah/wood-village/220.320.txt#L67"
-        },
-        {
-          "zone": "MR 4",
-          "field": "min_lot_width_ft",
-          "claimed": "220.310 220.355",
-          "found": "220.320",
-          "quote": "or/multnomah/wood-village/220.320.txt#L68"
-        },
-        {
-          "zone": "MR 4",
-          "field": "setback_front_ft",
-          "claimed": "220.310 220.355",
-          "found": "220.320",
-          "quote": "or/multnomah/wood-village/220.320.txt#L72"
-        },
-        {
-          "zone": "MR 4",
-          "field": "setback_rear_ft",
-          "claimed": "220.310 220.355",
-          "found": "220.320",
-          "quote": "or/multnomah/wood-village/220.320.txt#L75"
-        },
-        {
-          "zone": "MR 4",
-          "field": "setback_side_ft",
-          "claimed": "220.310 220.355",
-          "found": "220.320",
-          "quote": "or/multnomah/wood-village/220.320.txt#L74"
-        }
-      ],
+      "misattributed": [],
       "label": "Wood Village",
       "counts": {
-        "multi": 5,
         "uncheckable": 4
       },
       "gaps": [
-        {
-          "zone": "LR 12",
-          "field": "setback_rear_ft",
-          "cause": "multi",
-          "detail": "15, 20",
-          "believed": "15",
-          "action": "encode as variants \u2014 the document states more than one number"
-        },
-        {
-          "zone": "LR 7.5",
-          "field": "setback_rear_ft",
-          "cause": "multi",
-          "detail": "15, 20",
-          "believed": "15",
-          "action": "encode as variants \u2014 the document states more than one number"
-        },
-        {
-          "zone": "LR 7.5",
-          "field": "setback_side_ft",
-          "cause": "multi",
-          "detail": "5, 10",
-          "believed": "5",
-          "action": "encode as variants \u2014 the document states more than one number"
-        },
-        {
-          "zone": "MR 2",
-          "field": "max_coverage_pct",
-          "cause": "multi",
-          "detail": "45, 75",
-          "believed": "45",
-          "action": "encode as variants \u2014 the document states more than one number"
-        },
-        {
-          "zone": "MR 4",
-          "field": "max_coverage_pct",
-          "cause": "multi",
-          "detail": "45, 75",
-          "believed": "45",
-          "action": "encode as variants \u2014 the document states more than one number"
-        },
         {
           "zone": "LR 12",
           "field": "quadplex_allowed",

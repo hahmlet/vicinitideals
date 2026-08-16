@@ -430,10 +430,28 @@ zones:
     setback_street_side_ft:
       value: 20
       quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
-    min_lot_sqft: 7200
-    notes: 'quadfit confidence: verified | SFD is NP — quadplex permitted natively. 11,000 sf site min
-      waived for existing lots of record; but middle housing COUNTS toward max density here (24.2 u/ac):
-      4 units need ~7,200 sf net — encoded as min_lot_sqft (approximation, net≈gross for existing lots).'
+    min_lot_sqft:
+      # Table 4.0130 section A, Minimum Site Size, all other uses: 11,000 sq
+      # ft in MDR-24. Seven district columns and seven values in the row, so
+      # the column reads positionally, and the multi-family row above it
+      # prints the same 11,000 under the same column.
+      value: 11000
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L239"
+    notes: 'quadfit confidence: verified. Single-family detached is not permitted here and a quadplex
+      is permitted natively rather than by state mandate.
+
+      MINIMUM LOT SIZE CORRECTED 2026-08-16, 7,200 to 11,000. The 7,200 was not a standard the code
+      states — it was arithmetic off the maximum density, four units divided by 24.2 units per acre,
+      and the old note said as much ("approximation"). Table 4.0130 states an 11,000-square-foot
+      minimum SITE size for MDR-24 outright, which is the larger constraint and the one a permit is
+      measured against. Both tests still pass at 11,000: four units is 15.8 units per acre, under the
+      24.2 maximum and over the 12.1 minimum.
+
+      NOT ENCODED, and it loosens: table note 2 lets a Lot of Record smaller than the required minimum
+      LOT size be developed anyway. It is written against section B (Minimum Lot Size), which in
+      MDR-24 reads None for all other uses and 3,600 for a duplex, rather than against the section A
+      site minimum encoded here. No condition names a lot of record, and a relief nobody can select is
+      better left out than assumed.'
     max_height_ft:
       value: 35
       quote: "or/multnomah/gresham/4.0100.residential.txt#L332"
