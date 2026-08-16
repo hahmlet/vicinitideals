@@ -1,0 +1,19 @@
+{"setup": {"model": "qwen2.5:7b", "size": 30, "overlap": 20, "context": 8192}}
+{"chunk": "or/multnomah/fairview/19.30.txt#L1-L26", "document": "or/multnomah/fairview/19.30.txt", "first": 1, "last": 26, "found": []}
+{"chunk": "or/multnomah/fairview/19.30.txt#L11-L26", "document": "or/multnomah/fairview/19.30.txt", "first": 11, "last": 26, "found": []}
+{"chunk": "or/multnomah/fairview/19.30.txt#L21-L48", "document": "or/multnomah/fairview/19.30.txt", "first": 21, "last": 48, "found": []}
+{"chunk": "or/multnomah/fairview/19.30.txt#L31-L54", "document": "or/multnomah/fairview/19.30.txt", "first": 31, "last": 54, "found": []}
+{"chunk": "or/multnomah/fairview/19.30.txt#L41-L70", "document": "or/multnomah/fairview/19.30.txt", "first": 41, "last": 70, "found": []}
+{"chunk": "or/multnomah/fairview/19.30.txt#L51-L80", "document": "or/multnomah/fairview/19.30.txt", "first": 51, "last": 80, "found": []}
+{"chunk": "or/multnomah/fairview/19.30.txt#L61-L90", "document": "or/multnomah/fairview/19.30.txt", "first": 61, "last": 90, "found": []}
+{"chunk": "or/multnomah/fairview/19.30.txt#L71-L100", "document": "or/multnomah/fairview/19.30.txt", "first": 71, "last": 100, "found": []}
+{"chunk": "or/multnomah/fairview/19.30.txt#L81-L110", "document": "or/multnomah/fairview/19.30.txt", "first": 81, "last": 110, "found": []}
+{"chunk": "or/multnomah/fairview/19.30.txt#L91-L120", "document": "or/multnomah/fairview/19.30.txt", "first": 91, "last": 120, "found": []}
+{"chunk": "or/multnomah/fairview/19.30.txt#L101-L130", "document": "or/multnomah/fairview/19.30.txt", "first": 101, "last": 130, "found": []}
+{"chunk": "or/multnomah/fairview/19.30.txt#L111-L140", "document": "or/multnomah/fairview/19.30.txt", "first": 111, "last": 140, "found": []}
+{"chunk": "or/multnomah/fairview/19.30.txt#L121-L150", "document": "or/multnomah/fairview/19.30.txt", "first": 121, "last": 150, "found": []}
+{"chunk": "or/multnomah/fairview/19.30.txt#L131-L160", "document": "or/multnomah/fairview/19.30.txt", "first": 131, "last": 160, "found": []}
+{"chunk": "or/multnomah/fairview/19.30.txt#L141-L170", "document": "or/multnomah/fairview/19.30.txt", "first": 141, "last": 170, "found": []}
+{"chunk": "or/multnomah/fairview/19.30.txt#L151-L180", "document": "or/multnomah/fairview/19.30.txt", "first": 151, "last": 180, "found": []}
+{"chunk": "or/multnomah/fairview/19.30.txt#L161-L190", "document": "or/multnomah/fairview/19.30.txt", "first": 161, "last": 190, "found": []}
+{"chunk": "or/multnomah/fairview/19.30.txt#L171-L200", "document": "or/multnomah/fairview/19.30.txt", "first": 171, "last": 200, "found": []}

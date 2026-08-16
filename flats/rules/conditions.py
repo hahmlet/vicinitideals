@@ -165,6 +165,18 @@ _C: tuple[ConditionDef, ...] = (
         assume=False,
     ),
     ConditionDef(
+        "local_street",
+        "site_fact",
+        "The frontage is a local street rather than an arterial or collector. "
+        "Street-side setbacks are routinely written per street class — Lake "
+        "Oswego R-7.5 asks 20 ft on an arterial and 15 on a local — so a "
+        "screen that picks one without knowing which is guessing. Assumed "
+        "unknown, which makes the arterial number bind, because that is the "
+        "half that cannot turn a RED lot green by mistake.",
+        evidence="the jurisdiction functional classification layer",
+        assume=None,
+    ),
+    ConditionDef(
         "public_sewer",
         "site_fact",
         "A public sanitary main is close enough to connect to.",
@@ -228,6 +240,18 @@ _C: tuple[ConditionDef, ...] = (
         "which set governs is decided by how the product is brought to "
         "market, not by the parcel.",
         evidence="the design catalog entry — Design.plat",
+    ),
+    ConditionDef(
+        "attached_wall",
+        "design_fact",
+        "The property line in question is the line a party wall stands on. "
+        "Codes that permit attached housing say so in the setback cell rather "
+        "than in prose — Lake Oswego R-3 and R-5 both read \"10 ft exterior "
+        "wall, 0 ft attached wall\" — and the second number is the whole "
+        "reason four units may touch. It is a design fact and not a site one "
+        "because whether a side line carries a party wall is decided by how "
+        "the four units are laid out, which is the pod, not the parcel.",
+        evidence="the design catalog entry — which walls the pod shares",
     ),
     # --- relief: an approval the developer applies for ------------------
     ConditionDef(
