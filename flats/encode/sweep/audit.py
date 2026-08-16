@@ -276,9 +276,16 @@ def run(
     size: int = 120,
     overlap: int = 60,
     limit: int = 0,
+    only: str = "",
     log: object = None,
 ) -> Report:
-    """Sweep every document this layer declares, and report what it establishes."""
+    """Sweep every document this layer declares, and report what it establishes.
+
+    ``only`` narrows it to one document id. Comparing two configurations is the
+    routine use of this whole module — is a smaller chunk worth the wall-clock,
+    is a larger model worth five times it — and a comparison across different
+    documents measures the documents.
+    """
     keeper = store if store is not None else ProvenanceStore()
     documents: list[str] = []
     covered: list[str] = []
@@ -287,6 +294,8 @@ def run(
     total = 0
 
     for entry in layer.code:
+        if only and entry.id != only:
+            continue
         path = f"{layer.layer}/{entry.id}.txt"
         try:
             text = keeper.load(path).text

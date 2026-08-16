@@ -39,6 +39,12 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--overlap", type=int, default=60, help="overlap in lines")
     parser.add_argument("--context", type=int, default=8192, help="model context window")
     parser.add_argument("--limit", type=int, default=0, help="chunks per document, 0 for all")
+    parser.add_argument("--doc", default="", help="one document id, for benchmarking a change")
+    parser.add_argument(
+        "--tag",
+        default="",
+        help="suffix for the output file, so two configurations can be compared",
+    )
     parser.add_argument("--out", type=Path, default=OUT)
     parser.add_argument("--rules", type=Path, default=CONFIG_ROOT)
     parser.add_argument("--docs", type=Path, default=None)
@@ -60,6 +66,14 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 2
 
     ask = Ollama(endpoint=args.endpoint, model=args.model, context=args.context)
+    trouble = ask.ready()
+    if trouble:
+        # Before any work. A sweep against a dead model does not fail, it
+        # produces an empty hole list per document and a recall of zero, which
+        # is indistinguishable from a model that read everything and found
+        # nothing wrong.
+        print(f"the model is not answering: {trouble}", file=sys.stderr)
+        return 2
     store = ProvenanceStore(args.docs)
     print(f"{args.model} at {args.endpoint} — {len(wanted)} layer(s)")
 
@@ -74,12 +88,16 @@ def main(argv: Sequence[str] | None = None) -> int:
                 size=args.size,
                 overlap=args.overlap,
                 limit=args.limit,
+                only=args.doc,
                 log=print,
             )
         except Exception as exc:  # noqa: BLE001 — one layer failing must not lose the rest
             print(f"  ! {layer.layer}: {exc}", file=sys.stderr)
             continue
-        path = write(report, args.out / f"{layer.layer.replace('/', '_')}.json")
+        # Tagged, because an untagged second run overwrites the number the
+        # first one was supposed to be compared against.
+        stem = layer.layer.replace("/", "_") + (f".{args.tag}" if args.tag else "")
+        path = write(report, args.out / f"{stem}.json")
         print(f"  {report.summary()} -> {path}")
         worst = max(worst, 1 - report.recall)
 

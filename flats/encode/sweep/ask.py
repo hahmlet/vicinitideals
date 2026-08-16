@@ -148,6 +148,47 @@ class Ollama:
         self.timeout = timeout
         self.context = context
 
+    def ready(self) -> str:
+        """"" if the model will answer, otherwise why it will not.
+
+        Worth a separate call because of how this fails in practice. A card that
+        has fallen off the bus leaves ollama running, answering /api/tags in a
+        millisecond, and still listing the model as loaded — so every check that
+        looks like a health check passes, and the first thing that actually
+        notices is a generate call timing out five minutes later, once per
+        chunk, for as long as the run lasts.
+        """
+        import httpx
+
+        try:
+            tags = httpx.get(f"{self.endpoint}/api/tags", timeout=10.0)
+            tags.raise_for_status()
+            served = {str(m.get("name", "")) for m in tags.json().get("models", [])}
+        except Exception as exc:  # noqa: BLE001 — unreachable and malformed read alike
+            return f"{self.endpoint}: {exc}"
+        if self.model not in served:
+            return f"{self.endpoint}: {self.model} is not pulled — have {sorted(served)}"
+        try:
+            # One token from the model itself. Nothing short of generation
+            # touches the device, and the device is what breaks.
+            httpx.post(
+                f"{self.endpoint}/api/generate",
+                json={
+                    "model": self.model,
+                    "prompt": "ok",
+                    "stream": False,
+                    "options": {"num_predict": 1},
+                },
+                timeout=120.0,
+            ).raise_for_status()
+        except Exception as exc:  # noqa: BLE001
+            return (
+                f"{self.endpoint}: {self.model} is listed but will not generate ({exc}). "
+                "On a local box this is usually the GPU rather than ollama — check "
+                "`nvidia-smi` on the host serving it."
+            )
+        return ""
+
     def __call__(self, prompt: str) -> str:
         import httpx
 
