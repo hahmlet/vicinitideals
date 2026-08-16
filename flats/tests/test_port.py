@@ -283,3 +283,68 @@ def test_happy_valley_side_yard_goes_to_zero_on_an_attached_wall() -> None:
         "or/clackamas/happy-valley", "R20", conditions=["attached_wall"]
     )
     assert attached.values["setback_side_ft"].value == 0
+
+
+def test_wilsonville_r_coverage_bands_on_lot_area() -> None:
+    """4.122(.06)F is five rows on lot area, 50 percent at the small end
+    falling to 20 at 20,000 sq ft, and the port held the loosest row as the
+    zone's one figure. Lot area is a measurement the screen always has, so
+    unlike a height band this one can be encoded exactly."""
+    rules = RuleSet(load_rules())
+    steps = {6000: 50, 7000: 50, 7500: 45, 10000: 40, 15000: 25, 19999: 25, 20000: 20, 40000: 20}
+
+    for area, expected in steps.items():
+        res = rules.resolve("or/clackamas/wilsonville", "R", lot={"lot_sqft": area})
+        assert res.values["max_coverage_pct"].value == expected, f"{area} sq ft"
+
+    # An unmeasured lot must not quietly take the loosest row. The base is the
+    # table's last column, and the standard comes back ambiguous besides.
+    blind = RuleSet(load_rules()).resolve("or/clackamas/wilsonville", "R")
+    assert blind.values["max_coverage_pct"].value == 20
+    assert blind.values["max_coverage_pct"].ambiguous
+
+
+def test_wilsonville_townhouses_owe_no_setback_where_they_are_attached() -> None:
+    """4.113(.02) says it twice, once in each lot-size block: "No setback is
+    required along property lines where townhouses are attached." That
+    sentence is what lets four units share three walls. Written as one
+    band-less variant it collides with the 10 ft band on a large lot — two
+    variants match, neither narrows the other, and the standard resolves
+    ambiguous back to the base."""
+    rules = RuleSet(load_rules())
+
+    for area in (6000, 15000):
+        plain = rules.resolve("or/clackamas/wilsonville", "R", lot={"lot_sqft": area})
+        assert plain.values["setback_side_ft"].value > 0, "the base keeps the yard"
+
+        attached = rules.resolve(
+            "or/clackamas/wilsonville", "R", conditions=["attached_wall"],
+            lot={"lot_sqft": area},
+        )
+        side = attached.values["setback_side_ft"]
+        assert side.value == 0 and not side.ambiguous, f"{area} sq ft"
+
+
+def test_clackamas_vr_rows_are_read_by_counting_their_values() -> None:
+    """Table 315-3 merges cells across three zone columns, and the port read
+    that as "no column can be attributed by position" and left six values
+    unquoted. How many values a row prints settles it: three values under
+    three headers is positional, and two identical values give the same answer
+    whichever column the merge covers."""
+    rules = RuleSet(load_rules())
+
+    for zone in ("VR45", "VR57"):
+        res = rules.resolve("or/clackamas/_unincorporated", zone)
+        for name in (
+            "setback_front_ft",
+            "setback_front_max_ft",
+            "setback_side_ft",
+            "setback_rear_ft",
+            "max_coverage_pct",
+        ):
+            assert res.values[name].prov.quote, f"{zone}.{name} is unquoted"
+
+    # The one genuinely two-different-values row stays out of both zones.
+    for zone in ("VR45", "VR57"):
+        res = rules.resolve("or/clackamas/_unincorporated", zone)
+        assert "min_lot_sqft" not in res.values

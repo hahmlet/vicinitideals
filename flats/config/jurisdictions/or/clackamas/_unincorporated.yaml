@@ -10,9 +10,12 @@ notes: 'Table 315-2 (R-2.5 through R-30) read against the adopted ZDO on 2026-08
   development none either (fn 11), a middle housing lot measures coverage on the parent lot (fn 5)
   and setbacks from the parent lot lines (fn 9), and a lot of record of 6,000 sq ft or less created
   before the district applied gets rear 10 / side 5 total (fn 10). None of those is encoded.
-  VR45 and VR57 stay unquoted: Table 315-3 merges cells across its three zone columns -- two
-  values printed under VR-5/7, VR-4/5 and VTH -- so no column can be attributed by position, and
-  its side setback (0 on one side, 5 on the others) has no field here. UNPORTED:
+  VR45 and VR57 are quoted as of 2026-08-16. Table 315-3 does merge cells across its three zone
+  columns, but how many values a row prints settles what can be read from it: a three-value row is
+  positional and nothing is merged (front, maximum front, side), and a two-value row whose values
+  are identical gives the same answer whichever column the merge covers (rear 15 and 15, coverage
+  50 and 50). The one row that is genuinely two DIFFERENT values under three columns -- minimum lot
+  size -- is left unencoded in both zones and the reading is written out in their notes. UNPORTED:
   orientation_constraint=''entrance_only'', which quadfit justified in a YAML comment with no citation.'
 ingest:
   geoid: null
@@ -203,25 +206,75 @@ zones:
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 10
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    max_coverage_pct: 50
-    notes: 'quadfit confidence: verified | Adopted ZDO 315 Table 315-3 (layer literal ''VR57'' = ZDO ''VR-5/7'').
-      Front 10 (max 18); side 0 on one side / 5 others — modeled as uniform 5 (conservative). Base SFD
-      min lot 5,000 (max 7,000); waived for middle-housing land division.'
+    setback_front_ft:
+      value: 10
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1324-L1327"
+    setback_front_max_ft:
+      value: 18
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1328-L1331"
+    setback_garage_entrance_ft:
+      # The VR-5/7 cell is two standards in one sentence: 10 ft to a dwelling
+      # with a recessed garage or none, 19.5 ft to the garage door where the
+      # garage is not recessed. The front setback holds the first; this holds
+      # the second, so a pod with a street-facing garage is measured against
+      # what the code actually asks rather than against the shorter half.
+      value: 19.5
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1324-L1327"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1335-L1338"
+    setback_rear_ft:
+      value: 15
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1332-L1334"
+    max_coverage_pct:
+      value: 50
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1297-L1299"
+    notes: 'Adopted ZDO 315 Table 315-3 (layer literal ''VR57'' = ZDO ''VR-5/7''). Quoted 2026-08-16 per
+      row, each quote spanning the row label and every value printed under it so a reviewer can count
+      values against the three column headers. Front, maximum front and side are three-value rows and
+      read positionally; rear and coverage are two-value rows whose values are identical, so the merge
+      cannot change the answer.
+
+      Side is 0 on one side and 5 on all others, modelled as a uniform 5. The zero is real but it is
+      not the pod''s: it is one lot line''s worth, and the field holds one number for both sides. A
+      pod that wants the zero needs the site plan to claim which side, which is a fitment question
+      rather than a rules one.
+
+      NOT ENCODED: minimum lot size. The row is "District Land Area for Calculating Density Pursuant
+      to Section 1012/Minimum Lot Size" and prints "5,000/4,000" — two labels, two numbers, so the
+      stated minimum lot size is 4,000 and the 5,000 is the density figure. Section 845 also waives
+      the minimum for a middle housing land division. Encoding 4,000 would be the looser of two
+      readings on a row that decides whether a lot qualifies at all, so it waits for a person.'
   VR45:
     cite_default:
       cite: Clackamas ZDO-282; ZDO Section 315 Table 315-3 (Village Residential VR-4/5)
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-07-28'
     quadplex_allowed: true
-    setback_front_ft: 10
-    setback_side_ft: 5
-    setback_rear_ft: 15
-    max_coverage_pct: 50
-    notes: 'quadfit confidence: needs_verification | Adopted ZDO 315 Table 315-3 dimensions verified (layer
-      literal ''VR45'' = ZDO ''VR-4/5''; front 10/max 18, side 0/5, rear 15, coverage 50%). The quadplex-by-right
-      ALLOWANCE in VR-4/5 is needs_verification — county Middle Housing FAQ listed VR-5/7 but omitted
-      VR-4/5, though Section 845 + Table 315-3 fn 23 contemplate quadplexes in both. Base SFD min lot
-      4,000 (max 5,000); waived for land division.'
+    setback_front_ft:
+      value: 10
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1324-L1327"
+    setback_front_max_ft:
+      value: 18
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1328-L1331"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1335-L1338"
+    setback_rear_ft:
+      value: 15
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1332-L1334"
+    max_coverage_pct:
+      value: 50
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1297-L1299"
+    notes: 'Adopted ZDO 315 Table 315-3 (layer literal ''VR45'' = ZDO ''VR-4/5''). Quoted 2026-08-16 the
+      same way as VR57 — row label plus every value under it, so the count of values can be checked
+      against the three column headers. VR-4/5 carries no garage-door setback: unlike the VR-5/7 cell,
+      its front and maximum-front cells are plain numbers.
+
+      The quadplex-by-right ALLOWANCE here remains needs_verification: the county Middle Housing FAQ
+      listed VR-5/7 and omitted VR-4/5, while Section 845 and Table 315-3 fn 23 contemplate quadplexes
+      in both. That is a use question, not a dimension one, and it decides the zone outright.
+
+      NOT ENCODED: minimum lot size, for the same reason as VR57 — the row prints "4,000/2,000" under
+      a two-part label, so the stated minimum is 2,000 and the 4,000 is the density figure, and
+      Section 845 waives it for a middle housing land division besides.'

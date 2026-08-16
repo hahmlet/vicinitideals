@@ -75,6 +75,14 @@ zones:
         - value: 10
           band: {measure: lot_sqft, more_than: 10000}
           quote: "or/clackamas/wilsonville/4.planning.txt#L3013"
+        - value: 0
+          when: [attached_wall]
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3032"
+        - value: 0
+          when: [attached_wall]
+          band: {measure: lot_sqft, at_most: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3059-L3060"
     setback_rear_ft:
       value: 15
       quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
@@ -96,16 +104,71 @@ zones:
         - value: 4
           when: [abuts_alley]
           quote: "or/clackamas/wilsonville/4.planning.txt#L3049-L3050"
-    min_lot_sqft: 7000
-    min_frontage_ft: 30
-    max_coverage_pct: 50
+    min_lot_sqft:
+      value: 7000
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4450-L4453"
+      variants:
+        # 4.122(.06)C.4. R states a per-lot townhouse minimum and, unlike
+        # OTR, no cumulative figure for a row of them.
+        - value: 1250
+          when: [unit_lots]
+          quote: "or/clackamas/wilsonville/4.planning.txt#L4455"
+    min_lot_width_ft:
+      value: 60
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4440-L4442"
+      variants:
+        - value: 20
+          when: [unit_lots]
+          quote: "or/clackamas/wilsonville/4.planning.txt#L4440-L4442"
+    min_lot_depth_ft:
+      value: 70
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4456"
+    min_frontage_ft:
+      value: 30
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4443-L4446"
+      variants:
+        - value: 20
+          when: [unit_lots]
+          quote: "or/clackamas/wilsonville/4.planning.txt#L4443-L4446"
+    max_coverage_pct:
+      # 4.122(.06)F is five rows on lot area, and the file held the loosest
+      # of them as the zone's figure. Each row prints two numbers, largest
+      # building over all buildings -- 50/60 at the small end. The pod is one
+      # building, so the largest-building column is the one it is measured
+      # against, and it is also the tighter of the two.
+      #
+      # Base is the tightest row rather than the commonest, so a lot whose
+      # area we somehow do not have cannot come back looser than the code
+      # allows anywhere. Every other row is an explicit band, and the screen
+      # always knows lot area, so the base is a backstop rather than an
+      # answer.
+      value: 20
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4458-L4467"
+      variants:
+        - value: 50
+          band: {measure: lot_sqft, at_most: 7000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L4458-L4467"
+        - value: 45
+          band: {measure: lot_sqft, more_than: 7000, at_most: 8000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L4458-L4467"
+        - value: 40
+          band: {measure: lot_sqft, more_than: 8000, at_most: 12000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L4458-L4467"
+        # The code writes this row "more than 12,000 sf and less than 20,000
+        # sf" and the band grammar has no exclusive upper bound. 19,999 is
+        # the last whole square foot in it; a lot measured between 19,999 and
+        # 20,000 falls through to the base 20, which is the stricter side and
+        # the right way to miss.
+        - value: 25
+          band: {measure: lot_sqft, more_than: 12000, at_most: 19999}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L4458-L4467"
     notes: 'quadfit confidence: verified | Permits Middle Housing outright. Setbacks per 4.113(.02): lots
       <=10,000sf get 15/5/15 (2-story side=7, rear=20); lots >10,000sf get 20/10/20. Quadplex min lot
       7,000 (SFD/duplex/triplex 5,000).'
   OTR:
     section: ["4.123", "4.113"]
     cite_default:
-      cite: Wilsonville Development Code 4.123 (Old Town Residential OTR Zone); Ord. 841
+      cite: Wilsonville Development Code 4.123 (Old Town Residential OTR Zone) + 4.113(.02) setbacks; Ord. 841
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.123OLTOREOTZO
       retrieved: '2026-07-28'
     quadplex_allowed: true
@@ -127,6 +190,14 @@ zones:
         - value: 10
           band: {measure: lot_sqft, more_than: 10000}
           quote: "or/clackamas/wilsonville/4.planning.txt#L3013"
+        - value: 0
+          when: [attached_wall]
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3032"
+        - value: 0
+          when: [attached_wall]
+          band: {measure: lot_sqft, at_most: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3059-L3060"
     setback_rear_ft:
       value: 15
       quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
@@ -148,12 +219,43 @@ zones:
         - value: 4
           when: [abuts_alley]
           quote: "or/clackamas/wilsonville/4.planning.txt#L3049-L3050"
-    min_lot_sqft: 7000
-    min_frontage_ft: 35
-    notes: 'quadfit confidence: needs_verification | Zone code + quadplex use VERIFIED (Middle Housing
-      permitted, 7,000sf min). Setbacks NOT verified: 4.123(.06) delegates to the ''Old Town Residential
-      Design Standards Book''. Values shown are the 4.113(.02) underlying-zone default; confirm against
-      the design book.'
+    min_lot_sqft:
+      value: 7000
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4516-L4520"
+      variants:
+        # 4.123(.05)C.4. OTR states the cumulative figure R leaves out, and
+        # it lands on the same 7,000 as the single-lot quadplex: four
+        # attached units need 7,000 square feet however the plat is drawn.
+        - value: 7000
+          when: [unit_lots]
+          quote: "or/clackamas/wilsonville/4.planning.txt#L4521-L4525"
+    min_lot_width_ft:
+      value: 35
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4510-L4512"
+      variants:
+        # No minimum per townhouse lot, 35 cumulative for the attached row --
+        # which is the same 35, so the split-lot path buys nothing in width.
+        - value: 35
+          when: [unit_lots]
+          quote: "or/clackamas/wilsonville/4.planning.txt#L4510-L4512"
+    min_frontage_ft:
+      value: 35
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4513-L4515"
+      variants:
+        - value: 20
+          when: [unit_lots]
+          quote: "or/clackamas/wilsonville/4.planning.txt#L4513-L4515"
+    notes: 'Zone code + quadplex use VERIFIED (Middle Housing permitted). Lot standards read against
+      4.123(.05) on 2026-08-16 and quoted per cell: width 35 at the building line, street frontage 35
+      or 20 for townhouses, minimum lot size 7,000 for a quadplex and 7,000 cumulative for four
+      attached townhouse units. Those are the zone''s own, and .05 is not delegated anywhere.
+
+      SETBACKS AND COVERAGE ARE NOT: 4.123(.06)A hands design and siting to the ''Old Town Residential
+      Design Standards Book'', naming height, setbacks and lot coverage explicitly. The book is not a
+      stored document. The setbacks shown are the 4.113(.02) citywide default, which is what applies
+      absent the book rather than what the book says, and coverage is deliberately absent rather than
+      guessed. Fetch the design book before signing an OTR screen. quadfit confidence:
+      needs_verification.'
   PDR1:
     section: ["4.124", "4.113"]
     cite_default:
@@ -179,6 +281,14 @@ zones:
         - value: 10
           band: {measure: lot_sqft, more_than: 10000}
           quote: "or/clackamas/wilsonville/4.planning.txt#L3013"
+        - value: 0
+          when: [attached_wall]
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3032"
+        - value: 0
+          when: [attached_wall]
+          band: {measure: lot_sqft, at_most: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3059-L3060"
     setback_rear_ft:
       value: 15
       quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
@@ -236,6 +346,14 @@ zones:
         - value: 10
           band: {measure: lot_sqft, more_than: 10000}
           quote: "or/clackamas/wilsonville/4.planning.txt#L3013"
+        - value: 0
+          when: [attached_wall]
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3032"
+        - value: 0
+          when: [attached_wall]
+          band: {measure: lot_sqft, at_most: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3059-L3060"
     setback_rear_ft:
       value: 15
       quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
@@ -293,6 +411,14 @@ zones:
         - value: 10
           band: {measure: lot_sqft, more_than: 10000}
           quote: "or/clackamas/wilsonville/4.planning.txt#L3013"
+        - value: 0
+          when: [attached_wall]
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3032"
+        - value: 0
+          when: [attached_wall]
+          band: {measure: lot_sqft, at_most: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3059-L3060"
     setback_rear_ft:
       value: 15
       quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
@@ -350,6 +476,14 @@ zones:
         - value: 10
           band: {measure: lot_sqft, more_than: 10000}
           quote: "or/clackamas/wilsonville/4.planning.txt#L3013"
+        - value: 0
+          when: [attached_wall]
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3032"
+        - value: 0
+          when: [attached_wall]
+          band: {measure: lot_sqft, at_most: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3059-L3060"
     setback_rear_ft:
       value: 15
       quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
@@ -407,6 +541,14 @@ zones:
         - value: 10
           band: {measure: lot_sqft, more_than: 10000}
           quote: "or/clackamas/wilsonville/4.planning.txt#L3013"
+        - value: 0
+          when: [attached_wall]
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3032"
+        - value: 0
+          when: [attached_wall]
+          band: {measure: lot_sqft, at_most: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3059-L3060"
     setback_rear_ft:
       value: 15
       quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
@@ -464,6 +606,14 @@ zones:
         - value: 10
           band: {measure: lot_sqft, more_than: 10000}
           quote: "or/clackamas/wilsonville/4.planning.txt#L3013"
+        - value: 0
+          when: [attached_wall]
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3032"
+        - value: 0
+          when: [attached_wall]
+          band: {measure: lot_sqft, at_most: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3059-L3060"
     setback_rear_ft:
       value: 15
       quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
@@ -499,8 +649,8 @@ zones:
   RN:
     section: ["4.127", "4.113"]
     cite_default:
-      cite: Wilsonville Development Code 4.127 (Residential Neighborhood RN Zone), Table 2 (Frog Pond
-        West)
+      cite: Wilsonville Development Code 4.127 (Residential Neighborhood RN Zone), Table 8A (Frog Pond
+        West) + 4.113(.02) setbacks
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.127RENERNZO
       retrieved: '2026-07-28'
     quadplex_allowed: true
@@ -522,6 +672,14 @@ zones:
         - value: 10
           band: {measure: lot_sqft, more_than: 10000}
           quote: "or/clackamas/wilsonville/4.planning.txt#L3013"
+        - value: 0
+          when: [attached_wall]
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3032"
+        - value: 0
+          when: [attached_wall]
+          band: {measure: lot_sqft, at_most: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L3059-L3060"
     setback_rear_ft:
       value: 15
       quote: "or/clackamas/wilsonville/4.planning.txt#L3051"
@@ -546,7 +704,19 @@ zones:
     min_lot_sqft:
       value: 7000
       quote: "or/clackamas/wilsonville/4.planning.txt#L7244"
-    min_frontage_ft: 35
+    min_lot_width_ft:
+      # The 40 is R-10, the widest of the three sub-district rows and so the
+      # binding one. The zone literal in the GIS is "RN" with no sub-district
+      # on it, and until something says which row a lot is in, the row that
+      # cannot turn a lot green by mistake is the one that governs. R-7 and
+      # R-5 both read 35.
+      value: 40
+      quote: "or/clackamas/wilsonville/4.planning.txt#L7179-L7236"
+    min_lot_depth_ft:
+      # The one column where the three rows agree, so nothing turns on which
+      # sub-district a lot is in.
+      value: 60
+      quote: "or/clackamas/wilsonville/4.planning.txt#L7179-L7236"
     max_coverage_pct:
       # Table 8A, header and all three sub-district rows. Quoted as a block
       # rather than a single line because the row is nine bare numbers and the
@@ -569,6 +739,28 @@ zones:
       Pond West sub-district, and a maximum front setback is not harmless: it pushes every building to
       within twenty feet of the street and would fail detached-house lots that comply perfectly well.
       Table 8B (Frog Pond East and South) is unread; if it states one for RN, it belongs here with its
-      own quote. The Table 8A setback columns are also still unquoted — the row is nine bare numbers
-      against ten headers, so which column is which cannot be settled by position, and the encoded
-      setbacks continue to come from 4.113(.02).'
+      own quote.
+
+      TABLE 8A IS READABLE AFTER ALL (2026-08-16). The old note here said its columns could not be
+      settled by position, nine bare numbers against ten headers. The tenth header is "Side Min
+      (note)", which prints no number: nine numbers, nine numeric columns, in order, and all three
+      sub-district rows share the shape. REMOVED on the strength of that: min_frontage_ft 35, which
+      was the R-5 Min Lot WIDTH column wearing the wrong field name. Table 8A states no street
+      frontage at all, and frontage is not width — a flag lot has width and almost none of it — so
+      the pod''s access would have been checked against a number the code never wrote. Lot width and
+      lot depth are now encoded from their own columns.
+
+      THE ONE DECISION THIS ZONE NEEDS. Table 8A is three rows, one per Frog Pond West sub-district,
+      and the GIS zone literal is "RN" with no sub-district on it. The three rows disagree: coverage
+      40 / 45 / 60 percent, width 40 / 35 / 35, front setback 20 / 15 / 12, lot size 8,000 / 6,000 /
+      4,000. Width and depth above take the binding row, which is the rule everywhere else in this
+      file. Coverage 60 and min lot 7,000 do NOT — they are the R-5 row and note C, encoded before
+      this was understood, and the loose end of a 40-to-60 spread is exactly the shape that turns a
+      lot green by mistake. Fixing that honestly is not a number edit: it wants either the
+      sub-district carried through from the GIS, or three registered sub-district conditions with no
+      assumed answer, so an RN lot resolves as unknown until somebody says which row it is in.
+      Neither is a five-minute change, so it is written here rather than guessed at.
+
+      Setbacks continue to come from 4.113(.02) rather than Table 8A: the citywide section states
+      them per lot size with the townhouse zero, which is more of the answer than Table 8A''s single
+      front/rear pair, and the cite now names both chapters.'

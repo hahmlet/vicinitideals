@@ -83,13 +83,29 @@ def test_the_corpus_is_measured_not_asserted():
     from flats.provenance.store import ProvenanceStore
     from flats.rules.loader import load_rules
 
-    layer = load_rules(strict=False)["or/clackamas/wilsonville"]
+    layers = load_rules(strict=False)
+    store = ProvenanceStore()
 
-    found = check(layer, ProvenanceStore())
+    found = check(layers["or/clackamas/wilsonville"], store)
 
     assert found, "a fully encoded jurisdiction has values to check"
     assert all(item.quote for item in found)
-    assert any(not item.agrees for item in found), (
-        "Wilsonville's setbacks cite 4.127 and quote 4.113 — if this stops being "
-        "true, either somebody fixed the citations or the check went blind"
+    # Wilsonville used to be the example of a layer that disagreed: OTR and RN
+    # cited only their own zone chapter and quoted the citywide setback
+    # section. Both cites name 4.113 now, so the layer is the regression guard
+    # for that fix rather than the proof the check can see a miss.
+    assert all(item.agrees for item in found), (
+        "OTR and RN cite 4.113(.02) alongside their own chapter — a setback "
+        "quoted from the citywide section is cited to it"
     )
+
+    # The check is not blind: somewhere in the corpus a value still cites a
+    # section its text is not in, and this is what stops the assertion above
+    # from passing because nothing was measured.
+    misses = [
+        item
+        for layer in layers.values()
+        for item in check(layer, store)
+        if not item.agrees
+    ]
+    assert misses, "no layer disagrees anywhere — the check went blind"
