@@ -213,3 +213,73 @@ def test_wilsonville_rn_carries_no_maximum_front_setback() -> None:
 
     assert "setback_front_max_ft" not in res.values
     assert res.values["max_coverage_pct"].value == 60, "the 90 is the commercial block"
+
+
+def test_lr7_yards_all_come_from_the_row_the_zone_already_quoted() -> None:
+    """MCC 39.4862(H) prints `20 5 10 15` under `Front Side Street Side Rear`.
+    The port quoted that line for side and street side and overrode front and
+    rear to 10 apiece, unquoted, from the state Model Code — a document that is
+    not stored, in the direction that manufactures a false GREEN. OAR
+    660-046-0220(2)(c) does not license the override either: it bars setbacks
+    GREATER than the detached-single-family ones in the same zone, and this row
+    IS that zone's single-family row."""
+    res = RuleSet(load_rules()).resolve("or/multnomah/_unincorporated", "LR7")
+    yards = {
+        "setback_front_ft": 20,
+        "setback_side_ft": 5,
+        "setback_street_side_ft": 10,
+        "setback_rear_ft": 15,
+    }
+
+    for name, expected in yards.items():
+        got = res.values[name]
+        assert got.value == expected, f"{name} is not the {expected} the row prints"
+        assert got.prov.quote and got.prov.quote.endswith("#L409-L411"), (
+            f"{name} must quote the header and the row together — four bare "
+            f"numbers under four headers is how two of them got invented"
+        )
+
+
+def test_lake_oswego_coverage_is_a_height_band_not_a_number() -> None:
+    """Both Lake Oswego coverage tables step down as the building gets taller,
+    and both zones encoded the first row — the tallest allowance, written for
+    the shortest building — as though it were the zone's one figure. The base
+    has to be the row that holds at any height; the loose row is what a known
+    pod height earns."""
+    rules = RuleSet(load_rules())
+
+    for zone, strict, loose in (("R-5", 35, 45), ("R-7.5", 25, 35)):
+        plain = rules.resolve("or/clackamas/lake-oswego", zone)
+        assert plain.values["max_coverage_pct"].value == strict
+
+        low = rules.resolve("or/clackamas/lake-oswego", zone, conditions=["low_rise"])
+        assert low.values["max_coverage_pct"].value == loose
+
+
+def test_happy_valley_r20cc_adopts_r20_rather_than_copying_it() -> None:
+    """R20CC is a zoning-layer code with no chapter behind it: LDC 16.22 names
+    R-40, R-20 and R-15 and nothing else. Six hand-copied numbers under it were
+    every Happy Valley row in the gap ledger."""
+    rules = RuleSet(load_rules())
+    res = rules.resolve("or/clackamas/happy-valley", "R20CC")
+
+    assert res.borrowed_from == ("R20",)
+    lot = res.values["min_lot_sqft"]
+    assert lot.value == 20000 and lot.via == "R20"
+    assert lot.prov.quote, "the borrowed value still cites the R-20 cell"
+
+
+def test_happy_valley_side_yard_goes_to_zero_on_an_attached_wall() -> None:
+    """Table 16.22.020-2 prints the interior side cell as `10/04` — ten, or
+    nought, the trailing 4 being footnote 4 run up against the number. The
+    footnote is what lets four units share three walls, and the port kept the
+    ten and dropped the nought."""
+    rules = RuleSet(load_rules())
+
+    plain = rules.resolve("or/clackamas/happy-valley", "R20")
+    assert plain.values["setback_side_ft"].value == 10, "the base is the wider half"
+
+    attached = rules.resolve(
+        "or/clackamas/happy-valley", "R20", conditions=["attached_wall"]
+    )
+    assert attached.values["setback_side_ft"].value == 0

@@ -174,23 +174,53 @@ zones:
       quote: "or/multnomah/_unincorporated/33.110.txt#L464"
   LR7:
     cite_default:
-      cite: MCC 39.4848-.4862 (S-1 2023) + OAR 660-046 Exhibit B Large Cities Model Code §B; OAR 660-046-0010/-0020
+      cite: MCC 39.4848, 39.4862 (S-1 2023) + OAR 660-046 Exhibit B Large Cities Model Code §B; OAR 660-046-0010/-0020
       url: https://multco.us/file/chapter_39_-_zoning_code/download
       retrieved: '2026-07-24'
     quadplex_allowed: true
-    setback_front_ft: 10
+    setback_front_ft:
+      value: 20
+      quote: "or/multnomah/_unincorporated/39.lr-7.txt#L409-L411"
     setback_side_ft:
       value: 5
-      quote: "or/multnomah/_unincorporated/39.lr-7.txt#L411"
-    setback_rear_ft: 10
+      quote: "or/multnomah/_unincorporated/39.lr-7.txt#L409-L411"
+    setback_rear_ft:
+      value: 15
+      quote: "or/multnomah/_unincorporated/39.lr-7.txt#L409-L411"
     setback_street_side_ft:
       value: 10
-      quote: "or/multnomah/_unincorporated/39.lr-7.txt#L411"
+      quote: "or/multnomah/_unincorporated/39.lr-7.txt#L409-L411"
+    max_coverage_pct:
+      value: 40
+      quote: "or/multnomah/_unincorporated/39.lr-7.txt#L407-L408"
+    min_lot_width_ft:
+      value: 60
+      quote: "or/multnomah/_unincorporated/39.lr-7.txt#L405-L406"
+    min_frontage_ft:
+      value: 30
+      quote: "or/multnomah/_unincorporated/39.lr-7.txt#L403-L404"
     min_lot_sqft: 7000
-    notes: 'quadfit confidence: needs_verification | County plan areas (Interlachen). MCC has no middle-housing
-      code; the un-adopted state Model Code pre-empts: front/street-side capped at 10 ft, rear capped
-      at 10 ft, SFD side 5 ft governs; MCC 40% coverage cap invalid for quadplexes (Model Code B.1.b).
-      Confirm interpretation with county/DLCD before banking on it.'
+    notes: 'County plan areas (Interlachen). CORRECTED: the yards were encoded front 10 / rear 10 from
+      the state Model Code Exhibit B, which is not a stored document, while side 5 and street-side 10
+      were quoted from MCC 39.4862(H) — two columns read off a row and two overridden from an uncited
+      source, in the direction that manufactures a false GREEN. All four now come from the quoted row,
+      which reads 20 5 10 15 under Front Side Street Side Rear. Coverage 40 percent, lot width 60 and
+      front lot line 30 are quoted from the same section and were simply missing.
+
+      OAR 660-046-0220 does not say what the old note said. (2)(c) bars setbacks GREATER than the
+      detached-single-family setbacks in the same zone — a ceiling over MCC''s row, which is itself the
+      SFD row, so it binds nothing here. (2)(f) says a city need not apply coverage to a quadplex, but
+      if it does it may not set one BELOW the detached-SFD figure, so the 40 percent is the number the
+      rule protects rather than one it invalidates.
+
+      TWO OPEN QUESTIONS, both needing a human. (1) min_lot_sqft 7,000 is the OAR 660-046-0220(2)(a)(B)(i)
+      cap. MCC 39.4862(C) states 5,000 square feet PER UNIT for a multiplex — 20,000 for four. The gap
+      between those two numbers decides nearly every LR-7 lot, and the cap only reaches this layer if
+      the county is reached at all. (2) MCC 39.4856(C) lists a multiplex as a CONDITIONAL use, not a
+      permitted one; quadplex_allowed: true rests on the HB 2001 mandate overriding that, not on the
+      county code. Both turn on ORS 197A.420, which is not stored — 660-046-0220 governs "Large Cities"
+      by its own terms and this layer is unincorporated county. Fetch the statute before signing
+      anything here. quadfit confidence: needs_verification.'
   RR:
     cite_default:
       cite: MCC 39.4350-.4395 (Rural Residential)

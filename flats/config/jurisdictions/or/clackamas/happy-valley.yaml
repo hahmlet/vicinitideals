@@ -33,6 +33,13 @@ zones:
     setback_side_ft:
       value: 15
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L292"
+      variants:
+        # The cell prints `15/04` -- 15 feet, or zero, the trailing 4 being
+        # footnote 4 run up against the number. The footnote is quoted with
+        # the row because the row alone does not say what the zero is for.
+        - value: 0
+          when: [attached_wall]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L292,L305"
     setback_rear_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L291"
@@ -45,6 +52,16 @@ zones:
     min_lot_width_ft:
       value: 100
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L282"
+    min_lot_depth_ft:
+      value: 200
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L283"
+    min_frontage_ft:
+      # L286 is the "All other lots" row. The two rows above it are a
+      # cul-de-sac exception and a townhome figure; neither is the general
+      # case, and the townhome 20 ft is a lot-per-unit standard for a
+      # different product than the pod.
+      value: 100
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L286"
     max_coverage_pct:
       value: 20
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L288"
@@ -68,6 +85,13 @@ zones:
     setback_side_ft:
       value: 10
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L292"
+      variants:
+        # The cell prints `10/04` -- 10 feet, or zero, the trailing 4 being
+        # footnote 4 run up against the number. The footnote is quoted with
+        # the row because the row alone does not say what the zero is for.
+        - value: 0
+          when: [attached_wall]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L292,L305"
     setback_rear_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L291"
@@ -80,6 +104,16 @@ zones:
     min_lot_width_ft:
       value: 80
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L282"
+    min_lot_depth_ft:
+      value: 100
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L283"
+    min_frontage_ft:
+      # L286 is the "All other lots" row. The two rows above it are a
+      # cul-de-sac exception and a townhome figure; neither is the general
+      # case, and the townhome 20 ft is a lot-per-unit standard for a
+      # different product than the pod.
+      value: 80
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L286"
     max_coverage_pct:
       value: 30
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L288"
@@ -101,6 +135,13 @@ zones:
     setback_side_ft:
       value: 7
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L292"
+      variants:
+        # The cell prints `7/04` -- 7 feet, or zero, the trailing 4 being
+        # footnote 4 run up against the number. The footnote is quoted with
+        # the row because the row alone does not say what the zero is for.
+        - value: 0
+          when: [attached_wall]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L292,L305"
     setback_rear_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L291"
@@ -113,6 +154,16 @@ zones:
     min_lot_width_ft:
       value: 70
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L282"
+    min_lot_depth_ft:
+      value: 90
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L283"
+    min_frontage_ft:
+      # L286 is the "All other lots" row. The two rows above it are a
+      # cul-de-sac exception and a townhome figure; neither is the general
+      # case, and the townhome 20 ft is a lot-per-unit standard for a
+      # different product than the pod.
+      value: 60
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L286"
     max_coverage_pct:
       value: 35
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L288"
@@ -285,12 +336,13 @@ zones:
       cite: Assumed R-20 variant (unexplained 'CC' suffix in layer)
       url: https://ecode360.com/print/HA4934?guid=43529907
       retrieved: '2026-07-28'
-    quadplex_allowed: true
-    setback_front_ft: 22
-    setback_side_ft: 10
-    setback_rear_ft: 22
-    setback_street_side_ft: 15
-    min_lot_sqft: 20000
-    max_coverage_pct: 30
-    notes: 'quadfit confidence: needs_verification | Distinct layer value ''R20CC'' — meaning of CC suffix
-      unconfirmed; standards mirrored from R-20 pending verification.'
+    like: R20
+    notes: 'A zoning-layer code, not a zone in LDC 16.22 — Happy Valley''s own chapter names R-40,
+      R-20 and R-15 and nothing called R20CC, and what the CC suffix means is unconfirmed. The six
+      standards here were a hand copy of R-20 carrying no citation, which is every Happy Valley row
+      in the gap ledger. Adopted by reference instead, so each value cites the Table 16.22.020-2 cell
+      R-20 was read from and an amendment to the table moves this code with it. The inference that
+      the base is R-20 is the part that still needs a person, which is why it stays in the cite where
+      a reviewer meets it rather than dissolved into six numbers that look sourced. If CC turns out
+      to modify a standard, that standard belongs here as a local value over the reference.
+      quadfit confidence: needs_verification.'

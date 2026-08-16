@@ -246,15 +246,18 @@ _C: tuple[ConditionDef, ...] = (
     ConditionDef(
         "low_rise",
         "design_fact",
-        "The building sits under the height at which a code steps its "
-        "setbacks up. Portland RM3 and RM4 ask 5 feet of side and rear "
-        "setback of buildings up to 55 feet tall and 10 feet of anything "
-        "above that, and the threshold is the code's, not ours -- what this "
-        "condition asserts is that the pod clears whichever one the cited "
-        "zone names. A two-storey townhome clears every such threshold in "
-        "Oregon, so it is nearly always true; it is registered rather than "
-        "assumed because the taller number is the one that may not be "
-        "dropped by accident.",
+        "The building sits under the height at which a code steps a standard "
+        "up. Portland RM3 and RM4 ask 5 feet of side and rear setback of "
+        "buildings up to 55 feet tall and 10 feet of anything above that; "
+        "Lake Oswego steps lot coverage instead, 45 percent at 22 feet down "
+        "to 35 above 30. Either way the threshold is the code's, not ours -- "
+        "what this condition asserts is that the pod clears whichever one "
+        "the cited table names. A two-storey townhome clears most such "
+        "thresholds in Oregon, so it is usually true; it is registered "
+        "rather than assumed because the stricter number is the one that "
+        "may not be dropped by accident, and because 22 feet is close "
+        "enough to a two-storey building that the answer is a measurement "
+        "rather than a shrug.",
         evidence="the design catalog entry -- Design.height_ft against the cited threshold",
     ),
     ConditionDef(

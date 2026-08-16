@@ -129,7 +129,18 @@ zones:
         - value: 1500
           when: [unit_lots]
           quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L545"
-    max_coverage_pct: 45
+    max_coverage_pct:
+      # Table 50.04.001-7 is four rows of one column: 45 percent at 22 ft or
+      # less, 42 to 25, 38 to 28, then 35 above 30. The quote opens on the
+      # sentence above the table because that sentence is what makes the
+      # table this pod's -- it applies the percentages to "townhouse projects
+      # and single-family detached, duplex, triplex, and quadplex structures".
+      value: 35
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L886-L894"
+      variants:
+        - value: 45
+          when: [low_rise]
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L886-L894"
     notes: "Setbacks read against LOC Table 50.04.001-4 on 2026-08-15. The table is one row
       per structure type and the pod's row names the building outright — \"Attached Dwellings,
       Including Duplexes, Triplexes, Quadplexes, and Townhouse Projects\" — stating front 10,
@@ -139,7 +150,17 @@ zones:
       screening uses 10, the conservative half. The table prints no street-side column: only
       the detached row's side cell distinguishes one (\"10 – Street Side Yard\"), and the
       attached row does not, so the side standard governs — and the detached row's street side
-      is also 10, so the number holds under either reading. quadfit confidence: verified |
+      is also 10, so the number holds under either reading.
+
+      Coverage CORRECTED 2026-08-16: it was a bare 45 with no quote, which is Table
+      50.04.001-7's first row - the allowance for a building of 22 ft or less - encoded as
+      though it were the zone's one figure. The table steps down to 35 above 30 ft, so 35 is
+      now the base and 45 is a `low_rise` variant. Nothing sets `low_rise` yet, so screening
+      uses 35. The quote opens on the sentence above the table, which is what makes the table
+      this pod's: it applies the percentages to \"townhouse projects and single-family
+      detached, duplex, triplex, and quadplex structures\".
+
+      quadfit confidence: verified |
       Coverage is height-tiered (45% at <=22 ft — applies to a 2-story quadplex). Floor-area
       formula cap noted, never binds ~1,000 sf building."
   R-7.5:
@@ -154,7 +175,15 @@ zones:
     setback_front_ft:
       value: 25
       quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L116"
-    setback_side_ft: 7.5
+    setback_side_ft:
+      # The table says "Total 15, 5 min." -- it regulates the PAIR of side
+      # yards, not either one. 7.5 is half the stated total, which consumes
+      # exactly the width the code consumes and is therefore right for
+      # fitment; what it does not carry is the 5 ft floor on the narrower
+      # side, which constrains where the pod sits on the lot rather than
+      # whether it fits. Quoted so a reviewer meets the cell as written.
+      value: 7.5
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L131-L133"
     setback_rear_ft:
       value: 30
       quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L138"
@@ -180,8 +209,17 @@ zones:
           when: [unit_lots]
           quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L84"
     max_coverage_pct:
-      value: 35
-      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L395"
+      # Same mechanism as R-5, different table. 50.04.001-2 bands three zones
+      # side by side and R-7.5 is the first column: 35 percent at 22 ft or
+      # less, stepping to 25 above 27. The quote spans the table title and the
+      # column header as well as the rows, because the rows are bare numbers
+      # and the only thing that says which column is R-7.5 is the header.
+      value: 25
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L392-L408"
+      variants:
+        - value: 35
+          when: [low_rise]
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L392-L408"
     notes: 'Read against LOC Table 50.04.001-1 on 2026-08-14: lot area 7,500 (L59), lot width 50
       (L65), front 25 (L116) and rear 30 (L138), each quoted to its own cell under the table''s
       Primary Structure block; the Accessory Structure block below it states 25 front and 10 rear
@@ -191,7 +229,15 @@ zones:
       variant and is now encoded as one — 20 ft on an arterial or collector (L123) is the base
       and 15 ft on a local street (L128) the relief, which is the right way round: nothing sets
       `local_street` yet, so screening uses 20, and a screen that guessed 15 would call a lot
-      GREEN that an arterial frontage makes RED. Coverage is a height band, not one number —
-      Table 50.04.001-2 runs 35% down to 25% as the primary structure climbs past 22 ft — and
-      35 is the first row (L395), which is the pod''s row at two storeys. Steep-slope front is
+      GREEN that an arterial frontage makes RED. Side is now quoted too: the cell reads
+      "Total 15, 5 min." and regulates the pair of yards rather than either one, so 7.5/7.5
+      is this file''s modelling of it - the same width off the lot, without the 5 ft floor
+      on the narrower side, which decides where the pod sits rather than whether it fits.
+
+      Coverage CORRECTED 2026-08-16. It is a height band, not one number: Table 50.04.001-2
+      runs 35% down to 25% as the primary structure climbs past 22 ft, and the file encoded
+      the first row as though it were the zone''s figure, with the note arguing that two
+      storeys lands there. That argument is a condition, and it now is one - base 25, which
+      holds at any height, and 35 behind `low_rise`, which asserts the pod clears the 22 ft
+      the table names. Nothing sets `low_rise` yet, so screening uses 25. Steep-slope front is
       18 ft (LOC 50.04.001.1.e). quadfit confidence: verified.'
