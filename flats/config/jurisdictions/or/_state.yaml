@@ -60,9 +60,15 @@ defaults:
   # would help small lots; encoding them as bands is deferred, because a band
   # cannot be chosen without a lot area and would make every jurisdiction
   # resolve ambiguous anywhere a lot has not been measured.
+  #
+  # `cap`, not `true`. The rule bars a city from asking for MORE than this; it
+  # does not oblige one to ask for this much. Portland repealed its parking
+  # minimums outright, and an unconditional lock would hand every Portland lot
+  # a requirement for four stalls the city does not impose — roughly 1,300
+  # square feet of a site that has to fit a pod, its parking and its access.
   parking_min_per_unit:
     value: 1.0
-    preempts: true
+    preempts: cap
     cite: "OAR 660-046-0220(2)(e)(B)(iv)"
     url: "https://oregon.public.law/rules/oar_660-046-0220"
     retrieved: 2026-08-12

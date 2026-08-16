@@ -36,7 +36,7 @@ from dataclasses import dataclass
 from datetime import date
 from typing import Any, Collection, Mapping
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from flats.rules.conditions import condition
 from flats.rules.fields import FieldDef, field
@@ -352,6 +352,61 @@ class Effective:
         return bool(self.when)
 
 
+class Preempt(str, enum.Enum):
+    """How a less specific layer's value survives a more specific one.
+
+    Preemption is not one thing. Two statutes in this rule set preempt in
+    genuinely different shapes, and collapsing them cost real buildable area:
+
+    ``always``  the ancestor answers the question and the local layer does not
+                get a say either way. ORS 92.031(2)(b) settles WHICH standards
+                a middle housing land division is measured against; a city may
+                not decide that differently in any direction.
+
+    ``cap``     the ancestor states the strictest a local layer may be. OAR
+                660-046-0220 caps required parking at one stall per unit: a
+                city asking two is clipped to one, and a city asking none --
+                Portland, since it repealed its minimums -- keeps none. A lock
+                here would invent a requirement the city does not impose.
+
+    Which way "looser" runs is not stored on the preemption; it is read off the
+    field, because it is a property of the standard. A minimum gets looser as
+    it falls and a maximum as it rises, and `FieldDef.is_maximum` already
+    knows which is which.
+    """
+
+    none = "none"
+    always = "always"
+    cap = "cap"
+
+    @property
+    def binds(self) -> bool:
+        return self is not Preempt.none
+
+    @classmethod
+    def read(cls, raw: object) -> "Preempt":
+        """Parse what a rule file wrote.
+
+        ``true`` predates the distinction and every existing use of it means
+        ``always``, so it keeps that reading. Anything else unrecognised is
+        refused rather than guessed at -- a typo that quietly resolved to
+        "no preemption" would drop a statute without a word.
+        """
+        if isinstance(raw, cls):
+            return raw
+        if raw is None or raw is False:
+            return cls.none
+        if raw is True:
+            return cls.always
+        try:
+            return cls(str(raw))
+        except ValueError:
+            raise ValueError(
+                f"preempts: expected true, false, or one of "
+                f"{', '.join(x.value for x in cls)} \u2014 got {raw!r}"
+            ) from None
+
+
 class Value(BaseModel):
     """One encoded standard plus its proof and review state."""
 
@@ -366,11 +421,21 @@ class Value(BaseModel):
     #: Exceptions to this standard, each under its own conditions. The base
     #: value applies when none of them do.
     variants: tuple[Variant, ...] = ()
-    #: When True this value wins over anything a more specific layer says.
-    #: This is how state preemption works: OAR 660-046-0220 caps required
-    #: parking at 1 stall/unit, and a city asking for 2 does not get to
-    #: override it. The one place the flat rule set needs defeasibility.
-    preempts: bool = False
+    #: How this value survives a more specific layer. ``"always"`` wins
+    #: outright; ``"cap"`` is the strictest a local layer may be, so a looser
+    #: local number passes through and a stricter one is clipped to this; the
+    #: default binds nothing. The one place the flat rule set needs
+    #: defeasibility, and it needs a direction with it -- see `Preempt`.
+    preempts: Preempt = Preempt.none
+
+    @field_validator("preempts", mode="before")
+    @classmethod
+    def _read_preempts(cls, raw: object) -> Preempt:
+        # `True` is what every rule file and every caller wrote before
+        # preemption had a direction, and it still means "wins outright".
+        # Accepted here rather than only in the loader so the model is the one
+        # place that decides, whoever is constructing the value.
+        return Preempt.read(raw)
 
     @property
     def trusted(self) -> bool:

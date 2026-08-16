@@ -279,3 +279,197 @@ def test_jurisdiction_toggle_is_policy_not_a_drop(root: Path) -> None:
     # Toggling a jurisdiction off must not erase its rules — turning it back on
     # is a report-time re-run, not a re-encode.
     assert rs.resolve(PORTLAND, "R5").get("setback_front_ft") == 10
+
+
+# --- preemption has a direction ---------------------------------------
+
+
+def capped(root: Path, city_parking: str, city_height: str = "30") -> RuleSet:
+    """The same hierarchy, with the state rule declared as a ceiling.
+
+    OAR 660-046-0220 bars a city from requiring MORE parking than this. It does
+    not oblige one to require any. `preempts: cap` is that distinction, and the
+    three tests below are the three cases it has to get right.
+    """
+    write(
+        root,
+        "or/_state.yaml",
+        "label: Oregon\n"
+        "kind: state\n"
+        "cite_default:\n"
+        '  cite: "OAR 660-046-0220"\n'
+        '  url: "https://oregon.public.law/rules/oar_660-046-0220"\n'
+        '  quote: "or/oar.660-046-0220.txt#L79"\n'
+        "  retrieved: 2026-08-12\n"
+        "defaults:\n"
+        "  parking_min_per_unit: {value: 1.0, preempts: cap}\n"
+        "  max_coverage_pct: {value: 50, preempts: cap}\n",
+    )
+    portland(
+        root,
+        "  R5:\n"
+        "    quadplex_allowed: true\n"
+        "    setback_front_ft: 10\n"
+        "    setback_side_ft: 5\n"
+        "    setback_rear_ft: 5\n"
+        "    min_lot_sqft: 3000\n"
+        f"    max_height_ft: {city_height}\n"
+        f"    parking_min_per_unit: {city_parking}\n",
+    )
+    return RuleSet(load_rules(root))
+
+
+def test_a_cap_clips_a_city_that_asks_for_more(root: Path) -> None:
+    """The case a lock also got right, and the reason preemption exists."""
+    parking = capped(root, "2.0").resolve(PORTLAND, "R5").values["parking_min_per_unit"]
+
+    assert parking.value == 1.0
+    assert parking.preempted
+    assert parking.shadowed == 2.0
+
+
+def test_a_cap_lets_a_city_that_asks_for_less_through(root: Path) -> None:
+    """The case a lock got wrong. Portland repealed its parking minimum; a cap
+    read as a substitute hands every lot in the city four stalls nobody
+    requires, which on a narrow lot is the difference between fitting and
+    not."""
+    parking = capped(root, "0").resolve(PORTLAND, "R5").values["parking_min_per_unit"]
+
+    assert parking.value == 0
+    assert parking.layer == PORTLAND
+    assert not parking.preempted, "nothing was displaced — the city is inside the ceiling"
+
+
+def test_which_way_looser_runs_is_read_off_the_field(root: Path) -> None:
+    """A minimum gets looser as it falls; a maximum gets looser as it rises.
+    Same `cap`, opposite direction, and the direction is a property of the
+    standard rather than of the preemption — so it comes from the field
+    registry and not from anything written in a rule file."""
+    capped(root, "0")  # writes the state layer; the zone is replaced below
+    portland(
+        root,
+        "  R5:\n"
+        "    quadplex_allowed: true\n"
+        "    setback_front_ft: 10\n"
+        "    setback_side_ft: 5\n"
+        "    setback_rear_ft: 5\n"
+        "    min_lot_sqft: 3000\n"
+        "    max_coverage_pct: 70\n",
+    )
+    rules = RuleSet(load_rules(root))
+    coverage = rules.resolve(PORTLAND, "R5").values["max_coverage_pct"]
+
+    assert coverage.value == 70, "70% is looser than a 50% floor-on-a-ceiling"
+    assert not coverage.preempted
+
+
+def test_a_cap_on_a_boolean_still_wins_outright(root: Path) -> None:
+    """A boolean has no ordering, so "looser" is undefined and there is nothing
+    to clip. The conservative reading is that the ancestor wins, and the
+    alternative — inventing an order for true and false — is how a state
+    mandate silently becomes optional."""
+    write(
+        root,
+        "or/_state.yaml",
+        "label: Oregon\n"
+        "kind: state\n"
+        "cite_default:\n"
+        '  cite: "ORS 92.031"\n'
+        '  url: "https://www.oregonlegislature.gov/bills_laws/ors/ors092.html"\n'
+        '  quote: "or/ors.92.031.txt#L7"\n'
+        "  retrieved: 2026-08-14\n"
+        "defaults:\n"
+        "  land_division_parent_standards: {value: true, preempts: cap}\n",
+    )
+    portland(
+        root,
+        "  R5:\n"
+        "    quadplex_allowed: true\n"
+        "    setback_front_ft: 10\n"
+        "    setback_side_ft: 5\n"
+        "    setback_rear_ft: 5\n"
+        "    min_lot_sqft: 3000\n"
+        "    land_division_parent_standards: false\n",
+    )
+    res = RuleSet(load_rules(root)).resolve(PORTLAND, "R5")
+
+    split = res.values["land_division_parent_standards"]
+    assert split.value is True
+    assert split.preempted
+
+
+def test_an_unreadable_preemption_is_refused_not_ignored(root: Path) -> None:
+    """A typo that quietly resolved to "no preemption" would drop a statute
+    without a word — the failure mode this whole rule set is built against."""
+    write(
+        root,
+        "or/_state.yaml",
+        "label: Oregon\n"
+        "kind: state\n"
+        "cite_default:\n"
+        '  cite: "OAR 660-046-0220"\n'
+        '  url: "https://oregon.public.law/rules/oar_660-046-0220"\n'
+        '  quote: "or/oar.660-046-0220.txt#L79"\n'
+        "  retrieved: 2026-08-12\n"
+        "defaults:\n"
+        "  parking_min_per_unit: {value: 1.0, preempts: sometimes}\n",
+    )
+    portland(root, "  R5:\n    quadplex_allowed: true\n")
+
+    with pytest.raises(RuleLoadError, match="preempts"):
+        load_rules(root)
+
+
+def test_a_third_layer_is_measured_against_the_state_not_the_city(root: Path) -> None:
+    """Once a cap lets a looser city number through, the resolved value is the
+    city's — but an overlay after it is still bounded by the STATE's ceiling,
+    not by whatever the city happened to choose. Comparing against the last
+    winner would turn a city's permissiveness into a cap it never declared and
+    silently void an overlay that was inside the state rule all along."""
+    write(
+        root,
+        "or/_state.yaml",
+        "label: Oregon\n"
+        "kind: state\n"
+        "cite_default:\n"
+        '  cite: "OAR 660-046-0220"\n'
+        '  url: "https://oregon.public.law/rules/oar_660-046-0220"\n'
+        '  quote: "or/oar.660-046-0220.txt#L79"\n'
+        "  retrieved: 2026-08-12\n"
+        "defaults:\n"
+        "  parking_min_per_unit: {value: 1.0, preempts: cap}\n",
+    )
+    county = PORTLAND.rsplit("/", 1)[0]
+    write(
+        root,
+        f"{county}/_county.yaml",
+        "label: Multnomah\nkind: county\n"
+        "cite_default:\n"
+        '  cite: "MCC"\n'
+        '  url: "https://example.invalid/mcc"\n'
+        '  quote: "or/multnomah/mcc.txt#L1"\n'
+        "  retrieved: 2026-08-12\n"
+        "defaults:\n"
+        "  parking_min_per_unit: 0\n",
+    )
+    portland(
+        root,
+        "  R5:\n"
+        "    quadplex_allowed: true\n"
+        "    setback_front_ft: 10\n"
+        "    setback_side_ft: 5\n"
+        "    setback_rear_ft: 5\n"
+        "    min_lot_sqft: 3000\n"
+        "    parking_min_per_unit: 0.5\n",
+    )
+
+    res = RuleSet(load_rules(root)).resolve(PORTLAND, "R5")
+
+    # Without this the test is vacuous: if the county layer never loaded, the
+    # city would be compared against the state's 1.0 either way and pass.
+    assert res.chain == (PORTLAND, county, "or")
+
+    parking = res.values["parking_min_per_unit"]
+    assert parking.value == 0.5, "0.5 is inside the state's 1.0 ceiling"
+    assert parking.layer == PORTLAND
+    assert not parking.preempted

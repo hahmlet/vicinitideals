@@ -125,11 +125,26 @@ def test_written_config_loads_through_the_real_loader() -> None:
 
 
 def test_state_parking_preemption_reaches_a_city_zone() -> None:
-    res = RuleSet(load_rules()).resolve("or/multnomah/portland", "R5")
+    """The state cap reaches a city that has not spoken for itself."""
+    res = RuleSet(load_rules()).resolve("or/multnomah/fairview", "R-6")
 
     parking = res.values["parking_min_per_unit"]
     assert parking.value == 1.0
-    assert parking.layer == "or", "state cap must win over any local standard"
+    assert parking.layer == "or", "state cap must reach a city with no rule of its own"
+
+
+def test_a_city_below_the_state_cap_keeps_its_own_number() -> None:
+    """OAR 660-046-0220 bars a city from asking for MORE than one stall per
+    unit. It does not oblige one to ask for any, and Portland asks for none.
+    Reading the cap as a substitute would hand every Portland lot four stalls
+    the city does not require -- about 1,300 sq ft of a site that has to fit
+    the pod, its parking and its access."""
+    res = RuleSet(load_rules()).resolve("or/multnomah/portland", "R5")
+
+    parking = res.values["parking_min_per_unit"]
+    assert parking.value == 0
+    assert parking.layer == "or/multnomah/portland"
+    assert not parking.preempted
 
 
 def test_ported_zones_are_unverified_not_trusted() -> None:

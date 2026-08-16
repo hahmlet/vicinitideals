@@ -20,6 +20,30 @@ code:
   - id: "33.120"
     url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
     title: Chapter 33.120 Multi-Dwelling Zones
+  - id: "33.266"
+    url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+    title: Chapter 33.266 Parking, Loading, and Transportation and Parking Demand Management
+defaults:
+  # Portland requires no off-street parking anywhere in the city. The chapter
+  # is the evidence: it runs from 33.266.100 straight to 33.266.115 Maximum
+  # Allowed Parking Spaces with no minimum section between them, and
+  # 33.266.110.A regulates carpool and EV spaces only "when parking spaces are
+  # provided" -- language that presupposes providing none is allowed. The
+  # state's 1 stall/unit ceiling caps what a city MAY require and does not
+  # oblige it to require anything, so this passes through it.
+  #
+  # Four stalls is about 1,300 sq ft of a site that has to hold the pod, its
+  # parking and its access. On the narrow lots this screen exists to find, that
+  # is routinely the difference between fitting and not, which is why it is
+  # worth citing an absence carefully rather than leaving the state ceiling to
+  # stand in for a rule Portland does not have.
+  parking_min_per_unit:
+    value: 0
+    cite: "PCC 33.266.110.A; and the absence of any minimum-parking section between 33.266.100 and 33.266.115"
+    url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
+    retrieved: 2026-08-15
+    status: draft
+    quote: "or/multnomah/portland/33.266.txt#L67-L70"
 zones:
   RF:
     cite_default:

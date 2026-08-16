@@ -32,6 +32,7 @@ from flats.rules.model import (
     CodeDocument,
     Incorporation,
     Layer,
+    Preempt,
     Provenance,
     Status,
     Value,
@@ -144,7 +145,7 @@ def _parse_values(
                 status=Status(declared),
                 reviewer=body.get("reviewer"),
                 reviewed=body.get("reviewed"),
-                preempts=bool(body.get("preempts", False)),
+                preempts=Preempt.read(body.get("preempts")),
                 variants=variants,
             )
             if not (built.prov.quote or "").strip():

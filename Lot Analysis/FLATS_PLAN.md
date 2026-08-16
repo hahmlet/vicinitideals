@@ -256,6 +256,18 @@ Every resolved value carries the layer it came from. A lot detail page therefore
 OAR 660-046-0220 (state, preempts city 2/unit)"*. Provenance survives resolution. This is
 what makes the system auditable end to end.
 
+**Preemption has a direction.** `preempts: true` answers the question outright — ORS
+92.031(2)(b) settles which standards a middle housing land division is measured against
+and a city may not decide that differently either way. `preempts: cap` states the
+*strictest* a local layer may be and lets a looser local number through: OAR
+660-046-0220 bars a city from requiring more than one parking stall per unit but does
+not oblige one to require any, and Portland requires none. Reading the cap as a
+substitute handed every Portland lot four stalls the city does not ask for — about 1,300
+sq ft of a site that has to fit the pod, its parking and its access. Which way "looser"
+runs is read off `FieldDef.is_maximum` rather than written into the preemption, because
+it is a property of the standard: a minimum gets looser as it falls, a maximum as it
+rises.
+
 **Adding a county** = one directory, one `_county.yaml`, N city files, plus GIS sources in
 `config/pipeline.yaml`. No code change. Washington County next (RLIS already covers it).
 

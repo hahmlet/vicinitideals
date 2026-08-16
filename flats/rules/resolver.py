@@ -5,8 +5,15 @@ Resolution order, least specific to most::
     OAR 660-046 (state)  →  county  →  city base zone  →  overlay  →  bonus
 
 A more specific layer overrides a less specific one, **except** where the less
-specific value is marked ``preempts: true`` — that is how state law that caps a
-local standard survives a city trying to exceed it.
+specific value is marked ``preempts`` — that is how state law that caps a local
+standard survives a city trying to exceed it. Preemption comes in two shapes
+and the difference is load-bearing: ``preempts: true`` answers the question
+outright, while ``preempts: cap`` states the *strictest* a local layer may be
+and lets a looser local number through. OAR 660-046-0220 bars a city from
+requiring more than one parking stall per unit; it does not oblige one to
+require any, and Portland requires none. Which way "looser" runs is read off
+the field rather than the preemption, because it is a property of the standard
+— a minimum gets looser as it falls, a maximum as it rises.
 
 Every resolved value remembers the layer and code section it came from, so the
 UI can show *"front setback 10 ft — Portland 33.110 Table 110-4"* beside
@@ -34,8 +41,8 @@ import enum
 from dataclasses import dataclass, field as _dc_field
 from typing import Any, Collection, Mapping
 
-from flats.rules.fields import REQUIRED_FIELDS
-from flats.rules.model import LIKE, Layer, Provenance, Status, Value, Zone
+from flats.rules.fields import REQUIRED_FIELDS, field
+from flats.rules.model import LIKE, Layer, Preempt, Provenance, Status, Value, Zone
 
 
 class Verdict(str, enum.Enum):
@@ -159,6 +166,27 @@ class ZoneResolution:
         return default if r is None else r.value
 
 
+def _looser(name: str, local: Any, ceiling: Any) -> bool:
+    """True when a local standard sits inside what an ancestor allows.
+
+    "Looser" is a property of the standard, not of the preemption. A minimum
+    gets looser as it falls -- no required parking is looser than one stall --
+    and a maximum gets looser as it rises. A field that is neither, a boolean
+    or an enum, has no such ordering, so a cap on one is meaningless and the
+    ancestor simply wins; that is the conservative reading, and the loader has
+    no business inventing an order for it.
+    """
+    which = field(name).is_maximum
+    if which is None:
+        return False
+    try:
+        return local > ceiling if which else local < ceiling
+    except TypeError:
+        # Two values of different shapes -- a curve against a number, say.
+        # Not comparable, so not demonstrably looser.
+        return False
+
+
 class RuleSet:
     """Loaded hierarchy with resolution over it."""
 
@@ -278,7 +306,11 @@ class RuleSet:
             )
 
         resolved: dict[str, Resolved] = {}
-        locked: set[str] = set()
+        # field -> (how it preempts, the number the ancestor set). The
+        # number is kept apart from `resolved`, because once a cap lets a
+        # looser local value through, `resolved` holds the city's number
+        # and a third layer must still be measured against the STATE's.
+        locked: dict[str, tuple[Preempt, Any]] = {}
         exempted: set[str] = set()
 
         def apply(
@@ -295,9 +327,23 @@ class RuleSet:
                     continue
                 exempted.discard(name)
                 if name in locked:
-                    # A preempting ancestor already fixed this field. Record what
-                    # was displaced so the UI can say why the local number lost.
+                    # A preempting ancestor has already spoken. Whether that
+                    # ends the matter depends on how it preempts.
                     prev = resolved[name]
+                    mode, ceiling = locked[name]
+                    if mode is Preempt.cap and _looser(name, eff.value, ceiling):
+                        # The ancestor stated the strictest a local layer may
+                        # be, and this one is inside it. Nothing to preempt --
+                        # a cap does not become a requirement.
+                        resolved[name] = Resolved(
+                            name, eff.value, eff.status, eff.prov, layer, origin,
+                            via=via, when=eff.when, levers=val.levers,
+                            ambiguous=eff.ambiguous,
+                        )
+                        continue
+                    # Either the ancestor wins outright, or the local number is
+                    # stricter than the ancestor allows and is clipped back to
+                    # it. Record what was displaced so the UI can say why.
                     resolved[name] = Resolved(
                         prev.name, prev.value, prev.status, prev.prov, prev.layer,
                         prev.origin, preempted=True, shadowed=eff.value, via=prev.via,
@@ -316,8 +362,8 @@ class RuleSet:
                     levers=val.levers,
                     ambiguous=eff.ambiguous,
                 )
-                if val.preempts:
-                    locked.add(name)
+                if val.preempts.binds:
+                    locked[name] = (val.preempts, eff.value)
 
         # Least specific first so later layers override — except where locked.
         for layer in chain:
