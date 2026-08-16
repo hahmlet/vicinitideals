@@ -42,7 +42,12 @@ zones:
         20, side 5, rear 20, coverage 50%)
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # Table 315-1, Quadplexes row, first column: "R-5 - R-30" reads P7,8 --
+      # permitted, subject to note 7 (a lot of record may hold only one of the
+      # listed dwelling types) and note 8 (Section 845 governs the design).
+      value: true
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1076,L1078"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1188"
@@ -66,7 +71,12 @@ zones:
       cite: Clackamas ZDO-282; ZDO Section 315 Table 315-2
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # Table 315-1, Quadplexes row, first column: "R-5 - R-30" reads P7,8 --
+      # permitted, subject to note 7 (a lot of record may hold only one of the
+      # listed dwelling types) and note 8 (Section 845 governs the design).
+      value: true
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1076,L1078"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1189"
@@ -89,7 +99,12 @@ zones:
       cite: Clackamas ZDO-282; ZDO Section 315 Table 315-2
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # Table 315-1, Quadplexes row, first column: "R-5 - R-30" reads P7,8 --
+      # permitted, subject to note 7 (a lot of record may hold only one of the
+      # listed dwelling types) and note 8 (Section 845 governs the design).
+      value: true
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1076,L1078"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1190"
@@ -112,7 +127,12 @@ zones:
       cite: Clackamas ZDO-282; ZDO Section 315 Table 315-2
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # Table 315-1, Quadplexes row, first column: "R-5 - R-30" reads P7,8 --
+      # permitted, subject to note 7 (a lot of record may hold only one of the
+      # listed dwelling types) and note 8 (Section 845 governs the design).
+      value: true
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1076,L1078"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1191"
@@ -135,7 +155,12 @@ zones:
       cite: Clackamas ZDO-282; ZDO Section 315 Table 315-2
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # Table 315-1, Quadplexes row, first column: "R-5 - R-30" reads P7,8 --
+      # permitted, subject to note 7 (a lot of record may hold only one of the
+      # listed dwelling types) and note 8 (Section 845 governs the design).
+      value: true
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1076,L1078"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1192"
@@ -158,7 +183,12 @@ zones:
       cite: Clackamas ZDO-282; ZDO Section 315 Table 315-2
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # Table 315-1, Quadplexes row, first column: "R-5 - R-30" reads P7,8 --
+      # permitted, subject to note 7 (a lot of record may hold only one of the
+      # listed dwelling types) and note 8 (Section 845 governs the design).
+      value: true
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1076,L1078"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1193"
@@ -181,7 +211,12 @@ zones:
       cite: Clackamas ZDO-282; ZDO Section 315 Table 315-2
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # Table 315-1, Quadplexes row, first column: "R-5 - R-30" reads P7,8 --
+      # permitted, subject to note 7 (a lot of record may hold only one of the
+      # listed dwelling types) and note 8 (Section 845 governs the design).
+      value: true
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1076,L1078"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1194"
@@ -205,7 +240,12 @@ zones:
         front 18, side 0/5, rear 15, coverage 50%)'
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # Table 315-1, Quadplexes row, second column: "VR-4/5 & VR-5/7" reads
+      # P7,8, the same as the low-density zones. One table, one row, both
+      # village zones in the same cell.
+      value: true
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1076,L1078"
     setback_front_ft:
       value: 10
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1324-L1327"
@@ -250,7 +290,12 @@ zones:
       cite: Clackamas ZDO-282; ZDO Section 315 Table 315-3 (Village Residential VR-4/5)
       url: https://www.clackamas.us/planning/zdo315
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # Table 315-1, Quadplexes row, second column: "VR-4/5 & VR-5/7" reads
+      # P7,8, the same as the low-density zones. One table, one row, both
+      # village zones in the same cell.
+      value: true
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1076,L1078"
     setback_front_ft:
       value: 10
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1324-L1327"
@@ -271,9 +316,11 @@ zones:
       against the three column headers. VR-4/5 carries no garage-door setback: unlike the VR-5/7 cell,
       its front and maximum-front cells are plain numbers.
 
-      The quadplex-by-right ALLOWANCE here remains needs_verification: the county Middle Housing FAQ
-      listed VR-5/7 and omitted VR-4/5, while Section 845 and Table 315-3 fn 23 contemplate quadplexes
-      in both. That is a use question, not a dimension one, and it decides the zone outright.
+      THE ALLOWANCE IS SETTLED, 2026-08-16. It stood as needs_verification because the county Middle
+      Housing FAQ listed VR-5/7 and omitted VR-4/5. The FAQ is not the code. Table 315-1 puts both
+      village zones in one cell -- the column header reads "VR-4/5 & VR-5/7" -- and the Quadplexes row
+      reads P7,8 in it. Permitted, subject to note 7 (one dwelling type per lot of record) and note 8
+      (Section 845 design standards). Quoted.
 
       NOT ENCODED: minimum lot size, for the same reason as VR57 — the row prints "4,000/2,000" under
       a two-part label, so the stated minimum is 2,000 and the 4,000 is the density figure, and

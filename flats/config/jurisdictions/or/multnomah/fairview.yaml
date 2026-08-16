@@ -42,7 +42,11 @@ zones:
         - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/fairview/19.30.txt#L354"
-    quadplex_allowed: true
+    quadplex_allowed:
+      # Table 19.30.020.A row h, Quadplex. Six district columns, four values
+      # printed: R-6, R-7.5, R-10 and RM permit it, MH and TOZ print nothing.
+      value: true
+      quote: "or/multnomah/fairview/19.30.txt#L55-L63,L108-L112"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/fairview/19.30.txt#L362"
@@ -84,7 +88,11 @@ zones:
         - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/fairview/19.30.txt#L356"
-    quadplex_allowed: true
+    quadplex_allowed:
+      # Table 19.30.020.A row h, Quadplex. Six district columns, four values
+      # printed: R-6, R-7.5, R-10 and RM permit it, MH and TOZ print nothing.
+      value: true
+      quote: "or/multnomah/fairview/19.30.txt#L55-L63,L108-L112"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/fairview/19.30.txt#L363"
@@ -125,7 +133,11 @@ zones:
         - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/fairview/19.30.txt#L358"
-    quadplex_allowed: true
+    quadplex_allowed:
+      # Table 19.30.020.A row h, Quadplex. Six district columns, four values
+      # printed: R-6, R-7.5, R-10 and RM permit it, MH and TOZ print nothing.
+      value: true
+      quote: "or/multnomah/fairview/19.30.txt#L55-L63,L108-L112"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/fairview/19.30.txt#L364"
@@ -159,7 +171,11 @@ zones:
       cite: FMC 19.30.010.D, 19.30.020, 19.30.030 Table A (2023-41-TA amendments)
       url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html
       retrieved: '2026-07-24'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # Table 19.30.020.A row h, Quadplex. Six district columns, four values
+      # printed: R-6, R-7.5, R-10 and RM permit it, MH and TOZ print nothing.
+      value: true
+      quote: "or/multnomah/fairview/19.30.txt#L55-L63,L108-L112"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/fairview/19.30.txt#L366"
@@ -219,7 +235,14 @@ zones:
     min_lot_depth_ft:
       value: 70
       quote: "or/multnomah/fairview/19.115.txt#L37"
-    quadplex_allowed: true
+    quadplex_allowed:
+      # 19.115.020A adopts R-6's use list wholesale: "The permitted uses in the
+      # residential (R) district R-6 shall apply in the village single-family
+      # (VSF) zone." The quote is the cross-reference, because a quote names
+      # one document and the row it lands on is in another -- Table 19.30.020.A
+      # row h, quoted under R-6 above, where a quadplex reads permitted.
+      value: true
+      quote: "or/multnomah/fairview/19.115.txt#L19-L21"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/fairview/19.115.txt#L47"
@@ -263,7 +286,14 @@ zones:
       cite: FMC 19.120 Village Townhouse Residential
       url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19120.html
       retrieved: '2026-07-24'
-    quadplex_allowed: false
+    quadplex_allowed:
+      # 19.120.020 lists what is permitted in VTH and a quadplex is not on it:
+      # detached single-unit (existing only), townhouses, duplexes, then
+      # accessory buildings, parks, day care, home occupations, signs and
+      # accessory dwelling units. The zone is named for attached dwellings and
+      # allows no new detached ones, so the state mandate does not attach.
+      value: false
+      quote: "or/multnomah/fairview/19.120.txt#L19-L37"
     notes: 'quadfit confidence: verified | Townhouse/duplex zone; new detached SFD not allowed — OAR mandate
       does not attach.'
   R/MH:
@@ -271,6 +301,10 @@ zones:
       cite: FMC 19.30 Manufactured Home Park district standards
       url: https://www.codepublishing.com/OR/Fairview/html/Fairview1930.html
       retrieved: '2026-07-24'
-    quadplex_allowed: false
+    quadplex_allowed:
+      # The same Quadplex row, read for what it does not print: the Manufactured
+      # Home Park column is the fifth of six and the row stops at four values.
+      value: false
+      quote: "or/multnomah/fairview/19.30.txt#L55-L63,L108-L112"
     notes: 'quadfit confidence: needs_verification | MH-park district; no detached SFD — no quadplex mandate
       (3 lots).'

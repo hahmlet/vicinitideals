@@ -56,7 +56,11 @@ zones:
       cite: Wilsonville Development Code 4.122 (R Zone) + 4.113(.02) setbacks; Ord. 841 (middle housing)
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.122REZO
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # 4.122(.04)B, "Middle Housing", which 4.096(181) defines as the class
+      # containing quadplexes.
+      value: true
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4408-L4412,L874-L875"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
@@ -171,7 +175,10 @@ zones:
       cite: Wilsonville Development Code 4.123 (Old Town Residential OTR Zone) + 4.113(.02) setbacks; Ord. 841
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.123OLTOREOTZO
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # 4.123(.03)B, same term, same definition.
+      value: true
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4496-L4498,L874-L875"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
@@ -262,7 +269,13 @@ zones:
       cite: Wilsonville Development Code 4.124 (PDR Zones) Table 2 + 4.113(.02); Ord. 841
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # 4.124(.01)C names the type outright: "Duplexes, triplexes, quadplexes,
+      # townhouses". 4.124 is headed "Standards Applying to all Planned
+      # Development Residential Zones", so it is one block for all six PDR
+      # zones rather than six blocks that happen to agree.
+      value: true
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4572-L4576"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
@@ -327,7 +340,13 @@ zones:
       cite: Wilsonville Development Code 4.124 Table 2 + 4.113(.02)
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # 4.124(.01)C names the type outright: "Duplexes, triplexes, quadplexes,
+      # townhouses". 4.124 is headed "Standards Applying to all Planned
+      # Development Residential Zones", so it is one block for all six PDR
+      # zones rather than six blocks that happen to agree.
+      value: true
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4572-L4576"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
@@ -392,7 +411,13 @@ zones:
       cite: Wilsonville Development Code 4.124 Table 2 note B + 4.113(.02)
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # 4.124(.01)C names the type outright: "Duplexes, triplexes, quadplexes,
+      # townhouses". 4.124 is headed "Standards Applying to all Planned
+      # Development Residential Zones", so it is one block for all six PDR
+      # zones rather than six blocks that happen to agree.
+      value: true
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4572-L4576"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
@@ -457,7 +482,13 @@ zones:
       cite: Wilsonville Development Code 4.124 Table 2 note B + 4.113(.02)
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # 4.124(.01)C names the type outright: "Duplexes, triplexes, quadplexes,
+      # townhouses". 4.124 is headed "Standards Applying to all Planned
+      # Development Residential Zones", so it is one block for all six PDR
+      # zones rather than six blocks that happen to agree.
+      value: true
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4572-L4576"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
@@ -522,7 +553,13 @@ zones:
       cite: Wilsonville Development Code 4.124 Table 2 note B + 4.113(.02)
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # 4.124(.01)C names the type outright: "Duplexes, triplexes, quadplexes,
+      # townhouses". 4.124 is headed "Standards Applying to all Planned
+      # Development Residential Zones", so it is one block for all six PDR
+      # zones rather than six blocks that happen to agree.
+      value: true
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4572-L4576"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
@@ -587,7 +624,13 @@ zones:
       cite: Wilsonville Development Code 4.124 Table 2 note B + 4.113(.02)
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # 4.124(.01)C names the type outright: "Duplexes, triplexes, quadplexes,
+      # townhouses". 4.124 is headed "Standards Applying to all Planned
+      # Development Residential Zones", so it is one block for all six PDR
+      # zones rather than six blocks that happen to agree.
+      value: true
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4572-L4576"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
@@ -653,7 +696,13 @@ zones:
         Development Standards), notes B, C, G, I, J, M
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.127RENERNZO
       retrieved: '2026-08-16'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # 4.127(.02)B.1.a.ii: "triplexes are permitted only on corner lots, and
+      # quadplexes are not permitted." See the zone note -- this is Frog Pond
+      # West and RN covers two other neighborhoods, but nothing published says
+      # which one a lot is in.
+      value: false
+      quote: "or/clackamas/wilsonville/4.planning.txt#L6498-L6505"
     # Every dimension below is the R-10 Large Lot column: the binding row of
     # three, taken because nothing published says which row a lot is in. Each
     # quote spans the header block and all three rows so the choice is visible
@@ -770,8 +819,22 @@ zones:
       condition names either, and both loosen), note L (cottage cluster and ADU setbacks), note H
       (vertical encroachments). KNOWN differs: the document also prints 90 percent coverage in section
       4.127, which is the Commercial Main Street block sharing the section number with RN and cannot
-      be scoped out until fetch-layer geometry. quadfit confidence: needs_verification -- RN allows
-      detached single-family so the HB 2001 mandate attaches BY STATE PREEMPTION, but the adopted Frog
-      Pond West master plan caps attached units at 2 and bars multi-family, so a fourplex may not be
-      locally permitted at all. Kept true because preemption is a real legal argument; confirm before
-      relying on it.'
+      be scoped out until fetch-layer geometry. quadfit confidence: needs_verification.
+
+      THE POD IS NOT A PERMITTED USE HERE, 2026-08-16. `quadplex_allowed` was a bare `true` resting on
+      state preemption, and the code says the opposite in as many words: 4.127(.02)B.1.a.ii,
+      "triplexes are permitted only on corner lots, and quadplexes are not permitted", with B.1.b
+      barring multi-family from Frog Pond West outright. That is the West neighborhood during initial
+      development; (.02)B.2 sends Frog Pond East and South to the variety standards in (.06)C-E
+      instead, which are not encoded. RN is one zone literal across all three with nothing published to
+      separate them -- the same gap that makes every dimension above take the binding sub-district row
+      -- so the neighborhood that bans the pod governs. Flipped to false and quoted.
+
+      What that leaves unresolved is a real contradiction rather than a reading: Table 8A note C sets
+      "the minimum lot size for quadplexes and cottage clusters is 7,000 square feet" in the R-5 and
+      R-7 sub-districts. A minimum lot size for a use the same section says is not permitted. Either
+      the initial-development limit has been overtaken by a later amendment or the note is residue, and
+      the document cannot say which. The state argument survives too: ORS 197A.420 and OAR 660-046
+      require a city to allow middle housing wherever it allows detached single-family, and RN allows
+      detached single-family. Both belong in front of a person -- flipping this back is one line, and
+      it changes every RN lot from RED to screened.'

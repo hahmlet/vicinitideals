@@ -1,5 +1,5 @@
 {
-  "digest": "45f125ecebe019f354c1eb5c84d8e294455d0b3e322ef81914a652d31f64766e",
+  "digest": "5cfde4a19a54ad82c05a758f3d29938858b5793a5b5b0b27ef72e4a4a2db9b27",
   "layers": {
     "or": {
       "misattributed": [],
@@ -10,116 +10,14 @@
     "or/clackamas/_unincorporated": {
       "misattributed": [],
       "label": "Clackamas Unincorporated",
-      "counts": {
-        "uncheckable": 9
-      },
-      "gaps": [
-        {
-          "zone": "R10",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R15",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R20",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R30",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R5",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R7",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R8.5",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "VR45",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "VR57",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        }
-      ]
+      "counts": {},
+      "gaps": []
     },
     "or/clackamas/gladstone": {
       "misattributed": [],
       "label": "Gladstone",
-      "counts": {
-        "uncheckable": 3
-      },
-      "gaps": [
-        {
-          "zone": "R10",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/gladstone \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R5",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/gladstone \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R7.2",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/gladstone \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        }
-      ]
+      "counts": {},
+      "gaps": []
     },
     "or/clackamas/happy-valley": {
       "misattributed": [],
@@ -219,131 +117,16 @@
     "or/clackamas/wilsonville": {
       "misattributed": [],
       "label": "Wilsonville",
-      "counts": {
-        "uncheckable": 9
-      },
-      "gaps": [
-        {
-          "zone": "OTR",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/wilsonville \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "PDR1",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/wilsonville \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "PDR2",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/wilsonville \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "PDR3",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/wilsonville \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "PDR4",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/wilsonville \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "PDR5",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/wilsonville \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "PDR6",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/wilsonville \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/wilsonville \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "RN",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/clackamas/wilsonville \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        }
-      ]
+      "counts": {},
+      "gaps": []
     },
     "or/multnomah/_unincorporated": {
       "misattributed": [],
       "label": "Multnomah Unincorporated",
       "counts": {
-        "uncheckable": 6
+        "uncheckable": 1
       },
       "gaps": [
-        {
-          "zone": "LR7",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/multnomah/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R10",
-          "field": "coverage_curve",
-          "cause": "uncheckable",
-          "detail": "curve",
-          "believed": "[[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]",
-          "action": "python -m flats.encode.review show or/multnomah/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R20",
-          "field": "coverage_curve",
-          "cause": "uncheckable",
-          "detail": "curve",
-          "believed": "[[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]",
-          "action": "python -m flats.encode.review show or/multnomah/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R7",
-          "field": "coverage_curve",
-          "cause": "uncheckable",
-          "detail": "curve",
-          "believed": "[[0, 0, 50], [3000, 1500, 37.5], [5000, 2250, 15], [20000, 4500, 7.5]]",
-          "action": "python -m flats.encode.review show or/multnomah/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "RF",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "False",
-          "action": "python -m flats.encode.review show or/multnomah/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
         {
           "zone": "RR",
           "field": "quadplex_allowed",
@@ -357,132 +140,14 @@
     "or/multnomah/fairview": {
       "misattributed": [],
       "label": "Fairview",
-      "counts": {
-        "uncheckable": 7
-      },
-      "gaps": [
-        {
-          "zone": "R-10",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/multnomah/fairview \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R-6",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/multnomah/fairview \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R-7.5",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/multnomah/fairview \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "R/MH",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "False",
-          "action": "python -m flats.encode.review show or/multnomah/fairview \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "RM",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/multnomah/fairview \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "VSF",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/multnomah/fairview \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "VTH",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "False",
-          "action": "python -m flats.encode.review show or/multnomah/fairview \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        }
-      ]
+      "counts": {},
+      "gaps": []
     },
     "or/multnomah/gresham": {
       "misattributed": [],
       "label": "Gresham",
-      "counts": {
-        "uncheckable": 7
-      },
-      "gaps": [
-        {
-          "zone": "CMF",
-          "field": "orientation_constraint",
-          "cause": "uncheckable",
-          "detail": "enum",
-          "believed": "axis_required",
-          "action": "python -m flats.encode.review show or/multnomah/gresham \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "DRL-1",
-          "field": "orientation_constraint",
-          "cause": "uncheckable",
-          "detail": "enum",
-          "believed": "axis_required",
-          "action": "python -m flats.encode.review show or/multnomah/gresham \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "DRL-2",
-          "field": "orientation_constraint",
-          "cause": "uncheckable",
-          "detail": "enum",
-          "believed": "axis_required",
-          "action": "python -m flats.encode.review show or/multnomah/gresham \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "LDR-PV",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/multnomah/gresham \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "LDR-SW",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/multnomah/gresham \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "LDR/GB",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "False",
-          "action": "python -m flats.encode.review show or/multnomah/gresham \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "THR-SW",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "False",
-          "action": "python -m flats.encode.review show or/multnomah/gresham \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        }
-      ]
+      "counts": {},
+      "gaps": []
     },
     "or/multnomah/maywood-park": {
       "misattributed": [],
@@ -499,60 +164,14 @@
     "or/multnomah/troutdale": {
       "misattributed": [],
       "label": "Troutdale",
-      "counts": {
-        "uncheckable": 1
-      },
-      "gaps": [
-        {
-          "zone": "HDR",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "False",
-          "action": "python -m flats.encode.review show or/multnomah/troutdale \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        }
-      ]
+      "counts": {},
+      "gaps": []
     },
     "or/multnomah/wood-village": {
       "misattributed": [],
       "label": "Wood Village",
-      "counts": {
-        "uncheckable": 4
-      },
-      "gaps": [
-        {
-          "zone": "LR 12",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/multnomah/wood-village \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "LR 7.5",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/multnomah/wood-village \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "MR 2",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/multnomah/wood-village \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        },
-        {
-          "zone": "MR 4",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "True",
-          "action": "python -m flats.encode.review show or/multnomah/wood-village \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        }
-      ]
+      "counts": {},
+      "gaps": []
     }
   }
 }

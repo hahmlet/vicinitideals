@@ -474,3 +474,95 @@ def test_wood_village_second_numbers_are_corner_lots_and_townhouses() -> None:
         res = rules.resolve("or/multnomah/wood-village", zone)
         assert res.values["min_lot_depth_ft"].value == depth
         assert res.values["setback_garage_entrance_ft"].value == 22
+
+
+def test_the_flag_that_ends_a_screen_is_quoted_everywhere_it_resolves() -> None:
+    """`quadplex_allowed` false makes every lot in a zone RED before a single
+    dimension is measured, and it was a bare boolean in ten layers — the one
+    value with the most authority and the least provenance. Anything that
+    resolves now carries a document behind it."""
+    rules = RuleSet(load_rules())
+
+    bare = [
+        f"{layer}/{zone}"
+        for layer, layer_rules in rules.layers.items()
+        for zone in layer_rules.zones
+        if (value := rules.resolve(layer, zone).values.get("quadplex_allowed"))
+        and not value.prov.quote
+    ]
+    assert bare == []
+
+
+def test_two_zones_answer_differently_than_they_used_to() -> None:
+    """Quoting the flag was supposed to be bookkeeping. Two zones read the
+    other way once somebody opened the section."""
+    rules = RuleSet(load_rules())
+
+    # Wilsonville RN carried `true` on the argument that ORS 197A.420 preempts
+    # the city. 4.127(.02)B.1.a.ii: "triplexes are permitted only on corner
+    # lots, and quadplexes are not permitted."
+    rn = rules.resolve("or/clackamas/wilsonville", "RN")
+    assert rn.values["quadplex_allowed"].value is False
+    assert "4.127" in rn.values["quadplex_allowed"].prov.cite
+
+    # The rest of Wilsonville permits it by naming Middle Housing, which
+    # 4.096(181) defines as the class containing quadplexes.
+    for zone in ("R", "OTR", "PDR1", "PDR6"):
+        res = rules.resolve("or/clackamas/wilsonville", zone)
+        assert res.values["quadplex_allowed"].value is True
+
+    # Multnomah LR-7 is neither permitted nor prohibited: MCC 39.4856 is the
+    # CONDITIONAL USES section and (C) is the multiplex. An LR-7 lot is not
+    # RED, it is a lot whose pod needs a hearing — which the traffic light can
+    # only say if base and relief stay apart.
+    lr7 = rules.resolve("or/multnomah/_unincorporated", "LR7")
+    assert lr7.values["quadplex_allowed"].value is False
+    with_hearing = rules.resolve(
+        "or/multnomah/_unincorporated", "LR7", conditions=("conditional_use",)
+    )
+    assert with_hearing.values["quadplex_allowed"].value is True
+
+
+def test_what_the_loader_still_drops_is_named() -> None:
+    """An unquoted value does not resolve. It is not a wrong answer, it is a
+    value the engine cannot see, which reads as encoded and behaves as absent —
+    so the ones left have to be listed rather than counted."""
+    debt = {
+        (layer_id, w.zone, w.field)
+        for layer_id, layer in load_rules(strict=False).items()
+        for w in layer.wanted
+    }
+    assert debt == {
+        # MCC 39.4350-.4395, Rural Residential, is not a stored document. The
+        # `code:` block declares 33.110 and the LR-7 article and nothing else,
+        # and quoting a prohibition from a document that does not state it
+        # would be worse than leaving it visible here.
+        ("or/multnomah/_unincorporated", "RR", "quadplex_allowed"),
+        # Both layers are `eligible: false` — the pod is out of scope in the
+        # whole jurisdiction, so no screen reads these and no fetch is owed.
+        ("or/clackamas/johnson-city", "MR1", "quadplex_allowed"),
+        ("or/clackamas/rivergrove", "R10", "quadplex_allowed"),
+        ("or/clackamas/rivergrove", "R10", "setback_front_ft"),
+        ("or/clackamas/rivergrove", "R10", "setback_side_ft"),
+        ("or/clackamas/rivergrove", "R10", "setback_rear_ft"),
+    }
+
+
+def test_a_schedule_and_an_enum_are_values_too() -> None:
+    """Neither is a number, and both spent the port unquoted — invisible for
+    the same reason the booleans were."""
+    rules = RuleSet(load_rules())
+
+    # Portland writes coverage as a schedule: Table 110-5, RF through R2.5.
+    for zone in ("R7", "R10", "R20"):
+        curve = rules.resolve("or/multnomah/_unincorporated", zone).values["coverage_curve"]
+        assert curve.value[0] == [0, 0, 50]
+        assert curve.value[-1] == [20000, 4500, 7.5]
+        assert "33.110.txt#L781-L786" in curve.prov.quote
+
+    # Gresham's design districts require half the frontage built out in the
+    # band between the minimum and maximum front setback, which is an axis.
+    for zone in ("DRL-1", "DRL-2", "CMF"):
+        axis = rules.resolve("or/multnomah/gresham", zone).values["orientation_constraint"]
+        assert axis.value == "axis_required"
+        assert "7.0400.middle-housing-design.txt#L410-L418" in axis.prov.quote

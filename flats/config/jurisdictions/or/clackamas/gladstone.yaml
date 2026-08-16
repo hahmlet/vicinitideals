@@ -31,7 +31,13 @@ zones:
         standards), 17.10.065 (garage setback)
       url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1710.html
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # GMC 17.10.020, "Uses allowed outright": "(1) Single-household dwelling
+      # ... (2) Middle housing." Middle housing is the statutory class -- ORS
+      # 197A.420 and OAR 660-046 -- and a quadplex is in it. The city states no
+      # list of its own, so the class is the whole of the answer.
+      value: true
+      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L33-L39"
     setback_front_ft:
       value: 20
       quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L169"
@@ -63,7 +69,13 @@ zones:
         standards), 17.12.065 (garage setback)
       url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1712.html
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # GMC 17.12.020, "Uses allowed outright": "(1) Single-household dwelling
+      # ... (2) Middle housing." Middle housing is the statutory class -- ORS
+      # 197A.420 and OAR 660-046 -- and a quadplex is in it. The city states no
+      # list of its own, so the class is the whole of the answer.
+      value: true
+      quote: "or/clackamas/gladstone/17.12.r-5.txt#L31-L37"
     setback_front_ft:
       value: 20
       quote: "or/clackamas/gladstone/17.12.r-5.txt#L182"
@@ -96,7 +108,14 @@ zones:
         SFD district)
       url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1710.html
       retrieved: '2026-07-28'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # There is no R-10 chapter in Title 17 -- this zone's block says so and
+      # mirrors R-7.2, the lowest-density district Gladstone does define. The
+      # use flag comes from R-7.2's sentence for the same reason its dimensions
+      # do, and this quote is the honest version of that: GMC 17.10.020, not a
+      # section that does not exist.
+      value: true
+      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L33-L39"
     setback_front_ft:
       value: 20
       quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L169"

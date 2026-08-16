@@ -50,7 +50,12 @@ zones:
         210.375 (Ord. 2-2022)
       url: https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf
       retrieved: '2026-07-24'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # Table 210-2, "Attached or Detached Tri- or Quadplex": Y in both light
+      # residential zones. Permitted outright by the city's own table, not by
+      # the state mandate reaching a zone that allows detached houses.
+      value: true
+      quote: "or/multnomah/wood-village/210.310.txt#L62-L63,L67,L73-L75"
     min_lot_sqft:
       value: 7500
       quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L65"
@@ -144,7 +149,12 @@ zones:
         210.375 (Ord. 2-2022)
       url: https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf
       retrieved: '2026-07-24'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # Table 210-2, "Attached or Detached Tri- or Quadplex": Y in both light
+      # residential zones. Permitted outright by the city's own table, not by
+      # the state mandate reaching a zone that allows detached houses.
+      value: true
+      quote: "or/multnomah/wood-village/210.310.txt#L62-L63,L67,L73-L75"
     min_lot_sqft:
       value: 12000
       quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L65"
@@ -238,7 +248,11 @@ zones:
         220.355 (Ord. 2-2022)
       url: https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf
       retrieved: '2026-07-24'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # Table 220-2, "Attached or Detached Tri- or Quadplex": Y in both
+      # multi-residential zones.
+      value: true
+      quote: "or/multnomah/wood-village/220.310.txt#L62-L63,L67,L74-L76"
     min_lot_sqft:
       value: 7500
       quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L67"
@@ -322,7 +336,11 @@ zones:
         220.355 (Ord. 2-2022)
       url: https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf
       retrieved: '2026-07-24'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # Table 220-2, "Attached or Detached Tri- or Quadplex": Y in both
+      # multi-residential zones.
+      value: true
+      quote: "or/multnomah/wood-village/220.310.txt#L62-L63,L67,L74-L76"
     min_lot_sqft:
       value: 7500
       quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L67"

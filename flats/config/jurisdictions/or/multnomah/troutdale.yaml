@@ -361,7 +361,12 @@ zones:
       cite: Troutdale Development Code 3.120 (Quadplex = N in HDR), 3.130 (dimensional standards)
       url: https://library.municode.com/or/troutdale/codes/development_code?nodeId=CH3ZODI
       retrieved: '2026-07-24'
-    quadplex_allowed: false
+    quadplex_allowed:
+      # 3.120, Quadplex row: P in LDR-1, LDR-2, MDR, MDR (TC) and HDR (TC),
+      # and N in HDR. The quote carries the legend -- P permitted, C
+      # conditional, N not permitted -- so the letter is readable on its own.
+      value: false
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L213,L215,L222,L224-L226,L232"
     notes: 'quadfit confidence: verified | Multifamily/townhouse zone — no detached SFD, no quadplex;
       OAR mandate does not attach. Inside the Town Center overlay quadplex IS permitted, but the GIS zonecode
       does not distinguish HDR-TC — treated as excluded (conservative; 369 lots).'

@@ -56,18 +56,17 @@ zones:
       value: 6000
       quote: "or/multnomah/_unincorporated/33.110.txt#L1551"
     coverage_curve:
-    - - 0
-      - 0
-      - 50
-    - - 3000
-      - 1500
-      - 37.5
-    - - 5000
-      - 2250
-      - 15
-    - - 20000
-      - 4500
-      - 7.5
+      # Table 110-5, "Maximum Building Coverage Allowed in the RF through R2.5
+      # Zones". Each triple is [lot size at which the row starts, square feet
+      # allowed at that size, percent of the excess above it]. The first row
+      # prints a flat 50 percent rather than a base-plus-marginal, which is the
+      # [0, 0, 50] -- 50 percent of everything up to 3,000.
+      value:
+      - [0, 0, 50]
+      - [3000, 1500, 37.5]
+      - [5000, 2250, 15]
+      - [20000, 4500, 7.5]
+      quote: "or/multnomah/_unincorporated/33.110.txt#L781-L786"
     notes: 'quadfit confidence: verified | z Constrained Sites overlay voids fourplex allowance — gated
       in s3. Wooded west-hills pockets have heavy z coverage.'
     setback_garage_entrance_ft:
@@ -95,18 +94,17 @@ zones:
       value: 12000
       quote: "or/multnomah/_unincorporated/33.110.txt#L1550"
     coverage_curve:
-    - - 0
-      - 0
-      - 50
-    - - 3000
-      - 1500
-      - 37.5
-    - - 5000
-      - 2250
-      - 15
-    - - 20000
-      - 4500
-      - 7.5
+      # Table 110-5, "Maximum Building Coverage Allowed in the RF through R2.5
+      # Zones". Each triple is [lot size at which the row starts, square feet
+      # allowed at that size, percent of the excess above it]. The first row
+      # prints a flat 50 percent rather than a base-plus-marginal, which is the
+      # [0, 0, 50] -- 50 percent of everything up to 3,000.
+      value:
+      - [0, 0, 50]
+      - [3000, 1500, 37.5]
+      - [5000, 2250, 15]
+      - [20000, 4500, 7.5]
+      quote: "or/multnomah/_unincorporated/33.110.txt#L781-L786"
     notes: 'quadfit confidence: verified | Fourplex min lot 12,000 sf. z overlay gated in s3.'
     setback_garage_entrance_ft:
       value: 18
@@ -116,9 +114,15 @@ zones:
       cite: Portland Zoning Code 33.110 Table 110-2 — fourplex prohibited in RF
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-07-24'
-    quadplex_allowed: false
-    notes: 'quadfit confidence: verified | House + ADU only. Whether the state Model Code could override
-      RF in county pockets is unresolved — treated as no-quadplex.'
+    quadplex_allowed:
+      # PCC Table 110-2, Fourplex row, RF column: No. Same table prints Yes for
+      # R20 and R10, which is the check that the column was counted.
+      value: false
+      quote: "or/multnomah/_unincorporated/33.110.txt#L300-L302,L313-L314"
+    notes: 'quadfit confidence: verified. House and ADU only, and the prohibition is quoted as of
+      2026-08-16 rather than asserted. Whether the state Model Code could override RF in county
+      pockets is unresolved -- treated as no-quadplex, which is the direction that cannot invent a
+      buildable lot.'
     max_height_ft:
       value: 30
       quote: "or/multnomah/_unincorporated/33.110.txt#L454"
@@ -155,18 +159,17 @@ zones:
       value: 4200
       quote: "or/multnomah/_unincorporated/33.110.txt#L1552"
     coverage_curve:
-    - - 0
-      - 0
-      - 50
-    - - 3000
-      - 1500
-      - 37.5
-    - - 5000
-      - 2250
-      - 15
-    - - 20000
-      - 4500
-      - 7.5
+      # Table 110-5, "Maximum Building Coverage Allowed in the RF through R2.5
+      # Zones". Each triple is [lot size at which the row starts, square feet
+      # allowed at that size, percent of the excess above it]. The first row
+      # prints a flat 50 percent rather than a base-plus-marginal, which is the
+      # [0, 0, 50] -- 50 percent of everything up to 3,000.
+      value:
+      - [0, 0, 50]
+      - [3000, 1500, 37.5]
+      - [5000, 2250, 15]
+      - [20000, 4500, 7.5]
+      quote: "or/multnomah/_unincorporated/33.110.txt#L781-L786"
     notes: 'quadfit confidence: needs_verification | Zone standards verified from code text, but R7 occurrence
       in the pockets unconfirmed (33 lots observed in Metro layer).'
     setback_garage_entrance_ft:
@@ -174,10 +177,26 @@ zones:
       quote: "or/multnomah/_unincorporated/33.110.txt#L464"
   LR7:
     cite_default:
-      cite: MCC 39.4848, 39.4862 (S-1 2023) + OAR 660-046 Exhibit B Large Cities Model Code §B; OAR 660-046-0010/-0020
+      cite: MCC 39.4848, 39.4856 (conditional uses), 39.4862 (S-1 2023) + OAR 660-046 Exhibit B Large Cities Model Code §B; OAR 660-046-0010/-0020
       url: https://multco.us/file/chapter_39_-_zoning_code/download
       retrieved: '2026-07-24'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # MCC 39.4856 CONDITIONAL USES, (C): "A multiplex or two-unit dwelling
+      # structure, under the provisions of Part 7 of this Chapter, subject to
+      # the following findings and conditions" -- the site outside a Developed
+      # Neighborhood, comprehensive plan findings, and more. 39.4854, the
+      # permitted-use section, does not list a multiplex at all.
+      #
+      # So the base is false and the relief carries the true. Not the same as
+      # a prohibition: an LR-7 lot is not RED, it is a lot whose pod needs a
+      # hearing, and the traffic light can only say that if the code's own
+      # distinction between permitted and conditional survives the encoding.
+      value: false
+      quote: "or/multnomah/_unincorporated/39.lr-7.txt#L322-L336"
+      variants:
+        - value: true
+          when: [conditional_use]
+          quote: "or/multnomah/_unincorporated/39.lr-7.txt#L322-L336"
     setback_front_ft:
       value: 20
       quote: "or/multnomah/_unincorporated/39.lr-7.txt#L409-L411"
@@ -241,5 +260,10 @@ zones:
       url: https://multco.us/file/chapter_39_-_zoning_code/download
       retrieved: '2026-07-24'
     quadplex_allowed: false
-    notes: 'quadfit confidence: verified | County RURAL zone — overwhelmingly outside the Metro UGB; no
-      quadplex use in MCC 39. Any RR parcel inside the UGB needs individual review.'
+    notes: 'quadfit confidence: verified. County RURAL zone, overwhelmingly outside the Metro UGB; no
+      quadplex use in MCC 39. Any RR parcel inside the UGB needs individual review.
+
+      The use flag is the one in this layer still unquoted, and deliberately: MCC 39.4350 through
+      .4395 is not a stored document. The `code:` block declares 33.110 for the Portland-administered
+      pockets and the LR-7 article, and nothing for Rural Residential. Quoting a false from a document
+      that does not state it would be worse than leaving it visible in the ledger. Fetch the chapter.'

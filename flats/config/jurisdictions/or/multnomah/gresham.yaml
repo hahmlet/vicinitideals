@@ -287,7 +287,11 @@ zones:
       cite: Gresham Development Code Tables 4.1413/4.1415A/4.1415B (Pleasant Valley); 7.0420
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1400.pdf
       retrieved: '2026-07-24'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # Table 4.1413, Quadplex row: P under LDR-PV. Three district columns,
+      # three values.
+      value: true
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L132-L133,L138"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L386-L392"
@@ -321,7 +325,10 @@ zones:
       cite: Gresham Development Code Tables 4.1507/4.1508 (Springwater); 7.0420
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1500.pdf
       retrieved: '2026-07-24'
-    quadplex_allowed: true
+    quadplex_allowed:
+      # Table 4.1507, Quadplex row: P P NP under VLDR-SW, LDR-SW, THR-SW.
+      value: true
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L139-L140,L145"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/gresham/4.1500.springwater.txt#L349-L353"
@@ -511,7 +518,21 @@ zones:
     min_lot_depth_ft:
       value: 70
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L516"
-    orientation_constraint: axis_required
+    orientation_constraint:
+      # 7.0420(J)(1)(a): "A minimum of 50 percent of the site's frontage shall
+      # be occupied by buildings oriented to the abutting street", measured
+      # "between the minimum and maximum front setback". J.1 scopes it to
+      # plexes in the Downtown, Rockwood, Civic and Corridor Design Districts,
+      # which is why the quote opens on the scoping sentence rather than the
+      # standard: half the frontage built out, in a band a few feet deep, is
+      # only reachable with the long axis parallel to the street.
+      #
+      # Note 16 of Table 4.1130 releases the maximum front setback "once all
+      # minimum building frontage requirements of the street type have been
+      # satisfied", which is the same standard read from the other end and
+      # does not loosen this one.
+      value: axis_required
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
     notes: 'Read against Table 4.1130 on 2026-08-15. The governing row is the one headed "Single-detached, duplex, triplex, and quadplex dwellings in any district; and Townhouse and Cottage Cluster in DRL-1 and DRL-2" (L492), which names this building twice over, and its numbers hold across every street type the row prints -- so nothing here depends on which street the lot fronts. Front is the facade line (10, L495); the garage face is a separate and much deeper standard (20, L497) and is now encoded rather than left to bind invisibly. Side interior is 5 (L499) with a common-wall 0 (L504) as an `attached_wall` variant; rear is 10 without an alley (L506) and 6 with one (L507). Street side is 10 (L500). Lot area 4,000 (L511), width 35 at the building line with 16 on a townhouse unit lot (L514/L517), frontage 35 (L518). The same row states a 70 ft minimum interior-lot DEPTH (L516) and FLATS has no depth field -- the second jurisdiction where that hole has now surfaced, after the sweep found it in Fairview 19.30. Not encodable until the field exists. quadfit confidence: verified | Downtown. MAXIMUM front setback 15-20 ft + >=50% frontage occupancy
       (7.0420(J)) effectively force the long axis parallel to the street — axis_required. Max-front-setback
       placement band not modeled (blind spot).'
@@ -563,7 +584,21 @@ zones:
     min_lot_depth_ft:
       value: 70
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L516"
-    orientation_constraint: axis_required
+    orientation_constraint:
+      # 7.0420(J)(1)(a): "A minimum of 50 percent of the site's frontage shall
+      # be occupied by buildings oriented to the abutting street", measured
+      # "between the minimum and maximum front setback". J.1 scopes it to
+      # plexes in the Downtown, Rockwood, Civic and Corridor Design Districts,
+      # which is why the quote opens on the scoping sentence rather than the
+      # standard: half the frontage built out, in a band a few feet deep, is
+      # only reachable with the long axis parallel to the street.
+      #
+      # Note 16 of Table 4.1130 releases the maximum front setback "once all
+      # minimum building frontage requirements of the street type have been
+      # satisfied", which is the same standard read from the other end and
+      # does not loosen this one.
+      value: axis_required
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
     notes: 'Read against Table 4.1130 on 2026-08-15. The governing row is the one headed "Single-detached, duplex, triplex, and quadplex dwellings in any district; and Townhouse and Cottage Cluster in DRL-1 and DRL-2" (L492), which names this building twice over, and its numbers hold across every street type the row prints -- so nothing here depends on which street the lot fronts. Front is the facade line (10, L495); the garage face is a separate and much deeper standard (20, L497) and is now encoded rather than left to bind invisibly. Side interior is 5 (L499) with a common-wall 0 (L504) as an `attached_wall` variant; rear is 10 without an alley (L506) and 6 with one (L507). Street side is 10 (L500). Lot area 4,000 (L511), width 35 at the building line with 16 on a townhouse unit lot (L514/L517), frontage 35 (L518). The same row states a 70 ft minimum interior-lot DEPTH (L516) and FLATS has no depth field -- the second jurisdiction where that hole has now surfaced, after the sweep found it in Fairview 19.30. Not encodable until the field exists. quadfit confidence: verified | Same as DRL-1; height 50 ft.'
   CMF:
     section: ["4.04", "7.042"]
@@ -595,7 +630,21 @@ zones:
     min_frontage_ft:
       value: 100
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L301-L302"
-    orientation_constraint: axis_required
+    orientation_constraint:
+      # 7.0420(J)(1)(a): "A minimum of 50 percent of the site's frontage shall
+      # be occupied by buildings oriented to the abutting street", measured
+      # "between the minimum and maximum front setback". J.1 scopes it to
+      # plexes in the Downtown, Rockwood, Civic and Corridor Design Districts,
+      # which is why the quote opens on the scoping sentence rather than the
+      # standard: half the frontage built out, in a band a few feet deep, is
+      # only reachable with the long axis parallel to the street.
+      #
+      # Note 16 of Table 4.1130 releases the maximum front setback "once all
+      # minimum building frontage requirements of the street type have been
+      # satisfied", which is the same standard read from the other end and
+      # does not loosen this one.
+      value: axis_required
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
     notes: 'Read against Table 4.0430 on 2026-08-15, and quoted as line ranges because this table is the worst case of the extraction problem in the corpus: seven columns (RTC, SC, SC-RJ, CMF, CMU, CC, MC, header at L359) collapse into one run of words per line, so no single line holds a whole cell and CMF is the fourth value along each of five consecutive lines. Reassembled, the residential row reads "5 feet front and street-side; 15 feet rear; 0 feet interior side" (L332-L336). A reviewer has to read the range and count columns; that is what the range citation is asking them to do, and it is honest about the work rather than pointing at a line that looks decisive and is not. The MAXIMUM front setback, 20 ft (L351-L356), is now encoded rather than living only in this note -- it is the standard that forces the pod forward on the lot and it was previously invisible to the engine. Lot size 10,000 (L296-L297) and frontage 100 (L301-L302) confirmed in the same table. quadfit confidence: verified | Base CMF regime: residential needs 10,000 sf min AND 100 ft
       street frontage; max front setback 20 ft + frontage occupancy — axis_required. NE Glisan/162nd corridors
       follow TLDR standards instead (Table 4.0430 n.14) — NOT split out; base regime applied everywhere
@@ -606,7 +655,12 @@ zones:
       cite: Gresham Development Code 4.1310 (Gresham Butte)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1300.pdf
       retrieved: '2026-07-24'
-    quadplex_allowed: false
+    quadplex_allowed:
+      # 4.1310 ALLOWED USES adopts LDR-5's permitted uses and then names what
+      # the plan district takes back: "the Gresham Butte Plan District
+      # specifically prohibits: 1. Triplexes; 2. Quadplexes; ..."
+      value: false
+      quote: "or/multnomah/gresham/4.1300.gresham-butte.txt#L28-L33"
     notes: 'quadfit confidence: verified | Quadplexes explicitly prohibited in Gresham Butte overlay (hillside/fire
       risk); duplex max.'
   THR-SW:
@@ -615,7 +669,11 @@ zones:
       cite: Gresham Development Code Tables 4.1507/4.1508 (Springwater)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1500.pdf
       retrieved: '2026-07-24'
-    quadplex_allowed: false
+    quadplex_allowed:
+      # Table 4.1507, Quadplex row: NP in the THR-SW column. Detached single
+      # dwellings read NP too, so the state mandate does not attach.
+      value: false
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L139-L140,L145"
     notes: 'quadfit confidence: verified | Quadplex NP and detached SFD also NP — OAR mandate does not
       attach (townhouse/cottage-cluster zone).'
     max_height_ft:
