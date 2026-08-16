@@ -134,6 +134,17 @@ _F: tuple[FieldDef, ...] = (
     # --- parking and open space ----------------------------------------
     FieldDef("parking_min_per_unit", "ratio", "Required off-street stalls per unit.", False, "parking_min"),
     FieldDef("open_space_min_pct", "percent", "Minimum private open space as a share of lot area.", False),
+    FieldDef(
+        "min_landscaped_pct",
+        "percent",
+        "Minimum share of the site kept in landscaping. Distinct from private "
+        "open space: nobody has to be able to sit in it, and it is written "
+        "against the whole site rather than per unit. Portland Table 120-4 "
+        "asks 30 percent in RM1 and 15 in RM4, and it binds the same way a "
+        "coverage cap does -- it is lot area the pod and its parking may not "
+        "have.",
+        False,
+    ),
     # --- orientation ----------------------------------------------------
     FieldDef(
         "orientation_constraint",
@@ -170,6 +181,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "min_density_trigger_lot_sqft",
         "min_units_at_trigger",
         "open_space_min_pct",
+        "min_landscaped_pct",
         "orientation_constraint",
     }
 )

@@ -17,6 +17,9 @@ code:
   - id: "33.110"
     url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
     title: Chapter 33.110 Single-Dwelling Zones
+  - id: "33.120"
+    url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
+    title: Chapter 33.120 Multi-Dwelling Zones
 zones:
   RF:
     cite_default:
@@ -251,3 +254,260 @@ zones:
     setback_garage_entrance_ft:
       value: 18
       quote: or/multnomah/portland/33.110.txt#L464
+  RM1:
+    cite_default:
+      cite: PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas
+      url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
+      retrieved: '2026-08-15'
+    quadplex_allowed:
+      value: true
+      quote: "or/multnomah/portland/33.120.txt#L394-L404"
+    min_lot_sqft:
+      value: 4000
+      quote: "or/multnomah/portland/33.120.txt#L458-L460"
+    min_lot_width_ft:
+      value: 33
+      quote: "or/multnomah/portland/33.120.txt#L458-L460"
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/portland/33.120.txt#L541-L542"
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/portland/33.120.txt#L543-L544"
+    setback_rear_ft:
+      value: 5
+      quote: "or/multnomah/portland/33.120.txt#L543-L544"
+    setback_garage_entrance_ft:
+      value: 18
+      quote: "or/multnomah/portland/33.120.txt#L545-L546"
+    max_height_ft:
+      value: 35
+      quote: "or/multnomah/portland/33.120.txt#L529"
+    max_far:
+      value: 1.0
+      quote: "or/multnomah/portland/33.120.txt#L517-L518"
+    max_coverage_pct:
+      value: 50
+      quote: "or/multnomah/portland/33.120.txt#L553-L554"
+    min_landscaped_pct:
+      value: 30
+      quote: "or/multnomah/portland/33.120.txt#L558-L559"
+    notes: 'Lowest-intensity multi-dwelling zone, and the only one that still allows cottage clusters and manufactured dwelling parks. Side and rear are a flat 5 ft here: the 5/10 step in 33.120.220.B.1 is written for RM3 and RM4 only. Garage entrance is a two-band rule rather than a minimum: 33.120.220.E.1.a allows 5 ft or closer OR 18 ft or farther and forbids everything between. 18 is encoded because it is the band that is always available; the near band additionally requires the entrance to sit no closer to the lot line than the residential facade, which is a maximum-shaped standard this field cannot hold. NOT ENCODED, on purpose. (1) Maximum front setback: Table 120-4 states one (#L549-L551) but 33.120.220.C.1 applies it only on a transit street or in a Pedestrian District, and a Value carries no condition on its base -- encoding it would bind every lot in the zone to a standard most of them never see. (2) Minimum density: Table 120-4 states a units-per-square-foot ratio (#L526-L528), so a large lot in this zone requires MORE than four units and the pod fails on being too small. The registry holds a trigger and a count, not a ratio, and turning one into the other needs a rounding convention 33.120.213 does not state. (3) Minimum site frontage of 90 ft (#L491-L495) applies only to sites on Map 120-2 that are more than 160 ft deep.'
+  RM2:
+    cite_default:
+      cite: PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas
+      url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
+      retrieved: '2026-08-15'
+    quadplex_allowed:
+      value: true
+      quote: "or/multnomah/portland/33.120.txt#L394-L404"
+    min_lot_sqft:
+      value: 4000
+      quote: "or/multnomah/portland/33.120.txt#L458-L460"
+    min_lot_width_ft:
+      value: 33
+      quote: "or/multnomah/portland/33.120.txt#L458-L460"
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/portland/33.120.txt#L541-L542"
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/portland/33.120.txt#L543-L544"
+    setback_rear_ft:
+      value: 5
+      quote: "or/multnomah/portland/33.120.txt#L543-L544"
+    setback_garage_entrance_ft:
+      value: 18
+      quote: "or/multnomah/portland/33.120.txt#L545-L546"
+    max_height_ft:
+      value: 45
+      quote: "or/multnomah/portland/33.120.txt#L529"
+    max_far:
+      value: 1.5
+      quote: "or/multnomah/portland/33.120.txt#L517-L518"
+    max_coverage_pct:
+      value: 60
+      quote: "or/multnomah/portland/33.120.txt#L553-L554"
+      variants:
+        - value: 70
+          when: [civic_corridor]
+          quote: "or/multnomah/portland/33.120.txt#L1240-L1243"
+    min_landscaped_pct:
+      value: 20
+      quote: "or/multnomah/portland/33.120.txt#L558-L559"
+    notes: 'Table 120-4 prints coverage as "60/70%". 33.120.225.B splits it: 70 percent on a site abutting a Civic or Neighborhood Corridor shown on Map 120-1, 60 on every other RM2 site. 60 is the base because we do not hold the corridor map, and the half that cannot turn a lot green by mistake is the half that binds. Garage entrance is a two-band rule rather than a minimum: 33.120.220.E.1.a allows 5 ft or closer OR 18 ft or farther and forbids everything between. 18 is encoded because it is the band that is always available; the near band additionally requires the entrance to sit no closer to the lot line than the residential facade, which is a maximum-shaped standard this field cannot hold. NOT ENCODED, on purpose. (1) Maximum front setback: Table 120-4 states one (#L549-L551) but 33.120.220.C.1 applies it only on a transit street or in a Pedestrian District, and a Value carries no condition on its base -- encoding it would bind every lot in the zone to a standard most of them never see. (2) Minimum density: Table 120-4 states a units-per-square-foot ratio (#L526-L528), so a large lot in this zone requires MORE than four units and the pod fails on being too small. The registry holds a trigger and a count, not a ratio, and turning one into the other needs a rounding convention 33.120.213 does not state. (3) Minimum site frontage of 90 ft (#L491-L495) applies only to sites on Map 120-2 that are more than 160 ft deep.'
+  RM3:
+    cite_default:
+      cite: PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas
+      url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
+      retrieved: '2026-08-15'
+    quadplex_allowed:
+      value: true
+      quote: "or/multnomah/portland/33.120.txt#L394-L404"
+    min_lot_sqft:
+      value: 4000
+      quote: "or/multnomah/portland/33.120.txt#L458-L460"
+    min_lot_width_ft:
+      value: 33
+      quote: "or/multnomah/portland/33.120.txt#L458-L460"
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/portland/33.120.txt#L541-L542"
+    setback_side_ft:
+      value: 10
+      quote: "or/multnomah/portland/33.120.txt#L990-L997"
+      variants:
+        - value: 5
+          when: [low_rise]
+          quote: "or/multnomah/portland/33.120.txt#L990-L997"
+    setback_rear_ft:
+      value: 10
+      quote: "or/multnomah/portland/33.120.txt#L990-L997"
+      variants:
+        - value: 5
+          when: [low_rise]
+          quote: "or/multnomah/portland/33.120.txt#L990-L997"
+    setback_street_side_ft:
+      value: 5
+      quote: "or/multnomah/portland/33.120.txt#L994-L997"
+    setback_garage_entrance_ft:
+      value: 18
+      quote: "or/multnomah/portland/33.120.txt#L545-L546"
+    max_height_ft:
+      value: 65
+      quote: "or/multnomah/portland/33.120.txt#L529"
+    max_far:
+      value: 2.0
+      quote: "or/multnomah/portland/33.120.txt#L517-L518"
+    max_coverage_pct:
+      value: 85
+      quote: "or/multnomah/portland/33.120.txt#L553-L554"
+    min_landscaped_pct:
+      value: 15
+      quote: "or/multnomah/portland/33.120.txt#L558-L559"
+    notes: 'Table 120-4 prints side and rear as "5/10 ft.". 33.120.220.B.1 splits it by height: 5 ft for a building up to 55 ft tall, 10 ft above that from a line that is not a street lot line. 10 is the base and 5 is a variant on `low_rise`, so a design that has not stated its height gets the deeper number. A side or rear line that IS a street lot line stays 5 ft in both cases, which is what setback_street_side_ft holds. Garage entrance is a two-band rule rather than a minimum: 33.120.220.E.1.a allows 5 ft or closer OR 18 ft or farther and forbids everything between. 18 is encoded because it is the band that is always available; the near band additionally requires the entrance to sit no closer to the lot line than the residential facade, which is a maximum-shaped standard this field cannot hold. NOT ENCODED, on purpose. (1) Maximum front setback: Table 120-4 states one (#L549-L551) but 33.120.220.C.1 applies it only on a transit street or in a Pedestrian District, and a Value carries no condition on its base -- encoding it would bind every lot in the zone to a standard most of them never see. (2) Minimum density: Table 120-4 states a units-per-square-foot ratio (#L526-L528), so a large lot in this zone requires MORE than four units and the pod fails on being too small. The registry holds a trigger and a count, not a ratio, and turning one into the other needs a rounding convention 33.120.213 does not state. (3) Minimum site frontage of 90 ft (#L491-L495) applies only to sites on Map 120-2 that are more than 160 ft deep.'
+  RM4:
+    cite_default:
+      cite: PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas
+      url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
+      retrieved: '2026-08-15'
+    quadplex_allowed:
+      value: true
+      quote: "or/multnomah/portland/33.120.txt#L394-L404"
+    min_lot_sqft:
+      value: 4000
+      quote: "or/multnomah/portland/33.120.txt#L458-L460"
+    min_lot_width_ft:
+      value: 33
+      quote: "or/multnomah/portland/33.120.txt#L458-L460"
+    setback_front_ft:
+      value: 5
+      quote: "or/multnomah/portland/33.120.txt#L541-L542"
+    setback_side_ft:
+      value: 10
+      quote: "or/multnomah/portland/33.120.txt#L990-L997"
+      variants:
+        - value: 5
+          when: [low_rise]
+          quote: "or/multnomah/portland/33.120.txt#L990-L997"
+    setback_rear_ft:
+      value: 10
+      quote: "or/multnomah/portland/33.120.txt#L990-L997"
+      variants:
+        - value: 5
+          when: [low_rise]
+          quote: "or/multnomah/portland/33.120.txt#L990-L997"
+    setback_street_side_ft:
+      value: 5
+      quote: "or/multnomah/portland/33.120.txt#L994-L997"
+    setback_garage_entrance_ft:
+      value: 18
+      quote: "or/multnomah/portland/33.120.txt#L545-L546"
+    max_height_ft:
+      value: 75
+      quote: "or/multnomah/portland/33.120.txt#L529"
+    max_far:
+      value: 3.0
+      quote: "or/multnomah/portland/33.120.txt#L574-L576"
+    max_coverage_pct:
+      value: 85
+      quote: "or/multnomah/portland/33.120.txt#L553-L554"
+    min_landscaped_pct:
+      value: 15
+      quote: "or/multnomah/portland/33.120.txt#L558-L559"
+    notes: 'Table 120-4 prints FAR as "4 to 1 or 3 to 1" and base height as "75/100 ft.". 33.120.210.B gives 4 to 1 except in Historic and Conservation Districts, where it is 3 to 1; 33.120.215.B.1 gives a base height of 75 ft, raised to 100 within 500 ft of a 20-minute transit street or 1,000 ft of a transit station. Both encode the tighter half. Neither binds a two-storey pod, so neither is worth a condition until something downstream reads them. Table 120-4 prints side and rear as "5/10 ft.". 33.120.220.B.1 splits it by height: 5 ft for a building up to 55 ft tall, 10 ft above that from a line that is not a street lot line. 10 is the base and 5 is a variant on `low_rise`, so a design that has not stated its height gets the deeper number. A side or rear line that IS a street lot line stays 5 ft in both cases, which is what setback_street_side_ft holds. Garage entrance is a two-band rule rather than a minimum: 33.120.220.E.1.a allows 5 ft or closer OR 18 ft or farther and forbids everything between. 18 is encoded because it is the band that is always available; the near band additionally requires the entrance to sit no closer to the lot line than the residential facade, which is a maximum-shaped standard this field cannot hold. NOT ENCODED, on purpose. (1) Maximum front setback: Table 120-4 states one (#L549-L551) but 33.120.220.C.1 applies it only on a transit street or in a Pedestrian District, and a Value carries no condition on its base -- encoding it would bind every lot in the zone to a standard most of them never see. (2) Minimum density: Table 120-4 states a units-per-square-foot ratio (#L526-L528), so a large lot in this zone requires MORE than four units and the pod fails on being too small. The registry holds a trigger and a count, not a ratio, and turning one into the other needs a rounding convention 33.120.213 does not state. (3) Minimum site frontage of 90 ft (#L491-L495) applies only to sites on Map 120-2 that are more than 160 ft deep.'
+  RX:
+    cite_default:
+      cite: PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas
+      url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
+      retrieved: '2026-08-15'
+    quadplex_allowed:
+      value: true
+      quote: "or/multnomah/portland/33.120.txt#L394-L404"
+    min_lot_sqft:
+      value: 0
+      quote: "or/multnomah/portland/33.120.txt#L463-L467"
+    min_frontage_ft:
+      value: 10
+      quote: "or/multnomah/portland/33.120.txt#L463-L467"
+    setback_front_ft:
+      value: 0
+      quote: "or/multnomah/portland/33.120.txt#L541-L542"
+    setback_side_ft:
+      value: 0
+      quote: "or/multnomah/portland/33.120.txt#L543-L544"
+    setback_rear_ft:
+      value: 0
+      quote: "or/multnomah/portland/33.120.txt#L543-L544"
+    setback_garage_entrance_ft:
+      value: 18
+      quote: "or/multnomah/portland/33.120.txt#L545-L546"
+    max_height_ft:
+      value: 100
+      quote: "or/multnomah/portland/33.120.txt#L529"
+    max_far:
+      value: 4.0
+      quote: "or/multnomah/portland/33.120.txt#L517-L518"
+    max_coverage_pct:
+      value: 100
+      quote: "or/multnomah/portland/33.120.txt#L553-L554"
+    min_landscaped_pct:
+      value: 0
+      quote: "or/multnomah/portland/33.120.txt#L558-L559"
+    notes: 'Central-city residential. The zeroes are read off the table, not placeholders: Table 120-3 states no minimum area for RX at all, only a 10-foot front lot line, and Table 120-4 states 0 ft setbacks, 100 percent coverage and no landscaped area. Nothing dimensional in this zone can fail a fourplex, so a RED here will come from somewhere other than the zone. Garage entrance is a two-band rule rather than a minimum: 33.120.220.E.1.a allows 5 ft or closer OR 18 ft or farther and forbids everything between. 18 is encoded because it is the band that is always available; the near band additionally requires the entrance to sit no closer to the lot line than the residential facade, which is a maximum-shaped standard this field cannot hold. NOT ENCODED, on purpose. (1) Maximum front setback: Table 120-4 states one (#L549-L551) but 33.120.220.C.1 applies it only on a transit street or in a Pedestrian District, and a Value carries no condition on its base -- encoding it would bind every lot in the zone to a standard most of them never see. (2) Minimum density: Table 120-4 states a units-per-square-foot ratio (#L526-L528), so a large lot in this zone requires MORE than four units and the pod fails on being too small. The registry holds a trigger and a count, not a ratio, and turning one into the other needs a rounding convention 33.120.213 does not state. (3) Minimum site frontage of 90 ft (#L491-L495) applies only to sites on Map 120-2 that are more than 160 ft deep.'
+  RMP:
+    cite_default:
+      cite: PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas
+      url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
+      retrieved: '2026-08-15'
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/portland/33.120.txt#L394-L404"
+    min_lot_sqft:
+      value: 10000
+      quote: "or/multnomah/portland/33.120.txt#L468-L470"
+    min_lot_width_ft:
+      value: 70
+      quote: "or/multnomah/portland/33.120.txt#L468-L470"
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/portland/33.120.txt#L541-L542"
+    setback_side_ft:
+      value: 10
+      quote: "or/multnomah/portland/33.120.txt#L543-L544"
+    setback_rear_ft:
+      value: 10
+      quote: "or/multnomah/portland/33.120.txt#L543-L544"
+    setback_garage_entrance_ft:
+      value: 18
+      quote: "or/multnomah/portland/33.120.txt#L545-L546"
+    max_height_ft:
+      value: 35
+      quote: "or/multnomah/portland/33.120.txt#L529"
+    max_coverage_pct:
+      value: 50
+      quote: "or/multnomah/portland/33.120.txt#L553-L554"
+    min_landscaped_pct:
+      value: 30
+      quote: "or/multnomah/portland/33.120.txt#L558-L559"
+    notes: 'Manufactured Dwelling Park. Table 120-2 is the whole answer here: fourplex is the one "No" in the row, so the pod is barred whatever the lot looks like. The dimensional standards are encoded anyway, so the zone reads as decided rather than as unread and a future product that is not a fourplex already has them. No FAR: 33.120.210.B states floor area ratio is not applicable in RMP. RMP is also the one multi-dwelling zone carrying a MAXIMUM density -- 1 unit per 1,500 sq ft, #L519-L521. NOT ENCODED, on purpose. (1) Maximum front setback: Table 120-4 states one (#L549-L551) but 33.120.220.C.1 applies it only on a transit street or in a Pedestrian District, and a Value carries no condition on its base -- encoding it would bind every lot in the zone to a standard most of them never see. (2) Minimum density: Table 120-4 states a units-per-square-foot ratio (#L526-L528), so a large lot in this zone requires MORE than four units and the pod fails on being too small. The registry holds a trigger and a count, not a ratio, and turning one into the other needs a rounding convention 33.120.213 does not state. (3) Minimum site frontage of 90 ft (#L491-L495) applies only to sites on Map 120-2 that are more than 160 ft deep.'

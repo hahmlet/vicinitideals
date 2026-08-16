@@ -214,6 +214,18 @@ _C: tuple[ConditionDef, ...] = (
         assume=False,
     ),
     ConditionDef(
+        "civic_corridor",
+        "site_fact",
+        "The site abuts a corridor the jurisdiction has mapped for more "
+        "intensity. Portland raises RM2 building coverage from 60 percent to "
+        "70 for sites on a Civic or Neighborhood Corridor and drops a setback "
+        "there too, so the same zone screens two ways depending on a line on "
+        "a map rather than on anything visible in the parcel record. Assumed "
+        "unknown, which leaves the tighter number binding.",
+        evidence="the jurisdiction corridor map -- Portland Map 120-1",
+        assume=None,
+    ),
+    ConditionDef(
         "flag_lot",
         "site_fact",
         "Reaches the street by a pole, so frontage and access are measured "
@@ -230,6 +242,20 @@ _C: tuple[ConditionDef, ...] = (
         "single-storey column is screened against a standard it can never "
         "meet.",
         evidence="the design catalog entry — Design.stories",
+    ),
+    ConditionDef(
+        "low_rise",
+        "design_fact",
+        "The building sits under the height at which a code steps its "
+        "setbacks up. Portland RM3 and RM4 ask 5 feet of side and rear "
+        "setback of buildings up to 55 feet tall and 10 feet of anything "
+        "above that, and the threshold is the code's, not ours -- what this "
+        "condition asserts is that the pod clears whichever one the cited "
+        "zone names. A two-storey townhome clears every such threshold in "
+        "Oregon, so it is nearly always true; it is registered rather than "
+        "assumed because the taller number is the one that may not be "
+        "dropped by accident.",
+        evidence="the design catalog entry -- Design.height_ft against the cited threshold",
     ),
     ConditionDef(
         "unit_lots",

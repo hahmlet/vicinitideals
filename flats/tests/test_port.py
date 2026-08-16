@@ -121,7 +121,7 @@ def test_written_config_loads_through_the_real_loader() -> None:
     rules = RuleSet(load_rules())
 
     assert len(rules.layers) == 19  # 18 jurisdictions + the state layer
-    assert sum(len(l.zones) for l in rules.layers.values()) == 96
+    assert sum(len(l.zones) for l in rules.layers.values()) == 102
 
 
 def test_state_parking_preemption_reaches_a_city_zone() -> None:
@@ -140,8 +140,14 @@ def test_ported_zones_are_unverified_not_trusted() -> None:
 
 
 def test_unencoded_zone_is_surfaced_not_dropped() -> None:
-    # RM1 is the 14,426-lot hole this whole rebuild exists to close.
+    # RM1 was the 14,426-lot hole this rebuild exists to close, and Chapter
+    # 33.120 closed it. What the test is for outlives the example: a zone the
+    # GIS reports and the rules do not carry must come back saying so, rather
+    # than resolving off the state layer and reading like a thin encoding.
     res = RuleSet(load_rules()).resolve("or/multnomah/portland", "RM1")
+    assert res.verdict is not Verdict.zone_not_encoded, "33.120 is encoded"
+
+    res = RuleSet(load_rules()).resolve("or/multnomah/portland", "CM2")
 
     assert res.verdict is Verdict.zone_not_encoded
 
