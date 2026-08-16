@@ -1,5 +1,5 @@
 {
-  "digest": "8868208b18d407aeae6ce4e68f75f400a80fa4081d4a71bcbfe901e37aad5cb3",
+  "digest": "da680fbefa36c231abefde9c4eb9841b5962986d7df2c54a7f282f8837487d1c",
   "layers": {
     "or": {
       "misattributed": [],
@@ -1075,20 +1075,6 @@
     "or/multnomah/gresham": {
       "misattributed": [
         {
-          "zone": "DRL-1",
-          "field": "quadplex_allowed",
-          "claimed": "4.1120 4.1130 7.0420",
-          "found": "4.1100",
-          "quote": "or/multnomah/gresham/4.1100.downtown.txt#L246"
-        },
-        {
-          "zone": "DRL-2",
-          "field": "quadplex_allowed",
-          "claimed": "4.1120 4.1130 7.0420",
-          "found": "4.1100",
-          "quote": "or/multnomah/gresham/4.1100.downtown.txt#L246"
-        },
-        {
           "zone": "LDR-5",
           "field": "min_frontage_ft",
           "claimed": "4.0120 4.0130 4.0131 7.0420",
@@ -1511,140 +1497,10 @@
       ],
       "label": "Gresham",
       "counts": {
-        "conditional": 3,
-        "unread": 11,
-        "unsourced": 3,
+        "unsourced": 1,
         "uncheckable": 7
       },
       "gaps": [
-        {
-          "zone": "CMF",
-          "field": "setback_side_ft",
-          "cause": "conditional",
-          "detail": "30, 50",
-          "believed": "0",
-          "action": "encode as a variant \u2014 the document qualifies this number, by footnote or by the lot sizes the column was written for"
-        },
-        {
-          "zone": "DRL-1",
-          "field": "setback_side_ft",
-          "cause": "conditional",
-          "detail": "30, 50",
-          "believed": "5",
-          "action": "encode as a variant \u2014 the document qualifies this number, by footnote or by the lot sizes the column was written for"
-        },
-        {
-          "zone": "DRL-2",
-          "field": "setback_side_ft",
-          "cause": "conditional",
-          "detail": "30, 50",
-          "believed": "5",
-          "action": "encode as a variant \u2014 the document qualifies this number, by footnote or by the lot sizes the column was written for"
-        },
-        {
-          "zone": "CMF",
-          "field": "min_frontage_ft",
-          "cause": "unread",
-          "detail": "or/multnomah/gresham/4.0400.corridor.txt#L220",
-          "believed": "100",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "CMF",
-          "field": "min_lot_sqft",
-          "cause": "unread",
-          "detail": "or/multnomah/gresham/4.0400.corridor.txt#L296",
-          "believed": "10000",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "CMF",
-          "field": "setback_front_ft",
-          "cause": "unread",
-          "detail": "or/multnomah/gresham/4.0100.residential.txt#L447",
-          "believed": "5",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "CMF",
-          "field": "setback_rear_ft",
-          "cause": "unread",
-          "detail": "or/multnomah/gresham/4.0400.corridor.txt#L334",
-          "believed": "15",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "CMF",
-          "field": "setback_street_side_ft",
-          "cause": "unread",
-          "detail": "or/multnomah/gresham/4.0100.residential.txt#L447",
-          "believed": "5",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "DRL-1",
-          "field": "setback_front_ft",
-          "cause": "unread",
-          "detail": "or/multnomah/gresham/4.0100.residential.txt#L76",
-          "believed": "10",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "DRL-1",
-          "field": "setback_rear_ft",
-          "cause": "unread",
-          "detail": "or/multnomah/gresham/4.0100.residential.txt#L76",
-          "believed": "10",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "DRL-1",
-          "field": "setback_street_side_ft",
-          "cause": "unread",
-          "detail": "or/multnomah/gresham/4.0100.residential.txt#L76",
-          "believed": "10",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "DRL-2",
-          "field": "setback_front_ft",
-          "cause": "unread",
-          "detail": "or/multnomah/gresham/4.0100.residential.txt#L76",
-          "believed": "10",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "DRL-2",
-          "field": "setback_rear_ft",
-          "cause": "unread",
-          "detail": "or/multnomah/gresham/4.0100.residential.txt#L76",
-          "believed": "10",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "DRL-2",
-          "field": "setback_street_side_ft",
-          "cause": "unread",
-          "detail": "or/multnomah/gresham/4.0100.residential.txt#L76",
-          "believed": "10",
-          "action": "a stored document prints this answer and no reader will claim it \u2014 the cell reads \"15/04 feet\", the row is written for five housing types at once, the column header is a range. Open /flats/find and read the line"
-        },
-        {
-          "zone": "DRL-1",
-          "field": "min_lot_sqft",
-          "cause": "unsourced",
-          "detail": "",
-          "believed": "4000",
-          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
-        },
-        {
-          "zone": "DRL-2",
-          "field": "min_lot_sqft",
-          "cause": "unsourced",
-          "detail": "",
-          "believed": "4000",
-          "action": "no stored document states this. Find the chapter that does, declare it under `code:`, and fetch \u2014 or delete a value nothing backs"
-        },
         {
           "zone": "MDR-24",
           "field": "min_lot_sqft",

@@ -447,54 +447,131 @@ zones:
   DRL-1:
     section: ["4.11", "7.042"]
     cite_default:
-      cite: Gresham Development Code Tables 4.1120/4.1130 (Downtown); 7.0420(J)
+      cite: Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown); 7.0420(J)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
       retrieved: '2026-07-24'
     quadplex_allowed:
       value: true
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L246"
-    setback_front_ft: 10
-    setback_side_ft: 5
-    setback_rear_ft: 10
-    setback_street_side_ft: 10
-    min_lot_sqft: 4000
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L495"
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L499"
+      variants:
+        - value: 0
+          when: [attached_wall]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L504"
+    setback_rear_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L506"
+      variants:
+        - value: 6
+          when: [abuts_alley]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L507"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L500"
+    setback_garage_entrance_ft:
+      value: 20
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L497"
+    min_lot_sqft:
+      value: 4000
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L511"
+    min_lot_width_ft:
+      value: 35
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L514"
+      variants:
+        - value: 16
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L517"
+    min_frontage_ft:
+      value: 35
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L518"
     orientation_constraint: axis_required
-    notes: 'quadfit confidence: verified | Downtown. MAXIMUM front setback 15-20 ft + >=50% frontage occupancy
+    notes: 'Read against Table 4.1130 on 2026-08-15. The governing row is the one headed "Single-detached, duplex, triplex, and quadplex dwellings in any district; and Townhouse and Cottage Cluster in DRL-1 and DRL-2" (L492), which names this building twice over, and its numbers hold across every street type the row prints -- so nothing here depends on which street the lot fronts. Front is the facade line (10, L495); the garage face is a separate and much deeper standard (20, L497) and is now encoded rather than left to bind invisibly. Side interior is 5 (L499) with a common-wall 0 (L504) as an `attached_wall` variant; rear is 10 without an alley (L506) and 6 with one (L507). Street side is 10 (L500). Lot area 4,000 (L511), width 35 at the building line with 16 on a townhouse unit lot (L514/L517), frontage 35 (L518). The same row states a 70 ft minimum interior-lot DEPTH (L516) and FLATS has no depth field -- the second jurisdiction where that hole has now surfaced, after the sweep found it in Fairview 19.30. Not encodable until the field exists. quadfit confidence: verified | Downtown. MAXIMUM front setback 15-20 ft + >=50% frontage occupancy
       (7.0420(J)) effectively force the long axis parallel to the street — axis_required. Max-front-setback
       placement band not modeled (blind spot).'
   DRL-2:
     section: ["4.11", "7.042"]
     cite_default:
-      cite: Gresham Development Code Tables 4.1120/4.1130 (Downtown); 7.0420(J)
+      cite: Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown); 7.0420(J)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
       retrieved: '2026-07-24'
     quadplex_allowed:
       value: true
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L246"
-    setback_front_ft: 10
-    setback_side_ft: 5
-    setback_rear_ft: 10
-    setback_street_side_ft: 10
-    min_lot_sqft: 4000
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L495"
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L499"
+      variants:
+        - value: 0
+          when: [attached_wall]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L504"
+    setback_rear_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L506"
+      variants:
+        - value: 6
+          when: [abuts_alley]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L507"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L500"
+    setback_garage_entrance_ft:
+      value: 20
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L497"
+    min_lot_sqft:
+      value: 4000
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L511"
+    min_lot_width_ft:
+      value: 35
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L514"
+      variants:
+        - value: 16
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L517"
+    min_frontage_ft:
+      value: 35
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L518"
     orientation_constraint: axis_required
-    notes: 'quadfit confidence: verified | Same as DRL-1; height 50 ft.'
+    notes: 'Read against Table 4.1130 on 2026-08-15. The governing row is the one headed "Single-detached, duplex, triplex, and quadplex dwellings in any district; and Townhouse and Cottage Cluster in DRL-1 and DRL-2" (L492), which names this building twice over, and its numbers hold across every street type the row prints -- so nothing here depends on which street the lot fronts. Front is the facade line (10, L495); the garage face is a separate and much deeper standard (20, L497) and is now encoded rather than left to bind invisibly. Side interior is 5 (L499) with a common-wall 0 (L504) as an `attached_wall` variant; rear is 10 without an alley (L506) and 6 with one (L507). Street side is 10 (L500). Lot area 4,000 (L511), width 35 at the building line with 16 on a townhouse unit lot (L514/L517), frontage 35 (L518). The same row states a 70 ft minimum interior-lot DEPTH (L516) and FLATS has no depth field -- the second jurisdiction where that hole has now surfaced, after the sweep found it in Fairview 19.30. Not encodable until the field exists. quadfit confidence: verified | Same as DRL-1; height 50 ft.'
   CMF:
     section: ["4.04", "7.042"]
     cite_default:
-      cite: Gresham Development Code Tables 4.0420/4.0430 (Corridor); 7.0420(J)
+      cite: Gresham Development Code 4.0400 Tables 4.0420/4.0430 (Corridor); 4.0433 and 7.0512.A.2; 7.0420(J)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0400.pdf
       retrieved: '2026-07-24'
     quadplex_allowed:
       value: true
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L148"
-    setback_front_ft: 5
-    setback_side_ft: 0
-    setback_rear_ft: 15
-    setback_street_side_ft: 5
-    min_lot_sqft: 10000
-    min_frontage_ft: 100
+    setback_front_ft:
+      value: 5
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L332-L336"
+    setback_side_ft:
+      value: 0
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L332-L336"
+    setback_rear_ft:
+      value: 15
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L332-L336"
+    setback_street_side_ft:
+      value: 5
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L332-L336"
+    setback_front_max_ft:
+      value: 20
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L351-L356"
+    min_lot_sqft:
+      value: 10000
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L296-L297"
+    min_frontage_ft:
+      value: 100
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L301-L302"
     orientation_constraint: axis_required
-    notes: 'quadfit confidence: verified | Base CMF regime: residential needs 10,000 sf min AND 100 ft
+    notes: 'Read against Table 4.0430 on 2026-08-15, and quoted as line ranges because this table is the worst case of the extraction problem in the corpus: seven columns (RTC, SC, SC-RJ, CMF, CMU, CC, MC, header at L359) collapse into one run of words per line, so no single line holds a whole cell and CMF is the fourth value along each of five consecutive lines. Reassembled, the residential row reads "5 feet front and street-side; 15 feet rear; 0 feet interior side" (L332-L336). A reviewer has to read the range and count columns; that is what the range citation is asking them to do, and it is honest about the work rather than pointing at a line that looks decisive and is not. The MAXIMUM front setback, 20 ft (L351-L356), is now encoded rather than living only in this note -- it is the standard that forces the pod forward on the lot and it was previously invisible to the engine. Lot size 10,000 (L296-L297) and frontage 100 (L301-L302) confirmed in the same table. quadfit confidence: verified | Base CMF regime: residential needs 10,000 sf min AND 100 ft
       street frontage; max front setback 20 ft + frontage occupancy — axis_required. NE Glisan/162nd corridors
       follow TLDR standards instead (Table 4.0430 n.14) — NOT split out; base regime applied everywhere
       = conservative.'
