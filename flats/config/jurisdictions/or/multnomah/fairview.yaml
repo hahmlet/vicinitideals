@@ -28,6 +28,9 @@ code:
     title: Chapter 19.120 VTR Village Townhouse Residential
 zones:
   R-6:
+    min_building_separation_ft:
+      value: 10
+      quote: "or/multnomah/fairview/19.30.txt#L405"
     cite_default:
       cite: FMC 19.30.020 Table A / 19.30.030 Table A (2023-41-TA amendments, PC Final Review Draft 12-5-2023)
       url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html
@@ -67,6 +70,9 @@ zones:
       value: 30
       quote: "or/multnomah/fairview/19.30.txt#L369"
   R-7.5:
+    min_building_separation_ft:
+      value: 10
+      quote: "or/multnomah/fairview/19.30.txt#L406"
     cite_default:
       cite: FMC 19.30.020/19.30.030 (2023-41-TA amendments)
       url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html
@@ -105,6 +111,9 @@ zones:
       value: 30
       quote: "or/multnomah/fairview/19.30.txt#L370"
   R-10:
+    min_building_separation_ft:
+      value: 10
+      quote: "or/multnomah/fairview/19.30.txt#L407"
     cite_default:
       cite: FMC 19.30.020/19.30.030 (2023-41-TA amendments)
       url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html
@@ -143,6 +152,9 @@ zones:
       value: 30
       quote: "or/multnomah/fairview/19.30.txt#L371"
   RM:
+    min_building_separation_ft:
+      value: 10
+      quote: "or/multnomah/fairview/19.30.txt#L409"
     cite_default:
       cite: FMC 19.30.010.D/.020/.030 (2023-41-TA amendments)
       url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html

@@ -1,0 +1,222 @@
+{
+  "layer": "or/multnomah/fairview",
+  "setup": {
+    "model": "qwen2.5:7b",
+    "size": 30,
+    "overlap": 20,
+    "context": 8192
+  },
+  "documents": [
+    "or/multnomah/fairview/19.30.txt"
+  ],
+  "found": 77,
+  "recall": 0.6129,
+  "covered": [
+    "or/multnomah/fairview/19.30.txt#L343 min_lot_width_ft",
+    "or/multnomah/fairview/19.30.txt#L345 min_lot_width_ft",
+    "or/multnomah/fairview/19.30.txt#L347 min_lot_width_ft",
+    "or/multnomah/fairview/19.30.txt#L362 setback_front_ft",
+    "or/multnomah/fairview/19.30.txt#L363 setback_front_ft",
+    "or/multnomah/fairview/19.30.txt#L364 setback_front_ft",
+    "or/multnomah/fairview/19.30.txt#L366 setback_front_ft",
+    "or/multnomah/fairview/19.30.txt#L377 setback_rear_ft",
+    "or/multnomah/fairview/19.30.txt#L379 setback_rear_ft",
+    "or/multnomah/fairview/19.30.txt#L387 setback_side_ft",
+    "or/multnomah/fairview/19.30.txt#L389 setback_side_ft",
+    "or/multnomah/fairview/19.30.txt#L391 setback_side_ft",
+    "or/multnomah/fairview/19.30.txt#L395 setback_side_ft",
+    "or/multnomah/fairview/19.30.txt#L399 setback_street_side_ft",
+    "or/multnomah/fairview/19.30.txt#L400 setback_street_side_ft",
+    "or/multnomah/fairview/19.30.txt#L401 setback_street_side_ft",
+    "or/multnomah/fairview/19.30.txt#L428 max_coverage_pct",
+    "or/multnomah/fairview/19.30.txt#L429 max_coverage_pct",
+    "or/multnomah/fairview/19.30.txt#L430 max_coverage_pct"
+  ],
+  "missed": [
+    "or/multnomah/fairview/19.30.txt#L257 min_lot_sqft",
+    "or/multnomah/fairview/19.30.txt#L258 min_lot_sqft",
+    "or/multnomah/fairview/19.30.txt#L259 min_lot_sqft",
+    "or/multnomah/fairview/19.30.txt#L350 min_lot_width_ft",
+    "or/multnomah/fairview/19.30.txt#L369 setback_front_max_ft",
+    "or/multnomah/fairview/19.30.txt#L370 setback_front_max_ft",
+    "or/multnomah/fairview/19.30.txt#L371 setback_front_max_ft",
+    "or/multnomah/fairview/19.30.txt#L373 setback_front_max_ft",
+    "or/multnomah/fairview/19.30.txt#L381 setback_rear_ft",
+    "or/multnomah/fairview/19.30.txt#L384 setback_rear_ft",
+    "or/multnomah/fairview/19.30.txt#L403 setback_street_side_ft",
+    "or/multnomah/fairview/19.30.txt#L432 max_coverage_pct"
+  ],
+  "common": [
+    [
+      "maximum lot depth",
+      1
+    ],
+    [
+      "special yards (distance between primary buildings on the same lot)",
+      1
+    ],
+    [
+      "recessed entryway",
+      1
+    ],
+    [
+      "minimum depth for covered entryway",
+      1
+    ],
+    [
+      "minimum eave overhang",
+      1
+    ],
+    [
+      "access standard",
+      1
+    ],
+    [
+      "entryway recession",
+      1
+    ],
+    [
+      "covered entryway depth",
+      1
+    ],
+    [
+      "maximum driveway approach",
+      1
+    ],
+    [
+      "driveway location",
+      1
+    ],
+    [
+      "grant access easements to allow normal vehicular access and emergency access",
+      1
+    ],
+    [
+      "screening",
+      1
+    ]
+  ],
+  "holes": [
+    {
+      "document": "or/multnomah/fairview/19.30.txt",
+      "line": 353,
+      "standard": "maximum lot depth",
+      "applies_to": "townhome, cottage clusters",
+      "states": "3 times the lot width",
+      "lenses": [
+        "dimension",
+        "relief"
+      ]
+    },
+    {
+      "document": "or/multnomah/fairview/19.30.txt",
+      "line": 405,
+      "standard": "special yards (distance between primary buildings on the same lot)",
+      "applies_to": "Special Yards",
+      "states": "10 feet",
+      "lenses": [
+        "dimension"
+      ]
+    },
+    {
+      "document": "or/multnomah/fairview/19.30.txt",
+      "line": 553,
+      "standard": "recessed entryway",
+      "applies_to": "an entryway",
+      "states": "that is recessed a minimum of three feet",
+      "lenses": [
+        "missed"
+      ]
+    },
+    {
+      "document": "or/multnomah/fairview/19.30.txt",
+      "line": 556,
+      "standard": "minimum depth for covered entryway",
+      "applies_to": "a covered entryway",
+      "states": "with a minimum depth of four feet",
+      "lenses": [
+        "missed"
+      ]
+    },
+    {
+      "document": "or/multnomah/fairview/19.30.txt",
+      "line": 559,
+      "standard": "minimum eave overhang",
+      "applies_to": "eaves",
+      "states": "12-inch minimum overhang",
+      "lenses": [
+        "missed"
+      ]
+    },
+    {
+      "document": "or/multnomah/fairview/19.30.txt",
+      "line": 587,
+      "standard": "access standard",
+      "applies_to": "lots or parcels with frontages only on collectors and/or arterial streets",
+      "states": "must meet the jurisdiction\u2019s access standards applicable to collectors and/or arterials",
+      "lenses": [
+        "relief"
+      ]
+    },
+    {
+      "document": "or/multnomah/fairview/19.30.txt",
+      "line": 643,
+      "standard": "entryway recession",
+      "applies_to": "entryway",
+      "states": "An entryway that is recessed a minimum of three feet.",
+      "lenses": [
+        "relief"
+      ]
+    },
+    {
+      "document": "or/multnomah/fairview/19.30.txt",
+      "line": 645,
+      "standard": "covered entryway depth",
+      "applies_to": "covered entryway",
+      "states": "A covered entryway with a minimum depth of four feet.",
+      "lenses": [
+        "relief"
+      ]
+    },
+    {
+      "document": "or/multnomah/fairview/19.30.txt",
+      "line": 661,
+      "standard": "maximum driveway approach",
+      "applies_to": "townhouse",
+      "states": "one driveway approach is allowed for every townhouse",
+      "lenses": [
+        "relief"
+      ]
+    },
+    {
+      "document": "or/multnomah/fairview/19.30.txt",
+      "line": 678,
+      "standard": "driveway location",
+      "applies_to": "townhouse with consolidated access",
+      "states": "driveway and approach are not allowed in the area directly between the front facade and front lot line of any of the townhouses",
+      "lenses": [
+        "relief"
+      ]
+    },
+    {
+      "document": "or/multnomah/fairview/19.30.txt",
+      "line": 681,
+      "standard": "grant access easements to allow normal vehicular access and emergency access",
+      "applies_to": "townhouse projects that include consolidated access or shared driveways",
+      "states": "A townhouse project that includes consolidated access or shared driveways shall grant access easements to allow normal vehicular access and emergency access.",
+      "lenses": [
+        "access"
+      ]
+    },
+    {
+      "document": "or/multnomah/fairview/19.30.txt",
+      "line": 851,
+      "standard": "screening",
+      "applies_to": "vehicle areas and trash receptacles",
+      "states": "oriented away from adjacent residences to the greatest extent practicable, and shall be screened with an evergreen hedge or solid fence or wall of not less than six feet in height.",
+      "lenses": [
+        "relief"
+      ]
+    }
+  ]
+}

@@ -18,6 +18,7 @@ import pytest
 from flats.encode.sweep.ask import Finding, merge, parse, prompt_for, scripted, sweep
 from flats.encode.sweep.audit import Report, field_for, judge
 from flats.encode.sweep.audit import run as sweep_run
+from flats.encode.sweep.audit import write as sweep_write
 from flats.encode.sweep.chunk import Chunk, chunks
 from flats.encode.sweep.journal import Journal, Mismatch, Setup
 from flats.rules.model import Layer, Provenance, Value, Zone
@@ -424,3 +425,38 @@ def test_a_resumed_run_does_not_re_ask_a_passage_it_already_read(tmp_path):
     assert report.documents == (DOC,)
 
 
+
+
+def test_a_report_records_the_configuration_that_produced_it(tmp_path):
+    """A banked recall is only a baseline if it says what it was reading with.
+
+    Two tagged runs of the same layer exist precisely to be compared, and
+    "0.48 against 0.61" answers nothing without the model and the chunking
+    beside it — which knob moved is the entire question.
+    """
+    from flats.rules.model import CodeDocument
+
+    layer = _layer().model_copy(
+        update={"code": (CodeDocument(id="16.22", url="https://example.invalid/16.22"),)}
+    )
+
+    class _Ask:
+        model = "qwen2.5:7b"
+        context = 8192
+
+        def __call__(self, prompt: str) -> str:
+            return '{"found": []}'
+
+    report = sweep_run(layer, _Ask(), store=_Stored(TEXT), size=30, overlap=20)
+
+    assert report.setup == {
+        "model": "qwen2.5:7b",
+        "size": 30,
+        "overlap": 20,
+        "context": 8192,
+    }
+
+    written = json.loads(
+        sweep_write(report, tmp_path / "out.json").read_text(encoding="utf-8")
+    )
+    assert written["setup"]["size"] == 30

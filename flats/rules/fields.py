@@ -78,6 +78,17 @@ _F: tuple[FieldDef, ...] = (
         "Minimum setback to a garage entrance / vehicle door.",
         False,
     ),
+    FieldDef(
+        "min_building_separation_ft",
+        "length_ft",
+        "Minimum distance between two primary buildings on the SAME lot -- "
+        "Fairview 19.30 calls it a special yard and asks ten feet. It is not a "
+        "setback: no lot line is involved, and it binds only where the pod is "
+        "going onto a lot that already holds a house, or where a site plan "
+        "puts two pods on one parcel. Both are ordinary, and neither is "
+        "visible to any of the lot-line fields.",
+        False,
+    ),
     # --- lot dimensions -------------------------------------------------
     FieldDef("min_lot_sqft", "area_sqft", "Minimum lot area for a fourplex.", False, "min_lot_size"),
     FieldDef("min_lot_width_ft", "length_ft", "Minimum lot width.", False, "min_lot_width"),
@@ -166,6 +177,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "setback_street_side_ft",
         "setback_front_max_ft",
         "setback_garage_entrance_ft",
+        "min_building_separation_ft",
         "min_lot_width_ft",
         "min_frontage_ft",
         # Most Oregon codes state neither, and a zone that is silent about depth

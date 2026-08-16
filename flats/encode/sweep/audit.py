@@ -28,9 +28,9 @@ from __future__ import annotations
 import json
 import re
 from collections import Counter
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import Iterable
+from typing import Iterable, Mapping
 
 from flats.encode.sweep.ask import Ask, Finding, sweep
 from flats.encode.sweep.chunk import chunks
@@ -178,6 +178,11 @@ class Report:
     holes: tuple[Hole, ...]
     #: How many findings the sweep produced in total, before mapping.
     found: int
+    #: The reading configuration this number came out of -- model, chunk size,
+    #: overlap, context. Recorded because the routine use of this module is
+    #: comparing one run against another, and a recall banked without its knobs
+    #: is a number nobody can reproduce or argue with.
+    setup: Mapping[str, object] = field(default_factory=dict)
 
     @property
     def recall(self) -> float:
@@ -344,6 +349,12 @@ def run(
         missed=tuple(missed),
         holes=tuple(holes),
         found=total,
+        setup={
+            "model": getattr(ask, "model", ""),
+            "size": size,
+            "overlap": overlap,
+            "context": getattr(ask, "context", 0),
+        },
     )
 
 
@@ -358,6 +369,7 @@ def write(report: Report, path: Path) -> Path:
     ranked = sorted(report.holes, key=lambda h: (-len(h.lenses), h.document, h.line))
     body = {
         "layer": report.layer,
+        "setup": dict(report.setup),
         "documents": list(report.documents),
         "found": report.found,
         "recall": round(report.recall, 4),
