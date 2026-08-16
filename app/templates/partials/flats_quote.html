@@ -1,9 +1,28 @@
 {% if error %}
   <div class="muted" style="font-size:12px;padding:6px 0">Source unavailable: {{ error }}</div>
 {% else %}
+  {#
+    Two kinds of line, rendered two ways, and the difference is load-bearing.
+
+    A sentence out of a PDF arrives ragged because the column it was set in was
+    six inches wide. Its horizontal spacing carries nothing, so it is squeezed
+    and allowed to wrap, with a hanging indent so the wrapped half lines up
+    under the text rather than under the line number.
+
+    A table row's runs of spaces ARE the columns — the only surviving evidence
+    of which zone a number belonged to. So it is printed exactly as stored and
+    never wrapped: it scrolls sideways instead, because wrapping a grid row
+    scrambles the one thing that makes it checkable.
+
+    Both keep their real line number. That number is what every rule in FLATS
+    cites, so it is never renumbered and never omitted.
+  #}
   <pre style="margin:6px 0;padding:8px;background:#0f172a;color:#e2e8f0;border-radius:6px;
-              font-size:11px;line-height:1.45;overflow-x:auto;white-space:pre">{% for line in lines %}<span
-    style="{% if line.quoted %}background:#1d4ed8;color:#fff;{% else %}opacity:.65;{% endif %}display:block"
-  >{% if line.n %}{{ "%5d" | format(line.n) }}  {% endif %}{{ line.text }}</span>{% endfor %}</pre>
+              font-size:11px;line-height:1.5;overflow-x:auto;white-space:pre"
+  >{% for line in lines %}<span
+      style="{% if line.quoted %}background:#1d4ed8;color:#fff;{% else %}opacity:.65;{% endif %}
+             display:block;{% if not line.grid %}white-space:pre-wrap;padding-left:7ch;text-indent:-7ch;{% endif %}"
+      {% if line.grid %}title="Table row — the spacing is the column layout, shown unaltered"{% endif %}
+    >{% if line.n %}{{ "%5d" | format(line.n) }}  {% endif %}{{ line.shown if line.shown is defined else line.text }}</span>{% endfor %}</pre>
   <div class="muted" style="font-size:11px">{{ path }}</div>
 {% endif %}

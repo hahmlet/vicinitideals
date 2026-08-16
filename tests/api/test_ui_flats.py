@@ -1482,3 +1482,33 @@ async def test_a_query_with_a_note_joins_the_batch(client: AsyncClient, session:
 
     bundle = await client.get("/flats/feedback")
     assert "10 percent cut" in bundle.text
+
+
+# --- reading the code without rewriting it --------------------------------
+
+
+@pytest.mark.asyncio
+async def test_a_sentence_is_tidied_and_a_table_row_is_not():
+    """The one thing that must not happen on this page is a table row losing
+    its column spacing. That spacing is the only evidence of which zone a
+    number belonged to, and squeezing it produces something that reads better
+    and means less."""
+    from app.api.routers.ui_flats import _line
+
+    sentence = _line(37, "   B. Lot Dimensions.  All lots shall have  35 ft.", True)
+    assert sentence["grid"] is False
+    assert sentence["shown"] == "B. Lot Dimensions. All lots shall have 35 ft."
+    assert sentence["text"] == "   B. Lot Dimensions.  All lots shall have  35 ft."
+
+    row = _line(753, "Attached Dwellings, Quadplexes  10          10 - Exterior Wall", True)
+    assert row["grid"] is True
+    assert row["shown"] == "Attached Dwellings, Quadplexes  10          10 - Exterior Wall"
+
+
+@pytest.mark.asyncio
+async def test_the_displayed_line_keeps_the_number_its_citation_is_written_against():
+    """A tidy-up that renumbered would move six hundred citations by one, with
+    nothing on screen to say so."""
+    from app.api.routers.ui_flats import _line
+
+    assert _line(1544, "  some line  ", False)["n"] == 1544

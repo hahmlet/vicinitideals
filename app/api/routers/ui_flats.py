@@ -50,6 +50,7 @@ from starlette.concurrency import run_in_threadpool
 from app.api.deps import DBSession
 from app.api.routers.ui_helpers import _base_ctx, _get_counts, _get_user, templates
 from app.models.flats import FlatsRuleSignature
+from flats.encode import legible
 from flats.designs.model import Design, DesignStatus, Plat, load_catalog
 from flats.encode.attribution import claimed_sections, section_at
 from flats.encode.find import passages
@@ -761,6 +762,29 @@ def _passages(layer: Layer, decided: dict) -> list[dict[str, Any]]:
     return sorted(cards, key=lambda c: (c["document"], _span(c["ref"]) or (0, 0)))
 
 
+def _line(n: int, text: str, quoted: bool) -> dict[str, Any]:
+    """One line of a document as the review pages show it.
+
+    Shared by the card and by the on-demand citation view, because the two sit
+    inches apart on the same screen and a line squeezed in one and not the
+    other reads as two different documents.
+
+    ``text`` stays exactly as stored -- it is what a feedback bundle quotes and
+    what a reviewer falls back to when the tidied version reads oddly. ``shown``
+    is the same line with the extractor's artefacts taken out, and only where
+    taking them out is lossless: a sentence's horizontal spacing carries
+    nothing, a table row's runs of spaces are the columns.
+    """
+    grid = legible.is_grid(text)
+    return {
+        "n": n,
+        "text": text,
+        "shown": text.rstrip() if grid else legible.legible(text),
+        "grid": grid,
+        "quoted": quoted,
+    }
+
+
 def _window(document: str, chain: list[tuple[int, int]]) -> list[dict[str, Any]]:
     """One stretch of the document, with every cited line in it marked.
 
@@ -774,11 +798,7 @@ def _window(document: str, chain: list[tuple[int, int]]) -> list[dict[str, Any]]
     start = max(min(x[0] for x in chain) - _CONTEXT, 1)
     end = min(max(x[1] for x in chain) + _CONTEXT, len(whole))
     return [
-        {
-            "n": n,
-            "text": whole[n - 1],
-            "quoted": any(first <= n <= last for first, last in chain),
-        }
+        _line(n, whole[n - 1], any(first <= n <= last for first, last in chain))
         for n in range(start, end + 1)
     ]
 
@@ -1728,13 +1748,12 @@ def _cited_lines(ref: str) -> tuple[list[dict[str, Any]], str]:
         return [], "this citation does not resolve to stored text"
 
     if not first:
-        return [{"n": 0, "text": quoted, "quoted": True}], ""
+        return [_line(0, quoted, True)], ""
 
     start = max(first - _CONTEXT, 1)
     end = min(last + _CONTEXT, len(whole))
     return [
-        {"n": n, "text": whole[n - 1], "quoted": first <= n <= last}
-        for n in range(start, end + 1)
+        _line(n, whole[n - 1], first <= n <= last) for n in range(start, end + 1)
     ], ""
 
 
