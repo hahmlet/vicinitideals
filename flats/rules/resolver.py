@@ -41,6 +41,7 @@ import enum
 from dataclasses import dataclass, field as _dc_field
 from typing import Any, Collection, Mapping
 
+from flats.rules.definitions import Boundary, Definition, decide, unread
 from flats.rules.fields import REQUIRED_FIELDS, field
 from flats.rules.model import LIKE, Layer, Preempt, Provenance, Status, Value, Zone
 
@@ -204,6 +205,47 @@ class RuleSet:
         parts = layer_id.split("/")
         ids = ["/".join(parts[: i + 1]) for i in range(len(parts))]
         return [self.layers[i] for i in ids if i in self.layers]
+
+    def definitions_for(self, layer_id: str) -> dict[str, Definition]:
+        """What each term means *here*, and nowhere else by accident.
+
+        Values inherit down the chain. Definitions deliberately do not. An
+        incorporated Oregon city writes its own development code; the county
+        code governs unincorporated land, so Milwaukie having no definition of
+        a term is not Clackamas County speaking for Milwaukie. Silence is not
+        adoption, and a borrowed test is a wrong answer wearing a citation.
+
+        The one way a layer takes another's definitions is by saying so:
+        ``definitions_from: <layer id>`` beside a quote of the clause that
+        adopts them. That is followed for terms the layer has not defined
+        itself, in the order declared, and the resulting definition still
+        cites the code it was actually read from.
+        """
+        out: dict[str, Definition] = {}
+        seen: set[str] = set()
+        queue = [layer_id]
+        while queue:
+            current = queue.pop(0)
+            if current in seen or current not in self.layers:
+                continue
+            seen.add(current)
+            layer = self.layers[current]
+            for term, defn in layer.definitions.items():
+                out.setdefault(term, defn)
+            queue.extend(layer.definitions_from)
+        return out
+
+    def defines(self, layer_id: str, term: str, boundary: Boundary) -> bool | None:
+        """Answer one term for one lot under this jurisdiction's own reading.
+
+        ``None`` means nobody in this jurisdiction's code has been read on the
+        question, which the screen carries through as unknown.
+        """
+        return decide(self.definitions_for(layer_id), term, boundary)
+
+    def undefined(self, layer_id: str) -> tuple[str, ...]:
+        """Terms this jurisdiction has never defined. One gap each."""
+        return unread(layer_id, self.definitions_for(layer_id))
 
     def find_zone(self, layer_id: str, zone: str) -> tuple[Layer, Zone] | None:
         """A zone code, looked up in this layer and then up the hierarchy.

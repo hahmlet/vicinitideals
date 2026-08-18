@@ -77,6 +77,10 @@ LAYER_META = frozenset(
         "defaults",
         "zones",
         "ingest",
+        # What a term means in this jurisdiction -- corner lot, front lot line.
+        # A measurement is a rule and belongs beside the numbers it governs.
+        "definitions",
+        "definitions_from",
     }
 )
 
@@ -871,6 +875,20 @@ class Layer(BaseModel):
     ingest: dict[str, Any] = Field(default_factory=dict)
     #: The documents this jurisdiction's rules are read from.
     code: tuple[CodeDocument, ...] = ()
+    #: How this jurisdiction decides a term the rules hang variants on. Held
+    #: per layer because four codes define "corner lot" four incompatible ways
+    #: and a borrowed default is a wrong answer rather than a safe one. See
+    #: :mod:`flats.rules.definitions`. Empty means unread, not "the usual one".
+    definitions: dict[str, Any] = Field(default_factory=dict)
+
+    #: Layer ids whose definitions this one adopts, most authoritative first.
+    #: Written only where the code says it adopts them, with the adopting
+    #: clause quoted in the layer's notes. It exists because the honest answer
+    #: to "who does Milwaukie borrow from" is nobody, and the way to hold that
+    #: answer is a field that stays empty rather than a chain walk that fills
+    #: it in. An incorporated city's development code is self-contained; the
+    #: county's governs unincorporated land. Silence is not adoption.
+    definitions_from: list[str] = Field(default_factory=list)
 
     @property
     def depth(self) -> int:

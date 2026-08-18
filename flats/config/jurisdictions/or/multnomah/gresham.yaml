@@ -41,6 +41,27 @@ ingest:
   zoning_layer: zoning_gresham
   zone_field: ZONE
   strip_lowercase_suffix: false
+definitions:
+  # "Corner Lot. A lot that has frontage on two or more streets. A corner lot
+  # also includes a lot abutting the inside curve of a street with a delta
+  # angle, as used on plats, of 60 degrees or more."
+  #
+  # The loosest of the five readings, and the only one under which a through
+  # lot is a corner lot: it asks for frontage on two streets and says nothing
+  # about where they go. That follows from the text rather than in spite of it.
+  #
+  # The curve clause is the same bend Portland writes as "120 degrees or less",
+  # stated from the other side -- a delta of 60 is an interior angle of 120 --
+  # so it is encoded as the interior angle the rest of the module measures.
+  #
+  # Alleys: 3.0100 defines a lot line abutting an alley as a rear lot line.
+  corner_lot:
+    test: frontage_count
+    count: 2
+    curve_at_or_below_deg: 120.0
+    quote: "or/multnomah/gresham/3.0100.definitions.txt#L1304-L1305"
+    cite: "Gresham Development Code 3.0100, Lot, Corner Lot"
+
 code:
   # The city hosts the Development Code as one PDF per section series,
   # served plain (no impersonation). Layout extraction is clean (no

@@ -11,6 +11,25 @@ ingest:
   zoning_layer: zoning_portland
   zone_field: ZONE
   strip_lowercase_suffix: true
+definitions:
+  # "Corner Lot. A lot, adjusted lot, lot remnant, or lot of record that has
+  # frontage on more than one intersecting street, and where the lot frontages
+  # intersect. A street that curves with angles that are 120 degrees or less,
+  # measured from the center line of the street, is considered two intersecting
+  # streets for the purpose of evaluating whether a lot is a corner lot."
+  #
+  # Two conditions, not one: more than one street, AND the frontages intersect.
+  # A through lot has two street frontages and is not a corner here, which is
+  # the clause that separates Portland from Gresham on identical geometry.
+  #
+  # Alleys are excluded upstream rather than in this sentence: 33.910's street
+  # lot line "does not include lot lines that abut an alley".
+  corner_lot:
+    test: intersecting_frontages
+    curve_at_or_below_deg: 120.0
+    quote: "or/multnomah/portland/33.910.definitions.txt#L701-L705"
+    cite: "PCC 33.910, Lot-Related Definitions, Corner Lot"
+
 code:
   # Portland's HTML route for a chapter serves navigation furniture; the PDF is
   # the artifact. Whole-chapter, unsliced: this one is already the chapter.

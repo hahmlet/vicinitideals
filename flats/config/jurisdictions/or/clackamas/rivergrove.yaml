@@ -12,6 +12,24 @@ ingest:
   zoning_layer: zoning_metro
   zone_field: ZONE
   strip_lowercase_suffix: false
+definitions:
+  # "Corner Lot" means a lot at least two adjacent sides of which abut streets
+  # other than alleys, provided the angle of the intersection of the adjacent
+  # streets does not exceed 135 degrees."
+  #
+  # The only ceiling in the corpus. A fork meeting at 150 degrees is a corner
+  # lot in Portland, Gresham and Oregon City and is not one here, and there is
+  # no reading of the other four codes that produces that answer.
+  #
+  # "streets other than alleys" states the alley exclusion outright rather than
+  # leaving it to the front lot line definition, which is why this is the
+  # jurisdiction to quote when asked whether an alley is ever frontage.
+  corner_lot:
+    test: adjacent_frontages
+    max_intersection_angle_deg: 135.0
+    quote: "or/clackamas/rivergrove/rldo.composite.txt#L326-L328"
+    cite: "RLDO, Lot, Corner Lot"
+
 code:
 # The city posts the RLDO as one composite PDF ("compilation of Rivergrove
 # enactments"). Setbacks are 5.080, lot size 5.010/5.075.

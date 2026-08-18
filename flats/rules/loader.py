@@ -26,6 +26,7 @@ from typing import Any
 import yaml
 
 from flats.rules.fields import field
+from flats.rules.definitions import parse as parse_definitions
 from flats.rules.model import (
     LAYER_META,
     ZONE_META,
@@ -356,6 +357,30 @@ def _parse_code(raw: Any, where: str, problems: list[str]) -> tuple[CodeDocument
     return tuple(out)
 
 
+def _adoptions(raw: object, *, where: str, problems: list[str]) -> list[str]:
+    """Layer ids whose definitions this layer says it adopts.
+
+    Deliberately dumb: a list of ids, in the order the code names them, and
+    nothing is added that the YAML did not write down. The resolver never
+    fills this in from the hierarchy, because "the county is above you" is a
+    fact about our file layout and not about who wrote your definitions.
+    """
+    if raw is None:
+        return []
+    if isinstance(raw, str):
+        raw = [raw]
+    if not isinstance(raw, list):
+        problems.append(f"{where}.definitions_from: expected a list of layer ids")
+        return []
+    out: list[str] = []
+    for item in raw:
+        if not isinstance(item, str) or not item.strip():
+            problems.append(f"{where}.definitions_from: {item!r} is not a layer id")
+            continue
+        out.append(item.strip())
+    return out
+
+
 def _terse(exc: Exception) -> str:
     """Pydantic errors are verbose; keep the message a reviewer can scan."""
     msg = str(exc).replace("\n", " ")
@@ -423,6 +448,8 @@ def load_layer(path: Path, root: Path, problems: list[str]) -> Layer | None:
             wanted=tuple(wanted),
             ingest=raw.get("ingest") or {},
             code=_parse_code(raw.get("code"), where, problems),
+            definitions=parse_definitions(raw.get("definitions"), where=where, problems=problems),
+            definitions_from=_adoptions(raw.get("definitions_from"), where=where, problems=problems),
         )
     except Exception as exc:
         problems.append(f"{where}: {_terse(exc)}")

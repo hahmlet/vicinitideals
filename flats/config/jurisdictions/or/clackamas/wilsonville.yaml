@@ -36,6 +36,36 @@ ingest:
   zoning_layer: zoning_wilsonville
   zone_field: ZONE_CODE
   strip_lowercase_suffix: false
+definitions:
+  # "157. Lot, Corner: A lot either (1) where two intersecting lot lines each
+  # abut a street or private drive or (2) where the shortest lot line abuts a
+  # tract with a non-vehicular pathway and an intersecting lot line abuts a
+  # street or private drive. Private drives which are bounded on two opposite
+  # sides by a single lot shall not be considered in determining if a lot is a
+  # corner lot."
+  #
+  # The widest frontage test of the five: a private drive counts, so a lot on
+  # an internal drive is a corner here and an interior lot in the other four.
+  #
+  # Clause (2) turns on whether an abutting tract carries a non-vehicular
+  # pathway. No layer we hold records that, so the definition is marked
+  # incomplete: it may answer yes, and it may never answer no, because the
+  # clause it cannot see could make the answer yes. A lot that fails clause (1)
+  # comes back unknown rather than "not a corner".
+  #
+  # The final sentence -- a private drive bounded on two opposite sides by a
+  # single lot is disregarded -- is not encoded either. It can only narrow the
+  # answer, so leaving it out keeps more lots in the corner class, which is the
+  # conservative direction for a standard that adds a second front setback.
+  corner_lot:
+    test: intersecting_frontages
+    drives_count: true
+    incomplete: >-
+      clause (2), a shortest lot line abutting a tract with a non-vehicular
+      pathway, is unmeasurable from any layer held
+    quote: "or/clackamas/wilsonville/4.planning.txt#L795-L798"
+    cite: "Wilsonville Planning and Land Development Ordinance 4.001(157), Lot, Corner"
+
 code:
   # Municode client 4976, publication 1951. The library page is a JavaScript
   # frame; PublicationPdfDownload returns the adopted code as one PDF, and the

@@ -25,6 +25,18 @@ ingest:
   zoning_layer: zoning_oregon_city
   zone_field: ZONE
   strip_lowercase_suffix: false
+definitions:
+  # "Corner lot" means a lot abutting upon two or more streets at their
+  # intersection."
+  #
+  # Same shape as Portland without the curve clause. Oregon City states no
+  # angle at which a curving street becomes two, so a bend is one street here
+  # however tight, and the only corner is a real intersection.
+  corner_lot:
+    test: intersecting_frontages
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L2081-L2083"
+    cite: "OCMC 17.04.665, Lot, corner"
+
 code:
   # Municode client 3708, publication 1377 (updated 2026-06-16). One product:
   # zoning is Title 17 inside the Municipal Code. The library renders in
