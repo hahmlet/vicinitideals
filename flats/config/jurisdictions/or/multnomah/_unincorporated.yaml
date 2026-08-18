@@ -13,6 +13,32 @@ ingest:
   zoning_layer: zoning_metro
   zone_field: ZONE
   strip_lowercase_suffix: false
+definitions:
+  # "Lot (Corner) - A lot which occupies an interior angle of less than 135
+  # degrees, formed by the intersection of two streets or a street and an
+  # accessway."
+  #
+  # Indexed under "Corner Lot - See Lot (Corner)" and stated here. The angle is
+  # the county's whole test: no count of streets, no requirement that the
+  # frontages be adjacent sides, just an interior angle formed by an
+  # intersection. Closest to Rivergrove and not the same -- "less than 135"
+  # excludes 135 where Rivergrove's "does not exceed 135" includes it, which is
+  # why angle_inclusive is written out rather than left to a default.
+  #
+  # An accessway counts alongside a street, and no layer we hold records
+  # accessways, so the definition is marked incomplete: it may answer yes on
+  # two streets, and it may never answer no, because an accessway it cannot see
+  # could make the answer yes.
+  corner_lot:
+    test: adjacent_frontages
+    max_intersection_angle_deg: 135.0
+    angle_inclusive: false
+    incomplete: >-
+      an intersection formed by a street and an accessway also makes a corner,
+      and no layer held records accessways
+    quote: "or/multnomah/_unincorporated/39.2000.definitions.txt#L836-L839"
+    cite: "MCC 39.2000, Lot (Corner)"
+
 code:
 # R10/R20/RF/R7 are Portland-administered pockets: the standards live in
 # PCC 33.110, the same chapter PDF the Portland layer declares. LR7 (MCC
@@ -25,6 +51,26 @@ code:
 # LR-7 article (39.4848-39.4862, dimensional requirements at 39.4862). LR7's
 # encoded values remain Model-Code-derived (OAR 660-046 preemption, see the
 # zone notes) — this is the MCC text a reviewer weighs them against.
+# MCC 39.2000 is Part 2 of the zoning chapter -- the county's own definitions.
+# The same PDF as the LR-7 slice and read plain rather than layout, because
+# the chapter is set in two columns and layout mode splits a definition across
+# the column break: "Lot (Corner) - A lot which occupies an interior angle of
+# less than 135 degrees, formed by the" ends one line range and "intersection
+# of two streets or a street and an accessway" opens another forty lines
+# earlier in the file. A quote has to be able to state the whole rule.
+- id: "39.2000.definitions"
+  url: https://multco.us/file/chapter_39_-_zoning_code/download
+  title: MCC 39.2000 Definitions (Chapter 39, Part 2)
+  extraction: plain
+  start: "PART 2"
+  end: "PART 3"
+  nth: 2
+  # A definitions chapter is prose about words, so it carries almost no
+  # dimensioned standards -- 36 lines of 1335 -- and the thinness guard reads
+  # that as a landing page. It is not one. Read 2026-08-18: the slice runs
+  # from "PART 2 - DEFINITIONS" to Part 3 and states the county's own
+  # definitions of lot, corner lot, street and alley.
+  allow_thin: true
 - id: "39.lr-7"
   url: https://multco.us/file/chapter_39_-_zoning_code/download
   title: MCC 39.4848-39.4862 Low Density Residential LR-7 (formerly S-1)

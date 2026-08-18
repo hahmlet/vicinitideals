@@ -39,6 +39,20 @@ def through() -> list[Side]:
     return lot((50, 0, S), (100, 90, N), (50, 0, S), (100, 90, N))
 
 
+def named_fork(angle: float) -> list[Side]:
+    """Two named streets meeting at a stated interior angle. Named, because
+    without street identity a shallow fork and one bending road are the same
+    boundary and the conservative reading is one road."""
+    sides = lot((50, 0, S), (100, (180 - angle) % 180.0, S), (50, 0, N), (100, 90, N))
+    ids = iter(("SE Main", "SE Oak"))
+    return [
+        Side(x.length_ft, x.bearing_deg, x.abuts, next(ids))
+        if x.abuts is Abuts.street
+        else x
+        for x in sides
+    ]
+
+
 def on_a_private_drive() -> list[Side]:
     return lot(
         (50, 0, S), (100, 90, Abuts.private_drive), (50, 0, N), (100, 90, N)
@@ -59,6 +73,7 @@ def test_the_five_cities_that_have_been_read(rules: RuleSet) -> None:
         "or/clackamas/oregon-city",
         "or/clackamas/rivergrove",
         "or/clackamas/wilsonville",
+        "or/multnomah/_unincorporated",
         "or/multnomah/gresham",
         "or/multnomah/portland",
     ]
@@ -239,3 +254,28 @@ def test_usage_counts_drive_the_queue(rules: RuleSet) -> None:
 
     exempt = next(r for r in rows if r.layer == "or/clackamas/lake-oswego")
     assert exempt.uses > 0 and exempt.blocking and exempt.priority == 0
+
+
+def test_the_two_codes_that_state_a_ceiling_state_it_differently(
+    rules: RuleSet,
+) -> None:
+    """Rivergrove: "does not exceed 135 degrees". Multnomah County: "less than
+    135 degrees". They agree everywhere except at exactly 135, and encoding
+    both as one comparison would pick a side without anybody deciding to."""
+    at_135 = named_fork(135.0)
+    assert rules.defines("or/clackamas/rivergrove", "corner_lot", at_135) is True
+    assert rules.defines("or/multnomah/_unincorporated", "corner_lot", at_135) is None
+
+    inside = named_fork(120.0)
+    assert rules.defines("or/clackamas/rivergrove", "corner_lot", inside) is True
+    assert rules.defines("or/multnomah/_unincorporated", "corner_lot", inside) is True
+
+
+def test_the_county_governs_its_own_land_and_nobody_elses(rules: RuleSet) -> None:
+    """Multnomah County now has a definition, which is exactly the moment a
+    chain-walking resolver would start handing it to Gresham, Fairview,
+    Troutdale and Wood Village. It does not."""
+    assert "corner_lot" in rules.definitions_for("or/multnomah/_unincorporated")
+    for city in ("or/multnomah/fairview", "or/multnomah/troutdale", "or/multnomah/wood-village"):
+        assert rules.definitions_for(city) == {}, city
+        assert rules.defines(city, "corner_lot", corner()) is None, city

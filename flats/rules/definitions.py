@@ -217,6 +217,17 @@ def _frontage_count(boundary: Boundary, p: "Definition") -> bool:
     )
 
 
+def _within(angle: float, ceiling: float, p: "Definition") -> bool:
+    """Whether a junction angle clears the ceiling this code wrote.
+
+    Rivergrove says the angle "does not exceed 135 degrees" and Multnomah
+    County says "less than 135 degrees". At 134 and at 136 they agree; at
+    exactly 135 they do not, and encoding both as the same comparison would
+    quietly pick one code's answer for the other.
+    """
+    return angle <= ceiling if p.angle_inclusive else angle < ceiling
+
+
 def _intersecting(boundary: Boundary, p: "Definition") -> bool:
     """Portland and Oregon City. The frontages have to meet.
 
@@ -228,7 +239,7 @@ def _intersecting(boundary: Boundary, p: "Definition") -> bool:
     streets, junctions = _prepare(boundary, p)
     straight = 180.0 - COLLINEAR_TOL_DEG
     ceiling = p.max_intersection_angle_deg or straight
-    if streets >= p.count and any(angle <= ceiling for angle in junctions):
+    if streets >= p.count and any(_within(a, ceiling, p) for a in junctions):
         return True
     return p.curve_at_or_below_deg is not None and any(
         angle <= p.curve_at_or_below_deg for angle in junctions
@@ -244,7 +255,7 @@ def _adjacent(boundary: Boundary, p: "Definition") -> bool:
     """
     _streets_unused, junctions = _prepare(boundary, p)
     ceiling = p.max_intersection_angle_deg or 180.0 - COLLINEAR_TOL_DEG
-    return any(angle <= ceiling for angle in junctions)
+    return any(_within(a, ceiling, p) for a in junctions)
 
 
 #: Every test a ``corner_lot`` definition may name, and nothing else. Adding a
@@ -283,8 +294,13 @@ class Definition:
     #: degrees or more" is the same bend from the other side.
     curve_at_or_below_deg: float | None = None
     #: The widest angle two streets may meet at and still make a corner.
-    #: Rivergrove states 135. Nobody else states one.
+    #: Rivergrove and Multnomah County both state 135 and mean different
+    #: things by it -- see :attr:`angle_inclusive`.
     max_intersection_angle_deg: float | None = None
+    #: Whether the stated ceiling is itself allowed. "Does not exceed 135
+    #: degrees" includes 135; "less than 135 degrees" does not. One boundary
+    #: angle apart, and the two codes that state a ceiling state it both ways.
+    angle_inclusive: bool = True
     #: Whether an alley counts as street frontage. Every code that addresses it
     #: says no — Portland's street lot line "does not include lot lines that
     #: abut an alley", Gresham's "lot line abutting an alley is a rear lot

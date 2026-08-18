@@ -68,7 +68,11 @@ PHRASE = {
     # Plural matters. Codes headline the standard "Corner Lots" and define the
     # term "Corner Lot", and counting only the singular hid Tualatin and Wood
     # Village entirely -- both apply corner rules and neither showed a use.
-    "corner_lot": r"\bcorner\s+lots?\b|\blots?\s*,\s*corner\b",
+    #
+    # The parenthesised form is Multnomah County's: it indexes "Corner Lot" and
+    # defines "Lot (Corner)", so a matcher that knows only the comma inversion
+    # finds the cross-reference and stops.
+    "corner_lot": r"\bcorner\s+lots?\b|\blots?\s*[,(]\s*corner\b\)?",
 }
 
 #: The typographic tell. A code sets a definition as the term *opening its own
@@ -89,20 +93,31 @@ DEFINED = {
         r"[\"“]?"  # some codes quote the term being defined
         rf"(?:{pattern})"
         r"[\"”]?"
-        # A period or a colon, never a comma. "For\ncorner lots, this standard
-        # shall apply to at least one side" is a wrapped sentence in Troutdale's
-        # window standards and reads as a definition if a comma is allowed to
-        # separate the term from its body. No code in the corpus uses one.
-        r"(?:\s*[.:]|\s+(?:means|shall mean|is|refers to|is defined as))\s*",
+        # A period, a colon or a dash -- never a comma. "For\ncorner lots, this
+        # standard shall apply to at least one side" is a wrapped sentence in
+        # Troutdale's window standards and reads as a definition if a comma is
+        # allowed to separate the term from its body. No code in the corpus
+        # uses one. Multnomah County uses an en dash and nothing else.
+        r"(?:\s*[.:]|\s*[–—-]\s|\s+(?:means|shall mean|is|refers to|is defined as))\s*",
         re.I,
     )
     for term, pattern in PHRASE.items()
 }
 
-#: An entry that only points somewhere else. Both Gresham and Portland index
-#: "Corner Lot. See Lot." at the top of their definitions chapters and define
-#: it eight hundred lines later, so the first hit is reliably the wrong one.
-CROSS_REFERENCE = re.compile(r"^see\b", re.I)
+#: A body that is not a definition. Two shapes:
+#:
+#: *A cross-reference.* Gresham, Portland and Multnomah County all index
+#: "Corner Lot. See Lot." near the top of their definitions and state the thing
+#: itself hundreds of lines later, so the first hit is reliably the wrong one.
+#:
+#: *A standard wearing a heading.* Allowing a dash to separate a term from its
+#: body -- which Multnomah County's definitions require -- also lets Tualatin's
+#: "Corner Lots — On corner lots, the setback is..." through. A definition
+#: opens with a noun phrase; a standard opens with a preposition or a
+#: quantifier, and that is the difference between the two.
+NOT_A_DEFINITION = re.compile(
+    r"^(?:see|on|for|in|where|when|if|no|all|each|every|except|the following)\b", re.I
+)
 
 #: How much text an entry has to carry before it is a definition rather than a
 #: line in a table of contents. "Lot, corner." followed by "Lot coverage" is a
@@ -212,7 +227,7 @@ def _find(layer_id: str, term: str) -> str:
                 # one's body. Oregon City's chapter opens with a page of them.
                 continue
             body = " ".join([head, *lines[i + 1 : i + 1 + LOOKAHEAD]]).strip()
-            if CROSS_REFERENCE.match(body) or len(body) < MIN_BODY:
+            if NOT_A_DEFINITION.match(body) or len(body) < MIN_BODY:
                 continue
             return f"{layer_id}/{path.stem}.txt#L{i + 1}"
     return ""
