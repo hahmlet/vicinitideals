@@ -48,6 +48,15 @@ code:
   # about and skips. The dimensional tables (4.0120/4.0130/4.0131) are
   # spatial grids with housing-type rows under lettered group headings
   # -- the housing-type dimension, explicit.
+  # Article 3 is the spec the geometry stage has been working without. Every
+  # standard in Article 4 is written in terms the city defines here -- corner
+  # lot, flag lot, street frontage, lot width at the building line, arterial --
+  # and FLATS infers all of them from shape with nothing to check the inference
+  # against. A definition is a rule about what a measurement means, and it
+  # belongs in the corpus for the same reason a setback does.
+  - id: "3.0100.definitions"
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-3.0100.pdf
+    title: "Section 3.0100 - Definitions"
   - id: "4.0100.residential"
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
     title: "Section 4.0100 - Residential Land Use Districts"
