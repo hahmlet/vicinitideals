@@ -209,3 +209,33 @@ def test_silence_and_not_having_looked_are_different_rows(rules: RuleSet) -> Non
 def test_an_encoded_definition_stops_blocking(rules: RuleSet) -> None:
     rows = coverage_for(rules, "or/multnomah/portland")
     assert [(r.status, r.blocking) for r in rows] == [("own", False)]
+
+
+def test_the_matcher_does_not_read_prose_as_a_definition(rules: RuleSet) -> None:
+    """Two shapes that fooled it and are now pinned.
+
+    Troutdale's window standard wraps onto a line beginning "corner lots, this
+    standard shall apply..." — a term, a comma, and forty characters of body,
+    which is a definition to anything that only checks punctuation. And every
+    code headlines the standard in the plural, "Corner Lots", while defining
+    the singular, so counting uses has to see both and defining must not fire
+    on a table heading with nothing after it.
+    """
+    troutdale = coverage_for(rules, "or/multnomah/troutdale")
+    assert [r.status for r in troutdale] == ["unsourced"]
+    # And it is a real gap rather than an absent one: the code uses the word.
+    assert troutdale[0].uses >= 5
+
+
+def test_usage_counts_drive_the_queue(rules: RuleSet) -> None:
+    """A code that leans on a word it never defines is the expensive gap. An
+    eligible jurisdiction with uses and no definition outranks everything, and
+    an exempt one never enters the queue however often it says the word."""
+    rows = coverage(rules)
+    blocking = [r for r in rows if r.priority]
+    assert blocking, "the queue is not empty and should not silently become so"
+    assert blocking == sorted(blocking, key=lambda r: -r.uses)
+    assert all(r.eligible and r.blocking for r in blocking)
+
+    exempt = next(r for r in rows if r.layer == "or/clackamas/lake-oswego")
+    assert exempt.uses > 0 and exempt.blocking and exempt.priority == 0

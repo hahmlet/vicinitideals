@@ -65,7 +65,10 @@ DOCS = Path(__file__).resolve().parents[1] / "provenance" / "docs"
 #: How each term is spelled where it is defined. Codes index definitions both
 #: ways -- "Corner Lot" and "Lot, Corner" -- so both are matched.
 PHRASE = {
-    "corner_lot": r"\bcorner\s+lot\b|\blots?\s*,\s*corner\b",
+    # Plural matters. Codes headline the standard "Corner Lots" and define the
+    # term "Corner Lot", and counting only the singular hid Tualatin and Wood
+    # Village entirely -- both apply corner rules and neither showed a use.
+    "corner_lot": r"\bcorner\s+lots?\b|\blots?\s*,\s*corner\b",
 }
 
 #: The typographic tell. A code sets a definition as the term *opening its own
@@ -86,7 +89,11 @@ DEFINED = {
         r"[\"“]?"  # some codes quote the term being defined
         rf"(?:{pattern})"
         r"[\"”]?"
-        r"(?:\s*[.:,]|\s+(?:means|shall mean|is|refers to|is defined as))\s*",
+        # A period or a colon, never a comma. "For\ncorner lots, this standard
+        # shall apply to at least one side" is a wrapped sentence in Troutdale's
+        # window standards and reads as a definition if a comma is allowed to
+        # separate the term from its body. No code in the corpus uses one.
+        r"(?:\s*[.:]|\s+(?:means|shall mean|is|refers to|is defined as))\s*",
         re.I,
     )
     for term, pattern in PHRASE.items()
@@ -134,11 +141,25 @@ class Coverage:
     where: str = ""
     #: For ``adopted``, the layer the definition came from.
     source: str = ""
+    #: How many lines of this jurisdiction's stored code use the term. A word
+    #: this code hangs standards on is a word we have to be able to answer,
+    #: and the count is the whole priority argument: thirteen jurisdictions
+    #: apply corner lot rules in text already on disk while none of them has
+    #: a definition encoded, which is a queue rather than a curiosity.
+    uses: int = 0
+    #: Whether this jurisdiction is screened at all. An exempt city's missing
+    #: definition costs nothing, and chasing it is wasted work.
+    eligible: bool = True
 
     @property
     def blocking(self) -> bool:
         """Whether a screen in this jurisdiction has to answer unknown."""
         return self.status not in ("own", "adopted")
+
+    @property
+    def priority(self) -> int:
+        """Rough ordering for the queue: uses we cannot answer."""
+        return 0 if not self.blocking or not self.eligible else self.uses
 
 
 def _stored(layer_id: str) -> list[Path]:
@@ -147,6 +168,26 @@ def _stored(layer_id: str) -> list[Path]:
     if not directory.is_dir():
         return []
     return sorted(p for p in directory.glob("*.txt") if p.is_file())
+
+
+def _uses(layer_id: str, term: str) -> int:
+    """Lines of this jurisdiction's stored code that use the term.
+
+    Usage, not definition. A code that writes a corner lot setback fifteen
+    times and defines the word nowhere we hold is the most expensive kind of
+    gap: every one of those fifteen standards resolves against a word the
+    screen cannot answer.
+    """
+    pattern = PHRASE.get(term)
+    if pattern is None:
+        return 0
+    phrase = re.compile(pattern, re.I)
+    return sum(
+        1
+        for path in _stored(layer_id)
+        for line in path.read_text(encoding="utf-8", errors="replace").splitlines()
+        if phrase.search(line)
+    )
 
 
 def _find(layer_id: str, term: str) -> str:
@@ -197,19 +238,22 @@ def coverage_for(rules: RuleSet, layer_id: str) -> list[Coverage]:
     resolved = rules.definitions_for(layer_id)
     chapter, held = _chapter(layer)
     has_docs = bool(_stored(layer_id))
+    common = {"layer": layer_id, "eligible": layer.eligible}
 
     out: list[Coverage] = []
     for term in TERMS:
+        uses = _uses(layer_id, term)
         defn = resolved.get(term)
         if defn is not None:
             own = term in layer.definitions
             out.append(
                 Coverage(
-                    layer=layer_id,
+                    **common,
                     term=term,
                     status="own" if own else "adopted",
                     where=defn.cite or defn.quote,
                     source="" if own else _owner(rules, layer_id, term),
+                    uses=uses,
                 )
             )
             continue
@@ -220,7 +264,9 @@ def coverage_for(rules: RuleSet, layer_id: str) -> list[Coverage]:
         found = _find(layer_id, term) if has_docs else ""
         if found:
             out.append(
-                Coverage(layer=layer_id, term=term, status="findable", where=found)
+                Coverage(
+                    **common, term=term, status="findable", where=found, uses=uses
+                )
             )
             continue
         if chapter and held:
@@ -231,7 +277,9 @@ def coverage_for(rules: RuleSet, layer_id: str) -> list[Coverage]:
             status, where = "unsourced", ""
         else:
             status, where = "unsearched", ""
-        out.append(Coverage(layer=layer_id, term=term, status=status, where=where))
+        out.append(
+            Coverage(**common, term=term, status=status, where=where, uses=uses)
+        )
     return out
 
 
@@ -246,9 +294,10 @@ def _owner(rules: RuleSet, layer_id: str, term: str) -> str:
 def coverage(rules: RuleSet | None = None) -> list[Coverage]:
     """The whole register, worst standing first, so the queue reads top-down."""
     rules = rules or RuleSet(load_rules())
-    rank = {status: i for i, status in enumerate(reversed(STATUSES))}
     out = [row for layer_id in sorted(rules.layers) for row in coverage_for(rules, layer_id)]
-    out.sort(key=lambda r: (rank[r.status], r.layer, r.term))
+    # Worst standing first, and within it the jurisdictions whose codes lean
+    # hardest on the word -- which is the order somebody should work the queue.
+    out.sort(key=lambda r: (-r.priority, r.status, r.layer, r.term))
     return out
 
 
@@ -264,7 +313,8 @@ def render(rows: list[Coverage]) -> str:
     """The register as text, for a terminal or a commit message."""
     width = max((len(r.layer) for r in rows), default=10)
     lines = [
-        f"{r.layer:<{width}}  {r.term:<14}  {r.status:<10}  {r.source or r.where}"
+        f"{r.layer:<{width}}  {r.term:<12}  {r.status:<10}  "
+        f"{'' if r.eligible else 'exempt '}{r.uses:>3} uses  {r.source or r.where}"
         for r in rows
     ]
     tally = by_status(rows)
