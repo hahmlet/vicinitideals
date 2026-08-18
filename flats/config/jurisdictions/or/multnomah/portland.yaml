@@ -20,6 +20,15 @@ code:
   - id: "33.120"
     url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
     title: Chapter 33.120 Multi-Dwelling Zones
+  # 33.910 is the spec for every measurement the other three chapters take.
+  # Corner lot, through lot, front lot line, lot depth, lot width, street --
+  # each is a defined term here, and each is inferred from shape by the
+  # geometry stage with nothing to check the inference against. Three cities
+  # define "corner lot" three incompatible ways; that is a rule, and a rule
+  # needs a citation.
+  - id: "33.910.definitions"
+    url: https://www.portland.gov/sites/default/files/code/910-definitions_0.pdf
+    title: Chapter 33.910 Definitions
   - id: "33.266"
     url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
     title: Chapter 33.266 Parking, Loading, and Transportation and Parking Demand Management
