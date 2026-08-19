@@ -141,3 +141,43 @@ def test_the_townhouse_multiple_is_encoded_only_where_it_is_printed(
     for zone in ("LDR-1", "LDR-2", "MDR"):
         split = rules.resolve(TROUTDALE, zone, ("unit_lots",))
         assert "max_density_du_per_acre" in split.exempted, zone
+
+
+GLADSTONE = "or/clackamas/gladstone"
+TUALATIN = "or/clackamas/tualatin"
+
+
+def test_a_ceiling_stated_by_housing_type_is_read_on_the_pod_s_row(
+    rules: RuleSet,
+) -> None:
+    """Tualatin's Tables 40-3 and 41-3 print a maximum density per housing
+    type: "None" against Quadplex, 25 units per acre against Townhouse. Two
+    rows, two plat paths, one table."""
+    for zone in ("RL", "RML"):
+        whole = rules.resolve(TUALATIN, zone)
+        split = rules.resolve(TUALATIN, zone, ("unit_lots",))
+
+        assert "max_density_du_per_acre" in whole.exempted, zone
+        assert split.values["max_density_du_per_acre"].value == 25, zone
+
+
+def test_a_chapter_that_prints_no_density_row_borrows_none(rules: RuleSet) -> None:
+    """Gladstone's R-7.2 chapter prints None against Middle housing. Chapter
+    17.12 prints no maximum density row at all, and borrowing R-7.2's across
+    chapters would cite a sentence about another district."""
+    assert "max_density_du_per_acre" in rules.resolve(GLADSTONE, "R7.2").exempted
+    assert "max_density_du_per_acre" not in rules.resolve(GLADSTONE, "R5").values
+    assert "max_density_du_per_acre" not in rules.resolve(GLADSTONE, "R5").exempted
+
+
+def test_four_units_on_a_lot_is_the_ceiling_and_the_pod_sits_on_it(
+    rules: RuleSet,
+) -> None:
+    """"This code does not allow for the creation of more than four dwelling
+    units on a lot, including accessory dwelling units. Cottage clusters and
+    townhomes are exempt." """
+    whole = rules.resolve(GLADSTONE, "R7.2")
+    split = rules.resolve(GLADSTONE, "R7.2", ("unit_lots",))
+
+    assert whole.values["max_units"].value == 4
+    assert "max_units" in split.exempted, "townhomes are exempt, and the split plat is that path"

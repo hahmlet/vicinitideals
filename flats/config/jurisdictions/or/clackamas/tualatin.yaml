@@ -55,6 +55,18 @@ code:
     extraction: plain
 zones:
   RL:
+    max_density_du_per_acre:
+      # Table 40-3, MAXIMUM DENSITY. The table states a ceiling per
+      # housing type and prints "None" against Quadplex, which is the pod on
+      # one lot. Exempt rather than a large number: the code states no maximum
+      # here.
+      exempt: true
+      quote: "or/clackamas/tualatin/40-41.residential.txt#L140,L146"
+      variants:
+        # The same table's Townhouse row, which is the split-plat path.
+        - value: 25
+          when: [unit_lots]
+          quote: "or/clackamas/tualatin/40-41.residential.txt#L140,L144"
     section: ["40."]
     cite_default:
       cite: TDC 40.220 Table (Minimum Lot Size, Lot Width, Setbacks, Height, Coverage); quadplex permitted
@@ -118,6 +130,18 @@ zones:
       units attach, height to 50 ft through Type II Architectural Review. Corner-lot street side is 10
       ft measured from the secondary frontage, which the code determines by where the front door faces.'
   RML:
+    max_density_du_per_acre:
+      # Table 41-3, MAXIMUM DENSITY. The table states a ceiling per
+      # housing type and prints "None" against Quadplex, which is the pod on
+      # one lot. Exempt rather than a large number: the code states no maximum
+      # here.
+      exempt: true
+      quote: "or/clackamas/tualatin/40-41.residential.txt#L445,L450"
+      variants:
+        # The same table's Townhouse row, which is the split-plat path.
+        - value: 25
+          when: [unit_lots]
+          quote: "or/clackamas/tualatin/40-41.residential.txt#L445,L448"
     section: ["41."]
     cite_default:
       cite: TDC 41.220 Table (Minimum Lot Size, Average Lot Width, Setbacks, Height, Coverage); quadplex

@@ -46,6 +46,32 @@ code:
     title: "Chapter 17.12 - Medium Density Residential District (R-5)"
 zones:
   R7.2:
+    max_density_du_per_acre:
+      # GMC 17.10.030, Maximum Density. The rows are by housing type and the
+      # one against "Middle housing" prints None. That also disposes of the
+      # minimum: the chapter asks subdivisions and PUDs for eighty percent of
+      # the maximum density per net acre, and eighty percent of a ceiling the
+      # code does not state has no operand. The other minimum-density sentence
+      # in the chapter is the cottage cluster's four units per acre, a housing
+      # type this screen does not place.
+      #
+      # R-5 gets no such value: chapter 17.12 prints no maximum density row at
+      # all, and borrowing this one across chapters would be citing a sentence
+      # about another district.
+      exempt: true
+      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L209,L213-L214"
+    max_units:
+      # The same block: "this code does not allow for the creation of more
+      # than four dwelling units on a lot, including accessory dwelling units.
+      # Cottage clusters and townhomes are exempt." The pod is four units with
+      # no ADU, so it sits exactly on the ceiling.
+      value: 4
+      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L209,L212"
+      variants:
+        # "Townhomes are exempt", and the split plat is the townhouse path.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L209,L212"
     section: ["17.10."]
     cite_default:
       cite: Gladstone Municipal Code 17.10.020 (middle housing allowed outright), 17.10.050 (dimensional
@@ -123,6 +149,32 @@ zones:
       value: 20
       quote: "or/clackamas/gladstone/17.12.r-5.txt#L388"
   R10:
+    max_density_du_per_acre:
+      # GMC 17.10.030, Maximum Density. The rows are by housing type and the
+      # one against "Middle housing" prints None. That also disposes of the
+      # minimum: the chapter asks subdivisions and PUDs for eighty percent of
+      # the maximum density per net acre, and eighty percent of a ceiling the
+      # code does not state has no operand. The other minimum-density sentence
+      # in the chapter is the cottage cluster's four units per acre, a housing
+      # type this screen does not place.
+      #
+      # R-5 gets no such value: chapter 17.12 prints no maximum density row at
+      # all, and borrowing this one across chapters would be citing a sentence
+      # about another district.
+      exempt: true
+      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L209,L213-L214"
+    max_units:
+      # The same block: "this code does not allow for the creation of more
+      # than four dwelling units on a lot, including accessory dwelling units.
+      # Cottage clusters and townhomes are exempt." The pod is four units with
+      # no ADU, so it sits exactly on the ceiling.
+      value: 4
+      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L209,L212"
+      variants:
+        # "Townhomes are exempt", and the split plat is the townhouse path.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L209,L212"
     section: ["17.10."]
     cite_default:
       cite: Gladstone MC Title 17 (no R-10 chapter; standards mirror R-7.2, the lowest-density defined
