@@ -176,13 +176,14 @@ zones:
       value: 25
       quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L116"
     setback_side_ft:
-      # The table says "Total 15, 5 min." -- it regulates the PAIR of side
-      # yards, not either one. 7.5 is half the stated total, which consumes
-      # exactly the width the code consumes and is therefore right for
-      # fitment; what it does not carry is the 5 ft floor on the narrower
-      # side, which constrains where the pod sits on the lot rather than
-      # whether it fits. Quoted so a reviewer meets the cell as written.
-      value: 7.5
+      # The cell reads "Total 15, 5 min." -- two standards, and both are now
+      # stated as the table states them. 5 is the floor under either yard;
+      # setback_side_total_ft carries the 15 the pair must add up to. The
+      # 7.5 that used to sit here was half a total the document never prints.
+      value: 5
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L131-L133"
+    setback_side_total_ft:
+      value: 15
       quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L131-L133"
     setback_rear_ft:
       value: 30

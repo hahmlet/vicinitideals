@@ -41,6 +41,11 @@ code:
   - id: "19.300.base-zones"
     url: https://ecode360.com/print/MI4969?guid=43860500
     title: "MMC Chapter 19.300 - Base Zones"
+    # Table 19.304.1 prints its footnote markers hard against the numbers:
+    # "Street side yard 154" is fifteen feet with note 4. Read 2026-08-19
+    # against the stored text, and declared rather than guessed -- see
+    # CodeDocument.glued_markers.
+    glued_markers: true
 zones:
   R-MD:
     section: ["19.301"]

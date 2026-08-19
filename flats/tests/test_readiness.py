@@ -445,3 +445,26 @@ def test_a_number_the_cited_line_does_not_state_is_still_caught() -> None:
 
     assert not quotes_the_number("Minimum lot width 20 feet", 35)
     assert not quotes_the_number("Minimum lot width 20 feet", 0)
+
+
+def test_a_number_printed_as_a_fraction_still_counts() -> None:
+    """Clackamas ZDO 315 states the VR-5/7 garage setback as "19½ feet to the
+    garage door". One character, and the digit scan reads the 19 beside it."""
+    from flats.encode.readiness import quotes_the_number
+
+    assert quotes_the_number("19½ feet to the garage door", 19.5)
+    assert quotes_the_number("a half-foot: ½ ft", 0.5)
+    assert not quotes_the_number("19½ feet to the garage door", 19.25)
+
+
+def test_a_footnote_marker_stuck_to_a_number_is_only_read_where_declared() -> None:
+    """Milwaukie prints "Street side yard 154" for fifteen feet with note 4.
+    Read as 154 the encoding looks wrong; read as 15 everywhere, a table that
+    really says 154 would corroborate an encoding of 15."""
+    from flats.encode.readiness import quotes_the_number
+
+    assert not quotes_the_number("Street side yard 154", 15)
+    assert quotes_the_number("Street side yard 154", 15, glued=True)
+    assert quotes_the_number("Street side yard 154", 154, glued=True)
+    # One digit, and only off a bare number -- 1,500 is not 150.
+    assert not quotes_the_number("Minimum lot area 1,500", 150, glued=True)

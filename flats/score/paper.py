@@ -112,6 +112,19 @@ def _number(rules: "ZoneResolution", name: str) -> float | None:
     return float(got) if isinstance(got, (int, float)) else None
 
 
+def _pair(side: float | None, total: float | None) -> float | None:
+    """What both side yards take off the width, from whichever the code states.
+
+    Neither stated is None -- an unknown requirement, not a free one. Both
+    stated is the larger, because a combined minimum and a per-side floor are
+    two standards and a lot has to meet both.
+    """
+    doubled = None if side is None else 2 * side
+    if total is None:
+        return doubled
+    return total if doubled is None else max(total, doubled)
+
+
 def _lot_standard(
     rules: "ZoneResolution", name: str, *, per_unit: bool, lots: int
 ) -> tuple[float | None, bool]:
@@ -171,6 +184,7 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
     front = _number(rules, "setback_front_ft")
     rear = _number(rules, "setback_rear_ft")
     side = _number(rules, "setback_side_ft")
+    side_total = _number(rules, "setback_side_total_ft")
     min_lot, lot_answered = _lot_standard(rules, "min_lot_sqft", per_unit=per_unit, lots=lots)
     min_width, width_answered = _lot_standard(
         rules, "min_lot_width_ft", per_unit=per_unit, lots=lots
@@ -181,10 +195,15 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
     # two orientations away, and the cheaper lot may have been that one.
     axis = rules.get("orientation_constraint") == "axis_required"
 
+    # What the two side yards take off the width together. Where the code
+    # states a combined figure it governs, and a per-side floor can only make
+    # the pair wider -- 5 ft either side of a "total 15" cell is still 15, but
+    # 8 ft either side of one would be 16.
+    sides = _pair(side, side_total)
     needed = (
         ("setback_front_ft", front),
         ("setback_rear_ft", rear),
-        ("setback_side_ft", side),
+        ("setback_side_ft", sides),
     )
     unknown = tuple(name for name, got in needed if got is None) + tuple(
         name
@@ -195,6 +214,8 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
         if not answered
     )
     used = [name for name, got in needed if got is not None]
+    if side_total is not None:
+        used.append("setback_side_total_ft")
     used += [
         name
         for name, got in (
@@ -209,7 +230,7 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
 
     best: PaperFit | None = None
     for orientation, width_ft, depth_ft in design.oriented(axis_required=axis):
-        needed_width = width_ft + 2 * side if side is not None else None
+        needed_width = width_ft + sides if sides is not None else None
         if needed_width is not None and min_width is not None:
             needed_width = max(needed_width, min_width)
         needed_depth = (

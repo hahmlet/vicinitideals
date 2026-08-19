@@ -312,7 +312,44 @@ _NO_STANDARD = tuple(
 )
 
 
-def quotes_the_number(text: str, value, *, spaced: bool = False) -> bool:
+#: A vulgar fraction is one character, and the number scan reads the digits
+#: around it: Clackamas ZDO 315 states the VR-5/7 garage setback as "19½
+#: feet to the garage door", which is stored as 19 followed by U+00BD and
+#: matches no spelling of 19.5. Rewritten to a decimal before the scan, the
+#: way the letter-spacing repair rewrites a scanned line.
+_VULGAR = {
+    "¼": 0.25, "½": 0.5, "¾": 0.75,
+    "⅓": 1 / 3, "⅔": 2 / 3,
+    "⅛": 0.125, "⅜": 0.375, "⅝": 0.625, "⅞": 0.875,
+}
+_FRACTION = re.compile(r"(\d*)\s?([" + "".join(_VULGAR) + r"])")
+
+
+def _decimalise(text: str) -> str:
+    """19½ -> 19.5, and a bare ½ -> 0.5."""
+
+    def sub(m: re.Match[str]) -> str:
+        whole = int(m.group(1)) if m.group(1) else 0
+        return f"{whole + _VULGAR[m.group(2)]:g}"
+
+    return _FRACTION.sub(sub, text)
+
+
+#: A number with a footnote marker stuck to it, in a document that says it
+#: does that: "154" for fifteen with note 4. Only a single trailing digit is
+#: tried, and only on a token carrying no comma or decimal point, which is
+#: the shape these table cells have.
+_GLUED = re.compile(r"(?<![\d.,])(\d{2,})(?![\d.,])")
+
+
+def _unmarked(text: str) -> str:
+    """The same text with one trailing digit dropped from each bare number."""
+    return _GLUED.sub(lambda m: m.group(1)[:-1], text)
+
+
+def quotes_the_number(
+    text: str, value, *, spaced: bool = False, glued: bool = False
+) -> bool:
     """Whether the cited text actually states the value's number.
 
     Deliberately generous: a code writes "7,500 sq ft" and "0.60" and "7.5
@@ -333,8 +370,10 @@ def quotes_the_number(text: str, value, *, spaced: bool = False) -> bool:
     """
     if isinstance(value, bool) or not isinstance(value, (int, float)):
         return True
-    hay = repair_text(text) if spaced else text
+    hay = _decimalise(repair_text(text) if spaced else text)
     if _states(hay, float(value)) or _says(hay, float(value)):
+        return True
+    if glued and _states(_unmarked(hay), float(value)):
         return True
     if value != 0:
         return False
@@ -369,6 +408,7 @@ def readiness_for(
 
     unfetched = tuple(sorted(p for p in layer.documents() if not store.exists(p)))
     spaced = frozenset(p for p, doc in layer.documents().items() if doc.spaced)
+    glued = frozenset(p for p, doc in layer.documents().items() if doc.glued_markers)
     unquoted: list[tuple[str, str]] = []
     no_evidence: list[tuple[str, str]] = []
     misquoted: list[tuple[str, str]] = []
@@ -384,7 +424,10 @@ def readiness_for(
             # is nothing on screen to compare the number against.
             no_evidence.append((zone_code, name))
             continue
-        if not quotes_the_number(cited, number, spaced=quote.split("#", 1)[0] in spaced):
+        doc_id = quote.split("#", 1)[0]
+        if not quotes_the_number(
+            cited, number, spaced=doc_id in spaced, glued=doc_id in glued
+        ):
             misquoted.append((zone_code, name))
 
     if not layer.zones and not layer.defaults:

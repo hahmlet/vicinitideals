@@ -902,6 +902,12 @@ class CodeDocument(BaseModel):
     #: are single digits that is two cells, not one number. Somebody looks at
     #: the stored text and says so.
     spaced: bool = False
+    #: True where this document's tables print footnote markers hard against
+    #: the numbers they mark -- Milwaukie's "Street side yard 154" is fifteen
+    #: feet with note 4, not a hundred and fifty-four. Declared, never
+    #: guessed: in a table that really does state 154, guessing would let the
+    #: corroboration check bless an encoding of 15.
+    glued_markers: bool = False
     #: Set only for a genuinely short section, and only by somebody who has read
     #: it. Never to silence a URL that is serving the wrong thing.
     allow_thin: bool = False

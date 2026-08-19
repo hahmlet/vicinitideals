@@ -17,7 +17,7 @@ import pytest
 from flats.designs.model import Design, Plat
 from flats.rules.loader import load_rules
 from flats.rules.resolver import RuleSet
-from flats.score.paper import BY_COVERAGE, BY_ENVELOPE, BY_MIN_LOT, paper_fit
+from flats.score.paper import BY_COVERAGE, BY_ENVELOPE, BY_MIN_LOT, _pair, paper_fit
 from flats.tests.signing import sign_encoded
 
 pytestmark = pytest.mark.unit
@@ -326,3 +326,21 @@ def test_the_one_lot_path_is_untouched_by_the_statute(tmp_path: Path) -> None:
     assert fit(tmp_path, min_lot_sqft=7000).min_area_sqft == fit(
         tmp_path, min_lot_sqft=7000, land_division_parent_standards=True
     ).min_area_sqft
+
+
+# --- a code that regulates the pair, not either yard ---------------------
+
+
+def test_a_combined_side_yard_is_spent_once_not_twice() -> None:
+    """Lake Oswego's R-7.5 cell reads "Total 15, 5 min." Doubling the 5 would
+    ask 10 feet of a lot the code asks 15 of; halving the 15 -- which is what
+    the encoding used to do -- puts a number in the file that the document
+    does not print."""
+    assert _pair(5.0, 15.0) == 15.0
+    # A floor that would push the pair wider than the stated total governs.
+    assert _pair(8.0, 15.0) == 16.0
+    # Either alone is what there is.
+    assert _pair(5.0, None) == 10.0
+    assert _pair(None, 15.0) == 15.0
+    # Neither is an unknown requirement, not a free one.
+    assert _pair(None, None) is None

@@ -56,6 +56,18 @@ _F: tuple[FieldDef, ...] = (
     # --- setbacks -------------------------------------------------------
     FieldDef("setback_front_ft", "length_ft", "Minimum front setback.", False, "front_setback"),
     FieldDef("setback_side_ft", "length_ft", "Minimum interior side setback.", False, "side_setback"),
+    FieldDef(
+        "setback_side_total_ft",
+        "length_ft",
+        "Minimum COMBINED side setback, where the code regulates the pair "
+        "rather than either yard: Lake Oswego's R-7.5 cell reads \"Total 15, "
+        "5 min.\" Held apart from setback_side_ft because halving it invents "
+        "a number the document does not print, and because the pair and the "
+        "per-side floor bind differently -- the pair takes width off the lot, "
+        "the floor says where the building may sit on what is left.",
+        False,
+        "side_setback",
+    ),
     FieldDef("setback_rear_ft", "length_ft", "Minimum rear setback.", False, "rear_setback"),
     FieldDef(
         "setback_street_side_ft",
@@ -175,6 +187,9 @@ FIELDS: dict[str, FieldDef] = {f.name: f for f in _F}
 OPTIONAL_FIELDS: frozenset[str] = frozenset(
     {
         "setback_street_side_ft",
+        # Only a handful of codes regulate the pair rather than either yard,
+        # and a zone that states one side yard is not an incomplete zone.
+        "setback_side_total_ft",
         "setback_front_max_ft",
         "setback_garage_entrance_ft",
         "min_building_separation_ft",
