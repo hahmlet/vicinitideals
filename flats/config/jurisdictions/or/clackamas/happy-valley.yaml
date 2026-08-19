@@ -62,6 +62,32 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L160"
+    max_density_du_per_acre:
+      # Table 16.22.020-2 prints no ceiling against the quadplex row -- the
+      # standard there is "Lot size (minimum and maximum density)", a lot area
+      # rather than a rate, and it is already carried as min_lot_sqft. What the
+      # table does state for a rate is one row lower: "Townhome maximum density
+      # (units per net acre)", 4.4 du/net acre in R-40.
+      #
+      # So the base is exempt and the townhouse figure is the variant, the same
+      # shape R-5 carries. The header row is quoted with the density row
+      # because the table puts three districts on one printed line and 4.4
+      # alone does not say which column it came from.
+      #
+      # 4.4 and not the 25 in R-5's table: each column states its own, and
+      # reading one district's number across would put four times the real
+      # ceiling on R-40.
+      exempt: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L278,L281"
+      # The acre this rate is per is a net one.
+      # 16.12 defines a net acre as "one acre of developable land, as
+      # calculated pursuant to Section 16.63.020(F)". That calculation is a
+      # survey of the parcel, not an attribute of it.
+      measured_on: net_developable_area
+      variants:
+        - value: 4.4
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L278,L281"
     setback_front_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L290"
@@ -114,6 +140,32 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L160"
+    max_density_du_per_acre:
+      # Table 16.22.020-2 prints no ceiling against the quadplex row -- the
+      # standard there is "Lot size (minimum and maximum density)", a lot area
+      # rather than a rate, and it is already carried as min_lot_sqft. What the
+      # table does state for a rate is one row lower: "Townhome maximum density
+      # (units per net acre)", 8.7 du/net acre in R-20.
+      #
+      # So the base is exempt and the townhouse figure is the variant, the same
+      # shape R-5 carries. The header row is quoted with the density row
+      # because the table puts three districts on one printed line and 8.7
+      # alone does not say which column it came from.
+      #
+      # 8.7 and not the 25 in R-5's table: each column states its own, and
+      # reading one district's number across would put four times the real
+      # ceiling on R-40.
+      exempt: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L278,L281"
+      # The acre this rate is per is a net one.
+      # 16.12 defines a net acre as "one acre of developable land, as
+      # calculated pursuant to Section 16.63.020(F)". That calculation is a
+      # survey of the parcel, not an attribute of it.
+      measured_on: net_developable_area
+      variants:
+        - value: 8.7
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L278,L281"
     setback_front_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L290"
@@ -164,6 +216,32 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L160"
+    max_density_du_per_acre:
+      # Table 16.22.020-2 prints no ceiling against the quadplex row -- the
+      # standard there is "Lot size (minimum and maximum density)", a lot area
+      # rather than a rate, and it is already carried as min_lot_sqft. What the
+      # table does state for a rate is one row lower: "Townhome maximum density
+      # (units per net acre)", 11.6 du/net acre in R-15.
+      #
+      # So the base is exempt and the townhouse figure is the variant, the same
+      # shape R-5 carries. The header row is quoted with the density row
+      # because the table puts three districts on one printed line and 11.6
+      # alone does not say which column it came from.
+      #
+      # 11.6 and not the 25 in R-5's table: each column states its own, and
+      # reading one district's number across would put four times the real
+      # ceiling on R-40.
+      exempt: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L278,L281"
+      # The acre this rate is per is a net one.
+      # 16.12 defines a net acre as "one acre of developable land, as
+      # calculated pursuant to Section 16.63.020(F)". That calculation is a
+      # survey of the parcel, not an attribute of it.
+      measured_on: net_developable_area
+      variants:
+        - value: 11.6
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L278,L281"
     setback_front_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L290"
@@ -214,6 +292,32 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L353"
+    max_density_du_per_acre:
+      # Table 16.22.030-2 prints no ceiling against the quadplex row -- the
+      # standard there is "Lot size (minimum and maximum density)", a lot area
+      # rather than a rate, and it is already carried as min_lot_sqft. What the
+      # table does state for a rate is one row lower: "Townhome maximum density
+      # (units per net acre)", 17.4 du/net acre in R-10.
+      #
+      # So the base is exempt and the townhouse figure is the variant, the same
+      # shape R-5 carries. The header row is quoted with the density row
+      # because the table puts three districts on one printed line and 17.4
+      # alone does not say which column it came from.
+      #
+      # 17.4 and not the 25 in R-5's table: each column states its own, and
+      # reading one district's number across would put four times the real
+      # ceiling on R-40.
+      exempt: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L468,L471"
+      # The acre this rate is per is a net one.
+      # 16.12 defines a net acre as "one acre of developable land, as
+      # calculated pursuant to Section 16.63.020(F)". That calculation is a
+      # survey of the parcel, not an attribute of it.
+      measured_on: net_developable_area
+      variants:
+        - value: 17.4
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L468,L471"
     setback_front_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L481"
@@ -247,6 +351,32 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L353"
+    max_density_du_per_acre:
+      # Table 16.22.030-2 prints no ceiling against the quadplex row -- the
+      # standard there is "Lot size (minimum and maximum density)", a lot area
+      # rather than a rate, and it is already carried as min_lot_sqft. What the
+      # table does state for a rate is one row lower: "Townhome maximum density
+      # (units per net acre)", 20.5 du/net acre in R-8.5.
+      #
+      # So the base is exempt and the townhouse figure is the variant, the same
+      # shape R-5 carries. The header row is quoted with the density row
+      # because the table puts three districts on one printed line and 20.5
+      # alone does not say which column it came from.
+      #
+      # 20.5 and not the 25 in R-5's table: each column states its own, and
+      # reading one district's number across would put four times the real
+      # ceiling on R-40.
+      exempt: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L468,L471"
+      # The acre this rate is per is a net one.
+      # 16.12 defines a net acre as "one acre of developable land, as
+      # calculated pursuant to Section 16.63.020(F)". That calculation is a
+      # survey of the parcel, not an attribute of it.
+      measured_on: net_developable_area
+      variants:
+        - value: 20.5
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L468,L471"
     setback_front_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L481"
@@ -280,6 +410,32 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L353"
+    max_density_du_per_acre:
+      # Table 16.22.030-2 prints no ceiling against the quadplex row -- the
+      # standard there is "Lot size (minimum and maximum density)", a lot area
+      # rather than a rate, and it is already carried as min_lot_sqft. What the
+      # table does state for a rate is one row lower: "Townhome maximum density
+      # (units per net acre)", 24.9 du/net acre in R-7.
+      #
+      # So the base is exempt and the townhouse figure is the variant, the same
+      # shape R-5 carries. The header row is quoted with the density row
+      # because the table puts three districts on one printed line and 24.9
+      # alone does not say which column it came from.
+      #
+      # 24.9 and not the 25 in R-5's table: each column states its own, and
+      # reading one district's number across would put four times the real
+      # ceiling on R-40.
+      exempt: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L468,L471"
+      # The acre this rate is per is a net one.
+      # 16.12 defines a net acre as "one acre of developable land, as
+      # calculated pursuant to Section 16.63.020(F)". That calculation is a
+      # survey of the parcel, not an attribute of it.
+      measured_on: net_developable_area
+      variants:
+        - value: 24.9
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L468,L471"
     setback_front_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L481"

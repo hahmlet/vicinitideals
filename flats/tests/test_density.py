@@ -406,3 +406,47 @@ def test_the_pod_s_lot_size_in_unincorporated_clackamas_is_section_845s(
         held = zones[zone].values["min_lot_sqft"]
         assert held.value == 7000, zone
         assert held.prov.quote == "or/clackamas/_unincorporated/zdo.845.txt#L3,L7", zone
+
+
+HAPPY_VALLEY = "or/clackamas/happy-valley"
+
+
+def test_each_happy_valley_district_states_its_own_townhouse_ceiling(
+    rules: RuleSet,
+) -> None:
+    """Six districts printed one and nobody had written it down, because until
+    the reader learned "units per acre" no field was held in that unit and a
+    density could not be found by machine at all.
+
+    The point of the row is that the numbers differ: 4.4 in R-40 through 24.9
+    in R-7, against the 25 R-5 carries. A corpus with one townhouse number
+    would have put nearly six times the real ceiling on R-40.
+    """
+    ceilings = {
+        zone: rules.resolve(HAPPY_VALLEY, zone, ("unit_lots",)).get(
+            "max_density_du_per_acre"
+        )
+        for zone in ("R40", "R20", "R15", "R10", "R8.5", "R7", "R5")
+    }
+
+    assert ceilings == {
+        "R40": 4.4,
+        "R20": 8.7,
+        "R15": 11.6,
+        "R10": 17.4,
+        "R8.5": 20.5,
+        "R7": 24.9,
+        "R5": 25,
+    }
+
+    # On one lot the pod is a quadplex, and the quadplex row of these tables
+    # is "Lot size (minimum and maximum density)" -- an area, carried as
+    # min_lot_sqft, not a rate.
+    for zone in ceilings:
+        whole = rules.resolve(HAPPY_VALLEY, zone)
+        assert "max_density_du_per_acre" in whole.exempted, zone
+        assert (
+            load_rules()[HAPPY_VALLEY].zones[zone].values["max_density_du_per_acre"]
+            .measured_on
+            == "net_developable_area"
+        ), zone
