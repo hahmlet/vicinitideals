@@ -137,3 +137,81 @@ def test_cmf_corner_frontage_binds_at_the_number_without_an_alley(rules: RuleSet
     assert rules.resolve(GRESHAM, "CMF", ("unit_lots", "corner_lot", "abuts_alley")).values[
         "min_frontage_ft"
     ].value == 25
+
+
+# --- the plan districts, where the same row prints twice ---------------
+#
+# Downtown, Springwater and Pleasant Valley each run an interior row and a
+# corner row, and each hands the townhouse its own pair. Two of the three
+# were also missing whole standards: Springwater had no frontage and no
+# depth encoded, Pleasant Valley no frontage and no garage setback -- a
+# standard nobody encoded never runs, and never running certifies.
+
+PLAN_ZONES = ("DRL-1", "DRL-2", "LDR-SW", "THR-SW", "LDR-PV")
+
+
+def test_every_plan_district_answers_for_a_corner(rules: RuleSet) -> None:
+    for zone in PLAN_ZONES:
+        assert "corner_lot" in rules.resolve(GRESHAM, zone).levers, zone
+
+
+def test_downtown_corner_rows(rules: RuleSet) -> None:
+    for zone in ("DRL-1", "DRL-2"):
+        assert width(rules, zone, "corner_lot") == 40
+        assert width(rules, zone, "unit_lots", "corner_lot") == 20
+        assert frontage(rules, zone, "corner_lot") == 40
+        assert frontage(rules, zone, "unit_lots") == 16
+        assert frontage(rules, zone, "unit_lots", "corner_lot") == 20
+        got = rules.resolve(GRESHAM, zone, ("unit_lots",))
+        assert "min_lot_sqft" in got.exempted, "Table 4.1130 reads Townhouse: None"
+
+
+def test_springwater_had_no_frontage_and_no_depth_at_all(rules: RuleSet) -> None:
+    got = rules.resolve(GRESHAM, "LDR-SW")
+    assert got.values["min_frontage_ft"].value == 35
+    assert got.values["min_lot_depth_ft"].value == 80
+    assert frontage(rules, "LDR-SW", "corner_lot") == 40
+    # F reads "None" for a townhouse lot on both rows, which is a standard
+    # that does not apply rather than 35 feet carried over.
+    town = rules.resolve(GRESHAM, "LDR-SW", ("unit_lots",))
+    assert "min_frontage_ft" in town.exempted
+    assert width(rules, "LDR-SW", "unit_lots", "corner_lot") == 20
+
+
+def test_springwater_lot_size_is_exempt_not_zero(rules: RuleSet) -> None:
+    # The Townhouse row reads "None". A 0 passes every lot; an exemption says
+    # the standard is not the one being applied.
+    got = rules.resolve(GRESHAM, "LDR-SW", ("unit_lots",))
+    assert "min_lot_sqft" in got.exempted
+    assert "min_lot_sqft" not in got.values
+
+
+def test_pleasant_valley_garage_setback_now_runs(rules: RuleSet) -> None:
+    # 20 feet, twice the facade setback, and it is what a street-facing
+    # garage door fails on first.
+    got = rules.resolve(GRESHAM, "LDR-PV")
+    assert got.values["setback_garage_entrance_ft"].value == 20
+    assert got.values["min_frontage_ft"].value == 35
+    assert frontage(rules, "LDR-PV", "corner_lot") == 40
+    assert frontage(rules, "LDR-PV", "unit_lots") == 18
+    assert frontage(rules, "LDR-PV", "unit_lots", "corner_lot") == 20
+
+
+def test_pleasant_valley_reads_its_last_three_columns(rules: RuleSet) -> None:
+    shared = rules.resolve(GRESHAM, "LDR-PV", ("attached_wall",))
+    assert shared.values["setback_side_ft"].value == 0
+    alley = rules.resolve(GRESHAM, "LDR-PV", ("abuts_alley",))
+    assert alley.values["setback_rear_ft"].value == 8
+
+
+def test_no_plan_district_configuration_is_ambiguous(rules: RuleSet) -> None:
+    for zone in PLAN_ZONES:
+        for conditions in (
+            ("corner_lot",),
+            ("unit_lots",),
+            ("unit_lots", "corner_lot"),
+            ("unit_lots", "corner_lot", "abuts_alley"),
+            ("attached_wall",),
+        ):
+            got = rules.resolve(GRESHAM, zone, conditions)
+            assert not got.ambiguous, f"{zone} {conditions}: {got.ambiguous}"

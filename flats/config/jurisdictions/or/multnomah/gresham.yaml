@@ -412,9 +412,19 @@ zones:
     setback_side_ft:
       value: 5
       quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L386-L392"
+      variants:
+        # Common Wall column: 0 where the wall is shared.
+        - value: 0
+          when: [attached_wall]
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385-L392"
     setback_rear_ft:
       value: 10
       quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L386-L392"
+      variants:
+        # Rear No Alley 10, Rear With Alley 8 -- the last two columns.
+        - value: 8
+          when: [abuts_alley]
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385-L392"
     setback_street_side_ft:
       value: 10
       quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L386-L392"
@@ -429,6 +439,26 @@ zones:
         - value: 1500
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L262"
+    setback_garage_entrance_ft:
+      # The Garage column, and it is twice the facade setback: 20 feet, which
+      # is the standard a rear-court pod with a street-facing garage door
+      # fails on first. It was not encoded, so it never ran.
+      value: 20
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385-L392"
+    min_frontage_ft:
+      # E, and it was not encoded at all.
+      value: 35
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L293"
+      variants:
+        - value: 40
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L302"
+        - value: 18
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L294"
+        - value: 20
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L303"
     notes: 'quadfit confidence: verified | Pleasant Valley plan district. Rear 10 ft (vs 15 in base LDR).'
     max_height_ft:
       value: 35
@@ -463,7 +493,10 @@ zones:
       value: 5000
       quote: "or/multnomah/gresham/4.1500.springwater.txt#L246"
       variants:
-        - value: 0
+        # The Townhouse row reads "None", not zero. Stating the exemption
+        # rather than writing a 0 keeps the difference between a standard
+        # that does not apply and a standard of nothing.
+        - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.1500.springwater.txt#L245"
     notes: 'quadfit confidence: verified | Springwater. Min lot width 45 ft, min depth 80 ft (not separately
@@ -478,6 +511,32 @@ zones:
         - value: 16
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.1500.springwater.txt#L259"
+        # D.2, the corner row: 45 for everything else, 20 for a townhouse.
+        - value: 45
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L263"
+        - value: 20
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L262"
+    min_frontage_ft:
+      # F, and it was not encoded at all -- a lot with no street to build a
+      # driveway off screened as though frontage were never asked for.
+      value: 35
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L269"
+      variants:
+        - value: 40
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L272"
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L268"
+        - exempt: true
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L271"
+    min_lot_depth_ft:
+      # E states one number for interior and corner alike.
+      value: 80
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L265"
   MDR-12:
     section: ["4.01", "7.042"]
     cite_default:
@@ -677,6 +736,12 @@ zones:
     min_lot_sqft:
       value: 4000
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L511"
+      variants:
+        # "Townhouse: None" -- a standard that does not apply, which is a
+        # different answer from one nobody encoded.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L513"
     min_lot_width_ft:
       value: 35
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L514"
@@ -684,9 +749,27 @@ zones:
         - value: 16
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.1100.downtown.txt#L517"
+        # The corner row is the larger number in both halves of the cell:
+        # 40 feet where the interior row asks 35, 20 where it asks 16.
+        - value: 40
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L515"
+        - value: 20
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L517"
     min_frontage_ft:
       value: 35
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L518"
+      variants:
+        - value: 40
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L518-L520"
+        - value: 16
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L521"
+        - value: 20
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L521"
     min_lot_depth_ft:
       value: 70
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L516"
@@ -743,6 +826,12 @@ zones:
     min_lot_sqft:
       value: 4000
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L511"
+      variants:
+        # "Townhouse: None" -- a standard that does not apply, which is a
+        # different answer from one nobody encoded.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L513"
     min_lot_width_ft:
       value: 35
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L514"
@@ -750,9 +839,27 @@ zones:
         - value: 16
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.1100.downtown.txt#L517"
+        # The corner row is the larger number in both halves of the cell:
+        # 40 feet where the interior row asks 35, 20 where it asks 16.
+        - value: 40
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L515"
+        - value: 20
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L517"
     min_frontage_ft:
       value: 35
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L518"
+      variants:
+        - value: 40
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L518-L520"
+        - value: 16
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L521"
+        - value: 20
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L521"
     min_lot_depth_ft:
       value: 70
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L516"
@@ -889,3 +996,14 @@ zones:
     min_lot_width_ft:
       value: 20
       quote: "or/multnomah/gresham/4.1500.springwater.txt#L260"
+      variants:
+        - value: 25
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L263"
+    min_frontage_ft:
+      # 20 feet on every row of F in this column, interior and corner alike.
+      value: 20
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L269,L272"
+    min_lot_depth_ft:
+      value: 65
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L265"
