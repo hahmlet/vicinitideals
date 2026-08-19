@@ -217,6 +217,21 @@ FIELDS: dict[str, FieldDef] = {f.name: f for f in _F}
 #: for a number the sentence does not print.
 DWELLINGS = 4
 
+#: Fields a rule file may state as an area per dwelling unit rather than as a
+#: density. Portland prints its multi-dwelling floor as "1 unit per 2,500 sq.
+#: ft. of site area" and prints 17.424 units per acre nowhere; the two are the
+#: same standard, and only one of them is in the document. The conversion runs
+#: through :data:`SQFT_PER_ACRE`, and what a citation is checked against is the
+#: figure the table prints.
+PER_UNIT_AREA_FIELDS: frozenset[str] = frozenset(
+    {"min_density_du_per_acre", "max_density_du_per_acre"}
+)
+
+#: Square feet in an acre. The one conversion this registry performs, and it
+#: is here rather than in a rule file because a file that typed the quotient
+#: would be citing a sentence for a number the sentence does not contain.
+SQFT_PER_ACRE = 43_560
+
 #: Fields a rule file may state per dwelling unit rather than outright.
 #: An area scales with the number of dwellings; a width, a depth or a setback
 #: does not. MCC 39.4862(C) asks "5,000 square feet for each dwelling unit"

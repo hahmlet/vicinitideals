@@ -25,7 +25,7 @@ from typing import Any
 
 import yaml
 
-from flats.rules.fields import DWELLINGS, field
+from flats.rules.fields import DWELLINGS, SQFT_PER_ACRE, field
 from flats.rules.definitions import parse as parse_definitions
 from flats.rules.model import (
     LAYER_META,
@@ -101,11 +101,14 @@ def _parse_values(
             problems.append(f"{where}: {exc.args[0]}")
             continue
 
-        if isinstance(node, dict) and ({"value", "exempt", "per_dwelling"} & set(node)):
+        if isinstance(node, dict) and (
+            {"value", "exempt", "per_dwelling", "sqft_per_unit"} & set(node)
+        ):
             body = dict(node)
             value = body.pop("value", None)
             exempt = bool(body.pop("exempt", False))
             per_dwelling = body.pop("per_dwelling", None)
+            sqft_per_unit = body.pop("sqft_per_unit", None)
             raw_variants = body.pop("variants", None) or ()
             unknown = set(body) - set(_PROV_KEYS) - set(_REVIEW_KEYS)
             if unknown:
@@ -133,6 +136,26 @@ def _parse_values(
                 # never prints 20,000, and a file that did would be citing a
                 # sentence for a number the sentence does not contain.
                 value = _per_dwelling(float(per_dwelling))
+            if sqft_per_unit is not None:
+                if value is not None or exempt:
+                    problems.append(
+                        f"{where}.{key}: a value states a density or an area per "
+                        f"dwelling, not both"
+                    )
+                    continue
+                if not isinstance(sqft_per_unit, (int, float)) or isinstance(
+                    sqft_per_unit, bool
+                ):
+                    problems.append(f"{where}.{key}: 'sqft_per_unit' expects a number")
+                    continue
+                if sqft_per_unit <= 0:
+                    problems.append(
+                        f"{where}.{key}: sqft_per_unit {sqft_per_unit} is not an area"
+                    )
+                    continue
+                # "1 unit per 2,500 sq. ft. of site area" is 17.424 units per
+                # acre, and 17.424 is in no ordinance anywhere.
+                value = _as_density(float(sqft_per_unit))
             if not exempt and value is None:
                 problems.append(f"{where}.{key}: expected a 'value' or 'exempt: true'")
                 continue
@@ -142,6 +165,7 @@ def _parse_values(
             value = node
             exempt = False
             per_dwelling = None
+            sqft_per_unit = None
             raw_variants = ()
 
         prov_src: dict[str, Any] = dict(cite_default or {})
@@ -176,6 +200,7 @@ def _parse_values(
                 value=value,
                 exempt=exempt,
                 per_dwelling=None if per_dwelling is None else float(per_dwelling),
+                sqft_per_unit=None if sqft_per_unit is None else float(sqft_per_unit),
                 prov=prov,
                 status=Status(declared),
                 reviewer=body.get("reviewer"),
@@ -204,6 +229,17 @@ def _per_dwelling(each: float) -> float:
     """
     total = each * DWELLINGS
     return int(total) if float(total).is_integer() else total
+
+
+def _as_density(each: float) -> float:
+    """An area per dwelling unit, said as dwellings per acre.
+
+    Rounded to three places. The quotient is rarely whole -- 43,560 over 2,500
+    is 17.424 -- and carrying the full float would put a number with fifteen
+    digits of precision in front of a reader who is checking it against a table
+    cell that says "2,500".
+    """
+    return round(SQFT_PER_ACRE / each, 3)
 
 
 def _reduced(base: float, pct: float) -> float:

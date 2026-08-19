@@ -185,15 +185,19 @@ def _quoted_parts(layer: Layer) -> Iterable[tuple[str, str, str | None, object]]
     )
     for zone_code, zone in layer.zones.items():
         for name, value in zone.values.items():
-            # A per-dwelling standard is checked against the figure the code
-            # prints, not the product: MCC 39.4862(C) states 5,000 square feet
-            # for each dwelling unit and prints 20,000 nowhere.
+            # A derived standard is checked against the figure the code prints
+            # rather than the one arithmetic made of it. MCC 39.4862(C) states
+            # 5,000 square feet for each dwelling unit and prints 20,000
+            # nowhere; Portland's Table 120-4 asks one unit per 2,500 sq ft of
+            # site area and prints 17.424 units per acre nowhere.
             yield (
                 zone_code,
                 name,
                 value.prov.quote,
                 value.per_dwelling
                 if value.per_dwelling is not None
+                else value.sqft_per_unit
+                if value.sqft_per_unit is not None
                 else getattr(value, "value", None),
             )
             for variant in value.variants:

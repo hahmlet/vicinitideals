@@ -39,7 +39,7 @@ from typing import Any, Collection, Mapping
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from flats.rules.conditions import condition
-from flats.rules.fields import PER_DWELLING_FIELDS, FieldDef, field
+from flats.rules.fields import PER_DWELLING_FIELDS, PER_UNIT_AREA_FIELDS, FieldDef, field
 
 
 class Status(str, enum.Enum):
@@ -501,6 +501,11 @@ class Value(BaseModel):
     #: compares the number a reader will find. Same shape as `reduce_pct` on a
     #: variant, and for the same reason.
     per_dwelling: float | None = None
+    #: The site area per dwelling unit the code prints, where it states a
+    #: density that way. Portland's Table 120-4 asks "1 unit per 2,500 sq. ft.
+    #: of site area" in RM1; `value` carries the density that comes to and this
+    #: carries the figure a reader will find. Same bargain as `per_dwelling`.
+    sqft_per_unit: float | None = None
     #: True where the zone was read and states no such standard at all --
     #: Portland's RX prints a front lot line and no lot area, and its parking
     #: chapter prints maximums and no minimum. Distinct from a zone that is
@@ -558,6 +563,19 @@ class Value(BaseModel):
             )
         if self.per_dwelling <= 0:
             raise ValueError(f"{self.name}: per_dwelling {self.per_dwelling} is not an area")
+        return self
+
+    @model_validator(mode="after")
+    def _sqft_per_unit_is_a_positive_area(self) -> Value:
+        if self.sqft_per_unit is None:
+            return self
+        if self.name not in PER_UNIT_AREA_FIELDS:
+            raise ValueError(
+                f"{self.name}: 'sqft_per_unit' states a density as an area per "
+                f"dwelling, and applies to {', '.join(sorted(PER_UNIT_AREA_FIELDS))}"
+            )
+        if self.sqft_per_unit <= 0:
+            raise ValueError(f"{self.name}: sqft_per_unit {self.sqft_per_unit} is not an area")
         return self
 
     @model_validator(mode="after")
