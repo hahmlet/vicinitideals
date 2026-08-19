@@ -311,3 +311,55 @@ def test_table_note_5_switches_the_floor_off_below_eleven_thousand_feet(
     assert "min_density_du_per_acre" in small.exempted
     assert "min_density_du_per_acre" not in small.values
     assert large.values["min_density_du_per_acre"].value == 12.1
+
+
+WEST_LINN = "or/clackamas/west-linn"
+
+
+def test_west_linn_prints_its_ceiling_in_a_column_the_header_names(
+    rules: RuleSet,
+) -> None:
+    """Table 05.020's third column is "Dwelling Units per Net Acre", and the
+    table puts R-5 and R-4.5 on one line and R-3 and R-2.1 on another. The
+    quote carries the header with the row, because 8.7 on its own does not say
+    which of a line's six numbers it is."""
+    city = load_rules()[WEST_LINN].zones
+
+    assert city["R-5"].values["max_density_du_per_acre"].value == 8.7
+    assert city["R-4.5"].values["max_density_du_per_acre"].value == 9.68
+    assert city["R-2.1"].values["max_density_du_per_acre"].value == 20.74
+    for zone in ("R-40", "R-20", "R-15", "R-10", "R-7", "R-5", "R-4.5", "R-3", "R-2.1"):
+        held = city[zone].values["max_density_du_per_acre"]
+        assert held.measured_on == "net_developable_area", zone
+        assert held.prov.quote.startswith("or/clackamas/west-linn/05.density.txt#L29,")
+
+
+def test_the_zone_west_linn_never_restated_is_the_one_the_state_carries(
+    rules: RuleSet,
+) -> None:
+    """The reason the state layer exists. Four units on a 5,000 sq ft R-5 lot
+    is 34.8 units to the acre against a printed 8.7, so read straight the zone
+    is a wall -- and OAR 660-046-0220(2)(b) says a Large City may not apply a
+    density maximum to a quadplex. West Linn is inside Metro and never wrote
+    that sentence into its own code, so nothing but the state layer removes
+    it. Split onto four lots the pod is townhouses and the 8.7 is the answer.
+    """
+    whole = rules.resolve(WEST_LINN, "R-5", lot={"lot_sqft": 5000})
+    split = rules.resolve(WEST_LINN, "R-5", ("unit_lots",), lot={"lot_sqft": 5000})
+
+    assert "max_density_du_per_acre" in whole.exempted
+    assert whole.get("max_density_du_per_acre") is None
+    assert split.get("max_density_du_per_acre") == 8.7
+
+
+def test_west_linn_leaves_its_floor_off_because_the_code_never_prints_one(
+    rules: RuleSet,
+) -> None:
+    """05.025.A.3 states the minimum as seventy percent of the maximum, which
+    makes every one of the nine floors a product the code does not print.
+    Typing 6.09 against R-5 would cite a sentence for a number the sentence
+    does not contain, so the field is absent -- a check that does not run
+    rather than a lot wrongly called RED."""
+    city = load_rules()[WEST_LINN].zones
+    for zone in ("R-40", "R-10", "R-5", "R-2.1"):
+        assert "min_density_du_per_acre" not in city[zone].values, zone

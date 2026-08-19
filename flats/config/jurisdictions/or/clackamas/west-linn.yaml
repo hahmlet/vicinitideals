@@ -58,6 +58,17 @@ code:
   - id: "05.density"
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
     title: "CDC Chapter 05 - Public Facility and Density Requirements"
+    # Table 05.020 is where the nine maxima below come from. What this chapter
+    # also states and this layer does NOT encode is the floor: 05.025.A.3,
+    # "minimum density is determined by multiplying the maximum density by
+    # 0.70". Every one of those nine minima is a product the code does not
+    # print, and typing 6.09 against R-5 would cite a sentence for a number
+    # the sentence does not contain. `reduce_pct` reduces a value the document
+    # states and there is no stated minimum to reduce; a second derived key
+    # for "a percentage OF another field" is the change that would encode
+    # this, and it is not being made for one city. Left off, which is the
+    # conservative direction: an unencoded floor is a check that does not run
+    # rather than a lot wrongly called RED.
   - id: "08.r-40"
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC08.html
     title: "CDC Chapter 08 - Low Density Residential R-40"
@@ -111,6 +122,37 @@ zones:
     min_lot_sqft:
       value: 40000
       quote: "or/clackamas/west-linn/08.r-40.txt#L135"
+    max_density_du_per_acre:
+      # Table 05.020's third column, headed "Dwelling Units per Net
+      # Acre". The header is quoted with the row because the table puts
+      # one zones on one line and the number alone would not say which
+      # column it came from.
+      #
+      # 05.025.A.2 is the operative sentence and the table restates it:
+      # "Maximum density is determined by dividing the developable net
+      # area square footage by the zoning district minimum lot size square
+      # footage" -- here 40,000 sq ft. What is NOT carried is the rest of
+      # that sentence, "where a maximum density calculation results in a
+      # fraction it is rounded down to the next whole number", which is a
+      # rounding this screen has nowhere to put. Rounding down is the
+      # stricter direction, so the encoded rate is the looser reading and
+      # a lot near the boundary can pass here and fail at the counter.
+      #
+      # On the whole-building path the state cancels this outright --
+      # OAR 660-046-0220(2)(b), and West Linn is inside Metro. It is
+      # encoded because it still governs the split plat, where the pod is
+      # townhouses and the state stands down.
+      value: 1.1
+      # 05.025.A.1: developable net area is the gross less Type I and II
+      # lands, land dedicated for parks, public rights-of-way and proposed
+      # private streets -- and optionally heritage and significant trees.
+      # Nothing measures any of those, so the lot's own acre is a bound
+      # rather than the denominator.
+      measured_on: net_developable_area
+      cite: "West Linn CDC 05.020 (classifications of zones) and CDC 05.025.A (density calculations)"
+      url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
+      retrieved: '2026-08-19'
+      quote: "or/clackamas/west-linn/05.density.txt#L29,L31"
     min_lot_width_ft:
       value: 150
       quote: "or/clackamas/west-linn/08.r-40.txt#L140"
@@ -147,6 +189,37 @@ zones:
     min_lot_sqft:
       value: 20000
       quote: "or/clackamas/west-linn/09.r-20.txt#L139"
+    max_density_du_per_acre:
+      # Table 05.020's third column, headed "Dwelling Units per Net
+      # Acre". The header is quoted with the row because the table puts
+      # one zones on one line and the number alone would not say which
+      # column it came from.
+      #
+      # 05.025.A.2 is the operative sentence and the table restates it:
+      # "Maximum density is determined by dividing the developable net
+      # area square footage by the zoning district minimum lot size square
+      # footage" -- here 20,000 sq ft. What is NOT carried is the rest of
+      # that sentence, "where a maximum density calculation results in a
+      # fraction it is rounded down to the next whole number", which is a
+      # rounding this screen has nowhere to put. Rounding down is the
+      # stricter direction, so the encoded rate is the looser reading and
+      # a lot near the boundary can pass here and fail at the counter.
+      #
+      # On the whole-building path the state cancels this outright --
+      # OAR 660-046-0220(2)(b), and West Linn is inside Metro. It is
+      # encoded because it still governs the split plat, where the pod is
+      # townhouses and the state stands down.
+      value: 2.18
+      # 05.025.A.1: developable net area is the gross less Type I and II
+      # lands, land dedicated for parks, public rights-of-way and proposed
+      # private streets -- and optionally heritage and significant trees.
+      # Nothing measures any of those, so the lot's own acre is a bound
+      # rather than the denominator.
+      measured_on: net_developable_area
+      cite: "West Linn CDC 05.020 (classifications of zones) and CDC 05.025.A (density calculations)"
+      url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
+      retrieved: '2026-08-19'
+      quote: "or/clackamas/west-linn/05.density.txt#L29,L32"
     min_lot_width_ft:
       value: 100
       quote: "or/clackamas/west-linn/09.r-20.txt#L144"
@@ -182,6 +255,37 @@ zones:
     min_lot_sqft:
       value: 15000
       quote: "or/clackamas/west-linn/10.r-15.txt#L135"
+    max_density_du_per_acre:
+      # Table 05.020's third column, headed "Dwelling Units per Net
+      # Acre". The header is quoted with the row because the table puts
+      # one zones on one line and the number alone would not say which
+      # column it came from.
+      #
+      # 05.025.A.2 is the operative sentence and the table restates it:
+      # "Maximum density is determined by dividing the developable net
+      # area square footage by the zoning district minimum lot size square
+      # footage" -- here 15,000 sq ft. What is NOT carried is the rest of
+      # that sentence, "where a maximum density calculation results in a
+      # fraction it is rounded down to the next whole number", which is a
+      # rounding this screen has nowhere to put. Rounding down is the
+      # stricter direction, so the encoded rate is the looser reading and
+      # a lot near the boundary can pass here and fail at the counter.
+      #
+      # On the whole-building path the state cancels this outright --
+      # OAR 660-046-0220(2)(b), and West Linn is inside Metro. It is
+      # encoded because it still governs the split plat, where the pod is
+      # townhouses and the state stands down.
+      value: 2.9
+      # 05.025.A.1: developable net area is the gross less Type I and II
+      # lands, land dedicated for parks, public rights-of-way and proposed
+      # private streets -- and optionally heritage and significant trees.
+      # Nothing measures any of those, so the lot's own acre is a bound
+      # rather than the denominator.
+      measured_on: net_developable_area
+      cite: "West Linn CDC 05.020 (classifications of zones) and CDC 05.025.A (density calculations)"
+      url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
+      retrieved: '2026-08-19'
+      quote: "or/clackamas/west-linn/05.density.txt#L29,L33"
     min_lot_width_ft:
       value: 45
       quote: "or/clackamas/west-linn/10.r-15.txt#L140"
@@ -218,6 +322,37 @@ zones:
     min_lot_sqft:
       value: 10000
       quote: "or/clackamas/west-linn/11.r-10.txt#L138"
+    max_density_du_per_acre:
+      # Table 05.020's third column, headed "Dwelling Units per Net
+      # Acre". The header is quoted with the row because the table puts
+      # one zones on one line and the number alone would not say which
+      # column it came from.
+      #
+      # 05.025.A.2 is the operative sentence and the table restates it:
+      # "Maximum density is determined by dividing the developable net
+      # area square footage by the zoning district minimum lot size square
+      # footage" -- here 10,000 sq ft. What is NOT carried is the rest of
+      # that sentence, "where a maximum density calculation results in a
+      # fraction it is rounded down to the next whole number", which is a
+      # rounding this screen has nowhere to put. Rounding down is the
+      # stricter direction, so the encoded rate is the looser reading and
+      # a lot near the boundary can pass here and fail at the counter.
+      #
+      # On the whole-building path the state cancels this outright --
+      # OAR 660-046-0220(2)(b), and West Linn is inside Metro. It is
+      # encoded because it still governs the split plat, where the pod is
+      # townhouses and the state stands down.
+      value: 4.35
+      # 05.025.A.1: developable net area is the gross less Type I and II
+      # lands, land dedicated for parks, public rights-of-way and proposed
+      # private streets -- and optionally heritage and significant trees.
+      # Nothing measures any of those, so the lot's own acre is a bound
+      # rather than the denominator.
+      measured_on: net_developable_area
+      cite: "West Linn CDC 05.020 (classifications of zones) and CDC 05.025.A (density calculations)"
+      url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
+      retrieved: '2026-08-19'
+      quote: "or/clackamas/west-linn/05.density.txt#L29,L34"
     min_lot_width_ft:
       value: 35
       quote: "or/clackamas/west-linn/11.r-10.txt#L142"
@@ -254,6 +389,37 @@ zones:
     min_lot_sqft:
       value: 7000
       quote: "or/clackamas/west-linn/12.r-7.txt#L136"
+    max_density_du_per_acre:
+      # Table 05.020's third column, headed "Dwelling Units per Net
+      # Acre". The header is quoted with the row because the table puts
+      # one zones on one line and the number alone would not say which
+      # column it came from.
+      #
+      # 05.025.A.2 is the operative sentence and the table restates it:
+      # "Maximum density is determined by dividing the developable net
+      # area square footage by the zoning district minimum lot size square
+      # footage" -- here 7,000 sq ft. What is NOT carried is the rest of
+      # that sentence, "where a maximum density calculation results in a
+      # fraction it is rounded down to the next whole number", which is a
+      # rounding this screen has nowhere to put. Rounding down is the
+      # stricter direction, so the encoded rate is the looser reading and
+      # a lot near the boundary can pass here and fail at the counter.
+      #
+      # On the whole-building path the state cancels this outright --
+      # OAR 660-046-0220(2)(b), and West Linn is inside Metro. It is
+      # encoded because it still governs the split plat, where the pod is
+      # townhouses and the state stands down.
+      value: 6.2
+      # 05.025.A.1: developable net area is the gross less Type I and II
+      # lands, land dedicated for parks, public rights-of-way and proposed
+      # private streets -- and optionally heritage and significant trees.
+      # Nothing measures any of those, so the lot's own acre is a bound
+      # rather than the denominator.
+      measured_on: net_developable_area
+      cite: "West Linn CDC 05.020 (classifications of zones) and CDC 05.025.A (density calculations)"
+      url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
+      retrieved: '2026-08-19'
+      quote: "or/clackamas/west-linn/05.density.txt#L29,L35"
     min_lot_width_ft:
       value: 35
       quote: "or/clackamas/west-linn/12.r-7.txt#L145"
@@ -290,6 +456,37 @@ zones:
     min_lot_sqft:
       value: 5000
       quote: "or/clackamas/west-linn/13.r-5.txt#L142"
+    max_density_du_per_acre:
+      # Table 05.020's third column, headed "Dwelling Units per Net
+      # Acre". The header is quoted with the row because the table puts
+      # two zones on one line and the number alone would not say which
+      # column it came from.
+      #
+      # 05.025.A.2 is the operative sentence and the table restates it:
+      # "Maximum density is determined by dividing the developable net
+      # area square footage by the zoning district minimum lot size square
+      # footage" -- here 5,000 sq ft. What is NOT carried is the rest of
+      # that sentence, "where a maximum density calculation results in a
+      # fraction it is rounded down to the next whole number", which is a
+      # rounding this screen has nowhere to put. Rounding down is the
+      # stricter direction, so the encoded rate is the looser reading and
+      # a lot near the boundary can pass here and fail at the counter.
+      #
+      # On the whole-building path the state cancels this outright --
+      # OAR 660-046-0220(2)(b), and West Linn is inside Metro. It is
+      # encoded because it still governs the split plat, where the pod is
+      # townhouses and the state stands down.
+      value: 8.7
+      # 05.025.A.1: developable net area is the gross less Type I and II
+      # lands, land dedicated for parks, public rights-of-way and proposed
+      # private streets -- and optionally heritage and significant trees.
+      # Nothing measures any of those, so the lot's own acre is a bound
+      # rather than the denominator.
+      measured_on: net_developable_area
+      cite: "West Linn CDC 05.020 (classifications of zones) and CDC 05.025.A (density calculations)"
+      url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
+      retrieved: '2026-08-19'
+      quote: "or/clackamas/west-linn/05.density.txt#L29,L37"
     min_lot_width_ft:
       value: 35
       quote: "or/clackamas/west-linn/13.r-5.txt#L152"
@@ -326,6 +523,37 @@ zones:
     min_lot_sqft:
       value: 4500
       quote: "or/clackamas/west-linn/14.r-4.5.txt#L168"
+    max_density_du_per_acre:
+      # Table 05.020's third column, headed "Dwelling Units per Net
+      # Acre". The header is quoted with the row because the table puts
+      # two zones on one line and the number alone would not say which
+      # column it came from.
+      #
+      # 05.025.A.2 is the operative sentence and the table restates it:
+      # "Maximum density is determined by dividing the developable net
+      # area square footage by the zoning district minimum lot size square
+      # footage" -- here 4,500 sq ft. What is NOT carried is the rest of
+      # that sentence, "where a maximum density calculation results in a
+      # fraction it is rounded down to the next whole number", which is a
+      # rounding this screen has nowhere to put. Rounding down is the
+      # stricter direction, so the encoded rate is the looser reading and
+      # a lot near the boundary can pass here and fail at the counter.
+      #
+      # On the whole-building path the state cancels this outright --
+      # OAR 660-046-0220(2)(b), and West Linn is inside Metro. It is
+      # encoded because it still governs the split plat, where the pod is
+      # townhouses and the state stands down.
+      value: 9.68
+      # 05.025.A.1: developable net area is the gross less Type I and II
+      # lands, land dedicated for parks, public rights-of-way and proposed
+      # private streets -- and optionally heritage and significant trees.
+      # Nothing measures any of those, so the lot's own acre is a bound
+      # rather than the denominator.
+      measured_on: net_developable_area
+      cite: "West Linn CDC 05.020 (classifications of zones) and CDC 05.025.A (density calculations)"
+      url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
+      retrieved: '2026-08-19'
+      quote: "or/clackamas/west-linn/05.density.txt#L29,L37"
     min_lot_width_ft:
       value: 35
       quote: "or/clackamas/west-linn/14.r-4.5.txt#L178"
@@ -362,6 +590,37 @@ zones:
     min_lot_sqft:
       value: 3000
       quote: "or/clackamas/west-linn/15.r-3.txt#L166"
+    max_density_du_per_acre:
+      # Table 05.020's third column, headed "Dwelling Units per Net
+      # Acre". The header is quoted with the row because the table puts
+      # two zones on one line and the number alone would not say which
+      # column it came from.
+      #
+      # 05.025.A.2 is the operative sentence and the table restates it:
+      # "Maximum density is determined by dividing the developable net
+      # area square footage by the zoning district minimum lot size square
+      # footage" -- here 3,000 sq ft. What is NOT carried is the rest of
+      # that sentence, "where a maximum density calculation results in a
+      # fraction it is rounded down to the next whole number", which is a
+      # rounding this screen has nowhere to put. Rounding down is the
+      # stricter direction, so the encoded rate is the looser reading and
+      # a lot near the boundary can pass here and fail at the counter.
+      #
+      # On the whole-building path the state cancels this outright --
+      # OAR 660-046-0220(2)(b), and West Linn is inside Metro. It is
+      # encoded because it still governs the split plat, where the pod is
+      # townhouses and the state stands down.
+      value: 14.5
+      # 05.025.A.1: developable net area is the gross less Type I and II
+      # lands, land dedicated for parks, public rights-of-way and proposed
+      # private streets -- and optionally heritage and significant trees.
+      # Nothing measures any of those, so the lot's own acre is a bound
+      # rather than the denominator.
+      measured_on: net_developable_area
+      cite: "West Linn CDC 05.020 (classifications of zones) and CDC 05.025.A (density calculations)"
+      url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
+      retrieved: '2026-08-19'
+      quote: "or/clackamas/west-linn/05.density.txt#L29,L39"
     min_lot_width_ft:
       value: 35
       quote: "or/clackamas/west-linn/15.r-3.txt#L175"
@@ -398,6 +657,37 @@ zones:
     min_lot_sqft:
       value: 4000
       quote: "or/clackamas/west-linn/16.r-2.1.txt#L182"
+    max_density_du_per_acre:
+      # Table 05.020's third column, headed "Dwelling Units per Net
+      # Acre". The header is quoted with the row because the table puts
+      # two zones on one line and the number alone would not say which
+      # column it came from.
+      #
+      # 05.025.A.2 is the operative sentence and the table restates it:
+      # "Maximum density is determined by dividing the developable net
+      # area square footage by the zoning district minimum lot size square
+      # footage" -- here 2,100 sq ft. What is NOT carried is the rest of
+      # that sentence, "where a maximum density calculation results in a
+      # fraction it is rounded down to the next whole number", which is a
+      # rounding this screen has nowhere to put. Rounding down is the
+      # stricter direction, so the encoded rate is the looser reading and
+      # a lot near the boundary can pass here and fail at the counter.
+      #
+      # On the whole-building path the state cancels this outright --
+      # OAR 660-046-0220(2)(b), and West Linn is inside Metro. It is
+      # encoded because it still governs the split plat, where the pod is
+      # townhouses and the state stands down.
+      value: 20.74
+      # 05.025.A.1: developable net area is the gross less Type I and II
+      # lands, land dedicated for parks, public rights-of-way and proposed
+      # private streets -- and optionally heritage and significant trees.
+      # Nothing measures any of those, so the lot's own acre is a bound
+      # rather than the denominator.
+      measured_on: net_developable_area
+      cite: "West Linn CDC 05.020 (classifications of zones) and CDC 05.025.A (density calculations)"
+      url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
+      retrieved: '2026-08-19'
+      quote: "or/clackamas/west-linn/05.density.txt#L29,L39"
     min_lot_width_ft:
       value: 35
       quote: "or/clackamas/west-linn/16.r-2.1.txt#L193"
