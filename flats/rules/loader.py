@@ -101,17 +101,28 @@ def _parse_values(
             problems.append(f"{where}: {exc.args[0]}")
             continue
 
-        if isinstance(node, dict) and "value" in node:
+        if isinstance(node, dict) and ({"value", "exempt"} & set(node)):
             body = dict(node)
-            value = body.pop("value")
+            value = body.pop("value", None)
+            exempt = bool(body.pop("exempt", False))
             raw_variants = body.pop("variants", None) or ()
             unknown = set(body) - set(_PROV_KEYS) - set(_REVIEW_KEYS)
             if unknown:
                 problems.append(f"{where}.{key}: unknown key(s) {sorted(unknown)}")
+            if exempt and value is not None:
+                problems.append(
+                    f"{where}.{key}: a value states a number or states that the code "
+                    f"imposes no such standard, not both"
+                )
+                continue
+            if not exempt and value is None:
+                problems.append(f"{where}.{key}: expected a 'value' or 'exempt: true'")
+                continue
         else:
             # Shorthand: the scalar is the value, everything else is inherited.
             body = {}
             value = node
+            exempt = False
             raw_variants = ()
 
         prov_src: dict[str, Any] = dict(cite_default or {})
@@ -144,6 +155,7 @@ def _parse_values(
             built = Value(
                 name=key,
                 value=value,
+                exempt=exempt,
                 prov=prov,
                 status=Status(declared),
                 reviewer=body.get("reviewer"),

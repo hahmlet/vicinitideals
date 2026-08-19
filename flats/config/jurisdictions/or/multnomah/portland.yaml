@@ -66,12 +66,18 @@ defaults:
   # worth citing an absence carefully rather than leaving the state ceiling to
   # stand in for a rule Portland does not have.
   parking_min_per_unit:
-    value: 0
-    cite: "PCC 33.266.110.A; and the absence of any minimum-parking section between 33.266.100 and 33.266.115"
+    # Not a minimum of zero -- there is no minimum. The quote is the chapter's
+    # own list of its motor vehicle parking sections, which runs General
+    # Regulations, Required Carpool and Electric Vehicle Parking, Maximum
+    # Allowed Parking Spaces, and three development-standard sections, with
+    # nothing that requires a space. An absence is what the code states here,
+    # so an absence is what is encoded.
+    exempt: true
+    cite: "PCC 33.266 — the chapter's own section list: no minimum-parking section exists between 33.266.100 General Regulations and 33.266.115 Maximum Allowed Parking Spaces"
     url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
     retrieved: 2026-08-15
     status: draft
-    quote: "or/multnomah/portland/33.266.txt#L67-L70"
+    quote: "or/multnomah/portland/33.266.txt#L10-L17"
 zones:
   RF:
     cite_default:
@@ -470,7 +476,10 @@ zones:
       value: true
       quote: "or/multnomah/portland/33.120.txt#L394-L404"
     min_lot_sqft:
-      value: 0
+      # Table 120-3 states one dimension for the RX zone and it is a 10-foot
+      # front lot line. No area, which is not the same as an area of zero: the
+      # test does not exist rather than being one every lot passes.
+      exempt: true
       quote: "or/multnomah/portland/33.120.txt#L463-L467"
     min_frontage_ft:
       value: 10

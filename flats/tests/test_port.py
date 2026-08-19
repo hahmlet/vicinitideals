@@ -141,10 +141,11 @@ def test_a_city_below_the_state_cap_keeps_its_own_number() -> None:
     the pod, its parking and its access."""
     res = RuleSet(load_rules()).resolve("or/multnomah/portland", "R5")
 
-    parking = res.values["parking_min_per_unit"]
-    assert parking.value == 0
-    assert parking.layer == "or/multnomah/portland"
-    assert not parking.preempted
+    # Portland states no minimum at all, so the field is exempted rather than
+    # set to zero -- and the state ceiling does not fill the hole, because a
+    # cap on what a city may require is not itself a requirement.
+    assert "parking_min_per_unit" in res.exempted
+    assert "parking_min_per_unit" not in res.values
 
 
 def test_ported_zones_are_unverified_not_trusted() -> None:

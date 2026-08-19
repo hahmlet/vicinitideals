@@ -940,3 +940,82 @@ def test_an_exempted_standard_leaves_the_resolution_entirely() -> None:
     as_townhouses = rules.resolve(LAYER, "R5", conditions=["unit_lots"])
     assert "max_lot_depth_ratio" not in as_townhouses.values
     assert as_townhouses.exempted == ("max_lot_depth_ratio",)
+
+
+# --- and a standard the code never states at all --------------------------
+#
+# An exemption under a condition was expressible from the start. A zone that
+# states no such standard at all was not: the base had to be a number, so an
+# absence had to be written as a 0. Portland's RX prints a front lot line and
+# no lot area; its parking chapter prints maximums and no minimum. A 0 in
+# either place is a test every lot passes for a reason the code never gave.
+
+
+def test_a_base_value_can_state_that_no_such_standard_exists() -> None:
+    held = Value(name="min_lot_sqft", exempt=True, prov=PROV)
+
+    assert held.value is None
+    assert held.under().exempt is True
+
+
+def test_an_exempt_base_may_not_also_state_a_number() -> None:
+    with pytest.raises(Exception):
+        Value(name="min_lot_sqft", value=5000, exempt=True, prov=PROV)
+
+
+def test_an_exempt_base_leaves_the_resolution_entirely(tmp_path: Path) -> None:
+    """The point of the field: nothing downstream can compare a lot against a
+    standard the city does not impose, and the absence is still explainable."""
+    root = tmp_path / "or" / "multnomah"
+    root.mkdir(parents=True)
+    (root / "somewhere.yaml").write_text(
+        "layer: or/multnomah/somewhere\n"
+        "kind: city\n"
+        "label: Somewhere\n"
+        "zones:\n"
+        "  R-6:\n"
+        "    cite_default:\n"
+        "      cite: FMC 19.30.030\n"
+        "      url: https://example.invalid/19.30\n"
+        "      retrieved: '2026-08-15'\n"
+        "    min_lot_sqft:\n"
+        "      exempt: true\n"
+        "      quote: 'or/multnomah/somewhere/19.30.txt#L353'\n",
+        encoding="utf-8",
+    )
+    (tmp_path / "or" / "or.yaml").write_text(
+        "layer: or\nkind: state\nlabel: Oregon\nzones: {}\n", encoding="utf-8"
+    )
+
+    res = RuleSet(load_rules(tmp_path, strict=True)).resolve("or/multnomah/somewhere", "R-6")
+
+    assert res.exempted == ("min_lot_sqft",)
+    assert "min_lot_sqft" not in res.values
+
+
+def test_a_base_states_a_number_or_states_that_it_is_exempt(tmp_path: Path) -> None:
+    """Neither is a typo the loader should guess at."""
+    root = tmp_path / "or" / "multnomah"
+    root.mkdir(parents=True)
+    (root / "somewhere.yaml").write_text(
+        "layer: or/multnomah/somewhere\n"
+        "kind: city\n"
+        "label: Somewhere\n"
+        "zones:\n"
+        "  R-6:\n"
+        "    cite_default:\n"
+        "      cite: FMC 19.30.030\n"
+        "      url: https://example.invalid/19.30\n"
+        "      retrieved: '2026-08-15'\n"
+        "    min_lot_sqft:\n"
+        "      exempt: true\n"
+        "      value: 5000\n"
+        "      quote: 'or/multnomah/somewhere/19.30.txt#L353'\n",
+        encoding="utf-8",
+    )
+    (tmp_path / "or" / "or.yaml").write_text(
+        "layer: or\nkind: state\nlabel: Oregon\nzones: {}\n", encoding="utf-8"
+    )
+
+    with pytest.raises(RuleLoadError, match="not both"):
+        load_rules(tmp_path, strict=True)

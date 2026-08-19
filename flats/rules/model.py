@@ -443,7 +443,9 @@ class Value(BaseModel):
     model_config = ConfigDict(frozen=True)
 
     name: str
-    value: Any
+    #: None only where `exempt` is set -- the code states no such standard
+    #: here. A non-exempt value with no number is refused by `check_kind`.
+    value: Any = None
     prov: Provenance
     status: Status = Status.draft
     reviewer: str | None = None
@@ -457,6 +459,14 @@ class Value(BaseModel):
     #: default binds nothing. The one place the flat rule set needs
     #: defeasibility, and it needs a direction with it -- see `Preempt`.
     preempts: Preempt = Preempt.none
+    #: True where the zone was read and states no such standard at all --
+    #: Portland's RX prints a front lot line and no lot area, and its parking
+    #: chapter prints maximums and no minimum. Distinct from a zone that is
+    #: silent because nobody has read it yet, which is a missing field, and
+    #: from a standard of zero, which is a test every lot passes for a reason
+    #: the code did not give. ``value`` is None and there is nothing to
+    #: compare a lot against.
+    exempt: bool = False
 
     @field_validator("preempts", mode="before")
     @classmethod
@@ -487,10 +497,21 @@ class Value(BaseModel):
 
     @model_validator(mode="after")
     def _value_matches_kind(self) -> Value:
-        check_kind(self.name, self.value)
+        if not self.exempt:
+            check_kind(self.name, self.value)
         for variant in self.variants:
             if not variant.exempt:
                 check_kind(self.name, variant.value)
+        return self
+
+    @model_validator(mode="after")
+    def _exempt_carries_no_number(self) -> Value:
+        # A value that said both "the code states no such standard" and "5"
+        # would leave every reader of the file guessing which half to believe.
+        if self.exempt and self.value is not None:
+            raise ValueError(
+                f"{self.name}: an exempt value states no number — the standard does not apply"
+            )
         return self
 
     @model_validator(mode="after")
@@ -595,7 +616,14 @@ class Value(BaseModel):
         answer known.
         """
         if not self.variants:
-            return Effective(self.value, self.prov, self.status, self.reviewer, self.reviewed)
+            return Effective(
+                self.value,
+                self.prov,
+                self.status,
+                self.reviewer,
+                self.reviewed,
+                exempt=self.exempt,
+            )
         held = set(active)
         matches = []
         unmeasured: list[Variant] = []
@@ -618,9 +646,17 @@ class Value(BaseModel):
                 self.reviewer,
                 self.reviewed,
                 ambiguous=tuple(sorted(v.band.token for v in unmeasured)),
+                exempt=self.exempt,
             )
         if not matches:
-            return Effective(self.value, self.prov, self.status, self.reviewer, self.reviewed)
+            return Effective(
+                self.value,
+                self.prov,
+                self.status,
+                self.reviewer,
+                self.reviewed,
+                exempt=self.exempt,
+            )
         deepest = max(_depth(v) for v in matches)
         best = [v for v in matches if _depth(v) == deepest]
         if len(best) > 1:
@@ -631,6 +667,7 @@ class Value(BaseModel):
                 self.reviewer,
                 self.reviewed,
                 ambiguous=tuple(sorted("+".join(v.key) for v in best)),
+                exempt=self.exempt,
             )
         winner = best[0]
         return Effective(

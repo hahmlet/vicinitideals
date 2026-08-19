@@ -120,12 +120,13 @@ def test_no_maximum_front_setback_is_asserted(rules: RuleSet, zone: str) -> None
 
 def test_rx_states_a_frontage_and_no_lot_area(rules: RuleSet) -> None:
     """Table 120-3 gives RX a 10-foot front lot line and no area minimum at
-    all. The zero is read off the table rather than standing in for a value
-    nobody looked up — which is the difference between a zone that is encoded
-    and a zone that is blank."""
+    all. Encoded as an exemption rather than a 0: the area test does not exist
+    in this zone, which is a different answer from a test every lot passes,
+    and both are different again from a zone nobody has read."""
     res = rules.resolve(PDX, "RX")
 
-    assert res.values["min_lot_sqft"].value == 0
+    assert "min_lot_sqft" in res.exempted
+    assert "min_lot_sqft" not in res.values
     assert res.values["min_frontage_ft"].value == 10
 
 
