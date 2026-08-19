@@ -108,3 +108,62 @@ def test_a_flag_lot_in_lr_7_is_the_one_lot_the_pod_is_too_tall_for(
     assert ordinary.get("max_height_ft") == 35
     assert flag.get("max_height_ft") == 25
     assert all(design.height_ft > 25 for design in load_catalog())
+
+
+GRESHAM = "or/multnomah/gresham"
+
+
+def test_greshams_largest_district_had_the_only_standard_it_was_missing(
+    rules: RuleSet,
+) -> None:
+    """Ten of this layer's thirteen districts carried a height and LDR-5 did
+    not, on 12,854 lots -- the biggest single-field gap left in the ledger
+    after Portland's.
+
+    Table 4.0130 H prints 35 ft. against both the Townhouse row and the
+    All-other-uses row, so the pod takes the same number whether it is platted
+    as one lot or four.
+    """
+    assert rules.resolve(GRESHAM, "LDR-5").get("max_height_ft") == 35
+    assert rules.resolve(GRESHAM, "LDR-5", ("unit_lots",)).get("max_height_ft") == 35
+
+
+def test_the_cmf_corridor_is_the_one_place_gresham_gets_tighter_off_base(
+    rules: RuleSet,
+) -> None:
+    """Every other CMF standard encodes the base as the stricter reading and
+    hangs the corridor relaxation off civic_corridor. Height runs the other
+    way: the district allows 45 feet and note 14 sends the NE Glisan and NE
+    162nd corridor areas to TLDR's 35.
+
+    Encoded on the fact rather than written across all 665 lots, because
+    applying a corridor standard to a district is the error the density ruling
+    on this same note refused to make. The fact is assumed unknown, so no CMF
+    lot is certified on either number.
+    """
+    assert rules.resolve(GRESHAM, "CMF").get("max_height_ft") == 45
+    assert rules.resolve(GRESHAM, "CMF", ("civic_corridor",)).get("max_height_ft") == 35
+
+    # The variant's number is printed in the residential chapter, not in the
+    # note that reaches for it -- note 14 states a reference and no height.
+    variant = load_rules()[GRESHAM].zones["CMF"].values["max_height_ft"].variants[0]
+    assert variant.prov.quote == "or/multnomah/gresham/4.0100.residential.txt#L330,L332"
+
+
+def test_gresham_butte_is_ldr_5_by_reference_and_not_by_copy(rules: RuleSet) -> None:
+    """4.1312 states the whole district in one sentence -- "the Site
+    Development Requirements of LDR-5 shall apply unless modified by this
+    section" -- and modifies two things: quadplexes are prohibited, and the
+    side yard is 10 feet instead of 5.
+
+    Adopted by reference so every inherited number still cites the Table
+    4.0130 cell it was read from. Copying them would have frozen this district
+    at whatever LDR-5 said the day someone typed it.
+    """
+    butte = rules.resolve(GRESHAM, "LDR/GB")
+    ldr5 = rules.resolve(GRESHAM, "LDR-5")
+
+    assert butte.get("quadplex_allowed") is False
+    assert butte.get("setback_side_ft") == 10 != ldr5.get("setback_side_ft")
+    for field in ("max_height_ft", "setback_front_ft", "setback_rear_ft", "min_lot_sqft"):
+        assert butte.get(field) == ldr5.get(field), field

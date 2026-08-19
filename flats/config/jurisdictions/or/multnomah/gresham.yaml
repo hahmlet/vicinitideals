@@ -123,6 +123,21 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/multnomah/gresham/4.0100.residential.txt#L134"
+    max_height_ft:
+      # Table 4.0130 H, "Maximum Building Height": 35 ft. in the LDR-5 column,
+      # on both the Townhouse row and the All-other-uses row, so the pod takes
+      # the same number whether it is platted as one lot or four. The header
+      # row is quoted with it because the table prints seven districts on one
+      # line.
+      #
+      # The cell reads "35 ft.12" -- the number with a note marker stuck to
+      # it. Note 12 sends shoreline lots to Section 10.1100, and it is already
+      # ruled in the footnote ledger as read-and-waiting-on-data against the
+      # protected_water_feature fact, so a lot that might be one cannot come
+      # back GREEN on this number.
+      value: 35
+      cite: Gresham Development Code Table 4.0130 H; 4.0133
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L330,L332"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
@@ -1093,6 +1108,44 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L148"
+    max_height_ft:
+      # Table 4.0430 I, the CMF column: 45 feet, and note 18(ii) states the
+      # same number for townhouses in as many words -- "Maximum Building
+      # Height: 45 feet". Two readings of the row, one number, which is why
+      # this cell needs no election between the quadplex and townhouse paths.
+      #
+      # The variant is the corridor problem this district keeps posing. Note
+      # 14 sends "the areas of CMF along the NE Glisan Street and NE 162nd
+      # Avenue corridors" to the TLDR standards of Table 4.0130, where the
+      # height is 35 feet -- TIGHTER than the district's own 45. That is the
+      # opposite direction from the other CMF standards, where the base is the
+      # stricter reading, so it is worth saying plainly: here the base is the
+      # looser one and the corridor is where the number drops.
+      #
+      # Encoded on civic_corridor, the registered fact that already governs
+      # two other CMF rows, rather than written across all 665 lots. Applying
+      # a corridor standard to a district is the error the density ruling on
+      # this same note refused to make. The fact is assumed unknown, so every
+      # CMF lot reports the corridor as unobserved and none can be certified
+      # on the 45 either way.
+      #
+      # Both numbers clear a 26 ft pod, so nothing about today's verdict turns
+      # on which one binds. That is the reason to write the pair down while it
+      # is cheap rather than when it is not.
+      value: 45
+      cite: Gresham Development Code Table 4.0430 I; 4.0434, Table note 18(ii)
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L359,L373,L497"
+      variants:
+        - value: 35
+          when: [civic_corridor]
+          # Note 14 states the reference and not the number: it sends these
+          # areas to "development standards of Tables 4.0130 and 4.0131 for
+          # the TLDR district" and prints no height at all. So the quote is
+          # the cell that prints 35 -- Table 4.0130 H, TLDR column, in the
+          # residential chapter -- and the corridor note lives in the cite,
+          # which is where the reader needs it to know why this column.
+          cite: Gresham Development Code Table 4.0430, note 14, adopting Table 4.0130 H (TLDR)
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L330,L332"
     setback_front_ft:
       value: 5
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L332-L336"
@@ -1180,6 +1233,34 @@ zones:
       # specifically prohibits: 1. Triplexes; 2. Quadplexes; ..."
       value: false
       quote: "or/multnomah/gresham/4.1300.gresham-butte.txt#L28-L33"
+    # 4.1312: "The Site Development Requirements of LDR-5 shall apply unless
+    # modified by this section." An overlay that states its base rather than
+    # restating its numbers, so this holds the pointer and the two things the
+    # section actually changes.
+    #
+    # `wins: local` because the sentence says so in its own words -- LDR-5
+    # applies *unless modified by this section*, which makes anything written
+    # here govern over the reference.
+    #
+    # The maximum density of Table 4.1311 -- 1 D.U./Acre on gross property
+    # area -- is not encoded. Four units on one acre is 4 du/acre and fails
+    # it, so this is not a standard to leave out lightly; it is left out
+    # because a quadplex is prohibited here outright and the use flag already
+    # decides every lot in the district. When the prohibition is ever
+    # revisited, that table is the first thing to read.
+    like:
+      zone: LDR-5
+      wins: local
+      cite: Gresham Development Code 4.1312 (Gresham Butte)
+      quote: "or/multnomah/gresham/4.1300.gresham-butte.txt#L64"
+    setback_side_ft:
+      # 4.1312.B: "The LDR-5 setback requirements are required except that the
+      # side yard setback shall be a minimum of 10 feet to encourage side yard
+      # planting." The one dimension the plan district moves, and it moves it
+      # tighter -- LDR-5's 5 feet doubled.
+      value: 10
+      cite: Gresham Development Code 4.1312.B (Gresham Butte)
+      quote: "or/multnomah/gresham/4.1300.gresham-butte.txt#L68-L69"
     notes: 'quadfit confidence: verified | Quadplexes explicitly prohibited in Gresham Butte overlay (hillside/fire
       risk); duplex max.'
   THR-SW:
