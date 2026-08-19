@@ -1,0 +1,245 @@
+# Portland -- PCC 33.110 (single-dwelling), 33.120 (multi-dwelling), 33.266
+# (parking).
+#
+# Forty notes captured, twenty-five of them over a value this corpus encodes,
+# and every one of the twenty-five is dismissed. That is a real finding rather
+# than a shrug: Portland writes its qualifications into the regulation text
+# and keeps its table notes for other tables, other uses and relief.
+#
+# Three groups account for all of them.
+#
+# **Other tables.** Chapter 33.110's institutional development standards and
+# 33.120's carry seven and three notes about campuses, towers and spires, and
+# conditional use review. Chapter 33.120's FAR bonus table carries three about
+# transfers and bonuses. Chapter 33.266's maximum-parking table carries two.
+# None of those tables is encoded here; the notes reach a value at all because
+# a block's region runs back to the previous block, which is the deliberately
+# wide reading.
+#
+# **Other buildings.** Congregate housing, accessory dwellings, manufactured
+# dwellings in a manufactured dwelling park.
+#
+# **Relief.** Table 110-3's notes are grandfathering, every one of them: a
+# primary structure stays allowed on a lot condemnation, a zone change or an
+# old lot confirmation left undersized. They widen where the pod may go, and
+# declining a widening can only cost a lot that would have qualified.
+#
+# What is NOT here, and worth saying because it is what a reader will look
+# for: nothing in these forty notes is a hidden condition on the numbers this
+# layer encodes. Portland's conditions -- the civic corridor coverage bonus,
+# the deeper setbacks on a narrow lot -- are in the section text, and they are
+# encoded as variants where they were read.
+notes:
+  # --- 33.110 Table 110-3, minimum lot dimensions --------------------
+  #
+  # Five notes, all of them grandfathering or measurement. They govern the
+  # single-dwelling zones' `quadplex_allowed`, which is read a page earlier.
+  - quote: "or/multnomah/portland/33.110.txt#L396"
+    digest: "8842e6faa398"
+    state: dismissed
+    reason: >-
+      a primary structure stays allowed on a lot that met Table 110-3 until a
+      condemnation or a right-of-way dedication shrank it. A grandfathering
+      clause: it keeps a use on land the table would now refuse, and declining
+      it can only cost a lot that would have qualified
+
+  - quote: "or/multnomah/portland/33.110.txt#L404"
+    digest: "00088d83a572"
+    state: dismissed
+    reason: >-
+      the R5 minimums for adjusted lots and lot remnants approved through a
+      property line adjustment -- 36 ft wide and 1,600 sq ft. A relaxation, and
+      one that attaches to a lot's paperwork history rather than to the lot
+
+  - quote: "or/multnomah/portland/33.110.txt#L407"
+    digest: "f3ac38f83c8d"
+    state: dismissed
+    reason: >-
+      grandfathering in R20 for lots made non-conforming solely by the zone
+      change of 24 May 2018. A relaxation with a date on it
+
+  - quote: "or/multnomah/portland/33.110.txt#L410"
+    digest: "4af25bbc8812"
+    state: dismissed
+    reason: >-
+      grandfathering for lots separated through a lot confirmation finalised
+      before 11 September 2020. A relaxation with a date on it
+
+  - quote: "or/multnomah/portland/33.110.txt#L413"
+    digest: "bf24d1f629bf"
+    state: dismissed
+    reason: >-
+      "lot width for a flag lot is measured at the midpoint of the flag
+      portion of the lot". It says where to measure, not what is required, so
+      there is no number here to encode -- and measuring a flag lot's width
+      across the pole rather than the flag is a geometry question this
+      layer cannot answer in a rule file. `flag_lot` is registered and assumed
+      false, which is where that gap is carried
+
+  # --- 33.110, the summary of development standards -----------------
+  - quote: "or/multnomah/portland/33.110.txt#L475"
+    digest: "30417624949c"
+    state: dismissed
+    reason: >-
+      "including any site with a congregate housing facility". A different
+      building, and the row it marks is not one this layer encodes
+
+  - quote: "or/multnomah/portland/33.110.txt#L476"
+    digest: "04194567b465"
+    state: dismissed
+    reason: >-
+      "including accessory dwelling units" -- a counting rule for the density
+      row, saying an ADU counts toward the units allowed. The pod has none
+
+  - quote: "or/multnomah/portland/33.110.txt#L477"
+    digest: "5f52813536b5"
+    state: dismissed
+    reason: >-
+      additional FAR and height may be allowed under 33.110.265.F. A
+      relaxation of two standards, and it can only raise the ceiling
+
+  # --- 33.110.240 and 33.120, institutional development standards ---
+  #
+  # These two tables state what an institution -- a school, a church, a
+  # community centre -- may build in a residential zone. They are not this
+  # pod's standards and are not encoded. Each note is dismissed on that scope,
+  # with what it actually says recorded so the dismissal is checkable.
+  - quote: "or/multnomah/portland/33.110.txt#L1999"
+    digest: "95476b5293ee"
+    state: dismissed
+    reason: >-
+      "the standards of this table are minimums or maximums as indicated;
+      compliance with the conditional use approval criteria might preclude
+      development to the maximum intensity". The institutional development
+      standards tables of 33.110.240 and 33.120.240 both print it, and neither
+      table is encoded here -- an institution in a residential zone is a
+      conditional use, and the pod is not one
+
+  - quote: "or/multnomah/portland/33.110.txt#L2001"
+    digest: "019d85304fe5"
+    state: dismissed
+    reason: >-
+      campus-type developments are treated as one site, and the table's
+      setbacks supersede Table 110-4's only at the campus perimeter. An
+      institutional standard, on a table this layer does not encode
+
+  - quote: "or/multnomah/portland/33.110.txt#L2004"
+    digest: "614f56b5c613"
+    state: dismissed
+    reason: >-
+      towers, spires, elevator equipment and stairwell enclosures may exceed
+      the height limit. A relaxation, on the institutional table's height
+
+  - quote: "or/multnomah/portland/33.110.txt#L2010"
+    digest: "d66aa950a2c5"
+    state: dismissed
+    reason: >-
+      required landscaping counts toward the landscaped area standard. A
+      relaxation of the institutional table's minimum landscaped area
+
+  - quote: "or/multnomah/portland/33.110.txt#L2012"
+    digest: "f5fe0824e9ba"
+    state: dismissed
+    reason: >-
+      vehicle areas are subject to the parking lot setback and landscaping
+      standards of Chapter 33.266. A cross-reference on the institutional
+      table; what 33.266 requires of this pod is encoded from 33.266 itself
+
+  - quote: "or/multnomah/portland/33.110.txt#L2014"
+    digest: "8e5edafcda00"
+    state: dismissed
+    reason: >-
+      setbacks for structures accessory to recreational fields for organized
+      sports are in Chapter 33.279. A different chapter for a different use
+
+  - quote: "or/multnomah/portland/33.110.txt#L2016"
+    digest: "26ae2529f3ab"
+    state: dismissed
+    reason: >-
+      "the maximum building setbacks are described in 33.110.270.C". A
+      cross-reference on the institutional table's maximum-setback row. A
+      maximum setback is a real standard and `setback_front_max_ft` exists to
+      hold one, but the sentence carries no number and the row it marks is not
+      this pod's; reading 33.110.270.C for the single-dwelling zones is
+      encoding work, not a footnote ruling
+
+  - quote: "or/multnomah/portland/33.120.txt#L1939"
+    digest: "ac6afd806e59"
+    state: dismissed
+    reason: >-
+      campus-type developments are treated as one site, and the table's
+      setbacks supersede Table 120-4's only at the campus perimeter. The
+      multi-dwelling half of the same institutional table
+
+  - quote: "or/multnomah/portland/33.120.txt#L1942"
+    digest: "7413f663cf05"
+    state: dismissed
+    reason: >-
+      towers and spires under 200 sq ft may exceed the height limit but must
+      still meet the setback. A relaxation, on the institutional table
+
+  # --- 33.120 Table 120-1, the use table ----------------------------
+  - quote: "or/multnomah/portland/33.120.txt#L417"
+    digest: "a9ffcddba0a4"
+    state: dismissed
+    reason: >-
+      the only multi-dwelling development allowed in RMP is manufactured
+      dwellings in a manufactured dwelling park. It marks the RMP column,
+      whose `quadplex_allowed` is already encoded false
+
+  - quote: "or/multnomah/portland/33.120.txt#L419"
+    digest: "e4040c76fdb9"
+    state: dismissed
+    reason: >-
+      manufactured dwellings are only allowed in manufactured dwelling parks,
+      except on lots created under 33.642. A rule about a housing type this
+      screen does not place
+
+  # --- 33.120 Table 120-6, the FAR bonus table ----------------------
+  - quote: "or/multnomah/portland/33.120.txt#L721"
+    digest: "6451e19699cf"
+    state: dismissed
+    reason: >-
+      the overall maximum FAR includes FAR received from a transfer. A note on
+      the bonus table of 33.120.211; the FAR this layer encodes is the base
+      figure from the summary of development standards, and a transfer can
+      only raise it
+
+  - quote: "or/multnomah/portland/33.120.txt#L722"
+    digest: "05356b149648"
+    state: dismissed
+    reason: >-
+      names the other bonuses -- Inclusionary Housing, Three-Bedroom Units,
+      Visitable Units. A definition inside the bonus table, and every bonus
+      raises a ceiling
+
+  - quote: "or/multnomah/portland/33.120.txt#L723"
+    digest: "bc6bd50b2144"
+    state: dismissed
+    reason: >-
+      "the lower FAR applies in the RM4 zone in Historic and Conservation
+      districts". It picks between the two figures in a bonus table cell, and
+      the bonus table is not encoded. Were it encoded, this is a
+      `historic_resource` variant rather than a footnote -- that condition is
+      registered and assumed false, so it would be written as a variant on the
+      bonus figure and not left to a ruling
+
+  # --- 33.266 Table 266-1/-2, maximum allowed parking spaces --------
+  - quote: "or/multnomah/portland/33.266.txt#L149"
+    digest: "83a3c1f59710"
+    state: dismissed
+    reason: >-
+      "regulations in a plan district or overlay zone may supersede the
+      standards of this table". The table is 33.266.115's maximum allowed
+      parking spaces -- a ceiling on stalls, not a floor -- and what this
+      layer encodes from the chapter is the absence of any minimum, read from
+      the chapter's own section list
+
+  - quote: "or/multnomah/portland/33.266.txt#L150"
+    digest: "f7ef893b01f9"
+    state: dismissed
+    reason: >-
+      uses subject to a Conditional Use, Impact Mitigation Plan or
+      Transportation Impact review may set different parking requirements
+      through the review. Three review paths, none of which a by-right
+      fourplex enters
