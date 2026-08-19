@@ -283,6 +283,27 @@ def _says(text: str, number: float) -> bool:
 #: field out) inherits the standard for a different housing type.
 _STATES_NONE = ("none", "n/a", "no min", "—", "--")
 
+#: The same statement made in a sentence rather than in a table cell. Prose
+#: codes do not print an em dash: Wilsonville writes "No setback is required
+#: along property lines where townhouses are attached", which states zero as
+#: plainly as a zero would and appears in none of the spellings above. The
+#: patterns are kept narrow on purpose -- this is the permissive direction,
+#: and a bare "no" anywhere in a passage is not a standard being waived.
+_NO_STANDARD = tuple(
+    re.compile(pattern, re.I)
+    for pattern in (
+        r"\bno\s+minimum\b",
+        r"\bno\s+maximum\b",
+        r"\bnot\s+required\b",
+        r"\bno\s+[a-z][a-z ]{0,24}?\s+(?:is|are)\s+required\b",
+        r"\bthere\s+is\s+no\s+[a-z]+\s+requirement\b",
+        # "may be reduced to zero" -- Happy Valley's townhouse footnote, and
+        # the one spelled number `_says` cannot see, because it is not
+        # followed by a unit the way "five feet" is.
+        r"\bzero\b",
+    )
+)
+
 
 def quotes_the_number(text: str, value, *, spaced: bool = False) -> bool:
     """Whether the cited text actually states the value's number.
@@ -308,7 +329,12 @@ def quotes_the_number(text: str, value, *, spaced: bool = False) -> bool:
     hay = repair_text(text) if spaced else text
     if _states(hay, float(value)) or _says(hay, float(value)):
         return True
-    return value == 0 and any(word in hay.lower() for word in _STATES_NONE)
+    if value != 0:
+        return False
+    lowered = hay.lower()
+    return any(word in lowered for word in _STATES_NONE) or any(
+        pattern.search(hay) for pattern in _NO_STANDARD
+    )
 
 
 def _statuses(layer: Layer) -> list[Status]:

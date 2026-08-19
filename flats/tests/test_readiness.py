@@ -372,6 +372,35 @@ def test_a_quote_that_does_not_state_its_number_is_misquoted(tmp_path: Path) -> 
     assert not quotes_the_number("13.090 OTHER APPLICABLE DEVELOPMENT STANDARDS", 20)
 
 
+def test_a_code_that_waives_a_standard_in_prose_states_zero() -> None:
+    """Table codes print an em dash for a standard they do not impose, and the
+    check already knew that spelling. Prose codes write the sentence instead --
+    "No setback is required along property lines where townhouses are
+    attached" -- and fourteen correctly-cited Wilsonville values read as
+    misquoted because the passage supporting them contains no digit."""
+    from flats.encode.readiness import quotes_the_number
+
+    assert quotes_the_number(
+        "8. Townhouse Setbacks: No setback is required along property lines "
+        "where townhouses are attached.",
+        0,
+    )
+    assert quotes_the_number("Interior side setbacks may be reduced to zero.", 0)
+    assert quotes_the_number("There is no minimum lot size in this zone.", 0)
+    assert quotes_the_number("Off-street parking is not required.", 0)
+
+
+def test_waiving_language_does_not_excuse_a_number_that_is_absent() -> None:
+    """The rule runs in the permissive direction, so it is held to zero only.
+    A passage that waives one standard is not evidence for a different one it
+    never states."""
+    from flats.encode.readiness import quotes_the_number
+
+    waiver = "No setback is required where townhouses are attached."
+    assert not quotes_the_number(waiver, 15)
+    assert not quotes_the_number("Maximum lot coverage", 0)
+
+
 def test_a_non_numeric_value_is_never_misquoted() -> None:
     # Permission flags and enums have no number to look for, and flagging
     # them would bury the citations that really did drift.
