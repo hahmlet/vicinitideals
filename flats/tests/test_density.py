@@ -219,3 +219,29 @@ def test_portland_measures_its_floor_on_the_lot_and_says_nothing(rules: RuleSet)
     rm1 = rules.resolve(PORTLAND_MD, "RM1").values["min_density_du_per_acre"]
 
     assert rm1.measured_on is None
+
+
+OREGON_CITY = "or/clackamas/oregon-city"
+
+
+def test_oregon_city_encodes_the_floor_and_leaves_the_ceiling_alone(
+    rules: RuleSet,
+) -> None:
+    """Tables 17.08.050 and 17.10.050 state both ends, and only one of them
+    can be written down. Note B.2 counts a duplex, triplex or quadplex as ONE
+    dwelling unit for maximum net density and lets total units count toward
+    the minimum — so the floor is the pod's four and the ceiling is a
+    numerator this screen has no way to produce. Encoding 4.4 against four
+    units would turn every R-10 lot RED on a rule the city does not apply that
+    way."""
+    floors = {
+        zone: rules.resolve(OREGON_CITY, zone).values["min_density_du_per_acre"].value
+        for zone in ("R-10", "R-8", "R-6", "R-5", "R-3.5")
+    }
+
+    assert floors == {"R-10": 3.5, "R-8": 4.4, "R-6": 5.8, "R-5": 7.0, "R-3.5": 10}
+    for zone in floors:
+        held = rules.resolve(OREGON_CITY, zone)
+        assert "max_density_du_per_acre" not in held.values, zone
+        assert "max_density_du_per_acre" not in held.exempted, zone
+        assert held.values["min_density_du_per_acre"].measured_on == "net_developable_area"

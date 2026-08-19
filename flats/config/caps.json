@@ -112,6 +112,9 @@
       "max_height_ft": [
         "utility_easement"
       ],
+      "min_density_du_per_acre": [
+        "utility_easement"
+      ],
       "min_lot_sqft": [
         "utility_easement"
       ],
@@ -142,6 +145,10 @@
         "utility_easement"
       ],
       "max_height_ft": [
+        "utility_easement"
+      ],
+      "min_density_du_per_acre": [
+        "abuts_lower_density_zone",
         "utility_easement"
       ],
       "min_lot_sqft": [
@@ -176,6 +183,10 @@
       "max_height_ft": [
         "utility_easement"
       ],
+      "min_density_du_per_acre": [
+        "abuts_lower_density_zone",
+        "utility_easement"
+      ],
       "min_lot_sqft": [
         "utility_easement"
       ],
@@ -208,6 +219,9 @@
       "max_height_ft": [
         "utility_easement"
       ],
+      "min_density_du_per_acre": [
+        "utility_easement"
+      ],
       "min_lot_sqft": [
         "utility_easement"
       ],
@@ -238,6 +252,9 @@
         "utility_easement"
       ],
       "max_height_ft": [
+        "utility_easement"
+      ],
+      "min_density_du_per_acre": [
         "utility_easement"
       ],
       "min_lot_sqft": [

@@ -92,6 +92,18 @@ zones:
     max_height_ft:
       value: 35
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4122"
+    min_density_du_per_acre:
+      # Table 17.08.050 row "Minimum net density". Note B.2 lets total
+      # dwelling units count toward the floor, so the pod counts as the
+      # four it is. 17.65.070.D.4 puts it out of reach of an adjustment:
+      # "minimum density for residential sites may not be reduced".
+      value: 3.5
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4184-L4186"
+      # 17.04.808 divides by NET developable area, which its own worked
+      # example takes as eighty percent of the site -- twenty percent
+      # for right-of-way, slopes and the rest. Nothing here surveys
+      # that, so the lot's own area serves as the bound it is.
+      measured_on: net_developable_area
     notes: 'quadfit confidence: verified | Height 35 ft. Front 15 ft for a porch. Rear 10 ft for ADU/cottage
       cluster. No FAR. Quadplex uses base-zone dimensions per 17.16.060.A; >=1 street-facing main entrance
       req''d (17.16.060.C). Coverage 45% only with an ADU.'
@@ -136,6 +148,18 @@ zones:
     max_height_ft:
       value: 35
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4122"
+    min_density_du_per_acre:
+      # Table 17.08.050 row "Minimum net density". Note B.2 lets total
+      # dwelling units count toward the floor, so the pod counts as the
+      # four it is. 17.65.070.D.4 puts it out of reach of an adjustment:
+      # "minimum density for residential sites may not be reduced".
+      value: 4.4
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4184-L4186"
+      # 17.04.808 divides by NET developable area, which its own worked
+      # example takes as eighty percent of the site -- twenty percent
+      # for right-of-way, slopes and the rest. Nothing here surveys
+      # that, so the lot's own area serves as the bound it is.
+      measured_on: net_developable_area
     notes: 'quadfit confidence: verified | Height 35 ft. Front 10 ft for a porch. No FAR. One street-facing
       entrance per quadplex (17.16.060.C). Coverage 45% only with an ADU.'
     setback_garage_entrance_ft:
@@ -179,6 +203,18 @@ zones:
     max_height_ft:
       value: 35
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4122"
+    min_density_du_per_acre:
+      # Table 17.08.050 row "Minimum net density". Note B.2 lets total
+      # dwelling units count toward the floor, so the pod counts as the
+      # four it is. 17.65.070.D.4 puts it out of reach of an adjustment:
+      # "minimum density for residential sites may not be reduced".
+      value: 5.8
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4184-L4186"
+      # 17.04.808 divides by NET developable area, which its own worked
+      # example takes as eighty percent of the site -- twenty percent
+      # for right-of-way, slopes and the rest. Nothing here surveys
+      # that, so the lot's own area serves as the bound it is.
+      measured_on: net_developable_area
     notes: 'quadfit confidence: verified | Height 35 ft. Front 5 ft for a porch. Quadplex min lot (7,000)
       exceeds detached-SFD min (6,000). No FAR. Coverage 45% only with an ADU.'
     setback_garage_entrance_ft:
@@ -228,6 +264,18 @@ zones:
     max_height_ft:
       value: 35
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4318"
+    min_density_du_per_acre:
+      # Table 17.10.050 row "Minimum net density". Note B.2 lets total
+      # dwelling units count toward the floor, so the pod counts as the
+      # four it is. 17.65.070.D.4 puts it out of reach of an adjustment:
+      # "minimum density for residential sites may not be reduced".
+      value: 7.0
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4376-L4378"
+      # 17.04.808 divides by NET developable area, which its own worked
+      # example takes as eighty percent of the site -- twenty percent
+      # for right-of-way, slopes and the rest. Nothing here surveys
+      # that, so the lot's own area serves as the bound it is.
+      measured_on: net_developable_area
     notes: 'quadfit confidence: verified | Height 35 ft. Ch 17.10 ''Medium Density'' but permits detached
       SFD (17.10.020.A) so HB 2001 attaches. Quadplex min lot 7,000 > detached 5,000. Coverage 50%.'
     setback_garage_entrance_ft:
@@ -277,6 +325,18 @@ zones:
     max_height_ft:
       value: 35
       quote: "or/clackamas/oregon-city/17.zoning.txt#L4318"
+    min_density_du_per_acre:
+      # Table 17.10.050 row "Minimum net density". Note B.2 lets total
+      # dwelling units count toward the floor, so the pod counts as the
+      # four it is. 17.65.070.D.4 puts it out of reach of an adjustment:
+      # "minimum density for residential sites may not be reduced".
+      value: 10
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4376-L4378"
+      # 17.04.808 divides by NET developable area, which its own worked
+      # example takes as eighty percent of the site -- twenty percent
+      # for right-of-way, slopes and the rest. Nothing here surveys
+      # that, so the lot's own area serves as the bound it is.
+      measured_on: net_developable_area
     notes: 'quadfit confidence: verified | Height 35 ft. Permits detached SFD (17.10.020.A). Quadplex
       min lot 7,000 >> detached 3,500. Coverage 55%. NOT the multi-family zone (that is R-2 / Ch 17.12,
       excluded).'
