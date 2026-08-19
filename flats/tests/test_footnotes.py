@@ -371,3 +371,43 @@ def test_a_lettered_note_may_number_its_own_sub_parts():
 
     assert [b.mark for b in seen.bodies] == ["D", "E", "F"]
     assert "minimum 20 feet" in seen.bodies[1].text
+
+
+def test_a_headless_numbered_run_under_a_table_is_a_notes_block():
+    """Milwaukie's Table 19.302.4 prints its notes with nothing over them.
+
+    No "Notes:", no brackets — just the number, a column gap and the sentence.
+    One of them exempts middle housing from a density maximum that would
+    otherwise ask 28,000 sq ft for four units, so the whole zone turns on a
+    block the census could not see.
+    """
+    text = "\n".join(
+        [
+            "Maximum2, 3                                          32.0",
+            "1  Minimum lot size for single detached dwelling applies to lots",
+            "created on or after June 3, 2022.",
+            "2  Townhouses are allowed at 4 times the maximum density allowed",
+            "for single detached dwellings or 25 dwelling units per acre.",
+            "3  The density for single room occupancy developments is",
+            "calculated as follows: four SRO rooms equal one dwelling unit.",
+        ]
+    )
+
+    seen = census(text, doc="d.txt")
+
+    assert [b.mark for b in seen.bodies] == ["1", "2", "3"]
+    assert "25 dwelling units per acre" in seen.bodies[1].text
+
+
+def test_a_numbered_paragraph_in_the_code_body_is_not_a_headless_run():
+    """"1. The applicant shall" is one space and a period — the shape of an
+    ordinary subsection. A codifier's footnote is a number, a column gap and
+    no period, and only that shape is read without a heading."""
+    text = "\n".join(
+        [
+            "1. The applicant shall submit a site plan.",
+            "2. The director shall review it within 30 days.",
+        ]
+    )
+
+    assert census(text, doc="d.txt").bodies == ()

@@ -117,6 +117,7 @@ CHECK_FIELD: dict[str, str] = {
     "height_ft": "max_height_ft",
     "max_units": "max_units",
     "min_units": "min_units_at_trigger",
+    "density_du_per_acre": "max_density_du_per_acre",
     "parking_stalls": "parking_min_per_unit",
     "open_space_pct": "open_space_min_pct",
 }
@@ -256,6 +257,16 @@ def _checks(
     )
     check("height_ft", design.height_ft, rules.get("max_height_ft"), is_maximum=True)
     check("max_units", float(design.units), rules.get("max_units"), is_maximum=True)
+    # A ceiling on units per acre, measured on the lot in front of us. An acre
+    # is 43,560 sq ft, and the arithmetic is done here rather than in the rule
+    # file because the code states the ceiling in acres and the parcel layer
+    # holds square feet.
+    check(
+        "density_du_per_acre",
+        design.units / (lot.lot_sqft / 43_560.0),
+        rules.get("max_density_du_per_acre"),
+        is_maximum=True,
+    )
 
     # Minimum density only bites above the lot size that triggers it.
     trigger = rules.get("min_density_trigger_lot_sqft")

@@ -154,6 +154,18 @@ _F: tuple[FieldDef, ...] = (
         "min_density",
     ),
     FieldDef("min_units_at_trigger", "count", "Units required once the density trigger is met.", False),
+    FieldDef(
+        "max_density_du_per_acre",
+        "ratio",
+        "MAXIMUM dwelling units per acre. A ceiling on units is a floor under "
+        "lot area said in other units -- Milwaukie caps R-MD at 6.2 du/acre on "
+        "a large lot, which asks 28,000 sq ft for four units where the lot "
+        "size row asks 7,000. Held apart from min_lot_sqft because a code can "
+        "state either without the other, and because the two disagree often "
+        "enough that folding one into the other would lose which one bound.",
+        True,
+        "max_density",
+    ),
     # --- parking and open space ----------------------------------------
     FieldDef("parking_min_per_unit", "ratio", "Required off-street stalls per unit.", False, "parking_min"),
     FieldDef("open_space_min_pct", "percent", "Minimum private open space as a share of lot area.", False),
@@ -207,6 +219,9 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "max_units",
         "min_density_trigger_lot_sqft",
         "min_units_at_trigger",
+        # Most Oregon codes cap density in the multi-family zones only, and a
+        # zone that states no ceiling is not an incomplete zone.
+        "max_density_du_per_acre",
         "open_space_min_pct",
         "min_landscaped_pct",
         "orientation_constraint",

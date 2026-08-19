@@ -56,6 +56,13 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L35"
+      variants:
+        # Note 3: "Townhouses are not permitted on flag lots." The pod on one
+        # lot is a quadplex and unaffected; split onto four it is townhouses,
+        # and on a flag lot that path closes.
+        - value: false
+          when: [unit_lots, flag_lot]
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L282"
     setback_front_ft:
       value: 20
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L184"
@@ -118,6 +125,26 @@ zones:
     max_height_ft:
       value: 35
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L224"
+    max_density_du_per_acre:
+      # Table 19.301.4 row "b. Maximum" reads 25 / 8.7 / 8.7 / 6.2 across the
+      # four lot-size bands, and note 4 does two things to it: it exempts
+      # duplexes, triplexes, quadplexes and cottage clusters outright, and it
+      # holds townhouses to four times the single-detached figure or 25 du per
+      # acre, whichever is less. Exempt at the base is the pod on one lot; the
+      # variants are the same building split onto four.
+      exempt: true
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L283"
+      variants:
+        # 25 is the number the note prints, and it governs in three of the
+        # four bands: four times 25, 8.7 and 8.7 are all above it. In the
+        # 7,000 sq ft band four times 6.2 is 24.8 and would bind instead --
+        # but 24.8 appears nowhere in the document, and typing it would cite
+        # a sentence for a number the sentence does not contain. What that
+        # costs is two tenths of a unit per acre in one band: sixty square
+        # feet of lot under a four-unit building.
+        - value: 25
+          when: [unit_lots]
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L283"
     notes: 'Table 19.301.4 is one zone in four columns, split by how big the lot already is: 1,500-2,999
       sq ft, 3,000-4,999, 5,000-6,999, and 7,000 and up. The base value here is the last column and the
       variants are the other three, so a lot FLATS has not measured comes back ambiguous rather than
@@ -169,6 +196,18 @@ zones:
     max_coverage_pct:
       value: 50
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L503"
+    max_density_du_per_acre:
+      # Table 19.302.4 caps R-HD at 32 du per acre, and note 2 is the same
+      # sentence Table 19.301.4 prints: middle housing is exempt, townhouses
+      # are held to four times the single-detached figure or 25, whichever is
+      # less. Four times 32 is 128, so here the 25 governs -- the townhouse
+      # path is capped tighter than the zone.
+      exempt: true
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L510"
+      variants:
+        - value: 25
+          when: [unit_lots]
+          quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L510"
     notes: 'Re-read against the adopted Table 19.302.4; the ported quadfit row disagreed with it on four
       standards and is replaced. Front was 5 and is 20: the 5 ft front yard applies only to properties
       identified in Figure 19.302.4, a mapped subset this screen cannot evaluate, so the general standard

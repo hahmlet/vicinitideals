@@ -1,0 +1,109 @@
+# Milwaukie -- Municipal Code Title 19 footnotes.
+#
+# Ten notes, and all ten sit over a value this corpus encodes. Eight belong to
+# the two residential tables -- 19.301.4 for R-MD and 19.302.4 for R-HD -- and
+# two are the commercial mixed-use table's, reaching an R-HD value only through
+# the block's region.
+#
+# One of the eight is the load-bearing sentence in both zones. Table 19.301.4
+# caps R-MD at 6.2 dwelling units per acre on a lot of 7,000 sq ft or more, and
+# Table 19.302.4 caps R-HD at 32. Four units at 6.2 need 28,000 sq ft; the lot
+# size row asks 7,000. What reconciles them is the note: duplexes, triplexes,
+# quadplexes and cottage clusters are exempt from density maximums outright,
+# and townhouses are held to four times the single-detached figure or 25 units
+# per acre, whichever is less. The pod on one lot is a quadplex and exempt;
+# split onto four lots it is townhouses and capped. Both halves are encoded,
+# which is what `max_density_du_per_acre` was added for -- until it existed
+# this note could not be written down at all.
+#
+# The same sentence is printed in both tables, so one ruling covers both: a
+# disposition binds to the words, not to the line.
+notes:
+  # --- Table 19.301.4, R-MD ------------------------------------------
+  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L280"
+    digest: "153def8cd904"
+    state: dismissed
+    reason: >-
+      note 1 permits a townhouse on a corner lot of up to 3,500 sq ft, which
+      widens where the townhouse path is available rather than narrowing it.
+      Declining it costs a corner lot in the 3,000-3,500 range called
+      ineligible for the split-plat route; it cannot certify one that is not
+
+  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L281"
+    digest: "1e379b18a919"
+    state: dismissed
+    reason: >-
+      note 2 limits the minimum lot size for a SINGLE DETACHED dwelling to
+      lots created on or after 3 June 2022. Neither half reaches this screen:
+      the housing type is not the one being placed, and the vintage rule only
+      exempts older lots from a standard
+
+  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L282"
+    digest: "4ed7c068ec63"
+    state: encoded
+    encoded_as: "quadplex_allowed variant, when [unit_lots, flag_lot], false"
+    reason: >-
+      note 3 states that townhouses are not permitted on flag lots. The pod on
+      a single lot is a quadplex and unaffected; split onto four lots it is
+      townhouses, and on a flag lot that path closes
+
+  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L283"
+    digest: "f78ad643b37f"
+    state: encoded
+    encoded_as: >-
+      max_density_du_per_acre exempt at the base in R-MD and R-HD; when
+      [unit_lots] 25 du/acre
+    reason: >-
+      the note that decides both zones. Duplexes, triplexes, quadplexes and
+      cottage clusters are exempt from density maximums, which is what lets a
+      four-unit building sit on a 7,000 sq ft R-MD lot the 6.2 du/acre ceiling
+      would otherwise ask 28,000 for. Townhouses get four times the
+      single-detached figure or 25, whichever is less, and 25 is what is
+      encoded because it is what the note prints. Four times 8.7 and four
+      times 32 are both well above it; only R-MD's largest band would bind
+      lower, at four times 6.2, and 24.8 is a product the document states
+      nowhere
+
+  # --- Table 19.302.4, R-HD ------------------------------------------
+  #
+  # Notes 1 and 2 print the same sentences as 19.301.4's notes 2 and 4 and are
+  # ruled by those digests. What follows is what only R-HD prints.
+  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L511"
+    digest: "938212bc2d9d"
+    state: dismissed
+    reason: >-
+      note 3 counts four single room occupancy rooms as one dwelling unit for
+      density purposes. It changes the arithmetic for a housing type this
+      screen does not place, and in the direction that fits more of it
+
+  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L512"
+    digest: "e12f4a926291"
+    state: encoded
+    encoded_as: "setback_street_side_ft variant, when [unit_lots], 5 ft"
+    reason: >-
+      note 4 sets the townhouse street side yard at 5 ft against the table's
+      15, and it was already carried as the unit_lots variant when the value
+      was quoted
+
+  # --- Table 19.303.3, the commercial mixed-use zones ----------------
+  #
+  # One reason, said twice: these are GMU, NMU and SMU standards, and the only
+  # thing joining them to an R-HD side yard is how wide a block's region is
+  # read.
+  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1071"
+    digest: "37167cf5ee63"
+    state: dismissed
+    reason: >-
+      an edge treatment mapped in Figure 19.303.5, applying to the commercial
+      mixed-use zones of Table 19.303.3. This layer encodes no GMU, NMU or SMU
+      zone, and the R-HD value it reaches is read from Table 19.302.4 several
+      pages earlier
+
+  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L1072"
+    digest: "acdaf14a0a9d"
+    state: dismissed
+    reason: >-
+      an edge treatment mapped in Figure 19.303.4.C.2.b, applying to the
+      commercial mixed-use zones of Table 19.303.3. This layer encodes no GMU,
+      NMU or SMU zone, and the R-HD value it reaches is read from Table
+      19.302.4 several pages earlier

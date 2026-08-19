@@ -95,6 +95,13 @@ LETTER_NOTE = re.compile(r"^\(?(?P<n>[A-Z])\)?\s?[.)]\s+(?P<text>\S.*)$")
 #: heading over it.
 BRACKET_NOTE = re.compile(r"^\[(?P<n>\d{1,2})\]\s+(?P<text>\S.*)$")
 
+#: A headless run: the number, a column gap, and the text, with nothing
+#: announcing it. Milwaukie prints its table notes this way. The gap is what
+#: earns the reading -- an ordinary numbered paragraph is "1. The applicant
+#: shall", one space and a period -- and the run is only believed where it
+#: starts at 1 and ascends, which is checked in `_blocks` rather than here.
+HEADLESS_NOTE = re.compile(r"^(?P<n>\d{1,2})\s{2,}(?P<text>\S.*)$")
+
 #: The number on its own line, with the text beneath it. An HTML table renders
 #: each cell as its own line, so a block that reads "1  Density calculations
 #: shall be..." on the page arrives as "1", newline, "Density calculations
@@ -283,8 +290,10 @@ class Census:
 def _blocks(lines: Sequence[str]) -> list[Block]:
     """Every notes block in the document, in order.
 
-    Two shapes: a headed block, which is a "NOTES:" line followed by numbered
-    entries, and a bracket run, which numbers itself and needs no heading.
+    Three shapes: a headed block, which is a "NOTES:" line followed by numbered
+    entries; a bracket run, which numbers itself and needs no heading; and a
+    headless run, which is a codifier printing "1", a column gap and the note
+    under a table it has just finished.
     """
     found: list[Block] = []
     i = 0
@@ -293,7 +302,8 @@ def _blocks(lines: Sequence[str]) -> list[Block]:
         stripped = lines[i].strip()
         headed = bool(stripped) and NOTES_HEAD.match(stripped) is not None
         bracketed = BRACKET_NOTE.match(stripped) is not None
-        if not headed and not bracketed:
+        headless = _headless_run(lines, i)
+        if not headed and not bracketed and not headless:
             i += 1
             continue
         head = i
@@ -330,6 +340,28 @@ def _order(mark: str) -> tuple[int, int]:
     cutting the second one off unread.
     """
     return (0, int(mark)) if mark.isdigit() else (1, ord(mark))
+
+
+def _headless_run(lines: Sequence[str], i: int) -> bool:
+    """Whether a numbered notes run starts here with nothing announcing it.
+
+    Believed only from its first note, and only where a second follows it: a
+    lone "1  something" is a table cell about as often as it is a footnote,
+    and two in sequence is a list.
+    """
+    first = HEADLESS_NOTE.match(lines[i].strip())
+    if first is None or first.group("n") != "1":
+        return False
+    for raw in lines[i + 1 : i + 12]:
+        stripped = raw.strip()
+        if not stripped:
+            continue
+        if ENDS_BLOCK.match(stripped) or NOTES_HEAD.match(stripped):
+            return False
+        following = HEADLESS_NOTE.match(stripped)
+        if following is not None:
+            return following.group("n") == "2"
+    return False
 
 
 def _bears_a_marker(raw: str) -> bool:
@@ -374,6 +406,7 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
             break
         opening = (
             STACKED_NOTE.match(stripped)
+            or HEADLESS_NOTE.match(stripped)
             or BLOCK_NOTE.match(stripped)
             or STACKED_LETTER.match(stripped)
             or LETTER_NOTE.match(stripped)
