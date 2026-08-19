@@ -207,7 +207,10 @@ def test_the_cities_that_say_net_acre_say_so_in_the_rule_file(rules: RuleSet) ->
         assert rates, f"{layer} {zone} states a density somewhere"
         for rate in rates:
             assert rate.measured_on == "net_developable_area", f"{layer} {zone} {rate.name}"
-            assert "net_developable_area" in rate.levers
+            # Not a lever. A lever says this number could move; this says the
+            # comparison rests on a quantity nobody surveyed, and the screen
+            # answers it from a bound where a bound is enough.
+            assert "net_developable_area" not in rate.levers
 
 
 def test_portland_measures_its_floor_on_the_lot_and_says_nothing(rules: RuleSet) -> None:
@@ -216,4 +219,3 @@ def test_portland_measures_its_floor_on_the_lot_and_says_nothing(rules: RuleSet)
     rm1 = rules.resolve(PORTLAND_MD, "RM1").values["min_density_du_per_acre"]
 
     assert rm1.measured_on is None
-    assert rm1.levers == frozenset()

@@ -515,10 +515,11 @@ class Value(BaseModel):
     #: The quantity a rate is measured against, where the code names one this
     #: screen does not hold. A density per *net acre* is computed on the lot
     #: less rights-of-way, floodplain, steep slopes and Goal 5 resources, and
-    #: nothing here surveys those -- so the number is right, the denominator is
-    #: absent, and running the check on the parcel's own square footage would
-    #: compare a lot against a standard it was never held to. Named here, it
-    #: becomes a lever the screen resolves as unknown.
+    #: nothing here surveys those. Deliberately not a lever: a lever says the
+    #: number could move, and this says the comparison rests on a quantity
+    #: nobody measured. The lot's own area is a bound on it, which settles the
+    #: check in one direction and leaves it open in the other -- see
+    #: :func:`flats.score.screen._checks`.
     measured_on: str | None = None
     #: True where the zone was read and states no such standard at all --
     #: Portland's RX prints a front lot line and no lot area, and its parking
@@ -692,11 +693,7 @@ class Value(BaseModel):
         What makes the batch view possible: a lever is worth offering only when
         flipping it moves a number some lot in the selection is bound by.
         """
-        held = frozenset(c for variant in self.variants for c in variant.when)
-        # A denominator nothing measures travels the same way an unread
-        # footnote does: as a fact the standard turns on. Same machinery, and
-        # the screen needs no special case for either.
-        return held | ({self.measured_on} if self.measured_on else frozenset())
+        return frozenset(c for variant in self.variants for c in variant.when)
 
 
 

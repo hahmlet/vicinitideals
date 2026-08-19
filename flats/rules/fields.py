@@ -240,10 +240,11 @@ SQFT_PER_ACRE = 43_560
 #: denominators and they are not close: Tualatin's own code offers 15 to 20
 #: percent as the deduction to assume when nobody has surveyed it.
 #:
-#: A screen holding only the parcel's square footage can run the first and
-#: cannot run the second. `measured_on` is how a rule file says which one it
-#: is, and the honest outcome for the second is an unrun check rather than a
-#: comparison against the wrong quantity.
+#: A screen holding only the parcel's square footage can run the first
+#: outright. For the second the lot's own area is still a bound -- net is
+#: never more than gross -- which settles a floor that clears and a ceiling
+#: that is exceeded, and leaves the other outcome to a survey nobody ran.
+#: `measured_on` is how a rule file says which one it is.
 MEASURED_ON_FIELDS: frozenset[str] = frozenset(
     {"min_density_du_per_acre", "max_density_du_per_acre"}
 )

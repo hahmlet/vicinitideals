@@ -203,10 +203,13 @@ def _checks(
     design: Design,
     fit: Fit,
     policy: SlackPolicy,
-) -> tuple[list[CheckResult], list[str]]:
+) -> tuple[list[CheckResult], list[str], set[str]]:
     """Every numeric standard this lot can be measured against."""
     out: list[CheckResult] = []
     unchecked: list[str] = []
+    #: Quantities a standard here is stated per, which nothing surveyed and
+    #: the lot's own area could not settle.
+    unmeasured: set[str] = set()
     where = rules.jurisdiction
 
     def check(name: str, observed: float, threshold: float | None, *, is_maximum: bool) -> None:
@@ -216,22 +219,45 @@ def _checks(
         out.append(policy.evaluate(name, observed, threshold, is_maximum=is_maximum, jurisdiction=where))
 
     def rate(name: str, per_acre: float, field: str, *, is_maximum: bool) -> None:
-        """A density check, run only where the denominator is the lot.
+        """A density check, aware of which acre the code counts.
 
         Nearly every Oregon city states density per *net acre* -- the lot less
         rights-of-way, floodplain, slopes over 25 percent, wetlands and Goal 5
-        resources -- and nothing here surveys any of that. Running the
-        comparison on the parcel's own square footage would understate the
-        density achieved and hold the lot to a floor it was never measured
-        against, which is a false RED on arithmetic nobody did. Portland is the
-        exception that makes the distinction worth carrying: its Table 120-4
-        says "of site area", which is the lot, so that one runs.
+        resources -- and nothing here surveys any of that. Portland is the
+        exception that makes the distinction worth carrying: Table 120-4 says
+        "of site area", which is the lot, so that one is simply run.
+
+        Where the denominator is a net acre the lot's own area is still a
+        bound on it, and a bound settles half the question. Net area is never
+        more than gross, so the density computed on the whole lot is the
+        *lowest* the development could be scored at:
+
+        * a floor cleared on the whole lot is cleared on any net area, so a
+          pass is certain and the check stands;
+        * a ceiling exceeded on the whole lot is exceeded on any net area, so
+          a failure is certain and the check stands;
+        * the other outcome in each pair depends on a survey nobody ran, and
+          the honest answer is that the comparison did not happen.
+
+        That asymmetry is worth the code. Minimum density binds only on large
+        lots and maximum density only on small ones, so the certain half is
+        the common case both times: most lots get a real answer here, and only
+        the genuinely marginal ones fall through to the fact.
         """
         held = rules.values.get(field)
-        if held is not None and held.measured_on is not None:
-            unchecked.append(name)
+        threshold = rules.get(field)
+        if held is None or held.measured_on is None or threshold is None:
+            check(name, per_acre, threshold, is_maximum=is_maximum)
             return
-        check(name, per_acre, rules.get(field), is_maximum=is_maximum)
+        result = policy.evaluate(
+            name, per_acre, threshold, is_maximum=is_maximum, jurisdiction=where
+        )
+        settled = result.verdict is (Verdict.fails if is_maximum else Verdict.passes)
+        if settled:
+            out.append(result)
+            return
+        unchecked.append(name)
+        unmeasured.add(held.measured_on)
 
     # Fitment. The threshold is the design's depth; the observation is the
     # deepest rectangle of that width the envelope holds.
@@ -342,7 +368,7 @@ def _checks(
             )
         )
 
-    return out, unchecked
+    return out, unchecked, unmeasured
 
 
 def _unconfirmed(outcomes: Sequence[ReliefOutcome]) -> tuple[str, ...]:
@@ -382,7 +408,7 @@ def screen(
         return Screening(triage=Triage.unknown, reasons=(GEOMETRY_UNREADABLE,))
 
     where = rules.jurisdiction
-    checks, unchecked = _checks(rules, lot, design, fit, policy)
+    checks, unchecked, unmeasured = _checks(rules, lot, design, fit, policy)
     blockers = tuple(binding(checks))
     optimistic = tuple(sorted({c.check for c in checks} & OPTIMISTIC_CHECKS))
     worst_check = dominant(checks)
@@ -452,6 +478,13 @@ def screen(
         reasons.append(GEOMETRY_UNREADABLE)
     if any(CHECK_FIELD.get(name, name) in REQUIRED_FIELDS for name in unchecked):
         reasons.append(STANDARD_NOT_ENCODED)
+    if unmeasured and FACT_UNOBSERVED not in reasons:
+        # A standard stated per a quantity nobody surveyed, on a lot whose own
+        # area could not settle it either way. Reported whether or not the
+        # caller passed a configuration: this one is not an assumption the
+        # caller made, it is the code naming a denominator this project does
+        # not hold.
+        reasons.append(FACT_UNOBSERVED)
 
     if any(not o.available for o in outcomes):
         # A verified standard the code offers no way around. Nothing still
