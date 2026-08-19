@@ -1,0 +1,27 @@
+# Multnomah County unincorporated -- the notes of a chapter the county does not
+# write.
+#
+# Fifteen footnotes are captured here and all fifteen are PCC 33.110's, because
+# this layer's 33.110.txt is Portland's chapter fetched a second time. R10,
+# R20, RF and R7 in unincorporated Multnomah are Portland-administered pockets:
+# the county's map names the zone and Portland's code states the standards, and
+# the encoded values in those zones cite 33.110 for exactly that reason.
+#
+# So the rulings are adopted rather than re-typed. Fifteen reasons written out
+# twice would be fifteen chances for the two copies to disagree, and a reader
+# comparing them would have no way to tell a considered difference from a
+# stale paste.
+#
+# What is NOT adopted, and would have to be written here: anything about the
+# county's own zones. LR7 comes from MCC 39.4848-.4868 and RR from MCC
+# 39.4350-.4395; neither article carries a footnote the census has found, and
+# if one appears it is the county's sentence and gets the county's ruling.
+adopts:
+  - layer: or/multnomah/portland
+    reason: >-
+      this layer's 33.110.txt is PCC 33.110, the same chapter stored twice. The
+      Portland-administered pockets are screened against Portland's standards
+      and cite Portland's chapter, so a ruling on one of its sentences is a
+      ruling on the same sentence. The county's own articles -- LR-7 and Rural
+      Residential -- are not covered by this and carry no captured notes
+notes: []

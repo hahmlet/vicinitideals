@@ -292,3 +292,107 @@ def test_every_unmeasured_fact_is_one_nothing_assumes() -> None:
     for row in notes():
         if row.state == "unmeasured":
             assert condition(row.fact).assume is None, row.fact
+
+
+# --- one chapter, stored twice -----------------------------------------
+
+
+ADOPTED = (
+    "notes:\n"
+    f"  - digest: {digest(NOTE)}\n"
+    "    state: dismissed\n"
+    "    reason: a corner lot relaxation, and a relaxation only widens where the pod may go\n"
+)
+
+
+def test_a_layer_may_adopt_another_layer_s_rulings(config: Path) -> None:
+    """Multnomah County's R10, R20, RF and R7 are Portland-administered
+    pockets, and the layer's 33.110.txt is PCC 33.110 stored a second time.
+    Fifteen reasons written out twice would be fifteen chances for the two
+    copies to disagree."""
+    write(config, "or/multnomah/portland", ADOPTED)
+    write(
+        config,
+        "or/multnomah/_unincorporated",
+        "adopts:\n"
+        "  - layer: or/multnomah/portland\n"
+        "    reason: the same chapter, fetched twice\n"
+        "notes: []\n",
+    )
+
+    held = rulings()["or/multnomah/_unincorporated"]
+
+    assert [r.digest for r in held] == [digest(NOTE)]
+    assert held[0].state == "dismissed"
+
+
+def test_the_adopting_file_wins_where_both_speak(config: Path) -> None:
+    """A pocket that reads a note differently says so, and saying so is not
+    an error — it is the whole reason adoption is declared rather than
+    inferred from a shared digest."""
+    write(config, "or/multnomah/portland", ADOPTED)
+    write(
+        config,
+        "or/multnomah/_unincorporated",
+        "adopts:\n"
+        "  - layer: or/multnomah/portland\n"
+        "    reason: the same chapter, fetched twice\n"
+        "notes:\n"
+        f"  - digest: {digest(NOTE)}\n"
+        "    state: encoded\n"
+        "    encoded_as: setback_front_ft variant, when [corner_lot], 8 ft\n",
+    )
+
+    held = rulings()["or/multnomah/_unincorporated"]
+
+    assert held[-1].state == "encoded", "own rulings come last, and the last one wins the digest"
+
+
+def test_adopting_a_layer_that_has_no_rulings_file_is_refused(config: Path) -> None:
+    """A typo would adopt nothing and read as a jurisdiction whose notes were
+    all ruled on, which is the one failure this register exists to prevent."""
+    write(
+        config,
+        "or/multnomah/_unincorporated",
+        "adopts:\n  - layer: or/multnomah/portlandd\n    reason: typo\nnotes: []\n",
+    )
+    with pytest.raises(DispositionError, match="no rulings file"):
+        rulings()
+
+
+def test_an_adoption_states_why_another_jurisdiction_s_reasons_hold(config: Path) -> None:
+    write(config, "or/multnomah/portland", ADOPTED)
+    write(
+        config,
+        "or/multnomah/_unincorporated",
+        "adopts:\n  - layer: or/multnomah/portland\nnotes: []\n",
+    )
+    with pytest.raises(DispositionError, match="why another jurisdiction"):
+        rulings()
+
+
+def test_adoption_does_not_chain(config: Path) -> None:
+    """Who ruled on this has to fit in a sentence."""
+    write(config, "or/multnomah/portland", ADOPTED)
+    write(
+        config,
+        "or/multnomah/gresham",
+        "adopts:\n  - layer: or/multnomah/portland\n    reason: because\nnotes: []\n",
+    )
+    write(
+        config,
+        "or/multnomah/_unincorporated",
+        "adopts:\n  - layer: or/multnomah/gresham\n    reason: because\nnotes: []\n",
+    )
+    with pytest.raises(DispositionError, match="itself adopts"):
+        rulings()
+
+
+def test_the_county_pockets_carry_portland_s_rulings() -> None:
+    """No config fixture: the adoption actually shipped. All fifteen captured
+    notes here are 33.110's, and none of them blocks."""
+    rows = notes("or/multnomah/_unincorporated")
+
+    assert len(rows) == 15
+    assert all(row.doc.endswith("33.110.txt") for row in rows)
+    assert not any(row.blocking for row in rows)

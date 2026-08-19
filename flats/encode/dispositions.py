@@ -149,6 +149,40 @@ class Note:
         return self.state in ("unread", "unmeasured")
 
 
+def _adopts(raw: dict, path: Path) -> list[str]:
+    """Layers whose rulings this file takes as its own.
+
+    Two jurisdictions can store the same chapter. Multnomah County's R10, R20,
+    RF and R7 are Portland-administered pockets, and the layer's 33.110.txt is
+    PCC 33.110 -- the same sentences, fetched twice, digesting identically. A
+    ruling is a statement about a sentence, so the second copy does not need
+    fifteen re-typed reasons that will drift from the first fifteen.
+
+    Not a default and not inferred from a shared digest: adopting another
+    jurisdiction's judgement is a claim that its reasons hold here, and it is
+    written down with the reason it holds. The adopting file's own rulings win
+    where both speak, which is how a pocket that reads a note differently says
+    so.
+    """
+    raw_adopts = raw.get("adopts") or []
+    if not isinstance(raw_adopts, list):
+        raise DispositionError(f"{path}: 'adopts' must be a list")
+    out: list[str] = []
+    for i, entry in enumerate(raw_adopts):
+        where = f"{path}: adopts[{i}]"
+        if not isinstance(entry, dict):
+            raise DispositionError(f"{where}: expected a mapping with 'layer' and 'reason'")
+        adopted = str(entry.get("layer", "")).strip()
+        if not adopted:
+            raise DispositionError(f"{where}: name the layer whose rulings this file adopts")
+        if not str(entry.get("reason", "")).strip():
+            raise DispositionError(
+                f"{where}: say why another jurisdiction's reasons hold here"
+            )
+        out.append(adopted)
+    return out
+
+
 def _read(path: Path) -> list[Ruling]:
     """One jurisdiction's rulings, refusing anything it cannot vouch for."""
     layer = path.relative_to(CONFIG_ROOT).with_suffix("").as_posix()
@@ -219,13 +253,41 @@ def _read(path: Path) -> list[Ruling]:
 
 
 def rulings() -> dict[str, list[Ruling]]:
-    """Every recorded decision, keyed by layer."""
-    out: dict[str, list[Ruling]] = {}
+    """Every recorded decision, keyed by layer, adoptions resolved."""
+    own: dict[str, list[Ruling]] = {}
+    adopts: dict[str, list[str]] = {}
     if not CONFIG_ROOT.is_dir():
-        return out
+        return own
     for path in sorted(CONFIG_ROOT.rglob("*.yaml")):
+        layer = path.relative_to(CONFIG_ROOT).with_suffix("").as_posix()
+        own.setdefault(layer, [])
+        raw = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        adopts[layer] = _adopts(raw if isinstance(raw, dict) else {}, path)
         for ruling in _read(path):
-            out.setdefault(ruling.layer, []).append(ruling)
+            own.setdefault(ruling.layer, []).append(ruling)
+
+    out: dict[str, list[Ruling]] = {}
+    for layer, mine in own.items():
+        inherited: list[Ruling] = []
+        for source in adopts.get(layer, ()):
+            if source not in own:
+                # A typo here would adopt nothing and read as a jurisdiction
+                # whose notes were all ruled on, which is the one failure this
+                # whole register exists to make impossible.
+                raise DispositionError(
+                    f"{layer}: adopts {source!r}, which has no rulings file"
+                )
+            if adopts.get(source):
+                # One hop. A chain would make "who ruled on this" a graph walk,
+                # and the answer to that question has to fit in a sentence.
+                raise DispositionError(
+                    f"{layer}: adopts {source!r}, which itself adopts — "
+                    "name the original instead"
+                )
+            inherited.extend(own[source])
+        # Own rulings last: where both speak, the file that names this layer
+        # wins.
+        out[layer] = inherited + mine
     return out
 
 
