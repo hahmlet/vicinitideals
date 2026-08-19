@@ -1,0 +1,280 @@
+"""What we decided about each captured footnote, and what happens by default.
+
+The census pulls every footnote out of every stored document without judging
+any of them. This is where judgement is recorded -- and the default is the
+whole point: a footnote nobody has ruled on is ``unread``, and ``unread``
+blocks. Not a warning, not a log line. A standard whose region contains an
+unread footnote is not something we get to call GREEN, because the note may
+be the sentence that halves the number.
+
+Three states, and only one of them is silent by omission:
+
+``unread``
+    Captured, nobody has decided. Blocks. This is what every footnote is
+    until someone writes it down.
+``encoded``
+    Turned into a rule. Carries the zone and field it became, so the claim is
+    checkable against the encoding rather than taken on trust.
+``dismissed``
+    Ruled irrelevant, with a reason in writing. Reasons are shared on purpose:
+    "detached dwellings only" said forty times is a class, and deleting that
+    one reason returns all forty footnotes to ``unread`` at once. That is the
+    rejection pass being re-runnable rather than a decision nobody can revisit.
+
+Dispositions bind to the footnote's *text*, not to its line number. A stored
+document that gets re-fetched moves its lines, and a codifier who amends a
+note changes what we ruled on. So each entry carries a digest of the text it
+was written against: the line may move and the ruling follows it, but if the
+words change the ruling evaporates and the footnote is ``unread`` again. A
+disposition is a statement about a sentence, and it should not outlive the
+sentence.
+
+Run it::
+
+    uv run python -m flats.encode.dispositions
+    uv run python -m flats.encode.dispositions --layer or/multnomah/gresham
+    uv run python -m flats.encode.dispositions --queue
+"""
+
+from __future__ import annotations
+
+import hashlib
+import re
+import sys
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Sequence
+
+import yaml
+
+from flats.encode.footnotes import Body, Census, survey
+
+CONFIG_ROOT = Path(__file__).resolve().parents[1] / "config" / "footnotes"
+
+#: The states a footnote can be in. ``unread`` is not written anywhere -- it
+#: is what a footnote is when nothing says otherwise, which is what makes the
+#: default safe rather than a thing somebody has to remember to set.
+STATES = ("unread", "encoded", "dismissed")
+
+_SPACE = re.compile(r"\s+")
+
+
+def digest(text: str) -> str:
+    """A stable fingerprint of a footnote's words.
+
+    Whitespace is collapsed and case dropped, because extraction re-flows both
+    and neither changes what the note says. Nothing else is normalised: a
+    codifier who edits a word has edited the rule, and the disposition written
+    against the old wording should not survive it.
+    """
+    normalised = _SPACE.sub(" ", text).strip().lower()
+    return hashlib.sha1(normalised.encode("utf-8")).hexdigest()[:12]
+
+
+class DispositionError(Exception):
+    """A disposition file that cannot be trusted to mean what it says."""
+
+
+@dataclass(frozen=True, slots=True)
+class Ruling:
+    """One recorded decision, as written in the YAML."""
+
+    layer: str
+    digest: str
+    state: str
+    reason: str = ""
+    encoded_as: str = ""
+    quote: str = ""
+
+
+@dataclass(frozen=True, slots=True)
+class Note:
+    """One captured footnote joined to whatever was decided about it."""
+
+    layer: str
+    doc: str
+    line: int
+    number: int
+    text: str
+    state: str
+    reason: str = ""
+    encoded_as: str = ""
+    #: Set when a ruling was found for this note's line but not its words --
+    #: the codifier amended it, so the ruling no longer applies.
+    amended: bool = False
+
+    @property
+    def quote(self) -> str:
+        return f"{self.doc}#L{self.line}"
+
+    @property
+    def blocking(self) -> bool:
+        return self.state == "unread"
+
+
+def _read(path: Path) -> list[Ruling]:
+    """One jurisdiction's rulings, refusing anything it cannot vouch for."""
+    layer = path.relative_to(CONFIG_ROOT).with_suffix("").as_posix()
+    raw = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    entries = raw.get("notes") or []
+    if not isinstance(entries, list):
+        raise DispositionError(f"{path}: 'notes' must be a list")
+    out: list[Ruling] = []
+    for i, entry in enumerate(entries):
+        where = f"{path}: notes[{i}]"
+        if not isinstance(entry, dict):
+            raise DispositionError(f"{where}: expected a mapping")
+        state = entry.get("state", "")
+        if state not in ("encoded", "dismissed"):
+            raise DispositionError(
+                f"{where}: state must be 'encoded' or 'dismissed'; "
+                "'unread' is the default and is never written down"
+            )
+        text_digest = str(entry.get("digest", "")).strip()
+        if not text_digest:
+            raise DispositionError(f"{where}: a ruling without a digest cannot be matched")
+        if state == "dismissed" and not str(entry.get("reason", "")).strip():
+            raise DispositionError(
+                f"{where}: a dismissal without a reason is an omission with extra steps"
+            )
+        if state == "encoded" and not str(entry.get("encoded_as", "")).strip():
+            raise DispositionError(
+                f"{where}: 'encoded' has to name what it became, or it cannot be checked"
+            )
+        out.append(
+            Ruling(
+                layer=layer,
+                digest=text_digest,
+                state=state,
+                reason=str(entry.get("reason", "")).strip(),
+                encoded_as=str(entry.get("encoded_as", "")).strip(),
+                quote=str(entry.get("quote", "")).strip(),
+            )
+        )
+    return out
+
+
+def rulings() -> dict[str, list[Ruling]]:
+    """Every recorded decision, keyed by layer."""
+    out: dict[str, list[Ruling]] = {}
+    if not CONFIG_ROOT.is_dir():
+        return out
+    for path in sorted(CONFIG_ROOT.rglob("*.yaml")):
+        for ruling in _read(path):
+            out.setdefault(ruling.layer, []).append(ruling)
+    return out
+
+
+def _join(census: Census, decided: Sequence[Ruling]) -> list[Note]:
+    by_digest = {r.digest: r for r in decided}
+    by_quote = {r.quote: r for r in decided if r.quote}
+    notes: list[Note] = []
+    for body in census.bodies:
+        notes.append(_note(census.layer, body, by_digest, by_quote))
+    return notes
+
+
+def _note(
+    layer: str,
+    body: Body,
+    by_digest: dict[str, Ruling],
+    by_quote: dict[str, Ruling],
+) -> Note:
+    ruling = by_digest.get(digest(body.text))
+    if ruling is not None:
+        return Note(
+            layer=layer,
+            doc=body.doc,
+            line=body.line,
+            number=body.number,
+            text=body.text,
+            state=ruling.state,
+            reason=ruling.reason,
+            encoded_as=ruling.encoded_as,
+        )
+    # A ruling written against this line whose words no longer match it. The
+    # note was amended, so the decision is void and this is a fresh footnote.
+    stale = by_quote.get(body.quote)
+    return Note(
+        layer=layer,
+        doc=body.doc,
+        line=body.line,
+        number=body.number,
+        text=body.text,
+        state="unread",
+        amended=stale is not None,
+    )
+
+
+def notes(layer: str | None = None) -> list[Note]:
+    """Every captured footnote with its state, over the store or one layer."""
+    decided = rulings()
+    out: list[Note] = []
+    for census in survey(layer):
+        out.extend(_join(census, decided.get(census.layer, [])))
+    return out
+
+
+def by_state(rows: Sequence[Note]) -> dict[str, int]:
+    counts = {state: 0 for state in STATES}
+    for row in rows:
+        counts[row.state] += 1
+    return {k: v for k, v in counts.items() if v}
+
+
+def render(rows: Sequence[Note], *, queue: bool = False) -> str:
+    """The register as text, for a terminal or a commit message."""
+    if queue:
+        blocking = [r for r in rows if r.blocking]
+        lines = [
+            f"{r.quote:<52} #{r.number:<3} {'AMENDED ' if r.amended else ''}{r.text[:90]}"
+            for r in blocking
+        ]
+        lines.append("")
+        lines.append(f"unread={len(blocking)} of {len(rows)} captured")
+        return "\n".join(lines)
+
+    per_layer: dict[str, list[Note]] = {}
+    for row in rows:
+        per_layer.setdefault(row.layer, []).append(row)
+    width = max((len(k) for k in per_layer), default=20)
+    lines = []
+    for layer, group in sorted(per_layer.items()):
+        tally = by_state(group)
+        lines.append(
+            f"{layer:<{width}}  {len(group):>3} footnotes  "
+            + "  ".join(f"{k}={v}" for k, v in tally.items())
+        )
+    lines.append("")
+    tally = by_state(rows)
+    lines.append(
+        f"captured={len(rows)}  "
+        + "  ".join(f"{k}={v}" for k, v in tally.items())
+        + f"  blocking={sum(1 for r in rows if r.blocking)}"
+    )
+    return "\n".join(lines)
+
+
+def main(argv: Sequence[str] | None = None) -> int:
+    args = list(sys.argv[1:] if argv is None else argv)
+    layer = args[args.index("--layer") + 1] if "--layer" in args else None
+    print(render(notes(layer), queue="--queue" in args))
+    return 0
+
+
+if __name__ == "__main__":  # pragma: no cover
+    raise SystemExit(main())
+
+
+__all__ = [
+    "CONFIG_ROOT",
+    "DispositionError",
+    "Note",
+    "Ruling",
+    "STATES",
+    "by_state",
+    "digest",
+    "notes",
+    "render",
+    "rulings",
+]
