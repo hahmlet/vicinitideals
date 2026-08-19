@@ -15,6 +15,12 @@ ingest:
 code:
   # Code Publishing refuses a plain request and accepts curl-cffi impersonating
   # chrome124 — measured, not reasoned about. See flats/provenance/sources.py.
+  - id: "19.13.definitions"
+    url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1913.html
+    title: Chapter 19.13 Definitions
+    # Prose about words: almost no dimensioned standards, which the thinness
+    # guard reads as a landing page. Read 2026-08-18.
+    allow_thin: true
   - id: "19.115"
     url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19115.html
     title: Chapter 19.115 VSF Village Single-Family Residential

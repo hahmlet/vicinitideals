@@ -1,0 +1,619 @@
+Chapter 19.13
+
+DEFINITIONS
+
+Sections:
+
+19.13.010 “A” definitions.
+
+19.13.020 “B” definitions.
+
+19.13.030 “C” definitions.
+
+19.13.040 “D” definitions.
+
+19.13.050 “E” definitions.
+
+19.13.060 “F” definitions.
+
+19.13.070 “G” definitions.
+
+19.13.080 “H” definitions.
+
+19.13.090 “I” definitions.
+
+19.13.100 “J” definitions.
+
+19.13.110 “K” definitions.
+
+19.13.120 “L” definitions.
+
+19.13.130 “M” definitions.
+
+19.13.140 “N” definitions.
+
+19.13.150 “O” definitions.
+
+19.13.160 “P” definitions.
+
+19.13.170 “Q” definitions.
+
+19.13.180 “R” definitions.
+
+19.13.190 “S” definitions.
+
+19.13.200 “T” definitions.
+
+19.13.210 “U” definitions.
+
+19.13.220 “V” definitions.
+
+19.13.230 “W” definitions.
+
+19.13.240 “X” definitions.
+
+19.13.250 “Y” definitions.
+
+19.13.260 “Z” definitions.
+
+19.13.010 “A” definitions.
+
+“Abutting” means contiguous or adjoining. It shall include the terms “adjacent,” “adjoining” and “contiguous.”
+
+“Access easement” means an easement recorded for the purpose of providing vehicle, bicycle, and/or pedestrian access from a public street to a parcel across intervening property under separate ownership from the parcel being provided access.
+
+“Access management” means the control of street (or highway) access for the purpose of improving the efficiency, safety and/or operation of the roadway for vehicles; may include prohibiting, closing, or limiting direct vehicle access to a roadway from abutting properties, either with physical barriers (curbs, medians, etc.) or by land dedication or easement.
+
+“Accessible” means approachable and usable by people with disabilities; complies with the Americans with Disabilities Act.
+
+“Accessory dwelling” means an interior, attached, or detached dwelling unit that is used in connection with, or that is accessory to, a single-unit dwelling.
+
+Accessory Use/Accessory Structure. “Accessory uses and structures” are of a nature customarily incidental and subordinate to the principal use or structure on the same lot. Typical accessory structures in the residential district include detached garages, sheds, workshops, greenhouses and similar structures.
+
+“Adjacent” means abutting or located directly across a street right-of-way.
+
+“Administrative” means a discretionary action or permit decision made without a public hearing, but requiring public notification and an opportunity for appeal.
+
+“Adverse impact” means negative effect of development that can be measured (e.g., noise, air pollution, vibration, dust, etc.).
+
+“Affordable” means housing affordable to a certain percentage of the population earning a specified level of income and spending no more than 30 percent of their income on housing expenses. For more information, refer to the Federal Department of Housing and Urban Development and the Oregon Department of Housing and Community Services.
+
+“Agriculture,” as used in this code, is the same as “farm use.”
+
+“Alley” means a narrow street (10-foot to 20-foot right-of-way), usually a thoroughfare through the middle of the block giving access to the rear of lots or buildings, which has been dedicated or deeded to the public.
+
+“Alteration” means any change, addition or modification in construction or occupancy.
+
+“Ambient” means something that surrounds, as in the level of light, dust or noise.
+
+“Arcade” means an arched or covered passageway, often along building fronts or between streets.
+
+“Arterial” means an arterial street. Arterials form the primary roadway network within a region, providing a continuous road system that distributes traffic between cities, neighborhoods, and districts. Generally, arterials are high capacity roadways.
+
+“Articulate/articulation” means the jointing and interrelating of building spaces through offsets, projections, overhangs, extensions and similar features.
+
+“Automobile-oriented use” means automobiles and/or other motor vehicles are an integral part of the use such as drive-in restaurants, quick access or auto repair businesses. (Ord. 1-2024 § 1 (Att. A); Ord. 7-2018 § 1 (Att. A); Ord. 6-2001 § 1)
+
+19.13.020 “B” definitions.
+
+“Basement” means any floor level below the first story in a building; a floor level in a building having only one floor shall be classified as a basement unless such floor level qualifies as a first story as defined in the building code.
+
+“Bed and breakfast inn” provides accommodations (three or more rooms) plus breakfast on a daily or weekly basis in an operator- or owner-occupied home that is primarily used for this purpose. This use is operated as a commercial enterprise, encourages direct bookings from the public, and is intended to provide a major source of income to the proprietors. This level includes inns that operate restaurants offering meals to the general public as well as to overnight guests.
+
+“Berm” means a small rise or hill in a landscape which is intended to buffer or visually screen certain developments, such as parking areas.
+
+“Beveled building corner” means a rounded or flat edge on a building, usually at a street corner; may include an entrance, windows, pillars, or other architectural details and ornamentation.
+
+“Block” means a parcel of land or group of lots bounded by intersecting streets.
+
+“Boarding, lodging or rooming house” means any building or portion thereof, containing not more than five guest rooms where rent is paid.
+
+“Bollard” means a post of metal, wood or masonry that is used to separate or direct traffic (vehicles, pedestrians and/or bicycles). Bollards are usually decorative, and may contain sidewalk or pathway lighting.
+
+“Boulevard” means a street with broad open space areas, typically with planted medians.
+
+“Building division” means a city governmental unit charged with the administration and enforcement of the city of Fairview and Oregon specialty codes, including building, plumbing, electrical and mechanical.
+
+“Building footprint” means the outline of a building, as measured around its foundation.
+
+“Building height” is measured as the vertical distance above a reference datum measured to the highest point of the coping of a flat roof or to the deck line of a mansard roof or to the average height of the highest gable of a pitched or hipped roof (see below examples). The reference datum shall be selected by either of the following, whichever yields a greater height of building:
+
+1. The elevation of the highest adjoining sidewalk or ground surface within a five-foot horizontal distance of an exterior wall of the building when such sidewalk or ground surface is not more than 10 feet above the lowest grade.
+
+2. An elevation 10 feet higher than the lowest grade when the sidewalk or ground surface described in subsection (1) of this definition is more than 10 feet above the lowest grade. The height of a stepped or terraced building is the maximum height of any segment of the building. Not included in the maximum height are: chimneys, bell towers, steeples, roof equipment, flagpoles, and similar features which are not for human occupancy.
+
+“Building mass” means the aggregate size of a building, or the total height, width, and depth of all its parts.
+
+“Building pad” means a vacant building site on a lot with other building sites.
+
+“Building scale” means the dimensional relationship of a building and its component parts to other buildings.
+
+“Bulkhead” means the wall below ground-floor windows on a building (i.e., may be differentiated from other walls by using different materials or detailing).
+
+“Business” means any profession, trade, occupation, commercial or industrial enterprise of any kind or nature including those carried on for profit or for nonprofit purposes, but excluding federally tax exempt organizations and nonprofit religious organizations. (Ord. 1-2024 § 1 (Att. A); Ord. 6-2001 § 1)
+
+19.13.030 “C” definitions.
+
+“Capacity” means maximum holding or service ability, as used for transportation, utilities, parks and other public facilities.
+
+“Centerline radius” means the radius of a centerline of a street right-of-way.
+
+“Child care center” means facilities that provide care and supervision of minor children for periods of less than 24 hours. “Child care centers” provide care for over 16 children.
+
+“City manager” means the appointed chief administrative officer or a designee of the city who is generally responsible for the administration of all city ordinances.
+
+“Clear and objective” relates to decision criteria and standards that do not involve substantial discretion or individual judgment in their application.
+
+“Collector” means type of street which serves traffic within the commercial, industrial and residential neighborhood areas. Collectors connect local neighborhoods or districts to the arterial network. Collectors help form part of the grid system.
+
+“Commercial” means land use involving buying/selling of goods or services as the primary activity.
+
+“Common area” means land commonly owned to include open space, landscaping or recreation facilities (e.g., typically owned by homeowners associations).
+
+“Common courtyard” means a common area for use by residents of a cottage cluster. A common courtyard may function as a community yard. Hard and soft landscape features may be included in a common courtyard, such as pedestrian paths, lawn, groundcover, trees, shrubs, patios, benches, or gazebos.
+
+“Conditional use” means a use which requires a conditional use permit.
+
+“Consensus” means agreement or consent among participants.
+
+“Conservation easement” means an easement that protects identified conservation values of the land, such as wetlands, woodlands, significant trees, floodplains, wildlife habitat, and similar resources.
+
+“Constrained slope” means land on slope that is between 15 to 20 percent.
+
+“Corner radius” means the radius of a street corner, as measured around the curb or edge of pavement.
+
+“Cornice” means the projecting horizontal element that tops a wall or flat roof.
+
+“Cottage” means an individual dwelling unit that is part of a cottage cluster.
+
+“Cottage cluster” means a grouping of no fewer than four detached dwelling units per acre, each with a footprint of less than 900 square feet, located on a single lot or parcel that includes a common courtyard. Cottage cluster may also be known as “cluster housing,” “cottage housing,” “bungalow court,” “cottage court,” or “pocket neighborhood.”
+
+“Court” means a space, open and unobstructed to the sky, located at or above grade level on a lot and bounded on three or more sides by walls of a building.
+
+“Courtyard” means a court or enclosure adjacent to a building, which usually provides amenities such as gardens, planters, seating, or art.
+
+“Curb cut” means a driveway opening where a curb is provided along a street. (Ord. 2-2025 § 1 (Att. A); Ord. 1-2024 § 1 (Att. A); Ord. 8-2021 § 1; Ord. 6-2001 § 1)
+
+19.13.040 “D” definitions.
+
+“Deciduous” means a tree or shrub that sheds its leaves seasonally.
+
+“Dedication” means the designation of land by its owner for any public use as shown on a subdivision plat or deed. The term may also be used for dedications to a private homeowners association.
+
+“Density(ies)” means a measurement of the number of dwelling units in relationship to a specified amount of land. As used in this code, density does not include land devoted to street right-of-way. Density is a measurement used generally for residential uses.
+
+“Developable” means buildable land, as identified by the city’s Comprehensive Plan, includes both vacant land and land likely to be redeveloped.
+
+“Development” means all improvements on a site, including buildings, other structures, parking and loading areas, landscaping, paved or graveled areas, grading, and areas devoted to exterior display, storage, or activities. Development includes improved open areas such as plazas and walkways, but does not include natural geologic forms or landscapes.
+
+“Discontinued/abandoned use” means a use that physically vacates the land it was on, cessation of an allowed activity, or use terminated at the end of any lease or contract.
+
+“Discretionary” describes a permit action or decision that involves substantial judgment or discretion.
+
+“Drip-line” means an imaginary line around a tree or shrub at a distance from the trunk equivalent to the canopy (leaf and branch) spread.
+
+“Drive lane/travel lane” means an improved (e.g., paved) driving surface for one lane of vehicles.
+
+“Driveway” means areas that provide vehicular access to a site, except for public and private streets. A driveway begins at the property line and extends into the site. Driveways do not include parking, maneuvering, or circulation areas in parking space areas.
+
+“Driveway apron/approach” means the edge of a driveway where it abuts a public way; usually constructed of concrete.
+
+Drought-Tolerant/Drought-Resistant Plants. Refer to Sunset Western Garden Book (latest edition).
+
+“Duplex” means two dwelling units on a lot or parcel in any configuration.
+
+Dwelling Unit. A “dwelling unit” is a living facility that includes provisions for sleeping, eating, cooking and sanitation, as required by the Uniform Building Code, for one or more persons, and for less than 10 persons in a congregate residence. (Ord. 1-2024 § 1 (Att. A); Ord. 6-2001 § 1)
+
+19.13.050 “E” definitions.
+
+“Easement” means a right of usage of real property granted by an owner to the public or to specific persons, firms, and corporations.
+
+“Elevation” refers to a building face, or scaled drawing of the same, from grade to roof ridgeline.
+
+Environmentally Sensitive Areas. See “sensitive lands.”
+
+“Established residential area” means an area within the residential district that was platted prior to the effective date of a land ordinance.
+
+“Evidence” means application materials, plans, data, testimony and other factual information used to demonstrate compliance or noncompliance with a code standard or criterion. (Ord. 6-2001 § 1)
+
+19.13.060 “F” definitions.
+
+“Facade” means the outside wall of a structure designated as either front, rear, or side facade. The front facade does not include front porches, bay windows or other similar architectural features.
+
+“Facade, street-facing” means outside wall of a structure that faces and is adjacent to a street. Street-facing facades are scaled by form not by unit. Single-unit dwellings regulated as having one street-facing facade, a duplex, triplex or quadplex would be regulated as having one street-facing facade.
+
+“Facility, higher education” means a college or university supported by public or private funds, tuitions, contributions or endowments, giving advanced academic instruction as approved by a recognized accrediting agency, excluding elementary and high schools, and trade and commercial schools.
+
+“Family child care home” means a child care facility in a dwelling that is caring for not more than 16 children.
+
+“Farm use” means the current employment of land for the primary purpose of obtaining a profit in money by raising, harvesting and selling crops or the feeding, breeding, management and sale of, or the produce of, livestock, poultry, fur-bearing animals or honeybees or for dairying and the sale of dairy products or any other agricultural or horticultural use or animal husbandry or any combination thereof.
+
+“Fence, sight-obscuring” means a barrier consisting of wood, metal, concrete or masonry arranged in such a way as to obstruct or obscure vision, or to enclose an area.
+
+“Fire apparatus lane” means as defined by the Uniform Fire Code.
+
+“Flag lot” means a lot or parcel which has access to a road, street or easement, by means of a narrow strip of lot or easement.
+
+“Floor area” means the total area of all floors of a building. Floor area is measured for each floor from the exterior faces of a building or structure. Floor area includes stairwells, ramps, shafts, chases, and the area devoted to garages and structured parking. Floor area does not include the following (see example below):
+
+1. Areas where the elevation of the floor is four feet or more below the adjacent right-of way;
+
+2. Roof area, including roof top parking;
+
+3. Rooftop mechanical equipment; and
+
+4. Roofed porches, exterior balconies, or other similar areas, unless they are enclosed by walls that are more than 42 inches in height for 75 percent or more of their perimeter.
+
+“Floor area ratio (FAR)” means the amount of floor area of a building or structure in relation to the amount of site area, expressed in square feet. For example, a floor area ratio of 0.7 to one means 0.7 square feet of floor area for every one square foot of site area. FAR is calculated by dividing the total floor area of all buildings on a site by the total site area (see example below).
+
+“Food cart” means a mobile vehicle, such as a food truck, trailer, or cart, from which service of food and/or beverages is provided to walk-up customers. Also known as a “mobile food unit” for the purpose of county health department licensing, as defined in OAR 333-150 and 333-162.
+
+“Food cart pod” means a site containing four or more food carts and associated amenities on private property.
+
+“Frequent transit corridor” means a corridor with bus service arriving with a published scheduled frequency of at least four times an hour during peak service.
+
+“Frontage” means the dimension of a property line abutting a public or private street.
+
+“Frontage street or road” means a minor street which parallels an arterial street in order to provide access to abutting properties and minimize direct access onto the arterial.
+
+Front Yard Orientation. See zoning districts. The “front yard orientation” on corner lots is determined by the location of the main building entrance.
+
+“Functional classification” means the classification given to streets (e.g., “local/collector/arterial”) by the city’s Transportation System Plan, by adopted county plans, and Oregon Department of Transportation. (Ord. 2-2025 § 1 (Att. A); Ord. 1-2024 § 1 (Att. A); Ord. 1-2021 § 1 (Att. A); Ord. 6-2001 § 1)
+
+19.13.070 “G” definitions.
+
+“Grade” means the degree of rise or descent of a sloping surface.
+
+“Grade (adjacent ground elevation)” means the lowest point of elevation of the finished surface of the ground, paving or sidewalk within the area between the building and the property line, or, when the property line is more than five feet from the building, between the building and a line five feet from the building.
+
+“Grade, finished” means the final or finish elevation of the ground surface after the development.
+
+“Grade, natural” means the elevation of the ground surface in its natural state, before manmade alterations.
+
+“Grading” means any stripping, cutting, filling, stockpiling of earth, rock or land, including the land in its cut or filled condition.
+
+“Ground cover” means a plant material or nonplant material (e.g., mulch, bark chips/dust) that is used to cover bare ground. (Ord. 6-2001 § 1)
+
+19.13.080 “H” definitions.
+
+“Hammerhead turnaround” means a “T” or “L” shaped dead-end street that allows for vehicles to turn around.
+
+“Hardscape” means nonplant landscape materials, including pathways, decorative pavers, benches, drinking fountains, arbors, pergolas, playgrounds, plazas, and similar amenities.
+
+“Historic building” means any building or structure on the city’s historic buildings inventory and so designated by action of the city.
+
+“Home occupation,” “home occupation site” means small commercial ventures which could not necessarily be sustained if it were necessary to lease commercial quarters or which, by the nature of the venture, are appropriate in scale and impact to be operated within a residence.
+
+“Hotel” means any building containing six or more guest rooms intended or designed to be used, or which are used, rented or hired out to be occupied, or which are occupied for sleeping purposes of guests.
+
+“Human-scale design/development” means site and building design elements that are dimensionally related to pedestrians, such as: small building spaces with individual entrances (e.g., as is typical of downtowns and main street developments); larger buildings which have articulation and detailing to break up large masses; narrower streets with tree canopies; smaller parking areas or parking areas broken up into small components with landscaping; and pedestrian amenities, such as sidewalks, plazas, outdoor seating, lighting, weather protection (e.g., awnings or canopies), and similar features. These features are all generally smaller in scale than those that are primarily intended to accommodate automobile traffic. (Ord. 6-2001 § 1)
+
+19.13.090 “I” definitions.
+
+“Impervious surface” means development which does not allow for water infiltration (e.g., pavement, roofs, etc.).
+
+“Incidental and subordinate to” means a use or portion of a development that is secondary to, and less apparent, than the primary use or other portion of the development.
+
+“Infill” means a dwelling that is proposed on land that is zoned for residential use where at least 75 percent of the abutting parcels have a dwelling, but not counting any parcel that is too small for a residence and any parcel that is large enough that it can be divided into four or more lots. These standards also apply where a home is removed to make way for a new house, manufactured home duplex and attached house. These standards do not apply to a dwelling that is proposed on land that is large enough that it can be divided into four or more lots. (Ord. 6-2001 § 1)
+
+19.13.100 “J” definitions.
+
+“Junk yard” means the use of more than 200 square feet of any lot for the dismantling or “wrecking” or for the storage or keeping of junk, including scrap metals or other scrap materials. (Ord. 6-2001 § 1)
+
+19.13.110 “K” definitions.
+
+“Kennel or other animal boarding place” means any establishment or premises where five or more dogs over one year of age are kept for any purpose whatsoever, or any establishment or premises where dogs are bred, boarded or offered for sale as a commercial business. “Other animal boarding place” as used in this title means and includes any establishment or premises where five or more cats or other animals are bred, boarded or offered for sale as a commercial business. (Ord. 6-2001 § 1)
+
+19.13.120 “L” definitions.
+
+“Land division” means the process of dividing land to create parcels or lots.
+
+“Land use” means the main activity that occurs on a piece of land, or the structure in which the activity occurs (e.g., residential, commercial, mixed use, industrial, open space, recreation, street rights-of-way, vacant, etc.).
+
+Land Use District. As used in this title, a “land use district” is the same as a zone district.
+
+“Landing” means a level part of a staircase, as at the end of a flight of stairs.
+
+“Landscaping” means any combination of living plants such as trees, shrubs, plants, vegetative ground cover or turf grasses, and may include structural features such as walkways, fences, benches, plazas, works of art, reflective pools, fountains or the like. Landscaping also includes irrigation systems, mulches, topsoil, and revegetation or the preservation, protection and replacement of existing trees.
+
+“Lane,” “mid-block lane” means a narrow, limited use roadway facility usually used to access a limited number of dwelling units; similar to an alley in design.
+
+“Legislative” means a legislative action or decision is the making of law, as opposed to the application of existing law to a particular use (e.g., adoption of, or amendment to, a comprehensive plan or development regulation).
+
+“Legislative action” means any action which would result in a change in city policy including a change to the Comprehensive Plan text, a change to the Comprehensive Plan map which involves a number of parcels of land, a change to the test of an implementing ordinance, a change to the zoning map which involves a number of parcels of land, a change to any land use plan or map which represents a change in city land use policy.
+
+“Level of service (LOS)” means, for transportation, a standard of a street’s carrying capacity, based upon prevailing roadway, traffic and traffic control conditions during a given time period. The level of service range, from LOS A (free flow) to LOS F (forced flow) describes operational conditions within a traffic stream and their perception by motorists/passengers. Level of service is normally measured for the peak traffic hour, at intersections (signalized or unsignalized) or street segments (between signalized intersections).
+
+“Light manufacture” means light manufacturing operations (e.g., electronic equipment, printing, bindery, furniture, and similar goods). See zoning district.
+
+“Live-work” means a type of residential mixed-use development that combines a nonresidential use with a residential use in the same unit, and where the work space is used by someone residing in the unit. The living space may be located in front or behind the work space on the same floor, or on a separate floor.
+
+“Livestock” means domestic animal types customarily raised or kept on farms.
+
+“Loading space” means an off-street space or berth on the same lot, or parcel, with a building or use, or contiguous to a group buildings or use, for temporary parking of a vehicle while loading or unloading persons, merchandise, or materials, and which space or berth abuts upon a street, alley or other appropriate means of access.
+
+“Local improvement district (LID)” means a small public district formed for the purpose of carrying out local improvements (paving of streets, construction of storm sewers, development of a park, etc.). Property owners within the LID are assessed for the cost of the improvements in accordance with state statutes.
+
+“Lot” means a lot is a unit of land that is created by a subdivision of land (See ORS Chapter 92). A lot or parcel under the same ownership.
+
+“Lot area” means the total surface area (measured horizontally) within the lot lines of a lot.
+
+“Lot coverage” means the area of a lot covered by a building or buildings expressed as a percentage of the total lot area.
+
+“Lot depth, average” means the average distance from the narrowest frontage to the lot line opposite.
+
+“Lot line adjustment” means the adjustment of a property line by the relocation of a common line where no additional lots are created.
+
+“Lot width” means the horizontal distance between the side lot lines, measured at right angles to the lot depth at a point midway between the front and rear lot lines. (Ord. 9-2019 § 1 (Att. A); Ord. 6-2001 § 1)
+
+19.13.130 “M” definitions.
+
+“Maneuvering area/aisle” refers to the driving area in a parking lot where motor vehicles are able to turn around and access parking spaces.
+
+Main/Primary Entry/Entrance. A “main entrance” is the entrance, or entrances, to a building that most pedestrians are expected to use. Generally, smaller buildings have one main entrance. Main entrances may also be the widest entrance of those provided for use by pedestrians. In multitenant buildings, main entrances open directly into the building’s lobby or principal interior ground level circulation space. When a multitenant building does not have a lobby or common interior circulation space, each tenant’s outside entrance is a main entrance. Buildings may also have main entrances opening directly into a reception or sales area, a courtyard, or plaza.
+
+“Major transit stop” means stops that are located where two or more existing or planned routes intersect or where there are existing or planned transfer locations between transit systems, park and ride lots, and shopping centers and other major destinations.
+
+“Major transit street” means a primary corridor for transit, receiving half-hour or better service during peak traffic hours. Typically, these streets are also arterials or major collectors.
+
+“Manufactured home” means a transportable single-unit dwelling conforming to the Manufactured Housing Construction and Safety Standards Code of the U.S. Department of Housing and Urban Development, but is not regulated by the Oregon State Structural Specialty Code and Fire Life Safety Regulations, and is intended for permanent occupancy.
+
+Manufactured Home Park. See ORS Chapter 446.
+
+“Mass movement” means the movement of earth (rock, soil, or fill) downslope as a function of gravity. The main types of mass movement include earthflow, slump, rockslide, rockfall and mudflow.
+
+“Micro retail pod” means a collection of at least three retail shops or services on the same site which are operated in small detached, prefabricated, or mobile structures no greater than 600 square feet in area per shop. The micro retail pod also includes associated site amenities such as outdoor seating, landscaping, restrooms, and lighting.
+
+“Middle housing” means duplexes, triplexes, quadplexes, cottage clusters, and townhouses.
+
+“Middle housing child lot” means a unit of land created from the division of a middle housing parent lot through a middle housing land division for the purpose of having a single dwelling unit per newly created lot or parcel.
+
+“Middle housing land division” means a partition or subdivision of a lot or parcel on which the development of middle housing is allowed under ORS 197.758(2) and the partition or subdivision is processed in accordance with the provisions of ORS Chapter 92. The lot or parcel that is the subject of the land division is referred to as the middle housing parent lot; a lot created by the division is referred to as a middle housing child lot.
+
+“Middle housing parent lot” means a lot or parcel that is developed, or proposed to be developed, with middle housing, and which may therefore be further divided through a middle housing land division to create middle housing child lots.
+
+“Ministerial” means a routine governmental action or decision that involves little or no discretion. The issuance of a building permit is such an action.
+
+“Mitigation” means to avoid, rectify, repair, or compensate for negative impacts which result from other actions (e.g., improvements to a street may be required to mitigate for transportation impacts resulting from development).
+
+“Mixed use” means a development consisting of more than one broad category of use (e.g., commercial, industrial, residential, or institutional).
+
+“Mixed-use development, residential” means development containing both residential and nonresidential uses on a single site. Uses may be mixed vertically in the same building, such as ground floor commercial with upper story residential units, or may be mixed horizontally in separate buildings on the same site.
+
+“Multi-unit dwelling” means a building containing five or more dwelling units or five or more dwelling units in two or more buildings. Multi-unit dwellings are sited on one property or development site (e.g., multiplexes, apartments, condominiums, etc.). See FMC 19.30.130.
+
+“Multi-use pathway” means pathways for pedestrian and bicycle use. See FMC 19.162.030(A)(4). (Ord. 1-2024 § 1 (Att. A); Ord. 1-2022 § 1 (Att. A); Ord. 9-2019 § 1 (Att. A); Ord. 2-2017 § 1 (Exh. A); Ord. 6-2001 § 1)
+
+19.13.140 “N” definitions.
+
+“Natural resource areas/natural resources” means the same as sensitive lands.
+
+“Natural hazard” means natural areas that can cause dangerous or difficult development situations. For example, natural hazard areas include steep slopes, unstable soils, landslides, flood areas.
+
+“Neighborhood” means a geographic area lived in by neighbors and usually having distinguishing character.
+
+“Neighborhood-scale design” means site and building design elements that are dimensionally related to housing and pedestrians, such as narrower streets with tree canopies, smaller parking areas, lower building heights (as compared to downtown areas) and similar neighborhood characteristics. These features are generally smaller in scale than those that are primarily intended to accommodate automobile traffic.
+
+“Neighborhood commercial” means small-scale commercial uses allowed within the neighborhood commercial district.
+
+“Net density” means the total number of lots or dwelling units per acre based on net site area.
+
+1. Maximum density is calculated by taking the net site area and dividing it by the minimum lot area per dwelling unit or lot. To determine maximum allowed density in number of units/lots, fractions are rounded down for a decimal less than 0.50 and rounded up for a decimal greater than 0.50.
+
+2. Minimum density is calculated by taking the maximum density and multiplying it by 0.80. To determine minimum required density in units/lots, fractions are rounded down to the nearest whole number.
+
+“Net site area” means the square footage of land after subtracting street right-of-way.
+
+“Nonconforming use/nonconforming development” means a land use/structure that exists which would not be permitted by the regulations imposed by the code, but was lawful at the time it was established (see Chapter 19.530 FMC).
+
+“Non-native invasive plants” means plants not historically found in the Fairview area prior to 1840. See the Metro Native Plant List. (Ord. 1-2024 § 1 (Att. A); Ord. 6-2001 § 1)
+
+19.13.150 “O” definitions.
+
+“Obstruction” means any dam, wall, wharf, embankment, levee, dike, pile, abutment, projection, excavation, channel rectification, bridge conduit, culvert, building, wire, fence, rock, gravel refuse, fill structures or matter in, along, across, or projecting into any channel, watercourse, or regulatory flood hazard area which may impede, retard or change the direction of the flow of water, either in itself or by catching or collecting debris carried by such water, or that is placed where the flow of water might carry the same downstream to the damage of life or property.
+
+“Off-street parking” means all off-street areas designed, used, required or intended to be used for the parking of motor vehicles. Off-street parking areas shall conform to the requirements of Chapter 19.164 FMC.
+
+“On-street parking” means parking in the street right-of-way, typically in parking lanes or bays. Parking may be “parallel” or “angled” in relation to the edge of the right-of-way or curb.
+
+“Open space (common/private/active/passive)” means land within a development which has been dedicated in common to the ownership within the development or to the public specifically for the purpose of providing places for recreation, conservation or other open space uses.
+
+“Orientation” means to cause to face toward a particular point of reference (e.g., “a building oriented to the street”).
+
+Oriented to a Street. See “Orientation.”
+
+“Outdoor commercial use” means a use supporting a commercial activity, which provides goods or services, either wholesale or retail, where the amount of site area used for outdoor storage of materials or display of merchandise exceeds the total floor area of all buildings on the site. Examples of outdoor commercial uses include automobile sales or services, nurseries, lumberyards and equipment rental businesses.
+
+Overlay Zone/District. “Overlay zones” provide regulations that address specific subjects that may be applicable in more than one land use district. (Ord. 6-2001 § 1)
+
+19.13.160 “P” definitions.
+
+“Parcel” means a parcel is a unit of land that is created by a partitioning of land (see ORS Chapter 92). See the Procedure Section.
+
+“Parking lot perimeter” means the boundary of a parking lot area which usually contains a landscaped buffer area.
+
+Parking vs. Storage. “Parking” is the area used for leaving motor vehicles for a temporary time. “Storage” is to place or leave in a location for maintenance, repair, sale, rental, or future use.
+
+“Partition” means to divide an area or tract of land into two or three parcels within a calendar year when such area or tract of land exists as a unit or contiguous units of land under single ownership at the beginning of such year (see also ORS Chapter 92).
+
+“Pedestrian amenity(ies)” means pedestrian areas and objects that serve as places for socializing and enjoyment of the city’s downtown/main street. Examples include benches or public art or sculpture.
+
+“Pier” means exterior vertical building elements that frame each side of a building or its ground-floor windows (usually decorative).
+
+“Planter strip,” “tree cut-out” means a landscape area for street trees and other plantings within the public right-of-way, usually between the street and a sidewalk.
+
+“Plat” means a map of a subdivision, prepared as specified in ORS Chapter 92, and recorded with Multnomah County. All plats shall also conform to the Land Divisions section.
+
+“Plaza” means a public square or extra-wide sidewalk (e.g., as on a street corner) that allows for special events, outdoor seating, sidewalk sales, and similar pedestrian activity.
+
+“Pocket park” means a small park, usually less than one-half acre.
+
+Practicable Alternative. At least two alternative locations on-site must be considered in determining whether the proposed option is “practicable.” In determining whether a practicable alternative exists the analysis must first address relocating the proposed project on-site outside of the significant environmental concern or wetlands and riparian buffer overlay. If no design alternative is available on-site outside of the overlay, alternative sites on-site within the overlay shall be considered to avoid loss of resources protected by the applicable code provision. The lowest cost alternative is not automatically the only practicable alternative. Cost should be considered based on what might reasonably be expected as part of the development process, taking into account site conditions and constraints. The applicant’s inability to pay for a particular alternative does not automatically preclude that alternative from being considered practicable. Standard landscaping practices, methods, designs and technology should generally be considered practicable, though new innovations may be practicable if they are reasonable. The applicant may not define the scope of the development project so narrowly that other reasonable alternatives are precluded from consideration.
+
+“Primary” means the largest or most substantial element on the property, as in “primary” use, residence, entrance, etc. All other similar elements are secondary in size or importance.
+
+“Professional office” means an office used by a physician, surgeon, dentist, lawyer, architect, engineer, accountant, artist, teacher or other member of a recognized, legal profession.
+
+“Property line: front, rear, interior side, street side” means legal borders of a lot or parcel of land.
+
+“Public facilities” means public and private transportation facilities and utilities. See Chapter 19.165 FMC.
+
+“Public improvements” means development of public facilities. See Chapter 19.165 FMC. (Ord. 6-2001 § 1)
+
+19.13.170 “Q” definitions.
+
+“Quadplex” means four dwelling units on a lot or parcel in any configuration.
+
+“Quasi-judicial” refers to an action or decision that requires substantial discretion or judgement in applying the standards or criteria of this code, and usually involves a public hearing. (Ord. 1-2024 § 1 (Att. A); Ord. 6-2001 § 1)
+
+19.13.180 “R” definitions.
+
+“Rail transit stop” means rail service designed to meet everyday transit needs. This includes MAX lightrail and streetcar, but not Amtrak passenger rail, historic, tourist, or seasonal rail operations.
+
+“Residence” means the same as “dwelling unit.”
+
+“Residential care facility” means a facility licensed by or under the authority of the Oregon Department of Human Resources, which provides residential care alone or in conjunction with treatment or training or a combination thereof for six to 15 individuals who need not be related. Staff persons required to meet Department of Human Resources licensing requirements shall not be counted in the number of facility residents, and need not be related to each other or to any resident of the residential facility.
+
+“Residential caretaker unit” means a dwelling unit for caretakers living on-site in the general industrial district. The unit must be served by water and sanitary sewage and conform with other applicable building standards.
+
+“Residential care home” means residential treatment or training homes or adult foster homes licensed by the state of Oregon.
+
+“Residential home” means a home licensed by or under the authority of the Department of Human Resources, which provides residential care alone or in conjunction with treatment or training or a combination thereof for five or fewer individuals, who need not be related. Staff persons required to meet Department of Human Resources licensing requirements shall not be counted in the number of facility residents, and need not be related to each other or to any resident of the residential home.
+
+“Ridge line (building)” means the top of a roof at its highest elevation.
+
+“Right-of-way” means land that is owned in fee simple by the public, usually for transportation facilities.
+
+“Roof pitch” means the slope of a roof, usually described as ratio (e.g., one foot of rise per two feet of horizontal distance).
+
+“Rooftop garden” means a garden on a building terrace, or on top of a building with a flat roof (usually on a portion of a roof).
+
+Rooming House. See “Boarding, lodging or rooming house.” (Ord. 1-2024 § 1 (Att. A); Ord. 6-2001 § 1)
+
+19.13.190 “S” definitions.
+
+“School, commercial” means a building or land where instruction is given to pupils in arts, crafts, or trade, and operated as a commercial enterprise as distinguished from school endowed and/or supported by taxation or public funds.
+
+“School, primary and secondary” means any building used for educational purposes through the twelfth grade.
+
+“Senior housing” means housing designated and/or managed for persons over the age of 55. (Specific age restrictions vary.)
+
+“Sensitive lands” means wetlands, significant trees, steep slopes, floodplains and other natural resource areas designated for protection or conservation by the Comprehensive Plan.
+
+“Setback” means the distance between a building (or other feature of development) and a property line. Minimum and maximum setbacks may be required for front, side and rear yards.
+
+“Shared driveway” means when land uses on two or more lots or parcels share one driveway. An easement or tract (owned in common) may be created for this purpose.
+
+“Shared parking” means required parking facilities for two or more uses, structures, or parcels of land may be satisfied by the same parking facilities used jointly, to the extent that the owners or operators show that the need for parking facilities does not materially overlap (daytime versus nighttime primary uses).
+
+“Shelter” means a facility, or part of a facility, providing temporary protective sanctuary for the homeless or victims of crime or abuse, including emergency housing during crisis interventions for individuals, such as victims of rape, child abuse, or domestic violence.
+
+“Shopping street” means a street or drive designed with the elements of a pedestrian-oriented street: buildings with close orientation to the street, on street parking, wide sidewalks, street trees, pedestrian scale lighting.
+
+“Significant trees,” “significant vegetation” means trees and shrubs with a trunk diameter of six inches or greater, as measured four feet above the ground, and all plants within the drip line of such trees and shrubs. Other trees may be deemed significant, when designated by the city council as “heritage trees.” Any trees and shrubs in areas that have been designated as “sensitive lands,” in accordance with this code.
+
+“Single-unit attached housing (townhouses)” means two or more single-unit dwellings with common end-walls.
+
+“Single-unit detached house” means a single-unit dwelling that does not share a wall with any other building.
+
+“Single-unit detached zero-lot line house” means a single-unit detached house with one side yard setback equal to “0.”
+
+“Site” means a property (or group of adjacent parcels or lots under the same ownership) that is subject to a permit application under this code.
+
+“Site design review” means a discretionary review that applies to all developments in the city, except those specifically listed under development review. Site design review ensures compliance with the basic development standards of the land use district, as well as more detailed design standards and public improvement requirements in Article III of this title.
+
+“Slope” means the degree of deviation of a surface from the horizontal usually expressed in percent or degrees. The vertical distance divided by the horizontal distance.
+
+“Specific area plan” describes in more detail the type of development planned for a specific area than is typically found in a comprehensive plan, zone map, or public facilities plan.
+
+Standards and Criteria. “Standards” are code requirements. “Criteria” are the elements required to comply with a particular standard.
+
+“Steep slopes” means slopes of greater than 30 percent.
+
+“Storefront character” means the character expressed by buildings placed close to the street with ground-floor display windows, weather protection (e.g., awnings or canopies), corner building entrances or recessed entries, and similar features.
+
+“Stormwater facility” means a detention and/or retention pond, swale, or other surface water feature that provides storage during high-rainfall events and/or water quality treatment.
+
+“Street” means any thoroughfare or public way not less than 16 feet in width which has been dedicated or deeded to the public for public use and accepted by an appropriate public body.
+
+“Street/road” means a public or private way for travel by vehicles, bicycles and pedestrians that meets the city standards.
+
+“Street access” means safe and efficient passage for pedestrians and vehicles to circulate through a connected street system.
+
+“Street connectivity” means the number of street connections within a specific geographic area. Higher levels of connectivity provide for more direct transportation routes and better dispersion of traffic, resulting in less traffic on individual streets and potentially slower speeds through neighborhoods.
+
+“Street furniture/furnishings” means benches, lighting, bicycle racks, drinking fountains, mailboxes, kiosks, and similar pedestrian amenities located within a street right-of-way.
+
+“Street stub” means a temporary street ending; i.e., where the street will be extended through adjacent property in the future, as those properties develop. Not a permanent street-end or dead-end street.
+
+“Street tree” means a tree planted in a planter strip or tree cut-out.
+
+“Subdivision” means to divide land into four or more lots within a single calendar year.
+
+“Sufficient infrastructure” means the following level of public services to serve new triplexes, quadplexes, townhouses, or cottage cluster development:
+
+1. Connection to a public sewer system capable of meeting established service levels.
+
+2. Connection to a public water system capable of meeting established service levels.
+
+3. Access via public or private streets meeting adopted emergency vehicle access standards to a city’s public street system.
+
+4. Storm drainage facilities capable of meeting established service levels for storm drainage.
+
+“Swale” means a type of stormwater facility; usually a broad, shallow depression with plants that filter and process contaminants. (Ord. 1-2024 § 1 (Att. A); Ord. 6-2001 § 1)
+
+19.13.200 “T” definitions.
+
+“Tangent” means meeting a curve or surface in a single point.
+
+“Terrace” means a porch or promenade supported by columns, or a flat roof or other platform on a building.
+
+“Topographical constraint” means where existing slopes prevent conformance with a code standard.
+
+“Townhouse” means a dwelling unit constructed in a row of two or more attached units, where each dwelling unit is located on an individual lot or parcel and shares at least one common wall with an adjacent unit. A townhouse is also commonly called a “rowhouse,” “attached house,” or “common-wall house.”
+
+“Tract, private/public” means a piece of land set aside in a separate area for dedication to the public, a homeowner’s association, or other entity (e.g., open space, recreation facilities, sensitive lands, etc.).
+
+“Transit and pedestrian accessible areas” means areas where 20-minute peak hour transit service has become available within a one-quarter mile walking distance for bus transit or one-half mile walking distance from a high-capacity transit station.
+
+“Transportation facilities” means the physical improvements used to move people and goods from one place to another (i.e., streets, sidewalks, pathways, bike lanes, airports, transit stations and bus stops, etc.).
+
+“Transportation mode” means the method of transportation (e.g., automobile, bus, walking, bicycling, etc.).
+
+“Triplex” means three dwelling units on a lot or parcel in any configuration. (Ord. 1-2024 § 1 (Att. A); Ord. 6-2001 § 1)
+
+19.13.210 “U” definitions.
+
+“Urban growth area” means as defined in state law.
+
+“Urban growth boundary” means as defined in state law. (Ord. 6-2001 § 1)
+
+19.13.220 “V” definitions.
+
+“Vacate plat/street” means to abandon a subdivision or street right-of-way. For example, vacation of a public right-of-way that is not needed or cannot be used for a street or other public purpose. A plat may be vacated, returning the property to an undivided condition.
+
+“Variance” means an administrative or quasi-judicial decision to lessen or otherwise modify the requirements of this code.
+
+“Vision clearance area” means the shaded area as shown on the following figure is the vision clearance area.
+
+(Ord. 6-2001 § 1)
+
+19.13.230 “W” definitions.
+
+Wetland. “Wetlands” are land areas where water is the dominant factor determining the nature of soil development and the types of plant and animal communities. They are defined more specifically by the Federal Clean Water Act and Oregon Administrative Rules.
+
+“Window hood” means an architectural detail placed above a window, used as an accent.
+
+“Wireless communication equipment” includes cell towers, antennas, monopoles, and related facilities used for radio signal transmission and receiving (see Chapter 19.245 FMC). (Ord. 6-2001 § 1)
+
+19.13.240 “X” definitions.
+
+Reserved. (Ord. 6-2001 § 1)
+
+19.13.250 “Y” definitions.
+
+“Yard” means the area defined by setbacks (i.e., between the setback line and respective property line). The term yard (front, rear and side) references the term “setback” used in the revised code. (Ord. 6-2001 § 1)
+
+19.13.260 “Z” definitions.
+
+“Zero-lot line house” means a single-unit courtyard home that is not subject to side yard setbacks on one side of a typical lot. (Ord. 1-2024 § 1 (Att. A); Ord. 6-2001 § 1)

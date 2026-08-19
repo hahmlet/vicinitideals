@@ -289,10 +289,10 @@ def test_the_matcher_does_not_read_prose_as_a_definition(rules: RuleSet) -> None
     the singular, so counting uses has to see both and defining must not fire
     on a table heading with nothing after it.
     """
-    fairview = coverage_for(rules, "or/multnomah/fairview")
-    assert [r.status for r in fairview] == ["unsourced"]
+    gladstone = coverage_for(rules, "or/clackamas/gladstone")
+    assert [r.status for r in gladstone] == ["unsourced"]
     # And it is a real gap rather than an absent one: the code uses the word.
-    assert fairview[0].uses >= 5
+    assert gladstone[0].uses >= 4
 
 
 def test_usage_counts_drive_the_queue(rules: RuleSet) -> None:
@@ -410,3 +410,26 @@ def test_one_number_two_boundaries(rules: RuleSet) -> None:
     # ...while three codes that state no ceiling call the same lot a corner.
     for open_ended in ("or/multnomah/portland", "or/clackamas/oregon-city", "or/clackamas/milwaukie"):
         assert rules.defines(open_ended, "corner_lot", over) is True, open_ended
+
+
+def test_fairview_is_the_first_code_that_is_actually_silent(rules: RuleSet) -> None:
+    """The case the register was built to tell apart, and the strongest
+    argument for refusing to inherit.
+
+    Fairview declares Chapter 19.13 DEFINITIONS, we hold it, and it defines
+    Lot, Lot area, Lot coverage, Lot depth, Lot line adjustment and Lot width
+    -- and not corner lot. Its own entry for front yard orientation says the
+    orientation "on corner lots" is determined by the zoning districts, so the
+    code leans on a word it never defines, eight times.
+
+    A resolver that fell back would hand Fairview Multnomah County's test,
+    which Fairview never adopted. The honest answer is that we do not know,
+    and it stays that way until somebody finds a definition or the city writes
+    one.
+    """
+    rows = coverage_for(rules, "or/multnomah/fairview")
+    assert [r.status for r in rows] == ["silent"]
+    assert rows[0].where == "19.13.definitions"
+    assert rows[0].uses >= 8
+    assert rows[0].blocking
+    assert rules.defines("or/multnomah/fairview", "corner_lot", corner()) is None
