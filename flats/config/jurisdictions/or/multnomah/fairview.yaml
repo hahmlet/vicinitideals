@@ -34,6 +34,34 @@ code:
     title: Chapter 19.120 VTR Village Townhouse Residential
 zones:
   R-6:
+    min_density_du_per_acre:
+      # Table 19.30.030.A row 3.b, "Duplex, Triplex, Quadplex, Cottage
+      # Cluster". A floor, and it is the pod that trips it: note [1] applies
+      # minimum density "when new primary dwelling units are added to a
+      # property", which is what placing four of them is. The quote names the
+      # row heading, the row label and this zone's cell, because the five
+      # cells of a row are five different numbers and a range that swallowed
+      # them all would let a citation check pass on a neighbour's.
+      value: 5.8
+      quote: "or/multnomah/fairview/19.30.txt#L292,L299,L300"
+      variants:
+        # Row 3.c, Townhouse. The same figure in this zone; carried anyway
+        # because the split-plat path reads a different row and a reader
+        # should not have to know they coincide here.
+        - value: 5.8
+          when: [unit_lots]
+          quote: "or/multnomah/fairview/19.30.txt#L292,L305,L306"
+    max_density_du_per_acre:
+      # Row 4.b prints "None" for this zone -- no ceiling on duplex, triplex,
+      # quadplex or cottage cluster density. Exempt rather than a large
+      # number: the code states no maximum here.
+      exempt: true
+      quote: "or/multnomah/fairview/19.30.txt#L317,L324,L325"
+      variants:
+        # Row 4.c, Townhouse, which does carry one.
+        - value: 25
+          when: [unit_lots]
+          quote: "or/multnomah/fairview/19.30.txt#L317,L330,L331"
     min_building_separation_ft:
       value: 10
       quote: "or/multnomah/fairview/19.30.txt#L405"
@@ -80,6 +108,34 @@ zones:
       value: 30
       quote: "or/multnomah/fairview/19.30.txt#L369"
   R-7.5:
+    min_density_du_per_acre:
+      # Table 19.30.030.A row 3.b, "Duplex, Triplex, Quadplex, Cottage
+      # Cluster". A floor, and it is the pod that trips it: note [1] applies
+      # minimum density "when new primary dwelling units are added to a
+      # property", which is what placing four of them is. The quote names the
+      # row heading, the row label and this zone's cell, because the five
+      # cells of a row are five different numbers and a range that swallowed
+      # them all would let a citation check pass on a neighbour's.
+      value: 4.6
+      quote: "or/multnomah/fairview/19.30.txt#L292,L299,L301"
+      variants:
+        # Row 3.c, Townhouse. The same figure in this zone; carried anyway
+        # because the split-plat path reads a different row and a reader
+        # should not have to know they coincide here.
+        - value: 4.6
+          when: [unit_lots]
+          quote: "or/multnomah/fairview/19.30.txt#L292,L305,L307"
+    max_density_du_per_acre:
+      # Row 4.b prints "None" for this zone -- no ceiling on duplex, triplex,
+      # quadplex or cottage cluster density. Exempt rather than a large
+      # number: the code states no maximum here.
+      exempt: true
+      quote: "or/multnomah/fairview/19.30.txt#L317,L324,L326"
+      variants:
+        # Row 4.c, Townhouse, which does carry one.
+        - value: 23.2
+          when: [unit_lots]
+          quote: "or/multnomah/fairview/19.30.txt#L317,L330,L332"
     min_building_separation_ft:
       value: 10
       quote: "or/multnomah/fairview/19.30.txt#L406"
@@ -125,6 +181,34 @@ zones:
       value: 30
       quote: "or/multnomah/fairview/19.30.txt#L370"
   R-10:
+    min_density_du_per_acre:
+      # Table 19.30.030.A row 3.b, "Duplex, Triplex, Quadplex, Cottage
+      # Cluster". A floor, and it is the pod that trips it: note [1] applies
+      # minimum density "when new primary dwelling units are added to a
+      # property", which is what placing four of them is. The quote names the
+      # row heading, the row label and this zone's cell, because the five
+      # cells of a row are five different numbers and a range that swallowed
+      # them all would let a citation check pass on a neighbour's.
+      value: 3.5
+      quote: "or/multnomah/fairview/19.30.txt#L292,L299,L302"
+      variants:
+        # Row 3.c, Townhouse. The same figure in this zone; carried anyway
+        # because the split-plat path reads a different row and a reader
+        # should not have to know they coincide here.
+        - value: 3.5
+          when: [unit_lots]
+          quote: "or/multnomah/fairview/19.30.txt#L292,L305,L308"
+    max_density_du_per_acre:
+      # Row 4.b prints "None" for this zone -- no ceiling on duplex, triplex,
+      # quadplex or cottage cluster density. Exempt rather than a large
+      # number: the code states no maximum here.
+      exempt: true
+      quote: "or/multnomah/fairview/19.30.txt#L317,L324,L327"
+      variants:
+        # Row 4.c, Townhouse, which does carry one.
+        - value: 17.6
+          when: [unit_lots]
+          quote: "or/multnomah/fairview/19.30.txt#L317,L330,L333"
     min_building_separation_ft:
       value: 10
       quote: "or/multnomah/fairview/19.30.txt#L407"
@@ -170,6 +254,19 @@ zones:
       value: 30
       quote: "or/multnomah/fairview/19.30.txt#L371"
   RM:
+    min_density_du_per_acre:
+      # Row 3.b prints "14 (Triplexes and Quadplexes)" in the RM column, and
+      # row 3.c prints 14 for townhouses. One figure whichever way the pod is
+      # platted, so no variant.
+      value: 14
+      quote: "or/multnomah/fairview/19.30.txt#L292,L299,L304"
+    max_density_du_per_acre:
+      # Row 4.b, and row 4.c prints the same 21.8. Four units at 21.8 per acre
+      # need 7,993 sq ft, which the 2,500-per-unit lot size already asks
+      # 10,000 for -- the ceiling does not bind in RM, and it is encoded
+      # because whether it binds is the screen's question and not the file's.
+      value: 21.8
+      quote: "or/multnomah/fairview/19.30.txt#L317,L324,L329"
     min_building_separation_ft:
       value: 10
       quote: "or/multnomah/fairview/19.30.txt#L409"
@@ -195,7 +292,13 @@ zones:
       value: 10
       quote: "or/multnomah/fairview/19.30.txt#L403"
     min_lot_sqft:
-      value: 10000
+      # Table 19.30.030.A row 1.d, Quadplex. Five columns across the row --
+      # R-6 6,000, R-7.5 7,500, R-10 10,000, TOZ NA, RM "2,500 per unit" --
+      # and it is the last cell that governs here. The file carried 10,000,
+      # which is the right requirement for four units and is also, by
+      # coincidence, the R-10 cell three columns to its left: a citation check
+      # looking for the number in the quoted row found it and passed.
+      per_dwelling: 2500
       quote: "or/multnomah/fairview/19.30.txt#L256-L261"
     min_lot_width_ft:
       value: 60

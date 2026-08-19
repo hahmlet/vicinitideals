@@ -118,6 +118,7 @@ CHECK_FIELD: dict[str, str] = {
     "max_units": "max_units",
     "min_units": "min_units_at_trigger",
     "density_du_per_acre": "max_density_du_per_acre",
+    "min_density_du_per_acre": "min_density_du_per_acre",
     "parking_stalls": "parking_min_per_unit",
     "open_space_pct": "open_space_min_pct",
 }
@@ -266,6 +267,19 @@ def _checks(
         design.units / (lot.lot_sqft / 43_560.0),
         rules.get("max_density_du_per_acre"),
         is_maximum=True,
+    )
+
+    # A density floor, compared as a density rather than converted to a unit
+    # count. Codes state the conversion differently -- Fairview rounds the
+    # required units down, others round to nearest -- and a rounding rule
+    # applied to the wrong jurisdiction turns a marginal lot the wrong colour
+    # in whichever direction it was borrowed from. Compared this way the margin
+    # is slack, and slack is what the triage bands already know how to read.
+    check(
+        "min_density_du_per_acre",
+        design.units / (lot.lot_sqft / 43_560.0),
+        rules.get("min_density_du_per_acre"),
+        is_maximum=False,
     )
 
     # Minimum density only bites above the lot size that triggers it.

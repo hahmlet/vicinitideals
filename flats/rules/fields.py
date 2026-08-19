@@ -155,6 +155,19 @@ _F: tuple[FieldDef, ...] = (
     ),
     FieldDef("min_units_at_trigger", "count", "Units required once the density trigger is met.", False),
     FieldDef(
+        "min_density_du_per_acre",
+        "ratio",
+        "MINIMUM dwelling units per acre. The shape most Oregon codes state a "
+        "density floor in, and one the trigger/units pair cannot hold: it is "
+        "continuous, so what it requires depends on how big the lot is. "
+        "Fairview asks 3.5 units per acre in R-10, which a four-unit pod meets "
+        "on a 10,000 sq ft lot and fails on two acres -- where the code wants "
+        "seven. Unencoded, that lot screens GREEN on every other standard, "
+        "which is the false GREEN this field exists to close.",
+        False,
+        "min_density",
+    ),
+    FieldDef(
         "max_density_du_per_acre",
         "ratio",
         "MAXIMUM dwelling units per acre. A ceiling on units is a floor under "
@@ -237,6 +250,7 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "max_units",
         "min_density_trigger_lot_sqft",
         "min_units_at_trigger",
+        "min_density_du_per_acre",
         # Most Oregon codes cap density in the multi-family zones only, and a
         # zone that states no ceiling is not an incomplete zone.
         "max_density_du_per_acre",

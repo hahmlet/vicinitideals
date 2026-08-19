@@ -64,3 +64,38 @@ def test_a_flag_lot_closes_the_townhouse_path_and_not_the_quadplex_one(
 
     assert flag.values["quadplex_allowed"].value is False
     assert whole.values["quadplex_allowed"].value is True
+
+
+# --- a floor, which nothing could hold until now ------------------------
+
+
+FAIRVIEW = "or/multnomah/fairview"
+
+
+def test_the_floor_is_registered_as_a_minimum() -> None:
+    """A floor and a ceiling on the same axis subtract in opposite directions,
+    and the two are now encoded in the same zone."""
+    field = FIELDS["min_density_du_per_acre"]
+
+    assert field.is_maximum is False
+    assert CHECK_FIELD["min_density_du_per_acre"] == "min_density_du_per_acre"
+
+
+def test_fairview_states_both_ends_of_the_same_axis(rules: RuleSet) -> None:
+    """Table 19.30.030.A row 3.b is the floor and row 4.b the ceiling. R-10
+    prints 3.5 and "None"; RM prints 14 and 21.8."""
+    r10 = rules.resolve(FAIRVIEW, "R-10", lot={"lot_sqft": 10000})
+    rm = rules.resolve(FAIRVIEW, "RM", lot={"lot_sqft": 10000})
+
+    assert r10.values["min_density_du_per_acre"].value == 3.5
+    assert "max_density_du_per_acre" in r10.exempted, "row 4.b prints None in R-10"
+    assert rm.values["min_density_du_per_acre"].value == 14
+    assert rm.values["max_density_du_per_acre"].value == 21.8
+
+
+def test_the_townhouse_row_governs_the_split_plat(rules: RuleSet) -> None:
+    """Row 4.c does carry a ceiling where row 4.b prints None, so the same
+    building on four lots is capped where on one lot it is not."""
+    split = rules.resolve(FAIRVIEW, "R-10", ("unit_lots",), lot={"lot_sqft": 10000})
+
+    assert split.values["max_density_du_per_acre"].value == 17.6

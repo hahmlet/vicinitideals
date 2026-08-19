@@ -1,0 +1,26 @@
+# Fairview -- FMC Chapter 19.30, Residential Districts.
+#
+# One footnote in the chapter, printed once per column of Table 19.30.030.A
+# and so captured seven times. A ruling binds to the words, so one entry
+# settles all seven.
+#
+# It is not a qualification on a number. It is the sentence that says WHEN the
+# minimum density rows apply at all, and it says they apply to what this
+# screen does: adding new primary dwelling units to a property. Reading it is
+# what made the density floor worth encoding — until it was read, row 3 of the
+# table could have been a standard for subdivisions only.
+notes:
+  - quote: "or/multnomah/fairview/19.30.txt#L445"
+    digest: "4c902831bbc1"
+    state: encoded
+    encoded_as: >-
+      min_density_du_per_acre in R-6 (5.8), R-7.5 (4.6), R-10 (3.5) and RM
+      (14), with the townhouse row carried as a unit_lots variant
+    reason: >-
+      "minimum density requirements apply when new primary dwelling units are
+      added to a property, and to the creation of new lots". Placing the pod
+      adds four primary dwelling units, so the floor applies on the one-lot
+      path, and a middle housing land division creates new lots, so it applies
+      on the split path too. The two exceptions -- residential care
+      homes/facilities and 2-lot partitions -- reach neither: the pod is
+      neither a care facility nor a two-lot partition

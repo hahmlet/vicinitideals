@@ -646,3 +646,24 @@ def test_without_a_configuration_nothing_changes() -> None:
 
     assert got.triage is Triage.green
     assert FACT_ASSUMED not in got.reasons
+
+
+def test_a_pod_alone_can_miss_the_density_floor_on_a_big_lot() -> None:
+    """Four units on two acres is two per acre, where Fairview R-10 asks 3.5.
+    Every other standard clears by a mile — the lot is enormous — so until the
+    floor could be written down this screened GREEN with nothing compared."""
+    two_acres = LotFacts(lot_sqft=87_120, frontage_ft=200, lot_width_ft=200)
+
+    result = run(rules(min_density_du_per_acre=3.5), lot=two_acres)
+
+    floor = next(c for c in result.checks if c.check == "min_density_du_per_acre")
+    assert floor.verdict is Verdict.fails
+    assert result.triage is not Triage.green
+
+
+def test_a_zone_that_states_no_density_floor_is_not_measured_against_one() -> None:
+    """Most zones state none, and a missing floor is not a floor of zero."""
+    result = run(rules(), lot=LotFacts(lot_sqft=87_120, frontage_ft=200, lot_width_ft=200))
+
+    assert not any(c.check == "min_density_du_per_acre" for c in result.checks)
+    assert "min_density_du_per_acre" in result.unchecked
