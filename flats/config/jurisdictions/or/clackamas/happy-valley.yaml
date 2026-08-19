@@ -312,11 +312,23 @@ zones:
       # absence of the test.
       exempt: true
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L642,L647"
+      # The acre this rate is per is a net one.
+      # Table 16.22.040-2 states these per NET acre, which 16.12 defines as
+      # "one acre of developable land, as calculated pursuant to Section
+      # 16.63.020(F)". That calculation is a survey of the parcel, not an
+      # attribute of it.
+      measured_on: net_developable_area
     max_density_du_per_acre:
       # No ceiling is printed for the quadplex on one lot. The townhome row is
       # a different standard for a different plat, carried as the variant.
       exempt: true
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L642,L646,L647"
+      # The acre this rate is per is a net one.
+      # Table 16.22.040-2 states these per NET acre, which 16.12 defines as
+      # "one acre of developable land, as calculated pursuant to Section
+      # 16.63.020(F)". That calculation is a survey of the parcel, not an
+      # attribute of it.
+      measured_on: net_developable_area
       variants:
         - value: 25
           when: [unit_lots]
@@ -367,9 +379,21 @@ zones:
       # gross acre.
       value: 6
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L642,L647"
+      # The acre this rate is per is a net one.
+      # Table 16.22.040-2 states these per NET acre, which 16.12 defines as
+      # "one acre of developable land, as calculated pursuant to Section
+      # 16.63.020(F)". That calculation is a survey of the parcel, not an
+      # attribute of it.
+      measured_on: net_developable_area
     max_density_du_per_acre:
       exempt: true
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L642,L646,L647"
+      # The acre this rate is per is a net one.
+      # Table 16.22.040-2 states these per NET acre, which 16.12 defines as
+      # "one acre of developable land, as calculated pursuant to Section
+      # 16.63.020(F)". That calculation is a survey of the parcel, not an
+      # attribute of it.
+      measured_on: net_developable_area
       variants:
         - value: 25
           when: [unit_lots]

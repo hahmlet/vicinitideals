@@ -232,6 +232,22 @@ PER_UNIT_AREA_FIELDS: frozenset[str] = frozenset(
 #: would be citing a sentence for a number the sentence does not contain.
 SQFT_PER_ACRE = 43_560
 
+#: Fields whose number is a rate, so the quantity underneath it decides what
+#: the number means. Portland's multi-dwelling floor is stated per square foot
+#: of *site area*, which is the lot; nearly every other Oregon city states its
+#: density per *net acre*, which is the lot less rights-of-way, floodplain,
+#: steep slopes, wetlands and Goal 5 resources. Those are different
+#: denominators and they are not close: Tualatin's own code offers 15 to 20
+#: percent as the deduction to assume when nobody has surveyed it.
+#:
+#: A screen holding only the parcel's square footage can run the first and
+#: cannot run the second. `measured_on` is how a rule file says which one it
+#: is, and the honest outcome for the second is an unrun check rather than a
+#: comparison against the wrong quantity.
+MEASURED_ON_FIELDS: frozenset[str] = frozenset(
+    {"min_density_du_per_acre", "max_density_du_per_acre"}
+)
+
 #: Fields a rule file may state per dwelling unit rather than outright.
 #: An area scales with the number of dwellings; a width, a depth or a setback
 #: does not. MCC 39.4862(C) asks "5,000 square feet for each dwelling unit"

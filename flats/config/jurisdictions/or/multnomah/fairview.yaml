@@ -44,6 +44,13 @@ zones:
       # them all would let a citation check pass on a neighbour's.
       value: 5.8
       quote: "or/multnomah/fairview/19.30.txt#L292,L299,L300"
+      # The acre this rate is per is a net one.
+      # Table 19.30.030.A names rows 3 and 4 "Minimum Net Density" and
+      # "Maximum Net Density", and FMC 19.13 defines net density as units
+      # per acre "based on net site area". Nothing here surveys what comes
+      # out of a site to make it net, so the figure is right and the
+      # denominator is absent.
+      measured_on: net_developable_area
       variants:
         # Row 3.c, Townhouse. The same figure in this zone; carried anyway
         # because the split-plat path reads a different row and a reader
@@ -57,6 +64,13 @@ zones:
       # number: the code states no maximum here.
       exempt: true
       quote: "or/multnomah/fairview/19.30.txt#L317,L324,L325"
+      # The acre this rate is per is a net one.
+      # Table 19.30.030.A names rows 3 and 4 "Minimum Net Density" and
+      # "Maximum Net Density", and FMC 19.13 defines net density as units
+      # per acre "based on net site area". Nothing here surveys what comes
+      # out of a site to make it net, so the figure is right and the
+      # denominator is absent.
+      measured_on: net_developable_area
       variants:
         # Row 4.c, Townhouse, which does carry one.
         - value: 25
@@ -118,6 +132,13 @@ zones:
       # them all would let a citation check pass on a neighbour's.
       value: 4.6
       quote: "or/multnomah/fairview/19.30.txt#L292,L299,L301"
+      # The acre this rate is per is a net one.
+      # Table 19.30.030.A names rows 3 and 4 "Minimum Net Density" and
+      # "Maximum Net Density", and FMC 19.13 defines net density as units
+      # per acre "based on net site area". Nothing here surveys what comes
+      # out of a site to make it net, so the figure is right and the
+      # denominator is absent.
+      measured_on: net_developable_area
       variants:
         # Row 3.c, Townhouse. The same figure in this zone; carried anyway
         # because the split-plat path reads a different row and a reader
@@ -131,6 +152,13 @@ zones:
       # number: the code states no maximum here.
       exempt: true
       quote: "or/multnomah/fairview/19.30.txt#L317,L324,L326"
+      # The acre this rate is per is a net one.
+      # Table 19.30.030.A names rows 3 and 4 "Minimum Net Density" and
+      # "Maximum Net Density", and FMC 19.13 defines net density as units
+      # per acre "based on net site area". Nothing here surveys what comes
+      # out of a site to make it net, so the figure is right and the
+      # denominator is absent.
+      measured_on: net_developable_area
       variants:
         # Row 4.c, Townhouse, which does carry one.
         - value: 23.2
@@ -191,6 +219,13 @@ zones:
       # them all would let a citation check pass on a neighbour's.
       value: 3.5
       quote: "or/multnomah/fairview/19.30.txt#L292,L299,L302"
+      # The acre this rate is per is a net one.
+      # Table 19.30.030.A names rows 3 and 4 "Minimum Net Density" and
+      # "Maximum Net Density", and FMC 19.13 defines net density as units
+      # per acre "based on net site area". Nothing here surveys what comes
+      # out of a site to make it net, so the figure is right and the
+      # denominator is absent.
+      measured_on: net_developable_area
       variants:
         # Row 3.c, Townhouse. The same figure in this zone; carried anyway
         # because the split-plat path reads a different row and a reader
@@ -204,6 +239,13 @@ zones:
       # number: the code states no maximum here.
       exempt: true
       quote: "or/multnomah/fairview/19.30.txt#L317,L324,L327"
+      # The acre this rate is per is a net one.
+      # Table 19.30.030.A names rows 3 and 4 "Minimum Net Density" and
+      # "Maximum Net Density", and FMC 19.13 defines net density as units
+      # per acre "based on net site area". Nothing here surveys what comes
+      # out of a site to make it net, so the figure is right and the
+      # denominator is absent.
+      measured_on: net_developable_area
       variants:
         # Row 4.c, Townhouse, which does carry one.
         - value: 17.6
@@ -260,6 +302,13 @@ zones:
       # platted, so no variant.
       value: 14
       quote: "or/multnomah/fairview/19.30.txt#L292,L299,L304"
+      # The acre this rate is per is a net one.
+      # Table 19.30.030.A names rows 3 and 4 "Minimum Net Density" and
+      # "Maximum Net Density", and FMC 19.13 defines net density as units
+      # per acre "based on net site area". Nothing here surveys what comes
+      # out of a site to make it net, so the figure is right and the
+      # denominator is absent.
+      measured_on: net_developable_area
     max_density_du_per_acre:
       # Row 4.b, and row 4.c prints the same 21.8. Four units at 21.8 per acre
       # need 7,993 sq ft, which the 2,500-per-unit lot size already asks
@@ -267,6 +316,13 @@ zones:
       # because whether it binds is the screen's question and not the file's.
       value: 21.8
       quote: "or/multnomah/fairview/19.30.txt#L317,L324,L329"
+      # The acre this rate is per is a net one.
+      # Table 19.30.030.A names rows 3 and 4 "Minimum Net Density" and
+      # "Maximum Net Density", and FMC 19.13 defines net density as units
+      # per acre "based on net site area". Nothing here surveys what comes
+      # out of a site to make it net, so the figure is right and the
+      # denominator is absent.
+      measured_on: net_developable_area
     min_building_separation_ft:
       value: 10
       quote: "or/multnomah/fairview/19.30.txt#L409"

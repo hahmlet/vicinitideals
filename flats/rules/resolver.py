@@ -109,6 +109,11 @@ class Resolved:
     #: Populated when two exceptions applied equally well. The number carried is
     #: the base, and nothing may treat it as an answer.
     ambiguous: tuple[str, ...] = ()
+    #: The quantity this rate is computed on, where the code names one nothing
+    #: measures. Kept apart from ``levers`` -- which say the number could move
+    #: -- because this says the comparison cannot be run at all, and the screen
+    #: has to be able to tell those two apart.
+    measured_on: str | None = None
 
     @property
     def trusted(self) -> bool:
@@ -381,7 +386,7 @@ class RuleSet:
                         resolved[name] = Resolved(
                             name, eff.value, eff.status, eff.prov, layer, origin,
                             via=via, when=eff.when, levers=val.levers,
-                            ambiguous=eff.ambiguous,
+                            ambiguous=eff.ambiguous, measured_on=val.measured_on,
                         )
                         continue
                     # Either the ancestor wins outright, or the local number is
@@ -391,6 +396,7 @@ class RuleSet:
                         prev.name, prev.value, prev.status, prev.prov, prev.layer,
                         prev.origin, preempted=True, shadowed=eff.value, via=prev.via,
                         when=prev.when, levers=prev.levers, ambiguous=prev.ambiguous,
+                        measured_on=prev.measured_on,
                     )
                     continue
                 resolved[name] = Resolved(
@@ -404,6 +410,7 @@ class RuleSet:
                     when=eff.when,
                     levers=val.levers,
                     ambiguous=eff.ambiguous,
+                    measured_on=val.measured_on,
                 )
                 if val.preempts.binds:
                     locked[name] = (val.preempts, eff.value)

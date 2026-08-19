@@ -14,6 +14,7 @@ Four asymmetries define this module and every test here defends one of them:
 
 from __future__ import annotations
 
+from dataclasses import replace
 from datetime import date
 
 import pytest
@@ -667,3 +668,49 @@ def test_a_zone_that_states_no_density_floor_is_not_measured_against_one() -> No
 
     assert not any(c.check == "min_density_du_per_acre" for c in result.checks)
     assert "min_density_du_per_acre" in result.unchecked
+
+
+def _per_net_acre(field: str, value: float) -> ZoneResolution:
+    """The same standard, stated per net acre rather than per lot acre."""
+    held = rules(**{field: value})
+    held.values[field] = replace(held.values[field], measured_on="net_developable_area")
+    return held
+
+
+def test_a_density_per_net_acre_is_not_run_against_the_lot() -> None:
+    """Fairview, Happy Valley, Milwaukie and Troutdale all measure density on
+    the lot less rights-of-way, floodplain, slopes and Goal 5 resources.
+    Nothing surveys that, so the parcel's own square footage is an upper bound
+    and nothing more — dividing by it understates the density achieved, which
+    holds a lot to a floor it may well clear."""
+    two_acres = LotFacts(lot_sqft=87_120, frontage_ft=200, lot_width_ft=200)
+
+    result = run(_per_net_acre("min_density_du_per_acre", 3.5), lot=two_acres)
+
+    assert not any(c.check == "min_density_du_per_acre" for c in result.checks)
+    assert "min_density_du_per_acre" in result.unchecked
+    assert result.triage is not Triage.red, "a false RED on arithmetic nobody did"
+
+
+def test_a_ceiling_per_net_acre_is_not_run_either() -> None:
+    """The error runs the other way on a maximum: a density understated is a
+    ceiling cleared, which passes a lot that should have been caught."""
+    small = LotFacts(lot_sqft=6_000, frontage_ft=60, lot_width_ft=60)
+
+    lot_acre = run(rules(max_density_du_per_acre=25), lot=small, relief=NO_RELIEF)
+    net_acre = run(_per_net_acre("max_density_du_per_acre", 25), lot=small, relief=NO_RELIEF)
+
+    assert lot_acre.head == "density_du_per_acre", "4 units on 6,000 sq ft is 29 per acre"
+    assert "density_du_per_acre" in net_acre.unchecked
+
+
+def test_portland_states_its_floor_per_lot_and_it_runs() -> None:
+    """Table 120-4 says "of site area", which is the whole lot. The
+    distinction is worth carrying because one city in the corpus is on the
+    other side of it."""
+    two_acres = LotFacts(lot_sqft=87_120, frontage_ft=200, lot_width_ft=200)
+
+    result = run(rules(min_density_du_per_acre=17.424), lot=two_acres)
+
+    floor = next(c for c in result.checks if c.check == "min_density_du_per_acre")
+    assert floor.verdict is Verdict.fails

@@ -134,6 +134,12 @@ zones:
       # variants are the same building split onto four.
       exempt: true
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L283"
+      # The acre this rate is per is a net one.
+      # 19.202.4.D.1 and .E.1 both subtract floodways, right-of-way
+      # dedications and public open space from the gross area before
+      # dividing by 43,560. The lot's own square footage is an upper bound
+      # on that quantity and nothing more.
+      measured_on: net_developable_area
       variants:
         # 25 is the number the note prints, and it governs in three of the
         # four bands: four times 25, 8.7 and 8.7 are all above it. In the
@@ -204,6 +210,12 @@ zones:
       # path is capped tighter than the zone.
       exempt: true
       quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L510"
+      # The acre this rate is per is a net one.
+      # 19.202.4.D.1 and .E.1 both subtract floodways, right-of-way
+      # dedications and public open space from the gross area before
+      # dividing by 43,560. The lot's own square footage is an upper bound
+      # on that quantity and nothing more.
+      measured_on: net_developable_area
       variants:
         - value: 25
           when: [unit_lots]

@@ -137,3 +137,28 @@ def test_the_printed_area_is_kept_for_the_reader() -> None:
     held = rules[PORTLAND].zones["RM1"].values["min_density_du_per_acre"]
 
     assert held.sqft_per_unit == 2500
+
+
+def test_only_a_rate_may_name_the_quantity_it_is_measured_on() -> None:
+    """A setback is not per anything. Naming a denominator on one would put a
+    fact nothing measures in front of a standard that does not need it, and
+    the lot would come back UNKNOWN for no reason a reader could find."""
+    with pytest.raises(ValueError, match="measured_on"):
+        Value(
+            name="setback_front_ft",
+            value=10,
+            measured_on="net_developable_area",
+            prov=PROV,
+        )
+
+
+def test_a_denominator_with_an_assumption_behind_it_is_refused() -> None:
+    """The point of naming it is that it is unknown. A fact the screen assumes
+    would let a lot come back GREEN on arithmetic nobody did."""
+    with pytest.raises(ValueError, match="assumed"):
+        Value(
+            name="min_density_du_per_acre",
+            value=17.424,
+            measured_on="corner_lot",
+            prov=PROV,
+        )

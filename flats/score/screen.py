@@ -215,6 +215,24 @@ def _checks(
             return
         out.append(policy.evaluate(name, observed, threshold, is_maximum=is_maximum, jurisdiction=where))
 
+    def rate(name: str, per_acre: float, field: str, *, is_maximum: bool) -> None:
+        """A density check, run only where the denominator is the lot.
+
+        Nearly every Oregon city states density per *net acre* -- the lot less
+        rights-of-way, floodplain, slopes over 25 percent, wetlands and Goal 5
+        resources -- and nothing here surveys any of that. Running the
+        comparison on the parcel's own square footage would understate the
+        density achieved and hold the lot to a floor it was never measured
+        against, which is a false RED on arithmetic nobody did. Portland is the
+        exception that makes the distinction worth carrying: its Table 120-4
+        says "of site area", which is the lot, so that one runs.
+        """
+        held = rules.values.get(field)
+        if held is not None and held.measured_on is not None:
+            unchecked.append(name)
+            return
+        check(name, per_acre, rules.get(field), is_maximum=is_maximum)
+
     # Fitment. The threshold is the design's depth; the observation is the
     # deepest rectangle of that width the envelope holds.
     out.append(
@@ -262,10 +280,10 @@ def _checks(
     # is 43,560 sq ft, and the arithmetic is done here rather than in the rule
     # file because the code states the ceiling in acres and the parcel layer
     # holds square feet.
-    check(
+    rate(
         "density_du_per_acre",
         design.units / (lot.lot_sqft / 43_560.0),
-        rules.get("max_density_du_per_acre"),
+        "max_density_du_per_acre",
         is_maximum=True,
     )
 
@@ -275,10 +293,10 @@ def _checks(
     # applied to the wrong jurisdiction turns a marginal lot the wrong colour
     # in whichever direction it was borrowed from. Compared this way the margin
     # is slack, and slack is what the triage bands already know how to read.
-    check(
+    rate(
         "min_density_du_per_acre",
         design.units / (lot.lot_sqft / 43_560.0),
-        rules.get("min_density_du_per_acre"),
+        "min_density_du_per_acre",
         is_maximum=False,
     )
 

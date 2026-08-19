@@ -143,6 +143,7 @@ def test_the_townhouse_multiple_is_encoded_only_where_it_is_printed(
         assert "max_density_du_per_acre" in split.exempted, zone
 
 
+PORTLAND_MD = "or/multnomah/portland"
 GLADSTONE = "or/clackamas/gladstone"
 TUALATIN = "or/clackamas/tualatin"
 
@@ -181,3 +182,38 @@ def test_four_units_on_a_lot_is_the_ceiling_and_the_pod_sits_on_it(
 
     assert whole.values["max_units"].value == 4
     assert "max_units" in split.exempted, "townhomes are exempt, and the split plat is that path"
+
+
+# --- which acre the rate is per -----------------------------------------
+
+
+def test_the_cities_that_say_net_acre_say_so_in_the_rule_file(rules: RuleSet) -> None:
+    """Four of the five cities printing a density row measure it on a net
+    acre. That is a survey of the parcel, not an attribute of it, so the
+    number is encoded and the denominator is named as missing."""
+    for layer, zone in (
+        (FAIRVIEW, "RM"),
+        (HAPPY_VALLEY, "MURS"),
+        (MILWAUKIE, "R-MD"),
+        (TROUTDALE, "HDR"),
+    ):
+        held = rules.resolve(layer, zone, ("unit_lots",), lot={"lot_sqft": 8000})
+        rates = [
+            held.values[f]
+            for f in ("min_density_du_per_acre", "max_density_du_per_acre")
+            if f in held.values
+        ]
+
+        assert rates, f"{layer} {zone} states a density somewhere"
+        for rate in rates:
+            assert rate.measured_on == "net_developable_area", f"{layer} {zone} {rate.name}"
+            assert "net_developable_area" in rate.levers
+
+
+def test_portland_measures_its_floor_on_the_lot_and_says_nothing(rules: RuleSet) -> None:
+    """Table 120-4 states "sq. ft. of site area", which is the lot. Marking it
+    would decline a check this project can actually run."""
+    rm1 = rules.resolve(PORTLAND_MD, "RM1").values["min_density_du_per_acre"]
+
+    assert rm1.measured_on is None
+    assert rm1.levers == frozenset()

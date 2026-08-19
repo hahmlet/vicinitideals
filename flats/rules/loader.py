@@ -109,6 +109,7 @@ def _parse_values(
             exempt = bool(body.pop("exempt", False))
             per_dwelling = body.pop("per_dwelling", None)
             sqft_per_unit = body.pop("sqft_per_unit", None)
+            measured_on = body.pop("measured_on", None)
             raw_variants = body.pop("variants", None) or ()
             unknown = set(body) - set(_PROV_KEYS) - set(_REVIEW_KEYS)
             if unknown:
@@ -166,6 +167,7 @@ def _parse_values(
             exempt = False
             per_dwelling = None
             sqft_per_unit = None
+            measured_on = None
             raw_variants = ()
 
         prov_src: dict[str, Any] = dict(cite_default or {})
@@ -201,6 +203,7 @@ def _parse_values(
                 exempt=exempt,
                 per_dwelling=None if per_dwelling is None else float(per_dwelling),
                 sqft_per_unit=None if sqft_per_unit is None else float(sqft_per_unit),
+                measured_on=None if measured_on is None else str(measured_on),
                 prov=prov,
                 status=Status(declared),
                 reviewer=body.get("reviewer"),

@@ -39,7 +39,13 @@ from typing import Any, Collection, Mapping
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from flats.rules.conditions import condition
-from flats.rules.fields import PER_DWELLING_FIELDS, PER_UNIT_AREA_FIELDS, FieldDef, field
+from flats.rules.fields import (
+    MEASURED_ON_FIELDS,
+    PER_DWELLING_FIELDS,
+    PER_UNIT_AREA_FIELDS,
+    FieldDef,
+    field,
+)
 
 
 class Status(str, enum.Enum):
@@ -506,6 +512,14 @@ class Value(BaseModel):
     #: of site area" in RM1; `value` carries the density that comes to and this
     #: carries the figure a reader will find. Same bargain as `per_dwelling`.
     sqft_per_unit: float | None = None
+    #: The quantity a rate is measured against, where the code names one this
+    #: screen does not hold. A density per *net acre* is computed on the lot
+    #: less rights-of-way, floodplain, steep slopes and Goal 5 resources, and
+    #: nothing here surveys those -- so the number is right, the denominator is
+    #: absent, and running the check on the parcel's own square footage would
+    #: compare a lot against a standard it was never held to. Named here, it
+    #: becomes a lever the screen resolves as unknown.
+    measured_on: str | None = None
     #: True where the zone was read and states no such standard at all --
     #: Portland's RX prints a front lot line and no lot area, and its parking
     #: chapter prints maximums and no minimum. Distinct from a zone that is
@@ -576,6 +590,29 @@ class Value(BaseModel):
             )
         if self.sqft_per_unit <= 0:
             raise ValueError(f"{self.name}: sqft_per_unit {self.sqft_per_unit} is not an area")
+        return self
+
+    @model_validator(mode="after")
+    def _measured_on_names_a_registered_fact(self) -> Value:
+        if self.measured_on is None:
+            return self
+        if self.name not in MEASURED_ON_FIELDS:
+            raise ValueError(
+                f"{self.name}: 'measured_on' names the quantity a rate is "
+                f"computed on, and applies to {', '.join(sorted(MEASURED_ON_FIELDS))}"
+            )
+        try:
+            fact = condition(self.measured_on)
+        except KeyError as exc:
+            raise ValueError(exc.args[0]) from None
+        if fact.assume is not None:
+            # A denominator with an assumption behind it would let a lot come
+            # back GREEN on arithmetic nobody did. The point of naming it is
+            # that it is unknown.
+            raise ValueError(
+                f"{self.name}: {self.measured_on!r} is assumed {fact.assume}, so "
+                f"naming it here would certify a rate nothing measured"
+            )
         return self
 
     @model_validator(mode="after")
@@ -655,7 +692,11 @@ class Value(BaseModel):
         What makes the batch view possible: a lever is worth offering only when
         flipping it moves a number some lot in the selection is bound by.
         """
-        return frozenset(c for variant in self.variants for c in variant.when)
+        held = frozenset(c for variant in self.variants for c in variant.when)
+        # A denominator nothing measures travels the same way an unread
+        # footnote does: as a fact the standard turns on. Same machinery, and
+        # the screen needs no special case for either.
+        return held | ({self.measured_on} if self.measured_on else frozenset())
 
 
 
