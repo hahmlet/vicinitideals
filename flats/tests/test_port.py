@@ -533,18 +533,14 @@ def test_what_the_loader_still_drops_is_named() -> None:
         for layer_id, layer in load_rules(strict=False).items()
         for w in layer.wanted
     }
-    assert debt == {
-        # MCC 39.4350-.4395, Rural Residential, is not a stored document. The
-        # `code:` block declares 33.110 and the LR-7 article and nothing else,
-        # and quoting a prohibition from a document that does not state it
-        # would be worse than leaving it visible here.
-        ("or/multnomah/_unincorporated", "RR", "quadplex_allowed"),
-    }
-    # Rivergrove's four left this list by being read: the RLDO is one stored
-    # document and 5.080 states all of them. Johnson City's left by being
-    # withdrawn — it was a prohibition inferred from a statute that exempts the
-    # city rather than one printed anywhere, and an uncited value is not a
-    # smaller debt than a missing one.
+    # Empty, and it took three different endings to get there. Rivergrove's four
+    # were read: the RLDO is one stored document and 5.080 states all of them.
+    # Johnson City's was withdrawn — a prohibition inferred from a statute that
+    # exempts the city rather than one printed anywhere, and an uncited value is
+    # not a smaller debt than a missing one. Multnomah RR's was quoted once the
+    # Rural Residential article was sliced out of the chapter PDF the LR-7
+    # slice already comes from, which is what the debt was waiting on.
+    assert debt == set()
 
 
 def test_a_schedule_and_an_enum_are_values_too() -> None:

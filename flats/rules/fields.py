@@ -193,6 +193,24 @@ _F: tuple[FieldDef, ...] = (
 
 FIELDS: dict[str, FieldDef] = {f.name: f for f in _F}
 
+#: How many dwellings the standards in this registry are read for.
+#:
+#: Not a design parameter -- the design catalog carries its own unit count.
+#: This is a property of the FIELD: `min_lot_sqft` is defined as the minimum
+#: lot area *for a fourplex*, so a code that states its lot area per dwelling
+#: unit has stated this field four times over. Written down because the
+#: multiplication has to happen somewhere, and the two honest places are here
+#: or nowhere -- a rule file that typed the product would be citing a sentence
+#: for a number the sentence does not print.
+DWELLINGS = 4
+
+#: Fields a rule file may state per dwelling unit rather than outright.
+#: An area scales with the number of dwellings; a width, a depth or a setback
+#: does not. MCC 39.4862(C) asks "5,000 square feet for each dwelling unit"
+#: and a fourplex needs four of them; four times a minimum lot WIDTH would be
+#: a requirement no code anywhere states.
+PER_DWELLING_FIELDS: frozenset[str] = frozenset({"min_lot_sqft"})
+
 #: Fields whose absence should not by itself block a zone from `verified`.
 #: Everything else, if the code speaks to it, must be encoded or explicitly
 #: recorded as not-applicable via the clause ledger.

@@ -71,6 +71,16 @@ code:
   # from "PART 2 - DEFINITIONS" to Part 3 and states the county's own
   # definitions of lot, corner lot, street and alley.
   allow_thin: true
+# The Rural Residential article, from the same chapter PDF. RR's use flag was
+# the one value in this layer with no citation, on the honest ground that
+# nothing stored said it -- so the article was sliced rather than the sentence
+# guessed at. Plain for the same two-column reason as the rest.
+- id: "39.rural-residential"
+  url: https://multco.us/file/chapter_39_-_zoning_code/download
+  title: MCC 39.4350-39.4395 Rural Residential (RR)
+  start: "39.4350- PURPOSE"
+  end: "39.4400- PURPOSE"
+  extraction: plain
 - id: "39.lr-7"
   url: https://multco.us/file/chapter_39_-_zoning_code/download
   title: MCC 39.4848-39.4862 Low Density Residential LR-7 (formerly S-1)
@@ -266,12 +276,16 @@ zones:
       quote: "or/multnomah/_unincorporated/39.lr-7.txt#L403-L404"
     min_lot_sqft:
       # MCC 39.4862(C): 5,000 square feet for EACH dwelling unit in a multiplex
-      # dwelling structure. Four units, so 20,000. The article states its lot
-      # sizes by housing type -- (A) single family 7,000, (B) two-unit 10,000,
-      # (C) multiplex 5,000 per unit -- and the pod is the third of those. It
-      # is not a townhouse question: the word "townhouse" does not appear
-      # anywhere in 39.4848 through 39.4868.
-      value: 20000
+      # dwelling structure. The article states its lot sizes by housing type --
+      # (A) single family 7,000, (B) two-unit 10,000, (C) multiplex 5,000 per
+      # unit -- and the pod is the third of those. It is not a townhouse
+      # question: the word "townhouse" does not appear anywhere in 39.4848
+      # through 39.4868.
+      #
+      # Stated per dwelling because that is what the sentence says. The file
+      # carried 20,000 until 2026-08-19, which is the right requirement and a
+      # number the article never prints; the multiplication is done at load.
+      per_dwelling: 5000
       quote: "or/multnomah/_unincorporated/39.lr-7.txt#L397-L399"
     notes: 'County plan areas (Interlachen). CORRECTED: the yards were encoded front 10 / rear 10 from
       the state Model Code Exhibit B, which is not a stored document, while side 5 and street-side 10
@@ -305,11 +319,23 @@ zones:
       cite: MCC 39.4350-.4395 (Rural Residential)
       url: https://multco.us/file/chapter_39_-_zoning_code/download
       retrieved: '2026-07-24'
-    quadplex_allowed: false
-    notes: 'quadfit confidence: verified. County RURAL zone, overwhelmingly outside the Metro UGB; no
-      quadplex use in MCC 39. Any RR parcel inside the UGB needs individual review.
+    quadplex_allowed:
+      # A closed list, and a single family dwelling is the only residential use
+      # on it. 39.4355 is the closure -- "no building, structure or land shall
+      # be used ... except for the uses listed in MCC 39.4360 through 39.4370"
+      # -- and 39.4360(A) is the entry: "Residential use consisting of a single
+      # family dwelling on a Lot of Record." The review uses (39.4365) and the
+      # conditional uses (39.4370) were read through: temporary uses, farm
+      # stands, property line adjustments, wireless facilities, mining, kennels,
+      # home occupations, a planned development for SINGLE FAMILY residences.
+      # No duplex, triplex, quadplex or middle housing anywhere in the article.
+      value: false
+      quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L19-L26,L27-L32"
+      cite: "MCC 39.4355 and 39.4360(A)"
+    notes: 'quadfit confidence: verified. County RURAL zone, overwhelmingly outside the Metro UGB. Any
+      RR parcel inside the UGB needs individual review.
 
-      The use flag is the one in this layer still unquoted, and deliberately: MCC 39.4350 through
-      .4395 is not a stored document. The `code:` block declares 33.110 for the Portland-administered
-      pockets and the LR-7 article, and nothing for Rural Residential. Quoting a false from a document
-      that does not state it would be worse than leaving it visible in the ledger. Fetch the chapter.'
+      The use flag was this layer''s one unquoted value until 2026-08-19, on the ground that MCC
+      39.4350-.4395 was not a stored document and quoting a false from a document that does not state
+      it is worse than leaving the debt visible. The article is now sliced out of the same chapter PDF
+      the LR-7 slice comes from, and the flag is quoted from the sentence that closes the use list.'

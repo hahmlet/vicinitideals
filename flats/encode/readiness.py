@@ -185,7 +185,17 @@ def _quoted_parts(layer: Layer) -> Iterable[tuple[str, str, str | None, object]]
     )
     for zone_code, zone in layer.zones.items():
         for name, value in zone.values.items():
-            yield zone_code, name, value.prov.quote, getattr(value, "value", None)
+            # A per-dwelling standard is checked against the figure the code
+            # prints, not the product: MCC 39.4862(C) states 5,000 square feet
+            # for each dwelling unit and prints 20,000 nowhere.
+            yield (
+                zone_code,
+                name,
+                value.prov.quote,
+                value.per_dwelling
+                if value.per_dwelling is not None
+                else getattr(value, "value", None),
+            )
             for variant in value.variants:
                 yield (
                     zone_code,

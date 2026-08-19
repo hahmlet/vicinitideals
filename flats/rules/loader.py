@@ -25,7 +25,7 @@ from typing import Any
 
 import yaml
 
-from flats.rules.fields import field
+from flats.rules.fields import DWELLINGS, field
 from flats.rules.definitions import parse as parse_definitions
 from flats.rules.model import (
     LAYER_META,
@@ -101,10 +101,11 @@ def _parse_values(
             problems.append(f"{where}: {exc.args[0]}")
             continue
 
-        if isinstance(node, dict) and ({"value", "exempt"} & set(node)):
+        if isinstance(node, dict) and ({"value", "exempt", "per_dwelling"} & set(node)):
             body = dict(node)
             value = body.pop("value", None)
             exempt = bool(body.pop("exempt", False))
+            per_dwelling = body.pop("per_dwelling", None)
             raw_variants = body.pop("variants", None) or ()
             unknown = set(body) - set(_PROV_KEYS) - set(_REVIEW_KEYS)
             if unknown:
@@ -115,6 +116,23 @@ def _parse_values(
                     f"imposes no such standard, not both"
                 )
                 continue
+            if per_dwelling is not None:
+                if value is not None or exempt:
+                    problems.append(
+                        f"{where}.{key}: a value states a total or a per-dwelling "
+                        f"figure, not both"
+                    )
+                    continue
+                if not isinstance(per_dwelling, (int, float)) or isinstance(
+                    per_dwelling, bool
+                ):
+                    problems.append(f"{where}.{key}: 'per_dwelling' expects a number")
+                    continue
+                # The product, computed here rather than typed into the file.
+                # A code that says "5,000 square feet for each dwelling unit"
+                # never prints 20,000, and a file that did would be citing a
+                # sentence for a number the sentence does not contain.
+                value = _per_dwelling(float(per_dwelling))
             if not exempt and value is None:
                 problems.append(f"{where}.{key}: expected a 'value' or 'exempt: true'")
                 continue
@@ -123,6 +141,7 @@ def _parse_values(
             body = {}
             value = node
             exempt = False
+            per_dwelling = None
             raw_variants = ()
 
         prov_src: dict[str, Any] = dict(cite_default or {})
@@ -156,6 +175,7 @@ def _parse_values(
                 name=key,
                 value=value,
                 exempt=exempt,
+                per_dwelling=None if per_dwelling is None else float(per_dwelling),
                 prov=prov,
                 status=Status(declared),
                 reviewer=body.get("reviewer"),
@@ -173,6 +193,17 @@ def _parse_values(
         except Exception as exc:  # pydantic ValidationError or ValueError
             problems.append(f"{where}.{key}: {_terse(exc)}")
     return out
+
+
+def _per_dwelling(each: float) -> float:
+    """What a per-dwelling area comes to for the pod, kept whole where it is.
+
+    5,000 square feet for each dwelling unit is 20,000 for a fourplex, not
+    20,000.0 — for the same reason `_reduced` rounds: a file that reads
+    20000.0 back out invites somebody to wonder which of the two the code said.
+    """
+    total = each * DWELLINGS
+    return int(total) if float(total).is_integer() else total
 
 
 def _reduced(base: float, pct: float) -> float:

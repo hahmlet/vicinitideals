@@ -39,7 +39,7 @@ from typing import Any, Collection, Mapping
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from flats.rules.conditions import condition
-from flats.rules.fields import FieldDef, field
+from flats.rules.fields import PER_DWELLING_FIELDS, FieldDef, field
 
 
 class Status(str, enum.Enum):
@@ -493,6 +493,14 @@ class Value(BaseModel):
     #: default binds nothing. The one place the flat rule set needs
     #: defeasibility, and it needs a direction with it -- see `Preempt`.
     preempts: Preempt = Preempt.none
+    #: The per-dwelling figure the code prints, where it prints one instead of
+    #: the total. MCC 39.4862(C) states the LR-7 minimum lot size as "5,000
+    #: square feet for each dwelling unit"; 20,000 appears nowhere in the
+    #: article. `value` carries the product because that is what the field
+    #: means, and this carries what the sentence says, so the citation check
+    #: compares the number a reader will find. Same shape as `reduce_pct` on a
+    #: variant, and for the same reason.
+    per_dwelling: float | None = None
     #: True where the zone was read and states no such standard at all --
     #: Portland's RX prints a front lot line and no lot area, and its parking
     #: chapter prints maximums and no minimum. Distinct from a zone that is
@@ -536,6 +544,20 @@ class Value(BaseModel):
         for variant in self.variants:
             if not variant.exempt:
                 check_kind(self.name, variant.value)
+        return self
+
+    @model_validator(mode="after")
+    def _per_dwelling_is_a_positive_area(self) -> Value:
+        if self.per_dwelling is None:
+            return self
+        if self.name not in PER_DWELLING_FIELDS:
+            raise ValueError(
+                f"{self.name}: 'per_dwelling' applies to "
+                f"{', '.join(sorted(PER_DWELLING_FIELDS))} — an area scales with "
+                f"the number of dwellings and a width does not"
+            )
+        if self.per_dwelling <= 0:
+            raise ValueError(f"{self.name}: per_dwelling {self.per_dwelling} is not an area")
         return self
 
     @model_validator(mode="after")
