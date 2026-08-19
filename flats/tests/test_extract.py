@@ -693,9 +693,22 @@ def test_a_number_a_formula_produced_is_not_a_standard() -> None:
 
 
 def test_a_density_is_not_a_maximum_number_of_units() -> None:
-    # "units per acre" names the same field words as a unit cap and states a
-    # different kind of thing. 24 units per acre is not 24 units.
-    assert candidates_in("The maximum density is 24 units per acre.", 12, DOC) == []
+    """"Units per acre" names the same field words as a unit cap and states a
+    different kind of thing: 24 units per acre is not 24 units. It used to be
+    refused outright, because no field held a rate. Two fields do now, so the
+    number is read for those two and still refused for everything else."""
+    got = candidates_in("The maximum density is 24 units per acre.", 12, DOC)
+    assert [(c.field, c.value) for c in got] == [("max_density_du_per_acre", 24)]
+
+    # The trap it was written for, unchanged. Gresham's middle-housing design
+    # chapter puts "dwelling units" beside a 12 in a sentence about an offset,
+    # and a reader that took it would cap eleven zones at twelve units.
+    assert (
+        candidates_in(
+            "Provide an offset between dwelling units of at least 12 inches.", 12, DOC
+        )
+        == []
+    )
 
 
 def test_a_height_in_storeys_is_not_a_height_in_feet() -> None:
@@ -708,3 +721,53 @@ def test_the_unit_it_does_model_still_reads() -> None:
     found = candidates_in("Maximum building height is 35 feet.", 15, DOC)
 
     assert [c.value for c in found] == [35]
+
+
+def test_both_ends_of_a_density_are_read_and_neither_is_guessed() -> None:
+    """The reader was blind to every density in the corpus: "units per acre"
+    was listed as a unit no field is held in, so eight jurisdictions' density
+    values were hand-encoded and nothing cross-checked them. Two fields hold a
+    rate now.
+
+    Both ends are named explicitly. A row headed "Density" alone does not say
+    which end it is, and a guess puts a floor on the field that holds
+    ceilings."""
+    def read(text: str) -> list[tuple[str, float]]:
+        return [(c.field, c.value) for c in candidates_in(text, 1, DOC)]
+
+    assert read(
+        "A. The minimum net density in the R-2 district shall be 17.4 "
+        "dwelling units per acre."
+    ) == [("min_density_du_per_acre", 17.4)]
+    assert read(
+        "B. The maximum net density in the R-2 district shall be 21.8 "
+        "dwelling units per acre."
+    ) == [("max_density_du_per_acre", 21.8)]
+    assert read("Maximum Density (dwelling units per acre)  21.8") == [
+        ("max_density_du_per_acre", 21.8)
+    ]
+    assert read("Density  8.7 units per acre") == [], "which end is not stated"
+
+
+def test_a_zone_designation_is_a_name_and_not_a_number() -> None:
+    """"The minimum net density in the R-2 district shall be 17.4 dwelling
+    units per acre" states one number and names another. Read as evidence the
+    name becomes a two-unit density on the very field the sentence is about --
+    a value the document supposedly states twice, which is a disagreement
+    invented by the reader rather than found in the code."""
+    got = candidates_in(
+        "A. The minimum net density in the R-2 district shall be 17.4 "
+        "dwelling units per acre.",
+        1,
+        DOC,
+    )
+    assert [(c.field, c.value) for c in got] == [("min_density_du_per_acre", 17.4)]
+
+    decimal = candidates_in(
+        "The minimum lot size in the R-3.5 district is 3,500 square feet.", 1, DOC
+    )
+    assert [(c.field, c.value) for c in decimal] == [("min_lot_sqft", 3500)]
+
+    # Case-sensitive, because an outline marker is not a zone.
+    outline = candidates_in("a-1. The minimum front setback is 10 feet.", 1, DOC)
+    assert [(c.field, c.value) for c in outline] == [("setback_front_ft", 10)]

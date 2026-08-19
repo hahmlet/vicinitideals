@@ -35,12 +35,12 @@ from typing import Iterable, Sequence
 
 from flats.encode.despace import repair_text
 from flats.provenance.store import ProvenanceStore
-from flats.rules.fields import FIELDS, field
+from flats.rules.fields import FIELDS, MEASURED_ON_FIELDS, field
 from flats.rules.ledger import Clause, Rase
 
 #: Bumped when the patterns change — extraction output is reproducible, and a
 #: candidate set that moved because the harness changed is not new evidence.
-EXTRACTOR = "flats-rase/3"
+EXTRACTOR = "flats-rase/4"
 
 _NUM = r"(?P<n>\d{1,3}(?:,\d{3})+|\d+(?:\.\d+)?)"
 
@@ -103,6 +103,22 @@ _SUBJECTS: tuple[tuple[str, str], ...] = (
     (r"(?:building|lot|site) coverage", "max_coverage_pct"),
     (r"outdoor area|open space", "open_space_min_pct"),
     (r"parking spaces?|off-street parking", "parking_min_per_unit"),
+    # Density before the bare "units", which would otherwise take every one of
+    # these lines and read a rate as a count. Both ends are named explicitly:
+    # a row headed "Density" alone does not say which end it is, and guessing
+    # puts a floor on the field that holds ceilings.
+    (
+        r"(?:minimum|min\.?)[ -](?:net |gross )?density"
+        r"|density[, ]+minimum"
+        r"|minimum number of (?:dwelling )?units",
+        "min_density_du_per_acre",
+    ),
+    (
+        r"(?:maximum|max\.?)[ -](?:net |gross )?density"
+        r"|density[, ]+maximum"
+        r"|(?:maximum|max\.?) (?:number of )?(?:dwelling )?units? per (?:net |gross )?acre\b",
+        "max_density_du_per_acre",
+    ),
     (r"dwelling units?|units", "max_units"),
 )
 
@@ -112,6 +128,10 @@ _UNITS: tuple[tuple[str, tuple[str, ...]], ...] = (
     (r"percent|%", ("percent",)),
     (r"feet|foot|ft\.?", ("length_ft",)),
     (r"spaces? per (?:dwelling )?unit|per unit", ("ratio",)),
+    # Before the bare "units", which matches the same text and answers
+    # "count". A density is a rate, and the two density fields are the only
+    # ratio-kind standards a line in these units can fill.
+    (r"(?:dwelling )?units? per (?:net |gross )?acre", ("ratio",)),
     (r"units", ("count",)),
 )
 
@@ -125,6 +145,15 @@ _UNITS: tuple[tuple[str, tuple[str, ...]], ...] = (
 #: Listed rather than inferred, because a number with no unit at all is a
 #: different fact: real standards state one bare under a heading that carries
 #: the unit, and refusing those would cost more than it saves.
+#: The one alien unit that stopped being alien. "Units per acre" is still a
+#: trap for every other field -- it is not a maximum number of units -- but it
+#: is exactly the unit the two density standards are stated in, so a number in
+#: it is read for those two and refused for the rest.
+_DENSITY_UNIT = re.compile(
+    r"^[^A-Za-z0-9]{0,6}\s*(?:dwelling\s+)?units?\s+per\s+(?:net\s+|gross\s+)?acre\b",
+    re.I,
+)
+
 #: Up to four characters of punctuation may sit between the number and its
 #: unit. Wood Village writes "an angle of up to forty-five (45) degrees" — the
 #: word is respelled as a digit, so the text after the first 45 is "(45)
@@ -212,7 +241,13 @@ _SECTION = re.compile(
 _CITATION = re.compile(
     r"\b\d{1,3}\.\d{2,4}(?:\.\d{1,4})?\b"  # 33.110.265, 4.0130
     r"|\b(?:Table|Figure|Map)s?\s+\d+-\d+\b"  # Table 110-4
-    r"|\b\d{1,3}-\d{1,3}\b",  # a bare hyphenated pair is an identifier
+    r"|\b\d{1,3}-\d{1,3}\b"  # a bare hyphenated pair is an identifier
+    # A zone designation. "The minimum net density in the R-2 district
+    # shall be 17.4 dwelling units per acre" states one number and names
+    # another, and the name reads as a two-unit density on the very field
+    # the sentence is about. Case-sensitive on purpose: a zone code is
+    # capitals, and matching lowercase would strike "a-1" out of an outline.
+    r"|(?-i:\b[A-Z]{1,4}-\d{1,3}(?:\.\d{1,2})?\b)",
     re.I,
 )
 #: "stated in Table 110-4" — the standard is real, and its number lives
@@ -527,7 +562,10 @@ def candidates_in(text: str, line: int, path: str, *, quote: str = "") -> list[C
 
     out: list[Candidate] = []
     for number, before, after in _numbers(text, subject=_subject_span(text)):
-        if _ALIEN_UNIT.match(after) or _FORMULA_LEAD.search(before):
+        alien = _ALIEN_UNIT.match(after) and not (
+            name in MEASURED_ON_FIELDS and _DENSITY_UNIT.match(after)
+        )
+        if alien or _FORMULA_LEAD.search(before):
             continue
         value = int(number) if number.is_integer() else number
         out.append(
