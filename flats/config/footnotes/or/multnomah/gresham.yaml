@@ -192,7 +192,21 @@ notes:
       parcel of 20,000 net sq ft or less in LDR-5, LDR-7 and TR, and 13,000
       or less in TLDR. Declined on both readings: a partition is a division
       into three lots or fewer and the split-plat path makes four, and even
-      where it did reach, switching a floor off is a relaxation
+      where it did reach, switching a floor off is a relaxation.
+
+      What the district characteristics say alongside it, and what this
+      ruling has to be read against: 4.0110 through 4.0112 state the floor as
+      "for all subdivisions, and for those partitions of parent parcels
+      greater than 20,000 square feet, a minimum net density of 6.22 units
+      per acre is required". Read strictly that is a standard on a land
+      division, and a quadplex built on a lot nobody divides is neither a
+      subdivision nor a partition. The floor is encoded from Table 4.0130 row
+      C anyway, because the table states it without that limiter and the
+      characteristics section describes rather than requires. It costs
+      nothing today: a floor is checked against the lot's gross acre, which
+      is a bound and not the net acre the standard names, so a lot that fails
+      it is reported unobserved rather than red. If net area is ever
+      measured, this paragraph is where the question lives
 
   # Note 5 was ruled a relaxation of the TR column when nothing on that row
   # was encoded. Both halves were wrong. The mark "acre5" sits at column 237
@@ -572,7 +586,22 @@ notes:
     digest: "1301f87d5d82"
     state: dismissed
     reason: >-
-      sends the NE Glisan and NE 162nd corridor areas of CMF to the TLDR standards, which are looser than the CMF ones encoded here; applying the base CMF regime to the whole district is the stricter reading and the one this layer takes
+      sends the NE Glisan and NE 162nd corridor areas of CMF to the TLDR
+      standards, which are looser than the CMF ones encoded here; applying
+      the base CMF regime to the whole district is the stricter reading and
+      the one this layer takes.
+
+      That holds for every standard encoded in CMF and not for the one it
+      does not encode. The same note states a density regime -- "minimum net
+      density for middle housing shall be 12 units per acre and maximum
+      density shall be 25 units per acre for townhouses and 24 units per acre
+      for all other middle housing uses" -- and CMF carries no density at
+      all, so on that row the base regime is the LOOSER reading rather than
+      the stricter one. It is still not encoded, because the note reaches
+      only "the areas of CMF along the NE Glisan Street and NE 162nd Avenue
+      corridors" and nothing here decides which parcels are in them. Writing
+      the floor against all 665 CMF lots would apply a corridor standard to a
+      district, which is a worse error than a check that does not run
 
   - quote: "or/multnomah/gresham/4.0400.corridor.txt#L489"
     digest: "344b30e7d6e4"

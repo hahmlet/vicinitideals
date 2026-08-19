@@ -77,6 +77,14 @@ code:
 - id: zdo.1012
   url: https://www.clackamas.us/planning/zdo1012
   title: Clackamas County ZDO Section 1012 - Lot Size and Density
+  # Read before encoding anything else out of this section. 1012.01 states
+  # what it applies to, and it is a list of applications rather than a list
+  # of buildings: subdivisions, partitions, Type II replats, design review
+  # for dwellings, and conditional uses for dwellings. A quadplex on a lot
+  # nobody divides reaches that list only through "design review", and
+  # whether one is required is not a fact any parcel here carries. That is
+  # why 1012.08's minimum density is not encoded on top of being underived
+  # -- two reasons, and either alone would be enough.
   start: "1012.01"
   end: "Return to the Zoning and Development Ordinance main page"
 # Table 315-1 marks every Quadplexes cell P7,8, and note 8 is this section:
