@@ -77,6 +77,7 @@ def test_the_jurisdictions_that_have_been_read(rules: RuleSet) -> None:
         "or/clackamas/oregon-city",
         "or/clackamas/rivergrove",
         "or/clackamas/tualatin",
+        "or/clackamas/west-linn",
         "or/clackamas/wilsonville",
         "or/multnomah/_unincorporated",
         "or/multnomah/gresham",
@@ -433,3 +434,30 @@ def test_fairview_is_the_first_code_that_is_actually_silent(rules: RuleSet) -> N
     assert rows[0].uses >= 8
     assert rows[0].blocking
     assert rules.defines("or/multnomah/fairview", "corner_lot", corner()) is None
+
+
+def test_four_wordings_of_one_number_and_they_do_not_all_agree(
+    rules: RuleSet,
+) -> None:
+    """135 degrees is the most-written number in the corpus and it is written
+    four ways:
+
+      "does not exceed 135"                    Rivergrove, Troutdale
+      "135 degrees or less"                    Happy Valley
+      "excluding ... angles greater than 135"  West Linn
+      "less than 135 degrees"                  Multnomah County
+
+    The first three include 135 and the fourth does not, so on the boundary
+    lot five jurisdictions split four to one. Nothing about that is visible
+    unless each is encoded from its own sentence.
+    """
+    at_135 = named_fork(135.0)
+    including = (
+        "or/clackamas/rivergrove",
+        "or/multnomah/troutdale",
+        "or/clackamas/happy-valley",
+        "or/clackamas/west-linn",
+    )
+    for layer_id in including:
+        assert rules.defines(layer_id, "corner_lot", at_135) is True, layer_id
+    assert rules.defines("or/multnomah/_unincorporated", "corner_lot", at_135) is None
