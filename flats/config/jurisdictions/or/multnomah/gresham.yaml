@@ -787,9 +787,26 @@ zones:
     setback_side_ft:
       value: 0
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L332-L336"
+      variants:
+        # Table 4.0430 note 1 states the townhouse yards, and they are tighter
+        # than the multi-family row above: a side that is not a party wall owes
+        # 5 feet where the base row owes none.
+        - value: 5
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0400.corridor.txt#L416,L422"
+        - value: 0
+          when: [unit_lots, attached_wall]
+          quote: "or/multnomah/gresham/4.0400.corridor.txt#L416,L423"
     setback_rear_ft:
       value: 15
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L332-L336"
+      variants:
+        - value: 10
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0400.corridor.txt#L416,L428"
+        - value: 5
+          when: [unit_lots, abuts_alley]
+          quote: "or/multnomah/gresham/4.0400.corridor.txt#L416,L428"
     setback_street_side_ft:
       value: 5
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L332-L336"
@@ -799,9 +816,27 @@ zones:
     min_lot_sqft:
       value: 10000
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L296-L297"
+      variants:
+        # Note 6: the minimum lot size does not apply to lots created for
+        # townhouses. The 10,000 is what a multi-family site owes, and a
+        # unit-lots pod is not measured against it.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0400.corridor.txt#L445"
     min_frontage_ft:
       value: 100
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L301-L302"
+      variants:
+        # Note 17, the same shape as the residential chapter's note 10.
+        - value: 16
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0400.corridor.txt#L460-L462"
+        - value: 32
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.0400.corridor.txt#L460-L462"
+        - value: 25
+          when: [unit_lots, corner_lot, abuts_alley]
+          quote: "or/multnomah/gresham/4.0400.corridor.txt#L460-L462"
     orientation_constraint:
       # 7.0420(J)(1)(a): "A minimum of 50 percent of the site's frontage shall
       # be occupied by buildings oriented to the abutting street", measured

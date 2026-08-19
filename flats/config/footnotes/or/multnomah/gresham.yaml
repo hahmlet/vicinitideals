@@ -323,3 +323,292 @@ notes:
     reason: >-
       sends the height standard to Section 10.1100 for shoreline lots, and the
       water layer that would say whether this is one is not held
+
+  # --- 4.0400, the corridor districts ---------------------------------
+  #
+  # Table 4.0420 is the use table and the CMF column reads a bare P for both
+  # Quadplex and Townhouse, so its notes are ruled the same way 4.0120's were:
+  # on the cell the marker sits in.
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L213"
+    digest: "e9a7417c111f"
+    state: dismissed
+    reason: >-
+      note 1 marks the Residential heading, and it permits an extra use -- temporary health hardship dwellings -- rather than limiting ours
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L219"
+    digest: "557c23f91a1e"
+    state: dismissed
+    reason: >-
+      requires ground-floor non-residential frontage inside the Rockwood Town Center Mixed-Use Area; it marks a cell in a district this layer does not encode
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L223"
+    digest: "dde70d112d42"
+    state: dismissed
+    reason: >-
+      governs conversion of hotels, motels and commercial buildings to housing; the pod is new construction
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L226"
+    digest: "985bf6d76a8a"
+    state: dismissed
+    reason: >-
+      applies to new multi-family in the SC district; neither the use nor the district is ours
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L232"
+    digest: "a61758839a3b"
+    state: dismissed
+    reason: >-
+      requires commercial ground floors in the CC and MC districts, neither of which is encoded here
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L236"
+    digest: "bd92b88e9375"
+    state: dismissed
+    reason: >-
+      caps building footprint and commercial floor area in Community Commercial, a district this layer does not encode
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L239"
+    digest: "0ae0695518ef"
+    state: dismissed
+    reason: >-
+      the same caps for Moderate Commercial, also not encoded here
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L243"
+    digest: "142ef4064dda"
+    state: dismissed
+    reason: >-
+      permits affordable housing under Section 10.1700; an election nobody has made, and a permission rather than a limit
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L244"
+    digest: "336f39cea970"
+    state: dismissed
+    reason: >-
+      limits Auto-Dependent Uses in Rockwood Town Center; not our use
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L246"
+    digest: "1cbf5109f069"
+    state: dismissed
+    reason: >-
+      caps the footprint of buildings occupied entirely by commercial use; the pod is residential
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L248"
+    digest: "116be71e732f"
+    state: dismissed
+    reason: >-
+      locates commercial uses in the Station Center district; not our use, not our district
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L251"
+    digest: "86c17ad2c2af"
+    state: dismissed
+    reason: >-
+      prohibits certain Outdoor Commercial uses in SC-RJ and CMU; not our use
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L253"
+    digest: "8f801e56356d"
+    state: dismissed
+    reason: >-
+      caps industrial floor area and sets an employee density; not our use
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L258"
+    digest: "5393e6f2f2ef"
+    state: dismissed
+    reason: >-
+      governs waste management uses; not our use
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L261"
+    digest: "fdec0a57829e"
+    state: dismissed
+    reason: >-
+      golf courses; not our use
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L262"
+    digest: "a4160d6e666a"
+    state: dismissed
+    reason: >-
+      locates schools in the SC district; not our use
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L268"
+    digest: "943490b75f59"
+    state: dismissed
+    reason: >-
+      electrical generating facilities; not our use
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L269"
+    digest: "7314e8dc848d"
+    state: dismissed
+    reason: >-
+      an accessory use to Medical and Civic Uses; not our use
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L270"
+    digest: "17d116396228"
+    state: dismissed
+    reason: >-
+      schools occupying existing commercial space; not our use
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L272"
+    digest: "055abdf0d78b"
+    state: dismissed
+    reason: >-
+      points at Section 10.0900 from a cell in a row this layer does not encode
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L273"
+    digest: "9d67522f29f0"
+    state: dismissed
+    reason: >-
+      solar energy standards; not our use
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L274"
+    digest: "01e363375328"
+    state: dismissed
+    reason: >-
+      wind energy standards; not our use
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L275"
+    digest: "121aaeb67b2f"
+    state: dismissed
+    reason: >-
+      biomass energy standards; not our use
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L276"
+    digest: "646de56fd7d0"
+    state: dismissed
+    reason: >-
+      geothermal energy standards; not our use
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L277"
+    digest: "bba481f14c89"
+    state: dismissed
+    reason: >-
+      micro-hydro energy standards; not our use
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L278"
+    digest: "cb1b28682da6"
+    state: dismissed
+    reason: >-
+      points at GRC 9.63.090 from a marijuana-business cell; not our use
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L280"
+    digest: "adef69e3595a"
+    state: dismissed
+    reason: >-
+      one cottage cluster per parent parcel; the pod is not a cottage cluster
+
+  # --- Table 4.0430, the corridor standards ---------------------------
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L429"
+    digest: "5a2488ebbcff"
+    state: dismissed
+    reason: >-
+      permits a maximum front or streetside setback of up to 20 feet where enhanced pedestrian amenities are provided; it can only relax the maximum this screen enforces
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L431"
+    digest: "c8ca23808a27"
+    state: dismissed
+    reason: >-
+      raises the maximum front or streetside setback to 30 feet on arterials and boulevards; the encoded 20 is the stricter number and stays
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L442"
+    digest: "74b7a16bd317"
+    state: dismissed
+    reason: >-
+      removes the parking maximum for townhouses; a relaxation of a standard that cannot stop a pod fitting
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L443"
+    digest: "cf100c09949a"
+    state: dismissed
+    reason: >-
+      sets the commercial parking maximum in a mixed-use development; not our use
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L453"
+    digest: "57b4bf6bbce6"
+    state: dismissed
+    reason: >-
+      removes the minimum lot size for duplexes; the pod is four units
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L454"
+    digest: "25c8d62f80af"
+    state: dismissed
+    reason: >-
+      states the minimum street frontage for duplexes; the pod is four units
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L457"
+    digest: "3a426934a72d"
+    state: dismissed
+    reason: >-
+      removes screening and buffering for townhouses abutting the lower density districts; a relaxation of a standard this screen does not encode
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L458"
+    digest: "73a87ca524e2"
+    state: dismissed
+    reason: >-
+      defines where the Central Rockwood Plan Area is; a definition pointing at a map, stating no standard
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L465"
+    digest: "53357e30430f"
+    state: dismissed
+    reason: >-
+      limits buildings in the Rockwood Design District to four or six stories; the pod is two
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L485"
+    digest: "1301f87d5d82"
+    state: dismissed
+    reason: >-
+      sends the NE Glisan and NE 162nd corridor areas of CMF to the TLDR standards, which are looser than the CMF ones encoded here; applying the base CMF regime to the whole district is the stricter reading and the one this layer takes
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L489"
+    digest: "344b30e7d6e4"
+    state: dismissed
+    reason: >-
+      switches off the minimum net density for affordable housing; a relaxation resting on an election nobody has made
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L492"
+    digest: "f0caedc075a1"
+    state: dismissed
+    reason: >-
+      sets townhouse height in CMF at a one-storey minimum and a 45-foot maximum; the pod is two storeys at 26 feet, inside both ends
+
+  # --- encoded, because they state CMF's townhouse standards ----------
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L416"
+    digest: "811c6b6a6171"
+    state: encoded
+    encoded_as: "CMF setback_side_ft and setback_rear_ft variants, when [unit_lots]"
+    reason: >-
+      note 1 states the townhouse setbacks CMF's residential row does not: a
+      5-foot interior side yard on any wall that is not shared, 0 where it is,
+      and a rear yard of 10 feet without an alley or 5 with one; the garage
+      setback it also states has no base standard in this zone to vary and is
+      left for the parking pass
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L445"
+    digest: "e4d33c03b83c"
+    state: encoded
+    encoded_as: "CMF min_lot_sqft exempt when [unit_lots]"
+    reason: >-
+      note 6 says the minimum lot size does not apply to lots created for
+      townhouses, which is why the 10,000 square feet CMF asks of a
+      multi-family site is not what a unit-lots pod is measured against
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L460"
+    digest: "ecc7052c14d2"
+    state: encoded
+    encoded_as: "CMF min_frontage_ft variants, when [unit_lots] 16 ft, corner 32 ft, corner with an alley 25 ft"
+    reason: >-
+      the same shape as the residential chapter's note 10: 16 feet of frontage
+      for a townhouse lot, 25 on a corner with an alley or shared access, 32 on
+      a corner without one -- and 32 is what binds until an alley is observed
+
+  # --- read, and resting on where the parcel sits ---------------------
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L217"
+    digest: "35d4271b8f7f"
+    state: unmeasured
+    fact: civic_corridor
+    reason: >-
+      middle housing land divisions are not permitted in CMF outside the NE
+      Glisan and NE 162nd Avenue corridors, so whether the unit-lots path
+      exists at all depends on a mapped corridor nothing locates
+
+  - quote: "or/multnomah/gresham/4.0400.corridor.txt#L480"
+    digest: "cbf12e6d1150"
+    state: unmeasured
+    fact: civic_corridor
+    reason: >-
+      inside the Rockwood Design District the front setbacks come from Section
+      7.0512.A.2 rather than from this table, and nothing decides whether a
+      parcel is inside it

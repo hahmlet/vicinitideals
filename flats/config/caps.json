@@ -162,6 +162,32 @@
     }
   },
   "or/multnomah/gresham": {
+    "CMF": {
+      "min_frontage_ft": [
+        "civic_corridor"
+      ],
+      "min_lot_sqft": [
+        "civic_corridor"
+      ],
+      "quadplex_allowed": [
+        "civic_corridor"
+      ],
+      "setback_front_ft": [
+        "civic_corridor"
+      ],
+      "setback_front_max_ft": [
+        "civic_corridor"
+      ],
+      "setback_rear_ft": [
+        "civic_corridor"
+      ],
+      "setback_side_ft": [
+        "civic_corridor"
+      ],
+      "setback_street_side_ft": [
+        "civic_corridor"
+      ]
+    },
     "LDR-5": {
       "min_frontage_ft": [
         "protected_water_feature"

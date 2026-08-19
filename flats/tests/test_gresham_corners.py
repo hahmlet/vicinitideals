@@ -92,3 +92,48 @@ def test_no_corner_configuration_resolves_two_variants_at_once(rules: RuleSet) -
         ):
             got = rules.resolve(GRESHAM, zone, conditions)
             assert not got.ambiguous, f"{zone} {conditions}: {got.ambiguous}"
+
+
+# --- CMF, where the townhouse standards live in the notes --------------
+#
+# Table 4.0430 states one residential row and hands the townhouse numbers to
+# notes 1, 6 and 17. Encoding only the row measured a unit-lots pod against a
+# multi-family site's 10,000 square feet and 100 feet of frontage, and let it
+# off the 5-foot side yard the note asks for on any wall that is not shared.
+
+
+def test_a_unit_lots_pod_is_not_measured_against_a_multi_family_site(
+    rules: RuleSet,
+) -> None:
+    base = rules.resolve(GRESHAM, "CMF")
+    assert base.values["min_lot_sqft"].value == 10000
+    assert base.values["min_frontage_ft"].value == 100
+
+    town = rules.resolve(GRESHAM, "CMF", ("unit_lots",))
+    assert "min_lot_sqft" in town.exempted, "note 6 switches the site minimum off"
+    assert town.values["min_frontage_ft"].value == 16
+
+
+def test_the_townhouse_side_yard_is_tighter_than_the_row_above_it(rules: RuleSet) -> None:
+    # The direction that matters: the base row owes no side yard at all, so
+    # reading it for a townhouse gives away 5 feet the code asks for.
+    assert rules.resolve(GRESHAM, "CMF").values["setback_side_ft"].value == 0
+    town = rules.resolve(GRESHAM, "CMF", ("unit_lots",))
+    assert town.values["setback_side_ft"].value == 5
+    shared = rules.resolve(GRESHAM, "CMF", ("unit_lots", "attached_wall"))
+    assert shared.values["setback_side_ft"].value == 0
+
+
+def test_the_cmf_rear_yard_follows_the_alley(rules: RuleSet) -> None:
+    assert rules.resolve(GRESHAM, "CMF", ("unit_lots",)).values["setback_rear_ft"].value == 10
+    alley = rules.resolve(GRESHAM, "CMF", ("unit_lots", "abuts_alley"))
+    assert alley.values["setback_rear_ft"].value == 5
+
+
+def test_cmf_corner_frontage_binds_at_the_number_without_an_alley(rules: RuleSet) -> None:
+    assert rules.resolve(GRESHAM, "CMF", ("unit_lots", "corner_lot")).values[
+        "min_frontage_ft"
+    ].value == 32
+    assert rules.resolve(GRESHAM, "CMF", ("unit_lots", "corner_lot", "abuts_alley")).values[
+        "min_frontage_ft"
+    ].value == 25
