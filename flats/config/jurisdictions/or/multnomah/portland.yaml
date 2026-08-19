@@ -184,6 +184,30 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.110.txt#L313"
+    min_density_trigger_lot_sqft:
+      # 33.110.205.C.1, one sentence: "In the R7 zone, a minimum of two
+      # dwelling units are required on sites that are 14,000 square feet or
+      # larger in total site area." A minimum density stated as a count over a
+      # lot-size trigger rather than as a rate over an acre, which is why it
+      # lands on this pair of fields and not on min_density_du_per_acre.
+      #
+      # The pod is four units and clears it on every lot in the zone. Encoded
+      # anyway: a standard the corpus does not hold is one nobody can see was
+      # considered, and 33.110.205.B is the kind of sentence that gets missed
+      # -- "the minimum dwelling unit density standard applies to new
+      # development when at least one dwelling unit is proposed", with sites
+      # in the Constrained Sites overlay zone exempt. That exemption relaxes a
+      # floor four units already clear, so declining it costs nothing.
+      #
+      # Both lines are quoted because the sentence wraps: the zone and the
+      # count are printed on one, the trigger on the next.
+      value: 14000
+      cite: PCC 33.110.205.C.1
+      quote: "or/multnomah/portland/33.110.txt#L421,L422"
+    min_units_at_trigger:
+      value: 2
+      cite: PCC 33.110.205.C.1
+      quote: "or/multnomah/portland/33.110.txt#L421,L422"
     setback_front_ft:
       value: 15
       quote: "or/multnomah/portland/33.110.txt#L458"
@@ -219,6 +243,30 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.110.txt#L313"
+    min_density_trigger_lot_sqft:
+      # 33.110.205.C.2, one sentence: "In the R5 zone, a minimum of two
+      # dwelling units are required on sites that are 10,000 square feet or
+      # larger in total site area." A minimum density stated as a count over a
+      # lot-size trigger rather than as a rate over an acre, which is why it
+      # lands on this pair of fields and not on min_density_du_per_acre.
+      #
+      # The pod is four units and clears it on every lot in the zone. Encoded
+      # anyway: a standard the corpus does not hold is one nobody can see was
+      # considered, and 33.110.205.B is the kind of sentence that gets missed
+      # -- "the minimum dwelling unit density standard applies to new
+      # development when at least one dwelling unit is proposed", with sites
+      # in the Constrained Sites overlay zone exempt. That exemption relaxes a
+      # floor four units already clear, so declining it costs nothing.
+      #
+      # Both lines are quoted because the sentence wraps: the zone and the
+      # count are printed on one, the trigger on the next.
+      value: 10000
+      cite: PCC 33.110.205.C.2
+      quote: "or/multnomah/portland/33.110.txt#L423,L424"
+    min_units_at_trigger:
+      value: 2
+      cite: PCC 33.110.205.C.2
+      quote: "or/multnomah/portland/33.110.txt#L423,L424"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/portland/33.110.txt#L458"
@@ -254,6 +302,30 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.110.txt#L313"
+    min_density_trigger_lot_sqft:
+      # 33.110.205.C.3, one sentence: "In the R2.5 zone, a minimum of two
+      # dwelling units are required on sites that are 5,000 square feet or
+      # larger in total site area." A minimum density stated as a count over a
+      # lot-size trigger rather than as a rate over an acre, which is why it
+      # lands on this pair of fields and not on min_density_du_per_acre.
+      #
+      # The pod is four units and clears it on every lot in the zone. Encoded
+      # anyway: a standard the corpus does not hold is one nobody can see was
+      # considered, and 33.110.205.B is the kind of sentence that gets missed
+      # -- "the minimum dwelling unit density standard applies to new
+      # development when at least one dwelling unit is proposed", with sites
+      # in the Constrained Sites overlay zone exempt. That exemption relaxes a
+      # floor four units already clear, so declining it costs nothing.
+      #
+      # Both lines are quoted because the sentence wraps: the zone and the
+      # count are printed on one, the trigger on the next.
+      value: 5000
+      cite: PCC 33.110.205.C.3
+      quote: "or/multnomah/portland/33.110.txt#L425,L426"
+    min_units_at_trigger:
+      value: 2
+      cite: PCC 33.110.205.C.3
+      quote: "or/multnomah/portland/33.110.txt#L425,L426"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/portland/33.110.txt#L458"

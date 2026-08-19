@@ -450,3 +450,56 @@ def test_each_happy_valley_district_states_its_own_townhouse_ceiling(
             .measured_on
             == "net_developable_area"
         ), zone
+
+
+PORTLAND = "or/multnomah/portland"
+MULTNOMAH = "or/multnomah/_unincorporated"
+
+
+def test_portlands_minimum_density_is_a_count_over_a_lot_size(rules: RuleSet) -> None:
+    """33.110.205 states a minimum density the way no table can hold it: not a
+    rate over an acre but a count over a trigger -- "in the R7 zone, a minimum
+    of two dwelling units are required on sites that are 14,000 square feet or
+    larger in total site area".
+
+    The registry has carried the pair of fields for this shape since it was
+    written and the screen has always checked them; nothing in the corpus ever
+    filled them in, so the standard existed in the reader's head and nowhere a
+    reviewer could see it.
+    """
+    triggers = {}
+    for zone in ("R7", "R5", "R2.5"):
+        held = rules.resolve(PORTLAND, zone)
+        triggers[zone] = (
+            held.get("min_density_trigger_lot_sqft"),
+            held.get("min_units_at_trigger"),
+        )
+
+    assert triggers == {
+        "R7": (14000, 2),
+        "R5": (10000, 2),
+        "R2.5": (5000, 2),
+    }
+
+    # Section C names three zones and stops. Reading the floor across to the
+    # rest of the ladder would invent a standard on the large-lot zones the
+    # section deliberately leaves alone.
+    for zone in ("R10", "R20", "RF"):
+        assert rules.resolve(PORTLAND, zone).get("min_density_trigger_lot_sqft") is None
+
+
+def test_the_same_floor_reaches_the_portland_administered_pockets(
+    rules: RuleSet,
+) -> None:
+    """R7 in unincorporated Multnomah is a Portland-administered pocket whose
+    standards live in PCC 33.110, and the county's own copy of the chapter
+    prints 33.110.205 at the same lines. Encoding it in one file and not the
+    other would make the pocket looser than the city it borrows from."""
+    held = rules.resolve(MULTNOMAH, "R7")
+
+    assert held.get("min_density_trigger_lot_sqft") == 14000
+    assert held.get("min_units_at_trigger") == 2
+    assert (
+        load_rules()[MULTNOMAH].zones["R7"].values["min_units_at_trigger"].prov.quote
+        == "or/multnomah/_unincorporated/33.110.txt#L421,L422"
+    )
