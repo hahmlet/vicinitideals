@@ -1,0 +1,552 @@
+Lot Types:
+Corner Lot. A lot abutting two intersecting streets other than an alley.
+Double Frontage Lot. A lot having public right-of-way frontage on two sides, but is not a corner
+lot; or a lot having frontage on three sides.
+Flag Lot. A lot the major portion of which has access to a public street by means of a narrow
+strip of the lot. Flag Lot. For newly created flag lots, the property owner can designate which lot
+line is to be the front lot line, so long as the front lot line is one of the lot lines that make up the
+flag portion of the lot and the rear lot line is the property line most distant from, and opposite,
+the designated front lot line.
+Primary Condominium Lot. A large lot, usually held in common ownership by condominium
+owners, and containing secondary condominium lots.
+Reserve Frontage Lot. A lot which is required by the City to take access across a specified lot
+line to separate residential development from railroad tracks or crossings, arterial or collector
+streets, adjacent non-residential uses, or to overcome specific disadvantages of topography
+and orientation.
+Secondary Condominium Lot. A small, individually owned lot, usually encompassing the
+perimeter of a dwelling unit and located inside the primary condominium lot.
+Through Lot. A lot that fronts upon two parallel streets or that fronts upon two streets that do not
+intersect at the boundaries of the lots.
+TDC 31.060 TUALATIN DEVELOPMENT CODE
+TDC31:12Supp. No. 12
+Lot Width. The horizontal distance between the side lot lines, ordinarily measured parallel to the front
+lot line, at the center of the lot, or, in the case of a corner lot, the horizontal distance between the front
+lot line and a side lot line.
+Average Lot Width. The sum of the length of the front lot line and the rear lot line divided by 2.
+Main Entrance or Main Entry. The entrance to a building that is designed to facilitate ingress and
+egress for the highest volume of building users. Generally, each building has one main entrance, but
+if design features do not make it possible to determine which entrance is the main entrance, all
+entrances providing the same capacity of ingress and egress shall be treated as main entrances.
+Major Driveway. Access is considered a major driveway when controlled by a traffic signal.
+Major Remodeling. Any man-made exterior modifications to improved or unimproved real property,
+including, but not limited to, the construction, installation, or alteration of a building or other structure;
+any remodeling that substantially changes the exterior appearance of the building (including
+painting); any site alteration which substantially alters the topography or appearance of the site; and
+any change in occupancy from single family use to commercial or industrial use.
+Major Transit Stop. See Transit Stop, Major.
+Manufactured Dwelling Types.
+Manufactured Dwelling, as defined in state law ORS 446.003. A residential trailer, mobile home
+or manufactured home, but not including any building or structure subject to the State of
+Oregon Structural Specialty Code adopted pursuant to ORS 55.100 to 455.450 and 455.610 to
+455.630 or any unit identified as a recreational vehicle by the manufacturer.
+Manufactured Home. A structure constructed for movement on the public highways that has
+sleeping, cooking, and plumbing facilities, that is intended for human occupancy, that is being
+used for residential purposes, and that was constructed after June 15, 1976 and in accordance
+with federal manufactured housing construction and safety standards and regulations in effect
+at the time of construction.
+Mobile Home. A structure constructed for movement on the public highways that has sleeping,
+cooking and plumbing facilities, that is intended for human occupancy, that is being used for
+residential purposes and that was constructed between January 1, 1962, and June 15, 1976,
+and met the construction requirements of Oregon mobile home law in effect at the time of
+construction.
+Residential Trailer. A structure constructed for movement on the public highways that has
+sleeping, cooking and plumbing facilities, that is intended for human occupancy, that is being
+used for residential purposes and that was constructed before January 1, 1962.
+Manufactured Dwelling Park (includes Mobile Home Park). Any place where four or more manufac-
+tured dwellings are located within 500 feet of one another on a lot, tract or parcel of land under the
+same ownership, the primary purpose of which is to rent or lease space or keep space for rent or
+lease to any person for a charge or fee paid or to be paid for the rental or lease or use of facilities or
+to offer space free in connection with securing the trade or patronage of such person consistent with
+state law ORS 446.003.
+ TDC 31.060GENERAL PROVISIONS
+TDC31:13Supp. No. 12
+Marijuana. All parts of the plant of the Cannabis family Cannabaceae, whether growing or not; the
+resin extracted from any part of the plant; and every compound, manufacture, salt, derivative,
+mixture, or preparation of the plant or its resin, and includes both medical and recreational marijuana
+as defined by Oregon law.
+Edible Marijuana. Edible product that contains marijuana.
+Homegrown Marijuana. Marijuana grown or made by a person 21 years of age or older for
+noncommercial purposes.
+Marijuana Extract. A product obtained by separating resins from the marijuana plant by solvent
+extraction.
+Marijuana Facility. A commercial or public use or structure where marijuana is produced,
+processed, wholesaled, retailed, distributed, transferred, sold or consumed and registered with
+the Oregon Health Authority (OHA) or the Oregon Liquor Control Commission (OLCC).
+Marquee. A projecting, permanent, roofed structure attached to and supported only by a building.
+Mixed Solid Waste. Solid waste that contains recoverable or recyclable materials, and materials that
+are not capable of being recycled or recovered for further use.
+Mixed Use Development. A tract of land or building or structure with two or more different uses such
+as, but not limited to, residential, office, retail, manufacturing, public, or entertainment, in a compact
+urban form.
+Mixed Use Residential Development. A mixed use development containing one or more residences.
+Mobile Food Unit. A vehicle that is self-propelled or that can be pulled or pushed down a sidewalk,
+street, highway, or water on which food is prepared, processed, or converted, or which is used in
+selling and dispensing food to the public. Mobile Food Units include, but are not limited to, food
+trucks, and food carts.
+Mobile Home. See Manufactured Dwelling Types.
+Mobile Home Park. See Manufactured Dwelling Park.
+Modular Home. See Residential Structure Types.
+Multi-Family Dwelling. See Residential Structure Types.
+Multi-Use Path (Trail). A path (trail) accommodating multi-modal active transportation. They serve as
+routes for recreational, commuter and destination-oriented trips.
+Mural. A pictorial or graphic decoration, illustration, visual representation or art work which is applied
+directly to a wall and does not contain letters, numbers, logos, brand names or trademarks. Murals
+are Architectural Features which are reviewed through the Architectural Review process.
+Neighborhood Activity Centers. A land use which draws high levels of daily pedestrian usage, and
+which functions as a destination for pedestrian, bicycle, and transit trips. Examples of neighborhood
+TDC 31.060 TUALATIN DEVELOPMENT CODE
+TDC31:14Supp. No. 12
+activity centers include existing or planned parks and recreation facilities, schools, shopping areas,
+employment centers, theaters, and museums, and other destinations listed in OAR 660-012-
+0360(2).
+Net Acres. The area proposed for development measured to the property lines of the parcel(s) or
+development site boundary or lot after all deductions are made. Deductions include:
+(1)  The following sensitive land areas:
+(a)  Land within the 100-year floodplain that is preserved in a tract;
+(b)  Land exceeding 25 percent slope;
+(c)  Drainage ways; and
+(d)  Wetlands and associated buffers.
+(2)  Land dedicated to the public for park purposes; and
+(3)  Land dedicated to the public for rights-of-way and stormwater facilities. When actual
+information is not available, the following formulas may be used:
+(a)  Single-family development: allocate 20 percent of gross acres;
+(b)  Multi-family development including, but not limited to, apartments, condominiums
+and townhouses: allocate 15 percent of gross acres.
+Noise Sensitive Property. Any residence, apartment, condominium, multi-family dwelling or any
+school, church, nursing home, retirement home, group care home or day care center located in a
+residential planning district.
+Nonconforming Situations, Development, or Lots. See TDC Chapter 35 (Nonconforming Situations).
+Off-Site. Any area not located within the property to be developed, whether or not in the common
+ownership of the applicant for development approval.
+Off-Street Parking. Parking spaces provided for motor vehicles on individual lots and not located on
+public street right-of-way. Off-street parking includes surface lots, parking structures, and under-
+ground parking.
+Outdoor Dining Facility. An establishment that serves food and beverages in an outdoor setting as
+part of a restaurant.
+Outdoor Recreational Access Route. A pedestrian path that provides access to a recreation trail.
+These trails are on City-owned property, exclusive rights-of-way or easements, but are not neces-
+sarily located in a designated greenway. They are typically ¼ mile or less in length.
+Outdoor Shared Areas. Common areas in multi-family developments used by residents for outdoor
+activities. Outdoor shared areas can include, but are not limited to open lawn areas, gazebos,
+covered spaces, swimming pool areas, walking trails or sport recreation fields.
+Overhead Door. An opening in a wall that is at least eight feet wide and eight feet in height and that
+is used as an access to a loading dock, loading bay, vehicle service bay, or other similar work area.
+The opening is covered by a door that opens overhead.
+ TDC 31.060GENERAL PROVISIONS
+TDC31:15Supp. No. 12
+Owner. Any person, firm, corporation or combination, or any other legal entity having legal title to
+land sought to be the subject of any application or decision of this Development Code.
+Painted Highlights. Painted areas on a wall which highlight a building's architecture or structure and
+do not contain letters, numbers, logos, brand names or trademarks. Painted highlights are architec-
+tural features which are reviewed through the Architectural Review process.
+Parcel. A unit of land that is created by a partitioning of land, as set forth in ORS 92.010. See, also
+Lot.
+Parking Lot Improvement or Expansion. The alteration of land or expansion of existing off-street
+parking, including grading, paving or installation of landscaping, on land intended to be regularly
+used for the temporary storage of motor vehicles. Parking lot improvement does not include
+resurfacing existing asphalt parking or re-striping of parking lots.
+Partition. An act of partitioning land, or an area or tract of land partitioned, as set forth in ORS 92.010.
+Partition Land. To divide land into two or three parcels of land within a calendar year, as set forth in
+ORS 92.010.
+Pedestrian. A person afoot or using any of the following: A means of conveyance propelled by human
+power other than a bicycle; or an electric personal assistive mobility device. Pedestrian includes a
+person who is operating a self-propelled wheelchair, motorized tricycle, or motorized quadricycle
+and, by reason of physical disability, is otherwise unable to move about as a pedestrian.
+Pedestrian Amenity Space. Publicly accessible space such as plaza, terrace, courtyard, or small
+park, which is intended for pedestrian use, abuts or is connected to the street, and is provided and
+maintained by a private party. The amenity space must not be used for vehicle parking or circulation.
+Pedestrian Facilities. On and off-street improvements and facilities that provide a continuous,
+unobstructed, reasonably direct route between two points that are intended and suitable for
+pedestrian use. Pedestrian facilities include, but are not limited to, sidewalks, walkways, pedestrian
+paths, trails, outdoor recreation access routes, and accessways.
+Pedestrian Path (Trail). Pedestrian paths (trails) are generally located within the City's designated
+greenways, but may be located elsewhere to provide access between residential, commercial,
+public, and semi-public uses. They serve as routes for recreational, commuter and destination-
+oriented trips.
+Person. A natural person, his or her heir, executor, administrator, assign or successor in interest; a
+firm, partnership, corporation, association or legal entity, it's or their successors or assigns; and any
+agent, employee or representative of any of the above-mentioned.
+Phase. A distinct stage of development having adequate public facilities.
+Planning District. Land use regulatory designation under the Tualatin Development Code. The term
+"Zone" has the same meaning as "Planning District."
+TDC 31.060 TUALATIN DEVELOPMENT CODE
+TDC31:16Supp. No. 12
+Plat. A final subdivision plat, replat or partition plat, as set forth in ORS 92.010.
+Partition Plat. A final map and other writing containing all the descriptions, locations, specifi-
+cations, provisions and information concerning a partition, as set forth in ORS 92.010.
+Subdivision Plat. A final map and other writing containing all the descriptions, locations,
+specifications, dedications, provisions and information concerning a subdivision, as set forth in
+ORS 92.010.
+Porch. A covered entrance to a building.
+Portable Collection Facility. A trailer, dropbox or similar portable or semi-portable container or
+enclosure for the collection and storage of repairable or reusable household goods or materials for
+the purpose of transfer of said goods and materials elsewhere for further processing. In this context,
+"materials" is specifically intended to include newspaper, magazines and other printed matter.
+Preliminary Approval. After specific elements of a development plan have been submitted to and
+agreed upon by the City and prior to final approval, the conditional approval and qualified acceptance
+which is given by the City.
+Preliminary Plat. The preliminary drawing or drawings, described in these regulations, indicating the
+proposed manner or layout of the subdivision or partition.
+Primary Public Customer Doorway. One or more principal entryways to a business provided for
+customer access on a day-to-day basis.
+Private Areas. Outdoor areas which are an extension of private interior spaces. Private areas include
+main entrances to dwelling units and patio areas.
+Private Grounds. Includes all real property not contained within public right-of-way.
+Private Improvements. See Improvement Types.
+Property Line. An imaginary line defining the boundary limits of a tract of land or lot. (Also known as
+a lot line).
+Property Line Adjustment. The relocation of a common property line between two abutting proper-
+ties, as set forth in ORS 92.010. (Also known as Lot Line Adjustment.)
+Public Hearing. An adjudicatory proceeding held by the City Council proceeded by specified public
+notice at which interested persons, including the applicant, may call witnesses and introduce
+evidence for the purpose of demonstrating an application complies with applicable development
+regulations and where the City Council determines whether and under what conditions the applica-
+tion complies or development may occur.
+Public Improvement. See Improvement Types.
+Public Road. A road under the jurisdiction of a public body.
+Public Utility Facility. All on-site and off-site improvements and related accessories to be accepted for
+ownership, maintenance and operation by a public agency, including, but not limited to, sanitary
+ TDC 31.060GENERAL PROVISIONS
+TDC31:17Supp. No. 12
+sewers and pump stations, water lines including related reservoirs, pump stations, pressure reading
+stations and hydrants, storm drain systems, greenways, bike paths, and streets including, alleys,
+street lights, street name signs, traffic control systems and devices.
+Public Works Construction Code or Public Works Code. The document entitled "Public Works
+Construction Code" adopted by the Council to provide design, materials and workmanship specifi-
+cations for public improvements constructed by developers.
+Quasi-Judicial. The application of general standards and criteria to a specific set of facts in order to
+determine the conformance of the facts to the applicable criteria and resulting in a determination that
+will definitely affect only a small number of identifiable people.
+Recreational Vehicle. See Vehicle Types.
+Relocation. Relocating a landmark from its existing parcel to another parcel or repositioning a
+landmark on an existing parcel.
+Replat. The act of platting the lots, parcels and easements in a previously recorded subdivision or
+partition plat to achieve a reconfiguration of the existing subdivision or partition plat or to increase or
+decrease the number of lots in the subdivision, as set forth in ORS 92.010.
+Reserve Strip. A narrow strip of land located between a subdivision or partition and other property at
+the ends of, or parallel to streets which has not been dedicated to public use, but rather conveyed to
+the City for purposes of enhancing City control over development of the adjacent property.
+Residential Care. Services such as supervision; protection; assistance while bathing, dressing,
+grooming or eating; management of money; transportation; recreation; and the providing of room
+and board, as defined in ORS 443.400(4).
+Residential Facility. See Group Living Types.
+Residential Structure Types and Related (includes, but is not limited to, definitions for Housing Types
+in Section 39.200 and Group Living in Section 39.210).
+Accessory Dwelling Unit (ADU). An interior attached or detached residential structure that is
+accessory to a single family dwelling. An Accessory Dwelling Unit is not a dwelling unit for
+density purposes.
+Certified or registered family child care home. (see ORS 329A.440). See, Child Care.
+Cottage Cluster. A grouping of no fewer than four cottages per acre that includes a common
+courtyard, subject to the provisions of Chapter 73A.
+Duplex. A type of dwelling that contains two dwelling units on one lot in any configuration.
+Dwelling Unit. A habitable structure designed for occupancy and only having one cooking
+facility.
+Garden Apartments. A multi-family housing structure characterized by the emphasis of open
+landscaped areas.
+Modular Home. A residential structure consisting of prefabricated components manufactured
+at a remote location and assembled on-site.
+TDC 31.060 TUALATIN DEVELOPMENT CODE
+TDC31:18Supp. No. 12
+Multi-Family Dwelling. A dwelling unit within a multi-family structure.
+Multi-Family Structure. A structure containing five or more dwelling units on one lot. The land
+underneath the structure is not divided into separate lots. Multi-Family Structure includes, but
+is not limited to structures commonly called apartments, condominiums, and garden apart-
+ments.
+Quadplex. Four dwelling units on a lot or parcel in any configuration.
+Residential Home. A residential training home or residential treatment home for five or fewer
+individuals exclusive of staff, as defined in ORS 443.400.
+Retirement Housing. Housing occupied by persons who are 55 years of age and older,
+including couples with one person 55 years of age or older, where a more supportive living
+environment than typically afforded to residents in conventional apartments or single-family
+residential housing is provided. Retirement housing includes "congregate care facility" and
+"retirement housing facility," or combinations thereof as defined by this Code. Retirement
+housing does not include "nursing facility" as defined below by this code.
+Retirement Housing Facility. Retirement housing consisting of dwelling units in a multi-family
+structure or complex.
+Single-Family Dwelling (detached). A detached structure on a lot or parcel that is comprised of
+a single dwelling unit.
+Studio. A unit in a multi-family structure characterized by one combined living, sleeping, and
+kitchen area, although it may have a separate bathroom containing sanitary facilities.
+Townhouse. A dwelling unit constructed in a row of two or more attached units, where each
+dwelling unit is located on an individual lot or parcel and shares at least one common wall with
+an adjacent unit.
+Triplex. Three dwelling units on a lot or parcel in any configuration.
+Residential Trailer. See Manufactured Dwelling Types.
+Restrictive Covenant. A legally binding limitation on the manner in which a tract of land or lot can be
+used, usually a condition placed on the deed.
+Retail Commercial Use. See Chapter 39 (Use Categories).
+Retirement Housing. See Residential Structure Types.
+Retirement Housing Facility. See Residential Structure Types.
+Riparian area. The area adjacent to a river, lake, stream, consisting of the area of transition from an
+aquatic ecosystem to a terrestrial system.
+Riparian Corridor. Riparian corridor includes the water areas, fish habitat, adjacent riparian areas,
+and wetlands within the riparian area boundary.
+Roadway. The portion of street right-of-way developed for vehicular traffic.
+ TDC 31.060GENERAL PROVISIONS
+TDC31:19Supp. No. 12
+Setback. The minimum horizontal distance between the public street right-of-way or side and rear
+property lines to the front, side and rear lines of a building or structure located on a lot.
+Shared Roadway. A type of bikeway where bicyclists and motor vehicles share the same roadway.
+Sidewalk. A pedestrian walkway with permanent surfacing located in a street right-of-way, generally
+constructed as part of a street improvement and parallel to the street improvement. A sidewalk is not
+an accessway.
+Sight Distance. The distance along which a person can see approaching objects, such as automo-
+biles or pedestrians at a street intersection or from a driveway along a street.
+Single-Family Dwelling. See Residential Structure Types.
+Site. For purposes of a decision following the limited land use process, a site refers to the property
+upon which a development is proposed.
+Sketch Map. A plan map provided to the City Manager as part of a development application for
+purposes of property line adjustment.
+Skirting. A covering that totally obscures the undercarriage of a manufactured dwelling, extending
+from the top of the undercarriage to the ground.
+Small Lot Subdivision. A subdivision containing lots smaller than 6,500 square feet and that has been
+granted conditional use approval.
+Stacking Area. The space occupied by vehicles queueing on the development site and behind any
+public sidewalk for a service to be provided at a drive-through facility.
+Stand-Alone Structure. A single purpose building that does not have a mixture of uses within it and
+therefore has an architectural design appropriate to the use.
+Storage Area. The space necessary to store mixed solid waste and source separated recyclables
+that accumulate between collection days.
+Store. The space within a building, other than a basement, included between the surface of any
+finished floor and the surface of the ceiling immediately above said floor.
+Stream. A stream is a channel such as a river or creek that carries flowing surface water, including
+perennial streams and intermittent streams with defined channels, and excluding manmade irriga-
+tion and drainage channels.
+Street. A structure within the boundary lines of a public right-of-way which provides for public use of
+a public roadway for the purpose of vehicular and pedestrian traffic and the placement of utilities, and
+including the terms "road," "highway," "lane," "place," "avenue," "court," "circle," "alley," or other
+similar designation.
+Street Right-of-Way. Publicly owned land devoted to the primary purpose of street and utility
+construction.
+Street Tree. A tree in a public place, street, special easement, or right-of-way adjoining a street as
+provided in these regulations.
+TDC 31.060 TUALATIN DEVELOPMENT CODE
+TDC31:20Supp. No. 12
+Stub-out (Stub-street). A portion of a street or cross access drive used as an extension to an abutting
+property that may be developed in the future resulting in the extension of the stubbed street.
+Structural Alteration. Any change to the supporting members of a building or structure, including
+foundations, bearing walls, partitions, columns, beams, girders, or roof or other supports.
+Structure. That which is built or constructed. An edifice or building of any kind, or any piece of work
+artificially built up or composed of parts joined together in some manner and which requires a
+location on the ground or which is attached to something having a location on the ground.
+Structure Bulk. The mass or size of a structure.
+Subdivision. The splitting of a single tract of land into four or more parcels.
+Subdivision Improvements. Construction of facilities such as streets, water, sewer, gas and tele-
+phone lines and other construction related to drainage, landscaping and beautification.
+Subdivision Sign. See Chapter 38 (Signs).
+Substantially Complete. A subdivision or partition will be considered substantially complete when, in
+the opinion of the City Manager, the City will not be adversely impacted by issuance of building
+permits prior to acceptance of the public improvements by resolution of the Council. Substantially
+complete includes, but is not limited to a determination that water and sewer lines have been tested
+and ready to begin service, that as-built drawings of public facilities have been submitted, that the
+roadway surfaces and drainage facilities will provide year-round access to each lot and that street
+lights are installed and authorized to be energized.
+Tenant. A separate business or business occupant whether as owner, purchaser or lessee. See
+Business and Business Occupant.
+Townhouse. See Residential Structure Types.
+Tract. A non-buildable unit of land created in the partitioning or subdivision process.
+Traffic Control Device. Any sign, signal or other device constructed by a road authority, as defined by
+State law, for the purpose of vehicular or pedestrian traffic control.
+Trail. The term "Trail" has the same meaning as "Path." See Multi-Use Path and Pedestrian Path.
+Transit Stop. A location where regularly scheduled transit service stops (includes but is not limited to
+bus stop) to load and unload passengers. For purpose of measuring, the transit stop is the location
+of a sign denoting the transit stop. See also Transit Stop, Major.
+Major Transit Stop. Existing and planned light rail stations, commuter rail stations and transit
+transfer stations, except for temporary facilities; other planned stops designated as major
+transit stops in Comprehensive Plan Map 8-5; and existing stops which have or are planned for
+frequently scheduled fixed-route service.
+Transit System. The property, equipment and improvements of whatever nature owned, used,
+constructed, maintained, controlled or operated to provide mass transportation for passengers, or to
+provide for the movement of people, including park-and-ride stations, transfer stations, parking lots,
+malls and skyways, as set forth in ORS 267.
+ TDC 31.060GENERAL PROVISIONS
+TDC31:21Supp. No. 12
+Transportation Facility or Improvement. Any physical facility constructed for the movement of people
+or goods, excluding electricity, sewage and water systems; the operation, maintenance, repair and
+preservation activities of existing facilities including, but not limited to, road, bicycle, pedestrian and
+rail facilities; the installation of improvements including, but not limited to, culverts, fencing,
+guardrails, landscaping, lighting, medians and pathways within the existing right-of-way; emergency
+measures necessary for the safety and protection of people and property; acquisition of right-of-way
+for public roads, highways and other transportation improvements designated in the Transportation
+System Plan and Comprehensive Plan Chapter 8, Transportation; and construction of a street or
+road as part of an approved subdivision, land partition, architectural review or other land use
+decision consistent with the TDC.
+Tree. A living, standing, woody plant having a trunk eight inches or more in diameter, widest cross
+section, at a point four feet above mean ground level.
+Tree Removal. To remove or cut down a tree, or to damage a tree so as to cause the tree to die.
+Damage which constitutes removal includes, but is not limited to, topping or removing a significant
+portion of the tree crown; application or injection of a substance toxic to the tree; damage inflicted
+upon the root system by root cutting, grading, paving, or storing materials or equipment in the tree's
+root zone; disrupting bark functions by stripping bark or girdling tree trunks or limbs with rope or wire.
+Triplex. See Residential Structure Types.
+Tualatin Development Code (TDC). The TDC, as amended, as of the date of submittal of a
+development application.
+Urban Renewal Area. A portion of the central area of the City legally designated by the City Council
+as appropriate for urban renewal.
+Use. The purpose for which land or a structure is designed, arranged, or intended, or for which it is
+occupied or maintained.
+Utility Facility or Utility Facilities. The portion of a new structure or major remodeling activity which is
+regulated or controlled by applicable portions of the City's Structural Specialty and Fire and Life
+Safety Code, the City's Public Works Construction Code, the City's Plumbing Code, the City's
+Mechanical Code, and those portions of the Tualatin Development Code which regulate site access,
+street, sanitary and storm sewer and water improvements, onsite vehicle circulation, and the
+location of power, gas, telephone, cable television, and other similar activities. "Facilities" includes
+Public Utility Facilities, but does not include architectural features.
+Vegetated Corridor. A corridor adjacent to a water quality Sensitive Area that is preserved and
+maintained to protect the water quality functions of the water quality sensitive area.
+Vehicle Types.
+Light Truck. Two axle motor vehicles including trucks, cargo vans, school buses and motor
+homes with a Gross Vehicle Weight (GVW) of 28,000 lbs. or less.
+Recreational Vehicle. A vehicle with or without motive power, which is designed for human
+occupancy and to be used temporarily for recreational, seasonal or emergency purposes, and
+TDC 31.060 TUALATIN DEVELOPMENT CODE
+TDC31:22Supp. No. 12
+has a gross floor area not exceeding 400 square feet in the set-up mode and as further defined,
+by rule, by the Oregon Department of Consumer and Business Services Director [ORS
+446.003(12)].
+Recreational Water, Snow and Land Vehicles. Motorized vehicles for recreational purposes
+that do not meet the Oregon Motor Vehicle Code requirements for legal operation on public
+streets and roads, including, but not limited to, personal watercraft, snowmobiles go-carts and
+swamp or dune buggies.
+Vision Clearance Area. A triangular shaped area established at the intersection of any combination
+of rights-of-way, private roads, alleys and driveways. The sides of the triangle shall extend an equal
+and specified distance from the intersection of the property lines, or from the property lines extended
+along the right-of-way away from the intersection.
+Walkway. A pedestrian facility which provides a paved surface for pedestrian circulation within a
+development. A walkway may be shared with bicycles and may cross vehicle areas.
+Wall Plane. A wall plane means all vertical surfaces on one side of a structure from the base of the
+main floor level up, including walls, garage doors, entries, gable ends, dormers, and other architec-
+tural features, but excluding any roof areas.
+Wetlands. Land areas determined by the Oregon Division of State Lands to be wetlands.
+Wetlands Conservation Lot. A parcel consisting principally of wetlands and therefore unsuitable for
+development, created to preserve and protect wetlands.
+Wireless Communication, Co-Location. The placement of two or more antenna systems or platforms
+by separate FCC license holders on a structure, such as a support structure, building, water tank, or
+utility pole.
+Wireless Communication Facility. An unstaffed facility for the transmission or reception of radio
+frequency (RF) signals, usually consisting of an equipment shelter, cabinet or other enclosed
+structure containing electronic equipment, a support structure, antennas or other transmission and
+reception devices.
+Wireless Communication Facility Attached. A wireless communication facility that is affixed to an
+existing structure, e.g., an existing building wall or roof, mechanical equipment, tower or pole, water
+tank, utility pole, or light pole, that does not include an additional wireless communication support
+structure.
+Wireless Communication Support Structure. A new structure, tower, pole or mast erected to support
+wireless communication antennas and connecting appurtenances. Support structure types include,
+but are not limited to, monopoles, lattice towers, wood poles and guyed towers.
+Yard. An open space on a lot which is unobstructed by buildings or structures from the ground
+upward.
+ TDC 31.060GENERAL PROVISIONS
+TDC31:23Supp. No. 12
+Yard Setback. An open space on a lot which is unobstructed by buildings or structures from the
+ground upward and is the minimum horizontal distance between the public street right-of-way or side
+and rear property lines to the front, side and rear lines of a building or structure located on a lot.
+Front Yard Setback. An open space between side lot lines, and measured horizontally from the
+front lot line at right angles to the front lot line to the nearest point of the building.
+Rear Yard Setback. An open space extending between side lot lines, and measured horizon-
+tally at right angles from the rear lot line of the nearest point of a building.
+Side Yard Setback. A yard between a building and the side lot line, measured horizontally at
+right angles to the side lot line from the side lot line to the nearest point of the building.
+Zone. Land use regulatory designation under the Tualatin Development Code. The term "Planning
+District" has the same meaning as "Zone."
+(Ord. 590-83 §1, 04-11-83; Ord. 585-82, 12-13-82; Ord. 635-84 §8, 06-11-84; Ord. 647-85 §1, 02-
+11-85; Ord. 661-85 §1, 06-10-85; Ord. 705-86 §§1 and 2, 09-8-86; Ord. 725-87 §1, 06-22-87; Ord.
+743-88 §§1, 2, 3, 4, 5, 6 and 7, 03-28-88; Ord. 769-89 §2, 02-27-89; Ord. 812-90 §1, 09-24-90; Ord.
+818-91 §8, 9 and 10, 01-14-91; Ord. 822-92 §4, 12-14-92; Ord. 827-91 §5, 03-25-91; Ord. 828-91
+§2, 03-25-91; Ord. 844-91 §4, 10-14-91; Ord. 849-91 §§2, 8 and 9, 11-25-91; Ord. 862-92
+§1, 03-23-92; Ord. 868-92 §3, 05-11-92; Ord. 882-92 §4, 12-14-92; Ord. 884-93 §1, 02-8-93; Ord.
+890-93 §2, 04-12-93, Ord. 894-93 §§3 and 4, 05-24-93; Ord. 895-93 §2, 05-24-93; Ord. 898-93
+§1, 06-14-93; Ord. 902-93 §2, 06-28-93; Ord. 904-93 §1, 09-13-93; Ord. 911-94 §4, 02-14-94; Ord.
+920-94 §1, 04-11-94; Ord. 921-94 §2, 04-25-94; Ord. 930-94 §1, 08-8-94; Ord. 937-95 §3, 01-9-95;
+Ord. 942-95 §2, 03-27-95; Ord. 947-95 §§3 and 4, 07-24-95; Ord. 956-96 §§4, 5 and 6, 01-8-96; Ord.
+963-96 §§2 and 8, 06-24-96; Ord. 960-96 §6, 05-28-96; Ord. 965-96 §4, 12-9-96; Ord. 979-97
+§8, 07-14-97; Ord. 1007-98 §1, 07-13-98; Ord. 1013-99 §5, 01-11-99; Ord. 1025-99 §1, 07-26-99;
+Ord. 1026-99 §14, 08-9-99; Ord. 1046-00 §2, 02-14-00; Ord. 1063-01 §1, 02-12-01; Ord. 1088-01
+§1, 08-27-01; Ord. 1096-02, 01-28-02; Ord. 1097-02, 02-11-02; Ord. 1103-02, 03-25-02; Ord.
+1120-02, 11-15-02; Ord. 1129-03, 02-24-03; Ord. 1133-03, 03-24-03; Ord. 1136-03, 04-28-03; Ord.
+1145-03, 07-28-03; Ord. 1157-04, 03-8-04; Ord. 1160-04, 05-24-04; Ord. 1164-04, 06-28-04; Ord.
+1212-06, 06-26-06; Ord. 1214-06, 07-10-06; Ord. 1216-06, 07-24-06; Ord. 1224-06, §3, 11-13-06;
+Ord. 1227-07 §3, 02-12-07; Ord. 1261-08 §2, 06-9-08, Ord. 1277-09, 3-9-09; Ord. 1305-10
+§1, 05-14-10; Ord. 1317-10 §1, 12-13-10; Ord. 1322-11 §1, 05-9-11; Ord. 1335-11 §1, 11-14-11; Ord.
+1338-12 §3, 01-23-12; Ord. 1351-12 §2, 1; 0-22-12; Ord. 1354-13 §4, 02-25-13; Ord. 1379-15 § 1,
+03-23-15; Ord. 1411-18, 7-23-18; Ord 1414-18, 12-10-18; Ord. 1427-19, § 15, 11-25-19; Ord. No.
+1438-20, § 5, 6-22-20; Ord. No. 1463-21, § 1, 12-13-21; Ord. No. 1480-23, § 5, 8-28-23; Ord. No.
+1486-24, § 2, 6-10-24; Ord. No. 1451-25, § 4, 8-11-25; Ord. No. 1454-25, § 1(Exhs. 2, 3), 11-24-25)
+TDC 31.070.  Interpretation of Code Provisions.
+(1)  The City Manager has the initial authority and responsibility to interpret all terms, provisions and
+requirements of the Tualatin Development Code.
+TDC 31.060 TUALATIN DEVELOPMENT CODE
+TDC31:24Supp. No. 12
+(2)  Unless accompanied by an application, submitted under some other Development Code or
+Ordinance provision, a party wishing an interpretation must submit a written application to the City
+Manager. The application must be accompanied by a detailed description of factors related to the
+issue for interpretation, including, but not limited to:
+(a)  The amount and type of traffic generated;
+(b)  The type of manufacturing or commercial process;
+(c)  The nature of any machinery used;
+(d)  Noise and odor characteristics, associated with the use or activity;
+(e)  Outside storage of materials or products;
+(f)  Type of structures required;
+(g)  Character of activity to be conducted on the site;
+(h)  Determination of the maximum vehicle parking and/or minimum bicycle parking required;
+(i)  Number of persons who would occupy the premises at any one time; and
+(j)  Any other information which the City Manager or designee determines to be relevant to a
+determination of the issue.
+(3)  Within 30 days of the submission of all required information, the City Manager must cause a
+final decision to be made on the issue. The decision must include findings of fact and conclusions for
+the particular aspects of the decision, based upon applicable criteria. Notice of the decision must be
+provided to the City Council. The City Manager must maintain a collection of such decisions.
+(4)  The final decision on a Code interpretation under this section may be appealed to the City
+Council pursuant to the provisions of TDC 31.076 and 31.077.
+(Ord. 590-83 §1, 04-11-83; Ord. 743-88 §8, 03-28-88; Ord. 1414-18, 12-10-18; Ord. No. 1486-24,
+§ 2, 6-10-24)
+TDC 31.100.  Application Fee Required.
+All applications for a land use action must be accompanied by the appropriate fee, as set by
+resolution of the City Council. The City will not process any land use action until the appropriate fee
+is paid. Land use actions initiated by the City do not require a fee.
+(Ord. 1414-18, 12-10-18)
+TDC 31.102.  Waiver or Reduction of Fees.
+The City Council may reduce or waive fees upon showing of just cause to do so by the applicant.
+(Ord. 1414-18, 12-10-18)
+ TDC 31.102GENERAL PROVISIONS
+TDC31:25Supp. No. 12
+COMPLIANCE AND ENFORCEMENT
+TDC 31.105.  Interpretation, Conflict and Rules of Construction.
+(1)  The provisions of this Chapter are minimum requirements.
+(2)  Unless a particular provision of the Tualatin Development Code provides otherwise, where two
+or more provisions of the Tualatin Development Code conflict, the provisions must be read in
+conjunction to give both meaning, unless only one can be given meaning in which case the provision
+imposing the more restrictive or higher standard applies.
+(3)  Unless a particular provision of the Tualatin Development Code provides otherwise, the rules of
+statutory construction under ORS Chapter 174, as interpreted by Oregon courts, apply to the
+Tualatin Development Code.
+(Ord. 1414-18, 12-10-18)
+TDC 31.110.  Conformance Required; Revocation.
+(1)  No building, structure, or land will hereafter be used, possessed or occupied, and no building,
+structure, or any part thereof will hereafter be erected, constructed, reconstructed, moved, or
+structurally altered contrary to the provisions of Chapters 31—80 of the City of Tualatin Development
+Code.
+(2)  Real property may be occupied or developed and a structure may be occupied or developed
+only as this Code and applicable City regulations permit. The requirements of this Code and
+applicable City regulations apply to the person undertaking the development or the user of a
+development and to any successor in interest.
+(3)  Any use of land or existing structures which is not in conformity with the provisions of the
+applicable standards at the time of the adoption of the City of Tualatin Community Development
+Code is nonconforming and subject to the provisions herein described by TDC Chapter 35.
+(4)  A building permit must not be issued by the Building Official for the City of Tualatin for the
+erection, construction, conversion or alteration of any building or structure or use of land unless the
+City Manager has first determined that such land use, building or structure, as proposed, would
+comply with the Tualatin Comprehensive Plan and Development Code.
+(a)  All applications for building permits must be accompanied by plans and specifications,
+drawn to scale, showing the exact sizes and locations on the lot of the building and other
+structures existing and proposed; the existing and intended use of each building, structure,
+structures, or part thereof; and such other information as is needed to determine conformance
+with the Tualatin Comprehensive Plan and Development Code.
+TDC 31.105 TUALATIN DEVELOPMENT CODE
+TDC31:26Supp. No. 12
+(b)  If, during the course of constructing any building or structure, the City Manager or Building
+Official determines that such construction activity is in violation of any provision of the Tualatin
+Comprehensive Plan or Development Code, the City Manager or Building Official is hereby
+authorized to issue a stop-work order. This remedy is in addition to and not in lieu of any other
+right or remedy available to the City to enforce the provisions of this ordinance.
+(5)  The City Council may, after conducting a hearing pursuant to

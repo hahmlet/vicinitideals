@@ -12,11 +12,38 @@ ingest:
   zoning_layer: zoning_tualatin
   zone_field: PLANDIST.CZONE
   strip_lowercase_suffix: false
+definitions:
+  # "Corner Lot. A lot abutting two intersecting streets other than an alley."
+  #
+  # The shortest definition in the corpus and the same shape as Oregon City's,
+  # with the alley exclusion stated in the sentence rather than left to the
+  # front lot line rule. No angle, so a curving street is read the way silence
+  # is read everywhere else: a non-collinear frontage is an intersection.
+  # Clackamas County, whose land surrounds Tualatin, says the opposite -- and
+  # the county's rule does not reach inside the city.
+  corner_lot:
+    test: intersecting_frontages
+    count: 2
+    quote: "or/clackamas/tualatin/31.definitions.txt#L2"
+    cite: "TDC 31, Lot Types, Corner Lot"
+
 code:
   # Municode client 4668, publication 1818 (updated 2026-05-21). The zoning
   # lives in the separately-published Development Code, not the City Charter
   # and Municipal Code (publication 1817). The library renders in JavaScript;
   # this endpoint returns the adopted PDF.
+  # TDC 31 is the Development Code's definitions. Same publication as the
+  # residential chapters, cut to the definitions chapter.
+  - id: "31.definitions"
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    title: "TDC Chapter 31 - Definitions"
+    start: "Lot Types:"
+    end: "TDC 32."
+    extraction: plain
+    # Prose about words, so almost nothing in it is a dimensioned standard.
+    # Read 2026-08-18: the slice opens on the lot types and states corner,
+    # double frontage and flag lot.
+    allow_thin: true
   - id: "40-41.residential"
     url: https://api.municode.com/PublicationPdfDownload/1818
     title: "Chapters 40-41 - Low and Medium Low Density Residential (RL, RML)"

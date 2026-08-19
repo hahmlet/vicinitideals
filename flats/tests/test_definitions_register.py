@@ -73,10 +73,12 @@ def test_the_five_cities_that_have_been_read(rules: RuleSet) -> None:
         "or/clackamas/_unincorporated",
         "or/clackamas/oregon-city",
         "or/clackamas/rivergrove",
+        "or/clackamas/tualatin",
         "or/clackamas/wilsonville",
         "or/multnomah/_unincorporated",
         "or/multnomah/gresham",
         "or/multnomah/portland",
+        "or/multnomah/troutdale",
     ]
 
 
@@ -319,3 +321,26 @@ def test_a_definition_cannot_both_split_a_curve_and_refuse_to() -> None:
             curve_is_one_street=True,
             curve_at_or_below_deg=120.0,
         )
+
+
+def test_identical_language_in_two_cities_is_still_two_definitions(
+    rules: RuleSet,
+) -> None:
+    """Troutdale and Rivergrove state the corner lot test word for word, down
+    to the 135-degree ceiling and the "streets other than alleys" exclusion.
+    Model language spreading is not an argument for a shared default: each is
+    quoted from its own code, so if one amends its ceiling only one moves."""
+    a = rules.definitions_for("or/multnomah/troutdale")["corner_lot"]
+    b = rules.definitions_for("or/clackamas/rivergrove")["corner_lot"]
+    assert (a.test, a.max_intersection_angle_deg) == (b.test, b.max_intersection_angle_deg)
+    assert a.quote != b.quote
+    assert a.cite != b.cite
+
+
+def test_a_city_does_not_take_the_county_that_surrounds_it(rules: RuleSet) -> None:
+    """Tualatin states no angle, so a bending street reads as an intersection.
+    Clackamas County, whose land surrounds it, says the opposite outright. The
+    county rule does not reach inside the city."""
+    bent = lot((50, 0, S), (50, 70, S), (60, 20, N), (80, 110, N))
+    assert rules.defines("or/clackamas/tualatin", "corner_lot", bent) is True
+    assert rules.defines("or/clackamas/_unincorporated", "corner_lot", bent) is False

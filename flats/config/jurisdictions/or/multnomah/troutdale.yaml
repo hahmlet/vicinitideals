@@ -12,11 +12,43 @@ ingest:
   zoning_layer: zoning_troutdale
   zone_field: zonecode
   strip_lowercase_suffix: false
+definitions:
+  # "Lot, Corner. A lot at least two (2) adjacent sides of which abut streets
+  # other than alleys provided the angle of intersection of the adjacent
+  # streets does not exceed one hundred thirty-five (135) degrees."
+  #
+  # Word for word Rivergrove's, down to the 135-degree ceiling and the
+  # "streets other than alleys" exclusion. Two cities twenty-five miles apart
+  # adopting the same model language is not an argument for a shared default:
+  # each is quoted from its own code, and if Troutdale amends its ceiling
+  # tomorrow only Troutdale moves.
+  #
+  # Not encoded: TDC 1.020 also illustrates "Corner Lots with Continuously
+  # Curved Front Lot Lines", which is a figure rather than a stated rule --
+  # there is no text saying what a continuous curve does to the angle test.
+  corner_lot:
+    test: adjacent_frontages
+    max_intersection_angle_deg: 135.0
+    quote: "or/multnomah/troutdale/1.020.definitions.txt#L522-L523"
+    cite: "TDC 1.020, Lot, Corner"
+
 code:
   # Municode client 4663, publication 1813 (updated 2025-11-17). The zoning
   # lives in the separately-published Development Code, not the Code of
   # Ordinances (publication 1812). The library renders in JavaScript; this
   # endpoint returns the adopted PDF.
+  # TDC 1.020 is the Development Code's definitions, in Chapter 1. Same
+  # publication as the other two slices, cut to the introductory provisions.
+  - id: "1.020.definitions"
+    url: https://api.municode.com/PublicationPdfDownload/1813
+    title: "TDC 1.020 - Definitions (Chapter 1, Introductory Provisions)"
+    start: "INTRODUCTORY PROVISIONS"
+    end: "CHAPTER 2"
+    # Prose about words carries almost no dimensioned standards, which the
+    # thinness guard reads as a landing page. Read 2026-08-18: the slice is
+    # the definitions themselves, Lot Area through Lot Width and the street
+    # types they lean on.
+    allow_thin: true
   - id: "3.zoning-districts"
     url: https://api.municode.com/PublicationPdfDownload/1813
     title: "Chapter 3 - Zoning Districts"
