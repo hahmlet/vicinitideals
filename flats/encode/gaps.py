@@ -37,6 +37,12 @@ it is eight, and they need opposite things:
 ``uncheckable``  a boolean, an enum or a curve. Corroboration emits no finding
                  for these at all, so their silence is not evidence of anything
                  and only a person can cite them.
+``unmapped``     not a value at all: a zone that adopts another zone's
+                 standards, where the adoption is an inference about a
+                 zoning-layer label rather than a sentence in the code. No
+                 chapter states that Metro's "R20CC" is Happy Valley's R-20,
+                 so no fetch and no reader clears it — it needs a planner, or
+                 the layer's own documentation.
 
 The last three are what matter at corpus scale, because from inside the ladder
 they look identical to each other and to everything above them. Splitting them
@@ -86,6 +92,7 @@ CAUSES = (
     "unread",
     "unsourced",
     "uncheckable",
+    "unmapped",
 )
 
 NEXT = {
@@ -118,6 +125,11 @@ NEXT = {
     "uncheckable": (
         "python -m flats.encode.review show {layer} — a boolean or an enum, which "
         "no reader can corroborate: quote it by hand"
+    ),
+    "unmapped": (
+        "ask the city, or read the zoning layer's own documentation — this zone "
+        "code is not in the ordinance and the base zone under it is an "
+        "inference. No document in the store will ever state it"
     ),
 }
 
@@ -244,6 +256,15 @@ def gaps(
         if cause == "unsourced" and (zone, field) in printed:
             cause, detail = "unread", printed[(zone, field)]
         out.append(Gap(layer.layer, zone, field, cause, detail, _lead(value)))
+    for zone, block in sorted(layer.zones.items()):
+        # An incorporation is a rule too, and an unquoted one is a rule nobody
+        # read. It never reached `wanted` -- that queue holds values -- so the
+        # ladder reported the jurisdiction as unquoted and the command it named
+        # printed nothing, which reads as work finished.
+        if block.like is not None and not (block.like.prov.quote or "").strip():
+            out.append(
+                Gap(layer.layer, zone, "like", "unmapped", block.like.zone, block.like.zone)
+            )
     return sorted(out, key=lambda g: (CAUSES.index(g.cause), g.zone, g.field))
 
 

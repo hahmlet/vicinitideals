@@ -290,6 +290,68 @@ def test_a_value_naming_an_undeclared_chapter_is_not_a_hunt(tmp_path: Path) -> N
     assert [(g.cause, g.detail) for g in found] == [("undeclared", OTHER_CHAPTER)]
 
 
+def test_a_zone_that_adopts_another_by_inference_is_unmapped(tmp_path: Path) -> None:
+    """Happy Valley's R20CC is a code in the zoning layer and not in the
+    ordinance: LDC 16.22 names R-40, R-20 and R-15 and nothing with a CC on
+    it. The file adopts R-20's standards, which is a claim about a map legend
+    rather than a sentence anybody can quote — so it never reached the values
+    queue, and the ladder sent a reviewer to a command that printed nothing."""
+    file = {**FILE, "zones": {**FILE["zones"], "R5CC": {"cite_default": CITE, "like": "R5"}}}
+    root = tmp_path / "jurisdictions" / "or" / "multnomah"
+    root.mkdir(parents=True)
+    (root.parent / "_state.yaml").write_text(
+        yaml.safe_dump({"label": "Oregon", "kind": "state", "zones": {}}), encoding="utf-8"
+    )
+    (root / "portland.yaml").write_text(yaml.safe_dump(file), encoding="utf-8")
+    layer = load_rules(tmp_path / "jurisdictions", strict=False)[LAYER]
+
+    found = gaps(layer, [])
+    unmapped = [g for g in found if g.cause == "unmapped"]
+
+    assert [(g.zone, g.field, g.detail) for g in unmapped] == [("R5CC", "like", "R5")]
+    assert "ask the city" in unmapped[0].action
+
+
+def test_an_incorporation_somebody_quoted_is_nobody_s_gap(tmp_path: Path) -> None:
+    """A code that states its own incorporation — "the R-6 use list applies in
+    the VSF zone" — is a rule that was read, and it is not this queue's."""
+    file = {
+        **FILE,
+        "zones": {
+            **FILE["zones"],
+            "R5A": {"cite_default": CITE, "like": {"zone": "R5", "quote": f"{DOC}#L9"}},
+        },
+    }
+    root = tmp_path / "jurisdictions" / "or" / "multnomah"
+    root.mkdir(parents=True)
+    (root.parent / "_state.yaml").write_text(
+        yaml.safe_dump({"label": "Oregon", "kind": "state", "zones": {}}), encoding="utf-8"
+    )
+    (root / "portland.yaml").write_text(yaml.safe_dump(file), encoding="utf-8")
+    layer = load_rules(tmp_path / "jurisdictions", strict=False)[LAYER]
+
+    assert not [g for g in gaps(layer, []) if g.cause == "unmapped"]
+
+
+def test_the_three_unmapped_zones_in_the_corpus_are_named() -> None:
+    """All three are the same thing: a zoning-layer label whose base zone was
+    inferred. None of them can be closed by reading a code."""
+    from flats.encode.gaps import gaps as gaps_for
+
+    held = {
+        (lid, g.zone)
+        for lid, layer in load_rules(strict=False).items()
+        for g in gaps_for(layer, [])
+        if g.cause == "unmapped"
+    }
+
+    assert held == {
+        ("or/clackamas/happy-valley", "R20CC"),
+        ("or/multnomah/fairview", "RM/TOZ"),
+        ("or/multnomah/fairview", "R/SFLD"),
+    }
+
+
 def _layer(setbacks: dict[str, int]) -> Layer:
     """A layer of one standard per zone, built without touching the YAML."""
     return Layer(
