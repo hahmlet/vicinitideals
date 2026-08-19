@@ -90,7 +90,14 @@ def test_fairview_states_both_ends_of_the_same_axis(rules: RuleSet) -> None:
     assert r10.values["min_density_du_per_acre"].value == 3.5
     assert "max_density_du_per_acre" in r10.exempted, "row 4.b prints None in R-10"
     assert rm.values["min_density_du_per_acre"].value == 14
-    assert rm.values["max_density_du_per_acre"].value == 21.8
+
+    # RM's 21.8 is written down and is what the split plat is held to. On one
+    # lot the state's exemption reaches it first: OAR 660-046-0220(2)(b) bars a
+    # Large City from applying a density maximum to a quadplex, and Fairview is
+    # inside Metro and over a thousand people.
+    assert "max_density_du_per_acre" in rm.exempted
+    split = rules.resolve(FAIRVIEW, "RM", ("unit_lots",), lot={"lot_sqft": 10000})
+    assert split.values["max_density_du_per_acre"].value == 21.8
 
 
 def test_the_townhouse_row_governs_the_split_plat(rules: RuleSet) -> None:
@@ -168,7 +175,13 @@ def test_a_chapter_that_prints_no_density_row_borrows_none(rules: RuleSet) -> No
     chapters would cite a sentence about another district."""
     assert "max_density_du_per_acre" in rules.resolve(GLADSTONE, "R7.2").exempted
     assert "max_density_du_per_acre" not in rules.resolve(GLADSTONE, "R5").values
-    assert "max_density_du_per_acre" not in rules.resolve(GLADSTONE, "R5").exempted
+
+    # Read off the resolved stack R5 now looks exempt too, because the state
+    # exempts every quadplex, so the question this test asks has to be put to
+    # the city's own file: chapter 17.12 states nothing either way.
+    city = load_rules()[GLADSTONE]
+    assert "max_density_du_per_acre" not in city.zones["R5"].values
+    assert "max_density_du_per_acre" in city.zones["R7.2"].values
 
 
 def test_four_units_on_a_lot_is_the_ceiling_and_the_pod_sits_on_it(
@@ -240,10 +253,13 @@ def test_oregon_city_encodes_the_floor_and_leaves_the_ceiling_alone(
     }
 
     assert floors == {"R-10": 3.5, "R-8": 4.4, "R-6": 5.8, "R-5": 7.0, "R-3.5": 10}
+    city = load_rules()[OREGON_CITY]
     for zone in floors:
         held = rules.resolve(OREGON_CITY, zone)
         assert "max_density_du_per_acre" not in held.values, zone
-        assert "max_density_du_per_acre" not in held.exempted, zone
+        # The city file is where the omission lives; the resolved stack shows
+        # the state's quadplex exemption over it either way.
+        assert "max_density_du_per_acre" not in city.zones[zone].values, zone
         assert held.values["min_density_du_per_acre"].measured_on == "net_developable_area"
 
 
@@ -273,7 +289,13 @@ def test_the_one_district_that_prints_a_figure_against_the_pod_s_own_row(
     whole = rules.resolve(GRESHAM, "MDR-24", lot={"lot_sqft": 12_000})
     split = rules.resolve(GRESHAM, "MDR-24", ("unit_lots",), lot={"lot_sqft": 12_000})
 
-    assert whole.values["max_density_du_per_acre"].value == 24.2
+    # Both rows print 24.2, and both are cancelled on the whole-building path
+    # by the state's quadplex exemption; the district's own figure is what the
+    # split plat is held to, and 24.2 rather than the 25 its neighbours carry.
+    assert "max_density_du_per_acre" in whole.exempted
+    assert load_rules()[GRESHAM].zones["MDR-24"].values[
+        "max_density_du_per_acre"
+    ].value == 24.2
     assert split.values["max_density_du_per_acre"].value == 24.2
 
 

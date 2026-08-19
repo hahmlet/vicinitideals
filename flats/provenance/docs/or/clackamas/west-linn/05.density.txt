@@ -1,0 +1,116 @@
+DIVISION 2. ZONING PROVISIONS
+
+Chapter 05
+
+GENERAL
+
+Sections:
+
+05.010 PURPOSE
+
+05.020 CLASSIFICATIONS OF ZONES
+
+05.025 MEASUREMENTS
+
+05.030 ZONING MAP
+
+05.040 DETERMINATION OF ZONING BOUNDARIES
+
+05.050 REVIEW OF ANNEXED LAND FOR SOLID WASTE FACILITY SITING
+
+05.010 PURPOSE
+
+The purpose of the zoning provisions of this code is: to implement the Comprehensive Plan; to provide rules, regulations, and standards governing the use of land and structures; to carry out the development pattern and plan of the City; to promote the public health, safety, and general welfare; to lessen congestion in the streets; to secure safety from fire, flood, pollution, and other dangers; to provide adequate light and air, prevent overcrowding of land, and facilitate adequate provision for transportation, water supply, sewage, and drainage; and to encourage the conservation of energy resources.
+
+05.020 CLASSIFICATIONS OF ZONES
+
+All areas within the corporate limits of the City of West Linn are hereby divided into zone districts, and the use of each tract and ownership of land within the corporate limits shall be limited to those uses permitted by the zoning classification applicable to each such tract as hereinafter designated. The zoning districts within the City of West Linn are hereby classified and designated as follows:
+
+Zoning District                                    Zone Designation  Dwelling Units per Net Acre  Lot Size per Unit in Square Feet
+Low Density
+Single-Family Residential detached                 R-40              1.1                          40,000
+Single-Family Residential detached                 R-20              2.18                         20,000
+Single-Family Residential detached                 R-15              2.9                          15,000
+Single-Family Residential detached                 R-10              4.35                         10,000
+Single-Family Residential detached                 R-7               6.2                          7,000
+
+Medium Density Residential                         R-5 R-4.5         8.7 9.68                     5,000 4,500
+
+Medium High Density                                R-3 R-2.1         14.5 20.74                   3,000 2,100
+
+Commercial
+Neighborhood Commercial                            NC
+General Commercial                                 GC
+Office Business Center                             OBC
+
+Industrial
+Campus Industrial                                  CI
+General Industrial                                 GI
+
+Overlay Zones
+Planned Unit Development                           PUD
+Historic District                                  HD
+Historic Landmark                                  HL
+Flood Management Area                              FMA
+Willamette River Greenway                          WRG
+Tualatin River Protection                          TRP
+Wetland and Riparian Area                          WRA
+Willamette Falls Drive Commercial Design District  WFC
+
+(Ord. 1291, 1990; Ord. 1321, 1992; Ord. 1377, 1995; Ord. 1463, 2000; Ord. 1638 § 3, 2015)
+
+05.025 MEASUREMENTS
+
+A. Density calculations.
+
+1. Developable net area is determined by subtracting the following areas from the developable gross area:
+
+a. Type I and II lands;
+
+b. All land dedicated to the public for park purposes;
+
+c. All land dedicated for public rights-of-way;
+
+d. All land proposed for private streets; and
+
+e. Optionally, the applicant may subtract the following (as measured in CDC 55.105(C)(2)(a)):
+
+1) Heritage trees,
+
+2) Significant trees or tree clusters.
+
+2. Maximum density is determined by dividing the developable net area square footage by the zoning district minimum lot size square footage. Where a maximum density calculation results in a fraction it is rounded down to the next whole number.
+
+3. Minimum density is determined by multiplying the maximum density by 0.70. Where a minimum density calculation results in a fraction it is rounded up to the next whole number.
+
+B. Segmented lot or parcel lines. Segmented lot lines include one or more lateral changes in direction. A lateral change is measured by drawing a hypothetical straight line between opposing lot corners and measuring the horizontal distance between the hypothetical straight line and the furthest extent of the actual lot line perpendicular from the hypothetical straight line. Cumulative lateral changes are measured by repeating this process for each lateral change in direction and summing all the distances as shown in the figure below. In the case of flag lots or parcels, the pole portion of the lot or parcel is not included in the measurement of cumulative lateral changes; cumulative lateral changes are measured only between the opposing corners of the flag portion of the lot or parcel.
+
+(Ord. 1763 § 1 (Exh. A), 2025)
+
+05.030 ZONING MAP
+
+A. The boundaries of each of the foregoing districts and the zoning classification and use of each tract in each of said zoning districts are hereby prescribed to coincide with the identifying zone classifications shown on the map entitled “West Linn Zoning Map,” dated with the effective date of this code and signed by the Mayor and City Recorder and hereafter referred to as the “Zoning Map,” and said map by this reference is made a part of this code. A certified print of the adopted Zoning Map or map amendments shall be maintained in the office of the Community Development Department as long as the code remains in effect.
+
+B. Each lot, tract, and parcel of land, or portion thereof, within the zone boundaries as designated and marked on the Zoning Map, is hereby classified, zoned, and limited to the uses as hereinafter specified and defined for the applicable zone classification.
+
+C. Amendments to the City Zoning Map may be made in accordance with the provisions of Chapters 98 and 99 CDC. Copies of all map amendments shall be dated with the effective date of the document adopting the map amendment and shall be maintained without change, together with the adopting documents, on file in the Community Development Department. The Planning Director shall maintain in their office, and available for public inspection, an up-to-date copy of the City Zoning Map to be revised so that it accurately portrays changes of zone boundaries.
+
+D. The Planning Director shall maintain on a set of zoning maps an index indicating the case number, type of action, and location of actions taken under this code. (Ord. 1621 § 25, 2014)
+
+05.040 DETERMINATION OF ZONING BOUNDARIES
+
+Where due to the scale, lack of scale, lack of detail, or illegibility of the City Zoning Map, or due to any other reason, there is uncertainty, contradiction, or conflict as to the intended location of district boundary lines, determination of zoning boundaries shall be determined by the Planning Director in accordance with the following standards:
+
+A. Boundaries indicated as approximately following the center lines of streets, highways, or alleys shall be construed to follow such center lines.
+
+B. Boundaries indicated as approximately following platted lot or parcel lines shall be construed as following such lot or parcel lines.
+
+C. Boundaries indicated as approximately following City limits shall be construed as following City limits.
+
+D. Boundaries indicated as approximately following river, stream, and/or drainage channels shall be construed as following river, stream, and/or drainage channels.
+
+E. Whenever any street is lawfully vacated, and when the lands within the boundaries thereof attached to and become a part of lands adjoining such street, the lands formerly within the vacated street shall automatically be subject to the same zoning district designation that is applicable to lands to which same attaches. (Ord. 1636 § 4, 2014)
+
+05.050 REVIEW OF ANNEXED LAND FOR SOLID WASTE FACILITY SITING
+
+Within a one-year period following annexation of land into the City, the City will determine whether or not the annexed land, where the land is designated for commercial and industrial use, includes appropriate areas for siting solid waste facilities. If commercial or industrial designated land is annexed to the City that is appropriate for siting solid waste facilities, the City will then notify Metro of the need to update this agreement. (Ord. 1442, 1999)

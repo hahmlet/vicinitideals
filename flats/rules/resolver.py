@@ -359,12 +359,23 @@ class RuleSet:
         # looser local value through, `resolved` holds the city's number
         # and a third layer must still be measured against the STATE's.
         locked: dict[str, tuple[Preempt, Any]] = {}
+        # Fields an ancestor removed outright and locked. Separate from
+        # `locked`, which carries a number a local layer is measured against;
+        # there is no number here, and the question a local value has to answer
+        # is not "how much" but "at all".
+        locked_exempt: set[str] = set()
         exempted: set[str] = set()
 
         def apply(
             values: dict[str, Value], layer: str, origin: str, via: str | None = None
         ) -> None:
             for name, val in values.items():
+                if val.unless and not set(val.unless).isdisjoint(held):
+                    # This layer's rule addresses a building this configuration
+                    # is not. Silence, not an exemption: a more specific layer
+                    # may still have a standard, and cancelling it here would
+                    # answer a question this rule never asked.
+                    continue
                 eff = val.under(held, lot)
                 if eff.exempt:
                     # Not a pass by a wide margin -- the test does not exist
@@ -372,6 +383,19 @@ class RuleSet:
                     # and remembered so the absence is explainable.
                     exempted.add(name)
                     resolved.pop(name, None)
+                    if val.preempts is Preempt.always:
+                        # An ancestor saying the standard does not apply, and
+                        # that a local layer may not decide otherwise. OAR
+                        # 660-046-0220(2)(b) is the case: a Large City applying
+                        # density maximums in a zone "may not apply those
+                        # maximums to the development of Quadplex and
+                        # Triplexes". Without the lock the state exemption is
+                        # written and then overwritten by the first city that
+                        # prints a density row, which is the standard the rule
+                        # exists to remove.
+                        locked_exempt.add(name)
+                    continue
+                if name in locked_exempt:
                     continue
                 exempted.discard(name)
                 if name in locked:

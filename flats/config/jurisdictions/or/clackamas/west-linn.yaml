@@ -50,6 +50,14 @@ code:
     # Prose about words: almost nothing dimensioned, which the thinness guard
     # reads as a landing page. Read 2026-08-18.
     allow_thin: true
+  # Cited by the definition of "developable net area" in Chapter 2 and by
+  # nothing this corpus had fetched: "the square footage subject to the
+  # maximum and minimum density calculations in CDC 05.025". A density
+  # calculation is a standard, and a standard nobody has read is not a
+  # standard that passes.
+  - id: "05.density"
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
+    title: "CDC Chapter 05 - Public Facility and Density Requirements"
   - id: "08.r-40"
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC08.html
     title: "CDC Chapter 08 - Low Density Residential R-40"

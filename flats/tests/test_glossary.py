@@ -173,6 +173,36 @@ def test_a_chapter_may_hold_more_than_one_alphabet() -> None:
     assert got.orderly
 
 
+def test_the_publishers_footer_is_not_part_of_the_chapter() -> None:
+    """oregon.public.law prints a newsletter sign-up, a bar referral and a
+    mission statement under every rule it hosts. Each heading has a paragraph
+    beneath it, which is exactly the shape of a stacked entry -- and three of
+    them landed inside Division 46's definitions, put the chapter out of
+    alphabetical order and made a fully-read glossary report as doubtful."""
+    from flats.encode.glossary import _entries
+
+    text = "\n".join(
+        [
+            "Definitions",
+            "",
+            "Quadplex",
+            "means a structure with four attached dwelling units on one lot.",
+            "",
+            "Stay Connected",
+            "",
+            "Join thousands of people who receive monthly site updates.",
+            "",
+            "Trust but verify",
+            "",
+            "Our page mirrors the official rule text published elsewhere.",
+        ]
+    )
+
+    got = _entries(text, layer="zz", doc="zz/d.txt")
+
+    assert [e.term for e in got] == ["Quadplex"]
+
+
 def test_a_chapter_of_noise_is_not_orderly() -> None:
     got = chapter(["Zebra", "Apple", "Yak", "Bee", "Xylophone", "Cat", "Walrus", "Dog"])
     assert len(got.disorder) > 2

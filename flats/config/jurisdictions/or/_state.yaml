@@ -23,6 +23,26 @@ code:
 # chapter page rather than a restatement — oregon.public.law is an unknown
 # authority, and nothing citing it may ever be signed. Sliced from the section
 # heading to the next section; the ORS chapter page is one long HTML document.
+# The definitions rule for Division 46. Needed because 660-046-0220 addresses
+# "Large Cities" throughout, and whether the jurisdictions in this corpus are
+# ones is a question about a term, not about a number. -0010 was tried first
+# and is Applicability, not Definitions; the term is defined in -0020.
+#
+# "Large City" means a city with a certified PSU estimated population of
+# 25,000 or more OR a city with a population over 1,000 within a metropolitan
+# service district, and includes unincorporated areas of counties within a
+# metropolitan service district that are provided with sufficient urban
+# services. Every city encoded here is inside Metro and over 1,000 except
+# Johnson City, Rivergrove and Maywood Park -- and none of those three states
+# a density maximum, nor does either county layer, so the exemption below
+# cancels nothing it was not written for.
+#
+# Definitions pages read as thin to the plausibility guard: prose about words,
+# almost nothing dimensioned. Read 2026-08-19 before storing.
+- id: oar.660-046-0020
+  url: https://oregon.public.law/rules/oar_660-046-0020
+  title: OAR 660-046-0020 Definitions
+  allow_thin: true
 - id: ors.92.031
   url: https://www.oregonlegislature.gov/bills_laws/ors/ors092.html
   title: ORS 92.031 Middle housing land division; conditions of approval
@@ -80,6 +100,46 @@ defaults:
   # minimums outright, and an unconditional lock would hand every Portland lot
   # a requirement for four stalls the city does not impose — roughly 1,300
   # square feet of a site that has to fit a pod, its parking and its access.
+  # OAR 660-046-0220(2)(b), one sentence: "If a Large City applies density
+  # maximums in a zone, it may not apply those maximums to the development of
+  # Quadplex and Triplexes."
+  #
+  # Most cities in this corpus restated it in their own words and it is
+  # encoded from their text -- Milwaukie's table note 4, Troutdale's
+  # 3.140.B.4, Tualatin's "None" against the Quadplex row, Gresham's row D,
+  # Oregon City's exception B.2. West Linn did not, and prints 8.7 dwelling
+  # units per net acre against R-5; four units on a 5,000 sq ft lot is four
+  # times that, so without this the zone reads as a wall the state says it is
+  # not. Encoding it here rather than city by city is what the preemption
+  # layer is for.
+  #
+  # `exempt`, not a large number: what the rule states is that the standard is
+  # not applied, and a ceiling of 999 would be a lie a screen could not tell
+  # from a reading. `always`, because a city may not decide it differently --
+  # and an exemption that did not lock would be written by the state and
+  # overwritten by the first city that prints a density row, which is the
+  # standard the rule exists to remove.
+  #
+  # `unless: [unit_lots]`, because the same rule at (3)(c) leaves a Large City
+  # a townhouse ceiling -- four times the detached maximum or 25 units per
+  # acre, whichever is LESS. That guarantee cannot be computed here (the
+  # detached maximum is not encoded, and "whichever is less" means 25 is not a
+  # safe floor), so the state stands down on the split-plat path and the
+  # city's own townhouse row stands. Silence rather than an exemption: the
+  # rule addresses a different building there, and cancelling a standard it
+  # never spoke to would be answering a question nobody asked.
+  #
+  # Minimum density is untouched. (2)(b) is about maximums, and no part of
+  # -0220 relieves a quadplex of a floor.
+  max_density_du_per_acre:
+    exempt: true
+    preempts: always
+    unless: [unit_lots]
+    cite: "OAR 660-046-0220(2)(b)"
+    url: "https://oregon.public.law/rules/oar_660-046-0220"
+    retrieved: 2026-08-19
+    status: draft
+    quote: "or/oar.660-046-0220.txt#L55"
   parking_min_per_unit:
     value: 1.0
     preempts: cap

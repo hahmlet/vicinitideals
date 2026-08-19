@@ -521,6 +521,15 @@ class Value(BaseModel):
     #: check in one direction and leaves it open in the other -- see
     #: :func:`flats.score.screen._checks`.
     measured_on: str | None = None
+    #: Conditions under which this layer says nothing at all. Not an exemption
+    #: -- an exemption is the answer "no such standard", and this is the
+    #: absence of an answer, which lets a more specific layer supply one. OAR
+    #: 660-046-0220 is why it exists: (2)(b) bars a Large City from applying a
+    #: density maximum to a quadplex, and (3)(c) leaves the city a townhouse
+    #: ceiling. One rule, two buildings, and the pod is both depending on how
+    #: it is platted -- so the state value has to stand down on the split-plat
+    #: path rather than cancel a standard that survives there.
+    unless: tuple[str, ...] = ()
     #: True where the zone was read and states no such standard at all --
     #: Portland's RX prints a front lot line and no lot area, and its parking
     #: chapter prints maximums and no minimum. Distinct from a zone that is
@@ -591,6 +600,38 @@ class Value(BaseModel):
             )
         if self.sqft_per_unit <= 0:
             raise ValueError(f"{self.name}: sqft_per_unit {self.sqft_per_unit} is not an area")
+        return self
+
+    @model_validator(mode="after")
+    def _unless_names_registered_conditions(self) -> Value:
+        for name in self.unless:
+            try:
+                condition(name)
+            except KeyError as exc:
+                raise ValueError(exc.args[0]) from None
+        overlap = set(self.unless) & {c for v in self.variants for c in v.when}
+        if overlap:
+            # A variant stating the number under a condition the value stands
+            # down on is two answers to one question, and nothing downstream
+            # could say which was meant.
+            raise ValueError(
+                f"{self.name}: stands down under {sorted(overlap)} and also states "
+                f"a variant for it"
+            )
+        return self
+
+    @model_validator(mode="after")
+    def _an_exemption_caps_nothing(self) -> Value:
+        # `cap` states the strictest a local layer may be, which is a sentence
+        # about a number. An exemption has none: what it says is that the
+        # standard is not there. Written together they would ask the resolver
+        # to clip a local value back to an absence.
+        if self.exempt and self.preempts is Preempt.cap:
+            raise ValueError(
+                f"{self.name}: an exempt value states no number, so it caps "
+                f"nothing — use 'preempts: always' to bar a local layer from "
+                f"reinstating the standard"
+            )
         return self
 
     @model_validator(mode="after")

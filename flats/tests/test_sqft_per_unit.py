@@ -106,7 +106,16 @@ def test_no_maximum_density_is_exempt_rather_than_a_large_number() -> None:
 
     assert "max_density_du_per_acre" in rm1.exempted
     assert "max_density_du_per_acre" not in rm1.values
-    assert rmp.values["max_density_du_per_acre"].value == round(SQFT_PER_ACRE / 1500, 3)
+
+    # RMP is the one column that prints a figure -- 1,500 sq ft per unit -- and
+    # on the whole-building path the state exempts it along with every other,
+    # so the number is read off Portland's own file and checked where it still
+    # binds, which is the split plat.
+    assert "max_density_du_per_acre" in rmp.exempted
+    city = load_rules()[PORTLAND].zones["RMP"].values["max_density_du_per_acre"]
+    assert city.value == round(SQFT_PER_ACRE / 1500, 3)
+    split = rules.resolve(PORTLAND, "RMP", ("unit_lots",))
+    assert split.values["max_density_du_per_acre"].value == city.value
 
 
 def test_a_value_states_a_density_or_an_area_per_dwelling(tmp_path: Path) -> None:

@@ -474,3 +474,203 @@ def test_a_third_layer_is_measured_against_the_state_not_the_city(root: Path) ->
     assert parking.layer == PORTLAND
     assert not parking.preempted
 
+
+
+# --- an ancestor removing a standard outright --------------------------
+
+
+def unexempted(root: Path, city_density: str) -> RuleSet:
+    """The state removing a standard, and a city printing one anyway.
+
+    OAR 660-046-0220(2)(b): "If a Large City applies density maximums in a
+    zone, it may not apply those maximums to the development of Quadplex and
+    Triplexes." That is not a ceiling on a number — there is no number. It says
+    the standard is not there for this building, and a city may not put it
+    back.
+    """
+    write(
+        root,
+        "or/_state.yaml",
+        "label: Oregon\n"
+        "kind: state\n"
+        "cite_default:\n"
+        '  cite: "OAR 660-046-0220(2)(b)"\n'
+        '  url: "https://oregon.public.law/rules/oar_660-046-0220"\n'
+        '  quote: "or/oar.660-046-0220.txt#L55"\n'
+        "  retrieved: 2026-08-19\n"
+        "defaults:\n"
+        "  max_density_du_per_acre: {exempt: true, preempts: always}\n",
+    )
+    portland(
+        root,
+        "  R5:\n"
+        "    quadplex_allowed: true\n"
+        "    setback_front_ft: 10\n"
+        "    setback_side_ft: 5\n"
+        "    setback_rear_ft: 5\n"
+        "    min_lot_sqft: 3000\n"
+        f"    max_density_du_per_acre: {city_density}\n",
+    )
+    return RuleSet(load_rules(root))
+
+
+def test_a_city_may_not_reinstate_a_standard_the_state_removed(root: Path) -> None:
+    """Before the lock the state wrote the exemption and the first city to
+    print a density row overwrote it — which is precisely the standard the
+    rule exists to remove."""
+    got = unexempted(root, "8.7").resolve(PORTLAND, "R5")
+
+    assert "max_density_du_per_acre" in got.exempted
+    assert "max_density_du_per_acre" not in got.values
+
+
+def test_an_exemption_states_no_number_so_it_caps_nothing(root: Path) -> None:
+    """`cap` clips a local value back to a ceiling. There is no ceiling here,
+    and asking the resolver to clip a number back to an absence is a file that
+    means two things at once."""
+    write(
+        root,
+        "or/_state.yaml",
+        "label: Oregon\n"
+        "kind: state\n"
+        "cite_default:\n"
+        '  cite: "OAR 660-046-0220(2)(b)"\n'
+        '  url: "https://oregon.public.law/rules/oar_660-046-0220"\n'
+        '  quote: "or/oar.660-046-0220.txt#L55"\n'
+        "  retrieved: 2026-08-19\n"
+        "defaults:\n"
+        "  max_density_du_per_acre: {exempt: true, preempts: cap}\n",
+    )
+    portland(root, "  R5:\n    quadplex_allowed: true\n")
+
+    with pytest.raises(RuleLoadError, match="caps nothing"):
+        load_rules(root, strict=True)
+
+
+# --- a layer standing down, which is not the same as an exemption ------
+
+
+def test_a_layer_says_nothing_under_a_condition_it_did_not_address(
+    root: Path,
+) -> None:
+    """OAR 660-046-0220 removes a density maximum for quadplexes at (2)(b) and
+    leaves a Large City a townhouse ceiling at (3)(c). Split onto four lots the
+    pod is townhouses, the state's exemption was written about a different
+    building, and the city's own row is the answer. Silence, not relief: an
+    exemption here would cancel a standard the rule never spoke to.
+    """
+    write(
+        root,
+        "or/_state.yaml",
+        "label: Oregon\n"
+        "kind: state\n"
+        "cite_default:\n"
+        '  cite: "OAR 660-046-0220(2)(b)"\n'
+        '  url: "https://oregon.public.law/rules/oar_660-046-0220"\n'
+        '  quote: "or/oar.660-046-0220.txt#L55"\n'
+        "  retrieved: 2026-08-19\n"
+        "defaults:\n"
+        "  max_density_du_per_acre:\n"
+        "    exempt: true\n"
+        "    preempts: always\n"
+        "    unless: [unit_lots]\n",
+    )
+    portland(
+        root,
+        "  R5:\n"
+        "    quadplex_allowed: true\n"
+        "    max_density_du_per_acre: 8.7\n",
+    )
+    rules = RuleSet(load_rules(root))
+
+    whole = rules.resolve(PORTLAND, "R5")
+    assert "max_density_du_per_acre" in whole.exempted
+
+    split = rules.resolve(PORTLAND, "R5", ("unit_lots",))
+    assert "max_density_du_per_acre" not in split.exempted
+    assert split.get("max_density_du_per_acre") == 8.7
+
+
+def test_standing_down_leaves_nothing_behind_when_no_city_answers(
+    root: Path,
+) -> None:
+    """The point of silence is that a lower layer may still speak. When none
+    does, the field is simply absent — not exempt, which would read as "the
+    state removed it", and not a number nobody wrote.
+    """
+    write(
+        root,
+        "or/_state.yaml",
+        "label: Oregon\n"
+        "kind: state\n"
+        "cite_default:\n"
+        '  cite: "OAR 660-046-0220(2)(b)"\n'
+        '  url: "https://oregon.public.law/rules/oar_660-046-0220"\n'
+        '  quote: "or/oar.660-046-0220.txt#L55"\n'
+        "  retrieved: 2026-08-19\n"
+        "defaults:\n"
+        "  max_density_du_per_acre:\n"
+        "    exempt: true\n"
+        "    preempts: always\n"
+        "    unless: [unit_lots]\n",
+    )
+    portland(root, "  R5:\n    quadplex_allowed: true\n")
+    rules = RuleSet(load_rules(root))
+
+    split = rules.resolve(PORTLAND, "R5", ("unit_lots",))
+    assert "max_density_du_per_acre" not in split.exempted
+    assert split.get("max_density_du_per_acre") is None
+
+
+def test_a_value_may_not_both_stand_down_and_answer(root: Path) -> None:
+    """A value that states a variant for `unit_lots` and also stands down
+    under it means two things at once, and which one wins is an accident of
+    the order the resolver reads them in."""
+    write(
+        root,
+        "or/_state.yaml",
+        "label: Oregon\n"
+        "kind: state\n"
+        "cite_default:\n"
+        '  cite: "OAR 660-046-0220(2)(b)"\n'
+        '  url: "https://oregon.public.law/rules/oar_660-046-0220"\n'
+        '  quote: "or/oar.660-046-0220.txt#L55"\n'
+        "  retrieved: 2026-08-19\n"
+        "defaults:\n"
+        "  max_density_du_per_acre:\n"
+        "    value: 25\n"
+        "    unless: [unit_lots]\n"
+        "    variants:\n"
+        "      - value: 20\n"
+        "        when: [unit_lots]\n",
+    )
+    portland(root, "  R5:\n    quadplex_allowed: true\n")
+
+    with pytest.raises(RuleLoadError, match="stands down under"):
+        load_rules(root, strict=True)
+
+
+def test_standing_down_names_a_registered_condition(root: Path) -> None:
+    """The same guard every other condition name gets. A typo here silently
+    turns the exemption on everywhere, because a condition nobody ever holds
+    is a condition that never fires."""
+    write(
+        root,
+        "or/_state.yaml",
+        "label: Oregon\n"
+        "kind: state\n"
+        "cite_default:\n"
+        '  cite: "OAR 660-046-0220(2)(b)"\n'
+        '  url: "https://oregon.public.law/rules/oar_660-046-0220"\n'
+        '  quote: "or/oar.660-046-0220.txt#L55"\n'
+        "  retrieved: 2026-08-19\n"
+        "defaults:\n"
+        "  max_density_du_per_acre:\n"
+        "    exempt: true\n"
+        "    preempts: always\n"
+        "    unless: [unit_lotz]\n",
+    )
+    portland(root, "  R5:\n    quadplex_allowed: true\n")
+
+    with pytest.raises(RuleLoadError, match="unit_lotz"):
+        load_rules(root, strict=True)

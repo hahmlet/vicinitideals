@@ -104,6 +104,19 @@ APPARATUS = re.compile(
 #: once the column padding is collapsed out of it.
 FURNITURE = re.compile(r"^\[[^\]]*\]$|^\(\d+\)$|^Page \d+", re.I)
 
+#: Where a publisher's page stops being the code and starts being the site.
+#: oregon.public.law prints the same footer under every rule -- a newsletter
+#: sign-up, a bar referral service, a mission statement, an office address --
+#: and each heading reads as a stacked entry with a paragraph beneath it.
+#: Three of them landed inside Division 46's definitions and put the chapter
+#: out of alphabetical order, which is the signal reserved for a reading that
+#: went wrong. None of these phrases is a heading a municipal code prints.
+PUBLISHER_FOOTER = re.compile(
+    r"^(?:stay connected|get legal help|committed to public service"
+    r"|trust but verify|about this site)\s*$",
+    re.I,
+)
+
 #: A term that opens with a pointer is the tail of somebody else's entry.
 _CROSS_REFERENCE = re.compile(r"^(?:see|also|and|or|of|the)\b", re.I)
 
@@ -203,6 +216,9 @@ def _entries(text: str, *, layer: str, doc: str) -> list[Entry]:
         stripped = raw.strip()
         if not stripped:
             continue
+        if PUBLISHER_FOOTER.match(stripped):
+            # Everything below is the website, not the chapter.
+            break
         inline = ENTRY.match(stripped)
         if inline is not None and MIN_TERM <= len(inline.group("term")) <= MAX_TERM:
             body = _collapse(inline.group("body"))
