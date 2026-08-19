@@ -181,8 +181,15 @@ def _streets(boundary: Boundary, runs: Sequence[Sequence[int]], p: "Definition")
     """
     named = {boundary[i].street_id for run in runs for i in run if boundary[i].street_id}
     anonymous = [run for run in runs if not boundary[run[0]].street_id]
-    bend = p.curve_at_or_below_deg or 180.0 - COLLINEAR_TOL_DEG
-    merged = sum(1 for angle in _junctions(boundary, anonymous) if angle > bend)
+    junctions = _junctions(boundary, anonymous)
+    if p.curve_is_one_street:
+        # Clackamas County settles it outright: "A lot within the radius curve
+        # of a single street is not a corner lot." However tight the bend, an
+        # unnamed stretch that runs into another is the same road.
+        merged = len(junctions)
+    else:
+        bend = p.curve_at_or_below_deg or 180.0 - COLLINEAR_TOL_DEG
+        merged = sum(1 for angle in junctions if angle > bend)
     return len(named) + max(len(anonymous) - merged, 0)
 
 
@@ -297,6 +304,13 @@ class Definition:
     #: Rivergrove and Multnomah County both state 135 and mean different
     #: things by it -- see :attr:`angle_inclusive`.
     max_intersection_angle_deg: float | None = None
+    #: Whether a bend in one street can never make a corner, however tight.
+    #: Clackamas County writes it out -- "a lot within the radius curve of a
+    #: single street is not a corner lot" -- which is the reverse of Portland
+    #: and Gresham, both of which turn a tight enough curve into two streets.
+    #: Silence is a third thing again: Oregon City states no angle, so a
+    #: non-collinear frontage is read as an intersection.
+    curve_is_one_street: bool = False
     #: Whether the stated ceiling is itself allowed. "Does not exceed 135
     #: degrees" includes 135; "less than 135 degrees" does not. One boundary
     #: angle apart, and the two codes that state a ceiling state it both ways.
@@ -328,6 +342,11 @@ class Definition:
             raise ValueError(f"{self.term}: unknown test {self.test!r} — one of {known}")
         if not self.quote:
             raise ValueError(f"{self.term}: a definition without a quote is a recollection")
+        if self.curve_is_one_street and self.curve_at_or_below_deg is not None:
+            raise ValueError(
+                f"{self.term}: curve_is_one_street contradicts "
+                f"curve_at_or_below_deg={self.curve_at_or_below_deg}"
+            )
         if self.count < 1:
             raise ValueError(f"{self.term}: count must be at least 1")
         for name in ("curve_at_or_below_deg", "max_intersection_angle_deg"):

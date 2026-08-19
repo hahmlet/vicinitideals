@@ -70,6 +70,7 @@ def test_the_five_cities_that_have_been_read(rules: RuleSet) -> None:
         if "corner_lot" in layer.definitions
     )
     assert read == [
+        "or/clackamas/_unincorporated",
         "or/clackamas/oregon-city",
         "or/clackamas/rivergrove",
         "or/clackamas/wilsonville",
@@ -279,3 +280,42 @@ def test_the_county_governs_its_own_land_and_nobody_elses(rules: RuleSet) -> Non
     for city in ("or/multnomah/fairview", "or/multnomah/troutdale", "or/multnomah/wood-village"):
         assert rules.definitions_for(city) == {}, city
         assert rules.defines(city, "corner_lot", corner()) is None, city
+
+
+def test_the_three_answers_a_bending_street_gets(rules: RuleSet) -> None:
+    """One frontage, one road, bent at 110 degrees. Three codes, three rules,
+    and none of them is a default:
+
+    * Portland and Gresham turn a tight enough curve into two intersecting
+      streets -- 120 degrees or less, or a 60-degree delta, the same bend.
+    * Oregon City states no angle, so a non-collinear frontage is read as an
+      intersection and the lot is a corner.
+    * Clackamas County rules it out outright: "a lot within the radius curve
+      of a single street is not a corner lot".
+    """
+    bent = lot((50, 0, S), (50, 70, S), (60, 20, N), (80, 110, N))
+    assert rules.defines("or/multnomah/portland", "corner_lot", bent) is True
+    assert rules.defines("or/multnomah/gresham", "corner_lot", bent) is True
+    assert rules.defines("or/clackamas/oregon-city", "corner_lot", bent) is True
+    assert rules.defines("or/clackamas/_unincorporated", "corner_lot", bent) is False
+
+    # And a real intersection of two named streets is a corner everywhere.
+    real = named_fork(90.0)
+    for layer_id in (
+        "or/multnomah/portland",
+        "or/multnomah/gresham",
+        "or/clackamas/oregon-city",
+        "or/clackamas/_unincorporated",
+    ):
+        assert rules.defines(layer_id, "corner_lot", real) is True, layer_id
+
+
+def test_a_definition_cannot_both_split_a_curve_and_refuse_to() -> None:
+    with pytest.raises(ValueError, match="contradicts"):
+        Definition(
+            term="corner_lot",
+            test="intersecting_frontages",
+            quote="d#L1",
+            curve_is_one_street=True,
+            curve_at_or_below_deg=120.0,
+        )

@@ -25,9 +25,43 @@ ingest:
   zoning_layer: zoning_metro
   zone_field: ZONE
   strip_lowercase_suffix: false
+definitions:
+  # "LOT, CORNER: A lot with street frontage on two streets intersecting at a
+  # corner of the lot. A lot within the radius curve of a single street is not
+  # a corner lot. A lot may be both a corner lot and a through lot."
+  #
+  # The one code in the corpus that rules a curve out. Portland turns a street
+  # curving at 120 degrees or less into two intersecting streets and Gresham
+  # writes the same bend as a 60-degree delta; Clackamas County says a lot on
+  # the radius curve of a single street is not a corner, however tight the
+  # bend. Oregon City is a third answer again -- it states no angle at all, so
+  # a non-collinear frontage reads as an intersection.
+  #
+  # "A lot may be both a corner lot and a through lot" is not a further
+  # condition, it is the county closing off the reading under which a street
+  # front and back disqualifies a lot from also being a corner.
+  corner_lot:
+    test: intersecting_frontages
+    count: 2
+    curve_is_one_street: true
+    quote: "or/clackamas/_unincorporated/zdo.202.definitions.txt#L275"
+    cite: "Clackamas County ZDO 202, Lot, Corner"
+
 code:
 # The county publishes each ZDO section as inline page text; the slice cuts
 # the site navigation off both ends.
+# ZDO Section 202 is the county's definitions. It is the one code in the
+# corpus that rules a curve *out*: "A lot within the radius curve of a single
+# street is not a corner lot", where Portland and Gresham both write a curve
+# tight enough into being two streets.
+- id: "zdo.202.definitions"
+  url: https://www.clackamas.us/planning/zdo202
+  title: ZDO Section 202 Definitions
+  # Prose about words: 740 lines, almost none of them dimensioned, which
+  # the thinness guard reads as a landing page. Read 2026-08-18 -- it is
+  # the definitions section itself, LOT CORNER through LOT THROUGH and the
+  # front/side/rear lot line rules that hang off them.
+  allow_thin: true
 - id: zdo.315
   url: https://www.clackamas.us/planning/zdo315
   title: Clackamas County ZDO Section 315 - Low Density Residential Districts (Tables 315-1/2/3)
