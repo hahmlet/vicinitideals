@@ -15,7 +15,8 @@ So readiness is a **ladder**, and a jurisdiction sits on the first rung it fails
 ===============  =========================================================
 stage            what it means
 ===============  =========================================================
-``no_zones``     nothing encoded here at all
+``no_zones``     nothing encoded here at all -- no zones, or zones with no
+                 standards written under them
 ``no_source``    zones written, no document declared to read them from
 ``unfetched``    documents declared, not in the store
 ``unquoted``     values that point at no text — unreviewable as written
@@ -69,6 +70,8 @@ STAGES = (
 #: read. `{layer}` is filled in; anything else is prose on purpose, because the
 #: first two rungs are human work with no command behind them.
 ACTION = {
+    # Reached by a jurisdiction with no zones and by one whose zones hold no
+    # standards; the work is the same sentence either way.
     "no_zones": "encode this jurisdiction's zones: nothing is written yet",
     "no_source": "find the URL that serves the ordinance text, and declare it under `code:`",
     "unfetched": "python -m flats.provenance.fetch --layer {layer}",
@@ -412,7 +415,8 @@ def readiness_for(
     unquoted: list[tuple[str, str]] = []
     no_evidence: list[tuple[str, str]] = []
     misquoted: list[tuple[str, str]] = []
-    for zone_code, name, quote, number in _quoted_parts(layer):
+    parts = list(_quoted_parts(layer))
+    for zone_code, name, quote, number in parts:
         if not quote:
             unquoted.append((zone_code, name))
             continue
@@ -430,7 +434,14 @@ def readiness_for(
         ):
             misquoted.append((zone_code, name))
 
-    if not layer.zones and not layer.defaults:
+    if not parts:
+        # Not `not layer.zones`: a zone may be declared and still hold nothing.
+        # Johnson City is one zone block with a label, no standards under it
+        # and no ordinance published to write any from. Every later rung asks a
+        # question about a value, so with no values every one of them passes,
+        # and the ladder called the emptiest jurisdiction in the corpus
+        # finished. `parts` rather than `statuses` because a quarantined value
+        # is still an encoded one -- it is why the rung above this exists.
         stage = "no_zones"
     elif not layer.code:
         stage = "no_source"

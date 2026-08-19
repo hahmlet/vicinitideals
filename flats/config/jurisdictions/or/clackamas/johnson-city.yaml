@@ -28,7 +28,20 @@ zones:
       cite: Metro RLIS Zoning layer (no published municipal code found); HB 2001 Sec 4(a) exemption
       url: https://www.clackamas.us/planning
       retrieved: '2026-07-28'
-    quadplex_allowed: false
-    notes: 'quadfit confidence: needs_verification | NOT subject to HB 2001 — pop <=1,000 exempt. City
-      limits = the Johnson Mobile Estates manufactured-home park; ~0 splittable lots. No municipal code
-      published. Metro ZONE ''MR1'' (ZONE_CLASS MFR1 — multi-family, not SFR).'
+    notes: 'NOTHING IS ENCODED HERE, and that is the finding. The zone carried
+      quadplex_allowed=false until 2026-08-19 on an argument rather than a citation: ORS
+      197A.420(4)(a)(A) exempts cities of 1,000 or fewer outside Tillamook County from the
+      middle housing mandate (or/clackamas/johnson-city/ors.197a.420.txt#L77-L81), so nothing
+      obliges Johnson City to allow a quadplex — which is not the same sentence as Johnson
+      City prohibiting one, and no municipal ordinance has been found saying either. A lot
+      here screens UNKNOWN, which is our queue, rather than RED, which would be a decision
+      nobody wrote down.
+
+      What a human searcher needs to find: any published Johnson City land use ordinance.
+      Checked 2026-08-13 — no code library, no documents page, city hall open three days a
+      week. The city limits are the Johnson Mobile Estates manufactured home park, so the
+      inventory behind this is close to zero splittable lots and the search is low priority
+      rather than urgent.
+
+      quadfit confidence: needs_verification | Metro ZONE ''MR1'' (ZONE_CLASS MFR1 —
+      multi-family, not SFR).'

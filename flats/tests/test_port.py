@@ -539,14 +539,12 @@ def test_what_the_loader_still_drops_is_named() -> None:
         # and quoting a prohibition from a document that does not state it
         # would be worse than leaving it visible here.
         ("or/multnomah/_unincorporated", "RR", "quadplex_allowed"),
-        # Both layers are `eligible: false` — the pod is out of scope in the
-        # whole jurisdiction, so no screen reads these and no fetch is owed.
-        ("or/clackamas/johnson-city", "MR1", "quadplex_allowed"),
-        ("or/clackamas/rivergrove", "R10", "quadplex_allowed"),
-        ("or/clackamas/rivergrove", "R10", "setback_front_ft"),
-        ("or/clackamas/rivergrove", "R10", "setback_side_ft"),
-        ("or/clackamas/rivergrove", "R10", "setback_rear_ft"),
     }
+    # Rivergrove's four left this list by being read: the RLDO is one stored
+    # document and 5.080 states all of them. Johnson City's left by being
+    # withdrawn — it was a prohibition inferred from a statute that exempts the
+    # city rather than one printed anywhere, and an uncited value is not a
+    # smaller debt than a missing one.
 
 
 def test_a_schedule_and_an_enum_are_values_too() -> None:
