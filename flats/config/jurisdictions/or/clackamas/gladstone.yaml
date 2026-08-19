@@ -12,11 +12,32 @@ ingest:
   zoning_layer: zoning_gladstone
   zone_field: ZONE
   strip_lowercase_suffix: false
+definitions:
+  # "'Corner lot' means the total area of a lot abutting on two or more streets,
+  # other than an alley, at their intersection."
+  #
+  # Two or more, so `count: 2` is a floor and not a target. Alleys are named out,
+  # and the streets have to meet — "at their intersection" is the same clause
+  # Milwaukie, Tualatin and Oregon City write, and like them Gladstone states no
+  # angle at which the meeting stops counting.
+  corner_lot:
+    test: intersecting_frontages
+    count: 2
+    quote: "or/clackamas/gladstone/17.06.definitions.txt#L841"
+    cite: "Gladstone Municipal Code 17.06.270, Lot, corner"
+
 code:
   # Code Publishing serves each chapter as its own server-rendered HTML page;
   # no slicing needed. The host refuses newer Chrome fingerprints — fetch
   # escalates to chrome124 automatically. R-10 has no chapter of its own
   # (Title 17 defines only R-7.2 and R-5); its standards mirror 17.10.
+  - id: "17.06.definitions"
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1706.html
+    title: "Chapter 17.06 - Definitions"
+    # A chapter about words: 1,500 lines of prose and barely a dimension in it,
+    # which the thinness guard reads as a landing page. Read 2026-08-18; it
+    # carries the lot-type definitions, including 17.06.270 Lot, corner.
+    allow_thin: true
   - id: "17.10.r-7.2"
     url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1710.html
     title: "Chapter 17.10 - Low Density Residential District (R-7.2)"

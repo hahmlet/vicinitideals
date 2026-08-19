@@ -9,9 +9,18 @@ sixth city's silence is not a vote for any of them.
 
 from __future__ import annotations
 
+import re
+
 import pytest
 
-from flats.encode.definitions import STATUSES, coverage, coverage_for
+from flats.encode.definitions import (
+    DEFINED,
+    NOT_A_DEFINITION,
+    PHRASE,
+    STATUSES,
+    coverage,
+    coverage_for,
+)
 from flats.rules.definitions import TERMS, Abuts, Definition, Side
 from flats.rules.loader import load_rules
 from flats.rules.model import Layer
@@ -72,6 +81,7 @@ def test_the_jurisdictions_that_have_been_read(rules: RuleSet) -> None:
     )
     assert read == [
         "or/clackamas/_unincorporated",
+        "or/clackamas/gladstone",
         "or/clackamas/happy-valley",
         "or/clackamas/milwaukie",
         "or/clackamas/oregon-city",
@@ -280,20 +290,42 @@ def test_an_encoded_definition_stops_blocking(rules: RuleSet) -> None:
     assert [(r.status, r.blocking) for r in rows] == [("own", False)]
 
 
-def test_the_matcher_does_not_read_prose_as_a_definition(rules: RuleSet) -> None:
-    """Two shapes that fooled it and are now pinned.
+def test_the_matcher_does_not_read_prose_as_a_definition() -> None:
+    """Four shapes that fooled it, pinned against the patterns themselves.
+
+    Stated over the regexes rather than over whichever city is unread today:
+    this used to assert that Gladstone had no definition, which made encoding
+    Gladstone look like a matcher regression.
 
     Troutdale's window standard wraps onto a line beginning "corner lots, this
-    standard shall apply..." — a term, a comma, and forty characters of body,
-    which is a definition to anything that only checks punctuation. And every
-    code headlines the standard in the plural, "Corner Lots", while defining
-    the singular, so counting uses has to see both and defining must not fire
-    on a table heading with nothing after it.
+    standard shall apply..." -- a term, a comma, and forty characters of body,
+    which is a definition to anything that only checks punctuation. Oregon
+    City's chapter opens with a page of contents entries. Fairview's index
+    sends the reader elsewhere. And every code headlines the standard in the
+    plural while defining the singular, so counting uses has to see both.
     """
-    gladstone = coverage_for(rules, "or/clackamas/gladstone")
-    assert [r.status for r in gladstone] == ["unsourced"]
-    # And it is a real gap rather than an absent one: the code uses the word.
-    assert gladstone[0].uses >= 4
+    defined = DEFINED["corner_lot"]
+
+    # A comma is not a separator, because no code in the corpus uses one.
+    assert defined.match("corner lots, this standard shall apply to at least one (1) side.") is None
+
+    # A contents line matches the opening and is caught by having no body: the
+    # entry under it is the next term, not this one's meaning.
+    entry = "Lot, corner."
+    contents = defined.match(entry)
+    assert contents is not None and not entry[contents.end() :].strip()
+
+    # A numbered section heading never even opens, which is why Gladstone's
+    # "17.06.270 Lot, corner." resolves to the sentence below it and not to the
+    # heading -- the list-marker prefix takes "(1)" and "iv.", not "17.06.270".
+    assert defined.match("17.06.270 Lot, corner.") is None
+
+    # A cross-reference is an opening with a body that defines nothing.
+    assert NOT_A_DEFINITION.match("See Lot, types of.")
+
+    # And the count has to see the plural the standards are headlined with.
+    assert re.search(PHRASE["corner_lot"], "Corner Lots", re.I)
+    assert re.search(PHRASE["corner_lot"], "Lot, corner", re.I)
 
 
 def test_usage_counts_drive_the_queue(rules: RuleSet) -> None:

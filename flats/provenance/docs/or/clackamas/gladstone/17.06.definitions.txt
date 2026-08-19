@@ -1,0 +1,1515 @@
+Chapter 17.06
+
+DEFINITIONS*
+
+Sections:
+
+17.06.005 Generally.
+
+17.06.010 Access.
+
+17.06.013 Accessory dwelling unit.
+
+17.06.015 Accessory use or accessory structure.
+
+17.06.020 Alley.
+
+17.06.035 Automobile service station.
+
+17.06.040 Automobile storage or repair garages.
+
+17.06.045 Boarding house, lodging house, or rooming house.
+
+17.06.050 Building.
+
+17.06.055 Building height.
+
+17.06.060 Building line, front.
+
+17.06.065 Building official.
+
+17.06.070 Carport.
+
+17.06.075 Cattery.
+
+17.06.080 Change of use for purposes of the greenway zone only.
+
+17.06.085 Chapter.
+
+17.06.090 City.
+
+17.06.095 City Council.
+
+17.06.100 City Administrator or designee.
+
+17.06.105 Comprehensive Plan.
+
+17.06.115 Day care center.
+
+17.06.117 Days.
+
+17.06.120 Development for purposes of the greenway zone only.
+
+17.06.125 Development permit.
+
+17.06.130 Drinking establishment.
+
+17.06.135 Durable and dustless surface.
+
+17.06.140 Dwelling unit.
+
+17.06.141 Dwelling, multi-household.
+
+17.06.142 Dwelling, detached single-household.
+
+17.06.143 Dwelling, two-household or duplex.
+
+17.06.144 Dwelling, three-household or triplex.
+
+17.06.145 Dwelling, four-household or quadplex.
+
+17.06.146 Townhouse.
+
+17.06.147 Townhouse project.
+
+17.06.148 Cottage cluster.
+
+17.06.149 Middle housing.
+
+17.06.150 Single-room occupancy.
+
+17.06.160 Easement.
+
+17.06.165 Eating establishment.
+
+17.06.170 Exterior.
+
+17.06.175 Family child care home.
+
+17.06.180 Fence or hedge, sight-obscuring.
+
+17.06.195 Floor area.
+
+17.06.200 Foster home.
+
+17.06.205 Frontage.
+
+17.06.210 Grade, ground level.
+
+17.06.213 Gross leasable area (GLA).
+
+17.06.214 Home for the aged.
+
+17.06.215 Group home.
+
+17.06.220 Home occupation.
+
+17.06.225 Hospital.
+
+17.06.230 Hotel.
+
+17.06.231 Household.
+
+17.06.233 Institutional use.
+
+17.06.235 Intensification of use for purposes of the greenway zone.
+
+17.06.240 Kennel.
+
+17.06.245 Landscaping.
+
+17.06.247 Land use decision.
+
+17.06.250 Livestock.
+
+17.06.255 Loading space.
+
+17.06.260 Lot.
+
+17.06.265 Lot area.
+
+17.06.270 Lot, corner.
+
+17.06.275 Lot coverage.
+
+17.06.280 Lot depth.
+
+17.06.282 Lot, flag.
+
+17.06.285 Lot line.
+
+17.06.290 Lot line, front.
+
+17.06.295 Lot line, rear.
+
+17.06.300 Lot line, side.
+
+17.06.301 Lot line, street side.
+
+17.06.305 Lot of record.
+
+17.06.310 Lot, through.
+
+17.06.315 Lot width.
+
+17.06.325 Major remodeling.
+
+17.06.328 Manufactured dwelling.
+
+17.06.329 Manufactured dwelling park.
+
+17.06.330 Manufactured home.
+
+17.06.332 Middle housing land division.
+
+17.06.336 Mini-storage.
+
+17.06.338 Mixed-use development.
+
+17.06.340 Mobile home.
+
+17.06.350 Model unit real estate office.
+
+17.06.355 Motel.
+
+17.06.358 Net acre.
+
+17.06.360 New construction.
+
+17.06.365 Nonaccess reservation.
+
+17.06.370 Nonconforming use.
+
+17.06.372 Nonconforming development.
+
+17.06.373 Nursing home.
+
+17.06.375 Open space.
+
+17.06.380 Owner.
+
+17.06.385 Parcel.
+
+17.06.390 Parking space.
+
+17.06.395 Partition.
+
+17.06.400 Partition land.
+
+17.06.405 Pedestrian way.
+
+17.06.410 Person.
+
+17.06.415 Planning Commission.
+
+17.06.416 Plat.
+
+17.06.418 Porch, front.
+
+17.06.419 Primary building wall.
+
+17.06.420 Prefabricated dwelling.
+
+17.06.422 Primary zoning district.
+
+17.06.426 Property line adjustment.
+
+17.06.430 Recreational vehicle park.
+
+17.06.435 Recreation vehicle.
+
+17.06.440 Residential home.
+
+17.06.445 Residence.
+
+17.06.450 Residential planned unit development.
+
+17.06.452 Residential trailer.
+
+17.06.455 Residential zoning district.
+
+17.06.460 Right-of-way.
+
+17.06.465 Roadway.
+
+17.06.470 Seasonal.
+
+17.06.475 Section.
+
+17.06.480 School, commercial.
+
+17.06.485 School, primary, elementary, junior high or high.
+
+17.06.491 Senior housing center.
+
+17.06.492 Setback, front.
+
+17.06.493 Setback, rear.
+
+17.06.494 Setback, side.
+
+17.06.496 Setback, street side.
+
+17.06.497 Sidewalk.
+
+17.06.500 Sign.
+
+17.06.501 Sign, electronic message center.
+
+17.06.503 Sign, monument.
+
+17.06.504 Sign, segmented message.
+
+17.06.506 Sign, tri-vision.
+
+17.06.507 Story.
+
+17.06.510 Story, half.
+
+17.06.515 Street.
+
+17.06.520 Structure.
+
+17.06.525 Subdivide land.
+
+17.06.530 Subdivision.
+
+17.06.535 Temporary structure real estate offices.
+
+17.06.537 Temporary structures.
+
+17.06.540 Title.
+
+17.06.542 Transit street.
+
+17.06.545 Use.
+
+17.06.548 Utility facility.
+
+17.06.550 Utility substation.
+
+17.06.551 Vacation rental.
+
+17.06.553 Vacation occupancy.
+
+17.06.555 Vegetation.
+
+17.06.560 Vehicle.
+
+* Prior history:
+
+17.06.025 History: Ord. 1131 §2, 1990; Repealed by Ord. 1323 §1, 2002.
+
+17.06.030 History: Ord. 1131 §2, 1990; Repealed by Ord. 1323 §1, 2002.
+
+17.06.110 History: Ord. 1131 §2, 1990; Repealed by Ord. 1323 § 1, 2002.
+
+17.06.185 History: Ord. 1131 §2, 1990; Repealed by Ord. 1334, 2004.
+
+17.06.190 History: Ord. 1131 §2, 1990; Repealed by Ord. 1334, 2004.
+
+17.06.320 History: Ord. 1131 §2, 1990; Repealed by Ord. 1171 §1(K), 1993.
+
+17.06.330 History: Ord. 1131 §2, 1990; Ord.1179 §11(B), 1993; Repealed by Ord. 1323 §1, 2002.
+
+17.06.335 History: Ord. 1131 §2, 1990; Repealed by Ord. 1171 §1(L), 1993.
+
+17.06.345 History: Ord. 1131 §2, 1990; Repealed by Ord. 1535 §1 (Exh. A), 2025.
+
+17.06.425 History: Ord. 1131 §2, 1990; Repealed by Ord. 1323§1, 2002.
+
+17.06.490 History: Ord. 1131 §2, 1990; Repealed by Ord. 1323§1, 2002.
+
+17.06.495 History: Ord. 1131 §2, 1990; Repealed by Ord. 1323 §1, 2002.
+
+17.06.502 History: Ord. 1161 §1, 1992; Renumbered to §17.06.504 by Ord. 1323 §1, 2002.
+
+17.06.505 History: Ord. 1131 §2, 1990; Renumbered to §17.06.507 by Ord. 1323 §1, 2002.
+
+17.06.565 History: Ord. 1131 §2, 1990; Repealed by Ord. 1323 §1, 2002.
+
+17.06.570 History: Ord. 1131 §2, 1990; Repealed by Ord. 1323 §1, 2002.
+
+17.06.575 History: Ord. 1131 §2, 1990; Repealed by Ord. 1323 §1, 2002.
+
+17.06.580 History: Ord. 1131 §2, 1990; Repealed by Ord. 1323 §1, 2002.
+
+17.06.585 History: Ord. 1131 §2, 1990; Repealed by Ord. 1323 §1, 2002.
+
+17.06.005 Generally.
+
+The words and phrases used in this title shall have the meanings set out in this chapter, Definitions, unless the context otherwise requires.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.010 Access.
+
+“Access” means the right to cross between public and private property allowing pedestrians and vehicles to enter and leave property.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.013 Accessory dwelling unit.
+
+“Accessory dwelling unit” means an additional, smaller, subordinate dwelling unit located on the same lot as a detached or attached single-household dwelling or multi-household dwelling. An accessory dwelling may be created as a detached structure or within, or as an addition to, a detached single-household dwelling or accessory structure.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1289, 2000; Ord. 1515 §2 (Exh. B), 2022; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.015 Accessory use or accessory structure.
+
+“Accessory use” or “accessory structure” means a use or structure incidental and subordinate to the main use of the property and located on the same lot as the main use.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.020 Alley.
+
+“Alley” means a street which affords only a secondary means of access to the property.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.035 Automobile service station.
+
+“Automobile service station” means a retail place of business engaged primarily in the sale of motor fuels, but also supplying goods and services required in the operation and maintenance of automotive vehicles. These may include petroleum products, tires, batteries, automotive accessories and replacement items, washing and lubrication services, or automobile and truck maintenance and repair, and the supplying of other incidental customer services and products, but not painting, body and fender work, and storage of autos and trucks.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.040 Automobile storage or repair garages.
+
+“Automobile storage or repair garages” means a premises used for the storage, repair, or sale of used automobile vehicles or automotive parts.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.045 Boarding house, lodging house, or rooming house.
+
+“Boarding house” “lodging house” or “rooming house” means a building or portion thereof without separate housekeeping facilities to be occupied, or which is occupied primarily by persons paying consideration for sleeping purposes where meals may or may not be served.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.050 Building.
+
+“Building” means a structure built for the support, shelter or enclosure of any persons, animals, chattels, or property of any kind excepting uncovered patios or decks not exceeding 30 inches in height above the average grade of the adjoining ground.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.055 Building height.
+
+“Building height” means the vertical distance measured from the adjoining street center line grade as established by the city to the highest point of the roof surface of a flat roof, to the deck line of a mansard roof, and to a mean height level between the eaves and ridge for a gable, hip or gambrel roof; provided, however, that where buildings are set back from the street line, the height of the building may be measured from the average elevation of the finished grade at the front of the building.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.060 Building line, front.
+
+“Front building line” means a line parallel and adjacent to the front of that structure which is closest to the front lot line. For purposes of this definition, the front of a structure is the side facing the front lot line. A front building line extends from one side lot line to the opposite side lot line.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1323 §1, 2002; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.065 Building official.
+
+“Building official” means the building official of the city.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.070 Carport.
+
+“Carport” means a stationary structure consisting of a roof with its supports and not more than two walls, or a storage cabinet substituting for one of the walls, and used for sheltering a motor vehicle, boat or recreation vehicle.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.075 Cattery.
+
+“Cattery” means 10 or more cats owned or boarded on the premises.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.080 Change of use for purposes of the greenway zone only.
+
+“Change of use for purposes of the greenway zone only” means a different use than that which existed on December 6, 1975. It includes a change that requires construction, alterations of the land, water or other areas outside of existing buildings or structures and which substantially alters or affects the land or water. It does not include a change of use of a building that does not substantially alter or affect the land or water upon which it is situated. Change of use shall not include the completion of a structure for which a valid permit has been issued as of December 6, 1975, and under which permanent substantial construction has been undertaken by July 1, 1976. The sale of property is not in itself considered to be a change of use. An existing open storage area shall be considered to be the same as a building.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1323 §1, 2002; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.085 Chapter.
+
+“Chapter” means a portion of the ordinance codified in this chapter identified by a four digit number (for example, GMC Chapter 17.06, Definitions.)
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.090 City.
+
+“City” means the City of Gladstone, Oregon.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.095 City Council.
+
+“City Council” means the governing body of the city.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.100 City Administrator or designee.
+
+“City Administrator” or “designee” means the administrator of the city or a person designated by the City Administrator.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.105 Comprehensive Plan.
+
+“Comprehensive Plan” means the official plan adopted by the city for the guidance of growth and improvement, including modifications or refinements which may be made from time to time.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.115 Day care center.
+
+“Day care center” means a child care facility, other than a family child care home, that is certified under ORS 329A.280.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.117 Days.
+
+“Days” means calendar days without reference to business days or holidays unless specifically stated to the contrary.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.120 Development for purposes of the greenway zone only.
+
+“Development for purposes of the greenway zone only” means any man-made change to improved or unimproved real estate, including but not limited to buildings or other structures, parking lots, mining, dredging, filling, grading, paving, excavation or drilling operations, to bring about growth or availability, to construct or alter a structure, to make a physical change in the use or appearance of land, to divide land into parcels, or to create or terminate rights of access.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.125 Development permit.
+
+“Development permit” means a building permit, subdivision approval, temporary permit, or any other permit required by the city before development can occur.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.130 Drinking establishment.
+
+“Drinking establishment” means a place of business which requires a permit and/or license from the Oregon Liquor and Cannabis Commission for the dispensing of liquor for consumption upon the premises.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.135 Durable and dustless surface.
+
+“Durable and dustless surface” means a surface providing a hard topping which is free from mud conditions in wet weather and dusty conditions in dry weather, specifically including concrete or asphaltic concrete or like material but specifically excluding gravel and dirt.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.140 Dwelling unit.
+
+“Dwelling unit” means one or more rooms for occupancy by one household for living purposes that is identified by a single street address and has common entrances and internal access.
+
+Trailer coaches shall not be considered as dwelling units, except when located in mobile home courts or parks.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1515 §2 (Exh. B), 2022; Ord. 1535 §1 (Exh. A), 2024. Formerly 17.06.155.
+
+17.06.141 Dwelling, multi-household.
+
+“Multi-household dwelling” means a building, designed for occupancy by five or more households living independently of each other.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1515 §2 (Exh. B), 2022; Ord. 1535 §1 (Exh. A), 2024. Formerly 17.06.140.
+
+17.06.142 Dwelling, detached single-household.
+
+“Detached single-household dwelling” means a detached building containing one dwelling unit located on a single lot.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1515 §2 (Exh. B), 2022; Ord. 1535 §1 (Exh. A), 2024. Formerly 17.06.145.
+
+17.06.143 Dwelling, two-household or duplex.
+
+“Two-household dwelling” or “duplex” means a detached or attached building containing two dwelling units on a single lot.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1515 §2 (Exh. B), 2022; Ord. 1535 §1 (Exh. A), 2024. Formerly 17.06.150.
+
+17.06.144 Dwelling, three-household or triplex.
+
+“Three-household dwelling” or “triplex” means three attached or detached dwelling units on a single lot in any configuration.
+
+History: Ord. 1515 §2 (Exh. B), 2022; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.145 Dwelling, four-household or quadplex.
+
+“Four-household dwelling” or “quadplex” means four attached or detached dwelling units on a single lot in any configuration.
+
+History: Ord. 1515 §2 (Exh. B), 2022; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.146 Townhouse.
+
+“Townhouse” means a dwelling unit that is part of a row of two or more attached dwelling units, where each unit is located on an individual lot and shares at least one common wall with an adjacent dwelling unit.
+
+History: Ord. 1515 §2 (Exh. B), 2022; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.147 Townhouse project.
+
+“Townhouse project” means one or more townhouse structures constructed, or proposed to be constructed, together with the development site where the land has been divided, or is proposed to be divided, to reflect the townhouse property lines and any commonly owned property.
+
+History: Ord. 1515 §2 (Exh. B), 2022; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.148 Cottage cluster.
+
+“Cottage cluster” means a grouping of no fewer than four detached dwelling units per acre with a footprint of less than 900 square feet each that includes a common courtyard on a single lot or on individual lots.
+
+History: Ord. 1515 §2 (Exh. B), 2022; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.149 Middle housing.
+
+“Middle housing” means duplex, triplex, quadplex, cottage cluster, or townhouse in the R-5 or R-7.2 zone and is subject to OAR Chapter 660, Division 46, Middle Housing in Medium and Large Cities.
+
+History: Ord. 1515 §2 (Exh. B), 2022; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.150 Single-room occupancy.
+
+“Single-room occupancy” means a residential development with no fewer than four attached units that are independently rented and lockable and provide living and sleeping space for the exclusive use of an occupant, but requires that the occupant share sanitary or food preparation facilities with other units in the occupancy.
+
+History: Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.160 Easement.
+
+“Easement” means a grant of the right to use a strip of land for specific purposes.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.165 Eating establishment.
+
+“Eating establishment” means a place of business which serves food but does not require a permit and/or license from the Oregon Liquor and Cannabis Commission.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.170 Exterior.
+
+“Exterior” means any portion of the outside of a structure which can be seen from a public place.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.175 Family child care home.
+
+“Family child care home” means a child care facility in a dwelling that is caring for not more than 16 children and is certified under ORS 329A.280 or is registered under ORS 329A.330.
+
+History: Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.180 Fence or hedge, sight-obscuring.
+
+“Sight-obscuring fence or hedge” means a fence consisting of wood, metal, masonry or similar materials, or an evergreen hedge or other evergreen planting, arranged in such a way as to obscure vision at least 80 percent.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1323 §1, 2002; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.195 Floor area.
+
+“Floor area” means the sum of the gross horizontal area of the several floors of a building, measured from the exterior faces of the exterior walls, or from the center line of walls separating two buildings, but not including:
+
+(1) Attic space providing headroom of less than seven feet.
+
+(2) Basement or cellar.
+
+(3) Uncovered steps or fire escapes.
+
+(4) Private garages, carports or porches.
+
+(5) Accessory water towers or cooling towers.
+
+(6) Accessory off-street parking or loading spaces.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.200 Foster home.
+
+“Foster home” means any dwelling occupied and maintained by a person or persons licensed or certified by the state or other authorized agency to provide extended or temporary care, food, and lodging in such home for not more than seven dependent individuals beyond the number defined as a household. A foster home is not a hospital, nursing home, or home for the aged as defined in Oregon Revised Statutes, nor does it include a halfway house, work release center, or any other domiciliary facility for persons released from any penal or correctional institution.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1515 § 2 (Exh. B), 2022; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.205 Frontage.
+
+“Frontage” means property abutting on a street.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.210 Grade, ground level.
+
+“Ground level grade” means the average elevation of the finished ground elevation at the centers of all walls of a building, except that if a wall is parallel to and within five feet of a sidewalk, the sidewalk elevation nearest the center of the wall shall constitute the ground elevation.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.213 Gross leasable area (GLA).
+
+“Gross leasable area (GLA)” means the total floor area designed for tenant occupancy and exclusive use, including any basements, mezzanines, or upper floors, expressed in square feet and measured from the center line of joint partitions and from outside wall faces.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1289 §1, 2000; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.214 Home for the aged.
+
+“Home for the aged” means a supervised personal care facility where staff provide services to residents. A home for the aged is not a group home, foster home, hospital, or nursing home.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1515 §2 (Exh. B), 2022; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.215 Group home.
+
+“Group home” means any home occupied and maintained by a person or persons licensed by the state or other appropriate agency to provide extended or temporary care, food and lodging in such home for from eight to 10 dependent individuals beyond the number defined as a household. A group home is not a foster home, hospital, nursing home or home for the aged as defined in Oregon Revised Statutes, nor does it include a halfway house, work release center, or any domiciliary facility for persons released from any penal or correctional institution.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1515 §2 (Exh. B), 2022; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.220 Home occupation.
+
+“Home occupation” means an occupation, profession, or craft which is customarily incidental to or carried on in a dwelling place or premises and not one in which the use of the premises as a dwelling place is largely incidental to the occupation carried on, and which occupation is carried on by an immediate member of the household residing within the dwelling place; provided, however, there shall be no structural alteration or changes in the dwelling, or on the premises and there is no display of merchandise, storage materials, signs or articles or objects awaiting or in the process of repair, remodeling, or modification on the premises which can be seen from the exterior of the dwelling. Noise, odor, smoke, gases, fallout, vibration, heat or glare resulting from the use shall not be of the intensity as to be detected outside of the containing structure.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1515 §2 (Exh. B), 2022; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.225 Hospital.
+
+“Hospital” means a medical facility licensed by the State of Oregon that provides health services on a primarily inpatient basis.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1515 §2 (Exh. B), 2022; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.230 Hotel.
+
+“Hotel” means a building or portion thereof designed or used for occupancy of transient individuals who are lodged with or without meals and in which no provision is made for cooking in any individual room or suite.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.231 Household.
+
+“Household” means one person or two or more persons occupying a dwelling unit as their usual place of residence. This definition shall not apply to group homes, foster homes, or homes for the aged.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1515 §6 (Exh. B), 2022; Ord. 1518 §1 (Exh. A), 2022; Ord. 1535 §1 (Exh. A), 2024. Formerly 17.06.175.
+
+17.06.233 Institutional use.
+
+“Institutional use” means a church, school, public facility, hospital, nursing home or home for the aged.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1289 §1, 2000; Ord. 1292 §1, 2000; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.235 Intensification of use for purposes of the greenway zone.
+
+“Intensification of use for purposes of the greenway zone” means any additions which increase or expand the area or amount of an existing use, or the level of activity. Remodeling of the exterior of a structure not excluded below in this section is an intensification when it will substantially alter the appearance of the structure. (Intensification shall not include the completion of a structure for which a valid permit has been issued as of December 6, 1975, and under which substantial construction has been undertaken by July 1, 1976.) Maintenance and repair usual and necessary for the continuance of an existing use is not an intensification of use. Reasonable emergency procedures necessary for the safety or protection of the greenway includes the practices and activities customarily related to the use and enjoyment of one’s home. Landscaping, construction of driveways, modification of existing structures, or construction or placement of such subsidiary structures or facilities adjacent to the residence as are usual and necessary to such use and enjoyment shall not be considered an intensification for the purposes of this district. Seasonal increases in gravel operation shall not be considered an intensification of use.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.240 Kennel.
+
+“Kennel” means four or more dogs with permanent canine teeth owned or boarded on the premises.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.245 Landscaping.
+
+“Landscaping” means the improvement of land by means such as contouring, plantings, fencing and the placement of outdoor structures.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.247 Land use decision.
+
+“Land use decision” includes a final decision or determination that concerns the adoption, amendment, interpretation or application of the goals, Comprehensive Plan provision, land use regulation, but does not include:
+
+(1) A decision which is made under the city’s development standards which does not require interpretation or the exercise of facts, policy, or legal judgment.
+
+(2) A decision which approves, approves with conditions or denies a subdivision or partition and is consistent with the city’s development standards.
+
+(3) Approval or denial of a building permit.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.250 Livestock.
+
+“Livestock” means domestic animals of types customarily raised or kept on farms for profit or other purposes.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.255 Loading space.
+
+“Loading space” means an off-street space or berth on the same lot or parcel with a building or use or contiguous to a group of buildings or uses for the temporary parking of a vehicle while loading or unloading persons, merchandise, or materials and which space or berth abuts upon a street, alley or other appropriate means of access and egress.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.260 Lot.
+
+“Lot” means a unit of land that is created by a subdivision of land. For the purposes of this title, “lot” includes “parcel” and “lot of record” unless the context otherwise requires.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1323 §1, 2002; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.265 Lot area.
+
+“Lot area” means the total area of a lot measured in a horizontal plane within the lot boundary lines exclusive of public streets.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.270 Lot, corner.
+
+“Corner lot” means the total area of a lot abutting on two or more streets, other than an alley, at their intersection.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.275 Lot coverage.
+
+“Lot coverage” means the area covered by a building or buildings on a lot, expressed as a percentage of the total lot area.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.280 Lot depth.
+
+“Lot depth” means the average horizontal distance between the front lot line and rear lot line.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.282 Lot, flag.
+
+“Flag lot” means a lot that has access to a street by means of a narrow deeded strip of land or easement.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1289 §1, 2000; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.285 Lot line.
+
+“Lot line” means the property line bounding a lot.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.290 Lot line, front.
+
+“Front lot line” means a lot line separating a lot from a street other than an alley. In the case of a corner lot, either of the lot lines separating the lot from a street other than an alley may be designated by the property owner as the front lot line with the other such lot line designated as a street side lot line. Except as modified by GMC Section 17.76.040(5), the front lot line of a flag lot, for the purposes of determining minimum yard requirements, shall be a line within the boundaries of the lot by a distance equal to the width of the narrow deeded strip of land or easement providing access to the lot from the street. The line shall be parallel to the lot line that extends from the street to the lot line opposite and most distant from the street.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1289 §1, 2000; Ord. 1323 §1, 2002; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.295 Lot line, rear.
+
+“Rear lot line” means the lot line that is opposite and most distant from the front lot line. In the case of an irregular or triangular shaped lot, the rear lot line is a line 10 feet in length within the lot parallel to and at a maximum distance from the front lot line.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1323 §1, 2002; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.300 Lot line, side.
+
+“Side lot line” means any lot line not a front or rear lot line.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.301 Lot line, street side.
+
+“Street side lot line” means a side lot line separating a lot from a street other than an alley.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1323 §1, 2002; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.305 Lot of record.
+
+“Lot of record” means a lot or parcel in a recorded plat. For units of land that are not lots or parcels in a recorded plat, “lot of record” means a unit of land or aggregate of contiguous units of land held in a single ownership, as recorded in the office of the Clackamas County Recorder on October 26, 1971.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1323 §1, 2002; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.310 Lot, through.
+
+“Through lot” means an interior lot having frontage on two streets other than alleys.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.315 Lot width.
+
+“Lot width” means the average horizontal distance between the side lot lines.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.325 Major remodeling.
+
+“Major remodeling” means any work that substantially alters the exterior appearance of a structure or off-street parking area.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1323 §1, 2002; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.328 Manufactured dwelling.
+
+“Manufactured dwelling” means a residential trailer, mobile home or manufactured home.
+
+Statutory Reference: ORS Chs. 197, 227
+
+History: Ord. 1171 §1(A), 1993; Ord. 1179 §11(A), 1993; Ord. 1515 §2 (Exh. B), 2022; Ord. 1518 §1 (Exh. A), 2022; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.329 Manufactured dwelling park.
+
+“Manufactured dwelling park” means any place where four or more manufactured dwellings or prefabricated dwellings are located within 500 feet of one another on a lot, tract, or parcel of land under the same ownership, the primary purpose of which is to rent or lease space or keep space for rent or lease to any person for a charge or fee paid or to be paid for the rental or lease or use of facilities or to offer space free in connection with securing the trade or patronage of such person. A manufactured dwelling park does not include a lot or lots located within an approved subdivision being rented or leased for occupancy by one manufactured dwelling per lot.
+
+History: Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.330 Manufactured home.
+
+“Manufactured home” means a structure constructed for movement on the public highways that has sleeping, cooking, and plumbing facilities, that is intended for human occupancy, that is being used for residential purposes, and that was constructed in accordance with federal manufactured housing construction and safety standards and regulations in effect at the time of construction.
+
+History: Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.332 Middle housing land division.
+
+“Middle housing land division” means the partition or subdivision of a lot of record that is developed, or proposed to be developed, with middle housing dwelling units. The type of middle housing developed on the original lot of record is not altered by a middle housing land division. Middle housing land divisions are expedited land divisions that are subject to the process outlined in ORS 197.375.
+
+Statutory Reference: ORS Ch. 197, Ch. 375.
+
+History: Ord. 1518 §1 (Exh. A), 2022. Renumbered from 17.06.330 by Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.336 Mini-storage.
+
+“Mini-storage” means a storage and warehousing service within a building(s) primarily for individuals to store personal effects and by business to store materials for operation of an industrial or commercial enterprise located elsewhere. In no case may storage spaces in a mini-warehouse facility function as an independent retail, wholesale business, or service use. Spaces shall not be used for workshops, hobby shops, manufacturing, or similar uses and human occupancy of said spaces shall be limited to that required to transport, arrange, and maintain stored materials. The location of an owner or manager residence on the premises is permitted.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1256 §1, 1998; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.338 Mixed-use development.
+
+“Mixed-use development” means development or buildings where land uses are mixed together. This can include residential and commercial, or office and retail. Uses may be mixed in one building vertically where there is one use on the ground floor and a different use above in one building, or horizontally where a variety of uses are next to each other in one building.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1289 §1, 200; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.340 Mobile home.
+
+“Mobile home” means a structure constructed for movement on the public highways that has sleeping, cooking, and plumbing facilities; that is intended for human occupancy; that is being used for residential purposes; and that was constructed between January 1, 1962, and June 15, 1976, and met the construction requirements of Oregon mobile home law in effect at the time of construction.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1171 §1(B), 1993; Ord. 1515 §2 (Exh. B), 2022; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.350 Model unit real estate office.
+
+“Model unit real estate office” means a permanent residential structure located in a developing subdivision used for the promotion of sale of units in the subdivision, so long as the model unit real estate office is at all times available for sale, lease, lease option or exchange as a residential dwelling.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.355 Motel.
+
+“Motel” means one or more buildings designed or used as temporary living quarters for transients.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.358 Net acre.
+
+“Net acre” means an area measuring 43,560 square feet, which excludes:
+
+(1) Road rights-of-way and other public dedications through or on the edge of the land; and
+
+(2) Environmentally constrained areas, including open water areas, areas in the FM district, areas in the WQ District, natural resource areas protected under statewide planning Goal 5 in the Comprehensive Plan, slopes in excess of 25 percent and wetlands requiring a federal fill and removal permit under Section 404 of the Clean Water Act.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1289 §1, 2000; Ord. 1334, 2002; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.360 New construction.
+
+“New construction” means a structure for which the start of construction commenced on or after the effective date of the ordinance codified in this title.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.365 Nonaccess reservation.
+
+“Nonaccess reservation” means a street plug or a one-foot right-of-way width owned by the city.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.370 Nonconforming use.
+
+“Nonconforming use” means a lawful existing use at the time the ordinance codified in this title or any amendment thereto becomes effective, which does not conform to the requirements of the zone in which it is located.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1266 §1, 1998; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.372 Nonconforming development.
+
+“Nonconforming development” means development of a site which was lawfully existing at the time the ordinance codified in this title or any amendment thereto becomes effective, which does not conform to the requirements of this title, including but not limited to minimum parking, minimum landscaping, etc.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1266 §2, 1998; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.373 Nursing home.
+
+“Nursing home” means a facility that provides medical care, nursing, and other health services to its residents. A nursing home is not a group home, foster home, hotel, hospital, or home for the aged.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1515 §2 (Exh. B), 2022; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.375 Open space.
+
+“Open space” means land that is undeveloped and that is planned to remain so indefinitely. “Open space” also refers to land zoned OS, Open Space District, and developed with uses identified in GMC Chapter 17.26 (OS Open Space District).
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1334, 2002; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.380 Owner.
+
+“Owner” means the person holding fee title to the land, or where there is a recorded land sale contract, the purchaser thereunder.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1334, 2002; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.385 Parcel.
+
+“Parcel” means a unit of land that is created by a partitioning of land. For the purposes of this title, “parcel” includes “lot” and “lot of record” unless the context otherwise requires.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1323 §1, 2002; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.390 Parking space.
+
+“Parking space” means an area available for the parking of a standard or compact vehicle.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.395 Partition.
+
+“Partition” means either an act of partitioning land or an area or tract of land partitioned as defined in GMC Section 17.06.400.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.400 Partition land.
+
+“Partition land” means to divide a lot of record into two or three parcels within a calendar year, but does not include a division of land resulting from a lien foreclosure, foreclosure of a recorded contract for the sale of real property or the creation of cemetery lots; divisions of land made pursuant to a court order, including, but not limited to, court orders and proceedings involving testate or intestate succession; or an adjustment of a property line by the relocation of a common boundary where an additional lot of record is not created and where the existing lot of record reduced in size by the adjustment complies with the provisions of this title. Any property divided by the sale or grant of property for state highway, county road, city street or other right-of-way purposes shall continue to be considered a single lot of record until such time as the property is further subdivided or partitioned.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1171 §1(M), 1993; Ord. 1323 §1, 2002; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.405 Pedestrian way.
+
+“Pedestrian way” means a right-of-way for pedestrian traffic.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.410 Person.
+
+“Person” means an individual, firm, partnership, corporation, company, syndicate, association, social or fraternal organization or any legal entity, and including any trustee, receiver, assignee, or any group or combination acting as a unit.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.415 Planning Commission.
+
+“Planning Commission” means the Planning Commission of the city.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.416 Plat.
+
+“Plat” means a final map and other writing containing all the descriptions, locations, specifications, dedications, provisions and information concerning a subdivision or partition.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1323 §1, 2002; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.418 Porch, front.
+
+“Front porch” means a front entrance to a dwelling covered by a separate roof or an extension of the dwelling roof. Enclosure walls shall extend no more than half the distance from the front porch to the porch eaves. A front porch shall be used only for recreational, outdoor living purposes and not as a carport, garage, storage room or habitable room.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1289 §1, 2000; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.419 Primary building wall.
+
+“Primary building wall” means an exterior building wall that contains a public entrance to the premises and faces either a street or a parking area.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1323 §1, 2002; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.420 Prefabricated dwelling.
+
+“Prefabricated dwelling” means a prefabricated structure, as defined in ORS 455.010, that is relocatable, more than eight and one-half feet wide, and designed for use as a single-household dwelling.
+
+History: Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.422 Primary zoning district.
+
+“Primary zoning district” includes the following: R-7.2, R-5, MR, C-1, C-2, C-3, OP, LI, and OS.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Renumbered from 17.06.420 by Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.426 Property line adjustment.
+
+“Property line adjustment” means the relocation of a common property line between two abutting lots of record.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1323 §1, 2002; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.430 Recreational vehicle park.
+
+“Recreational vehicle park” means an area designated by the person establishing, operating, managing or maintaining the same for overnight camping in recreation vehicles or for a short duration by the general public or any segment of the public. Recreation vehicle park includes, but is not limited to, areas open to use free of charge or through payment of a tax or fee or by virtue of rental, lease, license, membership, association, or ownership. Overnight camping of mobile homes is not allowed within recreation vehicle parks. A recreation vehicle park shall not include a municipal, county, state or federal park or recreation area.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1198 §1(A), 1994; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.435 Recreation vehicle.
+
+“Recreation vehicle” means a vacation trailer or self-propelled vehicle or structure equipped with wheels for highway use which is intended for human occupancy and is being used for recreation or vacation purposes, but not for residential purposes, and is equipped with plumbing, sink or toilet, and has a floor space of less than 220 square feet, excluding built-in equipment such as wardrobes, closets, cabinets, kitchen units or fixtures and bath and toilet rooms.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.440 Residential home.
+
+“Residential home” means the same as a foster home as defined in GMC Section 17.06.200.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.445 Residence.
+
+“Residence” means a dwelling unit as defined in GMC Section 17.06.155.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.450 Residential planned unit development.
+
+“Residential planned unit development” means a residential (R) planned unit development as allowed under GMC Chapter 17.38 (Planned Unit Development) and is at least 80,000 square feet in any zoning district or combination thereof. A planned unit development less than 80,000 square feet must be approved by Planning Commission per GMC 17.38.020.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1515 §2 (Exh. B), 2022; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.452 Residential trailer.
+
+“Residential trailer” means a structure constructed for movement on the public highways that has sleeping, cooking and plumbing facilities, that is intended for human occupancy, that is being used for residential purposes, and that was constructed before January 1, 1962.
+
+History: Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.455 Residential zoning district.
+
+“Residential zoning district” means the R-7.2, R-5 and MR zones.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.460 Right-of-way.
+
+“Right-of-way” means the area between boundary lines of a street or other easement, whether improved or unimproved.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.465 Roadway.
+
+“Roadway” means the portion of a street right-of-way developed for vehicular traffic.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.470 Seasonal.
+
+“Seasonal” means limited to a period of no more than six months in any 12-month period, but related to a unique or an annually occurring event or condition.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.475 Section.
+
+“Section” means a portion of this title identified by a seven-digit number, such as GMC Section 17.10.020 (Uses allowed outright) in the R-7.2 zoning district.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.480 School, commercial.
+
+“Commercial school” means a place where instruction is given to pupils in arts, crafts, trades or other occupational skills and operated as a commercial enterprise as distinguished from schools endowed or supported by taxation.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.485 School, primary, elementary, junior high or high.
+
+“Primary, elementary, junior high or high school” includes public, private or parochial but not nursery school, kindergarten or day nursery, except when operated in conjunction with a school.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.491 Senior housing center.
+
+“Senior housing center” means a residential facility providing dwelling units without full kitchens (known as residential suites) for those aged 65 and older and dwelling units with full kitchens. Up to 15 percent of the total number of dwelling units may be provided as single-household units or duplex units with full kitchens. A senior housing center is a congregate care facility which provides common services including but not limited to transportation of residents, three meals per day in a common facility and other non-medical care congregate services.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1280 §1, 1998; Ord. 1515 §2 (Exh. B), 2022; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.492 Setback, front.
+
+“Front setback” means the horizontal distance between a front lot line and a structure.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1323 §1, 2002; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.493 Setback, rear.
+
+“Rear setback” means the horizontal distance between a rear lot line and a structure.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1323 §1, 2002; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.494 Setback, side.
+
+“Side setback” means the horizontal distance between a side lot line and a structure.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1323 §1, 2002; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.496 Setback, street side.
+
+“Street side setback” means the horizontal distance between a street side lot line and a structure.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1323 §1, 2002; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.497 Sidewalk.
+
+“Sidewalk” means a pedestrian walkway with permanent surfacing to city standards.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1323 §1, 2002; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.500 Sign.
+
+“Sign” means an identification, description, illustration or device which is affixed to or represented, directly or indirectly, upon a building, structure, or land and which directs attention to a product, place, activity, person, institution or business.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.501 Sign, electronic message center.
+
+“Electronic message center sign” means a sign, display or device, or portion thereof, whose message may be changed by electronic process or remote control, and may include electronic time and/or temperature displays and the device known in the advertising industry as a commercial electronic variable message sign.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1161 §1, 1992; Ord. 1323 §1, 2002; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.503 Sign, monument.
+
+“Monument sign” means a sign that extends to the ground or that has a support that places the bottom of the sign less than two feet from the ground.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1323 §1, 2002; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.504 Sign, segmented message.
+
+“Segmented message sign” means any message or distinct subunit of a message presented by means of at least one display change on an electronic message center sign.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1161 §1, 1992; Renumbered from 17.06.502 by Ord. 1323 §1, 2002; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.506 Sign, tri-vision.
+
+“Tri-vision sign” means a sign where the display surface is composed of triangular louvers that rotate periodically to allow three images to be displayed.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1323 §1, 2002; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.507 Story.
+
+“Story” means that portion of a building included between the upper surface of any floor and the upper surface of the floor next above, except that the topmost story shall be that portion of a building included between the upper surface of the topmost floor and the ceiling or roof above. If the finished floor level directly above a basement, cellar or unused under floor space is more than six feet above grade as defined in this section for more than 50 percent of the total perimeter or is more than 12 feet above grade as defined in this section at any point, such basement, cellar or unused under floor space shall be considered a story.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Renumbered from 17.06.505 by Ord. 1323 §1, 2002; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.510 Story, half.
+
+“Half-story” means a story under a gable, hip, or gambrel roof, the wall plates of which on at least two opposite exterior walls are not more than two feet above the floor of such story.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.515 Street.
+
+(1) “Street” means a public or private way that is created to provide ingress or egress for persons to one or more lots, parcels, areas or tracts of land, and the placement of utilities and including the terms road, highway, lane, avenue, place, court, way, circle, drive, alley or similar designation.
+
+(2) “Alley” means a narrow street through a block primarily for vehicular service access to the back or side of properties otherwise abutting on another street.
+
+(3) “Arterial” means a street of considerable continuity which is primarily a traffic artery for intercommunication among large areas.
+
+(4) “Collector” means a street supplementary to the arterial street system and a means of intercommunication between this system and smaller areas; used to some extent for access to abutting properties and may be used to a limited extent for through traffic.
+
+(5) “Cul-de-sac” (dead-end street) means a short street having one end open to traffic and terminated by a vehicle turnaround.
+
+(6) “Marginal access street” means a minor street parallel and adjacent to a major arterial street providing access to abutting properties, but protected from through traffic.
+
+(7) “Minor street” means a street intended primarily for access to abutting properties.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.520 Structure.
+
+“Structure” means something constructed or built and having a fixed base on or fixed connection to the ground or another structure; to include a mobile home.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.525 Subdivide land.
+
+“Subdivide land” means to divide a lot of record into four or more lots within a calendar year.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1323 §1, 2002; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.530 Subdivision.
+
+“Subdivision” means either an act of subdividing land or an area or a tract of land subdivided as defined in GMC Section 17.06.525.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.535 Temporary structure real estate offices.
+
+“Temporary structure real estate offices” means a temporary structure located in a subdivision used for the promotion of a sale of residential units in a developing subdivision.
+
+Statutory Reference: ORS Ch. 197, Ch. 27
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.537 Temporary structures.
+
+“Temporary structures” means an area covered by a plastic, tarp, fabric, or metal membrane that is either attached to a rigid framework, natural feature or some other structure that is used for storage. It does not include greenhouses or weather proofing of a vehicle, boat, or other individual item by tarp or other type of covering as long as the covering is attached directly to and covers only the particular item.
+
+History: Ord. 1482 §1, 2018; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.540 Title.
+
+“Title” means that portion of the Gladstone Municipal Code identified by a two-digit number, such as GMC Title 17, Zoning and Development.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.542 Transit street.
+
+“Transit street” means a street on which public transit stops are located.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1289 §1, 2000; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.545 Use.
+
+“Use” means the purpose for which land or a structure is designed, arranged or intended or for which it is occupied or maintained.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.548 Utility facility.
+
+“Utility facility” means buildings, structures or any constructed portion of a system that provides for the production, transmission, conveyance, delivery or furnishing of services including, but not limited to, heat, light, water, power, natural gas, sanitary sewer, stormwater, telephone and cable television. Utility facilities do not include stormwater pretreatment facilities.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990, Ord. 1431, 2011; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.550 Utility substation.
+
+“Utility substation” means a facility that provides for the location of utility service apparatus that includes, but is not limited to: telephone exchanges; public utility structures, without shops, garages or general administrative offices; transmission and receiving towers, and/or earth stations.
+
+History: Ord. 1502 §1, 2020; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.551 Vacation rental.
+
+“Vacation rental” means a dwelling unit or accessory dwelling unit providing vacation occupancy.
+
+History: Ord. 1502 §1, 2020; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.553 Vacation occupancy.
+
+“Vacation occupancy” as defined by ORS 90.100 means occupancy in a dwelling unit, not including transient occupancy in a hotel or motel, that has all of the following characteristics:
+
+(1) The occupant rents the unit for vacation purposes only, not as a principal residence;
+
+(2) The occupant has a principal residence other than at the unit; and
+
+(3) The period of authorized occupancy does not exceed 45 days.
+
+History: Ord. 1502 §1, 2020; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.555 Vegetation.
+
+“Vegetation” means plantings or natural growth of trees, grass, shrubs, etc. which would permit normal percolation.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
+
+17.06.560 Vehicle.
+
+“Vehicle” means a device in, upon, or by which any person or property is or may be transported or drawn upon a public highway, except devices moved by human power or used exclusively upon stationary rails or tracks.
+
+Statutory Reference: ORS Ch. 197, Ch. 227
+
+History: Ord. 1131 §2, 1990; Ord. 1535 §1 (Exh. A), 2024.
