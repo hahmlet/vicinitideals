@@ -119,6 +119,11 @@ NOT_A_DEFINITION = re.compile(
     r"^(?:see|on|for|in|where|when|if|no|all|each|every|except|the following)\b", re.I
 )
 
+#: How a body opens when the codifier has set the term on a line of its own.
+#: Requiring the verb is what keeps a contents listing -- term, then the next
+#: term -- from reading as a definition whose body is the following entry.
+DEFINING_VERB = re.compile(r"^(?:means|shall mean|is\s|refers to|is defined as)", re.I)
+
 #: How much text an entry has to carry before it is a definition rather than a
 #: line in a table of contents. "Lot, corner." followed by "Lot coverage" is a
 #: contents listing in Oregon City's chapter and matches everything else.
@@ -222,10 +227,17 @@ def _find(layer_id: str, term: str) -> str:
                 continue
             head = line[opening.end() :].strip()
             if not head:
-                # The term with nothing after it is a table of contents line,
-                # and the entries under it are the next terms rather than this
-                # one's body. Oregon City's chapter opens with a page of them.
-                continue
+                # The term with nothing after it is usually a table of contents
+                # line, where the entries below are the next terms rather than
+                # this one's body -- Oregon City's chapter opens with a page of
+                # them. But Milwaukie's codifier sets the term on its own line
+                # and opens the body with "means" on the next, which is a
+                # definition list rather than a contents listing. The defining
+                # verb is what tells them apart.
+                nxt = lines[i + 1].strip() if i + 1 < len(lines) else ""
+                if not DEFINING_VERB.match(nxt):
+                    continue
+                head = nxt
             body = " ".join([head, *lines[i + 1 : i + 1 + LOOKAHEAD]]).strip()
             if NOT_A_DEFINITION.match(body) or len(body) < MIN_BODY:
                 continue

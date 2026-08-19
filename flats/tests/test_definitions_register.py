@@ -14,6 +14,7 @@ import pytest
 from flats.encode.definitions import STATUSES, coverage, coverage_for
 from flats.rules.definitions import TERMS, Abuts, Definition, Side
 from flats.rules.loader import load_rules
+from flats.rules.model import Layer
 from flats.rules.resolver import RuleSet
 
 pytestmark = pytest.mark.unit
@@ -62,7 +63,7 @@ def on_a_private_drive() -> list[Side]:
 # --- the corpus, as encoded --------------------------------------------
 
 
-def test_the_five_cities_that_have_been_read(rules: RuleSet) -> None:
+def test_the_jurisdictions_that_have_been_read(rules: RuleSet) -> None:
     """Changing this list is a real change and should be seen in review."""
     read = sorted(
         layer_id
@@ -71,6 +72,7 @@ def test_the_five_cities_that_have_been_read(rules: RuleSet) -> None:
     )
     assert read == [
         "or/clackamas/_unincorporated",
+        "or/clackamas/milwaukie",
         "or/clackamas/oregon-city",
         "or/clackamas/rivergrove",
         "or/clackamas/tualatin",
@@ -129,21 +131,60 @@ def test_an_unmeasurable_clause_makes_no_a_maybe() -> None:
 
 # --- and nobody borrows ------------------------------------------------
 
+#: A hierarchy nobody will ever encode, so these tests keep testing the rule
+#: rather than the state of the queue. Reading a real city used to break six of
+#: them at once, which measured our progress and not the resolver.
+def synthetic() -> RuleSet:
+    county = Layer(
+        layer="zz/county",
+        kind="county",
+        label="Test County",
+        definitions={
+            "corner_lot": Definition(
+                term="corner_lot",
+                test="frontage_count",
+                quote="zz/county/defs.txt#L1",
+                cite="Test County 1.000",
+            )
+        },
+    )
+    city = Layer(layer="zz/county/city", kind="city", label="Test City")
+    sibling = Layer(layer="zz/county/sibling", kind="city", label="Sibling City")
+    return RuleSet({layer.layer: layer for layer in (county, city, sibling)})
 
-def test_a_city_with_no_definition_gets_no_definition(rules: RuleSet) -> None:
-    """Milwaukie sits under Clackamas County in the file layout and takes
-    nothing from it. Hierarchy is where our YAML lives, not who wrote
-    Milwaukie's code."""
-    assert rules.definitions_for("or/clackamas/milwaukie") == {}
-    assert rules.defines("or/clackamas/milwaukie", "corner_lot", corner()) is None
-    assert rules.undefined("or/clackamas/milwaukie") == TERMS
+
+def test_a_city_with_no_definition_gets_no_definition() -> None:
+    """The city sits under the county in the file layout and takes nothing from
+    it. Hierarchy is where our YAML lives, not who wrote the city's code."""
+    rules = synthetic()
+    assert rules.definitions_for("zz/county")
+    assert rules.definitions_for("zz/county/city") == {}
+    assert rules.defines("zz/county/city", "corner_lot", corner()) is None
+    assert rules.undefined("zz/county/city") == TERMS
 
 
-def test_a_sibling_is_never_a_source(rules: RuleSet) -> None:
-    """Oregon City and Milwaukie are both Clackamas cities and one of them has
-    been read. That is not a route between them."""
-    assert "corner_lot" in rules.definitions_for("or/clackamas/oregon-city")
-    assert "corner_lot" not in rules.definitions_for("or/clackamas/milwaukie")
+def test_a_sibling_is_never_a_source() -> None:
+    """Two cities in one county, one of them read. That is not a route between
+    them, and it is not a route up to the county and back down either."""
+    rules = synthetic()
+    rules.layers["zz/county/sibling"] = rules.layers["zz/county/sibling"].model_copy(
+        update={"definitions": rules.layers["zz/county"].definitions}
+    )
+    assert rules.definitions_for("zz/county/city") == {}
+
+
+def test_nothing_in_the_corpus_resolves_a_definition_it_did_not_write() -> None:
+    """The corpus-level form of the same rule, written as an invariant so it
+    survives every jurisdiction we encode next. A layer's resolved definitions
+    are its own, unless it declares an adoption -- and none does."""
+    rules = RuleSet(load_rules())
+    for layer_id, layer in rules.layers.items():
+        resolved = rules.definitions_for(layer_id)
+        if layer.definitions_from:
+            continue
+        assert set(resolved) == set(layer.definitions), layer_id
+        for term, defn in resolved.items():
+            assert defn is layer.definitions[term], f"{layer_id}.{term}"
 
 
 def test_no_layer_in_the_corpus_claims_to_adopt_anybody(rules: RuleSet) -> None:
@@ -164,38 +205,39 @@ def test_no_layer_in_the_corpus_claims_to_adopt_anybody(rules: RuleSet) -> None:
 def test_adoption_works_when_a_code_actually_says_so() -> None:
     """The mechanism exists and is deliberately unused. Wiring it needs one
     line of YAML and a citation, which is the price of borrowing a meaning."""
-    rules = RuleSet(load_rules())
-    borrower = rules.layers["or/clackamas/milwaukie"]
-    lender = rules.layers["or/clackamas/oregon-city"]
-    rules.layers[borrower.layer] = borrower.model_copy(
-        update={"definitions_from": [lender.layer]}
+    rules = synthetic()
+    rules.layers["zz/county/city"] = rules.layers["zz/county/city"].model_copy(
+        update={"definitions_from": ["zz/county"]}
     )
-    resolved = rules.definitions_for(borrower.layer)
-    assert resolved["corner_lot"].cite == "OCMC 17.04.665, Lot, corner"
-    assert rules.defines(borrower.layer, "corner_lot", corner()) is True
+    resolved = rules.definitions_for("zz/county/city")
+    assert resolved["corner_lot"].cite == "Test County 1.000"
+    assert rules.defines("zz/county/city", "corner_lot", corner()) is True
 
 
 def test_a_layer_defining_a_term_outranks_the_one_it_adopts_from() -> None:
-    rules = RuleSet(load_rules())
-    gresham = rules.layers["or/multnomah/gresham"]
-    rules.layers[gresham.layer] = gresham.model_copy(
-        update={"definitions_from": ["or/multnomah/portland"]}
+    rules = synthetic()
+    own = Definition(
+        term="corner_lot",
+        test="adjacent_frontages",
+        quote="zz/city/defs.txt#L9",
+        cite="Test City 2.000",
+        max_intersection_angle_deg=100.0,
     )
-    resolved = rules.definitions_for(gresham.layer)
-    assert resolved["corner_lot"].cite.startswith("Gresham")
+    rules.layers["zz/county/city"] = rules.layers["zz/county/city"].model_copy(
+        update={"definitions": {"corner_lot": own}, "definitions_from": ["zz/county"]}
+    )
+    resolved = rules.definitions_for("zz/county/city")
+    assert resolved["corner_lot"].cite == "Test City 2.000"
     # And the borrowed reading is genuinely different, so this is a real test.
-    assert rules.defines(gresham.layer, "corner_lot", through()) is True
+    assert rules.defines("zz/county", "corner_lot", through()) is True
+    assert rules.defines("zz/county/city", "corner_lot", through()) is False
 
 
 def test_an_adoption_cycle_terminates() -> None:
-    rules = RuleSet(load_rules())
-    for a, b in (
-        ("or/clackamas/milwaukie", "or/clackamas/happy-valley"),
-        ("or/clackamas/happy-valley", "or/clackamas/milwaukie"),
-    ):
-        layer = rules.layers[a]
-        rules.layers[a] = layer.model_copy(update={"definitions_from": [b]})
-    assert rules.definitions_for("or/clackamas/milwaukie") == {}
+    rules = synthetic()
+    for a, b in (("zz/county/city", "zz/county/sibling"), ("zz/county/sibling", "zz/county/city")):
+        rules.layers[a] = rules.layers[a].model_copy(update={"definitions_from": [b]})
+    assert rules.definitions_for("zz/county/city") == {}
 
 
 # --- the register ------------------------------------------------------
@@ -218,10 +260,17 @@ def test_the_register_names_a_citation_for_every_encoded_definition(
 def test_silence_and_not_having_looked_are_different_rows(rules: RuleSet) -> None:
     """The distinction the whole module exists for. A jurisdiction whose
     definitions chapter nobody has found reads ``unsourced``, never ``silent``
-    -- because ``silent`` is a claim about the code and we have not earned it."""
-    rows = coverage_for(rules, "or/clackamas/milwaukie")
-    assert [r.status for r in rows] == ["unsourced"]
-    assert all(r.blocking for r in rows)
+    -- because ``silent`` is a claim about the code and we have not earned it.
+
+    Stated over the whole corpus rather than one city, so it cannot be made
+    true again by encoding whichever city it named.
+    """
+    for row in coverage(rules):
+        if row.status == "silent":
+            assert row.where, "silent has to name the chapter it searched"
+        if row.status in ("unsourced", "unsearched"):
+            assert not row.where
+        assert row.blocking == (row.status not in ("own", "adopted"))
 
 
 def test_an_encoded_definition_stops_blocking(rules: RuleSet) -> None:

@@ -10,10 +10,34 @@ ingest:
   zoning_layer: zoning_milwaukie
   zone_field: ZONE
   strip_lowercase_suffix: false
+definitions:
+  # "Corner lot" means a lot abutting 2 or more streets, other than an alley,
+  # at their intersection."
+  #
+  # Oregon City's and Tualatin's shape, with the alley exclusion stated in the
+  # sentence. No angle, so a bending street is read the way silence is read
+  # elsewhere: a non-collinear frontage is an intersection.
+  #
+  # 19.200 is where Milwaukie's lot-line rules live too -- "in the case of a
+  # corner lot, a line separating the lot from the street" -- which is the
+  # second front setback this term is load-bearing for.
+  corner_lot:
+    test: intersecting_frontages
+    count: 2
+    quote: "or/clackamas/milwaukie/19.200.definitions.txt#L434-L435"
+    cite: "MMC 19.200, Definitions, Corner lot"
+
 code:
   # eCode360 (code MI4969); /print/<code>?guid=<node> returns server-rendered
   # HTML. guid 43860500 is Chapter 19.300 Base Zones — both residential zones
   # (19.301 R-MD, 19.302 R-HD) in one document.
+  - id: "19.200.definitions"
+    url: https://ecode360.com/print/MI4969?guid=43860165
+    title: "Chapter 19.200 - Definitions and Measurements"
+    # Prose about words: almost no dimensioned standards, which the thinness
+    # guard reads as a landing page. Read 2026-08-18 -- it is the definitions
+    # chapter, and its lot types are set as a lettered list.
+    allow_thin: true
   - id: "19.300.base-zones"
     url: https://ecode360.com/print/MI4969?guid=43860500
     title: "MMC Chapter 19.300 - Base Zones"
