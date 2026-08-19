@@ -363,3 +363,46 @@ def test_west_linn_leaves_its_floor_off_because_the_code_never_prints_one(
     city = load_rules()[WEST_LINN].zones
     for zone in ("R-40", "R-10", "R-5", "R-2.1"):
         assert "min_density_du_per_acre" not in city[zone].values, zone
+
+
+CLACKAMAS = "or/clackamas/_unincorporated"
+
+
+def test_the_county_states_the_quadplex_exemption_in_its_own_words(
+    rules: RuleSet,
+) -> None:
+    """1012.04, and worth having beside the state layer rather than instead of
+    it: "for a duplex, triplex, quadplex, or cottage cluster in the R-5 ...
+    VR-5/7 District ... DLA is not the minimum lot area required per dwelling
+    unit". District land area is the whole of the density standard here --
+    1012.05 divides net site area by it -- so a building DLA does not measure
+    has no ceiling.
+
+    That sentence names four housing types and townhouses is not one of them,
+    and Table 315-3 gives townhouses a third and a quarter of the DLA instead.
+    So the county stands down on the split plat exactly where the state does,
+    for its own reason.
+    """
+    city = load_rules()[CLACKAMAS].zones["R5"].values["max_density_du_per_acre"]
+
+    assert city.exempt is True
+    assert city.unless == ("unit_lots",)
+    assert city.prov.quote == "or/clackamas/_unincorporated/zdo.1012.txt#L73"
+    assert "max_density_du_per_acre" in rules.resolve(CLACKAMAS, "R5").exempted
+
+
+def test_the_pod_s_lot_size_in_unincorporated_clackamas_is_section_845s(
+    rules: RuleSet,
+) -> None:
+    """Nine zones had no minimum lot size at all, because Table 315-2 prints a
+    pair -- "5,000/4,000 square feet" -- that is district land area over the
+    detached-dwelling minimum, and 1012.02(H) waives the district figure for a
+    middle housing land division anyway. Section 845.01 states the one that
+    reaches this building: "7,000 square feet for a quadplex or a cottage
+    cluster", the same number in every district."""
+    zones = load_rules()[CLACKAMAS].zones
+
+    for zone in ("R5", "R7", "R8.5", "R10", "R15", "R20", "R30", "VR57", "VR45"):
+        held = zones[zone].values["min_lot_sqft"]
+        assert held.value == 7000, zone
+        assert held.prov.quote == "or/clackamas/_unincorporated/zdo.845.txt#L3,L7", zone

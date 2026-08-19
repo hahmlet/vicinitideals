@@ -380,10 +380,16 @@ def test_clackamas_vr_rows_are_read_by_counting_their_values() -> None:
         ):
             assert res.values[name].prov.quote, f"{zone}.{name} is unquoted"
 
-    # The one genuinely two-different-values row stays out of both zones.
+    # The one genuinely two-different-values row is still unreadable by
+    # position, and Table 315-3 is still not where either zone's minimum lot
+    # size comes from. Section 845.01 states one figure for a quadplex in
+    # every district -- 7,000 square feet -- so the field is filled from there
+    # and the merged cell above is simply not the evidence.
     for zone in ("VR45", "VR57"):
         res = rules.resolve("or/clackamas/_unincorporated", zone)
-        assert "min_lot_sqft" not in res.values
+        held = res.values["min_lot_sqft"]
+        assert held.value == 7000
+        assert held.prov.quote.startswith("or/clackamas/_unincorporated/zdo.845.txt")
 
 
 def test_the_three_derived_numbers_now_come_from_documents() -> None:

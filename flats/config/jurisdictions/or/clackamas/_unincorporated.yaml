@@ -69,6 +69,25 @@ code:
   end: "Return to the Zoning and Development Ordinance main page"
   # Table 315-1's ~1,900 use-name lines dilute the density ratio. Read 2026-08-12.
   allow_thin: true
+# Table 315-2 states the pod's dimensions and points somewhere else for two
+# standards that decide whether it fits at all. "District Land Area (DLA) for
+# Calculating Density Pursuant to Section 1012" is the density row, and
+# "Minimum Density: See Section 1012" is the whole of the floor. A table that
+# cites another section for its number has not stated one.
+- id: zdo.1012
+  url: https://www.clackamas.us/planning/zdo1012
+  title: Clackamas County ZDO Section 1012 - Lot Size and Density
+  start: "1012.01"
+  end: "Return to the Zoning and Development Ordinance main page"
+# Table 315-1 marks every Quadplexes cell P7,8, and note 8 is this section:
+# "The development of a triplex, quadplex, townhouse, or cottage cluster is
+# subject to Section 845." It carries the one minimum lot size that governs
+# the pod anywhere in unincorporated Clackamas.
+- id: zdo.845
+  url: https://www.clackamas.us/planning/zdo845
+  title: Clackamas County ZDO Section 845 - Triplexes, Quadplexes, Townhouses, and Cottage Clusters
+  start: "845.01"
+  end: "Return to the Zoning and Development Ordinance main page"
 zones:
   R5:
     cite_default:
@@ -82,6 +101,39 @@ zones:
       # listed dwelling types) and note 8 (Section 845 governs the design).
       value: true
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1076,L1078"
+    min_lot_sqft:
+      # Section 845.01, and the only minimum lot size that reaches this pod.
+      # Table 315-2's own row prints a pair -- "5,000/4,000 square feet" in
+      # R-5 -- but that is district land area over the district minimum for a
+      # detached dwelling, and 1012.02(H) waives the district figure for a
+      # middle housing land division anyway. What 845 states is a floor on the
+      # subject lot for the building itself: "7,000 square feet for a quadplex
+      # or a cottage cluster", the same number in every district. The triplex
+      # line above it carries the VR exception; the quadplex line carries none.
+      value: 7000
+      cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
+      url: https://www.clackamas.us/planning/zdo845
+      retrieved: '2026-08-19'
+      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+    max_density_du_per_acre:
+      # 1012.04, the county saying in its own words what OAR 660-046-0220(2)(b)
+      # requires of it: "for a duplex, triplex, quadplex, or cottage cluster in
+      # the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5, or VR-5/7
+      # District, and for accessory dwelling units, DLA is not the minimum lot
+      # area required per dwelling unit". DLA is the whole of the density
+      # standard here -- 1012.05 divides net site area by it -- so a building
+      # DLA does not measure has no maximum density.
+      #
+      # `unless: [unit_lots]` because that sentence lists four housing types
+      # and townhouses is not among them. Table 315-3's notes give townhouses
+      # a third and a quarter of the DLA instead, so the split plat is
+      # governed and this layer must not say otherwise.
+      exempt: true
+      unless: [unit_lots]
+      cite: "Clackamas ZDO 1012.04 (general density provisions)"
+      url: https://www.clackamas.us/planning/zdo1012
+      retrieved: '2026-08-19'
+      quote: "or/clackamas/_unincorporated/zdo.1012.txt#L73"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1188"
@@ -111,6 +163,39 @@ zones:
       # listed dwelling types) and note 8 (Section 845 governs the design).
       value: true
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1076,L1078"
+    min_lot_sqft:
+      # Section 845.01, and the only minimum lot size that reaches this pod.
+      # Table 315-2's own row prints a pair -- "5,000/4,000 square feet" in
+      # R-5 -- but that is district land area over the district minimum for a
+      # detached dwelling, and 1012.02(H) waives the district figure for a
+      # middle housing land division anyway. What 845 states is a floor on the
+      # subject lot for the building itself: "7,000 square feet for a quadplex
+      # or a cottage cluster", the same number in every district. The triplex
+      # line above it carries the VR exception; the quadplex line carries none.
+      value: 7000
+      cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
+      url: https://www.clackamas.us/planning/zdo845
+      retrieved: '2026-08-19'
+      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+    max_density_du_per_acre:
+      # 1012.04, the county saying in its own words what OAR 660-046-0220(2)(b)
+      # requires of it: "for a duplex, triplex, quadplex, or cottage cluster in
+      # the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5, or VR-5/7
+      # District, and for accessory dwelling units, DLA is not the minimum lot
+      # area required per dwelling unit". DLA is the whole of the density
+      # standard here -- 1012.05 divides net site area by it -- so a building
+      # DLA does not measure has no maximum density.
+      #
+      # `unless: [unit_lots]` because that sentence lists four housing types
+      # and townhouses is not among them. Table 315-3's notes give townhouses
+      # a third and a quarter of the DLA instead, so the split plat is
+      # governed and this layer must not say otherwise.
+      exempt: true
+      unless: [unit_lots]
+      cite: "Clackamas ZDO 1012.04 (general density provisions)"
+      url: https://www.clackamas.us/planning/zdo1012
+      retrieved: '2026-08-19'
+      quote: "or/clackamas/_unincorporated/zdo.1012.txt#L73"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1189"
@@ -139,6 +224,39 @@ zones:
       # listed dwelling types) and note 8 (Section 845 governs the design).
       value: true
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1076,L1078"
+    min_lot_sqft:
+      # Section 845.01, and the only minimum lot size that reaches this pod.
+      # Table 315-2's own row prints a pair -- "5,000/4,000 square feet" in
+      # R-5 -- but that is district land area over the district minimum for a
+      # detached dwelling, and 1012.02(H) waives the district figure for a
+      # middle housing land division anyway. What 845 states is a floor on the
+      # subject lot for the building itself: "7,000 square feet for a quadplex
+      # or a cottage cluster", the same number in every district. The triplex
+      # line above it carries the VR exception; the quadplex line carries none.
+      value: 7000
+      cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
+      url: https://www.clackamas.us/planning/zdo845
+      retrieved: '2026-08-19'
+      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+    max_density_du_per_acre:
+      # 1012.04, the county saying in its own words what OAR 660-046-0220(2)(b)
+      # requires of it: "for a duplex, triplex, quadplex, or cottage cluster in
+      # the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5, or VR-5/7
+      # District, and for accessory dwelling units, DLA is not the minimum lot
+      # area required per dwelling unit". DLA is the whole of the density
+      # standard here -- 1012.05 divides net site area by it -- so a building
+      # DLA does not measure has no maximum density.
+      #
+      # `unless: [unit_lots]` because that sentence lists four housing types
+      # and townhouses is not among them. Table 315-3's notes give townhouses
+      # a third and a quarter of the DLA instead, so the split plat is
+      # governed and this layer must not say otherwise.
+      exempt: true
+      unless: [unit_lots]
+      cite: "Clackamas ZDO 1012.04 (general density provisions)"
+      url: https://www.clackamas.us/planning/zdo1012
+      retrieved: '2026-08-19'
+      quote: "or/clackamas/_unincorporated/zdo.1012.txt#L73"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1190"
@@ -167,6 +285,39 @@ zones:
       # listed dwelling types) and note 8 (Section 845 governs the design).
       value: true
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1076,L1078"
+    min_lot_sqft:
+      # Section 845.01, and the only minimum lot size that reaches this pod.
+      # Table 315-2's own row prints a pair -- "5,000/4,000 square feet" in
+      # R-5 -- but that is district land area over the district minimum for a
+      # detached dwelling, and 1012.02(H) waives the district figure for a
+      # middle housing land division anyway. What 845 states is a floor on the
+      # subject lot for the building itself: "7,000 square feet for a quadplex
+      # or a cottage cluster", the same number in every district. The triplex
+      # line above it carries the VR exception; the quadplex line carries none.
+      value: 7000
+      cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
+      url: https://www.clackamas.us/planning/zdo845
+      retrieved: '2026-08-19'
+      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+    max_density_du_per_acre:
+      # 1012.04, the county saying in its own words what OAR 660-046-0220(2)(b)
+      # requires of it: "for a duplex, triplex, quadplex, or cottage cluster in
+      # the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5, or VR-5/7
+      # District, and for accessory dwelling units, DLA is not the minimum lot
+      # area required per dwelling unit". DLA is the whole of the density
+      # standard here -- 1012.05 divides net site area by it -- so a building
+      # DLA does not measure has no maximum density.
+      #
+      # `unless: [unit_lots]` because that sentence lists four housing types
+      # and townhouses is not among them. Table 315-3's notes give townhouses
+      # a third and a quarter of the DLA instead, so the split plat is
+      # governed and this layer must not say otherwise.
+      exempt: true
+      unless: [unit_lots]
+      cite: "Clackamas ZDO 1012.04 (general density provisions)"
+      url: https://www.clackamas.us/planning/zdo1012
+      retrieved: '2026-08-19'
+      quote: "or/clackamas/_unincorporated/zdo.1012.txt#L73"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1191"
@@ -195,6 +346,39 @@ zones:
       # listed dwelling types) and note 8 (Section 845 governs the design).
       value: true
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1076,L1078"
+    min_lot_sqft:
+      # Section 845.01, and the only minimum lot size that reaches this pod.
+      # Table 315-2's own row prints a pair -- "5,000/4,000 square feet" in
+      # R-5 -- but that is district land area over the district minimum for a
+      # detached dwelling, and 1012.02(H) waives the district figure for a
+      # middle housing land division anyway. What 845 states is a floor on the
+      # subject lot for the building itself: "7,000 square feet for a quadplex
+      # or a cottage cluster", the same number in every district. The triplex
+      # line above it carries the VR exception; the quadplex line carries none.
+      value: 7000
+      cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
+      url: https://www.clackamas.us/planning/zdo845
+      retrieved: '2026-08-19'
+      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+    max_density_du_per_acre:
+      # 1012.04, the county saying in its own words what OAR 660-046-0220(2)(b)
+      # requires of it: "for a duplex, triplex, quadplex, or cottage cluster in
+      # the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5, or VR-5/7
+      # District, and for accessory dwelling units, DLA is not the minimum lot
+      # area required per dwelling unit". DLA is the whole of the density
+      # standard here -- 1012.05 divides net site area by it -- so a building
+      # DLA does not measure has no maximum density.
+      #
+      # `unless: [unit_lots]` because that sentence lists four housing types
+      # and townhouses is not among them. Table 315-3's notes give townhouses
+      # a third and a quarter of the DLA instead, so the split plat is
+      # governed and this layer must not say otherwise.
+      exempt: true
+      unless: [unit_lots]
+      cite: "Clackamas ZDO 1012.04 (general density provisions)"
+      url: https://www.clackamas.us/planning/zdo1012
+      retrieved: '2026-08-19'
+      quote: "or/clackamas/_unincorporated/zdo.1012.txt#L73"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1192"
@@ -223,6 +407,39 @@ zones:
       # listed dwelling types) and note 8 (Section 845 governs the design).
       value: true
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1076,L1078"
+    min_lot_sqft:
+      # Section 845.01, and the only minimum lot size that reaches this pod.
+      # Table 315-2's own row prints a pair -- "5,000/4,000 square feet" in
+      # R-5 -- but that is district land area over the district minimum for a
+      # detached dwelling, and 1012.02(H) waives the district figure for a
+      # middle housing land division anyway. What 845 states is a floor on the
+      # subject lot for the building itself: "7,000 square feet for a quadplex
+      # or a cottage cluster", the same number in every district. The triplex
+      # line above it carries the VR exception; the quadplex line carries none.
+      value: 7000
+      cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
+      url: https://www.clackamas.us/planning/zdo845
+      retrieved: '2026-08-19'
+      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+    max_density_du_per_acre:
+      # 1012.04, the county saying in its own words what OAR 660-046-0220(2)(b)
+      # requires of it: "for a duplex, triplex, quadplex, or cottage cluster in
+      # the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5, or VR-5/7
+      # District, and for accessory dwelling units, DLA is not the minimum lot
+      # area required per dwelling unit". DLA is the whole of the density
+      # standard here -- 1012.05 divides net site area by it -- so a building
+      # DLA does not measure has no maximum density.
+      #
+      # `unless: [unit_lots]` because that sentence lists four housing types
+      # and townhouses is not among them. Table 315-3's notes give townhouses
+      # a third and a quarter of the DLA instead, so the split plat is
+      # governed and this layer must not say otherwise.
+      exempt: true
+      unless: [unit_lots]
+      cite: "Clackamas ZDO 1012.04 (general density provisions)"
+      url: https://www.clackamas.us/planning/zdo1012
+      retrieved: '2026-08-19'
+      quote: "or/clackamas/_unincorporated/zdo.1012.txt#L73"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1193"
@@ -251,6 +468,39 @@ zones:
       # listed dwelling types) and note 8 (Section 845 governs the design).
       value: true
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1076,L1078"
+    min_lot_sqft:
+      # Section 845.01, and the only minimum lot size that reaches this pod.
+      # Table 315-2's own row prints a pair -- "5,000/4,000 square feet" in
+      # R-5 -- but that is district land area over the district minimum for a
+      # detached dwelling, and 1012.02(H) waives the district figure for a
+      # middle housing land division anyway. What 845 states is a floor on the
+      # subject lot for the building itself: "7,000 square feet for a quadplex
+      # or a cottage cluster", the same number in every district. The triplex
+      # line above it carries the VR exception; the quadplex line carries none.
+      value: 7000
+      cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
+      url: https://www.clackamas.us/planning/zdo845
+      retrieved: '2026-08-19'
+      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+    max_density_du_per_acre:
+      # 1012.04, the county saying in its own words what OAR 660-046-0220(2)(b)
+      # requires of it: "for a duplex, triplex, quadplex, or cottage cluster in
+      # the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5, or VR-5/7
+      # District, and for accessory dwelling units, DLA is not the minimum lot
+      # area required per dwelling unit". DLA is the whole of the density
+      # standard here -- 1012.05 divides net site area by it -- so a building
+      # DLA does not measure has no maximum density.
+      #
+      # `unless: [unit_lots]` because that sentence lists four housing types
+      # and townhouses is not among them. Table 315-3's notes give townhouses
+      # a third and a quarter of the DLA instead, so the split plat is
+      # governed and this layer must not say otherwise.
+      exempt: true
+      unless: [unit_lots]
+      cite: "Clackamas ZDO 1012.04 (general density provisions)"
+      url: https://www.clackamas.us/planning/zdo1012
+      retrieved: '2026-08-19'
+      quote: "or/clackamas/_unincorporated/zdo.1012.txt#L73"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1194"
@@ -280,6 +530,39 @@ zones:
       # village zones in the same cell.
       value: true
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1076,L1078"
+    min_lot_sqft:
+      # Section 845.01, and the only minimum lot size that reaches this pod.
+      # Table 315-2's own row prints a pair -- "5,000/4,000 square feet" in
+      # R-5 -- but that is district land area over the district minimum for a
+      # detached dwelling, and 1012.02(H) waives the district figure for a
+      # middle housing land division anyway. What 845 states is a floor on the
+      # subject lot for the building itself: "7,000 square feet for a quadplex
+      # or a cottage cluster", the same number in every district. The triplex
+      # line above it carries the VR exception; the quadplex line carries none.
+      value: 7000
+      cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
+      url: https://www.clackamas.us/planning/zdo845
+      retrieved: '2026-08-19'
+      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+    max_density_du_per_acre:
+      # 1012.04, the county saying in its own words what OAR 660-046-0220(2)(b)
+      # requires of it: "for a duplex, triplex, quadplex, or cottage cluster in
+      # the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5, or VR-5/7
+      # District, and for accessory dwelling units, DLA is not the minimum lot
+      # area required per dwelling unit". DLA is the whole of the density
+      # standard here -- 1012.05 divides net site area by it -- so a building
+      # DLA does not measure has no maximum density.
+      #
+      # `unless: [unit_lots]` because that sentence lists four housing types
+      # and townhouses is not among them. Table 315-3's notes give townhouses
+      # a third and a quarter of the DLA instead, so the split plat is
+      # governed and this layer must not say otherwise.
+      exempt: true
+      unless: [unit_lots]
+      cite: "Clackamas ZDO 1012.04 (general density provisions)"
+      url: https://www.clackamas.us/planning/zdo1012
+      retrieved: '2026-08-19'
+      quote: "or/clackamas/_unincorporated/zdo.1012.txt#L73"
     setback_front_ft:
       value: 10
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1324-L1327"
@@ -330,6 +613,39 @@ zones:
       # village zones in the same cell.
       value: true
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L41,L43-L54,L295-L306,L1076,L1078"
+    min_lot_sqft:
+      # Section 845.01, and the only minimum lot size that reaches this pod.
+      # Table 315-2's own row prints a pair -- "5,000/4,000 square feet" in
+      # R-5 -- but that is district land area over the district minimum for a
+      # detached dwelling, and 1012.02(H) waives the district figure for a
+      # middle housing land division anyway. What 845 states is a floor on the
+      # subject lot for the building itself: "7,000 square feet for a quadplex
+      # or a cottage cluster", the same number in every district. The triplex
+      # line above it carries the VR exception; the quadplex line carries none.
+      value: 7000
+      cite: "Clackamas ZDO 845.01 (general standards, minimum lot size)"
+      url: https://www.clackamas.us/planning/zdo845
+      retrieved: '2026-08-19'
+      quote: "or/clackamas/_unincorporated/zdo.845.txt#L3,L7"
+    max_density_du_per_acre:
+      # 1012.04, the county saying in its own words what OAR 660-046-0220(2)(b)
+      # requires of it: "for a duplex, triplex, quadplex, or cottage cluster in
+      # the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5, or VR-5/7
+      # District, and for accessory dwelling units, DLA is not the minimum lot
+      # area required per dwelling unit". DLA is the whole of the density
+      # standard here -- 1012.05 divides net site area by it -- so a building
+      # DLA does not measure has no maximum density.
+      #
+      # `unless: [unit_lots]` because that sentence lists four housing types
+      # and townhouses is not among them. Table 315-3's notes give townhouses
+      # a third and a quarter of the DLA instead, so the split plat is
+      # governed and this layer must not say otherwise.
+      exempt: true
+      unless: [unit_lots]
+      cite: "Clackamas ZDO 1012.04 (general density provisions)"
+      url: https://www.clackamas.us/planning/zdo1012
+      retrieved: '2026-08-19'
+      quote: "or/clackamas/_unincorporated/zdo.1012.txt#L73"
     setback_front_ft:
       value: 10
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1324-L1327"
