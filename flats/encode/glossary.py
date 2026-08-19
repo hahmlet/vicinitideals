@@ -219,7 +219,7 @@ def _entries(text: str, *, layer: str, doc: str) -> list[Entry]:
                         doc=doc,
                         line=i + 1,
                         term=inline.group("term").strip(),
-                        text=body,
+                        text=_whole(lines, i + 1, body),
                     )
                 )
                 continue
@@ -245,11 +245,38 @@ def _entries(text: str, *, layer: str, doc: str) -> list[Entry]:
                 doc=doc,
                 line=i + 1,
                 term=stacked.group("term").strip(),
-                text=body,
+                text=_whole(lines, i + 2, body),
                 shape="stacked",
             )
         )
     return out
+
+
+#: How far a definition is allowed to run before the reader is being shown
+#: the rest of the chapter rather than the rest of the meaning.
+MAX_BODY_LINES = 14
+
+
+def _whole(lines: Sequence[str], start: int, first: str) -> str:
+    """A definition's body, including the lines it wraps onto.
+
+    A body captured one line deep reads as a sentence that stops mid-clause,
+    and a legend of half-definitions is worse than no legend: it looks like
+    the meaning was consulted. Continuation runs until the next entry opens,
+    the codifier's apparatus starts, or the page does.
+    """
+    body = [first]
+    for raw in lines[start : start + MAX_BODY_LINES]:
+        stripped = raw.strip()
+        if not stripped or FURNITURE.match(stripped) or APPARATUS.match(stripped):
+            break
+        opens = ENTRY.match(stripped)
+        if opens is not None and MIN_TERM <= len(opens.group("term")) <= MAX_TERM:
+            break
+        if STACKED.match(stripped):
+            break
+        body.append(stripped)
+    return _collapse(" ".join(body))
 
 
 def _below(lines: Sequence[str], i: int) -> str:
