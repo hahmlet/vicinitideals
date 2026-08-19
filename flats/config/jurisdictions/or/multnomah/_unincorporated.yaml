@@ -99,6 +99,17 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/multnomah/_unincorporated/33.110.txt#L313"
+    max_height_ft:
+      # Table 110-4, "Maximum Height": 30 ft. in RF, R20, R10, R7 and R5, and
+      # 35 ft. in R2.5. The header row is quoted with the standard's row
+      # because the table puts all six districts on one printed line.
+      #
+      # Note [3] hangs on this cell and is already ruled in the footnote
+      # ledger: "additional FAR and height may be allowed. See 33.110.265.F"
+      # -- a relaxation, and it can only raise the ceiling.
+      value: 30
+      cite: PCC 33.110 Table 110-4; 33.110.215
+      quote: "or/multnomah/_unincorporated/33.110.txt#L435,L454"
     setback_front_ft:
       value: 20
       quote: "or/multnomah/_unincorporated/33.110.txt#L458"
@@ -137,6 +148,17 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/multnomah/_unincorporated/33.110.txt#L313"
+    max_height_ft:
+      # Table 110-4, "Maximum Height": 30 ft. in RF, R20, R10, R7 and R5, and
+      # 35 ft. in R2.5. The header row is quoted with the standard's row
+      # because the table puts all six districts on one printed line.
+      #
+      # Note [3] hangs on this cell and is already ruled in the footnote
+      # ledger: "additional FAR and height may be allowed. See 33.110.265.F"
+      # -- a relaxation, and it can only raise the ceiling.
+      value: 30
+      cite: PCC 33.110 Table 110-4; 33.110.215
+      quote: "or/multnomah/_unincorporated/33.110.txt#L435,L454"
     setback_front_ft:
       value: 20
       quote: "or/multnomah/_unincorporated/33.110.txt#L458"
@@ -181,7 +203,7 @@ zones:
       buildable lot.'
     max_height_ft:
       value: 30
-      quote: "or/multnomah/_unincorporated/33.110.txt#L454"
+      quote: "or/multnomah/_unincorporated/33.110.txt#L435,L454"
     setback_front_ft:
       value: 20
       quote: "or/multnomah/_unincorporated/33.110.txt#L458"
@@ -202,6 +224,17 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/multnomah/_unincorporated/33.110.txt#L313"
+    max_height_ft:
+      # Table 110-4, "Maximum Height": 30 ft. in RF, R20, R10, R7 and R5, and
+      # 35 ft. in R2.5. The header row is quoted with the standard's row
+      # because the table puts all six districts on one printed line.
+      #
+      # Note [3] hangs on this cell and is already ruled in the footnote
+      # ledger: "additional FAR and height may be allowed. See 33.110.265.F"
+      # -- a relaxation, and it can only raise the ceiling.
+      value: 30
+      cite: PCC 33.110 Table 110-4; 33.110.215
+      quote: "or/multnomah/_unincorporated/33.110.txt#L435,L454"
     min_density_trigger_lot_sqft:
       # 33.110.205.C.1, one sentence: "In the R7 zone, a minimum of two
       # dwelling units are required on sites that are 14,000 square feet or
@@ -277,6 +310,37 @@ zones:
         - value: true
           when: [conditional_use]
           quote: "or/multnomah/_unincorporated/39.lr-7.txt#L322-L336"
+    max_height_ft:
+      # MCC 39.4862(H): "Maximum Structure Height - 35 feet." The county's own
+      # article, five feet looser than the Portland-administered pockets in
+      # the same layer.
+      #
+      # The exception below is the one height rule in this corpus a 26 ft pod
+      # actually fails: exception (4) drops the ceiling to 25 feet for "a
+      # single family, duplex or multiplex dwelling on a flag lot or a lot
+      # having sole access from an accessway, private drive or easement". The
+      # pod is a multiplex, so the sentence reaches it.
+      #
+      # Only half of that trigger can be seen. `flag_lot` is a registered site
+      # fact; "sole access from an accessway, private drive or easement" is
+      # not, and no layer held records private drives or easements at all. So
+      # a lot reached only by an easement takes 35 here and should take 25 --
+      # the direction this encoding is wrong in, stated where the next person
+      # to hold that data will find it.
+      #
+      # The same exception restores 35 feet where the neighbours are far
+      # enough off and the upper windows do not face them. That is a
+      # relaxation of a ceiling and it is not encoded: it turns on abutting
+      # structures and window placement, neither of which is a fact about this
+      # lot, and the strict reading is the one that keeps a false GREEN out.
+      value: 35
+      cite: MCC 39.4862 Dimensional Requirements and Development Standards, (H)
+      quote: "or/multnomah/_unincorporated/39.lr-7.txt#L412"
+      variants:
+        - value: 25
+          when: [flag_lot]
+          cite: MCC 39.4862, exception (4)
+          quote: "or/multnomah/_unincorporated/39.lr-7.txt#L429-L434"
     setback_front_ft:
       value: 20
       quote: "or/multnomah/_unincorporated/39.lr-7.txt#L409-L411"
@@ -356,6 +420,17 @@ zones:
       value: false
       quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L19-L26,L27-L32"
       cite: "MCC 39.4355 and 39.4360(A)"
+    max_height_ft:
+      # MCC 39.4375: "Maximum Structure Height - 35 feet", printed directly
+      # under the minimum yard table.
+      #
+      # Paragraph (E) lets "barns, silos, windmills, antennae, chimneys, or
+      # similar structures" exceed it when they stand 30 feet off every
+      # property line. None of those is a dwelling, so it does not reach the
+      # pod and no variant carries it.
+      value: 35
+      cite: MCC 39.4375 Dimensional Requirements
+      quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L454"
     notes: 'quadfit confidence: verified. County RURAL zone, overwhelmingly outside the Metro UGB. Any
       RR parcel inside the UGB needs individual review.
 
