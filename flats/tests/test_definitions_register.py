@@ -190,8 +190,8 @@ def test_a_layer_defining_a_term_outranks_the_one_it_adopts_from() -> None:
 def test_an_adoption_cycle_terminates() -> None:
     rules = RuleSet(load_rules())
     for a, b in (
-        ("or/clackamas/milwaukie", "or/clackamas/tualatin"),
-        ("or/clackamas/tualatin", "or/clackamas/milwaukie"),
+        ("or/clackamas/milwaukie", "or/clackamas/happy-valley"),
+        ("or/clackamas/happy-valley", "or/clackamas/milwaukie"),
     ):
         layer = rules.layers[a]
         rules.layers[a] = layer.model_copy(update={"definitions_from": [b]})
@@ -239,10 +239,10 @@ def test_the_matcher_does_not_read_prose_as_a_definition(rules: RuleSet) -> None
     the singular, so counting uses has to see both and defining must not fire
     on a table heading with nothing after it.
     """
-    troutdale = coverage_for(rules, "or/multnomah/troutdale")
-    assert [r.status for r in troutdale] == ["unsourced"]
+    fairview = coverage_for(rules, "or/multnomah/fairview")
+    assert [r.status for r in fairview] == ["unsourced"]
     # And it is a real gap rather than an absent one: the code uses the word.
-    assert troutdale[0].uses >= 5
+    assert fairview[0].uses >= 5
 
 
 def test_usage_counts_drive_the_queue(rules: RuleSet) -> None:
@@ -279,7 +279,7 @@ def test_the_county_governs_its_own_land_and_nobody_elses(rules: RuleSet) -> Non
     chain-walking resolver would start handing it to Gresham, Fairview,
     Troutdale and Wood Village. It does not."""
     assert "corner_lot" in rules.definitions_for("or/multnomah/_unincorporated")
-    for city in ("or/multnomah/fairview", "or/multnomah/troutdale", "or/multnomah/wood-village"):
+    for city in ("or/multnomah/fairview", "or/multnomah/wood-village"):
         assert rules.definitions_for(city) == {}, city
         assert rules.defines(city, "corner_lot", corner()) is None, city
 
