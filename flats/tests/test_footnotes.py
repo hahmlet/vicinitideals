@@ -343,3 +343,31 @@ def test_a_page_break_does_not_end_a_notes_list():
 
     assert [b.mark for b in seen.bodies] == ["K", "L", "M"]
     assert "combined side yard" in seen.bodies[-1].text
+
+
+def test_a_lettered_note_may_number_its_own_sub_parts():
+    """Wilsonville's Table 8B note E numbers three garage setbacks.
+
+    Read as the start of a new numbered list it ended the block, and F, G, H
+    and I went with it — including the one that reduces a side setback to 3.5
+    feet and the one that maps lot area onto another table's standards. A
+    lettered list numbers its sub-parts; a numbered list that letters is the
+    next subsection, and only the second ends a block.
+    """
+    text = "\n".join(
+        [
+            "Notes:",
+            "D. For townhouses maximum lot coverage is calculated for the",
+            "combined lots.",
+            "E. Setbacks for residential garages are as follows:",
+            "1. Front (street loaded): minimum 20 feet.",
+            "2. Alley loaded with exterior driveway: minimum 18 feet.",
+            "F . For Urban Form Type 1 and 2, side setbacks may be reduced to",
+            "3.5 feet.",
+        ]
+    )
+
+    seen = census(text, doc="d.txt")
+
+    assert [b.mark for b in seen.bodies] == ["D", "E", "F"]
+    assert "minimum 20 feet" in seen.bodies[1].text

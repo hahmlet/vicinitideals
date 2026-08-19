@@ -380,13 +380,22 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
         )
         if opening is not None:
             mark = opening.group("n")
-            if bodies and _order(mark) <= highest:
-                break
             if bodies and mark.isalpha() != bodies[0].mark.isalpha():
-                # The list changed alphabet, so it is not the same list. A
-                # lettered paragraph under a numbered block is the next
-                # subsection, and swallowing it would both invent a note and
-                # cut the real one above it short.
+                if bodies[0].mark.isalpha():
+                    # Digits under letters are the lettered note's own
+                    # sub-parts -- "E. Setbacks for residential garages are as
+                    # follows: 1. Front loaded: minimum 20 feet." -- so they
+                    # are read as more of E rather than as note 1 of a new
+                    # list. Ending here lost every letter after E.
+                    texts[-1].append(stripped)
+                    i += 1
+                    continue
+                # Letters under digits are the next subsection. Troutdale's
+                # "C. Townhouse dwellings:" heads the following table, and
+                # swallowing it would both invent a note and cut the real one
+                # above it short.
+                break
+            if bodies and _order(mark) <= highest:
                 break
             text = opening.groupdict().get("text") or ""
             bodies.append(Body(doc="", line=i + 1, mark=mark, text=text))
