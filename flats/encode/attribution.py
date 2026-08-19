@@ -55,9 +55,14 @@ _SECTION = re.compile(r"(?<![\d.])(?P<n>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)(?![\d])"
 #: followed by its title, so a capital letter, a dash, or the end of the line.
 #: A cross-reference reads "Section 4.127(.09)(B)" and is followed by a
 #: parenthesis, which is how the two stay apart.
+#: The indent is the third guard, and it is what a heading cannot fake: a
+#: heading starts at the margin, a cross-reference printed inside a table cell
+#: starts wherever the column does. Gresham's RTC parking row prints "Section
+#: 9.0851" fifty-six columns in, followed by a capital S, and every table note
+#: below it read as section 9.0851 without this.
 _HEADING = re.compile(
-    r"^\s*(?:"
-    r"Section\s+(?P<s>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)\.?\s*(?:[A-Z—-]|$)"
+    r"^[ 	]{0,8}(?:"
+    r"Section\s+(?P<s>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)\.?\s*(?:[A-Z—-])"
     r"|(?:§|�)?\s*(?P<n>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)\s*(?:[A-Z§—-]|$)"
     r")"
 )
@@ -85,12 +90,20 @@ class Attribution:
         Prefix-compatible counts as agreement: a citation to "19.302" against
         text headed "19.302.4" is a citation to the table inside the section it
         names. Only a different section number is a disagreement.
+
+        A quote with several spans sits in several sections, and every one of
+        them is an authority the value rests on -- Wilsonville reads the zone
+        table and the definition of "Middle Housing" together, and a citation
+        naming only the table sends a reviewer to a page that never says a
+        quadplex is one. So every section found has to be claimed, not just
+        one of them.
         """
         if not self.claimed or not self.found:
             return True
-        return any(
-            one.startswith(self.found) or self.found.startswith(one)
-            for one in self.claimed.split()
+        claims = self.claimed.split()
+        return all(
+            any(one.startswith(here) or here.startswith(one) for one in claims)
+            for here in self.found.split()
         )
 
     def line(self) -> str:
@@ -114,6 +127,21 @@ def claimed_section(cite: str) -> str:
     """The first section a citation names, or "" if it names none."""
     found = claimed_sections(cite)
     return found[0] if found else ""
+
+
+def _spans(quote: str) -> tuple[int, ...]:
+    """The first line of each span in a quote, skipping anything unreadable.
+
+    Only the first line of a span is needed: a span short enough to quote does
+    not cross a section boundary, and one that does is a citation problem this
+    check has no way to repair.
+    """
+    out: list[int] = []
+    for piece in quote.partition("#")[2].split(","):
+        first = piece.strip().lstrip("L").partition("-")[0]
+        if first.isdigit():
+            out.append(int(first))
+    return tuple(out)
 
 
 def section_at(lines: Sequence[str], line: int) -> str:
@@ -157,10 +185,16 @@ def check(layer: Layer, store: ProvenanceStore) -> list[Attribution]:
         lines = cache[document]
         if not lines:
             continue
-        try:
-            first = int(quote.partition("#L")[2].split("-")[0].lstrip("L"))
-        except ValueError:
+        starts = _spans(quote)
+        if not starts:
             continue
+        # Every span, de-duplicated but kept in the order the quote reads --
+        # two spans on the same page are one authority, not two.
+        here: list[str] = []
+        for first in starts:
+            section = section_at(lines, first)
+            if section and section not in here:
+                here.append(section)
         out.append(
             Attribution(
                 layer=layer.layer,
@@ -168,7 +202,7 @@ def check(layer: Layer, store: ProvenanceStore) -> list[Attribution]:
                 field=field,
                 quote=quote,
                 claimed=" ".join(claimed_sections(value.prov.cite or "")),
-                found=section_at(lines, first),
+                found=" ".join(here),
             )
         )
     return out

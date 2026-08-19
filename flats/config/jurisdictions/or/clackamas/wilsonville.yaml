@@ -81,16 +81,19 @@ code:
     extraction: plain
 zones:
   R:
-    section: ["4.122", "4.113"]
+    section: ["4.122", "4.113", "4.001"]
     cite_default:
       cite: Wilsonville Development Code 4.122 (R Zone) + 4.113(.02) setbacks; Ord. 841 (middle housing)
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.122REZO
       retrieved: '2026-07-28'
     quadplex_allowed:
-      # 4.122(.04)B, "Middle Housing", which 4.096(181) defines as the class
-      # containing quadplexes.
+      # 4.122(.04)B permits "Middle Housing"; 4.001(181) is where that term is
+      # defined as the class containing quadplexes. The quote reads both, so
+      # the citation names both -- a reviewer sent only to 4.122 finds a
+      # permitted use whose meaning is somewhere else entirely.
+      cite: Wilsonville Development Code 4.122(.04)B (R Zone permitted uses) + 4.001(181) definition of Middle Housing; Ord. 841
       value: true
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4408-L4412,L874-L875"
+      quote: "or/clackamas/wilsonville/4.planning.txt#L874-L875,L4408-L4412"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
@@ -200,15 +203,16 @@ zones:
       <=10,000sf get 15/5/15 (2-story side=7, rear=20); lots >10,000sf get 20/10/20. Quadplex min lot
       7,000 (SFD/duplex/triplex 5,000).'
   OTR:
-    section: ["4.123", "4.113"]
+    section: ["4.123", "4.113", "4.001"]
     cite_default:
       cite: Wilsonville Development Code 4.123 (Old Town Residential OTR Zone) + 4.113(.02) setbacks; Ord. 841
       url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.123OLTOREOTZO
       retrieved: '2026-07-28'
     quadplex_allowed:
-      # 4.123(.03)B, same term, same definition.
+      # 4.123(.03)B, same term, same definition in 4.001(181).
+      cite: Wilsonville Development Code 4.123(.03)B (OTR permitted uses) + 4.001(181) definition of Middle Housing; Ord. 841
       value: true
-      quote: "or/clackamas/wilsonville/4.planning.txt#L4496-L4498,L874-L875"
+      quote: "or/clackamas/wilsonville/4.planning.txt#L874-L875,L4496-L4498"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"

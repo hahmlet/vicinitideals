@@ -164,3 +164,37 @@ def test_a_spelled_out_heading_beats_the_page_running_header():
 
     reference = ["Waivers in compliance with Section 4.127(.09)(B)(2)(d);", "text"]
     assert section_at(reference, 2) == ""
+
+
+def test_a_cross_reference_inside_a_table_cell_is_not_a_heading():
+    """Gresham's RTC parking row prints "Section 9.0851" fifty-six columns in.
+
+    Read as a heading, it re-attributed every table note below it — ten CMF
+    townhouse standards cited to 4.0430 and reported as sitting in the
+    off-street parking chapter. A heading starts at the margin; a cell starts
+    wherever its column does, and that is the only thing separating them here.
+    """
+    lines = [
+        "4.0430                              DEVELOPMENT STANDARDS",
+        "   L.     Maximum Off-        2 spaces/unit for residential;",
+        "                              all other uses see",
+        "                                                        Section 9.0851",
+        "Table 4.0430 Notes",
+        "1. Minimum setbacks for Townhouses:",
+    ]
+
+    assert section_at(lines, 6) == "4.0430"
+
+
+def test_a_quote_is_attributed_to_every_section_it_reads():
+    """A multi-span quote sits in several sections and owes all of them.
+
+    Wilsonville's quadplex permission reads the zone's use list and the
+    definition of "Middle Housing" in 4.001 together. Checking only the first
+    span would let a citation naming one section carry text from two.
+    """
+    both = Attribution("x", "R", "quadplex_allowed", "d#L1,L900", "4.122 4.001", "4.001 4.122")
+    half = Attribution("x", "R", "quadplex_allowed", "d#L1,L900", "4.122", "4.001 4.122")
+
+    assert both.agrees
+    assert not half.agrees
