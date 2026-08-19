@@ -1,0 +1,125 @@
+# Troutdale -- Development Code Chapter 3 footnotes.
+#
+# Ruled on 2026-08-19, reading each note against the column it actually
+# attaches to. Troutdale prints six columns per table and only some of them
+# carry "see note N", so the same sentence is decisive for one zone and silent
+# for the next. Four of the six are Town Center districts this layer does not
+# encode, which is why so much of this file dismisses on scope rather than on
+# substance: the note is real, and it is not about a zone we screen.
+#
+# Two are encoded rather than dismissed -- the townhouse frontage and the
+# alley rear yard -- and both were already carried as variants when the values
+# were quoted. Recording that here is what stops a later reader assuming the
+# footnote went unread.
+notes:
+  # --- 3.130.A, the duplex table -------------------------------------
+  #
+  # Our numbers come from 3.130.B and 3.130.C. These two notes are in scope
+  # only because the block's region is read wide on purpose.
+  - quote: "or/multnomah/troutdale/3.zoning-districts.txt#L305"
+    digest: "92a7017e9e9e"
+    state: dismissed
+    reason: >-
+      note 1 of the duplex table, and it permits a front setback to be reduced
+      where the driveway comes off the rear; screening against the unreduced
+      front yard is a compliance path the code offers outright
+
+  - quote: "or/multnomah/troutdale/3.zoning-districts.txt#L307"
+    digest: "bd4fbc6e727c"
+    state: dismissed
+    reason: >-
+      note 2 of the duplex table, and it states the side yards for a zero lot
+      line dwelling -- an alternative form we do not screen; the pod is
+      measured against the building-side and side-yard rows of 3.130.B and C,
+      which it can satisfy without this
+
+  # --- 3.130.B and C, the tables we read -----------------------------
+  #
+  # Both driveway-access notes attach to the "10 or 20" columns. In 3.130.B
+  # those are MDR (TC) and HDR (TC); in 3.130.C it is MDR (TC). Every column
+  # this layer encodes prints a bare number and carries no marker, which is
+  # what the quotes were re-cut to prove when they were opened on the header
+  # row.
+  - quote: "or/multnomah/troutdale/3.zoning-districts.txt#L339"
+    digest: "c4700f359115"
+    state: dismissed
+    reason: >-
+      attaches to the Town Center columns in both 3.130.B and 3.130.C, and no
+      Town Center district is encoded here; LDR-1, LDR-2, MDR and HDR print a
+      bare 10 front yard with no marker
+
+  - quote: "or/multnomah/troutdale/3.zoning-districts.txt#L340"
+    digest: "aa2b59153857"
+    state: dismissed
+    reason: >-
+      attaches to HDR (TC) in 3.130.B, which is not encoded here; the four
+      encoded columns print a bare 10 street side yard with no marker
+
+  - quote: "or/multnomah/troutdale/3.zoning-districts.txt#L370"
+    digest: "1ec1f39024ab"
+    state: dismissed
+    reason: >-
+      attaches to the MDR (TC) and HDR (TC) columns of 3.130.C, neither of
+      which is encoded here
+
+  - quote: "or/multnomah/troutdale/3.zoning-districts.txt#L368"
+    digest: "14a25d638372"
+    state: encoded
+    encoded_as: "min_frontage_ft variant, when [unit_lots], 15 ft"
+    reason: >-
+      3.130.C states no frontage at all and hands the whole row to this note,
+      so 15 is the only number the townhouse table gives; carried on the
+      unit_lots variant rather than exempting the standard on a lot whose
+      parking has not been placed
+
+  - quote: "or/multnomah/troutdale/3.zoning-districts.txt#L371"
+    digest: "03f8aaf48f27"
+    state: encoded
+    encoded_as: "setback_rear_ft variant, when [unit_lots, abuts_alley], 0 ft"
+    reason: >-
+      the "10 or 0" rear yard in 3.130.C is this note; the 0 is carried only
+      where an alley is observed, and the base stays 10
+
+  # --- 3.235, mixed use, and 3.330, commercial ------------------------
+  #
+  # Different chapters of the same document. No MU, CC or GC zone is encoded
+  # in this layer, so nothing here reaches a value we screen.
+  - quote: "or/multnomah/troutdale/3.zoning-districts.txt#L680"
+    digest: "d54b012eca57"
+    state: dismissed
+    reason: >-
+      exempts buildings standing before March 10, 1950 from a maximum building
+      size; the pod is new construction, and no mixed-use zone is encoded here
+
+  - quote: "or/multnomah/troutdale/3.zoning-districts.txt#L717"
+    digest: "3c86e9804fc1"
+    state: dismissed
+    reason: >-
+      the same pre-1950 exemption reprinted under the mixed-use residential
+      table; new construction, and no mixed-use zone is encoded here
+
+  - quote: "or/multnomah/troutdale/3.zoning-districts.txt#L927"
+    digest: "dfe2a55c9abb"
+    state: dismissed
+    reason: >-
+      note 1 of the commercial table 3.330.A, which sets the CC and GC side
+      yard where they abut a residential district; no commercial zone is
+      encoded here
+
+  - quote: "or/multnomah/troutdale/3.zoning-districts.txt#L929"
+    digest: "6e74632b6eea"
+    state: dismissed
+    reason: >-
+      note 2 of the commercial table 3.330.A, the same rule for the rear yard;
+      no commercial zone is encoded here
+
+  # Read and dismissed on scope, not on substance. It tightens setbacks on a
+  # lot fronting a street narrower than the City standard, which nothing
+  # measures -- if CC or GC is ever encoded, this comes back as unmeasured
+  # rather than as a dismissal, and it needs a right-of-way width layer.
+  - quote: "or/multnomah/troutdale/3.zoning-districts.txt#L931"
+    digest: "03922f04cf83"
+    state: dismissed
+    reason: >-
+      note 3 of the commercial table 3.330.A; no commercial zone is encoded
+      here, and the residential tables state no equivalent row

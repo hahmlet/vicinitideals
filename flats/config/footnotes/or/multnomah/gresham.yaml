@@ -1,0 +1,210 @@
+# Gresham -- Development Code footnotes.
+#
+# Gresham prints 213 footnotes across seven chapters, and 150 of them sit over
+# a value this corpus encodes. This file is the pass over 4.0100, the
+# residential districts. The other six chapters -- corridor, downtown,
+# Springwater, Pleasant Valley, Gresham Butte, middle-housing design -- are
+# still unread, and their notes go on blocking, which is the point.
+#
+# Two classes are ruled here, and both are ruled on where the marker sits
+# rather than on what the sentence says:
+#
+# Table 4.0120 is the use table. Every note in it qualifies a cell, and the
+# Quadplex and Townhouse rows print a bare P in all seven districts -- no
+# marker, no limitation. Fifteen notes therefore say nothing about the use
+# this screen encodes, however much they say about hotels, shelters, biomass
+# generators or cottage clusters.
+#
+# Table 4.0130 states the dimensions. Six of its notes only ever relax a
+# standard we enforce, so ignoring them can cost a lot we called too small,
+# never one we called buildable and is not.
+#
+# Deliberately left unread, because each is encoding work somebody has to do
+# rather than a rejection anybody can make:
+#   note 8  -- corner-lot townhouse width in MDR-24, 16 / 25 / 42 ft by access
+#   note 10 -- corner-lot frontage, 25 ft with alley or shared access, 32 without
+#   note 12 -- shoreline height standards, Section 10.1100
+#   the Table 4.0131 setback notes: sidewalk easements, double frontage lots,
+#   Minor Access Street frontage, and the distance between structures
+notes:
+  # --- Table 4.0120, the use table -----------------------------------
+  #
+  # One reason, said fifteen times on purpose: it is a class, and deleting the
+  # reason returns all fifteen to unread at once.
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L194"
+    digest: "bb47368a020a"
+    state: dismissed
+    reason: >-
+      Table 4.0120 marks the cells it limits; the Quadplex and Townhouse rows
+      are a bare P in all seven districts, so no note of this table reaches the
+      use this layer encodes
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L196"
+    digest: "c86d1c70c1d0"
+    state: dismissed
+    reason: >-
+      Table 4.0120 marks the cells it limits; the Quadplex and Townhouse rows
+      are a bare P in all seven districts, so no note of this table reaches the
+      use this layer encodes
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L198"
+    digest: "c55f8cf86f1f"
+    state: dismissed
+    reason: >-
+      Table 4.0120 marks the cells it limits; the Quadplex and Townhouse rows
+      are a bare P in all seven districts, so no note of this table reaches the
+      use this layer encodes
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L199"
+    digest: "5a31790fee8f"
+    state: dismissed
+    reason: >-
+      Table 4.0120 marks the cells it limits; the Quadplex and Townhouse rows
+      are a bare P in all seven districts, so no note of this table reaches the
+      use this layer encodes
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L202"
+    digest: "52103c413b16"
+    state: dismissed
+    reason: >-
+      Table 4.0120 marks the cells it limits; the Quadplex and Townhouse rows
+      are a bare P in all seven districts, so no note of this table reaches the
+      use this layer encodes
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L203"
+    digest: "76ba7fecb7f4"
+    state: dismissed
+    reason: >-
+      Table 4.0120 marks the cells it limits; the Quadplex and Townhouse rows
+      are a bare P in all seven districts, so no note of this table reaches the
+      use this layer encodes
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L205"
+    digest: "11c7e602ee7a"
+    state: dismissed
+    reason: >-
+      Table 4.0120 marks the cells it limits; the Quadplex and Townhouse rows
+      are a bare P in all seven districts, so no note of this table reaches the
+      use this layer encodes
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L206"
+    digest: "4f2281f317e0"
+    state: dismissed
+    reason: >-
+      Table 4.0120 marks the cells it limits; the Quadplex and Townhouse rows
+      are a bare P in all seven districts, so no note of this table reaches the
+      use this layer encodes
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L207"
+    digest: "f7ac81f0c27c"
+    state: dismissed
+    reason: >-
+      Table 4.0120 marks the cells it limits; the Quadplex and Townhouse rows
+      are a bare P in all seven districts, so no note of this table reaches the
+      use this layer encodes
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L208"
+    digest: "5624230b5dfe"
+    state: dismissed
+    reason: >-
+      Table 4.0120 marks the cells it limits; the Quadplex and Townhouse rows
+      are a bare P in all seven districts, so no note of this table reaches the
+      use this layer encodes
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L209"
+    digest: "e33fd67b18f9"
+    state: dismissed
+    reason: >-
+      Table 4.0120 marks the cells it limits; the Quadplex and Townhouse rows
+      are a bare P in all seven districts, so no note of this table reaches the
+      use this layer encodes
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L213"
+    digest: "97edc871fe97"
+    state: dismissed
+    reason: >-
+      Table 4.0120 marks the cells it limits; the Quadplex and Townhouse rows
+      are a bare P in all seven districts, so no note of this table reaches the
+      use this layer encodes
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L214"
+    digest: "b67191a64f63"
+    state: dismissed
+    reason: >-
+      Table 4.0120 marks the cells it limits; the Quadplex and Townhouse rows
+      are a bare P in all seven districts, so no note of this table reaches the
+      use this layer encodes
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L215"
+    digest: "95b34b73f0b5"
+    state: dismissed
+    reason: >-
+      Table 4.0120 marks the cells it limits; the Quadplex and Townhouse rows
+      are a bare P in all seven districts, so no note of this table reaches the
+      use this layer encodes
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L216"
+    digest: "59d496aa4a03"
+    state: dismissed
+    reason: >-
+      Table 4.0120 marks the cells it limits; the Quadplex and Townhouse rows
+      are a bare P in all seven districts, so no note of this table reaches the
+      use this layer encodes
+
+  # --- Table 4.0130, the dimensions ----------------------------------
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L373"
+    digest: "22aaf7bd0b1e"
+    state: dismissed
+    reason: >-
+      note 1, and it is about when a manufactured dwelling park must meet the
+      site minimum; the pod is neither
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L374"
+    digest: "be0e306681cb"
+    state: dismissed
+    reason: >-
+      note 2 lets an undersized lot of record be developed anyway; it can only
+      relax the minimum lot size this screen enforces, so ignoring it costs
+      lots we called too small and never the other way
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L376"
+    digest: "3aad28e9d598"
+    state: dismissed
+    reason: >-
+      note 3 switches off the minimum density for affordable housing -- a
+      relaxation, and one that turns on an election nobody has made
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L377"
+    digest: "27621538e5ed"
+    state: dismissed
+    reason: >-
+      note 4 switches off the minimum density on small partitions; a
+      relaxation of a standard the pod meets anyway at four units
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L379"
+    digest: "c94bfb390c6e"
+    state: dismissed
+    reason: >-
+      note 5 exempts lots of record under 11,000 square feet from the TR
+      minimum density column it marks; a relaxation
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L383"
+    digest: "2914b8813131"
+    state: dismissed
+    reason: >-
+      note 9 offers a discretionary reduction of the minimum street frontage
+      under Section 10.1520; relief is priced after a standard is missed, not
+      folded into which standard applies
+
+  # Read, and it constrains platting rather than fit. The four units share one
+  # driveway to a rear court by construction -- that is the typology, not an
+  # aspiration -- so a townhouse lot narrower than 22 feet has the shared
+  # access this note requires. Nothing dimensional follows from it.
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L381"
+    digest: "c76b9f715dd4"
+    state: dismissed
+    reason: >-
+      note 7 requires townhouse lots under 22 feet wide to take access from an
+      alley or a shared access; the pod's four units are served by one shared
+      driveway to a rear court, so it is satisfied by the design rather than
+      by the parcel
