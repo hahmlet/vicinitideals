@@ -306,6 +306,21 @@ zones:
   R5:
     section:
     - '16.22.040'
+    min_density_du_per_acre:
+      # Table 16.22.040-2, "Residential density (minimum)", R-5 column: None.
+      # The zone states no floor, which is not a floor of zero -- it is the
+      # absence of the test.
+      exempt: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L642,L647"
+    max_density_du_per_acre:
+      # No ceiling is printed for the quadplex on one lot. The townhome row is
+      # a different standard for a different plat, carried as the variant.
+      exempt: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L642,L646,L647"
+      variants:
+        - value: 25
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L642,L646"
     cite_default:
       cite: HV LDC 16.22.040 Table 16.22.040-2 (Medium Density)
       url: https://ecode360.com/print/HA4934?guid=43529907
@@ -342,6 +357,23 @@ zones:
   MURS:
     section:
     - '16.22.040'
+    min_density_du_per_acre:
+      # Table 16.22.040-2, "Residential density (minimum)", MUR-S column: 6
+      # du/net acre, and 16.22.040.A.2 states the same figure in prose. Four
+      # units clear it up to 29,040 sq ft of lot and miss it above that, where
+      # the district wants more of them than the pod has. Note 1 on the row
+      # reaches neither half of the pod: it sends single-family detached
+      # density to 16.63.020(F) and asks cottage clusters for four units per
+      # gross acre.
+      value: 6
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L642,L647"
+    max_density_du_per_acre:
+      exempt: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L642,L646,L647"
+      variants:
+        - value: 25
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L642,L646"
     cite_default:
       cite: HV LDC 16.22.040 (MUR-S, Mixed Use Residential-Single-Family); allows detached SFD
       url: https://ecode360.com/print/HA4934?guid=43529907

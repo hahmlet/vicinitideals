@@ -99,3 +99,45 @@ def test_the_townhouse_row_governs_the_split_plat(rules: RuleSet) -> None:
     split = rules.resolve(FAIRVIEW, "R-10", ("unit_lots",), lot={"lot_sqft": 10000})
 
     assert split.values["max_density_du_per_acre"].value == 17.6
+
+
+HAPPY_VALLEY = "or/clackamas/happy-valley"
+TROUTDALE = "or/multnomah/troutdale"
+
+
+def test_a_zone_that_states_no_floor_is_exempt_not_zero(rules: RuleSet) -> None:
+    """Happy Valley prints "None" in R-5's minimum density cell and 6 du/net
+    acre in MUR-S's. Two columns of one row, and only one of them is a test."""
+    r5 = rules.resolve(HAPPY_VALLEY, "R5")
+    murs = rules.resolve(HAPPY_VALLEY, "MURS")
+
+    assert "min_density_du_per_acre" in r5.exempted
+    assert "min_density_du_per_acre" not in r5.values
+    assert murs.values["min_density_du_per_acre"].value == 6
+
+
+def test_troutdale_exempts_the_pod_from_density_entirely(rules: RuleSet) -> None:
+    """3.140.B.4 switches maximum density off for duplex, triplex, quadplex and
+    cottage cluster projects. That also disposes of the minimum, which 3.140.A.2
+    states as eighty percent of the maximum: eighty percent of a standard this
+    housing type is exempt from has no operand, so no floor is encoded."""
+    for zone in ("LDR-1", "LDR-2", "MDR", "HDR"):
+        held = rules.resolve(TROUTDALE, zone)
+
+        assert "max_density_du_per_acre" in held.exempted, zone
+        assert "min_density_du_per_acre" not in held.values, zone
+
+
+def test_the_townhouse_multiple_is_encoded_only_where_it_is_printed(
+    rules: RuleSet,
+) -> None:
+    """3.140.B.3 gives LDR-1 and LDR-2 four times the detached density and MDR
+    three times it — multiples of a figure this layer does not encode, so
+    neither is written down. HDR falls to "all other districts", where 25 is
+    printed."""
+    hdr = rules.resolve(TROUTDALE, "HDR", ("unit_lots",))
+
+    assert hdr.values["max_density_du_per_acre"].value == 25
+    for zone in ("LDR-1", "LDR-2", "MDR"):
+        split = rules.resolve(TROUTDALE, zone, ("unit_lots",))
+        assert "max_density_du_per_acre" in split.exempted, zone
