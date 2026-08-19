@@ -227,3 +227,46 @@ def test_the_manufactured_home_park_states_no_height_at_all(rules: RuleSet) -> N
 
     assert resolved.get("max_height_ft") is None
     assert "max_height_ft" in resolved.exempted
+
+
+LAKE_OSWEGO = "or/clackamas/lake-oswego"
+
+
+def test_lake_oswego_leaves_the_pod_two_feet(rules: RuleSet) -> None:
+    """This city splits its districts across three dimensional tables and
+    this layer holds one zone from each band. All three print the same base
+    height on a flat lot -- 28 feet -- so the pod's 26 clears by two, the
+    tightest margin any standard in this corpus leaves it.
+
+    The two rows under Flat Lot are not looser numbers for the same measure.
+    "Lot with Sloping Topography" sets a plane 28 ft above the highest natural
+    grade and reaches 32 where the ground falls away, and "Footprint, Sloped"
+    is 35. Both need a topography this screen does not read, and both only
+    ever raise a building.
+    """
+    assert {
+        zone: rules.resolve(LAKE_OSWEGO, zone).get("max_height_ft")
+        for zone in ("R-0", "R-3", "R-5", "R-7.5")
+    } == {"R-0": 28, "R-3": 28, "R-5": 28, "R-7.5": 28}
+
+    assert all(28 - design.height_ft == 2 for design in load_catalog())
+
+
+def test_each_lake_oswego_height_cites_the_table_that_governs_its_band(
+    rules: RuleSet,
+) -> None:
+    """Four zones, three tables. Reading one band's cell for another zone is
+    the mistake available here, and it is invisible when every number happens
+    to agree -- so the citations are asserted, not just the values."""
+    zones = load_rules()[LAKE_OSWEGO].zones
+    cells = {
+        zone: zones[zone].values["max_height_ft"].prov.quote.split("#")[1]
+        for zone in ("R-7.5", "R-5", "R-3", "R-0")
+    }
+
+    assert cells == {
+        "R-7.5": "L205,L207",   # Table 50.04.001-1, first of R-7.5 / R-10 / R-15
+        "R-5": "L585,L587",     # Table 50.04.001-3, second of R-6 / R-5 / R-DD
+        "R-3": "L1418,L1421",   # Table 50.04.001-11, second of R-W / R-3 / R-2 / R-0
+        "R-0": "L1418,L1423",   # the same row, fourth column
+    }

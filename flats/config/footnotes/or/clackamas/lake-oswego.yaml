@@ -114,8 +114,12 @@ notes:
     state: dismissed
     reason: >-
       how base height is measured on sloping ground -- a flat plane 28 ft over
-      the highest natural grade, capped at 32. A height measurement rule, and
-      height is not encoded for this zone
+      the highest natural grade, capped at 32. Still declined now that the
+      flat-lot 28 is encoded, and for a better reason than the one first
+      written here: this is not a second number for the same measure, it is a
+      different measure, and the only direction it moves a building is upward
+      -- to 32 where the ground falls away under it. A relaxation that needs a
+      topography nothing here reads
 
   - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L245"
     digest: "53220937d37d"
@@ -180,8 +184,10 @@ notes:
     digest: "41fa8ae3a9df"
     state: dismissed
     reason: >-
-      how base height is measured on sloping ground. A height measurement
-      rule, and height is not encoded for this zone
+      how base height is measured on sloping ground. Still declined now that
+      the flat-lot 28 is encoded: a different measure rather than a second
+      number for the same one, and one that only ever raises a building --
+      to 32 where the ground falls away. It needs a topography nothing reads
 
   - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L614"
     digest: "2a25acc9b2d6"
@@ -258,8 +264,11 @@ notes:
     digest: "6db2c0b7f5ee"
     state: dismissed
     reason: >-
-      how base height is measured on sloping ground. A height measurement
-      rule, and height is not encoded for these zones
+      how base height is measured on sloping ground. Still declined now that
+      the flat-lot 28 is encoded for R-3 and R-0: a different measure rather
+      than a second number for the same one, and one that only ever raises a
+      building -- to 32 where the ground falls away. It needs a topography
+      nothing reads
 
   - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1458"
     digest: "3d8294473e1c"
