@@ -116,7 +116,8 @@ class Note:
     layer: str
     doc: str
     line: int
-    number: int
+    #: As the codifier printed it -- "1", "12", "A".
+    mark: str
     text: str
     state: str
     reason: str = ""
@@ -249,7 +250,7 @@ def _note(
             layer=layer,
             doc=body.doc,
             line=body.line,
-            number=body.number,
+            mark=body.mark,
             text=body.text,
             state=ruling.state,
             reason=ruling.reason,
@@ -263,7 +264,7 @@ def _note(
         layer=layer,
         doc=body.doc,
         line=body.line,
-        number=body.number,
+        mark=body.mark,
         text=body.text,
         state="unread",
         amended=stale is not None,
@@ -291,7 +292,7 @@ def render(rows: Sequence[Note], *, queue: bool = False) -> str:
     if queue:
         blocking = [r for r in rows if r.blocking]
         lines = [
-            f"{r.quote:<52} #{r.number:<3} {'AMENDED ' if r.amended else ''}{r.text[:90]}"
+            f"{r.quote:<52} #{r.mark:<3} {'AMENDED ' if r.amended else ''}{r.text[:90]}"
             for r in blocking
         ]
         lines.append("")

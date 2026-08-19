@@ -81,6 +81,15 @@ NOTES_HEAD = re.compile(
 #: earns the looser rule.
 BLOCK_NOTE = re.compile(r"^\[?\(?(?P<n>\d{1,2})\)?\]?[.):]?\s+(?P<text>\S.*)$")
 
+#: The lettered form, inside a block: Wilsonville's Table 8A runs A through P.
+#: A letter earns far less benefit of the doubt than a digit does, because
+#: every code in the corpus letters its ordinary subsections -- so this one
+#: demands the punctuation a digit may omit. "A. Minimum lot size may be
+#: reduced" is a note; "A minimum lot size of 5,000 square feet" is a
+#: sentence, and only the period tells them apart. The space before it is
+#: extraction's, not the codifier's: Wilsonville prints "F . Front porches".
+LETTER_NOTE = re.compile(r"^\(?(?P<n>[A-Z])\)?\s?[.)]\s+(?P<text>\S.*)$")
+
 #: A self-identifying note, which needs no block: Portland prints "[3] Additional
 #: FAR and height may be allowed. See 33.110.265.F." under the table with no
 #: heading over it.
@@ -94,6 +103,10 @@ BRACKET_NOTE = re.compile(r"^\[(?P<n>\d{1,2})\]\s+(?P<text>\S.*)$")
 #: reduces a corner lot's front setback to eight feet on a local street, which
 #: is precisely the kind of qualifier a screen must not miss.
 STACKED_NOTE = re.compile(r"^\[?\(?(?P<n>\d{1,2})\)?\]?[.):]?$")
+
+#: The same, lettered and on its own line. Punctuation is required here for
+#: the same reason: a bare "A" on a line is a table cell in half the corpus.
+STACKED_LETTER = re.compile(r"^\(?(?P<n>[A-Z])\)?\s?[.)]$")
 
 #: What ends a block. A note runs onto the next line often enough that an
 #: unrecognised line has to be read as continuation, so the block needs an
@@ -170,7 +183,19 @@ CELL_VOCAB = re.compile(
 #: "[4.0400]-5" and the running header it sits under. Read as note text it
 #: would be harmless; read as the end of the block it loses every note after
 #: the page break.
-FURNITURE = re.compile(r"^\[[^\]]+\]-\d+$|Development Code\s+\(\d|^Page \d+$", re.I)
+#: Municode's is the section mark, the section number and the publication it
+#: is running: "§ 4.127 WILSONVILLE CODE", "§ 4.127PLANNING AND LAND
+#: DEVELOPMENT", with the page stamp "CD4:178.3Supp. No. 5" under it. Both
+#: land in the middle of a notes list every time a list crosses a page, and
+#: the section mark is what tells them from the heading of the next section --
+#: a codifier prints it on the header and not on the heading. The replacement
+#: character is there because extraction loses the glyph about half the time.
+FURNITURE = re.compile(
+    r"^\[[^\]]+\]-\d+$|Development Code\s+\(\d|^Page \d+$"
+    r"|^(?:§|\ufffd)\s*\d{1,3}\.\d{2,4}"
+    r"|^[A-Z]{1,3}\d+:\d+",
+    re.I,
+)
 
 #: Two or more spaces: the column gap that tells a table row from a sentence.
 GAP = re.compile(r"\s{2,}")
@@ -182,7 +207,11 @@ class Marker:
 
     doc: str
     line: int
-    number: int
+    #: As the codifier printed it: "1", "12", "A". A string because a code
+    #: that letters its notes is not a code with unnumbered notes, and
+    #: renumbering them to suit the type would lose which note a reviewer is
+    #: being sent to read.
+    mark: str
     kind: str
     text: str
 
@@ -197,7 +226,8 @@ class Body:
 
     doc: str
     line: int
-    number: int
+    #: As printed -- see `Marker.mark`.
+    mark: str
     text: str
 
     @property
@@ -220,8 +250,8 @@ class Block:
     bodies: tuple[Body, ...]
 
     @property
-    def numbers(self) -> frozenset[int]:
-        return frozenset(b.number for b in self.bodies)
+    def marks(self) -> frozenset[str]:
+        return frozenset(b.mark for b in self.bodies)
 
 
 @dataclass(frozen=True, slots=True)
@@ -291,6 +321,17 @@ def _blocks(lines: Sequence[str]) -> list[Block]:
     return found
 
 
+def _order(mark: str) -> tuple[int, int]:
+    """A sort key over mixed marks: digits first, then letters.
+
+    Only ever used to ask whether the numbering restarted, which is how a
+    block knows it has ended. A block that runs 1, 2, 3 then A, B is two
+    lists in one, and reading them as one list is closer to the truth than
+    cutting the second one off unread.
+    """
+    return (0, int(mark)) if mark.isdigit() else (1, ord(mark))
+
+
 def _bears_a_marker(raw: str) -> bool:
     """Whether this line carries a footnote reference of any shape."""
     stripped = raw.strip()
@@ -322,7 +363,7 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
     """
     bodies: list[Body] = []
     texts: list[list[str]] = []
-    highest = 0
+    highest = (-1, -1)
     i = start
     while i < len(lines) and i - start < BLOCK_LIMIT:
         stripped = lines[i].strip()
@@ -331,15 +372,26 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
             continue
         if ENDS_BLOCK.match(stripped) or (bodies and NOTES_HEAD.match(stripped)):
             break
-        opening = STACKED_NOTE.match(stripped) or BLOCK_NOTE.match(stripped)
+        opening = (
+            STACKED_NOTE.match(stripped)
+            or BLOCK_NOTE.match(stripped)
+            or STACKED_LETTER.match(stripped)
+            or LETTER_NOTE.match(stripped)
+        )
         if opening is not None:
-            number = int(opening.group("n"))
-            if bodies and number <= highest:
+            mark = opening.group("n")
+            if bodies and _order(mark) <= highest:
+                break
+            if bodies and mark.isalpha() != bodies[0].mark.isalpha():
+                # The list changed alphabet, so it is not the same list. A
+                # lettered paragraph under a numbered block is the next
+                # subsection, and swallowing it would both invent a note and
+                # cut the real one above it short.
                 break
             text = opening.groupdict().get("text") or ""
-            bodies.append(Body(doc="", line=i + 1, number=number, text=text))
+            bodies.append(Body(doc="", line=i + 1, mark=mark, text=text))
             texts.append([text] if text else [])
-            highest = number
+            highest = _order(mark)
             i += 1
             continue
         if not bodies:
@@ -355,7 +407,7 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
         texts[-1].append(stripped)
         i += 1
     joined = [
-        Body(doc=b.doc, line=b.line, number=b.number, text=" ".join(t))
+        Body(doc=b.doc, line=b.line, mark=b.mark, text=" ".join(t))
         for b, t in zip(bodies, texts)
     ]
     return joined, i
@@ -375,23 +427,23 @@ def _markers(lines: Sequence[str], inside: Sequence[tuple[int, int]]) -> list[Ma
         stripped = raw.strip()
         if not stripped:
             continue
-        seen: set[int] = set()
+        seen: set[str] = set()
 
-        def add(number: int, kind: str) -> None:
-            if number in seen:
+        def add(mark: str, kind: str) -> None:
+            if mark in seen:
                 return
-            seen.add(number)
-            out.append(Marker(doc="", line=i + 1, number=number, kind=kind, text=stripped))
+            seen.add(mark)
+            out.append(Marker(doc="", line=i + 1, mark=mark, kind=kind, text=stripped))
 
         # Brackets identify themselves and are read anywhere on the line. The
         # rest are read per cell, because every one of them is a rule about
         # what a cell *ends* with.
         for m in BRACKET_MARKER.finditer(stripped):
-            add(int(m.group("n")), "bracket")
+            add(m.group("n"), "bracket")
         marked_cells = list(CELL_MARKER.finditer(stripped))
         if GAP.search(raw) or len(CELL_VOCAB.findall(stripped)) > 1:
             for m in marked_cells:
-                add(int(m.group("n")), "cell")
+                add(m.group("n"), "cell")
 
         # A label carries markers too -- "Residential density (maximum)1" --
         # and in an HTML extraction it has no column gap to be found by, since
@@ -412,7 +464,7 @@ def _markers(lines: Sequence[str], inside: Sequence[tuple[int, int]]) -> list[Ma
                 if found is None:
                     continue
                 for part in found.group("n").split(","):
-                    add(int(part.strip()), kind)
+                    add(part.strip(), kind)
     return out
 
 
@@ -422,7 +474,7 @@ def census(text: str, *, layer: str = "", doc: str = "") -> Census:
     blocks = _blocks(lines)
     inside = tuple((b.head - 1, b.end) for b in blocks)
     markers = [
-        Marker(doc=doc, line=m.line, number=m.number, kind=m.kind, text=m.text)
+        Marker(doc=doc, line=m.line, mark=m.mark, kind=m.kind, text=m.text)
         for m in _markers(lines, inside)
     ]
     blocks = tuple(
@@ -431,7 +483,7 @@ def census(text: str, *, layer: str = "", doc: str = "") -> Census:
             end=b.end,
             region=b.region,
             bodies=tuple(
-                Body(doc=doc, line=body.line, number=body.number, text=body.text)
+                Body(doc=doc, line=body.line, mark=body.mark, text=body.text)
                 for body in b.bodies
             ),
         )
@@ -443,14 +495,14 @@ def census(text: str, *, layer: str = "", doc: str = "") -> Census:
     claimed: set[int] = set()
     for block in blocks:
         low, high = block.region
-        pointing = {m.number for m in markers if low <= m.line - 1 < high}
+        pointing = {m.mark for m in markers if low <= m.line - 1 < high}
         for body in block.bodies:
-            if body.number not in pointing:
+            if body.mark not in pointing:
                 unmarked.append(body)
         claimed.update(range(low, high))
     for marker in markers:
         block = _governing(blocks, marker.line - 1)
-        if block is None or marker.number not in block.numbers:
+        if block is None or marker.mark not in block.marks:
             unbodied.append(marker)
 
     return Census(

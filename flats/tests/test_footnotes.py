@@ -33,10 +33,10 @@ def test_a_headed_block_with_the_number_on_the_text_line() -> None:
         ]
     )
     seen = census(text, doc="d.txt")
-    assert [b.number for b in seen.bodies] == [1, 2]
+    assert [b.mark for b in seen.bodies] == ["1", "2"]
     assert seen.bodies[1].text.startswith("The maximum is 45 feet")
     # Note 1 has no marker anywhere above it, which is a finding, not a shrug.
-    assert [b.number for b in seen.unmarked] == [1]
+    assert [b.mark for b in seen.unmarked] == ["1"]
     assert not seen.reconciled
 
 
@@ -65,7 +65,7 @@ def test_the_number_on_its_own_line_is_still_a_note() -> None:
         ]
     )
     seen = census(text, doc="d.txt")
-    assert [b.number for b in seen.bodies] == [8, 11]
+    assert [b.mark for b in seen.bodies] == ["8", "11"]
     assert "eight feet" in seen.bodies[1].text
     assert "local or connector street" in seen.bodies[1].text
 
@@ -80,9 +80,9 @@ def test_a_bracket_run_needs_no_heading() -> None:
         ]
     )
     seen = census(text, doc="d.txt")
-    assert [b.number for b in seen.bodies] == [3, 4]
-    assert [m.number for m in seen.markers] == [3]
-    assert [b.number for b in seen.unmarked] == [4]
+    assert [b.mark for b in seen.bodies] == ["3", "4"]
+    assert [m.mark for m in seen.markers] == ["3"]
+    assert [b.mark for b in seen.unmarked] == ["4"]
 
 
 def test_a_heading_over_prose_is_not_a_block() -> None:
@@ -122,8 +122,8 @@ def test_a_marker_belongs_to_the_block_below_it_not_the_one_above() -> None:
     assert len(seen.blocks) == 2
     # The marker under the first block is answered by the second block's
     # numbering, and 2 is not in it.
-    assert [m.number for m in seen.unbodied] == [2]
-    assert [b.number for b in seen.unmarked] == [1]
+    assert [m.mark for m in seen.unbodied] == ["2"]
+    assert [b.mark for b in seen.unmarked] == ["1"]
 
 
 def test_a_marker_below_every_block_has_no_block_at_all() -> None:
@@ -136,7 +136,7 @@ def test_a_marker_below_every_block_has_no_block_at_all() -> None:
         ]
     )
     seen = census(text, doc="d.txt")
-    assert [m.number for m in seen.unbodied] == [1]
+    assert [m.mark for m in seen.unbodied] == ["1"]
 
 
 # --- and the narrowness that keeps markers honest ----------------------
@@ -154,7 +154,7 @@ def test_a_neighbouring_cell_is_not_a_footnote_marker() -> None:
 def test_a_glued_marker_at_the_end_of_a_cell_is_read() -> None:
     text = "Front setback     20 feet7,8,9     15 feet"
     seen = census(text, doc="d.txt")
-    assert sorted(m.number for m in seen.markers) == [7, 8, 9]
+    assert sorted(m.mark for m in seen.markers) == ["7", "8", "9"]
 
 
 def test_three_letters_of_english_are_not_permission_codes() -> None:
@@ -177,7 +177,7 @@ def test_a_row_of_permissions_is_read_and_a_sentence_is_not() -> None:
     sentence that happens to contain one. Gresham prints the whole row on one
     line with single spaces: "Affordable Housing P/L2 P/L2 P3"."""
     row = "Affordable Housing P/L2 P/L2 P3"
-    assert sorted(m.number for m in census(row, doc="d.txt").markers) == [2, 3]
+    assert sorted(m.mark for m in census(row, doc="d.txt").markers) == ["2", "3"]
 
     sentence = "The lot must be platted under C2 of the partition standards."
     assert census(sentence, doc="d.txt").markers == ()
@@ -192,7 +192,7 @@ def test_a_label_carries_markers_and_a_zone_code_does_not() -> None:
         ]
     )
     seen = census(text, doc="d.txt")
-    assert sorted(m.number for m in seen.markers) == [3, 6]
+    assert sorted(m.mark for m in seen.markers) == ["3", "6"]
 
 
 def test_a_note_does_not_mark_itself() -> None:
@@ -201,7 +201,7 @@ def test_a_note_does_not_mark_itself() -> None:
     text = "\n".join(["NOTES:", "1 A note whose number is not a marker.", ""])
     seen = census(text, doc="d.txt")
     assert seen.markers == ()
-    assert [b.number for b in seen.unmarked] == [1]
+    assert [b.mark for b in seen.unmarked] == ["1"]
 
 
 # --- both directions, over the corpus ----------------------------------
@@ -235,7 +235,7 @@ def test_the_corner_lot_qualifier_the_stacked_shape_was_hiding(store: list) -> N
     happy = next(
         row for row in store if row.doc.endswith("happy-valley/16.22.residential.txt")
     )
-    eleven = [b for b in happy.bodies if b.number == 11 and "corner lot" in b.text.lower()]
+    eleven = [b for b in happy.bodies if b.mark == "11" and "corner lot" in b.text.lower()]
     assert eleven, "the stacked block is not being read"
     assert "eight feet" in eleven[0].text
     assert "local or connector street" in eleven[0].text
@@ -251,3 +251,95 @@ def test_documents_that_lost_their_markers_are_named(store: list) -> None:
     assert troutdale.bodies and not troutdale.markers
     assert not troutdale.reconciled
     assert len(troutdale.unmarked) == len(troutdale.bodies)
+
+
+def test_a_lettered_notes_block_is_a_notes_block():
+    """Wilsonville's Table 8A runs its notes A through P.
+
+    Every RN value in the corpus is read off that table, and until the census
+    could see a letter, sixteen governing sentences were invisible — the
+    combined side yards, the cul-de-sac frontage reduction, the quadplex lot
+    size. A footnote nobody can see is not a footnote nobody has to read.
+    """
+    text = "\n".join(
+        [
+            "R-5 Small Lot 4,000 60' 60% 35 12 15 20",
+            "Notes:",
+            "A. Minimum lot size may be reduced to 80% of minimum lot size.",
+            "B. For townhouses the minimum lot size in all sub-districts is",
+            "1,500 square feet.",
+            "C. In R-5 and R-7 sub-districts the minimum lot size for",
+            "quadplexes is 7,000 square feet.",
+        ]
+    )
+
+    seen = census(text, doc="d.txt")
+
+    assert [b.mark for b in seen.bodies] == ["A", "B", "C"]
+    assert "1,500 square feet" in seen.bodies[1].text
+
+
+def test_extraction_spacing_does_not_hide_a_lettered_note():
+    """Wilsonville prints "F . Front porches may extend" — the space is the
+    extractor's, not the codifier's, and the note is note F either way."""
+    text = "\n".join(["Notes:", "A. Minimum lot size.", "F . Front porches may extend 5 feet."])
+
+    assert [b.mark for b in census(text, doc="d.txt").bodies] == ["A", "F"]
+
+
+def test_a_lettered_paragraph_under_a_numbered_block_is_not_note_c():
+    """Troutdale's "C. Townhouse dwellings:" heads the next table.
+
+    Read as a note it did two kinds of damage: it invented a footnote nobody
+    wrote, and it cut the real note above it short — voiding a ruling somebody
+    had already made against the whole sentence. A block keeps one alphabet.
+    """
+    text = "\n".join(
+        [
+            "Notes:",
+            "1. Front yard setback is 10 feet.",
+            "2. Street side yard setback is 20 feet.",
+            "C. Townhouse dwellings: Dimensional Standard LDR-1 LDR-2 MDR",
+        ]
+    )
+
+    seen = census(text, doc="d.txt")
+
+    assert [b.mark for b in seen.bodies] == ["1", "2"]
+    assert "Townhouse" not in seen.bodies[-1].text
+
+
+def test_a_sentence_beginning_with_a_capital_is_not_a_lettered_note():
+    """"A minimum lot size of 5,000 square feet" opens a paragraph, not a
+    list. Only the punctuation after the letter tells the two apart, which is
+    why a letter is held to a stricter rule than a digit."""
+    text = "\n".join(["Notes:", "A minimum lot size of 5,000 square feet applies."])
+
+    assert census(text, doc="d.txt").bodies == ()
+
+
+def test_a_page_break_does_not_end_a_notes_list():
+    """Wilsonville's Table 8A runs A through P and breaks pages after L.
+
+    What sits in the gap is the running header and the page stamp. Read as the
+    start of the next section they took M, N, O and P with them — the combined
+    side yards, the courtyard frontage, one driveway per street, and the garage
+    setback from a sidewalk easement.
+    """
+    text = "\n".join(
+        [
+            "Notes:",
+            "K. Front Setback is measured as the offset of the front lot line.",
+            "L. For cottage clusters all setbacks greater than 10 feet are",
+            "reduced to 10 feet",
+            " � 4.127PLANNING AND LAND DEVELOPMENT",
+            "CD4:178.3Supp. No. 5",
+            "M. On lots greater than 10,000 SF the minimum combined side yard",
+            "setbacks shall total 20 ft. with a minimum of 10 ft.",
+        ]
+    )
+
+    seen = census(text, doc="d.txt")
+
+    assert [b.mark for b in seen.bodies] == ["K", "L", "M"]
+    assert "combined side yard" in seen.bodies[-1].text

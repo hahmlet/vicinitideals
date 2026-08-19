@@ -49,7 +49,7 @@ notes:
       bare 10 front yard with no marker
 
   - quote: "or/multnomah/troutdale/3.zoning-districts.txt#L340"
-    digest: "aa2b59153857"
+    digest: "4273dfc63f83"
     state: dismissed
     reason: >-
       attaches to HDR (TC) in 3.130.B, which is not encoded here; the four
@@ -73,7 +73,7 @@ notes:
       parking has not been placed
 
   - quote: "or/multnomah/troutdale/3.zoning-districts.txt#L371"
-    digest: "03f8aaf48f27"
+    digest: "1b03340f4814"
     state: encoded
     encoded_as: "setback_rear_ft variant, when [unit_lots, abuts_alley], 0 ft"
     reason: >-

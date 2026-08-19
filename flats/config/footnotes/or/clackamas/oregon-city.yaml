@@ -95,7 +95,7 @@ notes:
       needs both the feature and the slope direction
 
   - quote: "or/clackamas/oregon-city/17.zoning.txt#L12523"
-    digest: "d784dd5ddf9d"
+    digest: "668265daf1ac"
     state: unmeasured
     fact: protected_water_feature
     reason: >-
