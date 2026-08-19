@@ -347,6 +347,12 @@
       ]
     },
     "LDR-5": {
+      "max_density_du_per_acre": [
+        "protected_water_feature"
+      ],
+      "min_density_du_per_acre": [
+        "protected_water_feature"
+      ],
       "min_frontage_ft": [
         "protected_water_feature"
       ],
@@ -383,7 +389,13 @@
       ]
     },
     "LDR-7": {
+      "max_density_du_per_acre": [
+        "protected_water_feature"
+      ],
       "max_height_ft": [
+        "protected_water_feature"
+      ],
+      "min_density_du_per_acre": [
         "protected_water_feature"
       ],
       "min_frontage_ft": [
@@ -422,7 +434,13 @@
       ]
     },
     "MDR-12": {
+      "max_density_du_per_acre": [
+        "protected_water_feature"
+      ],
       "max_height_ft": [
+        "protected_water_feature"
+      ],
+      "min_density_du_per_acre": [
         "protected_water_feature"
       ],
       "min_frontage_ft": [
@@ -461,7 +479,13 @@
       ]
     },
     "MDR-24": {
+      "max_density_du_per_acre": [
+        "protected_water_feature"
+      ],
       "max_height_ft": [
+        "protected_water_feature"
+      ],
+      "min_density_du_per_acre": [
         "protected_water_feature"
       ],
       "min_frontage_ft": [
@@ -500,7 +524,13 @@
       ]
     },
     "TLDR": {
+      "max_density_du_per_acre": [
+        "protected_water_feature"
+      ],
       "max_height_ft": [
+        "protected_water_feature"
+      ],
+      "min_density_du_per_acre": [
         "protected_water_feature"
       ],
       "min_frontage_ft": [
@@ -539,7 +569,13 @@
       ]
     },
     "TR": {
+      "max_density_du_per_acre": [
+        "protected_water_feature"
+      ],
       "max_height_ft": [
+        "protected_water_feature"
+      ],
+      "min_density_du_per_acre": [
         "protected_water_feature"
       ],
       "min_frontage_ft": [

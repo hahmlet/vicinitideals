@@ -188,15 +188,28 @@ notes:
     digest: "27621538e5ed"
     state: dismissed
     reason: >-
-      note 4 switches off the minimum density on small partitions; a
-      relaxation of a standard the pod meets anyway at four units
+      note 4 switches off the minimum density on the partition of a parent
+      parcel of 20,000 net sq ft or less in LDR-5, LDR-7 and TR, and 13,000
+      or less in TLDR. Declined on both readings: a partition is a division
+      into three lots or fewer and the split-plat path makes four, and even
+      where it did reach, switching a floor off is a relaxation
 
+  # Note 5 was ruled a relaxation of the TR column when nothing on that row
+  # was encoded. Both halves were wrong. The mark "acre5" sits at column 237
+  # of the note line, under MDR-24's "12.1 units per" at 237 and not under
+  # TR's "6.22" at 124 -- and now that the row is encoded, the sentence is a
+  # standard rather than a shrug.
   - quote: "or/multnomah/gresham/4.0100.residential.txt#L379"
     digest: "c94bfb390c6e"
-    state: dismissed
+    state: encoded
+    encoded_as: >-
+      MDR-24 min_density_du_per_acre variant, exempt below 11,000 sq ft
     reason: >-
-      note 5 exempts lots of record under 11,000 square feet from the TR
-      minimum density column it marks; a relaxation
+      note 5 marks MDR-24's minimum net density cell and states that the
+      standard does not apply to a lot of record under 11,000 square feet.
+      Encoded as an exemption on a lot band rather than as a floor of zero:
+      the standard does not reach the lot, which is a different sentence from
+      one every lot clears
 
   - quote: "or/multnomah/gresham/4.0100.residential.txt#L383"
     digest: "2914b8813131"

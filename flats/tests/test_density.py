@@ -245,3 +245,47 @@ def test_oregon_city_encodes_the_floor_and_leaves_the_ceiling_alone(
         assert "max_density_du_per_acre" not in held.values, zone
         assert "max_density_du_per_acre" not in held.exempted, zone
         assert held.values["min_density_du_per_acre"].measured_on == "net_developable_area"
+
+
+GRESHAM = "or/multnomah/gresham"
+
+
+def test_gresham_states_the_pod_s_two_plat_paths_as_separate_rows(
+    rules: RuleSet,
+) -> None:
+    """Table 4.0130 row D prints "Duplex, Triplex, Quadplex, Cottage Cluster"
+    and "Townhouse" as two rows. Five of the six districts print None against
+    the first and 25 units per acre against the second, so the building on one
+    lot has no ceiling and the same building on four lots does."""
+    for zone in ("LDR-5", "LDR-7", "TR", "TLDR", "MDR-12"):
+        whole = rules.resolve(GRESHAM, zone, lot={"lot_sqft": 12_000})
+        split = rules.resolve(GRESHAM, zone, ("unit_lots",), lot={"lot_sqft": 12_000})
+
+        assert "max_density_du_per_acre" in whole.exempted, zone
+        assert split.values["max_density_du_per_acre"].value == 25, zone
+
+
+def test_the_one_district_that_prints_a_figure_against_the_pod_s_own_row(
+    rules: RuleSet,
+) -> None:
+    """MDR-24 prints 24.2 against both rows, which is the district's own
+    maximum rather than the townhouse 25 every other column carries."""
+    whole = rules.resolve(GRESHAM, "MDR-24", lot={"lot_sqft": 12_000})
+    split = rules.resolve(GRESHAM, "MDR-24", ("unit_lots",), lot={"lot_sqft": 12_000})
+
+    assert whole.values["max_density_du_per_acre"].value == 24.2
+    assert split.values["max_density_du_per_acre"].value == 24.2
+
+
+def test_table_note_5_switches_the_floor_off_below_eleven_thousand_feet(
+    rules: RuleSet,
+) -> None:
+    """"This does not apply to lots of record less than 11,000 square feet in
+    size." The mark sits in MDR-24's column, not TR's — it was ruled against
+    the wrong column while nothing on the row was encoded."""
+    small = rules.resolve(GRESHAM, "MDR-24", lot={"lot_sqft": 10_000})
+    large = rules.resolve(GRESHAM, "MDR-24", lot={"lot_sqft": 11_000})
+
+    assert "min_density_du_per_acre" in small.exempted
+    assert "min_density_du_per_acre" not in small.values
+    assert large.values["min_density_du_per_acre"].value == 12.1

@@ -83,6 +83,11 @@ def test_no_corner_configuration_resolves_two_variants_at_once(rules: RuleSet) -
     # unit_lots and corner_lot both select a variant, so every zone needs the
     # pair stated too. Without it the resolver ties, carries the base, and
     # reports ambiguity -- which is honest, and useless.
+    #
+    # A lot size is passed because MDR-24's minimum density is banded: note 5
+    # switches it off below 11,000 sq ft, and a banded standard resolved with
+    # no lot in front of it reports ambiguity on purpose rather than quietly
+    # using the residual column. That is a different question from this one.
     for zone in ZONES:
         for conditions in (
             ("corner_lot",),
@@ -90,7 +95,7 @@ def test_no_corner_configuration_resolves_two_variants_at_once(rules: RuleSet) -
             ("unit_lots", "corner_lot"),
             ("unit_lots", "corner_lot", "abuts_alley"),
         ):
-            got = rules.resolve(GRESHAM, zone, conditions)
+            got = rules.resolve(GRESHAM, zone, conditions, lot={"lot_sqft": 12_000})
             assert not got.ambiguous, f"{zone} {conditions}: {got.ambiguous}"
 
 

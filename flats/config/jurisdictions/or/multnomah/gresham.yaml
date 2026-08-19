@@ -145,6 +145,33 @@ zones:
         - value: 0
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L242"
+    min_density_du_per_acre:
+      # Table 4.0130 row C, "All uses except Manufactured Dwelling
+      # Parks". A floor, and the pod is four units against it.
+      value: 6.22
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L244-L246"
+      # Article 3 computes net density on the parcel less the Natural
+      # Resource, Hillside and Geologic Risk overlays, dedicated
+      # right-of-way and the rest. Nothing here surveys those, so the lot's
+      # own area serves as the bound it is.
+      measured_on: net_developable_area
+    max_density_du_per_acre:
+      # Row D prints None against "Duplex, Triplex, Quadplex,
+      # Cottage Cluster". The pod on one lot has no ceiling here --
+      # exempt, not a large number.
+      exempt: true
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L254"
+      variants:
+        # The same building split onto four lots is townhouses, which
+        # row D holds separately.
+        - value: 25
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L257"
+      # Article 3 computes net density on the parcel less the Natural
+      # Resource, Hillside and Geologic Risk overlays, dedicated
+      # right-of-way and the rest. Nothing here surveys those, so the lot's
+      # own area serves as the bound it is.
+      measured_on: net_developable_area
     notes: 'quadfit confidence: verified | Quadplex P outright. Rear w/ alley 8 ft (not modeled). FAR
       1.0. Height 35 ft.'
     min_frontage_ft:
@@ -213,6 +240,33 @@ zones:
         - value: 0
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L242"
+    min_density_du_per_acre:
+      # Table 4.0130 row C, "All uses except Manufactured Dwelling
+      # Parks". A floor, and the pod is four units against it.
+      value: 4.35
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L244-L246"
+      # Article 3 computes net density on the parcel less the Natural
+      # Resource, Hillside and Geologic Risk overlays, dedicated
+      # right-of-way and the rest. Nothing here surveys those, so the lot's
+      # own area serves as the bound it is.
+      measured_on: net_developable_area
+    max_density_du_per_acre:
+      # Row D prints None against "Duplex, Triplex, Quadplex,
+      # Cottage Cluster". The pod on one lot has no ceiling here --
+      # exempt, not a large number.
+      exempt: true
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L254"
+      variants:
+        # The same building split onto four lots is townhouses, which
+        # row D holds separately.
+        - value: 25
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L257"
+      # Article 3 computes net density on the parcel less the Natural
+      # Resource, Hillside and Geologic Risk overlays, dedicated
+      # right-of-way and the rest. Nothing here surveys those, so the lot's
+      # own area serves as the bound it is.
+      measured_on: net_developable_area
     notes: 'quadfit confidence: verified | Min lot 7,000 sf. FAR 0.7 (tightest in city; still >1,000 sf
       building on min lot).'
     max_height_ft:
@@ -278,6 +332,33 @@ zones:
     setback_street_side_ft:
       value: 10
       quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+    min_density_du_per_acre:
+      # Table 4.0130 row C, "All uses except Manufactured Dwelling
+      # Parks". A floor, and the pod is four units against it.
+      value: 10
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L244-L246"
+      # Article 3 computes net density on the parcel less the Natural
+      # Resource, Hillside and Geologic Risk overlays, dedicated
+      # right-of-way and the rest. Nothing here surveys those, so the lot's
+      # own area serves as the bound it is.
+      measured_on: net_developable_area
+    max_density_du_per_acre:
+      # Row D prints None against "Duplex, Triplex, Quadplex,
+      # Cottage Cluster". The pod on one lot has no ceiling here --
+      # exempt, not a large number.
+      exempt: true
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L254"
+      variants:
+        # The same building split onto four lots is townhouses, which
+        # row D holds separately.
+        - value: 25
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L257"
+      # Article 3 computes net density on the parcel less the Natural
+      # Resource, Hillside and Geologic Risk overlays, dedicated
+      # right-of-way and the rest. Nothing here surveys those, so the lot's
+      # own area serves as the bound it is.
+      measured_on: net_developable_area
     notes: 'quadfit confidence: verified | NO minimum lot size, no FAR, no max density — most permissive
       LDR-family zone.'
     max_height_ft:
@@ -356,6 +437,33 @@ zones:
         - value: 0
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L242"
+    min_density_du_per_acre:
+      # Table 4.0130 row C, "All uses except Manufactured Dwelling
+      # Parks". A floor, and the pod is four units against it.
+      value: 6.22
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L244-L246"
+      # Article 3 computes net density on the parcel less the Natural
+      # Resource, Hillside and Geologic Risk overlays, dedicated
+      # right-of-way and the rest. Nothing here surveys those, so the lot's
+      # own area serves as the bound it is.
+      measured_on: net_developable_area
+    max_density_du_per_acre:
+      # Row D prints None against "Duplex, Triplex, Quadplex,
+      # Cottage Cluster". The pod on one lot has no ceiling here --
+      # exempt, not a large number.
+      exempt: true
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L254"
+      variants:
+        # The same building split onto four lots is townhouses, which
+        # row D holds separately.
+        - value: 25
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L257"
+      # Article 3 computes net density on the parcel less the Natural
+      # Resource, Hillside and Geologic Risk overlays, dedicated
+      # right-of-way and the rest. Nothing here surveys those, so the lot's
+      # own area serves as the bound it is.
+      measured_on: net_developable_area
     notes: 'quadfit confidence: verified | Min lot 4,000 sf. FAR 1.0.'
     max_height_ft:
       value: 35
@@ -582,6 +690,33 @@ zones:
         - value: 0
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L242"
+    min_density_du_per_acre:
+      # Table 4.0130 row C, "All uses except Manufactured Dwelling
+      # Parks". A floor, and the pod is four units against it.
+      value: 8.71
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L244-L246"
+      # Article 3 computes net density on the parcel less the Natural
+      # Resource, Hillside and Geologic Risk overlays, dedicated
+      # right-of-way and the rest. Nothing here surveys those, so the lot's
+      # own area serves as the bound it is.
+      measured_on: net_developable_area
+    max_density_du_per_acre:
+      # Row D prints None against "Duplex, Triplex, Quadplex,
+      # Cottage Cluster". The pod on one lot has no ceiling here --
+      # exempt, not a large number.
+      exempt: true
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L254"
+      variants:
+        # The same building split onto four lots is townhouses, which
+        # row D holds separately.
+        - value: 25
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L257"
+      # Article 3 computes net density on the parcel less the Natural
+      # Resource, Hillside and Geologic Risk overlays, dedicated
+      # right-of-way and the rest. Nothing here surveys those, so the lot's
+      # own area serves as the bound it is.
+      measured_on: net_developable_area
     notes: 'quadfit confidence: verified | Interior side 10 ft; street-side wall 20 ft (corner lots modeled
       at max(F, street-side)).'
     max_height_ft:
@@ -653,6 +788,42 @@ zones:
       # prints the same 11,000 under the same column.
       value: 11000
       quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L239"
+    min_density_du_per_acre:
+      # Table 4.0130 row C, "All uses except Manufactured Dwelling
+      # Parks". A floor, and the pod is four units against it.
+      value: 12.1
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L244-L246"
+      variants:
+        # Note 5: "this does not apply to lots of record less than
+        # 11,000 square feet in size". Exempt rather than zero -- the
+        # standard does not reach the lot, which is a different
+        # sentence from a floor every lot clears. 10,999 is the last
+        # whole square foot below 11,000; the band grammar has no
+        # exclusive bound and the residual side is the stricter one.
+        - exempt: true
+          band: {measure: lot_sqft, at_most: 10999}
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L244-L246"
+      # Article 3 computes net density on the parcel less the Natural
+      # Resource, Hillside and Geologic Risk overlays, dedicated
+      # right-of-way and the rest. Nothing here surveys those, so the lot's
+      # own area serves as the bound it is.
+      measured_on: net_developable_area
+    max_density_du_per_acre:
+      # Row D, "Duplex, Triplex, Quadplex, Cottage Cluster". The one
+      # district that prints a figure against the pod's own row.
+      value: 24.2
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L254"
+      variants:
+        # The same building split onto four lots is townhouses, which
+        # row D holds separately.
+        - value: 24.2
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L257"
+      # Article 3 computes net density on the parcel less the Natural
+      # Resource, Hillside and Geologic Risk overlays, dedicated
+      # right-of-way and the rest. Nothing here surveys those, so the lot's
+      # own area serves as the bound it is.
+      measured_on: net_developable_area
     notes: 'quadfit confidence: verified. Single-family detached is not permitted here and a quadplex
       is permitted natively rather than by state mandate.
 
