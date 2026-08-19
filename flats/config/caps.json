@@ -161,6 +161,42 @@
       ]
     }
   },
+  "or/clackamas/wilsonville": {
+    "RN": {
+      "max_coverage_pct": [
+        "access_easement",
+        "sidewalk_easement"
+      ],
+      "min_frontage_ft": [
+        "access_easement",
+        "sidewalk_easement"
+      ],
+      "min_lot_depth_ft": [
+        "access_easement",
+        "sidewalk_easement"
+      ],
+      "min_lot_sqft": [
+        "access_easement",
+        "sidewalk_easement"
+      ],
+      "min_lot_width_ft": [
+        "access_easement",
+        "sidewalk_easement"
+      ],
+      "setback_front_ft": [
+        "access_easement",
+        "sidewalk_easement"
+      ],
+      "setback_garage_entrance_ft": [
+        "access_easement",
+        "sidewalk_easement"
+      ],
+      "setback_rear_ft": [
+        "access_easement",
+        "sidewalk_easement"
+      ]
+    }
+  },
   "or/multnomah/gresham": {
     "CMF": {
       "min_frontage_ft": [

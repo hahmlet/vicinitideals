@@ -1,0 +1,294 @@
+# Wilsonville -- Development Code Chapter 4 footnotes.
+#
+# Fifty-one notes are captured here and twenty-seven of them sit over a value
+# this corpus encodes. The other twenty-four belong to Table 8B and Table 8C
+# (the Frog Pond East and South neighborhoods), to the Town Center
+# sub-districts MSD, N-MU, MU and C-MU, and to the parking maximums in
+# Section 4.155. None of them reaches a value here, and they stay unread
+# rather than being waved through.
+#
+# Nearly all of what follows is Table 8A, the Frog Pond West lot standards,
+# whose notes run A through P and were invisible to this system until the
+# census learned to read a letter. Every RN dimension in the corpus is read
+# off that table. Four of its sixteen notes are carried in the encoding, ten
+# are dismissed, and two are unmeasured -- both because the code moves the
+# line a setback is measured from onto an easement nobody here holds.
+#
+# Two dismissals are worth stating plainly, because neither is clean:
+#
+# Note C states 7,000 sq ft for a quadplex in the R-5 and R-7 sub-districts.
+# It is dismissed only because this zone is encoded on the R-10 column, where
+# the note is silent and the 8,000 single-family base governs. If the
+# sub-district a lot sits in ever becomes knowable, note C is an encoding and
+# not a dismissal.
+#
+# Note O limits a lot with front-loaded garages to one shared driveway per
+# street however many units are on it. That is a real constraint and it is
+# dismissed on the pod rather than on the code: the design this screen exists
+# to place takes a single shared driveway to a rear court. A site plan that
+# gave each unit its own apron would fail this note, and this file would be
+# the wrong place to notice.
+#
+# The parking table's note is the one dismissal that is purely about scope.
+# Section 4.125 Table V-2 sits between the setback provisions of 4.113 and the
+# zone tables that cite them, so the block's region reaches 137 values printed
+# pages earlier under different tables. Wilsonville encodes no parking
+# standard at all; if one is ever read off Table V-2, this ruling has to be
+# revisited rather than inherited.
+notes:
+  # --- Section 4.125 Table V-2, off-street parking -------------------
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L5290"
+    digest: "f3d1324c295a"
+    state: dismissed
+    reason: >-
+      the notes to the off-street parking table -- a higher minimum for court
+      facilities, and no additional parking where middle housing is created by
+      converting or adding to an existing single-family dwelling. This layer
+      encodes no parking standard, and the values the block's region reaches
+      are setbacks and lot dimensions read from Sections 4.113, 4.122 and
+      4.123, printed pages earlier under different tables
+
+  # --- Section 4.127 Table 6B, the middle-housing unit mix -----------
+  #
+  # One reason, said ten times on purpose: it is a class, and deleting the
+  # reason returns all ten to unread at once. Table 6B sets minimum numbers of
+  # middle housing, small and mobility-ready units a Stage I Master Plan must
+  # deliver across a subdistrict. Its notes say what counts toward those
+  # minimums and when a neighbouring subdistrict's surplus may be borrowed.
+  # The value they are joined to is RN's quadplex permission, which is `false`
+  # and comes from 4.127(.02)B.1.a.ii -- "quadplexes are not permitted". A
+  # note about how a master plan meets a minimum cannot permit a use the zone
+  # prohibits.
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L6807"
+    digest: "ae0097e7a0bb"
+    state: dismissed
+    reason: >-
+      Table 6B counts middle housing toward a Stage I Master Plan's minimum
+      unit mix; nothing in its notes permits a use, and the value they govern
+      is a prohibition stated in 4.127(.02)B.1.a.ii
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L6826"
+    digest: "9b9181572c4f"
+    state: dismissed
+    reason: >-
+      Table 6B counts middle housing toward a Stage I Master Plan's minimum
+      unit mix; nothing in its notes permits a use, and the value they govern
+      is a prohibition stated in 4.127(.02)B.1.a.ii
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L6829"
+    digest: "4e2786600854"
+    state: dismissed
+    reason: >-
+      Table 6B counts middle housing toward a Stage I Master Plan's minimum
+      unit mix; nothing in its notes permits a use, and the value they govern
+      is a prohibition stated in 4.127(.02)B.1.a.ii
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L6831"
+    digest: "5c3b5b22af37"
+    state: dismissed
+    reason: >-
+      Table 6B counts middle housing toward a Stage I Master Plan's minimum
+      unit mix; nothing in its notes permits a use, and the value they govern
+      is a prohibition stated in 4.127(.02)B.1.a.ii
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L6833"
+    digest: "9d4e6599b39f"
+    state: dismissed
+    reason: >-
+      Table 6B counts middle housing toward a Stage I Master Plan's minimum
+      unit mix; nothing in its notes permits a use, and the value they govern
+      is a prohibition stated in 4.127(.02)B.1.a.ii
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L6835"
+    digest: "4730b020d36c"
+    state: dismissed
+    reason: >-
+      Table 6B counts middle housing toward a Stage I Master Plan's minimum
+      unit mix; nothing in its notes permits a use, and the value they govern
+      is a prohibition stated in 4.127(.02)B.1.a.ii
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L6839"
+    digest: "77a5a639f6bc"
+    state: dismissed
+    reason: >-
+      Table 6B counts middle housing toward a Stage I Master Plan's minimum
+      unit mix; nothing in its notes permits a use, and the value they govern
+      is a prohibition stated in 4.127(.02)B.1.a.ii
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L6854"
+    digest: "f5c49ec693a0"
+    state: dismissed
+    reason: >-
+      Table 6B counts middle housing toward a Stage I Master Plan's minimum
+      unit mix; nothing in its notes permits a use, and the value they govern
+      is a prohibition stated in 4.127(.02)B.1.a.ii
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L6867"
+    digest: "2c3e918c8cd0"
+    state: dismissed
+    reason: >-
+      Table 6B counts middle housing toward a Stage I Master Plan's minimum
+      unit mix; nothing in its notes permits a use, and the value they govern
+      is a prohibition stated in 4.127(.02)B.1.a.ii
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L6871"
+    digest: "8e88f1aab514"
+    state: dismissed
+    reason: >-
+      Table 6B counts middle housing toward a Stage I Master Plan's minimum
+      unit mix; nothing in its notes permits a use, and the value they govern
+      is a prohibition stated in 4.127(.02)B.1.a.ii
+
+  # --- Section 4.127 Table 8A, the Frog Pond West lot standards ------
+  #
+  # Ruled one at a time. This is the table the whole zone is read from, and
+  # the notes are where most of what it says about a townhouse lives.
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7238"
+    digest: "fa55835adb9f"
+    state: dismissed
+    reason: >-
+      note A lets the minimum lot size drop to 80 percent to preserve natural
+      resources, for cluster housing, or to trade one undersized lot against
+      one that meets the minimum. Every branch loosens a standard this screen
+      enforces, so declining the relief can only call a lot too small -- never
+      buildable when it is not
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7243"
+    digest: "7bc9e14efc98"
+    state: encoded
+    encoded_as: "min_lot_sqft variant, when [unit_lots], 1,500 sq ft"
+    reason: >-
+      note B states the townhouse minimum lot size for all sub-districts, and
+      it is the number the split-plat path is screened against
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7244"
+    digest: "a71324764e2a"
+    state: dismissed
+    reason: >-
+      note C states 7,000 sq ft for a quadplex in R-5 and R-7. This zone is
+      encoded on the R-10 Large Lot column, which the note does not name, so
+      the 8,000 sq ft single-family base governs and is the larger number
+      besides. If the sub-district a lot sits in becomes knowable, this note
+      is an encoding rather than a dismissal
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7245"
+    digest: "e69c1262c142"
+    state: dismissed
+    reason: >-
+      note D states the minimum lot size for a triplex, which is not the
+      housing type this screen places
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7246"
+    digest: "01663669556d"
+    state: dismissed
+    reason: >-
+      note E raises maximum lot coverage by 10 percent where several buildings
+      are built, and exempts cottage clusters outright. Both loosen a ceiling
+      this screen enforces, and the pod is one building
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7248"
+    digest: "9c897ef423ce"
+    state: dismissed
+    reason: >-
+      note F lets a front porch extend 5 feet into the front setback. It
+      relaxes the setback for a projection the pod does not have, and the
+      envelope is screened against the unrelaxed number
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7249"
+    digest: "a5381e9cff3c"
+    state: encoded
+    encoded_as: "setback_garage_entrance_ft variant, when [abuts_alley], 18 ft"
+    reason: >-
+      note G sets the garage setback from an alley at 18 feet so a parking
+      apron fits, which is the same 18 the table's own alley column prints
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7251"
+    digest: "84c9cfab8151"
+    state: dismissed
+    reason: >-
+      note H allows vertical encroachments of up to ten additional feet over
+      a tenth of the footprint, and this layer encodes no height standard for
+      the zone. A relief on a ceiling nobody is testing against changes no
+      answer
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7253"
+    digest: "9f937f4da067"
+    state: encoded
+    encoded_as: "min_lot_width_ft and min_frontage_ft variants, when [unit_lots], 20 ft"
+    reason: >-
+      note I states the townhouse minimum lot width for all sub-districts.
+      Table 8A heads that column "Min. Lot Width I, J, N" and Table 8B spells
+      it out as lot width and street frontage together, so the 20 ft is
+      carried into both fields
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7254"
+    digest: "bef8175d7056"
+    state: dismissed
+    reason: >-
+      note J drops the frontage requirement to 24 feet on a cul-de-sac and
+      waives it entirely for a lot fronting a platted private drive or a
+      cluster-housing pedestrian access. Both loosen the standard, and neither
+      condition is one this screen observes -- declining them costs a lot
+      called too narrow, never a lot called buildable that is not
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7257"
+    digest: "950f8fbeb718"
+    state: unmeasured
+    fact: access_easement
+    reason: >-
+      note K measures the front setback from the front lot line OR from a
+      vehicular or pedestrian access easement line, whichever the lot has. An
+      easement line sits inside the lot, so the envelope starts further in
+      than the plat suggests and by a distance nothing here holds
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7259"
+    digest: "d8f9534c7134"
+    state: dismissed
+    reason: >-
+      note L reduces setbacks over 10 feet to 10 feet for cottage clusters and
+      accessory dwelling units, neither of which is the housing type this
+      screen places
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7263"
+    digest: "ef5b0c4618ba"
+    state: encoded
+    encoded_as: >-
+      setback_side_ft 5 ft base, 10 ft banded over 10,000 sq ft, 10 ft when
+      [corner_lot]; setback_side_total_ft 20 ft banded over 10,000 sq ft,
+      exempt below the band
+    reason: >-
+      note M is three standards in one sentence and all three are now carried:
+      the 5 ft floor on an ordinary lot, the 10 ft on a large lot or a corner,
+      and the 20 ft the two side yards must add up to on a large lot. The
+      frontage half of the large-lot test -- 70 ft or wider -- is dropped, so
+      the band fires on area alone, which is the stricter reading
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7266"
+    digest: "c62c02dbe9c5"
+    state: dismissed
+    reason: >-
+      note N measures frontage at the front door face for cluster housing
+      arranged on a courtyard, which is a different housing type from the one
+      this screen places and a measurement that only helps a lot meet the
+      standard
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7269"
+    digest: "53e21f616110"
+    state: dismissed
+    reason: >-
+      note O limits a lot with front-loaded garages to one shared driveway and
+      apron per street however many units it holds. The pod this screen places
+      takes exactly one shared driveway to a rear court, so the note is
+      satisfied by the design rather than by the lot -- a site plan giving each
+      unit its own apron would fail it, and would have to be caught where the
+      plan is drawn
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7271"
+    digest: "8be9bb18ea5b"
+    state: unmeasured
+    fact: sidewalk_easement
+    reason: >-
+      note P sets the garage back 18 feet from any sidewalk easement paralleling
+      the street. Where such an easement exists the garage setback is measured
+      from a line inside the lot rather than from the frontage, and no layer
+      here holds recorded easements

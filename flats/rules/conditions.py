@@ -257,6 +257,20 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "access_easement",
+        "site_fact",
+        "A vehicular or pedestrian access easement crosses the lot, and the "
+        "code measures the setback from its line rather than from the "
+        "property line. Wilsonville's Table 8A note K does exactly that for "
+        "the front setback in the Frog Pond neighborhoods, which starts the "
+        "envelope somewhere inside the lot -- how far inside depends on an "
+        "easement nothing here holds. Distinct from the sidewalk easement: "
+        "that one carries a footpath at the frontage, this one can run "
+        "anywhere and carries vehicles.",
+        evidence="jurisdiction recorded-easement layer -- none held",
+        assume=None,
+    ),
+    ConditionDef(
         "utility_easement",
         "site_fact",
         "A recorded public utility easement crosses the buildable area. "

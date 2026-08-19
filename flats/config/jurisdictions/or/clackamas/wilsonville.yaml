@@ -808,6 +808,21 @@ zones:
         - value: 10
           when: [corner_lot]
           quote: "or/clackamas/wilsonville/4.planning.txt#L7263-L7265"
+    setback_side_total_ft:
+      # The third rule in note M, and the one the per-side numbers cannot
+      # carry: on a lot over 10,000 sq ft the two side yards must add up to
+      # 20 ft, not merely clear 10 apiece. Exempt below the band because the
+      # note states no combined figure for an ordinary lot -- the code asks
+      # nothing there, which is a different answer from asking zero. The
+      # frontage half of the band's test (70 ft or wider) is dropped for the
+      # same reason it is dropped on setback_side_ft: area alone is the
+      # stricter reading.
+      exempt: true
+      quote: "or/clackamas/wilsonville/4.planning.txt#L7263-L7265"
+      variants:
+        - value: 20
+          band: {measure: lot_sqft, more_than: 10000}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L7263-L7265"
     setback_street_side_ft:
       value: 10
       quote: "or/clackamas/wilsonville/4.planning.txt#L7263-L7265"
