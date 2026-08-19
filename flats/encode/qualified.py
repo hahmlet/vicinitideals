@@ -24,16 +24,20 @@ Run it::
     uv run python -m flats.encode.qualified
     uv run python -m flats.encode.qualified --layer or/multnomah/gresham
     uv run python -m flats.encode.qualified --blocking
+    uv run python -m flats.encode.qualified --write-caps
 """
 
 from __future__ import annotations
 
+import json
 import sys
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Iterable, Sequence
 
 from flats.encode.dispositions import Note, notes
 from flats.encode.footnotes import Census, survey
+from flats.rules.caps import LEDGER as CAPS
 from flats.rules.loader import load_rules
 from flats.rules.model import LIKE, Layer
 
@@ -55,6 +59,16 @@ class Qualified:
     @property
     def clear(self) -> bool:
         return not self.blocking
+
+    @property
+    def capping(self) -> tuple[Note, ...]:
+        """Notes somebody read and could not answer -- see `caps`."""
+        return tuple(note for note in self.governing if note.state == "unmeasured")
+
+    @property
+    def standard(self) -> str:
+        """The field name without the variant's condition key."""
+        return self.field.split(" [", 1)[0]
 
 
 def _quoted(layer: Layer) -> Iterable[tuple[str, str, str]]:
@@ -128,6 +142,50 @@ def qualified(layer_id: str | None = None) -> list[Qualified]:
     return out
 
 
+def caps(rows: Sequence[Qualified]) -> dict[str, dict[str, dict[str, list[str]]]]:
+    """Layer -> zone -> field -> the unmeasured facts its footnotes turn on.
+
+    What :mod:`flats.rules.caps` reads. A value under a footnote nobody could
+    answer is not a value the screen may certify, and this is how the rule
+    layer finds out: the fact becomes a lever on that standard, and a lever
+    nothing measured is what turns a would-be GREEN into an UNKNOWN naming the
+    data it needs.
+
+    Variants collapse onto their standard on purpose. A footnote qualifying
+    the corner-lot column qualifies the setback, and the screen asks about a
+    standard, not about a column.
+    """
+    out: dict[str, dict[str, dict[str, list[str]]]] = {}
+    for row in rows:
+        facts = sorted({note.fact for note in row.capping if note.fact})
+        if not facts:
+            continue
+        field = out.setdefault(row.layer, {}).setdefault(row.zone, {}).setdefault(
+            row.standard, []
+        )
+        for fact in facts:
+            if fact not in field:
+                field.append(fact)
+    for zones in out.values():
+        for fields in zones.values():
+            for names in fields.values():
+                names.sort()
+    return out
+
+
+def write_caps(rows: Sequence[Qualified], path: Path | None = None) -> Path:
+    """Write the ledger the rule layer reads. Sorted, so the diff is the news."""
+    file = path or CAPS
+    file.parent.mkdir(parents=True, exist_ok=True)
+    payload = caps(rows)
+    ordered = {
+        layer: {zone: dict(sorted(fields.items())) for zone, fields in sorted(zones.items())}
+        for layer, zones in sorted(payload.items())
+    }
+    file.write_text(json.dumps(ordered, indent=2, sort_keys=False) + "\n", encoding="utf-8")
+    return file
+
+
 def render(rows: Sequence[Qualified], *, blocking_only: bool = False) -> str:
     """The join as text, for a terminal or a commit message."""
     shown = [r for r in rows if not blocking_only or r.blocking]
@@ -149,7 +207,15 @@ def render(rows: Sequence[Qualified], *, blocking_only: bool = False) -> str:
 def main(argv: Sequence[str] | None = None) -> int:
     args = list(sys.argv[1:] if argv is None else argv)
     layer = args[args.index("--layer") + 1] if "--layer" in args else None
-    print(render(qualified(layer), blocking_only="--blocking" in args))
+    rows = qualified(layer)
+    if "--write-caps" in args:
+        # Always over the whole corpus: a per-layer write would silently drop
+        # every other jurisdiction's caps from the file it overwrites.
+        written = write_caps(qualified())
+        capped = sum(len(f) for z in caps(qualified()).values() for f in z.values())
+        print(f"{written}  {capped} value(s) capped by an unmeasured footnote")
+        return 0
+    print(render(rows, blocking_only="--blocking" in args))
     return 0
 
 
@@ -157,4 +223,4 @@ if __name__ == "__main__":  # pragma: no cover
     raise SystemExit(main())
 
 
-__all__ = ["Qualified", "qualified", "render"]
+__all__ = ["Qualified", "caps", "qualified", "render", "write_caps"]

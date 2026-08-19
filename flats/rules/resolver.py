@@ -38,9 +38,10 @@ and how much that answer can be trusted; the scoring stage acts on it.
 from __future__ import annotations
 
 import enum
-from dataclasses import dataclass, field as _dc_field
+from dataclasses import dataclass, field as _dc_field, replace
 from typing import Any, Collection, Mapping
 
+from flats.rules.caps import caps_for
 from flats.rules.definitions import Boundary, Definition, decide, unread
 from flats.rules.fields import REQUIRED_FIELDS, field
 from flats.rules.model import LIKE, Layer, Preempt, Provenance, Status, Value, Zone
@@ -413,6 +414,16 @@ class RuleSet:
         for owner, block in blocks:
             borrowed = None if (owner.layer == layer_id and block.zone == zone) else block.zone
             apply(block.values, owner.layer, "zone", via=borrowed)
+
+        # A footnote somebody read and could not answer rides with the value it
+        # qualifies. The fact it turns on becomes a lever, which is all the
+        # screen needs: nothing measures it, so it resolves as unknown, and a
+        # standard turning on an unknown may not be certified.
+        for name, r in list(resolved.items()):
+            where = r.via or (zone if r.origin == "zone" else "(defaults)")
+            extra = caps_for(r.layer, where).get(name, ())
+            if extra:
+                resolved[name] = replace(r, levers=r.levers | frozenset(extra))
 
         untrusted = tuple(sorted(n for n, r in resolved.items() if not r.trusted))
         # An exempted required field is answered, not missing. The code was

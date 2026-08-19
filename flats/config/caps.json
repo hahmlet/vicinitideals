@@ -1,0 +1,164 @@
+{
+  "or/clackamas/oregon-city": {
+    "R-10": {
+      "max_coverage_pct": [
+        "utility_easement"
+      ],
+      "max_height_ft": [
+        "utility_easement"
+      ],
+      "min_lot_sqft": [
+        "utility_easement"
+      ],
+      "min_lot_width_ft": [
+        "utility_easement"
+      ],
+      "quadplex_allowed": [
+        "utility_easement"
+      ],
+      "setback_front_ft": [
+        "utility_easement"
+      ],
+      "setback_garage_entrance_ft": [
+        "protected_water_feature"
+      ],
+      "setback_rear_ft": [
+        "utility_easement"
+      ],
+      "setback_side_ft": [
+        "utility_easement"
+      ],
+      "setback_street_side_ft": [
+        "utility_easement"
+      ]
+    },
+    "R-3.5": {
+      "max_coverage_pct": [
+        "utility_easement"
+      ],
+      "max_height_ft": [
+        "utility_easement"
+      ],
+      "min_lot_sqft": [
+        "utility_easement"
+      ],
+      "min_lot_width_ft": [
+        "utility_easement"
+      ],
+      "quadplex_allowed": [
+        "utility_easement"
+      ],
+      "setback_front_ft": [
+        "utility_easement"
+      ],
+      "setback_garage_entrance_ft": [
+        "protected_water_feature"
+      ],
+      "setback_rear_ft": [
+        "utility_easement"
+      ],
+      "setback_side_ft": [
+        "utility_easement"
+      ],
+      "setback_street_side_ft": [
+        "utility_easement"
+      ]
+    },
+    "R-5": {
+      "max_coverage_pct": [
+        "utility_easement"
+      ],
+      "max_height_ft": [
+        "utility_easement"
+      ],
+      "min_lot_sqft": [
+        "utility_easement"
+      ],
+      "min_lot_width_ft": [
+        "utility_easement"
+      ],
+      "quadplex_allowed": [
+        "utility_easement"
+      ],
+      "setback_front_ft": [
+        "utility_easement"
+      ],
+      "setback_garage_entrance_ft": [
+        "protected_water_feature"
+      ],
+      "setback_rear_ft": [
+        "utility_easement"
+      ],
+      "setback_side_ft": [
+        "utility_easement"
+      ],
+      "setback_street_side_ft": [
+        "utility_easement"
+      ]
+    },
+    "R-6": {
+      "max_coverage_pct": [
+        "utility_easement"
+      ],
+      "max_height_ft": [
+        "utility_easement"
+      ],
+      "min_lot_sqft": [
+        "utility_easement"
+      ],
+      "min_lot_width_ft": [
+        "utility_easement"
+      ],
+      "quadplex_allowed": [
+        "utility_easement"
+      ],
+      "setback_front_ft": [
+        "utility_easement"
+      ],
+      "setback_garage_entrance_ft": [
+        "protected_water_feature"
+      ],
+      "setback_rear_ft": [
+        "utility_easement"
+      ],
+      "setback_side_ft": [
+        "utility_easement"
+      ],
+      "setback_street_side_ft": [
+        "utility_easement"
+      ]
+    },
+    "R-8": {
+      "max_coverage_pct": [
+        "utility_easement"
+      ],
+      "max_height_ft": [
+        "utility_easement"
+      ],
+      "min_lot_sqft": [
+        "utility_easement"
+      ],
+      "min_lot_width_ft": [
+        "utility_easement"
+      ],
+      "quadplex_allowed": [
+        "utility_easement"
+      ],
+      "setback_front_ft": [
+        "utility_easement"
+      ],
+      "setback_garage_entrance_ft": [
+        "protected_water_feature"
+      ],
+      "setback_rear_ft": [
+        "utility_easement"
+      ],
+      "setback_side_ft": [
+        "utility_easement"
+      ],
+      "setback_street_side_ft": [
+        "utility_easement"
+      ]
+    }
+  }
+}
