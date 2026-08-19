@@ -1758,3 +1758,49 @@ Nothing new attaches — the remaining unquoted values refuse by name
 disagree) — but the review gate is clean. Still unclaimed: Wood Village's MR
 columns (column-level) and Gresham's Table 4.0131 (type blocks over
 zone-group rows under two-tier headers).
+
+---
+
+## 27. The corner-lot audit — one row every table prints twice
+
+Gresham's Table 4.0130 runs each dimension twice: an interior-lot row, then a
+corner-lot row. Only the interior row was encoded. That is not a small
+omission in one direction — the corner row is routinely the larger number (40
+feet of width in LDR-5 where the interior row asks 35, 70 in MDR-12 where it
+asks 16), so every corner lot in the city was screened against a standard the
+code does not state for it, in the direction that certifies lots. Fixed
+2026-08-19 across six residential zones, with the corner + `unit_lots` pair
+stated too so a corner townhouse lot resolves one variant instead of tying
+two, and `exempt` rather than a number where the table prints "None".
+
+**The audit that follows from it.** Corner variants encoded, per jurisdiction:
+Gresham 26, Wood Village 4, Wilsonville 1, and **zero everywhere else** — 14
+of 17 layers. Eleven of those cities define "corner lot" in their own code,
+and their held documents pair the word "corner" with a dimension and a number
+on this many lines:
+
+| jurisdiction | such lines | corner variants |
+|---|---:|---:|
+| or/clackamas/oregon-city | 13 | 0 |
+| or/clackamas/wilsonville | 9 | 1 |
+| or/multnomah/fairview | 4 | 0 |
+| or/clackamas/milwaukie | 4 | 0 |
+| or/clackamas/rivergrove | 2 | 0 |
+| or/clackamas/west-linn | 2 | 0 |
+| or/clackamas/_unincorporated | 2 | 0 |
+| or/multnomah/_unincorporated | 1 | 0 |
+| or/clackamas/gladstone | 1 | 0 |
+| or/clackamas/lake-oswego | 1 | 0 |
+
+A zero is not proof of a hole: most Oregon codes handle a corner with a
+street-side setback rather than a second dimensional row, and
+`setback_street_side_ft` is encoded widely. What the table says is where to
+look, jurisdiction by jurisdiction, and Oregon City at thirteen lines is the
+next one to read.
+
+The reason this is worth a section rather than a bug: the failure was silent.
+A zone with no corner variant hands back the interior number and looks exactly
+like a zone somebody read and found nothing in. The test added with the fix
+asserts the opposite for Gresham — that `corner_lot` appears in every
+residential zone's levers — which is the shape of assertion the rest of the
+corpus needs.
