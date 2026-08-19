@@ -457,9 +457,25 @@ class RuleSet:
                 resolved[name] = replace(r, levers=r.levers | frozenset(extra))
 
         untrusted = tuple(sorted(n for n, r in resolved.items() if not r.trusted))
+        # A zone that forbids the building forbids it by any amount of slack.
+        # The screen returns RED at the use gate without reading a setback, so
+        # a setback nobody encoded there blocks nothing -- and reporting it as
+        # missing sends a person to look up numbers for a building the code
+        # does not allow. That is how an encoding queue fills with work that
+        # cannot move a verdict.
+        #
+        # Only a settled prohibition counts. A `false` that some condition can
+        # turn true -- LR-7's conditional use, a footnote nobody has answered --
+        # still needs its dimensions, because the path that reaches them exists.
+        use = resolved.get("quadplex_allowed")
+        prohibited = use is not None and use.value is False and not use.levers
         # An exempted required field is answered, not missing. The code was
         # read, and what it said was that this standard does not apply.
-        missing = tuple(sorted(REQUIRED_FIELDS - set(resolved) - exempted))
+        missing = (
+            ()
+            if prohibited
+            else tuple(sorted(REQUIRED_FIELDS - set(resolved) - exempted))
+        )
         ambiguous = tuple(sorted(n for n, r in resolved.items() if r.ambiguous))
         borrowed_from = tuple(b.zone for _, b in blocks if b.zone != zone)
         # The claim to borrow is a rule somebody read, and an unread one could

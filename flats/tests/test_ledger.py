@@ -254,3 +254,35 @@ def test_a_written_ledger_reads_back_as_what_was_written(tmp_path) -> None:
     path = write_coverage([row], tmp_path / "coverage.csv")
 
     assert read_coverage(path) == [row]
+
+
+def test_a_zone_that_forbids_the_building_asks_for_no_dimensions() -> None:
+    """The queue's job is work that can move a verdict, and a setback in a
+    zone where a fourplex is prohibited cannot: the screen returns RED at the
+    use gate without reading one.
+
+    Seven zones reported missing dimensional standards for exactly this
+    reason, which is how an encoding queue quietly fills with lookups nobody
+    should do. Portland's RF is the plain case -- 33.110.265.E allows
+    triplexes and fourplexes "in the R20 through R2.5 zones" and Table 110-7
+    prints no RF row at all.
+    """
+    rules = RuleSet(load_rules())
+    resolved = rules.resolve(PORTLAND, "RF")
+
+    assert resolved.values["quadplex_allowed"].value is False
+    assert resolved.missing_required == ()
+
+
+def test_a_prohibition_a_hearing_can_lift_still_needs_its_numbers() -> None:
+    """LR-7 is the other half of the rule. A multiplex there is a conditional
+    use rather than a prohibited one, so the path to the dimensional standards
+    exists and they are still owed."""
+    rules = RuleSet(load_rules())
+    lr7 = rules.resolve("or/multnomah/_unincorporated", "LR7")
+
+    assert lr7.values["quadplex_allowed"].value is False
+    assert "conditional_use" in lr7.values["quadplex_allowed"].levers
+    assert rules.resolve(
+        "or/multnomah/_unincorporated", "LR7", ("conditional_use",)
+    ).values["quadplex_allowed"].value is True
