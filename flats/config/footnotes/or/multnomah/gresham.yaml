@@ -19,11 +19,14 @@
 # standard we enforce, so ignoring them can cost a lot we called too small,
 # never one we called buildable and is not.
 #
-# Deliberately left unread, because each is encoding work somebody has to do
-# rather than a rejection anybody can make:
-#   note 12 -- shoreline height standards, Section 10.1100
-#   the Table 4.0131 setback notes: sidewalk easements, double frontage lots,
-#   Minor Access Street frontage, and the distance between structures
+# Table 4.0131 states the setbacks, and four of its notes are the reason no
+# Gresham setback can be certified today. Each is plain English nobody has to
+# read twice, and each turns on something about the lot nothing measures: a
+# sidewalk easement the setback is measured from, a second street frontage
+# that turns the rear yard into a front one, the class of the street out
+# front, and how close the water is. They are ruled `unmeasured` rather than
+# dismissed, which stops them blocking the encoding and keeps them capping the
+# verdict.
 notes:
   # --- Table 4.0120, the use table -----------------------------------
   #
@@ -229,3 +232,94 @@ notes:
       the corner townhouse frontage cell in MDR-24 reads "Varies depending on
       access" and hands the number to this note; 32 binds without an alley or
       shared access, 25 with one
+
+  # --- the rest of Table 4.0120, and the bonuses ----------------------
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L195"
+    digest: "0c6f5742a9c1"
+    state: dismissed
+    reason: >-
+      Table 4.0120 marks the cells it limits; the Quadplex and Townhouse rows
+      are a bare P in all seven districts, so no note of this table reaches the
+      use this layer encodes
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L380"
+    digest: "ff7e17c3cf31"
+    state: dismissed
+    reason: >-
+      note 6 offers a density bonus to affordable housing; a relaxation, and
+      one that turns on an election nobody has made
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L387"
+    digest: "707aaab76b9b"
+    state: dismissed
+    reason: >-
+      note 11 offers a height bonus to affordable housing; a relaxation, and
+      one that turns on an election nobody has made
+
+  # --- Table 4.0131, the setbacks -------------------------------------
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L426"
+    digest: "c624796e294a"
+    state: dismissed
+    reason: >-
+      the zero lot line option is only available on a lot a land division
+      designated as one; the pod is screened against the ordinary side yards,
+      which is a compliance path that needs no designation
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L427"
+    digest: "4a5ccc448df6"
+    state: dismissed
+    reason: >-
+      points at Section 10.0200 for detached accessory structures and patio
+      covers; the pod is neither
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L430"
+    digest: "42d473ebf17f"
+    state: dismissed
+    reason: >-
+      note 6 sets the distance between two major structures on one lot -- 20
+      feet, or 10 for townhouse-style multi-family; the pod is a single
+      structure, so there is no second one to stand away from
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L431"
+    digest: "c8bcd443d5a5"
+    state: dismissed
+    reason: >-
+      the continuation of note 6, carrying the 10-foot side-to-side figure and
+      the exclusion of carports and garages; same ground, the pod is one
+      structure
+
+  # --- read, and resting on a fact nobody holds ------------------------
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L419"
+    digest: "dd93fa507971"
+    state: unmeasured
+    fact: sidewalk_easement
+    reason: >-
+      where sidewalk access is carried by an easement the setback is measured
+      from the easement line rather than the property line, and no easement
+      layer is held for Gresham
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L421"
+    digest: "bfc8f2b4c1fb"
+    state: unmeasured
+    fact: through_lot
+    reason: >-
+      on a double frontage lot every street frontage is a front yard, which
+      turns the rear setback into a second front one; nothing yet decides
+      whether a parcel has street on two opposite sides
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L428"
+    digest: "f733ca818d64"
+    state: unmeasured
+    fact: local_street
+    reason: >-
+      states a 25-foot maximum and a 5-foot minimum setback from the end of a
+      Minor Access Street, which is one of Gresham's street classes; nothing
+      holds the functional classification of the street a parcel fronts
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L388"
+    digest: "705b5032c7a2"
+    state: unmeasured
+    fact: protected_water_feature
+    reason: >-
+      sends the height standard to Section 10.1100 for shoreline lots, and the
+      water layer that would say whether this is one is not held

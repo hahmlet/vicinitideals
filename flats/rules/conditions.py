@@ -234,6 +234,29 @@ _C: tuple[ConditionDef, ...] = (
         assume=False,
     ),
     ConditionDef(
+        "through_lot",
+        "site_fact",
+        "Street on two opposite sides. Gresham states the consequence plainly "
+        "-- \"for double frontage lots, each street frontage shall be "
+        "considered a front yard\" -- which turns the rear setback into a "
+        "second front one and takes the depth a rear-court pod parks in. "
+        "Assumed unknown, because the two ways of being wrong are not "
+        "symmetric: treating a through lot as an ordinary one is how a lot "
+        "with no room for the pod screens as buildable.",
+        evidence="parcel geometry against the street centreline layer -- opposite frontages",
+        assume=None,
+    ),
+    ConditionDef(
+        "sidewalk_easement",
+        "site_fact",
+        "Sidewalk access is carried by an easement rather than by the "
+        "right-of-way. Gresham then measures the setback from the easement "
+        "line nearest the building rather than from the property line, which "
+        "moves the whole envelope back by however wide the easement is.",
+        evidence="jurisdiction recorded-easement layer -- none held",
+        assume=None,
+    ),
+    ConditionDef(
         "utility_easement",
         "site_fact",
         "A recorded public utility easement crosses the buildable area. "

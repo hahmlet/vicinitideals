@@ -160,5 +160,238 @@
         "utility_easement"
       ]
     }
+  },
+  "or/multnomah/gresham": {
+    "LDR-5": {
+      "min_frontage_ft": [
+        "protected_water_feature"
+      ],
+      "min_lot_sqft": [
+        "protected_water_feature"
+      ],
+      "min_lot_width_ft": [
+        "protected_water_feature"
+      ],
+      "setback_front_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ],
+      "setback_garage_entrance_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ],
+      "setback_rear_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ],
+      "setback_side_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ],
+      "setback_street_side_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ]
+    },
+    "LDR-7": {
+      "max_height_ft": [
+        "protected_water_feature"
+      ],
+      "min_frontage_ft": [
+        "protected_water_feature"
+      ],
+      "min_lot_sqft": [
+        "protected_water_feature"
+      ],
+      "min_lot_width_ft": [
+        "protected_water_feature"
+      ],
+      "setback_front_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ],
+      "setback_garage_entrance_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ],
+      "setback_rear_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ],
+      "setback_side_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ],
+      "setback_street_side_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ]
+    },
+    "MDR-12": {
+      "max_height_ft": [
+        "protected_water_feature"
+      ],
+      "min_frontage_ft": [
+        "protected_water_feature"
+      ],
+      "min_lot_sqft": [
+        "protected_water_feature"
+      ],
+      "min_lot_width_ft": [
+        "protected_water_feature"
+      ],
+      "setback_front_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ],
+      "setback_garage_entrance_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ],
+      "setback_rear_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ],
+      "setback_side_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ],
+      "setback_street_side_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ]
+    },
+    "MDR-24": {
+      "max_height_ft": [
+        "protected_water_feature"
+      ],
+      "min_frontage_ft": [
+        "protected_water_feature"
+      ],
+      "min_lot_sqft": [
+        "protected_water_feature"
+      ],
+      "min_lot_width_ft": [
+        "protected_water_feature"
+      ],
+      "setback_front_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ],
+      "setback_garage_entrance_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ],
+      "setback_rear_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ],
+      "setback_side_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ],
+      "setback_street_side_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ]
+    },
+    "TLDR": {
+      "max_height_ft": [
+        "protected_water_feature"
+      ],
+      "min_frontage_ft": [
+        "protected_water_feature"
+      ],
+      "min_lot_sqft": [
+        "protected_water_feature"
+      ],
+      "min_lot_width_ft": [
+        "protected_water_feature"
+      ],
+      "setback_front_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ],
+      "setback_garage_entrance_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ],
+      "setback_rear_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ],
+      "setback_side_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ],
+      "setback_street_side_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ]
+    },
+    "TR": {
+      "max_height_ft": [
+        "protected_water_feature"
+      ],
+      "min_frontage_ft": [
+        "protected_water_feature"
+      ],
+      "min_lot_sqft": [
+        "protected_water_feature"
+      ],
+      "min_lot_width_ft": [
+        "protected_water_feature"
+      ],
+      "setback_front_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ],
+      "setback_garage_entrance_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ],
+      "setback_rear_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ],
+      "setback_side_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ],
+      "setback_street_side_ft": [
+        "local_street",
+        "sidewalk_easement",
+        "through_lot"
+      ]
+    }
   }
 }
