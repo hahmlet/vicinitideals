@@ -103,19 +103,17 @@ def passage(quote: str, *, layer_id: str, store: ProvenanceStore | None = None) 
     """A citation, as the city wrote it, with its vocabulary marked."""
     store = store or ProvenanceStore()
     try:
-        text = store.quote(quote)
+        reference = parse_quote(quote)
+        numbered = store.load(reference.path).numbered(reference)
     except (ProvenanceError, KeyError, ValueError) as exc:
         raise ReadingError(f"{quote}: nothing stored to read -- {exc}") from exc
 
-    reference = parse_quote(quote)
-    first = getattr(reference, "start", None) or 1
     vocabulary = index(layer_id)
-
     lines: list[tuple[int, str]] = []
     legend: dict[str, Entry] = {}
-    for offset, raw in enumerate(text.splitlines()):
+    for number, raw in numbered:
         marked, found = _mark(raw, vocabulary)
-        lines.append((first + offset, marked))
+        lines.append((number, marked))
         for entry in found:
             legend.setdefault(normal(entry.term), entry)
     return Passage(

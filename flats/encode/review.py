@@ -206,6 +206,8 @@ def cmd_plan(args: argparse.Namespace) -> int:
             + [f"    unquoted   {z} {f}" for z, f in r.unquoted]
             + [f"    no text    {z} {f}" for z, f in r.no_evidence]
             + [f"    misquoted  {z} {f}" for z, f in r.misquoted]
+            + [f"    undefined  {z} {f}" for z, f in r.undefined]
+            + [f"    footnoted  {z} {f}" for z, f in r.footnoted]
         )
         if detail:
             print(f"\n  {r.layer}")

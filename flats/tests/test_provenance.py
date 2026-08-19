@@ -105,6 +105,36 @@ def test_a_line_range_parses_with_or_without_the_second_L() -> None:
     assert parse_quote("a.txt#L42-L48") == parse_quote("a.txt#L42-48")
 
 
+def test_a_citation_may_name_more_than_one_span() -> None:
+    """A number stated in a table row and qualified by a footnote three lines
+    down is cited from both places or from neither, and 133 values in the
+    corpus were written the first way while the store could only read the
+    second -- so they reported as evidence that does not resolve."""
+    ref = parse_quote("a.txt#L132-L133,L138")
+    assert ref.spans == ((132, 133), (138, 138))
+    assert (ref.start, ref.end) == (132, 138)
+    assert ref.numbers == (132, 133, 138)
+
+
+def test_spans_that_double_back_are_refused() -> None:
+    for bad in ("a.txt#L10,L5", "a.txt#L10-L20,L15"):
+        with pytest.raises(ProvenanceError, match="ascend"):
+            parse_quote(bad)
+
+
+def test_a_multi_span_quote_reads_only_the_lines_it_names() -> None:
+    doc = Document(
+        path="a.txt",
+        url="https://example.test/a",
+        retrieved=date(2026, 1, 1),
+        sha256="",
+        text="\n".join(f"line {n}" for n in range(1, 11)),
+    )
+    ref = parse_quote("a.txt#L2-L3,L7")
+    assert doc.lines(ref) == "line 2\nline 3\nline 7"
+    assert doc.numbered(ref) == ((2, "line 2"), (3, "line 3"), (7, "line 7"))
+
+
 def test_surrounding_whitespace_is_forgiven() -> None:
     assert parse_quote("  a.txt#L1-L2  ").path == "a.txt"
 

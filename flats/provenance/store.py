@@ -37,8 +37,13 @@ from typing import Callable, Iterable
 #: keeping them apart means a stored document can never shadow a module.
 STORE_ROOT = Path(__file__).resolve().parent / "docs"
 
-#: ``or/multnomah/portland/33.110.txt#L42-L48`` — path, then an optional line span.
-_QUOTE_RE = re.compile(r"^(?P<path>[^#]+?)(?:#L(?P<start>\d+)(?:-L?(?P<end>\d+))?)?$")
+#: ``or/multnomah/portland/33.110.txt#L42-L48`` -- path, then optional line
+#: spans. Several are allowed, comma-separated: a number stated in a table row
+#: and qualified by a footnote three lines further down is cited from both
+#: places or from neither, and "from neither" is how a citation ends up
+#: pointing at half of its own evidence.
+_SPAN = r"\d+(?:-L?\d+)?"
+_QUOTE_RE = re.compile(rf"^(?P<path>[^#]+?)(?:#L(?P<spans>{_SPAN}(?:,\s*L?{_SPAN})*))?$")
 
 
 class ProvenanceError(Exception):
@@ -47,15 +52,31 @@ class ProvenanceError(Exception):
 
 @dataclass(frozen=True, slots=True)
 class QuoteRef:
-    """A parsed ``path#Lstart-Lend`` reference."""
+    """A parsed ``path#Lstart-Lend`` reference, of one span or several."""
 
     path: str
-    start: int | None = None
-    end: int | None = None
+    #: (first, last) line pairs, ascending and non-overlapping. Empty means
+    #: the whole document.
+    spans: tuple[tuple[int, int], ...] = ()
 
     @property
     def whole_document(self) -> bool:
-        return self.start is None
+        return not self.spans
+
+    @property
+    def start(self) -> int | None:
+        """The first line cited: where a reviewer starts reading."""
+        return self.spans[0][0] if self.spans else None
+
+    @property
+    def end(self) -> int | None:
+        """The last line cited: what the document has to be long enough to hold."""
+        return self.spans[-1][1] if self.spans else None
+
+    @property
+    def numbers(self) -> tuple[int, ...]:
+        """Every line this quote names, in order."""
+        return tuple(n for first, last in self.spans for n in range(first, last + 1))
 
 
 def parse_quote(quote: str) -> QuoteRef:
@@ -66,14 +87,26 @@ def parse_quote(quote: str) -> QuoteRef:
     """
     m = _QUOTE_RE.match(quote.strip())
     if not m or not m.group("path"):
-        raise ProvenanceError(f"malformed quote reference {quote!r} — expected 'path#L10-L14'")
-    start = int(m.group("start")) if m.group("start") else None
-    end = int(m.group("end")) if m.group("end") else start
-    if start is not None and start < 1:
-        raise ProvenanceError(f"{quote!r}: line numbers are 1-based")
-    if start is not None and end is not None and end < start:
-        raise ProvenanceError(f"{quote!r}: end line precedes start line")
-    return QuoteRef(path=m.group("path"), start=start, end=end)
+        raise ProvenanceError(f"malformed quote reference {quote!r} - expected 'path#L10-L14'")
+    spans: list[tuple[int, int]] = []
+    for piece in (m.group("spans") or "").split(","):
+        piece = piece.strip().lstrip("L")
+        if not piece:
+            continue
+        first, _, last = piece.partition("-")
+        start = int(first)
+        end = int(last.lstrip("L")) if last else start
+        if start < 1:
+            raise ProvenanceError(f"{quote!r}: line numbers are 1-based")
+        if end < start:
+            raise ProvenanceError(f"{quote!r}: end line precedes start line")
+        if spans and start <= spans[-1][1]:
+            # Backwards or overlapping. Both mean the citation was written
+            # against a document that has since moved, and a reviewer reading
+            # the spans in the order given sees a line twice or out of order.
+            raise ProvenanceError(f"{quote!r}: spans must ascend and not overlap")
+        spans.append((start, end))
+    return QuoteRef(path=m.group("path"), spans=tuple(spans))
 
 
 @dataclass(frozen=True, slots=True)
@@ -92,15 +125,24 @@ class Document:
     extractor: str = ""
 
     def lines(self, ref: QuoteRef) -> str:
-        """The quoted span, or the whole document when no span is given."""
-        if ref.whole_document:
-            return self.text
+        """The quoted lines, or the whole document when no span is given."""
+        return "\n".join(text for _, text in self.numbered(ref))
+
+    def numbered(self, ref: QuoteRef) -> tuple[tuple[int, str], ...]:
+        """The quoted lines, each with the number it carries in the document.
+
+        The number is half the citation. A view that renumbers from one, or
+        that silently closes the gap between two spans, shows a reviewer
+        something they cannot find again in the store.
+        """
         all_lines = self.text.splitlines()
+        if ref.whole_document:
+            return tuple(enumerate(all_lines, start=1))
         if ref.end is not None and ref.end > len(all_lines):
             raise ProvenanceError(
                 f"{self.path}: quote asks for line {ref.end}, document has {len(all_lines)}"
             )
-        return "\n".join(all_lines[(ref.start or 1) - 1 : ref.end])
+        return tuple((n, all_lines[n - 1]) for n in ref.numbers)
 
 
 def sha256(text: str) -> str:
