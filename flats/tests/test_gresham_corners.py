@@ -215,3 +215,40 @@ def test_no_plan_district_configuration_is_ambiguous(rules: RuleSet) -> None:
         ):
             got = rules.resolve(GRESHAM, zone, conditions)
             assert not got.ambiguous, f"{zone} {conditions}: {got.ambiguous}"
+
+
+# --- floor area ratio, which none of the three plan districts had ------
+#
+# A 4-unit two-storey pod is roughly 4,000 square feet of floor, so a 1.0
+# cap asks for 4,000 square feet of lot before any setback is measured --
+# and Downtown's own minimum lot size is 4,000. Not encoding it meant the
+# standard closest to binding never ran.
+
+
+def far(rules: RuleSet, zone: str, *conditions: str) -> float | None:
+    got = rules.resolve(GRESHAM, zone, conditions).values.get("max_far")
+    return None if got is None else got.value
+
+
+def test_the_plan_districts_state_a_floor_area_ratio(rules: RuleSet) -> None:
+    for zone in ("DRL-1", "DRL-2", "LDR-SW", "LDR-PV"):
+        assert far(rules, zone) == 1.0, zone
+
+
+def test_the_far_row_does_not_reach_a_townhouse_in_springwater_or_pv(
+    rules: RuleSet,
+) -> None:
+    # The row is headed "Single Detached, Duplex, Triplex, Quadplex" and the
+    # row under it reads N/A for all other uses, so the cap governs the pod
+    # built as a quadplex and not the same pod on unit lots.
+    for zone in ("LDR-SW", "LDR-PV"):
+        assert "max_far" in rules.resolve(GRESHAM, zone, ("unit_lots",)).exempted, zone
+    # Downtown's row is per sub-district and splits by no use at all.
+    assert far(rules, "DRL-1", "unit_lots") == 1.0
+
+
+def test_downtown_now_states_a_height(rules: RuleSet) -> None:
+    # It does not bind a two-storey pod. A zone that answers "no height
+    # standard" reads the same as one nobody has read, which is the failure.
+    assert rules.resolve(GRESHAM, "DRL-1").values["max_height_ft"].value == 35
+    assert rules.resolve(GRESHAM, "DRL-2").values["max_height_ft"].value == 50

@@ -463,6 +463,13 @@ zones:
     max_height_ft:
       value: 35
       quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L307"
+    max_far:
+      value: 1.0
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L313-L317"
+      variants:
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L318"
   LDR-SW:
     section: ["4.15", "7.042"]
     cite_default:
@@ -504,6 +511,13 @@ zones:
     max_height_ft:
       value: 35
       quote: "or/multnomah/gresham/4.1500.springwater.txt#L278"
+    max_far:
+      value: 1.0
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L290-L294"
+      variants:
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L295"
     min_lot_width_ft:
       value: 45
       quote: "or/multnomah/gresham/4.1500.springwater.txt#L260"
@@ -703,6 +717,16 @@ zones:
           quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L316-L318,L385"
   DRL-1:
     section: ["4.11", "7.042"]
+    max_height_ft:
+      value: 35
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L426"
+    max_far:
+      # The Maximum Floor Area Ratio row, read across the eight columns of
+      # Table 4.1130. It applies to the whole sub-district, so unlike
+      # Springwater and Pleasant Valley there is no townhouse row to escape
+      # into.
+      value: 1.0
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L430"
     cite_default:
       cite: Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown); 7.0420(J)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
@@ -793,6 +817,16 @@ zones:
       placement band not modeled (blind spot).'
   DRL-2:
     section: ["4.11", "7.042"]
+    max_height_ft:
+      value: 50
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L426"
+    max_far:
+      # The Maximum Floor Area Ratio row, read across the eight columns of
+      # Table 4.1130. It applies to the whole sub-district, so unlike
+      # Springwater and Pleasant Valley there is no townhouse row to escape
+      # into.
+      value: 1.0
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L430"
     cite_default:
       cite: Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown); 7.0420(J)
       url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
