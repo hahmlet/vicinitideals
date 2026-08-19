@@ -83,6 +83,19 @@ zones:
       cite: FMC 19.30.020 Table A / 19.30.030 Table A (2023-41-TA amendments, PC Final Review Draft 12-5-2023)
       url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html
       retrieved: '2026-07-24'
+    max_height_ft:
+      # Table 19.30.030.A row 17, "Maximum Building Height". The table prints
+      # one cell per line, so the row label is quoted with the cell -- the
+      # cell's position in the run is what says which column it is, and the
+      # column order is R-6, R-7.5, R-10, Townhouse Overlay, RM.
+      #
+      # The cell states two standards at once: "2.5 stories, but not more than 35 ft.". Only the feet are
+      # encoded, because storeys are not a field here and the pod is two of
+      # them -- well inside 2.5, and a check that cannot fail is not
+      # worth a field that cannot be measured.
+      value: 35
+      cite: FMC Table 19.30.030.A, row 17
+      quote: "or/multnomah/fairview/19.30.txt#L439,L440"
     max_lot_depth_ratio:
       value: 3
       quote: "or/multnomah/fairview/19.30.txt#L353"
@@ -171,6 +184,19 @@ zones:
       cite: FMC 19.30.020/19.30.030 (2023-41-TA amendments)
       url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html
       retrieved: '2026-07-24'
+    max_height_ft:
+      # Table 19.30.030.A row 17, "Maximum Building Height". The table prints
+      # one cell per line, so the row label is quoted with the cell -- the
+      # cell's position in the run is what says which column it is, and the
+      # column order is R-6, R-7.5, R-10, Townhouse Overlay, RM.
+      #
+      # The cell states two standards at once: "2.5 stories, but not more than 35 ft.". Only the feet are
+      # encoded, because storeys are not a field here and the pod is two of
+      # them -- well inside 2.5, and a check that cannot fail is not
+      # worth a field that cannot be measured.
+      value: 35
+      cite: FMC Table 19.30.030.A, row 17
+      quote: "or/multnomah/fairview/19.30.txt#L439,L441"
     max_lot_depth_ratio:
       value: 3
       quote: "or/multnomah/fairview/19.30.txt#L355"
@@ -258,6 +284,19 @@ zones:
       cite: FMC 19.30.020/19.30.030 (2023-41-TA amendments)
       url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html
       retrieved: '2026-07-24'
+    max_height_ft:
+      # Table 19.30.030.A row 17, "Maximum Building Height". The table prints
+      # one cell per line, so the row label is quoted with the cell -- the
+      # cell's position in the run is what says which column it is, and the
+      # column order is R-6, R-7.5, R-10, Townhouse Overlay, RM.
+      #
+      # The cell states two standards at once: "2.5 stories, but not more than 35 ft.". Only the feet are
+      # encoded, because storeys are not a field here and the pod is two of
+      # them -- well inside 2.5, and a check that cannot fail is not
+      # worth a field that cannot be measured.
+      value: 35
+      cite: FMC Table 19.30.030.A, row 17
+      quote: "or/multnomah/fairview/19.30.txt#L439,L442"
     max_lot_depth_ratio:
       value: 3
       quote: "or/multnomah/fairview/19.30.txt#L357"
@@ -330,6 +369,19 @@ zones:
       cite: FMC 19.30.010.D, 19.30.020, 19.30.030 Table A (2023-41-TA amendments)
       url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html
       retrieved: '2026-07-24'
+    max_height_ft:
+      # Table 19.30.030.A row 17, "Maximum Building Height". The table prints
+      # one cell per line, so the row label is quoted with the cell -- the
+      # cell's position in the run is what says which column it is, and the
+      # column order is R-6, R-7.5, R-10, Townhouse Overlay, RM.
+      #
+      # The cell states two standards at once: "4 stories, but not more than 45 ft.". Only the feet are
+      # encoded, because storeys are not a field here and the pod is two of
+      # them -- well inside four, and a check that cannot fail is not
+      # worth a field that cannot be measured.
+      value: 45
+      cite: FMC Table 19.30.030.A, row 17
+      quote: "or/multnomah/fairview/19.30.txt#L439,L444"
     quadplex_allowed:
       # Table 19.30.020.A row h, Quadplex. Six district columns, four values
       # printed: R-6, R-7.5, R-10 and RM permit it, MH and TOZ print nothing.
@@ -372,6 +424,25 @@ zones:
       cite: FMC 19.30.030 Table A (RM + Townhouse Overlay columns)
       url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html
       retrieved: '2026-07-24'
+    max_height_ft:
+      # The one standard where this zone's two readings disagree, and the
+      # first thing the zone's own note said to do about that: "if the overlay
+      # turns out to move a standard, that standard belongs here as a local
+      # value overriding the reference."
+      #
+      # It does. Table 19.30.030.A row 17 gives the Townhouse Overlay column
+      # 35 feet and the RM column 45, and this zone is the RM base district
+      # with the overlay mapped onto it. 35 is the stricter of the two and the
+      # one a lot cannot be certified past, so it is the one encoded.
+      #
+      # What stays open is everything else in that column. This value settles
+      # one row and does not decide whether the overlay governs the rest of
+      # the zone's standards -- that is still the human question the notes
+      # describe, and swapping the whole base on the strength of one cell
+      # would answer it by accident.
+      value: 35
+      cite: FMC Table 19.30.030.A, row 17, Townhouse Overlay column
+      quote: "or/multnomah/fairview/19.30.txt#L439,L443"
     like: RM
     notes: 'Metro layer label, not a Fairview zone: the RM base district with the townhouse overlay
       mapped onto it. Adopted by reference rather than restated, so every number still cites the RM
@@ -397,6 +468,14 @@ zones:
       cite: FMC 19.115 Village Single-Family (.020 uses, .040 dimensional)
       url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19115.html
       retrieved: '2026-07-24'
+    max_height_ft:
+      # 19.115.040(D): "Buildings within this zone may not exceed 35 feet in
+      # height." The village chapters state their own standards in prose
+      # rather than borrowing Table 19.30.030.A, which has no column for
+      # either of them.
+      value: 35
+      cite: FMC 19.115.040(D) (Village Single-Family, height)
+      quote: "or/multnomah/fairview/19.115.txt#L41"
     min_lot_depth_ft:
       value: 70
       quote: "or/multnomah/fairview/19.115.txt#L37"
@@ -451,6 +530,14 @@ zones:
       cite: FMC 19.120 Village Townhouse Residential
       url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19120.html
       retrieved: '2026-07-24'
+    max_height_ft:
+      # 19.120.040(D): "Buildings within this zone may not exceed 35 feet in
+      # height." The village chapters state their own standards in prose
+      # rather than borrowing Table 19.30.030.A, which has no column for
+      # either of them.
+      value: 35
+      cite: FMC 19.120.040(D) (Village Townhouse, height)
+      quote: "or/multnomah/fairview/19.120.txt#L63"
     quadplex_allowed:
       # 19.120.020 lists what is permitted in VTH and a quadplex is not on it:
       # detached single-unit (existing only), townhouses, duplexes, then
@@ -466,6 +553,18 @@ zones:
       cite: FMC 19.30 Manufactured Home Park district standards
       url: https://www.codepublishing.com/OR/Fairview/html/Fairview1930.html
       retrieved: '2026-07-24'
+    max_height_ft:
+      # 19.30.100 is the whole of the manufactured home park district's
+      # dimensional regime -- 19.30.030.A says so in as many words, "all
+      # standards for the Manufactured Home Park District are located in FMC
+      # 19.30.100" -- and it states a pad size, a density, setbacks, perimeter
+      # landscaping and a roof pitch. No building height.
+      #
+      # Not a height of zero and not an unread zone: the section was read and
+      # states no such standard, which is what this flag is for.
+      exempt: true
+      cite: FMC 19.30.100 (MH district standards); Table 19.30.030.A note A
+      quote: "or/multnomah/fairview/19.30.txt#L1015-L1031"
     quadplex_allowed:
       # The same Quadplex row, read for what it does not print: the Manufactured
       # Home Park column is the fifth of six and the row stops at four values.

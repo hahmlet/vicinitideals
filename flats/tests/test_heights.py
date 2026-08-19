@@ -167,3 +167,63 @@ def test_gresham_butte_is_ldr_5_by_reference_and_not_by_copy(rules: RuleSet) -> 
     assert butte.get("setback_side_ft") == 10 != ldr5.get("setback_side_ft")
     for field in ("max_height_ft", "setback_front_ft", "setback_rear_ft", "min_lot_sqft"):
         assert butte.get(field) == ldr5.get(field), field
+
+
+FAIRVIEW = "or/multnomah/fairview"
+
+
+def test_fairviews_height_row_is_read_by_counting_its_cells(rules: RuleSet) -> None:
+    """Table 19.30.030.A extracts one cell per line, so nothing but position
+    says which district a 35 belongs to. Column order is stated once, at the
+    top of the table: R-6, R-7.5, R-10, Townhouse Overlay, Residential Medium.
+
+    Getting the count wrong by one would put RM's 45 on R-10, which is the
+    error worth a test.
+    """
+    assert {
+        zone: rules.resolve(FAIRVIEW, zone).get("max_height_ft")
+        for zone in ("R-6", "R-7.5", "R-10", "RM")
+    } == {"R-6": 35, "R-7.5": 35, "R-10": 35, "RM": 45}
+
+
+def test_the_village_zones_state_their_own_height_in_prose(rules: RuleSet) -> None:
+    """Table 19.30.030.A has no column for either village zone. Both chapters
+    say it in a sentence instead -- "buildings within this zone may not exceed
+    35 feet in height" -- and that sentence is the citation."""
+    for zone, doc in (("VSF", "19.115"), ("VTH", "19.120")):
+        held = load_rules()[FAIRVIEW].zones[zone].values["max_height_ft"]
+        assert held.value == 35, zone
+        assert held.prov.quote.startswith(f"or/multnomah/fairview/{doc}.txt"), zone
+
+
+def test_the_townhouse_overlay_takes_the_stricter_of_its_two_columns(
+    rules: RuleSet,
+) -> None:
+    """RM/TOZ adopts RM by reference and its note anticipated exactly this:
+    "if the overlay turns out to move a standard, that standard belongs here
+    as a local value overriding the reference."
+
+    Row 17 gives the Townhouse Overlay column 35 feet and RM 45. The local
+    value is the 35 -- stricter, and the one a lot cannot be certified past.
+    Everything else in the zone still resolves through RM, because one cell is
+    not an answer to which column governs the rest.
+    """
+    assert rules.resolve(FAIRVIEW, "RM/TOZ").get("max_height_ft") == 35
+    assert rules.resolve(FAIRVIEW, "RM").get("max_height_ft") == 45
+    assert rules.resolve(FAIRVIEW, "RM/TOZ").get("max_coverage_pct") == rules.resolve(
+        FAIRVIEW, "RM"
+    ).get("max_coverage_pct")
+
+
+def test_the_manufactured_home_park_states_no_height_at_all(rules: RuleSet) -> None:
+    """19.30.030.A says where that district's standards live -- "all standards
+    for the Manufactured Home Park District are located in FMC 19.30.100" --
+    and 19.30.100 states a pad size, a density, setbacks, landscaping and a
+    roof pitch. No building height.
+
+    Exempt rather than missing: the section was read.
+    """
+    resolved = rules.resolve(FAIRVIEW, "R/MH")
+
+    assert resolved.get("max_height_ft") is None
+    assert "max_height_ft" in resolved.exempted
