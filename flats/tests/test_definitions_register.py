@@ -72,6 +72,7 @@ def test_the_jurisdictions_that_have_been_read(rules: RuleSet) -> None:
     )
     assert read == [
         "or/clackamas/_unincorporated",
+        "or/clackamas/happy-valley",
         "or/clackamas/milwaukie",
         "or/clackamas/oregon-city",
         "or/clackamas/rivergrove",
@@ -393,3 +394,19 @@ def test_a_city_does_not_take_the_county_that_surrounds_it(rules: RuleSet) -> No
     bent = lot((50, 0, S), (50, 70, S), (60, 20, N), (80, 110, N))
     assert rules.defines("or/clackamas/tualatin", "corner_lot", bent) is True
     assert rules.defines("or/clackamas/_unincorporated", "corner_lot", bent) is False
+
+
+def test_one_number_two_boundaries(rules: RuleSet) -> None:
+    """Happy Valley and Multnomah County both state 135 degrees and mean
+    different lots by it -- "135 degrees or less" against "less than 135".
+    On the boundary lot they answer opposite ways, which is exactly the kind
+    of difference a shared default would erase."""
+    at_135 = named_fork(135.0)
+    assert rules.defines("or/clackamas/happy-valley", "corner_lot", at_135) is True
+    assert rules.defines("or/multnomah/_unincorporated", "corner_lot", at_135) is None
+
+    over = named_fork(150.0)
+    assert rules.defines("or/clackamas/happy-valley", "corner_lot", over) is False
+    # ...while three codes that state no ceiling call the same lot a corner.
+    for open_ended in ("or/multnomah/portland", "or/clackamas/oregon-city", "or/clackamas/milwaukie"):
+        assert rules.defines(open_ended, "corner_lot", over) is True, open_ended

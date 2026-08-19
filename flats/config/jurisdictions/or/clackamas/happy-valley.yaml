@@ -12,7 +12,42 @@ ingest:
   zoning_layer: zoning_happy_valley
   zone_field: ZONE
   strip_lowercase_suffix: false
+definitions:
+  # "Corner lot. A lot bounded entirely by streets, or a lot which adjoins the
+  # point of intersection of two or more streets and which the interior angle
+  # formed by the extensions of the street lines in the direction which they
+  # take at their intersections with lot lines other than street lines, forms
+  # an angle of 135 degrees or less. In the event that any street line is a
+  # curve at its point of intersection with a lot line other than street line,
+  # the tangent to the curve at that point shall be considered the direction
+  # of the street line."
+  #
+  # A 135-degree ceiling stated "or less", so it includes 135 -- the same
+  # number Multnomah County writes as "less than 135" and excludes. Two
+  # jurisdictions, one number, opposite answers on the boundary lot.
+  #
+  # The tangent sentence is not an extra rule for us, it is a measurement
+  # convention we already follow: the angle is taken from each boundary side's
+  # own bearing where it meets the next, which for a curved street line is its
+  # tangent at that point.
+  #
+  # "Bounded entirely by streets" needs no separate encoding -- a lot with a
+  # street on every side has intersecting frontages by any reading.
+  corner_lot:
+    test: intersecting_frontages
+    count: 2
+    max_intersection_angle_deg: 135.0
+    quote: "or/clackamas/happy-valley/16.12.definitions.txt#L907-L908"
+    cite: "HV LDC 16.12.030, Corner lot"
+
 code:
+- id: 16.12.definitions
+  url: https://ecode360.com/print/HA4934?guid=43529904
+  title: HV LDC Chapter 16.12 - Definitions
+  # Prose about words, so almost nothing in it is a dimensioned standard and
+  # the thinness guard reads it as a landing page. Read 2026-08-18: it is
+  # 16.12.030, the definitions themselves, lot types set as a numbered list.
+  allow_thin: true
 - id: 16.22.residential
   url: https://ecode360.com/print/HA4934?guid=43529907
   title: HV LDC Chapter 16.22 - Residential Land Use Districts
