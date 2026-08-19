@@ -20,6 +20,21 @@ Three states, and only one of them is silent by omission:
     "detached dwellings only" said forty times is a class, and deleting that
     one reason returns all forty footnotes to ``unread`` at once. That is the
     rejection pass being re-runnable rather than a decision nobody can revisit.
+``unmeasured``
+    Read, understood, and it turns on something about the lot that nothing
+    computes yet. Oregon City prints "public utility easements may supersede
+    the minimum setback" under every dimensional table in Title 17; the
+    sentence is plain, and no easement layer is held. This is not the same as
+    unread and collapsing the two costs in both directions -- leaving it
+    unread says nobody looked, which stops the value ever being signed, while
+    dismissing it says the sentence does not matter, which is false and
+    produces a GREEN a surveyor would not.
+
+    So it stops blocking the *encoding* and goes on capping the *verdict*: the
+    ruling must name a registered site fact, and a site fact registered with
+    no assumption can never produce a GREEN. The gap moves from "somebody has
+    to read this" to "somebody has to buy this data", which is a different
+    queue and a truer one.
 
 Dispositions bind to the footnote's *text*, not to its line number. A stored
 document that gets re-fetched moves its lines, and a codifier who amends a
@@ -48,13 +63,18 @@ from typing import Sequence
 import yaml
 
 from flats.encode.footnotes import Body, Census, survey
+from flats.rules.conditions import condition
 
 CONFIG_ROOT = Path(__file__).resolve().parents[1] / "config" / "footnotes"
 
 #: The states a footnote can be in. ``unread`` is not written anywhere -- it
 #: is what a footnote is when nothing says otherwise, which is what makes the
 #: default safe rather than a thing somebody has to remember to set.
-STATES = ("unread", "encoded", "dismissed")
+STATES = ("unread", "encoded", "dismissed", "unmeasured")
+
+#: The states a file may declare. ``unread`` is what a footnote is when
+#: nothing says otherwise.
+DECIDED = ("encoded", "dismissed", "unmeasured")
 
 _SPACE = re.compile(r"\s+")
 
@@ -84,6 +104,8 @@ class Ruling:
     state: str
     reason: str = ""
     encoded_as: str = ""
+    #: For ``unmeasured``: the registered site fact this note turns on.
+    fact: str = ""
     quote: str = ""
 
 
@@ -99,6 +121,8 @@ class Note:
     state: str
     reason: str = ""
     encoded_as: str = ""
+    #: For ``unmeasured``: the registered site fact this note turns on.
+    fact: str = ""
     #: Set when a ruling was found for this note's line but not its words --
     #: the codifier amended it, so the ruling no longer applies.
     amended: bool = False
@@ -109,7 +133,19 @@ class Note:
 
     @property
     def blocking(self) -> bool:
+        """Whether this note stops the value under it being signed."""
         return self.state == "unread"
+
+    @property
+    def caps_green(self) -> bool:
+        """Whether a lot under this note can be called GREEN.
+
+        Two states say no for opposite reasons: nobody has read the note, or
+        somebody read it and it turns on a fact about the lot that nothing
+        measures. Verification can clear the first. Only data clears the
+        second.
+        """
+        return self.state in ("unread", "unmeasured")
 
 
 def _read(path: Path) -> list[Ruling]:
@@ -125,9 +161,9 @@ def _read(path: Path) -> list[Ruling]:
         if not isinstance(entry, dict):
             raise DispositionError(f"{where}: expected a mapping")
         state = entry.get("state", "")
-        if state not in ("encoded", "dismissed"):
+        if state not in DECIDED:
             raise DispositionError(
-                f"{where}: state must be 'encoded' or 'dismissed'; "
+                f"{where}: state must be one of {', '.join(repr(s) for s in DECIDED)}; "
                 "'unread' is the default and is never written down"
             )
         text_digest = str(entry.get("digest", "")).strip()
@@ -141,6 +177,32 @@ def _read(path: Path) -> list[Ruling]:
             raise DispositionError(
                 f"{where}: 'encoded' has to name what it became, or it cannot be checked"
             )
+        fact = str(entry.get("fact", "")).strip()
+        if state == "unmeasured":
+            if not str(entry.get("reason", "")).strip():
+                raise DispositionError(
+                    f"{where}: 'unmeasured' states what the note turns on, in words"
+                )
+            try:
+                registered = condition(fact)
+            except KeyError as exc:
+                # An unregistered fact is a gap nobody can act on: no screen
+                # would ever look for it and no data layer would be bought for
+                # it. Registering it is the first half of the work.
+                raise DispositionError(f"{where}: {exc.args[0]}") from None
+            if registered.kind != "site_fact":
+                raise DispositionError(
+                    f"{where}: 'fact' names {fact!r}, which is a {registered.kind}; "
+                    "an unmeasured footnote turns on something about the lot"
+                )
+            if registered.assume is not None:
+                # A fact with an assumption is one the screen answers by
+                # default, so a note resting on it is not unmeasured -- it is
+                # a variant somebody has to encode.
+                raise DispositionError(
+                    f"{where}: {fact!r} is assumed {registered.assume} across a batch, "
+                    "so this note is encodable rather than unmeasured"
+                )
         out.append(
             Ruling(
                 layer=layer,
@@ -148,6 +210,7 @@ def _read(path: Path) -> list[Ruling]:
                 state=state,
                 reason=str(entry.get("reason", "")).strip(),
                 encoded_as=str(entry.get("encoded_as", "")).strip(),
+                fact=fact,
                 quote=str(entry.get("quote", "")).strip(),
             )
         )
@@ -191,6 +254,7 @@ def _note(
             state=ruling.state,
             reason=ruling.reason,
             encoded_as=ruling.encoded_as,
+            fact=ruling.fact,
         )
     # A ruling written against this line whose words no longer match it. The
     # note was amended, so the decision is void and this is a fresh footnote.
@@ -251,6 +315,7 @@ def render(rows: Sequence[Note], *, queue: bool = False) -> str:
         f"captured={len(rows)}  "
         + "  ".join(f"{k}={v}" for k, v in tally.items())
         + f"  blocking={sum(1 for r in rows if r.blocking)}"
+        + f"  caps_green={sum(1 for r in rows if r.caps_green)}"
     )
     return "\n".join(lines)
 

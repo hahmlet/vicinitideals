@@ -13,6 +13,7 @@ from pathlib import Path
 import pytest
 
 from flats.encode import dispositions
+from flats.rules.conditions import condition
 from flats.encode.dispositions import (
     DispositionError,
     by_state,
@@ -62,9 +63,9 @@ def test_unread_is_never_written_down(config: Path) -> None:
         rulings()
 
 
-def test_only_the_two_decided_states_are_accepted(config: Path) -> None:
+def test_only_a_decided_state_is_accepted(config: Path) -> None:
     write(config, "or/x", "notes:\n  - digest: abc123abc123\n    state: maybe\n")
-    with pytest.raises(DispositionError, match="must be 'encoded' or 'dismissed'"):
+    with pytest.raises(DispositionError, match="state must be one of"):
         rulings()
 
 
@@ -213,3 +214,81 @@ def test_the_report_says_how_many_are_blocking(config: Path) -> None:
     text = render(notes("or/multnomah/troutdale"))
     assert "blocking=" in text
     assert "unread=" in text
+
+
+# --- read, and waiting on data -----------------------------------------
+#
+# The fourth state exists because dismissing and blocking are both wrong for
+# the same sentence: Oregon City's easement note is plain English nobody has
+# to read twice, and nobody can answer it without an easement layer. These
+# tests keep it from turning into a polite way of saying "ignore".
+
+
+def unmeasured(fact: str, reason: str = "no layer held") -> str:
+    return (
+        "notes:\n"
+        "  - digest: abc123abc123\n"
+        "    state: unmeasured\n"
+        f"    fact: {fact}\n"
+        f"    reason: {reason}\n"
+    )
+
+
+def test_unmeasured_states_what_the_note_turns_on(config: Path) -> None:
+    write(
+        config,
+        "or/x",
+        "notes:\n"
+        "  - digest: abc123abc123\n"
+        "    state: unmeasured\n"
+        "    fact: utility_easement\n",
+    )
+    with pytest.raises(DispositionError, match="in words"):
+        rulings()
+
+
+def test_unmeasured_names_a_registered_fact(config: Path) -> None:
+    # An unregistered fact is a gap nobody can act on: no screen looks for it
+    # and no data gets bought for it.
+    write(config, "or/x", unmeasured("easements_probably"))
+    with pytest.raises(DispositionError, match="easements_probably"):
+        rulings()
+
+
+def test_unmeasured_names_a_fact_about_the_lot(config: Path) -> None:
+    # bonus_program is registered, and it is a choice the developer makes
+    # rather than something true of the parcel. A note resting on it is
+    # unencoded, not unmeasurable.
+    write(config, "or/x", unmeasured("bonus_program"))
+    with pytest.raises(DispositionError, match="which is a elective"):
+        rulings()
+
+
+def test_a_fact_with_an_assumption_is_encodable_not_unmeasured(config: Path) -> None:
+    # corner_lot is assumed False across a batch, so the screen already
+    # answers it. Calling it unmeasured would hide an encodable variant.
+    write(config, "or/x", unmeasured("corner_lot"))
+    with pytest.raises(DispositionError, match="encodable rather than unmeasured"):
+        rulings()
+
+
+def test_unmeasured_stops_blocking_and_goes_on_capping() -> None:
+    # No config fixture: this one is about the rulings actually shipped.
+    ruled = [row for row in notes("or/clackamas/oregon-city") if row.state == "unmeasured"]
+    assert len(ruled) == 7, "Oregon City's seven unmeasured notes moved"
+    assert not any(row.blocking for row in ruled), (
+        "an unmeasured note has been read, so it cannot go on blocking the encoding"
+    )
+    assert all(row.caps_green for row in ruled), (
+        "an unmeasured note turns on a fact nobody holds, so nothing under it is GREEN"
+    )
+    assert all(row.fact for row in ruled), "every one of them names the fact it needs"
+
+
+def test_every_unmeasured_fact_is_one_nothing_assumes() -> None:
+    # The gate that makes caps_green true rather than decorative: a site fact
+    # carrying an assumption is answered by default, and the verdict under it
+    # would not be capped at all.
+    for row in notes():
+        if row.state == "unmeasured":
+            assert condition(row.fact).assume is None, row.fact

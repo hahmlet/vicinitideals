@@ -233,6 +233,40 @@ _C: tuple[ConditionDef, ...] = (
         evidence="parcel geometry — pole detection in flats.geom",
         assume=False,
     ),
+    ConditionDef(
+        "utility_easement",
+        "site_fact",
+        "A recorded public utility easement crosses the buildable area. "
+        "Oregon City prints \"public utility easements may supersede the "
+        "minimum setback\" under every dimensional table in Title 17, which "
+        "makes the table's setback a floor rather than the answer: the "
+        "easement can push the building further in and nothing in the zoning "
+        "text says by how much. Assumed unknown, because a lot screened as if "
+        "no easement existed is the one way this footnote produces a GREEN "
+        "that a surveyor would not.",
+        evidence="county recorded-easement layer -- none held",
+        assume=None,
+    ),
+    ConditionDef(
+        "abuts_lower_density_zone",
+        "site_fact",
+        "The site shares a boundary with a less intense residential zone. "
+        "Codes buy the neighbours a buffer with it -- Oregon City requires a "
+        "ten-foot landscaped yard on the side abutting R-10, R-8 or R-6 -- so "
+        "the setback that binds is not the one in the row for this zone.",
+        evidence="jurisdiction zoning polygons, adjacency on the shared edge",
+        assume=None,
+    ),
+    ConditionDef(
+        "protected_water_feature",
+        "site_fact",
+        "A stream, wetland or water body whose vegetated corridor eats the "
+        "buildable area. The corridor is measured from the feature and runs to "
+        "fifty feet and beyond on slopes, which can exceed every setback in "
+        "the zone put together.",
+        evidence="jurisdiction natural-resource overlay -- none held",
+        assume=None,
+    ),
     # --- design facts: true of the building, not of the parcel ---------
     ConditionDef(
         "multi_story",

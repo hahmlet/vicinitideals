@@ -1,0 +1,103 @@
+# Oregon City -- Title 17 footnotes.
+#
+# Ruled on 2026-08-19. All eleven, in two piles.
+#
+# Four are dismissed, every one on the same ground: it can only *relax* a
+# standard this screen enforces, so ignoring it can produce a lot we called
+# too small or too tight, never one we called buildable and is not.
+#
+# The other seven are unmeasured. Each of them *tightens* placement on a fact
+# nobody measures yet -- a utility easement, the zone across the line, a
+# protected water feature. Dismissing them for tidiness is exactly the move
+# that turns a read qualifier into a false GREEN, so they name the site fact
+# they need instead: read, understood, and waiting on data. They stop blocking
+# the encoding and go on capping the verdict.
+notes:
+  - quote: "or/clackamas/oregon-city/17.zoning.txt#L4157"
+    digest: "a8d00e754091"
+    state: dismissed
+    reason: >-
+      permits a lot size below the table minimum in a land division; it can
+      only relax a minimum this screen enforces, so ignoring it is conservative
+
+  - quote: "or/clackamas/oregon-city/17.zoning.txt#L4349"
+    digest: "4b678264b8ae"
+    state: dismissed
+    reason: >-
+      permits a lot size below the table minimum in a land division; it can
+      only relax a minimum this screen enforces, so ignoring it is conservative
+
+  - quote: "or/clackamas/oregon-city/17.zoning.txt#L4159"
+    digest: "2af895ed4b01"
+    state: dismissed
+    reason: >-
+      governs accessory structures, which the pod is not, and grants them a
+      reduction rather than imposing one
+
+  - quote: "or/clackamas/oregon-city/17.zoning.txt#L4621"
+    digest: "f48a46cc6a13"
+    state: dismissed
+    reason: >-
+      permits a maximum setback to be increased; it can only relax a maximum
+      this screen enforces, so ignoring it is conservative
+
+  # --- read, and resting on a fact nobody holds ------------------------
+  #
+  # Three printings of one sentence. It is the reason no Oregon City setback
+  # can be called GREEN today: the table number is a floor, and an easement
+  # moves the building further in by an amount the zoning text never states.
+  - quote: "or/clackamas/oregon-city/17.zoning.txt#L4161"
+    digest: "7627ed6ea078"
+    state: unmeasured
+    fact: utility_easement
+    reason: >-
+      a recorded easement can supersede the minimum setback, and no easement
+      layer is held for Clackamas County
+
+  - quote: "or/clackamas/oregon-city/17.zoning.txt#L4351"
+    digest: "8fd3a5099c23"
+    state: unmeasured
+    fact: utility_easement
+    reason: >-
+      a recorded easement can supersede the minimum setback, and no easement
+      layer is held for Clackamas County
+
+  - quote: "or/clackamas/oregon-city/17.zoning.txt#L4619"
+    digest: "f3dac24185a1"
+    state: unmeasured
+    fact: utility_easement
+    reason: >-
+      a recorded easement can supersede the minimum setback, and no easement
+      layer is held for Clackamas County
+
+  - quote: "or/clackamas/oregon-city/17.zoning.txt#L4615"
+    digest: "07c044251881"
+    state: unmeasured
+    fact: abuts_lower_density_zone
+    reason: >-
+      requires a ten-foot landscaped buffer on the side abutting R-10, R-8 or
+      R-6, which needs the zone across the shared edge
+
+  - quote: "or/clackamas/oregon-city/17.zoning.txt#L12517"
+    digest: "b0bfa1c611fd"
+    state: unmeasured
+    fact: protected_water_feature
+    reason: >-
+      sets the vegetated corridor width, which is measured from a water
+      feature nothing in this system locates
+
+  - quote: "or/clackamas/oregon-city/17.zoning.txt#L12520"
+    digest: "f7812a588500"
+    state: unmeasured
+    fact: protected_water_feature
+    reason: >-
+      corridors past fifty feet apply uphill of the water feature only, which
+      needs both the feature and the slope direction
+
+  - quote: "or/clackamas/oregon-city/17.zoning.txt#L12523"
+    digest: "d784dd5ddf9d"
+    state: unmeasured
+    fact: protected_water_feature
+    reason: >-
+      places the corridor boundary at the top of a ravine confining the water
+      feature, which needs the feature and the terrain around it
