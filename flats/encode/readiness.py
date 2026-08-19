@@ -37,10 +37,11 @@ from __future__ import annotations
 import math
 import re
 from dataclasses import dataclass
-from typing import Iterable
+from typing import Iterable, Sequence
 
 from flats.encode.despace import repair_text
 from flats.encode.load import Trusted
+from flats.encode.qualified import qualified
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.model import LIKE, Layer, Status
 
@@ -52,6 +53,7 @@ STAGES = (
     "unquoted",
     "no_evidence",
     "misquoted",
+    "footnoted",
     "unsigned",
     "stale",
     "ready",
@@ -74,6 +76,14 @@ ACTION = {
     "misquoted": (
         "python -m flats.encode.attach {layer} --doc {doc} — quotes resolve to text that "
         "does not state the number, which is what a re-fetch does to line numbers"
+    ),
+    # Signing a number while an unread footnote governs the lines it was read
+    # from is how a conditional standard gets encoded as an unconditional one.
+    # The footnote may halve the number, or apply it only to a use we are not.
+    # Either way the reviewer cannot know until somebody reads it.
+    "footnoted": (
+        "python -m flats.encode.qualified --layer {layer} --blocking, then rule on each "
+        "footnote in flats/config/footnotes/{layer}.yaml"
     ),
     "unsigned": "python -m flats.encode.review queue --layer {layer}, then read and sign",
     "stale": "re-read the values whose source moved, then re-sign",
@@ -103,6 +113,10 @@ class Readiness:
     #: Nothing else in the ladder can see that, because the value still has a
     #: quote and the quote still resolves.
     misquoted: tuple[tuple[str, str], ...] = ()
+    #: (zone, field) pairs whose quoted lines sit under a footnote nobody has
+    #: ruled on. Not a claim the value is wrong -- a claim that we do not yet
+    #: know, which is the only honest state until the note is read.
+    footnoted: tuple[tuple[str, str], ...] = ()
     #: Values demoted because their evidence moved.
     stale: int = 0
     #: A declared document, for actions that name one. The first is as good as
@@ -287,7 +301,11 @@ def _statuses(layer: Layer) -> list[Status]:
 
 
 def readiness_for(
-    layer: Layer, *, store: ProvenanceStore, stale: int = 0
+    layer: Layer,
+    *,
+    store: ProvenanceStore,
+    stale: int = 0,
+    footnoted: Sequence[tuple[str, str]] = (),
 ) -> Readiness:
     """Place one jurisdiction on the ladder."""
     statuses = _statuses(layer)
@@ -325,6 +343,8 @@ def readiness_for(
         stage = "no_evidence"
     elif misquoted:
         stage = "misquoted"
+    elif footnoted:
+        stage = "footnoted"
     elif verified < len(statuses):
         stage = "unsigned"
     elif stale:
@@ -343,12 +363,18 @@ def readiness_for(
         unquoted=tuple(unquoted),
         no_evidence=tuple(no_evidence),
         misquoted=tuple(misquoted),
+        footnoted=tuple(footnoted),
         stale=stale,
         doc=next(iter(layer.documents()), ""),
     )
 
 
-def readiness(trusted: Trusted, store: ProvenanceStore) -> list[Readiness]:
+def readiness(
+    trusted: Trusted,
+    store: ProvenanceStore,
+    *,
+    footnoted: dict[str, list[tuple[str, str]]] | None = None,
+) -> list[Readiness]:
     """Every jurisdiction, worst rung first.
 
     Ties break on how much is already verified, descending — among cities at the
@@ -360,8 +386,26 @@ def readiness(trusted: Trusted, store: ProvenanceStore) -> list[Readiness]:
     for s in trusted.stale:
         stale_by_layer[s.layer] = stale_by_layer.get(s.layer, 0) + 1
 
+    # Computed once for the whole corpus: the join reads every stored document
+    # to find its footnotes, which is cheap once and silly per jurisdiction.
+    # Injectable because it is the one input that does not come from the store
+    # this function was handed -- a caller working against a different corpus
+    # has to be able to say so, or it reads the real one behind their back.
+    footnoted_by_layer: dict[str, list[tuple[str, str]]] = {}
+    if footnoted is None:
+        for row in qualified():
+            if row.blocking:
+                footnoted_by_layer.setdefault(row.layer, []).append((row.zone, row.field))
+    else:
+        footnoted_by_layer = footnoted
+
     out = [
-        readiness_for(layer, store=store, stale=stale_by_layer.get(layer_id, 0))
+        readiness_for(
+            layer,
+            store=store,
+            stale=stale_by_layer.get(layer_id, 0),
+            footnoted=footnoted_by_layer.get(layer_id, ()),
+        )
         for layer_id, layer in trusted.layers.items()
     ]
     out.sort(key=lambda r: (r.rung, -r.pct_verified, r.layer))

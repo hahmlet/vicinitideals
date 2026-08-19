@@ -73,7 +73,9 @@ def report(bench: dict, *, signed: bool = False):
         layers = sign_encoded(load_rules(bench["root"]))
         return readiness_for(layers[PORTLAND], store=store)
     trusted = load_trusted(bench["root"], log=log, store=store, strict=False)
-    return readiness(trusted, store)[0]
+    # The bench is its own corpus. Reading the real store's footnotes into it
+    # would make these tests depend on which jurisdiction was encoded today.
+    return readiness(trusted, store, footnoted={})[0]
 
 
 #: Everything present and quoted, awaiting a signature. Each test below breaks
@@ -179,7 +181,7 @@ def test_the_worst_rung_sorts_first(bench: dict) -> None:
 
     store = ProvenanceStore(bench["docs"])
     trusted = load_trusted(bench["root"], log=VerificationLog(), store=store, strict=False)
-    order = [r.stage for r in readiness(trusted, store)]
+    order = [r.stage for r in readiness(trusted, store, footnoted={})]
 
     assert order == ["no_source", "unsigned"]
 
@@ -280,7 +282,7 @@ def test_the_summary_counts_jurisdictions_per_rung(bench: dict) -> None:
     store = ProvenanceStore(bench["docs"])
     trusted = load_trusted(bench["root"], log=VerificationLog(), store=store, strict=False)
 
-    assert by_stage(readiness(trusted, store)) == {"no_source": 1, "unsigned": 1}
+    assert by_stage(readiness(trusted, store, footnoted={})) == {"no_source": 1, "unsigned": 1}
 
 
 def test_the_line_names_the_command_that_unblocks_it(bench: dict) -> None:
