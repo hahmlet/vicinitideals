@@ -1,4 +1,109 @@
 {
+  "or/clackamas/lake-oswego": {
+    "R-0": {
+      "max_coverage_pct": [
+        "net_developable_area",
+        "site_specific_limitation"
+      ],
+      "min_lot_sqft": [
+        "net_developable_area",
+        "site_specific_limitation"
+      ],
+      "quadplex_allowed": [
+        "site_specific_limitation",
+        "split_zone"
+      ],
+      "setback_front_ft": [
+        "net_developable_area",
+        "site_specific_limitation"
+      ],
+      "setback_rear_ft": [
+        "net_developable_area",
+        "site_specific_limitation"
+      ],
+      "setback_side_ft": [
+        "net_developable_area",
+        "site_specific_limitation"
+      ],
+      "setback_street_side_ft": [
+        "net_developable_area",
+        "site_specific_limitation"
+      ]
+    },
+    "R-3": {
+      "max_coverage_pct": [
+        "net_developable_area",
+        "site_specific_limitation"
+      ],
+      "min_lot_sqft": [
+        "net_developable_area",
+        "site_specific_limitation"
+      ],
+      "quadplex_allowed": [
+        "site_specific_limitation",
+        "split_zone"
+      ],
+      "setback_front_ft": [
+        "net_developable_area",
+        "site_specific_limitation"
+      ],
+      "setback_rear_ft": [
+        "net_developable_area",
+        "site_specific_limitation"
+      ],
+      "setback_side_ft": [
+        "net_developable_area",
+        "site_specific_limitation"
+      ],
+      "setback_street_side_ft": [
+        "net_developable_area",
+        "site_specific_limitation"
+      ]
+    },
+    "R-5": {
+      "max_coverage_pct": [
+        "net_developable_area",
+        "site_specific_limitation"
+      ],
+      "min_lot_sqft": [
+        "net_developable_area"
+      ],
+      "quadplex_allowed": [
+        "site_specific_limitation",
+        "split_zone"
+      ]
+    },
+    "R-7.5": {
+      "max_coverage_pct": [
+        "net_developable_area"
+      ],
+      "min_lot_sqft": [
+        "net_developable_area"
+      ],
+      "min_lot_width_ft": [
+        "net_developable_area"
+      ],
+      "quadplex_allowed": [
+        "site_specific_limitation",
+        "split_zone"
+      ],
+      "setback_front_ft": [
+        "net_developable_area"
+      ],
+      "setback_rear_ft": [
+        "net_developable_area"
+      ],
+      "setback_side_ft": [
+        "net_developable_area"
+      ],
+      "setback_side_total_ft": [
+        "net_developable_area"
+      ],
+      "setback_street_side_ft": [
+        "net_developable_area"
+      ]
+    }
+  },
   "or/clackamas/oregon-city": {
     "R-10": {
       "max_coverage_pct": [

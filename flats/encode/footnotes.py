@@ -207,6 +207,16 @@ FURNITURE = re.compile(
 #: Two or more spaces: the column gap that tells a table row from a sentence.
 GAP = re.compile(r"\s{2,}")
 
+#: A bracket that belongs to a figure or section number rather than to a cell:
+#: "See Figure 50.04.001-11[5]", where the figure is named after the note that
+#: sends you to it. Read as a marker it ends the block a note early, which is
+#: how Lake Oswego lost the sentence putting every R-0 and R-3 standard under
+#: a per-parcel check. Glued to a bare number -- "28 - 32[5]" -- it is still a
+#: marker, so only the citation shapes are forgiven.
+CROSS_REFERENCE = re.compile(
+    r"(?:figure|table|section|§|�)\s*[\w.\-]*\[\d{1,2}\]", re.I
+)
+
 
 @dataclass(frozen=True, slots=True)
 class Marker:
@@ -365,9 +375,14 @@ def _headless_run(lines: Sequence[str], i: int) -> bool:
 
 
 def _bears_a_marker(raw: str) -> bool:
-    """Whether this line carries a footnote reference of any shape."""
-    stripped = raw.strip()
-    cells = [stripped, *(GAP.split(stripped) if GAP.search(raw) else [])]
+    """Whether this line carries a footnote reference of any shape.
+
+    Cross-references come out first: a note that ends "See Figure
+    50.04.001-11[5]" is still the note, and reading its own figure number as a
+    marker ends the block on the note that cites a figure.
+    """
+    stripped = CROSS_REFERENCE.sub("", raw.strip())
+    cells = [stripped, *(GAP.split(stripped) if GAP.search(stripped) else [])]
     if any(GLUED_MARKER.search(c.strip()) or PAREN_MARKER.search(c.strip()) for c in cells):
         return True
     if BRACKET_MARKER.search(stripped):

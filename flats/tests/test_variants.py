@@ -652,11 +652,48 @@ def test_an_empty_exclusive_band_is_refused() -> None:
         Band(measure="lot_sqft", more_than=10000, at_most=10000)
 
 
+# Lake Oswego permits four townhouses per the lot area one single-family
+# dwelling would need — 7,500 sq ft in R-7.5. So the pod is allowed at exactly
+# 7,500 and not below, and the band saying "below" has to leave the figure out
+# without leaving a gap under it.
+
+
+def test_an_exclusive_upper_bound_excludes_the_figure_it_names() -> None:
+    under = Band(measure="lot_sqft", less_than=7500)
+
+    assert under.holds({"lot_sqft": 7499.5}) is True
+    assert under.holds({"lot_sqft": 7500}) is False
+    assert Band(measure="lot_sqft", at_most=7500).holds({"lot_sqft": 7500}) is True
+
+
+def test_the_two_halves_of_a_threshold_meet_without_overlapping() -> None:
+    v = value(
+        Variant(value=False, prov=PROV, band=Band(measure="lot_sqft", less_than=7500)),
+        Variant(value=True, prov=PROV, band=Band(measure="lot_sqft", at_least=7500)),
+        base=True,
+        name="quadplex_allowed",
+    )
+
+    assert v.under(lot={"lot_sqft": 7499}).value is False
+    assert v.under(lot={"lot_sqft": 7500}).value is True
+
+
+def test_a_band_has_one_upper_bound() -> None:
+    with pytest.raises(ValueError, match="one upper bound"):
+        Band(measure="lot_sqft", at_most=7500, less_than=7500)
+
+
+def test_an_empty_band_under_its_own_floor_is_refused() -> None:
+    with pytest.raises(ValueError, match="empty"):
+        Band(measure="lot_sqft", at_least=7500, less_than=7500)
+
+
 def test_a_band_token_says_which_side_the_figure_is_on() -> None:
     # The token is what a reviewer types to sign that column, so the two halves
     # of a split may not address the same way.
     assert Band(measure="lot_sqft", more_than=10000).token == "lot_sqft:>10000+"
     assert Band(measure="lot_sqft", at_most=10000).token == "lot_sqft:<=10000"
+    assert Band(measure="lot_sqft", less_than=10000).token == "lot_sqft:<=<10000"
 
 
 def test_a_storey_split_inside_a_band_resolves_to_one_number(root: Path) -> None:

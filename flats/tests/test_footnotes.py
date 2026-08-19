@@ -411,3 +411,50 @@ def test_a_numbered_paragraph_in_the_code_body_is_not_a_headless_run():
     )
 
     assert census(text, doc="d.txt").bodies == ()
+
+
+def test_a_note_may_cite_the_figure_named_after_it():
+    """Lake Oswego's Table 50.04.001-11 note 5 ends "See Figure
+    50.04.001-11[5]" — the figure carries the note's own number, glued to it.
+
+    Read as a marker, that bracket says a new table has begun, and the block
+    stopped there: note 5 arrived empty and 6 and 7 never arrived. Note 6 puts
+    every R-0 and R-3 standard under a per-parcel site-specific check.
+    """
+    text = "\n".join(
+        [
+            "Notes:",
+            "[4]",
+            "Maximum base height across the site shall be 28 ft.",
+            "[5]",
+            "For any portion of the lot above the Oswego Lake surface",
+            "elevation, height shall not exceed 25 ft. See Figure 50.04.001-11[5].",
+            "[6]",
+            "Site-specific dimensional standards, see LOC 50.02.002.2.c.",
+        ]
+    )
+
+    seen = census(text, doc="d.txt")
+
+    assert [b.mark for b in seen.bodies] == ["4", "5", "6"]
+    assert "Oswego Lake" in seen.bodies[1].text
+    assert "Site-specific" in seen.bodies[2].text
+
+
+def test_a_bracket_glued_to_a_bare_number_is_still_a_marker():
+    """"28 – 32[5]" is a table cell wearing its marker, and the forgiveness
+    for cross-references must not reach it: the next table starting is what
+    the block-ending test exists to catch."""
+    text = "\n".join(
+        [
+            "Notes:",
+            "[1]",
+            "Net developable area divided by the minimum lot area per unit.",
+            "Height, Primary Structure  28 – 32[5]  30 – 34[5]",
+        ]
+    )
+
+    seen = census(text, doc="d.txt")
+
+    assert [b.mark for b in seen.bodies] == ["1"]
+    assert "28" not in seen.bodies[0].text

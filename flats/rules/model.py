@@ -145,6 +145,13 @@ class Band(BaseModel):
     #: first, and ``at_least: 10001`` leaves a 1 sq ft hole a lot falls
     #: silently through to the base value in.
     more_than: float | None = None
+    #: An exclusive upper bound, the mirror of ``more_than``. Lake Oswego
+    #: permits four townhouses per the lot area one single-family dwelling
+    #: would need, so the pod is allowed at exactly 7,500 sq ft in R-7.5 and
+    #: not below -- and a band written ``at_most: 7499`` leaves a hole the
+    #: width of one square foot, through which a lot reaches the base value
+    #: unannounced.
+    less_than: float | None = None
 
     @model_validator(mode="after")
     def _is_a_range_on_a_known_measure(self) -> Band:
@@ -158,7 +165,17 @@ class Band(BaseModel):
                 f"{self.measure}: a band has one lower bound — "
                 f"'at_least' includes it, 'more_than' does not"
             )
-        if self.at_least is None and self.at_most is None and self.more_than is None:
+        if self.at_most is not None and self.less_than is not None:
+            raise ValueError(
+                f"{self.measure}: a band has one upper bound — "
+                f"'at_most' includes it, 'less_than' does not"
+            )
+        if (
+            self.at_least is None
+            and self.at_most is None
+            and self.more_than is None
+            and self.less_than is None
+        ):
             # A band with no bounds is every lot, which is the base value
             # written twice under a name that hides it.
             raise ValueError(f"{self.measure}: a band needs at least one bound")
@@ -172,6 +189,11 @@ class Band(BaseModel):
                 raise ValueError(
                     f"{self.measure}: band over {self.more_than} to {self.at_most} is empty"
                 )
+        low, _ = self.lower
+        if self.less_than is not None and low >= self.less_than:
+            raise ValueError(
+                f"{self.measure}: band {_num(low)} to under {_num(self.less_than)} is empty"
+            )
         return self
 
     @property
@@ -188,7 +210,14 @@ class Band(BaseModel):
 
     @property
     def upper(self) -> float:
+        if self.less_than is not None:
+            return self.less_than
         return self.at_most if self.at_most is not None else float("inf")
+
+    @property
+    def upper_closed(self) -> bool:
+        """Whether a lot sitting exactly on the upper bound is in the band."""
+        return self.less_than is None
 
     @property
     def token(self) -> str:
@@ -198,7 +227,10 @@ class Band(BaseModel):
         is one column. ``--when lot_sqft:3000-4999`` addresses it the way
         ``--when affordable`` addresses a footnote.
         """
-        high = _num(self.at_most) if self.at_most is not None else ""
+        if self.less_than is not None:
+            high = f"<{_num(self.less_than)}"
+        else:
+            high = _num(self.at_most) if self.at_most is not None else ""
         if self.more_than is not None:
             low = f">{_num(self.more_than)}"
         elif self.at_least is not None:
@@ -226,6 +258,8 @@ class Band(BaseModel):
         if self.more_than is not None and got <= self.more_than:
             return False
         if self.at_most is not None and got > self.at_most:
+            return False
+        if self.less_than is not None and got >= self.less_than:
             return False
         return True
 
@@ -559,10 +593,13 @@ class Value(BaseModel):
                 else:
                     low, closed = lo_b, closed_b
                 high = min(a.band.upper, b.band.upper)
+                high_closed = (a.band.upper_closed or a.band.upper > high) and (
+                    b.band.upper_closed or b.band.upper > high
+                )
                 # Touching at a single point is an overlap only when the lower
                 # bound includes that point: "over 10,000" and "up to 10,000"
                 # meet at 10,000 and share no lot.
-                if low < high or (low == high and closed):
+                if low < high or (low == high and closed and high_closed):
                     raise ValueError(
                         f"{self.name}: lot bands {a.band.token} and {b.band.token} "
                         f"overlap — a lot in both would take whichever sorted first"

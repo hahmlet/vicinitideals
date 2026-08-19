@@ -1,0 +1,286 @@
+# Lake Oswego -- LOC 50.03.002 (use table) and LOC 50.04 (dimensions).
+#
+# Sixty notes captured, twenty-eight of them over a value this corpus encodes.
+# They fall into four groups and one of the four is the reason this layer will
+# not go green on any lot.
+#
+# **Density.** Every residential table prints the same pair of sentences:
+# middle housing is exempt from maximum density, and a townhouse project gets
+# four dwellings per the lot area one single-family dwelling would need. Both
+# halves are encoded. The first is why a pod fits a 7,500 sq ft R-7.5 lot at
+# all; the second closes the split-plat path below 7,500 in R-7.5 and 5,000 in
+# R-5, which is land four 1,500 sq ft townhouse lots do not add up to.
+#
+# **Minimum density.** The same tables ask a subdivision to deliver 80 percent
+# of the theoretical yield -- or, in R-0, twenty units an acre -- computed on
+# *net developable area*. That is a survey of the parcel, not an attribute of
+# it, and nothing here holds one. Read, understood, and resting on a lot fact
+# nobody measures: `unmeasured`, which caps the verdict without pretending
+# somebody still has to read the sentence.
+#
+# **Site-specific standards.** The R-0 column of both the use table and the
+# dimensional table carries "see LOC 50.02.002.2.c", a list of named
+# properties carrying conditions from past approvals. A parcel on that list
+# can be barred from a use its zone permits, and the list is not held either.
+#
+# **The rest** are other housing types, other zones, height rules for sloping
+# ground, and relaxations -- dismissed, with the reason written down.
+notes:
+  # --- Table 50.03.002-1, the residential use table ------------------
+  - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L489"
+    digest: "51cc7973074a"
+    state: dismissed
+    reason: >-
+      note 1 sits on the R-W column's single-family cell and permits that
+      dwelling "erected on pilings over the water of Oswego Lake". A different
+      building on ground this screen does not measure, and R-W is not encoded
+
+  - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L490"
+    digest: "fbdef142ff47"
+    state: dismissed
+    reason: >-
+      note 2 marks the "small animals kept for owner's personal use" row and
+      says no commercial activity is allowed with it. It qualifies an
+      accessory use, not a dwelling
+
+  - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L491"
+    digest: "57cac05edacf"
+    state: unmeasured
+    fact: split_zone
+    reason: >-
+      note 3 stamps the R-3 and R-0 column heads: "if lot has multiple zones,
+      e.g., R-0/EC, see LOC 50.02.002.2.e". Each zone then governs the part of
+      the lot it covers, so on a split lot the pod is bound by whichever zone
+      it stands in and has a fraction of the lot to stand in. Every screen
+      here reads one zone per parcel
+
+  - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L492"
+    digest: "e8635f7f8c27"
+    state: unmeasured
+    fact: site_specific_limitation
+    reason: >-
+      note 4 stamps the R-0 column: "site-specific use limitations, see LOC
+      50.02.002.2.c". That section is a list of named properties carrying
+      conditions from past approvals, and a parcel on it can be barred from a
+      use the zone permits. The list is not held
+
+  # --- Table 50.04.001-1/-2, the R-7.5 zone ---------------------------
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L235"
+    digest: "8382d0fb9594"
+    state: unmeasured
+    fact: net_developable_area
+    reason: >-
+      note 1 is minimum density: a subdivision must produce the net
+      developable area divided by the minimum lot size, times 0.8, rounded.
+      Four units on land that could hold six is short of a floor rather than
+      over a ceiling, and the quantity the floor is computed on is a survey of
+      what the parcel loses to sensitive lands and dedications
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L237"
+    digest: "12b82f5551e3"
+    state: encoded
+    encoded_as: >-
+      R-7.5 max_density_du_per_acre exempt; R-7.5 quadplex_allowed false when
+      [unit_lots] under 7,500 sq ft
+    reason: >-
+      note 2 in both halves. Duplexes, triplexes, quadplexes and cottage
+      clusters are exempt from maximum density, which is what lets the pod sit
+      on one lot -- and it is an exemption rather than a large number, because
+      the table's Maximum row prints the marker and nothing else. Townhouse
+      projects get four dwellings per the lot area one single-family dwelling
+      needs, which in R-7.5 is the 7,500 on L59, so the split-plat path closes
+      below that figure. No per-lot number is written: 7,500 divided by four
+      is a number the code does not print, and what the note withholds under
+      it is permission
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L239"
+    digest: "1c0207f1d714"
+    state: dismissed
+    reason: >-
+      a 25% cut in minimum lot area to relocate a designated historic
+      landmark. A relaxation, granted for moving a landmark onto the site;
+      declining it can only cost a lot that would have qualified
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L241"
+    digest: "3839f3e55683"
+    state: dismissed
+    reason: >-
+      a foot of extra height for every five extra feet of setback on all
+      sides. A relaxation of a standard this layer does not encode for R-7.5,
+      and one bought with yard the pod is trying to fit inside
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L243"
+    digest: "deeb8fc51849"
+    state: dismissed
+    reason: >-
+      how base height is measured on sloping ground -- a flat plane 28 ft over
+      the highest natural grade, capped at 32. A height measurement rule, and
+      height is not encoded for this zone
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L245"
+    digest: "53220937d37d"
+    state: dismissed
+    reason: >-
+      building height exceptions may not exceed the primary structure's
+      height. A ceiling on accessory structures and projections, neither of
+      which is part of the pod
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L247"
+    digest: "9e6972a85a18"
+    state: dismissed
+    reason: >-
+      cottage cluster floor area. A different housing type, and a floor-area
+      standard this layer does not encode
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L249"
+    digest: "f84d8587bf8d"
+    state: dismissed
+    reason: >-
+      townhouse maximum floor area applies to the project rather than to each
+      lot. It says at what scale a standard is measured, and the standard --
+      maximum floor area -- is not encoded here; the formula cap it belongs to
+      does not bind a building of about a thousand square feet per unit
+
+  # --- Table 50.04.001-3, the R-5 and R-6 zones ----------------------
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L604"
+    digest: "42d5e438f82a"
+    state: unmeasured
+    fact: net_developable_area
+    reason: >-
+      minimum density again, in the R-5 and R-6 zones and computed the same
+      way: net developable area over the minimum lot size, times 0.8
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L606"
+    digest: "77baa83e6b6b"
+    state: encoded
+    encoded_as: >-
+      R-5 max_density_du_per_acre exempt; R-5 quadplex_allowed false when
+      [unit_lots] under 5,000 sq ft
+    reason: >-
+      the same pair of sentences Table 50.04.001-1 prints, read against R-5's
+      own row: "Single-Family, Duplex and Triplex Dwellings; Townhouse
+      Projects" states 5,000 (L526), so four townhouses need 5,000 sq ft of
+      land against the 4 x 1,500 the townhouse lot row would allow
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L608"
+    digest: "37137f670abc"
+    state: dismissed
+    reason: >-
+      the R-DD zone's density arithmetic. R-DD is not encoded in this layer
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L610"
+    digest: "92ec8a7651ff"
+    state: dismissed
+    reason: >-
+      an exception for structures the State or National Register has found
+      historically significant. A relaxation for a building already standing,
+      which is not the one being placed
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L612"
+    digest: "41fa8ae3a9df"
+    state: dismissed
+    reason: >-
+      how base height is measured on sloping ground. A height measurement
+      rule, and height is not encoded for this zone
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L614"
+    digest: "2a25acc9b2d6"
+    state: dismissed
+    reason: >-
+      cottage cluster floor area. A different housing type, and a floor-area
+      standard this layer does not encode
+
+  # --- Table 50.04.001-5, the R-6 zone -------------------------------
+  #
+  # One reason, said three times: these are R-6's notes. They reach R-5's
+  # setbacks only because a block's region runs back to the previous block,
+  # and R-5's setback row sits inside it.
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L788"
+    digest: "ac62e8e05c25"
+    state: dismissed
+    reason: >-
+      a note on Table 50.04.001-5, which is the R-6 zone's setback table. It
+      qualifies that table's accessory structure column -- under 600 sq ft,
+      walls under 10 ft -- and reaches an R-5 setback only through the width
+      of the block's region
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L789"
+    digest: "294e6c28c1c5"
+    state: dismissed
+    reason: >-
+      a note on Table 50.04.001-5, which is the R-6 zone's setback table. It
+      qualifies that table's garage-opening column, and reaches an R-5 setback
+      only through the width of the block's region
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L790"
+    digest: "3e870ea34bd1"
+    state: dismissed
+    reason: >-
+      a note on Table 50.04.001-5, which is the R-6 zone's setback table. It
+      measures the front setback of a corner lot on the narrow frontage, in
+      R-6, and reaches an R-5 setback only through the width of the block's
+      region
+
+  # --- Table 50.04.001-11, the R-W, R-3, R-2 and R-0 zones -----------
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1450"
+    digest: "3fdd3832cb7b"
+    state: unmeasured
+    fact: net_developable_area
+    reason: >-
+      minimum density in the R-W and R-3 zones, computed on net developable
+      area at 80 percent of the theoretical yield
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1452"
+    digest: "2134b66c0c2f"
+    state: unmeasured
+    fact: net_developable_area
+    reason: >-
+      minimum density in the R-2 and R-0 zones, stated as units per acre of
+      net developable area -- twenty in R-0 and twelve in R-2, per the
+      Minimum row of the table this note hangs off. On a tenth of an acre that
+      floor is under four units and on a quarter it is over, so it decides
+      ordinary lots, and the acre it is measured on is a survey nobody here
+      holds
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1454"
+    digest: "b8a6bd4094fe"
+    state: encoded
+    encoded_as: "R-3 and R-0 max_density_du_per_acre exempt"
+    reason: >-
+      the same exemption a third time: duplexes, triplexes, quadplexes and
+      cottage clusters are exempt from maximum density. The townhouse half is
+      not encoded for these two zones -- the row it points at extracts as five
+      cells across four columns ("3,375", "3,375", "No min.", "No min.", "No
+      min. for PD") and which belongs to R-3 cannot be told from the stored
+      text. R-0's Maximum density cell is an em dash regardless
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1456"
+    digest: "6db2c0b7f5ee"
+    state: dismissed
+    reason: >-
+      how base height is measured on sloping ground. A height measurement
+      rule, and height is not encoded for these zones
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1458"
+    digest: "3d8294473e1c"
+    state: dismissed
+    reason: >-
+      building height above and below the Oswego Lake surface elevation. The
+      table's R-W column, and a height standard at that
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1460"
+    digest: "cd7aed242922"
+    state: unmeasured
+    fact: site_specific_limitation
+    reason: >-
+      "site-specific dimensional standards, see LOC 50.02.002.2.c", stamped
+      on the R-0 column head. The same list of named properties the use
+      table's note 4 points at, reaching the dimensions this time: a parcel on
+      it is held to standards the table does not print
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1462"
+    digest: "3525ecf37ebc"
+    state: dismissed
+    reason: >-
+      cottage cluster floor area. A different housing type, and a floor-area
+      standard this layer does not encode

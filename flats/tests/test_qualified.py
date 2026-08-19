@@ -32,12 +32,20 @@ def rows() -> list[Qualified]:
 
 def test_encoded_values_do_sit_under_unruled_footnotes(rows: list[Qualified]) -> None:
     """The finding, stated as a test so it cannot quietly stop being true:
-    hundreds of encoded numbers were read from lines a footnote governs, and
-    not one of those footnotes has been ruled on."""
+    encoded numbers are read from lines a footnote governs, and until somebody
+    rules on the footnote the number is not signable.
+
+    The count is deliberately not pinned. It was, when the finding was new and
+    nothing had been ruled on; ruling on a jurisdiction is now the ordinary
+    week's work, and a test that fails as the queue drains would be measuring
+    progress rather than the mechanism. What is pinned is that the join still
+    reaches the corpus and that a blocked value is one whose notes are unread.
+    """
     assert rows, "the join found nothing, which would mean the census broke"
     blocked = [r for r in rows if r.blocking]
-    assert len(blocked) > 100
-    assert len({r.layer for r in blocked}) >= 5
+    assert blocked, "no value is blocked, which would mean the register broke"
+    for row in blocked:
+        assert any(note.state == "unread" for note in row.governing)
 
 
 def test_every_governed_value_names_the_notes_over_it(rows: list[Qualified]) -> None:

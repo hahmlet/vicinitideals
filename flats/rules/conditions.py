@@ -271,6 +271,45 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "split_zone",
+        "site_fact",
+        "The lot carries more than one base zone. Lake Oswego's use table "
+        "stamps its R-3 and R-0 columns \"if lot has multiple zones, e.g., "
+        "R-0/EC, see LOC 50.02.002.2.e\", and what that section does is apply "
+        "each zone to the part of the lot it covers -- so the pod is bound by "
+        "whichever zone it sits in, and the buildable area is a fraction of "
+        "the lot rather than the lot. Every screen here reads one zone per "
+        "parcel, which for a split lot is a coin flip nobody is told about.",
+        evidence="zoning polygons intersected against the parcel -- more than one hit",
+        assume=None,
+    ),
+    ConditionDef(
+        "site_specific_limitation",
+        "site_fact",
+        "A limitation attached to this parcel in particular rather than to "
+        "its zone. Lake Oswego footnotes the R-0 column of both its use table "
+        "and its dimensional table with \"site-specific standards, see LOC "
+        "50.02.002.2.c\", which is a list of named properties carrying "
+        "conditions from past approvals. Nothing here holds that list, and a "
+        "parcel on it can be barred from a use its zone permits.",
+        evidence="the jurisdiction's site-specific conditions list, keyed by parcel",
+        assume=None,
+    ),
+    ConditionDef(
+        "net_developable_area",
+        "site_fact",
+        "How much of the lot counts toward a density calculation once "
+        "sensitive lands, right-of-way dedications and the rest are taken "
+        "out. Minimum density is computed on it -- Lake Oswego asks a "
+        "subdivision for 80 percent of the theoretical yield in R-7.5, R-5 "
+        "and R-3, and 20 units per acre in R-0 -- so a four-unit plat on land "
+        "that could hold six is short of the floor rather than over a "
+        "ceiling. The lot's own square footage is an upper bound on it and "
+        "nothing more: the deductions are a survey, not an attribute.",
+        evidence="constrained-lands layers deducted from the parcel -- none held",
+        assume=None,
+    ),
+    ConditionDef(
         "utility_easement",
         "site_fact",
         "A recorded public utility easement crosses the buildable area. "

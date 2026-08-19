@@ -38,6 +38,12 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L193"
+    max_density_du_per_acre:
+      # Table 50.04.001-11 note 3: middle housing is exempt from maximum
+      # density. The table's Maximum row reads [3] for R-3 and an em dash for
+      # R-0, so there is no ceiling printed for either.
+      exempt: true
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1454"
     setback_front_ft:
       value: 10
       quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1344"
@@ -70,6 +76,12 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L193"
+    max_density_du_per_acre:
+      # Table 50.04.001-11 note 3: middle housing is exempt from maximum
+      # density. The table's Maximum row reads [3] for R-3 and an em dash for
+      # R-0, so there is no ceiling printed for either.
+      exempt: true
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1454"
     setback_front_ft:
       value: 10
       quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1342"
@@ -106,6 +118,18 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L193"
+      variants:
+        # Table 50.04.001-3 note 2, the townhouse half. R-5's row is titled
+        # "Single-Family, Duplex and Triplex Dwellings; Townhouse Projects"
+        # and states 5,000 (L526), so a four-unit townhouse project needs
+        # 5,000 sq ft of land -- against 4 x 1,500 for the lots themselves.
+        - value: false
+          when: [unit_lots]
+          band: {measure: lot_sqft, less_than: 5000}
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L606"
+    max_density_du_per_acre:
+      exempt: true
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L606"
     setback_front_ft:
       value: 10
       quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L753"
@@ -172,6 +196,26 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L193"
+      variants:
+        # Table 50.04.001-1 note 2, the townhouse half: "the maximum density
+        # is four dwelling units per equivalent minimum lot area required per
+        # single-family dwelling in that zone". In R-7.5 that area is 7,500
+        # (L59, the "Single-Family, Duplex, Triplex, Quadplex, and Cottage
+        # Cluster Developments" row), so four townhouses need 7,500 sq ft of
+        # land however the land is divided. Four 1,500 sq ft townhouse lots
+        # come to 6,000, and the gap between the two is where the split path
+        # was screening green on land the code does not allow it on.
+        - value: false
+          when: [unit_lots]
+          band: {measure: lot_sqft, less_than: 7500}
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L237"
+    max_density_du_per_acre:
+      # The other half of the same note: middle housing is exempt from maximum
+      # density outright. Exempt rather than a number, because the table's
+      # own Maximum row is the marker [2] and nothing else -- there is no
+      # ceiling printed for this zone to encode.
+      exempt: true
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L237"
     setback_front_ft:
       value: 25
       quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L116"
