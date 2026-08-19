@@ -820,6 +820,108 @@ def test_an_exemption_survives_the_file(tmp_path: Path) -> None:
     assert held.under({"unit_lots"}).exempt is True
 
 
+def _somewhere(tmp_path: Path, variant: str) -> Path:
+    root = tmp_path / "or" / "multnomah"
+    root.mkdir(parents=True)
+    (root / "somewhere.yaml").write_text(
+        "layer: or/multnomah/somewhere\n"
+        "kind: city\n"
+        "label: Somewhere\n"
+        "zones:\n"
+        "  R-6:\n"
+        "    cite_default:\n"
+        "      cite: FMC 19.30.030\n"
+        "      url: https://example.invalid/19.30\n"
+        "      retrieved: '2026-08-15'\n"
+        "    min_lot_sqft:\n"
+        "      value: 12000\n"
+        "      quote: 'or/multnomah/somewhere/19.30.txt#L353'\n"
+        "      variants:\n" + variant,
+        encoding="utf-8",
+    )
+    (tmp_path / "or" / "or.yaml").write_text(
+        "layer: or\nkind: state\nlabel: Oregon\nzones: {}\n", encoding="utf-8"
+    )
+    return tmp_path
+
+
+def test_a_reduction_the_code_states_as_a_percentage_is_written_as_one(
+    tmp_path: Path,
+) -> None:
+    """Portland allows a minimum lot area to be "reduced by up to 10 percent".
+    33.110 prints 12,000, prints 10, and prints 10,800 nowhere -- so a file
+    that typed 10,800 would cite a sentence for a number the sentence does not
+    contain, which is the misquote the ladder exists to catch. The file states
+    the percentage the code states; the arithmetic happens here."""
+    loaded = load_rules(
+        _somewhere(
+            tmp_path,
+            "        - reduce_pct: 10\n"
+            "          when: [adjustment]\n"
+            "          quote: 'or/multnomah/somewhere/19.30.txt#L354'\n",
+        ),
+        strict=True,
+    )
+    held = loaded["or/multnomah/somewhere"].zones["R-6"].values["min_lot_sqft"]
+    reduced = held.under({"adjustment"})
+
+    assert reduced.reduce_pct == 10
+    assert reduced.value == 10800
+    assert isinstance(reduced.value, int), "10800.0 invites a reader to wonder which was printed"
+
+
+def test_a_variant_states_a_number_or_a_reduction_and_not_both(tmp_path: Path) -> None:
+    with pytest.raises(RuleLoadError, match="a number or a reduction"):
+        load_rules(
+            _somewhere(
+                tmp_path,
+                "        - reduce_pct: 10\n"
+                "          value: 10800\n"
+                "          when: [adjustment]\n"
+                "          quote: 'or/multnomah/somewhere/19.30.txt#L354'\n",
+            ),
+            strict=True,
+        )
+
+
+def test_a_reduction_needs_something_numeric_to_reduce(tmp_path: Path) -> None:
+    """A curve, a permission flag or a missing base leaves nothing to take ten
+    percent of, and inventing a number there is what the key exists to stop."""
+    root = tmp_path / "or" / "multnomah"
+    root.mkdir(parents=True)
+    (root / "somewhere.yaml").write_text(
+        "layer: or/multnomah/somewhere\n"
+        "kind: city\n"
+        "label: Somewhere\n"
+        "zones:\n"
+        "  R-6:\n"
+        "    cite_default:\n"
+        "      cite: FMC 19.30.030\n"
+        "      url: https://example.invalid/19.30\n"
+        "      retrieved: '2026-08-15'\n"
+        "    quadplex_allowed:\n"
+        "      value: true\n"
+        "      quote: 'or/multnomah/somewhere/19.30.txt#L353'\n"
+        "      variants:\n"
+        "        - reduce_pct: 10\n"
+        "          when: [adjustment]\n"
+        "          quote: 'or/multnomah/somewhere/19.30.txt#L354'\n",
+        encoding="utf-8",
+    )
+    (tmp_path / "or" / "or.yaml").write_text(
+        "layer: or\nkind: state\nlabel: Oregon\nzones: {}\n", encoding="utf-8"
+    )
+    with pytest.raises(RuleLoadError, match="numeric base"):
+        load_rules(tmp_path, strict=True)
+
+
+def test_a_reduction_of_more_than_everything_is_refused() -> None:
+    with pytest.raises(ValueError, match="not a percentage"):
+        Variant(reduce_pct=140, when=("adjustment",), prov=PROV)
+    with pytest.raises(ValueError, match="exempt or reduced"):
+        Variant(reduce_pct=10, exempt=True, when=("adjustment",), prov=PROV)
+
+
 def test_an_exempted_standard_leaves_the_resolution_entirely() -> None:
     """A None sitting in `values` is a number-shaped hole. Something downstream
     would eventually subtract from it and fail the lot on a standard the code

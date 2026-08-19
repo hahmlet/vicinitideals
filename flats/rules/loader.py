@@ -138,7 +138,9 @@ def _parse_values(
 
         try:
             prov = Provenance(**{k: prov_src.get(k) for k in _PROV_KEYS})
-            variants = _parse_variants(raw_variants, prov_src, f"{where}.{key}", problems)
+            variants = _parse_variants(
+                raw_variants, prov_src, f"{where}.{key}", problems, base=value
+            )
             built = Value(
                 name=key,
                 value=value,
@@ -161,11 +163,24 @@ def _parse_values(
     return out
 
 
+def _reduced(base: float, pct: float) -> float:
+    """The base cut by a percentage, kept whole where the base is whole.
+
+    A minimum lot area of 12,000 reduced by ten percent is 10,800 square feet,
+    not 10,800.0 -- and a file that reads 10800.0 back out invites somebody to
+    wonder which of the two the code said.
+    """
+    cut = base * (1.0 - pct / 100.0)
+    rounded = round(cut, 6)
+    return int(rounded) if float(rounded).is_integer() else rounded
+
+
 def _parse_variants(
     raw: Any,
     prov_src: dict[str, Any],
     where: str,
     problems: list[str],
+    base: Any = None,
 ) -> tuple[Variant, ...]:
     """Parse the exceptions attached to one standard.
 
@@ -184,12 +199,34 @@ def _parse_variants(
     out: list[Variant] = []
     for i, node in enumerate(raw):
         at = f"{where}.variants[{i}]"
-        if not isinstance(node, dict) or not ({"value", "exempt"} & set(node)):
-            problems.append(f"{at}: expected a mapping with a 'value', or 'exempt: true'")
+        if not isinstance(node, dict) or not ({"value", "exempt", "reduce_pct"} & set(node)):
+            problems.append(
+                f"{at}: expected a mapping with a 'value', a 'reduce_pct', or 'exempt: true'"
+            )
             continue
         body = dict(node)
         value = body.pop("value", None)
         exempt = bool(body.pop("exempt", False))
+        reduce_pct = body.pop("reduce_pct", None)
+        if reduce_pct is not None:
+            if value is not None:
+                problems.append(f"{at}: a variant states a number or a reduction, not both")
+                continue
+            if not isinstance(base, (int, float)) or isinstance(base, bool):
+                # The reduction is arithmetic on the base, so a base that is a
+                # curve, a flag or absent leaves nothing to reduce -- and
+                # inventing a number here is exactly what the key exists to
+                # stop.
+                problems.append(
+                    f"{at}: 'reduce_pct' needs a numeric base value to reduce; "
+                    f"this standard's base is {base!r}"
+                )
+                continue
+            try:
+                value = _reduced(base, float(reduce_pct))
+            except (TypeError, ValueError) as exc:
+                problems.append(f"{at}.reduce_pct: {exc}")
+                continue
         when = body.pop("when", None)
         if isinstance(when, str):
             when = [when]
@@ -240,6 +277,7 @@ def _parse_variants(
                 Variant(
                     value=value,
                     exempt=exempt,
+                    reduce_pct=None if reduce_pct is None else float(reduce_pct),
                     when=tuple(str(c) for c in when),
                     band=band,
                     prov=Provenance(**{k: merged.get(k) for k in _PROV_KEYS}),

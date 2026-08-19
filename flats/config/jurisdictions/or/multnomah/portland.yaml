@@ -119,7 +119,7 @@ zones:
       value: 12000
       quote: "or/multnomah/portland/33.110.txt#L1550"
       variants:
-        - value: 10800
+        - reduce_pct: 10
           when: [adjustment]
           quote: "or/multnomah/portland/33.110.txt#L1544-L1546"
     coverage_curve:
@@ -155,7 +155,7 @@ zones:
       value: 6000
       quote: "or/multnomah/portland/33.110.txt#L1551"
       variants:
-        - value: 5400
+        - reduce_pct: 10
           when: [adjustment]
           quote: "or/multnomah/portland/33.110.txt#L1544-L1546"
     coverage_curve:
@@ -191,7 +191,7 @@ zones:
       value: 4200
       quote: "or/multnomah/portland/33.110.txt#L1552"
       variants:
-        - value: 3780
+        - reduce_pct: 10
           when: [adjustment]
           quote: "or/multnomah/portland/33.110.txt#L1544-L1546"
     coverage_curve:
@@ -226,7 +226,7 @@ zones:
       value: 3000
       quote: "or/multnomah/portland/33.110.txt#L1553"
       variants:
-        - value: 2700
+        - reduce_pct: 10
           when: [adjustment]
           quote: "or/multnomah/portland/33.110.txt#L1544-L1546"
     coverage_curve:
@@ -261,7 +261,7 @@ zones:
       value: 1500
       quote: "or/multnomah/portland/33.110.txt#L1554"
       variants:
-        - value: 1350
+        - reduce_pct: 10
           when: [adjustment]
           quote: "or/multnomah/portland/33.110.txt#L1544-L1546"
     coverage_curve:

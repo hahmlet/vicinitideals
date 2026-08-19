@@ -258,6 +258,15 @@ class Variant(BaseModel):
     #: exemption as some very large number would be a lie that screens
     #: correctly, right up until somebody reads it.
     exempt: bool = False
+    #: A percentage the code allows the base to be cut by, where the code
+    #: states the percentage and never the result. Portland's Table 110-7
+    #: zones may have their minimum lot area "reduced by up to 10 percent",
+    #: and 33.110 prints 12,000 and prints 10 and prints 10,800 nowhere. A
+    #: file that typed 10,800 would be citing a sentence for a number the
+    #: sentence does not contain, which is the misquote this whole ladder
+    #: exists to catch -- so the file states the percentage the code states,
+    #: and the arithmetic is done here where it can be checked.
+    reduce_pct: float | None = None
     #: Registered condition names, all of which must hold. Empty is allowed
     #: only alongside a band: a variant with neither is the base value written
     #: twice, and two bases cannot be told apart.
@@ -308,6 +317,18 @@ class Variant(BaseModel):
         return self
 
     @model_validator(mode="after")
+    def _a_reduction_is_a_percentage(self) -> Variant:
+        if self.reduce_pct is None:
+            return self
+        if self.exempt:
+            raise ValueError("a variant is exempt or reduced, not both")
+        if not 0 < self.reduce_pct <= 100:
+            raise ValueError(
+                f"reduce_pct {self.reduce_pct} is not a percentage of the base value"
+            )
+        return self
+
+    @model_validator(mode="after")
     def _exempt_carries_no_number(self) -> Variant:
         # The two are alternatives, not a value with a flag on it. A variant
         # that said both "exempt" and "3" would leave every reader of the file
@@ -337,6 +358,11 @@ class Effective:
     #: Populated when two variants applied equally well. The number carried is
     #: the base, but nothing may treat it as an answer.
     ambiguous: tuple[str, ...] = ()
+    #: Where this number was derived rather than read: the percentage the
+    #: code allows the base to be cut by. Carried so attribution can say "the
+    #: base, reduced by ten percent under 33.110.240.B.2" rather than
+    #: presenting a number that appears nowhere in the cited text.
+    reduce_pct: float | None = None
     #: True where the standard does not apply to this configuration at all.
     #: ``value`` is None and there is nothing to compare a lot against — not a
     #: pass by a wide margin, an absence of the test. A screen that read the
@@ -615,6 +641,7 @@ class Value(BaseModel):
             winner.reviewed,
             when=winner.key,
             exempt=winner.exempt,
+            reduce_pct=winner.reduce_pct,
         )
 
 

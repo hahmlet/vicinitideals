@@ -188,7 +188,14 @@ def _quoted_parts(layer: Layer) -> Iterable[tuple[str, str, str | None, object]]
                     zone_code,
                     f"{name} [{'+'.join(sorted(variant.when))}]",
                     variant.prov.quote,
-                    getattr(variant, "value", None),
+                    # A reduction is checked against the percentage the code
+                    # states, not against the product. Portland's 33.110 prints
+                    # 12,000 and prints 10 and prints 10,800 nowhere, so
+                    # looking for the result would flag the one encoding that
+                    # did not invent it.
+                    variant.reduce_pct
+                    if variant.reduce_pct is not None
+                    else getattr(variant, "value", None),
                 )
         if zone.like is not None:
             yield zone_code, LIKE, zone.like.prov.quote, None
