@@ -21,6 +21,10 @@ stage            what it means
 ``unquoted``     values that point at no text — unreviewable as written
 ``no_evidence``  quotes that do not resolve to stored text
 ``misquoted``    quotes that resolve, to text that does not state the number
+``undefined``    the evidence is written in a word this city defined and this
+                 layer never captured, so geometry would decide it by
+                 somebody else's code
+``footnoted``    the quoted lines sit under a footnote nobody has ruled on
 ``unsigned``     everything present; waiting on somebody to read it
 ``stale``        read, but the source has moved since
 ``ready``        every value verified against text that still says it
@@ -42,6 +46,7 @@ from typing import Iterable, Sequence
 from flats.encode.despace import repair_text
 from flats.encode.load import Trusted
 from flats.encode.qualified import qualified
+from flats.encode.tagging import blocked, gaps
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.model import LIKE, Layer, Status
 
@@ -53,6 +58,7 @@ STAGES = (
     "unquoted",
     "no_evidence",
     "misquoted",
+    "undefined",
     "footnoted",
     "unsigned",
     "stale",
@@ -76,6 +82,16 @@ ACTION = {
     "misquoted": (
         "python -m flats.encode.attach {layer} --doc {doc} — quotes resolve to text that "
         "does not state the number, which is what a re-fetch does to line numbers"
+    ),
+    # A number is written in the city's words, and one of those words is one
+    # geometry has to decide on a real parcel. Without this city's meaning
+    # captured, the parcel gets decided by somebody else's -- four codes give
+    # four incompatible corner lots -- and nothing in the file records the
+    # substitution. It outranks the footnote rung because it is about the
+    # vocabulary the footnote is written in.
+    "undefined": (
+        "python -m flats.encode.tagging --layer {layer} --gaps, then capture the term "
+        "under `definitions:` in this jurisdiction's YAML with its quote"
     ),
     # Signing a number while an unread footnote governs the lines it was read
     # from is how a conditional standard gets encoded as an unconditional one.
@@ -113,6 +129,12 @@ class Readiness:
     #: Nothing else in the ladder can see that, because the value still has a
     #: quote and the quote still resolves.
     misquoted: tuple[tuple[str, str], ...] = ()
+    #: (zone, field) pairs whose evidence is written in a term this city
+    #: defines and this layer has not captured -- or one it is silent on in a
+    #: chapter we could not read whole, which is the same gap wearing the
+    #: other face: their code saying nothing and our matcher finding nothing
+    #: look identical and license opposite conclusions.
+    undefined: tuple[tuple[str, str], ...] = ()
     #: (zone, field) pairs whose quoted lines sit under a footnote nobody has
     #: ruled on. Not a claim the value is wrong -- a claim that we do not yet
     #: know, which is the only honest state until the note is read.
@@ -306,6 +328,7 @@ def readiness_for(
     store: ProvenanceStore,
     stale: int = 0,
     footnoted: Sequence[tuple[str, str]] = (),
+    undefined: Sequence[tuple[str, str]] = (),
 ) -> Readiness:
     """Place one jurisdiction on the ladder."""
     statuses = _statuses(layer)
@@ -343,6 +366,8 @@ def readiness_for(
         stage = "no_evidence"
     elif misquoted:
         stage = "misquoted"
+    elif undefined:
+        stage = "undefined"
     elif footnoted:
         stage = "footnoted"
     elif verified < len(statuses):
@@ -363,6 +388,7 @@ def readiness_for(
         unquoted=tuple(unquoted),
         no_evidence=tuple(no_evidence),
         misquoted=tuple(misquoted),
+        undefined=tuple(undefined),
         footnoted=tuple(footnoted),
         stale=stale,
         doc=next(iter(layer.documents()), ""),
@@ -374,6 +400,7 @@ def readiness(
     store: ProvenanceStore,
     *,
     footnoted: dict[str, list[tuple[str, str]]] | None = None,
+    undefined: dict[str, tuple[tuple[str, str], ...]] | None = None,
 ) -> list[Readiness]:
     """Every jurisdiction, worst rung first.
 
@@ -399,12 +426,18 @@ def readiness(
     else:
         footnoted_by_layer = footnoted
 
+    # Same argument, same injection: the vocabulary gate reads every stored
+    # definitions chapter, which is cheap once and wrong to do behind the back
+    # of a caller working against a corpus of their own.
+    undefined_by_layer = blocked(gaps(store=store)) if undefined is None else undefined
+
     out = [
         readiness_for(
             layer,
             store=store,
             stale=stale_by_layer.get(layer_id, 0),
             footnoted=footnoted_by_layer.get(layer_id, ()),
+            undefined=undefined_by_layer.get(layer_id, ()),
         )
         for layer_id, layer in trusted.layers.items()
     ]
