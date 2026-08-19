@@ -154,6 +154,18 @@ zones:
         - value: 16
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L313"
+        # Table 4.0130 G.2, the corner-lot row. The interior number above
+        # it is not the standard for a corner, so encoding only the interior one
+        # measured corner lots against a number the code does not state for them.
+        - value: 40
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L319"
+        # The townhouse row prints None on a corner -- no standard, rather than
+        # the interior number carried over. Stated so a corner unit-lots lot
+        # resolves one variant rather than two.
+        - exempt: true
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L316"
     min_lot_width_ft:
       value: 35
       quote: "or/multnomah/gresham/4.0100.residential.txt#L274"
@@ -161,6 +173,15 @@ zones:
         - value: 16
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L277"
+        # Table 4.0130 E.2, the corner-lot row. The interior number above
+        # it is not the standard for a corner, so encoding only the interior one
+        # measured corner lots against a number the code does not state for them.
+        - value: 40
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L283-L285"
+        - value: 20
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L286"
   LDR-7:
     section: ["4.01", "7.042"]
     cite_default:
@@ -204,6 +225,18 @@ zones:
         - value: 16
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L313"
+        # Table 4.0130 G.2, the corner-lot row. The interior number above
+        # it is not the standard for a corner, so encoding only the interior one
+        # measured corner lots against a number the code does not state for them.
+        - value: 40
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L319"
+        # The townhouse row prints None on a corner -- no standard, rather than
+        # the interior number carried over. Stated so a corner unit-lots lot
+        # resolves one variant rather than two.
+        - exempt: true
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L316"
     min_lot_width_ft:
       value: 40
       quote: "or/multnomah/gresham/4.0100.residential.txt#L274"
@@ -211,6 +244,15 @@ zones:
         - value: 16
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L277"
+        # Table 4.0130 E.2, the corner-lot row. The interior number above
+        # it is not the standard for a corner, so encoding only the interior one
+        # measured corner lots against a number the code does not state for them.
+        - value: 40
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L283-L285"
+        - value: 20
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L286"
   TLDR:
     section: ["4.01", "7.042"]
     cite_default:
@@ -248,6 +290,18 @@ zones:
         - value: 16
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L313"
+        # Table 4.0130 G.2, the corner-lot row. The interior number above
+        # it is not the standard for a corner, so encoding only the interior one
+        # measured corner lots against a number the code does not state for them.
+        - value: 40
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L319"
+        # The townhouse row prints None on a corner -- no standard, rather than
+        # the interior number carried over. Stated so a corner unit-lots lot
+        # resolves one variant rather than two.
+        - exempt: true
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L316"
     min_lot_sqft:
       value: 8000
       quote: "or/multnomah/gresham/4.0100.residential.txt#L593"
@@ -262,6 +316,15 @@ zones:
         - value: 16
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L277"
+        # Table 4.0130 E.2, the corner-lot row. The interior number above
+        # it is not the standard for a corner, so encoding only the interior one
+        # measured corner lots against a number the code does not state for them.
+        - value: 20
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L283-L285"
+        - value: 20
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L286"
   TR:
     section: ["4.01", "7.042"]
     cite_default:
@@ -304,6 +367,18 @@ zones:
         - value: 16
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L313"
+        # Table 4.0130 G.2, the corner-lot row. The interior number above
+        # it is not the standard for a corner, so encoding only the interior one
+        # measured corner lots against a number the code does not state for them.
+        - value: 40
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L319"
+        # The townhouse row prints None on a corner -- no standard, rather than
+        # the interior number carried over. Stated so a corner unit-lots lot
+        # resolves one variant rather than two.
+        - exempt: true
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L316"
     min_lot_width_ft:
       value: 35
       quote: "or/multnomah/gresham/4.0100.residential.txt#L274"
@@ -311,6 +386,15 @@ zones:
         - value: 16
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L277"
+        # Table 4.0130 E.2, the corner-lot row. The interior number above
+        # it is not the standard for a corner, so encoding only the interior one
+        # measured corner lots against a number the code does not state for them.
+        - value: 40
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L283-L285"
+        - value: 20
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L286"
   LDR-PV:
     section: ["4.14", "7.042"]
     cite_default:
@@ -437,6 +521,18 @@ zones:
         - value: 16
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L313"
+        # Table 4.0130 G.2, the corner-lot row. The interior number above
+        # it is not the standard for a corner, so encoding only the interior one
+        # measured corner lots against a number the code does not state for them.
+        - value: 45
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L319"
+        # The townhouse row prints None on a corner -- no standard, rather than
+        # the interior number carried over. Stated so a corner unit-lots lot
+        # resolves one variant rather than two.
+        - exempt: true
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L316"
     min_lot_width_ft:
       value: 16
       quote: "or/multnomah/gresham/4.0100.residential.txt#L274"
@@ -444,6 +540,15 @@ zones:
         - value: 16
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L277"
+        # Table 4.0130 E.2, the corner-lot row. The interior number above
+        # it is not the standard for a corner, so encoding only the interior one
+        # measured corner lots against a number the code does not state for them.
+        - value: 70
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L283-L285"
+        - value: 20
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L286"
   MDR-24:
     section: ["4.01", "7.042"]
     cite_default:
@@ -493,13 +598,50 @@ zones:
     max_height_ft:
       value: 35
       quote: "or/multnomah/gresham/4.0100.residential.txt#L332"
+    min_lot_width_ft:
+      # Table 4.0130 E.1, interior lot, the Duplex/Triplex/Quadplex row: 16 ft,
+      # carrying note 7. Missing before, which meant no width test ran in
+      # MDR-24 at all -- a lot too narrow for the pod read as unconstrained.
+      value: 16
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L274"
+      variants:
+        - value: 70
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L283-L285"
+        - value: 16
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L277"
+        # Note 8 is the only place MDR-24 states a corner townhouse width, and
+        # it states three: 16 ft with an alley, 25 with a shared access, 42
+        # with neither. The base is the number that binds where nothing is
+        # observed, because a shared access is a plat commitment rather than
+        # something true of the parcel.
+        - value: 42
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L286-L287,L382"
+        - value: 16
+          when: [unit_lots, corner_lot, abuts_alley]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L286-L287,L382"
     min_frontage_ft:
       value: 45
       quote: "or/multnomah/gresham/4.0100.residential.txt#L314"
       variants:
+        - value: 45
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L319"
         - value: 16
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L313"
+        # The cell reads "Varies depending on access" and hands the number to
+        # note 10: 25 ft measured from the corner radius end point where there
+        # is an alley or a shared access, 32 without. 32 is what binds until
+        # one of them is observed.
+        - value: 32
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L316-L318,L385"
+        - value: 25
+          when: [unit_lots, corner_lot, abuts_alley]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L316-L318,L385"
   DRL-1:
     section: ["4.11", "7.042"]
     cite_default:

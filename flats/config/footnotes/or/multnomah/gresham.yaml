@@ -21,8 +21,6 @@
 #
 # Deliberately left unread, because each is encoding work somebody has to do
 # rather than a rejection anybody can make:
-#   note 8  -- corner-lot townhouse width in MDR-24, 16 / 25 / 42 ft by access
-#   note 10 -- corner-lot frontage, 25 ft with alley or shared access, 32 without
 #   note 12 -- shoreline height standards, Section 10.1100
 #   the Table 4.0131 setback notes: sidewalk easements, double frontage lots,
 #   Minor Access Street frontage, and the distance between structures
@@ -208,3 +206,26 @@ notes:
       alley or a shared access; the pod's four units are served by one shared
       driveway to a rear court, so it is satisfied by the design rather than
       by the parcel
+
+  # --- notes 8 and 10, encoded with the corner-lot rows they belong to ---
+  #
+  # Both were the only place MDR-24 states a corner number, and both were read
+  # while encoding Table 4.0130 E.2 and G.2 across the residential zones.
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L382"
+    digest: "f9d282159d16"
+    state: encoded
+    encoded_as: "MDR-24 min_lot_width_ft variants, when [unit_lots, corner_lot] 42 ft and with abuts_alley 16 ft"
+    reason: >-
+      the corner townhouse width cell in MDR-24 reads "See table note 8", and
+      the note states three numbers by access; 42 is the one that binds until
+      an alley is observed, because a shared access is a plat commitment and
+      not a fact about the parcel
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L385"
+    digest: "c39eff4953c2"
+    state: encoded
+    encoded_as: "MDR-24 min_frontage_ft variants, when [unit_lots, corner_lot] 32 ft and with abuts_alley 25 ft"
+    reason: >-
+      the corner townhouse frontage cell in MDR-24 reads "Varies depending on
+      access" and hands the number to this note; 32 binds without an alley or
+      shared access, 25 with one
