@@ -134,6 +134,23 @@ _F: tuple[FieldDef, ...] = (
     ),
     # --- bulk -----------------------------------------------------------
     FieldDef("max_height_ft", "length_ft", "Maximum building height.", True, "max_height"),
+    FieldDef(
+        "max_height_stories",
+        "count",
+        "MAXIMUM building height where the code counts storeys instead of "
+        "feet. Gresham's SC and SC-RJ read \"10 stories\" in Table 4.0430 and "
+        "the chapter prints no figure in feet for them anywhere; GDC 3.0100 "
+        "defines a story by which floor surfaces bound it and never says how "
+        "tall one is, so every conversion to feet is an invention. Held as "
+        "its own field rather than converted because a storey count is a "
+        "different measurement, not a different spelling: a pod with one tall "
+        "ground floor can clear the count and fail the feet, and the two are "
+        "checked against different things about the design. A zone that "
+        "states this has answered the height question, so it stands in for "
+        "`max_height_ft` in the required-field check rather than beside it.",
+        True,
+        "max_height",
+    ),
     FieldDef("max_far", "ratio", "Maximum floor area ratio.", True, "max_far"),
     FieldDef("max_coverage_pct", "percent", "Maximum building coverage, flat percentage.", True, "max_lot_coverage"),
     FieldDef(
@@ -261,6 +278,11 @@ PER_DWELLING_FIELDS: frozenset[str] = frozenset({"min_lot_sqft"})
 #: recorded as not-applicable via the clause ledger.
 OPTIONAL_FIELDS: frozenset[str] = frozenset(
     {
+        # Answers the height question in the other unit. Required-ness is
+        # handled by ALTERNATIVES in the resolver, which reads one as
+        # standing in for the other; listed as required here it would be
+        # demanded of every zone whose code states feet.
+        "max_height_stories",
         "setback_street_side_ft",
         # Only a handful of codes regulate the pair rather than either yard,
         # and a zone that states one side yard is not an incomplete zone.

@@ -44,6 +44,12 @@ from typing import Any, Collection, Mapping
 from flats.rules.caps import caps_for
 from flats.rules.definitions import Boundary, Definition, decide, unread
 from flats.rules.fields import REQUIRED_FIELDS, field
+
+#: A required field, and the field that answers the same question in another
+#: unit. Deliberately tiny and deliberately one-directional: the storey count
+#: satisfies the height requirement, and a zone that states only feet is not
+#: asked for storeys.
+ALTERNATIVES: dict[str, str] = {"max_height_ft": "max_height_stories"}
 from flats.rules.model import LIKE, Layer, Preempt, Provenance, Status, Value, Zone
 
 
@@ -471,10 +477,22 @@ class RuleSet:
         prohibited = use is not None and use.value is False and not use.levers
         # An exempted required field is answered, not missing. The code was
         # read, and what it said was that this standard does not apply.
+        # A standard stated in the other unit is stated. Gresham caps SC at ten
+        # storeys and prints no height in feet anywhere in the chapter, so
+        # asking for `max_height_ft` there sends somebody to look for a number
+        # that does not exist -- which is how an encoding queue fills with work
+        # that cannot be done rather than work that has not been.
+        answered = {
+            name
+            for name, alternative in ALTERNATIVES.items()
+            if alternative in resolved
+        }
         missing = (
             ()
             if prohibited
-            else tuple(sorted(REQUIRED_FIELDS - set(resolved) - exempted))
+            else tuple(
+                sorted(REQUIRED_FIELDS - set(resolved) - exempted - answered)
+            )
         )
         ambiguous = tuple(sorted(n for n, r in resolved.items() if r.ambiguous))
         borrowed_from = tuple(b.zone for _, b in blocks if b.zone != zone)

@@ -376,6 +376,48 @@ def test_a_definite_miss_outranks_a_fuzzy_one() -> None:
     assert result.triage is Triage.yellow
 
 
+# --- a ceiling counted in storeys instead of feet ---------------------
+
+
+def test_a_storey_limit_is_checked_like_any_other_ceiling() -> None:
+    """Gresham caps SC at ten storeys and prints no height in feet anywhere.
+
+    A limit stated in the other unit is still a limit, so it runs as its own
+    check rather than being converted -- GDC 3.0100 defines a story by the
+    floor surfaces bounding it and never says how tall one is, so there is no
+    conversion that is not an invention.
+    """
+    result = run(rules(max_height_stories=10))
+
+    assert result.triage is Triage.green
+    counted = [c for c in result.checks if c.check == "stories"]
+    assert [c.verdict for c in counted] == [Verdict.passes]
+    assert counted[0].threshold == 10
+    assert counted[0].observed == 2
+
+
+def test_a_pod_over_the_storey_count_fails_on_it() -> None:
+    """And it can bind on its own, with the feet still clearing.
+
+    A two-storey pod is 26 feet, so a one-storey district refuses it while
+    every height in feet this corpus holds would let it through.
+    """
+    result = run(rules(max_height_stories=1))
+
+    assert result.triage is not Triage.green
+    failed = {c.check for c in result.checks if c.verdict is not Verdict.passes}
+    assert failed == {"stories"}
+
+
+def test_both_ceilings_run_where_a_zone_states_both() -> None:
+    """Two standards, not two spellings of one -- each has to be cleared."""
+    result = run(rules(max_height_ft=20, max_height_stories=10))
+
+    assert result.triage is not Triage.green
+    failed = {c.check for c in result.checks if c.verdict is not Verdict.passes}
+    assert failed == {"height_ft"}
+
+
 # --- standards nobody encoded ----------------------------------------
 
 

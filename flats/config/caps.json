@@ -321,13 +321,45 @@
   },
   "or/multnomah/gresham": {
     "CMF": {
+      "max_density_du_per_acre": [
+        "civic_corridor"
+      ],
       "min_frontage_ft": [
         "civic_corridor"
       ],
       "min_lot_sqft": [
         "civic_corridor"
       ],
+      "parking_min_per_unit": [
+        "civic_corridor"
+      ],
       "quadplex_allowed": [
+        "civic_corridor"
+      ],
+      "setback_front_ft": [
+        "civic_corridor"
+      ],
+      "setback_front_max_ft": [
+        "civic_corridor"
+      ],
+      "setback_rear_ft": [
+        "civic_corridor"
+      ],
+      "setback_side_ft": [
+        "civic_corridor"
+      ],
+      "setback_street_side_ft": [
+        "civic_corridor"
+      ]
+    },
+    "CMU": {
+      "max_density_du_per_acre": [
+        "civic_corridor"
+      ],
+      "min_lot_sqft": [
+        "civic_corridor"
+      ],
+      "parking_min_per_unit": [
         "civic_corridor"
       ],
       "setback_front_ft": [
@@ -521,6 +553,28 @@
         "local_street",
         "sidewalk_easement",
         "through_lot"
+      ]
+    },
+    "SC": {
+      "max_density_du_per_acre": [
+        "civic_corridor"
+      ],
+      "min_lot_sqft": [
+        "civic_corridor"
+      ],
+      "parking_min_per_unit": [
+        "civic_corridor"
+      ]
+    },
+    "SC-RJ": {
+      "max_density_du_per_acre": [
+        "civic_corridor"
+      ],
+      "min_lot_sqft": [
+        "civic_corridor"
+      ],
+      "parking_min_per_unit": [
+        "civic_corridor"
       ]
     },
     "TLDR": {

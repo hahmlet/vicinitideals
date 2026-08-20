@@ -115,6 +115,7 @@ CHECK_FIELD: dict[str, str] = {
     "coverage_pct": "max_coverage_pct",
     "far": "max_far",
     "height_ft": "max_height_ft",
+    "stories": "max_height_stories",
     "max_units": "max_units",
     "min_units": "min_units_at_trigger",
     "density_du_per_acre": "max_density_du_per_acre",
@@ -301,6 +302,15 @@ def _checks(
         is_maximum=True,
     )
     check("height_ft", design.height_ft, rules.get("max_height_ft"), is_maximum=True)
+    # The same ceiling counted the other way, where the code counts that way.
+    # Both run when a zone states both: they are two standards, and a building
+    # has to clear each of them.
+    check(
+        "stories",
+        float(design.stories),
+        rules.get("max_height_stories"),
+        is_maximum=True,
+    )
     check("max_units", float(design.units), rules.get("max_units"), is_maximum=True)
     # A ceiling on units per acre, measured on the lot in front of us. An acre
     # is 43,560 sq ft, and the arithmetic is done here rather than in the rule
