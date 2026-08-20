@@ -121,7 +121,7 @@ def test_written_config_loads_through_the_real_loader() -> None:
     rules = RuleSet(load_rules())
 
     assert len(rules.layers) == 19  # 18 jurisdictions + the state layer
-    assert sum(len(l.zones) for l in rules.layers.values()) == 129
+    assert sum(len(l.zones) for l in rules.layers.values()) == 136
 
 
 def test_state_parking_preemption_reaches_a_city_zone() -> None:
@@ -163,12 +163,14 @@ def test_unencoded_zone_is_surfaced_not_dropped() -> None:
     res = RuleSet(load_rules()).resolve("or/multnomah/portland", "RM1")
     assert res.verdict is not Verdict.zone_not_encoded, "33.120 is encoded"
 
-    # Two Portland examples have been used here and both got encoded out from
-    # under the test -- CM2 by Chapter 33.130, CI2 by 33.150. Portland now
-    # carries every zone its GIS reports, so the example has to come from
-    # somewhere else: Gresham's MDR-PV is 340 lots in a plan district whose
-    # chapter is not fetched.
-    res = RuleSet(load_rules()).resolve("or/multnomah/gresham", "MDR-PV")
+    # Four examples have been used here and every one of them got encoded out
+    # from under the test -- Portland's CM2 by Chapter 33.130 and CI2 by
+    # 33.150, then Gresham's MDR-PV by the Pleasant Valley chapter. Churn in
+    # this line is the encoding queue working, but the example should come
+    # from the far end of it: Multnomah County's MUA20 is Multiple Use
+    # Agriculture on 251 rural lots, which is the last place a four-unit
+    # attached townhome will ever be screened.
+    res = RuleSet(load_rules()).resolve("or/multnomah/_unincorporated", "MUA20")
 
     assert res.verdict is Verdict.zone_not_encoded
 

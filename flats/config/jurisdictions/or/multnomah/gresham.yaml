@@ -647,6 +647,33 @@ zones:
         - value: 20
           when: [unit_lots, corner_lot]
           quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L303"
+    min_density_du_per_acre:
+      # Row B, first column. Four units meet 5.3 to the acre up to roughly
+      # 32,890 sq ft of net area, so this is a maximum lot size wearing the
+      # other name -- and the row was not encoded when the district was.
+      value: 5.3
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L265-L266"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list for the LDR group
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+    max_density_du_per_acre:
+      # Row C prints None against "Duplex, Triplex, Quadplex". Exempt, not a
+      # large number. Article 3 says the same thing from the other side:
+      # middle housing counts toward minimum but not maximum density in
+      # LDR-PV.
+      exempt: true
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L267,L269-L271"
+      variants:
+        # Split the plat and the building is townhouses, which row C holds
+        # separately and caps at 25.
+        - value: 25
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L267,L272"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list for the LDR group
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
     notes: 'quadfit confidence: verified | Pleasant Valley plan district. Rear 10 ft (vs 15 in base LDR).'
     max_height_ft:
       value: 35
@@ -658,6 +685,267 @@ zones:
         - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L318"
+  MDR-PV:
+    section: ["4.14", "7.042"]
+    cite_default:
+      cite: Gresham Development Code Tables 4.1413/4.1415A/4.1415B (Pleasant Valley); 7.0420
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1400.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed:
+      # Table 4.1413, Quadplex row: P in all three residential columns. The
+      # district is medium density and the use is outright.
+      value: true
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L132-L133,L138"
+    min_lot_sqft:
+      # Row A, the "Duplex, Triplex, Quadplex, Cottage Cluster" line: 3,000 sq
+      # ft, which is 2,000 less than LDR-PV asks and the smallest buildable lot
+      # the chapter states for a pod on one lot.
+      value: 3000
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L258-L261"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L262"
+    min_density_du_per_acre:
+      # Row B: 12 units to the acre, and this is the standard that decides the
+      # district. Four units reach 12 to the acre only up to about 14,520 sq
+      # ft of net area, so MDR-PV is a WINDOW between 3,000 and roughly 14,520
+      # -- and row A alone reads as though anything above 3,000 would do.
+      value: 12
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L265-L266"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list for districts outside the LDR group
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L800-L803"
+    max_density_du_per_acre:
+      # Row C prints None against "Duplex, Triplex, Quadplex". Article 3
+      # corroborates it in its own words: middle housing counts toward minimum
+      # but not maximum density in MDR-PV, which is one of the districts it
+      # names.
+      exempt: true
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L267,L269-L271"
+      variants:
+        - value: 25
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L267,L272"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list for districts outside the LDR group
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L800-L801,L804"
+    min_frontage_ft:
+      # Row E: 35 feet on an interior lot, 40 on a corner. The corner figure is
+      # LARGER, which is the opposite of the corridor's note 11 and worth not
+      # copying across chapters.
+      value: 35
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L287-L293"
+      variants:
+        - value: 40
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L297-L302"
+        - value: 18
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L294"
+        - value: 20
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L303"
+    max_height_ft:
+      value: 35
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L306-L307"
+    max_far:
+      # Row H states 1.0 for LDR-PV and N/A for this column. Read, and it does
+      # not apply.
+      exempt: true
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L313-L318"
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385-L387,L392"
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385-L387,L392"
+      variants:
+        - value: 0
+          when: [attached_wall]
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385-L387,L392"
+    setback_rear_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385-L387,L392"
+      variants:
+        - value: 8
+          when: [abuts_alley]
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385-L387,L392"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385-L387,L392"
+      variants:
+        # The Townhouse row of the same table drops it to 5 for this district
+        # while leaving LDR-PV's at 8 -- two districts on one row moving by
+        # different amounts.
+        - value: 5
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L394,L396"
+    setback_garage_entrance_ft:
+      # The Garage column: 20 feet, twice the facade setback, and the standard
+      # a street-facing garage door fails on first.
+      value: 20
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385-L387,L392"
+    notes: >-
+      Pleasant Valley medium-density sub-district; shares one setback row with
+      LDR-PV and takes its own column everywhere else. Off-street parking is
+      row J, "As provided in Section 9.0851" -- a cross-reference to a chapter
+      not in this corpus, so the state minimum stands rather than a number read
+      out of this table. Row K is not encoded and has no field: alley access is
+      REQUIRED for garage entrances on a lot narrower than 60 feet, which is an
+      access constraint on the pod rather than a dimension of it, and it
+      applies only to developments whose units have individual garage
+      entrances. Row D's 0.5:1 lot width/depth ratio is stated for "All Other
+      Uses" and prints None against the quadplex row, so it does not reach
+      this building.
+  HDR-PV:
+    section: ["4.14", "7.042"]
+    cite_default:
+      cite: Gresham Development Code Tables 4.1413/4.1415A/4.1415B (Pleasant Valley); 7.0420
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1400.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed:
+      value: true
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L132-L133,L138"
+    min_lot_sqft:
+      # Row A prints None in this column for every housing type. No minimum
+      # buildable lot size at all -- the density floor is what limits the lot,
+      # from the other end.
+      exempt: true
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L258-L261"
+    min_density_du_per_acre:
+      # Row B: 25 units to the acre, the highest floor in the city, and the
+      # binding standard here by a wide margin. Four units reach 25 to the acre
+      # only up to about 6,970 sq ft of net area.
+      value: 25
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L265-L266"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list for districts outside the LDR group
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L800-L803"
+    max_density_du_per_acre:
+      # Row C: 40 against the quadplex line, and unlike MDR-PV this one binds.
+      # HDR-PV is NOT in Article 3's list of districts where middle housing is
+      # excluded from maximum density, so four units count and the lot must be
+      # at least about 4,356 sq ft. Read with the floor above, the district is
+      # a window roughly 4,356 to 6,970 sq ft wide, and no row of the table
+      # states a lot size at all.
+      value: 40
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L267,L269-L271"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list for districts outside the LDR group
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L800-L801,L804"
+    min_frontage_ft:
+      # Row E: None on an interior lot, 20 feet on a corner. A minimum that
+      # exists only on corners.
+      exempt: true
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L287-L293"
+      variants:
+        - value: 20
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L297-L302"
+        - value: 18
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L294"
+        - value: 32
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L303"
+    max_height_ft:
+      # 45 feet, and note 5 attaches height TRANSITION standards to it where an
+      # abutting lot is LDR-PV. Those live in Section 4.1416 and are not
+      # encoded; the ceiling here is the flat one.
+      value: 45
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L306-L307"
+    max_far:
+      exempt: true
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L313-L318"
+    setback_front_ft:
+      value: 5
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385,L393"
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385,L393"
+      variants:
+        - value: 0
+          when: [attached_wall]
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385,L393"
+    setback_rear_ft:
+      # 15 feet without an alley and 5 with one -- the only district in the
+      # chapter where the alley column is the LOOSER of the two by ten feet,
+      # and the only rear setback here bigger than LDR-PV's.
+      value: 15
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385,L393"
+      variants:
+        - value: 5
+          when: [abuts_alley]
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385,L393"
+        - value: 10
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L394,L397"
+        - value: 5
+          when: [unit_lots, abuts_alley]
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L394,L397"
+    setback_street_side_ft:
+      value: 5
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385,L393"
+    setback_garage_entrance_ft:
+      value: 20
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385,L393"
+    notes: >-
+      Pleasant Valley high-density sub-district. Off-street parking is row J,
+      "As provided in Section 9.0851", a cross-reference to a chapter not in
+      this corpus, so the state minimum stands. Row K is not encoded and has no
+      field: alley access is REQUIRED for garage entrances here outright, not
+      only on narrow lots, for developments whose units have individual garage
+      entrances. Note 5 on the height row points at Section 4.1416 building
+      height transition standards, which apply where an abutting lot is
+      LDR-PV; those are a step-back rule rather than a ceiling and are not
+      encoded. Row D's 0.5:1 lot width/depth ratio is stated for "All Other
+      Uses" and prints None against the quadplex row.
+  NC-PV:
+    section: ["4.14", "7.042"]
+    cite_default:
+      cite: Gresham Development Code Tables 4.1413/4.1415A/4.1415B (Pleasant Valley); 7.0420
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1400.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed:
+      # Table 4.1423, Quadplex row: NP in all three mixed-use and employment
+      # columns. The neighbourhood commercial sub-district permits townhouses
+      # and multi-family under limitations and refuses a quadplex outright, so
+      # nothing else in the chapter is read for it.
+      value: false
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L506-L507,L512"
+    notes: >-
+      Settled RED on the use table rather than unread. Table 4.1423 marks
+      Townhouse L1 in this column, and the split-plat path is refused for the
+      same reason it is refused Downtown: GDC 3.0100 defines a quadplex divided
+      through a Middle Housing Land Division as still "considered a quadplex".
+      Multi-Family is L1,3 and does not reach four units either -- Gresham
+      defines a Multi-Family Dwelling as five units or more that is expressly
+      not middle housing.
+  PUB-PV:
+    section: ["4.14"]
+    cite_default:
+      cite: Gresham Development Code Table 4.1431 (Pleasant Valley, Public Land)
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1400.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed:
+      # Table 4.1431 marks every residential use NP, quadplex included. The
+      # sub-district is reserved for land owned by a government agency for
+      # public use.
+      value: false
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L775-L776,L781"
+    notes: >-
+      The zoning layer labels this district PUB-PV and the code calls it PL-PV,
+      Public Land - Pleasant Valley, the same way the layer writes LDR/GB for
+      the code's LDR-GB. One lot carries the label. 4.1430 says the
+      sub-district "shall only apply to land owned by governmental agencies for
+      public use or benefit", and publicly owned land outside it takes the
+      standards of whichever sub-district it sits in -- so the label is not a
+      standard a private lot could inherit.
   LDR-SW:
     section: ["4.15", "7.042"]
     cite_default:
@@ -677,6 +965,11 @@ zones:
     setback_rear_ft:
       value: 15
       quote: "or/multnomah/gresham/4.1500.springwater.txt#L349-L353"
+      variants:
+        # Rear No Alley 15, Rear With Alley 8 -- the last two columns.
+        - value: 8
+          when: [abuts_alley]
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L347,L349-L353"
     setback_street_side_ft:
       value: 10
       quote: "or/multnomah/gresham/4.1500.springwater.txt#L349-L353"
@@ -694,6 +987,35 @@ zones:
         - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.1500.springwater.txt#L245"
+    min_density_du_per_acre:
+      # Row B, "All Uses": 5.8 units to the acre. Four units meet that up to
+      # roughly 30,040 sq ft of net area, which is a maximum lot size the
+      # district states nowhere else.
+      value: 5.8
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L243,L247,L249"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list for the LDR group
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+    max_density_du_per_acre:
+      # Row C prints None against "Duplex, Triplex, Quadplex". Article 3 says
+      # the same from the other side: middle housing counts toward minimum but
+      # not maximum density in LDR-SW.
+      exempt: true
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L243,L250-L253"
+      variants:
+        - value: 25
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L243,L250,L254"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list for the LDR group
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+    setback_garage_entrance_ft:
+      # The Garage column of the continued table: 20 feet, twice the facade
+      # setback, and it was never encoded here.
+      value: 20
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L347,L349-L353"
     notes: 'quadfit confidence: verified | Springwater. Min lot width 45 ft, min depth 80 ft (not separately
       modeled — envelope test dominates).'
     max_height_ft:
@@ -739,6 +1061,189 @@ zones:
       # E states one number for interior and corner alike.
       value: 80
       quote: "or/multnomah/gresham/4.1500.springwater.txt#L265"
+  VLDR-SW:
+    section: ["4.15", "7.042"]
+    cite_default:
+      cite: Gresham Development Code Tables 4.1507/4.1508 (Springwater); 7.0420
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1500.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed:
+      # Table 4.1507, Quadplex row: P P NP under VLDR-SW, LDR-SW, THR-SW. The
+      # very low density district permits the use outright; the high density
+      # one across the table refuses it.
+      value: true
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L139-L140,L145"
+    min_lot_sqft:
+      # Row A, "All Other Uses": 10,000 sq ft -- twice what LDR-SW asks and the
+      # largest minimum lot in the city outside the corridor.
+      value: 10000
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L243-L244,L246"
+      variants:
+        # The Townhouse row reads None, not zero.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L243-L245"
+    min_density_du_per_acre:
+      # Row B reads None against "All Uses" in this column. The district has a
+      # floor for cottage clusters and for nothing else, so a quadplex is
+      # under no obligation to be dense here -- which is unusual enough to
+      # state rather than leave blank.
+      exempt: true
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L243,L247-L249"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list for the LDR group
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+    max_density_du_per_acre:
+      # Row C prints None against "Duplex, Triplex, Quadplex", and Article 3
+      # names VLDR-SW first in the list of districts where middle housing does
+      # not count toward maximum density. Two sources, same answer.
+      exempt: true
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L243,L250-L253"
+      variants:
+        # Split the plat and the building is townhouses, which the same row
+        # caps at 14.4 -- four units then need about 12,100 sq ft, and the lot
+        # row already asked 10,000, so the split path is a narrow window here
+        # rather than an escape.
+        - value: 14.4
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L243,L250,L254"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list for the LDR group
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+    min_lot_width_ft:
+      # Row D.1, "All Other Uses": 75 feet at the building line on an interior
+      # lot and 100 on a corner. The corner figure is a third larger, and it is
+      # the widest lot standard in the corpus.
+      value: 75
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L243,L257-L258,L260"
+      variants:
+        - value: 16
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L243,L259"
+        - value: 100
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L243,L261,L263"
+        - value: 20
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L243,L262"
+    min_lot_depth_ft:
+      # E states one number for interior and corner alike.
+      value: 100
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L243,L264-L265"
+    min_frontage_ft:
+      # Row F: 50 feet on an interior lot, 75 on a corner. Read with the width
+      # above it, this district asks for more street than any other in Gresham.
+      value: 50
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L243,L266-L269"
+      variants:
+        - value: 75
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L243,L270,L272"
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L243,L268"
+        - exempt: true
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L243,L271"
+    max_height_ft:
+      value: 40
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L276-L278"
+    max_far:
+      # Row I: 0.7 against the quadplex line, the tightest floor area ratio in
+      # the city. On the 10,000 sq ft this same table asks, 0.7 is 7,000 square
+      # feet of floor -- which the pod clears, but not by the margin the 1.0
+      # next door would give it.
+      value: 0.7
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L276,L290-L294"
+      variants:
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L276,L295"
+    setback_front_ft:
+      value: 20
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L347-L348"
+    setback_side_ft:
+      # 5 feet, and the Common Wall column reads N/A in this row rather than
+      # the 0 the Townhouse row above it gets -- so the party-wall relief that
+      # LDR-PV and MDR-PV give a quadplex on one lot is not stated here.
+      value: 5
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L347-L348"
+      variants:
+        - value: 0
+          when: [unit_lots, attached_wall]
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L339-L340"
+    setback_rear_ft:
+      value: 20
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L347-L348"
+      variants:
+        - value: 8
+          when: [abuts_alley]
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L347-L348"
+    setback_street_side_ft:
+      # 20 feet, which is the deepest street-side setback in the chapter and
+      # two and a half times what the Townhouse row asks in the same column.
+      value: 20
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L347-L348"
+      variants:
+        - value: 8
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L339-L340"
+    setback_garage_entrance_ft:
+      # 25 feet -- five more than anywhere else in Gresham, and the standard a
+      # street-facing garage door fails on first.
+      value: 25
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L347-L348"
+      variants:
+        - value: 20
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1500.springwater.txt#L339-L340"
+    notes: >-
+      Springwater very low density sub-district. Off-street parking is row K,
+      "As provided in Section 9.0851", a cross-reference to a chapter not in
+      this corpus, so the state minimum stands rather than a number read out of
+      this table. Row L, alley access for garage entrances, reads N/A against
+      All Other Uses here and is not encoded. Row H sends the quadplex row to
+      Section 7.0400 for rear height limits, which is a roof-plane rule rather
+      than a ceiling and is not encoded. The four-unit cap of row J is stated
+      for Townhouses only.
+  RTI-SW:
+    section: ["4.15"]
+    cite_default:
+      cite: Gresham Development Code Table 4.1520 (Springwater, Mixed-Use/Employment/Industrial)
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1500.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed:
+      # Table 4.1520, Quadplex row: NP in all four columns. Every residential
+      # row of that table is NP except Multi-Family, which Gresham defines as
+      # five units or more and expressly not middle housing.
+      value: false
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L434-L435,L440"
+    notes: >-
+      Settled RED on the use table rather than unread -- the Research/Technology Industrial sub-district, which takes its residential rows from the mixed-use and employment table rather than the residential one. The split-plat
+      path is refused for the same reason it is refused Downtown and in
+      Pleasant Valley: GDC 3.0100 defines a quadplex divided through a Middle
+      Housing Land Division as still "considered a quadplex", and the Townhouse
+      row of Table 4.1520 reads NP in this column regardless.
+  IND-SW:
+    section: ["4.15"]
+    cite_default:
+      cite: Gresham Development Code Table 4.1520 (Springwater, Mixed-Use/Employment/Industrial)
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1500.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed:
+      # Table 4.1520, Quadplex row: NP in all four columns. Every residential
+      # row of that table is NP except Multi-Family, which Gresham defines as
+      # five units or more and expressly not middle housing.
+      value: false
+      quote: "or/multnomah/gresham/4.1500.springwater.txt#L434-L435,L440"
+    notes: >-
+      Settled RED on the use table rather than unread -- the Industrial sub-district, whose column of that table carries note 20 adopting the Springwater Community Plan's permitted uses; the residential rows are NP either way. The split-plat
+      path is refused for the same reason it is refused Downtown and in
+      Pleasant Valley: GDC 3.0100 defines a quadplex divided through a Middle
+      Housing Land Division as still "considered a quadplex", and the Townhouse
+      row of Table 4.1520 reads NP in this column regardless.
   MDR-12:
     section: ["4.01", "7.042"]
     cite_default:
