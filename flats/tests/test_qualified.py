@@ -21,6 +21,9 @@ from flats.rules.loader import load_rules
 
 pytestmark = pytest.mark.unit
 
+#: The layer with the most governed values, used where one will do.
+GRESHAM = "or/multnomah/gresham"
+
 
 @pytest.fixture(scope="module")
 def rows() -> list[Qualified]:
@@ -30,21 +33,54 @@ def rows() -> list[Qualified]:
 # --- the join over the corpus ------------------------------------------
 
 
-def test_encoded_values_do_sit_under_unruled_footnotes(rows: list[Qualified]) -> None:
-    """The finding, stated as a test so it cannot quietly stop being true:
-    encoded numbers are read from lines a footnote governs, and until somebody
-    rules on the footnote the number is not signable.
-
-    The count is deliberately not pinned. It was, when the finding was new and
-    nothing had been ruled on; ruling on a jurisdiction is now the ordinary
-    week's work, and a test that fails as the queue drains would be measuring
-    progress rather than the mechanism. What is pinned is that the join still
-    reaches the corpus and that a blocked value is one whose notes are unread.
-    """
+def test_the_join_still_reaches_the_corpus(rows: list[Qualified]) -> None:
+    """The census and the register meet over more than one city. If this
+    number collapses the join has broken, whatever the blocked count says."""
     assert rows, "the join found nothing, which would mean the census broke"
+    assert len({r.layer for r in rows}) >= 8
+
+
+def test_no_encoded_value_sits_under_a_footnote_nobody_read(
+    rows: list[Qualified],
+) -> None:
+    """A ratchet, and the reason it can be one.
+
+    This began as the opposite assertion: encoded numbers *do* sit under unread
+    footnotes, stated as a test so the finding could not quietly stop being
+    true. It stopped being true. Every footnote governing a value this corpus
+    encodes has now been ruled on -- encoded, dismissed with a reason, or
+    parked against a site fact nothing measures yet.
+
+    Turning it around is what keeps it that way. Encoding a value read from a
+    region a note qualifies, without ruling on the note, is the exact shape of
+    the provenance fault this project exists to avoid: a conditional standard
+    written down as an unconditional one. The readiness ladder already refuses
+    to sign such a value. This refuses to commit it.
+
+    The remedy when this fails is never to delete the value. It is to rule on
+    the note it names, in flats/config/footnotes/<layer>.yaml -- and `dismissed`
+    with an honest reason is a ruling.
+    """
     blocked = [r for r in rows if r.blocking]
-    assert blocked, "no value is blocked, which would mean the register broke"
-    for row in blocked:
+    assert not blocked, chr(10).join(
+        f"{r.layer} {r.zone}.{r.field} <- "
+        + ", ".join(n.text[:70] for n in r.governing if n.state == "unread")
+        for r in blocked[:20]
+    )
+
+
+def test_and_the_gate_would_still_close_if_a_register_went_missing(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """The ratchet above is only worth having if zero means read rather than
+    broken. Point the register at an empty directory and every governed value
+    in the largest jurisdiction blocks again, each one naming unread notes."""
+    monkeypatch.setattr(dispositions, "CONFIG_ROOT", tmp_path / "footnotes")
+
+    unruled = qualified(GRESHAM)
+    assert unruled, "the join found nothing for a layer that has governed values"
+    assert all(r.blocking for r in unruled)
+    for row in unruled:
         assert any(note.state == "unread" for note in row.governing)
 
 
@@ -79,11 +115,13 @@ def test_ruling_on_the_note_clears_the_values_under_it(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch, rows: list[Qualified]
 ) -> None:
     """The other half of the gate: it opens. A footnote ruled on stops
-    blocking every value in its region, without anybody editing those values."""
-    blocked = next(r for r in rows if r.blocking)
+    blocking every value in its region, without anybody editing those values.
+
+    The blocked row is manufactured rather than borrowed from the backlog,
+    because there is no backlog left to borrow from -- see the ratchet above."""
     root = tmp_path / "footnotes"
-    (root / blocked.layer).parent.mkdir(parents=True, exist_ok=True)
     monkeypatch.setattr(dispositions, "CONFIG_ROOT", root)
+    blocked = next(r for r in qualified(GRESHAM) if r.blocking)
     entries = "".join(
         f"  - digest: {digest(note.text)}\n"
         "    state: dismissed\n"

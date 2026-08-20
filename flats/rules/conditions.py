@@ -385,6 +385,26 @@ _C: tuple[ConditionDef, ...] = (
         assume=False,
     ),
     ConditionDef(
+        "middle_housing_child_lot",
+        "site_fact",
+        "One of the lots a duplex, triplex, fourplex or cottage cluster was "
+        "divided onto under a middle housing land division. Happy Valley "
+        "prints the consequence in the note over all three of its residential "
+        "use tables: those buildings \"are not permitted on a child lot\", "
+        "because the code already counted them against the parent. A screen "
+        "that cannot tell a child lot from an ordinary one would offer a "
+        "fourplex on a parcel whose fourplex is already built next door. "
+        "Assumed false, unlike most facts here. Middle housing land divisions "
+        "date from 2022 and are a small share of any county's lots, so "
+        "assuming every parcel might be one would hold a whole jurisdiction "
+        "at UNKNOWN for a condition almost none of them have; and the answer "
+        "is in the plat record rather than out of reach forever. An assumed "
+        "answer is still visible -- it comes back as FACT_ASSUMED against "
+        "the check it settles.",
+        evidence="plat records — the child lots of a middle housing land division",
+        assume=False,
+    ),
+    ConditionDef(
         "through_lot",
         "site_fact",
         "Street on two opposite sides. Gresham states the consequence plainly "

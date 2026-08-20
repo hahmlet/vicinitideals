@@ -26,7 +26,23 @@ notes: >-
   from 16.42.030(D), (F), (G), (H), (J) and (K), and (B) is not on the list.
 
 
-  (3) 16.63.020(F), density calculations. Fetched with 16.42 and read for the same reason -- 16.12's
+  (4) NOT ENCODED AND SHOULD BE. Table 16.22.050 states the standards for the SFA, MUR-A and VTH
+  districts and Table 16.22.060 for MUR-M and MUR-X. A quadplex is permitted by right in all three
+  attached districts -- "Four-family dwelling (quadplex): P, P, P" -- and they are the densest
+  residential land in the city, with lot minimums of 2,000 and 3,000 square feet against R-40's
+  40,000. Fifteen footnotes are dismissed as scoped to those tables, and that dismissal is only
+  honest while this item stands: encoding the districts returns all fifteen to the queue.
+
+
+  (5) The townhome column. Every residential table in 16.22 prints a townhome row beside the row a
+  quadplex is named in, and the townhome row is looser in four standards at once -- 1,500 square
+  feet of lot against R-40's 40,000, no lot width at all, twenty feet of frontage against a
+  hundred, and a zero interior side yard. All four are now carried as `unit_lots` variants. Before
+  this pass the file held a lot the code permits this building on to a minimum twenty-six times the
+  real one.
+
+
+    (3) 16.63.020(F), density calculations. Fetched with 16.42 and read for the same reason -- 16.12's
   "net acre" and "floor area ratio" both defer to it, so the subtraction behind every measured_on in
   this layer lived in an unfetched chapter. Now cited directly. (F)(3) also lets dedicated right-of-way
   count toward minimum lot size, but only "in the case of a partition, where the City is requiring the
@@ -94,6 +110,21 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L160"
+      variants:
+        # The note over this use table, in every one of the three it appears
+        # in: "Applies to a parent lot. Duplexes, triplexes, quadplexes, and
+        # cottage clusters are not permitted on a child lot (i.e., previously
+        # subdivided lot from a middle housing land division)."
+        #
+        # The permission itself is qualified, which is the strongest kind of
+        # condition there is -- on a child lot this building is not a smaller
+        # building, it is no building. The fact is assumed false because a
+        # middle housing land division is rare and the answer is in the plat
+        # record; the assumption comes back with the answer rather than
+        # disappearing into it.
+        - value: false
+          when: [middle_housing_child_lot]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L271"
     max_density_du_per_acre:
       # Table 16.22.020-2 prints no ceiling against the quadplex row -- the
       # standard there is "Lot size (minimum and maximum density)", a lot area
@@ -147,7 +178,12 @@ zones:
         # footnote 4 run up against the number. The footnote is quoted with
         # the row because the row alone does not say what the zero is for.
         - value: 0
-          when: [attached_wall]
+          # The footnote says townhomes, and a townhome in this code sits on
+          # its own lot -- the table gives it a lot minimum two rows above the
+          # one this setback belongs to. A party wall alone is not the
+          # condition; the pair is, which is also how the other five zones and
+          # Gladstone read the same sentence.
+          when: [attached_wall, unit_lots]
           quote: "or/clackamas/happy-valley/16.22.residential.txt#L292,L305"
     setback_rear_ft:
       value: 22
@@ -158,19 +194,48 @@ zones:
     min_lot_sqft:
       value: 40000
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L279"
+      variants:
+        # The row under the one this value comes from: "Lot size (minimum):
+        # Townhome1 -- 1,500 sq. ft." Four of them is 6,000, a figure the
+        # table prints nowhere and the one that binds when the pod is platted
+        # as townhouses. Encoded as the printed figure so the citation check
+        # still compares against 1,500.
+        #
+        # The gap this closes is not small: 40,000 square feet against 6,000 is
+        # the difference between a lot this city will never permit a
+        # four-unit building on and one it will.
+        - per_dwelling: 1500
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L280"
     min_lot_width_ft:
       value: 100
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L282"
+      variants:
+        # Footnote 2 on the row: "Townhomes are exempt from the lot width
+        # requirements." An exemption, not a smaller number -- the code
+        # switches the standard off for this building rather than loosening it.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L282,L303"
     min_lot_depth_ft:
       value: 200
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L283"
     min_frontage_ft:
-      # L286 is the "All other lots" row. The two rows above it are a
-      # cul-de-sac exception and a townhome figure; neither is the general
-      # case, and the townhome 20 ft is a lot-per-unit standard for a
-      # different product than the pod.
+      # L286 is the "All other lots" row. The row above it is a cul-de-sac
+      # exception, which is not encoded: whether a lot fronts a cul-de-sac is
+      # not a fact this screen measures, and reading the looser row across
+      # would pass lots the code holds to 100.
       value: 100
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L286"
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L284,L286"
+      variants:
+        # The row below the general one: townhomes, twenty feet, in every
+        # column of every residential table in this chapter. The comment this
+        # replaces called it "a standard for a different product than the pod"
+        # -- but the pod platted as townhouses is that product, which is how
+        # the townhome density row three fields up is already read.
+        - value: 20
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L287"
     max_coverage_pct:
       value: 20
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L288"
@@ -216,6 +281,21 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L160"
+      variants:
+        # The note over this use table, in every one of the three it appears
+        # in: "Applies to a parent lot. Duplexes, triplexes, quadplexes, and
+        # cottage clusters are not permitted on a child lot (i.e., previously
+        # subdivided lot from a middle housing land division)."
+        #
+        # The permission itself is qualified, which is the strongest kind of
+        # condition there is -- on a child lot this building is not a smaller
+        # building, it is no building. The fact is assumed false because a
+        # middle housing land division is rare and the answer is in the plat
+        # record; the assumption comes back with the answer rather than
+        # disappearing into it.
+        - value: false
+          when: [middle_housing_child_lot]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L271"
     max_density_du_per_acre:
       # Table 16.22.020-2 prints no ceiling against the quadplex row -- the
       # standard there is "Lot size (minimum and maximum density)", a lot area
@@ -269,7 +349,12 @@ zones:
         # footnote 4 run up against the number. The footnote is quoted with
         # the row because the row alone does not say what the zero is for.
         - value: 0
-          when: [attached_wall]
+          # The footnote says townhomes, and a townhome in this code sits on
+          # its own lot -- the table gives it a lot minimum two rows above the
+          # one this setback belongs to. A party wall alone is not the
+          # condition; the pair is, which is also how the other five zones and
+          # Gladstone read the same sentence.
+          when: [attached_wall, unit_lots]
           quote: "or/clackamas/happy-valley/16.22.residential.txt#L292,L305"
     setback_rear_ft:
       value: 22
@@ -280,19 +365,48 @@ zones:
     min_lot_sqft:
       value: 20000
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L279"
+      variants:
+        # The row under the one this value comes from: "Lot size (minimum):
+        # Townhome1 -- 1,500 sq. ft." Four of them is 6,000, a figure the
+        # table prints nowhere and the one that binds when the pod is platted
+        # as townhouses. Encoded as the printed figure so the citation check
+        # still compares against 1,500.
+        #
+        # The gap this closes is not small: 20,000 square feet against 6,000 is
+        # the difference between a lot this city will never permit a
+        # four-unit building on and one it will.
+        - per_dwelling: 1500
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L280"
     min_lot_width_ft:
       value: 80
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L282"
+      variants:
+        # Footnote 2 on the row: "Townhomes are exempt from the lot width
+        # requirements." An exemption, not a smaller number -- the code
+        # switches the standard off for this building rather than loosening it.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L282,L303"
     min_lot_depth_ft:
       value: 100
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L283"
     min_frontage_ft:
-      # L286 is the "All other lots" row. The two rows above it are a
-      # cul-de-sac exception and a townhome figure; neither is the general
-      # case, and the townhome 20 ft is a lot-per-unit standard for a
-      # different product than the pod.
+      # L286 is the "All other lots" row. The row above it is a cul-de-sac
+      # exception, which is not encoded: whether a lot fronts a cul-de-sac is
+      # not a fact this screen measures, and reading the looser row across
+      # would pass lots the code holds to 80.
       value: 80
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L286"
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L284,L286"
+      variants:
+        # The row below the general one: townhomes, twenty feet, in every
+        # column of every residential table in this chapter. The comment this
+        # replaces called it "a standard for a different product than the pod"
+        # -- but the pod platted as townhouses is that product, which is how
+        # the townhome density row three fields up is already read.
+        - value: 20
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L287"
     max_coverage_pct:
       value: 30
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L288"
@@ -336,6 +450,21 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L160"
+      variants:
+        # The note over this use table, in every one of the three it appears
+        # in: "Applies to a parent lot. Duplexes, triplexes, quadplexes, and
+        # cottage clusters are not permitted on a child lot (i.e., previously
+        # subdivided lot from a middle housing land division)."
+        #
+        # The permission itself is qualified, which is the strongest kind of
+        # condition there is -- on a child lot this building is not a smaller
+        # building, it is no building. The fact is assumed false because a
+        # middle housing land division is rare and the answer is in the plat
+        # record; the assumption comes back with the answer rather than
+        # disappearing into it.
+        - value: false
+          when: [middle_housing_child_lot]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L271"
     max_density_du_per_acre:
       # Table 16.22.020-2 prints no ceiling against the quadplex row -- the
       # standard there is "Lot size (minimum and maximum density)", a lot area
@@ -389,7 +518,12 @@ zones:
         # footnote 4 run up against the number. The footnote is quoted with
         # the row because the row alone does not say what the zero is for.
         - value: 0
-          when: [attached_wall]
+          # The footnote says townhomes, and a townhome in this code sits on
+          # its own lot -- the table gives it a lot minimum two rows above the
+          # one this setback belongs to. A party wall alone is not the
+          # condition; the pair is, which is also how the other five zones and
+          # Gladstone read the same sentence.
+          when: [attached_wall, unit_lots]
           quote: "or/clackamas/happy-valley/16.22.residential.txt#L292,L305"
     setback_rear_ft:
       value: 22
@@ -400,19 +534,48 @@ zones:
     min_lot_sqft:
       value: 15000
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L279"
+      variants:
+        # The row under the one this value comes from: "Lot size (minimum):
+        # Townhome1 -- 1,500 sq. ft." Four of them is 6,000, a figure the
+        # table prints nowhere and the one that binds when the pod is platted
+        # as townhouses. Encoded as the printed figure so the citation check
+        # still compares against 1,500.
+        #
+        # The gap this closes is not small: 15,000 square feet against 6,000 is
+        # the difference between a lot this city will never permit a
+        # four-unit building on and one it will.
+        - per_dwelling: 1500
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L280"
     min_lot_width_ft:
       value: 70
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L282"
+      variants:
+        # Footnote 2 on the row: "Townhomes are exempt from the lot width
+        # requirements." An exemption, not a smaller number -- the code
+        # switches the standard off for this building rather than loosening it.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L282,L303"
     min_lot_depth_ft:
       value: 90
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L283"
     min_frontage_ft:
-      # L286 is the "All other lots" row. The two rows above it are a
-      # cul-de-sac exception and a townhome figure; neither is the general
-      # case, and the townhome 20 ft is a lot-per-unit standard for a
-      # different product than the pod.
+      # L286 is the "All other lots" row. The row above it is a cul-de-sac
+      # exception, which is not encoded: whether a lot fronts a cul-de-sac is
+      # not a fact this screen measures, and reading the looser row across
+      # would pass lots the code holds to 60.
       value: 60
-      quote: "or/clackamas/happy-valley/16.22.residential.txt#L286"
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L284,L286"
+      variants:
+        # The row below the general one: townhomes, twenty feet, in every
+        # column of every residential table in this chapter. The comment this
+        # replaces called it "a standard for a different product than the pod"
+        # -- but the pod platted as townhouses is that product, which is how
+        # the townhome density row three fields up is already read.
+        - value: 20
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L287"
     max_coverage_pct:
       value: 35
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L288"
@@ -456,6 +619,21 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L353"
+      variants:
+        # The note over this use table, in every one of the three it appears
+        # in: "Applies to a parent lot. Duplexes, triplexes, quadplexes, and
+        # cottage clusters are not permitted on a child lot (i.e., previously
+        # subdivided lot from a middle housing land division)."
+        #
+        # The permission itself is qualified, which is the strongest kind of
+        # condition there is -- on a child lot this building is not a smaller
+        # building, it is no building. The fact is assumed false because a
+        # middle housing land division is rare and the answer is in the plat
+        # record; the assumption comes back with the answer rather than
+        # disappearing into it.
+        - value: false
+          when: [middle_housing_child_lot]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L460"
     max_density_du_per_acre:
       # Table 16.22.030-2 prints no ceiling against the quadplex row -- the
       # standard there is "Lot size (minimum and maximum density)", a lot area
@@ -504,6 +682,16 @@ zones:
     setback_side_ft:
       value: 7
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L483"
+      variants:
+        # The cell prints `7/04` -- 7 feet, or zero, the trailing 4
+        # being the footnote run up against the number. The footnote is quoted
+        # with the row because the row alone does not say what the zero is for,
+        # and it says townhomes: "Interior side yard setbacks for townhomes may
+        # be reduced to zero in compliance with applicable sections of the
+        # adopted Uniform Building Code."
+        - value: 0
+          when: [attached_wall, unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L483,L495"
     setback_rear_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L482"
@@ -513,12 +701,54 @@ zones:
     min_lot_sqft:
       value: 10000
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L469"
+      variants:
+        # The row under the one this value comes from: "Lot size (minimum):
+        # Townhome1 -- 1,500 sq. ft." Four of them is 6,000, a figure the
+        # table prints nowhere and the one that binds when the pod is platted
+        # as townhouses. Encoded as the printed figure so the citation check
+        # still compares against 1,500.
+        #
+        # The gap this closes is not small: 10,000 square feet against 6,000 is
+        # the difference between a lot this city will never permit a
+        # four-unit building on and one it will.
+        - per_dwelling: 1500
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L470"
     min_lot_width_ft:
       value: 60
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L472"
+      variants:
+        # Footnote 2 on the row: "Townhomes are exempt from the lot width
+        # requirements." An exemption, not a smaller number -- the code
+        # switches the standard off for this building rather than loosening it.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L472,L493"
     max_coverage_pct:
       value: 40
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L479"
+    min_lot_depth_ft:
+      # Table 16.22.030-2, "Lot depth (minimum)". Stated by the code and absent
+      # from this zone until now. Most Oregon codes are silent about depth, so
+      # the field is optional and its absence raises nothing -- which is
+      # exactly why a zone that does state it can go unencoded unnoticed.
+      value: 80
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L473"
+    min_frontage_ft:
+      # Table 16.22.030-2, "Street frontage (minimum)", "All other lots" row.
+      # Absent from this zone until now. The row above it, "Lots fronting on
+      # cul-de-sac", states a smaller 35 feet; that one is not encoded because
+      # whether a lot fronts a cul-de-sac is not a fact this screen measures,
+      # and reading the looser row across would pass lots the code holds to
+      # 50.
+      value: 50
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L474,L476"
+      variants:
+        # The row below: townhomes, twenty feet in every column of every
+        # residential table in this chapter.
+        - value: 20
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L477"
     min_landscaped_pct:
       # LDC 16.42.030(B) states the landscaping requirement by housing type,
       # and (B)(1) names this building: "Single-family detached, single-family
@@ -559,6 +789,21 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L353"
+      variants:
+        # The note over this use table, in every one of the three it appears
+        # in: "Applies to a parent lot. Duplexes, triplexes, quadplexes, and
+        # cottage clusters are not permitted on a child lot (i.e., previously
+        # subdivided lot from a middle housing land division)."
+        #
+        # The permission itself is qualified, which is the strongest kind of
+        # condition there is -- on a child lot this building is not a smaller
+        # building, it is no building. The fact is assumed false because a
+        # middle housing land division is rare and the answer is in the plat
+        # record; the assumption comes back with the answer rather than
+        # disappearing into it.
+        - value: false
+          when: [middle_housing_child_lot]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L460"
     max_density_du_per_acre:
       # Table 16.22.030-2 prints no ceiling against the quadplex row -- the
       # standard there is "Lot size (minimum and maximum density)", a lot area
@@ -607,6 +852,16 @@ zones:
     setback_side_ft:
       value: 5
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L483"
+      variants:
+        # The cell prints `5/04` -- 5 feet, or zero, the trailing 4
+        # being the footnote run up against the number. The footnote is quoted
+        # with the row because the row alone does not say what the zero is for,
+        # and it says townhomes: "Interior side yard setbacks for townhomes may
+        # be reduced to zero in compliance with applicable sections of the
+        # adopted Uniform Building Code."
+        - value: 0
+          when: [attached_wall, unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L483,L495"
     setback_rear_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L482"
@@ -616,12 +871,54 @@ zones:
     min_lot_sqft:
       value: 8500
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L469"
+      variants:
+        # The row under the one this value comes from: "Lot size (minimum):
+        # Townhome1 -- 1,500 sq. ft." Four of them is 6,000, a figure the
+        # table prints nowhere and the one that binds when the pod is platted
+        # as townhouses. Encoded as the printed figure so the citation check
+        # still compares against 1,500.
+        #
+        # The gap this closes is not small: 8,500 square feet against 6,000 is
+        # the difference between a lot this city will never permit a
+        # four-unit building on and one it will.
+        - per_dwelling: 1500
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L470"
     min_lot_width_ft:
       value: 50
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L472"
+      variants:
+        # Footnote 2 on the row: "Townhomes are exempt from the lot width
+        # requirements." An exemption, not a smaller number -- the code
+        # switches the standard off for this building rather than loosening it.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L472,L493"
     max_coverage_pct:
       value: 45
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L479"
+    min_lot_depth_ft:
+      # Table 16.22.030-2, "Lot depth (minimum)". Stated by the code and absent
+      # from this zone until now. Most Oregon codes are silent about depth, so
+      # the field is optional and its absence raises nothing -- which is
+      # exactly why a zone that does state it can go unencoded unnoticed.
+      value: 70
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L473"
+    min_frontage_ft:
+      # Table 16.22.030-2, "Street frontage (minimum)", "All other lots" row.
+      # Absent from this zone until now. The row above it, "Lots fronting on
+      # cul-de-sac", states a smaller 35 feet; that one is not encoded because
+      # whether a lot fronts a cul-de-sac is not a fact this screen measures,
+      # and reading the looser row across would pass lots the code holds to
+      # 50.
+      value: 50
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L474,L476"
+      variants:
+        # The row below: townhomes, twenty feet in every column of every
+        # residential table in this chapter.
+        - value: 20
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L477"
     min_landscaped_pct:
       # LDC 16.42.030(B) states the landscaping requirement by housing type,
       # and (B)(1) names this building: "Single-family detached, single-family
@@ -662,6 +959,21 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L353"
+      variants:
+        # The note over this use table, in every one of the three it appears
+        # in: "Applies to a parent lot. Duplexes, triplexes, quadplexes, and
+        # cottage clusters are not permitted on a child lot (i.e., previously
+        # subdivided lot from a middle housing land division)."
+        #
+        # The permission itself is qualified, which is the strongest kind of
+        # condition there is -- on a child lot this building is not a smaller
+        # building, it is no building. The fact is assumed false because a
+        # middle housing land division is rare and the answer is in the plat
+        # record; the assumption comes back with the answer rather than
+        # disappearing into it.
+        - value: false
+          when: [middle_housing_child_lot]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L460"
     max_density_du_per_acre:
       # Table 16.22.030-2 prints no ceiling against the quadplex row -- the
       # standard there is "Lot size (minimum and maximum density)", a lot area
@@ -710,6 +1022,16 @@ zones:
     setback_side_ft:
       value: 5
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L483"
+      variants:
+        # The cell prints `5/04` -- 5 feet, or zero, the trailing 4
+        # being the footnote run up against the number. The footnote is quoted
+        # with the row because the row alone does not say what the zero is for,
+        # and it says townhomes: "Interior side yard setbacks for townhomes may
+        # be reduced to zero in compliance with applicable sections of the
+        # adopted Uniform Building Code."
+        - value: 0
+          when: [attached_wall, unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L483,L495"
     setback_rear_ft:
       value: 22
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L482"
@@ -719,12 +1041,54 @@ zones:
     min_lot_sqft:
       value: 7000
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L469"
+      variants:
+        # The row under the one this value comes from: "Lot size (minimum):
+        # Townhome1 -- 1,500 sq. ft." Four of them is 6,000, a figure the
+        # table prints nowhere and the one that binds when the pod is platted
+        # as townhouses. Encoded as the printed figure so the citation check
+        # still compares against 1,500.
+        #
+        # The gap this closes is not small: 7,000 square feet against 6,000 is
+        # the difference between a lot this city will never permit a
+        # four-unit building on and one it will.
+        - per_dwelling: 1500
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L470"
     min_lot_width_ft:
       value: 50
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L472"
+      variants:
+        # Footnote 2 on the row: "Townhomes are exempt from the lot width
+        # requirements." An exemption, not a smaller number -- the code
+        # switches the standard off for this building rather than loosening it.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L472,L493"
     max_coverage_pct:
       value: 50
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L479"
+    min_lot_depth_ft:
+      # Table 16.22.030-2, "Lot depth (minimum)". Stated by the code and absent
+      # from this zone until now. Most Oregon codes are silent about depth, so
+      # the field is optional and its absence raises nothing -- which is
+      # exactly why a zone that does state it can go unencoded unnoticed.
+      value: 70
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L473"
+    min_frontage_ft:
+      # Table 16.22.030-2, "Street frontage (minimum)", "All other lots" row.
+      # Absent from this zone until now. The row above it, "Lots fronting on
+      # cul-de-sac", states a smaller 35 feet; that one is not encoded because
+      # whether a lot fronts a cul-de-sac is not a fact this screen measures,
+      # and reading the looser row across would pass lots the code holds to
+      # 50.
+      value: 50
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L474,L476"
+      variants:
+        # The row below: townhomes, twenty feet in every column of every
+        # residential table in this chapter.
+        - value: 20
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L477"
     min_landscaped_pct:
       # LDC 16.42.030(B) states the landscaping requirement by housing type,
       # and (B)(1) names this building: "Single-family detached, single-family
@@ -824,12 +1188,37 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L535"
+      variants:
+        # The note over this use table, in every one of the three it appears
+        # in: "Applies to a parent lot. Duplexes, triplexes, quadplexes, and
+        # cottage clusters are not permitted on a child lot (i.e., previously
+        # subdivided lot from a middle housing land division)."
+        #
+        # The permission itself is qualified, which is the strongest kind of
+        # condition there is -- on a child lot this building is not a smaller
+        # building, it is no building. The fact is assumed false because a
+        # middle housing land division is rare and the answer is in the plat
+        # record; the assumption comes back with the answer rather than
+        # disappearing into it.
+        - value: false
+          when: [middle_housing_child_lot]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L633"
     setback_front_ft:
       value: 20
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L658"
     setback_side_ft:
       value: 5
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L661"
+      variants:
+        # The cell prints `5/0 feet 3` -- 5 feet, or zero, the trailing 3
+        # being the footnote run up against the number. The footnote is quoted
+        # with the row because the row alone does not say what the zero is for,
+        # and it says townhomes: "Interior side yard setbacks for townhomes may
+        # be reduced to zero in compliance with applicable sections of the
+        # adopted Uniform Building Code."
+        - value: 0
+          when: [attached_wall, unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L661,L676"
     setback_rear_ft:
       value: 20
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L660"
@@ -839,12 +1228,55 @@ zones:
     min_lot_sqft:
       value: 7000
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L644"
+      variants:
+        # The row under the one this value comes from: "Lot size (minimum):
+        # Townhome1 -- 1,500 sq. ft." Four of them is 6,000, a figure the
+        # table prints nowhere and the one that binds when the pod is platted
+        # as townhouses. Encoded as the printed figure so the citation check
+        # still compares against 1,500.
+        #
+        # The gap this closes is not small: 7,000 square feet against 6,000 is
+        # the difference between a lot this city will never permit a
+        # four-unit building on and one it will.
+        - per_dwelling: 1500
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L645"
     min_lot_width_ft:
       value: 40
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L648"
+      variants:
+        # Footnote 2 on the row: "Townhomes are exempt from the lot width
+        # requirements." This table's copy adds a sentence: "Street
+        # frontage controls lot width for townhomes." An exemption, not a smaller number -- the code
+        # switches the standard off for this building rather than loosening it.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L648,L675"
     max_coverage_pct:
       value: 60
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L656"
+    min_lot_depth_ft:
+      # Table 16.22.040-2, "Lot depth (minimum)". Stated by the code and absent
+      # from this zone until now. Most Oregon codes are silent about depth, so
+      # the field is optional and its absence raises nothing -- which is
+      # exactly why a zone that does state it can go unencoded unnoticed.
+      value: 60
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L649"
+    min_frontage_ft:
+      # Table 16.22.040-2, "Street frontage (minimum)", "All other lots" row.
+      # Absent from this zone until now. The row above it, "Lots fronting on
+      # cul-de-sac", states a smaller 35 feet; that one is not encoded because
+      # whether a lot fronts a cul-de-sac is not a fact this screen measures,
+      # and reading the looser row across would pass lots the code holds to
+      # 40.
+      value: 40
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L650,L652"
+      variants:
+        # The row below: townhomes, twenty feet in every column of every
+        # residential table in this chapter.
+        - value: 20
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L653"
     min_landscaped_pct:
       # LDC 16.42.030(B) states the landscaping requirement by housing type,
       # and (B)(1) names this building: "Single-family detached, single-family
@@ -946,15 +1378,54 @@ zones:
       cite: HV LDC 16.22.040 (MUR-S, Mixed Use Residential-Single-Family); allows detached SFD
       url: https://ecode360.com/print/HA4934?guid=43529907
       retrieved: '2026-07-28'
+    min_lot_sqft:
+      # Table 16.22.040-2, "Lot size (minimum): Quadplex and cottage cluster",
+      # MUR-S column -- 7,000 sq ft, the same figure R-5 carries and the row
+      # this building is named in.
+      #
+      # Absent from this zone entirely until now, which is a standard the code
+      # states and the screen did not test. Most of the MUR-S column reads
+      # "Variable" and is genuinely unfixed; this cell is not one of them.
+      value: 7000
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L642,L644"
+      variants:
+        - per_dwelling: 1500
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L645"
     quadplex_allowed:
       value: true
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L535"
+      variants:
+        # The note over this use table, in every one of the three it appears
+        # in: "Applies to a parent lot. Duplexes, triplexes, quadplexes, and
+        # cottage clusters are not permitted on a child lot (i.e., previously
+        # subdivided lot from a middle housing land division)."
+        #
+        # The permission itself is qualified, which is the strongest kind of
+        # condition there is -- on a child lot this building is not a smaller
+        # building, it is no building. The fact is assumed false because a
+        # middle housing land division is rare and the answer is in the plat
+        # record; the assumption comes back with the answer rather than
+        # disappearing into it.
+        - value: false
+          when: [middle_housing_child_lot]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L633"
     setback_front_ft:
       value: 20
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L658"
     setback_side_ft:
       value: 5
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L661"
+      variants:
+        # The cell prints `5/0 feet3,4` -- 5 feet, or zero, the trailing 3
+        # being the footnote run up against the number. The footnote is quoted
+        # with the row because the row alone does not say what the zero is for,
+        # and it says townhomes: "Interior side yard setbacks for townhomes may
+        # be reduced to zero in compliance with applicable sections of the
+        # adopted Uniform Building Code."
+        - value: 0
+          when: [attached_wall, unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L661,L676"
     setback_rear_ft:
       value: 20
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L660"

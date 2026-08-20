@@ -1,0 +1,453 @@
+# Happy Valley -- Land Development Code Chapter 16.22 footnotes.
+#
+# Fifty-six notes under eleven tables, none of them read until now, and the
+# largest single block of unread footnotes in the corpus -- 42 percent of
+# everything holding a jurisdiction short of GREEN.
+#
+# Reading them found five standards the layer did not carry, which is the
+# argument for the census in one line. Four of the five turn on the same word.
+# Every residential table in this chapter prints a *townhome* row beside the
+# row a quadplex is named in, and the townhome row is the looser one:
+#
+#   * a lot minimum of 1,500 square feet against R-40's 40,000;
+#   * no lot width requirement at all;
+#   * twenty feet of street frontage against a hundred;
+#   * an interior side yard of zero.
+#
+# The first of those is the expensive one. A four-unit building platted as
+# townhouses needs 6,000 square feet in every one of these zones; the file
+# held R-40 to 40,000, and a lot the code permits this building on screened
+# RED for missing a standard it is not held to.
+#
+# The fifth is the opposite direction, and worse. The note over all three use
+# tables reads "Applies to a parent lot. Duplexes, triplexes, quadplexes, and
+# cottage clusters are not permitted on a child lot" -- a qualification on the
+# *permission*, not on a dimension. Nothing in the file said so, so a child
+# lot of a middle housing land division screened GREEN for a building the code
+# forbids there outright.
+#
+# Two shared reasons carry most of the dismissals and are meant to:
+#
+# * "a footnote is scoped to the table it sits under" -- Tables 16.22.050 and
+#   16.22.060 state the standards for the SFA, MUR-A, VTH, MUR-M and MUR-X
+#   districts, and none of those districts is encoded yet. Fifteen notes are
+#   ruled on that sentence alone. They are dismissed as *out of scope*, not as
+#   harmless: encoding those districts is an open item in the layer notes, and
+#   the day it happens these fifteen return to the queue by deleting the
+#   reason they share.
+#
+# * "the note loosens a standard for a building this is not" -- the height
+#   note raises the side and rear limit for single-family residential, the
+#   coverage notes exempt cottage clusters. Neither reaches a four-unit pod,
+#   and both would only ever add room.
+
+notes:
+  # --- the use permission, qualified ---------------------------------------
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L271"
+    digest: "80e1c0d8440b"
+    state: encoded
+    encoded_as: >-
+      quadplex_allowed variant `value: false when: [middle_housing_child_lot]`
+      in R40, R20, R15, R10, R8.5, R7, R5 and MURS -- every zone whose use
+      table carries the note.
+    reason: >-
+      The note sits over all three residential use tables and qualifies the
+      permission itself: on a child lot of a middle housing land division a
+      quadplex is not a smaller building, it is no building. The fact is
+      registered assumed-false, because middle housing land divisions date
+      from 2022 and are a small share of any county's lots, and because the
+      answer is in the plat record rather than out of reach. The assumption
+      comes back with the answer as FACT_ASSUMED rather than disappearing
+      into it.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L307"
+    digest: "3ea72b60c393"
+    state: dismissed
+    reason: >-
+      "If a duplex, triplex, fourplex, or cottage cluster has been divided by a
+      middle housing land division... the development standards that are
+      applicable to the lot shall apply to the middle housing parent lot, not
+      to the middle housing child lot." It directs the standards at a different
+      lot rather than changing any of them, and this screen tests one lot at a
+      time against the standards as printed. The only case it governs -- a
+      child lot -- is already closed by the note above, which forbids the
+      building there.
+
+  # --- the townhome column, four standards deep ----------------------------
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L303"
+    digest: "d18c11411223"
+    state: encoded
+    encoded_as: >-
+      min_lot_width_ft variant `exempt: true when: [unit_lots]` in R40, R20,
+      R15, R10, R8.5 and R7.
+    reason: >-
+      "Townhomes are exempt from the lot width requirements." An exemption
+      rather than a smaller number: the code switches the standard off for this
+      building instead of loosening it, and `exempt` is how that is said.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L675"
+    digest: "e2ac779b56bd"
+    state: encoded
+    encoded_as: "min_lot_width_ft variant `exempt: true when: [unit_lots]` in R5."
+    reason: >-
+      The same exemption as the note above with a sentence added -- "Street
+      frontage controls lot width for townhomes" -- which is not a second
+      standard but a pointer to the frontage row, itself encoded with its own
+      townhome variant of twenty feet. Held as a separate ruling because the
+      wording differs and a digest that matched both would be lying about
+      which sentence was read.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L305"
+    digest: "efd4892dc931"
+    state: encoded
+    encoded_as: >-
+      setback_side_ft variant `value: 0 when: [attached_wall, unit_lots]` in
+      R40, R20, R15, R10, R8.5, R7 and R5.
+    reason: >-
+      "Interior side yard setbacks for townhomes may be reduced to zero in
+      compliance with applicable sections of the adopted Uniform Building
+      Code." This is the sentence the `15/0`, `10/0`, `7/0` and `5/0` cells
+      abbreviate; the row alone does not say what the zero is for. Conditioned
+      on unit lots as well as the party wall, because a townhome in this code
+      sits on its own lot -- the table gives it a lot minimum of its own two
+      rows up.
+
+  # --- the note the whole census paid for ----------------------------------
+  #
+  # Not a footnote at all in the file's shape: the townhome lot minimum is a
+  # table row. It is recorded here because the notes are what sent a reader to
+  # the row, and because the size of the correction is the case for reading
+  # them.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L302"
+    digest: "8b8e073952a0"
+    state: dismissed
+    reason: >-
+      "Density calculations for single-family detached shall be made pursuant
+      to Section 16.63.020(F). Cottage clusters must meet a minimum density of
+      four units per gross acre." Two rows, neither of them this building's:
+      the density this layer encodes is the townhome maximum on the row below,
+      which states its own net-acre denominator and carries it as
+      `measured_on`. The 16.63.020(F) pointer is read and cited there.
+
+  # --- landscaping ---------------------------------------------------------
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L679"
+    digest: "c48a98cc9b06"
+    state: encoded
+    encoded_as: "min_landscaped_pct = 20 on every zone in the layer."
+    reason: >-
+      "Pursuant to Section 16.42.030, 20% of the net developable area must be
+      usable open space." The city's own gloss on the standard encoded from
+      16.42.030(B)(1), and it disagrees with the chapter about two words: the
+      chapter says "gross developable lot area... shall be landscaped", the
+      footnote says net developable area and usable open space. Both
+      denominators are smaller than the lot, so the value is held against the
+      lot's own area, which asks for at least as much as either reading does.
+      The share is the same twenty percent in both.
+
+  # --- loosenings this building cannot use ---------------------------------
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L308"
+    digest: "ad1e465e2a88"
+    state: dismissed
+    reason: >-
+      "Maximum lot coverage for townhomes is the greater of the percentage
+      identified in the table or up to 1,000 square feet of buildings, decks,
+      stairways and entry bridges that are more than 30 inches above grade."
+      A floor under the allowance rather than a percentage, and there is no
+      form for the greater of a rate and an area. Leaving it out can only cost
+      a GREEN on a small townhome lot; it can never make one, which is the
+      direction that decides whether an unencodable note may be dismissed.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L118"
+    digest: "0919e0e581b5"
+    state: dismissed
+    reason: >-
+      "The single-family residential building height maximum is 45 feet at the
+      front elevation; side and rear elevations may not exceed 49 feet." It
+      raises the limit, for single-family residential, from the 45 the table
+      already prints. The pod is a four-unit building and it is 26 feet tall,
+      so neither half reaches it.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L304"
+    digest: "61ad8aa1880d"
+    state: dismissed
+    reason: >-
+      "Cottage cluster housing is exempt from lot coverage requirements." A
+      cottage cluster is a different building type with its own rows in every
+      one of these tables, and the pod is not one.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L494"
+    digest: "11266f317e33"
+    state: dismissed
+    reason: >-
+      "Cottage clusters are exempt from lot coverage requirements." The same
+      exemption as the note above in different words -- this table drops
+      "housing" -- and dismissed for the same reason: the pod is not a cottage
+      cluster. Ruled separately because the wording differs, and a shared
+      ruling would claim a sentence was read that was not.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L677"
+    digest: "54234f903021"
+    state: dismissed
+    reason: >-
+      "Standards may be proposed for amendment by Master Plan, PUD or Design
+      Review land use applications." A relief path rather than a standard, and
+      relief is held in the relief policy where a screen can say which
+      application a miss would need. It states no dimension to encode.
+
+  # --- other uses, other buildings -----------------------------------------
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L117"
+    digest: "f56558dc42f1"
+    state: dismissed
+    reason: >-
+      "Density calculations shall be made pursuant to Section 16.63.020(F)."
+      Scoped to Table 16.22.010-2, the Future Urbanization district's
+      standards. FU-10 is not a zone this layer encodes -- it is land waiting
+      to be annexed, not land a pod is placed on.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L461"
+    digest: "a8f979a97777"
+    state: dismissed
+    reason: >-
+      "Subject to applicable FAA rules and regulations." Marked on a use row
+      for aviation-related uses, states no dimension, and reaches nothing this
+      screen tests.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L634"
+    digest: "ab211350a1b1"
+    state: dismissed
+    reason: >-
+      "Neighborhood commercial uses subject to the provisions of Section
+      16.44.080." A use permission for a use this building is not, on a use
+      table row this building is not on.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L635"
+    digest: "d6d29d55cf42"
+    state: dismissed
+    reason: >-
+      "Neighborhood commercial uses are permitted within the Happy Valley Town
+      Center Plan Area." Permits somebody else's use inside a plan area, and
+      changes no dimension a residential building is held to.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L924"
+    digest: "33b2987ee5cd"
+    state: dismissed
+    reason: >-
+      "Neighborhood commercial use subject to the provisions of Section
+      16.44.080." The singular-worded twin of the note above, on the use tables
+      for the attached and mixed-use districts. Same reason: a use this
+      building is not.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L921"
+    digest: "09be99484497"
+    state: dismissed
+    reason: >-
+      "Preexisting single-family dwellings and residential homes may be altered
+      or expanded." A grandfathering allowance for buildings that already
+      exist. The pod is new construction, and nothing here is preexisting.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L923"
+    digest: "cf86f9269ed7"
+    state: dismissed
+    reason: >-
+      "Permitted only as an accessory use." Restricts a use row that is not
+      this building's -- the quadplex row on the same table carries no marker.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L925"
+    digest: "79b9cfa766e8"
+    state: dismissed
+    reason: >-
+      Alteration or expansion of a religious facility lawfully established
+      before July 1, 1993, bounded to the land that facility already occupied.
+      A different use, a different building, and a date this project's lots do
+      not turn on.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L926"
+    digest: "d3009ca52d5c"
+    state: dismissed
+    reason: >-
+      Public parks, playgrounds and noncommercial recreation, with a 30-foot
+      separation between a principal building or swimming pool and any other
+      residential lot. A standard on a neighbouring park's building, not on
+      this one.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L928"
+    digest: "4d97a744b94f"
+    state: dismissed
+    reason: >-
+      "Single-family detached units with a maximum floor area of 2,000 square
+      feet are permitted in the MUR-A zone within the Happy Valley Town Center
+      Plan Area." Permits a detached single-family house in a district this
+      layer does not encode. Two reasons out, and either alone would do.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L1299"
+    digest: "3da3c3aedbce"
+    state: dismissed
+    reason: >-
+      "Where scale and trip generation are compatible with residential
+      development." A discretionary compatibility test on a commercial use row
+      in the MUR-M and MUR-X use table, which is neither this building nor a
+      district this layer encodes.
+
+  # --- scoped to the districts this layer has not encoded yet --------------
+  #
+  # Tables 16.22.050 (SFA, MUR-A, VTH) and 16.22.060 (MUR-M, MUR-X). A
+  # quadplex is permitted by right in all three of the attached districts, so
+  # these are zones worth having and their absence is an open item, not a
+  # judgement. Every ruling below shares that reason and returns to the queue
+  # with the encoding.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L922"
+    digest: "845da9f2b8a2"
+    state: dismissed
+    reason: >-
+      "Residential care homes/facilities, duplexes, triplexes, quadplexes,
+      cottage clusters, and accessory dwellings are exempt from the density
+      standards. Townhouses have a maximum density of 25 units/acre." Scoped to
+      Table 16.22.050-1, whose SFA, MUR-A and VTH districts this layer does not
+      encode. It is the note that will matter most when they are.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L1013"
+    digest: "67d5c63b54e1"
+    state: dismissed
+    reason: >-
+      Density per Section 16.63.020(F), and a four-units-per-gross-acre minimum
+      for cottage clusters. Scoped to Table 16.22.050-2, districts this layer
+      does not encode.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L1015"
+    digest: "74853645f4ab"
+    state: dismissed
+    reason: >-
+      The Table 16.22.050-2 wording of the density exemption -- "Townhouses may
+      have a maximum density of 25 units/acre", where the use table says
+      "have". Scoped to districts this layer does not encode.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L1017"
+    digest: "a5d9261e79c6"
+    state: dismissed
+    reason: >-
+      Twenty-foot setbacks for public and institutional uses in SFA, and a
+      ten-foot perimeter setback for cottage clusters in MUR-A. Scoped to
+      districts this layer does not encode, and to two building types the pod
+      is not.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L1019"
+    digest: "dbeb7652444e"
+    state: dismissed
+    reason: >-
+      "Where the SFA district abuts lower density residential districts, the
+      abutting yards shall have a 10-foot landscaped buffer area." Scoped to
+      SFA, which this layer does not encode. Worth flagging for the day it
+      does: it turns on the neighbour's zoning, which is a registered site
+      fact nothing measures yet.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L1021"
+    digest: "d5708448eaff"
+    state: dismissed
+    reason: >-
+      "Side yard building setbacks for attached single-family (townhouse) may
+      be reduced to zero in compliance with applicable sections of the adopted
+      Uniform Building Code." The same sentence as the encoded zero-side note,
+      reprinted for Table 16.22.050-2 with "attached single-family (townhouse)"
+      in place of "townhomes". Scoped to districts this layer does not encode;
+      it becomes an encoding, not a dismissal, on the day they are.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L1023"
+    digest: "96e754fe4a6f"
+    state: dismissed
+    reason: >-
+      "(Reserved)". A number the codifier kept and a body that says nothing.
+      Captured because a reserved note is how a code leaves room to add one,
+      and a marker that acquires words later must not arrive unnoticed.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L1025"
+    digest: "f2b3f2930548"
+    state: dismissed
+    reason: >-
+      "Maximum building height for single-family detached/attached is 45 feet
+      at the front elevation; side and rear elevations may not exceed 49 feet
+      in height." Scoped to Table 16.22.050-2, and in any case a loosening for
+      a building type the pod is not, at heights it is nowhere near.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L1027"
+    digest: "4eac04eef3b0"
+    state: dismissed
+    reason: >-
+      The per-lot townhouse sizes for SFA, VTH and MUR-A -- 2,000 minimum and
+      3,000 maximum, or 2,000 with a 2,500 average; 1,500 and no maximum in
+      MUR-A -- together with the sentence that lots for two- and three-family
+      and multifamily dwellings are not subject to lot size standards at all.
+      A quadplex is on none of those lists: this code's multifamily row begins
+      at five units. Scoped to districts this layer does not encode, and the
+      first note to read when it does.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L1029"
+    digest: "4d4f9d89dd9d"
+    state: dismissed
+    reason: >-
+      "Preexisting dwellings and their accessory structures shall comply with
+      the Clackamas County VR-4/5 setback standards." Sends buildings that
+      predate annexation to the county's numbers. The pod is new, and the
+      districts are not encoded.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L1031"
+    digest: "d23c65389af4"
+    state: dismissed
+    reason: >-
+      "On a corner lot, one of the required front yard building setbacks may be
+      reduced to eight feet when abutting a local or connector street." A
+      loosening on a corner lot, in a district this layer does not encode. It
+      would be a `corner_lot` variant on the day VTH is.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L1033"
+    digest: "2b15c316e08d"
+    state: dismissed
+    reason: >-
+      "Lot coverage maximum for existing, or where allowed, proposed
+      single-family detached units is 50%. Maximum lot coverage does not apply
+      to cottage clusters." Scoped to Table 16.22.050-2, and both halves are
+      about building types the pod is not.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L1318"
+    digest: "e013207276cf"
+    state: dismissed
+    reason: >-
+      "Density calculations shall be made pursuant to Section 16.63.020.F."
+      Scoped to Table 16.22.060-2, the MUR-M districts, which this layer does
+      not encode. Note the citation's punctuation -- "16.63.020.F" where every
+      other note in the chapter writes "16.63.020(F)".
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L1319"
+    digest: "f1a74bd0b076"
+    state: dismissed
+    reason: >-
+      "Standards are flexible and shall be determined through the master plan
+      process or design review application." The MUR-M table's version of the
+      amendment path, and the reason most of that table's cells read
+      "Variable". States no dimension, in districts this layer does not encode.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L1320"
+    digest: "c48a98cc9b06"
+    state: encoded
+    encoded_as: "min_landscaped_pct = 20 on every zone in the layer."
+    reason: >-
+      The MUR-M table reprints the R-5 table's open space note word for word,
+      so it shares a digest with it and is ruled by the same entry. Left here
+      as a pointer only.
+
+  - quote: "or/clackamas/happy-valley/16.22.residential.txt#L1321"
+    digest: "5c273cb78646"
+    state: dismissed
+    reason: >-
+      "Building height is measured pursuant to Chapter 16.12 Definitions.
+      Maximum building height for single-family (attached) is 45 feet at the
+      front elevation; the building height may not exceed 49 feet at the side
+      and rear elevations." Scoped to Table 16.22.060-2. The measurement
+      pointer is not a standard, and the rest loosens a limit for a building
+      type the pod is not.

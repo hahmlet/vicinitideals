@@ -317,11 +317,26 @@ def test_happy_valley_r20cc_adopts_r20_rather_than_copying_it() -> None:
     assert lot.prov.quote, "the borrowed value still cites the R-20 cell"
 
 
-def test_happy_valley_side_yard_goes_to_zero_on_an_attached_wall() -> None:
+def test_happy_valley_side_yard_goes_to_zero_only_for_a_townhome() -> None:
     """Table 16.22.020-2 prints the interior side cell as `10/04` — ten, or
-    nought, the trailing 4 being footnote 4 run up against the number. The
-    footnote is what lets four units share three walls, and the port kept the
-    ten and dropped the nought."""
+    nought, the trailing 4 being footnote 4 run up against the number. The port
+    kept the ten and dropped the nought; reading the footnote put the nought
+    back, and reading the glossary took it off this building again.
+
+    Footnote 4 reads "Interior side yard setbacks *for townhomes* may be reduced
+    to zero", and 16.12 defines a townhouse as "a dwelling, located on its own
+    lot ... which shares one or more common or abutting walls ... with one or
+    more other dwellings on another lot". Own lot, another lot: the nought is
+    what a code gives a party wall that runs along a *property line*, which is
+    the only place a side yard could otherwise be measured from.
+
+    Four units sharing three walls on one lot is not a townhome here, it is a
+    quadplex — "a building containing four dwelling units on a single lot" —
+    and it has no interior lot lines for the zero to apply to. It is held to
+    the ten. That is the current catalog pod, so this correction costs GREEN
+    lots in Happy Valley, and it costs them correctly: the relief was read
+    across from a building type the code names separately.
+    """
     rules = RuleSet(load_rules())
 
     plain = rules.resolve("or/clackamas/happy-valley", "R20")
@@ -330,7 +345,12 @@ def test_happy_valley_side_yard_goes_to_zero_on_an_attached_wall() -> None:
     attached = rules.resolve(
         "or/clackamas/happy-valley", "R20", conditions=["attached_wall"]
     )
-    assert attached.values["setback_side_ft"].value == 0
+    assert attached.values["setback_side_ft"].value == 10, "a party wall is not enough"
+
+    townhome = rules.resolve(
+        "or/clackamas/happy-valley", "R20", conditions=["attached_wall", "unit_lots"]
+    )
+    assert townhome.values["setback_side_ft"].value == 0
 
 
 def test_wilsonville_r_coverage_bands_on_lot_area() -> None:
