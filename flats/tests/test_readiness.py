@@ -457,6 +457,31 @@ def test_a_number_printed_as_a_fraction_still_counts() -> None:
     assert not quotes_the_number("19½ feet to the garage door", 19.25)
 
 
+def test_a_spelled_number_restated_in_brackets_still_finds_its_unit() -> None:
+    """Troutdale writes "Minimum of seven and one-half (7" and breaks the line
+    before the fraction, so the digits land too far apart for the fraction
+    repair to join them and the words in front are all that is left.
+
+    The unit test is what those words have to clear -- "one" and "two" are
+    ordinary English and a bare match on them would let a citation about
+    anything corroborate a setback. Here the unit is behind a bracketed
+    restatement of the same number, which is how nearly every ordinance in
+    this corpus is drafted, so the check steps over it rather than stopping.
+    """
+    from flats.encode.readiness import quotes_the_number
+
+    broken = (
+        "Minimum of seven and one-half (7\n"
+        "                                  ½) feet from an adjoining side yard"
+    )
+    assert quotes_the_number(broken, 7.5)
+    assert quotes_the_number("a setback of five (5) feet", 5)
+    # The bracket is stepped over, not treated as a unit: a spelled number
+    # with nothing dimensional behind it still fails.
+    assert not quotes_the_number("Two (2) story or greater construction", 2.5)
+    assert not quotes_the_number("seven and one-half (7 1/2) reasons", 7.5)
+
+
 def test_a_footnote_marker_stuck_to_a_number_is_only_read_where_declared() -> None:
     """Milwaukie prints "Street side yard 154" for fifteen feet with note 4.
     Read as 154 the encoding looks wrong; read as 15 everywhere, a table that

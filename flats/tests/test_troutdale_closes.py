@@ -6,20 +6,15 @@ one case, by a list that is not a table at all -- 349 lots, and not one
 dimensional standard worth reading, because a district that refuses the use
 never reaches a setback.
 
-The other four are not encoded here and the reasons differ, which is the point
-of pinning them:
+MU-2 and MU-3 print `P` on the same row and were encoded next, off
+cross-references into TDC 3.235 -- see test_troutdale_mixed_use.
 
-* MU-2 (69 lots) and MU-3 (3) print `P` on the Quadplex row. Their dimensional
-  rows are cross-references into TDC 3.235 rather than numbers, so they are a
-  reading job rather than a copying job and wait for their own slice.
-* NSA (74) is read and deliberately refused. TDC 3.050 hands zoning authority
-  over those lots to Multnomah County under MCC chapters 38 and 39. Troutdale
-  does not state a standard for them, so neither does this layer.
-* UPAR-10 (1) is a county label the Development Code never mentions.
-
-Three of those four stay in the coverage ledger as unencoded. That is not a
-gap in the work -- it is the ledger reporting the truth, which is what it is
-for.
+Two labels are left in the coverage ledger on purpose. NSA (74 lots) is read
+and deliberately refused: TDC 3.050 hands zoning authority over those lots to
+Multnomah County under MCC chapters 38 and 39, so Troutdale states no standard
+for them and neither does this layer. UPAR-10 (1 lot) is a county label the
+Development Code never mentions. Neither is a gap in the work -- it is the
+ledger reporting the truth, which is what it is for.
 """
 
 from __future__ import annotations
@@ -41,11 +36,11 @@ REFUSED = ("MU-1", "CC", "GC", "IP", "LI", "GI", "OS")
 #: quadfit port; HDR was already a refusal, on a different table.
 ALL_ZONES = (
     "LDR-1", "LDR-2", "MDR", "HDR",
-    "MU-1", "CC", "GC", "IP", "LI", "GI", "OS",
+    "MU-1", "MU-2", "MU-3", "CC", "GC", "IP", "LI", "GI", "OS",
 )
 #: Read and left out on purpose. Kept here so that encoding one of them has to
 #: come through this test rather than past it.
-LEFT_UNENCODED = ("MU-2", "MU-3", "NSA", "UPAR-10")
+LEFT_UNENCODED = ("NSA", "UPAR-10")
 
 
 @pytest.fixture(scope="module")
@@ -58,7 +53,7 @@ def rules() -> RuleSet:
     return RuleSet(load_rules())
 
 
-def test_the_layer_carries_eleven_zones_and_names_them(troutdale: Layer) -> None:
+def test_the_layer_carries_thirteen_zones_and_names_them(troutdale: Layer) -> None:
     assert set(ALL_ZONES) == set(troutdale.zones)
     for zone in LEFT_UNENCODED:
         assert zone not in troutdale.zones, zone
@@ -85,13 +80,16 @@ def test_one_of_three_mixed_use_columns_refuses_and_two_permit(
 ) -> None:
     """Table 3.220 reads `Quadplex N P P` across MU-1, MU-2, MU-3.
 
-    So the district encoded here is a RED and the two beside it are open work
-    -- which is why only MU-1 appears. A screen that assumed the mixed-use
-    family moved together would be wrong in both directions at once.
+    A screen that assumed the mixed-use family moved together would be wrong
+    in both directions at once. MU-1 is the settled RED encoded here; the two
+    beside it permit the building and carry a full set of standards.
     """
     assert troutdale.zones["MU-1"].values["quadplex_allowed"].value is False
-    assert "MU-2" not in troutdale.zones
-    assert "MU-3" not in troutdale.zones
+    assert set(troutdale.zones["MU-1"].values) == {"quadplex_allowed"}
+    for open_column in ("MU-2", "MU-3"):
+        held = troutdale.zones[open_column]
+        assert held.values["quadplex_allowed"].value is True, open_column
+        assert len(held.values) > 5, open_column
 
 
 def test_the_commercial_answer_is_a_catch_all_row_not_a_named_one(

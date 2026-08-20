@@ -150,6 +150,328 @@ zones:
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L1271,L1276-L1285"
     notes: >-
       3.520 does not use a land use table at all. It states a closed list -- "The following uses and their accessory uses are permitted in the OS district" -- of nature preserves, passive recreation, restrooms and minor utilities, and a conditional list of active recreation, community services and major utilities. No dwelling of any kind appears on either. A closed list that omits housing is a refusal rather than a silence, and the district exists to apply to publicly owned parkland.
+  MU-2:
+    max_density_du_per_acre:
+      # 3.140.B.4: "Maximum density standards shall not apply to duplex,
+      # triplex, quadplex, cottage cluster projects ... on a dwelling units per
+      # net acre calculation". The pod on one lot is exempt outright, which is
+      # also what disposes of the minimum: 3.140.A.2 states the floor as eighty
+      # percent of the maximum number of units per net acre, and eighty percent
+      # of a standard this housing type is exempt from has no operand. The
+      # mixed-use table sends density to the same section the residential ones
+      # do -- row "Density standards: see 3.140".
+      exempt: true
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522,L710"
+      measured_on:
+        fact: net_developable_area
+        cite: TDC 1.020 "Net Area"
+        quote: "or/multnomah/troutdale/1.020.definitions.txt#L640-L643"
+    section: ["3.210", "3.220", "3.230", "3.235", "3.140"]
+    cite_default:
+      cite: Troutdale Development Code 3.220, 3.230.B (residential uses) and 3.235 (detailed
+        dimensional standards) (Municode, through Ord. 899)
+      url: https://library.municode.com/or/troutdale/codes/development_code?nodeId=CH3ZODI
+      retrieved: '2026-08-19'
+    quadplex_allowed:
+      # Table 3.220, Quadplex row: N P P. This is the middle column.
+      value: true
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L573,L582,L585,L590"
+    min_lot_sqft:
+      # 3.230.B prints no number in any of the three columns. It prints "see
+      # 3.235.A", and 3.235.A says "The minimum lot size shall be based on the
+      # minimum lot width and minimum lot depth standards" -- which is a
+      # deferral, not a figure. MU-2 states no lot-area standard of its own:
+      # what it asks of a lot is 15 feet of width and 70 of depth, both
+      # encoded below and both screened separately, and a lot that clears
+      # those clears the area test by construction.
+      #
+      # Encoded exempt rather than as the product of the two. 15 by 70 is
+      # 1,050 square feet, but that number appears nowhere in the Development
+      # Code, and writing an arithmetic result into a field the code never
+      # printed is how a derived figure becomes a quoted one. It would also
+      # never bind: the pod's own footprint is 2,016 square feet, so a
+      # 1,050-foot floor cannot decide a single lot either way.
+      exempt: true
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684-L688,L724-L725"
+    min_lot_width_ft:
+      # 15 feet, the same in all three mixed-use columns. A townhouse-unit
+      # width applied to every residential use in the district, which is what
+      # a downtown code does when it governs by form rather than by lot.
+      value: 15
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L686"
+    min_lot_depth_ft:
+      # 3.235.B.1: seventy feet "for residential units with a driveway from
+      # the public street or with access from an alley within a separate tract
+      # from the lot", which is the pod's normal case.
+      value: 70
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L687,L727-L729"
+      variants:
+        # B.2: ninety feet where the alley access runs in an easement that is
+        # part of the lot rather than in a tract of its own. Two unmeasured
+        # facts at once, so it cannot fire -- recorded so the ninety is not
+        # lost.
+        - value: 90
+          when: [abuts_alley, access_easement]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L687,L730-L731"
+        # B.3: no minimum depth at all inside the block bounded by the
+        # Historic Columbia River Highway and 2nd Street west to 257th. A
+        # boundary drawn inside the zone, and nobody holds it.
+        - exempt: true
+          when: [inside_mapped_use_area]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L687,L732-L734"
+    min_frontage_ft:
+      value: 15
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L688"
+    setback_front_ft:
+      # The front yard is four numbers, not one, and the pod takes the façade
+      # row: 15 feet to the front façade of a residential unit without alley
+      # access, 10 with. The porch rows -- 10 and 5 -- are a shallower
+      # standard for a projecting porch and are not the building line.
+      value: 15
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L689-L694"
+      variants:
+        - value: 10
+          when: [abuts_alley]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L689-L690,L696-L697"
+    setback_garage_entrance_ft:
+      # 20 feet "to the garage door of units with a driveway", stated only on
+      # the without-alley-access line. The with-alley block prints a façade and
+      # a porch and no garage row, which is what a code does when the garage is
+      # off the alley and not on the street at all.
+      value: 20
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L689-L692"
+    setback_side_ft:
+      # 3.235.C.2.b.ii is two numbers for one yard: seven and a half feet from
+      # an adjoining SIDE yard and fifteen from an adjoining REAR yard. Which
+      # applies is the neighbour's orientation, and nothing in the parcel
+      # record says which way the lot behind the side line faces -- so fifteen
+      # is the base, on the same reasoning Portland's commercial side yard
+      # takes. The relief is named rather than dropped.
+      value: 15
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L699,L738-L745"
+      variants:
+        - value: 5
+          when: [abuts_side_yard]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L699,L739-L741"
+        - value: 7.5
+          when: [abuts_side_yard, multi_story]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L699,L739,L742-L744"
+        # C.2.a: a flat five feet against a non-residential or HDR district,
+        # with no storey step at all.
+        - value: 5
+          when: [abuts_nonresidential_zone]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L699,L737-L738"
+        # The Building Side row of 3.230.B, 0 in every column: the walls the
+        # four units share owe no yard. Without it the pod is charged a side
+        # setback on each of its three interior walls.
+        - value: 0
+          when: [attached_wall]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L700"
+        # Spelled out against the neighbour's zoning for the same reason the
+        # rear pairs are: two variants one condition deep would tie, and a wall
+        # standing on the line owes no yard whatever is on the far side of it.
+        - value: 0
+          when: [attached_wall, abuts_nonresidential_zone]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L700"
+        - value: 0
+          when: [attached_wall, abuts_side_yard]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L700"
+    setback_rear_ft:
+      # 3.235.C.5.b: fifteen feet of rear yard against a residential district
+      # for single-storey construction and twenty for two storeys or more. The
+      # pod is two storeys, so the twenty is what it screens against.
+      value: 15
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L703,L749,L759-L761"
+      variants:
+        - value: 20
+          when: [multi_story]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L703,L759-L760,L762"
+        # C.5.a.ii and C.5.b.ii agree: five feet from the nearest edge of an
+        # alley, and the alley has to be platted as an easement or as a tract
+        # at least twenty feet wide. This layer cannot check the alley's width,
+        # so the five is the code's number and the proviso is unverified.
+        - value: 5
+          when: [abuts_alley]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L703,L759,L765-L767"
+        # Spelled out against `multi_story` because both variants would
+        # otherwise match a two-storey building on an alley lot at equal
+        # specificity, and the model refuses a tie rather than guessing. There
+        # is nothing to guess here: C.5.b.ii states the five with no storey
+        # step at all.
+        - value: 5
+          when: [multi_story, abuts_alley]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L703,L759,L765-L767"
+        # C.5.a.i: ten feet without an alley where the rear line abuts a
+        # non-residential district, and no storey step there either.
+        - value: 10
+          when: [abuts_nonresidential_zone]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L703,L750-L751"
+        - value: 10
+          when: [multi_story, abuts_nonresidential_zone]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L703,L750-L751"
+    setback_street_side_ft:
+      # "0 or 18, see note 1", and note 1 reads "Street side yard setback is 18
+      # feet if driveway access is taken from street side yard". That trigger
+      # is a design election rather than a fact about the lot -- where the
+      # driveway goes is decided when the pod is placed, not by the parcel --
+      # so the stated standard of zero is the base and the eighteen is a cost
+      # of one particular access layout. Recorded here because a corner lot in
+      # MU-2 whose only workable access is off the side street pays it.
+      value: 0
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L701-L702,L715-L716"
+    max_height_ft:
+      value: 35
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L707"
+    notes: >-
+      Central Mixed-Use, and the first district in this corpus whose
+      dimensional table is mostly cross-references. 3.230.B prints "see
+      3.235.A" for lot size, "see 3.235.B" for depth, "see 3.235.C.2" for the
+      side yard and "see 3.235.C.5" for the rear, so nothing here can be read
+      off the table it is printed in.
+
+
+      The table has three columns and most of its setback rows print only two
+      numbers. The row that explains why is "Minimum setbacks (ft): ... see
+      3.230.A", whose lone entry sits in the MU-3 column -- MU-3 takes its
+      setbacks from the NON-residential table above, so the paired numbers
+      belong to MU-1 and MU-2. Both numbers in every pair are identical, so
+      this column is unambiguous either way.
+
+
+      NOT ENCODED. 3.235.C.6 lets the side yard adjoining a rear yard and the
+      rear yard without an alley be reduced by up to five feet, paid for by
+      dropping the building-height ceiling two feet for every foot of
+      reduction. It is a trade between two standards rather than a number, and
+      a 26-foot pod under a 35-foot ceiling can afford four and a half feet of
+      it; encoding that needs a mechanism this model does not have. Variant
+      pairs are spelled out only where both conditions can be held at once
+      today -- a pair of facts nobody measures resolves to UNKNOWN, which is
+      the right answer while nobody measures them. The
+      accessory-structure setbacks (see 5.010) and the 20,000 sq ft maximum
+      building footprint are stated and do not bind a 2,016 sq ft building.
+  MU-3:
+    max_density_du_per_acre:
+      # 3.140.B.4: "Maximum density standards shall not apply to duplex,
+      # triplex, quadplex, cottage cluster projects ... on a dwelling units per
+      # net acre calculation". The pod on one lot is exempt outright, which is
+      # also what disposes of the minimum: 3.140.A.2 states the floor as eighty
+      # percent of the maximum number of units per net acre, and eighty percent
+      # of a standard this housing type is exempt from has no operand. The
+      # mixed-use table sends density to the same section the residential ones
+      # do -- row "Density standards: see 3.140".
+      exempt: true
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522,L710"
+      measured_on:
+        fact: net_developable_area
+        cite: TDC 1.020 "Net Area"
+        quote: "or/multnomah/troutdale/1.020.definitions.txt#L640-L643"
+    section: ["3.210", "3.220", "3.230", "3.235", "3.140"]
+    cite_default:
+      cite: Troutdale Development Code 3.220, 3.230.A and 3.230.B (residential uses), 3.235
+        (Municode, through Ord. 899)
+      url: https://library.municode.com/or/troutdale/codes/development_code?nodeId=CH3ZODI
+      retrieved: '2026-08-19'
+    quadplex_allowed:
+      value: true
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L573,L582,L585,L590"
+    min_lot_sqft:
+      # 3.235.A again, and the same reading MU-2 takes: the column defers its
+      # lot-area standard to the width and depth rows rather than stating one,
+      # so there is no area test here to compare a lot against.
+      exempt: true
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684-L688,L724-L725"
+    min_lot_width_ft:
+      value: 15
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L686"
+    min_lot_depth_ft:
+      value: 70
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L687,L727-L729"
+      variants:
+        - value: 90
+          when: [abuts_alley, access_easement]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L687,L730-L731"
+        - exempt: true
+          when: [inside_mapped_use_area]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L687,L732-L734"
+    min_frontage_ft:
+      value: 15
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L688"
+    setback_front_ft:
+      # This column's setback cell reads "see 3.230.A", the NON-residential
+      # table, which does not divide the yard into front, side and rear at all.
+      # It states one setback by what the lot abuts: 20 feet against a
+      # residential district, 0 against a non-residential one, 10 against a
+      # park. The 20 is the base because the neighbour's zoning is unmeasured.
+      value: 20
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L668,L671-L674,L684,L689"
+      variants:
+        - value: 0
+          when: [abuts_nonresidential_zone]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L668,L671,L673,L684,L689"
+    setback_side_ft:
+      value: 20
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L668,L671-L674,L684,L689"
+      variants:
+        - value: 0
+          when: [abuts_nonresidential_zone]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L668,L671,L673,L684,L689"
+        # The Building Side row prints 0 in all three columns, this one
+        # included, and it is the one setback row of 3.230.B that MU-3 does
+        # not send to 3.230.A.
+        - value: 0
+          when: [attached_wall]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L700"
+        # Spelled out against the neighbour's zoning for the same reason the
+        # rear pairs are: two variants one condition deep would tie, and a wall
+        # standing on the line owes no yard whatever is on the far side of it.
+        - value: 0
+          when: [attached_wall, abuts_nonresidential_zone]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L700"
+    setback_rear_ft:
+      value: 20
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L668,L671-L674,L684,L689"
+      variants:
+        - value: 0
+          when: [abuts_nonresidential_zone]
+          quote: "or/multnomah/troutdale/3.zoning-districts.txt#L668,L671,L673,L684,L689"
+    setback_front_max_ft:
+      # A MAXIMUM front setback of 20 feet, stated only in this column. Read
+      # against the 20-foot minimum above it, MU-3 fixes the building line
+      # rather than bounding it: a lot abutting a residential district has one
+      # legal front setback and it is 20 feet.
+      value: 20
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L705"
+    max_height_ft:
+      # 3.230.B prints "see 3.235.D", and 3.235.D states no by-right ceiling at
+      # all: everything up to 55 feet takes a Type II site development review
+      # and 55 to 75 takes a Type IV. 55 is encoded as the envelope because it
+      # is the figure the section names, but see the note -- a pod that fits
+      # this district still has to be reviewed to be built.
+      value: 55
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L707,L783-L786"
+    notes: >-
+      East Mixed-Use, three lots, and the district that behaves least like the
+      rest of this city. Its residential setbacks are not in the residential
+      table: the cell reads "see 3.230.A", which is the NON-residential table,
+      and that table does not name a front, a side or a rear at all. It states
+      one setback per neighbour -- 20 feet against a residential district, 0
+      against a non-residential one, 10 against a park -- so all three yards
+      carry the same number here.
+
+
+      TWO STANDARDS THIS LAYER CANNOT SCREEN. 3.230.B sets a MINIMUM building
+      height of 25 feet in this column, which the pod clears by a foot at 26,
+      and there is no field for a height floor -- a shorter product would fail
+      MU-3 and nothing here would say so. And 3.235.D grants no height by
+      right: every building up to 55 feet is subject to a Type II site
+      development review. A GREEN in MU-3 therefore means the envelope fits,
+      not that the building may be permitted over the counter.
+
+
+      NOT ENCODED: the 10-foot setback against a park, which needs a fact
+      about the neighbour nothing here holds; the 15-foot setback for building
+      facades over 35 feet, which a 26-foot pod never reaches; and the 60,000
+      sq ft footprint maximum.
   LDR-1:
     max_density_du_per_acre:
       # 3.140.B.4: "Maximum density standards shall not apply to duplex,

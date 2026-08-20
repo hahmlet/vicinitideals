@@ -279,8 +279,21 @@ _TENS = {
 #: ordinary English words — "one story", "two or more" — and a bare match on
 #: them would let a citation about anything at all corroborate a setback of 1.
 #: A dimension in a code is always said with its unit close behind.
+#:
+#: The optional bracket in the middle is the drafting convention this whole
+#: corpus is written in -- "Five (5) feet", "seven and one-half (7 1/2)
+#: feet". A whole number restated that way is found by the digit scan and
+#: never reaches here, but a half is not: Troutdale prints "seven and
+#: one-half (7" and breaks the line before the vulgar fraction, which leaves
+#: too much whitespace between the two for the fraction repair to join them.
+#: The words in front carry the value on their own -- the numeral in brackets
+#: is the same number said twice, and stepping over it is what lets the unit
+#: behind it be seen.
 _UNIT_WORD = re.compile(
-    r"^[\s.,:;)\-]{0,3}(?:and\s+)?(?:feet|foot|ft|inch|inches|stor(?:y|ies)|percent"
+    r"^[\s.,:;)\-]{0,3}"
+    r"(?:\(\s*[\d\s.,¼½¾⅓⅔⅛⅜⅝⅞]*\)"
+    r"[\s.,:;\-]{0,3})?"
+    r"(?:and\s+)?(?:feet|foot|ft|inch|inches|stor(?:y|ies)|percent"
     r"|unit|units|space|spaces|square|sq|acre|acres|dwelling|dwellings|percent|%)\b",
     re.I,
 )

@@ -272,6 +272,26 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "abuts_side_yard",
+        "site_fact",
+        "The lot's side lot line adjoins the SIDE yard of the neighbour "
+        "rather than the neighbour's rear yard. Troutdale asks seven and a "
+        "half feet of a two-storey building along a side lot line that "
+        "adjoins another side yard and fifteen along one that adjoins a rear "
+        "yard, which is the neighbouring lot's ORIENTATION rather than its "
+        "zoning -- a different unmeasured fact from "
+        "`abuts_nonresidential_zone`, and one the zoning layer cannot answer "
+        "at all. Assumed unknown, which leaves the fifteen binding: a lot at "
+        "the end of a row, backing onto the rear of the lots on the "
+        "perpendicular street, is exactly the case the larger number is "
+        "written for, and it is not visible from the parcel record.",
+        evidence=(
+            "the neighbouring lots' front lot lines, read against this lot's "
+            "side lot line -- none held"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "flag_lot",
         "site_fact",
         "Reaches the street by a pole, so frontage and access are measured "
