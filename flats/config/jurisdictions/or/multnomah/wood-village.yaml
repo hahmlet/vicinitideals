@@ -73,6 +73,38 @@ code:
     url: https://woodvillage.municipal.codes/WVDC/235.300
     title: "WVDC 235.300 - Purpose (Town Center Zone, Table 235-2)"
     allow_thin: true
+  - id: "235.310"
+    url: https://woodvillage.municipal.codes/WVDC/235.310
+    title: "WVDC 235.310 - Lot Size and Dimensional Standards (Town Center)"
+    allow_thin: true
+  - id: "235.320"
+    url: https://woodvillage.municipal.codes/WVDC/235.320
+    title: "WVDC 235.320 - Building Setbacks (Town Center)"
+    allow_thin: true
+  - id: "235.330"
+    url: https://woodvillage.municipal.codes/WVDC/235.330
+    title: "WVDC 235.330 - Height (Town Center)"
+    allow_thin: true
+  - id: "235.340"
+    url: https://woodvillage.municipal.codes/WVDC/235.340
+    title: "WVDC 235.340 - Floor Area Ratios (Town Center)"
+    allow_thin: true
+  - id: "235.390"
+    url: https://woodvillage.municipal.codes/WVDC/235.390
+    title: "WVDC 235.390 - Parking and Loading (Town Center)"
+    allow_thin: true
+  - id: "235.410"
+    url: https://woodvillage.municipal.codes/WVDC/235.410
+    title: "WVDC 235.410 - Concept Plan Regulating Diagram (Figure 235-1)"
+    allow_thin: true
+  - id: "235.420"
+    url: https://woodvillage.municipal.codes/WVDC/235.420
+    title: "WVDC 235.420 - Concept Plan Regulating Diagram Development Standards"
+    allow_thin: true
+  - id: "235.465"
+    url: https://woodvillage.municipal.codes/WVDC/235.465
+    title: "WVDC 235.465 - Open Space Requirement (Town Center)"
+    allow_thin: true
   - id: "240.200"
     url: https://woodvillage.municipal.codes/WVDC/240.200
     title: "WVDC 240.200 - Primary Uses (Manufacturing Zones, Table 240-1)"
@@ -244,6 +276,94 @@ zones:
       quote: "or/multnomah/wood-village/240.200.txt#L90-L94,L132-L136"
     notes: >-
       Table 240-1 reads N on Household Living and on Group Living in both manufacturing columns. Light Manufacturing is the looser of the two on retail and office and is no different on housing. The row that answers is Household Living, which 710.100 defines as "the residential occupancy of a dwelling unit or a structure by a household" with an average stay of thirty days or more. It names no housing type and excludes none, so a four-unit attached townhome is inside it -- which is how the non-residential zones speak about dwellings at all. The residential zones do the opposite and list types by name. The definition is quoted at or/multnomah/wood-village/710.100.txt#L56,L60.
+  TC:
+    section: ["235.200", "235.300", "235.310", "235.320", "235.330", "235.340",
+              "235.390", "235.410", "235.420", "235.465", "710.100"]
+    cite_default:
+      cite: WVDC 235.200 Table 235-1 (Uses in Town Center Zone); 235.300 Table 235-2 (Development Standards in Town Center Zone)
+      url: https://woodvillage.municipal.codes/WVDC/235.300
+      retrieved: '2026-08-19'
+    # Table 235-2's residential column hands lot size, coverage and landscaping
+    # to the MR2 zone by name -- "Same as MR2 zone (see Tables 220-3 and
+    # 220-4)" -- and states height and setbacks for itself. The reference is
+    # the encoding rather than a copy: MR2 amended is TC amended, and every
+    # value resolved through this pointer still cites the 220 section it was
+    # actually read from.
+    like:
+      zone: MR 2
+      wins: local
+      cite: WVDC 235.300 Table 235-2, "Lot size and dimensions" and "Maximum lot coverage" rows
+      quote: "or/multnomah/wood-village/235.300.txt#L68-L71,L77"
+    quadplex_allowed:
+      value: true
+      quote: "or/multnomah/wood-village/235.200.txt#L60,L66,L68"
+    # 35 feet in the residential column against 115 in the nonresidential one,
+    # which is the widest split in this city's tables. Footnote (2) hangs off
+    # the 115 and not off the 35.
+    max_height_ft:
+      value: 35
+      quote: "or/multnomah/wood-village/235.300.txt#L68-L69,L72"
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/wood-village/235.300.txt#L68-L69,L73"
+    setback_garage_entrance_ft:
+      value: 20
+      quote: "or/multnomah/wood-village/235.300.txt#L68-L69,L74"
+    # Five feet, flat. MR2's townhouse column next door allows zero on the
+    # attached side and Table 235-2 does not repeat it, so the pod is charged
+    # the five on both of its side lot lines here. That costs nothing for a
+    # single building on a single lot -- the four units share walls inside one
+    # 56-foot structure -- and it is what would bind if the same four units
+    # were ever divided onto unit lots.
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/wood-village/235.300.txt#L68-L69,L75"
+    setback_rear_ft:
+      value: 15
+      quote: "or/multnomah/wood-village/235.300.txt#L68-L69,L76"
+    # 235.465, and it is a Development Plan standard rather than a lot one:
+    # twenty percent of the plan area, which may be satisfied on land the
+    # applicant holds elsewhere and need not be contiguous. Encoded because a
+    # screen that ignores it reports a lot as full when a fifth of it is
+    # spoken for; read the zone notes before treating a miss here as fatal.
+    open_space_min_pct:
+      value: 20
+      quote: "or/multnomah/wood-village/235.465.txt#L56,L60"
+    notes: >-
+      Table 235-1 reads Y on the Household Living row, and 710.100 is what says
+      that row covers a four-unit attached townhome: "the residential occupancy
+      of a dwelling unit or a structure by a household", thirty days or longer,
+      naming no housing type and excluding none.
+
+
+      This is the one zone in the city that does not work lot by lot, and a
+      GREEN here means less than it does anywhere else. WVDC 235.490 runs Town
+      Center development through a Development Plan; 235.410 organises every
+      existing and future street into one of five types on Figure 235-1, the
+      Concept Plan Regulating Diagram, and 235.420 requires intersections,
+      gateways and public plazas at locations shown on it. Table 235-5 then
+      states building frontage, ground floor height, transparency, entry door
+      and weather protection standards by the street type a parcel fronts.
+      Figure 235-1 is a diagram and Table 235-5 is keyed to it, so neither is
+      readable here, and a parcel's street type -- which decides its frontage
+      requirements -- is not a fact this system holds.
+
+
+      Two more standards belong to the plan rather than the lot. 235.340 asks a
+      Development Plan to show a minimum 0.4 floor area ratio can be achieved
+      on the areas set aside for NONRESIDENTIAL uses at full build-out, which
+      is a phasing test on a mixed programme and not a ratio a residential-only
+      lot has to meet. 235.390 hands parking to Section 350 "except as modified
+      in an approved Development Plan", and allows on-street, nearby public and
+      shared stalls to count -- so the state parking cap this layer inherits is
+      a ceiling the zone can and does relax.
+
+
+      What is encoded here is therefore the dimensional envelope Table 235-2
+      states, and nothing about whether a Development Plan would be approved.
+      That is the honest half, it is the half a fitment screen exists to
+      answer, and 167 lots is too many to leave unread because the other half
+      is out of reach.
   LR 7.5:
     section: ["210."]
     cite_default:

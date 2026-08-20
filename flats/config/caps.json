@@ -702,5 +702,27 @@
         "site_specific_limitation"
       ]
     }
+  },
+  "or/multnomah/wood-village": {
+    "TC": {
+      "like": [
+        "abuts_lower_density_zone"
+      ],
+      "max_height_ft": [
+        "abuts_lower_density_zone"
+      ],
+      "setback_front_ft": [
+        "abuts_lower_density_zone"
+      ],
+      "setback_garage_entrance_ft": [
+        "abuts_lower_density_zone"
+      ],
+      "setback_rear_ft": [
+        "abuts_lower_density_zone"
+      ],
+      "setback_side_ft": [
+        "abuts_lower_density_zone"
+      ]
+    }
   }
 }

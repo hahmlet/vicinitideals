@@ -28,11 +28,11 @@
 #   landscaping chapter's L1 / F2 codes and the street-tree spacing are real
 #   requirements and none of them is a dimension a fitment screen can test.
 #
-# The five notes under Table 235-2 (235.300) are deliberately not ruled here.
-# The Town Center zone is not encoded yet -- 167 lots, the largest gap left in
-# this city -- and a ruling written before the encoding it describes is a
-# claim nobody can check. They stay `unread`, which blocks nothing today
-# because no value cites that table.
+# The five notes under Table 235-2 (235.300) were deliberately left `unread`
+# in the commit that learned this shape, because the Town Center zone did not
+# exist yet and a ruling written before the encoding it describes is a claim
+# nobody can check. They are ruled now, with the zone, and two of them are
+# `unmeasured` rather than dismissed -- see the comment over them.
 
 # Three of this city's documents now report UNRECONCILED and did not before,
 # which is the census getting more honest rather than less. 240.200 and
@@ -146,3 +146,70 @@ notes:
     reason: >-
       A planting or vocabulary cross-reference states no standard. This one
       says only where the L1 and F2 codes are defined.
+
+  # --- 235.300, Table 235-2: TC ------------------------------------------
+  #
+  # This table has two columns and four of its five notes are marked on the
+  # nonresidential one. Two of those four are ruled `unmeasured` rather than
+  # dismissed on that placement, and the reason is worth stating where the
+  # rulings are: both would move a residential standard the pod is one foot
+  # from failing, both turn on a fact nobody here holds, and a dismissal that
+  # rests only on which cell the codifier glued the marker to is not the kind
+  # of dismissal this ledger is for. `unmeasured` costs the zone its GREEN and
+  # keeps the reading honest, which is the trade FLATS is supposed to make.
+  - quote: "or/multnomah/wood-village/235.300.txt#L79"
+    digest: "704dba24dc87"
+    state: dismissed
+    reason: >-
+      Chooses which column of Table 235-2 applies rather than changing a
+      number. It sends residential floors inside a mixed use structure to the
+      nonresidential column; the pod is a stand-alone residential building, so
+      the residential column is the one encoded here. The note would move it to
+      the looser column on every row -- 115 feet of height against 35, no side
+      or rear setback against 5 and 15 -- so reading it the other way would
+      have been the unsafe direction.
+
+  - quote: "or/multnomah/wood-village/235.300.txt#L81"
+    digest: "26a5d3eb1a6f"
+    state: unmeasured
+    fact: abuts_lower_density_zone
+    reason: >-
+      caps height at twenty-five feet within twenty-five feet of a lot line
+      abutting a light residential zone, and the pod is twenty-six feet tall.
+      The marker is glued to the nonresidential column's 115 feet rather than
+      to the residential column's 35, which is an argument for dismissing it
+      and not a good enough one: the step-down exists to transition to the
+      neighbours and a 35-foot residential building is no less of a transition.
+      No zoning-adjacency layer is held, so whether a TC lot abuts a light
+      residential zone is not a fact this system can answer
+
+  - quote: "or/multnomah/wood-village/235.300.txt#L83"
+    digest: "81586d1cfd5e"
+    state: unmeasured
+    fact: abuts_lower_density_zone
+    reason: >-
+      asks fifteen feet of side or rear setback from an abutting residential
+      zone, against the five feet the residential column states for the side
+      yard. Marked on the nonresidential column's "None" cells, which is the
+      same weak argument for dismissal as the height step-down above and is
+      declined for the same reason. No zoning-adjacency layer is held, so
+      whether a TC lot abuts a residential zone is not a fact this system can
+      answer
+
+  - quote: "or/multnomah/wood-village/235.300.txt#L85"
+    digest: "126089798f44"
+    state: dismissed
+    reason: >-
+      A planting or vocabulary cross-reference states no standard. It requires
+      the depth of a setback that is already required to be landscaped, which
+      changes no dimension of the lot or the building.
+
+  - quote: "or/multnomah/wood-village/235.300.txt#L87"
+    digest: "73ece6089ab6"
+    state: dismissed
+    reason: >-
+      Applies by its own first words to detached single-family dwelling units,
+      which a four-unit attached townhome is not. The ten-foot front setback
+      and twenty-foot garage setback its markers sit on are encoded from the
+      cells themselves; the facade-plane rule the note adds on top does not
+      reach this building.

@@ -44,7 +44,7 @@ WV = "or/multnomah/wood-village"
 POD = ("multi_story", "attached_wall")
 #: The four added here. Every one of them is answered by a `Household Living`
 #: row rather than by a named housing type.
-ADDED = ("NC", "C/I", "GM", "LM")
+ADDED = ("NC", "TC", "C/I", "GM", "LM")
 #: Settled refusals -- one cell each, and nothing else worth reading.
 REFUSED = ("C/I", "GM", "LM")
 #: Ported in July, off tables that do name the housing type.
@@ -61,11 +61,10 @@ def rules() -> RuleSet:
     return RuleSet(load_rules())
 
 
-def test_the_layer_carries_eight_zones(wv: Layer) -> None:
+def test_the_layer_carries_nine_zones(wv: Layer) -> None:
     assert set(wv.zones) == set(ADDED) | set(PORTED)
-    # Read and deliberately left out; see the last test.
+    # Read and deliberately left out; see the O test below.
     assert "O" not in wv.zones
-    assert "TC" not in wv.zones
 
 
 def test_the_non_residential_zones_answer_on_a_use_category(wv: Layer) -> None:
@@ -273,18 +272,101 @@ def test_a_footnote_is_scoped_to_the_table_it_sits_under() -> None:
     assert all(n.doc.endswith("220.320.txt") for n in scoped)
 
 
-def test_the_town_centre_notes_are_left_unread_on_purpose() -> None:
-    """Five notes under Table 235-2, and the zone they govern is not encoded.
+def test_every_footnote_in_this_city_is_ruled_on() -> None:
+    """Sixteen captured, sixteen decided, and nothing left blocking.
 
-    A ruling written before the encoding it describes is a claim nobody can
-    check, so they stay `unread`. That blocks nothing today because no value
-    cites that table -- and it will block the moment one does, which is the
-    behaviour worth having.
+    The five under Table 235-2 were held `unread` until the Town Center zone
+    existed to rule them against, which is the order that keeps an `encoded`
+    claim checkable.
     """
     from flats.encode.dispositions import notes
 
     unread = [
         n for n in notes() if n.layer == WV and n.state == "unread"
     ]
-    assert len(unread) == 5
-    assert all(n.doc.endswith("235.300.txt") for n in unread)
+    assert unread == []
+
+
+# --- the Town Center, where the zone does not work lot by lot -------------
+
+
+def test_the_town_centre_adopts_the_mid_density_zone_by_reference(
+    wv: Layer, rules: RuleSet
+) -> None:
+    """Table 235-2 says "Same as MR2 zone (see Tables 220-3 and 220-4)".
+
+    Encoded as a pointer rather than a copy. Copies stop tracking their source
+    the first time MR2 is amended, silently, and no reviewer looking at TC
+    would have any way to notice -- so TC holds the reference and whatever it
+    states for itself, and every value resolved through it still cites the 220
+    section it was actually read from.
+    """
+    assert wv.zones["TC"].like is not None
+    assert wv.zones["TC"].like.zone == "MR 2"
+    assert wv.zones["TC"].like.wins == "local"
+
+    tc = rules.resolve(WV, "TC", POD).values
+    mr2 = rules.resolve(WV, "MR 2", POD).values
+    for field in ("min_lot_sqft", "min_lot_width_ft", "min_lot_depth_ft"):
+        assert tc[field].value == mr2[field].value, field
+    # And what the table states for itself wins over what it points at.
+    assert tc["setback_garage_entrance_ft"].value == 20
+    assert mr2["setback_garage_entrance_ft"].value == 22
+
+
+def test_the_two_columns_of_the_town_centre_table(wv: Layer) -> None:
+    """35 feet of residential height against 115 nonresidential.
+
+    The widest split in this city's tables, and note (1) is the switch between
+    them: residential floors inside a mixed use structure are regulated as the
+    mixed use. The pod is a stand-alone residential building, so the residential
+    column is what is encoded -- and it is the stricter one on every row, which
+    is the safe direction to have read it.
+    """
+    held = wv.zones["TC"].values
+    assert held["max_height_ft"].value == 35
+    assert held["setback_side_ft"].value == 5
+    assert held["setback_rear_ft"].value == 15
+
+
+def test_the_step_down_the_pod_is_one_foot_from_failing_caps_the_zone() -> None:
+    """Note (2) puts 25 feet within 25 feet of a light residential zone.
+
+    The pod is 26. The marker is glued to the nonresidential column's 115 feet
+    rather than the residential column's 35, which is an argument for
+    dismissing it and not a good enough one -- a step-down exists to transition
+    to the neighbours and a 35-foot residential building is no less of a
+    transition. So it is ruled `unmeasured` on a fact nobody holds, which costs
+    the zone its GREEN and keeps the reading honest.
+    """
+    from flats.encode.dispositions import notes
+
+    capped = [
+        n
+        for n in notes()
+        if n.layer == WV and n.state == "unmeasured"
+    ]
+    assert len(capped) == 2
+    assert {n.fact for n in capped} == {"abuts_lower_density_zone"}
+    assert conditions.condition("abuts_lower_density_zone").assume is None
+
+
+def test_the_town_centre_records_what_a_green_there_does_not_mean(
+    wv: Layer,
+) -> None:
+    """This is the one zone in the city that is not screened lot by lot.
+
+    235.490 runs Town Center development through a Development Plan, 235.410
+    organises every street onto Figure 235-1 and 235.420 requires intersections,
+    gateways and plazas at locations shown on it, and Table 235-5 then states
+    frontage standards by the street type a parcel fronts. None of that is
+    readable here. What is encoded is the dimensional envelope Table 235-2
+    states -- which is the half a fitment screen exists to answer, and 167 lots
+    is too many to leave unread because the other half is out of reach.
+    """
+    notes_text = wv.zones["TC"].notes or ""
+    for phrase in ("Development Plan", "Figure 235-1", "Table 235-5", "0.4"):
+        assert phrase in notes_text, phrase
+    # The open space requirement is a number, so it is encoded rather than
+    # described -- twenty percent of the plan area under 235.465.
+    assert wv.zones["TC"].values["open_space_min_pct"].value == 20
