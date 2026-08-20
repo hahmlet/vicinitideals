@@ -243,3 +243,77 @@ notes:
       Transportation Impact review may set different parking requirements
       through the review. Three review paths, none of which a by-right
       fourplex enters
+
+  # --- 33.130 Commercial/Mixed Use Zones -----------------------------
+  #
+  # Three notes, and the first is the only one in this whole ledger that turns
+  # out to be a standard rather than a pointer to one.
+  - quote: "or/multnomah/portland/33.130.txt#L668"
+    digest: "c81d9d942fff"
+    state: encoded
+    encoded_as: >-
+      CR max_density_du_per_acre sqft_per_unit 2500
+    reason: >-
+      note [1] under Table 130-2, and it describes exactly the building this
+      screen places: "on sites that do not have a Retail Sales And Service or
+      Office use, maximum density for Household Living is 1 unit per 2,500
+      square feet of site area". A four-unit pod with no ground-floor
+      commercial is such a site, so the note is the standard for it and the
+      table's blank CR density cell is not. Encoded on the value rather than
+      dismissed -- and then removed at resolution by OAR 660-046-0220(2)(b),
+      which is a separate sentence and belongs on a separate record
+
+  - quote: "or/multnomah/portland/33.130.txt#L736"
+    digest: "b05a55a3a9f8"
+    state: dismissed
+    reason: >-
+      bonus height in CM2 is allowed only inside a Historic District,
+      Conservation District or Design Overlay with a Mixed Use - Urban Center
+      plan designation. A bonus is earned, and what is encoded is the base
+      height from Table 130-2; declining a bonus can only cost a site that
+      would have qualified for one
+
+  - quote: "or/multnomah/portland/33.130.txt#L742"
+    digest: "677f0dfe063a"
+    state: dismissed
+    reason: >-
+      the larger overall maximum in Table 130-3 is reachable only through the
+      Planned Development bonus and its review. Same table, same reason: a
+      bonus nobody is entitled to, over a figure this layer does not encode
+
+  # --- 33.140 Employment and Industrial Zones ------------------------
+  - quote: "or/multnomah/portland/33.140.txt#L631"
+    digest: "f6b7afba11f4"
+    state: dismissed
+    reason: >-
+      Table 140-3's residential setbacks "do not apply to lot lines that abut
+      lots in the RX zone". A relief, and one that rests on the neighbour's
+      zoning rather than on this lot -- the same unheld fact the EX side and
+      rear setbacks already stand at 10 ft for. Declining it keeps the 10;
+      taking it would need the abutting parcel's zone, which this screen does
+      not read. Not `unmeasured`, because the standard the note relieves is
+      already encoded at its binding value and no verdict waits on the note
+
+  - quote: "or/multnomah/portland/33.140.txt#L1196"
+    digest: "6e74a267a5f1"
+    state: dismissed
+    reason: >-
+      a reading instruction for the screening table -- setback first, then
+      landscaping standard. It tells a reader how to parse a cell, and the
+      cell is in 33.140.235 Screening, which this layer does not encode
+
+  - quote: "or/multnomah/portland/33.140.txt#L1198"
+    digest: "66da0ed46ddd"
+    state: dismissed
+    reason: >-
+      an F2 screen alone suffices where parking sits between exterior storage
+      and the street. Exterior storage is not a fourplex, and screening is not
+      encoded
+
+  - quote: "or/multnomah/portland/33.140.txt#L1200"
+    digest: "330298c96374"
+    state: dismissed
+    reason: >-
+      where the F2 + L2 option is used the fence goes on the interior side of
+      the landscaped area. A construction detail inside a standard this layer
+      does not encode

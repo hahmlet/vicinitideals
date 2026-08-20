@@ -121,7 +121,7 @@ def test_written_config_loads_through_the_real_loader() -> None:
     rules = RuleSet(load_rules())
 
     assert len(rules.layers) == 19  # 18 jurisdictions + the state layer
-    assert sum(len(l.zones) for l in rules.layers.values()) == 102
+    assert sum(len(l.zones) for l in rules.layers.values()) == 115
 
 
 def test_state_parking_preemption_reaches_a_city_zone() -> None:
@@ -163,7 +163,10 @@ def test_unencoded_zone_is_surfaced_not_dropped() -> None:
     res = RuleSet(load_rules()).resolve("or/multnomah/portland", "RM1")
     assert res.verdict is not Verdict.zone_not_encoded, "33.120 is encoded"
 
-    res = RuleSet(load_rules()).resolve("or/multnomah/portland", "CM2")
+    # CM2 used to be the example here and Chapter 33.130 closed it too. CI2
+    # is the standing one: Campus Institutional, 245 lots, Chapter 33.150
+    # unfetched.
+    res = RuleSet(load_rules()).resolve("or/multnomah/portland", "CI2")
 
     assert res.verdict is Verdict.zone_not_encoded
 

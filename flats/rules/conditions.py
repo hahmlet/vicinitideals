@@ -226,6 +226,20 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "abuts_nonresidential_zone",
+        "site_fact",
+        "Every lot line that is not a street lot line abuts a commercial, "
+        "employment, industrial, open-space or central-residential zone. "
+        "Portland's commercial zones require no setback at all from such a "
+        "line and 10 feet from a line abutting anything more residential, so "
+        "the same building is legal against one neighbour and illegal against "
+        "the next. Assumed unknown, which leaves the 10 feet binding: reading "
+        "it the other way is how a lot with a house behind it screens as "
+        "buildable to its own rear lot line.",
+        evidence="the zoning layer, read at the neighbouring parcels rather than at this one",
+        assume=None,
+    ),
+    ConditionDef(
         "flag_lot",
         "site_fact",
         "Reaches the street by a pole, so frontage and access are measured "
