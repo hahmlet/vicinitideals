@@ -32,7 +32,79 @@ code:
   - id: "19.120"
     url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19120.html
     title: Chapter 19.120 VTR Village Townhouse Residential
+  - id: "19.70"
+    url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1970.html
+    title: Chapter 19.70 Corridor Commercial (CC) District
+  - id: "19.80"
+    url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1980.html
+    title: Chapter 19.80 Light Industrial (LI) District
+  - id: "19.85"
+    url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1985.html
+    title: Chapter 19.85 General Industrial (GI) District
 zones:
+  LI:
+    section: ["19.80"]
+    cite_default:
+      cite: FMC 19.80.020 Table 19.80.020.A (Land Use Types Permitted in the Light Industrial District); FMC 19.80.020.C
+      url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1980.html
+      retrieved: '2026-08-19'
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/fairview/19.80.txt#L43,L45-L46,L80"
+    notes: >-
+      Table 19.80.020.A has four use categories -- Industrial, Commercial,
+      Civic and Semi-Public, Other -- and no residential one at all. The
+      district does not refuse the pod by leaving it off a list; it refuses it
+      twice. 19.80.020.C states the prohibition in words: "The following uses
+      are expressly prohibited: new housing, and similar facilities, and
+      nonvocational schools." Fairview writes closed lists. Every commercial and industrial chapter opens the same way -- "Only land uses that are specifically listed in Table 19.xx.020.A, and land uses that are approved as 'similar' to those in Table 19.xx.020.A, may be permitted" -- so a use missing from the table is refused rather than unaddressed. That sentence is what makes an absence readable, and it is quoted with every refusal here.
+  GI:
+    section: ["19.85"]
+    cite_default:
+      cite: FMC 19.85.020 Table 19.85.020.A (Land Uses Types Permitted in the General Industrial District), row 2 Residential
+      url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1985.html
+      retrieved: '2026-08-19'
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/fairview/19.85.txt#L35,L37-L41,L61-L63"
+    notes: >-
+      This table does have a Residential category and it is one row: "One
+      caretaker unit shall be permitted for each development, subject to the
+      standards in FMC 19.85.070(B). Other residential uses are not permitted,
+      except that residences existing prior to the effective date of the
+      ordinance codified in this section may continue." A real residential
+      permission, marked P, reaching a single unit tied to an industrial
+      development -- and the same sentence closes the district to everything
+      else. Read the P alone and the zone looks open. Fairview writes closed lists. Every commercial and industrial chapter opens the same way -- "Only land uses that are specifically listed in Table 19.xx.020.A, and land uses that are approved as 'similar' to those in Table 19.xx.020.A, may be permitted" -- so a use missing from the table is refused rather than unaddressed. That sentence is what makes an absence readable, and it is quoted with every refusal here.
+  CC:
+    section: ["19.70"]
+    cite_default:
+      cite: FMC 19.70.020 Table 19.70.020.A (Land Uses and Building Types Permitted in the Corridor Commercial District), row 4 Residential
+      url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1970.html
+      retrieved: '2026-08-19'
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/fairview/19.70.txt#L31,L33-L34,L62-L65"
+    notes: >-
+      Row 4 of Table 19.70.020.A is Residential and it lists three things:
+      residential mixed use, manufactured homes on individual lots where the
+      housing already exists, and residential care homes and facilities. A
+      stand-alone four-unit townhome is none of them. Unlike Wood Village's NC
+      zone next door -- where the table's own row is the broad Household Living
+      category and a later section then limits it to mixed use developments --
+      this district never admits the use category at all, so there is no
+      relief to record: the pod cannot elect its way onto a list it is not on.
+
+
+      What the district admits is a different use. FMC 19.70.090.E.1 asks
+      nonresidential uses to occupy the ground floor along 75 percent of the
+      street-facing facade width, which a fixed-dimension two-storey townhome
+      cannot supply, and E.2 prohibits residential mixed-use development
+      anywhere in the corridor commercial zone east of NE 223rd Avenue except
+      one corner at Sandy Boulevard. Both are recorded here rather than encoded
+      -- the first is a facade-length test and the second is a line on a map --
+      because neither can change this pod's answer, which is already no.
+      Fairview writes closed lists. Every commercial and industrial chapter opens the same way -- "Only land uses that are specifically listed in Table 19.xx.020.A, and land uses that are approved as 'similar' to those in Table 19.xx.020.A, may be permitted" -- so a use missing from the table is refused rather than unaddressed. That sentence is what makes an absence readable, and it is quoted with every refusal here.
   R-6:
     min_density_du_per_acre:
       # Table 19.30.030.A row 3.b, "Duplex, Triplex, Quadplex, Cottage
