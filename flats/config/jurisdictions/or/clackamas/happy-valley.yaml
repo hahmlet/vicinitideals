@@ -1,10 +1,36 @@
 label: Happy Valley
 kind: city
 eligible: true
-notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s verification was against a
-  coarser standard (one citation per row) and does not carry over. UNPORTED: orientation_constraint=''entrance_only''.
+notes: >-
+  Ported from quadfit rules.yaml. Every value is `draft` -- quadfit's verification was against a coarser
+  standard (one citation per row) and does not carry over. UNPORTED: orientation_constraint='entrance_only'.
   quadfit justified this in a YAML comment with no citation; it needs its own encoding rather than invented
-  provenance.'
+  provenance.
+
+
+  READ AND NOT ENCODED.
+
+
+  (1) 16.42.080, shared outdoor recreation areas. Every residential table in 16.22 prints "400 sq.
+  ft./unit provided in accordance with Section 16.42.080" against every district, which made it the
+  loudest unfetched reference in the whole corpus -- eleven mentions, eight of them beside a number this
+  screen uses. Fetched and read 2026-08-20. 16.42.080(A): "The standards of this section apply to
+  subdivisions of 30 or more units." Four units is not thirty, so the row reaches somebody else's
+  development. (B) excuses PUDs and multifamily of five or more as well, a second door out of the same
+  standard and not the one this building uses. Sixteen hundred square feet of recreation tract that the
+  tables appear to demand of a fourplex, and do not.
+
+
+  (2) 16.42.030(B) is the part of that chapter that does reach the pod, and it is now encoded on every
+  zone as min_landscaped_pct. Worth saying why the two land differently: 16.42.020 excuses quadplexes
+  from 16.42.030(D), (F), (G), (H), (J) and (K), and (B) is not on the list.
+
+
+  (3) 16.63.020(F), density calculations. Fetched with 16.42 and read for the same reason -- 16.12's
+  "net acre" and "floor area ratio" both defer to it, so the subtraction behind every measured_on in
+  this layer lived in an unfetched chapter. Now cited directly. (F)(3) also lets dedicated right-of-way
+  count toward minimum lot size, but only "in the case of a partition, where the City is requiring the
+  dedication", which is a land-division proceeding rather than a lot fact and is not encoded.
 ingest:
   geoid: null
   juris_city_codes:
@@ -51,6 +77,12 @@ code:
 - id: 16.22.residential
   url: https://ecode360.com/print/HA4934?guid=43529907
   title: HV LDC Chapter 16.22 - Residential Land Use Districts
+- id: 16.42.landscaping
+  url: https://ecode360.com/print/HA4934?guid=43529965
+  title: HV LDC Chapter 16.42 - Landscaping, Fences and Walls, Recreation Areas
+- id: 16.63.land-divisions
+  url: https://ecode360.com/print/HA4934?guid=43529977
+  title: HV LDC Chapter 16.63 - Land Divisions and Property Line Adjustments
 zones:
   R40:
     section:
@@ -85,11 +117,21 @@ zones:
       # survey of the parcel, not an attribute of it.
       measured_on:
         fact: net_developable_area
-        # This city's own subtraction list: a definition that defers -- "one acre of developable land, as
-      # calculated pursuant to Section 16.63.020(F)". The glossary names
-      # the quantity and sends the reader to the calculation.
-        cite: HVMC 16.12 "Net acre"; 16.63.020(F)
-        quote: "or/clackamas/happy-valley/16.12.definitions.txt#L1073-L1074"
+        # This city's own subtraction list, and it took two documents to
+        # reach. 16.12 defines a net acre as "one acre of developable land,
+        # as calculated pursuant to Section 16.63.020(F)" -- a glossary entry
+        # that names the quantity and sends the reader somewhere else, which
+        # is not a definition of what comes off.
+        #
+        # 16.63.020(F)(1) is where it is actually said. Constrained land is
+        # public facilities in a tract including stormwater treatment, public
+        # and private right-of-way, land under the Steep Slopes Overlay
+        # (16.32), land under the Natural Resources Overlay (16.34), and
+        # easement land the Planning Official finds similar. The quote is
+        # that list rather than the glossary line, because the glossary line
+        # answers no question a screen can ask.
+        cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
+        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
       variants:
         - value: 4.4
           when: [unit_lots]
@@ -132,6 +174,34 @@ zones:
     max_coverage_pct:
       value: 20
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L288"
+    min_landscaped_pct:
+      # LDC 16.42.030(B) states the landscaping requirement by housing type,
+      # and (B)(1) names this building: "Single-family detached, single-family
+      # attached dwellings, duplexes, triplexes and fourplexes: 20%."
+      #
+      # Not a zone standard and not in the district tables at all -- it is
+      # citywide, in the design-standards chapter, which is why nine zones
+      # carry the same figure from the same sentence.
+      #
+      # It reaches a quadplex. 16.42.020 excuses "quadplexes" from Section
+      # 16.42.030(D), (F), (G), (H), (J) and (K); (B) is not on that list, and
+      # naming the exceptions is how a code says the rest applies.
+      #
+      # The denominator is "gross developable lot area of the greater proposed
+      # development", which is not the lot and is defined nowhere in 16.12 --
+      # the glossary's two developable-area terms both defer to 16.63.020(F).
+      # Left on the lot's own area deliberately: developable area is never more
+      # than the lot, so twenty percent of it is never more square feet than
+      # twenty percent of the lot, and the check as run asks for at least as
+      # much as the code does. The screen already flags this one optimistic for
+      # a bigger reason -- 16.42.030(A)(8) says driveways and parking do not
+      # count as landscaped area and nothing here knows how much of the
+      # leftover they take.
+      value: 20
+      cite: HV LDC 16.42.030(B)(1)
+      url: https://ecode360.com/print/HA4934?guid=43529965
+      retrieved: '2026-08-20'
+      quote: "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93"
     notes: 'quadfit confidence: verified | Setbacks/coverage from City Model Home Application form (LDC
       eff 3/19/2024). Height 45 ft front elev / 49 ft side+rear. Covered porch >=20% of bldg line cuts
       front to 15 ft. Quadplex by-right per HV Middle Housing amendments. min_lot is the nominal density
@@ -169,11 +239,21 @@ zones:
       # survey of the parcel, not an attribute of it.
       measured_on:
         fact: net_developable_area
-        # This city's own subtraction list: a definition that defers -- "one acre of developable land, as
-      # calculated pursuant to Section 16.63.020(F)". The glossary names
-      # the quantity and sends the reader to the calculation.
-        cite: HVMC 16.12 "Net acre"; 16.63.020(F)
-        quote: "or/clackamas/happy-valley/16.12.definitions.txt#L1073-L1074"
+        # This city's own subtraction list, and it took two documents to
+        # reach. 16.12 defines a net acre as "one acre of developable land,
+        # as calculated pursuant to Section 16.63.020(F)" -- a glossary entry
+        # that names the quantity and sends the reader somewhere else, which
+        # is not a definition of what comes off.
+        #
+        # 16.63.020(F)(1) is where it is actually said. Constrained land is
+        # public facilities in a tract including stormwater treatment, public
+        # and private right-of-way, land under the Steep Slopes Overlay
+        # (16.32), land under the Natural Resources Overlay (16.34), and
+        # easement land the Planning Official finds similar. The quote is
+        # that list rather than the glossary line, because the glossary line
+        # answers no question a screen can ask.
+        cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
+        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
       variants:
         - value: 8.7
           when: [unit_lots]
@@ -216,6 +296,34 @@ zones:
     max_coverage_pct:
       value: 30
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L288"
+    min_landscaped_pct:
+      # LDC 16.42.030(B) states the landscaping requirement by housing type,
+      # and (B)(1) names this building: "Single-family detached, single-family
+      # attached dwellings, duplexes, triplexes and fourplexes: 20%."
+      #
+      # Not a zone standard and not in the district tables at all -- it is
+      # citywide, in the design-standards chapter, which is why nine zones
+      # carry the same figure from the same sentence.
+      #
+      # It reaches a quadplex. 16.42.020 excuses "quadplexes" from Section
+      # 16.42.030(D), (F), (G), (H), (J) and (K); (B) is not on that list, and
+      # naming the exceptions is how a code says the rest applies.
+      #
+      # The denominator is "gross developable lot area of the greater proposed
+      # development", which is not the lot and is defined nowhere in 16.12 --
+      # the glossary's two developable-area terms both defer to 16.63.020(F).
+      # Left on the lot's own area deliberately: developable area is never more
+      # than the lot, so twenty percent of it is never more square feet than
+      # twenty percent of the lot, and the check as run asks for at least as
+      # much as the code does. The screen already flags this one optimistic for
+      # a bigger reason -- 16.42.030(A)(8) says driveways and parking do not
+      # count as landscaped area and nothing here knows how much of the
+      # leftover they take.
+      value: 20
+      cite: HV LDC 16.42.030(B)(1)
+      url: https://ecode360.com/print/HA4934?guid=43529965
+      retrieved: '2026-08-20'
+      quote: "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93"
     notes: 'quadfit confidence: verified | Height 45 ft front / 49 ft side+rear. Porch >=20% bldg line
       -> front 15 ft. min_lot nominal.'
   R15:
@@ -251,11 +359,21 @@ zones:
       # survey of the parcel, not an attribute of it.
       measured_on:
         fact: net_developable_area
-        # This city's own subtraction list: a definition that defers -- "one acre of developable land, as
-      # calculated pursuant to Section 16.63.020(F)". The glossary names
-      # the quantity and sends the reader to the calculation.
-        cite: HVMC 16.12 "Net acre"; 16.63.020(F)
-        quote: "or/clackamas/happy-valley/16.12.definitions.txt#L1073-L1074"
+        # This city's own subtraction list, and it took two documents to
+        # reach. 16.12 defines a net acre as "one acre of developable land,
+        # as calculated pursuant to Section 16.63.020(F)" -- a glossary entry
+        # that names the quantity and sends the reader somewhere else, which
+        # is not a definition of what comes off.
+        #
+        # 16.63.020(F)(1) is where it is actually said. Constrained land is
+        # public facilities in a tract including stormwater treatment, public
+        # and private right-of-way, land under the Steep Slopes Overlay
+        # (16.32), land under the Natural Resources Overlay (16.34), and
+        # easement land the Planning Official finds similar. The quote is
+        # that list rather than the glossary line, because the glossary line
+        # answers no question a screen can ask.
+        cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
+        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
       variants:
         - value: 11.6
           when: [unit_lots]
@@ -298,6 +416,34 @@ zones:
     max_coverage_pct:
       value: 35
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L288"
+    min_landscaped_pct:
+      # LDC 16.42.030(B) states the landscaping requirement by housing type,
+      # and (B)(1) names this building: "Single-family detached, single-family
+      # attached dwellings, duplexes, triplexes and fourplexes: 20%."
+      #
+      # Not a zone standard and not in the district tables at all -- it is
+      # citywide, in the design-standards chapter, which is why nine zones
+      # carry the same figure from the same sentence.
+      #
+      # It reaches a quadplex. 16.42.020 excuses "quadplexes" from Section
+      # 16.42.030(D), (F), (G), (H), (J) and (K); (B) is not on that list, and
+      # naming the exceptions is how a code says the rest applies.
+      #
+      # The denominator is "gross developable lot area of the greater proposed
+      # development", which is not the lot and is defined nowhere in 16.12 --
+      # the glossary's two developable-area terms both defer to 16.63.020(F).
+      # Left on the lot's own area deliberately: developable area is never more
+      # than the lot, so twenty percent of it is never more square feet than
+      # twenty percent of the lot, and the check as run asks for at least as
+      # much as the code does. The screen already flags this one optimistic for
+      # a bigger reason -- 16.42.030(A)(8) says driveways and parking do not
+      # count as landscaped area and nothing here knows how much of the
+      # leftover they take.
+      value: 20
+      cite: HV LDC 16.42.030(B)(1)
+      url: https://ecode360.com/print/HA4934?guid=43529965
+      retrieved: '2026-08-20'
+      quote: "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93"
     notes: 'quadfit confidence: verified | Height 45/49 ft. Porch >=20% bldg line -> front 15 ft. min_lot
       nominal.'
   R10:
@@ -333,11 +479,21 @@ zones:
       # survey of the parcel, not an attribute of it.
       measured_on:
         fact: net_developable_area
-        # This city's own subtraction list: a definition that defers -- "one acre of developable land, as
-      # calculated pursuant to Section 16.63.020(F)". The glossary names
-      # the quantity and sends the reader to the calculation.
-        cite: HVMC 16.12 "Net acre"; 16.63.020(F)
-        quote: "or/clackamas/happy-valley/16.12.definitions.txt#L1073-L1074"
+        # This city's own subtraction list, and it took two documents to
+        # reach. 16.12 defines a net acre as "one acre of developable land,
+        # as calculated pursuant to Section 16.63.020(F)" -- a glossary entry
+        # that names the quantity and sends the reader somewhere else, which
+        # is not a definition of what comes off.
+        #
+        # 16.63.020(F)(1) is where it is actually said. Constrained land is
+        # public facilities in a tract including stormwater treatment, public
+        # and private right-of-way, land under the Steep Slopes Overlay
+        # (16.32), land under the Natural Resources Overlay (16.34), and
+        # easement land the Planning Official finds similar. The quote is
+        # that list rather than the glossary line, because the glossary line
+        # answers no question a screen can ask.
+        cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
+        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
       variants:
         - value: 17.4
           when: [unit_lots]
@@ -363,6 +519,34 @@ zones:
     max_coverage_pct:
       value: 40
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L479"
+    min_landscaped_pct:
+      # LDC 16.42.030(B) states the landscaping requirement by housing type,
+      # and (B)(1) names this building: "Single-family detached, single-family
+      # attached dwellings, duplexes, triplexes and fourplexes: 20%."
+      #
+      # Not a zone standard and not in the district tables at all -- it is
+      # citywide, in the design-standards chapter, which is why nine zones
+      # carry the same figure from the same sentence.
+      #
+      # It reaches a quadplex. 16.42.020 excuses "quadplexes" from Section
+      # 16.42.030(D), (F), (G), (H), (J) and (K); (B) is not on that list, and
+      # naming the exceptions is how a code says the rest applies.
+      #
+      # The denominator is "gross developable lot area of the greater proposed
+      # development", which is not the lot and is defined nowhere in 16.12 --
+      # the glossary's two developable-area terms both defer to 16.63.020(F).
+      # Left on the lot's own area deliberately: developable area is never more
+      # than the lot, so twenty percent of it is never more square feet than
+      # twenty percent of the lot, and the check as run asks for at least as
+      # much as the code does. The screen already flags this one optimistic for
+      # a bigger reason -- 16.42.030(A)(8) says driveways and parking do not
+      # count as landscaped area and nothing here knows how much of the
+      # leftover they take.
+      value: 20
+      cite: HV LDC 16.42.030(B)(1)
+      url: https://ecode360.com/print/HA4934?guid=43529965
+      retrieved: '2026-08-20'
+      quote: "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93"
     notes: 'quadfit confidence: verified | Height 45/49 ft. Porch >=20% bldg line -> front 15 ft. min_lot
       nominal.'
   R8.5:
@@ -398,11 +582,21 @@ zones:
       # survey of the parcel, not an attribute of it.
       measured_on:
         fact: net_developable_area
-        # This city's own subtraction list: a definition that defers -- "one acre of developable land, as
-      # calculated pursuant to Section 16.63.020(F)". The glossary names
-      # the quantity and sends the reader to the calculation.
-        cite: HVMC 16.12 "Net acre"; 16.63.020(F)
-        quote: "or/clackamas/happy-valley/16.12.definitions.txt#L1073-L1074"
+        # This city's own subtraction list, and it took two documents to
+        # reach. 16.12 defines a net acre as "one acre of developable land,
+        # as calculated pursuant to Section 16.63.020(F)" -- a glossary entry
+        # that names the quantity and sends the reader somewhere else, which
+        # is not a definition of what comes off.
+        #
+        # 16.63.020(F)(1) is where it is actually said. Constrained land is
+        # public facilities in a tract including stormwater treatment, public
+        # and private right-of-way, land under the Steep Slopes Overlay
+        # (16.32), land under the Natural Resources Overlay (16.34), and
+        # easement land the Planning Official finds similar. The quote is
+        # that list rather than the glossary line, because the glossary line
+        # answers no question a screen can ask.
+        cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
+        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
       variants:
         - value: 20.5
           when: [unit_lots]
@@ -428,6 +622,34 @@ zones:
     max_coverage_pct:
       value: 45
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L479"
+    min_landscaped_pct:
+      # LDC 16.42.030(B) states the landscaping requirement by housing type,
+      # and (B)(1) names this building: "Single-family detached, single-family
+      # attached dwellings, duplexes, triplexes and fourplexes: 20%."
+      #
+      # Not a zone standard and not in the district tables at all -- it is
+      # citywide, in the design-standards chapter, which is why nine zones
+      # carry the same figure from the same sentence.
+      #
+      # It reaches a quadplex. 16.42.020 excuses "quadplexes" from Section
+      # 16.42.030(D), (F), (G), (H), (J) and (K); (B) is not on that list, and
+      # naming the exceptions is how a code says the rest applies.
+      #
+      # The denominator is "gross developable lot area of the greater proposed
+      # development", which is not the lot and is defined nowhere in 16.12 --
+      # the glossary's two developable-area terms both defer to 16.63.020(F).
+      # Left on the lot's own area deliberately: developable area is never more
+      # than the lot, so twenty percent of it is never more square feet than
+      # twenty percent of the lot, and the check as run asks for at least as
+      # much as the code does. The screen already flags this one optimistic for
+      # a bigger reason -- 16.42.030(A)(8) says driveways and parking do not
+      # count as landscaped area and nothing here knows how much of the
+      # leftover they take.
+      value: 20
+      cite: HV LDC 16.42.030(B)(1)
+      url: https://ecode360.com/print/HA4934?guid=43529965
+      retrieved: '2026-08-20'
+      quote: "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93"
     notes: 'quadfit confidence: verified | Layer value is ''R8.5'' (code text ''R-8.5''). Height 45/49
       ft. Porch >=20% -> front 15 ft. min_lot nominal.'
   R7:
@@ -463,11 +685,21 @@ zones:
       # survey of the parcel, not an attribute of it.
       measured_on:
         fact: net_developable_area
-        # This city's own subtraction list: a definition that defers -- "one acre of developable land, as
-      # calculated pursuant to Section 16.63.020(F)". The glossary names
-      # the quantity and sends the reader to the calculation.
-        cite: HVMC 16.12 "Net acre"; 16.63.020(F)
-        quote: "or/clackamas/happy-valley/16.12.definitions.txt#L1073-L1074"
+        # This city's own subtraction list, and it took two documents to
+        # reach. 16.12 defines a net acre as "one acre of developable land,
+        # as calculated pursuant to Section 16.63.020(F)" -- a glossary entry
+        # that names the quantity and sends the reader somewhere else, which
+        # is not a definition of what comes off.
+        #
+        # 16.63.020(F)(1) is where it is actually said. Constrained land is
+        # public facilities in a tract including stormwater treatment, public
+        # and private right-of-way, land under the Steep Slopes Overlay
+        # (16.32), land under the Natural Resources Overlay (16.34), and
+        # easement land the Planning Official finds similar. The quote is
+        # that list rather than the glossary line, because the glossary line
+        # answers no question a screen can ask.
+        cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
+        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
       variants:
         - value: 24.9
           when: [unit_lots]
@@ -493,6 +725,34 @@ zones:
     max_coverage_pct:
       value: 50
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L479"
+    min_landscaped_pct:
+      # LDC 16.42.030(B) states the landscaping requirement by housing type,
+      # and (B)(1) names this building: "Single-family detached, single-family
+      # attached dwellings, duplexes, triplexes and fourplexes: 20%."
+      #
+      # Not a zone standard and not in the district tables at all -- it is
+      # citywide, in the design-standards chapter, which is why nine zones
+      # carry the same figure from the same sentence.
+      #
+      # It reaches a quadplex. 16.42.020 excuses "quadplexes" from Section
+      # 16.42.030(D), (F), (G), (H), (J) and (K); (B) is not on that list, and
+      # naming the exceptions is how a code says the rest applies.
+      #
+      # The denominator is "gross developable lot area of the greater proposed
+      # development", which is not the lot and is defined nowhere in 16.12 --
+      # the glossary's two developable-area terms both defer to 16.63.020(F).
+      # Left on the lot's own area deliberately: developable area is never more
+      # than the lot, so twenty percent of it is never more square feet than
+      # twenty percent of the lot, and the check as run asks for at least as
+      # much as the code does. The screen already flags this one optimistic for
+      # a bigger reason -- 16.42.030(A)(8) says driveways and parking do not
+      # count as landscaped area and nothing here knows how much of the
+      # leftover they take.
+      value: 20
+      cite: HV LDC 16.42.030(B)(1)
+      url: https://ecode360.com/print/HA4934?guid=43529965
+      retrieved: '2026-08-20'
+      quote: "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93"
     notes: 'quadfit confidence: verified | Height 45/49 ft. Porch >=20% -> front 15 ft. Coverage never
       binds a ~1,000 sf/unit fourplex footprint. min_lot nominal.'
   R5:
@@ -511,11 +771,21 @@ zones:
       # attribute of it.
       measured_on:
         fact: net_developable_area
-        # This city's own subtraction list: a definition that defers -- "one acre of developable land, as
-      # calculated pursuant to Section 16.63.020(F)". The glossary names
-      # the quantity and sends the reader to the calculation.
-        cite: HVMC 16.12 "Net acre"; 16.63.020(F)
-        quote: "or/clackamas/happy-valley/16.12.definitions.txt#L1073-L1074"
+        # This city's own subtraction list, and it took two documents to
+        # reach. 16.12 defines a net acre as "one acre of developable land,
+        # as calculated pursuant to Section 16.63.020(F)" -- a glossary entry
+        # that names the quantity and sends the reader somewhere else, which
+        # is not a definition of what comes off.
+        #
+        # 16.63.020(F)(1) is where it is actually said. Constrained land is
+        # public facilities in a tract including stormwater treatment, public
+        # and private right-of-way, land under the Steep Slopes Overlay
+        # (16.32), land under the Natural Resources Overlay (16.34), and
+        # easement land the Planning Official finds similar. The quote is
+        # that list rather than the glossary line, because the glossary line
+        # answers no question a screen can ask.
+        cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
+        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
     max_density_du_per_acre:
       # No ceiling is printed for the quadplex on one lot. The townhome row is
       # a different standard for a different plat, carried as the variant.
@@ -528,11 +798,21 @@ zones:
       # attribute of it.
       measured_on:
         fact: net_developable_area
-        # This city's own subtraction list: a definition that defers -- "one acre of developable land, as
-      # calculated pursuant to Section 16.63.020(F)". The glossary names
-      # the quantity and sends the reader to the calculation.
-        cite: HVMC 16.12 "Net acre"; 16.63.020(F)
-        quote: "or/clackamas/happy-valley/16.12.definitions.txt#L1073-L1074"
+        # This city's own subtraction list, and it took two documents to
+        # reach. 16.12 defines a net acre as "one acre of developable land,
+        # as calculated pursuant to Section 16.63.020(F)" -- a glossary entry
+        # that names the quantity and sends the reader somewhere else, which
+        # is not a definition of what comes off.
+        #
+        # 16.63.020(F)(1) is where it is actually said. Constrained land is
+        # public facilities in a tract including stormwater treatment, public
+        # and private right-of-way, land under the Steep Slopes Overlay
+        # (16.32), land under the Natural Resources Overlay (16.34), and
+        # easement land the Planning Official finds similar. The quote is
+        # that list rather than the glossary line, because the glossary line
+        # answers no question a screen can ask.
+        cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
+        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
       variants:
         - value: 25
           when: [unit_lots]
@@ -565,6 +845,34 @@ zones:
     max_coverage_pct:
       value: 60
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L656"
+    min_landscaped_pct:
+      # LDC 16.42.030(B) states the landscaping requirement by housing type,
+      # and (B)(1) names this building: "Single-family detached, single-family
+      # attached dwellings, duplexes, triplexes and fourplexes: 20%."
+      #
+      # Not a zone standard and not in the district tables at all -- it is
+      # citywide, in the design-standards chapter, which is why nine zones
+      # carry the same figure from the same sentence.
+      #
+      # It reaches a quadplex. 16.42.020 excuses "quadplexes" from Section
+      # 16.42.030(D), (F), (G), (H), (J) and (K); (B) is not on that list, and
+      # naming the exceptions is how a code says the rest applies.
+      #
+      # The denominator is "gross developable lot area of the greater proposed
+      # development", which is not the lot and is defined nowhere in 16.12 --
+      # the glossary's two developable-area terms both defer to 16.63.020(F).
+      # Left on the lot's own area deliberately: developable area is never more
+      # than the lot, so twenty percent of it is never more square feet than
+      # twenty percent of the lot, and the check as run asks for at least as
+      # much as the code does. The screen already flags this one optimistic for
+      # a bigger reason -- 16.42.030(A)(8) says driveways and parking do not
+      # count as landscaped area and nothing here knows how much of the
+      # leftover they take.
+      value: 20
+      cite: HV LDC 16.42.030(B)(1)
+      url: https://ecode360.com/print/HA4934?guid=43529965
+      retrieved: '2026-08-20'
+      quote: "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93"
     notes: 'quadfit confidence: verified | Front 20 ft street-access / 10 ft alley-access. Height 45/49
       ft. Densest std SF zone. CORRECTED 2026-08-13 against Table 16.22.040-2: quadfit encoded the
       single-family tiers (5,000 sf lot / 50% coverage); the table splits by housing type and the
@@ -590,11 +898,21 @@ zones:
       # attribute of it.
       measured_on:
         fact: net_developable_area
-        # This city's own subtraction list: a definition that defers -- "one acre of developable land, as
-      # calculated pursuant to Section 16.63.020(F)". The glossary names
-      # the quantity and sends the reader to the calculation.
-        cite: HVMC 16.12 "Net acre"; 16.63.020(F)
-        quote: "or/clackamas/happy-valley/16.12.definitions.txt#L1073-L1074"
+        # This city's own subtraction list, and it took two documents to
+        # reach. 16.12 defines a net acre as "one acre of developable land,
+        # as calculated pursuant to Section 16.63.020(F)" -- a glossary entry
+        # that names the quantity and sends the reader somewhere else, which
+        # is not a definition of what comes off.
+        #
+        # 16.63.020(F)(1) is where it is actually said. Constrained land is
+        # public facilities in a tract including stormwater treatment, public
+        # and private right-of-way, land under the Steep Slopes Overlay
+        # (16.32), land under the Natural Resources Overlay (16.34), and
+        # easement land the Planning Official finds similar. The quote is
+        # that list rather than the glossary line, because the glossary line
+        # answers no question a screen can ask.
+        cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
+        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
     max_density_du_per_acre:
       exempt: true
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L642,L646,L647"
@@ -605,11 +923,21 @@ zones:
       # attribute of it.
       measured_on:
         fact: net_developable_area
-        # This city's own subtraction list: a definition that defers -- "one acre of developable land, as
-      # calculated pursuant to Section 16.63.020(F)". The glossary names
-      # the quantity and sends the reader to the calculation.
-        cite: HVMC 16.12 "Net acre"; 16.63.020(F)
-        quote: "or/clackamas/happy-valley/16.12.definitions.txt#L1073-L1074"
+        # This city's own subtraction list, and it took two documents to
+        # reach. 16.12 defines a net acre as "one acre of developable land,
+        # as calculated pursuant to Section 16.63.020(F)" -- a glossary entry
+        # that names the quantity and sends the reader somewhere else, which
+        # is not a definition of what comes off.
+        #
+        # 16.63.020(F)(1) is where it is actually said. Constrained land is
+        # public facilities in a tract including stormwater treatment, public
+        # and private right-of-way, land under the Steep Slopes Overlay
+        # (16.32), land under the Natural Resources Overlay (16.34), and
+        # easement land the Planning Official finds similar. The quote is
+        # that list rather than the glossary line, because the glossary line
+        # answers no question a screen can ask.
+        cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
+        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
       variants:
         - value: 25
           when: [unit_lots]
@@ -633,6 +961,34 @@ zones:
     setback_street_side_ft:
       value: 8
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L662"
+    min_landscaped_pct:
+      # LDC 16.42.030(B) states the landscaping requirement by housing type,
+      # and (B)(1) names this building: "Single-family detached, single-family
+      # attached dwellings, duplexes, triplexes and fourplexes: 20%."
+      #
+      # Not a zone standard and not in the district tables at all -- it is
+      # citywide, in the design-standards chapter, which is why nine zones
+      # carry the same figure from the same sentence.
+      #
+      # It reaches a quadplex. 16.42.020 excuses "quadplexes" from Section
+      # 16.42.030(D), (F), (G), (H), (J) and (K); (B) is not on that list, and
+      # naming the exceptions is how a code says the rest applies.
+      #
+      # The denominator is "gross developable lot area of the greater proposed
+      # development", which is not the lot and is defined nowhere in 16.12 --
+      # the glossary's two developable-area terms both defer to 16.63.020(F).
+      # Left on the lot's own area deliberately: developable area is never more
+      # than the lot, so twenty percent of it is never more square feet than
+      # twenty percent of the lot, and the check as run asks for at least as
+      # much as the code does. The screen already flags this one optimistic for
+      # a bigger reason -- 16.42.030(A)(8) says driveways and parking do not
+      # count as landscaped area and nothing here knows how much of the
+      # leftover they take.
+      value: 20
+      cite: HV LDC 16.42.030(B)(1)
+      url: https://ecode360.com/print/HA4934?guid=43529965
+      retrieved: '2026-08-20'
+      quote: "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93"
     notes: 'quadfit confidence: needs_verification | Layer value ''MURS'' = code ''MUR-S''. Setbacks from
       Model Home form (verified); max_coverage not shown in form (verify Table 16.22.040-2). Front 20
       street/10 alley. In HV middle-housing zone list.'

@@ -551,6 +551,25 @@ def test_open_space_is_flagged_as_a_favourable_approximation() -> None:
     assert result.triage is Triage.green
 
 
+def test_landscaping_is_a_check_and_not_a_comment() -> None:
+    # Four jurisdictions encoded min_landscaped_pct and the screen read none of
+    # them. Portland asks 30 percent in RM1; a pod leaving twenty screened
+    # GREEN on a standard it missed by a third.
+    ok = run(rules(min_landscaped_pct=20))
+    short = run(rules(min_landscaped_pct=70), relief=NO_RELIEF)
+
+    assert ok.triage is Triage.green
+    assert short.triage is Triage.red
+    assert short.head == "landscaped_pct"
+
+
+def test_landscaping_says_it_is_a_favourable_approximation() -> None:
+    # Optimistic twice over: leftover area is an upper bound on what could be
+    # landscaped, and every code that asks for landscaping also says driveways
+    # and parking do not count towards it.
+    assert run(rules(min_landscaped_pct=20)).optimistic == ("landscaped_pct",)
+
+
 # --- the rule-cost ledger ---------------------------------------------
 
 

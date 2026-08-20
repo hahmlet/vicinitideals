@@ -101,7 +101,7 @@ FACT_UNOBSERVED = "FACT_UNOBSERVED"
 USE_PROHIBITED = "USE_PROHIBITED"
 
 #: Checks computed from a proxy that runs in the lot's favour.
-OPTIMISTIC_CHECKS = frozenset({"open_space_pct"})
+OPTIMISTIC_CHECKS = frozenset({"open_space_pct", "landscaped_pct"})
 
 #: Which rule field each check reads. A check with no value goes unrun, but only
 #: an unrun check backed by a *required* field means the encoding is incomplete
@@ -122,6 +122,7 @@ CHECK_FIELD: dict[str, str] = {
     "min_density_du_per_acre": "min_density_du_per_acre",
     "parking_stalls": "parking_min_per_unit",
     "open_space_pct": "open_space_min_pct",
+    "landscaped_pct": "min_landscaped_pct",
 }
 
 
@@ -366,6 +367,28 @@ def _checks(
                 "parking_stalls",
                 design.stalls_required,
                 float(per_unit) * design.units,
+                is_maximum=False,
+                jurisdiction=where,
+            )
+        )
+
+    landscaped = rules.get("min_landscaped_pct")
+    if landscaped is not None:
+        # The same leftover proxy as open space, and more optimistic still:
+        # every code that asks for landscaping also says driveways and parking
+        # do not count towards it (Happy Valley 16.42.030(A)(8) is the plain
+        # form), and nothing here knows how much of the leftover the parking
+        # takes. So this can only ever fail a lot that has no room by the
+        # building alone -- which is exactly the lot worth failing, and why an
+        # optimistic check still beats no check.
+        #
+        # Encoded in four jurisdictions and read by nobody until now: Portland
+        # asks 30 percent in RM1, and a pod that left 20 screened GREEN.
+        out.append(
+            policy.evaluate(
+                "landscaped_pct",
+                (lot.lot_sqft - design.ground_sqft) / lot.lot_sqft * 100.0,
+                float(landscaped),
                 is_maximum=False,
                 jurisdiction=where,
             )
