@@ -87,6 +87,15 @@ code:
   - id: "4.1100.downtown"
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
     title: "Section 4.1100 - Downtown Land Use Districts"
+    # Table 4.1130 prints its footnote markers hard against the numbers they
+    # mark, and the whole table is built that way: the DRL height row reads
+    # "8.71" for 8.7 units per acre with note 1, the DCL density ceiling
+    # reads "608" for 60 with note 8, and the maximum front setback reads
+    # "1512" for 15 with note 12. Read raw, the corroboration check compares
+    # the encoded 8.7 against a line that states 8.71 and calls a correct
+    # citation a misquote. Declared rather than guessed, because in a table
+    # that really did state 608 the guess would bless an encoding of 60.
+    glued_markers: true
   - id: "4.1300.gresham-butte"
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1300.pdf
     title: "Section 4.1300 - Gresham Butte Plan District"
@@ -987,6 +996,60 @@ zones:
           quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L316-L318,L385"
   DRL-1:
     section: ["4.11", "7.042"]
+    min_density_du_per_acre:
+      # The Minimum Residential Net Density row of Table 4.1130, which
+      # neither DRL block read when the rest of the table was encoded. A
+      # floor stated per acre is not a floor a small lot can fail: four
+      # units on 4,000 sq ft is 43 units to the acre. It bites at the other
+      # end -- 8.7 units per acre asks five units of a half-acre lot and
+      # nine of a full one, and a four-unit pod on either is short. That is
+      # the false GREEN this field exists to close, and it was open here.
+      value: 8.7
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L435-L437"
+      # Article 3 computes net density on the parcel less the Natural
+      # Resource, Hillside and Geologic Risk overlays, dedicated
+      # right-of-way and the rest. Nothing here surveys those, so the lot's
+      # own area serves as the bound it is.
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: the longer of the two lists -- Natural Resource Overlay, Hillside
+      # and Geologic Risk Overlay, land under either easement, dedicated
+      # street, private accessway, the flag pole of a flag lot and the
+      # encumbered part of a non-standard lot.
+        cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+    max_density_du_per_acre:
+      # The Maximum Residential Net Density row, and DRL-1 is the only
+      # Downtown sub-district that states one for this building: "Townhouse
+      # 25; All other uses: 12.45". A quadplex is one of the other uses, so
+      # 12.45 units per acre is the ceiling, and read against the floor
+      # above it leaves a narrow window -- four units need at least 4/12.45
+      # of an acre to satisfy the ceiling and at most 4/8.7 to satisfy the
+      # floor, which is roughly 14,000 to 20,000 sq ft of net area. The lot
+      # size row asks 4,000. Most of this sub-district is therefore too
+      # SMALL for a four-unit pod on one lot, which is the opposite of what
+      # every other standard in the chapter suggests, and it was invisible
+      # until this row was read.
+      value: 12.45
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L441-L444"
+      variants:
+        # The same four units split onto four lots are townhouses, which
+        # the cell holds separately and much more loosely.
+        - value: 25
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L441-L444"
+      # Article 3 computes net density on the parcel less the Natural
+      # Resource, Hillside and Geologic Risk overlays, dedicated
+      # right-of-way and the rest. Nothing here surveys those, so the lot's
+      # own area serves as the bound it is.
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: the shorter list -- High Slope Subarea, dedicated street, private
+      # accessway, the flag pole of a flag lot and the encumbered part of
+      # a non-standard lot. The two overlays that come out of the minimum
+      # acre stay in this one.
+        cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
     max_height_ft:
       value: 35
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L426"
@@ -1087,6 +1150,41 @@ zones:
       placement band not modeled (blind spot).'
   DRL-2:
     section: ["4.11", "7.042"]
+    min_density_du_per_acre:
+      # The Minimum Residential Net Density row of Table 4.1130. Same
+      # number as DRL-1 and the same shape: it binds on the large lot, not
+      # the small one.
+      value: 8.7
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L435-L437"
+      # Article 3 computes net density on the parcel less the Natural
+      # Resource, Hillside and Geologic Risk overlays, dedicated
+      # right-of-way and the rest. Nothing here surveys those, so the lot's
+      # own area serves as the bound it is.
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: the longer of the two lists -- Natural Resource Overlay, Hillside
+      # and Geologic Risk Overlay, land under either easement, dedicated
+      # street, private accessway, the flag pole of a flag lot and the
+      # encumbered part of a non-standard lot.
+        cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+    max_density_du_per_acre:
+      # "No maximum" in this column -- exempt, not a large number, and a
+      # different answer from a row nobody read.
+      exempt: true
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L441-L443"
+      # Article 3 computes net density on the parcel less the Natural
+      # Resource, Hillside and Geologic Risk overlays, dedicated
+      # right-of-way and the rest. Nothing here surveys those, so the lot's
+      # own area serves as the bound it is.
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: the shorter list -- High Slope Subarea, dedicated street, private
+      # accessway, the flag pole of a flag lot and the encumbered part of
+      # a non-standard lot. The two overlays that come out of the minimum
+      # acre stay in this one.
+        cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
     max_height_ft:
       value: 50
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L426"
@@ -1183,6 +1281,306 @@ zones:
       value: axis_required
       quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
     notes: 'Read against Table 4.1130 on 2026-08-15. The governing row is the one headed "Single-detached, duplex, triplex, and quadplex dwellings in any district; and Townhouse and Cottage Cluster in DRL-1 and DRL-2" (L492), which names this building twice over, and its numbers hold across every street type the row prints -- so nothing here depends on which street the lot fronts. Front is the facade line (10, L495); the garage face is a separate and much deeper standard (20, L497) and is now encoded rather than left to bind invisibly. Side interior is 5 (L499) with a common-wall 0 (L504) as an `attached_wall` variant; rear is 10 without an alley (L506) and 6 with one (L507). Street side is 10 (L500). Lot area 4,000 (L511), width 35 at the building line with 16 on a townhouse unit lot (L514/L517), frontage 35 (L518). The same row states a 70 ft minimum interior-lot DEPTH (L516) and FLATS has no depth field -- the second jurisdiction where that hole has now surfaced, after the sweep found it in Fairview 19.30. Not encodable until the field exists. quadfit confidence: verified | Same as DRL-1; height 50 ft.'
+  DCC:
+    section: ["4.11", "7.042"]
+    cite_default:
+      cite: Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown); 7.0420(J)
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed:
+      # Table 4.1120 reads L1 in this column, not P: the use is LIMITED,
+      # and note 1(b) states the limit as three gates that must all hold --
+      # north of NE 8th Street, a lot of record no larger than 7,600 sq ft,
+      # and 70 feet of street frontage or less. The base is the reading that
+      # binds. Two of the three are conditions nothing measures, so the
+      # permission cannot be reached and every lot in the district screens
+      # closed until they are; the third is the lot area, which IS measured,
+      # and it rides on the variant as a band so that a 20,000 sq ft site is
+      # refused for the reason the code refuses it.
+      value: false
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L241-L242,L246,L309-L311"
+      variants:
+        - value: true
+          when: [inside_mapped_use_area, narrow_frontage]
+          band:
+            measure: lot_sqft
+            at_most: 7600
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L309-L311"
+    max_height_ft:
+      value: 85
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L424,L426"
+    max_far:
+      # The Maximum Floor Area Ratio row, read across the eight
+      # columns of Table 4.1130 -- seven sub-districts plus the
+      # N Main Avenue strip, which is the second column and not a
+      # district of its own.
+      value: 3.0
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L424,L430"
+    min_density_du_per_acre:
+      # A floor stated per acre, which a four-unit pod meets on a
+      # small lot and fails on a large one.
+      value: 17
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L435-L437"
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: the longer of the two lists -- Natural Resource Overlay, Hillside
+      # and Geologic Risk Overlay, land under either easement, dedicated
+      # street, private accessway, the flag pole of a flag lot and the
+      # encumbered part of a non-standard lot.
+        cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+    max_density_du_per_acre:
+      # "No maximum" in this column -- exempt, not a large number.
+      exempt: true
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L441-L443"
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: the shorter list -- High Slope Subarea, dedicated street, private
+      # accessway, the flag pole of a flag lot and the encumbered part of
+      # a non-standard lot. The two overlays that come out of the minimum
+      # acre stay in this one.
+        cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L492,L495"
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L492,L499"
+      variants:
+        - value: 0
+          when: [attached_wall]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L492,L504"
+    setback_rear_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L492,L506"
+      variants:
+        - value: 6
+          when: [abuts_alley]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L492,L507"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L492,L500"
+    setback_garage_entrance_ft:
+      value: 20
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L492,L497"
+    min_lot_sqft:
+      # "Duplex, triplex, and quadplex in DCC, DTM, DMU, DEM: 5,000" -- this
+      # sub-district is named in the line, and it is a thousand square feet
+      # more than the DRL row above it asks of the same building.
+      value: 5000
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L512"
+      variants:
+        # "Townhouse: None" -- a standard that does not apply, which is a
+        # different answer from one nobody encoded.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L513"
+    min_lot_width_ft:
+      value: 35
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L514"
+      variants:
+        - value: 16
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L517"
+        # The corner row is the larger number in both halves of the cell:
+        # 40 feet where the interior row asks 35, 20 where it asks 16.
+        - value: 40
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L515"
+        - value: 20
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L517"
+    min_frontage_ft:
+      value: 35
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L518"
+      variants:
+        - value: 40
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L518-L520"
+        - value: 16
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L521"
+        - value: 20
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L521"
+    min_lot_depth_ft:
+      value: 70
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L516"
+    orientation_constraint:
+      # 7.0420(J)(1)(a): "A minimum of 50 percent of the site's frontage shall
+      # be occupied by buildings oriented to the abutting street", measured
+      # "between the minimum and maximum front setback". J.1 scopes it to
+      # plexes in the Downtown, Rockwood, Civic and Corridor Design Districts,
+      # which is why the quote opens on the scoping sentence rather than the
+      # standard: half the frontage built out, in a band a few feet deep, is
+      # only reachable with the long axis parallel to the street.
+      value: axis_required
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
+    notes: 'Read against Tables 4.1120 and 4.1130 on 2026-08-19. The Downtown Commercial Core is the largest unencoded district in Gresham and it screens closed, which is worth stating precisely because the reason is narrow. A quadplex is not prohibited here; it is allowed on a small legacy lot -- 7,600 sq ft or less, 70 feet of frontage or less, north of NE 8th Street -- and two of those three gates are facts nobody has measured. The lot-area gate is measured and rides on the variant as a band, so the day frontage and that street line are computed the permission opens on the right lots rather than on all of them. Every dimensional standard comes from the Table 4.1130 row headed "Single-detached, duplex, triplex, and quadplex dwellings in any district" (L492): its numbers are identical across all six street-type columns, so nothing here turns on which street the lot fronts. Height 85 and floor area ratio 3.0 are the DCC column of a table whose second column is not a district but the N Main Avenue strip -- 45 feet and 1.5 -- and note 1 sends any part of a site within 110 feet of that centre line to it. Both of those numbers still clear a 26 ft pod, so the strip is ruled in the footnote ledger rather than encoded as a variant. The MAXIMUM front setback of this row (L508) is 20 feet on four street types and 15 on Beech; not encoded, for the same reason it is not encoded on DRL-1 and DRL-2, and the same blind spot.'
+  DTM:
+    section: ["4.11", "7.042"]
+    cite_default:
+      cite: Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown); 7.0420(J)
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed:
+      # Table 4.1120 reads L1 in this column, not P. Note 1(a) states the
+      # limit: a lot of record 6,500 sq ft or smaller with 70 feet of street
+      # frontage or less. Same shape as DCC and one gate lighter -- there is
+      # no geography in it -- but the frontage maximum is still unmeasured,
+      # so the base false is what binds.
+      value: false
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L241-L242,L246,L309-L311"
+      variants:
+        - value: true
+          when: [narrow_frontage]
+          band:
+            measure: lot_sqft
+            at_most: 6500
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L309-L311"
+    max_height_ft:
+      value: 85
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L424,L426"
+    max_far:
+      # The Maximum Floor Area Ratio row, read across the eight
+      # columns of Table 4.1130 -- seven sub-districts plus the
+      # N Main Avenue strip, which is the second column and not a
+      # district of its own.
+      value: 3.0
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L424,L430"
+    min_density_du_per_acre:
+      # A floor stated per acre, which a four-unit pod meets on a
+      # small lot and fails on a large one.
+      value: 20
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L435-L437"
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: the longer of the two lists -- Natural Resource Overlay, Hillside
+      # and Geologic Risk Overlay, land under either easement, dedicated
+      # street, private accessway, the flag pole of a flag lot and the
+      # encumbered part of a non-standard lot.
+        cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+    max_density_du_per_acre:
+      # "No maximum" in this column -- exempt, not a large number.
+      exempt: true
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L441-L443"
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: the shorter list -- High Slope Subarea, dedicated street, private
+      # accessway, the flag pole of a flag lot and the encumbered part of
+      # a non-standard lot. The two overlays that come out of the minimum
+      # acre stay in this one.
+        cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L492,L495"
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L492,L499"
+      variants:
+        - value: 0
+          when: [attached_wall]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L492,L504"
+    setback_rear_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L492,L506"
+      variants:
+        - value: 6
+          when: [abuts_alley]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L492,L507"
+    setback_street_side_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L492,L500"
+    setback_garage_entrance_ft:
+      value: 20
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L492,L497"
+    min_lot_sqft:
+      # "Duplex, triplex, and quadplex in DCC, DTM, DMU, DEM: 5,000" -- this
+      # sub-district is named in the line, and it is a thousand square feet
+      # more than the DRL row above it asks of the same building.
+      value: 5000
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L512"
+      variants:
+        # "Townhouse: None" -- a standard that does not apply, which is a
+        # different answer from one nobody encoded.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L513"
+    min_lot_width_ft:
+      value: 35
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L514"
+      variants:
+        - value: 16
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L517"
+        # The corner row is the larger number in both halves of the cell:
+        # 40 feet where the interior row asks 35, 20 where it asks 16.
+        - value: 40
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L515"
+        - value: 20
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L517"
+    min_frontage_ft:
+      value: 35
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L518"
+      variants:
+        - value: 40
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L518-L520"
+        - value: 16
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L521"
+        - value: 20
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.1100.downtown.txt#L521"
+    min_lot_depth_ft:
+      value: 70
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L516"
+    orientation_constraint:
+      # 7.0420(J)(1)(a): "A minimum of 50 percent of the site's frontage shall
+      # be occupied by buildings oriented to the abutting street", measured
+      # "between the minimum and maximum front setback". J.1 scopes it to
+      # plexes in the Downtown, Rockwood, Civic and Corridor Design Districts,
+      # which is why the quote opens on the scoping sentence rather than the
+      # standard: half the frontage built out, in a band a few feet deep, is
+      # only reachable with the long axis parallel to the street.
+      value: axis_required
+      quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L410-L418"
+    notes: 'Read against Tables 4.1120 and 4.1130 on 2026-08-19. Downtown Transit Mid-Rise, and the same L1 limitation as DCC without the geography: a quadplex is allowed on a lot of record 6,500 sq ft or smaller with 70 feet of street frontage or less. The lot-area half is measured and rides on the variant as a band; the frontage maximum is not, so the base false binds. Read together with the minimum lot size the same table states for this building -- 5,000 sq ft -- the permission is a window rather than a threshold: between 5,000 and 6,500 sq ft, and nothing outside it. That is the shape a screen gets wrong by taking either number alone. Height 85 and floor area ratio 3.0 from the DTM column; minimum net density 20 units per acre, which four units clear on any lot small enough to qualify. Dimensional standards from the L492 row, identical across every street type.'
+  DMU:
+    section: ["4.11"]
+    cite_default:
+      cite: Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown); 7.0420(J)
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L241-L242,L246"
+    notes: 'Table 4.1120 reads NP in this column for Quadplex (L246), and that is the whole screen: the use is out, so the chapter''s dimensional table is not read for this district and none of its standards are encoded. A decided RED and an unread district look identical in a count, so the distinction is worth stating -- this one is decided. Two other rows of the same table were checked before settling it, because either could have reopened the district. Multi-Family is a bare P here (L249), and does not reach this building: GDC 3.0100 defines a Multi-Family Dwelling as five or more units and adds that Multi-Family dwellings are not middle housing (3.0100.definitions.txt L939-L942). Townhouse is also a bare P (L247), and Table 4.1130 prints a whole setback row headed "Townhouse in DCC, DMU, DTM, DEM, and DCL" (L476) -- so the code plainly contemplates attached housing here. What closes it is the definition: a quadplex divided onto individual lots through a Middle Housing Land Division is still "considered a quadplex" (L962-L964), so the split plat does not move the pod into the Townhouse row. The path that is NOT ruled out is a genuine townhouse subdivision -- four lots created first, then four attached units built on them, which the Townhouse definition (L952-L954) reaches on its own terms and which the Downtown row states no minimum lot size for at all. That is a legal reading rather than a sentence in the code, so it is written down here rather than encoded as a variant; a variant on unit_lots would fire off the design catalog and turn 42 lots green on my reading rather than on Gresham''s. Note 1(a) does name DMU -- plexes on a lot of record 6,500 sq ft or smaller -- and it is not a drafting error and not an opening: the Duplex row one line above (L244) reads L1 in this column where Quadplex reads NP, so the note is serving the row that carries the marker. The table and its note agree.'
+  DEM:
+    section: ["4.11"]
+    cite_default:
+      cite: Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown); 7.0420(J)
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L241-L242,L246"
+    notes: 'Table 4.1120 reads NP in this column for Quadplex (L246), and that is the whole screen: the use is out, so the chapter''s dimensional table is not read for this district and none of its standards are encoded. A decided RED and an unread district look identical in a count, so the distinction is worth stating -- this one is decided. Two other rows of the same table were checked before settling it, because either could have reopened the district. Multi-Family is a bare P here (L249), and does not reach this building: GDC 3.0100 defines a Multi-Family Dwelling as five or more units and adds that Multi-Family dwellings are not middle housing (3.0100.definitions.txt L939-L942). Townhouse is also a bare P (L247), and Table 4.1130 prints a whole setback row headed "Townhouse in DCC, DMU, DTM, DEM, and DCL" (L476) -- so the code plainly contemplates attached housing here. What closes it is the definition: a quadplex divided onto individual lots through a Middle Housing Land Division is still "considered a quadplex" (L962-L964), so the split plat does not move the pod into the Townhouse row. The path that is NOT ruled out is a genuine townhouse subdivision -- four lots created first, then four attached units built on them, which the Townhouse definition (L952-L954) reaches on its own terms and which the Downtown row states no minimum lot size for at all. That is a legal reading rather than a sentence in the code, so it is written down here rather than encoded as a variant; a variant on unit_lots would fire off the design catalog and turn 30 lots green on my reading rather than on Gresham''s.'
+  DCL:
+    section: ["4.11"]
+    cite_default:
+      cite: Gresham Development Code 4.1100 Tables 4.1120/4.1130 (Downtown); 7.0420(J)
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/gresham/4.1100.downtown.txt#L241-L242,L246"
+    notes: 'Table 4.1120 reads NP in this column for Quadplex (L246), and that is the whole screen: the use is out, so the chapter''s dimensional table is not read for this district and none of its standards are encoded. A decided RED and an unread district look identical in a count, so the distinction is worth stating -- this one is decided. Two other rows of the same table were checked before settling it, because either could have reopened the district. Multi-Family is a bare P here (L249), and does not reach this building: GDC 3.0100 defines a Multi-Family Dwelling as five or more units and adds that Multi-Family dwellings are not middle housing (3.0100.definitions.txt L939-L942). Townhouse is also a bare P (L247), and Table 4.1130 prints a whole setback row headed "Townhouse in DCC, DMU, DTM, DEM, and DCL" (L476) -- so the code plainly contemplates attached housing here. What closes it is the definition: a quadplex divided onto individual lots through a Middle Housing Land Division is still "considered a quadplex" (L962-L964), so the split plat does not move the pod into the Townhouse row. The path that is NOT ruled out is a genuine townhouse subdivision -- four lots created first, then four attached units built on them, which the Townhouse definition (L952-L954) reaches on its own terms and which the Downtown row states no minimum lot size for at all. That is a legal reading rather than a sentence in the code, so it is written down here rather than encoded as a variant; a variant on unit_lots would fire off the design catalog and turn 152 lots green on my reading rather than on Gresham''s. DCL is also the one Downtown column that states a maximum residential net density -- 60 units per acre (L441-L443) -- which a four-unit pod would clear on any lot over 2,904 sq ft. Not encoded, because the use flag decides every lot here and a dimensional standard on a barred district is a number nobody reads. It is the first thing to read if the prohibition is ever revisited.'
   CMF:
     section: ["4.04", "7.042"]
     cite_default:

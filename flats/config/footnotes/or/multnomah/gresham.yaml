@@ -672,23 +672,33 @@ notes:
   # Cluster in DRL-1 and DRL-2", and it carries two markers: note 10, which
   # defines the column headings, and note 12 on the maximum setback cell.
   # Everything else in the chapter is somebody else's row.
+  #
+  # Widened 2026-08-19, when DCC, DTM, DMU, DEM and DCL were encoded. The
+  # governing row does not change -- its heading says "in any district" and
+  # its numbers are identical across all six street-type columns -- but the
+  # rulings below were written when this layer held only DRL-1 and DRL-2,
+  # and four of them turned on that. Notes 1, 2, 3 and 13 are re-reasoned
+  # against the districts now held; the rest were already reasoned from the
+  # row rather than from the district and stand as written. Table 4.1120's
+  # own note 1 joins them: it is the L1 that limits the Quadplex cell in
+  # DCC and DTM, and it is encoded rather than dismissed.
   - quote: "or/multnomah/gresham/4.1100.downtown.txt#L528"
     digest: "3c036597fca8"
     state: dismissed
     reason: >-
-      note 1 limits height and floor area ratio on the strip within 110 feet of the N Main Avenue centre line and sends it to the DCC -- N Main Avenue column; the row this layer reads is the one for DRL-1 and DRL-2
+      note 1 limits height and floor area ratio on the strip within 110 feet of the N Main Avenue centre line and sends it to the DCC -- N Main Avenue column, which is the table's second column and not a district of its own. It did not reach this layer while only DRL-1 and DRL-2 were held; it reaches DCC now. What the strip states is 45 feet and a ratio of 1.5 against the district's 85 and 3.0 -- a real cut, and still far above what a 26 ft four-unit pod asks of either. No lot changes colour on which side of the 110 feet it falls, so the strip is ruled here rather than carried as a variant on an unmeasured line
 
   - quote: "or/multnomah/gresham/4.1100.downtown.txt#L532"
     digest: "db5da3c91d2f"
     state: dismissed
     reason: >-
-      note 2 states its own exclusion -- it lets buildings exceed the maximum height in every Downtown sub-district except DRL-1 and DRL-2 -- and it is a relaxation besides
+      note 2 lets buildings exceed the maximum height by up to 8 feet for parapets and pitched roofs in every Downtown sub-district except DRL-1 and DRL-2. It excluded the whole of this layer when only the two DRL districts were held and now reaches DCC and DTM, which changes nothing: it only ever raises a ceiling, and the ceiling it raises is already three times the pod
 
   - quote: "or/multnomah/gresham/4.1100.downtown.txt#L534"
     digest: "b5860ff4afbd"
     state: dismissed
     reason: >-
-      note 3 caps height at 45 feet within 50 feet of a low-height district; that is above both numbers this layer now encodes, 35 and 50, and far above a two-storey pod
+      note 3 caps height at 45 feet within 50 feet of a district whose own limit is 40 feet or less, and 50 feet in DCC along the north side of Division Street. Against DRL-1 and DRL-2 it was no cut at all; against the 85 feet now encoded for DCC and DTM it is a real one, and it is still nearly twice a two-storey pod. Every number in the note clears the building, so no lot in the district turns on it
 
   - quote: "or/multnomah/gresham/4.1100.downtown.txt#L538"
     digest: "1d4a80e6ca1f"
@@ -748,7 +758,7 @@ notes:
     digest: "c151ce5d1de8"
     state: dismissed
     reason: >-
-      note 13 sets the townhouse street facade and garage side setbacks from the side street's type, and its marker sits on the SIDE cells of the "Townhouse in DCC, DMU, DTM, DEM, and DCL" row; a townhouse in DRL-1 or DRL-2 is read from the row below, which carries no such note
+      note 13 sets the townhouse street facade and garage side setbacks from the side street's type, and its marker sits on the SIDE cells of the "Townhouse in DCC, DMU, DTM, DEM, and DCL" row. That row names three districts this layer now holds, so the reason has to be the row rather than the district: every Downtown district here is read from "Single-detached, duplex, triplex, and quadplex dwellings in any district" below it, which carries no such note. The townhouse row is what a genuine townhouse subdivision would be read against, and the DMU, DEM and DCL notes say why that path is written down rather than encoded
 
   - quote: "or/multnomah/gresham/4.1100.downtown.txt#L566"
     digest: "08366eee1fa5"
@@ -767,6 +777,16 @@ notes:
     state: dismissed
     reason: >-
       note 16 releases the maximum front setback once the street type's building frontage requirement is met; it is a relaxation of a maximum, and the orientation constraint encoded for these zones already reads it
+
+  # Table 4.1120's own note, which is a use limitation rather than a
+  # dimensional one: the Quadplex row reads L1 in DCC and DTM, and this is
+  # what the L1 says.
+  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L309-L311"
+    digest: "513c1dd7c6c2"
+    state: encoded
+    encoded_as: DCC quadplex_allowed variant (lot_sqft at most 7,600, inside_mapped_use_area + narrow_frontage); DTM quadplex_allowed variant (lot_sqft at most 6,500, narrow_frontage)
+    reason: >-
+      note 1 is the whole content of the L1 marking the Quadplex cell in DCC and DTM: a plex is allowed on a lot of record 6,500 sq ft or smaller in DTM and DMU, or 7,600 sq ft or smaller in DCC north of NE 8th Street, in either case with 70 feet of street frontage or less, and provided density standards are met. Encoded as a variant on each of the two districts whose Quadplex cell carries the marker, with the lot-area gate as a band because that one is measured, and the frontage maximum and the NE 8th Street line as registered facts that nothing measures yet -- so the base false is what binds and the permission opens on the right lots the day they are. DMU is named in the note and takes nothing from it here: its Quadplex cell reads NP, and the L1 in that column belongs to the Duplex row above
 
   # --- 4.1500, Springwater --------------------------------------------
   #

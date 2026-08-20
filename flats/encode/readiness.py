@@ -365,15 +365,32 @@ def _decimalise(text: str) -> str:
 
 
 #: A number with a footnote marker stuck to it, in a document that says it
-#: does that: "154" for fifteen with note 4. Only a single trailing digit is
-#: tried, and only on a token carrying no comma or decimal point, which is
-#: the shape these table cells have.
-_GLUED = re.compile(r"(?<![\d.,])(\d{2,})(?![\d.,])")
+#: does that: "154" for fifteen with note 4, and "8.71" for eight point seven
+#: with note 1. Only a single trailing digit is tried, and only on a token
+#: carrying no comma -- cutting a digit off "7,500" would leave 750 standing
+#: in the text as a number the table never printed.
+#:
+#: The decimal half of this was learned from Gresham's Downtown table, which
+#: states its densities to a tenth and its ceilings to a hundredth and marks
+#: both: 8.7 units per acre arrives as "8.71" and 12.45 as "12.458". The
+#: earlier pattern skipped any token containing a point, so a whole column of
+#: correctly cited rates read as misquoted -- the check disagreeing with the
+#: flag that was set to tell it about this exact document.
+_GLUED = re.compile(r"(?<![\d.,])(\d+(?:\.\d+)?)(?![\d.,])")
 
 
 def _unmarked(text: str) -> str:
     """The same text with one trailing digit dropped from each bare number."""
-    return _GLUED.sub(lambda m: m.group(1)[:-1], text)
+
+    def cut(match: re.Match[str]) -> str:
+        token = match.group(0)
+        # A marker only ever hangs off the end, and taking it off has to leave
+        # a figure behind: "154" -> "15" and "8.71" -> "8.7", but "5" -> ""
+        # and "7.1" -> "7." are not numbers any table prints.
+        trimmed = token[:-1]
+        return trimmed if trimmed and trimmed[-1].isdigit() else token
+
+    return _GLUED.sub(cut, text)
 
 
 def quotes_the_number(

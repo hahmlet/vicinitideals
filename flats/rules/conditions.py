@@ -226,6 +226,38 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "inside_mapped_use_area",
+        "site_fact",
+        "The parcel lies inside a boundary the code draws INSIDE a zone to "
+        "turn a use on or off. Gresham allows a plex in the Downtown "
+        "Commercial Core only \"north of NE 8th Street\", which is not an "
+        "overlay, not a plan district and not on the zoning map -- it is one "
+        "sentence in a table note, and it decides the use outright for every "
+        "lot on the wrong side of it. Distinct from `civic_corridor`, which "
+        "relaxes a dimension along a mapped corridor, and from "
+        "`site_specific_limitation`, which attaches to one parcel because of "
+        "its own history. Assumed unknown, so a use the area switches ON "
+        "stays off.",
+        evidence="the boundary the citing rule names, cut against the parcel — none held",
+        assume=None,
+    ),
+    ConditionDef(
+        "narrow_frontage",
+        "site_fact",
+        "The lot's street frontage is at or below the figure the CITING rule "
+        "names, the way `low_rise` asserts the pod clears whichever height a "
+        "table steps at. Gresham's Downtown note reaches only lots with "
+        "\"70 feet of street frontage or less\" -- a carve-out for the small "
+        "legacy lot, and the whole reason a plex is allowed in the Commercial "
+        "Core at all. It is a maximum, so it is the mirror of "
+        "`min_frontage_ft` and cannot be folded into it: one says the lot is "
+        "big enough to build on, the other says it is small enough to "
+        "qualify. Assumed unknown, which keeps the narrow-lot permission "
+        "shut rather than opening it on a measurement nobody took.",
+        evidence="the parcel's street frontage against the cited threshold — the frontage measurement is not built",
+        assume=None,
+    ),
+    ConditionDef(
         "abuts_nonresidential_zone",
         "site_fact",
         "Every lot line that is not a street lot line abuts a commercial, "

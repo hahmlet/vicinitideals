@@ -468,3 +468,26 @@ def test_a_footnote_marker_stuck_to_a_number_is_only_read_where_declared() -> No
     assert quotes_the_number("Street side yard 154", 154, glued=True)
     # One digit, and only off a bare number -- 1,500 is not 150.
     assert not quotes_the_number("Minimum lot area 1,500", 150, glued=True)
+
+
+def test_a_marker_glued_to_a_decimal_is_read_the_same_way() -> None:
+    """Gresham's Downtown table states a density to a tenth and marks it.
+
+    "8.71" is 8.7 units per acre with note 1, and "12.458" is 12.45 with note
+    8 -- a whole column of rates the earlier reader skipped, because it only
+    tried tokens with no decimal point in them. Skipping them made a correct
+    citation read as a misquote, which is the check disagreeing with the flag
+    that was set to tell it about this document.
+    """
+    from flats.encode.readiness import quotes_the_number
+
+    assert not quotes_the_number("Minimum Residential Net Density 8.71", 8.7)
+    assert quotes_the_number("Minimum Residential Net Density 8.71", 8.7, glued=True)
+    assert quotes_the_number("Maximum 12.458", 12.45, glued=True)
+    # Still one digit, and still the number as printed reads too.
+    assert quotes_the_number("Minimum Residential Net Density 8.71", 8.71, glued=True)
+    assert not quotes_the_number("Maximum 12.458", 12.4, glued=True)
+    # Cutting a digit must leave a figure behind: 7.1 does not read as 7.
+    assert not quotes_the_number("Setback 7.1 feet", 7, glued=True)
+    # And a comma still keeps the whole token out of it, so 7,500 is not 750.
+    assert not quotes_the_number("Minimum lot area 7,500", 750, glued=True)
