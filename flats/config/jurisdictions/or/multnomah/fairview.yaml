@@ -32,6 +32,31 @@ code:
   - id: "19.120"
     url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19120.html
     title: Chapter 19.120 VTR Village Townhouse Residential
+  - id: "19.108"
+    url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19108.html
+    title: Chapter 19.108 Community Service/Parks Overlay
+    allow_thin: true
+  - id: "19.125"
+    url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19125.html
+    title: Chapter 19.125 Village Apartment (VA)
+  - id: "19.130"
+    url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19130.html
+    title: Chapter 19.130 Village Office (VO)
+  - id: "19.135"
+    url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19135.html
+    title: Chapter 19.135 Village Commercial (VC) and Mixed Use (VMU)
+  - id: "19.140"
+    url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19140.html
+    title: Chapter 19.140 Village General Standards
+  - id: "19.145"
+    url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19145.html
+    title: Chapter 19.145 Special Development Standards - VSF, VTH and VA Zones
+  - id: "19.150"
+    url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19150.html
+    title: Chapter 19.150 Special Development Standards - VO, VC and VMU Zones
+  - id: "19.65"
+    url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1965.html
+    title: Chapter 19.65 Town Center Commercial (TCC) District
   - id: "19.70"
     url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1970.html
     title: Chapter 19.70 Corridor Commercial (CC) District
@@ -591,6 +616,384 @@ zones:
       Adopted by reference rather than restated: the six standards that were hand-copied here matched
       R-10 exactly and cited nothing, and would have gone on matching a superseded table forever.
       quadfit confidence: needs_verification.'
+  TCC:
+    section: ["19.65"]
+    cite_default:
+      cite: FMC 19.65.020 Table 19.65.020(A) (Land Uses and Building Types Permitted in the Town Center Commercial District), row 1.h Quadplexes; FMC 19.65.030 through 19.65.060
+      url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1965.html
+      retrieved: '2026-08-19'
+    # Row h reads `Quadplexes P` -- the only outright permission for this
+    # building in any of Fairview's commercial districts, and the base here is
+    # still false. 19.65.030 designates a Halsey Street storefront district as
+    # a SUBAREA of this zone, and inside it "residential uses shall be
+    # permitted only when part of a mixed use development". The boundary is a
+    # figure this system cannot read, so whether a given TCC lot sits inside
+    # it is unmeasured, and the conservative reading is that it does.
+    #
+    # Electing the mixed use satisfies the requirement whether or not the lot
+    # is in the subarea, so `mixed_use` alone is the variant -- unlike Wood
+    # Village NC across the city line, which needs a conditional use as well
+    # because its table never permits the building outright. The two cities
+    # are running the same storefront programme: 19.65.030.A says the concept
+    # "is applied to multiple areas on Halsey Street across Fairview, Wood
+    # Village, and Troutdale".
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/fairview/19.65.txt#L45,L47-L48,L57,L101,L109,L111"
+      variants:
+        - value: true
+          when: [mixed_use]
+          quote: "or/multnomah/fairview/19.65.txt#L45,L47-L48,L57,L109,L111,L115,L117"
+    # 19.65.100(A)(1), in words: "There is no minimum or maximum residential
+    # density standard. Density shall be controlled by the applicable floor
+    # area and building height standards." The chapter then states no floor
+    # area ratio and no lot coverage, so height and the setbacks below are the
+    # whole of the envelope. Read and empty, not unread.
+    min_lot_sqft:
+      exempt: true
+      quote: "or/multnomah/fairview/19.65.txt#L699,L701"
+    # 45 feet, and 19.65.070 will sell another 20 on top of it. The step-downs
+    # in 19.65.060(B) reduce the limit on a PORTION of a site within 25 feet
+    # of a residential zone -- 35 feet next to R, R-7.5, R-10 or VSF -- and
+    # the 26-foot pod clears even that, so the unmeasured adjacency cannot
+    # change this pod's answer.
+    max_height_ft:
+      value: 45
+      quote: "or/multnomah/fairview/19.65.txt#L241,L245,L247,L249,L251"
+    # "There is no minimum front setback required." The zone wants buildings
+    # at the sidewalk, not away from it, which is why the binding front number
+    # here is the MAXIMUM.
+    setback_front_ft:
+      value: 0
+      quote: "or/multnomah/fairview/19.65.txt#L155,L161,L163"
+    # Ten feet, and this is a real constraint on a fixed-dimension building:
+    # at least 50 percent of the ground level street-facing facade must sit
+    # within it (75 percent inside a storefront district). A 56-foot pod set
+    # back further than 10 feet fails the zone even though it fits the lot.
+    setback_front_max_ft:
+      value: 10
+      quote: "or/multnomah/fairview/19.65.txt#L155,L165,L177,L179"
+    # Zero, except fifteen when the building abuts a residential district --
+    # and which of those applies is the neighbour's zoning, which this system
+    # does not hold. The fifteen is the base for the same reason Portland's
+    # side setback is: reading it the other way is how a lot with houses
+    # behind it screens as buildable to its own line.
+    setback_side_ft:
+      value: 15
+      quote: "or/multnomah/fairview/19.65.txt#L155,L207"
+      variants:
+        - value: 0
+          when: [abuts_nonresidential_zone]
+          quote: "or/multnomah/fairview/19.65.txt#L155,L207"
+    # The same sentence pair on the rear line, with an extra step in the
+    # middle: zero on street-access lots, eight on alley-access lots so a car
+    # can park parallel behind the building, fifteen against a residential
+    # district. Both reliefs are recorded and neither can fire, because both
+    # facts they turn on are unmeasured or assumed absent.
+    setback_rear_ft:
+      value: 15
+      quote: "or/multnomah/fairview/19.65.txt#L155,L201,L203"
+      variants:
+        - value: 0
+          when: [abuts_nonresidential_zone]
+          quote: "or/multnomah/fairview/19.65.txt#L155,L201,L203"
+        - value: 8
+          when: [abuts_nonresidential_zone, abuts_alley]
+          quote: "or/multnomah/fairview/19.65.txt#L155,L201,L203"
+    notes: >-
+      This is the one Fairview district that permits the pod outright, and
+      the encoding still opens with a refusal. The reason is a subarea:
+      19.65.030 draws a Halsey Street storefront district inside the TCC zone
+      and requires every development there to include a nonresidential use.
+      The chapter is generous about what counts -- 1,000 square feet of
+      enclosed commercial space, a food cart pod of four or more carts, or a
+      micro retail pod of three retailers in prefabricated buildings under 600
+      square feet each -- but the pod on its own is none of them, and the
+      boundary is Figure 19.65.030(B), a map. A second storefront limit,
+      19.65.030(D)(2), caps ground-floor residential at 50 percent of a site's
+      Halsey Street frontage; it needs the same unread map and a frontage
+      measurement besides.
+
+
+      What the zone does NOT state is as load-bearing as what it does. There
+      is no minimum lot size, no density standard, no floor area ratio and no
+      lot coverage limit -- 19.65.100(A)(1) says density is controlled by
+      floor area and building height instead. So the envelope is four numbers:
+      45 feet of height, a 10-foot MAXIMUM front setback, and the side and
+      rear lines. A screen that treats a missing lot-size row as unread would
+      hold this zone open forever waiting for a number the code does not have.
+
+
+      Three standards are read and deliberately left out of the fields. The
+      design standards of 19.65.090 -- including a five-foot front setback for
+      ground-floor dwelling units under option R3(b) and an eight-foot entrance
+      setback under R4 -- apply by 19.65.090(A) to three or more attached
+      townhomes on their own lots, to quadplex developments with MORE THAN ONE
+      building, and to multi-unit housing. A single four-unit building on a
+      single lot is none of the three, so they do not reach this pod; divide
+      the same four units onto unit lots and they all do. 19.65.080(B) caps
+      building length within 20 feet of a street lot line at 150 feet, which a
+      56-foot building cannot approach. And 19.65.100(A)(2) requires off-street
+      parking to be oriented to an alley, underground, above the ground floor,
+      or behind or beside the building, with corner side yards barred from
+      surface parking -- a siting rule for the stalls rather than a dimension
+      of the lot, and one the geometry layer will have to answer when it can
+      see a parcel's alley and street edges.
+  VMU:
+    section: ["19.135", "19.13.definitions", "19.140", "19.145", "19.150"]
+    cite_default:
+      cite: FMC 19.135.010 (Permitted uses, VC and VMU), Residential Uses rows b and c; FMC 19.135.030 Development standards
+      url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19135.html
+      retrieved: '2026-08-19'
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/fairview/19.135.txt#L13,L15-L16,L18-L19"
+      variants:
+        - value: true
+          when: [unit_lots, conditional_use]
+          quote: "or/multnomah/fairview/19.135.txt#L13,L15-L16,L19"
+    # 19.135.030 states density, coverage and height for this zone and states
+    # no lot size. Read and empty.
+    min_lot_sqft:
+      exempt: true
+      quote: "or/multnomah/fairview/19.135.txt#L48,L82,L84,L86"
+    max_height_ft:
+      value: 45
+      quote: "or/multnomah/fairview/19.135.txt#L48,L86"
+    max_coverage_pct:
+      value: 75
+      quote: "or/multnomah/fairview/19.135.txt#L48,L84"
+    # "Residential density shall not exceed 45 units per acre", and 19.13 says
+    # the acre is net of street right-of-way. Four units need 3,872 square feet
+    # of it, which no VMU lot is likely to fail; encoded because a ceiling
+    # nobody wrote down is a ceiling nobody can check.
+    max_density_du_per_acre:
+      value: 45
+      quote: "or/multnomah/fairview/19.135.txt#L48,L82"
+      measured_on:
+        fact: net_developable_area
+        cite: FMC 19.13 "Density(ies)" and "Net site area"
+        quote: "or/multnomah/fairview/19.13.definitions.txt#L183,L405"
+    # The subsection that states this zone's setbacks states exactly one, and
+    # it is against the neighbours rather than against the street. Five feet
+    # is charged on every side and rear line, not only the ones that abut a
+    # residential area, because the code never prints the number that would
+    # apply elsewhere -- an absence of a rule is not a stated zero, and
+    # inventing one is how a lot screens buildable to a line it does not own.
+    setback_front_ft:
+      exempt: true
+      quote: "or/multnomah/fairview/19.135.txt#L48,L50,L64,L66,L76"
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/fairview/19.135.txt#L48,L50,L64,L76"
+    setback_rear_ft:
+      value: 5
+      quote: "or/multnomah/fairview/19.135.txt#L48,L50,L64,L76"
+    notes: >-
+      Fairview counts differently from its neighbours. FMC 19.13 defines a "multi-unit dwelling" as "a building containing five or more dwelling units", so the P on that row is not this building's P -- a quadplex is four. The same chapter defines "quadplex" as "four dwelling units on a lot or parcel in any configuration" and "single-unit attached housing (townhouses)" as "two or more single-unit dwellings with common end-walls", which the pod is. Read the five-or-more row as the permission and every village zone in this city screens green on a standard that does not apply to the building.
+
+
+      Which row the pod lands on turns on whether the four units sit on one lot or four. On four they are unambiguously attached single-unit dwellings and the answer is a conditional use. On one they are a quadplex, which is its own defined term here and is on no village list at all -- the TCC chapter next door gives quadplexes their own table row, so the code plainly distinguishes them. The variant therefore asks for the land division as well as the permit, which is the conservative of the two readings and the one a reviewer can argue with.
+
+
+      This zone wants the building. 19.135.030(A)(2)(a) says in one sentence
+      that "the VMU area shall be occupied by townhomes and commercial uses",
+      which is a programme for the district rather than a standard for a lot
+      and is the reason the conditional use is worth applying for here. Two
+      standards are read and left out because they are mapped or facade-shaped:
+      (A)(2)(f) restricts residential to the second and third floors in the
+      "four corners area" delineated on Figure V-1, and (A)(2)(c) asks retail
+      facades to reach the lot line -- retail, not this building. Chapters
+      19.140 and 19.150 add pedestrian ways, bicycle parking, landscaping,
+      blank wall, entry, roof and materials standards, none of which is a
+      dimension of the lot.
+  VC:
+    section: ["19.135", "19.13.definitions", "19.140", "19.150"]
+    cite_default:
+      cite: FMC 19.135.010 (Permitted uses, VC and VMU), Residential Uses rows b and c; FMC 19.135.030(A)(1)(e); FMC 19.135.030 Development standards
+      url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19135.html
+      retrieved: '2026-08-19'
+    # Refused twice over. The use rows answer no on their own, and then
+    # 19.135.030(A)(1)(e) requires every building's first floor to be occupied
+    # exclusively by commercial or office uses -- which a two-storey, all
+    # residential pod cannot be. The one door is the "VC flex" area on the
+    # extreme western edge of the zone, where first-floor residential is
+    # allowed; it is drawn on Figure V-1 and this system cannot see it.
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/fairview/19.135.txt#L13,L15-L16,L18-L19,L48,L50,L52,L62"
+      variants:
+        - value: true
+          when: [inside_mapped_use_area, unit_lots, conditional_use]
+          quote: "or/multnomah/fairview/19.135.txt#L13,L15-L16,L19,L48,L50,L52,L62"
+    min_lot_sqft:
+      exempt: true
+      quote: "or/multnomah/fairview/19.135.txt#L48,L82,L84,L86"
+    max_height_ft:
+      value: 45
+      quote: "or/multnomah/fairview/19.135.txt#L48,L86"
+    max_coverage_pct:
+      value: 75
+      quote: "or/multnomah/fairview/19.135.txt#L48,L84"
+    max_density_du_per_acre:
+      value: 45
+      quote: "or/multnomah/fairview/19.135.txt#L48,L82"
+      measured_on:
+        fact: net_developable_area
+        cite: FMC 19.13 "Density(ies)" and "Net site area"
+        quote: "or/multnomah/fairview/19.13.definitions.txt#L183,L405"
+    # Twenty feet from the NE Halsey Street right-of-way, stated for "all
+    # building facades (front, rear, sides of unit)". A VC lot off Halsey has
+    # no Halsey right-of-way to stand back from, but which lots those are is
+    # not a fact this system holds, so the twenty is the base.
+    setback_front_ft:
+      value: 20
+      quote: "or/multnomah/fairview/19.135.txt#L48,L50,L52,L60"
+    setback_side_ft:
+      value: 15
+      quote: "or/multnomah/fairview/19.135.txt#L48,L50,L52,L58"
+    setback_rear_ft:
+      value: 15
+      quote: "or/multnomah/fairview/19.135.txt#L48,L50,L52,L58"
+    notes: >-
+      Fairview counts differently from its neighbours. FMC 19.13 defines a "multi-unit dwelling" as "a building containing five or more dwelling units", so the P on that row is not this building's P -- a quadplex is four. The same chapter defines "quadplex" as "four dwelling units on a lot or parcel in any configuration" and "single-unit attached housing (townhouses)" as "two or more single-unit dwellings with common end-walls", which the pod is. Read the five-or-more row as the permission and every village zone in this city screens green on a standard that does not apply to the building.
+
+
+      Which row the pod lands on turns on whether the four units sit on one lot or four. On four they are unambiguously attached single-unit dwellings and the answer is a conditional use. On one they are a quadplex, which is its own defined term here and is on no village list at all -- the TCC chapter next door gives quadplexes their own table row, so the code plainly distinguishes them. The variant therefore asks for the land division as well as the permit, which is the conservative of the two readings and the one a reviewer can argue with.
+
+
+      VC and VMU share a chapter, a use table and three of their dimensions,
+      and they are not the same answer. VMU is told to be occupied by townhomes;
+      VC is told that every first floor belongs to commerce. A screen that
+      treated the shared table as the whole reading would give both zones the
+      same verdict and be wrong about one of them. The VC flex area is also
+      why the refusal here carries a relief and Village Office's does not:
+      there is a place in this zone where the code says yes, and nothing in
+      this system can find it.
+  VA:
+    section: ["19.125", "19.13.definitions", "19.140", "19.145"]
+    cite_default:
+      cite: FMC 19.125.020 (Permitted uses, VA); FMC 19.125.030 (Conditional uses, VA); FMC 19.125.040 (Development standards)
+      url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19125.html
+      retrieved: '2026-08-19'
+    # A closed list -- "The following uses and their accessory uses are
+    # permitted in a VA zone" -- and what it permits is multi-unit dwellings
+    # and duplexes. Five or more units, or two. Not four. The conditional list
+    # is one line and it is the door: "All conditional uses in the VTH zone
+    # with the addition of townhouses", and a townhouse in this code is a unit
+    # on its own lot.
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/fairview/19.125.txt#L19,L21,L23,L25,L41,L43,L45"
+      variants:
+        - value: true
+          when: [unit_lots, conditional_use]
+          quote: "or/multnomah/fairview/19.125.txt#L41,L43,L45"
+    min_lot_sqft:
+      exempt: true
+      quote: "or/multnomah/fairview/19.125.txt#L47,L49,L51,L53,L55"
+    max_height_ft:
+      value: 45
+      quote: "or/multnomah/fairview/19.125.txt#L47,L53"
+    max_coverage_pct:
+      value: 65
+      quote: "or/multnomah/fairview/19.125.txt#L47,L51"
+    # The only zone in this city with a density FLOOR, and on a small lot the
+    # floor is what bites: twenty units per net acre means four units may not
+    # spread over more than 8,712 square feet, while the thirty-unit ceiling
+    # asks for at least 5,808. A quadplex fits this zone only between those
+    # two numbers.
+    min_density_du_per_acre:
+      value: 20
+      quote: "or/multnomah/fairview/19.125.txt#L47,L49"
+      measured_on:
+        fact: net_developable_area
+        cite: FMC 19.13 "Density(ies)" and "Net site area"
+        quote: "or/multnomah/fairview/19.13.definitions.txt#L183,L405"
+    max_density_du_per_acre:
+      value: 30
+      quote: "or/multnomah/fairview/19.125.txt#L47,L49"
+      measured_on:
+        fact: net_developable_area
+        cite: FMC 19.13 "Density(ies)" and "Net site area"
+        quote: "or/multnomah/fairview/19.13.definitions.txt#L183,L405"
+    # Twenty feet, and the sentence it comes from offers zero as well. "Front
+    # facades shall be set back from right-of-way a distance of either zero
+    # feet or 10 feet or 15 feet" is a menu the applicant picks from, so off
+    # Halsey the front costs nothing; the exception that follows puts twenty
+    # feet on "the Halsey Street frontage" of any VA lot adjacent to it. Which
+    # street a lot fronts is not a fact this system holds, so the exception is
+    # the base and the menu is in the notes.
+    setback_front_ft:
+      value: 20
+      quote: "or/multnomah/fairview/19.125.txt#L47,L55"
+    setback_side_ft:
+      exempt: true
+      quote: "or/multnomah/fairview/19.125.txt#L47,L55"
+    setback_rear_ft:
+      exempt: true
+      quote: "or/multnomah/fairview/19.125.txt#L47,L55"
+    min_landscaped_pct:
+      value: 25
+      quote: "or/multnomah/fairview/19.145.txt#L55,L57"
+    notes: >-
+      Fairview counts differently from its neighbours. FMC 19.13 defines a "multi-unit dwelling" as "a building containing five or more dwelling units", so the P on that row is not this building's P -- a quadplex is four. The same chapter defines "quadplex" as "four dwelling units on a lot or parcel in any configuration" and "single-unit attached housing (townhouses)" as "two or more single-unit dwellings with common end-walls", which the pod is. Read the five-or-more row as the permission and every village zone in this city screens green on a standard that does not apply to the building.
+
+
+      Which row the pod lands on turns on whether the four units sit on one lot or four. On four they are unambiguously attached single-unit dwellings and the answer is a conditional use. On one they are a quadplex, which is its own defined term here and is on no village list at all -- the TCC chapter next door gives quadplexes their own table row, so the code plainly distinguishes them. The variant therefore asks for the land division as well as the permit, which is the conservative of the two readings and the one a reviewer can argue with.
+
+
+      Two standards here are read and left out because they describe the
+      building rather than the lot, and both would refuse a pod that arrived in
+      the wrong shape. 19.145.040 requires hipped, gambrel or gabled roofs at a
+      pitch of no less than 4:12 and does not permit flat roofs except over
+      mechanical equipment. 19.145.020 asks that primary entries be reached
+      directly from a public street and that every other unit on a block
+      frontage have a front porch. A factory-built pod is a fixed design; these
+      are the standards on which a fixed design either qualifies for this zone
+      or does not, and no lot geometry will answer them.
+
+
+      19.125.040(E) also bars direct motor vehicle access to apartment parking
+      lots from NE Halsey Street, and 19.145.090 requires access to come from
+      the alley on any lot that abuts one. Both are access rules for the
+      geometry layer rather than dimensions of the lot.
+
+
+      The front setback encoded here is the strict end of a sentence that
+      offers three answers. "Front facades shall be set back from right-of-way
+      a distance of either zero feet or 10 feet or 15 feet" is a menu the
+      applicant picks from, so off Halsey the front costs nothing; the
+      exception that follows it puts twenty feet on the Halsey Street frontage
+      of any VA lot adjacent to that street. Which street a lot fronts is not
+      a fact this system holds, so the exception is the base -- and on a lot
+      that is not on Halsey the encoded twenty is twenty feet this zone does
+      not actually ask for.
+  VO:
+    section: ["19.130"]
+    cite_default:
+      cite: FMC 19.130.020 (Permitted uses, VO); FMC 19.130.030 (Conditional uses, VO)
+      url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19130.html
+      retrieved: '2026-08-19'
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/fairview/19.130.txt#L19,L21,L23,L39,L47,L53,L55"
+    notes: >-
+      A closed list with no residential use anywhere on it. "The following uses
+      and their accessory uses are permitted in a VO zone" and then three
+      headings -- Office Uses, Service Commercial Uses, Institutional Uses --
+      running from law firms and dental clinics to coffee shops inside office
+      buildings and galleries seating up to 500. The conditional list is one
+      sentence: "Other uses when found similar to those above by planning
+      commission." A four-unit townhome is not similar to an office, so unlike
+      Village Commercial next door this refusal carries no relief at all.
+
+
+      The zone is otherwise the loosest in the city -- 55 feet of height, tower
+      elements to 70, and "there are no setback requirements in the VO zone" --
+      which is exactly why the use answer has to be read carefully. A screen
+      that reached the dimensions before the list would find nothing here to
+      stop a building this zone never admits.
   VSF:
     cite_default:
       cite: FMC 19.115 Village Single-Family (.020 uses, .040 dimensional)
@@ -676,6 +1079,42 @@ zones:
       quote: "or/multnomah/fairview/19.120.txt#L19-L37"
     notes: 'quadfit confidence: verified | Townhouse/duplex zone; new detached SFD not allowed — OAR mandate
       does not attach.'
+  R/CSP:
+    section: ["19.108"]
+    cite_default:
+      cite: FMC 19.108.010 (Community Service/Parks Overlay - Uses)
+      url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19108.html
+      retrieved: '2026-08-19'
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/fairview/19.108.txt#L9,L11,L13-L25"
+    notes: >-
+      A Metro layer label, not a Fairview zone, and the shortest chapter in
+      this code answers it. 19.108.010 is one sentence and seven items: a
+      government building, a park or playground, open space and green way, a
+      library, a school, a power substation, telecommunications. No dwelling
+      of any kind. The overlay is additive -- those uses "may be permitted in
+      ANY zoning district when approved at a public hearing" -- so it does not
+      by itself take away whatever the base district allows.
+
+
+      What settles these 55 lots is the sentence after the list: "The district
+      is to be applied only to public property (lands owned by public agencies)
+      or utilities." The city applied the district, so the land is public. That
+      is an ownership fact rather than a use prohibition, and it is stated here
+      rather than inferred because the distinction matters: nothing in this
+      chapter forbids housing on land somebody else owns, and if one of these
+      parcels were ever sold the answer would come from the base district
+      instead.
+
+
+      Which base district that is remains unknown, and deliberately so. The
+      label reads "R/" and this city has R-6, R-7.5 and R-10; the Metro label
+      does not say which, exactly as with R/SFLD and RM/TOZ elsewhere in this
+      layer. Guessing one would put a number on 55 parcels on the strength of
+      a slash. The refusal encoded here does not need the guess -- a screen
+      that reported these lots green would be pointing an acquisition team at
+      a city park.
   R/MH:
     cite_default:
       cite: FMC 19.30 Manufactured Home Park district standards

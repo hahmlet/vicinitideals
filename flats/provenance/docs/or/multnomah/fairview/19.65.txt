@@ -1,0 +1,747 @@
+Chapter 19.65
+
+TOWN CENTER COMMERCIAL (TCC) DISTRICT
+
+Sections:
+
+19.65.010 Purpose.
+
+19.65.020 Permitted land uses.
+
+19.65.030 Storefront district requirements.
+
+19.65.040 Building orientation and setbacks.
+
+19.65.050 Block layout.
+
+19.65.060 Building height.
+
+19.65.070 Height bonuses and parking credits.
+
+19.65.080 Building length and facade articulation.
+
+19.65.090 Design standards.
+
+19.65.100 Special standards for certain uses.
+
+19.65.010 Purpose.
+
+A city goal is to strengthen the town center commercial district as the “heart” of the community and as the logical place for people to gather and create a business center. The town center commercial district is intended to support this goal through elements of design and appropriate mixed use development. This chapter provides standards for the orderly improvement of the district based on the following principles:
+
+A. Efficient use of land and urban services;
+
+B. A mixture of land uses to encourage walking as an alternative to driving, and to provide more employment and housing options;
+
+C. Both formal and informal community gathering places;
+
+D. A distinct storefront character that identifies commercial districts;
+
+E. Connections to neighborhoods and other employment areas;
+
+F. Reduced reliance on the automobile and reduced parking needs. (Ord. 1-2022 § 1 (Att. A); Ord. 6-2001 § 1)
+
+19.65.020 Permitted land uses.
+
+A. Permitted Uses. The land uses listed in Table 19.65.020(A) are permitted in the town center commercial district, subject to the provisions of this chapter. Only land uses that are specifically listed in Table 19.65.020(A), and land uses that are approved as similar to those in Table 19.65.020(A), may be permitted. The land uses identified with a “CU” in Table 19.65.020(A) require conditional use permit approval prior to development or a change in use. The land uses identified with an “L” in Table 19.65.020(A) are permitted but are subject to certain limitations as identified in notes following the table.
+
+Table 19.65.020(A) Land Uses and Building Types Permitted in the Town Center Commercial District
+Uses and Use Categories                                                                                                                                                                                          Permitted (P)  Conditional Use (CU)  Additional Standards
+1. Residential Uses
+a. Existing single-unit detached housing                                                                                                                                                                         P
+b. Zero-lot line housing (existing only)                                                                                                                                                                         P
+c. Accessory dwellings                                                                                                                                                                                           P                                    Subject to special standards for certain uses, see FMC 19.65.100
+d. Existing manufactured homes – individual lots                                                                                                                                                                 P                                    Subject to special standards for certain uses, see FMC 19.65.100
+e. Townhouses                                                                                                                                                                                                    P                                    Subject to special limitations in storefront districts, see FMC 19.65.030 and subject to special standards for certain uses, see FMC 19.65.100
+f. Duplexes                                                                                                                                                                                                      P                                    Subject to special limitations in storefront districts, see FMC 19.65.030 and subject to special standards for certain uses, see FMC 19.65.100
+g. Triplexes                                                                                                                                                                                                     P                                    Subject to special limitations in storefront districts, see FMC 19.65.030 and subject to special standards for certain uses, see FMC 19.65.100
+h. Quadplexes                                                                                                                                                                                                    P                                    Subject to special limitations in storefront districts, see FMC 19.65.030 and subject to special standards for certain uses, see FMC 19.65.100
+i. Multi-unit housing for residential care                                                                                                                                                                       P                                    Subject to special limitations in storefront districts, see FMC 19.65.030 and subject to special standards for certain uses, see FMC 19.65.100
+j. Residential care homes and facilities                                                                                                                                                                                        CU                    Subject to special standards for certain uses, see FMC 19.65.100
+k. Family child care homes (16 or fewer children)                                                                                                                                                                P                                    Subject to special standards for certain uses, see FMC 19.65.100
+l. Home occupations                                                                                                                                                                                              P                                    Subject to home occupation requirements, see FMC 19.490.200.
+m. Bed and breakfast inns and vacation rentals                                                                                                                                                                                  CU
+2. Public and Institutional
+a. Churches and places of worship                                                                                                                                                                                P                                    Subject to special standards for certain uses, see FMC 19.65.100
+b. Clubs, lodges, similar uses                                                                                                                                                                                   P                                    Subject to special standards for certain uses, see FMC 19.65.100
+c. Government offices and facilities (administration, public safety, transportation, utilities and similar uses)                                                                                                 P                                    Subject to special standards for certain uses, see FMC 19.65.100
+d. Libraries, museums, community centers, concert halls, and similar uses                                                                                                                                        P                                    Subject to special standards for certain uses, see FMC 19.65.100
+e. Public parking lots and garages                                                                                                                                                                               P
+f. Private utilities                                                                                                                                                                                             P
+g. Public parks and recreational facilities                                                                                                                                                                      P
+h. Schools (public and private)                                                                                                                                                                                  P
+i. Special district facilities                                                                                                                                                                                   P
+j. Telecommunications equipment – antennas                                                                                                                                                                       P                                    Subject to requirements in Chapter 19.245 FMC
+k. Telecommunications equipment – monopoles                                                                                                                                                                                     CU                    Subject to requirements in Chapter 19.245 FMC
+l. Uses similar to those listed above subject to applicable CU requirements                                                                                                                                                     CU                    See FMC 19.65.020(B)
+3. Commercial
+a. Auto-oriented uses and facilities                                                                                                                                                                                            CU                    Subject to special standards for certain uses, see FMC 19.65.100
+b. Entertainment (e.g., theatres, clubs, amusement uses)                                                                                                                                                         P
+c. Hotels/motels                                                                                                                                                                                                 P
+d. Medical and dental offices, clinics and laboratories                                                                                                                                                          P
+e. Mixed-use development (housing and other permitted use)                                                                                                                                                       P                                    Subject to special standards for certain uses, see FMC 19.65.100
+f. Office uses (i.e., those not otherwise listed)                                                                                                                                                                P
+g. Personal and professional services (e.g., child care center, catering/food services, restaurants, laundromats and dry cleaners, barber shops and salons, banks and financial institutions, and similar uses)  P
+h. Repair services (must be enclosed within building)                                                                                                                                                            P
+i. Retail trade and services, except auto-oriented uses                                                                                                                                                          P
+j. Food cart pods                                                                                                                                                                                                P                                    Subject to standards in FMC 19.490.400, Food and beverage cart permits
+k. Uses similar to those listed above                                                                                                                                                                            P                                    See FMC 19.65.020(B)
+4. Industrial
+a. Light manufacture (e.g., small-scale crafts, electronic equipment, furniture, similar goods when in conjunction with retail)                                                                                                 CU                    Subject to special standards for certain uses, see FMC 19.65.100
+5. Other
+a. Accessory uses and structures                                                                                                                                                                                 P                                    Subject to special standards for certain uses, see FMC 19.65.100
+
+B. Determination of Similar Land Use. Similar use determinations shall be made in conformance with the procedures in Chapter 19.480 FMC.
+
+C. Land Uses Prohibited in the Commercial District. Only uses specifically listed in Table 19.65.020(A), and uses similar to those in Table 19.65.020(A), are permitted in this district.
+
+The following uses are expressly prohibited: industrial uses not permitted in section 4 of Table 19.65.020(A). (Ord. 2-2025 § 1 (Att. A); Ord. 1-2024 § 1 (Att. A); Ord. 1-2022 § 1 (Att. A); Ord. 1-2021 § 1 (Att. A); Ord. 6-2001 § 1)
+
+19.65.030 Storefront district requirements.
+
+A. Purpose. A subarea of the TCC zone is designated as a Halsey Street storefront district. The purpose of the storefront district is to promote a concentration of retail and commercial destinations within a pedestrian-friendly environment. The storefront district concept is applied to multiple areas on Halsey Street across Fairview, Wood Village, and Troutdale. Developments within storefront districts are required to include a nonresidential use and meet additional or enhanced design standards.
+
+B. Applicability. A map of the boundaries of the storefront district is provided in Figure 19.65.030(B). New developments and alterations to existing developments are subject to the applicable use regulations and design standards as identified in this section.
+
+Figure 19.65.030(B) – Storefront District Map
+
+C. Design Standards. Design standards for sites within a storefront district differ from sites outside a storefront district. See FMC 19.65.090.
+
+D. Limitations on Residential Uses. Residential uses are limited in the storefront district. All developments that include a residential use must meet the following two standards:
+
+1. Mixed Use Development Requirement. Residential uses shall be permitted only when part of a mixed use development. Both “vertical” mixed use (housing above the ground floor) and “horizontal” mixed use (housing on the ground floor) developments are allowed, subject to subsection (D)(2) of this section.
+
+2. Limitation on Street-Level Housing. No more than 50 percent of the frontage on Halsey Street may be occupied by ground floor/street-level residential uses.
+
+E. Flexible Nonresidential Uses in Mixed Use Developments. The following options are available to satisfy the requirement for a nonresidential use in a mixed use development:
+
+1. Conventional Commercial Space. Provide a minimum of 1,000 square feet of conventional, enclosed commercial space meeting all applicable standards of the building code.
+
+2. Food Cart Pod. A food cart pod with four or more food carts which meets the requirements of FMC 19.490.400 and includes a pedestrian access plaza which meets standard P1 of the Main Streets on Halsey Design Standards (Table 19.65.090(B)(2)).
+
+3. Micro Retail Pod. A micro retail pod is a collection of retail shops or services which are operated in detached, prefabricated or mobile structures with associated site amenities. A micro retail pod must meet the following minimum standards:
+
+a. Number of Retailers. The site must provide sufficient area for a minimum of three retailers. The site may also include up to three food carts. If the site includes four or more food carts, then the site must also meet the standards for a food cart pod in FMC 19.490.400.
+
+b. Building Design.
+
+i. Each individual building in a micro retail pod must not exceed 600 square feet in floor area.
+
+ii. All buildings must be constructed with high-quality building materials that are compatible with other development on the site and the surrounding neighborhood. Prohibited materials include:
+
+(A) Standard form concrete block (not including split-faced, colored or other block designs that mimic stone, brick or other similar masonry).
+
+(B) Corrugated metal or fiberglass.
+
+(C) Plastic or vinyl siding.
+
+iii. All buildings must meet any applicable building code requirements associated with their intended use and occupancy.
+
+c. Site Improvements and Amenities (See Figure 19.65.030(E)).
+
+i. The micro retail pod must include a pedestrian access plaza which meets standard P1 of the Main Streets on Halsey Design Standards (Table 19.65.090(B)(2)).
+
+ii. All buildings must orient their main entry or shopfront window to a pedestrian access plaza or to a public street.
+
+iii. If food cart(s) are located on the site, then on-site restrooms shall be provided for employees and customers and be screened from view.
+
+iv. Waste and recycling receptacles shall be provided for customer and business waste and be screened from view.
+
+v. Lighting must be provided to illuminate the area when retailers operate during hours of darkness. No direct light source shall be visible from the property line. Lighting fixtures shall be oriented and/or shielded to prevent glare on abutting properties.
+
+Figure 19.65.030(E) – Food Cart or Micro Retail Pod
+
+(Ord. 1-2022 § 1 (Att. A))
+
+19.65.040 Building orientation and setbacks.
+
+In the town center commercial district, buildings are placed close to the street to create a vibrant pedestrian environment, to slow traffic down, provide a storefront character to the street, and encourage walking. The setback standards are flexible to encourage public spaces between sidewalks and building entrances (e.g., extra-wide sidewalks, plazas, squares, outdoor dining areas, and pocket parks). The standards also encourage the formation of solid blocks of commercial and mixed use buildings for a walkable commercial area.
+
+Building setbacks are measured from the wall or facade to the respective property line. The setback standards, as listed on the following page, apply to primary structures as well as accessory structures. The standards may be modified only by approval of a variance.
+
+A. Front Setbacks.
+
+1. Minimum Setback. There is no minimum front setback required.
+
+2. Maximum Setback.
+
+a. Purpose. The intent of the maximum setback standard is to promote a comfortable and interesting pedestrian environment by creating visually interesting street frontages and a sense of enclosure on a street when experienced as a pedestrian.
+
+b. Applicability. The maximum setback standard applies to all development as follows:
+
+i. Expansions or additions to buildings must not increase the length of street-facing facade that does not conform to the maximum setback standard.
+
+ii. If the number of vehicle parking spaces on the site exceeds the maximum number of spaces allowed in transit/pedestrian areas as provided in FMC 19.164.030(D), then expansions or additions to existing buildings must be sited in order to reduce the area dedicated to parking and vehicular circulation between the existing building and the street. The amount of parking and vehicular circulation area between the building and the street must be reduced by an amount equal to at least 50 percent of the footprint of the expansion or addition.
+
+iii. On corner lots or lots with more than one frontage, the maximum setback only applies to the street property line which abuts the higher classification street. If the lot abuts two streets of the same classification, then the applicant may select which street property line the maximum setback applies to.
+
+c. Standards.
+
+i. Maximum Setback. Unless otherwise specified, the maximum a building can be set back from a street lot line is 10 feet. On sites within a storefront district, at least 75 percent of the length of the ground level street-facing facade of the building must meet the maximum setback standard. On all other sites, at least 50 percent of the length of the ground level street-facing facade of the building must meet the maximum setback standard. Eaves, chimneys, bay windows, overhangs, cornices, awnings, canopies, porches, decks, pergolas, and similar architectural features on the facade do not count towards meeting the maximum setback standard. The standard applies to the facade wall. See Figure 19.65.040(A).
+
+ii. Improvements in the Setback Between a Building and a Street Lot Line. The land between any building and a street lot line must be landscaped to at least the standards of FMC 19.163.030(E)(1) and/or hard surfaced for use by pedestrians.
+
+iii. Location of Parking Areas. Parking and vehicle circulation areas are prohibited in the setback area between the building and the street lot line. Parking and vehicle circulation areas must not be located within 10 feet of the street lot line on more than 50 percent of the length of the street frontage. Bicycle parking may be located in the area between a building and a street lot line when the area is hard surfaced.
+
+3. Main Entrance.
+
+a. Purpose. These requirements ensure that main entrances are visible and connected to the sidewalk by a pedestrian walkway.
+
+b. Applicability. All sites with at least one frontage on a street, and where any of the floor area on the site is in nonresidential uses, must meet the following standards. If the site has frontage on more than one street the standards must be met on at least one street. These standards apply to the primary building(s) on a site (e.g., not to accessory structures).
+
+c. Standards. For portions of a building within the maximum building setback, at least one main entrance for each nonresidential tenant space on the ground floor must meet the standards of this section.
+
+i. Location. The main entrance must be within 25 feet of the street and must face the street or be at an angle of up to 45 degrees from the street, measured from the street property line.
+
+ii. Entrance Design. The primary building entrances must be architecturally emphasized through the use of two or more of the following features: recessed doorway(s) at least two feet deep; overhangs or canopies at least three feet deep; transom windows; ornamental light fixtures; larger, transparent or more prominent doors; or pilasters or columns that frame the principal doorway.
+
+iii. Walkway Connection. All primary entrances to a building (e.g., tenant entrance, lobby entrance, breezeway entrance, or courtyard entrance) must be connected to the sidewalk by a direct and continuous walkway.
+
+Figure 19.65.040(A) – Building Orientation
+
+B. Rear Setbacks.
+
+1. Minimum Setback. The minimum rear setback for all structures shall be zero feet, except for doorways which will be recessed to assure safe exiting, for street-access lots, and eight feet for alley-access lots (distance from building to rear property line or alley easement) in order to provide space for parallel parking. When a building abuts a residential district the minimum rear setback shall be 15 feet.
+
+2. Through-Lots. For buildings on through-lots (lots with front and rear frontage onto a street), the front setbacks in subsection A of this section shall apply.
+
+C. Side Setbacks. There is no minimum side setback required, except that buildings shall conform to the vision clearance standards in FMC 19.162.020 and the applicable fire and building codes for attached structures, firewalls, and related requirements. When a building abuts a residential district the minimum side setback shall be 15 feet.
+
+D. Setback Exceptions. Eaves, chimneys, bay windows, overhangs, cornices, awnings, canopies, porches, decks, pergolas, and similar architectural features may encroach into setbacks by no more than four feet, subject to compliance with applicable standards of the Uniform Building Code and Uniform Fire Code. Walls and fences may be placed on the property line, subject to the requirements of Chapter 19.163 FMC, Landscaping, Street Trees, Fences and Walls. (Ord. 1-2022 § 1 (Att. A); Ord. 6-2001 § 1. Formerly 19.65.030)
+
+19.65.050 Block layout.
+
+This section is intended to promote the walkable, storefront character of the town center commercial district by forming short blocks and complete pedestrian walkway networks.
+
+A. Applicability. This section applies to new land divisions and all of the following types of development (i.e., subject to site design review):
+
+1. Three or more attached townhomes on their own lots (i.e., townhomes subject to site design review);
+
+2. Duplex, triplex and quadplex developments with more than one building (i.e., duplex and triplex developments subject to site design review);
+
+3. Multi-unit housing;
+
+4. Public and institutional buildings, except that the standard shall not apply to buildings which are not subject to site design review or those that do not receive the public (e.g., buildings used solely to house mechanical equipment, and similar uses); and
+
+5. Commercial and mixed use buildings subject to site design review.
+
+Compliance with all of the provisions of subsections B through C of this section shall be required.
+
+B. Block Layout Standard.
+
+1. New land divisions and developments with more than one building, which are subject to site design review, shall be configured to provide an alley or interior parking court, as shown in Figure 16.85.050(B). When new public streets are created on larger sites, blocks (areas bound by public street right-of-way) shall have a length not exceeding 200 feet, and a depth not exceeding 200 feet.
+
+2. Pedestrian pathways shall be provided from the street right-of-way to interior parking courts between buildings, as necessary to ensure reasonably safe, direct, and convenient access to building entrances and off-street parking.
+
+3. Exceptions to the alley or interior parking court standard may be approved, and longer block lengths or depths allowed, when the proposed development provides a mid-block pedestrian pathway. The mid-block pedestrian pathway must connect across the site to both street frontages, be at least 10 feet in width, and be lit with pedestrian-scale lighting.
+
+Figure 19.65.050(B) – Block Layout (Typical)
+
+C. Variances. Variances will be made in accordance with Chapter 19.520 FMC. The standard may be varied to address topographic or other physical constraints, in accordance with the provisions for Class B or C variances in Chapter 19.520 FMC. (Ord. 1-2024 § 1 (Att. A); Ord. 1-2022 § 1 (Att. A); Ord. 6-2001 § 1)
+
+19.65.060 Building height.
+
+All buildings in the town center commercial district shall comply with the following building height standards. The standards are intended to allow for development of appropriately scaled buildings with a storefront character.
+
+A. Base Maximum Height. The base maximum building height in the town center commercial district is 45 feet. The base height limits can be increased through options described in FMC 19.65.070. A height step down adjacent to the street or abutting residential zones may be required; see subsection B of this section.
+
+B. Height Step Down. In the following situations, the base height is reduced, or stepped down, to create a transition to areas with lower building heights or to reduce the massing of the building as seen from the street:
+
+1. Adjacent to Residential Zone. The following step-down height limits apply within 25 feet of sites zoned residential. Sites with property lines that abut residential zones for less than a five-foot length are exempt from these standards:
+
+a. On the portion of the site within 25 feet of a site zoned R, R-7.5, R-10, or VSF, the step-down height limit is 35 feet. See Figure 19.65.060(B).
+
+b. On the portion of the site within 25 feet of a site zoned R/MF, VA, VTH, VO, VC, VMU, the step-down height limit is 45 feet. See Figure 19.65.060(B).
+
+2. Across a Local Street or Alley from a Residential Zone. On the portion of the site within 15 feet of a lot line that is across a local street or alley, as identified in the Fairview Transportation System Plan (TSP), from any of the zones listed in subsection (B)(1) of this section, the step-down height limit is 45 feet.
+
+3. Adjacent to Any Street. If a project is approved for a height bonus pursuant to FMC 19.65.070, then step-down height limit applies to a portion of the site as follows:
+
+a. For sites eligible for a height bonus of 10 feet, allowing an overall height of 55 feet, the step-down height limit is 45 feet on the portion of the site within five feet of any street lot line. See Figure 19.65.060(B).
+
+b. For sites eligible for a height bonus of 20 feet, allowing an overall height of 65 feet, the step-down height limit is 45 feet on the portion of the site within 15 feet of any street lot line. Additionally, any rooftop area within 15 feet of the street lot line must be usable outdoor space or developed as an eco-roof. See Figure 19.65.060(B).
+
+Figure 19.65.060(B) – Height Step Downs
+
+(Ord. 1-2024 § 1 (Att. A); Ord. 1-2022 § 1 (Att. A); Ord. 6-2001 § 1)
+
+19.65.070 Height bonuses and parking credits.
+
+A. Purpose. The height bonus and parking credit options allow an increase in building height or a reduction in off-street parking requirements as an incentive for development that provides a public or community benefit.
+
+B. Applicability. The bonus height or off-street parking credit options are available to any development meeting the criteria of this section. An option may be used to secure both a height bonus and parking credit(s) as identified in Table 19.65.070.
+
+C. Height Bonus Options. A height bonus of 10 feet in addition to the base height identified in FMC 19.65.060 is allowed as identified in Table 19.65.070. A maximum of two height bonus options may be used for a total bonus of 20 feet.
+
+D. Parking Credit Options. A percentage reduction in off-street parking requirements is allowed as identified in Table 19.65.070. More than one credit may be used; however, in no case shall the credits result in an off-street parking requirement that is less than one space per dwelling unit or two spaces per 1,000 square feet of nonresidential floor area. For mixed use developments that include both residential and nonresidential uses, each parking credit allows for a percentage reduction in parking requirements for both uses. The amount of the reduction should be calculated separately as applies to the use.
+
+Table 19.65.070 – Height Bonus and Off-Street Parking Credit Options
+Option
+Option
+Height Bonus
+Parking Credit
+Parking Credit
+Option
+Option
+Height Bonus
+Residential
+Nonresidential
+B1
+Street Level Commercial Space. A vertical mixed use development that provides housing units above a ground floor commercial space. The ground floor commercial space must occupy a minimum of 50 percent of the width of the total street frontage of the site.
+10 ft
+10%
+20%
+B2
+Small-Scale Commercial Spaces. A vertical mixed use development that provides housing units above a ground floor commercial space. The ground floor commercial space must include a minimum of three tenant spaces that are each no greater than 800 square feet in floor area.
+10 ft
+None
+20%
+B3
+Affordable Housing. A development that includes affordable housing units meeting the following standards:
+10 ft
+20%
+None
+B3
+a. Ten percent of the total number of dwelling units must be affordable to those earning no more than 60 percent of the area median family income; or
+10 ft
+20%
+None
+B3
+b. Twenty percent of the total number of dwelling units in the new building or the alteration must be affordable to those earning no more than 80 percent of the area median family income; and
+10 ft
+20%
+None
+B3
+c. The property owner must execute a covenant or development agreement with the city that must ensure that the affordable dwelling units will remain affordable to households meeting the income restriction for a minimum of 30 years. The covenant or agreement must be provided prior to issuance of the building permit.
+10 ft
+20%
+None
+B4
+High-Quality Design. A development that incorporates design elements identified in Table 19.65.090(B)(2) which total five points in addition to the points needed to meet the minimum requirement.
+10 ft
+10%
+20%
+B5
+Additional Open Space. A development that incorporates a pedestrian access plaza or outdoor recreation area. The plaza must meet the minimum standards of design element P1 in Table 19.65.090(B)(2). The outdoor recreation area must meet the standards of design element P2 in Table 19.65.090(B)(2). If this bonus is used in combination with bonus B4, then these design elements may not count toward the minimum points needed to be eligible for bonus B4.
+10 ft
+10%
+20%
+B6
+Transit Amenities. If there is a transit stop along the site’s frontage or within 200 feet of the site, and the site provides the following amenities:
+None
+20%
+10%
+B6
+a. A new transit shelter approved by Tri-Met (if the stop is located along the site’s frontage);
+None
+20%
+10%
+B6
+b. A pedestrian access plaza that abuts a sidewalk on a public right-of-way. The plaza must be a minimum of 500 square feet. The plaza must include benches or seating that provides at least 10 linear feet of seats. The seating surface should be at least 15 inches deep and between 16 and 24 inches above the grade upon which the seating or bench sits.
+None
+20%
+10%
+
+(Ord. 1-2022 § 1 (Att. A))
+
+19.65.080 Building length and facade articulation.
+
+A. Purpose. These standards, along with the height and setback standards, limit the bulk of buildings close to the street. These standards help ensure that large buildings will be divided into smaller components that add visual interest and variety to the street environment.
+
+B. Maximum Building Length. The maximum building length for the portion of a building located within 20 feet of a street lot line is 150 feet. The portions of buildings subject to this standard must be separated by a minimum of 20 feet when located on the same site. This standard is met if two buildings are entirely separated, or when one building includes a recess that is at least 20 feet in length and 20 feet in depth (see Figure 19.65.080(A)).
+
+Figure 19.65.080(A) – Maximum Building Length
+
+C. Facade Articulation.
+
+1. Applicability. The facade articulation standard applies as follows:
+
+a. The standard applies to buildings more than 20 feet high that have facade areas of more than 3,000 square feet that face a street lot line or a lot line that abuts a residential zone.
+
+b. Portions of building facades that are vertically separated by a gap of at least 10 feet in width extending at least 20 feet in depth from the street property line are considered to be separate facade areas for the purposes of the facade area measurements.
+
+2. Standard. At least 25 percent of the area of a facade that faces a street lot line or a lot line that abuts a residential zone must be divided into facade planes that either recess by at least two feet or project by at least two feet from the rest of the facade. Facade area used to meet the facade articulation standard may be recessed behind or project out from the primary facade plane, but projections into street right-of-way do not count toward meeting this standard (see Figure 19.65.080(B)).
+
+Figure 19.65.080(B) – Facade Articulation
+
+(Ord. 1-2022 § 1 (Att. A))
+
+19.65.090 Design standards.
+
+A. Purpose and Applicability. The town center commercial district design standards are intended to provide detailed, human-scale design, while affording flexibility to use a variety of building styles. This section applies to all of the following types of buildings:
+
+1. Three or more attached townhomes on their own lots;
+
+2. Duplex, triplex and quadplex developments with more than one building;
+
+3. Multi-unit housing;
+
+4. Public and institutional buildings, except that the standard shall not apply to buildings which are not subject to site design review or those that do not receive the public (e.g., buildings used solely to house mechanical equipment, and similar uses); and
+
+5. Commercial and mixed use buildings subject to site design review.
+
+B. Main Streets on Halsey Design Standards.
+
+1. Purpose. The TCC zone includes properties that have frontage on NE Halsey Street. Halsey Street is an important corridor that connects the three cities of Fairview, Wood Village, and Troutdale. Halsey is the “main street” for each of these communities, a place where residents eat, shop, gather, and live. Halsey is also the gateway through which visitors experience each community, and it connects to the Historic Columbia River Highway and the Columbia River Gorge. The objectives of the Main Streets on Halsey Design Standards are to:
+
+a. Facilitate a built environment that is a comfortable, safe, and attractive space for people to gather and spend time on Halsey Street;
+
+b. Establish consistent patterns in the design of buildings and site improvements across the three cities to promote a coherent and distinct sense of place for Halsey Street as a whole;
+
+2. Applicability. The design standards apply as follows:
+
+a. Base Requirements. New development must meet all the standards identified in Table 19.65.090(B)(1) as required. Only the standards applicable to the development apply. Alterations to existing development must meet all the standards identified in Table 19.65.090(B)(1) as required. Only the standards applicable to the alteration apply.
+
+b. Menu of Options for Additional Requirements. In addition, new development must meet enough of the standards identified in Table 19.65.090(B)(2) to total 10 points for sites in storefront districts and seven points in sites elsewhere in the TCC zone, or one point for every 1,000 square feet of site area, whichever is less.
+
+Table 19.65.090(B)(1) – Base Design Requirements
+No.
+Design Requirement
+Design Requirement
+Required
+Required
+No.
+Design Requirement
+Design Requirement
+Storefront District
+Elsewhere
+R1
+Ground Floor Height. For ground floor commercial space in new buildings, the distance from the finished floor to the bottom of the ceiling structure above must be at least 12 feet. For ground floor area associated with a residential use, the height is 10 feet. The bottom of the structure includes supporting beams. The area meeting this standard must be at least 25 feet deep, measured from the street-facing facade.
+Ground Floor Height. For ground floor commercial space in new buildings, the distance from the finished floor to the bottom of the ceiling structure above must be at least 12 feet. For ground floor area associated with a residential use, the height is 10 feet. The bottom of the structure includes supporting beams. The area meeting this standard must be at least 25 feet deep, measured from the street-facing facade.
+X
+X
+R2
+Ground Floor Windows – Nonresidential Uses. The following standards apply to the portions of a ground floor wall of a street-facing facade that are 20 feet or closer to a street lot line or a publicly accessible plaza and that is not the wall of a dwelling unit:
+Ground Floor Windows – Nonresidential Uses. The following standards apply to the portions of a ground floor wall of a street-facing facade that are 20 feet or closer to a street lot line or a publicly accessible plaza and that is not the wall of a dwelling unit:
+X – 60%
+X – 40%
+R2
+a. Windows must cover a minimum percent of the width of the ground floor wall as listed in the required column of this table. To count towards meeting this standard, the bottom sill of a window must be no lower than two feet and no higher than five feet above sidewalk grade.
+a. Windows must cover a minimum percent of the width of the ground floor wall as listed in the required column of this table. To count towards meeting this standard, the bottom sill of a window must be no lower than two feet and no higher than five feet above sidewalk grade.
+X – 60%
+X – 40%
+R2
+b. Windows must cover at least the minimum percent of the ground floor wall area as listed in the required column of this table. For the purposes of calculating this percentage, ground floor wall areas include all exterior wall areas from two feet to 10 feet above the finished grade, and include openings in the walls of structured parking. See Figure 19.65.090(A).
+b. Windows must cover at least the minimum percent of the ground floor wall area as listed in the required column of this table. For the purposes of calculating this percentage, ground floor wall areas include all exterior wall areas from two feet to 10 feet above the finished grade, and include openings in the walls of structured parking. See Figure 19.65.090(A).
+X – 60%
+X – 40%
+R2
+c. Windows into storage areas, vehicle parking areas, mechanical and utility areas, garbage and recycling areas, and display cases attached to outside walls do not qualify.
+c. Windows into storage areas, vehicle parking areas, mechanical and utility areas, garbage and recycling areas, and display cases attached to outside walls do not qualify.
+X – 60%
+X – 40%
+R2
+d. Bulkheads, piers and a storefront cornice (e.g., separates ground floor from second story, as shown above) shall frame display windows.
+d. Bulkheads, piers and a storefront cornice (e.g., separates ground floor from second story, as shown above) shall frame display windows.
+X – 60%
+X – 40%
+R2
+e. Ground floor street-facing walls of dwelling units must meet standards R3 and R4.
+e. Ground floor street-facing walls of dwelling units must meet standards R3 and R4.
+X – 60%
+X – 40%
+R3
+Ground Floor Windows – Dwelling Units. The ground floor wall area of street-facing facades of dwelling units that are 20 feet or closer to a street lot line must meet at least one of the following standards:
+Ground Floor Windows – Dwelling Units. The ground floor wall area of street-facing facades of dwelling units that are 20 feet or closer to a street lot line must meet at least one of the following standards:
+R3
+a. Flexible ground floor design. The ground floor window standards of R2 must be met, and the ground level of the building must be designed and constructed as follows:
+a. Flexible ground floor design. The ground floor window standards of R2 must be met, and the ground level of the building must be designed and constructed as follows:
+R3
+i. The distance from the finished floor to the bottom of the ceiling structure above must be at least 12 feet. The bottom of the structure above includes supporting beams;
+R3
+ii. The area meeting this standard must be at least 25 feet deep, measured from the street-facing facade; and
+R3
+iii. Each unit must include a front entrance that is located at the level of the finished grade and can be accessed without steps.
+R3
+b. Front setback.
+b. Front setback.
+R3
+i. The portions of the building with residential dwelling units on the ground floor must be set back at least five feet from the street lot line. The setback must be landscaped to at least the standards of FMC 19.163.030(E)(1); and/or hard-surfaced for use by pedestrians; and
+R3
+ii. Windows must cover at least 25 percent of the ground level wall area of the portion of the building with residential dwelling units on the ground floor.
+R3
+c. Raised ground floor.
+c. Raised ground floor.
+R3
+i. The portion of the building with residential dwelling units on the ground floor must have the finished floor of each residential unit at least two feet above the grade of the closest adjoining sidewalk.
+R3
+ii. Window must cover at least 25 percent of the ground level wall area of the portion of the building with residential dwelling units on the ground floor.
+R3
+Ground Floor Residential Entrances. At least 50 percent of the dwelling units on the street-facing ground floor of a building must provide a pedestrian access between the main entrance of the dwelling and the street. The entrance must be set back at least eight feet from the street lot line and have at least two of the following within the setback:
+Ground Floor Residential Entrances. At least 50 percent of the dwelling units on the street-facing ground floor of a building must provide a pedestrian access between the main entrance of the dwelling and the street. The entrance must be set back at least eight feet from the street lot line and have at least two of the following within the setback:
+X
+X
+R3
+a. A wall or fence that is 18 to 36 inches high. Permitted materials include weather-treated wood; untreated cedar and redwood; metal (except not chain link); bricks, stone, masonry block, formed-in-place concrete, or similar masonry; and composite (e.g., recycled) materials designed for use as fencing;
+a. A wall or fence that is 18 to 36 inches high. Permitted materials include weather-treated wood; untreated cedar and redwood; metal (except not chain link); bricks, stone, masonry block, formed-in-place concrete, or similar masonry; and composite (e.g., recycled) materials designed for use as fencing;
+X
+X
+R3
+b. Landscaping that meets the standards of FMC 19.163.030(E)(1);
+b. Landscaping that meets the standards of FMC 19.163.030(E)(1);
+X
+X
+R3
+c. Private open space of at least 48 square feet and a minimum length or depth of six feet, where the floor of the open space is 18 to 36 inches above the grade of the right-of-way; or
+c. Private open space of at least 48 square feet and a minimum length or depth of six feet, where the floor of the open space is 18 to 36 inches above the grade of the right-of-way; or
+X
+X
+R3
+d. A change of grade where the door to the dwelling unit is 18 to 36 inches above the grade of the right-of-way.
+d. A change of grade where the door to the dwelling unit is 18 to 36 inches above the grade of the right-of-way.
+X
+X
+R4
+Weather Protection. For buildings with at least 30 feet of a street-facing facade within 20 feet of Halsey Street, weather protection must be provided along the minimum percent of the facade as listed in the required column of this table. All canopies, awnings and other weather protection elements that are provided must meet the following requirements:
+Weather Protection. For buildings with at least 30 feet of a street-facing facade within 20 feet of Halsey Street, weather protection must be provided along the minimum percent of the facade as listed in the required column of this table. All canopies, awnings and other weather protection elements that are provided must meet the following requirements:
+X – 50%
+X – 20%
+R4
+a. The weather protection structure must project at least four feet from the adjoining building wall facade.
+a. The weather protection structure must project at least four feet from the adjoining building wall facade.
+X – 50%
+X – 20%
+R4
+b. The bottom of the weather protection structure must be at least nine feet above grade.
+b. The bottom of the weather protection structure must be at least nine feet above grade.
+X – 50%
+X – 20%
+R4
+c. Alterations to existing weather protection that does not meet the standard must either meet this standard or come closer to conformance with this standard.
+c. Alterations to existing weather protection that does not meet the standard must either meet this standard or come closer to conformance with this standard.
+X – 50%
+X – 20%
+R5
+Screening of Utilities, Equipment, and Waste Receptacles. New electric meters, gas meters, HVAC equipment, and waste receptacles must be screened from the street by meeting one of the following standards:
+Screening of Utilities, Equipment, and Waste Receptacles. New electric meters, gas meters, HVAC equipment, and waste receptacles must be screened from the street by meeting one of the following standards:
+X
+X
+R5
+a. The utilities, equipment, or receptacles are enclosed by a building;
+a. The utilities, equipment, or receptacles are enclosed by a building;
+X
+X
+R5
+b. The utilities, equipment, or receptacles are screened from the street by a wall that is as tall as the tallest part of the feature to be screened;
+b. The utilities, equipment, or receptacles are screened from the street by a wall that is as tall as the tallest part of the feature to be screened;
+X
+X
+R5
+c. The utilities or equipment are mounted to a wall that does not face a street and are set back at least five feet from a street lot line. This option is not allowed for waste receptacles.
+c. The utilities or equipment are mounted to a wall that does not face a street and are set back at least five feet from a street lot line. This option is not allowed for waste receptacles.
+X
+X
+R6
+Corner Features. The following applies to a new building on a site that has frontage on more than one intersecting street. One of the following features must be provided (see Figure 19.65.090(C)):
+Corner Features. The following applies to a new building on a site that has frontage on more than one intersecting street. One of the following features must be provided (see Figure 19.65.090(C)):
+X
+X
+R6
+• The highest point of the building’s street-facing elevations must be within 20 feet of the corner of both intersecting street lot lines. This wall must project three feet above an adjacent wall elevation.
+• The highest point of the building’s street-facing elevations must be within 20 feet of the corner of both intersecting street lot lines. This wall must project three feet above an adjacent wall elevation.
+X
+X
+R6
+• The building must include a plaza at the corner of the two intersecting street lot lines. The plaza has a minimum area of 500 square feet, minimum dimensions of 15 feet by 15 feet, and must be hard-surfaced for use by pedestrians or an extension of the sidewalk. The plaza must include benches or seating that provides at least 10 linear feet of seating surface. The seating surface must be at least 15 inches deep, and between 16 and 24 inches above the grade upon which the seating or bench sits. At least one main entrance to a commercial tenant space or a residential lobby must face the plaza.
+• The building must include a plaza at the corner of the two intersecting street lot lines. The plaza has a minimum area of 500 square feet, minimum dimensions of 15 feet by 15 feet, and must be hard-surfaced for use by pedestrians or an extension of the sidewalk. The plaza must include benches or seating that provides at least 10 linear feet of seating surface. The seating surface must be at least 15 inches deep, and between 16 and 24 inches above the grade upon which the seating or bench sits. At least one main entrance to a commercial tenant space or a residential lobby must face the plaza.
+X
+X
+R7
+Upper Floor Windows. The following window standards must be met on all new street-facing facades above the ground floor or 15 feet:
+Upper Floor Windows. The following window standards must be met on all new street-facing facades above the ground floor or 15 feet:
+X
+X
+R7
+• At least 30 percent of the area of the new street-facing facade above the ground floor must be windows or doors opening up to balconies.
+• At least 30 percent of the area of the new street-facing facade above the ground floor must be windows or doors opening up to balconies.
+X
+X
+R7
+• Provide trim that is at least three inches wide or recess the window glazing at least three inches behind the exterior wall or window frame. Alterations must either meet this standard or match the window trim and recess of the existing building for all new windows.
+• Provide trim that is at least three inches wide or recess the window glazing at least three inches behind the exterior wall or window frame. Alterations must either meet this standard or match the window trim and recess of the existing building for all new windows.
+X
+X
+R7
+• A minimum of 60 percent of all upper story windows shall be vertically oriented, with a minimum vertical to horizontal dimension ratio of 1.5:1. This vertical orientation applies to individual windows, as opposed to grouped window arrays.
+• A minimum of 60 percent of all upper story windows shall be vertically oriented, with a minimum vertical to horizontal dimension ratio of 1.5:1. This vertical orientation applies to individual windows, as opposed to grouped window arrays.
+X
+X
+R8
+Roof Detailing. Provide a decorative cornice on a building with flat roof or eaves with a minimum depth of 12 inches on a building with pitched roof.
+Roof Detailing. Provide a decorative cornice on a building with flat roof or eaves with a minimum depth of 12 inches on a building with pitched roof.
+X
+X
+R9
+Pedestrian Access Plaza. Provide an outdoor plaza that abuts a sidewalk on a public right-of-way. The plaza must be a minimum of 500 square feet with minimum dimensions of 20 feet. Fifteen percent of the plaza must be landscaped with a tree for each 100 square feet of landscaping. The plaza must include benches or seating that provides at least 10 linear feet of seats. The seating surface should be at least 15 inches deep and between 16 and 24 inches above the grade upon which the seating or bench sits. A plaza provided to meet R6 may count toward meeting this standard.
+Pedestrian Access Plaza. Provide an outdoor plaza that abuts a sidewalk on a public right-of-way. The plaza must be a minimum of 500 square feet with minimum dimensions of 20 feet. Fifteen percent of the plaza must be landscaped with a tree for each 100 square feet of landscaping. The plaza must include benches or seating that provides at least 10 linear feet of seats. The seating surface should be at least 15 inches deep and between 16 and 24 inches above the grade upon which the seating or bench sits. A plaza provided to meet R6 may count toward meeting this standard.
+X
+R10
+Exterior Lighting. Exterior light fixtures must be provided on street-facing facades within 20 feet of the street as follows:
+Exterior Lighting. Exterior light fixtures must be provided on street-facing facades within 20 feet of the street as follows:
+X
+R10
+a. The fixtures must be spaced a maximum of 30 feet apart;
+a. The fixtures must be spaced a maximum of 30 feet apart;
+X
+R10
+b. The bottom of each fixture is a maximum of 15 feet above the adjoining grade or sidewalk; and
+b. The bottom of each fixture is a maximum of 15 feet above the adjoining grade or sidewalk; and
+X
+R10
+c. Lights must not project light upward or to the side of the fixture.
+c. Lights must not project light upward or to the side of the fixture.
+X
+
+Figure 19.65.090(A) – Ground Floor Design – Nonresidential (Selected Standards)
+
+Figure 19.65.090(B) – Ground Floor Design – Residential
+
+Figure 19.65.090(C) – Corner Features Standards
+
+Table 19.65.090(B)(2) – Menu of Options for Additional Requirements
+No.
+Design Option
+Points
+P1
+Additional Plaza Area. Provide an outdoor plaza that abuts a sidewalk on a public right-of-way. The plaza must be a minimum of 800 square feet with minimum dimensions of 20 feet. Fifteen percent of the plaza must be landscaped with a tree for each 100 square feet of landscaping. The plaza must include benches or seating that provides at least 15 linear feet of seats. The seating surface should be at least 15 inches deep and between 16 and 24 inches above the grade upon which the seating or bench sits. The plaza may also count toward meeting standard R7. A plaza provided to meet R6 may count toward meeting this standard.
+3 pts
+P2
+Outdoor Recreation Area. Provide at least 800 square feet of outdoor common area with a minimum dimension of 20 feet by 20 feet. The outdoor area must meet one of the following:
+3 pts
+P2
+a. The entire outdoor area is a community garden with the area divided into individual raised garden beds. The beds are raised at least 12 inches above grade and can each be between 12 and 50 square feet in area. Individual beds are separated by pathways at least three feet in width; or
+3 pts
+P2
+b. The entire outdoor area is a children’s play area that includes a play structure at least 100 square feet in area and manufactured to the American Society for Testing and Materials (ASTM) standards for public playground equipment. At least four linear feet of seating per 100 square feet of area must be located adjacent to the play structure.
+3 pts
+P2
+Up to 20 percent of the outdoor area may be landscaped to the standards of FMC 19.163.030(E)(1).
+3 pts
+P3
+Additional Ground Floor Height. For ground floor commercial space in new buildings, the distance from the finished floor to the bottom of the ceiling structure above must be at least 15 feet. For ground floor area associated with a residential use, the height is 12 feet. The bottom of the structure includes supporting beams.
+2 pts
+P4
+Small Commercial Spaces. Provide at least three separate tenant spaces on the ground floor for commercial use that are a minimum of 300 and a maximum of 800 square feet. Each space must include at least one main entrance that faces the street and is within five feet of the street lot line.
+2 pts
+P5
+Original Art Mural. Provide an original art mural that meets the following requirements:
+1 pt
+P5
+a. The mural is on a wall or structure that is visible from Halsey Street; and
+1 pt
+P5
+b. The mural is at least 32 square feet in area.
+1 pt
+P6
+Public Art Installation. Provide an art feature on the site that has been approved by the planning commission and is not a mural. The feature must be set back a maximum of 15 feet from Halsey Street.
+2 pts
+P7
+Water Feature. Provide a water feature, such as a fountain, waterfall, or reflecting pool. The feature must be set back a maximum of 20 feet from Halsey Street. The water feature must have the following:
+1 pt
+P7
+a. A feature area of at least six square feet that contains water year-round; and
+1 pt
+P7
+b. A bench or seat with six linear feet of seating adjacent to it.
+1 pt
+P7
+The feature can be part of a stormwater facility.
+1 pt
+P8
+Transit Amenities. If there is a transit stop along the site’s frontage or within 200 feet of the site, and the site provides the following amenities:
+2 pts
+P8
+a. A transit shelter approved by Tri-Met (if the stop is located along the site’s frontage);
+2 pts
+P8
+b. A pedestrian access plaza that abuts a sidewalk on a public right-of-way. The plaza must be a minimum of 500 square feet. The plaza must include benches or seating that provides at least six linear feet of seats in addition to any seating within the transit shelter. The seating surface should be at least 15 inches deep and between 16 and 24 inches above the grade upon which the seating or bench sits.
+2 pts
+P8
+This option may not be used if the transit amenities are provided to receive a parking credit under FMC 19.65.070.
+2 pts
+P9
+Additional Ground Floor Windows. Provide ground floor windows as required by standard R4, except the windows cover at least 70 percent of the applicable ground floor wall area(s).
+1 pt
+P10
+Additional Weather Protection. Provide weather protection structures as required by standard R4, except the weather protection is provided along at least 70 percent of the length of the applicable facade(s).
+1 pt
+P11
+Additional Corner Feature. Provide a corner feature meeting one of the two options allowed to satisfy standard R8, except the option for the type of corner feature must not be the same option used to satisfy standard R8.
+1 pt
+P13
+Oversized Opening. Provide an oversized operable door, such as a roll-up door or movable storefront, for at least one ground floor tenant space that faces the street lot line. Buildings with more than one ground floor tenant space that faces the street must provide the door opening for at least 50 percent of the tenant spaces that face the street. The oversized operable door opening must be at least eight feet wide and cannot open up into utility, garbage, or parking areas.
+1 pt
+P14
+Public Seating. Provide at least 10 linear feet of seating or bench within 25 feet of a main entrance. The seating or bench must be accessible to the sidewalk or trail and the access must be open to the public. The seating surface must be at least 15 inches deep and between 16 and 24 inches above the grade upon which the seating or bench sits.
+1 pt
+P15
+Pervious Paving. At least 50 percent of all new vehicle area must be surfaced with pervious pavement approved by the public works department.
+1 pt
+P16
+Additional Landscaping with Native Plants. Provide landscaping on 10 percent of the site that meets the standards of FMC 19.163.030. At least 30 percent of the total landscaped area must be planted with native species listed on the Metro Native Plant List, and 80 percent of all trees planted on site must be native trees listed on the Metro Native Plant List.
+1 pt
+
+(Ord. 1-2024 § 1 (Att. A); Ord. 1-2022 § 1 (Att. A); Ord. 6-2001 § 1. Formerly 19.65.070)
+
+19.65.100 Special standards for certain uses.
+
+This section supplements the standards contained in FMC 19.65.030 through 19.65.090. It provides standards for the following land uses in order to control the scale and compatibility of those uses within the town center commercial district:
+
+•Residential Uses
+
+•Public and Institutional Uses
+
+•Accessory Uses and Structures
+
+•Automobile-Oriented Uses and Facilities
+
+•Outdoor Storage and Display
+
+A. Residential Uses. Higher density residential uses, such as multi-unit buildings and attached townhomes, are permitted to encourage housing near employment, shopping and services. All residential developments shall comply with the standards in subsections (A)(1) through (A)(4) of this section which are intended to avoid or minimize impacts associated with traffic and parking and ensure proper management and maintenance of common areas. Residential uses which existed prior to the effective date of this code are exempt from this section.
+
+1. Density. There is no minimum or maximum residential density standard. Density shall be controlled by the applicable floor area and building height standards.
+
+2. Parking, Garages, and Driveways. All off-street vehicle parking, including surface lots and garages, shall be oriented to alleys, placed underground, placed in structures above the ground floor, or located in parking areas located behind or to the side of the building; except that side yards facing a street (i.e., corner yards) shall not be used for surface parking. All garage entrances facing a street (e.g., underground or structured parking) shall be recessed behind the front building elevation by a minimum of five feet. On corner lots, garage entrances shall be oriented to a side street when access cannot be provided from an alley.
+
+3. Creation of Alleys. When a subdivision (e.g., four or more townhome lots) is proposed, a public or private alley shall be created for the purpose of vehicle access. Alleys are not required when existing development patterns or topography make construction of an alley impracticable. As part of a subdivision, the city may require dedication of right-of-way or easements, and construction of pathways between townhome lots (e.g., between building breaks) to provide pedestrian connections through a development site, in conformance with Chapter 19.162 FMC, Access and Circulation.
+
+4. Common Areas. All common areas (e.g., walkways, drives, courtyards, private alleys, parking courts, etc.) and building exteriors shall be maintained by a homeowners association or other legal entity. Copies of any applicable covenants, restrictions and conditions shall be recorded and provided to the city prior to building permit approval.
+
+B. Public and Institutional Uses. Public and institutional uses (as listed in Table 19.65.020(A)) are allowed in the town center commercial district, except that automobile-oriented uses shall comply with the standards in subsection D of this section. Typical automobile-oriented uses in this category include public works yards, equipment storage and repair, school bus companies, and similar facilities that store, repair or service automobiles, trucks, buses, heavy equipment and construction materials.
+
+C. Accessory Uses and Structures. Accessory uses and structures are of a nature customarily incidental and subordinate to the principal use or structure on the same lot. Typical accessory structures in the town center commercial district include small workshops, greenhouses, studios, storage sheds, and similar structures. Accessory uses and structures are allowed for all permitted land uses within the town center commercial district, as identified in Table 19.65.020(A). Accessory structures shall comply with the following standards:
+
+1. Primary Use Required. An accessory structure shall not be allowed before or without a primary use.
+
+2. Setback Standards. Accessory structures shall comply with the setback standards in FMC 19.65.040, except that the maximum setback provisions shall not apply.
+
+3. Design Guidelines. Accessory structures under 500 square feet are exempt from the design standards of FMC 19.65.090, except if the total floor area of all accessory structures on the site exceeds 1,500 square feet, then any new accessory structures must meet the design standards.
+
+4. Restrictions. A structure shall not be placed over an easement that prohibits such placement. No structure shall encroach into the public right-of-way.
+
+5. Compliance with Subdivision Standards. The owner may be required to remove an accessory structure as a condition of land division approval when removal of the structure is necessary to comply with setback standards.
+
+D. Automobile-Oriented Uses and Facilities. Automobile-oriented uses and facilities, as defined below, shall conform to all of the following standards in the town center commercial district. The standards are intended to provide a vibrant storefront character, slow traffic, and encourage walking.
+
+1. Parking, Garages, and Driveways. All off-street vehicle parking, including surface lots and garages, shall be accessed from alleys, placed underground, placed in structures above the ground floor, or located in parking areas located behind or to the side of a building; except that side yards on corner lots shall not be used for surface parking. All garage entrances facing a street (e.g., underground or structured parking) shall be recessed behind the front elevation by a minimum of five feet. On corner lots, garage entrances shall be oriented to a side street (i.e., away from the more major street) when vehicle access cannot be provided from an alley. Individual surface parking lots shall not exceed a total of 200 parking spaces, or one-half city block, whichever is smaller; larger parking areas shall be in multiple story garages.
+
+2. Automobile-Oriented Uses. “Automobile-oriented use” means automobiles and/or other motor vehicles are an integral part of the use. These uses are restricted because, when unrestricted, they detract from the pedestrian-friendly, storefront character of the district and can consume large amounts of land relative to other permitted uses. Automobile-oriented uses shall comply with the following standards:
+
+a. Vehicle Repair, Sales, Rental, Storage, Service. Businesses that repair, sell, rent, store, or service automobiles, trucks, motorcycles, buses, recreational vehicles/boats, construction equipment, and similar vehicles and equipment are permitted when the use does not exceed 5,000 square feet (indoor and outdoor). Outdoor storage and display for these uses is prohibited unless the use is in a fully enclosed structure.
+
+b. Drive-Up, Drive-In, and Drive-Through Facilities. Drive-up, drive-in, and drive-through facilities (e.g., associated with restaurants, banks, car washes, and similar uses) are permitted only when accessory to a primary commercial “walk-in” use, and shall conform to all of the following standards:
+
+i. The facility receives access from an alley or driveway, and not a street;
+
+ii. None of the drive-up, drive-in or drive-through facilities (e.g., driveway queuing areas, windows, teller machines, service windows, drop-boxes, and similar facilities) are located within 20 feet of a street and shall not be oriented to a street corner. (Walk-up only teller machines and kiosks may be oriented to a corner);
+
+iii. The facility is subordinate to a primary permitted use. “Subordinate” means all components of the facility, in total, occupy less street frontage than the primary commercial or public/institutional building; and
+
+iv. No more than one drive-up, drive-in, or drive-through facility shall be permitted on one block, or for a distance of 400 linear feet along the same street frontage, whichever is less.
+
+E. Sidewalk Displays. Sidewalk display of merchandise and vendors shall be limited to cards, plants, gardening/floral products, food, books, newspapers, bicycles, and similar small items for sale or rental to pedestrians (i.e., non-automobile-oriented). A minimum clearance of five feet shall be maintained. Display of larger items, such as automobiles, trucks, motorcycles, buses, recreational vehicles/boats, construction equipment, building materials, and similar vehicles and equipment, is prohibited.
+
+F. Light Industrial Uses.
+
+1. High Traffic-Generating Uses. Uses which are likely to generate “significant” levels of vehicle traffic (e.g., due to shipping, receiving, and/or customer traffic) shall require a conditional use permit, in accordance with Chapter 19.440 FMC. “Significant traffic” means that the average number of daily trips, or the average number of peak hour trips, on any existing street would increase by 10 percent or greater as a result of the development. The city may require a traffic impact analysis prepared by a qualified professional prior to deeming a land use application complete, and determining whether the proposed use requires conditional use approval. Applicants may be required to provide a traffic analysis for review by Oregon Department of Transportation (ODOT) for developments that increase traffic on state highways. The conditional use permit shall include appropriate transportation improvement requirements, as identified by the traffic analysis, in conformance with Chapter 19.165 FMC.
+
+2. Wireless Communication Equipment. Wireless communication equipment, including radio (i.e., cellular), television and similar types of transmission and receiving facilities are permitted, subject to the standards for wireless communication equipment in Chapter 19.245 FMC. (Ord. 1-2024 § 1 (Att. A); Ord. 1-2022 § 1 (Att. A); Ord. 6-2001 § 1. Formerly 19.65.090)

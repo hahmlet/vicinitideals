@@ -51,8 +51,17 @@ def rules() -> RuleSet:
     return RuleSet(load_rules())
 
 
-def test_the_layer_carries_twelve_zones_and_names_them(fairview: Layer) -> None:
-    assert set(REFUSED) | set(PORTED) == set(fairview.zones)
+def test_the_three_refusals_sit_alongside_the_ported_residential_zones(
+    fairview: Layer,
+) -> None:
+    """Names, not a count.
+
+    The corpus-wide zone count lives in test_port; pinning it here as well
+    means every Fairview slice breaks a test that has nothing to say about it.
+    What this file owns is that its three districts exist and that the nine
+    quadfit ported in July are still there beside them.
+    """
+    assert set(REFUSED) | set(PORTED) <= set(fairview.zones)
 
 
 def test_a_settled_refusal_owns_the_use_flag_and_nothing_else(
@@ -176,3 +185,62 @@ def test_the_new_citations_all_point_at_their_own_sentence(fairview: Layer) -> N
     ready = readiness_for(fairview, store=ProvenanceStore())
     assert ready.no_evidence == ()
     assert ready.misquoted == ()
+
+
+# --- the overlay label, which is a different kind of closed ------------------
+
+
+def test_the_parks_overlay_permits_seven_things_and_no_dwelling(
+    fairview: Layer,
+) -> None:
+    """19.108.010 is one sentence and seven items.
+
+    A government building, a park, open space, a library, a school, a power
+    substation, telecommunications. The chapter is 25 lines long and it is the
+    whole of what this label says.
+    """
+    held = fairview.zones["R/CSP"].values["quadplex_allowed"]
+    assert held.value is False
+    assert set(fairview.zones["R/CSP"].values) == {"quadplex_allowed"}
+
+    text = ProvenanceStore().quote(held.prov.quote)
+    for permitted in ("Government building", "Park, playground", "Library"):
+        assert permitted in text, permitted
+    assert "dwelling" not in text.lower()
+
+
+def test_the_parks_overlay_refusal_rests_on_ownership_and_says_so(
+    fairview: Layer,
+) -> None:
+    """The distinction this note exists to keep straight.
+
+    The overlay is additive -- its uses "may be permitted in any zoning
+    district" -- so it takes nothing away from the base district on its own.
+    What closes these 55 lots is the sentence after the list: the district "is
+    to be applied only to public property (lands owned by public agencies) or
+    utilities". That is an ownership fact, not a use prohibition, and encoding
+    it as though the chapter forbade housing would be the wrong reading of a
+    right answer.
+    """
+    text = ProvenanceStore().quote(
+        fairview.zones["R/CSP"].values["quadplex_allowed"].prov.quote
+    )
+    assert "may be permitted in any zoning district" in text
+    assert "applied only to public property" in text
+
+    notes = fairview.zones["R/CSP"].notes or ""
+    assert "ownership fact rather than a use prohibition" in notes
+
+
+def test_the_base_district_under_the_slash_is_left_unguessed(
+    fairview: Layer,
+) -> None:
+    """"R/" is R-6, R-7.5 or R-10 and the Metro label does not say which.
+
+    The same problem as R/SFLD and RM/TOZ, and the reason this refusal is
+    written so that it does not depend on the answer: a guess would put a
+    number on 55 parcels on the strength of a slash.
+    """
+    notes = fairview.zones["R/CSP"].notes or ""
+    assert "R-6, R-7.5 and R-10" in notes
+    assert "R/SFLD" in notes

@@ -86,11 +86,11 @@ or/multnomah/troutdale,GC,63,306.28,partial,0,3,,land_division_parent_standards;
 or/multnomah/portland,IR,60,159.37,partial,0,8,setback_rear_ft;setback_side_ft,land_division_parent_standards;max_coverage_pct;max_far;max_height_ft;min_landscaped_pct;quadplex_allowed;setback_front_ft;setback_front_max_ft,60
 or/multnomah/wood-village,MR 4,60,11.37,partial,0,12,,land_division_parent_standards;max_coverage_pct;max_height_ft;min_lot_depth_ft;min_lot_sqft;min_lot_width_ft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_garage_entrance_ft;setback_rear_ft;setback_side_ft,60
 or/multnomah/wood-village,NC,60,36.79,partial,0,7,,land_division_parent_standards;max_height_ft;min_landscaped_pct;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_front_max_ft,60
-or/multnomah/fairview,VMU,59,12.5,zone_missing,0,0,,,59
-or/multnomah/fairview,R/CSP,55,488.36,zone_missing,0,0,,,55
+or/multnomah/fairview,VMU,59,12.5,partial,0,7,,land_division_parent_standards;max_coverage_pct;max_height_ft;parking_min_per_unit;quadplex_allowed;setback_rear_ft;setback_side_ft,59
+or/multnomah/fairview,R/CSP,55,488.36,partial,0,3,,land_division_parent_standards;parking_min_per_unit;quadplex_allowed,55
 or/multnomah/fairview,GI,54,443.41,partial,0,3,,land_division_parent_standards;parking_min_per_unit;quadplex_allowed,54
 or/multnomah/gresham,VLDR-SW,48,193.98,partial,0,14,,land_division_parent_standards;max_far;max_height_ft;min_frontage_ft;min_lot_depth_ft;min_lot_sqft;min_lot_width_ft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_garage_entrance_ft;setback_rear_ft;setback_side_ft;setback_street_side_ft,48
-or/multnomah/fairview,TCC,47,72.9,zone_missing,0,0,,,47
+or/multnomah/fairview,TCC,47,72.9,partial,0,8,,land_division_parent_standards;max_height_ft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_front_max_ft;setback_rear_ft;setback_side_ft,47
 or/multnomah/gresham,DMU,42,43.66,partial,0,3,,land_division_parent_standards;parking_min_per_unit;quadplex_allowed,42
 or/multnomah/wood-village,C/I,41,164.74,partial,0,3,,land_division_parent_standards;parking_min_per_unit;quadplex_allowed,41
 or/multnomah/fairview,CC,40,125.04,partial,0,3,,land_division_parent_standards;parking_min_per_unit;quadplex_allowed,40
@@ -115,7 +115,7 @@ or/multnomah/gresham,NC,12,8.15,partial,0,3,,land_division_parent_standards;park
 or/multnomah/fairview,LI,11,17.71,partial,0,3,,land_division_parent_standards;parking_min_per_unit;quadplex_allowed,11
 or/multnomah/gresham,IND-SW,11,113.65,partial,0,3,,land_division_parent_standards;parking_min_per_unit;quadplex_allowed,11
 or/multnomah/_unincorporated,UPAGI,8,78.55,zone_missing,0,0,,,8
-or/multnomah/fairview,VA,8,7.03,zone_missing,0,0,,,8
+or/multnomah/fairview,VA,8,7.03,partial,0,8,,land_division_parent_standards;max_coverage_pct;max_height_ft;min_density_du_per_acre;min_landscaped_pct;parking_min_per_unit;quadplex_allowed;setback_front_ft,8
 or/multnomah/_unincorporated,OCI,6,3.74,zone_missing,0,0,,,6
 or/multnomah/troutdale,CC,6,12.82,partial,0,3,,land_division_parent_standards;parking_min_per_unit;quadplex_allowed,6
 or/multnomah/wood-village,O,6,15.63,zone_missing,0,0,,,6
@@ -127,12 +127,12 @@ or/multnomah/_unincorporated,LR5,4,82.4,zone_missing,0,0,,,4
 or/multnomah/_unincorporated,UF20,4,94.36,zone_missing,0,0,,,4
 or/multnomah/_unincorporated,UPAR-10,4,46.55,zone_missing,0,0,,,4
 or/multnomah/fairview,LR5,4,55.45,zone_missing,0,0,,,4
-or/multnomah/fairview,VC,4,15.13,zone_missing,0,0,,,4
+or/multnomah/fairview,VC,4,15.13,partial,0,8,,land_division_parent_standards;max_coverage_pct;max_height_ft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_rear_ft;setback_side_ft,4
 or/multnomah/_unincorporated,GGR2,3,0.93,zone_missing,0,0,,,3
 or/multnomah/_unincorporated,IG2,3,2.0,zone_missing,0,0,,,3
 or/multnomah/fairview,AH,3,14.68,zone_missing,0,0,,,3
 or/multnomah/fairview,R/MH,3,35.64,partial,0,3,,land_division_parent_standards;parking_min_per_unit;quadplex_allowed,3
-or/multnomah/fairview,VO,3,1.56,zone_missing,0,0,,,3
+or/multnomah/fairview,VO,3,1.56,partial,0,3,,land_division_parent_standards;parking_min_per_unit;quadplex_allowed,3
 or/multnomah/troutdale,IP,3,38.45,partial,0,3,,land_division_parent_standards;parking_min_per_unit;quadplex_allowed,3
 or/multnomah/troutdale,MU-3,3,19.27,partial,0,11,,land_division_parent_standards;max_height_ft;min_frontage_ft;min_lot_depth_ft;min_lot_width_ft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_front_max_ft;setback_rear_ft;setback_side_ft,3
 or/multnomah/_unincorporated,CFU2,2,2.07,zone_missing,0,0,,,2
