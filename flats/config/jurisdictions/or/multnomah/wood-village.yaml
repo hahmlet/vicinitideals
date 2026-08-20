@@ -4,7 +4,21 @@ eligible: true
 notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s verification was against a
   coarser standard (one citation per row) and does not carry over. UNPORTED: orientation_constraint=''entrance_only''.
   quadfit justified this in a YAML comment with no citation; it needs its own encoding rather than invented
-  provenance.'
+  provenance.
+
+
+  This city speaks about housing two ways. Its residential zones list housing types by name in Tables
+  210-2 and 220-2, down to "Attached or Detached Tri- or Quadplex". Everything else — commercial,
+  town centre, manufacturing, the mixed-use industrial zone — states one row, Household Living, and
+  leaves what that covers to WVDC 710.100. Reading only the first kind of table would leave two thirds
+  of the city looking silent about dwellings when it is not.
+
+
+  O, the Open Space zone, is not encoded and is not a gap in the reading. WVDC 260.200 names Table
+  260-1 three times — outright uses, conditional uses, prohibited uses — and the table does not come
+  down with the page under this extractor, so nothing here can say what it permits. Six lots, and the
+  honest state is unread. The section is declared and stored anyway so the absence is checkable rather
+  than remembered.'
 ingest:
   geoid: null
   juris_city_codes:
@@ -42,7 +56,185 @@ code:
     url: https://woodvillage.municipal.codes/WVDC/220.355
     title: "WVDC 220.355 - Middle Housing Design Standards (MR)"
     allow_thin: true
+  - id: "230.200"
+    url: https://woodvillage.municipal.codes/WVDC/230.200
+    title: "WVDC 230.200 - Primary Uses (Commercial Zones, Table 230-1)"
+    allow_thin: true
+  - id: "235.200"
+    url: https://woodvillage.municipal.codes/WVDC/235.200
+    title: "WVDC 235.200 - Primary Uses (Town Center Zone, Table 235-1)"
+    allow_thin: true
+  - id: "240.200"
+    url: https://woodvillage.municipal.codes/WVDC/240.200
+    title: "WVDC 240.200 - Primary Uses (Manufacturing Zones, Table 240-1)"
+    allow_thin: true
+  - id: "250.200"
+    url: https://woodvillage.municipal.codes/WVDC/250.200
+    title: "WVDC 250.200 - Primary Uses (Commercial/Industrial Mixed Use, Table 250-1)"
+    allow_thin: true
+  # Fetched and kept even though nothing is encoded from it. The section's
+  # prose names Table 260-1 three times and the table itself does not come
+  # down with the page, so the Open Space zone stays unread rather than
+  # guessed -- and the document on disk is what makes that checkable.
+  - id: "260.200"
+    url: https://woodvillage.municipal.codes/WVDC/260.200
+    title: "WVDC 260.200 - Primary Uses (Open Space Zone, Table 260-1)"
+    allow_thin: true
+  # The use category the non-residential tables answer in. Wood Village's
+  # residential zones list housing types by name -- "Attached or Detached Tri-
+  # or Quadplex" -- and its commercial, manufacturing and town centre zones do
+  # not: they state one row, Household Living, and this is what that row means.
+  - id: "710.100"
+    url: https://woodvillage.municipal.codes/WVDC/710.100
+    title: "WVDC 710.100 - Household Living (use category)"
+    allow_thin: true
+  - id: "230.310"
+    url: https://woodvillage.municipal.codes/WVDC/230.310
+    title: "WVDC 230.310 - Lot Size and Dimensional Standards (Table 230-2)"
+    allow_thin: true
+  - id: "230.315"
+    url: https://woodvillage.municipal.codes/WVDC/230.315
+    title: "WVDC 230.315 - Residential-Commercial Mixed Use Development"
+    allow_thin: true
+  # Declared and stored, cited by nothing. WVDC 230.390 is the NC design
+  # standards chapter: Table 230-5 is required of all new development and
+  # Table 230-6 is a menu a development must take ten points from. None of it
+  # is a lot standard and none of it can refuse a lot, so nothing here encodes
+  # a value from it -- but a GREEN in NC is a fitment answer and this is one of
+  # the reasons that is not the same as an approval.
+  - id: "230.390"
+    url: https://woodvillage.municipal.codes/WVDC/230.390
+    title: "WVDC 230.390 - Neighborhood Commercial (NC) Zone Design Standards"
+    allow_thin: true
+  - id: "230.330"
+    url: https://woodvillage.municipal.codes/WVDC/230.330
+    title: "WVDC 230.330 - Building Setbacks and Orientation"
+    allow_thin: true
+  - id: "230.335"
+    url: https://woodvillage.municipal.codes/WVDC/230.335
+    title: "WVDC 230.335 - Height"
+    allow_thin: true
 zones:
+  NC:
+    section: ["230.200", "230.310", "230.315", "230.330", "230.335", "710.100"]
+    cite_default:
+      cite: WVDC 230.200 Table 230-1 (Uses in Commercial Zones); 710.100 (Ord. 3-2021)
+      url: https://woodvillage.municipal.codes/WVDC/230.200
+      retrieved: '2026-08-19'
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/wood-village/230.200.txt#L72-L75,L117-L118"
+      variants:
+        # Not a prohibition, and not a bare hearing either. Table 230-1 reads
+        # CU, and 230.315.A.1 then says residential is permitted only as part
+        # of a mixed use development -- so both have to be held before the use
+        # opens. The pod holds neither, which is why the base false is what a
+        # screen sees.
+        - value: true
+          when: [conditional_use, mixed_use]
+          quote: "or/multnomah/wood-village/230.200.txt#L72-L75,L117-L118"
+    # Table 230-2 states no lot standard at all, twice: 230.310.A in prose --
+    # "There is no minimum lot size or dimension for development of land or
+    # creation of new lots in commercial zones" -- and then footnote (1) on the
+    # table itself, which repeats it for residential uses specifically. Three
+    # rows reading None, and the footnote is what makes them a read absence
+    # rather than an empty cell.
+    min_lot_sqft:
+      exempt: true
+      quote: "or/multnomah/wood-village/230.310.txt#L60,L64-L67,L84"
+    min_lot_width_ft:
+      exempt: true
+      quote: "or/multnomah/wood-village/230.310.txt#L60,L64-L65,L68,L84"
+    min_lot_depth_ft:
+      exempt: true
+      quote: "or/multnomah/wood-village/230.310.txt#L60,L64-L65,L69,L84"
+    # "45 - 55 feet (see Figure 230-3)". The table prints a range and hands the
+    # number to a map this system cannot read, so 45 is encoded -- the end of
+    # the range that is true everywhere in the zone. A 26-foot pod clears it,
+    # and clears the 35-foot step-down too, so the unread figure does not
+    # change any verdict here. See the zone notes.
+    max_height_ft:
+      value: 45
+      quote: "or/multnomah/wood-village/230.310.txt#L64-L65,L70,L86"
+    # 3 feet minimum and 10 feet maximum, one row. The maximum is the standard
+    # that is actually hard to meet: 230.330.B.3.a asks 75 percent of the
+    # ground-level street-facing facade to sit within ten feet of the street
+    # lot line, which is a facade-length test the screen does not run.
+    setback_front_ft:
+      value: 3
+      quote: "or/multnomah/wood-village/230.310.txt#L64-L65,L73"
+    setback_front_max_ft:
+      value: 10
+      quote: "or/multnomah/wood-village/230.310.txt#L64-L65,L73"
+    setback_side_ft:
+      exempt: true
+      quote: "or/multnomah/wood-village/230.310.txt#L64-L65,L74"
+    setback_rear_ft:
+      exempt: true
+      quote: "or/multnomah/wood-village/230.310.txt#L64-L65,L75"
+    min_landscaped_pct:
+      value: 5
+      quote: "or/multnomah/wood-village/230.310.txt#L64-L65,L78,L88"
+    notes: >-
+      Table 230-1 reads CU on the Household Living row -- conditional use review required -- against Y for Mixed Use Residential and Commercial. So a pod on an NC lot is not refused; it needs a hearing. That is a different answer from a prohibition and the traffic light can only say so if the code's own distinction survives the encoding, which is why the base is false and the relief carries the true. The row that answers is Household Living, which 710.100 defines as "the residential occupancy of a dwelling unit or a structure by a household" with an average stay of thirty days or more. It names no housing type and excludes none, so a four-unit attached townhome is inside it -- which is how the non-residential zones speak about dwellings at all. The residential zones do the opposite and list types by name. The definition is quoted at or/multnomah/wood-village/710.100.txt#L56,L60.
+
+
+      Three things in this zone are read and cannot be screened, and they are
+      recorded here rather than encoded as numbers nobody can check. Figure
+      230-3 is a map: WVDC 230.335.B puts the maximum base height in it and
+      Table 230-2 prints the range that map spans, 45 to 55 feet. 230.335.C
+      steps that base down -- 35 feet within twenty-five feet of an LR7.5 site,
+      45 within twenty-five feet of an MR2 site, 45 within fifteen feet of a
+      lot line across a local street or alley from either -- and each applies to
+      a PORTION of the site, which is a geometry this field cannot hold. And
+      230.335.A sets a minimum height of eighteen feet on Halsey Street. The pod
+      is twenty-six feet, so it is over the floor and under every ceiling, which
+      is why 45 is safe to encode: no reading of the unread map changes the
+      answer for this building.
+
+
+      Two more limits bind development rather than the lot. 230.315.A.2 caps
+      ground-floor residential at fifty percent of a site's Halsey Street
+      frontage, and 230.330.B.3.a asks seventy-five percent of the ground-level
+      street-facing facade to meet the ten-foot maximum setback. Both are
+      facade-length tests against a specific street; neither is a lot standard,
+      and a fitment screen that reported GREEN on an NC lot would be reporting
+      that the building fits, not that this design of it would be approved.
+      WVDC 230.390 is the third of those: every new development in NC must
+      meet Table 230-5 and take ten points off the menu in Table 230-6.
+  C/I:
+    section: ["250.200", "710.100"]
+    cite_default:
+      cite: WVDC 250.200 Table 250-1 (Uses in Commercial/Industrial Mixed Use Zone); 710.100
+      url: https://woodvillage.municipal.codes/WVDC/250.200
+      retrieved: '2026-08-19'
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/wood-village/250.200.txt#L86-L89,L128-L132"
+    notes: >-
+      Table 250-1 has one column and reads N on both residential rows, Household Living and Group Living. The zone exists to hold Metro Title 4 industrial land, and the table's limited-use notes are about how much retail may face the street rather than about housing. The row that answers is Household Living, which 710.100 defines as "the residential occupancy of a dwelling unit or a structure by a household" with an average stay of thirty days or more. It names no housing type and excludes none, so a four-unit attached townhome is inside it -- which is how the non-residential zones speak about dwellings at all. The residential zones do the opposite and list types by name. The definition is quoted at or/multnomah/wood-village/710.100.txt#L56,L60.
+  GM:
+    section: ["240.200", "710.100"]
+    cite_default:
+      cite: WVDC 240.200 Table 240-1 (Uses in Manufacturing Zones); 710.100
+      url: https://woodvillage.municipal.codes/WVDC/240.200
+      retrieved: '2026-08-19'
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/wood-village/240.200.txt#L90-L94,L132-L136"
+    notes: >-
+      Table 240-1 reads N on Household Living and on Group Living in both manufacturing columns. General Manufacturing permits no dwelling of any kind, not even the caretaker unit some industrial codes carry. The row that answers is Household Living, which 710.100 defines as "the residential occupancy of a dwelling unit or a structure by a household" with an average stay of thirty days or more. It names no housing type and excludes none, so a four-unit attached townhome is inside it -- which is how the non-residential zones speak about dwellings at all. The residential zones do the opposite and list types by name. The definition is quoted at or/multnomah/wood-village/710.100.txt#L56,L60.
+  LM:
+    section: ["240.200", "710.100"]
+    cite_default:
+      cite: WVDC 240.200 Table 240-1 (Uses in Manufacturing Zones); 710.100
+      url: https://woodvillage.municipal.codes/WVDC/240.200
+      retrieved: '2026-08-19'
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/wood-village/240.200.txt#L90-L94,L132-L136"
+    notes: >-
+      Table 240-1 reads N on Household Living and on Group Living in both manufacturing columns. Light Manufacturing is the looser of the two on retail and office and is no different on housing. The row that answers is Household Living, which 710.100 defines as "the residential occupancy of a dwelling unit or a structure by a household" with an average stay of thirty days or more. It names no housing type and excludes none, so a four-unit attached townhome is inside it -- which is how the non-residential zones speak about dwellings at all. The residential zones do the opposite and list types by name. The definition is quoted at or/multnomah/wood-village/710.100.txt#L56,L60.
   LR 7.5:
     section: ["210."]
     cite_default:
