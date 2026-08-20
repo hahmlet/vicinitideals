@@ -18,6 +18,7 @@ import pytest
 
 from flats.encode.dispositions import notes
 from flats.rules.loader import load_rules
+from flats.rules.model import Layer
 from flats.rules.resolver import RuleSet
 
 pytestmark = pytest.mark.unit
@@ -88,3 +89,32 @@ def test_the_two_easement_notes_cap_the_verdict_rather_than_clearing_it() -> Non
     capping = {n.mark: n.fact for n in notes(WV) if n.state == "unmeasured"}
 
     assert capping == {"K": "access_easement", "P": "sidewalk_easement"}
+
+
+@pytest.fixture(scope="module")
+def wilsonville() -> Layer:
+    return load_rules()[WV]
+
+
+def test_no_zone_here_carries_the_overlay_that_would_refuse_the_pod(
+    wilsonville: Layer,
+) -> None:
+    """The one rule in this chapter that could kill a Wilsonville lot outright.
+
+    Section 4.137.2 caps the height of a structure's shade point, and Table 2
+    puts that cap at 14 ft on a lot whose shade reduction line is five feet off
+    the northern line. A 26 ft pod cannot pass it at any setback, because the
+    standard is not a setback.
+
+    It applies to building permits "in an 'S' (solar access) Overlay Zone", and
+    that overlay is opt-in: 4.137(.01)B has the Council apply it by zone change
+    where the owner asks for it. It travels in the zone label -- the code's own
+    examples are PDR-S and R-S -- so the absence of the suffix is checkable
+    rather than assumed, and this is the check. A re-ingest that brings one in
+    fails here and sends the next reader to the note.
+    """
+    assert not [z for z in wilsonville.zones if z.upper().endswith("-S")]
+
+    notes_text = wilsonville.notes or ""
+    assert "4.137.2" in notes_text
+    assert "shade point" in notes_text

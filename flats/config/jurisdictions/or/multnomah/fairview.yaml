@@ -207,6 +207,27 @@ zones:
       value: 35
       cite: FMC Table 19.30.030.A, row 17
       quote: "or/multnomah/fairview/19.30.txt#L439,L440"
+      qualified_by:
+        fact: adjacent_single_story_building
+        cite: FMC 19.30.030(E), Building Height Transition
+        quote: "or/multnomah/fairview/19.30.txt#L481-L486"
+    max_far:
+      # Table 19.30.030.A row 14, "Maximum Floor Area Ratio (FAR)", stated
+      # as a ratio to one. Read across from the row label, because the table
+      # prints one cell per line and position is what names the column.
+      #
+      # The cell carries its own carve-out, "Cottage clusters none", and a
+      # quadplex is not one: row 1 of this table lists Quadplex and Cottage
+      # Cluster as separate housing types with separate lot minimums. So the
+      # ratio binds.
+      #
+      # It is the standard that decides a small lot here. The pod is 2,016 sq
+      # ft on the ground over two storeys, so 0.7 asks for 5,760 sq ft of lot
+      # -- inside this zone's own minimum, and outside a nonconforming lot
+      # platted before it.
+      value: 0.7
+      cite: FMC Table 19.30.030.A, row 14
+      quote: "or/multnomah/fairview/19.30.txt#L417,L418,L419"
     max_lot_depth_ratio:
       value: 3
       quote: "or/multnomah/fairview/19.30.txt#L353"
@@ -240,8 +261,36 @@ zones:
     max_coverage_pct:
       value: 50
       quote: "or/multnomah/fairview/19.30.txt#L428"
-    notes: 'quadfit confidence: needs_verification | Quadplex outright; min lot = SFD min 6,000 sf. Max
-      FAR 0.7. Height 35 ft.'
+    notes: >-
+      Quadplex outright, and the minimum lot is the detached-dwelling minimum:
+      6,000 sq ft buys four units here. Maximum FAR 0.7 is read and not
+      encoded — there is no floor-area field, and the pod's 4,032 sq ft of
+      floor over a 6,000 sq ft lot is 0.67, which passes on the smallest lot
+      the zone allows and by too little to ignore if a lot is ever smaller.
+
+
+      BUILDING HEIGHT TRANSITION, READ WIDE. Row 17 of Table 19.30.030.A gives
+      this zone its height, and 19.30.030(E) makes that conditional: taller
+      buildings "shall 'step-down' to create a building height transition to
+      adjacent single-story building(s)", triggered "within 20 feet (as
+      measured horizontally) of an existing single-story building with a height
+      of 20 feet or less". At 26 ft the pod is the taller building, and the
+      standard is met only where the separation buys the height — so on a
+      close-built established street it can refuse the building outright rather
+      than move it.
+
+
+      Two facts decide it and nothing here holds either: the neighbouring
+      structure's height and storey count, and a horizontal distance between
+      two buildings rather than between a building and a line. Carried as
+      `qualified_by` so the unqualified figure cannot certify a lot on its own.
+
+
+      The scope is a judgement. The table hangs (E) off row 12, "Special Yards
+      (distance between primary buildings on the same lot)", which would keep
+      it away from a single pod on its own lot. The subsection's own text says
+      "between developments" and "adjacent", which reads across the line. The
+      wider reading costs a review and the narrow one costs a false GREEN.
     setback_front_max_ft:
       value: 30
       quote: "or/multnomah/fairview/19.30.txt#L369"
@@ -322,6 +371,27 @@ zones:
       value: 35
       cite: FMC Table 19.30.030.A, row 17
       quote: "or/multnomah/fairview/19.30.txt#L439,L441"
+      qualified_by:
+        fact: adjacent_single_story_building
+        cite: FMC 19.30.030(E), Building Height Transition
+        quote: "or/multnomah/fairview/19.30.txt#L481-L486"
+    max_far:
+      # Table 19.30.030.A row 14, "Maximum Floor Area Ratio (FAR)", stated
+      # as a ratio to one. Read across from the row label, because the table
+      # prints one cell per line and position is what names the column.
+      #
+      # The cell carries its own carve-out, "Cottage clusters none", and a
+      # quadplex is not one: row 1 of this table lists Quadplex and Cottage
+      # Cluster as separate housing types with separate lot minimums. So the
+      # ratio binds.
+      #
+      # It is the standard that decides a small lot here. The pod is 2,016 sq
+      # ft on the ground over two storeys, so 0.7 asks for 5,760 sq ft of lot
+      # -- inside this zone's own minimum, and outside a nonconforming lot
+      # platted before it.
+      value: 0.7
+      cite: FMC Table 19.30.030.A, row 14
+      quote: "or/multnomah/fairview/19.30.txt#L417,L420,L421"
     max_lot_depth_ratio:
       value: 3
       quote: "or/multnomah/fairview/19.30.txt#L355"
@@ -355,7 +425,32 @@ zones:
     max_coverage_pct:
       value: 50
       quote: "or/multnomah/fairview/19.30.txt#L429"
-    notes: 'quadfit confidence: needs_verification | Quadplex min lot 7,500 sf.'
+    notes: >-
+      Quadplex outright on the zone's own 7,500 sq ft minimum.
+
+
+      BUILDING HEIGHT TRANSITION, READ WIDE. Row 17 of Table 19.30.030.A gives
+      this zone its height, and 19.30.030(E) makes that conditional: taller
+      buildings "shall 'step-down' to create a building height transition to
+      adjacent single-story building(s)", triggered "within 20 feet (as
+      measured horizontally) of an existing single-story building with a height
+      of 20 feet or less". At 26 ft the pod is the taller building, and the
+      standard is met only where the separation buys the height — so on a
+      close-built established street it can refuse the building outright rather
+      than move it.
+
+
+      Two facts decide it and nothing here holds either: the neighbouring
+      structure's height and storey count, and a horizontal distance between
+      two buildings rather than between a building and a line. Carried as
+      `qualified_by` so the unqualified figure cannot certify a lot on its own.
+
+
+      The scope is a judgement. The table hangs (E) off row 12, "Special Yards
+      (distance between primary buildings on the same lot)", which would keep
+      it away from a single pod on its own lot. The subsection's own text says
+      "between developments" and "adjacent", which reads across the line. The
+      wider reading costs a review and the narrow one costs a false GREEN.
     setback_front_max_ft:
       value: 30
       quote: "or/multnomah/fairview/19.30.txt#L370"
@@ -436,6 +531,27 @@ zones:
       value: 35
       cite: FMC Table 19.30.030.A, row 17
       quote: "or/multnomah/fairview/19.30.txt#L439,L442"
+      qualified_by:
+        fact: adjacent_single_story_building
+        cite: FMC 19.30.030(E), Building Height Transition
+        quote: "or/multnomah/fairview/19.30.txt#L481-L486"
+    max_far:
+      # Table 19.30.030.A row 14, "Maximum Floor Area Ratio (FAR)", stated
+      # as a ratio to one. Read across from the row label, because the table
+      # prints one cell per line and position is what names the column.
+      #
+      # The cell carries its own carve-out, "Cottage clusters none", and a
+      # quadplex is not one: row 1 of this table lists Quadplex and Cottage
+      # Cluster as separate housing types with separate lot minimums. So the
+      # ratio binds.
+      #
+      # It is the standard that decides a small lot here. The pod is 2,016 sq
+      # ft on the ground over two storeys, so 0.7 asks for 5,760 sq ft of lot
+      # -- inside this zone's own minimum, and outside a nonconforming lot
+      # platted before it.
+      value: 0.7
+      cite: FMC Table 19.30.030.A, row 14
+      quote: "or/multnomah/fairview/19.30.txt#L417,L422,L423"
     max_lot_depth_ratio:
       value: 3
       quote: "or/multnomah/fairview/19.30.txt#L357"
@@ -469,7 +585,33 @@ zones:
     max_coverage_pct:
       value: 50
       quote: "or/multnomah/fairview/19.30.txt#L430"
-    notes: 'quadfit confidence: needs_verification | Quadplex min lot 10,000 sf (= zone min).'
+    notes: >-
+      Quadplex outright, and the quadplex minimum is the zone minimum: 10,000
+      sq ft either way.
+
+
+      BUILDING HEIGHT TRANSITION, READ WIDE. Row 17 of Table 19.30.030.A gives
+      this zone its height, and 19.30.030(E) makes that conditional: taller
+      buildings "shall 'step-down' to create a building height transition to
+      adjacent single-story building(s)", triggered "within 20 feet (as
+      measured horizontally) of an existing single-story building with a height
+      of 20 feet or less". At 26 ft the pod is the taller building, and the
+      standard is met only where the separation buys the height — so on a
+      close-built established street it can refuse the building outright rather
+      than move it.
+
+
+      Two facts decide it and nothing here holds either: the neighbouring
+      structure's height and storey count, and a horizontal distance between
+      two buildings rather than between a building and a line. Carried as
+      `qualified_by` so the unqualified figure cannot certify a lot on its own.
+
+
+      The scope is a judgement. The table hangs (E) off row 12, "Special Yards
+      (distance between primary buildings on the same lot)", which would keep
+      it away from a single pod on its own lot. The subsection's own text says
+      "between developments" and "adjacent", which reads across the line. The
+      wider reading costs a review and the narrow one costs a false GREEN.
     setback_front_max_ft:
       value: 30
       quote: "or/multnomah/fairview/19.30.txt#L371"
@@ -535,6 +677,28 @@ zones:
       value: 45
       cite: FMC Table 19.30.030.A, row 17
       quote: "or/multnomah/fairview/19.30.txt#L439,L444"
+      qualified_by:
+        fact: adjacent_single_story_building
+        cite: FMC 19.30.030(E), Building Height Transition
+        quote: "or/multnomah/fairview/19.30.txt#L481-L486"
+    max_far:
+      # Table 19.30.030.A row 14, "Maximum Floor Area Ratio (FAR)", stated
+      # as a ratio to one. Read across from the row label, because the table
+      # prints one cell per line and position is what names the column.
+      #
+      # The cell's carve-out is "Multi-unit none", and row 1 of this table
+      # lists Quadplex, Townhouse and Multi-Unit as three separate housing
+      # types. A four-unit attached building is the second of those on the
+      # split-plat path and the first otherwise, and neither is the third, so
+      # the ratio binds on both.
+      #
+      # It is the standard that decides a small lot here. The pod is 2,016 sq
+      # ft on the ground over two storeys, so 0.7 asks for 5,760 sq ft of lot
+      # -- inside this zone's own minimum, and outside a nonconforming lot
+      # platted before it.
+      value: 0.7
+      cite: FMC Table 19.30.030.A, row 14
+      quote: "or/multnomah/fairview/19.30.txt#L417,L425,L426"
     quadplex_allowed:
       # Table 19.30.020.A row h, Quadplex. Six district columns, four values
       # printed: R-6, R-7.5, R-10 and RM permit it, MH and TOZ print nothing.
@@ -567,8 +731,35 @@ zones:
     max_coverage_pct:
       value: 60
       quote: "or/multnomah/fairview/19.30.txt#L432"
-    notes: 'quadfit confidence: needs_verification | Quadplex needs 2,500 sf/unit = 10,000 sf — standard
-      6-7.5k RM lots cannot hold a quad without assembly. Height 45 ft.'
+    notes: >-
+      The zone states its lot minimum per unit rather than per building, so a
+      quadplex needs 2,500 sq ft four times over. Ordinary RM lots run 6,000 to
+      7,500 sq ft and cannot hold one without assembly — the binding constraint
+      in this zone is arithmetic, not the envelope.
+
+
+      BUILDING HEIGHT TRANSITION, READ WIDE. Row 17 of Table 19.30.030.A gives
+      this zone its height, and 19.30.030(E) makes that conditional: taller
+      buildings "shall 'step-down' to create a building height transition to
+      adjacent single-story building(s)", triggered "within 20 feet (as
+      measured horizontally) of an existing single-story building with a height
+      of 20 feet or less". At 26 ft the pod is the taller building, and the
+      standard is met only where the separation buys the height — so on a
+      close-built established street it can refuse the building outright rather
+      than move it.
+
+
+      Two facts decide it and nothing here holds either: the neighbouring
+      structure's height and storey count, and a horizontal distance between
+      two buildings rather than between a building and a line. Carried as
+      `qualified_by` so the unqualified figure cannot certify a lot on its own.
+
+
+      The scope is a judgement. The table hangs (E) off row 12, "Special Yards
+      (distance between primary buildings on the same lot)", which would keep
+      it away from a single pod on its own lot. The subsection's own text says
+      "between developments" and "adjacent", which reads across the line. The
+      wider reading costs a review and the narrow one costs a false GREEN.
     setback_front_max_ft:
       value: 30
       quote: "or/multnomah/fairview/19.30.txt#L373"
@@ -596,13 +787,59 @@ zones:
       value: 35
       cite: FMC Table 19.30.030.A, row 17, Townhouse Overlay column
       quote: "or/multnomah/fairview/19.30.txt#L439,L443"
+      qualified_by:
+        fact: adjacent_single_story_building
+        cite: FMC 19.30.030(E), Building Height Transition
+        quote: "or/multnomah/fairview/19.30.txt#L481-L486"
+    max_far:
+      # Table 19.30.030.A row 14, "Maximum Floor Area Ratio (FAR)", stated
+      # as a ratio to one. Read across from the row label, because the table
+      # prints one cell per line and position is what names the column.
+      #
+      # The only cell in row 14 with no carve-out under it.
+      #
+      # It is the standard that decides a small lot here. The pod is 2,016 sq
+      # ft on the ground over two storeys, so 0.7 asks for 5,760 sq ft of lot
+      # -- inside this zone's own minimum, and outside a nonconforming lot
+      # platted before it.
+      value: 0.7
+      cite: FMC Table 19.30.030.A, row 14
+      quote: "or/multnomah/fairview/19.30.txt#L417,L424"
     like: RM
-    notes: 'Metro layer label, not a Fairview zone: the RM base district with the townhouse overlay
-      mapped onto it. Adopted by reference rather than restated, so every number still cites the RM
-      row it was read from and an amendment to Table A moves this zone with it. What the TOZ overlay
-      itself changes at parcel level is unconfirmed — the overlay is townhouse-oriented, and if it
-      turns out to move a standard, that standard belongs here as a local value overriding the
-      reference. quadfit confidence: needs_verification.'
+    notes: >-
+      Metro layer label, not a Fairview zone: the RM base district with the
+      townhouse overlay mapped onto it. Adopted by reference rather than
+      restated, so every number still cites the row it was read from and an
+      amendment to Table A moves this zone with it. Table 19.30.030.A gives the
+      Townhouse Overlay its own column, so the standards read off that table
+      are stated here rather than borrowed. What the TOZ overlay itself changes
+      at parcel level is unconfirmed — the overlay is townhouse-oriented, and
+      if it turns out to move a standard, that standard belongs here as a local
+      value overriding the reference.
+
+
+      BUILDING HEIGHT TRANSITION, READ WIDE. Row 17 of Table 19.30.030.A gives
+      this zone its height, and 19.30.030(E) makes that conditional: taller
+      buildings "shall 'step-down' to create a building height transition to
+      adjacent single-story building(s)", triggered "within 20 feet (as
+      measured horizontally) of an existing single-story building with a height
+      of 20 feet or less". At 26 ft the pod is the taller building, and the
+      standard is met only where the separation buys the height — so on a
+      close-built established street it can refuse the building outright rather
+      than move it.
+
+
+      Two facts decide it and nothing here holds either: the neighbouring
+      structure's height and storey count, and a horizontal distance between
+      two buildings rather than between a building and a line. Carried as
+      `qualified_by` so the unqualified figure cannot certify a lot on its own.
+
+
+      The scope is a judgement. The table hangs (E) off row 12, "Special Yards
+      (distance between primary buildings on the same lot)", which would keep
+      it away from a single pod on its own lot. The subsection's own text says
+      "between developments" and "adjacent", which reads across the line. The
+      wider reading costs a review and the narrow one costs a false GREEN.
   R/SFLD:
     cite_default:
       cite: 'Mapping inference: Metro ''R/SFLD'' = old Lower Density Residential overlay -> current R-10;

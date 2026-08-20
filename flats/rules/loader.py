@@ -105,7 +105,7 @@ def _parse_values(
         if isinstance(node, dict) and (
             {"value", "exempt", "per_dwelling", "sqft_per_unit", "acres",
              "acres_per_dwelling", "per_height_ft", "floor_ft",
-             "step_back"} & set(node)
+             "step_back", "qualified_by"} & set(node)
         ):
             body = dict(node)
             value = body.pop("value", None)
@@ -121,6 +121,9 @@ def _parse_values(
             )
             measured_on, measured_on_cite, measured_on_quote = _parse_measured_on(
                 body.pop("measured_on", None), f"{where}.{key}", problems
+            )
+            qualified, qualified_cite, qualified_quote = _parse_qualified_by(
+                body.pop("qualified_by", None), f"{where}.{key}", problems
             )
             unless = body.pop("unless", ()) or ()
             raw_variants = body.pop("variants", None) or ()
@@ -288,6 +291,7 @@ def _parse_values(
             acres = None
             acres_each = None
             measured_on = measured_on_cite = measured_on_quote = None
+            qualified = qualified_cite = qualified_quote = None
             unless = ()
             raw_variants = ()
 
@@ -361,6 +365,9 @@ def _parse_values(
                 measured_on=None if measured_on is None else str(measured_on),
                 measured_on_cite=measured_on_cite,
                 measured_on_quote=measured_on_quote,
+                qualified_by=qualified,
+                qualified_cite=qualified_cite,
+                qualified_quote=qualified_quote,
                 unless=tuple(unless),
                 prov=prov,
                 status=Status(declared),
@@ -714,6 +721,46 @@ def _parse_measured_on(
         problems.append(
             f"{where}.measured_on: name the quantity under 'fact' — the rate is "
             f"computed on it"
+        )
+        return None, None, None
+    return str(fact), None if cite is None else str(cite), None if quote is None else str(quote)
+
+
+def _parse_qualified_by(
+    raw: Any,
+    where: str,
+    problems: list[str],
+) -> tuple[str | None, str | None, str | None]:
+    """Parse a rule elsewhere that moves this standard on a fact nobody holds.
+
+    Same shape as ``measured_on`` and the same reason for it: the fact is one
+    name shared across the corpus, and the sentence that invokes it is local.
+    Fairview's building height transition and Gresham's hillside release would
+    both be "the height standard is not the whole rule here", and they are not
+    the same rule, so each carries its own citation.
+
+    The string form parses and :class:`~flats.rules.model.Value` refuses it, so
+    a file that names a fact and cites nothing is told which half is missing
+    rather than being told its YAML is the wrong shape.
+    """
+    if raw is None:
+        return None, None, None
+    if isinstance(raw, str):
+        return raw, None, None
+    if not isinstance(raw, dict):
+        problems.append(f"{where}.qualified_by: expected a fact name or a mapping")
+        return None, None, None
+
+    body = dict(raw)
+    fact = body.pop("fact", None)
+    cite = body.pop("cite", None)
+    quote = body.pop("quote", None)
+    if body:
+        problems.append(f"{where}.qualified_by: unknown key(s) {sorted(body)}")
+    if not fact:
+        problems.append(
+            f"{where}.qualified_by: name the fact under 'fact' — the qualifying "
+            f"rule turns on it"
         )
         return None, None, None
     return str(fact), None if cite is None else str(cite), None if quote is None else str(quote)

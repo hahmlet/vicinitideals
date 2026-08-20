@@ -28,7 +28,31 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
   ALSO NOT ENCODED: the key-lot front setback (half the sum of two neighbouring
   yards), the future-street reservation, and the cottage-cluster/ADU and
   attached-townhouse setback exceptions, none of which apply to a four-unit pod
-  on its own lot.'
+  on its own lot.
+
+
+  READ AND NOT ENCODED: Section 4.137.2''s Maximum Shade Point Height Standard
+  would refuse this building outright wherever it reaches. Table 2 allows a
+  shade point of 14 ft where the shade reduction line sits five feet off the
+  northern lot line, and the pod is 26. It reaches only land inside the "S"
+  (solar access) Overlay Zone, which 4.137(.01)B applies by Council zone change
+  and only where protecting solar access is "specifically requested by the
+  developer or owner of the site". The overlay travels in the zone label — the
+  code''s own examples are PDR-S and R-S — and no Wilsonville label in this
+  corpus carries the suffix. Guarded by a test rather than asserted here,
+  because the premise is about what the zoning layer emits and not about what
+  the ordinance says.
+
+
+  If an S-suffixed label ever does arrive, none of the fields here can hold the
+  standard: it caps a building''s height as a function of the lot''s
+  north-south dimension and where its ridge sits, which is a shape this
+  registry has no room for. The right answer then is a refusal, not a setback.
+
+
+  ALSO READ: 4.132''s requirement that buildings over three storeys step the
+  facade back six feet at the fourth is a Town Center standard, and neither
+  that zone nor a third storey is in reach.'
 ingest:
   geoid: null
   juris_city_codes:

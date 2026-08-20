@@ -651,6 +651,30 @@ class Value(BaseModel):
     #: on different acres and each cites its own sentence.
     measured_on_cite: str | None = None
     measured_on_quote: str | None = None
+    #: A rule elsewhere in the code that changes this standard, turning on a
+    #: fact nothing here measures. Fairview's Table 19.30.030.A prints 35 ft
+    #: for a building height and 19.30.030(E) makes that conditional: a
+    #: building within 20 ft of an existing single-storey building of 20 ft or
+    #: less must step down to it. The trigger is the neighbour's building, and
+    #: no layer held records one.
+    #:
+    #: Distinct from a variant, which states what the standard BECOMES; this
+    #: says only that it moves. The distinction is not a convenience -- writing
+    #: a number here would be inventing one, and leaving the qualifier out
+    #: entirely would let the unqualified 35 certify a lot the code would not.
+    #: So it is carried as a lever on a fact registered with no assumption,
+    #: which is the existing machinery for "read, and waiting on data": the
+    #: standard cannot be certified and the fact is named in the verdict.
+    #:
+    #: Distinct from ``measured_on`` for the opposite reason -- a denominator
+    #: says the comparison rests on a quantity nobody surveyed, and this says
+    #: the standard itself is not the whole rule.
+    qualified_by: str | None = None
+    #: Where the qualifying rule is printed. Required, and for the reason
+    #: ``step_back`` requires the same: it is a second rule in a second place,
+    #: and a claim that one exists is worth nothing without the sentence.
+    qualified_cite: str | None = None
+    qualified_quote: str | None = None
     #: Conditions under which this layer says nothing at all. Not an exemption
     #: -- an exemption is the answer "no such standard", and this is the
     #: absence of an answer, which lets a more specific layer supply one. OAR
@@ -830,6 +854,49 @@ class Value(BaseModel):
         return self
 
     @model_validator(mode="after")
+    def _a_qualifier_names_a_fact_nobody_can_answer_and_cites_it(self) -> Value:
+        """The three things that keep this from becoming an escape hatch.
+
+        A qualifier says the standard is not the whole rule and stops short of
+        saying what the rule is. That is honest exactly once: when the trigger
+        is a fact nothing measures. Where the fact IS answerable the rule can
+        be encoded as a variant, and accepting a qualifier there would let a
+        number that could have been written be left out with a citation
+        attached -- provenance theatre over an unencoded standard.
+        """
+        if self.qualified_by is None:
+            if self.qualified_cite or self.qualified_quote:
+                raise ValueError(
+                    f"{self.name}: a citation for a qualifying rule with no "
+                    f"'qualified_by' fact for it to turn on"
+                )
+            return self
+
+        try:
+            fact = condition(self.qualified_by)
+        except KeyError as exc:
+            raise ValueError(exc.args[0]) from None
+        if fact.kind != "site_fact" or fact.assume is not None:
+            raise ValueError(
+                f"{self.name}: 'qualified_by' is for a rule whose trigger "
+                f"nothing measures, and {self.qualified_by} is a "
+                f"{fact.kind} the registry answers — encode the rule as a "
+                f"variant instead of citing it as unanswerable"
+            )
+        if self.qualified_by in {c for v in self.variants for c in v.when}:
+            raise ValueError(
+                f"{self.name}: states a variant for {self.qualified_by} and "
+                f"also calls it unanswerable"
+            )
+        if not (self.qualified_cite and self.qualified_quote):
+            raise ValueError(
+                f"{self.name}: a qualifying rule is a second rule in a second "
+                f"section — cite and quote where it is printed, or the claim "
+                f"that the standard moves has no provenance"
+            )
+        return self
+
+    @model_validator(mode="after")
     def _unless_names_registered_conditions(self) -> Value:
         for name in self.unless:
             try:
@@ -981,7 +1048,8 @@ class Value(BaseModel):
         What makes the batch view possible: a lever is worth offering only when
         flipping it moves a number some lot in the selection is bound by.
         """
-        return frozenset(c for variant in self.variants for c in variant.when)
+        held = frozenset(c for variant in self.variants for c in variant.when)
+        return held | ({self.qualified_by} if self.qualified_by else frozenset())
 
 
 

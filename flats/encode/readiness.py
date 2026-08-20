@@ -240,6 +240,17 @@ def _quoted_parts(layer: Layer) -> Iterable[tuple[str, str, str | None, object]]
                     value.measured_on_quote,
                     None,
                 )
+            if value.qualified_quote:
+                # The rule that says this standard is not the whole rule. No
+                # figure either -- what it states is a condition, and the
+                # citation exists so a reader can see the sentence rather than
+                # take "there is more to this" on trust.
+                yield (
+                    zone_code,
+                    f"{name} ?{value.qualified_by}",
+                    value.qualified_quote,
+                    None,
+                )
             for variant in value.variants:
                 yield (
                     zone_code,

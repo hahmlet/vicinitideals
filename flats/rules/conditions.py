@@ -294,6 +294,23 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "adjacent_single_story_building",
+        "site_fact",
+        "An existing single-storey building 20 ft or less in height stands "
+        "within 20 ft, measured horizontally, of where this one would. "
+        "Fairview 19.30.030(E) makes a taller building step down to it, and "
+        "the pod is 26 ft, so on an established street the standard can refuse "
+        "the building outright rather than move it. Two things nothing here "
+        "holds: the neighbouring structure's height and storey count, and the "
+        "horizontal distance between two buildings rather than between a "
+        "building and a line. Assumed unknown, which caps the verdict.",
+        evidence=(
+            "building footprints with heights or storey counts, cut against "
+            "the pod's own footprint — no layer held records either"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "inside_mapped_use_area",
         "site_fact",
         "The parcel lies inside a boundary the code draws INSIDE a zone to "
