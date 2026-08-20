@@ -20,6 +20,7 @@ surface every problem in one pass, not one per run.
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -359,6 +360,7 @@ def _parse_values(
                 floor_ft=None if floor_ft is None else float(floor_ft),
                 step_back_at_ft=None if step_back is None else step_back.at_ft,
                 step_back_rise=None if step_back is None else step_back.rise,
+                step_back_degrees=None if step_back is None else step_back.degrees,
                 step_back_cite=None if step_back is None else step_back.cite,
                 step_back_quote=None if step_back is None else step_back.quote,
                 before_step_back=before_step_back,
@@ -644,6 +646,9 @@ class _StepBack:
     rise: float | None
     cite: str | None
     quote: str | None
+    #: The angle, when that is what the code printed. Kept so the rule file
+    #: holds the figure on the page and the rate stays computed.
+    degrees: float | None = None
 
 
 def _parse_step_back(raw: Any, where: str, problems: list[str]) -> _StepBack | None:
@@ -662,11 +667,16 @@ def _parse_step_back(raw: Any, where: str, problems: list[str]) -> _StepBack | N
     body = dict(raw)
     at_ft = body.pop("height_ft", None)
     rise = body.pop("rise_per_ft", None)
+    degrees = body.pop("slope_degrees", None)
     cite = body.pop("cite", None)
     quote = body.pop("quote", None)
     if body:
         problems.append(f"{where}.step_back: unknown key(s) {sorted(body)}")
-    for label, number in (("height_ft", at_ft), ("rise_per_ft", rise)):
+    for label, number in (
+        ("height_ft", at_ft),
+        ("rise_per_ft", rise),
+        ("slope_degrees", degrees),
+    ):
         if number is not None and (
             not isinstance(number, (int, float)) or isinstance(number, bool)
         ):
@@ -678,11 +688,30 @@ def _parse_step_back(raw: Any, where: str, problems: list[str]) -> _StepBack | N
             f"under 'height_ft' — it is what the rule limits"
         )
         return None
+    if rise is not None and degrees is not None:
+        problems.append(
+            f"{where}.step_back: states both a rate and an angle for the same "
+            f"plane — write the one the code prints"
+        )
+        return None
+    if degrees is not None:
+        if not 0 < float(degrees) < 90:
+            problems.append(
+                f"{where}.step_back.slope_degrees: {degrees} is not a plane "
+                f"rising from the setback line"
+            )
+            return None
+        # Rounded because the right angles are the ones codes print, and
+        # tan(45 degrees) coming back as 0.9999999999999999 would put a
+        # setback at 11.000000000000002 and a slack figure just under
+        # zero on a lot that exactly fits.
+        rise = round(math.tan(math.radians(float(degrees))), 10)
     return _StepBack(
         float(at_ft),
         None if rise is None else float(rise),
         None if cite is None else str(cite),
         None if quote is None else str(quote),
+        None if degrees is None else float(degrees),
     )
 
 

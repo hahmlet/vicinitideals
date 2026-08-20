@@ -620,6 +620,15 @@ class Value(BaseModel):
     #: Stated rather than assumed because a 1:1 plane and a 1:2 plane are
     #: different rules and both are written.
     step_back_rise: float | None = None
+    #: The angle, where the code prints one instead of a rate. Milwaukie states
+    #: its side yard height plane as "Slope of plane (degrees) 45"; Gresham
+    #: states the same 1:1 plane as "one foot in height for every one foot of
+    #: distance". Both are kept, and `step_back_rise` is computed from this
+    #: when it is set, so no rule file ever types a number the code does not
+    #: print. Writing `rise_per_ft: 1` against a cell that prints 45 would be
+    #: an invented figure -- exact, trivially derivable, and still not the one
+    #: a reviewer would find on the page.
+    step_back_degrees: float | None = None
     step_back_cite: str | None = None
     step_back_quote: str | None = None
     #: The district's own printed setback, before the step-back was added.

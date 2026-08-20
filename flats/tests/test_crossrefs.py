@@ -193,10 +193,17 @@ def test_a_section_symbol_is_part_of_the_heading(
 
     for own in ("19.301.2", "19.301.5", "19.302.2", "19.302.4", "19.302.5"):
         assert own not in refs, own
-    # And the ones that really are absent survive: Milwaukie holds 19.200 and
-    # 19.300, not the 19.500 development-standards chapter.
-    assert "19.505.1" in refs
-    assert "19.501.3" in refs
+
+    # And the ones that really were absent are gone because the ledger was
+    # worked, not because the check got looser. Milwaukie held 19.200 and
+    # 19.300; every surviving reference pointed into 19.500, so 19.500 was
+    # fetched, and with it the side yard height plane that put six feet on
+    # both side yards of the zone. Fifteen binding references became five.
+    assert "19.501.3" not in refs
+    assert "19.505.1" not in refs
+    # What is left is a different title, and this corpus is not going to grow
+    # Milwaukie's public-works code.
+    assert "12.24" in refs
 
 
 def test_only_the_section_symbol_earns_that(layers: dict[str, Layer]) -> None:
