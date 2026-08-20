@@ -257,3 +257,45 @@ def test_the_zones_that_were_unread_are_no_longer_unread(portland: Layer) -> Non
     which is not a screen returning RED, it is a screen with nothing to say."""
     for zone in (*COMMERCIAL, "EX", *BARRED):
         assert zone in portland.zones, zone
+
+
+# --- Chapter 33.150, the campus institutional zones --------------------
+
+
+def test_the_campus_zones_split_three_ways(portland: Layer, store: ProvenanceStore) -> None:
+    """One table row, three answers. CI1 is written to sit against
+    single-family neighbourhoods and says N; CI2 and IR say Y. Portland now
+    carries every zone its GIS reports."""
+    assert portland.zones["CI1"].values["quadplex_allowed"].value is False
+    assert portland.zones["CI2"].values["quadplex_allowed"].value is True
+    assert portland.zones["IR"].values["quadplex_allowed"].value is True
+
+    text = store.quote(portland.zones["CI2"].values["quadplex_allowed"].prov.quote)
+    assert "CI1" in text and "IR" in text
+    assert "Household Living" in text
+
+
+def test_the_campus_chapter_exempts_lot_size_twice_over(portland: Layer) -> None:
+    """A stronger sentence than the commercial chapter's. 33.130.200 exempts
+    development and sends lot creation to 33.613; 33.150.200 exempts both."""
+    for zone in ("CI2", "IR"):
+        assert portland.zones[zone].values["min_lot_sqft"].exempt, zone
+
+
+def test_the_one_setback_measured_off_the_building_is_owed_not_guessed(
+    portland: Layer,
+) -> None:
+    """IR states "1 ft. for every 2 ft. of building height but not less than
+    10 ft.", which for a 26 ft pod is 13 -- a number no sentence in the
+    chapter contains. Typing it would be the misquote the ladder exists to
+    catch; typing the printed 10 would state a floor as the standard, three
+    feet looser on every lot line. Both fields carry their citation and no
+    quote, which routes them to the work queue instead of the screen."""
+    owed = {(w.zone, w.field) for w in portland.wanted}
+
+    assert owed == {("IR", "setback_side_ft"), ("IR", "setback_rear_ft")}
+    assert "setback_side_ft" not in portland.zones["IR"].values
+
+
+def test_a_zone_decided_at_the_use_gate_owes_no_dimensions(portland: Layer) -> None:
+    assert set(portland.zones["CI1"].values) == {"quadplex_allowed"}

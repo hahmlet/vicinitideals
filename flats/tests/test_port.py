@@ -121,7 +121,7 @@ def test_written_config_loads_through_the_real_loader() -> None:
     rules = RuleSet(load_rules())
 
     assert len(rules.layers) == 19  # 18 jurisdictions + the state layer
-    assert sum(len(l.zones) for l in rules.layers.values()) == 115
+    assert sum(len(l.zones) for l in rules.layers.values()) == 118
 
 
 def test_state_parking_preemption_reaches_a_city_zone() -> None:
@@ -163,10 +163,12 @@ def test_unencoded_zone_is_surfaced_not_dropped() -> None:
     res = RuleSet(load_rules()).resolve("or/multnomah/portland", "RM1")
     assert res.verdict is not Verdict.zone_not_encoded, "33.120 is encoded"
 
-    # CM2 used to be the example here and Chapter 33.130 closed it too. CI2
-    # is the standing one: Campus Institutional, 245 lots, Chapter 33.150
-    # unfetched.
-    res = RuleSet(load_rules()).resolve("or/multnomah/portland", "CI2")
+    # Two Portland examples have been used here and both got encoded out from
+    # under the test -- CM2 by Chapter 33.130, CI2 by 33.150. Portland now
+    # carries every zone its GIS reports, so the example has to come from
+    # somewhere else: Gresham's MDR-PV is 340 lots in a plan district whose
+    # chapter is not fetched.
+    res = RuleSet(load_rules()).resolve("or/multnomah/gresham", "MDR-PV")
 
     assert res.verdict is Verdict.zone_not_encoded
 
@@ -542,14 +544,25 @@ def test_what_the_loader_still_drops_is_named() -> None:
         for layer_id, layer in load_rules(strict=False).items()
         for w in layer.wanted
     }
-    # Empty, and it took three different endings to get there. Rivergrove's four
-    # were read: the RLDO is one stored document and 5.080 states all of them.
-    # Johnson City's was withdrawn — a prohibition inferred from a statute that
-    # exempts the city rather than one printed anywhere, and an uncited value is
-    # not a smaller debt than a missing one. Multnomah RR's was quoted once the
-    # Rural Residential article was sliced out of the chapter PDF the LR-7
-    # slice already comes from, which is what the debt was waiting on.
-    assert debt == set()
+    # It reached empty once, and it took three different endings to get there.
+    # Rivergrove's four were read: the RLDO is one stored document and 5.080
+    # states all of them. Johnson City's was withdrawn — a prohibition inferred
+    # from a statute that exempts the city rather than one printed anywhere, and
+    # an uncited value is not a smaller debt than a missing one. Multnomah RR's
+    # was quoted once the Rural Residential article was sliced out of the
+    # chapter PDF the LR-7 slice already comes from.
+    #
+    # Then Portland's IR zone put two back, and they are a different kind of
+    # debt from any of those three. Nothing is unread: Table 150-2 states the
+    # standard plainly, as "1 ft. for every 2 ft. of building height but not
+    # less than 10 ft." It is the file that cannot say it. A Value holds a
+    # number and this one is a function of the design, so 13 ft is the answer
+    # for a 26 ft pod and appears in no sentence anyone could cite for it.
+    # Listing them is the point of the list.
+    assert debt == {
+        ("or/multnomah/portland", "IR", "setback_side_ft"),
+        ("or/multnomah/portland", "IR", "setback_rear_ft"),
+    }
 
 
 def test_a_schedule_and_an_enum_are_values_too() -> None:

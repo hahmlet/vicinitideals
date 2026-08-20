@@ -1,0 +1,1024 @@
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             Chapter 33.150
+3/1/25                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Campus Institutional Zones
+33.150 Campus Institutional Zones                                                                                                                                                                                                                         150
+
+Sections:
+General
+           33.150.010 Purpose
+           33.150.020 List of the Campus Institutional Zones
+           33.150.030 Characteristics of the Zones
+           33.150.040 Other Zoning Regulations
+           33.150.06                        0 Neighborhood Contact and Outreach
+Use Regulations
+           33.150.100 Primary Uses
+           33.150.110 Accessory Uses
+Development Standards
+           33.150.200 Lot Size
+           33.150.205 Floor Area Ratio
+           33.150.210 Height
+           33.150.215 Setbacks
+           33.150.220 Building Coverage
+           33.150.235 Building Length in the CI1 Zone
+           33.150.240 Landscaped Areas
+           33.150.245 Trees
+           33.150.250 Ground Floor Windows in the CI2 and IR Zones
+           33.150.255 Building Length and Facade             Articulation in the CI2 Zone
+           33.150.260 Screening
+           33.150.265 Transit Street Main Entrance
+           33.150.267  Additional Development Standards for Institutional Campuses in the IR Zone
+           33.150.270 Exterior Display, and Storage
+           33.150.275 Trucks and Equipment
+           33.150.277 Drive -Through Facilities
+           33.150.280 Detached Accessory Structures
+           33.150.285 Fences
+           33.150.290 Demolitions
+           33.150.295 Nonconforming Development
+           33.150.300 Parking, Loading,             and Transportation and Parking Demand Management
+           33.150.305 Signs
+           33.150.310 Superblock Requirements
+           33.150.315 Recycling Areas
+Maps 150-                          1 through 150-5 Maximum Heights and Minimum Setbacks
+
+                                                                                                                                    General
+33.150.010 Purpose
+The campus institutional zones implement the campus institution policies and Institutional Campus (IC)
+land use designation of the Comprehensive Plan. The zones are for institutions such as         medical centers
+and colleges that have been developed as campuses, and for other uses that are compatible with
+surrounding neighborhoods. The differences                         between the zones reflect the diversity  and location of
+campus institutions. Allowed uses and development standards promote the desired character of each
+
+                                                                                                                                         150-                                                            1
+Chapter 33.150                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Title 33, Planning and Zoning
+Campus Institutional Zones                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          3/1/25
+
+zone, and reflect the character and development intensity of surrounding neighborhoods. The CI1 and IR
+zones encourage development that is at a low to medium density residential scale, while the CI2 zone
+encourages development that is at a more intense, ur ban scale. The development standards allow
+flexibility for development and provide guidance to property owners, developers, and neighbors about
+the limits of what is allowed.
+33.150.020 List of the Campus Institutional Zones
+The full and short names of the campus institutional zones and their map symbols are listed below.
+When this Title refers to the campus institutional zones, it is referring to the three zones listed here.
+When this Title refers to the CI zones, it is referring only to CI1 and CI2.
+  Full Name                                                                                                     Short Name/Map Symbol
+  Campus Institutional 1                                                                                        CI1
+  Campus Institutional 2                                                                                        CI2
+  Institutional Residential                                                                                     IR
+33.150.030 Characteristics of the Zones
+        A.                                                Campus Institutional 1 zone. The Campus Institutional 1 (CI1) zone is intended for large
+                   colleges and medical centers located in or near low and medium density residential
+                   neighborhoods. Retail Sales and Service and other uses that serve or support the campus and
+                   neighborhood are allowed. Development is intended to be internally focused and compatible
+                   with the scale of the surrounding neighborhood. Setback and open space requirements create
+                   a buffer between the institution and the surrounding community.
+        B.                                                  Campus Institutional 2 zone. The Campus Institutional 2 (CI2) zone is intended for large
+                   medical centers, colleges and universities located in or near a Regional, Town or Neighborhood
+                   Center, or along a civic or neighborhood corridor that is served by frequent transit service.
+                   Development is intended to be pedestrian-oriented and at a scale that encourages urban-scale
+                   medical and educational facilities, while also ensuring compatibility with nearby mixed-use
+                   commercial and residential areas. Retail Sales and Service and Office uses are allowed to
+                   support the medical or college campus, and to provide services to the surrounding
+                   neighborhoods.
+        C.                                                   IR zone.               The IR zone is a multi-use zone that provides for the establishment and growth of large
+                   institutional campuses as well as higher density residential development. The IR zone
+                   recognizes the valuable role of institutional uses in the community. However, these institutions
+                   are generally in residential areas where the level of public services is scaled to a less intense
+                   level of development. Institutional uses are often of a significantly different scale and character
+                   than the areas in which they are located. Intensity and density are regulated by the maximum
+                   number of dwelling units per acre and the maximum size of buildings permitted. Some
+                   commercial and light industrial uses are allowed, along with major event entertainment
+                   facilities and other uses associated with institutions.
+
+                   Residential development allowed includes all structure types. Mixed use projects including
+                   both residential development and institutions are allowed as well as single use projects that are
+                   entirely residential or institutional. IR zones will be located near one or more streets that are
+                   designated as District Collector streets, Transit Access Streets, or streets of higher classification
+                   The IR zone will be applied only when it is accompanied by the D         esign overlay zone.
+
+                                                                                                             150-                                                            2
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             Chapter 33.150
+3/1/25                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Campus Institutional Zones
+33.150.040 Other Zoning Regulations
+The regulations in this chapter state the allowed uses and the development standards for the base
+zones. Sites with overlay zones, plan districts, or designated historical landmarks are subject to
+additional regulations. The Official Zoning Maps indicate which sites are subject to the additional
+regulations. Specific uses or development types may also be subject to regulations in the 200s series of
+chapters.
+33.150.060 Neighborhood Contact and Outreach
+         A.                                              Purpose. The requirements of this section promote ongoing communication between campus
+                     institutions and other uses and the surrounding communities. In addition to neighborhood
+                     contact, Colleges and Medical Centers are required to annually update the community on
+                     campus operations and development proposals. The annual meeting allows neighbors and
+                     campus administrators the opportunity to discuss and resolve potential impacts or conflicts.
+                     While the comments from the community are not binding, a collaborative approach is
+                     encouraged.
+         B.                                               Neighborhood contact. Neighborhood contact is a set of outreach steps that must be taken
+                     before certain developments can be submitted for approval. Neighborhood contact is required
+                     as follows:
+                     1.                                                   Neighborhood contact I.
+                                  a.                                                    Neighborhood contact I requirements. When proposed development will add at least
+                                              10,000 square feet and not more than 25,000 square feet of net building area to a
+                                              site, the neighborhood contact steps of 33.705.020.A., Neighborhood contact I,             are
+                                              required. All the steps in 33.705.020.A. must be completed before an application for
+                                              a building permit can be submitted.
+                                  b.                                                  Exemption. If the proposed development has already met the neighborhood contact
+                                              requirements as part of a land use review process, it is exempt from the
+                                              neighborhood contact requirements.
+                     2.                                                   Neighborhood contact II.
+                                  a.                                                    Neighborhood contact II requirements. When the proposed development will add
+                                              more than 25,000 square feet of net building area to a site, the neighborhood
+                                              contact steps of 33.705.020.B., Neighborhood contact II, are required. All of the steps
+                                              in 33.705.020.B. must be completed before an application for a building permit can
+                                              be submitted.
+                                  b.                                                  Exemption. If the proposed development has already met the neighborhood contact
+                                              requirements as part of a land use review process, it is exempt from the
+                                              neighborhood contact requirements.
+         C.                                                 Annual meeting. Colleges and Medical Centers must conduct at least one community meeting
+                     per year. The annual community meeting is intended to ensure that the College or Medical
+                     Center updates the community at least once a year regarding future development and other
+                     potential changes that could affect the surrounding area, and to provide a forum for discussion
+                     of a Good Neighbor Agreement:
+                     1.                                                   The following information must be provided during the meeting:
+
+                                                                                                                        150-                                                            3
+Chapter 33.150                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Title 33, Planning and Zoning
+Campus Institutional Zones                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          3/1/25
+
+                                   a.                                                    The status of and any updates to the College’s or Medical Center ’s Transportation
+                                               and Parking Demand Management Plan, Transportation Impact Analysis, and related
+                                               mitigation measures;
+                                   b.                                                  Development that is anticipated to take place on the site during the next 12 months;
+                                   c.                                                          Potential impacts of other on-site activities that could affect the surrounding
+                                               neighborhood; and
+                                   d.                                                  Updated contact information for the College or Medical Center;
+                      2.                                                   The College or Medical Center must send notice of the meeting to the neighborhood
+                                  association and business association for the area at least 30 days before the meeting.
+                                  Notice must be by registered or certified mail, and must include the following:
+                                   a.                                                    The purpose of the meeting;
+                                   b.                                                  Information on how to contact the institution regarding details about this meeting;
+                                   c.                                                       The date, time, and location of the meeting.
+                      3.                                                   A copy of the notification, the mailing list, and registered or certified mail receipt must be
+                                  retained by the College or Medical Center for at least 5 years and must be available for
+                                  inspection by City staff upon request.
+
+                                                                                                            Use Regulations
+33.150.100 Primary Uses
+          A.                                             Allowed uses. Uses allowed in the campus institutional zones are listed in Table 150-1 with a
+                      "Y". These uses are allowed if they comply with the development standards and other
+                      regulations of this Title. Being listed as an allowed use does not mean that a proposed
+                      development will be granted an adjustment or other exception to the regulations of this Title.
+                      In addition, a use or development listed in the 200s series of chapters is also subject to the
+                      regulations of those chapters.
+          B.                                               Limited uses. Uses allowed that are subject to limitations are listed in Table 150-1 with an "L".
+                      These uses are allowed if they comply with the limitations listed below and the development
+                      standards and other regulations of this Title. In addition, a use or development listed in the
+                      200s series of chapters is also subject to the regulations of those ch apters. The paragraphs
+                      listed below contain the limitations and correspond with the footnote numbers from Table
+                      150-1.
+                      1.                                                   Retail Sales And Service uses in the CI1 zone          . This regulation applies to all parts of Table
+                                  150-1 that have note [1]. Up to 10,000 square feet of Retail Sales And Service use per site
+                                  may be allowed as a conditional use in the CI1 zone.
+                      2.                                                   Manufacturing And Production and Industrial Service in the CI1 and CI2 zones. This
+                                  regulation applies to all parts of Table 150-1 that have note [2]. In the CI 1 and CI2 zones,
+                                  up to 10,000 square feet of Manufacturing And Production use and 10,000 square feet of
+                                  Industrial Service use is allowed per site. More than 10,000 square feet of Manufacturing
+                                  and Production use and 10,000 square feet of Industrial Service use may be allowed as a
+                                  conditional use in the CI2 zone. More than 10,000 square feet of Manufacturing and
+                                  Production and Industrial Service is prohibited in the CI1 zone.
+
+                                                                                                                            150-                                                            4
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             Chapter 33.150
+3/1/25                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Campus Institutional Zones
+
+                       3.                                                   Basic Utilities. These regulations apply to all parts of Table 150-1 that have note [3].
+                                     a.                                                    Basic Utilities that serve a development site are accessory uses to the primary use
+                                                  being served on that site.
+                                     b.                                                  Small Scale Energy Production that provides energy for on-site or off-                            site use are
+                                                  considered accessory to the primary use on the site.  Installations that sell power they
+                                                  generate—                                        at retail (net, metered) or wholesale—are included. However, they are
+                                                  only considered accessory if they generate energy primarily from biological materials
+                                                  or byproducts from the site itself, or conditions on the site itself. Not more than 10
+                                                  tons per week of biological material or byproducts from other sites may be used to
+                                                  generate energy. Not more than 20 percent of the floor area on a site, exclusive of
+                                                  parking area may be devoted to small scale energy production.
+                                     c.                                                       All other Basic Utilities are conditional uses.
+                       4.                                         Community Service. This regulation applies to all parts of Table 150-1 that have note [4].
+                                    Most Community Service uses are regulated by Chapter 33.815, Conditional Uses.
+                                     a.                                                    In the CI1 and IR zones, most Community Service uses are regulated by Chapter
+                                                  33.815, Conditional Uses. Short term, mass, and outdoor shelters are regulated by
+                                                  Chapter 33.285, Short Term, Mass, and Outdoor Shelters.
+                                     b.                                                  In the CI2 zones, most Community Service uses are allowed by right. Short term,
+                                                  mass, and outdoor shelters are regulated by Chapter 33.285, Short Term, Mass, and
+                                                  Outdoor Shelters.
+                       5.                                                   Parks And Open Areas. This regulation applies to all parts of Table 150-1 that have note
+                                    [5]. Parks And Open Areas uses are allowed by right. However, certain accessory uses and
+                                    facilities that are part of a Parks And Open Areas use require a conditional use review.
+                                    These accessory uses and facilities that require a conditional use review are listed below.
+                                     a.                                                    Swimming pools.
+                                     b.                                                  Cemeteries, including mausoleums, chapels, and similar accessory structures
+                                                  associated with funerals or burial.
+                                     c.                                                       Golf courses, including club houses, restaurants, and driving ranges.
+                                     d.                                                  Boat ramps.
+                                     e.                                                   Parking areas.
+                                     f.                                                             Recreational fields for organized sports. Recreational fields used for organized sports
+                                                  are subject to the regulations of Chapter 33.279, Recreational Fields for Organized
+                                                  Sports.
+                       6.                                                   Colleges. This regulation applies to all parts of Table 150-1 that have note [6].             Colleges are
+                                    allowed by right. However, outdoor sports facilities that include more than 1,500 square
+                                    feet of accessory building floor area, more than 500 linear feet of spectator seating,
+                                    outdoor lighting, or voice amplification require a conditional use review.
+                       7.                                                   Agriculture. This regulation applies to all parts of Table 150-1 that have note [7].             If the use
+                                    and site do not meet the regulations of Chapter 33.237, Food Production and Distribution,
+                                    Agriculture is prohibited.
+
+                                                                                                                                   150-                                                            5
+Chapter 33.150                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Title 33, Planning and Zoning
+Campus Institutional Zones                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          3/1/25
+
+                       8.                                                   Radio Frequency Transmission Facilities. This regulation applies to all parts of Table 150-1
+                                    that have an [8]. Some Radio Frequency Transmission Facilities are allowed by right. See
+                                    Chapter 33.274.
+                       9.                                                   Group Living in the IR Zone. This regulation applies to all parts of table 150-1 that have a
+                                    note [9]. Group Living uses                                  in the IR zone are regulated as follows:
+                                     a.                                                     The Group Living use                                   must be included in the mission statement of the campus’s
+                                                  impact mitigation plan; and
+                                     b.                                                     The impact mitigation plan’s implemented mitigation measures must accommodate
+                                                  the impacts the Group Living use                                  will create.
+                       10.                          Retail Sales And Services and Office uses in the IR zone. This regulation applies to all parts
+                                    of Table 150-1 that have a note [10].
+                                     a.                                                    Purpose. Retail Sales And Service uses are allowed as part of an institutional campus
+                                                  in recognition of the large size of such campuses and the needs of the people present
+                                                  for nearby goods and services. Office uses are allowed in recognition of the
+                                                  multifaceted nature of colleges and medical center s.
+                                     b.                                                  Retail Sales and Service uses allowed as accessory activities. These uses are allowed
+                                                  by right when the use is identified as a permitted accessory use in the institution’s
+                                                  approved impact mitigation plan or conditional use master plan; and
+                                     c.                                                       Retail Sales and Service and Office uses are allowed on an institutional campus as
+                                                  primary uses when the following regulations are met:
+                                                  (1)                                  The location is identified as a site for a primary retail, service or office use in the
+                                                               institution’s approved impact mitigation plan;
+                                                  (2)                                  The impact mitigation plan’s mitigation measures for commercial use at the site
+                                                               are met; and
+                                                  (3)                                  Retail Sales and Services uses in combination with office uses which are not
+                                                               listed as primary or accessory uses in the mission statement of the impact
+                                                               mitigation plan are limited. These uses are limited to no more than 50,000
+                                                               square feet of floor area                       or 10 percent of the campus floor area, whichever is
+                                                               less. When structured parking is provided 250 square feet of parking structure
+                                                               floor area is included in the area subject to this floor area limitation for each
+                                                               accessory parking space for the use. Size exceptions are prohibited.
+                                     d.                                                  Institutional Office uses allowed as accessory activities. These uses are allowed by
+                                                  right when the use is identified as a permitted accessory use in the institution’s
+                                                  approved impact mitigation plan or conditional use master plan; and
+                                     e.                                                   Institutional Office uses allowed as primary uses. Office uses related to the mission of
+                                                  the institution are allowed by right when all of the following are met:
+                                                  (1)                                  The amount of office space development is mitigated for at the level specified in
+                                                               the institution’s approved impact mitigation plan;
+                                                  (2)                                  The office uses allowed are limited to the following:
+                                                               •                                                                                                                           Institutional administrative, faculty, staff, student, and educational
+                                                                                    offices;
+
+                                                                                                                                   150-                                                            6
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             Chapter 33.150
+3/1/25                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Campus Institutional Zones
+
+                                                              •                                                                                                                           Blood collection facilities;
+                                                              •                                                                                                                           Medical office space and medical office buildings; and
+                                                              •                                                                                                                           Medical, scientific, educational research and development facilities and
+                                                                                   laboratories.
+                                                 (3)                                  Limit the aggregate size of medical, scientific, educational research and
+                                                              development facilities and laboratories; non institution-owned medical office
+                                                              buildings; and major event entertainment facilities and their associated
+                                                              structured parking to 30 percent or less of the campus floor area. Exceptions to
+                                                              the 30 percent maximum are prohibited.
+                       11.                          Schools, Colleges, and Medical Centers in the IR zone. This regulation applies to all parts of
+                                    Table 150-1 that have a note [11].
+                                    a.                                                    Purpose. High Schools, Colleges, and Medical Centers located in IR Zones are limited
+                                                 to the large institutional campuses the IR Zone is intended to foster. The IR zone was
+                                                 created in recognition of the role such institutions play in meeting the needs of
+                                                 Portland’s citizens.
+                                    b.                                                  Regulations for institutional campuses. High Schools, Colleges, Hospitals, and Medical
+                                                 Centers are allowed to develop as institutional campuses when they meet the
+                                                 following regulations.
+                                                 (1)                                  The institution is located or is to be located on a site that is at least 5 acres in
+                                                              total area. Exceptions to this minimum size requirement are prohibited.
+                                                 (2)                                  The institution has an approved impact mitigation plan or conditional use
+                                                              master plan.
+                                                 (3)                                  Trade schools and business schools are commercial uses and are not allowed in
+                                                              an IR zone through a conditional use.
+                                    c.                                                       Regulations for other institutions. Schools, Colleges, Hospitals, and Medical Centers
+                                                 are allowed as a conditional use only.
+                                    d.                                                  Regulations for recreational fields for organized sports. Recreational fields used for
+                                                 organized sports on a school, school site, or in a park, are subject to the regulations
+                                                 of Chapter 33.279, Recreational Fields for Organized Sports.
+                       12.                          Daycare in the IR zone. This regulation applies to all parts of Table 150-1 that have a note
+                                    [11]. Daycare facilities are allowed if included in the institution’s approved impact
+                                    mitigation plan or conditional use master plan.
+          C.                                                 Conditional uses. Uses that are allowed if approved through the conditional use review process
+                       are listed in Table 150-1 with a "CU". These uses are allowed provided they comply with the
+                       conditional use approval criteria for that use, the development standards, and other
+                       regulations of this Title. Uses listed with a "CU" that also have a footnote number in the table
+                       are subject to the regulations cited in the footnote.  In addition, a use or development listed in
+                       the 200s series of chapters is also subject to the regulations of those chapters. The conditional
+                       use review process and approval criteria are stated in Chapter 33.815, Conditional Uses.
+          D.                                            Prohibited uses. Uses listed in Table 150-1 with an "N" are prohibited. Existing uses in
+                       categories listed as prohibited may be subject to the regulations of Chapter 33.258,
+                       Nonconforming Uses and Development.
+
+                                                                                                                                150-                                                            7
+Chapter 33.150                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Title 33, Planning and Zoning
+Campus Institutional Zones                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          3/1/25
+33.150.110 Accessory Uses
+Uses that are accessory to a primary use are allowed if they comply with specific          regulations for the
+accessory use and all applicable development standards. In addition, Retail Sales and Service,
+Manufacturing and Production, and Industrial Service uses that are on a site with a College or a Medical
+Center in a CI1 or CI2 zone that have exterior access within 150 feet of a public right-of-way or have
+exterior signage are primary uses. Retail Sales and Service, Manufacturing and Production, and Industrial
+Service uses that have exterior access more than 150 from a public right-of-way and do not have
+exterior signage are accessory uses.
+                                                                                                                                                       Table 150-1
+                                                                                                 Campus Institutional Zone Primary Uses
+             Use Categories                                                                                                                         CI1                                                                 CI2                                                               IR
+             Residential Categories
+             Household Living                                                                                                                       N                                                                   Y                                                                 Y
+             Group Living                                                                                                                           N                                                                   Y                                                                 Y [9]
+             Commercial Categories
+             Retail Sales And Service                                                                                                               CU [1]                                                              Y                                                                 L/CU [10]
+             Office                                                                                                                                 N                                                                   Y                                                                 L/CU [10]
+             Quick Vehicle Servicing                                                                                                                N                                                                   N                                                                 N
+             Vehicle Repair                                                                                                                         N                                                                   N                                                                 N
+             Commercial Parking                                                                                                                     N                                                                   Y                                                                 N
+             Self-Service Storage                                                                                                                   N                                                                   N                                                                 N
+             Commercial Outdoor Recreation                                                                                                          N                                                                   N                                                                 N
+             Major Event Entertainment                                                                                                              CU                                                                  CU                                                                CU
+             Industrial Categories
+             Manufacturing And Production                                                                                                           L [2]                                                               L/CU [2]                                                          CU
+             Warehouse And Freight Movement                                                                                                         N                                                                   N                                                                 N
+             Wholesale Sales                                                                                                                        N                                                                   N                                                                 N
+             Industrial Service                                                                                                                     L [2]                                                               L/CU [2]                                                          CU
+             Bulk Fossil Fuel Terminal                                                                                                              N                                                                   N                                                                 N
+             Railroad Yards                                                                                                                         N                                                                   N                                                                 N
+             Waste-Related                                                                                                                          N                                                                   N                                                                 N
+             Y = Yes, Allowed                                                                                                                                                                         L = Allowed, But Special Limitations
+             CU = Conditional Use Review Required                                                                                                                                                     N = No, Prohibited
+             Notes:
+                          •                                               The use categories are described in Chapter 33.920.
+                          •                                               Regulations that correspond to the bracketed numbers [ ] are stated in 33.150.100.B.
+                          •             Specific uses and developments may also be subject to regulations in the 200s series of chapters.
+
+                                                                                                                                                                           150-                                                            8
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             Chapter 33.150
+3/1/25                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Campus Institutional Zones
+
+                                                                                                                      Table 150-1
+                                                                            Campus Institutional Zone Primary Uses
+          Use Categories                                                                                            CI1                                                   CI2                                                IR
+          Institutional Categories
+          Basic Utilities                                                                                           L/CU [3]                                              L/CU [3]                                           L/CU [3]
+          Community Service                                                                                         L/CU [4]                                              L/CU [4]                                           L/CU [4]
+          Parks And Open Areas                                                                                      L/CU [5]                                              L/CU [5]                                           L/CU [5]
+          Schools                                                                                                   N                                                     N                                                  L/CU [11]
+          Colleges                                                                                                  Y/CU [6]                                              Y/CU [6]                                           L/CU [11]
+          Medical Centers                                                                                           Y                                                     Y                                                  L/CU [11]
+          Religious Institutions                                                                                    CU                                                    CU                                                 CU
+          Daycare                                                                                                   Y                                                     Y                                                  L/CU [12]
+          Other Categories
+          Agriculture                                                                                               L [7]                                                 L [7]                                              L [7]
+          Aviation And Surface Passenger                                                                            N                                                     N                                                  N
+          Terminals
+          Detention Facilities                                                                                      N                                                     N                                                  N
+          Mining                                                                                                    N                                                     N                                                  N
+          Radio Frequency Transmission Facilities                                                                   L/CU [8]                                              L/CU [8]                                           L/CU [8]
+          Rail Lines And Utility Corridors                                                                          CU                                                    CU                                                 CU
+          Y = Yes, Allowed                                                                                                                                 L = Allowed, But Special Limitations
+          CU = Conditional Use Review Required                                                                                                             N = No, Prohibited
+          Notes:
+                     •                                               The use categories are described in Chapter 33.920.
+                     •                                               Regulations that correspond to the bracketed numbers [ ] are stated in 33.150.100.B.
+                     •         Specific uses and developments may also be subject to regulations in the 200s series of chapters.
+
+                                                                                                        Development Standards
+33.150.200 Lot Size
+There is no required minimum lot size for development of land or for the creation of new lots in campus
+institution zones. Creation of new lots is subject to the regulations of Chapter 33.613, Lots in
+Commercial and Campus Institutional Zones.
+33.150.205 Floor Area Ratio
+          A.                                              Purpose. Floor area ratios (FARs) regulate the amount of use (the intensity) allowed on a site.
+                        FARs provide a means to match the potential amount of uses with the desired character of the
+                        area and the provision of public services. FARs also work with the height, setback, and building
+                        coverage standards to control the overall bulk of development.
+          B.                                               FAR standard. The floor area ratios are stated in Table 150-2 and apply to all development.
+          C.                                       Inclusionary housing bonus FAR. The following FAR bonus options are allowed in the CI2 zone.
+                        Sites in the CI1 and IR zone are not eligible for the bonus FAR options. Adjustments to this
+                        Subsection, or to the amount of maximum floor area allowed through the bonuses, are
+                        prohibited.
+                        1.                                                   Mandatory inclusionary housing. Bonus FAR is allowed up to the maximum FAR allowed
+                                     with inclusionary housing bonus stated in Table 150-2 for development that triggers the
+                                     requirements of 33.245, Inclusionary Housing. The amount of bonus floor area allowed is
+
+                                                                                                                                      150-                                                            9
+Chapter 33.150                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Title 33, Planning and Zoning
+Campus Institutional Zones                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          3/1/25
+
+                                 an amount equal to the net building area of the building that triggers 33.245, up to the
+                                 maximum FAR allowed with bonus stated in Table 150-2. To qualify for this bonus, the
+                                 applicant must provide a letter from the Portland Housing Bureau certifying that the
+                                 regulations of 33.245 have been met.
+                     2.                                                   Voluntary inclusionary housing. Bonus FAR up to the maximum with inclusionary housing
+                                 bonus stated in Table 150-2 is allowed when one of the following voluntary bonus options
+                                 is met:
+                                 a.                                                    Bonus density or FAR is allowed for projects that voluntarily comply with the
+                                             standards of 33.245.040 and 33.245.050. The amount of bonus floor area allowed is
+                                             an amount equal to the net building area of the building that complies with
+                                             33.245.040 and .050, up to the maximum FAR allowed with bonus stated in Table
+                                             150-2. To qualify for this bonus, the applicant must provide a letter from the Portland
+                                             Housing Bureau certifying that the regulations of 33.245 have been met. The letter is
+                                             required to be submitted before a building permit can be issued for development,
+                                             but is not required in order to apply for a land use review; or
+                                 b.                                                  Affordable Housing Fund. Bonus FAR is allowed in exchange for payment into the
+                                             Affordable Housing Fund. For each square foot of floor area purchased a fee must be
+                                             paid to the Portland Housing Bureau (PHB). The Portland Housing Bureau collects and
+                                             administers the Affordable Housing Fund, and determines the fee. PHB determines
+                                             the fee per square foot and updates the fee at least every three yea  rs. The fee
+                                             schedule is available from the Bureau of Development Services. To qualify for this
+                                             bonus, the applicant must provide a letter from PHB documenting the amount that
+                                             has been contributed. The letter is required to be submitted before a building permit
+                                             can be issued for development, but is not required in order to apply for a land use
+                                             review.
+33.150.210 Height
+         A.                                              Purpose. Maximum height limits work with other development standards to control the overall
+                     scale of buildings. The height limits in the CI zones allow for urban scale development that
+                     generally reflects the intent of each zone. Height limits adjacent to residentia  l and mixed use
+                     areas preserve light, air, and the potential for privacy in the adjacent zones, and discourage
+                     buildings that visually dominate adjacent development.
+         B.                                               Maximum height. The maximum height standards for all structures are stated in Table 150-2,
+                     or are shown on Maps 150-1 through 150-4. Maximum height is reduced adjacent to certain
+                     zones as described in S          ubsection C. The maximum h          eights                    shown on Maps                   150-1 through 150-4
+                     supersede the maximum height standards in Table 150-2 and S          ubsection C. Exceptions to all
+                     the maximum height standards           are stated in S          ubsection E.
+         C.                                                 Reduced                          maximum height. M          aximum height is reduced adjacent to certain zones.
+                     1.                                                                                            In the CI1 zone, maximum height is reduced          as follows.
+                                 a.                                                     On the portion of the            site within 60 feet of a lot line abutting or across the street
+                                             from a site zoned OS or RF through R2.5, the maximum height is 30 feet.                                                                    See Figure
+                                             150-1.
+
+                                                                                                                      150-                                                            10
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             Chapter 33.150
+3/1/25                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Campus Institutional Zones
+
+                                                  b.                                        On the portion of the site within 40 feet of a lot line abutting or across the street
+                                                                    from a site zoned RM1           through RMP or commercial/mixed use zones the maximum
+                                                                    height is 45 feet. See Figure 150 -2.
+                                2.                                         CI2 zone.
+                                                  a.                                          Maximum height is reduced on sites in the CI2 zone that abut or are across the street
+                                                                    from a site zoned OS, or RF through R2.5 as follows:
+                                                                    (1)                        On the portion of the site within 60 feet of a lot line abutting or across the
+                                                                                     street from a site zoned OS, or RF through R2.5, the maximum height is 30 feet.
+                                                                                     See Figure 150-1.
+                                                                    (2)                        On the portion of the site that is more than 60 feet but within 130 feet of a lot
+                                                                                     line abutting or across the street from a site zoned OS ,             or RF through R2.5, the
+                                                                                     maximum height is 75 feet. See Figure 150-1.
+                                                  b.                                        Maximum height is reduced on sites in the CI2 zone that abut or are across the street
+                                                                    from a site zoned RM1           through RMP                          , or commercial/mixed use zones as follows                          :
+                                                                    (1)                        On the portion of the site within 40 feet of a lot line abutting or across the
+                                                                                     street from a site zoned RM1             through RMP, or commercial/mixed use zones, the
+                                                                                     maximum height is 45 feet. See Figure 150-2.
+                                                                    (2)                        On the portion of the site more than 40 feet but within 110 feet of a lot line
+                                                                                     abutting or across the street from a site zoned RM1           through RMP                           , or
+                                                                                     commercial/mixed use zones, the maximum height is 75 feet. See Figure 150-2.
+
+                                                                                                                                                                   Figure 150-                         1
+
+                                                                                                                                                                               150-                                                            11
+Chapter 33.150                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Title 33, Planning and Zoning
+Campus Institutional Zones                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          3/1/25
+
+                                                                                                                                               Figure 150-2
+
+            D.                          Exceptions
+                            1.                                                   Chimneys, flag poles, satellite receiving dishes, and other items similar with a width,
+                                           depth, or diameter of 5 feet or less may extend 10 feet above the height limit, or 5 feet
+                                           above the highest point of the roof, whichever is greater. If they are greater than 5 feet in
+                                           width, depth, or diameter, they are subject to the height limit.
+                            2.                                                   Parapets and rooftop railings may extend 4 feet above the height limit.
+                            3.                                                   Rooftop mechanical equipment and stairwell enclosures that provide rooftop access may
+                                           extend above the height limit as follows, provided that the equipment and enclosures are
+                                           set back at least 15 feet from all                                                         roof edges on street facing facades:
+                                            a.                                                    Elevator mechanical equipment may extend up to 16 feet above the height
+                                                           limit; and
+                                            b.                                                  Other mechanical equipment and stairwell enclosures that cumulatively cover no
+                                                           more than 10 percent of the roof area may extend up to 10 feet above the height
+                                                           limit.
+                            4.                                                   Antennas, utility power poles, and public safety facilities are exempt from the height limit.
+                            5.                                                   Small wind turbines are subject to the standards of Chapter 33.299. Roof mounted solar
+                                           panels are not included in height calculations, any may exceed the maximum height limit if
+                                           the following are met:
+                                            a.                                                       For flat roofs or the horizontal portion of mansard roofs, they may extend up to 5
+                                                           feet above the top of the highest point of the roof.
+                                            b.                                                  For pitched, hipped, or gambrel roofs, they must be mounted no more than 12
+                                                           inches from the surface of the roof at any point, and may not extend above the
+                                                           ridgeline of the roof. The 12 inches is measured from the upper side of the solar
+                                                           panel.
+                            6.                                                   Towers and spires with a footprint of 200 square feet or less may exceed the height limit,
+                                           but still must comply with the setback standard.
+
+                                                                                                                                                          150-12
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             Chapter 33.150
+3/1/25                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Campus Institutional Zones
+
+                                                                                                                            Table 150-2
+                                        Summary of Development Standards in Campus Institutional Zones
+
+ Standard                                                                                                                                                                         CI1                                   CI2                                   IR
+ Maximum FAR [1]
+ (see 33.150.205)                                                                                                                                                                 0.5 to 1                              3 to 1 [2] [3]                        2 to 1
+ Maximum FAR with Inclusionary Housing Bonus [1]                                                                                                                                  NA                                    3.75 to 1 [2]                         NA
+ (see 33.150.205.C)                                                                                                                                                                                                     [3]
+ Maximum Height
+ (see 33.150.210)                                                                                                                                                                 75 ft. [4]                            150 ft. [4]                           75 ft.
+ Minimum Building Setbacks [1]
+ (see 33.150.215)
+ - Lot line abutting or across the street from an OS, RF-R2.5 zoned lot                                                                                                                                                                                       1 ft. for
+                                                                                                                                                                                  15 ft.                                10 ft.                                every 2 ft.
+ - Lot line abutting or across the street from an RM1-RMP, IR zoned lot                                                                                                                                                                                       of building
+                                                                                                                                                                                  10 ft.                                10 ft.                                height but
+ - Lot line abutting or across the street from a C, CI, E, or I zoned lot                                                                                                                                                                                     not less
+                                                                                                                                                                                  0 ft.                                 0 ft.                                 than 10 ft.
+ Maximum Building Setbacks Street Lot Line, Transit Street or
+ Pedestrian District [5] (See 33.150.215)                                                                                                                                         None                                  10 ft.                                10 ft.
+ Maximum Building Coverage [1]                                                                                                                                                    50% of site                           85% of site                           70% of site
+ (see 33.150.220)                                                                                                                                                                 area                                  area                                  area
+ Maximum Building Length [1]
+ (see 33.150.235 and 33.150.255)                                                                                                                                                  200 ft.                               200 ft.                               None
+ Minimum Landscaped Area                                                                                                                                                          25% of site                           15% of site                           20% of site
+ (see 33.150.240)                                                                                                                                                                 area                                  area                                  area
+ Landscaping Abutting an R zoned lot
+ (see 33.150.240.C)                                                                                                                                                               10 ft. @ L3                           5 ft. @ L3                            10 ft. @L3
+ Landscaping across the street from an R zoned lot
+ (see 33.150.240.C)                                                                                                                                                               10 ft. @ L1                           5 ft. @ L1                            10 ft. @L1
+ Building Facade Articulation [1]
+ (see 33.150.255)                                                                                                                                                                 No                                    Yes                                   No
+ Ground Floor Window Standards [1]
+ (see 33.150.250)                                                                                                                                                                 No                                    Yes                                   Yes
+ Transit Street Main Entrance [1]
+ (See 33.150.265)                                                                                                                                                                 No                                    Yes                                   No
+Notes:
+[1] For Colleges and Medical Centers, the entire CI zone is treated as one site regardless of ownership. In this case,
+FAR is calculated based on the total square footage of the parcels within the zone rather than for each individual
+parcel, and setbacks, building length, facade articulation, ground floor windows and transit street ma      in entrance
+regulations are measured from, or only apply to, the perimeter of the zone.
+[2] Maximum FAR within the Legacy Good Samaritan Hospital and Health Center campus boundary shown on Map
+150-                                                                 3 is 3.7 to 1, and is 4.5 to 1 with inclusionary housing bonus                                            .
+[3] Maximum FAR within the PCC Sylvania campus boundary shown on Map 150     -5 is .75 to 1, and is 1 to 1 with
+inclusionary housing bonus  .
+[4] Heights reduced on sites that are across the street from, or adjacent to, certain zones. See 33.150.210.C.
+[5] For frontages where the maximum building setback applies, there is no minimum setback.
+
+                                                                                                                                      150-                                                            13
+Chapter 33.150                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Title 33, Planning and Zoning
+Campus Institutional Zones                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          3/1/25
+
+33.150.215 Setbacks
+          A.                                              Purpose. The required building setbacks promote streetscapes that are consistent with the
+                      desired character of the campus institutional zones, and reflect the diversity of neighborhoods
+                      within which the campus institutional zones are located. In instances where a campus
+                      institutional zone abuts a residential zone, the required setbacks centers complement the
+                      residential character of surrounding neighborhood and result in development that will maintain
+                      light, air, and the potential for privacy for adjacent residential zones. In instances where a
+                      campus institutional zone abuts a mixed-use zone, pedestrian district and/or transit street, the
+                      setback requirements promote buildings and activity that are inviting to pedestrians, and
+                      contribute to an active pedestrian environment.
+          B.                                               Minimum building setbacks. The minimum building setback standards apply to all buildings
+                      and structures on the site. Minimum required building setbacks are stated in Table 150-2, or
+                      are shown on Maps 150-1 through 150-5. Minimum building setbacks shown on Maps 150-1
+                      through 150--5 supersede Table 150-2. Exceptions to the minimum building setback standards
+                      are stated below:
+                      1.                                                   Minor projections allowed. Minor features of a building, such as eaves, chimneys, fire
+                                  escapes, water collection cisterns and planters, bay windows, uncovered stairways,
+                                  wheelchair ramps, and uncovered decks or balconies, may project into a required building
+                                  setback up to 20 percent of the depth of the setback. However, they may not be within 3
+                                  feet of a lot line. Bays and bay windows extending into the setback also must meet the
+                                  following requirements:
+                                   a.                                                    Each bay and bay window may be up to 12 feet long, but the total area of all bays
+                                               and bay windows on a building facade cannot be more than 30 percent of the area of
+                                               the facade;
+                                   b.                                                  At least 30 percent of the area of the bay which faces the property line requiring the
+                                               setback must be glazing or glass block;
+                                   c.                                                       Bays and bay windows must cantilever beyond the foundation of the building; and
+                                   d.                                                  The bay may not include any doors.
+                      2.                                                   Full projection allowed. In addition to Paragraph 1 above, the following features are
+                                  allowed to fully project into required building setbacks:
+                                   a.                                                    Canopies, marquees, awnings, and similar features may fully extend into a street
+                                               setback;
+                                   b.                                                  Uncovered stairways and wheelchair ramps that lead to one entrance on the street-
+                                               facing facade of a building may fully extend into a street setback;
+                                   c.                                                       Uncovered decks and stairways that are no more than 2 -1/2 feet above the ground
+                                               may fully extend into a required building setback; and
+                                   d.                                                  On lots that slope down from the street, vehicular and pedestrian entry bridges that
+                                               are no more than 2-1/2 feet above the average sidewalk elevation may fully extend
+                                               into a required building setback.
+
+                                                                                                                          150-                                                            14
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             Chapter 33.150
+3/1/25                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Campus Institutional Zones
+
+                    3.                                                   Projections not allowed. Attached mechanical structures such as heat pumps, air
+                                conditioners, emergency generators, and water pumps are allowed in a street setback but
+                                not a required setback from an abutting residential zone.
+         C.                                                   Maximum building setbacks in the CI2 and IR zones.
+                    1.                                                   Where the building is within 100 feet a transit street or street lot line within a pedestrian
+                                district, the maximum the building can be set back is 10 feet. W  here an existing building is
+                                being altered, the standard applies to the portion of the building being altered. If the site
+                                has street lot lines on three or more streets, the maximum setback standard only applies
+                                to two of the streets. When this occurs, the                          standard must be applied to the streets with
+                                the highest transit street classifications. If multiple streets have the same highest transit
+                                street classification, the applicant may choose which streets to apply the standard.
+                    2.                                                   Exception. The maximum building setbacks do not apply to primary structures under 500
+                                square feet in floor area, or to detached accessory structures. The street-                                                                      facing facades of
+                                detached accessory structures do not count towards meeting maximum setback  standard.
+         D.                                              Improvements within maximum building setbacks. At least 50 percent of the setback area
+                    between the street lot line and the portion of the building that complies with the maximum
+                    building setback must be hard surfaced for use by pedestrians. Residential buildings are exempt
+                    from this standard.
+33.150.220 Building Coverage
+         A.                                              Purpose. The building coverage standards limit the footprint of buildings and work with the
+                    FAR, height, and setback standards to control the overall scale of development. The standards
+                    promote development consistent with the desired character of the zone. In the CI1 zone, the
+                    standard promotes open spaces, both formal and informal, together with buildings at a scale
+                    that are compatible with surrounding single family residential development. In the CI2 zone the
+                    standards allow for buildings that represent an urban level of development and are consistent
+                    with adjacent mixed use zones.
+         B.                                                  Building coverage standards. The maximum building coverage covered structures are stated in
+                    Table 150-2
+33.150.235 Building Length in the CI1 Zone
+         A.                                              Purpose. The maximum building length standard, along with the height and setback standard,
+                    limits the amount of bulk that can be placed close to the street. The standard assures that long
+                    building walls close to streets will be broken up into separate buildings. This will provide a
+                    feeling of transition from lower density development and help create the desired character of
+                    development in these zones.
+         B.                                                  Maximum building length. In the CI1 Zone, the maximum building length for the portion of
+                    buildings located within 30 feet of a street lot line is 200 feet. The portions of buildings subject
+                    to this standard must be separated by a minimum of 20 feet when located on the same site.
+33.150.240 Landscaped Areas
+         A.                                              Purpose. Landscaping is attractive and it helps to soften the effects of built and paved areas.
+                    Landscaping also helps cool the air temperature, intercept rainfall and reduce stormwater
+                    runoff by providing non-paved permeable surface. Landscaping is required for all campus
+
+                                                                                                                   150-                                                            15
+Chapter 33.150                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Title 33, Planning and Zoning
+Campus Institutional Zones                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          3/1/25
+
+                         institutional zoned lands that abut or are across a street from residential zoned lands to
+                         provide buffering and promote the livability of the residential lands.
+           B.                                               Minimum landscaped area. The required amount of landscaped areas is stated in Table 150-2.
+                         Required landscaped areas must be at ground level and comply with at least the L1 standard as
+                         stated in Chapter 33.248, Landscaping and Screening. However, up to one-third of the required
+                         landscaped area may be improved for active or passive recreational use, or for use by
+                         pedestrians. Examples include walkways, play areas, plazas, picnic areas, and unenclosed
+                         recreational facilities. Any required landscaping, such as for required setbacks or parking lots,
+                         applies towards the landscaped area standard.
+           C.                                                 Landscaping required in minimum building setbacks. Landscaping is required in minimum
+                         building setbacks from lot lines abutting or across the street from a residential zoned lot. The
+                         depth and type of required landscaping are stated in Table 150-2.
+33.150.245 Trees
+Requirements for street trees and for on -site tree preservation, protection, and overall tree density are
+specified in Title 11. See Chapter 11.50, Trees in Development Situations.
+33.150.250 Ground Floor Windows in the CI2 and IR              Zones.
+           A.                                              Purpose. In the CI2 and IR zone                                        s, blank walls on the ground level of buildings are limited in
+                         order to:
+                          •                                            Provide a pleasant, rich, and diverse pedestrian experience by connecting activities
+                                     occurring within a structure to adjacent sidewalk areas, or allowing public art at the ground
+                                     level;
+                          •                                            Encourage continuity of active street level uses;
+                          •                                            Encourage surveillance opportunities by restricting fortress-like facades at street
+                                     level; and
+                          •                                            Avoid a monotonous pedestrian environment.
+           B.                                                  Ground floor window standard. The following standards apply in the CI2 and IR zones:
+                         1.                                                   General standard.
+                                       a.                                                    Windows must cover at least 40 percent of the ground floor wall area of street-                                           facing
+                                                     facades that are 20 feet or closer to a street lot line or a publicly-accessible plaza. For
+                                                     the purposes of this standard, ground floor wall areas include all exterior                wall areas
+                                                     from 2 feet to 10 feet above the finished grade, and include openings in the walls of
+                                                     structured parking.                       See Figure 150-3.
+
+                                                                                                                                          150-                                                            16
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             Chapter 33.150
+3/1/25                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Campus Institutional Zones
+
+                                                                                                                                 Figure 150-                         3
+                                                                                                                  Ground Floor Windows
+
+                                       b.                                                  If the lot has more than one street frontage, then the ground floor window standard
+                                                      in Subparagraph B.1.a. applies to the facade           that faces the highest transit street
+                                                      classification. All other ground level street-facing facades that are 20 feet or closer to
+                                                      the street lot line must have windows that cover 25 percent of the ground level wall
+                                                      area. The walls of structured parking along these facades may be set back at least 5
+                                                      feet and landscaped to the L2 standard instead of providing 25 percent windows. If
+                                                      two or more streets have the same highest transit street classification, then the
+                                                      applicant may choose on which of those streets to meet the higher standard. Transit
+                                                      street classifications are identified in the Transportation Element of the
+                                                      Comprehensive Plan.
+                         2.                                                   Exemptions:
+                                       a.                                                       Houses, attached houses, manufactured homes, duplexes, attached duplexes, and
+                                                      triplexes are exempt from this Section;
+                                       b.                                                  Ground floor street-facing walls of dwelling units are exempt from Paragraph B.1.,
+                                                      but the walls must meet one o f the standards in Subsection D; and
+                                       c.                                                       If the portion of the ground floor wall area that is not a dwelling unit is less than 250
+                                                      square feet in area, then it is exempt from this Section.
+           C.                                                   Qualifying window features. Required ground floor window areas must be windows that allow
+                         views into working areas, lobbies, residential units or residential building common areas;
+                         glazing in pedestrian entrances; or display windows that are at least 24 inches deep set into a
+                         wall. Windows into storage areas, vehicle parking areas, mechanical and utility                                             equipment
+                         areas, garbage and recycling areas, and display cases attached to outside walls do not qualify.
+                         Windows into bicycle parking areas are allowed to qualify for up to 25 percent of the ground
+                         floor windows coverage requirement. Except for the windows of residential units and
+                         clerestory windows located above doors or other windows, the bottom of qualifying windows
+                         must be no more than 4 feet above the adjacent exterior grade.
+
+                                                                                                                                           150-                                                            17
+Chapter 33.150                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Title 33, Planning and Zoning
+Campus Institutional Zones                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          3/1/25
+
+             D.                                            Ground floor window and frontage standards for dwelling units. The ground floor wall area of
+                             street-                facing facades of dwelling units that are 20 feet or closer to a street lot line must meet at
+                             least one of the following standards:
+                              1.                                                   Flexible ground floor design. The ground floor window standard of Subparagraph B.1.a.
+                                              must be met, and the ground level of the building must be designed and constructed as
+                                              follows:
+                                              a.                                                     The distance from the finished floor to the bottom of the ceiling structure above
+                                                               must be at least 12 feet. The bottom of the structure above includes supporting
+                                                               beams;
+                                              b.                                                   The area meeting this standard must be at least 25 feet deep, measured from the
+                                                               street-                facing facade; and
+                                              c.                                                        Each unit must include a front entrance that is located at the level of the finished
+                                                               grade and can be accessed without steps.
+                              2.                                                   Front setback.
+                                              a.                                                    The portions of the building with residential dwelling units on the ground-floor must
+                                                               be set back at least 5 feet from the street lot line. The setback must be landscaped to
+                                                               at least the L1 level and/or hard-surfaced for use by pedestrians; and
+                                              b.                                                  Windows must cover at least 25 percent  of the ground level wall area of the portion
+                                                               of the building with residential dwelling units on the ground-floor.
+                              3.                                                   Raised ground floor.
+                                              a.                                                    The portion of the building with residential dwelling units on the ground-floor must
+                                                               have the finished floor of each residential unit at least 2 feet above the grade of the
+                                                               closest adjoining sidewalk.
+                                              b.                                                  Window must cover at least 25 percent of the ground level wall area of the portion of
+                                                               the building with residential dwelling units on the ground-floor.
+
+                                                                                                                                                                   150-                                                            18
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             Chapter 33.150
+3/1/25                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Campus Institutional Zones
+
+                                                                                                                                                                         Figure 150-                         4
+                                                                                                                                      Ground Floor Window Options
+
+              E.                                                      Exception for Public Art. Public art may be used to meet up to one half of the required window
+                                 coverage of the ground floor window provision. Covenants for the public art will be required,
+                                 following the regulations of Section 33.700.060, Covenants with the City, to ensure the
+                                 installation, preservation, maintenance, and replacement of the public art. To qualify for this
+                                 exception, documentation of approval by the City Arts Program or its designee            must be
+                                 provided prior to approval of the building permit.
+33.150.255 Building Length and Facade                                         Articulation in the CI2 Zone
+              A.                                              Purpose. These standards, along with the height and setback standards, limit the bulk of
+                                 buildings close to the street. These standards help ensure that large buildings will be divided
+                                 into smaller components that relate to the scale and patterns of Portland’s commercial/mixed-
+                                 use areas and add visual interest and variety to the street environment.
+              B.                                                  Maximum building length. In the CI2 zone          , the maximum building length for the portion of a
+                                 building located within 20 feet of a street lot line is 200 feet. The portions of buildings subject
+
+                                                                                                                                                                                     150-                                                            19
+Chapter 33.150                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Title 33, Planning and Zoning
+Campus Institutional Zones                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          3/1/25
+
+                                  to this standard must be separated by a minimum of 20 feet when located on the same site.
+                                  See Figure 150-5.
+
+                                                                                                                                                                               Figure 150-                         5
+                                                                                                                                                    Maximum Building Length
+
+               C.                                                 Building Facade articulation in the CI2 Zone.
+                              1.                                                   The standard applies to buildings more than 35 feet high and that have more than 3,500
+                                                 square feet of street-                                                                 facing facade area within 20 feet of a street property line.
+                                  2.                                         The standard. At least 25 percent of each facade             within 20 feet of a street lot line must be
+                                                     divided into facade           planes that are off-                             set by at least 2 feet from the rest of the facade            .
+                                                     Facade area used to meet the  facade articulation standard may be recessed behind or
+                                                     project out from the primary facade plane         , but projections into street right-of-way do not
+                                                     count toward meeting this standard. See Figure 150-6.
+
+                                                                                                                                                                               Figure 150-                         6
+                                                                                                                                                                 Facade Articulation
+
+33.150.260 Screening
+               A.                                              Purpose. The screening standards address specific unsightly features that detract from the
+                                  appearance of campus institutional areas.
+               B.                                               Garbage and recycling collection areas. All exterior garbage cans, garbage collection areas, and
+                                  recycling collection areas must be screened from the street and any adjacent properties. Trash
+
+                                                                                                                                                                                            150-                                                            20
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             Chapter 33.150
+3/1/25                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Campus Institutional Zones
+
+                       receptacles for pedestrian use are exempt. Screening must comply with at least the L3 or F2
+                       standards of Chapter 33.248, Landscaping and Screening.
+          C.                                                 Mechanical equipment. Mechanical equipment located on the ground, such as heating or
+                       cooling equipment, pumps, or generators must be screened from the street and any abutting
+                       residential zones by walls, fences, or vegetation. Screening must comply with at least the L2 or
+                       F2 standards of Chapter 33.248, Landscaping and Screening, and be tall enough to screen the
+                       equipment. Mechanical equipment placed on roofs must be screened in one of the following
+                       ways, if the equipment is within 50 feet of an R zone:
+                       1.                                                   A parapet along facades facing the R zone that is as tall as the tallest part of the
+                                    equipment;
+                       2.                                                   A screen around the equipment that is as tall as the tallest part of the equipment; or
+                       3.                                                   The equipment is set back from roof edges facing the R zone 3 feet for each foot of height
+                                    of the equipment.
+33.150.265 Transit Street Main Entrance
+          A.                                              Purpose. Locating the main entrance to a use on a transit street provides convenient
+                       pedestrian access between the use and public sidewalks and transit facilities, and so promotes
+                       walking and the use of transit.
+          B.                                                Applicability.
+                       1.                                                   Generally. All sites with at least one frontage on a transit street, and where any of the
+                                    floor area on the site is in nonresidential uses, or residential use in a multi-         dwelling
+                                    structure, must meet the following standards. If the site has frontage on mor  e than one
+                                    transit street, the standards of Subsection C must be met on at least one of the transit
+                                    streets;
+                       2.                                                     Small housing types. Houses, attached houses, manufactured homes, duplexes, attached
+                                    duplexes, triplexes, and fourplexes  must meet the standards of 33.130.250.B, Residential
+                                    Main Entrance, instead of the requirements of this section.
+          C.                                                 Location. For portions of a building within the maximum building setback, at least one main
+                       entrance for each nonresidential tenant space on the ground floor, and one main entrance to a
+                       multi-dwelling structure must meet the standards of this section. The ground floor is the lowest
+                       floor of the building that is within four feet of the adjacent transit street grade. The main
+                       entrance must:
+                       1.                                                   Be within 25 feet of the transit street;
+                       2.                                                   Allow pedestrians to both enter and exit the building; and
+                       3.                                                     Meet one of the following:
+                                     a.                                                    Face the transit street;
+                                     b.                                                  Be at an angle of up to 45 degrees from the transit street, measured from the street
+                                                  property line, as shown in Figure 150          -7; or
+                                     c.                                                       If it is an entrance to a multi-          dwelling structure:
+                                                  (1)                                  Face a courtyard at least 15 feet in width that                      abuts the transit street  and that is
+                                                               landscaped to at least the L1 level, or hard-surfaced for use by pedestrians; and
+
+                                                                                                                                  150-                                                            21
+Chapter 33.150                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Title 33, Planning and Zoning
+Campus Institutional Zones                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          3/1/25
+
+                                                               (2)                                  Be within 6           0 feet of the transit street.
+
+                                                                                                                                                        Figure 150-                         7
+                                                                                                                            Transit Street Main Entrance
+
+             D.                                            Distance between entrances. For portions of a building with any nonresidential uses within the
+                             maximum building setback, a minimum of one entrance is required for every 200 feet of
+                             building length.
+33.150.267 Additional Development Standards for Institutional Campuses in the IR Zone
+             A.                                              Purpose. The general base zone development standards in the IR zone are designed for
+                             institutional campuses with approved impact mitigation plans. The intent is to maintain
+                             compatibility with and limit negative impacts on surrounding areas.
+             B.                                               Where these standards apply. The standards of this section apply to all development that is
+                             part of an institutional campus with an approved impact mitigation plan or conditional use
+                             master plan in the IR zone, whether allowed by right, allowed with limitations, or subject to a
+                             conditional use review. The standards apply to new development, exterior alterations, and
+                             conversions from one use category to another.
+             C.                                                 The standards.
+                             1.                                                   Access to accessory Retail Sales And Service uses must be from an interior space, or from
+                                              an exterior space that is at least 150 feet from a public right of way.
+                             2.                                                   Exterior signage for accessory Retail Sales And Service uses is prohibited.
+                             3.                                                   The following subsections apply to development in the IR zone unless superseded by
+                                              development standards in an approved impact mitigation plan or approved conditional
+                                              use master plan:
+
+                                                                                                                                                                   150-                                                            22
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             Chapter 33.150
+3/1/25                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Campus Institutional Zones
+
+                                      a.                                                    33.120.200 Housing Types Allowed;
+                                      b.                                                  33.120.232 Street -Facing Facades;
+                                      c.                                                       33.120.240 Required Outdoor Areas; and
+                                      d.                                                     33.120.255 Pedestrian Standards.
+33.150.270 Exterior Display and Storage,
+          A.                                              Purpose. The standards of this section are intended to assure that exterior display, storage, and
+                        work activities:
+                                    •                   Will be consistent with the desired character of the zone;
+                                    •                   Will not be a detriment to the overall appearance of a commercial area;
+                                    •                  Will not have adverse impacts on adjacent properties, especially those zoned
+                                           residential; and
+                                    •                   Will not have an adverse impact on the environment.
+          B.                                               Exterior display. Exterior display of goods is prohibited except for the display of plants and
+                        produce.
+          C.                                                 Exterior storage. Exterior storage is allowed when           the following are met:
+                                      1.                                                   Exterior storage is limited to 10 percent of the site area; and
+                                      2.                                                   Exterior storage areas must be set back 10             feet from lot lines and           the setback area
+                                                   must be landscaped to at least the L3 standard. Exterior storage areas located more
+                                                   than 100 feet from the perimeter of a College or Medical Center site are exempt
+                                                   from the landscape requirement. For colleges and medical centers, the entire CI zone
+                                                   is considered one site regardless of ownership.
+          D.                                             Paving. All exterior display and storage areas, except for plant nurseries, must be paved.
+33.150.275 Trucks and Equipment
+          A.                                              Purpose. The parking and storage of trucks and equipment is regulated to ensure that it will be
+                        consistent with the desired character of the campus institutional zones, and to limit adverse
+                        effects on adjacent residential lands.
+          B.                                               Truck and equipment parking standards. The standards for truck and equipment parking apply
+                        to business vehicles that are parked regularly at a site. The regulations do not apply to pick-up
+                        and delivery activities, to the use of vehicles during construction, or to services at the site that
+                        occur on an intermittent and short term basis. The truck categories are defined in Chapter
+                        33.910.
+                        1.                                                   Light trucks. The parking of passenger vehicles, light trucks, and similar equipment is
+                                     allowed in all campus institutional zone areas that comply with the development
+                                     standards for auto parking areas.
+                        2.                                                   Medium trucks. The parking of pickup trucks in the medium truck category is allowed in all
+                                     campus institutional zones. The parking of all other medium trucks and similar equipment
+                                     is allowed only in the CI2 zone. Truck parking areas must comply with the development
+                                     standards for auto parking areas.
+                        3.                                                   Heavy trucks. The parking of heavy trucks and similar equipment is not allowed in any
+                                     campus institutional zone.
+
+                                                                                                                                     150-                                                            23
+Chapter 33.150                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Title 33, Planning and Zoning
+Campus Institutional Zones                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          3/1/25
+33.150.277 Drive-Through Facilities
+Drive-through facilities are prohibited in the campus institutional zones.
+33.150.280 Detached Accessory Structures
+           A.                                              Purpose. These standards are intended to maintain separation and privacy for abutting
+                        residential zoned lots from nonresidential development.
+           B.                                               General standards.
+                        1.                                                   The regulations of this section apply to detached accessory structures.
+                        2.                                                   The height and building coverage standards of the base zone apply to detached
+                                      accessory structures.
+           C.                                                 Setbacks.
+                        1.                                                   Uncovered accessory structures. Uncovered accessory structures such as flag poles, lamp
+                                      posts, signs, antennas and dishes, mechanical equipment, uncovered decks, play
+                                      structures, and tennis courts are allowed in a street setback, but not in a required setback
+                                      from an abutting residential zone.
+                        2.                                                   Covered structures.
+                                       a.                                                    Covered structures such as storage buildings, greenhouses, work shed, covered
+                                                    decks, and covered recreational structures are subject to the setbacks for buildings.
+                                       b.                                                  Water cisterns that are 6 feet or less in height are allowed in side and rear setbacks,
+                                                    including setbacks for abutting a residential zone.
+33.150.285 Fences
+           A.                                              Purpose. The fence regulations promote the positive benefits of fences without negatively
+                        impacting the community or endangering public or vehicle safety. Fences near streets are kept
+                        low in order to allow visibility into and out of the site and to ensure visibility for motorists.
+                        Fences in any required side or rear setback are limited in height so as to not conflict with the
+                        purpose for
+                        the setback.
+           B.                                               Types of fences. The standards apply to walls, fences, and screens of all types whether open,
+                        solid, wood, metal, wire, masonry, or other material.
+           C.                                                 Location and heights.
+                        1.                                                   Fences up to 8 feet high are allowed in required building setbacks except for required
+                                      building setbacks along street lot lines or pedestrian connections. The following height
+                                      limits apply to fences located within 10 feet of a street lot line or pedestr  ian connection.
+                                      In the case of a college or medical center these limits apply to fences within 10 feet of all
+                                      street lot lines or pedestrian connections within the zone.
+                                       a.                                                    Fences that are more than 50 percent sight-                 obscuring may be up to 3-1/2 feet high.
+                                       b.                                                  Fences that are 50 percent or less sight-                 obscuring may be up to 8 feet high.
+                        2.                                                   Fences in all other locations. The height for fences in locations other than described in
+                                      Paragraphs C.1 and C.2 is the same as the regular height limits of the zone.
+
+                                                                                                                                        150-                                                            24
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             Chapter 33.150
+3/1/25                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Campus Institutional Zones
+
+           D.                                            Reference to other regulations
+                          1.                                                   Building permits. Building permits are required by PP&D for certain fences pursuant to the
+                                        building code.
+                          2.                                                   Fence materials regulated by other bureaus. Electrified fences are regulated under Title
+                                        26, Electrical Regulations. The use of barbed wire is regulated under Title 24, Building
+                                        Regulations.
+33.150.290 Demolitions
+           A.                                              Generally. Demolition on a site that requires a demolition permit is subject to the tree
+                          preservation and protection requirements of Title 11, Trees. See Chapter 11.50, Trees in
+                          Development Situations.
+           B.                                               Historic resources. Demolition of a historic resource is regulated by Chapter 33.445, Historic
+                          Resource Overlay Zone.
+           C.                                                 Landscaping. Sites must be landscaped within 6 months of the demolition of buildings unless
+                          there is an approved development for the site. Approved development means a project
+                          approved through a land use review or building permit. The landscaping must meet at least the
+                          L1 standard of Chapter 33.248, Landscaping and Screening, except that no shrubs or trees are
+                          required.
+33.150.295 Nonconforming Development
+Existing development that does not conform to the development standards of this chapter may be
+subject to the regulations of Chapter 33.258, Nonconforming Situations.
+33.150.300 Parking, Loading , and Transportation and Parking                                         Demand Management
+The regulations for vehicle parking, bicycle parking, loading, and transportation and parking demand
+management are stated in Chapter 33.266, Parking, Loading, and Transportation and Parking Demand
+Management.
+33.150.305 Signs
+The sign regulations are stated in Title 32, Signs and Related Regulations.
+33.150.310 Superblock Requirements
+Development on land that includes vacated rights          -of-way may be subject to the superblock standards of
+Chapter 33.293, Superblocks.
+33.150.315 Recycling Areas
+Requirements for recycling areas are regulated by the Bureau of Planning and Sustainability. See Section
+17.102.270, Businesses and Multifamily Complexes Required to Recycle, of the Portland City Code.
+
+(Adopted by Ord. No. 188177, effecti                                                  ve 5/24/18. Amended by Ord. No. 188958, effective 5/24/18; Ord.
+No. 189137, effective 8/22/18; Ord. No.                                                                         189488, effective 12/2/19; Ord. No. 189807                                               , effective 12/18/19;
+Ord. No. 189805                                                 , effective 3/1/20; Ord. No. 190380, effective 4/30/21 and 8/1/21; Ord. No. 190477                                               ,
+effective 8/1/21; Ord. No. 190978                                               , effective 8/31/22; Ord. No. 191310                                                 , effective 6/30/23; Ord. No.
+191779, effective 10/1/24; Ord. No. 191961, effective 3/1/25.)
+
+                                                                                                                                                150-                                                            25
+Chapter 33.150                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       Title 33, Planning and Zoning
+Campus Institutional Zones                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          3/1/25
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          150-                                                            26

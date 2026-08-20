@@ -28,13 +28,22 @@ def test_no_encoded_value_waits_on_an_unread_note() -> None:
     assert not blocked
 
 
-def test_nothing_here_caps_a_verdict() -> None:
-    """No Portland note rests on a lot fact nothing measures. Where a mapped
-    condition does decide a number — the civic corridor coverage bonus — it is
-    in the section text and is encoded as a variant."""
+def test_exactly_one_note_caps_a_verdict() -> None:
+    """For a long time none did, and that was the finding: Portland writes its
+    conditions into the section text — the civic corridor coverage bonus is a
+    variant, not a note — and keeps its table notes for other tables, other
+    buildings and relief.
+
+    Chapter 33.150 broke the run. Note [3] under Table 150-2 sets maximum FAR
+    inside the PCC Sylvania campus boundary at .75 to 1 where the CI2 column
+    says 3 to 1 — a quarter of the zone's own ceiling, on a line on Map 150-5
+    that nothing here reads. It is the one Portland note that makes a standard
+    tighter on a fact nobody measures, and 0.75 is low enough to decide a
+    four-unit pod rather than sitting harmlessly above it."""
     capping = [n for n in notes() if n.layer == LAYER and n.state == "unmeasured"]
 
-    assert not capping
+    assert [n.quote for n in capping] == ["or/multnomah/portland/33.150.txt#L571"]
+    assert capping[0].fact == "site_specific_limitation"
 
 
 def test_the_grandfathering_notes_are_dismissed_as_relief() -> None:

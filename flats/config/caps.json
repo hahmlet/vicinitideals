@@ -613,5 +613,17 @@
         "through_lot"
       ]
     }
+  },
+  "or/multnomah/portland": {
+    "CI2": {
+      "min_lot_sqft": [
+        "site_specific_limitation"
+      ]
+    },
+    "IR": {
+      "min_lot_sqft": [
+        "site_specific_limitation"
+      ]
+    }
   }
 }

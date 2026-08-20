@@ -317,3 +317,63 @@ notes:
       where the F2 + L2 option is used the fence goes on the interior side of
       the landscaped area. A construction detail inside a standard this layer
       does not encode
+
+  # --- 33.150 Table 150-2, campus institutional standards ------------
+  #
+  # Five notes, and one of them breaks this ledger's clean record: note [3] is
+  # a mapped condition that makes a standard TIGHTER, which is the shape every
+  # other Portland note has managed to avoid.
+  - quote: "or/multnomah/portland/33.150.txt#L565"
+    digest: "0f6941d0781c"
+    state: dismissed
+    reason: >-
+      for Colleges and Medical Centers the entire CI zone counts as one site
+      regardless of ownership, and FAR, setbacks, building length, facade
+      articulation, windows and the transit-street entrance are then measured
+      from the perimeter of the zone. A different applicant and a different
+      site: the pod is neither a college nor a medical centre, and reading a
+      lot's standards off a campus perimeter is what this note exists to let
+      a campus do
+
+  - quote: "or/multnomah/portland/33.150.txt#L569"
+    digest: "8e4715494aec"
+    state: dismissed
+    reason: >-
+      maximum FAR inside the Legacy Good Samaritan campus boundary on Map
+      150-3 is 3.7 to 1 rather than 3. A relaxation, on a mapped boundary
+      nothing here reads; declining it can only cost a site that sits inside
+      it
+
+  - quote: "or/multnomah/portland/33.150.txt#L571"
+    digest: "b0b1dfa3fbb5"
+    state: unmeasured
+    fact: site_specific_limitation
+    reason: >-
+      maximum FAR inside the PCC Sylvania campus boundary on Map 150-5 is
+      .75 to 1, not 3 to 1 -- a quarter of the zone's own ceiling, and the
+      only Portland note in this ledger that tightens a standard on a fact
+      nobody measures. At 0.75 a 5,000 sq ft lot carries 3,750 sq ft of floor
+      area, which a four-unit pod can exceed, so this is not a difference that
+      stays below the verdict. Whether a CI2 lot is inside that boundary is a
+      line on a map this screen does not hold, so the note caps rather than
+      resolves
+
+  - quote: "or/multnomah/portland/33.150.txt#L573"
+    digest: "22c261d2f980"
+    state: dismissed
+    reason: >-
+      heights are reduced next to certain zones under 33.150.210.C. Every
+      reduction that subsection states lands at 30 ft or above -- 30 within 60
+      ft of an OS or RF-R2.5 line, 45 within 40 ft of an RM1-RMP or
+      commercial line -- and the pod is 26 ft. A tightening that cannot reach
+      this building, which is a different reason for dismissing it than the
+      usual one and worth writing down as such
+
+  - quote: "or/multnomah/portland/33.150.txt#L574"
+    digest: "4a88404f5401"
+    state: dismissed
+    reason: >-
+      where the maximum building setback applies there is no minimum setback.
+      A relief, and one this file already takes the conservative side of: the
+      street minimum is encoded at 0 from the table's own rows, so the note
+      cannot loosen anything further
