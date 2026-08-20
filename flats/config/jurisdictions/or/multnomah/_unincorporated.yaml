@@ -98,6 +98,27 @@ code:
 # the same chapter PDF, both set their purpose heading with a double space and
 # no dash the way MUF does, and between them they answer 19 of the lots this
 # layer could not.
+# The three articles that close out this layer's MCC labels: the medium
+# density zone that permits the pod outright, the urban future holding zone,
+# and the retail commercial zone that forbids a residence in one sentence.
+- id: "39.mr-4"
+  url: https://multco.us/file/chapter_39_-_zoning_code/download
+  title: MCC 39.4968-39.4990 Urban Medium Density Residential - 4 (MR-4)
+  start: "39.4968  PURPOSE"
+  end: "39.5000- PURPOSES"
+  extraction: plain
+- id: "39.uf-20"
+  url: https://multco.us/file/chapter_39_-_zoning_code/download
+  title: MCC 39.4748-39.4754 Urban Future (UF-20)
+  start: "39.4748 UF-20 ZONE"
+  end: "39.4758 AREA AFFECTED"
+  extraction: plain
+- id: "39.c-3"
+  url: https://multco.us/file/chapter_39_-_zoning_code/download
+  title: MCC 39.4735-39.4739 Retail Commercial (C-3)
+  start: "39.4735 USES"
+  end: "39.4740 PURPOSES"
+  extraction: plain
 - id: "39.lr-5"
   url: https://multco.us/file/chapter_39_-_zoning_code/download
   title: MCC 39.4818-39.4830 Urban Low Density Residential - 5 (LR-5)
@@ -139,6 +160,187 @@ code:
   end: "39.4735 USES"
   extraction: plain
 zones:
+  C3:
+    section: ["39.c-3"]
+    cite_default:
+      cite: MCC 39.4735 (Uses), 39.4737(H) (Restrictions)
+      url: https://multco.us/file/chapter_39_-_zoning_code/download
+      retrieved: '2026-08-20'
+    quadplex_allowed:
+      # Two sentences and it is over. 39.4735 closes the list -- 68 enumerated
+      # retail uses from antique shop to variety store, none of them a
+      # dwelling -- and 39.4737(H) says it outright: "No new residence shall
+      # be permitted in this base zone except that related to the business or
+      # enterprise allowed in this base zone such as janitor or night
+      # watchperson."
+      #
+      # A caretaker's flat is the exception, and it is the same exception the
+      # county's General Industrial zone and Fairview's GI carry. One unit for
+      # somebody who works there is not four units for sale.
+      value: false
+      quote: "or/multnomah/_unincorporated/39.c-3.txt#L1-L8,L203-L206"
+    notes: >-
+      One lot. Encoded because a closed commercial list with an explicit
+      residential prohibition is the cheapest kind of certainty in this corpus
+      -- the zone is answered by a sentence rather than by an absence, and
+      absences are what take the reading.
+  CFU2:
+    section: ["39.cfu"]
+    cite_default:
+      cite: MCC 39.4050(C)
+      url: https://multco.us/file/chapter_39_-_zoning_code/download
+      retrieved: '2026-08-20'
+    like:
+      zone: CFU
+      wins: local
+      cite: MCC 39.4050(C) (the CFU base zones and their common standards)
+      quote: "or/multnomah/_unincorporated/39.cfu.txt#L24-L30"
+    notes: >-
+      Not a separate article. 39.4050(C) names six zones -- CFU, CFU-1 through
+      CFU-5 -- and says they "may be referred to collectively as the CFU
+      because all standards and requirements applicable to the specific CFU
+      base zone itself also apply to each of the other zones except as
+      expressly stated otherwise". So the incorporation is the code's own
+      sentence rather than an inference from the label, which is the whole
+      difference between a `like` somebody can check and a `like` somebody
+      guessed.
+
+
+      The two places the article does state otherwise are both in the forest
+      practices and siting standards -- 39.4115's fire siting rules read
+      differently in CFU-1 and CFU-2 -- and neither touches the use list or
+      any dimension encoded here. `wins: local` is set anyway, so a value
+      written into this zone later would override the incorporation rather
+      than sit beside it.
+  MR4:
+    section: ["39.mr-4"]
+    cite_default:
+      cite: MCC 39.4970 (Uses), 39.4975(B) (Primary Uses), 39.4990 (Dimensional
+        Requirements)
+      url: https://multco.us/file/chapter_39_-_zoning_code/download
+      retrieved: '2026-08-20'
+    quadplex_allowed:
+      # The only zone in this layer that permits the pod outright. 39.4975 is
+      # PRIMARY USES and (B) is one line: "A multiplex dwelling structure."
+      # No conditional use, no locational requirement, no hearing -- where
+      # LR-5 four zones up needs 39.4826(C) and 39.4828(A) together, this zone
+      # needs nothing at all.
+      #
+      # 39.4970 is quoted with it for the usual reason: the permission is only
+      # readable as a permission because the article closes its list.
+      value: true
+      quote: "or/multnomah/_unincorporated/39.mr-4.txt#L12-L21"
+    min_lot_sqft:
+      # 39.4990(C): 4,000 square feet for EACH dwelling unit in a multiplex
+      # dwelling structure, so 16,000 for the pod. The lowest per-unit figure
+      # in the county's own articles -- LR-5 asks 4,500 and LR-7 asks 5,000 --
+      # and 16,000 appears in the article nowhere.
+      per_dwelling: 4000
+      cite: MCC 39.4990(C)
+      quote: "or/multnomah/_unincorporated/39.mr-4.txt#L155-L157"
+    max_height_ft:
+      value: 35
+      cite: MCC 39.4990(J)
+      quote: "or/multnomah/_unincorporated/39.mr-4.txt#L173,L179"
+    setback_front_ft:
+      # Two printed rows this time, not one -- "Interior Lot 20 5 N/A 15" and
+      # "Corner Lot 20 5 10 15" under "Front Side Street Side Rear". Both are
+      # inside every citation, because the only column that differs is the
+      # street side one and a reader has to be able to see that.
+      value: 20
+      cite: MCC 39.4990(J)
+      quote: "or/multnomah/_unincorporated/39.mr-4.txt#L173-L178"
+    setback_side_ft:
+      value: 5
+      cite: MCC 39.4990(J)
+      quote: "or/multnomah/_unincorporated/39.mr-4.txt#L173-L178"
+    setback_street_side_ft:
+      value: 10
+      cite: MCC 39.4990(J)
+      quote: "or/multnomah/_unincorporated/39.mr-4.txt#L173-L178"
+    setback_rear_ft:
+      value: 15
+      cite: MCC 39.4990(J)
+      quote: "or/multnomah/_unincorporated/39.mr-4.txt#L173-L178"
+    max_coverage_pct:
+      value: 40
+      cite: MCC 39.4990(I)
+      quote: "or/multnomah/_unincorporated/39.mr-4.txt#L171-L172"
+    min_lot_width_ft:
+      value: 45
+      cite: MCC 39.4990(H)
+      quote: "or/multnomah/_unincorporated/39.mr-4.txt#L168-L170"
+      variants:
+        - value: 50
+          when: [corner_lot]
+          cite: MCC 39.4990(H)
+          quote: "or/multnomah/_unincorporated/39.mr-4.txt#L168-L170"
+    min_frontage_ft:
+      value: 20
+      cite: MCC 39.4990(G)
+      quote: "or/multnomah/_unincorporated/39.mr-4.txt#L166-L167"
+    notes: >-
+      WHAT "MULTIPLEX" MEANS HERE, and it is not obvious. MCC 39.2000 defines a
+      Multi-Plex Dwelling Structure as "a row house or town house apartment
+      structure" and stops. A Row House is "a one-story apartment structure
+      having three or more dwelling units" -- the pod is two storeys, so it is
+      not that half. An Apartment is "any building or portion thereof used for
+      or containing three or more dwelling units", which the pod is. And "town
+      house" the county never defines at all.
+
+
+      So a four-unit, two-storey, attached townhome reaches the multiplex row
+      through the undefined half of a two-part definition. That reading is
+      almost certainly right -- a town house apartment structure is what this
+      building is in any ordinary use of the words, and the row house half
+      exists precisely to cover the single-storey case -- but it rests on a
+      term with no entry in the county's glossary, and this file says so
+      rather than letting the permission look unqualified. The same chain
+      decides LR-5 and LR-7.
+
+
+      39.4990(K) is not encoded and it can bind hard: "in the case of an
+      apartment structure in this base zone, a yard equal to the structure
+      height shall be provided between the structure in this base zone and any
+      adjacent LR base zone lot line". A 26-foot pod next to an LR lot would
+      owe a 26-foot yard on that line instead of five or fifteen. Two things
+      stop it being encoded rather than one -- the neighbour's zoning is a
+      fact nothing here holds, and whether a four-unit multiplex is an
+      "apartment structure" for this sentence turns on the same undefined
+      vocabulary the use flag does. The Planning Director may modify or waive
+      it on design review, which is a relief nobody should count on.
+
+
+      Two lots carry this label. It is encoded in full anyway, because it is
+      the one county zone where the answer can come out GREEN, and a zone that
+      can say yes is worth more attention than a zone that says no.
+  UF20:
+    section: ["39.uf-20"]
+    cite_default:
+      cite: MCC 39.4750 (Uses), 39.4751(A) (Primary Uses), 39.4752(A)
+      url: https://multco.us/file/chapter_39_-_zoning_code/download
+      retrieved: '2026-08-20'
+    quadplex_allowed:
+      # A holding zone -- 20-acre minimum lot on land the county expects to
+      # urbanise later -- and it holds by keeping the use list short. 39.4750
+      # closes it; 39.4751(A) is "residential use consisting of a single-
+      # family detached dwelling on a lot"; 39.4752(A) adds a second
+      # single-family dwelling for farm help on the same lot as the first.
+      # 39.4753's conditional list is mining, feed lots, swine, fur-bearing
+      # animals, dog kennels and log rafts. No middle housing of any kind.
+      value: false
+      quote: "or/multnomah/_unincorporated/39.uf-20.txt#L6-L15,L138-L143"
+    notes: >-
+      Twenty acres is the minimum lot size, stated in the zone's own first
+      sentence rather than in its dimensional section. Not encoded, because
+      the use list settles the zone first.
+
+
+      The name is the thing to notice. This is land the comprehensive plan has
+      already earmarked for a future urban designation, which means the answer
+      here has a shelf life in a way a resource zone's does not: an EFU parcel
+      refuses the pod because it is a farm, and a UF-20 parcel refuses it
+      because the county has not rezoned it yet. Four lots today.
   LR5:
     section: ["39.lr-5"]
     cite_default:
@@ -251,6 +453,25 @@ zones:
       cite: MCC 39.4830(E)
       quote: "or/multnomah/_unincorporated/39.lr-5.txt#L318-L319"
     notes: >-
+      WHAT "MULTIPLEX" MEANS HERE, and it is not obvious. MCC 39.2000 defines a
+      Multi-Plex Dwelling Structure as "a row house or town house apartment
+      structure" and stops. A Row House is "a one-story apartment structure
+      having three or more dwelling units" -- the pod is two storeys, so it is
+      not that half. An Apartment is "any building or portion thereof used for
+      or containing three or more dwelling units", which the pod is. And "town
+      house" the county never defines at all.
+
+
+      So a four-unit, two-storey, attached townhome reaches the multiplex row
+      through the undefined half of a two-part definition. That reading is
+      almost certainly right -- a town house apartment structure is what this
+      building is in any ordinary use of the words, and the row house half
+      exists precisely to cover the single-storey case -- but it rests on a
+      term with no entry in the county's glossary, and this file says so
+      rather than letting the permission look unqualified. The same chain
+      decides LR-5 and LR-7.
+
+
       Two of the four locational paths in 39.4828(A) are not encoded because
       nothing here can see them: "a lot having sole access from an accessway
       approved under MCC 39.9000 through 39.9700", and a lot on a public street
@@ -649,6 +870,91 @@ zones:
     setback_side_ft:
       value: 10
       quote: "or/multnomah/_unincorporated/33.110.txt#L460"
+  R5:
+    cite_default:
+      cite: Portland Zoning Code 33.110 Tables 110-2/110-4/110-5/110-7 (Portland-administered
+        pockets); 33.110.205
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-08-20'
+    quadplex_allowed:
+      # Table 110-2, Fourplex row, R5 column: Yes. The fifth of the six
+      # single-dwelling columns, and the last one in this layer that was still
+      # unread -- R20, R10, R7 and RF have been encoded off this table since
+      # the port.
+      value: true
+      quote: "or/multnomah/_unincorporated/33.110.txt#L313"
+    max_height_ft:
+      # Table 110-4, "Maximum Height": 30 ft. in RF, R20, R10, R7 and R5, and
+      # 35 ft. in R2.5. The header row is quoted with the standard's row
+      # because the table puts all six districts on one printed line.
+      #
+      # Note [3] hangs on this cell and is already ruled in the footnote
+      # ledger: "additional FAR and height may be allowed. See 33.110.265.F"
+      # -- a relaxation, and it can only raise the ceiling.
+      value: 30
+      cite: PCC 33.110 Table 110-4; 33.110.215
+      quote: "or/multnomah/_unincorporated/33.110.txt#L435,L454"
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/_unincorporated/33.110.txt#L458"
+    setback_side_ft:
+      value: 5
+      quote: "or/multnomah/_unincorporated/33.110.txt#L460"
+    setback_rear_ft:
+      value: 5
+      quote: "or/multnomah/_unincorporated/33.110.txt#L462"
+    setback_garage_entrance_ft:
+      value: 18
+      quote: "or/multnomah/_unincorporated/33.110.txt#L464"
+    min_lot_sqft:
+      # Table 110-7, "Triplex and Fourplex Minimum Lot Area Standard": 3,000
+      # square feet in R5. The smallest fourplex lot minimum in this layer, and
+      # the standard's own table rather than the zone's general lot size --
+      # 33.110.265.E.2 sends triplexes and fourplexes here specifically.
+      #
+      # The adjustment it offers is not encoded: up to 10 percent off, but only
+      # for applications made before January 1, 2032, after which "adjustments
+      # are prohibited". A relief with an expiry date is a different thing from
+      # a relief, and nothing in the value model holds a date.
+      value: 3000
+      quote: "or/multnomah/_unincorporated/33.110.txt#L1553"
+    min_density_trigger_lot_sqft:
+      # 33.110.205.C.2: "In the R5 zone, a minimum of two dwelling units are
+      # required on sites that are 10,000 square feet or larger in total site
+      # area." The R7 rule two lines up says the same at 14,000, and both are
+      # encoded for the same reason: a floor the pod clears everywhere is still
+      # a standard somebody has to be able to see was considered.
+      value: 10000
+      cite: PCC 33.110.205.C.2
+      quote: "or/multnomah/_unincorporated/33.110.txt#L423,L424"
+    min_units_at_trigger:
+      value: 2
+      cite: PCC 33.110.205.C.2
+      quote: "or/multnomah/_unincorporated/33.110.txt#L423,L424"
+    coverage_curve:
+      # Table 110-5, "Maximum Building Coverage Allowed in the RF through R2.5
+      # Zones". Each triple is [lot size at which the row starts, square feet
+      # allowed at that size, percent of the excess above it]. The first row
+      # prints a flat 50 percent rather than a base-plus-marginal, which is the
+      # [0, 0, 50] -- 50 percent of everything up to 3,000.
+      value:
+      - [0, 0, 50]
+      - [3000, 1500, 37.5]
+      - [5000, 2250, 15]
+      - [20000, 4500, 7.5]
+      quote: "or/multnomah/_unincorporated/33.110.txt#L781-L786"
+    notes: >-
+      A Portland-administered pocket, same as R20, R10, R7 and RF above. The
+      standards come from PCC Chapter 33.110 rather than from MCC Chapter 39,
+      and the Constrained Sites overlay that voids the fourplex allowance in
+      those zones voids it here too -- it is an overlay this layer does not
+      hold, and the quadfit note on R10 records the same gap.
+
+
+      The 3,000 square foot minimum makes this the loosest lot standard in the
+      layer by a wide margin: R7 asks 4,200, R10 asks 6,000, R20 asks 12,000
+      and LR-7 asks 20,000. Thirteen lots carry the label, which is small
+      enough that the number matters less than the fact that it was read.
   R7:
     cite_default:
       cite: Portland Zoning Code 33.110 Tables 110-2/110-4/110-5/110-7
@@ -829,6 +1135,14 @@ zones:
       number governs until the statute is fetched and says otherwise, because 7,000 against a real
       20,000 passes lots that cannot be built on. If ORS 197A.420 turns out to reach unincorporated
       county, 7,000 comes back as a preemption on the state layer rather than as this zone''s base.
+
+      WHAT "MULTIPLEX" MEANS HERE. The note below used to say this is "not a townhouse question: the
+      word townhouse does not appear anywhere in 39.4848 through 39.4868", which is true of the
+      article and not of the code. MCC 39.2000 defines a Multi-Plex Dwelling Structure as "a row
+      house or town house apartment structure"; a Row House is "a one-story apartment structure
+      having three or more dwelling units", which the two-storey pod is not; and "town house" has no
+      entry in the county glossary. The pod reaches this multiplex line through the undefined half
+      of that definition. See MR-4 for the same chain stated at length.
 
       STILL OPEN, and needing a human: MCC 39.4856(C) lists a multiplex as a CONDITIONAL use, not a
       permitted one; quadplex_allowed: true rests on the HB 2001 mandate overriding that, not on the
