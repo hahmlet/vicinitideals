@@ -83,7 +83,13 @@ zones:
       # 16.12 defines a net acre as "one acre of developable land, as
       # calculated pursuant to Section 16.63.020(F)". That calculation is a
       # survey of the parcel, not an attribute of it.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: a definition that defers -- "one acre of developable land, as
+      # calculated pursuant to Section 16.63.020(F)". The glossary names
+      # the quantity and sends the reader to the calculation.
+        cite: HVMC 16.12 "Net acre"; 16.63.020(F)
+        quote: "or/clackamas/happy-valley/16.12.definitions.txt#L1073-L1074"
       variants:
         - value: 4.4
           when: [unit_lots]
@@ -161,7 +167,13 @@ zones:
       # 16.12 defines a net acre as "one acre of developable land, as
       # calculated pursuant to Section 16.63.020(F)". That calculation is a
       # survey of the parcel, not an attribute of it.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: a definition that defers -- "one acre of developable land, as
+      # calculated pursuant to Section 16.63.020(F)". The glossary names
+      # the quantity and sends the reader to the calculation.
+        cite: HVMC 16.12 "Net acre"; 16.63.020(F)
+        quote: "or/clackamas/happy-valley/16.12.definitions.txt#L1073-L1074"
       variants:
         - value: 8.7
           when: [unit_lots]
@@ -237,7 +249,13 @@ zones:
       # 16.12 defines a net acre as "one acre of developable land, as
       # calculated pursuant to Section 16.63.020(F)". That calculation is a
       # survey of the parcel, not an attribute of it.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: a definition that defers -- "one acre of developable land, as
+      # calculated pursuant to Section 16.63.020(F)". The glossary names
+      # the quantity and sends the reader to the calculation.
+        cite: HVMC 16.12 "Net acre"; 16.63.020(F)
+        quote: "or/clackamas/happy-valley/16.12.definitions.txt#L1073-L1074"
       variants:
         - value: 11.6
           when: [unit_lots]
@@ -313,7 +331,13 @@ zones:
       # 16.12 defines a net acre as "one acre of developable land, as
       # calculated pursuant to Section 16.63.020(F)". That calculation is a
       # survey of the parcel, not an attribute of it.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: a definition that defers -- "one acre of developable land, as
+      # calculated pursuant to Section 16.63.020(F)". The glossary names
+      # the quantity and sends the reader to the calculation.
+        cite: HVMC 16.12 "Net acre"; 16.63.020(F)
+        quote: "or/clackamas/happy-valley/16.12.definitions.txt#L1073-L1074"
       variants:
         - value: 17.4
           when: [unit_lots]
@@ -372,7 +396,13 @@ zones:
       # 16.12 defines a net acre as "one acre of developable land, as
       # calculated pursuant to Section 16.63.020(F)". That calculation is a
       # survey of the parcel, not an attribute of it.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: a definition that defers -- "one acre of developable land, as
+      # calculated pursuant to Section 16.63.020(F)". The glossary names
+      # the quantity and sends the reader to the calculation.
+        cite: HVMC 16.12 "Net acre"; 16.63.020(F)
+        quote: "or/clackamas/happy-valley/16.12.definitions.txt#L1073-L1074"
       variants:
         - value: 20.5
           when: [unit_lots]
@@ -431,7 +461,13 @@ zones:
       # 16.12 defines a net acre as "one acre of developable land, as
       # calculated pursuant to Section 16.63.020(F)". That calculation is a
       # survey of the parcel, not an attribute of it.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: a definition that defers -- "one acre of developable land, as
+      # calculated pursuant to Section 16.63.020(F)". The glossary names
+      # the quantity and sends the reader to the calculation.
+        cite: HVMC 16.12 "Net acre"; 16.63.020(F)
+        quote: "or/clackamas/happy-valley/16.12.definitions.txt#L1073-L1074"
       variants:
         - value: 24.9
           when: [unit_lots]
@@ -473,7 +509,13 @@ zones:
       # "one acre of developable land, as calculated pursuant to Section
       # 16.63.020(F)". That calculation is a survey of the parcel, not an
       # attribute of it.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: a definition that defers -- "one acre of developable land, as
+      # calculated pursuant to Section 16.63.020(F)". The glossary names
+      # the quantity and sends the reader to the calculation.
+        cite: HVMC 16.12 "Net acre"; 16.63.020(F)
+        quote: "or/clackamas/happy-valley/16.12.definitions.txt#L1073-L1074"
     max_density_du_per_acre:
       # No ceiling is printed for the quadplex on one lot. The townhome row is
       # a different standard for a different plat, carried as the variant.
@@ -484,7 +526,13 @@ zones:
       # "one acre of developable land, as calculated pursuant to Section
       # 16.63.020(F)". That calculation is a survey of the parcel, not an
       # attribute of it.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: a definition that defers -- "one acre of developable land, as
+      # calculated pursuant to Section 16.63.020(F)". The glossary names
+      # the quantity and sends the reader to the calculation.
+        cite: HVMC 16.12 "Net acre"; 16.63.020(F)
+        quote: "or/clackamas/happy-valley/16.12.definitions.txt#L1073-L1074"
       variants:
         - value: 25
           when: [unit_lots]
@@ -540,7 +588,13 @@ zones:
       # "one acre of developable land, as calculated pursuant to Section
       # 16.63.020(F)". That calculation is a survey of the parcel, not an
       # attribute of it.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: a definition that defers -- "one acre of developable land, as
+      # calculated pursuant to Section 16.63.020(F)". The glossary names
+      # the quantity and sends the reader to the calculation.
+        cite: HVMC 16.12 "Net acre"; 16.63.020(F)
+        quote: "or/clackamas/happy-valley/16.12.definitions.txt#L1073-L1074"
     max_density_du_per_acre:
       exempt: true
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L642,L646,L647"
@@ -549,7 +603,13 @@ zones:
       # "one acre of developable land, as calculated pursuant to Section
       # 16.63.020(F)". That calculation is a survey of the parcel, not an
       # attribute of it.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: a definition that defers -- "one acre of developable land, as
+      # calculated pursuant to Section 16.63.020(F)". The glossary names
+      # the quantity and sends the reader to the calculation.
+        cite: HVMC 16.12 "Net acre"; 16.63.020(F)
+        quote: "or/clackamas/happy-valley/16.12.definitions.txt#L1073-L1074"
       variants:
         - value: 25
           when: [unit_lots]

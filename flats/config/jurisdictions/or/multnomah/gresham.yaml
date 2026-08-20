@@ -169,7 +169,14 @@ zones:
       # Resource, Hillside and Geologic Risk overlays, dedicated
       # right-of-way and the rest. Nothing here surveys those, so the lot's
       # own area serves as the bound it is.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: the longer of the two lists -- Natural Resource Overlay, Hillside
+      # and Geologic Risk Overlay, land under either easement, dedicated
+      # street, private accessway, the flag pole of a flag lot and the
+      # encumbered part of a non-standard lot.
+        cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
     max_density_du_per_acre:
       # Row D prints None against "Duplex, Triplex, Quadplex,
       # Cottage Cluster". The pod on one lot has no ceiling here --
@@ -186,7 +193,14 @@ zones:
       # Resource, Hillside and Geologic Risk overlays, dedicated
       # right-of-way and the rest. Nothing here surveys those, so the lot's
       # own area serves as the bound it is.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: the shorter list -- High Slope Subarea, dedicated street, private
+      # accessway, the flag pole of a flag lot and the encumbered part of
+      # a non-standard lot. The two overlays that come out of the minimum
+      # acre stay in this one.
+        cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
     notes: 'quadfit confidence: verified | Quadplex P outright. Rear w/ alley 8 ft (not modeled). FAR
       1.0. Height 35 ft.'
     min_frontage_ft:
@@ -264,7 +278,14 @@ zones:
       # Resource, Hillside and Geologic Risk overlays, dedicated
       # right-of-way and the rest. Nothing here surveys those, so the lot's
       # own area serves as the bound it is.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: the longer of the two lists -- Natural Resource Overlay, Hillside
+      # and Geologic Risk Overlay, land under either easement, dedicated
+      # street, private accessway, the flag pole of a flag lot and the
+      # encumbered part of a non-standard lot.
+        cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
     max_density_du_per_acre:
       # Row D prints None against "Duplex, Triplex, Quadplex,
       # Cottage Cluster". The pod on one lot has no ceiling here --
@@ -281,7 +302,14 @@ zones:
       # Resource, Hillside and Geologic Risk overlays, dedicated
       # right-of-way and the rest. Nothing here surveys those, so the lot's
       # own area serves as the bound it is.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: the shorter list -- High Slope Subarea, dedicated street, private
+      # accessway, the flag pole of a flag lot and the encumbered part of
+      # a non-standard lot. The two overlays that come out of the minimum
+      # acre stay in this one.
+        cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
     notes: 'quadfit confidence: verified | Min lot 7,000 sf. FAR 0.7 (tightest in city; still >1,000 sf
       building on min lot).'
     max_height_ft:
@@ -356,7 +384,14 @@ zones:
       # Resource, Hillside and Geologic Risk overlays, dedicated
       # right-of-way and the rest. Nothing here surveys those, so the lot's
       # own area serves as the bound it is.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: the longer of the two lists -- Natural Resource Overlay, Hillside
+      # and Geologic Risk Overlay, land under either easement, dedicated
+      # street, private accessway, the flag pole of a flag lot and the
+      # encumbered part of a non-standard lot.
+        cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
     max_density_du_per_acre:
       # Row D prints None against "Duplex, Triplex, Quadplex,
       # Cottage Cluster". The pod on one lot has no ceiling here --
@@ -373,7 +408,14 @@ zones:
       # Resource, Hillside and Geologic Risk overlays, dedicated
       # right-of-way and the rest. Nothing here surveys those, so the lot's
       # own area serves as the bound it is.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: the shorter list -- High Slope Subarea, dedicated street, private
+      # accessway, the flag pole of a flag lot and the encumbered part of
+      # a non-standard lot. The two overlays that come out of the minimum
+      # acre stay in this one.
+        cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
     notes: 'quadfit confidence: verified | NO minimum lot size, no FAR, no max density — most permissive
       LDR-family zone.'
     max_height_ft:
@@ -461,7 +503,14 @@ zones:
       # Resource, Hillside and Geologic Risk overlays, dedicated
       # right-of-way and the rest. Nothing here surveys those, so the lot's
       # own area serves as the bound it is.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: the longer of the two lists -- Natural Resource Overlay, Hillside
+      # and Geologic Risk Overlay, land under either easement, dedicated
+      # street, private accessway, the flag pole of a flag lot and the
+      # encumbered part of a non-standard lot.
+        cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
     max_density_du_per_acre:
       # Row D prints None against "Duplex, Triplex, Quadplex,
       # Cottage Cluster". The pod on one lot has no ceiling here --
@@ -478,7 +527,14 @@ zones:
       # Resource, Hillside and Geologic Risk overlays, dedicated
       # right-of-way and the rest. Nothing here surveys those, so the lot's
       # own area serves as the bound it is.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: the shorter list -- High Slope Subarea, dedicated street, private
+      # accessway, the flag pole of a flag lot and the encumbered part of
+      # a non-standard lot. The two overlays that come out of the minimum
+      # acre stay in this one.
+        cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
     notes: 'quadfit confidence: verified | Min lot 4,000 sf. FAR 1.0.'
     max_height_ft:
       value: 35
@@ -714,7 +770,14 @@ zones:
       # Resource, Hillside and Geologic Risk overlays, dedicated
       # right-of-way and the rest. Nothing here surveys those, so the lot's
       # own area serves as the bound it is.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: the longer of the two lists -- Natural Resource Overlay, Hillside
+      # and Geologic Risk Overlay, land under either easement, dedicated
+      # street, private accessway, the flag pole of a flag lot and the
+      # encumbered part of a non-standard lot.
+        cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
     max_density_du_per_acre:
       # Row D prints None against "Duplex, Triplex, Quadplex,
       # Cottage Cluster". The pod on one lot has no ceiling here --
@@ -731,7 +794,14 @@ zones:
       # Resource, Hillside and Geologic Risk overlays, dedicated
       # right-of-way and the rest. Nothing here surveys those, so the lot's
       # own area serves as the bound it is.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: the shorter list -- High Slope Subarea, dedicated street, private
+      # accessway, the flag pole of a flag lot and the encumbered part of
+      # a non-standard lot. The two overlays that come out of the minimum
+      # acre stay in this one.
+        cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
     notes: 'quadfit confidence: verified | Interior side 10 ft; street-side wall 20 ft (corner lots modeled
       at max(F, street-side)).'
     max_height_ft:
@@ -822,7 +892,14 @@ zones:
       # Resource, Hillside and Geologic Risk overlays, dedicated
       # right-of-way and the rest. Nothing here surveys those, so the lot's
       # own area serves as the bound it is.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: the longer of the two lists -- Natural Resource Overlay, Hillside
+      # and Geologic Risk Overlay, land under either easement, dedicated
+      # street, private accessway, the flag pole of a flag lot and the
+      # encumbered part of a non-standard lot.
+        cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
     max_density_du_per_acre:
       # Row D, "Duplex, Triplex, Quadplex, Cottage Cluster". The one
       # district that prints a figure against the pod's own row.
@@ -838,7 +915,14 @@ zones:
       # Resource, Hillside and Geologic Risk overlays, dedicated
       # right-of-way and the rest. Nothing here surveys those, so the lot's
       # own area serves as the bound it is.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: the shorter list -- High Slope Subarea, dedicated street, private
+      # accessway, the flag pole of a flag lot and the encumbered part of
+      # a non-standard lot. The two overlays that come out of the minimum
+      # acre stay in this one.
+        cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
     notes: 'quadfit confidence: verified. Single-family detached is not permitted here and a quadplex
       is permitted natively rather than by state mandate.
 

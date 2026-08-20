@@ -109,7 +109,9 @@ def _parse_values(
             exempt = bool(body.pop("exempt", False))
             per_dwelling = body.pop("per_dwelling", None)
             sqft_per_unit = body.pop("sqft_per_unit", None)
-            measured_on = body.pop("measured_on", None)
+            measured_on, measured_on_cite, measured_on_quote = _parse_measured_on(
+                body.pop("measured_on", None), f"{where}.{key}", problems
+            )
             unless = body.pop("unless", ()) or ()
             raw_variants = body.pop("variants", None) or ()
             unknown = set(body) - set(_PROV_KEYS) - set(_REVIEW_KEYS)
@@ -168,7 +170,7 @@ def _parse_values(
             exempt = False
             per_dwelling = None
             sqft_per_unit = None
-            measured_on = None
+            measured_on = measured_on_cite = measured_on_quote = None
             unless = ()
             raw_variants = ()
 
@@ -206,6 +208,8 @@ def _parse_values(
                 per_dwelling=None if per_dwelling is None else float(per_dwelling),
                 sqft_per_unit=None if sqft_per_unit is None else float(sqft_per_unit),
                 measured_on=None if measured_on is None else str(measured_on),
+                measured_on_cite=measured_on_cite,
+                measured_on_quote=measured_on_quote,
                 unless=tuple(unless),
                 prov=prov,
                 status=Status(declared),
@@ -383,6 +387,46 @@ def _parse_sections(raw: object) -> tuple[str, ...]:
     if isinstance(raw, str):
         return (raw.strip(),) if raw.strip() else ()
     return tuple(str(item).strip() for item in raw if str(item).strip())
+
+
+def _parse_measured_on(
+    raw: Any,
+    where: str,
+    problems: list[str],
+) -> tuple[str | None, str | None, str | None]:
+    """Parse the quantity a rate is computed on, and where the code defines it.
+
+    A bare string used to be the whole of it, and that was the bug: seven
+    Oregon codes say "net acre" and subtract seven different lists to get
+    there, so the name alone records nothing a reviewer can check. The mapping
+    form names the fact and sends the reader to the sentence that says what
+    this city takes out.
+
+    The string form is still accepted and still incomplete — it parses, and
+    :class:`~flats.rules.model.Value` refuses it, so the error names the
+    missing citation rather than a YAML shape.
+    """
+    if raw is None:
+        return None, None, None
+    if isinstance(raw, str):
+        return raw, None, None
+    if not isinstance(raw, dict):
+        problems.append(f"{where}.measured_on: expected a fact name or a mapping")
+        return None, None, None
+
+    body = dict(raw)
+    fact = body.pop("fact", None)
+    cite = body.pop("cite", None)
+    quote = body.pop("quote", None)
+    if body:
+        problems.append(f"{where}.measured_on: unknown key(s) {sorted(body)}")
+    if not fact:
+        problems.append(
+            f"{where}.measured_on: name the quantity under 'fact' — the rate is "
+            f"computed on it"
+        )
+        return None, None, None
+    return str(fact), None if cite is None else str(cite), None if quote is None else str(quote)
 
 
 def _parse_like(

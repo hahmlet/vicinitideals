@@ -191,6 +191,23 @@ def _text(store: ProvenanceStore, quote: str) -> str:
         return ""
 
 
+def _evidence(layer: Layer) -> Iterable[tuple[str, str, str]]:
+    """Every passage a layer's values rest on, the denominators included.
+
+    A density per net acre rests on two sentences, not one: the table cell
+    that prints the rate, and the definition that says what the acre is. The
+    second is where a city's vocabulary is thickest -- Milwaukie's net acre
+    names floodplains, protected water features, vegetated corridors and Goal
+    5 resources in a single sentence -- so leaving it out marked the number
+    and skipped the arithmetic under it.
+    """
+    yield from _quoted(layer)
+    for zone_code, zone in sorted(layer.zones.items()):
+        for name, value in sorted(zone.values.items()):
+            if value.measured_on_quote:
+                yield zone_code, f"{name} <{value.measured_on}>", value.measured_on_quote
+
+
 def tagged(layer_id: str | None = None, *, store: ProvenanceStore | None = None) -> list[Tagged]:
     """Every quoted value in the corpus, with this city's words marked in it."""
     store = store or ProvenanceStore()
@@ -201,7 +218,7 @@ def tagged(layer_id: str | None = None, *, store: ProvenanceStore | None = None)
         vocabulary = index(identifier)
         if not vocabulary.by_spelling:
             continue
-        for zone, field, quote in _quoted(layer):
+        for zone, field, quote in _evidence(layer):
             marks = vocabulary.marks(_text(store, quote))
             if marks:
                 out.append(
@@ -214,7 +231,7 @@ def _affected(layer: Layer, term: str, *, store: ProvenanceStore) -> tuple[tuple
     """The values whose evidence is written in a term we cannot evaluate."""
     phrase = PHRASE.get(term) or re.escape(term.replace("_", " "))
     hits: list[tuple[str, str]] = []
-    for zone, field, quote in _quoted(layer):
+    for zone, field, quote in _evidence(layer):
         if re.search(phrase, _text(store, quote), re.I):
             hits.append((zone, field))
     return tuple(hits)

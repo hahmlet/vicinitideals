@@ -200,6 +200,18 @@ def _quoted_parts(layer: Layer) -> Iterable[tuple[str, str, str | None, object]]
                 if value.sqft_per_unit is not None
                 else getattr(value, "value", None),
             )
+            if value.measured_on_quote:
+                # The denominator's definition is a rule somebody read, and a
+                # citation nothing checks is the provenance hole this field
+                # was added to close. No number to corroborate -- what is
+                # being verified is that the sentence is still where the file
+                # says it is.
+                yield (
+                    zone_code,
+                    f"{name} <{value.measured_on}>",
+                    value.measured_on_quote,
+                    None,
+                )
             for variant in value.variants:
                 yield (
                     zone_code,

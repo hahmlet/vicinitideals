@@ -50,7 +50,14 @@ zones:
       # per acre "based on net site area". Nothing here surveys what comes
       # out of a site to make it net, so the figure is right and the
       # denominator is absent.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: street right-of-way and nothing else -- "Net site area means the
+      # square footage of land after subtracting street right-of-way".
+      # The loosest net acre in this corpus, and the closest to the lot's
+      # own area.
+        cite: FMC 19.13 "Net density"; "Net site area"
+        quote: "or/multnomah/fairview/19.13.definitions.txt#L399,L405"
       variants:
         # Row 3.c, Townhouse. The same figure in this zone; carried anyway
         # because the split-plat path reads a different row and a reader
@@ -70,7 +77,14 @@ zones:
       # per acre "based on net site area". Nothing here surveys what comes
       # out of a site to make it net, so the figure is right and the
       # denominator is absent.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: street right-of-way and nothing else -- "Net site area means the
+      # square footage of land after subtracting street right-of-way".
+      # The loosest net acre in this corpus, and the closest to the lot's
+      # own area.
+        cite: FMC 19.13 "Net density"; "Net site area"
+        quote: "or/multnomah/fairview/19.13.definitions.txt#L399,L405"
       variants:
         # Row 4.c, Townhouse, which does carry one.
         - value: 25
@@ -151,7 +165,14 @@ zones:
       # per acre "based on net site area". Nothing here surveys what comes
       # out of a site to make it net, so the figure is right and the
       # denominator is absent.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: street right-of-way and nothing else -- "Net site area means the
+      # square footage of land after subtracting street right-of-way".
+      # The loosest net acre in this corpus, and the closest to the lot's
+      # own area.
+        cite: FMC 19.13 "Net density"; "Net site area"
+        quote: "or/multnomah/fairview/19.13.definitions.txt#L399,L405"
       variants:
         # Row 3.c, Townhouse. The same figure in this zone; carried anyway
         # because the split-plat path reads a different row and a reader
@@ -171,7 +192,14 @@ zones:
       # per acre "based on net site area". Nothing here surveys what comes
       # out of a site to make it net, so the figure is right and the
       # denominator is absent.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: street right-of-way and nothing else -- "Net site area means the
+      # square footage of land after subtracting street right-of-way".
+      # The loosest net acre in this corpus, and the closest to the lot's
+      # own area.
+        cite: FMC 19.13 "Net density"; "Net site area"
+        quote: "or/multnomah/fairview/19.13.definitions.txt#L399,L405"
       variants:
         # Row 4.c, Townhouse, which does carry one.
         - value: 23.2
@@ -251,7 +279,14 @@ zones:
       # per acre "based on net site area". Nothing here surveys what comes
       # out of a site to make it net, so the figure is right and the
       # denominator is absent.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: street right-of-way and nothing else -- "Net site area means the
+      # square footage of land after subtracting street right-of-way".
+      # The loosest net acre in this corpus, and the closest to the lot's
+      # own area.
+        cite: FMC 19.13 "Net density"; "Net site area"
+        quote: "or/multnomah/fairview/19.13.definitions.txt#L399,L405"
       variants:
         # Row 3.c, Townhouse. The same figure in this zone; carried anyway
         # because the split-plat path reads a different row and a reader
@@ -271,7 +306,14 @@ zones:
       # per acre "based on net site area". Nothing here surveys what comes
       # out of a site to make it net, so the figure is right and the
       # denominator is absent.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: street right-of-way and nothing else -- "Net site area means the
+      # square footage of land after subtracting street right-of-way".
+      # The loosest net acre in this corpus, and the closest to the lot's
+      # own area.
+        cite: FMC 19.13 "Net density"; "Net site area"
+        quote: "or/multnomah/fairview/19.13.definitions.txt#L399,L405"
       variants:
         # Row 4.c, Townhouse, which does carry one.
         - value: 17.6
@@ -347,7 +389,14 @@ zones:
       # per acre "based on net site area". Nothing here surveys what comes
       # out of a site to make it net, so the figure is right and the
       # denominator is absent.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: street right-of-way and nothing else -- "Net site area means the
+      # square footage of land after subtracting street right-of-way".
+      # The loosest net acre in this corpus, and the closest to the lot's
+      # own area.
+        cite: FMC 19.13 "Net density"; "Net site area"
+        quote: "or/multnomah/fairview/19.13.definitions.txt#L399,L405"
     max_density_du_per_acre:
       # Row 4.b, and row 4.c prints the same 21.8. Four units at 21.8 per acre
       # need 7,993 sq ft, which the 2,500-per-unit lot size already asks
@@ -361,7 +410,14 @@ zones:
       # per acre "based on net site area". Nothing here surveys what comes
       # out of a site to make it net, so the figure is right and the
       # denominator is absent.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: street right-of-way and nothing else -- "Net site area means the
+      # square footage of land after subtracting street right-of-way".
+      # The loosest net acre in this corpus, and the closest to the lot's
+      # own area.
+        cite: FMC 19.13 "Net density"; "Net site area"
+        quote: "or/multnomah/fairview/19.13.definitions.txt#L399,L405"
     min_building_separation_ft:
       value: 10
       quote: "or/multnomah/fairview/19.30.txt#L409"

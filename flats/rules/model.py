@@ -521,6 +521,21 @@ class Value(BaseModel):
     #: check in one direction and leaves it open in the other -- see
     #: :func:`flats.score.screen._checks`.
     measured_on: str | None = None
+    #: Where *this* jurisdiction defines that quantity, and the line it is
+    #: written on. One fact name is shared by every city that states a density
+    #: per net acre, and the seven codes read so far subtract seven different
+    #: things to get there. Fairview takes out street right-of-way and nothing
+    #: else; Milwaukie takes out right-of-way, floodplain, protected water
+    #: features and their corridors, Goal 5 resources, slopes over 25 percent
+    #: and public open space. Those are not the same acre, and a screen that
+    #: computed one denominator for both would be wrong by the difference.
+    #:
+    #: Gresham is why this is per value rather than per jurisdiction: 3.0100
+    #: prints one subtraction list for minimum density and a shorter one for
+    #: maximum, so inside a single city the floor and the ceiling are measured
+    #: on different acres and each cites its own sentence.
+    measured_on_cite: str | None = None
+    measured_on_quote: str | None = None
     #: Conditions under which this layer says nothing at all. Not an exemption
     #: -- an exemption is the answer "no such standard", and this is the
     #: absence of an answer, which lets a more specific layer supply one. OAR
@@ -654,6 +669,26 @@ class Value(BaseModel):
             raise ValueError(
                 f"{self.name}: {self.measured_on!r} is assumed {fact.assume}, so "
                 f"naming it here would certify a rate nothing measured"
+            )
+        if not (self.measured_on_cite and self.measured_on_quote):
+            # The denominator is the other half of the number. A rate whose
+            # acre nobody defined is a rate nobody can check, and "net acre"
+            # is not one meaning -- it is whatever this code subtracts, which
+            # differs city to city and, in Gresham, between the floor and the
+            # ceiling of the same zone.
+            raise ValueError(
+                f"{self.name}: 'measured_on' names a quantity this code defines "
+                f"for itself — cite and quote where {self.measured_on!r} is "
+                f"defined, or the rate has no denominator anyone can read"
+            )
+        return self
+
+    @model_validator(mode="after")
+    def _denominator_citation_needs_a_denominator(self) -> Value:
+        if (self.measured_on_cite or self.measured_on_quote) and self.measured_on is None:
+            raise ValueError(
+                f"{self.name}: a definition of the quantity a rate is measured "
+                f"on, with no 'measured_on' saying the rate is measured on it"
             )
         return self
 

@@ -76,7 +76,13 @@ zones:
       # 3.140 states density "on a dwelling units per net acre
       # calculation" throughout. Net acre is the lot less what the code
       # deducts, and nothing here deducts it.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: proposed public streets, land constrained for development under the
+      # Code, land in a community resource protection overlay, and land
+      # dedicated or conveyed to the City where the Council approved it.
+        cite: TDC 1.020 "Net Area"
+        quote: "or/multnomah/troutdale/1.020.definitions.txt#L640-L643"
     section: ["3.111", "3.120", "3.130", "8.120"]
     cite_default:
       cite: Troutdale Development Code 3.120, 3.130.B (triplex and quadplex) and 3.130.C (townhouse),
@@ -201,7 +207,13 @@ zones:
       # 3.140 states density "on a dwelling units per net acre
       # calculation" throughout. Net acre is the lot less what the code
       # deducts, and nothing here deducts it.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: proposed public streets, land constrained for development under the
+      # Code, land in a community resource protection overlay, and land
+      # dedicated or conveyed to the City where the Council approved it.
+        cite: TDC 1.020 "Net Area"
+        quote: "or/multnomah/troutdale/1.020.definitions.txt#L640-L643"
     section: ["3.112", "3.120", "3.130", "8.120"]
     cite_default:
       cite: Troutdale Development Code 3.120, 3.130.B (triplex and quadplex) and 3.130.C (townhouse),
@@ -326,7 +338,13 @@ zones:
       # 3.140 states density "on a dwelling units per net acre
       # calculation" throughout. Net acre is the lot less what the code
       # deducts, and nothing here deducts it.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: proposed public streets, land constrained for development under the
+      # Code, land in a community resource protection overlay, and land
+      # dedicated or conveyed to the City where the Council approved it.
+        cite: TDC 1.020 "Net Area"
+        quote: "or/multnomah/troutdale/1.020.definitions.txt#L640-L643"
     section: ["3.113", "3.120", "3.130", "8.120"]
     cite_default:
       cite: Troutdale Development Code 3.120, 3.130.B (triplex and quadplex) and 3.130.C (townhouse),
@@ -451,7 +469,13 @@ zones:
       # 3.140 states density "on a dwelling units per net acre
       # calculation" throughout. Net acre is the lot less what the code
       # deducts, and nothing here deducts it.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: proposed public streets, land constrained for development under the
+      # Code, land in a community resource protection overlay, and land
+      # dedicated or conveyed to the City where the Council approved it.
+        cite: TDC 1.020 "Net Area"
+        quote: "or/multnomah/troutdale/1.020.definitions.txt#L640-L643"
       variants:
         # 3.140.B.3.c. LDR-1 and LDR-2 get four times the detached density and
         # MDR three times it (3.140.B.3.a and .b); both are multiples of a

@@ -139,7 +139,15 @@ zones:
       # dedications and public open space from the gross area before
       # dividing by 43,560. The lot's own square footage is an upper bound
       # on that quantity and nothing more.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: the longest list in this corpus -- rights-of-way, floodplains,
+      # protected water features and their vegetated corridors, Goal 5
+      # resources, slopes over 25 percent, and publicly owned park, open
+      # space and resource land. Land carrying a density bonus or a
+      # transfer right is expressly not deducted.
+        cite: MMC 19.200 "Net acre"
+        quote: "or/clackamas/milwaukie/19.200.definitions.txt#L529-L530"
       variants:
         # 25 is the number the note prints, and it governs in three of the
         # four bands: four times 25, 8.7 and 8.7 are all above it. In the
@@ -215,7 +223,15 @@ zones:
       # dedications and public open space from the gross area before
       # dividing by 43,560. The lot's own square footage is an upper bound
       # on that quantity and nothing more.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: the longest list in this corpus -- rights-of-way, floodplains,
+      # protected water features and their vegetated corridors, Goal 5
+      # resources, slopes over 25 percent, and publicly owned park, open
+      # space and resource land. Land carrying a density bonus or a
+      # transfer right is expressly not deducted.
+        cite: MMC 19.200 "Net acre"
+        quote: "or/clackamas/milwaukie/19.200.definitions.txt#L529-L530"
       variants:
         - value: 25
           when: [unit_lots]

@@ -148,7 +148,14 @@ zones:
       # private streets -- and optionally heritage and significant trees.
       # Nothing measures any of those, so the lot's own acre is a bound
       # rather than the denominator.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: a definition that defers -- "the square footage subject to the
+      # maximum and minimum density calculations in CDC 05.025". The
+      # subtractions are in that section rather than in the glossary, and
+      # the gross figure beside it is the bound.
+        cite: CDC 02.030 "Developable net area"; CDC 05.025
+        quote: "or/clackamas/west-linn/02.definitions.txt#L197,L199"
       cite: "West Linn CDC 05.020 (classifications of zones) and CDC 05.025.A (density calculations)"
       url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
       retrieved: '2026-08-19'
@@ -215,7 +222,14 @@ zones:
       # private streets -- and optionally heritage and significant trees.
       # Nothing measures any of those, so the lot's own acre is a bound
       # rather than the denominator.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: a definition that defers -- "the square footage subject to the
+      # maximum and minimum density calculations in CDC 05.025". The
+      # subtractions are in that section rather than in the glossary, and
+      # the gross figure beside it is the bound.
+        cite: CDC 02.030 "Developable net area"; CDC 05.025
+        quote: "or/clackamas/west-linn/02.definitions.txt#L197,L199"
       cite: "West Linn CDC 05.020 (classifications of zones) and CDC 05.025.A (density calculations)"
       url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
       retrieved: '2026-08-19'
@@ -281,7 +295,14 @@ zones:
       # private streets -- and optionally heritage and significant trees.
       # Nothing measures any of those, so the lot's own acre is a bound
       # rather than the denominator.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: a definition that defers -- "the square footage subject to the
+      # maximum and minimum density calculations in CDC 05.025". The
+      # subtractions are in that section rather than in the glossary, and
+      # the gross figure beside it is the bound.
+        cite: CDC 02.030 "Developable net area"; CDC 05.025
+        quote: "or/clackamas/west-linn/02.definitions.txt#L197,L199"
       cite: "West Linn CDC 05.020 (classifications of zones) and CDC 05.025.A (density calculations)"
       url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
       retrieved: '2026-08-19'
@@ -348,7 +369,14 @@ zones:
       # private streets -- and optionally heritage and significant trees.
       # Nothing measures any of those, so the lot's own acre is a bound
       # rather than the denominator.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: a definition that defers -- "the square footage subject to the
+      # maximum and minimum density calculations in CDC 05.025". The
+      # subtractions are in that section rather than in the glossary, and
+      # the gross figure beside it is the bound.
+        cite: CDC 02.030 "Developable net area"; CDC 05.025
+        quote: "or/clackamas/west-linn/02.definitions.txt#L197,L199"
       cite: "West Linn CDC 05.020 (classifications of zones) and CDC 05.025.A (density calculations)"
       url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
       retrieved: '2026-08-19'
@@ -415,7 +443,14 @@ zones:
       # private streets -- and optionally heritage and significant trees.
       # Nothing measures any of those, so the lot's own acre is a bound
       # rather than the denominator.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: a definition that defers -- "the square footage subject to the
+      # maximum and minimum density calculations in CDC 05.025". The
+      # subtractions are in that section rather than in the glossary, and
+      # the gross figure beside it is the bound.
+        cite: CDC 02.030 "Developable net area"; CDC 05.025
+        quote: "or/clackamas/west-linn/02.definitions.txt#L197,L199"
       cite: "West Linn CDC 05.020 (classifications of zones) and CDC 05.025.A (density calculations)"
       url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
       retrieved: '2026-08-19'
@@ -482,7 +517,14 @@ zones:
       # private streets -- and optionally heritage and significant trees.
       # Nothing measures any of those, so the lot's own acre is a bound
       # rather than the denominator.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: a definition that defers -- "the square footage subject to the
+      # maximum and minimum density calculations in CDC 05.025". The
+      # subtractions are in that section rather than in the glossary, and
+      # the gross figure beside it is the bound.
+        cite: CDC 02.030 "Developable net area"; CDC 05.025
+        quote: "or/clackamas/west-linn/02.definitions.txt#L197,L199"
       cite: "West Linn CDC 05.020 (classifications of zones) and CDC 05.025.A (density calculations)"
       url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
       retrieved: '2026-08-19'
@@ -549,7 +591,14 @@ zones:
       # private streets -- and optionally heritage and significant trees.
       # Nothing measures any of those, so the lot's own acre is a bound
       # rather than the denominator.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: a definition that defers -- "the square footage subject to the
+      # maximum and minimum density calculations in CDC 05.025". The
+      # subtractions are in that section rather than in the glossary, and
+      # the gross figure beside it is the bound.
+        cite: CDC 02.030 "Developable net area"; CDC 05.025
+        quote: "or/clackamas/west-linn/02.definitions.txt#L197,L199"
       cite: "West Linn CDC 05.020 (classifications of zones) and CDC 05.025.A (density calculations)"
       url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
       retrieved: '2026-08-19'
@@ -616,7 +665,14 @@ zones:
       # private streets -- and optionally heritage and significant trees.
       # Nothing measures any of those, so the lot's own acre is a bound
       # rather than the denominator.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: a definition that defers -- "the square footage subject to the
+      # maximum and minimum density calculations in CDC 05.025". The
+      # subtractions are in that section rather than in the glossary, and
+      # the gross figure beside it is the bound.
+        cite: CDC 02.030 "Developable net area"; CDC 05.025
+        quote: "or/clackamas/west-linn/02.definitions.txt#L197,L199"
       cite: "West Linn CDC 05.020 (classifications of zones) and CDC 05.025.A (density calculations)"
       url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
       retrieved: '2026-08-19'
@@ -683,7 +739,14 @@ zones:
       # private streets -- and optionally heritage and significant trees.
       # Nothing measures any of those, so the lot's own acre is a bound
       # rather than the denominator.
-      measured_on: net_developable_area
+      measured_on:
+        fact: net_developable_area
+        # This city's own subtraction list: a definition that defers -- "the square footage subject to the
+      # maximum and minimum density calculations in CDC 05.025". The
+      # subtractions are in that section rather than in the glossary, and
+      # the gross figure beside it is the bound.
+        cite: CDC 02.030 "Developable net area"; CDC 05.025
+        quote: "or/clackamas/west-linn/02.definitions.txt#L197,L199"
       cite: "West Linn CDC 05.020 (classifications of zones) and CDC 05.025.A (density calculations)"
       url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC05.html
       retrieved: '2026-08-19'
