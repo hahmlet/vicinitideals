@@ -262,8 +262,16 @@ SQFT_PER_ACRE = 43_560
 #: never more than gross -- which settles a floor that clears and a ceiling
 #: that is exceeded, and leaves the other outcome to a survey nobody ran.
 #: `measured_on` is how a rule file says which one it is.
+#:
+#: A floor area ratio is the same shape of number and takes the same
+#: subtraction. West Linn prints one sentence in all nine zone chapters —
+#: "Type I and II lands shall not be counted toward lot area when determining
+#: allowable floor area ratio" — so the ratio that governs there is the
+#: building's floor area over something smaller than the lot, and the bound
+#: argument above carries over unchanged: a FAR already over the ceiling on
+#: the whole lot is over it on any part of the lot.
 MEASURED_ON_FIELDS: frozenset[str] = frozenset(
-    {"min_density_du_per_acre", "max_density_du_per_acre"}
+    {"min_density_du_per_acre", "max_density_du_per_acre", "max_far"}
 )
 
 #: Fields a rule file may state per dwelling unit rather than outright.

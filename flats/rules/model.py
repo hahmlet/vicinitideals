@@ -79,6 +79,7 @@ LAYER_META = frozenset(
     {
         "layer",
         "code",
+        "crossrefs",
         "kind",
         "label",
         "eligible",
@@ -311,6 +312,15 @@ class Variant(BaseModel):
     #: exists to catch -- so the file states the percentage the code states,
     #: and the arithmetic is done here where it can be checked.
     reduce_pct: float | None = None
+    #: The square footage per dwelling unit the code prints, where a condition
+    #: decides that the standard is stated per unit rather than per lot.
+    #: Gladstone's R-5 table states a townhouse project's minimum lot area as
+    #: 5,000 sq ft and then adds "the average minimum lot area for a townhouse
+    #: dwelling shall be 1,500 sf", so four of them want 6,000 — a figure
+    #: 17.12.050 prints nowhere, and the larger of the two, which is the whole
+    #: reason it may not be dropped. Same bargain as `acres_per_dwelling`, in
+    #: the unit a parcel record answers in.
+    per_dwelling: float | None = None
     #: The acreage per dwelling unit the code prints, where a condition
     #: changes which acreage applies. Multnomah County's Planned Development
     #: overlay turns a rural district's minimum lot size into a per-dwelling
@@ -403,6 +413,19 @@ class Variant(BaseModel):
             )
         if self.acres <= 0:
             raise ValueError(f"acres {self.acres} is not an area")
+        return self
+
+    @model_validator(mode="after")
+    def _a_per_dwelling_area_is_an_area(self) -> Variant:
+        if self.per_dwelling is None:
+            return self
+        if self.exempt or self.reduce_pct is not None:
+            raise ValueError(
+                "a variant states an area per dwelling, a reduction or an "
+                "exemption, not more than one"
+            )
+        if self.per_dwelling <= 0:
+            raise ValueError(f"per_dwelling {self.per_dwelling} is not an area")
         return self
 
     @model_validator(mode="after")
@@ -1451,6 +1474,22 @@ class Layer(BaseModel):
     ingest: dict[str, Any] = Field(default_factory=dict)
     #: The documents this jurisdiction's rules are read from.
     code: tuple[CodeDocument, ...] = ()
+    #: Sections this layer's documents point at, which somebody has read and
+    #: ruled do not reach this building — keyed by the section number the
+    #: cross-reference ledger prints, valued by why.
+    #:
+    #: The ledger can only see whether a chapter is in the store, so a
+    #: reference correctly disposed of by reading it stays at the top of the
+    #: queue forever. Gladstone's 17.62.070 was the loudest reference in the
+    #: county at ten mentions, all ten beside a number this screen uses, and
+    #: all ten the same sentence about manufactured homes in a mobile home
+    #: park. A queue whose first row is permanently a settled question teaches
+    #: the person working it to skip rows, which is the failure this whole
+    #: ledger exists to prevent.
+    #:
+    #: Not a substitute for fetching. What it records is the one outcome a
+    #: fetch cannot produce: the chapter is about somebody else's building.
+    crossrefs: dict[str, str] = Field(default_factory=dict)
     #: How this jurisdiction decides a term the rules hang variants on. Held
     #: per layer because four codes define "corner lot" four incompatible ways
     #: and a borrowed default is a wrong answer rather than a safe one. See

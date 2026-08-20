@@ -766,6 +766,47 @@ def test_a_ceiling_per_net_acre_is_settled_the_other_way_round() -> None:
     assert FACT_UNOBSERVED in under.reasons
 
 
+def test_a_ratio_may_name_a_denominator_too() -> None:
+    """Not only densities take a subtraction.
+
+    West Linn prints one sentence in all nine of its zone chapters — "Type I
+    and II lands shall not be counted toward lot area when determining
+    allowable floor area ratio" — so the ratio that governs there is the pod's
+    floor area over something smaller than the lot. Divided by the whole lot
+    the FAR comes out LOW, which is the direction that certifies, so a screen
+    that ran it anyway would hand out GREENs on exactly the wooded and steep
+    parcels the sentence was written for.
+
+    The bound settles the other half unchanged: 4,032 sq ft of floor on 6,000
+    of lot is 0.67 against a 0.60 ceiling, and shrinking the denominator only
+    raises it.
+    """
+    small = LotFacts(lot_sqft=6_000, frontage_ft=60, lot_width_ft=60)
+    big = LotFacts(lot_sqft=40_000, frontage_ft=150, lot_width_ft=150)
+
+    over = run(_per_net_acre("max_far", 0.60), lot=small, relief=NO_RELIEF)
+    under = run(_per_net_acre("max_far", 0.60), lot=big)
+
+    assert over.head == "far"
+    assert over.triage is Triage.red
+    assert not any(c.check == "far" for c in under.checks)
+    assert "far" in under.unchecked
+    assert FACT_UNOBSERVED in under.reasons
+
+
+def test_a_ratio_measured_on_the_lot_still_simply_runs() -> None:
+    """Most cities define FAR against the lot and say so — West Linn's own
+    glossary works the example on "the total lot size". Marking every ratio
+    would decline a check this project can run."""
+    big = LotFacts(lot_sqft=40_000, frontage_ft=150, lot_width_ft=150)
+
+    result = run(rules(max_far=0.60), lot=big)
+
+    ratio = next(c for c in result.checks if c.check == "far")
+    assert ratio.verdict is Verdict.passes
+    assert FACT_UNOBSERVED not in result.reasons
+
+
 def test_portland_states_its_floor_per_lot_and_it_runs() -> None:
     """Table 120-4 says "of site area", which is the whole lot. The
     distinction is worth carrying because one city in the corpus is on the

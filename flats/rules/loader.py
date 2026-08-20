@@ -496,12 +496,20 @@ def _parse_variants(
     for i, node in enumerate(raw):
         at = f"{where}.variants[{i}]"
         if not isinstance(node, dict) or not (
-            {"value", "exempt", "reduce_pct", "acres", "acres_per_dwelling"}
+            {
+                "value",
+                "exempt",
+                "reduce_pct",
+                "acres",
+                "per_dwelling",
+                "acres_per_dwelling",
+            }
             & set(node)
         ):
             problems.append(
                 f"{at}: expected a mapping with a 'value', a 'reduce_pct', an "
-                f"'acres', an 'acres_per_dwelling', or 'exempt: true'"
+                f"'acres', a 'per_dwelling', an 'acres_per_dwelling', or "
+                f"'exempt: true'"
             )
             continue
         body = dict(node)
@@ -521,6 +529,24 @@ def _parse_variants(
                 problems.append(f"{at}: acres {acres} is not an area")
                 continue
             value = _in_acres(float(acres))
+        each = body.pop("per_dwelling", None)
+        if each is not None:
+            if value is not None:
+                problems.append(
+                    f"{at}: a variant states a number or an area per dwelling "
+                    f"unit, not both"
+                )
+                continue
+            if not isinstance(each, (int, float)) or isinstance(each, bool):
+                problems.append(f"{at}: 'per_dwelling' expects a number")
+                continue
+            if each <= 0:
+                problems.append(f"{at}: per_dwelling {each} is not an area")
+                continue
+            # GMC 17.12.050 asks an average of 1,500 sq ft of each townhouse
+            # dwelling. Four of them, 6,000 -- a figure the table prints
+            # nowhere, and the one that binds.
+            value = _per_dwelling(float(each))
         acres_each = body.pop("acres_per_dwelling", None)
         if acres_each is not None:
             if value is not None:
@@ -615,6 +641,7 @@ def _parse_variants(
                     exempt=exempt,
                     reduce_pct=None if reduce_pct is None else float(reduce_pct),
                     acres=None if acres is None else float(acres),
+                    per_dwelling=None if each is None else float(each),
                     acres_per_dwelling=(
                         None if acres_each is None else float(acres_each)
                     ),
@@ -914,6 +941,41 @@ def _adoptions(raw: object, *, where: str, problems: list[str]) -> list[str]:
     return out
 
 
+#: Short enough to be a shrug. A ruling that says "n/a" or "not relevant"
+#: closes a queue row without telling the next reader anything, which is worse
+#: than leaving the row open — the row at least still shows the sentence.
+MIN_RULING = 40
+
+
+def _parse_crossrefs(raw: object, *, where: str, problems: list[str]) -> dict[str, str]:
+    """Sections this layer has read and ruled out of the cross-reference queue.
+
+    Keyed by the number the ledger prints, valued by why the chapter does not
+    reach this building. Both halves are checked: a key nothing points at is a
+    ruling on a reference that does not exist, and a one-word reason is a row
+    closed rather than answered.
+    """
+    if raw is None:
+        return {}
+    if not isinstance(raw, dict):
+        problems.append(f"{where}.crossrefs: expected a mapping of section -> why")
+        return {}
+    out: dict[str, str] = {}
+    for ref, why in raw.items():
+        ref = str(ref).strip()
+        if not ref:
+            problems.append(f"{where}.crossrefs: a ruling needs a section number")
+            continue
+        if not isinstance(why, str) or len(why.strip()) < MIN_RULING:
+            problems.append(
+                f"{where}.crossrefs.{ref}: a ruling states why the chapter does "
+                f"not reach this building, in at least {MIN_RULING} characters"
+            )
+            continue
+        out[ref] = " ".join(why.split())
+    return out
+
+
 def _terse(exc: Exception) -> str:
     """Pydantic errors are verbose; keep the message a reviewer can scan."""
     msg = str(exc).replace("\n", " ")
@@ -981,6 +1043,7 @@ def load_layer(path: Path, root: Path, problems: list[str]) -> Layer | None:
             wanted=tuple(wanted),
             ingest=raw.get("ingest") or {},
             code=_parse_code(raw.get("code"), where, problems),
+            crossrefs=_parse_crossrefs(raw.get("crossrefs"), where=where, problems=problems),
             definitions=parse_definitions(raw.get("definitions"), where=where, problems=problems),
             definitions_from=_adoptions(raw.get("definitions_from"), where=where, problems=problems),
         )

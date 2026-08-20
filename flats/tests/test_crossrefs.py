@@ -41,11 +41,12 @@ from flats.encode.crossrefs import (
     _headings,
     dangling,
     render,
+    stale_rulings,
     state_law,
     survey,
     write,
 )
-from flats.rules.loader import load_rules
+from flats.rules.loader import RuleLoadError, load_rules
 from flats.rules.model import Layer
 
 pytestmark = pytest.mark.unit
@@ -309,3 +310,93 @@ def test_the_ledger_round_trips(tmp_path: Path, layers: dict[str, Layer]) -> Non
 
 def test_an_empty_answer_says_so_rather_than_printing_nothing() -> None:
     assert "no unfetched references" in "\n".join(render(()))
+
+
+# -- leaving the queue without being fetched --------------------------------
+
+
+GLADSTONE = "or/clackamas/gladstone"
+
+
+def test_a_reference_can_be_settled_by_reading_it(layers: dict[str, Layer]) -> None:
+    """The outcome this ledger could not previously record.
+
+    Gladstone's 17.62.070 topped the whole corpus — ten mentions, ten of them
+    beside a number this screen uses — and all ten are the same sentence,
+    printed once and spanned by rowspan down every setback row: setbacks for
+    manufactured homes in a mobile home park. The pod is factory-built and is
+    neither a manufactured dwelling nor on a rented space, so reading it
+    settles it, and a check built on "is the chapter in the store" can never
+    see that.
+    """
+    ruled = {d.ref: d for d in dangling(layers[GLADSTONE]) if d.ruled}
+
+    assert "17.62.070" in ruled
+    assert ruled["17.62.070"].mentions == 10
+    assert "mobile home park" in ruled["17.62.070"].ruling
+
+
+def test_a_ruled_reference_stops_leading_the_queue(layers: dict[str, Layer]) -> None:
+    """Rank, not visibility. A settled question sitting at the top of a queue
+    forever teaches whoever works it to skip rows."""
+    rows = dangling(layers[GLADSTONE])
+
+    assert rows[0].ref != "17.62.070"
+    assert dangling(layers[GLADSTONE])[-1].rank == (0, 0)
+
+
+def test_and_it_is_still_printed(layers: dict[str, Layer]) -> None:
+    """Under its own heading, with the reason, so a reader can disagree with
+    the ruling. A queue that silently dropped rows would be as untrustworthy
+    as one that never dropped any."""
+    printed = "\n".join(render(dangling(layers[GLADSTONE]), binding_only=True))
+
+    assert "17.62.070" in printed
+    assert "mobile home park" in printed
+    # And it is out of the count that says how much work is left.
+    assert "17.62.070" not in printed.split("ruled")[0]
+
+
+def test_the_ruling_is_carried_into_the_ledger(
+    tmp_path: Path, layers: dict[str, Layer]
+) -> None:
+    rows = dangling(layers[GLADSTONE])
+    back = list(csv.DictReader(write(rows, tmp_path / "crossrefs.csv").open(encoding="utf-8")))
+
+    ruled = next(r for r in back if r["ref"] == "17.62.070")
+    assert "mobile home park" in ruled["ruling"]
+    assert not next(r for r in back if r["ref"] == "17.70")["ruling"]
+
+
+def test_a_ruling_nobody_can_see_any_more_is_reported(layers: dict[str, Layer]) -> None:
+    """The other direction. A ruling survives a re-fetch that removes the
+    sentence, or a fetch of the chapter it ruled on — and either way it is
+    describing a corpus that has moved."""
+    assert stale_rulings(layers[GLADSTONE]) == []
+
+    moved = layers[GLADSTONE].model_copy(
+        update={"crossrefs": {"17.62.070": "x" * 50, "99.999": "y" * 50}}
+    )
+    assert stale_rulings(moved) == ["99.999"]
+
+
+def _somewhere(root: Path, block: str) -> Path:
+    d = root / "or" / "clackamas"
+    d.mkdir(parents=True)
+    (d / "somewhere.yaml").write_text(
+        "layer: or/clackamas/somewhere\nkind: city\nlabel: Somewhere\n"
+        "zones: {}\n" + block,
+        encoding="utf-8",
+    )
+    (root / "or" / "or.yaml").write_text(
+        "layer: or\nkind: state\nlabel: Oregon\nzones: {}\n", encoding="utf-8"
+    )
+    return root
+
+
+def test_a_ruling_has_to_say_something(tmp_path: Path) -> None:
+    """"n/a" closes a row without telling the next reader anything, which is
+    worse than leaving it open — an open row at least still shows the
+    sentence."""
+    with pytest.raises(RuleLoadError, match="at least"):
+        load_rules(_somewhere(tmp_path, 'crossrefs:\n  "17.62.070": n/a\n'), strict=True)

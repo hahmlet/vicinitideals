@@ -28,7 +28,18 @@ notes: 'Ported from quadfit rules.yaml, then re-cited value by value against the
   percentage of the total lot size that can be built as habitable space ... on a 10,000-square-foot lot,
   an FAR of 0.45 will allow a 4,500-square-foot house". Habitable floor area over lot area, which is
   what the screen computes; the definition excludes attached and detached garages, accessory dwellings
-  and basements predominantly below grade, none of which this pod has.'
+  and basements predominantly below grade, none of which this pod has.
+
+
+  (5) And the denominator is not the lot. The same one sentence is printed in all nine zone chapters:
+  "Type I and II lands shall not be counted toward lot area when determining allowable floor area
+  ratio, except that a minimum floor area ratio of 0.30 shall be allowed regardless of the
+  classification of lands within the property." Type I and II lands are the city''s habitat
+  classification and nothing here holds their boundaries, so the four encoded FARs carry
+  `measured_on` and the screen treats the lot''s own area as a bound: a pod already over the ceiling
+  on the whole lot is over it on any part of it and still fails, and a pod that clears it is not
+  certified. The 0.30 guarantee is a floor under what is allowed, on the whole property, so it can
+  only loosen — read, and not encoded.'
 ingest:
   geoid: null
   juris_city_codes:
@@ -55,6 +66,15 @@ definitions:
     max_intersection_angle_deg: 135.0
     quote: "or/clackamas/west-linn/02.definitions.txt#L177"
     cite: "West Linn CDC 2.030, Corner lot"
+
+crossrefs:
+  "66": >-
+    Non-conforming Structures, and every one of the nineteen mentions is one of two sentences. Eight
+    are the zone chapters' own list of related procedures ("2. Chapter 66 CDC, Non-conforming
+    Structures"); the rest are the tail of the Type I and II lands sentence, which lets an existing
+    house over the FAR be rebuilt to its prior dimensions after damage without a non-conforming
+    structures permit. Neither reaches a new building on a lot, which is the only thing this screen
+    places, so the chapter is not fetched.
 
 code:
   # The CDC gives every residential zone its own chapter, and Code
@@ -216,6 +236,21 @@ zones:
       # parcels mostly sees.
       value: 0.45
       quote: "or/clackamas/west-linn/08.r-40.txt#L175,L176"
+      measured_on:
+        fact: net_developable_area
+        # Not the density net area: this chapter's own subtraction, one item
+        # long. "Type I and II lands shall not be counted toward lot area when
+        # determining allowable floor area ratio" — the city's habitat
+        # classification, which nothing here holds. The lot's own area is a
+        # bound on it, so a FAR that already exceeds the ceiling on the whole
+        # lot exceeds it on any part, and a FAR that clears it does not settle.
+        #
+        # The same sentence guarantees "a minimum floor area ratio of 0.30
+        # ... regardless of the classification of lands within the property",
+        # based on the whole property. That is a floor under what is allowed
+        # and can only loosen, so it is read and not encoded.
+        cite: 'West Linn CDC 08.070, Type I and II lands'
+        quote: "or/clackamas/west-linn/08.r-40.txt#L178"
     max_height_ft:
       value: 40
       quote: "or/clackamas/west-linn/08.r-40.txt#L163"
@@ -297,6 +332,21 @@ zones:
       # parcels mostly sees.
       value: 0.45
       quote: "or/clackamas/west-linn/09.r-20.txt#L177,L178"
+      measured_on:
+        fact: net_developable_area
+        # Not the density net area: this chapter's own subtraction, one item
+        # long. "Type I and II lands shall not be counted toward lot area when
+        # determining allowable floor area ratio" — the city's habitat
+        # classification, which nothing here holds. The lot's own area is a
+        # bound on it, so a FAR that already exceeds the ceiling on the whole
+        # lot exceeds it on any part, and a FAR that clears it does not settle.
+        #
+        # The same sentence guarantees "a minimum floor area ratio of 0.30
+        # ... regardless of the classification of lands within the property",
+        # based on the whole property. That is a floor under what is allowed
+        # and can only loosen, so it is read and not encoded.
+        cite: 'West Linn CDC 09.070, Type I and II lands'
+        quote: "or/clackamas/west-linn/09.r-20.txt#L180"
     max_height_ft:
       value: 40
       quote: "or/clackamas/west-linn/09.r-20.txt#L165"
@@ -455,6 +505,21 @@ zones:
       # screen looks at.
       value: 0.60
       quote: "or/clackamas/west-linn/11.r-10.txt#L170,L173-L174"
+      measured_on:
+        fact: net_developable_area
+        # Not the density net area: this chapter's own subtraction, one item
+        # long. "Type I and II lands shall not be counted toward lot area when
+        # determining allowable floor area ratio" — the city's habitat
+        # classification, which nothing here holds. The lot's own area is a
+        # bound on it, so a FAR that already exceeds the ceiling on the whole
+        # lot exceeds it on any part, and a FAR that clears it does not settle.
+        #
+        # The same sentence guarantees "a minimum floor area ratio of 0.30
+        # ... regardless of the classification of lands within the property",
+        # based on the whole property. That is a floor under what is allowed
+        # and can only loosen, so it is read and not encoded.
+        cite: 'West Linn CDC 11.070, Type I and II lands'
+        quote: "or/clackamas/west-linn/11.r-10.txt#L175"
     notes: 'quadfit confidence: verified | Width 35 ft at front line / 50 ft avg (frontage=35). Coverage
       35% applies to quadplex, and the FAR row states a separate 0.60 for duplex, triplex and quadplex
       against the 0.45 the zone states for everything else.'
@@ -536,6 +601,21 @@ zones:
       # quadfit import and no value carried it.
       value: 0.60
       quote: "or/clackamas/west-linn/12.r-7.txt#L172,L175-L176"
+      measured_on:
+        fact: net_developable_area
+        # Not the density net area: this chapter's own subtraction, one item
+        # long. "Type I and II lands shall not be counted toward lot area when
+        # determining allowable floor area ratio" — the city's habitat
+        # classification, which nothing here holds. The lot's own area is a
+        # bound on it, so a FAR that already exceeds the ceiling on the whole
+        # lot exceeds it on any part, and a FAR that clears it does not settle.
+        #
+        # The same sentence guarantees "a minimum floor area ratio of 0.30
+        # ... regardless of the classification of lands within the property",
+        # based on the whole property. That is a floor under what is allowed
+        # and can only loosen, so it is read and not encoded.
+        cite: 'West Linn CDC 12.070, Type I and II lands'
+        quote: "or/clackamas/west-linn/12.r-7.txt#L177"
     notes: 'quadfit confidence: verified | Detached SFD + quadplex outright. Coverage 35% applies to quadplex;
       max FAR 0.60 for duplex/triplex/quadplex.'
     max_height_ft:

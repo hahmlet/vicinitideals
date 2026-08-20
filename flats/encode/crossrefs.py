@@ -39,6 +39,24 @@ State law (ORS, OAR) is counted separately. It is a different fetch problem
 with a different source, and mixing it in would bury a city's own missing
 chapter under a hundred boilerplate statutory references.
 
+A reference can also leave this queue without being fetched, and that outcome
+needs recording or the queue lies. Gladstone's 17.62.070 was the loudest
+reference in the corpus — ten mentions, every one of them beside a number this
+screen uses — and all ten are one sentence spanned by ``rowspan`` over ten
+table cells: setbacks for manufactured homes in a mobile home park. Reading it
+settles it, and nothing in a ledger built on "is the chapter in the store"
+could ever see that. So a jurisdiction file may record a ruling::
+
+    crossrefs:
+      "17.62.070": >-
+        Setbacks for manufactured homes in a mobile home park — neither the
+        building nor the tenure this screen places.
+
+Ruled rows sort to the bottom, are printed under their own heading rather than
+hidden, and are checked the other way too: a ruling on a reference the corpus
+no longer makes is reported as stale, because the chapter was fetched or the
+sentence was amended away and either way the note has moved.
+
 Run it::
 
     uv run python -m flats.encode.crossrefs
@@ -136,9 +154,25 @@ class Dangling:
     sources: tuple[str, ...]
     #: One line of context, so the row can be judged without opening anything.
     sample: str
+    #: Why this reference was read and does not reach this building, where the
+    #: jurisdiction file records a ruling on it. Empty means nobody has looked.
+    ruling: str = ""
+
+    @property
+    def ruled(self) -> bool:
+        return bool(self.ruling)
 
     @property
     def rank(self) -> tuple[int, int]:
+        """How far up the queue this sits.
+
+        A ruled reference ranks at the bottom whatever its counts, which is
+        the whole point of recording the ruling: Gladstone's 17.62.070 is ten
+        mentions and ten binding hits of one settled sentence, and left at the
+        top it is the first thing anybody working this queue sees.
+        """
+        if self.ruled:
+            return (0, 0)
         return (self.binding, self.mentions)
 
 
@@ -318,11 +352,27 @@ def dangling(layer: Layer, store: ProvenanceStore | None = None) -> list[Danglin
                 )
             ),
             sample=sample[ref],
+            ruling=layer.crossrefs.get(ref, ""),
         )
         for ref, count in mentions.items()
     ]
     out.sort(key=lambda d: (-d.rank[0], -d.rank[1], d.ref))
     return out
+
+
+def stale_rulings(layer: Layer, store: ProvenanceStore | None = None) -> list[str]:
+    """Rulings on references this layer's documents no longer make.
+
+    Two ways that happens and both want reporting. The chapter was fetched, so
+    the ruling is a settled question about a document we now hold and the note
+    belongs beside the values instead; or the document that made the reference
+    was re-fetched and the sentence is gone, in which case the ruling is
+    describing a code that has been amended.
+
+    A ruling nobody can see is the same fault as a citation nobody can follow.
+    """
+    live = {d.ref for d in dangling(layer, store)}
+    return sorted(ref for ref in layer.crossrefs if ref not in live)
 
 
 def state_law(layer: Layer, store: ProvenanceStore | None = None) -> dict[str, int]:
@@ -359,7 +409,9 @@ def write(rows: Sequence[Dangling], path: Path | None = None) -> Path:
     file.parent.mkdir(parents=True, exist_ok=True)
     with file.open("w", encoding="utf-8", newline="") as fh:
         out = csv.writer(fh)
-        out.writerow(["layer", "ref", "mentions", "binding", "sources", "sample"])
+        out.writerow(
+            ["layer", "ref", "mentions", "binding", "sources", "sample", "ruling"]
+        )
         for row in rows:
             out.writerow(
                 [
@@ -369,13 +421,16 @@ def write(rows: Sequence[Dangling], path: Path | None = None) -> Path:
                     row.binding,
                     " ".join(row.sources),
                     row.sample,
+                    row.ruling,
                 ]
             )
     return file
 
 
 def render(rows: Sequence[Dangling], *, binding_only: bool = False) -> Iterator[str]:
-    shown = [r for r in rows if r.binding] if binding_only else list(rows)
+    ruled = [r for r in rows if r.ruled]
+    open_rows = [r for r in rows if not r.ruled]
+    shown = [r for r in open_rows if r.binding] if binding_only else open_rows
     if not shown:
         yield "no unfetched references — every section this corpus points at is in the store"
         return
@@ -401,6 +456,15 @@ def render(rows: Sequence[Dangling], *, binding_only: bool = False) -> Iterator[
             yield f"    ... and {len(group) - 12} more"
         yield ""
 
+    if ruled:
+        # Kept in the output rather than filtered away. A queue that silently
+        # dropped rows would be as untrustworthy as one that never dropped
+        # any: the reader has to be able to see what was ruled and disagree.
+        yield f"  ruled — read, and about somebody else's building ({len(ruled)})"
+        for row in sorted(ruled, key=lambda r: (r.layer, r.ref)):
+            yield f"    {row.layer} {row.ref:<14} x{row.mentions}  {row.ruling[:96]}"
+        yield ""
+
 
 def main(argv: Sequence[str] | None = None) -> int:
     # Code documents carry ligatures and dashes a Windows console cannot
@@ -417,6 +481,10 @@ def main(argv: Sequence[str] | None = None) -> int:
     rows = survey(chosen)
     for line in render(rows, binding_only=binding_only):
         print(line)
+
+    for layer in chosen:
+        for ref in stale_rulings(layer):
+            print(f"  STALE RULING  {layer.layer} {ref}: nothing points at it any more")
 
     if not args:
         print(f"\nwritten -> {write(rows)}")

@@ -266,6 +266,8 @@ def _quoted_parts(layer: Layer) -> Iterable[tuple[str, str, str | None, object]]
                     if getattr(variant, "before_step_back", None) is not None
                     else variant.acres
                     if getattr(variant, "acres", None) is not None
+                    else variant.per_dwelling
+                    if getattr(variant, "per_dwelling", None) is not None
                     else variant.acres_per_dwelling
                     if getattr(variant, "acres_per_dwelling", None) is not None
                     else variant.reduce_pct

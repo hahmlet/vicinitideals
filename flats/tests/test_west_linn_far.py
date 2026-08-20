@@ -261,6 +261,60 @@ def test_the_steep_lot_chapter_only_ever_loosens(store: ProvenanceStore) -> None
     assert "Exceptions to the maximum building height standards" in height
 
 
+def test_the_ratio_is_not_taken_over_the_whole_lot(west_linn: Layer) -> None:
+    """The half of the FAR rule that got encoded a day late.
+
+    Every zone chapter prints the same sentence under its dimensional table:
+    "Type I and II lands shall not be counted toward lot area when determining
+    allowable floor area ratio." Type I and II are the city's habitat
+    classification and no layer here holds their boundaries, so the ratio the
+    code imposes is over an area smaller than the parcel — and dividing by the
+    parcel makes the pod's FAR come out LOW, which is the direction that
+    certifies. Encoding 0.60 against the whole lot would have handed GREENs to
+    exactly the wooded and steep parcels the sentence exists for.
+    """
+    for zone in ("R-40", "R-20", "R-10", "R-7"):
+        held = west_linn.zones[zone].values["max_far"]
+        assert held.measured_on == "net_developable_area", zone
+        # Not a lever: a lever says the number could move, and this says the
+        # comparison rests on a quantity nobody surveyed.
+        assert "net_developable_area" not in held.levers, zone
+
+
+def test_the_subtraction_is_this_chapter_s_and_not_the_density_one(
+    west_linn: Layer, store: ProvenanceStore
+) -> None:
+    """One fact name, two different lists, in one city. The density's acre is
+    "developable net area", a glossary term deferring to CDC 05.025, which
+    takes out Type I and II lands AND parks, rights-of-way and proposed private
+    streets. The FAR sentence takes out Type I and II lands and stops. Each
+    cites its own sentence, which is the whole reason `measured_on` carries a
+    citation rather than a bare fact name."""
+    far = west_linn.zones["R-10"].values["max_far"]
+    density = west_linn.zones["R-10"].values["max_density_du_per_acre"]
+
+    assert far.measured_on_quote != density.measured_on_quote
+    assert "when determining allowable floor area ratio" in store.quote(
+        far.measured_on_quote
+    )
+    assert "density calculations in CDC 05.025" in store.quote(
+        density.measured_on_quote
+    )
+
+
+def test_the_guarantee_in_the_same_sentence_only_ever_loosens(
+    store: ProvenanceStore,
+) -> None:
+    """"Except that a minimum floor area ratio of 0.30 shall be allowed
+    regardless of the classification of lands within the property" — a floor
+    under what the city will permit, computed on the whole property. It cannot
+    refuse a lot, so nothing encodes it, and the layer notes say why."""
+    sentence = store.quote(f"{WEST_LINN}/11.r-10.txt#L175")
+
+    assert "minimum floor area ratio of 0.30 shall be allowed" in sentence
+    assert "based upon the entire property" in sentence
+
+
 def test_the_ratio_is_the_one_the_screen_computes(store: ProvenanceStore) -> None:
     """A ratio is only a number until the code says what it divides. West Linn
     defines FAR as habitable floor area over lot area and works the example,

@@ -219,8 +219,8 @@ def _checks(
             return
         out.append(policy.evaluate(name, observed, threshold, is_maximum=is_maximum, jurisdiction=where))
 
-    def rate(name: str, per_acre: float, field: str, *, is_maximum: bool) -> None:
-        """A density check, aware of which acre the code counts.
+    def rate(name: str, observed: float, field: str, *, is_maximum: bool) -> None:
+        """A rate check, aware of which area the code divides by.
 
         Nearly every Oregon city states density per *net acre* -- the lot less
         rights-of-way, floodplain, slopes over 25 percent, wetlands and Goal 5
@@ -228,10 +228,17 @@ def _checks(
         exception that makes the distinction worth carrying: Table 120-4 says
         "of site area", which is the lot, so that one is simply run.
 
-        Where the denominator is a net acre the lot's own area is still a
+        Not only densities. A floor area ratio is the same shape of number and
+        takes the same subtraction: West Linn's zone chapters all print "Type I
+        and II lands shall not be counted toward lot area when determining
+        allowable floor area ratio", so the FAR that governs there is the pod's
+        floor area over something smaller than the lot. Any standard whose
+        value carries a `measured_on` comes through here.
+
+        Where the denominator is a net area the lot's own area is still a
         bound on it, and a bound settles half the question. Net area is never
-        more than gross, so the density computed on the whole lot is the
-        *lowest* the development could be scored at:
+        more than gross, so the rate computed on the whole lot is the *lowest*
+        the development could be scored at:
 
         * a floor cleared on the whole lot is cleared on any net area, so a
           pass is certain and the check stands;
@@ -248,10 +255,10 @@ def _checks(
         held = rules.values.get(field)
         threshold = rules.get(field)
         if held is None or held.measured_on is None or threshold is None:
-            check(name, per_acre, threshold, is_maximum=is_maximum)
+            check(name, observed, threshold, is_maximum=is_maximum)
             return
         result = policy.evaluate(
-            name, per_acre, threshold, is_maximum=is_maximum, jurisdiction=where
+            name, observed, threshold, is_maximum=is_maximum, jurisdiction=where
         )
         settled = result.verdict is (Verdict.fails if is_maximum else Verdict.passes)
         if settled:
@@ -295,10 +302,10 @@ def _checks(
             )
         )
 
-    check(
+    rate(
         "far",
         design.ground_sqft * design.stories / lot.lot_sqft,
-        rules.get("max_far"),
+        "max_far",
         is_maximum=True,
     )
     check("height_ft", design.height_ft, rules.get("max_height_ft"), is_maximum=True)

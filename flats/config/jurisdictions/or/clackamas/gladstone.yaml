@@ -4,7 +4,23 @@ eligible: true
 notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s verification was against a
   coarser standard (one citation per row) and does not carry over. UNPORTED: orientation_constraint=''entrance_only''.
   quadfit justified this in a YAML comment with no citation; it needs its own encoding rather than invented
-  provenance.'
+  provenance.
+
+
+  READ AND NOT ENCODED (1) GMC 17.62.070(4), the loudest unfetched reference in the county at ten
+  mentions, all ten of them binding. It is one sentence, printed once and spanned by rowspan over
+  every setback row of both dimensional tables: "setbacks for manufactured homes in a mobile home
+  park are subject to the standards in GMC Section 17.62.070(4)." A mobile home park is a use this
+  screen does not place — the pod is factory-built but it is not a manufactured dwelling on a rented
+  space — so the sentence names a building and a tenure that are both somebody else''s, and the
+  chapter is not fetched.
+
+
+  (2) GMC Chapter 17.48, Off-Street Parking and Loading, which both dimensional tables point at
+  without stating a number. Nothing is lost by not holding it: OAR 660-046-0220(2)(e)(B)(iv) caps
+  what any Oregon city may require of middle housing at one space per unit and the state layer
+  carries that as `preempts: cap`, so 17.48 can only bind at or below the figure already screened
+  against. Worth fetching the day this corpus screens a use the middle-housing rules do not reach.'
 ingest:
   geoid: null
   juris_city_codes:
@@ -25,6 +41,19 @@ definitions:
     count: 2
     quote: "or/clackamas/gladstone/17.06.definitions.txt#L841"
     cite: "Gladstone Municipal Code 17.06.270, Lot, corner"
+
+crossrefs:
+  "17.62.070": >-
+    Setbacks for manufactured homes in a mobile home park. One sentence, printed once in each
+    dimensional table and spanned by rowspan over every setback row, which is why it counts ten
+    times. The pod is factory-built and is neither a manufactured dwelling nor sited on a rented
+    space in a park, so the standard is about somebody else's building and 17.62 is not fetched.
+  "17.48": >-
+    Off-street Parking and Loading, pointed at by both dimensional tables without a number beside
+    it. OAR 660-046-0220(2)(e)(B)(iv) caps what any Oregon city may require of middle housing at one
+    space per unit and the state layer carries that as `preempts: cap`, so this chapter can only
+    bind at or below the figure already screened against. Worth fetching the day this corpus screens
+    a use the middle-housing rules do not reach.
 
 code:
   # Code Publishing serves each chapter as its own server-rendered HTML page;
@@ -89,8 +118,28 @@ zones:
       value: 20
       quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L169"
     setback_side_ft:
-      value: 5
-      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L190"
+      # GMC 17.10.050 prints two side rows and no housing type against either:
+      # "Side setback | 7.5 ft or 5 ft due to irregular shaped lots", and two
+      # rows below it "Interior side setback | 5 ft". Chapter 17.12 prints one
+      # side row of 5 ft for R-5, which reads like the middle-housing
+      # amendment restating the side yard once and 17.10 keeping both. Nothing
+      # on the page says that, and where two rows of one table both reach this
+      # building the larger of them binds — so 7.5 is the encoding, 5 is the
+      # reading a signature may settle it to, and the file was carrying 5
+      # against the interior row with no note that the other row existed. The
+      # irregular-lot relief in the same cell is unmeasured and only loosens.
+      value: 7.5
+      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L175-L176"
+      variants:
+        # The third column spans all five setback rows, and one of its five
+        # sentences is a zero: "townhouse projects are allowed a zero-foot
+        # side setback for lot lines where townhouse units are attached."
+        # Both halves are conditions — the project has to be the townhouse
+        # path, and the line has to be one a party wall stands on. Neither is
+        # set today, so screening uses 7.5.
+        - value: 0
+          when: [attached_wall, unit_lots]
+          quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L179"
     setback_rear_ft:
       value: 15
       quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L197"
@@ -102,7 +151,16 @@ zones:
       quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L161"
     notes: 'quadfit confidence: needs_verification | GIS literal ''R7.2'' (code writes ''R-7.2''). Height
       35 ft. NO max lot coverage, NO min lot width in code. Middle housing (incl. quadplex) permitted
-      outright. min_lot is the middle-housing minimum (17.10.050); the detached-SFD row is 7,200. Street-side setback read via mirror; confirm 17.10.050.'
+      outright. min_lot is the middle-housing minimum (17.10.050); the detached-SFD row is 7,200. Street-side setback read via mirror; confirm 17.10.050.
+
+
+      OPEN QUESTION, and the one a signature should settle first: 17.10.050 prints a "Side setback"
+      row of 7.5 ft and an "Interior side setback" row of 5 ft, with a "Street side setback" row of
+      20 between them and no housing type against any of the three. R-5''s table prints one side row
+      of 5. The file carried 5 against the interior row; it now carries 7.5, because two rows of one
+      table that both reach this building leave the larger binding. Five feet of side yard either
+      side is five feet of lot width — the pod is 56 ft across — so the reading is worth an hour of
+      somebody''s time at the counter.'
     max_height_ft:
       value: 35
       quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L204"
@@ -127,8 +185,14 @@ zones:
       value: 20
       quote: "or/clackamas/gladstone/17.12.r-5.txt#L182"
     setback_side_ft:
+      # One side row here, unlike 17.10, and it is the smaller number.
       value: 5
-      quote: "or/clackamas/gladstone/17.12.r-5.txt#L190"
+      quote: "or/clackamas/gladstone/17.12.r-5.txt#L189-L190"
+      variants:
+        # Same footnote column, spanning all four setback rows of this table.
+        - value: 0
+          when: [attached_wall, unit_lots]
+          quote: "or/clackamas/gladstone/17.12.r-5.txt#L193"
     setback_rear_ft:
       value: 15
       quote: "or/clackamas/gladstone/17.12.r-5.txt#L205"
@@ -136,12 +200,47 @@ zones:
       value: 20
       quote: "or/clackamas/gladstone/17.12.r-5.txt#L197"
     min_lot_sqft:
+      # GMC 17.12.050, Minimum Lot Area. The rows are by housing type and the
+      # quadplex has one of its own — 7,000, against 5,000 for a detached
+      # house and 5,000 for a duplex or triplex.
       value: 7000
-      quote: "or/clackamas/gladstone/17.12.r-5.txt#L168"
+      quote: "or/clackamas/gladstone/17.12.r-5.txt#L167-L168"
+      variants:
+        # The townhouse path is a different row and a smaller one, stated
+        # twice: 5,000 sq ft for the project, and "the average minimum lot
+        # area for a townhouse dwelling shall be 1,500 sf". Four dwellings
+        # want 6,000 of that, which is the larger of the two and therefore the
+        # one that binds. 17.12.050 prints 6,000 nowhere, so the file states
+        # the 1,500 a reader will find and the multiplication is done in the
+        # loader — the same bargain `per_dwelling` strikes on a base value.
+        - per_dwelling: 1500
+          when: [unit_lots]
+          quote: "or/clackamas/gladstone/17.12.r-5.txt#L171-L173"
     notes: 'quadfit confidence: needs_verification | GIS literal ''R5'' (code writes ''R-5''). Height
-      35 ft. NO max lot coverage, NO min lot width. Middle housing outright. Front drops to ~10-15 ft
-      inside Gladstone Town Center overlay. min_lot is the quadplex row (17.12.050); detached is 5,000 and a townhouse project 5,000. Street-side read via mirror;
-      confirm 17.12.050.'
+      35 ft. NO max lot coverage, NO min lot width. Middle housing outright. min_lot is the quadplex
+      row (17.12.050); detached is 5,000 and a townhouse project 5,000 with a 1,500 sq ft average per
+      dwelling, encoded as the `unit_lots` variant. Street-side read via mirror; confirm 17.12.050.
+
+
+      READ AND NOT ENCODED (1) Gladstone Town Center. 17.12.050 states a second figure inside it for
+      three rows this screen uses — front setback 10 ft (L183) and street side 10 ft (L198) against
+      20 outside it, and 2,500 sq ft of lot against 5,000 (L164), though that last row is the detached
+      house and does not reach a quadplex. It is a boundary drawn inside the zone rather than a zone
+      of its own, nothing here cuts it against a parcel, and both figures loosen — so the encoding is
+      the outside-the-district half and lots inside the Town Center screen tighter than the code
+      holds them.
+
+
+      (2) No maximum-units ceiling. R-7.2''s table carries "this code does not allow for the creation
+      of more than four dwelling units on a lot", and its wording ("this code") reads wider than its
+      chapter — but it is printed in 17.10''s Maximum Density block and 17.12 prints no such block at
+      all, so borrowing it here would cite another district''s table. R-10 borrows it because R-10
+      has no chapter to borrow from; R-5 does.
+
+
+      (3) Minimum Vegetation, 20 percent of the lot (L214-L217). The row is against "multi-household
+      dwelling", and 17.12.040(1) sizes that use at "five to eight units on one parcel" (L129). A
+      quadplex is middle housing and does not reach it.'
     max_height_ft:
       value: 35
       quote: "or/clackamas/gladstone/17.12.r-5.txt#L212"
@@ -193,8 +292,28 @@ zones:
       value: 20
       quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L169"
     setback_side_ft:
-      value: 5
-      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L190"
+      # GMC 17.10.050 prints two side rows and no housing type against either:
+      # "Side setback | 7.5 ft or 5 ft due to irregular shaped lots", and two
+      # rows below it "Interior side setback | 5 ft". Chapter 17.12 prints one
+      # side row of 5 ft for R-5, which reads like the middle-housing
+      # amendment restating the side yard once and 17.10 keeping both. Nothing
+      # on the page says that, and where two rows of one table both reach this
+      # building the larger of them binds — so 7.5 is the encoding, 5 is the
+      # reading a signature may settle it to, and the file was carrying 5
+      # against the interior row with no note that the other row existed. The
+      # irregular-lot relief in the same cell is unmeasured and only loosens.
+      value: 7.5
+      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L175-L176"
+      variants:
+        # The third column spans all five setback rows, and one of its five
+        # sentences is a zero: "townhouse projects are allowed a zero-foot
+        # side setback for lot lines where townhouse units are attached."
+        # Both halves are conditions — the project has to be the townhouse
+        # path, and the line has to be one a party wall stands on. Neither is
+        # set today, so screening uses 7.5.
+        - value: 0
+          when: [attached_wall, unit_lots]
+          quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L179"
     setback_rear_ft:
       value: 15
       quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L197"
@@ -207,7 +326,7 @@ zones:
     notes: 'quadfit confidence: needs_verification | DISCREPANCY: Gladstone''s adopted code defines only
       R-7.2 and R-5 single-household districts — there is NO R-10 district in Title 17. Exactly one layer
       polygon carries ZONE=''R10''. SFD zone, so HB 2001 attaches. Standards are placeholders copied from
-      R-7.2 pending verification.'
+      R-7.2 pending verification, including the two-side-rows question R-7.2''s notes set out.'
     max_height_ft:
       value: 35
       quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L204"
