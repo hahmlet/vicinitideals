@@ -207,3 +207,84 @@ def test_the_new_citations_all_point_at_their_own_sentence(wv: Layer) -> None:
     ready = readiness_for(wv, store=ProvenanceStore())
     assert ready.no_evidence == ()
     assert ready.misquoted == ()
+
+
+# --- the footnotes the census could not see until it learned Municode ------
+
+
+def test_the_townhouse_standard_lives_in_a_footnote_and_is_ruled_on() -> None:
+    """Table 210-3 states 12,000 square feet and 80 feet of width for LR12.
+
+    Note (2) under it states the townhouse standard instead -- 1,500 square
+    feet, 20 feet of width, no minimum depth, a zero side setback on the
+    attached wall -- and none of that appears in the table. The July port had
+    already read it and encoded it as the `unit_lots` band, so nothing screened
+    wrong; but nothing said so, and a number that is right by luck is
+    indistinguishable from one that is right on purpose until somebody writes
+    down which.
+    """
+    from flats.encode.dispositions import notes
+
+    ruled = {
+        (n.doc.rsplit("/", 1)[-1], n.mark): n
+        for n in notes()
+        if n.layer == WV
+    }
+    townhouse = ruled[("210.320.txt", "2")]
+    assert townhouse.state == "encoded"
+    assert "unit_lots" in townhouse.encoded_as
+    assert "1500" in townhouse.encoded_as
+
+
+def test_the_band_the_footnote_became_is_the_one_the_pod_lands_in(
+    rules: RuleSet,
+) -> None:
+    """A four-unit attached townhome on its own unit lots gets the 1,500.
+
+    The point of ruling the note `encoded` is that the claim can be checked
+    against the encoding rather than believed, so this checks it.
+    """
+    for zone, base in (("LR 7.5", 7500), ("LR 12", 12000)):
+        plain = rules.resolve(WV, zone, POD)
+        assert plain.values["min_lot_sqft"].value == base, zone
+        divided = rules.resolve(WV, zone, (*POD, "unit_lots"))
+        assert divided.values["min_lot_sqft"].value == 1500, zone
+        assert divided.values["min_lot_width_ft"].value == 20, zone
+        assert divided.values["setback_side_ft"].value == 0, zone
+
+
+def test_a_footnote_is_scoped_to_the_table_it_sits_under() -> None:
+    """Table 220-4 starts at five units; a quadplex is on Table 220-3.
+
+    Three of this city's notes are dismissed on that one sentence, and they
+    share it on purpose -- deleting the reason returns all three to `unread` in
+    a single pass, which is what makes the rejection re-runnable rather than a
+    decision nobody can revisit.
+    """
+    from flats.encode.dispositions import notes
+
+    scoped = [
+        n
+        for n in notes()
+        if n.layer == WV and "scoped to the table it sits under" in n.reason
+    ]
+    assert len(scoped) == 2
+    assert all(n.state == "dismissed" for n in scoped)
+    assert all(n.doc.endswith("220.320.txt") for n in scoped)
+
+
+def test_the_town_centre_notes_are_left_unread_on_purpose() -> None:
+    """Five notes under Table 235-2, and the zone they govern is not encoded.
+
+    A ruling written before the encoding it describes is a claim nobody can
+    check, so they stay `unread`. That blocks nothing today because no value
+    cites that table -- and it will block the moment one does, which is the
+    behaviour worth having.
+    """
+    from flats.encode.dispositions import notes
+
+    unread = [
+        n for n in notes() if n.layer == WV and n.state == "unread"
+    ]
+    assert len(unread) == 5
+    assert all(n.doc.endswith("235.300.txt") for n in unread)

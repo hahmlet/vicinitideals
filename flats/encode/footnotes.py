@@ -102,6 +102,23 @@ BRACKET_NOTE = re.compile(r"^\[(?P<n>\d{1,2})\]\s+(?P<text>\S.*)$")
 #: starts at 1 and ascends, which is checked in `_blocks` rather than here.
 HEADLESS_NOTE = re.compile(r"^(?P<n>\d{1,2})\s{2,}(?P<text>\S.*)$")
 
+#: The same run, parenthesised and glued: "(1)For commercial or residential
+#: uses there is no minimum lot area, lot width or lot depth." Municode's HTML
+#: renders a table's notes this way -- no heading over them, and the marker
+#: welded to the first word.
+#:
+#: The weld is the whole discriminator, and it is a strong one. A codifier
+#: writes its ordinary subsections with a space after the bracket -- "(1) Mixed
+#: Use Development Requirement." -- so demanding *no* whitespace separates a
+#: footnote body from every numbered paragraph in the code. Across the corpus
+#: this shape appears on twenty lines in eight documents, and the run rule in
+#: `_glued_paren_run` keeps all four of the stragglers out.
+#:
+#: Missing it cost real rules. Wood Village prints the whole townhouse standard
+#: as note (2) under Table 210-3 -- 1,500 square feet, 20 feet of width, no
+#: minimum depth -- and it was invisible while this shape was.
+GLUED_PAREN_NOTE = re.compile(r"^\((?P<n>\d{1,2})\)(?!\s)(?P<text>\S.*)$")
+
 #: The number on its own line, with the text beneath it. An HTML table renders
 #: each cell as its own line, so a block that reads "1  Density calculations
 #: shall be..." on the page arrives as "1", newline, "Density calculations
@@ -148,6 +165,25 @@ GLUED_MARKER = re.compile(
 #: The parenthesised form, as Wood Village prints it: "10 ft(1)".
 PAREN_MARKER = re.compile(
     r"(?:sq\.?\s*ft\.?|sf|ft\.?|feet|percent|%)\s?\((?P<n>\d{1,2})\)$", re.I
+)
+
+#: The parenthesised form with no unit in front of it, which is what a marker
+#: on a row *label* or on a wordless cell looks like: "Minimum Lot Size(1)",
+#: "None(2)", "Minimum Landscape Required(2)". `PAREN_MARKER` cannot see these
+#: because it is anchored to a unit, and half of Wood Village's Table 230-2 is
+#: written without one.
+#:
+#: Narrow the same way `LABEL_MARKER` is: the bracket must be welded to the
+#: cell's last character. What that still lets through is a code citation --
+#: "Subject to TDC 40.300(4)" -- so `PAREN_CITATION` is subtracted first.
+PAREN_LABEL_MARKER = re.compile(r"(?<=[0-9a-z%)])\((?P<n>\d{1,2})\)\s*$", re.I)
+
+#: A parenthesised subsection on the end of a cross-reference: "TDC 40.300(4)",
+#: "ORS 455.315(2)", "Section 8.0117(C)(3)", "Figure 4.0420(  I)(1)". The
+#: dotted section number is what tells them from a marker; the whitespace
+#: inside the brackets is extraction's, not the codifier's.
+PAREN_CITATION = re.compile(
+    r"\d{1,3}\.\d{2,4}(?:\.\d{1,4})?(?:\(\s*[A-Za-z0-9]{1,3}\s*\))+"
 )
 
 #: The bracketed form, anywhere on a line: "30 ft. [3]".
@@ -312,7 +348,7 @@ def _blocks(lines: Sequence[str]) -> list[Block]:
         stripped = lines[i].strip()
         headed = bool(stripped) and NOTES_HEAD.match(stripped) is not None
         bracketed = BRACKET_NOTE.match(stripped) is not None
-        headless = _headless_run(lines, i)
+        headless = _headless_run(lines, i) or _glued_paren_run(lines, i)
         if not headed and not bracketed and not headless:
             i += 1
             continue
@@ -374,6 +410,31 @@ def _headless_run(lines: Sequence[str], i: int) -> bool:
     return False
 
 
+def _glued_paren_run(lines: Sequence[str], i: int) -> bool:
+    """Whether a parenthesised, glued notes run starts here.
+
+    Same standard of proof as `_headless_run`: believed only from its own note
+    1, and only where note 2 follows before anything ends the block. A lone
+    "(2)See 250.200 D. Limited Uses per Title 4" is a note whose siblings the
+    extraction lost, and reading it alone would let the census claim a block it
+    cannot show -- so it stays an unbodied marker, which is the direction that
+    reports a problem rather than hiding one.
+    """
+    first = GLUED_PAREN_NOTE.match(lines[i].strip())
+    if first is None or first.group("n") != "1":
+        return False
+    for raw in lines[i + 1 : i + 12]:
+        stripped = raw.strip()
+        if not stripped:
+            continue
+        if ENDS_BLOCK.match(stripped) or NOTES_HEAD.match(stripped):
+            return False
+        following = GLUED_PAREN_NOTE.match(stripped)
+        if following is not None:
+            return following.group("n") == "2"
+    return False
+
+
 def _bears_a_marker(raw: str) -> bool:
     """Whether this line carries a footnote reference of any shape.
 
@@ -381,9 +442,14 @@ def _bears_a_marker(raw: str) -> bool:
     50.04.001-11[5]" is still the note, and reading its own figure number as a
     marker ends the block on the note that cites a figure.
     """
-    stripped = CROSS_REFERENCE.sub("", raw.strip())
+    stripped = PAREN_CITATION.sub("", CROSS_REFERENCE.sub("", raw.strip()))
     cells = [stripped, *(GAP.split(stripped) if GAP.search(stripped) else [])]
-    if any(GLUED_MARKER.search(c.strip()) or PAREN_MARKER.search(c.strip()) for c in cells):
+    if any(
+        GLUED_MARKER.search(c.strip())
+        or PAREN_MARKER.search(c.strip())
+        or PAREN_LABEL_MARKER.search(c.strip())
+        for c in cells
+    ):
         return True
     if BRACKET_MARKER.search(stripped):
         return True
@@ -422,6 +488,7 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
         opening = (
             STACKED_NOTE.match(stripped)
             or HEADLESS_NOTE.match(stripped)
+            or GLUED_PAREN_NOTE.match(stripped)
             or BLOCK_NOTE.match(stripped)
             or STACKED_LETTER.match(stripped)
             or LETTER_NOTE.match(stripped)
@@ -509,12 +576,14 @@ def _markers(lines: Sequence[str], inside: Sequence[tuple[int, int]]) -> list[Ma
         # its own narrowness: the digits must follow a lowercase letter or a
         # closing parenthesis with nothing between. "Table 16.22.020-2" and
         # "MUR-M3" end in digits and match neither.
-        cells = [stripped, *(GAP.split(stripped) if GAP.search(raw) else [])]
+        cited = PAREN_CITATION.sub("", stripped)
+        cells = [cited, *(GAP.split(cited) if GAP.search(raw) else [])]
         for cell in cells:
             cell = cell.strip()
             for kind, pattern in (
                 ("glued", GLUED_MARKER),
                 ("paren", PAREN_MARKER),
+                ("paren", PAREN_LABEL_MARKER),
                 ("label", LABEL_MARKER),
             ):
                 found = pattern.search(cell)

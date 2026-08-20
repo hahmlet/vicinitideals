@@ -64,6 +64,15 @@ code:
     url: https://woodvillage.municipal.codes/WVDC/235.200
     title: "WVDC 235.200 - Primary Uses (Town Center Zone, Table 235-1)"
     allow_thin: true
+  # Declared and stored ahead of the encoding that will cite it. Table 235-2
+  # is printed here rather than in 235.310, and its five notes are captured and
+  # deliberately left `unread` -- the Town Center zone is not encoded yet, and
+  # a ruling written before the encoding it describes is a claim nobody can
+  # check. Storing the document is what makes those five visible at all.
+  - id: "235.300"
+    url: https://woodvillage.municipal.codes/WVDC/235.300
+    title: "WVDC 235.300 - Purpose (Town Center Zone, Table 235-2)"
+    allow_thin: true
   - id: "240.200"
     url: https://woodvillage.municipal.codes/WVDC/240.200
     title: "WVDC 240.200 - Primary Uses (Manufacturing Zones, Table 240-1)"

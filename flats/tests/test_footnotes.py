@@ -458,3 +458,122 @@ def test_a_bracket_glued_to_a_bare_number_is_still_a_marker():
 
     assert [b.mark for b in seen.bodies] == ["1"]
     assert "28" not in seen.bodies[0].text
+
+
+def test_a_glued_parenthesised_run_under_a_table_is_a_notes_block():
+    """Municode prints a table's notes with no heading and the marker welded on.
+
+    Wood Village's whole townhouse standard lives in one of them -- 1,500
+    square feet, twenty feet of width, no minimum depth, a zero side setback on
+    the attached wall -- and Table 210-3 states none of it. Sixteen notes in
+    that city were on the page and invisible until this shape was read.
+    """
+    text = "\n".join(
+        [
+            "- Min. lot area(2)                 12,000 sq ft  7,500 sq ft",
+            "- Side setback(2)                  10 ft         5 ft",
+            "",
+            "(1)Garages shall not be closer to the street than the plane of "
+            "the street-facing facade.",
+            "",
+            "(2)For townhouses the minimum lot size is one thousand five "
+            "hundred (1,500) square feet with a twenty (20) foot minimum "
+            "width, no minimum depth, and zero (0) foot side setback when "
+            "attached to another townhouse.",
+            "",
+            "(3)For cottage housing the rear setback and street side setback "
+            "is ten (10) feet.",
+        ]
+    )
+
+    seen = census(text, doc="d.txt")
+
+    assert [b.mark for b in seen.bodies] == ["1", "2", "3"]
+    assert "1,500) square feet" in seen.bodies[1].text
+    # And the markers in the table above are what the block answers.
+    assert "2" in {m.mark for m in seen.markers}
+    assert seen.unbodied == ()
+
+
+def test_a_numbered_subsection_is_not_a_glued_run():
+    """The weld is the whole discriminator.
+
+    A codifier writes "(1) Mixed Use Development Requirement." with a space
+    after the bracket and writes its footnote bodies without one. Drop that
+    distinction and every numbered paragraph in the code becomes a footnote.
+    """
+    text = "\n".join(
+        [
+            "(1) Mixed Use Development Requirement. Residential uses shall be "
+            "permitted only when part of a mixed use development.",
+            "",
+            "(2) Limitation on Street-Level Housing. No more than fifty (50) "
+            "percent of the frontage may be ground floor residential.",
+        ]
+    )
+
+    assert census(text, doc="d.txt").bodies == ()
+
+
+def test_a_lone_glued_note_is_not_believed():
+    """A run is believed from its own note 1, with note 2 behind it.
+
+    Wood Village's Table 250-1 prints "(2)See 250.200 D. Limited Uses per Title
+    4" and no note 1 -- the sibling was lost in extraction. Reading it alone
+    would let the census claim a block it cannot show; leaving it unbodied
+    reports the document as unreconciled, which is the direction that surfaces
+    the problem instead of burying it.
+    """
+    text = "\n".join(
+        [
+            "Household Living                    N(2)",
+            "",
+            "(2)See 250.200 D. Limited Uses per Title 4",
+        ]
+    )
+
+    seen = census(text, doc="d.txt")
+
+    assert seen.bodies == ()
+    assert [m.mark for m in seen.unbodied] == ["2"]
+
+
+def test_a_parenthesised_marker_needs_no_unit_in_front_of_it():
+    """Half of Wood Village's Table 230-2 has no unit to anchor to.
+
+    "Minimum Lot Size(1)" is a row label, "None(2)" is a cell with a word in
+    it, and the height cell ends in a cross-reference before its marker --
+    "45 - 55 feet (see Figure 230-3)(2)". The unit-anchored rule sees none of
+    them, and all three carry a footnote that changes what the row means.
+    """
+    text = "\n".join(
+        [
+            "Minimum Lot Size(1)",
+            "Maximum Height        45 - 55 feet (see Figure 230-3)(2)",
+            "- Side setback        None(2)",
+            "- Site area           5%(3)",
+        ]
+    )
+
+    seen = census(text, doc="d.txt")
+
+    assert {m.mark for m in seen.markers} == {"1", "2", "3"}
+
+
+def test_a_code_citation_ending_in_a_subsection_is_not_a_marker():
+    """"Subject to TDC 40.300(4)" is a cross-reference wearing a marker's shape.
+
+    The dotted section number is what tells them apart. Without subtracting it
+    the census invents a marker on every use row that points at another
+    chapter, and an invented marker is an unbodied one -- a document reported
+    unreconciled for a footnote that was never there.
+    """
+    text = "\n".join(
+        [
+            "Manufactured Dwelling P Subject to TDC 40.300(4)",
+            "Equine Facility - Pursuant to ORS 455.315(2)",
+            "Yes, except as provided in Section 8.0117(C)(3)",
+        ]
+    )
+
+    assert census(text, doc="d.txt").markers == ()

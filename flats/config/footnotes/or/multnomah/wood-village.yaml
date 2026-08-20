@@ -1,0 +1,148 @@
+# Wood Village -- Development Code footnotes.
+#
+# Sixteen notes across four tables, all of them invisible until the census
+# learned Municode's shape: a table's notes with no heading over them and the
+# marker welded to the first word -- "(2)For townhouses the minimum lot size
+# is one thousand five hundred (1,500) square feet". Every note here was on
+# the page the whole time and none of them was captured, which is the exact
+# failure the census exists to make impossible.
+#
+# The one that mattered is 210.320 note 2. It carries the entire townhouse
+# standard for LR12 and LR7.5 -- 1,500 square feet, twenty feet of width, no
+# minimum depth, a zero side setback on the attached wall -- and none of it is
+# in the table it hangs off. The July port had already read it and encoded it
+# as the `unit_lots` band, so nothing screened wrong; but nothing in the ledger
+# said so, and a number that is right by luck is indistinguishable from one
+# that is right on purpose until somebody writes down which.
+#
+# Two dismissal reasons are shared and are meant to be:
+#
+# * "a footnote is scoped to the table it sits under" -- Table 220-4 states
+#   the standards for multi-dwelling structures of five units and more, and
+#   its rows start at 5. A four-unit building is on Table 220-3, in the column
+#   headed "Duplex Triplex Quadplex", which carries no marker at all. Two of
+#   the eleven notes ruled here turn on that sentence, and a third leans on it
+#   after its own reason; deleting it returns them to `unread` in one pass.
+#
+# * "a planting or vocabulary cross-reference states no standard" -- the
+#   landscaping chapter's L1 / F2 codes and the street-tree spacing are real
+#   requirements and none of them is a dimension a fitment screen can test.
+#
+# The five notes under Table 235-2 (235.300) are deliberately not ruled here.
+# The Town Center zone is not encoded yet -- 167 lots, the largest gap left in
+# this city -- and a ruling written before the encoding it describes is a
+# claim nobody can check. They stay `unread`, which blocks nothing today
+# because no value cites that table.
+
+# Three of this city's documents now report UNRECONCILED and did not before,
+# which is the census getting more honest rather than less. 240.200 and
+# 250.200 carry limited-use markers on their retail, office and daycare rows
+# whose bodies begin at "(2)" -- the sibling note 1 was lost in extraction, and
+# a lone note is not believed. 220.320's note 3 is marked on Table 220-4's own
+# caption, "...in the MR2 Zone (3)", with a space before the bracket that the
+# marker rule will not read as a weld. None of the six sits over a value this
+# layer encodes; all six were silently absent until now.
+
+notes:
+  # --- 210.320, Table 210-3: LR12 and LR7.5 -------------------------------
+  - quote: "or/multnomah/wood-village/210.320.txt#L82"
+    digest: "37d7c3a55545"
+    state: dismissed
+    reason: >-
+      Places a garage relative to the building's own street-facing facade
+      rather than relative to the lot, and the pod has no garage -- it seats
+      surface stalls. The 22-foot garage setback printed on the row the marker
+      sits on is encoded as `setback_garage_entrance_ft`; this sentence adds
+      the facade-plane rule on top of it, which is a building test the lot
+      screen does not run.
+
+  - quote: "or/multnomah/wood-village/210.320.txt#L84"
+    digest: "8fb313cdfbf2"
+    state: encoded
+    encoded_as: >-
+      LR 7.5 and LR 12, the `unit_lots` band: min_lot_sqft 1500,
+      min_lot_width_ft 20, min_lot_depth_ft exempt, setback_side_ft 0 under
+      [attached_wall, unit_lots], max_coverage_pct 70. The whole townhouse
+      standard for both zones, and none of it appears in Table 210-3 itself.
+
+  - quote: "or/multnomah/wood-village/210.320.txt#L86"
+    digest: "6a2f01a842eb"
+    state: dismissed
+    reason: >-
+      Governs cottage housing, which is a housing type this pod is not. WVDC
+      220.400 defines it as a cluster of small detached dwellings around common
+      open space; a four-unit attached townhome cannot be one, so neither the
+      ten-foot rear and street side setbacks nor the coverage exemption reach
+      it.
+
+  # --- 220.320, Tables 220-3 and 220-4: MR2 and MR4 -----------------------
+  - quote: "or/multnomah/wood-village/220.320.txt#L87"
+    digest: "10fe4e8e49ea"
+    state: dismissed
+    reason: >-
+      A footnote is scoped to the table it sits under. Table 220-4 states the
+      standards for multi-dwelling structures of five units and more -- its
+      first row is "5" -- and a four-unit building is on Table 220-3, in the
+      column headed "Duplex Triplex Quadplex", which carries no marker at all
+      and states its own five-foot side setback.
+
+  - quote: "or/multnomah/wood-village/220.320.txt#L89"
+    digest: "b1587147cdf6"
+    state: dismissed
+    reason: >-
+      A planting or vocabulary cross-reference states no standard. This one
+      names the unit of Table 220-4's Minimum Landscape Required column
+      (percent of site area) and hands the L1 and F2 codes to Section 330. It
+      is also scoped to Table 220-4, which starts at five units.
+
+  - quote: "or/multnomah/wood-village/220.320.txt#L91"
+    digest: "7730fc1c7571"
+    state: dismissed
+    reason: >-
+      A footnote is scoped to the table it sits under. The marker is on Table
+      220-4's own caption, so the thirteen-dwelling minimum density is the
+      minimum for a multi-dwelling structure of five units or more. Table 220-3
+      states the minimum for a quadplex separately and it is 8.7 per net acre.
+
+  # --- 230.310, Table 230-2: NC ------------------------------------------
+  - quote: "or/multnomah/wood-village/230.310.txt#L84"
+    digest: "1502084af0da"
+    state: encoded
+    encoded_as: >-
+      NC min_lot_sqft, min_lot_width_ft and min_lot_depth_ft, all `exempt`.
+      The note is what makes those three an absence somebody read rather than
+      three cells nobody has looked at: it repeats 230.310.A's prose for
+      residential uses specifically.
+
+  - quote: "or/multnomah/wood-village/230.310.txt#L86"
+    digest: "1abcd8fe7e3c"
+    state: dismissed
+    reason: >-
+      Read, and recorded in the NC zone notes rather than in a field. It sends
+      the base height to Figure 230-3, which is a map this system cannot read,
+      and the step-downs to 230.335(C), which reduce the limit on a PORTION of
+      a site -- geometry no single height field can hold. The 45 encoded here
+      is the low end of the range Table 230-2 prints and sits under the lowest
+      step-down the section states, so the unread figure cannot change this
+      pod's verdict.
+
+  - quote: "or/multnomah/wood-village/230.310.txt#L88"
+    digest: "8df73c340ae5"
+    state: encoded
+    encoded_as: "NC min_landscaped_pct = 5."
+
+  - quote: "or/multnomah/wood-village/230.310.txt#L90"
+    digest: "493eea22fd62"
+    state: dismissed
+    reason: >-
+      A planting or vocabulary cross-reference states no standard. Foundation
+      beds three feet wide, a three-gallon shrub every three lineal feet and a
+      street tree every thirty are real requirements and none of them is a
+      dimension of the lot or the building.
+
+  - quote: "or/multnomah/wood-village/230.310.txt#L92"
+    digest: "5e10266fc5d8"
+    state: dismissed
+    reason: >-
+      A planting or vocabulary cross-reference states no standard. This one
+      says only where the L1 and F2 codes are defined.
