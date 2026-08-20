@@ -577,3 +577,58 @@ def test_a_code_citation_ending_in_a_subsection_is_not_a_marker():
     )
 
     assert census(text, doc="d.txt").markers == ()
+
+
+def test_a_design_element_named_in_a_sentence_is_not_a_table_cell():
+    """"design element P1" is the use-table cell pattern, in running prose.
+
+    Fairview's TCC height-bonus chapter names its plaza and open-space
+    standards P1 and P2 and then talks about them in paragraphs. Read as
+    cells they are two footnote markers with no notes under them, and the
+    chapter reports UNRECONCILED for footnotes that do not exist -- which is
+    worse than useless, because the census exists to say which documents to
+    go back and look at.
+    """
+    text = (
+        "Additional Open Space. A development that incorporates a pedestrian "
+        "access plaza or outdoor recreation area. The plaza must meet the "
+        "minimum standards of design element P1 in Table 19.65.090(B)(2). The "
+        "outdoor recreation area must meet the standards of design element P2."
+    )
+
+    assert census(text, doc="d.txt").markers == ()
+
+
+def test_a_table_row_that_lost_its_column_gaps_is_still_a_row():
+    """The reach the sentence rule must not cost.
+
+    Gresham's plan district use tables come down from Municode with every
+    column single-spaced -- "Single Detached Dwelling P P L1" -- and 53 rows
+    across two chapters are read only because a line with more than one
+    permission code on it counts as a row without needing a gap. A row has no
+    sentence in it, which is what separates the two.
+    """
+    text = "\n".join(
+        [
+            "Single Detached Dwelling P P L1",
+            "Affordable Housing P/L3 P4 P4",
+            "Religious Institutions L/SUR7 SUR SUR",
+            "Parks, Open Spaces, Paths, and Trails L/SUR13 L/SUR13 L/SUR13",
+        ]
+    )
+
+    seen = census(text, doc="d.txt")
+
+    assert {m.mark for m in seen.markers} == {"1", "3", "4", "7", "13"}
+
+
+def test_a_column_gap_beats_the_sentence_rule():
+    """A cell can carry a full stop when the table prints one.
+
+    The sentence test is only ever the tie-breaker for lines with no column
+    gap. Where the gap survives extraction it settles the question, and a
+    cell whose text ends in a period keeps its marker.
+    """
+    text = "Accessory Dwelling Units      P3      One per lot. See 19.490."
+
+    assert {m.mark for m in census(text, doc="d.txt").markers} == {"3"}

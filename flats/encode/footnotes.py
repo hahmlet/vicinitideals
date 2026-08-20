@@ -243,6 +243,16 @@ FURNITURE = re.compile(
 #: Two or more spaces: the column gap that tells a table row from a sentence.
 GAP = re.compile(r"\s{2,}")
 
+#: A full stop with a space after it -- what a sentence has and a row of table
+#: cells does not. The cell rule has to read lines that lost their column gaps
+#: in extraction (Gresham's plan district tables print "Single Detached
+#: Dwelling P P L1" on one single-spaced line), and the price of that reach is
+#: that running prose naming a design element -- "the plaza must meet the
+#: minimum standards of design element P1 in Table 19.65.090(B)(2)" -- is the
+#: use-table cell pattern exactly. Neither a label like "Parks, Open Spaces,
+#: Paths, and Trails" nor a citation like "FMC 19.490.400" carries one.
+SENTENCE = re.compile(r"\.\s")
+
 #: A bracket that belongs to a figure or section number rather than to a cell:
 #: "See Figure 50.04.001-11[5]", where the figure is named after the note that
 #: sends you to it. Read as a marker it ends the block a note early, which is
@@ -435,6 +445,21 @@ def _glued_paren_run(lines: Sequence[str], i: int) -> bool:
     return False
 
 
+def _cell_row(raw: str, stripped: str) -> bool:
+    """Whether a line may be read as a row of use-table cells.
+
+    A column gap settles it. Without one the line has to earn it, by carrying
+    more than one permission code AND reading as a row rather than as a
+    sentence -- because "P1" is a cell in a table and a design element in a
+    paragraph, and the pattern cannot tell them apart on its own.
+    """
+    if GAP.search(raw):
+        return True
+    if SENTENCE.search(stripped):
+        return False
+    return len(CELL_VOCAB.findall(stripped)) > 1
+
+
 def _bears_a_marker(raw: str) -> bool:
     """Whether this line carries a footnote reference of any shape.
 
@@ -453,10 +478,7 @@ def _bears_a_marker(raw: str) -> bool:
         return True
     if BRACKET_MARKER.search(stripped):
         return True
-    return bool(
-        CELL_MARKER.search(stripped)
-        and (GAP.search(raw) or len(CELL_VOCAB.findall(stripped)) > 1)
-    )
+    return bool(CELL_MARKER.search(stripped) and _cell_row(raw, stripped))
 
 
 def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
@@ -565,7 +587,7 @@ def _markers(lines: Sequence[str], inside: Sequence[tuple[int, int]]) -> list[Ma
         for m in BRACKET_MARKER.finditer(stripped):
             add(m.group("n"), "bracket")
         marked_cells = list(CELL_MARKER.finditer(stripped))
-        if GAP.search(raw) or len(CELL_VOCAB.findall(stripped)) > 1:
+        if _cell_row(raw, stripped):
             for m in marked_cells:
                 add(m.group("n"), "cell")
 
