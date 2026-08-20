@@ -555,6 +555,29 @@
         "through_lot"
       ]
     },
+    "OFR": {
+      "max_density_du_per_acre": [
+        "protected_water_feature"
+      ],
+      "max_far": [
+        "protected_water_feature"
+      ],
+      "min_density_du_per_acre": [
+        "protected_water_feature"
+      ],
+      "min_frontage_ft": [
+        "protected_water_feature"
+      ],
+      "min_lot_depth_ft": [
+        "protected_water_feature"
+      ],
+      "min_lot_sqft": [
+        "protected_water_feature"
+      ],
+      "min_lot_width_ft": [
+        "protected_water_feature"
+      ]
+    },
     "SC": {
       "max_density_du_per_acre": [
         "civic_corridor"

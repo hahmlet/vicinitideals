@@ -1194,6 +1194,184 @@ notes:
       Public Land sub-district; the Quadplex row of that table is a bare NP
       like every other residential row, and nothing here could turn it on
 
+
+  # --- 4.0200, Neighborhood Commercial ---
+  - quote: "or/multnomah/gresham/4.0200.commercial.txt#L123"
+    digest: "f44d9f636c57"
+    state: dismissed
+    reason: >-
+      a note of Section 4.0200, whose use table has one column and reads NP on the Quadplex row with no marker on it; note 1 marks the RESIDENTIAL heading and permits home occupations and a temporary health hardship dwelling alongside a PRE-EXISTING dwelling; it creates no dwelling and reaches nothing new
+
+  - quote: "or/multnomah/gresham/4.0200.commercial.txt#L125"
+    digest: "024c2a26f977"
+    state: dismissed
+    reason: >-
+      a note of Section 4.0200, whose use table has one column and reads NP on the Quadplex row with no marker on it; an affordable housing note; a permission resting on an election nobody has made
+
+  - quote: "or/multnomah/gresham/4.0200.commercial.txt#L139"
+    digest: "030f791cd975"
+    state: dismissed
+    reason: >-
+      a note of Section 4.0200, whose use table has one column and reads NP on the Quadplex row with no marker on it; marks the Solar Energy Systems row
+
+  - quote: "or/multnomah/gresham/4.0200.commercial.txt#L140"
+    digest: "4cb0509b4eeb"
+    state: dismissed
+    reason: >-
+      a note of Section 4.0200, whose use table has one column and reads NP on the Quadplex row with no marker on it; marks the Wind Energy Systems row
+
+  - quote: "or/multnomah/gresham/4.0200.commercial.txt#L141"
+    digest: "69a548626262"
+    state: dismissed
+    reason: >-
+      a note of Section 4.0200, whose use table has one column and reads NP on the Quadplex row with no marker on it; marks the Biomass Energy Systems row
+
+  - quote: "or/multnomah/gresham/4.0200.commercial.txt#L142"
+    digest: "7fd6b3ae12e0"
+    state: dismissed
+    reason: >-
+      a note of Section 4.0200, whose use table has one column and reads NP on the Quadplex row with no marker on it; marks the Geothermal Energy Systems row
+
+  - quote: "or/multnomah/gresham/4.0200.commercial.txt#L143"
+    digest: "8e3a459b31a3"
+    state: dismissed
+    reason: >-
+      a note of Section 4.0200, whose use table has one column and reads NP on the Quadplex row with no marker on it; marks the Micro-Hydro Energy Systems row
+
+  - quote: "or/multnomah/gresham/4.0200.commercial.txt#L144"
+    digest: "b43e5d371b94"
+    state: dismissed
+    reason: >-
+      a note of Section 4.0200, whose use table has one column and reads NP on the Quadplex row with no marker on it; sends marijuana businesses to GRC 9.63.090; not our use
+
+  - quote: "or/multnomah/gresham/4.0200.commercial.txt#L180"
+    digest: "5631f3e8e047"
+    state: dismissed
+    reason: >-
+      a note of Section 4.0200, whose use table has one column and reads NP on the Quadplex row with no marker on it; a note of the district STANDARDS table exempting the Springwater Plan District from a requirement; this layer reads no dimensional standard for NC, because the use flag settles it
+
+  - quote: "or/multnomah/gresham/4.0200.commercial.txt#L181"
+    digest: "ecdc8eddea48"
+    state: dismissed
+    reason: >-
+      a note of Section 4.0200, whose use table has one column and reads NP on the Quadplex row with no marker on it; a note of the district STANDARDS table pointing at the buffering and screening chapter; no dimensional standard is read for NC
+
+  - quote: "or/multnomah/gresham/4.0200.commercial.txt#L183"
+    digest: "77633365c99e"
+    state: dismissed
+    reason: >-
+      a note of Section 4.0200, whose use table has one column and reads NP on the Quadplex row with no marker on it; a note of the district STANDARDS table letting the street-side setback drop to 5 feet along half the side yard; a relaxation of a setback this layer does not read for NC
+
+  - quote: "or/multnomah/gresham/4.0200.commercial.txt#L185"
+    digest: "dc668df94b70"
+    state: dismissed
+    reason: >-
+      a note of Section 4.0200, whose use table has one column and reads NP on the Quadplex row with no marker on it; a note of the district STANDARDS table pointing at Section 9.0600 height transition; no height is read for NC
+
+  - quote: "or/multnomah/gresham/4.0200.commercial.txt#L186"
+    digest: "7f5756c2e3e9"
+    state: dismissed
+    reason: >-
+      a note of Section 4.0200, whose use table has one column and reads NP on the Quadplex row with no marker on it; a note of the district STANDARDS table requiring 95 percent of business activity to be indoors; not our use
+
+
+  # --- 4.0300, Heavy and General Industrial ---
+  - quote: "or/multnomah/gresham/4.0300.industrial.txt#L130"
+    digest: "1694321848a3"
+    state: dismissed
+    reason: >-
+      a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; an affordable housing note, and one gated on public-body ownership or a 2009 title; a permission resting on an election nobody has made and a fact nobody holds
+
+  - quote: "or/multnomah/gresham/4.0300.industrial.txt#L134"
+    digest: "b54d7c2c0e9c"
+    state: dismissed
+    reason: >-
+      a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; defines which retail and professional services the Business and Retail Service and Trade row covers; not our use
+
+  - quote: "or/multnomah/gresham/4.0300.industrial.txt#L151"
+    digest: "341473397e32"
+    state: dismissed
+    reason: >-
+      a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; limits administrative offices in HI to 20 percent of floor area; not our use
+
+  - quote: "or/multnomah/gresham/4.0300.industrial.txt#L154"
+    digest: "388b09b229a5"
+    state: dismissed
+    reason: >-
+      a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; prohibits auto and truck salvaging in GI and sets a 100-foot separation for miscellaneous industrial uses; not our use
+
+  - quote: "or/multnomah/gresham/4.0300.industrial.txt#L157"
+    digest: "5f98246c7b0e"
+    state: dismissed
+    reason: >-
+      a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; governs waste management uses and their separation from residentially designated land; not our use
+
+  - quote: "or/multnomah/gresham/4.0300.industrial.txt#L160"
+    digest: "3ebbfd033340"
+    state: dismissed
+    reason: >-
+      a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; lists the Community Service uses the two districts refuse; not our use
+
+  - quote: "or/multnomah/gresham/4.0300.industrial.txt#L162"
+    digest: "352bfcd10442"
+    state: dismissed
+    reason: >-
+      a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; governs parks, plazas and golf courses; not our use
+
+  - quote: "or/multnomah/gresham/4.0300.industrial.txt#L167"
+    digest: "4a3b88fa3b6b"
+    state: dismissed
+    reason: >-
+      a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; permits religious institutions and schools on a 2009 title; not our use
+
+  - quote: "or/multnomah/gresham/4.0300.industrial.txt#L171"
+    digest: "8e0573ded089"
+    state: dismissed
+    reason: >-
+      a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; marks the Solar Energy Systems row
+
+  - quote: "or/multnomah/gresham/4.0300.industrial.txt#L172"
+    digest: "7ccd3b5e6889"
+    state: dismissed
+    reason: >-
+      a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; marks the Wind Energy Systems row
+
+  - quote: "or/multnomah/gresham/4.0300.industrial.txt#L176"
+    digest: "986fc0a1a3b7"
+    state: dismissed
+    reason: >-
+      a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; marks the Biomass Energy Systems row
+
+  - quote: "or/multnomah/gresham/4.0300.industrial.txt#L177"
+    digest: "72ade6f374ca"
+    state: dismissed
+    reason: >-
+      a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; marks the Geothermal Energy Systems row
+
+  - quote: "or/multnomah/gresham/4.0300.industrial.txt#L178"
+    digest: "1a6bfa19af91"
+    state: dismissed
+    reason: >-
+      a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; marks the Micro-Hydro Energy Systems row
+
+  - quote: "or/multnomah/gresham/4.0300.industrial.txt#L179"
+    digest: "f1e0ad3f4d48"
+    state: dismissed
+    reason: >-
+      a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; sends marijuana businesses to GRC 9.63.090; not our use
+
+
+  # --- 4.1200, Civic Neighborhood ---
+  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L2888"
+    digest: "68d633cbd838"
+    state: dismissed
+    reason: >-
+      the only footnote the census finds in Section 4.1200, and it is a
+      cross-reference inside the design guidelines to an illumination
+      standard; Table 4.1220(A) reads NP for a quadplex in all three Civic
+      Neighborhood columns, so no design standard of that chapter is
+      reached
+
   # --- 4.1300, Gresham Butte ------------------------------------------
   - quote: "or/multnomah/gresham/4.1300.gresham-butte.txt#L57"
     digest: "5e3d926b4b81"

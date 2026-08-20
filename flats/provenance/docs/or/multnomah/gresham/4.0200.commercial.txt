@@ -1,0 +1,275 @@
+SECTION 4.0200
+                                                                      COMMERCIAL LAND USE DISTRICTS
+
+General
+4.0201                      Purpose
+
+Land Use District Characteristics
+4.0210                                                                                                                                                                     Neighborhood Commercial District (NC)
+4.0212                                                                                                                                                                     Central Rockwood and Corridor Districts
+
+Permitted Uses
+4.0220                                                                                                                                                                     Permitted Uses
+
+Commercial Land Use District Standards
+4.0230                                                                                                                                                                     Commercial Land Use District Standards
+4.0231                                                                                                                                                                     Additional Commercial Land Use District Standards
+4.0232                                                                                                                                                                     Solar Energy Standards for Commercial Districts
+4.0233                                                                                                                                                                     Wind Energy Standards for Commercial Districts
+4.0234                                                                                                                                                                     Biomass Energy Standards for Commercial Districts
+4.0235                                                                                                                                                                     Geothermal Energy Standards for Commercial Districts
+4.0236                                                                                                                                                                      Micro-Hydro Energy Standards for Commercial Districts
+
+GENERAL
+
+4.0201                              PURPOSE
+
+Development on lands designated Neighborhood Commercial District is permitted when consistent with the
+provisions of this section and all other applicable requirements of the Community Development Code.
+
+LAND USE DISTRICT CHARACTERISTICS
+
+4.0210 NEIGHBORHOOD COMMERCIAL DISTRICT (NC)
+
+The Neighborhood Commercial District is intended to provide for small to medium sized shopping and service
+facilities and limited office uses adjacent to residential neighborhoods. The district is intended to meet the
+shopping and service needs of the immediate neighborhood and to have minimal negative impacts on
+surrounding residential uses. Areas determined appropriate for Neighborhood Commercial Districts are
+identified on the Community Development Plan Map.
+
+                                                                                                                                                       [4.0200]                                       -1
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+4.0212                              CENTRAL ROCKWOOD AND CORRIDOR DISTRICTS
+
+Additional Commercial Development Districts unique to the Corridor Districts are listed in Section 4.0400.  The
+Gresham Community Development Plan map identifies the location of these additional development districts.
+
+PERMITTED USES
+
+4.0220                              PERMITTED USES
+
+Table 4.0220 lists those uses that are permitted in the             Commercial                                                Land Use Districts.
+•                                            P = Permitted use
+•                                            L = Use is permitted, but is limited in the extent to which it may be permitted
+•                                            NP = Use not permitted
+•                                            SUR = Use permitted subject to a Special Use Review
+
+Each of these uses must comply with the site development requirements of Section 4.0230-                                                               4.0231 and all
+other applicable requirements of the Community Development Code.
+Table 4.0220: Permitted Uses in the Commercial Land Use Districts
+     USES                                                                                                                                                                                                                                        NC
+     RESIDENTIAL1
+     Single Detached Dwelling                                                                                                                                                                                                     NP
+     Duplex                                                                                                                                                                                                                       NP
+     Triplex                                                                                                                                                                                                                      NP
+     Quadplex                                                                                                                                                                                                                     NP
+     Townhouse                                                                                                                                                                                                                    NP
+     Cottage Cluster                                                                                                                                                                                                              NP
+     Multi-Family/Shared Housing Facility                                                                                                                                                                                         NP
+     Elderly Housing                                                                                                                                                                                                              NP
+     Manufactured Dwelling Park                                                                                                                                                                                                   NP
+     Residential Facility                                                                                                                                                                                                         NP
+     Residential Home                                                                                                                                                                                                             NP
+     Affordable Housing                                                                                                                                                                                                           P2
+     COMMERCIAL
+     Auto-Dependent Use                                                                                                                                                                                                           L3
+     Business and Retail Service and Trade                                                                                                                                                                                        L4
+     Clinics                                                                                                                                                                                                                      NP
+     Commercial Parking                                                                                                                                                                                                           SUR
+     Daycare Facilities                                                                                                                                                                                                           SUR
+     Live-Work                                                                                                                                                                                                                    NP
+     Major Event Entertainment                                                                                                                                                                                                    SUR
+
+                                                                                                                      [4.0200]                                       -2
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+     USES                                                                                                                                                                                                                                              NC
+     Mini-Storage Facilities                                                                                                                                                                                                           NP
+     Outdoor Commercial                                                                                                                                                                                                                NP
+     INDUSTRIAL
+     Construction                                                                                                                                                                                                                      NP
+     Exclusive Heavy Industrial Uses                                                                                                                                                                                                   NP
+     Industrial Office                                                                                                                                                                                                                 NP
+     Information Services                                                                                                                                                                                                              NP
+     Manufacturing                                                                                                                                                                                                                     NP
+     Miscellaneous Industrial                                                                                                                                                                                                          NP
+     Trade Schools                                                                                                                                                                                                                     NP
+     Transportation/Distribution                                                                                                                                                                                                       NP
+     Warehousing/Storage                                                                                                                                                                                                               NP
+     Waste Management                                                                                                                                                                                                                  NP
+     Wholesale Trade                                                                                                                                                                                                                   NP
+     INSTITUTIONAL USES
+     Civic Use                                                                                                                                                                                                                         SUR
+     Community Services                                                                                                                                                                                                                SUR
+     Medical                                                                                                                                                                                                                           SUR
+     Parks, Open Spaces, Paths, and Trails                                                                                                                                                                                             SUR
+     Religious Institutions                                                                                                                                                                                                            SUR
+     Schools                                                                                                                                                                                                                           SUR
+     RENEWABLE ENERGY6
+     Solar Energy Systems                                                                                                                                                                                                              L/SUR7
+     Wind Energy Systems                                                                                                                                                                                                               L8
+     Biomass Energy Systems                                                                                                                                                                                                            L9
+     Geothermal Energy Systems                                                                                                                                                                                                         L/SUR10
+     Micro-Hydro Energy Systems                                                                                                                                                                                                        L11
+     OTHER
+     Basic Utilities
+     Minor basic utilities                                                                                                                                                                                                             P
+     Major basic utilities                                                                                                                                                                                                             SUR
+     Heliports5                                                                                                                                                                                                                        NP
+     Wireless Communication Facilities                                                                                                                                                                                                 SUR
+     Temporary, Intermittent & Interim Uses                                                                                                                                                                                            P
+     Marijuana Businesses                                                                                                                                                                                                              L12
+
+Table 4.0220 Notes:
+1.                                    Home occupations may be permitted with a pre   -existing dwelling in the NC district. Temporary health hardship
+         dwellings may be permitted with a pre  -existing single detached dwelling home in the NC district.
+2.                                    Affordable Housing Development is permitted. See Section 10.1700.
+
+                                                                                                                        [4.0200]                                       -3
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+3.                           Limited to gas stations and similar retail uses with a maximum gross floor area of 10,000 square feet.
+4.                                    Business and Retail Service and Trade are limited to the following:
+         •                                               Eating and drinking establishments with a maximum gross floor area of 3,500 square feet
+         •                                               Insurance, real estate, and other similar offices with a maximum gross floor area of 5,000 square feet
+         •                                               Laundries, dry cleaners, barber salons, and other similar personal services with a maximum gross floor area of
+                   5,000 square feet
+         •                                               Clothing, drug stores, and similar retail trade uses with a maximum gross floor area of 10,000 square feet
+         •                                               Grocery store with a maximum gross floor area of 35,000 square feet
+5.                           Permitted as an accessory use to Medical and Civic Uses through the Special Use Review process.
+6.                            See Section 10.0900                      for additional standards that apply.
+7.                           For limitations, see Section 4.0232                                                                                                  Solar Energy System Standards for Commercial Districts    .
+8.                           For limitations, see Section 4.0233                                                                                                  Wind Energy System Standards for Commercial Districts   .
+9.                           For limitations, see Section 4.0234                                                                                                  Biomass Energy System Standards for Commercial Districts    .
+10.     For limitations, see Section 4.0235                                                                                                  Geothermal Energy System Standards for Commercial Districts    .
+11.     For limitations, see Section 4.0236                                                                                                    Micro-Hydro Energy System Standards for Commercial Districts    .
+12.     For limitations, see GRC 9.63.090.
+
+COMMERCIAL LAND USE DISTRICT STANDARDS
+
+4.0230                             COMMERCIAL LAND USE DISTRICT STANDARDS
+
+The site development requirements listed in  Table 4.0230 are applicable to all development within the
+Neighborhood Commercial district. Development within this district shall also be consistent with all other
+applicable requirements of the Community Development Code.
+                                                                                                                                                                                                               NC
+  A. Maximum Site Size                                                                                                                                   4 acres1
+
+  B. Minimum Lot Size                                                                                                                                    10,000 square feet
+  C. Minimum Lot Dimensions
+         Width                                                                                                                                           60 feet
+         Depth                                                                                                                                           70 feet
+  D. Minimum Yard Setbacks2
+
+       Front                                                                                                                                             20 feet
+       Side - interior lot                                                                                                                               0 feet
+       Side - corner lot                                                                                                                                 0 feet on the interior side, and
+                                                                                                                                                         15 feet on the side abutting the street3.
+       Rear                                                                                                                                              0 feet
+  E. Maximum Building Height                                                                                                                             See Section 4.0231(A)4
+  F. Maximum Lot Coverage                                                                                                                                50%
+  G. On-Site Activities                                                                                                                                  See Section 4.0231(B)5
+
+                                                                                                                           [4.0200]                                       -4
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+                                                                                                                                                                              NC
+  H. Public Facilities, Site and Supplementary Requirements                                                                      See Section 4.0231(C)
+  I.  Transit Design Criteria and Standards                                                                                      Yes; Development along designated Design
+                                                                                                                                 Streets as shown on Figure 7.0210            and are not
+                                                                                                                                 exempted per 7.0210(C).
+
+Table  4.0230 Notes:
+1.                            This requirement does not apply to the Springwater Plan District.
+2.                           Buffering and screening may be required in addition to these setbacks. See Section 9.0100                                                             for the buffering and
+        screening requirements.
+3.                           However, for up to fifty percent (50%) of the length of the side yard abutting a street (excluding that portion of the
+        side yard which overlaps the required front yard), the street    -side setback may be reduced to five (5) feet.
+4.                            See Section 9.0600                                                                                          – Height Transition.
+5.                           At least ninety-five percent (95%) of the business activities must be conducted within a completely enclosed
+        structure. No more than five percent (5%) of the area devoted to business use may be used for outdoor business
+        activities, product display, or storage.
+
+4.0231                             ADDITIONAL COMMERCIAL LAND USE DISTRICT STANDARDS
+
+A.                          Maximum Building Height:  Three (3) stories or forty (40) feet unless equipped with a built-in fire
+        protection system. When fire sprinklers, alarms, and when needed, enclosed, pressurized exit stairwell
+        systems are provided, the building height can be increased to sixty-five (65) feet.
+B.                            On Site Activities:
+        1.                               No outdoor business activities, product display or storage shall be located within yard setback or
+                buffering and screening areas.
+        2.                               Areas devoted to on-site outdoor business activities, product display or storage must be located so
+                that they do not interfere with pedestrian circulation.
+C.                              Public Facilities,             Site,             and Supplementary Requirements. All developments shall also be subject to the
+        applicable requirements of Section 4.0230                                                             Commercial Land Use District Standards; Section 7.0210                          –
+        Transit and Pedestrian Design Criteria and Standards, when located along designated Design Streets;
+        Section 7.0212 – Standards for New Solid Waste and Recycling; Section 7.0310                                     – Commercial, Institutional,
+        and Mixed-Use Developments; Article 9 Common Requirements; and Appendix 5.000 Public Facilities.
+
+4.0232                             SOLAR ENERGY STANDARDS FOR COMMERCIAL DISTRICTS
+
+Solar energy systems are limited in all commercial districts as follows:
+A.                          Scale. Small and medium           -scale solar energy systems are permitted in these districts. Large scale systems
+        are permitted with a Special Use Review.
+B.                             Type. Roof-top, flat-roof, integrated and ground-mounted solar energy systems are permitted.
+C.                              Height. The following limitations on maximum height apply to all solar energy systems:
+        1.                               Roof-top, Flat-roof and Integrated.
+
+                                                                                                       [4.0200]                                       -5
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+               a.                                For roofs that are flat or the horizontal portion of mansard roofs, the solar energy systems on
+                       frames shall not exceed 10 feet above the roof height on which the system is installed.
+               b.                              For pitched, hipped or gambrel roofs, the solar energy system panels shall not exceed 18 inches in
+                       height from the surface of the roof on which the system is installed.
+       2.                               Ground-mounted. Ground-mounted solar energy systems shall not exceed 20 feet in height.
+D.                                                       Setbacks and Yards. Solar energy systems are not allowed in the required front or in the street-side
+       setbacks.
+
+4.0233                             WIND ENERGY STANDARDS FOR COMMERCIAL DISTRICTS
+
+Wind energy systems are limited in all commercial districts as follows:
+A.                          Scale. Small and medium           -scale wind energy systems are permitted.
+B.                             Type. Roof-top and ground-mounted wind energy systems are permitted.
+C.                              Height. The following limitations on maximum height apply to all wind energy systems:
+       1.                               Roof-top. Wind energy system height shall not exceed a value equal to the building height when the
+               building height is 35 feet or less. For example, a 30-                                                 foot-tall                                              building could have a 30-foot-tall wind
+               energy system installed on its roof for a total height of 60 feet from the ground to top of the wind
+               energy system. In no case can the wind energy system exceed 35 feet in height.
+       2.                               Ground-mounted. Ground-mounted wind energy systems shall not exceed 45 feet in height.
+D.                                                         Setbacks and Yards. Wind energy systems are not allowed in required front, street-side, side or rear
+       setbacks and are not allowed in the front or street-side yards between the building and the street.
+
+4.0234                             BIOMASS ENERGY STANDARDS FOR COMMERCIAL DISTRICTS
+
+Biomass energy systems are limited in all commercial districts as follows:
+A.                           Scale. Small scale biomass energy systems are permitted.
+B.                             Type. No n-hazardous biomass systems are permitted.
+C.                              Height. Biomass energy systems shall not exceed the maximum district height limits.
+D.                                                         Setbacks and Yards. Biomass energy systems are not allowed in the required front, street-                                                                   side, side or rear
+       setbacks, and are not allowed in the front or street-side yards between the building and the street.
+
+4.0235                              GEOTHERMAL ENERGY STANDARDS FOR COMMERCIAL DISTRICTS
+
+Geothermal energy systems are limited in all commercial districts as follows:
+A.                           Scale. Small scale geothermal energy systems are permitted. Large scale systems are permitted with a
+       Special Use Review.
+B.                             Type. Closed-loop geothermal energy systems that are not in any well field protection areas are permitted.
+C.                              Height. Geothermal energy systems shall not exceed the maximum district height limits.
+D.                                                         Setbacks and Yards. Geothermal energy systems are not allowed in the required front, street-                   side, side or
+       rear setbacks, except that small geothermal heating and cooling units like heat pumps can project into the
+       setbacks per Section 9.0900 Projections.
+
+                                                                                                    [4.0200]                                       -6
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+4.0236                                       MICRO         -   HYDRO ENERGY STANDARDS FOR COMMERCIAL DISTRICTS
+
+Micro-hydro energy systems are limited in all commercial districts as follows:
+A.                           Scale. Small scale micro-hydro energy systems are permitted.
+B.                             Type. In-pipe micro-hydro energy systems such as systems within water, stormwater or wastewater pipes
+          are permitted.
+C.                              Height. Generally, the district height limits apply. However, in-pipe systems may exceed the district height
+          limit as allowed for mechanical equipment. If supplemental equipment structures accompany the in-pipe
+          systems, then the district height limit would apply.
+D.                                                         Setbacks and Yards. Micro-hydro energy systems contained within piping are allowed and pipe can run
+          within the required setbacks. However, if supplemental equipment structures accompany the in-pipe
+          systems, then the district setback limits apply.
+
+                                                                                                                                         [4.0200]                                       -7
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)

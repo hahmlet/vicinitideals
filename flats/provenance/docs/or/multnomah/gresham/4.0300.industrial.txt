@@ -1,0 +1,415 @@
+SECTION 4.0300
+                                                                               INDUSTRIAL LAND USE DISTRICTS
+
+General Provisions
+4.0301                                                                                                                                                                      Purpose
+
+Industrial Land Use Districts Characteristics
+4.0310                                                                                                                                                                     Heavy Industrial (HI)
+4.0311                                                                                                                                                                             General Industrial (GI)
+
+Permitted Uses
+4.0320                                                                                                                                                                     Permitted Uses
+
+Development Standards
+4.0330                                                                                                                                                                             Development Standards Table
+4.0331                                                                                                                                                                     Additional Industrial District Standards
+4.0332                                                                                                                                                                     Solar Energy Standards for Industrial Districts
+4.0333                                                                                                                                                                     Wind Energy Standards for Industrial Districts
+4.0334                                                                                                                                                                     Biomass Energy Standards for Industrial Districts
+4.0335                                                                                                                                                                     Geothermal Energy Standards for Industrial Districts
+4.0336                                                                                                                                                                      Micro-Hydro Energy Standards for Industrial Districts
+4.0341                                                                                                                                                                             Green Development Practices for Stormwater Management
+
+GENERAL                     PROVISIONS
+
+4.0301                                       PURPOSE
+
+This section of the Community Development Code implements  Section 10.313 -                          Industrial Land Use within
+Volume 2 of the Comprehensive Plan. The purposes of the Industrial Land Use Districts are to: (1) implement
+the Comprehensive Plan’s goals, policies, and action measures to promote economic development (2) include
+provisions to support viable industrial trends; and, (3) provide clear and objective standards so that
+implementation of the Industrial Land Use Districts is efficient, effective, and fair.
+
+INDUSTRIAL    LAND USE DISTRICTS                            CHARACTERISTICS
+
+4.0310                              HEAVY INDUSTRIAL (HI)
+
+The Heavy Industrial District (HI) is intended to provide space for industrial users that may include operational
+characteristics that could create compatibility issues for adjacent land uses (such as noise and/or air
+emissions). This district also permits certain uses from the General Industrial District.
+
+                                                                                                                                                              [4.0300]-1
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+4.0311                              GENERAL INDUSTRIAL (GI)
+
+The General Industrial District (GI) is primarily intended to provide space for a wide range of industrial                                                              uses,
+related enterprises serving primarily industrial clients, and employment-oriented uses in office-type buildings.
+Primary uses shall include manufacturing and associated industrial uses, knowledge-based industries (graphic
+communications, creative services, and information technology), research and development facilities,
+professional services primarily serving industrial and business clients and other industry focused uses and
+limited retail and commercial professional services that cater to the general public.
+
+PERMITTED USES
+
+4.0320                              PERMITTED USES
+
+Table 4.0320 lists those uses that are permitted in each Industrial District.
+•                                            P = Permitted use
+•                                            L = Use is permitted, but is limited in the extent to which it may be permitted
+•                                            NP = Use not permitted
+•                                            SUR = Use permitted subject to a Special Use Review
+Each of these uses must comply with the land use district standards of this section and all other applicable
+requirements of the Community Development Code.
+Table 4.0320: Permitted Uses in the Industrial Land Use Districts
+  USES                                                                                                                                                                    HI                                           GI
+  Residential
+  Single Detached Dwelling                                                                                                                             NP                                              NP
+  Duplex                                                                                                                                               NP                                              NP
+  Triplex                                                                                                                                              NP                                              NP
+  Quadplex                                                                                                                                             NP                                              NP
+  Townhouse                                                                                                                                            NP                                              NP
+  Cottage Cluster                                                                                                                                      NP                                              NP
+  Multi-Family/Shared Housing Facility                                                                                                                 NP                                              NP
+  Elderly Housing                                                                                                                                      NP                                              NP
+  Manufactured Dwelling Park                                                                                                                           NP                                              NP
+  Residential Facility                                                                                                                                 NP                                              NP
+  Residential Home                                                                                                                                     NP                                              NP
+  Affordable Housing                                                                                                                                   NP                                              P1
+  Commercial
+  Auto-Dependent Use                                                                                                                                   NP                                              NP
+  Business and Retail Service and Trade                                                                                                                L2                                              L2
+  Clinics                                                                                                                                              L2                                              L2
+  Commercial Parking                                                                                                                                   NP                                              NP
+
+                                                                                                            [4.0300]-2
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+  USES                                                                                                                                                                                HI                                              GI
+  Daycare Facilities                                                                                                                                              SUR                                                SUR
+  Live-Work                                                                                                                                                       NP                                                 NP
+  Major Event Entertainment                                                                                                                                       SUR                                                SUR
+  Mini-Storage Facilities                                                                                                                                         NP                                                 NP
+  Outdoor Commercial                                                                                                                                              NP                                                 NP
+  Industrial
+  Construction                                                                                                                                                    P                                                  P
+  Exclusive Heavy Industrial Uses                                                                                                                                 P                                                  NP
+  Industrial Office                                                                                                                                               L3                                                 P
+  Information Services                                                                                                                                            NP                                                 P
+  Manufacturing                                                                                                                                                   P                                                  P
+  Miscellaneous Industrial                                                                                                                                        P                                                  L4
+  Trade Schools                                                                                                                                                   NP                                                 P
+  Transportation/Distribution                                                                                                                                     P                                                  P
+  Warehousing/Storage                                                                                                                                             P                                                  P
+  Waste Management                                                                                                                                                P/SUR5                                             P/SUR5
+  Wholesale Trade                                                                                                                                                 NP                                                 P
+  Institutional Uses
+  Civic Uses                                                                                                                                                      SUR                                                SUR
+  Community Services                                                                                                                                              L/SUR6                                             L/SUR6
+  Medical                                                                                                                                                         NP                                                 NP
+  Parks, Open Spaces, Paths, and Trails                                                                                                                           L/SUR7                                             L/SUR7
+  Religious Institutions                                                                                                                                          L/SUR8                                             L/SUR8
+  Schools                                                                                                                                                         L/SUR8                                             L/SUR8
+  Renewable Energy9
+  Solar Energy Systems                                                                                                                                            P10                                                P10
+  Wind Energy Systems                                                                                                                                             L/SUR11                                            L/SUR11
+  Biomass Energy Systems                                                                                                                                          L/SUR12                                            L/SUR12
+  Geothermal Energy Systems                                                                                                                                       P13                                                P13
+  Hydro-Micro Energy Systems                                                                                                                                      L14                                                L14
+  Other
+  Basic Utilities
+  Minor Basic Utilities                                                                                                                                           P                                                  P
+  Major Basic Utilities                                                                                                                                           SUR                                                SUR
+  Heliports                                                                                                                                                       SUR                                                SUR
+  Wireless Communication Facilities                                                                                                                               SUR                                                SUR
+  Temporary, Intermittent & Interim Uses                                                                                                                          P                                                  P
+  Marijuana Businesses                                                                                                                                            L15                                                L15
+
+                                                                                                                    [4.0300]-3
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+Table 4.0320                                             Notes:
+1.                                  Affordable housing development is permitted:
+       a.                                   On property owned by a public body, and adjacent to property where residential or school uses are permitted, or
+       b.                                 When an applicant demonstrates that the title for the parcel(s) where the facility is to be developed was held by
+               the governing body for the applicant as of April 2, 2009. See Section 10.1700         .
+2.                                  This includes the sale of goods and materials and of professional services to the general public      . Examples include
+       restaurants, stores, mini -marts, factory outlet stores and office supplies. Examples of professional services that cater
+       to daily general public customers include bank branches, financial, insurance, real estate, legal, medical and dental
+       offices.
+       In order to ensure that these uses are primarily intended to serve the needs of workers in the immediate area the
+       following standards apply:
+       The total gross leasable square footage shall not exceed 3,000 square feet per use and shall not exceed 5,000 square
+       feet cumulative gross leasable square footage within the same development project. For the purposes of this section,
+       a development project is:         a) a single building with less than 50,000 square feet of gross floor area that does not share
+       common development features (such as access, parking, or utilities) with another building that has less than 50,000
+       square feet of gross floor area, whether or not the second building is located on the same or a different parcel or lot;
+       or b) more than one building with less than 50,000 square feet of gross floor area that shares common development
+       features (such as access, parking, or utilities) with another building that has less than 50,000 square feet of gross floor
+       area, whether or not the buildings are located on the same or a different parcel or lot; or c) a single building with
+       50,000 square feet or more of gross floor area.
+       Shall not be permitted in a stand-                                                alone building and instead be included within a building whose primary purpose is
+       for an industrial use.
+3.                                  Only administrative offices which are related to the operation of the industrial use of the property are permitted in
+       the HI. Up to 20 percent of the total floor area may consist of these administrative offices. Multiple tenant office
+       buildings are prohibited.
+4.                                  Auto and track salvaging and wrecking are not permitted in GI. All other miscellaneous industrial uses located
+       adjacent to properties that are residentially designated land shall be located at least 100 feet from the residential
+       property.
+5.                                  Waste Management uses are permitted uses, except for solid waste transfer station, composting facilities, and
+       landfills, which are subject to a Special Use Review. When located in the GI, waste management uses adjacent to
+       residentially designated land shal  l be located at least 100 feet from the residential property.
+6.                                  The following Community Service Uses are not permitted in the HI and GI districts: adult or senior centers, drug and
+       alcohol treatment facilities, cemeteries, and mausoleums.
+7.                                  The following Parks, Open Spaces, Paths,         and Trails are not permitted in the HI and GI districts: public urban plazas,
+       public neighborhood parks, public community parks, and golf courses. However, public urban plazas, public
+       neighborhood parks, and public community parks are permitted in the HI a      nd GI districts when an applicant
+       demonstrates that title for the parcel(s) where the facility is to be developed was held by the governing body for the
+       applicant as of April 2, 2009.
+8.                                  Religious institutions, elementary schools, middle schools and high schools are permitted in the HI and GI districts
+       when an applicant demonstrates that title for the parcel(s) where the facility is to be developed was held by the
+       governing body for the applicant as of April 2, 2009.
+9.                                  See Section 10.0900                       for additional standards that apply.
+10.           For limitations, see Section 4.0332                                                                                                  Solar Energy System Standards for Industrial Districts.
+11.           For limitations, see Section 4.0333                                                                                                  Wind Energy System Standards for Industrial Districts.
+
+                                                                                                   [4.0300]                                       -4
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+12.           For limitations, see Section 4.0334                                                                                                  Biomass Energy System Standards for Industrial Districts.
+13.           For limitations, see Section 4.0335                                                                                                  Geothermal Energy System Standards for Industrial Districts.
+14.           For limitations, see Section 4.0336                                                                                                    Micro-Hydro Energy System Standards for Industrial Districts.
+15.           For limitations, see GRC 9.63.090.
+
+DEVELOPMENT STANDARDS
+
+4.0330                              DEVELOPMENT STANDARDS TABLE
+
+Table 4.0330 summarizes development standards which apply within the Industrial Land Use Districts. The
+standards contained in this table are supplemented by the referenced subsections and footnotes, which
+provide additional clarification and guidance.
+Table 4.0330: Development Standards for the Heavy Industrial and General Industrial Districts
+                                                                                                                        HI                                                            GI
+  A. Minimum Lot Size                                                                         None: See Section 4.0331(A)                                   None: See Section 4.0331(A)
+  B. Minimum Floor Area Ratio (FAR)                                                           None                                                          None
+  C. Minimum Building Setbacks                                                                20 feet front & street side; 0                                20 feet front & street side; 0
+                                                                                              feet for interior side and rear                               feet for interior side and rear
+  D. Minimum Building Height                                                                  None                                                          None
+  E. Maximum Building Height                                                                  None                                                          None
+  F. Height Transition Standards                                                              See Section 9.0600                                            See Section 9.0600
+  G. Minimum Bicycle Parking Required                                                         See Section 9.0851                                            See Section 9.0851
+  H. Maximum Off-Street Parking                                                               See Section 9.0851                                            See Section 9.0851
+  I. Pedestrian Circulation and Standards                                                     See Section 7.0320                                            See Section 7.0320
+  J. Screening & Buffering                                                                    See Section 9.0100                                            See Section 9.0100
+  K. Landscaping                                                                              See Section 7.0320                                            See Section 7.0320
+  L. Outdoor Uses and Outdoor Storage Uses                                                    Yes; 100% of the site area                                    Yes; 100% of the site area
+                                                                                              may include outdoor uses                                      may include outdoor uses
+                                                                                              and outdoor storage                                           and outdoor storage
+                                                                                              associated with industrial                                    associated with industrial
+                                                                                              uses. Screening required, see                                 uses. Screening required, see
+                                                                                              Sections 4.0331(B) and                                        Sections 4.0331(B) and
+                                                                                              9.0100                                                        9.0100
+  M. Parking, Loading and Unloading Area                                                      See Section 4.0331(C) and                                     See Section 4.0331(C) and
+  Standards                                                                                   9.0800                                                        9.0800
+  N. External Effects                                                                         See Section 4.0331(D)                                         See Section 4.0331(D)
+  O. Mechanical Equipment Screening                                                           See Section 4.0331(E)                                         See Section 4.0331(E)
+  P. Exterior Building Treatment                                                              See Section 4.0331(F)                                         See Section 4.0331(F)
+
+                                                                                                  [4.0300]-5
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+                                                                                                                       HI                                                           GI
+  Q. Well Field Protection                                                                   See Section 4.0331(G)                                        See Section 4.0331(G)
+  R. Public Facility Site and Supplementary                                                  See Section 4.0331(H)                                                                                                                                                                                           See Section 4.0331(H)
+  Requirements
+  S. Stormwater Management                                                                   See Section 4.0341                                           See Section 4.0341
+  T. Transit Design Criteria and Standards                                                   Yes; Development along                                       Yes; Development along
+                                                                                             designated Design Streets as                                 designated Design Streets as
+                                                                                             shown on Figure 7.0210 and                                   shown on Figure 7.0210 and
+                                                                                             are not exempted per                                         are not exempted per
+                                                                                             7.0210(C).                                                   7.0210(C).
+
+4.0331                                  ADDITIONAL INDUSTRIAL LAND USE DISTRICT STANDARDS
+
+A.                        Lot Area. Division of lots or parcels are permitted as follows:
+       1.                             Lots or parcels 50 acres or smaller may be divided into any number of smaller lots or parcels.
+       2.                             Undeveloped lots, parcels, or tracts larger than 50 acres in size may be divided into smaller lots,
+               parcels, or tracts so long as the resulting land division yields at least one lot, parcel, or tract of at least
+               50 acres in size. If a land division results in more than one lot, parcel, or tract of 50 acres or greater in
+               size, only one of those 50+ acre lots, parcels, or tracts, if further divided, must yield a lot, parcel, or
+               tract of at least 50 acres in size.
+       3.                             Development lots or parcels 50 acres or larger in size may be divided into any number of smaller lots
+               or parcels pursuant to a master plan approved by the city so long as at least 40 percent of the net area
+               or the lot or parcel has already been developed with industrial uses or uses accessory to industrial
+               uses, and no portion of the lot is developed, or proposed to be developed, with uses considered
+               Business and Retail Service and Trade.
+       4.                             Notwithstanding parts (2) and (3) of this subsection, any lot or parcel may be divided into smaller lots
+               or parcels or made subject to right-of-ways for the following purposes:
+               a.                             To provide public facilities and services;
+               b.                           To separate a portion of a lot or parcel in order to protect a natural resource, to                        provide a public
+                       amenity, or to implement a remediation plan for a site identified by the Oregon Department of
+                       Environmental Quality pursuant to ORS 465.225:
+               c.                                 To separate a portion of a lot or parcel containing a non-conforming use from the remainder of the
+                       lot or parcel in order to render the remainder more practical for                a permitted use; or
+               d.                           To allow the creation of a lot for financing purposes when the created lot is part of a master
+                       planned development.
+B.                          Outdoor Uses to be Screened
+       1.                             Screening. All outdoor use and storage areas shall be screened from adjacent properties by a six                                             -foot-
+               high sight-obscuring fence or wall. When outdoor uses and storage areas are more than 250 feet from
+               abutting public rights-of-way and/or abutting properties, or are screened by a building, the screening
+               fence or wall is not required.
+
+                                                                                                 [4.0300]-6
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+       2.                             Landscaped Setback. All outdoor use and storage areas shall be set back a minimum of 25 feet from
+              abutting public rights-of-way. Within the landscaped setback area,                       trees shall be planted at a spacing
+              of 1 per 30 linear feet and evergreen shrubs shall be planted at a ratio of 40 shrubs per 100 linear feet
+              of landscape area.                       New plant material shall meet the standards of 9.0110(E). When Outdoor uses and
+              storage areas are more than 250 feet from abutting public rights-of-way or are behind a building, the
+              landscape setback per this standard is not required. Buffer standards per Table 9.0111(A)                     for abutting
+              uses and 9.0110(D)           – Buffers across streets, may also be applicable.
+       3.                             Alternate Plan.                          An applicant may propose a reduction in the minimum setback required in (2) above to
+              a minimum of at least 20 feet by providing a detailed plan with specifications for landscaping and
+              screening, including plantings, fences, walls, walks, berms and other features designed to afford the
+              degree of the desired screening. The manager may approve                           an alternative plan if proposed buffering
+              and screening makes up for the lack of horizontal                                  distance and the result minimizes any impact that
+              the storage has to the public street.
+C.                            Parking, Loading and Unloading Areas
+       1.                             Parking, loading and unloading areas shall not be located within the required setback.
+       2.                             No loading or unloading facilities shall be located adjacent to lands designated for                 residential uses or
+              parks if there is an alternative location of adequate size adjacent to commercial, industrial or other
+              institutional uses.
+D.                        External Effects
+       1.                             In the GI district, the emission of air pollutants or odorous gasses and changes in temperature
+              detectable by the human senses without the aid of instruments at any point beyond the property line
+              is prohibited.
+       2.                             In both the HI and GI districts, electrical disturbances which interfere with the normal operation of
+              equipment or instruments on adjacent properties are prohibited.
+       3.                             In the GI district, except for exterior lighting, operations producing heat or glare shall be conducted
+              entirely within an enclosed building.
+       4.                             In the GI district, loud, unnecessary, or unusual noise which endangers health, peace or safety is
+              prohibited.
+       5.                             Prior to the City taking any action on a Type I, Type II or Type III land use application or on issuance of
+              certificate of occupancy information sufficient to determine the degree of compliance shall be
+              furnished by the applicant. Such request may include continuous records of operations, for periodic
+              checks to ensure maintenance of standards, or for special surveys.
+E.                              Mechanical Equipment. Roof mounted mechanical equipment such as ventilators and ducts for buildings
+       located adjacent to residential districts, major arterial or standard arterial streets or transit streets shall be
+       contained within a completely enclosed structure that may include louvers, latticework, etc. Screening
+       shall obscure mechanical equipment at elevation.
+F.                               Exterior Building Treatment in the GI District. In the GI District, unfinished metal structure siding shall not
+       be the primary                                    (over 50 percent of the entire structure) exterior                          material. Materials such as finished metal,
+       wood, tilt-up concrete, masonry or glass should be the primary structural siding materials.
+G.                       Well Field Protection. Industrial and commercial development may be subject to the provisions of
+       Gresham Revised Code Article 5.75 Well Field Protection.
+
+                                                                                            [4.0300]                                       -7
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+H.                       Public Facility,             Site,             and Supplementary Requirements. All developments shall also be subject to the
+        applicable requirements of Sections 4.0320                                     and 4.0341; Section 7.0212                                                   – Standards for New Solid Waste
+        and Recycling Collection Areas; Section 7.0320                                                   – Industrial Developments; Article 9 – Common
+        Requirements; and Appendix 5.000 - Public Facilities.
+
+4.0332                             SOLAR ENERGY STANDARDS FOR INDUSTRIAL DISTRICTS
+
+Solar energy systems are limited in all industrial districts as follows:
+A.                        Scale. Small, medium and large          -scale solar energy systems are permitted.
+B.                          Type. Roof-top, flat-roof, integrated and ground-mounted solar energy systems are permitted.
+C.                            Height. The following limitations on maximum height apply to all solar energy systems:
+        1.                             Roof-top, Flat-roof and Integrated. The solar energy systems on frames shall not exceed 10 feet above
+                the roof height on which the system is installed.
+        2.                             Ground-mounted. Ground-mounted solar energy systems shall not exceed 20 feet in height.
+D.                       Setbacks and Yards. Solar energy systems are not allowed in the required front or street-side setbacks.
+
+4.0333                                           WIND       ENERGY STANDARDS FOR INDUSTRIAL DISTRICTS
+
+Wind energy systems are limited in all industrial districts as follows:
+A.                        Scale. Small, medium and large          -scale wind energy systems are permitted. Large scale systems require a
+        Special Use Review when the system is:
+        1.                             Located on a building or on a site that is a historic, cultural or archeological resource; or
+        2.                             Located adjacent to residentially designated lands.
+B.                          Type. Roof-top and ground-mounted wind energy systems are permitted.
+C.                            Height. The following limitations on maximum height apply to all wind energy systems:
+        1.                             Roof-top. Wind energy system height shall not exceed a value equal to 45 feet above the roof top.
+        2.                             Ground-mounted. Ground-mounted wind energy systems shall not exceed 110 feet in height.
+D.                       Setbacks and Yards. Wind energy systems are not allowed in the required front, street-                                                                   side, side or rear
+        setbacks.
+
+4.0334                              BIOMASS ENERGY STANDARDS FOR INDUSTRIAL DISTRICTS
+
+Biomass energy systems are limited in all industrial districts as follows:
+A.                        Scale. Small scale biomass energy systems are permitted. Large scale systems are permitted with a Special
+        Use Review.
+B.                          Type. Non-hazardous biomass systems are permitted.
+C.                            Height. Biomass energy systems shall not exceed the maximum district height limits.
+D.                       Setbacks and Yards. Biomass energy systems are not allowed in the required front, street-                                                                   side, side or rear
+        setbacks.
+
+                                                                                                         [4.0300]                                       -8
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+4.0335                              GEOTHERMAL ENERGY STANDARDS FOR INDUSTRIAL DISTRICTS
+
+Geothermal energy systems are limited in all commercial districts as follows:
+A.                        Scale. Small-                                              or large-scale geothermal energy systems are permitted.
+B.                          Type. Closed-loop geothermal energy systems that are not in any well field protection areas are permitted.
+C.                            Height. Geothermal energy systems shall not exceed the maximum district height limits.
+D.                       Setbacks and Yards. Geothermal energy systems are not allowed in the required front, streetside, side or
+       rear setbacks, except that small geothermal heating and cooling units like heat pumps can project into the
+       setbacks per Section 9.0900 Projections.
+
+4.0336                                       MICRO         -   HYDRO ENERGY STANDARDS FOR INDUSTRIAL DISTRICTS
+
+Micro-hydro energy systems are limited in all industrial districts as follows:
+A.                        Scale. Small scale micro-hydro energy systems are permitted.
+B.                          Type. In-pipe micro-hydro energy systems such as systems within water, stormwater or  wastewater pipe
+       are permitted.
+C.                            Height. Generally, the district height limits apply. However, in -pipe systems may exceed the district height
+       limit as allowed for mechanical equipment. If supplemental equipment structures accompany the in-pipe
+       systems, then the district height limit would apply.
+D.                        Setbacks and Yards. Micro-hydro energy systems contained within piping are allowed and pipe can run
+       within the required setbacks. However, if supplemental equipment structures accompany the in-pipe
+       systems, then the district setback limits apply.
+
+4.0341                              GREEN DEVELOPMENT PRACTICES FOR STORMWATER MANAGEMENT
+
+The City requires prioritization of Green Development Practices, such as rain gardens, stormwater                planters,
+ecoroofs, and porous pavement to manage stormwater runoff as close as possible to its source and use natural
+processes such as retention, infiltration, and evapotranspiration to treat and reduce the volume of stormwater
+runoff that drains into downstream water bodies. The implementation of Green Development Practices
+detailed in the Stormwater Management Manual will minimize local and downstream flooding, improve water
+quality, and protect aquatic habitat to the maximum extent  practicable.
+A.                        Stormwater runoff from new or redevelopment shall be managed on-site with Green Development
+       Practices and Green Streets to the maximum extent practicable. Green   Development Practices shall be
+       designed in accordance with the requirements set forth in the Stormwater Management Manual and
+       Green Streets shall be designed in accordance with the Public Works Standards.
+B.                          Submittal Requirements Prior to Tentative Land Division or Site Design Approval. Prior to tentative land
+       division or site design approval, applicants for new or redevelopment must submit a                                  stormwater report
+       with the development permit application. The stormwater report shall contain  the information required by
+       the Stormwater Management Manual to demonstrate the development  is consistent with this section.
+C.                            Submittal Requirements Prior to Building Permit Approval. Prior to building permit approval, applicants for
+       development on private property must meet submittal requirements as specified in  the Stormwater
+       Management Manual.
+
+                                                                                        [4.0300]                                       -9
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+D.                       Parking lot landscaping may be used as Green Development Practice for parking lots, if designed as
+        provided by the Stormwater Management Manual.
+        1.                             Purpose: This section is enacted with the purpose of achieving multiple functions from parking lot
+                 landscaping by using it for on-site stormwater management.
+        2.                             Appropriate designs are contained in the Stormwater Management Manual.
+        3.                             Landscaping for stormwater management within parking lots will count towards total                                   percentage of
+                 landscaping required on site.
+E.                              After management in Green Development Practices, excess stormwater from private property shall be
+        conveyed to an approved discharge point.
+F.                               A grading or building permit may not be issued for a property until a stormwater report has been approved
+        that meets the requirements listed in the Stormwater Management Manual.
+G.                      Operations and maintenance requirements. The property owner, or its successors or assigns, shall
+        adequately maintain the on-site Green Development Practices according to guidelines in the Stormwater
+        Management Manual and/or contained in a recorded operations and maintenance agreement.
+H.                       Landscaping
+        1.                             Landscaping shall provide multiple purposes, whenever possible, including: protecting and enhancing
+                 water quality and aquatic habitat by providing for the infiltration, storage, and treatment of surface
+                 water runoff.
+        2.                             Landscaping for stormwater management will count towards total percentage of landscaping required
+                 on site and for parking lots.
+        3.                             Detailed landscaping requirements for Green Development Practices are included in the Stormwater
+                 Management Manual.
+
+                                                                                                          [4.0300]                                       -10
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)

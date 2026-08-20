@@ -81,6 +81,12 @@ code:
   - id: "4.0100.residential"
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
     title: "Section 4.0100 - Residential Land Use Districts"
+  - id: "4.0200.commercial"
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0200.pdf
+    title: "Section 4.0200 - Commercial Land Use Districts"
+  - id: "4.0300.industrial"
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0300.pdf
+    title: "Section 4.0300 - Industrial Land Use Districts"
   - id: "4.0400.corridor"
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0400.pdf
     title: "Section 4.0400 - Corridor Land Use Districts"
@@ -96,6 +102,9 @@ code:
     # citation a misquote. Declared rather than guessed, because in a table
     # that really did state 608 the guess would bless an encoding of 60.
     glued_markers: true
+  - id: "4.1200.civic-neighborhood"
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1200.pdf
+    title: "Section 4.1200 - Civic Neighborhood Plan District"
   - id: "4.1300.gresham-butte"
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1300.pdf
     title: "Section 4.1300 - Gresham Butte Plan District"
@@ -1499,6 +1508,225 @@ zones:
         - value: 25
           when: [unit_lots, corner_lot, abuts_alley]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L315,L316-L318,L385"
+  OFR:
+    section: ["4.01", "7.042"]
+    cite_default:
+      cite: Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf
+      retrieved: '2026-07-24'
+    quadplex_allowed:
+      # Table 4.0120, Quadplex row: P in every column including this one. The
+      # office/residential district permits a single detached dwelling only
+      # under a limitation and a quadplex outright.
+      value: true
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L129,L134"
+    min_lot_sqft:
+      # Two rows state a size here and the SITE row is the larger: 7,200 sq ft
+      # under A, Minimum Site Size, against 3,600 under B, Minimum Lot Size. A
+      # development on one lot has to satisfy both, so 7,200 is what binds --
+      # the same reading MDR-24 already takes from row A. No `unit_lots`
+      # escape: splitting the plat sets each lot's minimum to None but leaves
+      # the development site the size it was.
+      value: 7200
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L239"
+    min_density_du_per_acre:
+      # Row C, "All uses except Manufactured Dwelling Parks": 8.71 to the
+      # acre. Four units meet that up to about 20,000 sq ft of net area, which
+      # read against the 7,200 above it makes this district a window rather
+      # than a floor.
+      value: 8.71
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L244-L246"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list for districts outside the LDR group
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L800-L803"
+    max_density_du_per_acre:
+      # Row D prints None against "Duplex, Triplex, Quadplex, Cottage
+      # Cluster", and Article 3 names OFR in the list of districts where
+      # middle housing does not count toward maximum density.
+      exempt: true
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L254"
+      variants:
+        - value: 25
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L250,L257"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list for districts outside the LDR group
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L800-L801,L804"
+    min_lot_width_ft:
+      # E.1, the "Duplex, Triplex, Quadplex, and Cottage Cluster" line: 60
+      # feet at the building line, the widest of the seven columns, and 70 on
+      # a corner.
+      value: 60
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L271-L274"
+      variants:
+        - value: 16
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L271-L272,L277"
+        - value: 70
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L283-L285"
+        - value: 20
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L279,L286"
+    min_lot_depth_ft:
+      # F: 100 feet, interior or corner, and the only column of the seven that
+      # states a depth at all for this building -- five of the others read
+      # None.
+      value: 100
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L289-L290,L298-L300"
+      variants:
+        - value: 100
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L289-L290,L301"
+        - value: 100
+          when: [corner_lot]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L303,L306-L308"
+    min_frontage_ft:
+      # G reads NA in this column on both the interior and the corner line,
+      # and None on the townhouse line. Read, and no frontage standard
+      # applies -- which is not the same as nobody having looked.
+      exempt: true
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L311-L314"
+    max_height_ft:
+      value: 35
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L331,L333"
+    max_far:
+      # Row J states a ratio for LDR-5, LDR-7 and TR and NA for this column.
+      exempt: true
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L347-L348"
+    setback_front_ft:
+      value: 10
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L399,L403-L404"
+    setback_side_ft:
+      # 10 feet, twice what the LDR group asks, and the Common Wall column
+      # reads NA on this row -- so the party-wall relief the low-density
+      # districts give a quadplex is not stated here.
+      value: 10
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L399,L403-L404"
+      variants:
+        - value: 5
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
+    setback_rear_ft:
+      # 15 feet, and the Rear With Alley column reads NA -- an alley buys
+      # nothing here unless the plat is split, where the same table drops the
+      # rear to 10 and to 8 with an alley.
+      value: 15
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L399,L403-L404"
+      variants:
+        - value: 10
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
+        - value: 8
+          when: [unit_lots, abuts_alley]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
+    setback_street_side_ft:
+      # 20 feet, the deepest street side in the chapter, against 8 for a
+      # townhouse on the row below.
+      value: 20
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L399,L403-L404"
+      variants:
+        - value: 8
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
+    setback_garage_entrance_ft:
+      value: 20
+      quote: "or/multnomah/gresham/4.0100.residential.txt#L399,L403-L404"
+    notes: >-
+      Office/Residential, the seventh column of the residential tables and the
+      only one that was never read. Off-street parking is Table 4.0130 row L,
+      "See Section 9.0800", a cross-reference to a chapter not in this corpus,
+      so the state minimum stands. Row A's 7,200 sq ft is a minimum SITE size
+      and row B's 3,600 a minimum LOT size; both are stated for this column and
+      the larger is encoded, because a development on one lot has to satisfy
+      both. Row I sends this column to Section 9.0600 for height transition,
+      which is a step-back rule rather than a ceiling and is not encoded.
+  NC:
+    section: ["4.02"]
+    cite_default:
+      cite: Gresham Development Code Table 4.0220 (Commercial)
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0200.pdf
+      retrieved: '2026-08-19'
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/gresham/4.0200.commercial.txt#L59-L60,L65"
+    notes: >-
+      Table 4.0220 has one column, and every residential row of it reads NP except Multi-Family. The Neighborhood Commercial district is the city's only free-standing commercial zone; the rest of Gresham's commercial land sits in the corridor and plan-district chapters, which state their own tables. The split-plat path is refused throughout Gresham for one reason:
+      GDC 3.0100 defines a quadplex divided through a Middle Housing Land
+      Division as still "considered a quadplex", so a P on the Townhouse row
+      does not reach this building.
+  HI:
+    section: ["4.03"]
+    cite_default:
+      cite: Gresham Development Code Table 4.0320 (Industrial)
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0300.pdf
+      retrieved: '2026-08-19'
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/gresham/4.0300.industrial.txt#L64-L65,L70"
+    notes: >-
+      Table 4.0320 reads NP down the whole residential block in both industrial columns. Heavy Industrial is the stricter of the two and refuses even the uses General Industrial allows. The split-plat path is refused throughout Gresham for one reason:
+      GDC 3.0100 defines a quadplex divided through a Middle Housing Land
+      Division as still "considered a quadplex", so a P on the Townhouse row
+      does not reach this building.
+  GI:
+    section: ["4.03"]
+    cite_default:
+      cite: Gresham Development Code Table 4.0320 (Industrial)
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0300.pdf
+      retrieved: '2026-08-19'
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/gresham/4.0300.industrial.txt#L64-L65,L70"
+    notes: >-
+      Table 4.0320 reads NP down the whole residential block in both industrial columns. 284 lots, the largest single unread zone left in the city, and the answer is one cell. The split-plat path is refused throughout Gresham for one reason:
+      GDC 3.0100 defines a quadplex divided through a Middle Housing Land
+      Division as still "considered a quadplex", so a P on the Townhouse row
+      does not reach this building.
+  CNTH:
+    section: ["4.12"]
+    cite_default:
+      cite: Gresham Development Code Table 4.1220(A) (Civic Neighborhood)
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1200.pdf
+      retrieved: '2026-08-19'
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L195-L196,L200"
+    notes: >-
+      Table 4.1220(A) reads NP for a quadplex in all three Civic Neighborhood columns and P for a townhouse in all three. Transit High Density is the densest of the three and refuses the pod on one lot just the same. The split-plat path is refused throughout Gresham for one reason:
+      GDC 3.0100 defines a quadplex divided through a Middle Housing Land
+      Division as still "considered a quadplex", so a P on the Townhouse row
+      does not reach this building.
+  CNTM:
+    section: ["4.12"]
+    cite_default:
+      cite: Gresham Development Code Table 4.1220(A) (Civic Neighborhood)
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1200.pdf
+      retrieved: '2026-08-19'
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L195-L196,L200"
+    notes: >-
+      Table 4.1220(A) reads NP for a quadplex in all three Civic Neighborhood columns and P for a townhouse in all three. The split-plat path is refused throughout Gresham for one reason:
+      GDC 3.0100 defines a quadplex divided through a Middle Housing Land
+      Division as still "considered a quadplex", so a P on the Townhouse row
+      does not reach this building.
+  CNRM:
+    section: ["4.12"]
+    cite_default:
+      cite: Gresham Development Code Table 4.1220(A) (Civic Neighborhood)
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1200.pdf
+      retrieved: '2026-08-19'
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L195-L196,L200"
+    notes: >-
+      Table 4.1220(A) reads NP for a quadplex in all three Civic Neighborhood columns and P for a townhouse in all three. Residential Mid-Rise is the one of the three whose name suggests housing, and it is no different. The split-plat path is refused throughout Gresham for one reason:
+      GDC 3.0100 defines a quadplex divided through a Middle Housing Land
+      Division as still "considered a quadplex", so a P on the Townhouse row
+      does not reach this building.
   DRL-1:
     section: ["4.11", "7.042"]
     min_density_du_per_acre:
