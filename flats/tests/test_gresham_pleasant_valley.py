@@ -191,17 +191,25 @@ def test_two_districts_share_one_setback_row_and_one_of_them_leaves_it(
     it drops MDR-PV's street-side setback to 5 feet and leaves LDR-PV's at 8,
     which is two districts on one row moving by different amounts and the sort
     of thing a shared encoding hides.
+
+    The rear yard is the other way round -- one printed figure, two answers.
+    7.0420(G)(1) names LDR-PV and not MDR-PV, so the roof plane pushes a 26 ft
+    box five feet further back in the first and nowhere in the second, and two
+    districts sharing a table cell end up five feet apart.
     """
     shared = (
         "setback_front_ft",
         "setback_side_ft",
-        "setback_rear_ft",
         "setback_garage_entrance_ft",
     )
     for field in shared:
         held = gresham.zones["LDR-PV"].values[field]
         mirror = gresham.zones["MDR-PV"].values[field]
         assert held.value == mirror.value, field
+
+    rear = gresham.zones["LDR-PV"].values["setback_rear_ft"]
+    assert rear.before_step_back == gresham.zones["MDR-PV"].values["setback_rear_ft"].value
+    assert rear.value == rear.before_step_back + 5
     assert gresham.zones["LDR-PV"].values["setback_street_side_ft"].value == 10
     assert gresham.zones["MDR-PV"].values["setback_street_side_ft"].value == 10
     split = {
@@ -234,9 +242,18 @@ def test_the_alley_is_the_looser_column_by_ten_feet_in_one_district(
         (10, ("unit_lots",)),
         (5, ("unit_lots", "abuts_alley")),
     ]
+    # HDR-PV and MDR-PV are outside 7.0420(G)(1)'s list and read the table as
+    # printed; LDR-PV is inside it and carries the same two figures five feet
+    # deeper.
     for zone in ("LDR-PV", "MDR-PV"):
         held = gresham.zones[zone].values["setback_rear_ft"]
-        assert (held.value, held.variants[0].value) == (10, 8), zone
+        printed = (
+            held.before_step_back or held.value,
+            held.variants[0].before_step_back or held.variants[0].value,
+        )
+        assert printed == (10, 8), zone
+    assert gresham.zones["LDR-PV"].values["setback_rear_ft"].value == 15
+    assert gresham.zones["MDR-PV"].values["setback_rear_ft"].value == 10
 
 
 def test_an_alley_actually_loosens_the_rear_when_it_is_named(

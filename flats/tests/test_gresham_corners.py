@@ -206,7 +206,11 @@ def test_pleasant_valley_reads_its_last_three_columns(rules: RuleSet) -> None:
     shared = rules.resolve(GRESHAM, "LDR-PV", ("attached_wall",))
     assert shared.values["setback_side_ft"].value == 0
     alley = rules.resolve(GRESHAM, "LDR-PV", ("abuts_alley",))
-    assert alley.values["setback_rear_ft"].value == 8
+    # 8 in the table, 13 on the ground: 7.0420(G)(1)'s roof plane pushes a 26
+    # ft box five feet off whichever rear setback applies. See test_step_back.
+    held = rules.layers[GRESHAM].zones["LDR-PV"].values["setback_rear_ft"]
+    assert held.variants[0].before_step_back == 8
+    assert alley.values["setback_rear_ft"].value == 13
 
 
 def test_no_plan_district_configuration_is_ambiguous(rules: RuleSet) -> None:

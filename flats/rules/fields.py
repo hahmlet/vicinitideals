@@ -339,6 +339,29 @@ HEIGHT_RATIO_FIELDS: frozenset[str] = frozenset(
     }
 )
 
+#: Fields a rule file may state with a STEP-BACK behind them -- a second rule,
+#: usually in a different chapter, that limits how tall a building may be near
+#: the line and so decides how far back a building of a given height has to
+#: stand. Gresham 7.0420(G)(1) is the case: in six of its residential districts
+#: "the maximum roof height at the rear setback line is 21 feet and increases
+#: at a rate of one foot in height for every one foot of distance further from
+#: the rear property line", which for a 26 ft box is five feet further back
+#: than the district table prints.
+#:
+#: Restricted to the yards, because a step-back is a rule about a lot line. It
+#: is the second form here that reads :data:`DESIGN_HEIGHT_FT`, and unlike
+#: `per_height_ft` it does not replace the district's own number -- it adds to
+#: it, which is why a value carrying one states both figures and cites both
+#: sentences.
+STEP_BACK_FIELDS: frozenset[str] = frozenset(
+    {
+        "setback_front_ft",
+        "setback_side_ft",
+        "setback_street_side_ft",
+        "setback_rear_ft",
+    }
+)
+
 #: Fields whose absence should not by itself block a zone from `verified`.
 #: Everything else, if the code speaks to it, must be encoded or explicitly
 #: recorded as not-applicable via the clause ledger.

@@ -209,8 +209,25 @@ def _quoted_parts(layer: Layer) -> Iterable[tuple[str, str, str | None, object]]
                 # 150-2 prints 2 and prints 10 and prints 13 nowhere.
                 else value.per_height_ft
                 if getattr(value, "per_height_ft", None) is not None
+                # A step-back ADDS to the district's own setback rather than
+                # replacing it, so the district table is checked against the
+                # figure the district table prints. The other half gets its own
+                # row below.
+                else value.before_step_back
+                if getattr(value, "before_step_back", None) is not None
                 else getattr(value, "value", None),
             )
+            if value.step_back_quote:
+                # The half of the number that lives in another chapter. Unlike
+                # a denominator there IS a figure to corroborate -- Gresham
+                # prints 21 and prints the 20 it comes to nowhere -- so this
+                # row is checked like any other.
+                yield (
+                    zone_code,
+                    f"{name} [step-back]",
+                    value.step_back_quote,
+                    value.step_back_at_ft,
+                )
             if value.measured_on_quote:
                 # The denominator's definition is a rule somebody read, and a
                 # citation nothing checks is the provenance hole this field
@@ -233,7 +250,9 @@ def _quoted_parts(layer: Layer) -> Iterable[tuple[str, str, str | None, object]]
                     # 12,000 and prints 10 and prints 10,800 nowhere, so
                     # looking for the result would flag the one encoding that
                     # did not invent it.
-                    variant.acres
+                    variant.before_step_back
+                    if getattr(variant, "before_step_back", None) is not None
+                    else variant.acres
                     if getattr(variant, "acres", None) is not None
                     else variant.acres_per_dwelling
                     if getattr(variant, "acres_per_dwelling", None) is not None

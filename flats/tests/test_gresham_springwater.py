@@ -169,7 +169,10 @@ def test_the_deepest_garage_setback_in_the_corpus(gresham: Layer) -> None:
     assert held["setback_garage_entrance_ft"].value == 25
     assert held["setback_street_side_ft"].value == 20
     assert held["setback_front_ft"].value == 20
-    assert held["setback_rear_ft"].value == 20
+    # 20 in the table, 25 on the ground -- 7.0420(G)(1)'s roof plane. It is the
+    # deepest rear yard in the corpus for that reason and not this table's.
+    assert held["setback_rear_ft"].before_step_back == 20
+    assert held["setback_rear_ft"].value == 25
     moved = {
         f: [(v.value, v.when) for v in held[f].variants if "unit_lots" in v.when]
         for f in (
@@ -207,15 +210,25 @@ def test_the_party_wall_relief_is_not_stated_for_the_pod_on_one_lot(
 def test_the_alley_column_of_the_rear_is_read_in_both_districts(
     rules: RuleSet,
 ) -> None:
-    """20 feet down to 8 in VLDR-SW, 15 down to 8 in LDR-SW.
+    """20 feet down to 8 in VLDR-SW, 15 down to 8 in LDR-SW, as printed.
 
     LDR-SW's was encoded without it in July, so an alley lot screened against
     the deeper number for four months.
+
+    Both districts are inside 7.0420(G)(1), so a 26 ft box stands five feet
+    further off the rear property line than either column says -- and the alley
+    column, which the table drops to 8, lands at 13 in both. The roof plane
+    knows nothing about alleys, which is the point of applying it to the
+    exception as well as the base.
     """
     for zone, base in (("VLDR-SW", 20), ("LDR-SW", 15)):
-        assert rules.resolve(GRESHAM, zone).values["setback_rear_ft"].value == base
+        held = rules.layers[GRESHAM].zones[zone].values["setback_rear_ft"]
+        assert held.before_step_back == base, zone
+        assert held.variants[0].before_step_back == 8, zone
+
+        assert rules.resolve(GRESHAM, zone).values["setback_rear_ft"].value == base + 5
         with_alley = rules.resolve(GRESHAM, zone, ("abuts_alley",))
-        assert with_alley.values["setback_rear_ft"].value == 8, zone
+        assert with_alley.values["setback_rear_ft"].value == 13, zone
 
 
 def test_the_tightest_floor_area_ratio_in_the_corpus(gresham: Layer) -> None:

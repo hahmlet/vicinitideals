@@ -20,6 +20,7 @@ surface every problem in one pass, not one per run.
 
 from __future__ import annotations
 
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
@@ -103,7 +104,8 @@ def _parse_values(
 
         if isinstance(node, dict) and (
             {"value", "exempt", "per_dwelling", "sqft_per_unit", "acres",
-             "acres_per_dwelling", "per_height_ft", "floor_ft"} & set(node)
+             "acres_per_dwelling", "per_height_ft", "floor_ft",
+             "step_back"} & set(node)
         ):
             body = dict(node)
             value = body.pop("value", None)
@@ -114,6 +116,9 @@ def _parse_values(
             acres_each = body.pop("acres_per_dwelling", None)
             per_height = body.pop("per_height_ft", None)
             floor_ft = body.pop("floor_ft", None)
+            step_back = _parse_step_back(
+                body.pop("step_back", None), f"{where}.{key}", problems
+            )
             measured_on, measured_on_cite, measured_on_quote = _parse_measured_on(
                 body.pop("measured_on", None), f"{where}.{key}", problems
             )
@@ -247,6 +252,28 @@ def _parse_values(
             if not exempt and value is None:
                 problems.append(f"{where}.{key}: expected a 'value' or 'exempt: true'")
                 continue
+            before_step_back = None
+            if step_back is not None and step_back.at_ft is not None:
+                if exempt or not isinstance(value, (int, float)) or isinstance(
+                    value, bool
+                ):
+                    problems.append(
+                        f"{where}.{key}: a step-back is added to the district's "
+                        f"own setback, and there is no distance here to add it to"
+                    )
+                    continue
+                if step_back.rise is None or step_back.rise <= 0:
+                    problems.append(
+                        f"{where}.{key}: a step-back rises at a rate the code "
+                        f"prints — state it as 'rise_per_ft'"
+                    )
+                    continue
+                # Applied below, after the variants are parsed: a step-back
+                # is a property of the standard rather than of its base, so
+                # whatever setback the district's own rules produce, the roof
+                # plane pushes it back by the same amount. Parsing the variants
+                # against a base that had already moved would compound it.
+                before_step_back = value
         else:
             # Shorthand: the scalar is the value, everything else is inherited.
             body = {}
@@ -254,6 +281,8 @@ def _parse_values(
             exempt = False
             per_height = None
             floor_ft = None
+            step_back = None
+            before_step_back = None
             per_dwelling = None
             sqft_per_unit = None
             acres = None
@@ -289,6 +318,29 @@ def _parse_values(
             variants = _parse_variants(
                 raw_variants, prov_src, f"{where}.{key}", problems, base=value
             )
+            if before_step_back is not None:
+                # 21 ft of roof at the rear setback line, rising one foot per
+                # foot further back, and a 26 ft box. Five more feet, and 20 is
+                # printed in neither chapter.
+                value = _stepped_back(
+                    float(value), float(step_back.at_ft), float(step_back.rise)
+                )
+                variants = tuple(
+                    variant
+                    if not isinstance(variant.value, (int, float))
+                    or isinstance(variant.value, bool)
+                    else variant.model_copy(
+                        update={
+                            "before_step_back": float(variant.value),
+                            "value": _stepped_back(
+                                float(variant.value),
+                                float(step_back.at_ft),
+                                float(step_back.rise),
+                            ),
+                        }
+                    )
+                    for variant in variants
+                )
             built = Value(
                 name=key,
                 value=value,
@@ -301,6 +353,11 @@ def _parse_values(
                 ),
                 per_height_ft=None if per_height is None else float(per_height),
                 floor_ft=None if floor_ft is None else float(floor_ft),
+                step_back_at_ft=None if step_back is None else step_back.at_ft,
+                step_back_rise=None if step_back is None else step_back.rise,
+                step_back_cite=None if step_back is None else step_back.cite,
+                step_back_quote=None if step_back is None else step_back.quote,
+                before_step_back=before_step_back,
                 measured_on=None if measured_on is None else str(measured_on),
                 measured_on_cite=measured_on_cite,
                 measured_on_quote=measured_on_quote,
@@ -361,6 +418,24 @@ def _off_the_building(per_height: float, floor: float | None) -> float:
     """
     off_height = round(DESIGN_HEIGHT_FT / per_height, 3)
     total = max(off_height, floor) if floor is not None else off_height
+    return int(total) if float(total).is_integer() else total
+
+
+def _stepped_back(setback: float, at_ft: float, rise: float) -> float:
+    """How far a building of this height stands back, given a roof-plane rule.
+
+    Gresham 7.0420(G)(1): "The maximum roof height at the rear setback line is
+    21 feet and increases at a rate of one foot in height for every one foot of
+    distance further from the rear property line." A 26 ft box is five feet
+    over the allowance at the line, and at one foot per foot it buys those five
+    feet by standing five feet further back.
+
+    A building shorter than the allowance owes nothing extra, which is the
+    `max(0, ...)`: the rule limits a roof, and a roof under the limit is not
+    pushed anywhere.
+    """
+    owed = max(0.0, (DESIGN_HEIGHT_FT - at_ft) / rise)
+    total = round(setback + owed, 3)
     return int(total) if float(total).is_integer() else total
 
 
@@ -554,6 +629,54 @@ def _parse_sections(raw: object) -> tuple[str, ...]:
     if isinstance(raw, str):
         return (raw.strip(),) if raw.strip() else ()
     return tuple(str(item).strip() for item in raw if str(item).strip())
+
+
+@dataclass(frozen=True)
+class _StepBack:
+    at_ft: float | None
+    rise: float | None
+    cite: str | None
+    quote: str | None
+
+
+def _parse_step_back(raw: Any, where: str, problems: list[str]) -> _StepBack | None:
+    """Parse a height limit near a lot line, and where the code prints it.
+
+    Always a mapping. There is no shorthand because there is nothing short to
+    say: the rule is a height, a rate and a section, and a bare number would be
+    the half of it that decides nothing.
+    """
+    if raw is None:
+        return None
+    if not isinstance(raw, dict):
+        problems.append(f"{where}.step_back: expected a mapping")
+        return None
+
+    body = dict(raw)
+    at_ft = body.pop("height_ft", None)
+    rise = body.pop("rise_per_ft", None)
+    cite = body.pop("cite", None)
+    quote = body.pop("quote", None)
+    if body:
+        problems.append(f"{where}.step_back: unknown key(s) {sorted(body)}")
+    for label, number in (("height_ft", at_ft), ("rise_per_ft", rise)):
+        if number is not None and (
+            not isinstance(number, (int, float)) or isinstance(number, bool)
+        ):
+            problems.append(f"{where}.step_back.{label}: expected a number")
+            return None
+    if at_ft is None:
+        problems.append(
+            f"{where}.step_back: state the height allowed at the setback line "
+            f"under 'height_ft' — it is what the rule limits"
+        )
+        return None
+    return _StepBack(
+        float(at_ft),
+        None if rise is None else float(rise),
+        None if cite is None else str(cite),
+        None if quote is None else str(quote),
+    )
 
 
 def _parse_measured_on(

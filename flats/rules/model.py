@@ -46,6 +46,7 @@ from flats.rules.fields import (
     MEASURED_ON_FIELDS,
     PER_DWELLING_FIELDS,
     PER_UNIT_AREA_FIELDS,
+    STEP_BACK_FIELDS,
     FieldDef,
     field,
 )
@@ -323,6 +324,13 @@ class Variant(BaseModel):
     #: within a mile of the Urban Growth Boundary and five of one beyond it,
     #: in one sentence, and prints no square footage at all.
     acres: float | None = None
+    #: This exception's own printed figure, before the standard's step-back was
+    #: added to it. Gresham's LDR-PV rear yard is 10 ft, or 8 with an alley,
+    #: and 7.0420(G)(1) pushes a 26 ft box five feet off whichever of the two
+    #: applies -- a step-back belongs to the standard, not to its base. Kept so
+    #: the citation check compares the 8 the table prints against the table's
+    #: own quote, exactly as `before_step_back` does for the base.
+    before_step_back: float | None = None
     #: Registered condition names, all of which must hold. Empty is allowed
     #: only alongside a band: a variant with neither is the base value written
     #: twice, and two bases cannot be told apart.
@@ -592,6 +600,33 @@ class Value(BaseModel):
     #: it the floor does, and which of the two binds for this building is
     #: arithmetic the file should not have to do.
     floor_ft: float | None = None
+    #: The height a second rule allows AT the setback line, where one limits
+    #: how tall a building may be near the lot line. Gresham 7.0420(G)(1)
+    #: states 21 feet at the rear setback line in six of its residential
+    #: districts, rising one foot for every foot further back; a 26 ft box
+    #: therefore stands five feet further off the rear property line than
+    #: Table 4.0130 prints. `value` carries the sum, because a lot is checked
+    #: against one distance.
+    #:
+    #: Unlike every other derived form here, this one does not replace the
+    #: district's own figure -- it adds to it -- so a value carrying a
+    #: step-back states two numbers from two sentences, and carries a second
+    #: citation for the second one. Same arrangement `measured_on` uses, and
+    #: for the same reason: the other half of a rule is still a rule, and a
+    #: citation nothing checks is a hole.
+    step_back_at_ft: float | None = None
+    #: Feet of height gained per foot of additional distance -- the "one foot
+    #: in height for every one foot of distance" half of the same sentence.
+    #: Stated rather than assumed because a 1:1 plane and a 1:2 plane are
+    #: different rules and both are written.
+    step_back_rise: float | None = None
+    step_back_cite: str | None = None
+    step_back_quote: str | None = None
+    #: The district's own printed setback, before the step-back was added.
+    #: Kept so the citation check compares the figure a reader finds in the
+    #: district table against the district table's own quote -- the same job
+    #: `acres` does for a lot size.
+    before_step_back: float | None = None
     #: The quantity a rate is measured against, where the code names one this
     #: screen does not hold. A density per *net acre* is computed on the lot
     #: less rights-of-way, floodplain, steep slopes and Goal 5 resources, and
@@ -754,6 +789,44 @@ class Value(BaseModel):
             )
         if self.floor_ft is not None and self.floor_ft < 0:
             raise ValueError(f"{self.name}: floor_ft {self.floor_ft} is not a distance")
+        return self
+
+    @model_validator(mode="after")
+    def _a_step_back_states_both_halves_and_cites_them(self) -> Value:
+        if self.step_back_at_ft is None:
+            if self.step_back_rise is None and not (
+                self.step_back_cite or self.step_back_quote
+            ):
+                return self
+            raise ValueError(
+                f"{self.name}: a step-back's rate and citation with no height "
+                f"at the setback line for them to belong to"
+            )
+        if self.name not in STEP_BACK_FIELDS:
+            raise ValueError(
+                f"{self.name}: 'step_back' states a height limit near a lot "
+                f"line, and applies to {', '.join(sorted(STEP_BACK_FIELDS))}"
+            )
+        if self.step_back_at_ft < 0:
+            raise ValueError(
+                f"{self.name}: step_back height {self.step_back_at_ft} is not a "
+                f"distance"
+            )
+        if self.step_back_rise is None or self.step_back_rise <= 0:
+            raise ValueError(
+                f"{self.name}: a step-back rises at a rate the code prints — "
+                f"state it as 'rise_per_ft'"
+            )
+        if not (self.step_back_cite and self.step_back_quote):
+            # The district table and the step-back are two sentences, usually
+            # in two chapters, and the value is neither of them on its own. A
+            # reader handed only the table's citation would find the number the
+            # file does not hold.
+            raise ValueError(
+                f"{self.name}: a step-back is a second rule in a second "
+                f"section — cite and quote where it is printed, or half the "
+                f"number has no provenance"
+            )
         return self
 
     @model_validator(mode="after")

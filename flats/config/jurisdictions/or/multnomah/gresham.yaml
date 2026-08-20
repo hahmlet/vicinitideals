@@ -131,6 +131,13 @@ code:
   - id: "7.0400.middle-housing-design"
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
     title: "Section 7.0400 - Middle Housing Design Standards"
+  # Fetched to settle a doubt three zone notes were carrying rather than to
+  # supply a number. 9.0602 excludes middle housing from the whole section,
+  # and 9.0610(A) would cap a building at 30 ft near the trigger lot line
+  # anyway. Neither reaches a 26 ft quadplex; see the OFR note.
+  - id: "9.0600.height-transition"
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-9.0600.pdf
+    title: "Section 9.0600 - Height Transition"
 zones:
   LDR-5:
     section: ["4.01", "7.042"]
@@ -168,6 +175,20 @@ zones:
     setback_rear_ft:
       value: 15
       quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+      variants:
+        # Table 4.0130 row G: "Rear No Alley" 15 ft, "Rear With Alley" 8 ft.
+        # The alley column has been printed in this table the whole time and
+        # was never read across -- quadfit's own note on LDR-5 said "rear w/
+        # alley 8 ft (not modeled)", which is a gap somebody wrote down and
+        # then imported.
+        - value: 8
+          when: [abuts_alley]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L393-L397,L399-L400"
+      step_back:
+        height_ft: 21
+        rise_per_ft: 1
+        cite: Gresham Development Code 7.0420(G)(1), with the applicability sentence of 7.0420
+        quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L167-L169,L358-L362"
     setback_street_side_ft:
       value: 10
       quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
@@ -219,8 +240,28 @@ zones:
       # acre stay in this one.
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
-    notes: 'quadfit confidence: verified | Quadplex P outright. Rear w/ alley 8 ft (not modeled). FAR
-      1.0. Height 35 ft.'
+    notes: >-
+      Low Density Residential 5, and 12,854 lots — the largest zone in Gresham. A quadplex is P outright; minimum lot 5,000 sq ft, FAR 1.0, height 35 ft.
+
+
+      REAR ROOF HEIGHT LIMIT. Section 7.0420 applies its design standards to
+      "single detached, duplex, triplex, and quadplex residential
+      developments" in this district, and 7.0420(G)(1) limits the ROOF rather
+      than the wall: 21 feet at the rear setback line, "increases at a rate of
+      one foot in height for every one foot of distance further from the rear
+      property line". A 26 ft pod is five feet over the allowance at that
+      line, so it stands 20 ft off the rear property line rather than
+      the 15 the table prints, and 13 rather than 8 where the lot has an alley. The split-plat path is caught by the
+      same rule: GDC 3.0100 says quadplex units divided through a Middle
+      Housing Land Division "are considered a quadplex".
+
+
+      7.0420(G)(1)(b) switches the limit off where any portion of the lot lies
+      inside the Hillside Geological Risk Area or a Resource Area. That is a
+      real relief, and nothing here cuts either boundary against a parcel, so
+      the step-back binds and the relief is recorded rather than encoded --
+      the lever would need a variant per existing variant and a condition
+      nobody can answer.
     min_frontage_ft:
       value: 35
       quote: "or/multnomah/gresham/4.0100.residential.txt#L314"
@@ -277,6 +318,20 @@ zones:
     setback_rear_ft:
       value: 15
       quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+      variants:
+        # Table 4.0130 row G: "Rear No Alley" 15 ft, "Rear With Alley" 8 ft.
+        # The alley column has been printed in this table the whole time and
+        # was never read across -- quadfit's own note on LDR-5 said "rear w/
+        # alley 8 ft (not modeled)", which is a gap somebody wrote down and
+        # then imported.
+        - value: 8
+          when: [abuts_alley]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L393-L397,L399-L400"
+      step_back:
+        height_ft: 21
+        rise_per_ft: 1
+        cite: Gresham Development Code 7.0420(G)(1), with the applicability sentence of 7.0420
+        quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L167-L169,L358-L362"
     setback_street_side_ft:
       value: 10
       quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
@@ -328,8 +383,28 @@ zones:
       # acre stay in this one.
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
-    notes: 'quadfit confidence: verified | Min lot 7,000 sf. FAR 0.7 (tightest in city; still >1,000 sf
-      building on min lot).'
+    notes: >-
+      Low Density Residential 7. Minimum lot 7,000 sq ft and FAR 0.7, the tightest ratio in the city — still over 1,000 sq ft of building on a minimum lot, so it does not bind this pod.
+
+
+      REAR ROOF HEIGHT LIMIT. Section 7.0420 applies its design standards to
+      "single detached, duplex, triplex, and quadplex residential
+      developments" in this district, and 7.0420(G)(1) limits the ROOF rather
+      than the wall: 21 feet at the rear setback line, "increases at a rate of
+      one foot in height for every one foot of distance further from the rear
+      property line". A 26 ft pod is five feet over the allowance at that
+      line, so it stands 20 ft off the rear property line rather than
+      the 15 the table prints, and 13 rather than 8 where the lot has an alley. The split-plat path is caught by the
+      same rule: GDC 3.0100 says quadplex units divided through a Middle
+      Housing Land Division "are considered a quadplex".
+
+
+      7.0420(G)(1)(b) switches the limit off where any portion of the lot lies
+      inside the Hillside Geological Risk Area or a Resource Area. That is a
+      real relief, and nothing here cuts either boundary against a parcel, so
+      the step-back binds and the relief is recorded rather than encoded --
+      the lever would need a variant per existing variant and a condition
+      nobody can answer.
     max_height_ft:
       value: 35
       quote: "or/multnomah/gresham/4.0100.residential.txt#L332"
@@ -390,6 +465,15 @@ zones:
     setback_rear_ft:
       value: 15
       quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+      variants:
+        # Table 4.0130 row G: "Rear No Alley" 15 ft, "Rear With Alley" 8 ft.
+        # The alley column has been printed in this table the whole time and
+        # was never read across -- quadfit's own note on LDR-5 said "rear w/
+        # alley 8 ft (not modeled)", which is a gap somebody wrote down and
+        # then imported.
+        - value: 8
+          when: [abuts_alley]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L393-L397,L399-L400"
     setback_street_side_ft:
       value: 10
       quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
@@ -434,8 +518,11 @@ zones:
       # acre stay in this one.
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
-    notes: 'quadfit confidence: verified | NO minimum lot size, no FAR, no max density — most permissive
-      LDR-family zone.'
+    notes: >-
+      Transit Low Density Residential. No minimum lot size, no FAR and no maximum density — the most permissive zone in the LDR family. Table 4.0130 row G prints a rear yard of 15 ft, or 8 with an alley.
+
+
+      NOT stepped back, and the absence is the point: 7.0420(G)(1) lists VLDR-SW, LDR-SW, LDR-PV, LDR-7, LDR-5 and TR, and this district is the one LDR-family zone missing from that list even though 7.0420 reaches it for every other design standard. So the 15 ft here is the whole rear yard, where the same 15 ft in LDR-5 is 20.
     max_height_ft:
       value: 35
       quote: "or/multnomah/gresham/4.0100.residential.txt#L332"
@@ -502,6 +589,20 @@ zones:
     setback_rear_ft:
       value: 15
       quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
+      variants:
+        # Table 4.0130 row G: "Rear No Alley" 15 ft, "Rear With Alley" 8 ft.
+        # The alley column has been printed in this table the whole time and
+        # was never read across -- quadfit's own note on LDR-5 said "rear w/
+        # alley 8 ft (not modeled)", which is a gap somebody wrote down and
+        # then imported.
+        - value: 8
+          when: [abuts_alley]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L393-L397,L399-L400"
+      step_back:
+        height_ft: 21
+        rise_per_ft: 1
+        cite: Gresham Development Code 7.0420(G)(1), with the applicability sentence of 7.0420
+        quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L167-L169,L358-L362"
     setback_street_side_ft:
       value: 10
       quote: "or/multnomah/gresham/4.0100.residential.txt#L400"
@@ -553,7 +654,28 @@ zones:
       # acre stay in this one.
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
-    notes: 'quadfit confidence: verified | Min lot 4,000 sf. FAR 1.0.'
+    notes: >-
+      Transitional Residential. Minimum lot 4,000 sq ft, FAR 1.0.
+
+
+      REAR ROOF HEIGHT LIMIT. Section 7.0420 applies its design standards to
+      "single detached, duplex, triplex, and quadplex residential
+      developments" in this district, and 7.0420(G)(1) limits the ROOF rather
+      than the wall: 21 feet at the rear setback line, "increases at a rate of
+      one foot in height for every one foot of distance further from the rear
+      property line". A 26 ft pod is five feet over the allowance at that
+      line, so it stands 20 ft off the rear property line rather than
+      the 15 the table prints, and 13 rather than 8 where the lot has an alley. The split-plat path is caught by the
+      same rule: GDC 3.0100 says quadplex units divided through a Middle
+      Housing Land Division "are considered a quadplex".
+
+
+      7.0420(G)(1)(b) switches the limit off where any portion of the lot lies
+      inside the Hillside Geological Risk Area or a Resource Area. That is a
+      real relief, and nothing here cuts either boundary against a parcel, so
+      the step-back binds and the relief is recorded rather than encoded --
+      the lever would need a variant per existing variant and a condition
+      nobody can answer.
     max_height_ft:
       value: 35
       quote: "or/multnomah/gresham/4.0100.residential.txt#L332"
@@ -622,6 +744,11 @@ zones:
         - value: 8
           when: [abuts_alley]
           quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385-L392"
+      step_back:
+        height_ft: 21
+        rise_per_ft: 1
+        cite: Gresham Development Code 7.0420(G)(1), with the applicability sentence of 7.0420
+        quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L167-L169,L358-L362"
     setback_street_side_ft:
       value: 10
       quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L386-L392"
@@ -683,7 +810,28 @@ zones:
         fact: net_developable_area
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list for the LDR group
         quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
-    notes: 'quadfit confidence: verified | Pleasant Valley plan district. Rear 10 ft (vs 15 in base LDR).'
+    notes: >-
+      Pleasant Valley low density sub-district. Rear yard 10 ft against 15 in the base LDR districts, which is the plan district's whole point.
+
+
+      REAR ROOF HEIGHT LIMIT. Section 7.0420 applies its design standards to
+      "single detached, duplex, triplex, and quadplex residential
+      developments" in this district, and 7.0420(G)(1) limits the ROOF rather
+      than the wall: 21 feet at the rear setback line, "increases at a rate of
+      one foot in height for every one foot of distance further from the rear
+      property line". A 26 ft pod is five feet over the allowance at that
+      line, so it stands 15 ft off the rear property line rather than
+      the 10 the table prints, and 13 rather than 8 where the lot has an alley. The split-plat path is caught by the
+      same rule: GDC 3.0100 says quadplex units divided through a Middle
+      Housing Land Division "are considered a quadplex".
+
+
+      7.0420(G)(1)(b) switches the limit off where any portion of the lot lies
+      inside the Hillside Geological Risk Area or a Resource Area. That is a
+      real relief, and nothing here cuts either boundary against a parcel, so
+      the step-back binds and the relief is recorded rather than encoded --
+      the lever would need a variant per existing variant and a condition
+      nobody can answer.
     max_height_ft:
       value: 35
       quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L307"
@@ -911,8 +1059,12 @@ zones:
       only on narrow lots, for developments whose units have individual garage
       entrances. Note 5 on the height row points at Section 4.1416 building
       height transition standards, which apply where an abutting lot is
-      LDR-PV; those are a step-back rule rather than a ceiling and are not
-      encoded. Row D's 0.5:1 lot width/depth ratio is stated for "All Other
+      LDR-PV. Read, and they cannot bind: 4.1416(B) sets the maximum height
+      at 35 feet AT the minimum building setback and lets it climb a foot
+      for every foot beyond, and a 26 ft pod is nine feet under the
+      allowance before it moves at all. Pleasant Valley writes its own
+      height transition rather than using Section 9.0600, which 9.0602
+      excludes this plan district from by name. Row D's 0.5:1 lot width/depth ratio is stated for "All Other
       Uses" and prints None against the quadplex row.
   NC-PV:
     section: ["4.14", "7.042"]
@@ -979,6 +1131,11 @@ zones:
         - value: 8
           when: [abuts_alley]
           quote: "or/multnomah/gresham/4.1500.springwater.txt#L347,L349-L353"
+      step_back:
+        height_ft: 21
+        rise_per_ft: 1
+        cite: Gresham Development Code 7.0420(G)(1), with the applicability sentence of 7.0420
+        quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L167-L169,L358-L362"
     setback_street_side_ft:
       value: 10
       quote: "or/multnomah/gresham/4.1500.springwater.txt#L349-L353"
@@ -1025,8 +1182,28 @@ zones:
       # setback, and it was never encoded here.
       value: 20
       quote: "or/multnomah/gresham/4.1500.springwater.txt#L347,L349-L353"
-    notes: 'quadfit confidence: verified | Springwater. Min lot width 45 ft, min depth 80 ft (not separately
-      modeled — envelope test dominates).'
+    notes: >-
+      Springwater low density sub-district. Minimum lot width 45 ft and minimum depth 80 ft are stated and not separately modelled; the envelope test dominates both.
+
+
+      REAR ROOF HEIGHT LIMIT. Section 7.0420 applies its design standards to
+      "single detached, duplex, triplex, and quadplex residential
+      developments" in this district, and 7.0420(G)(1) limits the ROOF rather
+      than the wall: 21 feet at the rear setback line, "increases at a rate of
+      one foot in height for every one foot of distance further from the rear
+      property line". A 26 ft pod is five feet over the allowance at that
+      line, so it stands 20 ft off the rear property line rather than
+      the 15 the table prints, and 13 rather than 8 where the lot has an alley. The split-plat path is caught by the
+      same rule: GDC 3.0100 says quadplex units divided through a Middle
+      Housing Land Division "are considered a quadplex".
+
+
+      7.0420(G)(1)(b) switches the limit off where any portion of the lot lies
+      inside the Hillside Geological Risk Area or a Resource Area. That is a
+      real relief, and nothing here cuts either boundary against a parcel, so
+      the step-back binds and the relief is recorded rather than encoded --
+      the lever would need a variant per existing variant and a condition
+      nobody can answer.
     max_height_ft:
       value: 35
       quote: "or/multnomah/gresham/4.1500.springwater.txt#L278"
@@ -1190,6 +1367,11 @@ zones:
         - value: 8
           when: [abuts_alley]
           quote: "or/multnomah/gresham/4.1500.springwater.txt#L347-L348"
+      step_back:
+        height_ft: 21
+        rise_per_ft: 1
+        cite: Gresham Development Code 7.0420(G)(1), with the applicability sentence of 7.0420
+        quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L167-L169,L358-L362"
     setback_street_side_ft:
       # 20 feet, which is the deepest street-side setback in the chapter and
       # two and a half times what the Townhouse row asks in the same column.
@@ -1214,8 +1396,15 @@ zones:
       this corpus, so the state minimum stands rather than a number read out of
       this table. Row L, alley access for garage entrances, reads N/A against
       All Other Uses here and is not encoded. Row H sends the quadplex row to
-      Section 7.0400 for rear height limits, which is a roof-plane rule rather
-      than a ceiling and is not encoded. The four-unit cap of row J is stated
+      Section 7.0400 for rear height limits, and that is now read and carried.
+      7.0420(G)(1) allows 21 ft of roof at the rear setback line and a foot
+      more for every foot further back, so a 26 ft pod stands 25 ft off the
+      rear property line rather than the 20 this table prints, and 13 rather
+      than 8 with an alley. 7.0420(G)(1)(b) switches the limit off inside the
+      Hillside Geological Risk Area or a Resource Area; neither boundary is
+      cut against a parcel here, so the step-back binds. It catches the
+      split-plat path too: GDC 3.0100 says quadplex units divided through a
+      Middle Housing Land Division "are considered a quadplex". The four-unit cap of row J is stated
       for Townhouses only.
   RTI-SW:
     section: ["4.15"]
@@ -1641,8 +1830,18 @@ zones:
       so the state minimum stands. Row A's 7,200 sq ft is a minimum SITE size
       and row B's 3,600 a minimum LOT size; both are stated for this column and
       the larger is encoded, because a development on one lot has to satisfy
-      both. Row I sends this column to Section 9.0600 for height transition,
-      which is a step-back rule rather than a ceiling and is not encoded.
+      both. Row I sends this column to Section 9.0600 for height
+      transition, and that section is now in the store and read. It does not
+      reach this building, for two independent reasons. 9.0602: "These
+      standards also do not apply to single detached dwellings and middle
+      housing", and Gresham''s own glossary at 3.0100 defines middle housing
+      as "Duplexes, Triplexes, Quadplexes, Townhouses, and Cottage Clusters"
+      -- the pod is a quadplex on one lot and townhouses on unit lots, and
+      3.0100 says a quadplex divided through a Middle Housing Land Division
+      is still a quadplex. And even where it applied, 9.0610(A)(1) caps a
+      building at 30 ft within 35 ft of the trigger lot line, which a 26 ft
+      pod clears. Recorded rather than encoded because there is nothing to
+      encode: the rule exists and cannot bind.
   NC:
     section: ["4.02"]
     cite_default:

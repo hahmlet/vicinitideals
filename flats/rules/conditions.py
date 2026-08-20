@@ -260,6 +260,21 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "hillside_or_resource_overlay",
+        "site_fact",
+        "Some part of the lot lies inside a mapped hillside-risk or resource "
+        "overlay. Gresham 7.0420(G)(1)(b) switches its rear roof height limit "
+        "OFF where it does -- 'this rear roof height limit standard does not "
+        "apply if any portion of the lot is located within the Hillside "
+        "Geological Risk Area (HGRO) or Resource Area (RA)' -- which is a "
+        "relief running the opposite way from every other overlay in this "
+        "registry, where a mapped constraint tightens rather than releases. "
+        "Nothing here cuts either boundary against a parcel, so it is assumed "
+        "unknown and the step-back binds.",
+        evidence="the jurisdiction's hillside and resource overlay boundaries, cut against the lot — neither held",
+        assume=None,
+    ),
+    ConditionDef(
         "on_transit_street",
         "site_fact",
         "The frontage is on a transit street, or is a street lot line inside a "
