@@ -61,7 +61,7 @@ or/multnomah/_unincorporated,LR7,163,41.67,partial,0,12,,land_division_parent_st
 or/multnomah/fairview,VSF,161,31.82,partial,0,11,,land_division_parent_standards;max_coverage_pct;max_height_ft;min_lot_depth_ft;min_lot_sqft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_rear_ft;setback_side_ft;setback_street_side_ft,161
 or/multnomah/wood-village,LR 12,161,78.51,partial,0,13,,land_division_parent_standards;max_coverage_pct;max_height_ft;min_lot_depth_ft;min_lot_sqft;min_lot_width_ft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_garage_entrance_ft;setback_rear_ft;setback_side_ft;setback_street_side_ft,161
 or/clackamas/lake-oswego,R-0,160,84.45,partial,0,10,,land_division_parent_standards;max_coverage_pct;max_height_ft;min_lot_sqft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_rear_ft;setback_side_ft;setback_street_side_ft,160
-or/multnomah/troutdale,GI,153,1037.1,zone_missing,0,0,,,153
+or/multnomah/troutdale,GI,153,1037.1,partial,0,3,,land_division_parent_standards;parking_min_per_unit;quadplex_allowed,153
 or/clackamas/lake-oswego,R-3,152,28.97,partial,0,10,,land_division_parent_standards;max_coverage_pct;max_height_ft;min_lot_sqft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_rear_ft;setback_side_ft;setback_street_side_ft,152
 or/multnomah/gresham,DCL,152,138.26,partial,0,3,,land_division_parent_standards;parking_min_per_unit;quadplex_allowed,152
 or/multnomah/_unincorporated,RR,150,503.95,partial,0,4,,land_division_parent_standards;max_height_ft;parking_min_per_unit;quadplex_allowed,150
@@ -70,19 +70,19 @@ or/multnomah/portland,CI1,142,507.83,partial,0,2,,land_division_parent_standards
 or/multnomah/gresham,CNTM,107,56.22,partial,0,3,,land_division_parent_standards;parking_min_per_unit;quadplex_allowed,107
 or/multnomah/gresham,LDR-SW,105,99.22,partial,0,15,,land_division_parent_standards;max_far;max_height_ft;min_density_du_per_acre;min_frontage_ft;min_lot_depth_ft;min_lot_sqft;min_lot_width_ft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_garage_entrance_ft;setback_rear_ft;setback_side_ft;setback_street_side_ft,105
 or/multnomah/fairview,R-10,95,47.7,partial,0,15,,land_division_parent_standards;max_coverage_pct;max_height_ft;max_lot_depth_ratio;min_building_separation_ft;min_density_du_per_acre;min_lot_sqft;min_lot_width_ft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_front_max_ft;setback_rear_ft;setback_side_ft;setback_street_side_ft,95
-or/multnomah/troutdale,MU-1,95,36.72,zone_missing,0,0,,,95
+or/multnomah/troutdale,MU-1,95,36.72,partial,0,3,,land_division_parent_standards;parking_min_per_unit;quadplex_allowed,95
 or/multnomah/fairview,VTH,93,7.14,partial,0,4,,land_division_parent_standards;max_height_ft;parking_min_per_unit;quadplex_allowed,93
 or/multnomah/gresham,LDR/GB,93,98.98,partial,0,13,,LDR/GB.like;land_division_parent_standards;max_height_ft;min_density_du_per_acre;min_frontage_ft;min_lot_sqft;min_lot_width_ft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_garage_entrance_ft;setback_rear_ft;setback_side_ft;setback_street_side_ft,93
 or/multnomah/portland,RMP,87,327.4,partial,0,12,,land_division_parent_standards;max_coverage_pct;max_height_ft;min_density_du_per_acre;min_landscaped_pct;min_lot_sqft;min_lot_width_ft;quadplex_allowed;setback_front_ft;setback_garage_entrance_ft;setback_rear_ft;setback_side_ft,87
 or/clackamas/lake-oswego,NC/R-0,84,18.4,zone_missing,0,0,,,84
 or/multnomah/wood-village,MR 2,83,87.24,partial,0,12,,land_division_parent_standards;max_coverage_pct;max_height_ft;min_lot_depth_ft;min_lot_sqft;min_lot_width_ft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_garage_entrance_ft;setback_rear_ft;setback_side_ft,83
-or/multnomah/troutdale,OS,82,548.66,zone_missing,0,0,,,82
+or/multnomah/troutdale,OS,82,548.66,partial,0,3,,land_division_parent_standards;parking_min_per_unit;quadplex_allowed,82
 or/multnomah/gresham,HI,81,298.99,partial,0,3,,land_division_parent_standards;parking_min_per_unit;quadplex_allowed,81
 or/multnomah/gresham,DRL-1,78,21.15,partial,0,16,,land_division_parent_standards;max_far;max_height_ft;min_density_du_per_acre;min_frontage_ft;min_lot_depth_ft;min_lot_sqft;min_lot_width_ft;orientation_constraint;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_garage_entrance_ft;setback_rear_ft;setback_side_ft;setback_street_side_ft,78
 or/multnomah/gresham,HDR-PV,74,15.57,partial,0,10,,land_division_parent_standards;max_height_ft;min_density_du_per_acre;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_garage_entrance_ft;setback_rear_ft;setback_side_ft;setback_street_side_ft,74
 or/multnomah/troutdale,NSA,74,124.0,zone_missing,0,0,,,74
 or/multnomah/troutdale,MU-2,69,54.98,zone_missing,0,0,,,69
-or/multnomah/troutdale,GC,63,306.28,zone_missing,0,0,,,63
+or/multnomah/troutdale,GC,63,306.28,partial,0,3,,land_division_parent_standards;parking_min_per_unit;quadplex_allowed,63
 or/multnomah/portland,IR,60,159.37,partial,0,8,setback_rear_ft;setback_side_ft,land_division_parent_standards;max_coverage_pct;max_far;max_height_ft;min_landscaped_pct;quadplex_allowed;setback_front_ft;setback_front_max_ft,60
 or/multnomah/wood-village,MR 4,60,11.37,partial,0,12,,land_division_parent_standards;max_coverage_pct;max_height_ft;min_lot_depth_ft;min_lot_sqft;min_lot_width_ft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_garage_entrance_ft;setback_rear_ft;setback_side_ft,60
 or/multnomah/wood-village,NC,60,36.79,zone_missing,0,0,,,60
@@ -101,7 +101,7 @@ or/multnomah/gresham,CNTH,33,71.07,partial,0,3,,land_division_parent_standards;p
 or/multnomah/gresham,SC-RJ,31,27.2,partial,0,12,,land_division_parent_standards;max_height_stories;min_frontage_ft;min_lot_sqft;orientation_constraint;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_front_max_ft;setback_rear_ft;setback_side_ft;setback_street_side_ft,31
 or/multnomah/gresham,DEM,30,37.17,partial,0,3,,land_division_parent_standards;parking_min_per_unit;quadplex_allowed,30
 or/multnomah/_unincorporated,OS,28,42.32,zone_missing,0,0,,,28
-or/multnomah/troutdale,LI,27,97.02,zone_missing,0,0,,,27
+or/multnomah/troutdale,LI,27,97.02,partial,0,3,,land_division_parent_standards;parking_min_per_unit;quadplex_allowed,27
 or/multnomah/gresham,OFR,25,11.61,partial,0,13,,land_division_parent_standards;max_height_ft;min_density_du_per_acre;min_lot_depth_ft;min_lot_sqft;min_lot_width_ft;parking_min_per_unit;quadplex_allowed;setback_front_ft;setback_garage_entrance_ft;setback_rear_ft;setback_side_ft;setback_street_side_ft,25
 or/multnomah/_unincorporated,CFU,21,152.53,zone_missing,0,0,,,21
 or/multnomah/_unincorporated,MUF19,20,1221.57,zone_missing,0,0,,,20
@@ -117,7 +117,7 @@ or/multnomah/gresham,IND-SW,11,113.65,partial,0,3,,land_division_parent_standard
 or/multnomah/_unincorporated,UPAGI,8,78.55,zone_missing,0,0,,,8
 or/multnomah/fairview,VA,8,7.03,zone_missing,0,0,,,8
 or/multnomah/_unincorporated,OCI,6,3.74,zone_missing,0,0,,,6
-or/multnomah/troutdale,CC,6,12.82,zone_missing,0,0,,,6
+or/multnomah/troutdale,CC,6,12.82,partial,0,3,,land_division_parent_standards;parking_min_per_unit;quadplex_allowed,6
 or/multnomah/wood-village,O,6,15.63,zone_missing,0,0,,,6
 or/clackamas/lake-oswego,PNA,5,50.14,zone_missing,0,0,,,5
 or/multnomah/_unincorporated,EG2,5,9.71,zone_missing,0,0,,,5
@@ -133,7 +133,7 @@ or/multnomah/_unincorporated,IG2,3,2.0,zone_missing,0,0,,,3
 or/multnomah/fairview,AH,3,14.68,zone_missing,0,0,,,3
 or/multnomah/fairview,R/MH,3,35.64,partial,0,3,,land_division_parent_standards;parking_min_per_unit;quadplex_allowed,3
 or/multnomah/fairview,VO,3,1.56,zone_missing,0,0,,,3
-or/multnomah/troutdale,IP,3,38.45,zone_missing,0,0,,,3
+or/multnomah/troutdale,IP,3,38.45,partial,0,3,,land_division_parent_standards;parking_min_per_unit;quadplex_allowed,3
 or/multnomah/troutdale,MU-3,3,19.27,zone_missing,0,0,,,3
 or/multnomah/_unincorporated,CFU2,2,2.07,zone_missing,0,0,,,2
 or/multnomah/_unincorporated,LDR-5,2,16.14,zone_missing,0,0,,,2

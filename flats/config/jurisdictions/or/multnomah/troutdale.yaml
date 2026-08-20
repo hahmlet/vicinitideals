@@ -4,7 +4,20 @@ eligible: true
 notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s verification was against a
   coarser standard (one citation per row) and does not carry over. UNPORTED: orientation_constraint=''entrance_only''.
   quadfit justified this in a YAML comment with no citation; it needs its own encoding rather than invented
-  provenance.'
+  provenance.
+
+
+  NSA is read and deliberately not encoded. TDC 3.050 says Multnomah County holds zoning authority over
+  certain lots inside incorporated Troutdale that fall within the Columbia River Gorge National Scenic
+  Area, and that those lots keep their COUNTY zoning district designation under Chapters 38 and 39 of
+  the Multnomah County Code. The 74 lots the GIS labels NSA are therefore not governed by a Troutdale
+  district at all, and writing one here would invent a rule the city does not claim to make. They stay
+  in the coverage ledger as unencoded, which is the true answer, until the county Gorge chapters are in
+  this corpus.
+
+
+  The Troutdale zoning layer also reports one lot as UPAR-10, which is a Multnomah County label rather
+  than a city district and appears nowhere in the Development Code. Left alone for the same reason.'
 ingest:
   geoid: null
   juris_city_codes:
@@ -60,6 +73,83 @@ code:
     start: "DEVELOPMENT AND DESIGN STANDARDS"
     end: "CHAPTER 9"
 zones:
+  MU-1:
+    section: ["3.210", "3.220"]
+    cite_default:
+      cite: Troutdale Development Code 3.220, Land Use Table for Mixed-Use Zoning Districts (Municode, through Ord. 899)
+      url: https://library.municode.com/or/troutdale/codes/development_code?nodeId=CH3ZODI
+      retrieved: '2026-08-19'
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L573,L582,L585,L590"
+    notes: >-
+      3.220's Quadplex row reads N in MU-1 and P in MU-2 and MU-3, so the one of the three mixed-use districts that refuses this building is the one named first. Townhouse is P in all three, and the split-plat path is not read as an escape here for the reason it is not read as one anywhere in this corpus without the code saying so: 8.130 states townhouse standards, not that a quadplex divided onto four lots stops being a quadplex. The quote carries the legend -- P permitted, C conditional, N not permitted -- so the letter is readable on its own.
+  CC:
+    section: ["3.310", "3.320"]
+    cite_default:
+      cite: Troutdale Development Code 3.320, Land Use Table for Commercial Zoning Districts (Municode, through Ord. 899)
+      url: https://library.municode.com/or/troutdale/codes/development_code?nodeId=CH3ZODI
+      retrieved: '2026-08-19'
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L816,L825,L828,L831"
+    notes: >-
+      3.320's residential block is two rows: Residential facilities P, and "Other residential uses N". A quadplex is an other residential use in both commercial columns. Live-Work units are P in CC, which is a dwelling attached to a business rather than four attached townhomes on a lot. The quote carries the legend -- P permitted, C conditional, N not permitted -- so the letter is readable on its own.
+  GC:
+    section: ["3.310", "3.320"]
+    cite_default:
+      cite: Troutdale Development Code 3.320, Land Use Table for Commercial Zoning Districts (Municode, through Ord. 899)
+      url: https://library.municode.com/or/troutdale/codes/development_code?nodeId=CH3ZODI
+      retrieved: '2026-08-19'
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L816,L825,L828,L831"
+    notes: >-
+      3.320's residential block is two rows: Residential facilities P, and "Other residential uses N". General Commercial refuses Live-Work as well, so a residential facility is the only housing of any kind that reaches it. The quote carries the legend -- P permitted, C conditional, N not permitted -- so the letter is readable on its own.
+  IP:
+    section: ["3.410", "3.420"]
+    cite_default:
+      cite: Troutdale Development Code 3.420, Use Table for Industrial Zoning Districts (Municode, through Ord. 899)
+      url: https://library.municode.com/or/troutdale/codes/development_code?nodeId=CH3ZODI
+      retrieved: '2026-08-19'
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L979,L991,L996,L1000"
+    notes: >-
+      3.420 states one residential permission -- "One Caretaker unit in conjunction with an existing industrial use" -- and then "All other residential uses N" in all three industrial columns. Industrial Park refuses even the caretaker unit. The quote carries the legend -- P permitted, C conditional, N not permitted -- so the letter is readable on its own.
+  LI:
+    section: ["3.410", "3.420"]
+    cite_default:
+      cite: Troutdale Development Code 3.420, Use Table for Industrial Zoning Districts (Municode, through Ord. 899)
+      url: https://library.municode.com/or/troutdale/codes/development_code?nodeId=CH3ZODI
+      retrieved: '2026-08-19'
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L979,L991,L996,L1000"
+    notes: >-
+      3.420 permits one caretaker unit alongside an existing industrial use and reads "All other residential uses N". One unit tied to an industrial operation is not four attached townhomes, and the row that would carry them says N. The quote carries the legend -- P permitted, C conditional, N not permitted -- so the letter is readable on its own.
+  GI:
+    section: ["3.410", "3.420"]
+    cite_default:
+      cite: Troutdale Development Code 3.420, Use Table for Industrial Zoning Districts (Municode, through Ord. 899)
+      url: https://library.municode.com/or/troutdale/codes/development_code?nodeId=CH3ZODI
+      retrieved: '2026-08-19'
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L979,L991,L996,L1000"
+    notes: >-
+      3.420 permits one caretaker unit alongside an existing industrial use and reads "All other residential uses N". 153 lots, the largest unread zone in the city, and the answer is one cell. The quote carries the legend -- P permitted, C conditional, N not permitted -- so the letter is readable on its own.
+  OS:
+    section: ["3.520"]
+    cite_default:
+      cite: Troutdale Development Code 3.520, OS - Open Space (Municode, through Ord. 899)
+      url: https://library.municode.com/or/troutdale/codes/development_code?nodeId=CH3ZODI
+      retrieved: '2026-08-19'
+    quadplex_allowed:
+      value: false
+      quote: "or/multnomah/troutdale/3.zoning-districts.txt#L1271,L1276-L1285"
+    notes: >-
+      3.520 does not use a land use table at all. It states a closed list -- "The following uses and their accessory uses are permitted in the OS district" -- of nature preserves, passive recreation, restrooms and minor utilities, and a conditional list of active recreation, community services and major utilities. No dwelling of any kind appears on either. A closed list that omits housing is a refusal rather than a silence, and the district exists to apply to publicly owned parkland.
   LDR-1:
     max_density_du_per_acre:
       # 3.140.B.4: "Maximum density standards shall not apply to duplex,
