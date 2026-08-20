@@ -147,6 +147,23 @@ _C: tuple[ConditionDef, ...] = (
         "Portland Table 110-4 footnote 3 points at one; the terms are unread.",
         evidence="developer commitment plus the bonus chapter own criteria",
     ),
+    ConditionDef(
+        "farm_labor_housing",
+        "elective",
+        "The four units are being built as registered farm labor housing "
+        "rather than as market housing. Multnomah County's Exclusive Farm Use "
+        "zone is the one resource district in this corpus that names this "
+        "building's form: an accessory farm dwelling may be \"attached "
+        "multi-unit residential structures allowed by the applicable state "
+        "building code or similar types of farm labor housing\" registered "
+        "with Oregon OSHA under ORS 658.750. The price is the whole "
+        "proposition -- an existing primary farm dwelling on the tract, "
+        "occupancy limited to people principally engaged in the farm use, and "
+        "removal or conversion when the housing is no longer required -- "
+        "which is why it is an elective and not a permission. Nobody takes it "
+        "by accident.",
+        evidence="registration with Oregon OSHA under ORS 658.750, plus the county's accessory-farm-dwelling findings",
+    ),
     # --- site facts: true of the parcel, whoever wants otherwise -------
     ConditionDef(
         "corner_lot",
@@ -482,6 +499,24 @@ _C: tuple[ConditionDef, ...] = (
         "Permission for a use the zone lists as conditional rather than "
         "permitted. Only available where the code enumerates it.",
         evidence="the zone conditional use list",
+        tier=Tier.discretionary,
+    ),
+    ConditionDef(
+        "review_use",
+        "relief",
+        "Permission for a use a code lists as a REVIEW use -- a third "
+        "category between permitted and conditional that Multnomah County's "
+        "resource districts use throughout. MCC 39.4225 opens \"the following "
+        "uses may be permitted when found by the approval authority to "
+        "satisfy the applicable standards of this Chapter\", which is a "
+        "decision on criteria rather than an over-the-counter permit. Kept "
+        "separate from `conditional_use` because the code keeps them separate "
+        "-- the same article lists both, with different sections and "
+        "different findings -- and folding one into the other would report a "
+        "cost the county does not charge. Tiered discretionary, the "
+        "conservative of the two readings, until the Part 7 procedure is "
+        "stored and says which it is.",
+        evidence="the zone review-use list; MCC Chapter 39 Part 7 procedure is unread",
         tier=Tier.discretionary,
     ),
 )

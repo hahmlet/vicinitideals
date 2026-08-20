@@ -121,7 +121,7 @@ def test_written_config_loads_through_the_real_loader() -> None:
     rules = RuleSet(load_rules())
 
     assert len(rules.layers) == 19  # 18 jurisdictions + the state layer
-    assert sum(len(l.zones) for l in rules.layers.values()) == 166
+    assert sum(len(l.zones) for l in rules.layers.values()) == 170
 
 
 def test_state_parking_preemption_reaches_a_city_zone() -> None:
@@ -163,14 +163,19 @@ def test_unencoded_zone_is_surfaced_not_dropped() -> None:
     res = RuleSet(load_rules()).resolve("or/multnomah/portland", "RM1")
     assert res.verdict is not Verdict.zone_not_encoded, "33.120 is encoded"
 
-    # Four examples have been used here and every one of them got encoded out
+    # Five examples have been used here and every one of them got encoded out
     # from under the test -- Portland's CM2 by Chapter 33.130 and CI2 by
-    # 33.150, then Gresham's MDR-PV by the Pleasant Valley chapter. Churn in
-    # this line is the encoding queue working, but the example should come
-    # from the far end of it: Multnomah County's MUA20 is Multiple Use
-    # Agriculture on 251 rural lots, which is the last place a four-unit
-    # attached townhome will ever be screened.
-    res = RuleSet(load_rules()).resolve("or/multnomah/_unincorporated", "MUA20")
+    # 33.150, Gresham's MDR-PV by the Pleasant Valley chapter, and Multnomah
+    # County's MUA20 by the resource-district slice of MCC Chapter 39. Churn
+    # in this line is the encoding queue working.
+    #
+    # Troutdale's NSA should outlast the rest, because it is not a hole in the
+    # queue at all. NSA is the city's label for land inside its urban planning
+    # area that Multnomah County still administers: the standards live in
+    # another jurisdiction's chapters, so the Troutdale layer will never carry
+    # a zone block for it however far the encoding runs. 74 lots, and the
+    # honest answer for every one of them is that this layer does not decide.
+    res = RuleSet(load_rules()).resolve("or/multnomah/troutdale", "NSA")
 
     assert res.verdict is Verdict.zone_not_encoded
 

@@ -40,6 +40,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 
 from flats.rules.conditions import condition
 from flats.rules.fields import (
+    ACRE_STATED_FIELDS,
     MEASURED_ON_FIELDS,
     PER_DWELLING_FIELDS,
     PER_UNIT_AREA_FIELDS,
@@ -512,6 +513,14 @@ class Value(BaseModel):
     #: of site area" in RM1; `value` carries the density that comes to and this
     #: carries the figure a reader will find. Same bargain as `per_dwelling`.
     sqft_per_unit: float | None = None
+    #: The acreage the code prints, where it states an area that way. MCC
+    #: 39.4245(A) asks 80 acres of a new EFU parcel and prints 3,484,800
+    #: square feet nowhere. `value` carries the square footage because that is
+    #: the unit the field is defined in and the unit a parcel record answers
+    #: in; this carries the figure the ordinance shows. Same bargain as
+    #: `per_dwelling` and `sqft_per_unit`, and it exists because every rural
+    #: zone in Oregon states its lot minimum this way.
+    acres: float | None = None
     #: The quantity a rate is measured against, where the code names one this
     #: screen does not hold. A density per *net acre* is computed on the lot
     #: less rights-of-way, floodplain, steep slopes and Goal 5 resources, and
@@ -615,6 +624,19 @@ class Value(BaseModel):
             )
         if self.sqft_per_unit <= 0:
             raise ValueError(f"{self.name}: sqft_per_unit {self.sqft_per_unit} is not an area")
+        return self
+
+    @model_validator(mode="after")
+    def _acres_is_a_positive_area(self) -> Value:
+        if self.acres is None:
+            return self
+        if self.name not in ACRE_STATED_FIELDS:
+            raise ValueError(
+                f"{self.name}: 'acres' states an area in the unit rural codes "
+                f"use, and applies to {', '.join(sorted(ACRE_STATED_FIELDS))}"
+            )
+        if self.acres <= 0:
+            raise ValueError(f"{self.name}: acres {self.acres} is not an area")
         return self
 
     @model_validator(mode="after")

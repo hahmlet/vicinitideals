@@ -273,6 +273,21 @@ MEASURED_ON_FIELDS: frozenset[str] = frozenset(
 #: a requirement no code anywhere states.
 PER_DWELLING_FIELDS: frozenset[str] = frozenset({"min_lot_sqft"})
 
+#: Fields a rule file may state in ACRES rather than in square feet. Rural
+#: Oregon is written this way and only this way -- MCC 39.4245(A) asks 80 acres
+#: of a new EFU parcel, 39.4325 asks 20 of MUA-20, 39.4705(E) asks 38 of a
+#: dwelling in MUF -- and none of those articles prints a square footage
+#: anywhere. Typing the product into the file would cite a sentence for a
+#: number the sentence does not contain, which is the failure this registry
+#: exists to make impossible; the multiplication runs through
+#: :data:`SQFT_PER_ACRE` at load and the citation is checked against the
+#: acreage a reader will actually find.
+#:
+#: Restricted to areas for the same reason as `per_dwelling`: an acre is a
+#: unit of area, and a lot WIDTH stated in acres is not a rule any code
+#: writes.
+ACRE_STATED_FIELDS: frozenset[str] = frozenset({"min_lot_sqft"})
+
 #: Fields whose absence should not by itself block a zone from `verified`.
 #: Everything else, if the code speaks to it, must be encoded or explicitly
 #: recorded as not-applicable via the clause ledger.

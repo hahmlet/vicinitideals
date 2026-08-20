@@ -89,7 +89,238 @@ code:
   start: "39.4848  PURPOSE"
   end: "39.4868"
   extraction: plain
+# The four resource base zones, sliced out of the same chapter PDF as the
+# LR-7 and Rural Residential articles above. Together they carry 305 of the
+# 424 lots this layer could not answer, and all four end the same way: a
+# closed use list whose only residential entry is a single family dwelling.
+# Plain extraction for the two-column reason stated above.
+- id: "39.mua-20"
+  url: https://multco.us/file/chapter_39_-_zoning_code/download
+  title: MCC 39.4300-39.4345 Multiple Use Agriculture (MUA-20)
+  start: "39.4300- PURPOSE"
+  end: "39.4350- PURPOSE"
+  extraction: plain
+- id: "39.cfu"
+  url: https://multco.us/file/chapter_39_-_zoning_code/download
+  title: MCC 39.4050-39.4155 Commercial Forest Use (CFU)
+  start: "39.4050- PURPOSES"
+  end: "39.4200- PURPOSE"
+  extraction: plain
+- id: "39.efu"
+  url: https://multco.us/file/chapter_39_-_zoning_code/download
+  title: MCC 39.4200-39.4265 Exclusive Farm Use (EFU)
+  start: "39.4200- PURPOSE"
+  end: "39.4300- PURPOSE"
+  extraction: plain
+# The MUF heading is the one in this chapter the table of contents misprints:
+# the body sets it "39.4700  PURPOSES." with two spaces and no dash, while
+# the contents page reads "39.4700- PURPOSES". A start marker taken from the
+# contents finds nothing.
+- id: "39.muf"
+  url: https://multco.us/file/chapter_39_-_zoning_code/download
+  title: MCC 39.4700-39.4732 Multiple Use Forest (MUF)
+  start: "39.4700  PURPOSES"
+  end: "39.4735 USES"
+  extraction: plain
 zones:
+  MUA20:
+    section: ["39.mua-20"]
+    cite_default:
+      cite: MCC 39.4305 (Uses) and 39.4310(A) (Allowed Uses)
+      url: https://multco.us/file/chapter_39_-_zoning_code/download
+      retrieved: '2026-08-20'
+    quadplex_allowed:
+      # The largest single gap in this corpus -- 251 lots -- and the article
+      # closes in eight lines. 39.4305 is the closure, in the county's
+      # standard form: "no building, structure or land shall be used ...
+      # except for the uses listed in MCC 39.4310 through 39.4320". 39.4310(A)
+      # is the entry, and it is the whole of residential use in this zone:
+      # "Residential use consisting of a single family dwelling on a Lot of
+      # Record."
+      #
+      # The review uses (39.4315) and the conditional uses (39.4320) were read
+      # through. Between them: utility facilities, community service uses,
+      # temporary health-hardship dwellings, home occupations, farm stands,
+      # wireless facilities, mining, kennels, and an accessory dwelling unit
+      # attached to or inside the single family dwelling. An ADU is one unit
+      # sharing a wall with one house, which is the nearest this zone comes to
+      # the pod and is not it.
+      value: false
+      quote: "or/multnomah/_unincorporated/39.mua-20.txt#L18-L25,L30-L31"
+    notes: >-
+      Twenty-acre minimum lot, 35 feet of height, yards of 30 front / 10 side
+      / 30 street side / 30 rear, and a 50-foot minimum front lot line
+      (39.4325). None of that is encoded, because the use list settles the
+      zone before any of it is reached and a dimensional row on a refused zone
+      is a row nobody can act on. It is recorded here so the next reader knows
+      it was read rather than skipped.
+
+
+      MUA-20 is a rural zone and nearly all of it lies outside the Metro urban
+      growth boundary. A parcel inside the UGB carrying this label deserves an
+      individual look -- not because the code reads differently there, but
+      because a county zoning map inside a growth boundary is usually a
+      pending annexation.
+  CFU:
+    section: ["39.cfu"]
+    cite_default:
+      cite: MCC 39.4065 (Uses), 39.4060 (Definitions), 39.4070(B)
+      url: https://multco.us/file/chapter_39_-_zoning_code/download
+      retrieved: '2026-08-20'
+    quadplex_allowed:
+      # A forest zone, and it says so in the shape of its dwellings. 39.4065
+      # closes the list; 39.4070(B) opens the one residential entry, "the
+      # following dwellings", and names three: a Large Acreage Dwelling
+      # (39.4085), a Template Dwelling (39.4090), a Heritage Tract Dwelling
+      # (39.4095). The article's own definitions section settles all three in
+      # the same six words -- each is "a type of single family detached
+      # dwelling" -- which is why the definitions are inside the citation
+      # rather than left to the reader.
+      #
+      # Detached is the word that ends it. The pod is four units on one
+      # foundation sharing three party walls, and a zone whose every dwelling
+      # type is defined as detached has no row for it.
+      value: false
+      quote: "or/multnomah/_unincorporated/39.cfu.txt#L85-L86,L92-L93,L115-L116,L130-L137,L386"
+    notes: >-
+      The three dwelling types are gated far past the use list -- a large
+      acreage dwelling wants an 80-acre tract in one ownership, a template
+      dwelling wants a 160-acre square with a stated number of existing
+      dwellings inside it, a heritage tract dwelling wants a tract held by the
+      same family since 1974. Those are the criteria a single house has to
+      clear here, and none of them is encoded, because they cannot make a
+      detached dwelling into an attached one.
+  EFU:
+    section: ["39.efu"]
+    cite_default:
+      cite: MCC 39.4215 (Uses), 39.4225(D) (Review Uses), 39.4265(C)
+      url: https://multco.us/file/chapter_39_-_zoning_code/download
+      retrieved: '2026-08-20'
+    quadplex_allowed:
+      # The one resource district in this corpus that prints this building.
+      #
+      # The base is the ordinary reading. 39.4215 closes the list. The
+      # residential entries are all farm-attached: a farm help dwelling for a
+      # relative (39.4225(B)), a dwelling customarily provided in conjunction
+      # with a farm use (C), accessory farm dwellings (D), a heritage tract
+      # dwelling (E). Read at that level, every one of them is a house.
+      #
+      # 39.4265(C)(2)(d) is where it stops being a house. An accessory farm
+      # dwelling on a lot without the primary farm dwelling may be "limited to
+      # only attached multi-unit residential structures allowed by the
+      # applicable state building code or similar types of farm labor housing"
+      # registered with Oregon OSHA under ORS 658.750. That is the pod's form,
+      # named, in a zone with an 80-acre minimum lot.
+      #
+      # So the variant is real and it is expensive: it needs the farm, the
+      # primary dwelling on the tract, farm-worker occupancy, and removal or
+      # conversion when the housing is no longer required. `review_use`
+      # carries the county's procedure, `farm_labor_housing` carries the
+      # commitment. Neither is assumed and the base stays false, which is the
+      # right answer for an acquisition screen -- but recording the door is
+      # the difference between a zone that refuses and a zone nobody read.
+      value: false
+      quote: "or/multnomah/_unincorporated/39.efu.txt#L175-L186,L621-L633"
+      variants:
+        - value: true
+          when: [farm_labor_housing, review_use]
+          cite: MCC 39.4225(D) and 39.4265(C)(2)(d)
+          quote: "or/multnomah/_unincorporated/39.efu.txt#L628-L633,L2179-L2198"
+    max_height_ft:
+      # 39.4245(C), printed under the yard row: "Maximum Structure Height - 35
+      # feet." Paragraph (E) lets barns, silos, windmills, antennae and
+      # chimneys exceed it when they stand 30 feet off every property line.
+      # None of those is a dwelling, so no variant carries the exception --
+      # the same reading the Rural Residential zone in this layer takes of the
+      # same sentence.
+      value: 35
+      cite: MCC 39.4245(C)
+      quote: "or/multnomah/_unincorporated/39.efu.txt#L1352,L1356"
+    setback_front_ft:
+      # One printed row -- "Front Side Street Side Rear / 30 10 30 30" -- and
+      # all four columns come off it together, because a row read one column
+      # at a time is how a setback gets attributed to the wrong lot line.
+      value: 30
+      cite: MCC 39.4245(C)
+      quote: "or/multnomah/_unincorporated/39.efu.txt#L1352-L1354"
+    setback_side_ft:
+      value: 10
+      cite: MCC 39.4245(C)
+      quote: "or/multnomah/_unincorporated/39.efu.txt#L1352-L1354"
+    setback_street_side_ft:
+      value: 30
+      cite: MCC 39.4245(C)
+      quote: "or/multnomah/_unincorporated/39.efu.txt#L1352-L1354"
+    setback_rear_ft:
+      value: 30
+      cite: MCC 39.4245(C)
+      quote: "or/multnomah/_unincorporated/39.efu.txt#L1352-L1354"
+    min_frontage_ft:
+      value: 50
+      cite: MCC 39.4245(C)
+      quote: "or/multnomah/_unincorporated/39.efu.txt#L1352,L1358"
+    min_lot_sqft:
+      # 80 acres, from 39.4245(A). The file states the acreage and the loader
+      # multiplies, because 3,484,800 square feet appears in this article
+      # nowhere -- the same bargain LR-7's "5,000 square feet for each
+      # dwelling unit" strikes two zones down.
+      #
+      # The reservation is in the words "for new parcels". This is a land
+      # DIVISION floor and the county files it under "Dimensional Requirements
+      # and Development Standards", which is why it is encoded here -- but an
+      # EFU lot of record smaller than 80 acres is not thereby barred from
+      # developing, and 39.4250 states the exceptions. So this number reads
+      # RED on a 20-acre farm that could in principle host the one use this
+      # zone opens to the pod. That is a false red on a handful of the 13 lots
+      # in this layer, and it is the direction taken deliberately: the use
+      # path here needs a working farm with a primary dwelling already on the
+      # tract, and a screen that reported those lots green would be inviting
+      # somebody to underwrite farm labor housing as market housing.
+      acres: 80
+      cite: MCC 39.4245(A)
+      quote: "or/multnomah/_unincorporated/39.efu.txt#L1339-L1345"
+    notes: >-
+      The dimensions are encoded here and on none of the other three resource
+      zones, because this is the only one of the four with a use path that
+      reaches the pod at all. A zone whose use list closes needs no envelope;
+      a zone with a door needs the room behind it measured.
+
+
+      39.4240 attaches a condition of approval to every single family dwelling
+      in this zone -- the landowner records a deed document waiving any claim
+      alleging injury from farming or forest practices. It binds successors.
+      It is not a dimensional standard and nothing here holds it, but anybody
+      who reaches this zone with a real deal should know the waiver exists.
+  MUF19:
+    section: ["39.muf"]
+    cite_default:
+      cite: MCC 39.4702 (Uses), 39.4705(E), 39.4707(A), 39.4710(C)
+      url: https://multco.us/file/chapter_39_-_zoning_code/download
+      retrieved: '2026-08-20'
+    quadplex_allowed:
+      # Three doors into residential use in this zone and all three are the
+      # same door. 39.4705(E) allows "a single-family dwelling including a
+      # mobile or modular home, on a lot of 38 acres or more". 39.4707(A)
+      # allows one in conjunction with a primary forest use on ten acres or
+      # more. 39.4710(C) allows one NOT in conjunction with a primary use, as
+      # a conditional use, on land found incapable of sustaining a farm or
+      # forest use. Different acreages, different procedures, one building
+      # type.
+      #
+      # 39.4702 is the closure that makes the absence readable. Nothing in the
+      # article is attached, multi-unit or middle housing, and 39.4732 -- the
+      # residential development standards these dwellings answer to -- asks
+      # for a minimum floor area of 600 square feet and a foundation, which
+      # are a house's standards.
+      value: false
+      quote: "or/multnomah/_unincorporated/39.muf.txt#L22-L28,L54-L58,L69-L72,L231-L235"
+    notes: >-
+      39.4732 is worth a line even though it changes nothing here. It sites
+      the dwelling for fire protection -- as close to an existing road as
+      practicable, clustered where more than one is allowed, outside a big
+      game habitat area unless ODFW certifies the impact. Those are siting
+      rules a geometry layer could hold one day; they sit on a zone that
+      refuses the building, so today they are a note.
   R10:
     cite_default:
       cite: Portland Zoning Code 33.110 Tables 110-2/110-4/110-5/110-7 (Portland-administered pockets);

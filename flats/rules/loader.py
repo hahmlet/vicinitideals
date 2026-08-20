@@ -102,13 +102,14 @@ def _parse_values(
             continue
 
         if isinstance(node, dict) and (
-            {"value", "exempt", "per_dwelling", "sqft_per_unit"} & set(node)
+            {"value", "exempt", "per_dwelling", "sqft_per_unit", "acres"} & set(node)
         ):
             body = dict(node)
             value = body.pop("value", None)
             exempt = bool(body.pop("exempt", False))
             per_dwelling = body.pop("per_dwelling", None)
             sqft_per_unit = body.pop("sqft_per_unit", None)
+            acres = body.pop("acres", None)
             measured_on, measured_on_cite, measured_on_quote = _parse_measured_on(
                 body.pop("measured_on", None), f"{where}.{key}", problems
             )
@@ -160,6 +161,22 @@ def _parse_values(
                 # "1 unit per 2,500 sq. ft. of site area" is 17.424 units per
                 # acre, and 17.424 is in no ordinance anywhere.
                 value = _as_density(float(sqft_per_unit))
+            if acres is not None:
+                if value is not None or exempt:
+                    problems.append(
+                        f"{where}.{key}: a value states an area in square feet "
+                        f"or in acres, not both"
+                    )
+                    continue
+                if not isinstance(acres, (int, float)) or isinstance(acres, bool):
+                    problems.append(f"{where}.{key}: 'acres' expects a number")
+                    continue
+                if acres <= 0:
+                    problems.append(f"{where}.{key}: acres {acres} is not an area")
+                    continue
+                # "80 acres in the EFU base zone" is 3,484,800 square feet, and
+                # 3,484,800 is in no ordinance anywhere.
+                value = _in_acres(float(acres))
             if not exempt and value is None:
                 problems.append(f"{where}.{key}: expected a 'value' or 'exempt: true'")
                 continue
@@ -170,6 +187,7 @@ def _parse_values(
             exempt = False
             per_dwelling = None
             sqft_per_unit = None
+            acres = None
             measured_on = measured_on_cite = measured_on_quote = None
             unless = ()
             raw_variants = ()
@@ -207,6 +225,7 @@ def _parse_values(
                 exempt=exempt,
                 per_dwelling=None if per_dwelling is None else float(per_dwelling),
                 sqft_per_unit=None if sqft_per_unit is None else float(sqft_per_unit),
+                acres=None if acres is None else float(acres),
                 measured_on=None if measured_on is None else str(measured_on),
                 measured_on_cite=measured_on_cite,
                 measured_on_quote=measured_on_quote,
@@ -238,6 +257,18 @@ def _per_dwelling(each: float) -> float:
     20000.0 back out invites somebody to wonder which of the two the code said.
     """
     total = each * DWELLINGS
+    return int(total) if float(total).is_integer() else total
+
+
+def _in_acres(size: float) -> float:
+    """Acres to square feet — the unit rural Oregon writes its lot sizes in.
+
+    MCC 39.4245(A) asks 80 acres of a new EFU parcel; a parcel record answers
+    in square feet, and 3,484,800 appears in no ordinance. The product is made
+    here so that the file keeps the figure a reader can find, and kept whole
+    where it is whole, for the reason `_per_dwelling` gives.
+    """
+    total = round(size * SQFT_PER_ACRE, 3)
     return int(total) if float(total).is_integer() else total
 
 

@@ -189,7 +189,9 @@ def _quoted_parts(layer: Layer) -> Iterable[tuple[str, str, str | None, object]]
             # rather than the one arithmetic made of it. MCC 39.4862(C) states
             # 5,000 square feet for each dwelling unit and prints 20,000
             # nowhere; Portland's Table 120-4 asks one unit per 2,500 sq ft of
-            # site area and prints 17.424 units per acre nowhere.
+            # site area and prints 17.424 units per acre nowhere; MCC
+            # 39.4245(A) asks 80 acres and prints 3,484,800 square feet
+            # nowhere.
             yield (
                 zone_code,
                 name,
@@ -198,6 +200,8 @@ def _quoted_parts(layer: Layer) -> Iterable[tuple[str, str, str | None, object]]
                 if value.per_dwelling is not None
                 else value.sqft_per_unit
                 if value.sqft_per_unit is not None
+                else value.acres
+                if getattr(value, "acres", None) is not None
                 else getattr(value, "value", None),
             )
             if value.measured_on_quote:

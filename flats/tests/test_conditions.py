@@ -54,7 +54,16 @@ def test_relief_is_a_condition_like_any_other() -> None:
     # Filing for an adjustment is a choice with a cost, exactly like electing
     # affordability. Modelling it as a special case inside the scoring stage is
     # what produced a traffic light that called a one-foot miss RED.
-    assert {c.name for c in reliefs()} == {"adjustment", "variance", "conditional_use"}
+    assert {c.name for c in reliefs()} == {
+        "adjustment",
+        "variance",
+        "conditional_use",
+        # Multnomah County's resource districts run a third category between
+        # permitted and conditional, with its own sections and its own
+        # findings. Folding it into `conditional_use` would report a cost the
+        # county does not charge.
+        "review_use",
+    }
 
 
 # --- what a definition may not claim -----------------------------------
