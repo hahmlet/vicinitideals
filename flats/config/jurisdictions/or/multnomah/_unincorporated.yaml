@@ -94,6 +94,22 @@ code:
 # 424 lots this layer could not answer, and all four end the same way: a
 # closed use list whose only residential entry is a single family dwelling.
 # Plain extraction for the two-column reason stated above.
+# The two urban low-density articles either side of LR-7. Both are sliced from
+# the same chapter PDF, both set their purpose heading with a double space and
+# no dash the way MUF does, and between them they answer 19 of the lots this
+# layer could not.
+- id: "39.lr-5"
+  url: https://multco.us/file/chapter_39_-_zoning_code/download
+  title: MCC 39.4818-39.4830 Urban Low Density Residential - 5 (LR-5)
+  start: "39.4818  PURPOSE"
+  end: "39.4848  PURPOSE"
+  extraction: plain
+- id: "39.lr-10"
+  url: https://multco.us/file/chapter_39_-_zoning_code/download
+  title: MCC 39.4868-39.4878 Urban Low Density Residential - 10 (LR-10)
+  start: "39.4868  PURPOSE"
+  end: "39.4900 AREA AFFECTED"
+  extraction: plain
 - id: "39.mua-20"
   url: https://multco.us/file/chapter_39_-_zoning_code/download
   title: MCC 39.4300-39.4345 Multiple Use Agriculture (MUA-20)
@@ -123,6 +139,192 @@ code:
   end: "39.4735 USES"
   extraction: plain
 zones:
+  LR5:
+    section: ["39.lr-5"]
+    cite_default:
+      cite: MCC 39.4820 (Uses), 39.4826(C) (Conditional Uses), 39.4828 (Multiplex
+        Locational Requirements), 39.4830 (Dimensional Requirements)
+      url: https://multco.us/file/chapter_39_-_zoning_code/download
+      retrieved: '2026-08-20'
+    quadplex_allowed:
+      # LR-7's twin, and encoded the way LR-7 should have been. 39.4826(C)
+      # lists "a multiplex dwelling structure under the provisions of Part 7 of
+      # this Chapter" as a conditional use, so the base is false and a hearing
+      # carries the true -- an LR-5 lot is not RED, it is a lot whose pod needs
+      # an application.
+      #
+      # The permit alone is not enough. 39.4828(A) is a locational rule with
+      # teeth: an approved multiplex "may be located only on" a corner lot, a
+      # flag lot, a lot with sole access from an approved accessway, or a lot
+      # on a street created under the land division chapters with fewer than 12
+      # multiplex units within 250 feet. Two of those four are site facts this
+      # system registers, so they are the two variants; the other two are not
+      # held by any layer and are recorded in the notes rather than assumed.
+      #
+      # Both registered facts default to false, which means a batch screen
+      # returns the refusal until the geometry layer speaks. That is the
+      # correct direction here -- the county wrote this rule to keep multiplex
+      # buildings off ordinary interior lots, and an encoding that ignored it
+      # would open every lot in the zone.
+      value: false
+      quote: "or/multnomah/_unincorporated/39.lr-5.txt#L13-L19,L259-L270"
+      variants:
+        - value: true
+          when: [conditional_use, corner_lot]
+          cite: MCC 39.4826(C) and 39.4828(A)(1)
+          quote: "or/multnomah/_unincorporated/39.lr-5.txt#L259-L261,L283-L287"
+        - value: true
+          when: [conditional_use, flag_lot]
+          cite: MCC 39.4826(C) and 39.4828(A)(2)
+          quote: "or/multnomah/_unincorporated/39.lr-5.txt#L259-L261,L283-L287"
+    min_lot_sqft:
+      # 39.4830(C): 4,500 square feet for EACH dwelling unit in a multiplex
+      # dwelling structure, so 18,000 for the pod. Stated per dwelling because
+      # that is what the sentence says -- the same shape as LR-7's 5,000, and
+      # the product appears in the article nowhere.
+      per_dwelling: 4500
+      cite: MCC 39.4830(C)
+      quote: "or/multnomah/_unincorporated/39.lr-5.txt#L312-L314"
+    max_height_ft:
+      # 39.4830(H): "Maximum Structure Height - 35 feet", and then exception
+      # (4), which is the one height rule in this corpus a 26 ft pod actually
+      # fails: 25 feet for "a single family, duplex or multiplex dwelling on a
+      # flag lot or a lot having sole access from an accessway, private drive
+      # or easement".
+      #
+      # Read that against the use rule above and the zone says something
+      # sharper than either sentence alone. A multiplex may sit on a corner lot
+      # or a flag lot; on the flag lot it may be 25 feet tall; the pod is 26.
+      # So one of the two doors this zone opens is shut by its own height
+      # exception, and the arithmetic is what shuts it rather than an
+      # assumption.
+      #
+      # The exception restores 35 feet where the neighbours are far enough off
+      # and the upper windows do not face them. That is a relaxation turning on
+      # abutting structures and window placement, neither of which is a fact
+      # about this lot, and it is not encoded.
+      value: 35
+      cite: MCC 39.4830(H)
+      quote: "or/multnomah/_unincorporated/39.lr-5.txt#L325,L329"
+      variants:
+        - value: 25
+          when: [flag_lot]
+          cite: MCC 39.4830(H), exception (4)
+          quote: "or/multnomah/_unincorporated/39.lr-5.txt#L348-L352"
+    setback_front_ft:
+      # One printed row -- "Front Side Street Side Rear / 20 5 10 15" -- and
+      # all four columns come off it together.
+      value: 20
+      cite: MCC 39.4830(H)
+      quote: "or/multnomah/_unincorporated/39.lr-5.txt#L325-L327"
+    setback_side_ft:
+      value: 5
+      cite: MCC 39.4830(H)
+      quote: "or/multnomah/_unincorporated/39.lr-5.txt#L325-L327"
+    setback_street_side_ft:
+      value: 10
+      cite: MCC 39.4830(H)
+      quote: "or/multnomah/_unincorporated/39.lr-5.txt#L325-L327"
+    setback_rear_ft:
+      value: 15
+      cite: MCC 39.4830(H)
+      quote: "or/multnomah/_unincorporated/39.lr-5.txt#L325-L327"
+    max_coverage_pct:
+      value: 50
+      cite: MCC 39.4830(G)
+      quote: "or/multnomah/_unincorporated/39.lr-5.txt#L323-L324"
+    min_lot_width_ft:
+      # 45 for an interior lot and 50 for a corner lot, and the pod's only
+      # unconditional door into this zone is the corner lot -- so the variant
+      # is the number that will nearly always bind, and the base is the one
+      # that almost never can.
+      value: 45
+      cite: MCC 39.4830(F)
+      quote: "or/multnomah/_unincorporated/39.lr-5.txt#L320-L322"
+      variants:
+        - value: 50
+          when: [corner_lot]
+          cite: MCC 39.4830(F)
+          quote: "or/multnomah/_unincorporated/39.lr-5.txt#L320-L322"
+    min_frontage_ft:
+      value: 20
+      cite: MCC 39.4830(E)
+      quote: "or/multnomah/_unincorporated/39.lr-5.txt#L318-L319"
+    notes: >-
+      Two of the four locational paths in 39.4828(A) are not encoded because
+      nothing here can see them: "a lot having sole access from an accessway
+      approved under MCC 39.9000 through 39.9700", and a lot on a public street
+      created under the same chapters where "not more than 12 multiplex
+      dwelling units having access from the same public street are located
+      within 250 feet of each other". The first needs a private-access layer
+      nobody holds; the second needs a count of existing multiplex units within
+      250 feet, which is a survey of what has already been built. A lot on
+      either path screens as refused here and should not be. That is the
+      direction this file errs in, stated where the next person to hold the
+      data will find it.
+
+
+      39.4828(B) caps a multiplex approved this way at six dwelling units. The
+      pod is four and clears it, and the number is recorded because a cap that
+      binds nothing today is exactly the sort of sentence a larger catalog
+      entry would walk into.
+
+
+      THE PREEMPTION QUESTION, unresolved and shared with LR-7 two zones down.
+      That zone carries quadplex_allowed: true on the HB 2001 middle-housing
+      mandate rather than on the county code, which lists a multiplex as a
+      conditional use there exactly as it does here. This file takes the
+      opposite reading -- what the stored document says -- because 660-046-0220
+      governs "Large Cities" by its own terms and this layer is unincorporated
+      county, and because inventing a state override per zone is how the same
+      statute ends up meaning two things inside one layer. If ORS 197A.420 does
+      reach unincorporated county, it belongs on the state layer as a
+      preemption, where it will reach LR-5, LR-7 and LR-10 together. Fetch the
+      statute before signing anything in any of the three.
+  LR10:
+    section: ["39.lr-10"]
+    cite_default:
+      cite: MCC 39.4870 (Uses), 39.4872(A) (Primary Uses), 39.4876 (Conditional Uses)
+      url: https://multco.us/file/chapter_39_-_zoning_code/download
+      retrieved: '2026-08-20'
+    quadplex_allowed:
+      # The same article shape as LR-5 with the multiplex line taken out.
+      # 39.4870 closes the list, 39.4872(A) is the primary use -- "single
+      # family detached dwelling" -- and 39.4876 is the conditional list, which
+      # runs to community service uses, the generic Part 7 conditional uses,
+      # farm sales and home occupations. Where LR-5 prints "(C) A multiplex
+      # dwelling structure", this zone prints nothing.
+      #
+      # The ceiling in LR-10 is two units, and it is reached twice under
+      # prescribed conditions rather than as a primary use: 39.4874(B) allows a
+      # two-unit dwelling as a transitional use within 100 feet of a commercial
+      # or industrial zone, and 39.4874(E) allows one on a corner lot outside a
+      # Developed Neighborhood. Neither reaches four.
+      value: false
+      quote: "or/multnomah/_unincorporated/39.lr-10.txt#L13-L19,L22,L242-L256"
+    notes: >-
+      Minimum lot size 10,000 square feet for a single family detached dwelling
+      and 12,000 for a two-unit dwelling; front lot line 30 feet, lot width 70,
+      coverage 35 percent, yards 30 front / 10 side / 10 street side / 20 rear,
+      height 35 feet. None of it is encoded, because the use list settles the
+      zone first and a dimensional row on a refused zone is a row nobody can
+      act on. It is recorded so the next reader knows it was read.
+
+
+      39.4876(B) admits "Conditional Uses under the provisions of Part 7 of
+      this Chapter" without listing them, and Part 7 is not a stored document.
+      That reference is the one soft spot in this refusal. It is read as the
+      county's general conditional-use chapter -- schools, churches, utilities,
+      the uses a residential zone hosts rather than the housing types it
+      permits -- on the evidence that every article in Part 4 states its own
+      housing types explicitly and LR-5 states a multiplex in exactly this
+      position. A reader who wants the refusal airtight should fetch Part 7.
+
+
+      The preemption question stated at length under LR-5 applies here
+      identically: LR-7 reads true on an unstored statute and these two read
+      false on their own text. If ORS 197A.420 reaches unincorporated county it
+      belongs on the state layer, not in three zone blocks disagreeing.
   MUA20:
     section: ["39.mua-20"]
     cite_default:
