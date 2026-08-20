@@ -37,6 +37,7 @@ from flats.encode.crossrefs import (
     BINDING_WINDOW,
     Dangling,
     _doc_ids,
+    _headings,
     dangling,
     render,
     state_law,
@@ -52,6 +53,7 @@ GRESHAM = "or/multnomah/gresham"
 TUALATIN = "or/clackamas/tualatin"
 WILSONVILLE = "or/clackamas/wilsonville"
 OREGON_CITY = "or/clackamas/oregon-city"
+MILWAUKIE = "or/clackamas/milwaukie"
 
 
 @pytest.fixture(scope="module")
@@ -174,6 +176,36 @@ def test_a_whole_title_answers_for_every_section_inside_it(
     """
     assert "17.29.030" not in {d.ref for d in dangling(layers[OREGON_CITY])}
     assert "4.137" not in {d.ref for d in dangling(layers[WILSONVILLE])}
+
+
+def test_a_section_symbol_is_part_of_the_heading(
+    layers: dict[str, Layer]
+) -> None:
+    """Four jurisdictions print every heading as "SECTION-SIGN 19.302.4.", and
+    reading past the symbol is not optional.
+
+    Milwaukie topped the first ledger with 123 binding hits, and eight of its
+    twenty-three references were sections printed as headings in the very
+    document doing the referencing. A check whose loudest answer is its own
+    blind spot teaches a reader to discount it.
+    """
+    refs = {d.ref for d in dangling(layers[MILWAUKIE])}
+
+    for own in ("19.301.2", "19.301.5", "19.302.2", "19.302.4", "19.302.5"):
+        assert own not in refs, own
+    # And the ones that really are absent survive: Milwaukie holds 19.200 and
+    # 19.300, not the 19.500 development-standards chapter.
+    assert "19.505.1" in refs
+    assert "19.501.3" in refs
+
+
+def test_only_the_section_symbol_earns_that(layers: dict[str, Layer]) -> None:
+    """Gresham stamps "[3.0100-7]" at the foot of 451 pages, which is a page
+    number and not a section. Widening the marker set to "whatever punctuation
+    starts the line" would have swallowed it, so the symbol is admitted by
+    name."""
+    text = "§ 19.302.4. Development Standards.\n     [19.400-7]\n  19.302.9 x\n"
+    assert _headings(text, {"19"}) == {"19.302.4", "19.302.9"}
 
 
 def test_a_filename_may_claim_more_than_one_chapter() -> None:

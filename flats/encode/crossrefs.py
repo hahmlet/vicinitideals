@@ -102,8 +102,16 @@ _STATE = re.compile(r"\b(?:ORS|OAR)\s+(?P<num>[\d][\d.\-]*)")
 #: prints "TDC 40.300. Development Standards." as the section's own title, and
 #: reading only line-initial digits would report a city's own chapters as
 #: unfetched.
+#:
+#: So is a section symbol, and missing it is worse than missing an
+#: abbreviation. Four jurisdictions print every heading in the form
+#: "SECTION-SIGN 19.302.4. Development Standards." — 837 lines across
+#: Wilsonville, unincorporated Multnomah, Lake Oswego and Milwaukie — and
+#: without it a city reports its own fetched chapters as missing. Milwaukie led
+#: the first ledger with 123 binding hits on sections printed in the document
+#: the references were read from.
 _HEADING = re.compile(
-    r"^\s*(?:(?:Section|Chapter)\s+|[A-Z]{2,5}\s+)?"
+    r"^\s*(?:§\s*)?(?:(?:Section|Chapter)\s+|[A-Z]{2,5}\s+)?"
     r"(?P<num>\d[\d.\-]*\d(?:[A-Z](?![A-Za-z]))?|\d(?:[A-Z](?![A-Za-z]))?)\b"
 )
 

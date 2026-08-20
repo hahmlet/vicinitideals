@@ -1,38 +1,26 @@
 layer,ref,mentions,binding,sources,sample
 or/clackamas/tualatin,36.410,18,15,40-41.residential.txt,ject to TDC 36.410
 or/clackamas/milwaukie,19.505.1,17,14,19.300.base-zones.txt,Single detached dwelling                                                                                      P                                                 
-or/clackamas/milwaukie,19.302.5,18,13,19.300.base-zones.txt,Multi-unit housing                                                                                            P                                                 
-or/clackamas/milwaukie,19.302.4,17,11,19.300.base-zones.txt,§ 19.302.4. Development Standards.
-or/clackamas/lake-oswego,50.04.001.1,13,11,50.04.dimensional.txt,§ 50.04.001.1.b
 or/clackamas/milwaukie,19.504.6,16,10,19.300.base-zones.txt,Subsection 19.504.6 Flag Lot and Back Lot Design and Development Standards
 or/clackamas/gladstone,17.62.070,10,10,17.10.r-7.2.txt 17.12.r-5.txt,Setbacks for manufactured homes in a mobile home park are subject to the standards in GMC Section 17.62.070(4).
 or/clackamas/west-linn,41.010,10,10,15.r-3.txt 08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 16.r-2.1.txt,Except for steeply sloped lots where the provisions of CDC 41.010 shall apply
 or/clackamas/west-linn,41,18,9,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"Except for steeply sloped lots, in which case the provisions of Chapter 41 CDC shall apply"
-or/clackamas/milwaukie,19.301.5,17,9,19.300.base-zones.txt,"In the moderate density residential zone, the development standards in Table 19.301.4 apply. Notes and/or cross references to other applicable code sections are"
-or/clackamas/lake-oswego,50.04.001.2,16,9,50.04.dimensional.txt,§ 50.04.001.2.b
 or/clackamas/milwaukie,19.505.4,13,9,19.300.base-zones.txt 19.200.definitions.txt,"means an individual dwelling unit that is part of a cottage cluster, per Subsection 19.505.4."
 or/multnomah/gresham,10.1700,34,8,4.1400.pleasant-valley.txt 4.1500.springwater.txt 4.1100.downtown.txt 4.0100.residential.txt 4.0400.corridor.txt 4.1200.civic-neighborhood.txt 4.0200.commercial.txt 4.0300.industrial.txt,6.                                    Affordable housing development is subject to the provisions in Section                                       10.1700.
 or/clackamas/west-linn,66,19,8,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt 02.definitions.txt,"Type I and II lands shall not be counted toward lot area when determining allowable floor area ratio, except that a minimum floor area ratio of 0.30 shall be al"
 or/multnomah/wood-village,300,14,8,230.200.txt 235.200.txt 240.200.txt 250.200.txt 260.200.txt 210.310.txt 210.320.txt 220.310.txt 220.320.txt,Housing types are flexible but limited in the light residential zones in order to maintain and enhance the overall character of less dense neighborhoods compare
 or/clackamas/milwaukie,19.505.5,13,8,19.300.base-zones.txt,Townhouse                                                                                                     P                                                 
 or/clackamas/happy-valley,16.42.080,11,8,16.22.residential.txt,Shared outdoor recreation areas                                                                                400 sq. ft./unit provided in accordance with Sect
-or/clackamas/happy-valley,16.22.040,9,7,16.22.residential.txt,§ 16.22.040. Medium density single-family residential zones.
 or/clackamas/milwaukie,19.504.5,8,7,19.300.base-zones.txt,Subsection 19.504.5 Minimum Vegetation
-or/clackamas/happy-valley,16.22.030,11,6,16.22.residential.txt,§ 16.22.030. Low density residential zones.
-or/clackamas/lake-oswego,50.10.003.2,9,6,50.04.dimensional.txt,Maximum base height across the site shall be established by a flat plane measured at 28 ft. (R-7.5 zone) or 30 ft. (R-10 zone) above the highest point of the na
 or/multnomah/gresham,7.0512,7,6,4.0400.corridor.txt,(Sections                                7.0512.A.2                                     7.0512.A.2                                     Section 7.0512.A.2       
 or/clackamas/milwaukie,19.501.3,6,6,19.300.base-zones.txt,Subsection 19.501.3 Building Height and Side Yard Height Plane Exceptions
 or/multnomah/gresham,9.0851,22,5,4.1400.pleasant-valley.txt 4.1500.springwater.txt 4.0300.industrial.txt 4.0400.corridor.txt,G. Minimum Bicycle Parking Required                                                         See Section 9.0851                                            See Se
 or/clackamas/milwaukie,19.501.4,14,5,19.300.base-zones.txt,"Subsection 19.501.4 Density Exceptions For Cottage Clusters and Townhouse Density Exceptions, see 19.501.4"
-or/clackamas/happy-valley,16.22.020,11,5,16.22.residential.txt,§ 16.22.020. Very low density residential zones.
 or/clackamas/happy-valley,16.63.020,9,5,16.22.residential.txt 16.12.definitions.txt,"The ratio of the total amount of enclosed gross floor area within a structure to the amount of buildable acreage pursuant to Section 16.63.020(F), Density Calcu"
 or/clackamas/west-linn,75,9,5,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"5. Chapter 75 CDC, Variance. (Ord. 1745 § 1 (Exh. A), 2023)"
 or/multnomah/fairview,19.480,6,5,19.135.txt 19.30.txt 19.65.txt 19.70.txt 19.80.txt 19.85.txt,a. Uses similar to those listed above                                                                                                                           
-or/clackamas/milwaukie,19.301.2,5,5,19.300.base-zones.txt,§ 19.301.2. Allowed Uses in Moderate Density Residential Zones.
-or/clackamas/milwaukie,19.302.2,5,5,19.300.base-zones.txt,§ 19.302.2. Allowed Uses in the High Density Residential Zone.
 or/multnomah/troutdale,6.300,5,5,3.zoning-districts.txt,B.     Uses that require conditional use approval in accordance with Section 6.300 of this Code are
 or/clackamas/west-linn,34,18,4,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"Accessory uses are allowed in this zone as provided by Chapter 34 CDC. (Ord. 1745 § 1 (Exh. A), 2023)"
-or/clackamas/lake-oswego,50.03.003.1,11,4,50.04.dimensional.txt 50.03.002.use-table.txt,§ 50.03.003.1.e
 or/clackamas/gladstone,17.48,6,4,17.10.r-7.2.txt 17.12.r-5.txt,(A) One off-street parking space in addition to the off-street parking space required by GMC Chapter 17.48 (Off-Street Parking and Loading) for the primary dwel
 or/clackamas/happy-valley,16.72,5,4,16.12.definitions.txt,"A use that physically left the land it was on, a permitted use that ceased, or a use terminated at the end of a lease or contract. See Chapter 16.72, Nonconform"
 or/clackamas/milwaukie,19.505.7,5,4,19.300.base-zones.txt,Mixed use                                                                                                     P                                                 
@@ -42,7 +30,6 @@ or/multnomah/fairview,19.245,11,3,19.65.txt 19.70.txt 19.85.txt 19.13.definition
 or/clackamas/_unincorporated,845,10,3,zdo.315.txt,"The development of a triplex, quadplex, townhouse, or cottage cluster is subject to Section 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters."
 or/multnomah/gresham,10.0420,8,3,4.1100.downtown.txt 4.1200.civic-neighborhood.txt 4.1400.pleasant-valley.txt 4.1500.springwater.txt,•    Conversion of a hotel or motel to an emergency shelter or aﬀordable housing under Section 10.0420
 or/clackamas/happy-valley,16.44.050,7,3,16.22.residential.txt,Accessory dwelling units complying with Section 16.44.050
-or/clackamas/lake-oswego,50.04.001.3,7,3,50.04.dimensional.txt,§ 50.04.001.3.b
 or/clackamas/_unincorporated,1105,6,3,zdo.1012.txt zdo.315.txt,"Middle housing dwelling units; however, middle housing land divisions are permitted pursuant to Section 1105, Subdivisions, Partitions, Replats, Middle Housing "
 or/clackamas/milwaukie,19.505.3,6,3,19.300.base-zones.txt,Multi-unit housing                                                                                            P                                                 
 or/multnomah/wood-village,640,6,3,240.200.txt 230.200.txt 235.200.txt 250.200.txt 260.200.txt,C. Prohibited Uses. Uses shown in Table 230-1 with the letter “N” are prohibited in the zone. Legally established uses and development which existed at the time
@@ -54,7 +41,6 @@ or/multnomah/_unincorporated,004,4,3,39.rural-residential.txt 39.mua-20.txt 39.o
 or/multnomah/portland,33.251,4,3,33.120.txt 33.110.txt 33.266.txt,(See Chapter 33.251)                                                               Yes                                  Yes                                   Ye
 or/multnomah/portland,33.236,3,3,33.110.txt 33.120.txt 33.140.txt,(See Chapter 33.236)                                                               Yes                                  Yes                                   Ye
 or/multnomah/_unincorporated,39.8860,12,2,39.cfu.txt 39.efu.txt 39.mua-20.txt 39.oci.txt 39.or.txt 39.rural-residential.txt,(5) Compliance with MCC 39.8860 is
-or/clackamas/lake-oswego,50.04.003,11,2,50.04.dimensional.txt,"When subdivisions are proposed in the R-W and R-3 zones or multi-family development is proposed in the R-3 zone, the number of lots or dwelling units required s"
 or/clackamas/west-linn,43,11,2,02.definitions.txt 08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"Incombustible material. Flame-resistant material as defined in the Uniform Building Code, Chapter 43, Fire-Resistive Standards."
 or/clackamas/west-linn,60.090,10,2,02.definitions.txt 08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"2. Transportation facilities (Type II) are those which are not designated in the adopted TSP or part of an approved, active development order. Type II transport"
 or/multnomah/gresham,7.0112,10,2,4.1400.pleasant-valley.txt 4.0400.corridor.txt 4.1500.springwater.txt 4.0100.residential.txt 7.0400.middle-housing-design.txt,Residential Design Standards. The Corridor Design District standards in Section 7.0112          shall apply to new
@@ -68,7 +54,6 @@ or/clackamas/_unincorporated,1204,5,2,zdo.1012.txt zdo.315.txt zdo.202.definitio
 or/clackamas/rivergrove,5.080,5,2,rldo.composite.txt,"March 2, 1998            – Section 5.080"
 or/clackamas/gladstone,17.70,4,2,17.10.r-7.2.txt 17.12.r-5.txt,"In an R-7.2 zoning district, the following uses and their accessory uses are allowed subject to GMC Chapter 17.70 (Conditional Uses):"
 or/clackamas/happy-valley,16.61,4,2,16.22.residential.txt 16.12.definitions.txt,An action or decision that requires substantial discretion or judgment in applying the standards or criteria of this Code to the facts of a development proposal
-or/clackamas/milwaukie,19.302.3,4,2,19.300.base-zones.txt,Office: Production-related office and Professional and Administrative office                                  P                                                 
 or/clackamas/tualatin,35,4,2,31.definitions.txt 40-41.residential.txt,"Nonconforming Situations, Development, or Lots. See TDC Chapter 35 (Nonconforming Situations)."
 or/clackamas/gladstone,17.38,3,2,17.06.definitions.txt 17.10.r-7.2.txt 17.12.r-5.txt,“Residential planned unit development” means a residential (R) planned unit development as allowed under GMC Chapter 17.38 (Planned Unit Development) and is at 
 or/clackamas/milwaukie,19.501.1,3,2,19.300.base-zones.txt 19.200.definitions.txt,"Regardless of the density calculation described above, any legal lot that meets the standards of Subsection 19.501.1 is allowed at least one dwelling unit."
@@ -83,7 +68,6 @@ or/clackamas/milwaukie,19.910.3,2,2,19.300.base-zones.txt,Manufactured dwelling 
 or/clackamas/tualatin,34.400,2,2,40-41.residential.txt,Retirement Housing Facility C Subject to TDC 34.400
 or/clackamas/west-linn,25.070,2,2,11.r-10.txt 13.r-5.txt,Except as specified in CDC 25.070(C)(1) through (4) for the Willamette Historic District.
 or/multnomah/_unincorporated,33.236,2,2,33.110.txt 33.140.txt,(See Chapter 33.236)                                                               Yes                                  Yes                                   Ye
-or/multnomah/_unincorporated,39.4826,2,2,39.lr-5.txt,under MCC 39.4826(C) may be located only on
 or/multnomah/fairview,19.170,2,2,19.120.txt 19.125.txt,H. Signs – see Chapter 19.170 FMC.
 or/multnomah/fairview,19.200,2,2,19.120.txt 19.125.txt,F. Family day care providers and residential homes – see Chapter 19.200 FMC.
 or/multnomah/fairview,19.490.200,2,2,19.30.txt 19.65.txt,"1. Permitted Uses. Manufactured homes, prefabricated homes, manufactured home park manager’s office, home occupations, and accessory structures which are necess"
@@ -101,10 +85,8 @@ or/multnomah/fairview,19.162,8,1,19.70.txt 19.80.txt 19.30.txt 19.65.txt 19.85.t
 or/multnomah/gresham,7.0100,8,1,4.0400.corridor.txt 4.1100.downtown.txt 4.1200.civic-neighborhood.txt 4.1400.pleasant-valley.txt,"duplexes, triplexes, quadplexes, and townhouses, and in Section 7.0100                                                            for new construction and remod"
 or/clackamas/_unincorporated,1012.05,7,1,zdo.1012.txt zdo.315.txt,"Bonus Density: If a smaller lot size is necessary to provide bonus density dwelling units awarded under Subsection 1012.05(E), the minimum lot size standard of "
 or/clackamas/lake-oswego,50.02.002.2,7,1,50.03.002.use-table.txt 50.04.dimensional.txt,"[3]     If lot has multiple zones, e.g., R-0/EC, see LOC § 50.02.002.2.e."
-or/clackamas/happy-valley,16.12.030,6,1,16.22.residential.txt 16.12.definitions.txt,Definitions. The definitions in Section 16.12.030 apply to all actions and interpretations under the City of Happy Valley Development Code. The meanings given t
 or/clackamas/happy-valley,16.34,6,1,16.12.definitions.txt,"For the purposes of Chapter 16.34, discarded manmade objects that would not occur in an undeveloped stream corridor or wetland. ""Debris"" includes, but is not li"
 or/clackamas/lake-oswego,50.06.001.5,6,1,50.04.dimensional.txt,"[Cross-Reference: Height Limitation: see Charter Section 46A for 50 ft. Maximum Height of Structures in Residential Areas; LOC § 50.04.003.4, General Exception "
-or/clackamas/milwaukie,19.202.4,6,1,19.300.base-zones.txt 19.200.definitions.txt,§ 19.202.4. Density Calculations.
 or/multnomah/_unincorporated,11,6,1,33.100.txt 33.110.txt 33.140.txt,"preservation and protection requirements of Title 11, Trees.  See Chapter 11.50, Trees in"
 or/multnomah/_unincorporated,11.50,6,1,33.100.txt 33.110.txt 33.140.txt,"preservation and protection requirements of Title 11, Trees.  See Chapter 11.50, Trees in"
 or/multnomah/_unincorporated,33.700.060,6,1,33.140.txt 33.110.txt,the requirements of 33.700.060. The covenant must ensure that the affordable
@@ -121,19 +103,12 @@ or/clackamas/_unincorporated,845.02,3,1,zdo.845.txt,"Exemptions: Subsections 845
 or/clackamas/_unincorporated,847,3,1,zdo.315.txt zdo.202.definitions.txt,DWELLING: A building that contains one or more dwelling units. A dwelling may be a residential trailer or a manufactured dwelling but not a recreational vehicle
 or/clackamas/happy-valley,16.44.080,3,1,16.22.residential.txt,2       Neighborhood commercial uses subject to the provisions of Section 16.44.080.
 or/multnomah/_unincorporated,33.205,3,1,33.110.txt,(See Chapter 33.205)                                                               Yes                                  Yes                                   Ye
-or/multnomah/_unincorporated,39.4220,3,1,39.efu.txt,except for the uses listed in MCC 39.4220
 or/multnomah/gresham,6.0500,3,1,4.0100.residential.txt 3.0100.definitions.txt,with Section 6.0500.
 or/clackamas/_unincorporated,1012.07,2,1,zdo.1012.txt,"Duplexes in the RA-1 District: In the RA-1 District, there is no minimum lot size for a lot or parcel to be developed with duplexes pursuant to Section 1203, Co"
 or/clackamas/_unincorporated,839,2,1,zdo.315.txt,"Accessory Dwelling Units, subject to Section 839"
-or/clackamas/milwaukie,19.301.3,2,1,19.300.base-zones.txt,Agricultural or horticultural use                                                                             P                                                 
 or/clackamas/rivergrove,5.010,2,1,rldo.composite.txt,Section 5.010.  Land Use.           All land within the city of Rivergrove is zoned residential.  The
 or/clackamas/rivergrove,6.221,2,1,rldo.composite.txt,changed according to the provisions of Section 6.221 or by legislative action.  A change in
 or/multnomah/_unincorporated,39.3090,2,1,39.rural-residential.txt,"(A) Except as provided in MCC 39.3090,"
-or/multnomah/_unincorporated,39.4310,2,1,39.mua-20.txt,except for the uses listed in MCC 39.4310
-or/multnomah/_unincorporated,39.4360,2,1,39.rural-residential.txt,except for the uses listed in MCC 39.4360
-or/multnomah/_unincorporated,39.4610,2,1,39.or.txt,except for the uses listed in MCC 39.4610
-or/multnomah/_unincorporated,39.4660,2,1,39.oci.txt,except for the uses listed in MCC 39.4660
-or/multnomah/_unincorporated,39.4878,2,1,39.lr-10.txt,MCC 39.4868 through MCC 39.4878 applies to
 or/multnomah/_unincorporated,39.8610,2,1,39.mr-4.txt 39.pd.txt,development standards of MCC 39.8610;
 or/multnomah/gresham,7.05,2,1,4.0400.corridor.txt,a.                                   Triangle Area. For lands in the Triangle Area as described in Section 7.05         10                                      
 or/multnomah/wood-village,350,2,1,230.310.txt 235.390.txt,"(5)See Section 350 – Landscaping and Screening for a description of the landscape standards (i.e., L1, F2, etc.)."
@@ -152,13 +127,6 @@ or/clackamas/rivergrove,5.030,1,1,rldo.composite.txt,Section 5.030.  Change in C
 or/clackamas/west-linn,28.040,1,1,02.definitions.txt,"Development. Any manmade change defined as the construction of buildings or other structures, mining, dredging, paving, filling, grading or site clearing, and g"
 or/multnomah/_unincorporated,0.7,1,1,33.110.txt,- 3 total dwelling units [2]                                                                                 NA                            0.7 to 1             
 or/multnomah/_unincorporated,33.251,1,1,33.110.txt,(See Chapter 33.251)                                                               Yes                                  Yes                                   Ye
-or/multnomah/_unincorporated,39.4753,1,1,39.uf-20.txt,except as provided in MCC 39.4753(B);
-or/multnomah/_unincorporated,39.4822,1,1,39.lr-5.txt,the uses listed in MCC 39.4822 through 39.4826
-or/multnomah/_unincorporated,39.4824,1,1,39.lr-5.txt,"home under MCC 39.4824(F) shall be 5,000"
-or/multnomah/_unincorporated,39.4854,1,1,39.lr-7.txt,"home under MCC 39.4854(G) shall be 7,000"
-or/multnomah/_unincorporated,39.4872,1,1,39.lr-10.txt,the uses listed in MCC 39.4872 through 39.4876
-or/multnomah/_unincorporated,39.4975,1,1,39.mr-4.txt,the uses listed in MCC 39.4975 through 39.4985
-or/multnomah/_unincorporated,39.4990,1,1,39.mr-4.txt,MCC 39.4969 through MCC 39.4990 applies to
 or/multnomah/_unincorporated,39.8870,1,1,39.efu.txt,(F) A Farm Stands subject to MCC 39.8870
 or/multnomah/_unincorporated,39.8885,1,1,39.efu.txt,through MCC 39.8885.
 or/multnomah/_unincorporated,39.8900,1,1,39.efu.txt,"ORS 215.452, and subject to MCC 39.8900 –"
@@ -188,63 +156,38 @@ or/multnomah/wood-village,230.350,1,1,230.310.txt,(See Sections 230.350 and 330)
 or/multnomah/wood-village,340.020,1,1,220.310.txt,Manufactured Home Park (See Section 340.020)  N    Y
 or/multnomah/wood-village,660,1,1,220.320.txt,B. Exceptions to Minimum Lot Size & Dimension. In the MR4 & MR2 zones reductions to the minimum lot size & dimensions for detached single dwelling units may be 
 or,10.1700,34,0,4.1400.pleasant-valley.txt 4.1500.springwater.txt 4.1100.downtown.txt 4.0100.residential.txt 4.0400.corridor.txt 4.1200.civic-neighborhood.txt 4.0200.commercial.txt 4.0300.industrial.txt,6.                                    Affordable housing development is subject to the provisions in Section                                       10.1700.
-or,50.03.003.6,31,0,50.03.002.use-table.txt,§ 50.03.003.6.j; R-6 zone: § 50.03.003.3
-or/clackamas/lake-oswego,50.03.003.6,31,0,50.03.002.use-table.txt,§ 50.03.003.6.j; R-6 zone: § 50.03.003.3
 or,34,24,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt 39.cfu.txt 39.efu.txt 39.mua-20.txt 39.oci.txt 39.or.txt 39.rural-residential.txt,"Accessory uses are allowed in this zone as provided by Chapter 34 CDC. (Ord. 1745 § 1 (Exh. A), 2023)"
 or,35,22,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt 31.definitions.txt 40-41.residential.txt,"Nonconforming Situations, Development, or Lots. See TDC Chapter 35 (Nonconforming Situations)."
 or,9.0851,22,0,4.1400.pleasant-valley.txt 4.1500.springwater.txt 4.0300.industrial.txt 4.0400.corridor.txt,G. Minimum Bicycle Parking Required                                                         See Section 9.0851                                            See Se
 or,52,21,0,02.definitions.txt 08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt 17.zoning.txt,cle parking spaces as required in Chapter 52 of this title.
-or,19.304.5,20,0,19.300.base-zones.txt,"In the downtown zones, the development standards in Table 19.304.4 apply. Notes and/or cross references to other applicable code sections are listed in the ""sta"
-or/clackamas/milwaukie,19.304.5,20,0,19.300.base-zones.txt,"In the downtown zones, the development standards in Table 19.304.4 apply. Notes and/or cross references to other applicable code sections are listed in the ""sta"
 or/clackamas/west-linn,52,20,0,02.definitions.txt 08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"The following terms and phrases shall have the meanings given to them below with regard to Chapter 52 CDC, Signs:"
-or,50.03.003.5,19,0,50.03.002.use-table.txt,§ 50.03.003.5
 or,66,19,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt 02.definitions.txt,"Type I and II lands shall not be counted toward lot area when determining allowable floor area ratio, except that a minimum floor area ratio of 0.30 shall be al"
-or/clackamas/lake-oswego,50.03.003.5,19,0,50.03.002.use-table.txt,§ 50.03.003.5
 or,11.50,18,0,33.100.txt 33.110.txt 33.140.txt 33.120.txt 33.130.txt 33.150.txt,"preservation and protection requirements of Title 11, Trees.  See Chapter 11.50, Trees in"
-or,19.302.5,18,0,19.300.base-zones.txt,Multi-unit housing                                                                                            P                                                 
-or,19.304.3,18,0,19.300.base-zones.txt,Subsection 19.304.3.A.1 Downtown residential use limitations
 or,33.258,18,0,33.100.txt 33.110.txt 33.140.txt 33.120.txt 33.130.txt 33.150.txt,"categories listed as prohibited may be subject to the regulations of Chapter 33.258,"
 or,36.410,18,0,40-41.residential.txt,ject to TDC 36.410
 or,60,18,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,C. The approval of a conditional use (CDC 08.060) is discretionary with the Planning Commission. The approval process and criteria for approval are set forth in
 or,80,18,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"A. A use permitted outright, CDC 08.030, is a use which requires no approval under the provisions of this code, except that some uses require design review purs"
-or/clackamas/milwaukie,19.304.3,18,0,19.300.base-zones.txt,Subsection 19.304.3.A.1 Downtown residential use limitations
 or/clackamas/west-linn,35,18,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,3. Temporary use subject to the provisions of Chapter 35 CDC.
 or/clackamas/west-linn,60,18,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,C. The approval of a conditional use (CDC 08.060) is discretionary with the Planning Commission. The approval process and criteria for approval are set forth in
 or/clackamas/west-linn,80,18,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"A. A use permitted outright, CDC 08.030, is a use which requires no approval under the provisions of this code, except that some uses require design review purs"
-or,19.301.5,17,0,19.300.base-zones.txt,"In the moderate density residential zone, the development standards in Table 19.301.4 apply. Notes and/or cross references to other applicable code sections are"
-or,19.302.4,17,0,19.300.base-zones.txt,§ 19.302.4. Development Standards.
 or,19.505.1,17,0,19.300.base-zones.txt,Single detached dwelling                                                                                      P                                                 
 or,32,17,0,02.definitions.txt 33.110.txt 33.100.txt 33.120.txt 33.140.txt 33.130.txt 33.150.txt 33.910.definitions.txt,"Maximum disturbed area (MDA). The MDA, as measured in square feet, is the maximum area within a WRA that can be disturbed in hardship cases under Chapter 32 CDC"
 or,1012,16,0,zdo.315.txt zdo.1012.txt 16.22.residential.txt,"Section 1012 applies to the following land use permit applications in any zoning district that has a minimum lot size standard, district land area standard, or "
-or,19.303.4,16,0,19.300.base-zones.txt,Table 19.303.3 summarizes some of the development standards that apply in the commercial mixed-use zones. Development standards are presented in detail in Subse
 or,19.504.6,16,0,19.300.base-zones.txt,Subsection 19.504.6 Flag Lot and Back Lot Design and Development Standards
-or,50.04.001.2,16,0,50.04.dimensional.txt,§ 50.04.001.2.b
-or/clackamas/milwaukie,19.303.4,16,0,19.300.base-zones.txt,Table 19.303.3 summarizes some of the development standards that apply in the commercial mixed-use zones. Development standards are presented in detail in Subse
 or,10.0900,15,0,4.1100.downtown.txt 4.1400.pleasant-valley.txt 4.1200.civic-neighborhood.txt 4.1500.springwater.txt 3.0100.definitions.txt 4.0100.residential.txt 4.0200.commercial.txt 4.0300.industrial.txt 4.0400.corridor.txt,"The following definitions apply to the application of Section 10.0900, Renewable Energy and sustainability"
-or,19.301.4,15,0,19.300.base-zones.txt,§ 19.301.4. Development Standards.
-or,19.303.2,15,0,19.300.base-zones.txt,§ 19.303.2. Uses.
-or,19.312.2,15,0,19.300.base-zones.txt,§ 19.312.2. Uses.
-or,19.312.4,15,0,19.300.base-zones.txt,"Uses listed in Table 19.312.2 as ""L"" are permitted only as limited uses in conformance with Section 19.312.4."
 or,300,15,0,230.200.txt 235.200.txt 240.200.txt 250.200.txt 260.200.txt 210.310.txt 210.320.txt 220.310.txt 220.320.txt zdo.202.definitions.txt,"ZONING DISTRICT, RESIDENTIAL: A zoning district regulated by Section 300, Urban and Rural Residential Districts."
 or,9.0100,15,0,4.1200.civic-neighborhood.txt 4.1400.pleasant-valley.txt 3.0100.definitions.txt 4.0300.industrial.txt 4.1100.downtown.txt 4.0200.commercial.txt 4.1500.springwater.txt,"screen, or separate areas. For purposes of              Section 9.0100, walls are a type of fence."
-or/clackamas/milwaukie,19.301.4,15,0,19.300.base-zones.txt,§ 19.301.4. Development Standards.
-or/clackamas/milwaukie,19.303.2,15,0,19.300.base-zones.txt,§ 19.303.2. Uses.
-or/clackamas/milwaukie,19.312.2,15,0,19.300.base-zones.txt,§ 19.312.2. Uses.
-or/clackamas/milwaukie,19.312.4,15,0,19.300.base-zones.txt,"Uses listed in Table 19.312.2 as ""L"" are permitted only as limited uses in conformance with Section 19.312.4."
 or/multnomah/gresham,10.0900,15,0,4.1100.downtown.txt 4.1400.pleasant-valley.txt 4.1200.civic-neighborhood.txt 4.1500.springwater.txt 3.0100.definitions.txt 4.0100.residential.txt 4.0200.commercial.txt 4.0300.industrial.txt 4.0400.corridor.txt,"The following definitions apply to the application of Section 10.0900, Renewable Energy and sustainability"
 or/multnomah/gresham,9.0100,15,0,4.1200.civic-neighborhood.txt 4.1400.pleasant-valley.txt 3.0100.definitions.txt 4.0300.industrial.txt 4.1100.downtown.txt 4.0200.commercial.txt 4.1500.springwater.txt,"screen, or separate areas. For purposes of              Section 9.0100, walls are a type of fence."
 or,1005.02,14,0,zdo.315.txt,See Subsections 1005.02(E) and (H).
-or,19.312.7,14,0,19.300.base-zones.txt,Subsection 19.312.7.A.6 Flexible ground-floor space
 or,19.501.4,14,0,19.300.base-zones.txt,"Subsection 19.501.4 Density Exceptions For Cottage Clusters and Townhouse Density Exceptions, see 19.501.4"
 or,19.509.2,14,0,19.300.base-zones.txt,State-licensed production for medical marijuana patients is permitted provided the operation is entirely indoors and meets the security and odor control standar
 or/clackamas/_unincorporated,1005.02,14,0,zdo.315.txt,See Subsections 1005.02(E) and (H).
-or/clackamas/milwaukie,19.312.7,14,0,19.300.base-zones.txt,Subsection 19.312.7.A.6 Flexible ground-floor space
 or/clackamas/milwaukie,19.509.2,14,0,19.300.base-zones.txt,State-licensed production for medical marijuana patients is permitted provided the operation is entirely indoors and meets the security and odor control standar
 or,19.505.4,13,0,19.300.base-zones.txt 19.200.definitions.txt,"means an individual dwelling unit that is part of a cottage cluster, per Subsection 19.505.4."
 or,19.505.5,13,0,19.300.base-zones.txt,Townhouse                                                                                                     P                                                 
 or,33.920,13,0,33.140.txt 33.100.txt 33.110.txt 33.150.txt 33.120.txt 33.130.txt 33.910.definitions.txt,•                                               The use categories are described in Chapter 33.920.
 or,46,13,0,02.definitions.txt 08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt 17.06.definitions.txt oar.660-046-0020.txt oar.660-046-0220.txt,"“Middle housing” means duplex, triplex, quadplex, cottage cluster, or townhouse in the R-5 or R-7.2 zone and is subject to OAR Chapter 660, Division 46, Middle "
-or,50.04.001.1,13,0,50.04.dimensional.txt,§ 50.04.001.1.b
 or,6409,13,0,4.planning.txt,Section 4.813. Mandatory and Automatic Permit Conditions of Approval for Section 6409(a).
 or/clackamas/wilsonville,6409,13,0,4.planning.txt,Section 4.813. Mandatory and Automatic Permit Conditions of Approval for Section 6409(a).
 or,16.44.020,12,0,16.12.definitions.txt 16.22.residential.txt,"For the purposes of Section 16.44.020, the mounting or installation of antennas and/or auxiliary support equipment on an existing support tower, support structu"
@@ -256,44 +199,26 @@ or/clackamas/west-linn,55,12,0,14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt 08.r-40.txt 
 or/multnomah/gresham,4.115,12,0,4.1100.downtown.txt,quality project that might not comply with all or some of the standards in Section 4.115              2. The aim is to
 or/multnomah/gresham,9.0900,12,0,4.1500.springwater.txt 4.0100.residential.txt 4.1100.downtown.txt 4.1400.pleasant-valley.txt 4.0200.commercial.txt 4.0300.industrial.txt 4.0400.corridor.txt,such as heat pumps can project into the setbacks per Section 9.0900 Projections.
 or/multnomah/portland,33.258,12,0,33.100.txt 33.110.txt 33.120.txt 33.130.txt 33.140.txt 33.150.txt,"categories listed as prohibited may be subject to the regulations of Chapter 33.258,"
-or,16.22.020,11,0,16.22.residential.txt,§ 16.22.020. Very low density residential zones.
-or,16.22.030,11,0,16.22.residential.txt,§ 16.22.030. Low density residential zones.
-or,16.22.050,11,0,16.22.residential.txt,§ 16.22.050. High density residential—Attached.
-or,16.22.060,11,0,16.22.residential.txt,§ 16.22.060. Mixed use residential—Multifamily (MUR-M and MUR-X).
 or,16.42.080,11,0,16.22.residential.txt,Shared outdoor recreation areas                                                                                400 sq. ft./unit provided in accordance with Sect
 or,17.102.270,11,0,33.110.txt 33.100.txt 33.140.txt 33.120.txt 33.130.txt 33.150.txt,"See Section 17.102.270, Businesses and Multifamily Complexes Required to Recycle, of the Portland"
 or,19.245,11,0,19.65.txt 19.70.txt 19.85.txt 19.13.definitions.txt 19.135.txt 19.80.txt,"“Wireless communication equipment” includes cell towers, antennas, monopoles, and related facilities used for radio signal transmission and receiving (see Chapt"
-or,19.304.2,11,0,19.300.base-zones.txt,§ 19.304.2. Uses.
-or,19.304.4,11,0,19.300.base-zones.txt,§ 19.304.4. Development Standards.
 or,38,11,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt 3.zoning-districts.txt 31.definitions.txt,Subdivision Sign. See Chapter 38 (Signs).
 or,43,11,0,02.definitions.txt 08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"Incombustible material. Flame-resistant material as defined in the Uniform Building Code, Chapter 43, Fire-Resistive Standards."
-or,50.03.003.1,11,0,50.04.dimensional.txt 50.03.002.use-table.txt,§ 50.03.003.1.e
-or,50.04.003,11,0,50.04.dimensional.txt,"When subdivisions are proposed in the R-W and R-3 zones or multi-family development is proposed in the R-3 zone, the number of lots or dwelling units required s"
-or/clackamas/happy-valley,16.22.050,11,0,16.22.residential.txt,§ 16.22.050. High density residential—Attached.
-or/clackamas/happy-valley,16.22.060,11,0,16.22.residential.txt,§ 16.22.060. Mixed use residential—Multifamily (MUR-M and MUR-X).
-or/clackamas/milwaukie,19.304.2,11,0,19.300.base-zones.txt,§ 19.304.2. Uses.
-or/clackamas/milwaukie,19.304.4,11,0,19.300.base-zones.txt,§ 19.304.4. Development Standards.
 or,17.62.070,10,0,17.10.r-7.2.txt 17.12.r-5.txt,Setbacks for manufactured homes in a mobile home park are subject to the standards in GMC Section 17.62.070(4).
-or,19.303.3,10,0,19.300.base-zones.txt,§ 19.303.3. Development Standards.
 or,24,10,0,33.100.txt 33.110.txt 33.140.txt 33.120.txt 33.130.txt 33.150.txt 33.910.definitions.txt,"Regulations. The use of barbed wire is regulated under Title 24, Building Regulations."
 or,37,10,0,02.definitions.txt 08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"Home occupation. Any activity carried out for gain by a resident and conducted as a customary, incidental, and accessory use in the resident’s dwelling unit. St"
 or,41.010,10,0,15.r-3.txt 08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 16.r-2.1.txt,Except for steeply sloped lots where the provisions of CDC 41.010 shall apply
 or,50.03.003.3,10,0,50.03.002.use-table.txt,§ 50.03.003.4.a and b; R-2 zone: § 50.03.003.3
-or,50.03.004.1,10,0,50.03.002.use-table.txt,§ 50.03.004.1.b.vii
 or,50.04.003.4,10,0,50.04.dimensional.txt,[Cross-References: Height Limitation: see Charter Section 46A for 50 ft. Maximum Height of Structures in Residential Areas; Height Measure: see LOC § 50.04.003.
 or,60.090,10,0,02.definitions.txt 08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"2. Transportation facilities (Type II) are those which are not designated in the adopted TSP or part of an approved, active development order. Type II transport"
 or,7.0112,10,0,4.1400.pleasant-valley.txt 4.0400.corridor.txt 4.1500.springwater.txt 4.0100.residential.txt 7.0400.middle-housing-design.txt,Residential Design Standards. The Corridor Design District standards in Section 7.0112          shall apply to new
 or,845,10,0,zdo.315.txt,"The development of a triplex, quadplex, townhouse, or cottage cluster is subject to Section 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters."
 or,92,10,0,19.13.definitions.txt zdo.202.definitions.txt 1.020.definitions.txt 16.12.definitions.txt 4.planning.txt,"PLAT, FINAL: A final map and other writing containing all the descriptions, locations, specifications, dedications, provisions, and information concerning a par"
 or/clackamas/lake-oswego,50.03.003.3,10,0,50.03.002.use-table.txt,§ 50.03.003.4.a and b; R-2 zone: § 50.03.003.3
-or/clackamas/lake-oswego,50.03.004.1,10,0,50.03.002.use-table.txt,§ 50.03.004.1.b.vii
-or/clackamas/milwaukie,19.303.3,10,0,19.300.base-zones.txt,§ 19.303.3. Development Standards.
 or/clackamas/west-linn,37,10,0,02.definitions.txt 08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"Home occupation. Any activity carried out for gain by a resident and conducted as a customary, incidental, and accessory use in the resident’s dwelling unit. St"
 or/clackamas/west-linn,46,10,0,02.definitions.txt 08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,Parking space. A space as defined by the standards set forth in Chapter 46 CDC.
 or/multnomah/gresham,4.125,10,0,4.1200.civic-neighborhood.txt,Civic Neighborhood Streets and Future Streets to identify the primary street type. Also See Section 4.125                                      2(A)(2) fo r
-or,16.22.040,9,0,16.22.residential.txt,§ 16.22.040. Medium density single-family residential zones.
 or,16.63.020,9,0,16.22.residential.txt 16.12.definitions.txt,"The ratio of the total amount of enclosed gross floor area within a structure to the amount of buildable acreage pursuant to Section 16.63.020(F), Density Calcu"
-or,19.312.6,9,0,19.300.base-zones.txt,Subsection 19.312.6 Detailed Development Standards
 or,19.490,9,0,19.30.txt 19.120.txt 19.125.txt,G. Home occupations – see Chapter 19.490 FMC.
 or,33.445,9,0,33.100.txt 33.110.txt 33.140.txt 33.120.txt 33.130.txt 33.150.txt,"B.                                                Historic resources. Demolition of historic resources is regulated by Chapter 33.445, Historic"
 or,39.9200,9,0,39.cfu.txt 39.efu.txt 39.lr-10.txt 39.lr-5.txt 39.lr-7.txt 39.mua-20.txt 39.oci.txt 39.or.txt 39.rural-residential.txt,pursuant to MCC 39.9200.
@@ -302,7 +227,6 @@ or,44,9,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 
 or,48,9,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"8. Chapter 48 CDC, Access, Egress and Circulation."
 or,50.05.005,9,0,50.04.dimensional.txt,"[Cross-References: (1) Height Limitation: See also LOC § 50.03.003.4.e.iii(3) for collocated telecommunication facilities, and LOC § 50.06.001.5.b for non-singl"
 or,50.06.007.2,9,0,50.04.dimensional.txt,"In any zone district, side yard setbacks may be reduced by up to 50% and/or the front or rear yard setbacks by up to 25% if the construction of a proposed struc"
-or,50.10.003.2,9,0,50.04.dimensional.txt,Maximum base height across the site shall be established by a flat plane measured at 28 ft. (R-7.5 zone) or 30 ft. (R-10 zone) above the highest point of the na
 or,54,9,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"10. Chapter 54 CDC, Landscaping."
 or,60.070,9,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"Except as may otherwise be established by this code, the appropriate lot or parcel size for a conditional use shall be determined by the approval authority at t"
 or,65,9,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"1. Chapter 65 CDC, Non-conforming Uses Involving a Structure."
@@ -315,7 +239,6 @@ or,99.060,9,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.
 or,99.240,9,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,2. The decision may be appealed by the applicant to the Planning Commission as provided by CDC 99.240(A).
 or/clackamas/lake-oswego,50.05.005,9,0,50.04.dimensional.txt,"[Cross-References: (1) Height Limitation: See also LOC § 50.03.003.4.e.iii(3) for collocated telecommunication facilities, and LOC § 50.06.001.5.b for non-singl"
 or/clackamas/lake-oswego,50.06.007.2,9,0,50.04.dimensional.txt,"In any zone district, side yard setbacks may be reduced by up to 50% and/or the front or rear yard setbacks by up to 25% if the construction of a proposed struc"
-or/clackamas/milwaukie,19.312.6,9,0,19.300.base-zones.txt,Subsection 19.312.6 Detailed Development Standards
 or/clackamas/west-linn,38,9,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"3. Chapter 38 CDC, Additional Yard Area Required; Exceptions to Yard Requirements; Storage in Yards; Projections into Yards."
 or/clackamas/west-linn,42,9,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"5. Chapter 42 CDC, Clear Vision Areas."
 or/clackamas/west-linn,44,9,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"6. Chapter 44 CDC, Fences."
@@ -331,20 +254,16 @@ or/multnomah/gresham,7.0320,9,0,4.0300.industrial.txt 4.0400.corridor.txt 4.1100
 or/multnomah/portland,32,9,0,33.110.txt 33.120.txt 33.100.txt 33.130.txt 33.140.txt 33.150.txt 33.910.definitions.txt,"The sign regulations are stated in Title 32, Signs and Related Regulations."
 or,10.0420,8,0,4.1100.downtown.txt 4.1200.civic-neighborhood.txt 4.1400.pleasant-valley.txt 4.1500.springwater.txt,•    Conversion of a hotel or motel to an emergency shelter or aﬀordable housing under Section 10.0420
 or,1012.02,8,0,zdo.1012.txt,"In subdivisions, partitions, and replats, lots and parcels shall comply with the minimum lot size standards, if any, of the applicable zoning district, except a"
-or,16.22.010,8,0,16.22.residential.txt,§ 16.22.010. Future urbanization zone.
 or,19.162,8,0,19.70.txt 19.80.txt 19.30.txt 19.65.txt 19.85.txt,b. All buildings shall have their primary entrance(s) oriented to the street. Multi-unit housing and neighborhood commercial building entrances may include entr
 or,19.504.5,8,0,19.300.base-zones.txt,Subsection 19.504.5 Minimum Vegetation
 or,26,8,0,33.100.txt 33.110.txt 33.140.txt 33.120.txt 33.130.txt,"D.                                            Reference to other regulations. Electrified fences are regulated under Title 26, Electrical"
 or,28,8,0,02.definitions.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"Habitat conservation areas (HCA). Areas identified on the Habitat Conservation Areas Map and subject to the standards found in Chapter 28 CDC, Willamette and Tu"
-or,50.03.003.4,8,0,50.03.002.use-table.txt 50.04.dimensional.txt,§ 50.03.003.4.a and b; R-2 zone: § 50.03.003.3
 or,50.06.007.1,8,0,50.04.dimensional.txt,"A development is exempt from the requirements of LOC § 50.06.007.1.c, Solar Design Standard, if the reviewing authority finds the applicant has shown that one o"
 or,57,8,0,09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"5. Wireless communication facilities, subject to the provisions of Chapter 57 CDC. (Ord. 1298, 1991; Ord. 1308, 1991; Ord. 1408, 1998; Ord. 1565, 2008; Ord. 162"
 or,6.300,8,0,3.zoning-districts.txt rldo.composite.txt,Sections 6.300 through 6.340.
 or,7.0100,8,0,4.0400.corridor.txt 4.1100.downtown.txt 4.1200.civic-neighborhood.txt 4.1400.pleasant-valley.txt,"duplexes, triplexes, quadplexes, and townhouses, and in Section 7.0100                                                            for new construction and remod"
 or,7.0310,8,0,4.1400.pleasant-valley.txt 4.1500.springwater.txt 4.0200.commercial.txt 4.0400.corridor.txt 4.1100.downtown.txt 4.1200.civic-neighborhood.txt,"Section 7.0212 – Standards for New Solid Waste and Recycling; Section 7.0310                                     – Commercial, Institutional,"
 or/clackamas/_unincorporated,1012.02,8,0,zdo.1012.txt,"In subdivisions, partitions, and replats, lots and parcels shall comply with the minimum lot size standards, if any, of the applicable zoning district, except a"
-or/clackamas/happy-valley,16.22.010,8,0,16.22.residential.txt,§ 16.22.010. Future urbanization zone.
-or/clackamas/lake-oswego,50.03.003.4,8,0,50.03.002.use-table.txt 50.04.dimensional.txt,§ 50.03.003.4.a and b; R-2 zone: § 50.03.003.3
 or/clackamas/lake-oswego,50.06.007.1,8,0,50.04.dimensional.txt,"A development is exempt from the requirements of LOC § 50.06.007.1.c, Solar Design Standard, if the reviewing authority finds the applicant has shown that one o"
 or/clackamas/oregon-city,16.12,8,0,17.zoning.txt,"path or way as described in OCMC 16.12, intended primarily"
 or/clackamas/west-linn,28,8,0,02.definitions.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"Habitat conservation areas (HCA). Areas identified on the Habitat Conservation Areas Map and subject to the standards found in Chapter 28 CDC, Willamette and Tu"
@@ -355,30 +274,21 @@ or,12.08,7,0,17.zoning.txt,stall one street tree in accordance with OCMC 12.08 i
 or,16.44.050,7,0,16.22.residential.txt,Accessory dwelling units complying with Section 16.44.050
 or,16.69.020,7,0,16.22.residential.txt 16.12.definitions.txt,"A business activity that is carried out on the same site as a dwelling unit, and which is accessory to the residential use on the site, subject to the provision"
 or,19.155,7,0,19.140.txt 19.135.txt,"e. All buildings shall have their first floors occupied exclusively by commercial/office uses, except for the special “VC flex” area located on the extreme west"
-or,19.202.2,7,0,19.200.definitions.txt,§ 19.202.2. Vertical Measurements.
-or,19.312.5,7,0,19.300.base-zones.txt,§ 19.312.5. Development Standards.
 or,33.299,7,0,33.110.txt 33.140.txt 33.120.txt 33.130.txt 33.150.txt,"5.                                                    Small wind turbines are subject to the standards of Chapter 33.299, Wind Turbines."
 or,5.0700,7,0,4.1500.springwater.txt 4.1400.pleasant-valley.txt,Section 5.0700 Natural Resource Overlay):
 or,50.02.002.2,7,0,50.03.002.use-table.txt 50.04.dimensional.txt,"[3]     If lot has multiple zones, e.g., R-0/EC, see LOC § 50.02.002.2.e."
-or,50.04.001.3,7,0,50.04.dimensional.txt,§ 50.04.001.3.b
-or,50.04.002,7,0,50.04.dimensional.txt,§ 50.04.002. Special Street Setbacks.
 or,7.0512,7,0,4.0400.corridor.txt,(Sections                                7.0512.A.2                                     7.0512.A.2                                     Section 7.0512.A.2       
 or/clackamas/happy-valley,16.69.020,7,0,16.22.residential.txt 16.12.definitions.txt,"A business activity that is carried out on the same site as a dwelling unit, and which is accessory to the residential use on the site, subject to the provision"
-or/clackamas/lake-oswego,50.04.002,7,0,50.04.dimensional.txt,§ 50.04.002. Special Street Setbacks.
-or/clackamas/milwaukie,19.202.2,7,0,19.200.definitions.txt,§ 19.202.2. Vertical Measurements.
-or/clackamas/milwaukie,19.312.5,7,0,19.300.base-zones.txt,§ 19.312.5. Development Standards.
 or/clackamas/oregon-city,12.08,7,0,17.zoning.txt,stall one street tree in accordance with OCMC 12.08 if
 or/multnomah/gresham,5.0700,7,0,4.1500.springwater.txt 4.1400.pleasant-valley.txt,Section 5.0700 Natural Resource Overlay):
 or/multnomah/portland,17.102.270,7,0,33.110.txt 33.100.txt 33.120.txt 33.130.txt 33.140.txt 33.150.txt,"See Section 17.102.270, Businesses and Multifamily Complexes Required to Recycle, of the Portland"
 or/multnomah/portland,24,7,0,33.100.txt 33.110.txt 33.120.txt 33.130.txt 33.140.txt 33.150.txt 33.910.definitions.txt,"Regulations. The use of barbed wire is regulated under Title 24, Building Regulations."
 or,1105,6,0,zdo.1012.txt zdo.315.txt,"Middle housing dwelling units; however, middle housing land divisions are permitted pursuant to Section 1105, Subdivisions, Partitions, Replats, Middle Housing "
 or,13.12,6,0,17.zoning.txt,sign Standards as referenced in OCMC 13.12.
-or,16.12.030,6,0,16.22.residential.txt 16.12.definitions.txt,Definitions. The definitions in Section 16.12.030 apply to all actions and interpretations under the City of Happy Valley Development Code. The meanings given t
 or,16.34,6,0,16.12.definitions.txt,"For the purposes of Chapter 16.34, discarded manmade objects that would not occur in an undeveloped stream corridor or wetland. ""Debris"" includes, but is not li"
 or,19.163,6,0,19.70.txt 19.80.txt 19.30.txt 19.65.txt,"C. Setback Exceptions. The following architectural features are allowed to encroach into the setback yards: Eaves, chimneys, bay windows, overhangs, and similar"
 or,19.163.030,6,0,19.65.txt,ii. Improvements in the Setback Between a Building and a Street Lot Line. The land between any building and a street lot line must be landscaped to at least the
 or,19.165,6,0,19.13.definitions.txt 19.70.txt 19.65.txt 19.80.txt,“Public facilities” means public and private transportation facilities and utilities. See Chapter 19.165 FMC.
-or,19.202.4,6,0,19.300.base-zones.txt 19.200.definitions.txt,§ 19.202.4. Density Calculations.
 or,19.480,6,0,19.135.txt 19.30.txt 19.65.txt 19.70.txt 19.80.txt 19.85.txt,a. Uses similar to those listed above                                                                                                                           
 or,19.501.3,6,0,19.300.base-zones.txt,Subsection 19.501.3 Building Height and Side Yard Height Plane Exceptions
 or,19.505.3,6,0,19.300.base-zones.txt,Multi-unit housing                                                                                            P                                                 
@@ -410,8 +320,6 @@ or,16.43,5,0,16.12.definitions.txt,"The area available for the maneuvering and s
 or,16.63,5,0,16.12.definitions.txt 16.22.residential.txt,"The process of dividing land to create parcels or lots. See Chapter 16.63, Land Divisions and Property Line Adjustments."
 or,16.63.130,5,0,16.22.residential.txt 16.12.definitions.txt,"See Section 16.63.130 of this title. The development of a parcel or contiguous parcels or portions of such parcel or contiguous parcels, as individually subdivi"
 or,16.72,5,0,16.12.definitions.txt,"A use that physically left the land it was on, a permitted use that ceased, or a use terminated at the end of a lease or contract. See Chapter 16.72, Nonconform"
-or,19.301.2,5,0,19.300.base-zones.txt,§ 19.301.2. Allowed Uses in Moderate Density Residential Zones.
-or,19.302.2,5,0,19.300.base-zones.txt,§ 19.302.2. Allowed Uses in the High Density Residential Zone.
 or,19.402,5,0,19.200.definitions.txt,"means any ""water quality resource"" or ""habitat Conservation area"" as defined in Section 19.201 and established in Section 19.402."
 or,19.505.7,5,0,19.300.base-zones.txt,Mixed use                                                                                                     P                                                 
 or,19.800,5,0,19.300.base-zones.txt,"Nonconforming Uses, Structures, and Development. Existing structures and uses that do not meet the standards for the commercial mixed-use zones may continue in "
@@ -426,8 +334,6 @@ or,33.251,5,0,33.110.txt 33.120.txt 33.266.txt,(See Chapter 33.251)             
 or,39.7710,5,0,39.cfu.txt 39.mua-20.txt 39.oci.txt 39.or.txt 39.rural-residential.txt,as described in MCC 39.7710(B) pursuant to the
 or,5.050,5,0,rldo.composite.txt,Section 5.050.  Permitted Uses.  The following developments are permitted.  Uses not listed here
 or,5.080,5,0,rldo.composite.txt,"March 2, 1998            – Section 5.080"
-or,50.03.003,5,0,50.03.002.use-table.txt 50.04.dimensional.txt,There may be additional standards that apply to specific permitted or conditional uses. Those additional standards are either identified in a note at the end of
-or,50.03.003.7,5,0,50.03.002.use-table.txt,§ 50.03.003.7
 or,50.05.010,5,0,50.04.dimensional.txt,"For projects on properties subject to a Sensitive Lands designation, lot areas may be modified as provided in LOC § 50.05.010, Sensitive Lands Overlay Districts"
 or,6.060,5,0,rldo.composite.txt,(b)       With the approval of the City Council under the procedure set out in Section 6.060
 or,6.200,5,0,4.planning.txt rldo.composite.txt,Section 6.200.  Approval Signatures for Final Subdivision Plat.  Following review and approval of
@@ -436,8 +342,6 @@ or,7.0210,5,0,4.0200.commercial.txt 4.0400.corridor.txt 4.1100.downtown.txt 4.12
 or/clackamas/_unincorporated,1203,5,0,zdo.1012.txt zdo.315.txt,"The proposed lot size requires approval pursuant to Section 1203, Conditional Uses. However, approval pursuant to Section 1203 does not waive the requirement to"
 or/clackamas/happy-valley,16.43,5,0,16.12.definitions.txt,"The area available for the maneuvering and standing of vehicles engaged in delivering and loading goods, freight, or other articles. See also Chapter 16.43, Par"
 or/clackamas/happy-valley,16.63,5,0,16.12.definitions.txt 16.22.residential.txt,"The process of dividing land to create parcels or lots. See Chapter 16.63, Land Divisions and Property Line Adjustments."
-or/clackamas/lake-oswego,50.03.003,5,0,50.03.002.use-table.txt 50.04.dimensional.txt,There may be additional standards that apply to specific permitted or conditional uses. Those additional standards are either identified in a note at the end of
-or/clackamas/lake-oswego,50.03.003.7,5,0,50.03.002.use-table.txt,§ 50.03.003.7
 or/clackamas/lake-oswego,50.05.010,5,0,50.04.dimensional.txt,"For projects on properties subject to a Sensitive Lands designation, lot areas may be modified as provided in LOC § 50.05.010, Sensitive Lands Overlay Districts"
 or/clackamas/milwaukie,19.800,5,0,19.300.base-zones.txt,"Nonconforming Uses, Structures, and Development. Existing structures and uses that do not meet the standards for the commercial mixed-use zones may continue in "
 or/clackamas/milwaukie,19.911,5,0,19.300.base-zones.txt,"Nonconforming Uses, Structures, and Development. Existing structures and uses that do not meet the standards for the commercial mixed-use zones may continue in "
@@ -456,12 +360,6 @@ or,106,4,0,zdo.315.txt 4.1100.downtown.txt,"In the PMD District, uses similar to
 or,16.45,4,0,16.12.definitions.txt,"For the purposes of Chapter 16.45, any written or graphic information on a sign."
 or,16.61,4,0,16.22.residential.txt 16.12.definitions.txt,An action or decision that requires substantial discretion or judgment in applying the standards or criteria of this Code to the facts of a development proposal
 or,17.38,4,0,17.06.definitions.txt 17.10.r-7.2.txt 17.12.r-5.txt 33.266.txt,“Residential planned unit development” means a residential (R) planned unit development as allowed under GMC Chapter 17.38 (Planned Unit Development) and is at 
-or,19.302.3,4,0,19.300.base-zones.txt,Office: Production-related office and Professional and Administrative office                                  P                                                 
-or,19.303.5,4,0,19.300.base-zones.txt,1.      Residential edge treatments apply to properties as shown in Figure 19.303.5.
-or,19.307.3,4,0,19.300.base-zones.txt,§ 19.307.3. Standards.
-or,19.309.2,4,0,19.300.base-zones.txt,§ 19.309.2. Permitted Uses.
-or,19.310.2,4,0,19.300.base-zones.txt,§ 19.310.2. Uses Permitted Outright.
-or,19.311.17,4,0,19.300.base-zones.txt,"For phased development, the owner-applicant may prepare and submit a preliminary plat for the initial phase only to be considered at the same time as the final "
 or,19.611.4,4,0,19.300.base-zones.txt,Subsection 19.611.4 incentives for Provision of Structured Parking
 or,19.911.6,4,0,19.300.base-zones.txt,Subsection 19.911.6 Building Height Variance in the Downtown Mixed Use Zone
 or,29,4,0,33.910.definitions.txt 33.266.txt 39.2000.definitions.txt,"to MCC Chapter 29, certifying compliance with"
@@ -484,11 +382,6 @@ or,9.1000,4,0,3.0100.definitions.txt 4.1100.downtown.txt 4.1200.civic-neighborho
 or/clackamas/_unincorporated,703,4,0,zdo.1012.txt,"The floodway of the Floodplain Management District regulated by Section 703, Floodplain Management District;"
 or/clackamas/happy-valley,16.45,4,0,16.12.definitions.txt,"For the purposes of Chapter 16.45, any written or graphic information on a sign."
 or/clackamas/lake-oswego,50.04.003.1,4,0,50.04.dimensional.txt,The following dimensional regulations apply to the base zones as identified in each table. These dimensions may have exceptions or modifications as identified i
-or/clackamas/milwaukie,19.303.5,4,0,19.300.base-zones.txt,1.      Residential edge treatments apply to properties as shown in Figure 19.303.5.
-or/clackamas/milwaukie,19.307.3,4,0,19.300.base-zones.txt,§ 19.307.3. Standards.
-or/clackamas/milwaukie,19.309.2,4,0,19.300.base-zones.txt,§ 19.309.2. Permitted Uses.
-or/clackamas/milwaukie,19.310.2,4,0,19.300.base-zones.txt,§ 19.310.2. Uses Permitted Outright.
-or/clackamas/milwaukie,19.311.17,4,0,19.300.base-zones.txt,"For phased development, the owner-applicant may prepare and submit a preliminary plat for the initial phase only to be considered at the same time as the final "
 or/clackamas/milwaukie,19.611.4,4,0,19.300.base-zones.txt,Subsection 19.611.4 incentives for Provision of Structured Parking
 or/clackamas/milwaukie,19.911.6,4,0,19.300.base-zones.txt,Subsection 19.911.6 Building Height Variance in the Downtown Mixed Use Zone
 or/clackamas/rivergrove,2.010,4,0,rldo.composite.txt,"Section 2.010.  Scope and Compliance.  A parcel of land may be used, developed by land division"
@@ -516,9 +409,6 @@ or,16.71,3,0,16.22.residential.txt 16.12.definitions.txt,An administrative or qu
 or,17.20.030,3,0,17.zoning.txt,"17.20.020, 17.20.030 Reserved."
 or,19.1007,3,0,19.300.base-zones.txt,"Upon receipt of the final development plan and program, phasing plan, and preliminary plat, where applicable, notice shall be given and the Planning Commission "
 or,19.162.020,3,0,19.30.txt 19.65.txt,"a. A minimum front setback is not required, except as necessary to comply with the vision clearance standards in FMC 19.162.020."
-or,19.303.6,3,0,19.300.base-zones.txt,Subsection 19.303.6.C Marijuana testing and research facilities
-or,19.310.4,3,0,19.300.base-zones.txt,§ 19.310.4. Limited Uses.
-or,19.310.6,3,0,19.300.base-zones.txt,"The following business and industrial uses are allowed outright, subject to the standards of Subsection 19.310.6."
 or,19.490.400,3,0,19.65.txt,j. Food cart pods                                                                                                                                               
 or,19.501.1,3,0,19.300.base-zones.txt 19.200.definitions.txt,"Regardless of the density calculation described above, any legal lot that meets the standards of Subsection 19.501.1 is allowed at least one dwelling unit."
 or,19.505.6,3,0,19.300.base-zones.txt,Subsection 19.505.6 Live/Work Units
@@ -531,7 +421,6 @@ or,197,3,0,16.12.definitions.txt 19.30.txt 4.planning.txt,Urban growth boundary 
 or,215,3,0,39.efu.txt,Oregon Revised Statutes Chapter 215 and the
 or,33.930.100,3,0,33.110.txt 33.120.txt,width for a cottage cluster is measured as lot width is measured. See 33.930.100.
 or,36,3,0,13.r-5.txt 14.r-4.5.txt,"1. Manufactured dwelling park, subject to the provisions of Chapters 36 and 55 CDC."
-or,39.4220,3,0,39.efu.txt,except for the uses listed in MCC 39.4220
 or,39.4778,3,0,39.lr-10.txt 39.lr-5.txt 39.lr-7.txt,Provisions (MCC 39.4778 through 39.4786)
 or,39.7020,3,0,39.efu.txt,MCC 39.7015 and MCC 39.7020:
 or,5.010,3,0,rldo.composite.txt 3.zoning-districts.txt,Section 5.010.  Land Use.           All land within the city of Rivergrove is zoned residential.  The
@@ -557,9 +446,6 @@ or/clackamas/happy-valley,49,3,0,16.12.definitions.txt,"Hazardous Materials Tabl
 or/clackamas/lake-oswego,50.04.003.7,3,0,50.04.dimensional.txt,"The setbacks set forth in LOC § 50.04.001 may be adjusted or excepted by LOC § 50.05.010.4.b (Sensitive Lands Setback Modifications), LOC § 50.04.003.3 (General"
 or/clackamas/milwaukie,14,3,0,19.300.base-zones.txt 19.200.definitions.txt,"means a ruling of the Planning Director regarding the applicability, scope, or effect of any provision of Titles 14, 17, and this title."
 or/clackamas/milwaukie,19.1007,3,0,19.300.base-zones.txt,"Upon receipt of the final development plan and program, phasing plan, and preliminary plat, where applicable, notice shall be given and the Planning Commission "
-or/clackamas/milwaukie,19.303.6,3,0,19.300.base-zones.txt,Subsection 19.303.6.C Marijuana testing and research facilities
-or/clackamas/milwaukie,19.310.4,3,0,19.300.base-zones.txt,§ 19.310.4. Limited Uses.
-or/clackamas/milwaukie,19.310.6,3,0,19.300.base-zones.txt,"The following business and industrial uses are allowed outright, subject to the standards of Subsection 19.310.6."
 or/clackamas/milwaukie,19.505.6,3,0,19.300.base-zones.txt,Subsection 19.505.6 Live/Work Units
 or/clackamas/milwaukie,19.509.3,3,0,19.300.base-zones.txt,Marijuana production facilities located in the M-Manufacturing zone shall be subject to the Marijuana Production Limitations set forth in Subsection 19.509.3.
 or/clackamas/milwaukie,19.906,3,0,19.300.base-zones.txt,"Nonconforming Uses, Structures, and Development. Existing structures and uses that do not meet the standards for the commercial mixed-use zones may continue in "
@@ -608,18 +494,6 @@ or,18,2,0,19.200.definitions.txt 39.cfu.txt,Refer to Title 18 for definitions re
 or,19.1006,2,0,19.300.base-zones.txt,"Detailed traffic report, analyzing existing traffic, traffic generation, turning movements, and impact on adjacent streets. Report shall recommend roadway impro"
 or,19.162.030,2,0,19.13.definitions.txt 19.70.txt,“Multi-use pathway” means pathways for pedestrian and bicycle use. See FMC 19.162.030(A)(4). (Ord. 1-2024 § 1 (Att. A); Ord. 1-2022 § 1 (Att. A); Ord. 9-2019 § 
 or,19.170,2,0,19.120.txt 19.125.txt,H. Signs – see Chapter 19.170 FMC.
-or,19.202.5,2,0,19.200.definitions.txt,§ 19.202.5. Façade Area.
-or,19.301.3,2,0,19.300.base-zones.txt,Agricultural or horticultural use                                                                             P                                                 
-or,19.307.1,2,0,19.300.base-zones.txt,§ 19.307.1. Uses Permitted Outright.
-or,19.308.1,2,0,19.300.base-zones.txt,§ 19.308.1. Uses.
-or,19.308.2,2,0,19.300.base-zones.txt,§ 19.308.2. Scale.
-or,19.308.3,2,0,19.300.base-zones.txt,§ 19.308.3. Application Review; Minimum Requirements.
-or,19.308.5,2,0,19.300.base-zones.txt,It meets the development standards of Subsection 19.308.5 below;
-or,19.311.1,2,0,19.300.base-zones.txt,§ 19.311.1. Purpose.
-or,19.311.2,2,0,19.300.base-zones.txt,§ 19.311.2. Use.
-or,19.311.3,2,0,19.300.base-zones.txt,§ 19.311.3. Development Standards.
-or,19.311.6,2,0,19.300.base-zones.txt,§ 19.311.6. Planning Commission Review of Preliminary Development Plan and Program.
-or,19.311.9,2,0,19.300.base-zones.txt,§ 19.311.9. Approval Criteria.
 or,19.440,2,0,19.30.txt 19.65.txt,"1. Development Site Area. The maximum development site area shall be eight acres, except that this standard shall not apply to parks and open space uses. Larger"
 or,19.490.200,2,0,19.30.txt 19.65.txt,"1. Permitted Uses. Manufactured homes, prefabricated homes, manufactured home park manager’s office, home occupations, and accessory structures which are necess"
 or,19.503.1,2,0,19.300.base-zones.txt,"Poultry kept for the production of meat or for commercial sale of eggs are not housed or kept within 100 ft of any dwelling not on the same lot, nor on a lot le"
@@ -656,12 +530,6 @@ or,350.045,2,0,235.390.txt,"B. Shared Parking. In addition, parking requiremen
 or,36.3525,2,0,4.1500.springwater.txt,"as Orient Commercial-Industrial (OCI), those uses allowed under Section 36.3525 of the adopted West of Sandy River"
 or,39.3080,2,0,39.mua-20.txt,"(A) Except as provided in MCC 39.3080,"
 or,39.3090,2,0,39.rural-residential.txt,"(A) Except as provided in MCC 39.3090,"
-or,39.4310,2,0,39.mua-20.txt,except for the uses listed in MCC 39.4310
-or,39.4360,2,0,39.rural-residential.txt,except for the uses listed in MCC 39.4360
-or,39.4610,2,0,39.or.txt,except for the uses listed in MCC 39.4610
-or,39.4660,2,0,39.oci.txt,except for the uses listed in MCC 39.4660
-or,39.4826,2,0,39.lr-5.txt,under MCC 39.4826(C) may be located only on
-or,39.4878,2,0,39.lr-10.txt,MCC 39.4868 through MCC 39.4878 applies to
 or,39.8610,2,0,39.mr-4.txt 39.pd.txt,development standards of MCC 39.8610;
 or,39.8925,2,0,39.efu.txt 39.mua-20.txt,agri-tourism event subject to MCC 39.8925.
 or,39.8930,2,0,39.efu.txt 39.mua-20.txt,subject to MCC 39.8930.
@@ -743,17 +611,6 @@ or/clackamas/lake-oswego,50.04.003.8,2,0,50.04.dimensional.txt,"The setbacks set
 or/clackamas/lake-oswego,50.06.004.2,2,0,50.04.dimensional.txt,See LOC § 50.06.004.2
 or/clackamas/lake-oswego,50.07.007.2,2,0,50.04.dimensional.txt,[Cross-Reference: See LOC § 50.07.007.2.e.iii for flag lot height requirements.]
 or/clackamas/milwaukie,19.1006,2,0,19.300.base-zones.txt,"Detailed traffic report, analyzing existing traffic, traffic generation, turning movements, and impact on adjacent streets. Report shall recommend roadway impro"
-or/clackamas/milwaukie,19.202.5,2,0,19.200.definitions.txt,§ 19.202.5. Façade Area.
-or/clackamas/milwaukie,19.307.1,2,0,19.300.base-zones.txt,§ 19.307.1. Uses Permitted Outright.
-or/clackamas/milwaukie,19.308.1,2,0,19.300.base-zones.txt,§ 19.308.1. Uses.
-or/clackamas/milwaukie,19.308.2,2,0,19.300.base-zones.txt,§ 19.308.2. Scale.
-or/clackamas/milwaukie,19.308.3,2,0,19.300.base-zones.txt,§ 19.308.3. Application Review; Minimum Requirements.
-or/clackamas/milwaukie,19.308.5,2,0,19.300.base-zones.txt,It meets the development standards of Subsection 19.308.5 below;
-or/clackamas/milwaukie,19.311.1,2,0,19.300.base-zones.txt,§ 19.311.1. Purpose.
-or/clackamas/milwaukie,19.311.2,2,0,19.300.base-zones.txt,§ 19.311.2. Use.
-or/clackamas/milwaukie,19.311.3,2,0,19.300.base-zones.txt,§ 19.311.3. Development Standards.
-or/clackamas/milwaukie,19.311.6,2,0,19.300.base-zones.txt,§ 19.311.6. Planning Commission Review of Preliminary Development Plan and Program.
-or/clackamas/milwaukie,19.311.9,2,0,19.300.base-zones.txt,§ 19.311.9. Approval Criteria.
 or/clackamas/milwaukie,19.503.1,2,0,19.300.base-zones.txt,"Poultry kept for the production of meat or for commercial sale of eggs are not housed or kept within 100 ft of any dwelling not on the same lot, nor on a lot le"
 or/clackamas/milwaukie,19.504.4,2,0,19.300.base-zones.txt,Subsection 19.504.4 Buildings on the Same Lot
 or/clackamas/milwaukie,19.505.2,2,0,19.300.base-zones.txt,Subsection 19.505.2 Garages and Carports
@@ -876,8 +733,6 @@ or,16.08,1,0,17.zoning.txt,to OCMC 16.08 . 065 .
 or,16.08.053,1,0,17.zoning.txt,pursuant to OCMC 16.08.053.
 or,16.08.065,1,0,17.zoning.txt,to OCMC 16.08.065.
 or,16.1,1,0,17.zoning.txt,traffic safety and meet requirements of OCMC 16.1 2. 035.
-or,16.12.010,1,0,16.12.definitions.txt,§ 16.12.010. Purpose.
-or,16.12.020,1,0,16.12.definitions.txt,§ 16.12.020. Applicability.
 or,16.21,1,0,16.12.definitions.txt,"The following definitions are organized alphabetically and some related terms are also grouped together and cross-referenced under group leadings (e.g., Lot Typ"
 or,16.24,1,0,17.zoning.txt,divisions are subject to the requirements of OCMC 16.24.
 or,16.32.042,1,0,19.200.definitions.txt,"means the trimming or removal of 20% or more of the live crown, or removal of or injury to roots within a radial distance from the tree of six times the tree’s "
@@ -909,43 +764,7 @@ or,19.1004,1,0,19.300.base-zones.txt,Minor modifications will be evaluated throu
 or,19.110,1,0,19.115.txt,"All uses shall comply with the standards in this chapter and any other applicable Fairview Village standards in Chapters 19.110 through 19.155 FMC, together wit"
 or,19.164,1,0,19.13.definitions.txt,"“Off-street parking” means all off-street areas designed, used, required or intended to be used for the parking of motor vehicles. Off-street parking areas shal"
 or,19.164.030,1,0,19.65.txt,ii. If the number of vehicle parking spaces on the site exceeds the maximum number of spaces allowed in transit/pedestrian areas as provided in FMC 19.164.030(D
-or,19.202,1,0,19.200.definitions.txt,"The exterior height of an accessory structure is the vertical distance above the average of the highest and lowest points of finished grade, within a 10-ft hori"
-or,19.202.1,1,0,19.200.definitions.txt,§ 19.202.1. Horizontal Measurements.
-or,19.202.3,1,0,19.200.definitions.txt,§ 19.202.3. Measuring Tree Diameter.
 or,19.30.130,1,0,19.13.definitions.txt,“Multi-unit dwelling” means a building containing five or more dwelling units or five or more dwelling units in two or more buildings. Multi-unit dwellings are 
-or,19.301.1,1,0,19.300.base-zones.txt,§ 19.301.1. Purpose.
-or,19.302.1,1,0,19.300.base-zones.txt,§ 19.302.1. Purpose.
-or,19.303.1,1,0,19.300.base-zones.txt,§ 19.303.1. Purpose.
-or,19.304.1,1,0,19.300.base-zones.txt,§ 19.304.1. Purpose.
-or,19.304.6,1,0,19.300.base-zones.txt,§ 19.304.6. Public Area Requirements.
-or,19.304.7,1,0,19.300.base-zones.txt,§ 19.304.7. Additional Standards.
-or,19.304.8,1,0,19.300.base-zones.txt,§ 19.304.8. Variances.
-or,19.307.2,1,0,19.300.base-zones.txt,§ 19.307.2. Conditional Uses Permitted.
-or,19.307.4,1,0,19.300.base-zones.txt,§ 19.307.4. Prohibited Uses.
-or,19.308.4,1,0,19.300.base-zones.txt,§ 19.308.4. Criteria for Approval.
-or,19.309.1,1,0,19.300.base-zones.txt,§ 19.309.1. Purpose.
-or,19.309.3,1,0,19.300.base-zones.txt,§ 19.309.3. Preexisting Uses and Developments.
-or,19.309.4,1,0,19.300.base-zones.txt,§ 19.309.4. Specific Prohibited Uses.
-or,19.309.5,1,0,19.300.base-zones.txt,§ 19.309.5. Standards for Conditional Uses.
-or,19.309.6,1,0,19.300.base-zones.txt,§ 19.309.6. Development Standards for All Uses.
-or,19.309.7,1,0,19.300.base-zones.txt,§ 19.309.7. Special Development Standards.
-or,19.310.1,1,0,19.300.base-zones.txt,§ 19.310.1. Purpose.
-or,19.310.3,1,0,19.300.base-zones.txt,§ 19.310.3. Accessory Uses.
-or,19.310.5,1,0,19.300.base-zones.txt,§ 19.310.5. Conditional Uses.
-or,19.310.7,1,0,19.300.base-zones.txt,§ 19.310.7. Validity of Uses.
-or,19.311.10,1,0,19.300.base-zones.txt,§ 19.311.10. Planning Commission Action on Final Development Plan and Program.
-or,19.311.11,1,0,19.300.base-zones.txt,§ 19.311.11. City Council Action on Final Development Plan and Program.
-or,19.311.12,1,0,19.300.base-zones.txt,§ 19.311.12. Filing of Approved Final Plan and Program.
-or,19.311.13,1,0,19.300.base-zones.txt,§ 19.311.13. Recording of Notice of Final Development Plan.
-or,19.311.14,1,0,19.300.base-zones.txt,§ 19.311.14. Development Improvement Prohibited Pending Compliance.
-or,19.311.15,1,0,19.300.base-zones.txt,§ 19.311.15. Variations from Final Development Plan and Program.
-or,19.311.16,1,0,19.300.base-zones.txt,§ 19.311.16. Expiration of Planned Development Zone.
-or,19.311.4,1,0,19.300.base-zones.txt,§ 19.311.4. Subject to Design Review.
-or,19.311.5,1,0,19.300.base-zones.txt,§ 19.311.5. Preliminary Development Plan and Program.
-or,19.311.7,1,0,19.300.base-zones.txt,§ 19.311.7. Final Development Plan and Program.
-or,19.311.8,1,0,19.300.base-zones.txt,§ 19.311.8. Land Division.
-or,19.312.1,1,0,19.300.base-zones.txt,§ 19.312.1. Purpose.
-or,19.312.3,1,0,19.300.base-zones.txt,§ 19.312.3. Specific Prohibited Uses.
 or,19.312.7.1,1,0,19.300.base-zones.txt,Figure 19.312.7.1 Key Streets
 or,19.402.14,1,0,19.200.definitions.txt,"Minimum required and maximum allowed dwelling unit density will be calculated as described below, except that residential cluster development on lands containin"
 or,19.402.15,1,0,19.200.definitions.txt,"means the area of setback between the top of the bank of a Protected water feature, or the edge of a delineated wetland, and the edge of the water quality resou"
@@ -1021,21 +840,9 @@ or,39.200,1,0,31.definitions.txt,in Section 39.200 and Group Living in Section 3
 or,39.210,1,0,31.definitions.txt,in Section 39.200 and Group Living in Section 39.210).
 or,39.3160,1,0,39.uf-20.txt,"(A) Except as provided in MCC 39.3160(B),"
 or,39.4037,1,0,39.c-3.txt,in compliance with MCC 39.4037.
-or,39.4130,1,0,39.cfu.txt,limited to the provisions of MCC 39.4130.
-or,39.4255,1,0,39.efu.txt,provisions of MCC 39.4255.
-or,39.4753,1,0,39.uf-20.txt,except as provided in MCC 39.4753(B);
-or,39.4822,1,0,39.lr-5.txt,the uses listed in MCC 39.4822 through 39.4826
-or,39.4824,1,0,39.lr-5.txt,"home under MCC 39.4824(F) shall be 5,000"
-or,39.4830,1,0,39.lr-5.txt,"the lot size requirement of MCC 39.4830(B),"
-or,39.4852,1,0,39.lr-7.txt,the uses listed in MCC 39.4852 through
-or,39.4854,1,0,39.lr-7.txt,"home under MCC 39.4854(G) shall be 7,000"
-or,39.4872,1,0,39.lr-10.txt,the uses listed in MCC 39.4872 through 39.4876
 or,39.4930,1,0,39.mr-4.txt,subject to the provisions of MCC 39.4930.
 or,39.4955,1,0,39.mr-4.txt,satisfy the approval criteria of MCC 39.4955.
-or,39.4975,1,0,39.mr-4.txt,the uses listed in MCC 39.4975 through 39.4985
-or,39.4990,1,0,39.mr-4.txt,MCC 39.4969 through MCC 39.4990 applies to
 or,39.5000,1,0,39.2000.definitions.txt,"(MCC 39.5000 – 39.5055) only, the term"
-or,39.5330,1,0,39.pd.txt,(5) The provisions of MCC 39.5330;
 or,39.7330,1,0,39.cfu.txt,39.7300 through MCC 39.7330.  For purposes of
 or,39.7575,1,0,39.efu.txt,39.7550 through MCC 39.7575; and
 or,39.7765,1,0,39.cfu.txt,through MCC 39.7765.
@@ -1136,7 +943,6 @@ or,50.04.002.1,1,0,50.04.dimensional.txt,"State Street                          
 or,50.04.002.3,1,0,50.04.dimensional.txt,"The City Engineer establishes the centerline from which the special street setback reference line is measured, pursuant to LOC § 50.04.002.3."
 or,50.04.002.5,1,0,50.04.dimensional.txt,"The special street setback (SSS) shall be measured from the SSS reference line (as established pursuant to LOC § 42.03.135), the prescribed special setback dist"
 or,50.04.003.6,1,0,50.04.dimensional.txt,"The setbacks set forth in LOC § 50.04.001 may be adjusted or excepted by LOC § 50.05.010.4.b (Sensitive Lands Setback Modifications), LOC § 50.04.003.3 (General"
-or,50.04.004,1,0,50.04.dimensional.txt,§ 50.04.004. Solar Adjustments.
 or,50.04.004.1,1,0,50.04.dimensional.txt,"When created, the lot was subject to LOC §§ 50.04.004.1 and 50.04.004.2, LOC § 50.06.007.1.a through 1.d, and was not subject to the provisions of LOC § 50.06.0"
 or,50.04.004.2,1,0,50.04.dimensional.txt,"When created, the lot was subject to LOC §§ 50.04.004.1 and 50.04.004.2, LOC § 50.06.007.1.a through 1.d, and was not subject to the provisions of LOC § 50.06.0"
 or,50.05.004,1,0,50.04.dimensional.txt,"[Cross-References: In EC zone, see also Downtown Redevelopment Design District, LOC § 50.05.004; Height Limitation: see also LOC § 50.06.001.5.b.]"
@@ -1290,8 +1096,6 @@ or/clackamas/happy-valley,1.1312,1,0,16.12.definitions.txt,"As defined by the Fe
 or/clackamas/happy-valley,1.1320,1,0,16.12.definitions.txt,The facilities are mounted on structures 50 feet or less in height including their antennas (as defined in CFR 1.1320.d);
 or/clackamas/happy-valley,1.2307,1,0,16.12.definitions.txt,The facilities do not result in human exposure to radio-frequency radiation in excess of applicable safety standards specified in CFR 1.2307.b.
 or/clackamas/happy-valley,1012,1,0,16.22.residential.txt,"Each lot for an attached single-family (townhouse) dwelling in the SFA and VTH zones shall have a minimum size of 2,000 square feet and a maximum size of 3,000 "
-or/clackamas/happy-valley,16.12.010,1,0,16.12.definitions.txt,§ 16.12.010. Purpose.
-or/clackamas/happy-valley,16.12.020,1,0,16.12.definitions.txt,§ 16.12.020. Applicability.
 or/clackamas/happy-valley,16.21,1,0,16.12.definitions.txt,"The following definitions are organized alphabetically and some related terms are also grouped together and cross-referenced under group leadings (e.g., Lot Typ"
 or/clackamas/happy-valley,16.4,1,0,16.22.residential.txt,The procedures and application requirements under Chapter 16.63 (Land Divisions and Property Line Adjustments) and Article 16.4 (Community Design Standards) sha
 or/clackamas/happy-valley,16.42,1,0,16.12.definitions.txt,"Any living plant approved as part of a landscape plan that provides under story cover, shade of the ground, or cover for bare ground. See Chapter 16.42, Landsca"
@@ -1316,7 +1120,6 @@ or/clackamas/lake-oswego,50.04.002.1,1,0,50.04.dimensional.txt,"State Street    
 or/clackamas/lake-oswego,50.04.002.3,1,0,50.04.dimensional.txt,"The City Engineer establishes the centerline from which the special street setback reference line is measured, pursuant to LOC § 50.04.002.3."
 or/clackamas/lake-oswego,50.04.002.5,1,0,50.04.dimensional.txt,"The special street setback (SSS) shall be measured from the SSS reference line (as established pursuant to LOC § 42.03.135), the prescribed special setback dist"
 or/clackamas/lake-oswego,50.04.003.6,1,0,50.04.dimensional.txt,"The setbacks set forth in LOC § 50.04.001 may be adjusted or excepted by LOC § 50.05.010.4.b (Sensitive Lands Setback Modifications), LOC § 50.04.003.3 (General"
-or/clackamas/lake-oswego,50.04.004,1,0,50.04.dimensional.txt,§ 50.04.004. Solar Adjustments.
 or/clackamas/lake-oswego,50.04.004.1,1,0,50.04.dimensional.txt,"When created, the lot was subject to LOC §§ 50.04.004.1 and 50.04.004.2, LOC § 50.06.007.1.a through 1.d, and was not subject to the provisions of LOC § 50.06.0"
 or/clackamas/lake-oswego,50.04.004.2,1,0,50.04.dimensional.txt,"When created, the lot was subject to LOC §§ 50.04.004.1 and 50.04.004.2, LOC § 50.06.007.1.a through 1.d, and was not subject to the provisions of LOC § 50.06.0"
 or/clackamas/lake-oswego,50.05.004,1,0,50.04.dimensional.txt,"[Cross-References: In EC zone, see also Downtown Redevelopment Design District, LOC § 50.05.004; Height Limitation: see also LOC § 50.06.001.5.b.]"
@@ -1339,42 +1142,6 @@ or/clackamas/milwaukie,16.32.042,1,0,19.200.definitions.txt,"means the trimming 
 or/clackamas/milwaukie,17,1,0,19.300.base-zones.txt,Compliance with all applicable standards in Title 17 Land Division;
 or/clackamas/milwaukie,18,1,0,19.200.definitions.txt,Refer to Title 18 for definitions related to flood hazard areas.
 or/clackamas/milwaukie,19.1004,1,0,19.300.base-zones.txt,Minor modifications will be evaluated through either a Type I or Type II review per Section 19.1004 or 19.1005. The City Manager or designee will determine the 
-or/clackamas/milwaukie,19.202,1,0,19.200.definitions.txt,"The exterior height of an accessory structure is the vertical distance above the average of the highest and lowest points of finished grade, within a 10-ft hori"
-or/clackamas/milwaukie,19.202.1,1,0,19.200.definitions.txt,§ 19.202.1. Horizontal Measurements.
-or/clackamas/milwaukie,19.202.3,1,0,19.200.definitions.txt,§ 19.202.3. Measuring Tree Diameter.
-or/clackamas/milwaukie,19.301.1,1,0,19.300.base-zones.txt,§ 19.301.1. Purpose.
-or/clackamas/milwaukie,19.302.1,1,0,19.300.base-zones.txt,§ 19.302.1. Purpose.
-or/clackamas/milwaukie,19.303.1,1,0,19.300.base-zones.txt,§ 19.303.1. Purpose.
-or/clackamas/milwaukie,19.304.1,1,0,19.300.base-zones.txt,§ 19.304.1. Purpose.
-or/clackamas/milwaukie,19.304.6,1,0,19.300.base-zones.txt,§ 19.304.6. Public Area Requirements.
-or/clackamas/milwaukie,19.304.7,1,0,19.300.base-zones.txt,§ 19.304.7. Additional Standards.
-or/clackamas/milwaukie,19.304.8,1,0,19.300.base-zones.txt,§ 19.304.8. Variances.
-or/clackamas/milwaukie,19.307.2,1,0,19.300.base-zones.txt,§ 19.307.2. Conditional Uses Permitted.
-or/clackamas/milwaukie,19.307.4,1,0,19.300.base-zones.txt,§ 19.307.4. Prohibited Uses.
-or/clackamas/milwaukie,19.308.4,1,0,19.300.base-zones.txt,§ 19.308.4. Criteria for Approval.
-or/clackamas/milwaukie,19.309.1,1,0,19.300.base-zones.txt,§ 19.309.1. Purpose.
-or/clackamas/milwaukie,19.309.3,1,0,19.300.base-zones.txt,§ 19.309.3. Preexisting Uses and Developments.
-or/clackamas/milwaukie,19.309.4,1,0,19.300.base-zones.txt,§ 19.309.4. Specific Prohibited Uses.
-or/clackamas/milwaukie,19.309.5,1,0,19.300.base-zones.txt,§ 19.309.5. Standards for Conditional Uses.
-or/clackamas/milwaukie,19.309.6,1,0,19.300.base-zones.txt,§ 19.309.6. Development Standards for All Uses.
-or/clackamas/milwaukie,19.309.7,1,0,19.300.base-zones.txt,§ 19.309.7. Special Development Standards.
-or/clackamas/milwaukie,19.310.1,1,0,19.300.base-zones.txt,§ 19.310.1. Purpose.
-or/clackamas/milwaukie,19.310.3,1,0,19.300.base-zones.txt,§ 19.310.3. Accessory Uses.
-or/clackamas/milwaukie,19.310.5,1,0,19.300.base-zones.txt,§ 19.310.5. Conditional Uses.
-or/clackamas/milwaukie,19.310.7,1,0,19.300.base-zones.txt,§ 19.310.7. Validity of Uses.
-or/clackamas/milwaukie,19.311.10,1,0,19.300.base-zones.txt,§ 19.311.10. Planning Commission Action on Final Development Plan and Program.
-or/clackamas/milwaukie,19.311.11,1,0,19.300.base-zones.txt,§ 19.311.11. City Council Action on Final Development Plan and Program.
-or/clackamas/milwaukie,19.311.12,1,0,19.300.base-zones.txt,§ 19.311.12. Filing of Approved Final Plan and Program.
-or/clackamas/milwaukie,19.311.13,1,0,19.300.base-zones.txt,§ 19.311.13. Recording of Notice of Final Development Plan.
-or/clackamas/milwaukie,19.311.14,1,0,19.300.base-zones.txt,§ 19.311.14. Development Improvement Prohibited Pending Compliance.
-or/clackamas/milwaukie,19.311.15,1,0,19.300.base-zones.txt,§ 19.311.15. Variations from Final Development Plan and Program.
-or/clackamas/milwaukie,19.311.16,1,0,19.300.base-zones.txt,§ 19.311.16. Expiration of Planned Development Zone.
-or/clackamas/milwaukie,19.311.4,1,0,19.300.base-zones.txt,§ 19.311.4. Subject to Design Review.
-or/clackamas/milwaukie,19.311.5,1,0,19.300.base-zones.txt,§ 19.311.5. Preliminary Development Plan and Program.
-or/clackamas/milwaukie,19.311.7,1,0,19.300.base-zones.txt,§ 19.311.7. Final Development Plan and Program.
-or/clackamas/milwaukie,19.311.8,1,0,19.300.base-zones.txt,§ 19.311.8. Land Division.
-or/clackamas/milwaukie,19.312.1,1,0,19.300.base-zones.txt,§ 19.312.1. Purpose.
-or/clackamas/milwaukie,19.312.3,1,0,19.300.base-zones.txt,§ 19.312.3. Specific Prohibited Uses.
 or/clackamas/milwaukie,19.312.7.1,1,0,19.300.base-zones.txt,Figure 19.312.7.1 Key Streets
 or/clackamas/milwaukie,19.402.14,1,0,19.200.definitions.txt,"Minimum required and maximum allowed dwelling unit density will be calculated as described below, except that residential cluster development on lands containin"
 or/clackamas/milwaukie,19.402.15,1,0,19.200.definitions.txt,"means the area of setback between the top of the bank of a Protected water feature, or the edge of a delineated wetland, and the edge of the water quality resou"
@@ -1602,14 +1369,9 @@ or/multnomah/_unincorporated,33.930.100,1,0,33.110.txt,width for a cottage clust
 or/multnomah/_unincorporated,39.1600,1,0,39.2000.definitions.txt,established under MCC 39.1600.
 or/multnomah/_unincorporated,39.3160,1,0,39.uf-20.txt,"(A) Except as provided in MCC 39.3160(B),"
 or/multnomah/_unincorporated,39.4037,1,0,39.c-3.txt,in compliance with MCC 39.4037.
-or/multnomah/_unincorporated,39.4130,1,0,39.cfu.txt,limited to the provisions of MCC 39.4130.
-or/multnomah/_unincorporated,39.4255,1,0,39.efu.txt,provisions of MCC 39.4255.
-or/multnomah/_unincorporated,39.4830,1,0,39.lr-5.txt,"the lot size requirement of MCC 39.4830(B),"
-or/multnomah/_unincorporated,39.4852,1,0,39.lr-7.txt,the uses listed in MCC 39.4852 through
 or/multnomah/_unincorporated,39.4930,1,0,39.mr-4.txt,subject to the provisions of MCC 39.4930.
 or/multnomah/_unincorporated,39.4955,1,0,39.mr-4.txt,satisfy the approval criteria of MCC 39.4955.
 or/multnomah/_unincorporated,39.5000,1,0,39.2000.definitions.txt,"(MCC 39.5000 – 39.5055) only, the term"
-or/multnomah/_unincorporated,39.5330,1,0,39.pd.txt,(5) The provisions of MCC 39.5330;
 or/multnomah/_unincorporated,39.7330,1,0,39.cfu.txt,39.7300 through MCC 39.7330.  For purposes of
 or/multnomah/_unincorporated,39.7575,1,0,39.efu.txt,39.7550 through MCC 39.7575; and
 or/multnomah/_unincorporated,39.7765,1,0,39.cfu.txt,through MCC 39.7765.
