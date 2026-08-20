@@ -278,3 +278,146 @@ def test_the_report_says_which_chapters_are_doubtful(corpus: list[Chapter]) -> N
     text = render(corpus)
     assert "read_whole=" in text
     assert "/100 lines" in text
+
+
+# --- a glossary set inside a chapter about something else --------------
+
+
+def test_a_numbered_heading_still_opens_an_entry() -> None:
+    """A codifier that numbers its definitions prints the section number, the
+    term and a period, and puts the meaning on the line beneath. The stacked
+    matcher wanted the line to open with a capital letter, so every entry in
+    every numbered chapter read as prose."""
+    got = read(
+        "\n".join(
+            [
+                "17.04.808 Net density.",
+                '"Net density" means the number of dwelling units divided by the',
+                "net developable area, as measured in acres.",
+            ]
+        )
+    )
+
+    assert [e.term for e in got] == ["Net density"]
+    assert got[0].shape == "stacked"
+
+
+def test_a_body_that_quotes_its_own_heading_is_not_a_misfiling() -> None:
+    """The guard against filing one term's meaning under another's fires on a
+    body that is itself a well-formed entry. A numbered codifier writes every
+    entry that way -- heading, then the term again in quotes -- so the guard
+    was throwing away the chapters it was meant to protect."""
+    got = read(
+        "\n".join(
+            [
+                "17.04.810 Net developable area.",
+                '"Net developable area" means the area of a parcel of land',
+                "remaining after deducting floodplain, resource overlay and slope.",
+            ]
+        )
+    )
+
+    assert [e.term for e in got] == ["Net developable area"]
+
+
+def test_an_index_heading_over_a_reading_body_is_one_entry() -> None:
+    """Codes file corner lots under L so the alphabetical list works, then
+    write the sentence the other way round. Same words, different order, one
+    entry -- and the words are what the comparison is on."""
+    got = read(
+        "\n".join(
+            [
+                "17.04.665 Lot, corner.",
+                '"Corner lot" means a lot abutting upon two or more streets at',
+                "their intersection, and not otherwise.",
+            ]
+        )
+    )
+
+    assert [e.term for e in got] == ["Lot, corner"]
+
+
+def test_a_body_that_is_a_different_term_is_still_a_misfiling() -> None:
+    """The narrowing has to stay narrow. A heading whose next line is the next
+    entry is the failure the guard exists for, and it is worse than a missed
+    entry: it files one term's meaning under another term's name."""
+    got = read(
+        "\n".join(
+            [
+                "17.04.660 Lot.",
+                "17.04.665 Lot coverage. The area of a lot covered by the footprint",
+                "of all structures two hundred square feet or greater.",
+            ]
+        )
+    )
+
+    assert "Lot" not in [e.term for e in got]
+
+
+def test_a_glossary_inside_another_chapter_is_read_where_it_was_declared() -> None:
+    """Oregon City defines 300-odd terms in Chapter 17.04 of Title 17 and
+    publishes no document called Definitions, so matching on a document's name
+    found nothing and the city read as a code that defines no words."""
+    oregon_city = next(
+        c for c in chapters("or/clackamas/oregon-city")
+    )
+    terms = {e.key for e in oregon_city.entries}
+
+    assert oregon_city.read_whole
+    assert len(oregon_city.entries) > 250
+    for expected in ("net density", "net developable area", "lot corner"):
+        assert expected in terms, expected
+
+
+def test_the_line_numbers_are_the_documents_own(  # noqa: D401
+) -> None:
+    """A span is read at an offset, and an entry whose quote pointed into the
+    slice rather than into the file would send every reviewer to the wrong
+    sentence."""
+    oregon_city = chapters("or/clackamas/oregon-city")[0]
+    net_density = next(e for e in oregon_city.entries if e.key == "net density")
+
+    assert net_density.quote == "or/clackamas/oregon-city/17.zoning.txt#L2441"
+
+
+def test_a_declared_span_has_to_be_a_line_range() -> None:
+    from pydantic import ValidationError
+
+    from flats.rules.model import CodeDocument
+
+    with pytest.raises(ValidationError, match="expected a line range"):
+        CodeDocument(id="17.zoning", url="https://example.invalid/1", definitions_at="17.04")
+    with pytest.raises(ValidationError, match="not a range"):
+        CodeDocument(id="17.zoning", url="https://example.invalid/1", definitions_at="L900-L800")
+
+
+def test_three_more_jurisdictions_declared_one(corpus: list[Chapter]) -> None:
+    """Oregon City, Wilsonville and Rivergrove all print their glossary inside
+    a chapter named for something else. Between them they hold 660 defined
+    terms that nothing in this system could see."""
+    held = {c.layer for c in corpus}
+
+    for layer in (
+        "or/clackamas/oregon-city",
+        "or/clackamas/wilsonville",
+        "or/clackamas/rivergrove",
+    ):
+        assert layer in held
+
+
+def test_a_body_is_captured_once_and_not_also_as_its_own_entry() -> None:
+    """A body that quotes its heading back is a well-formed inline entry read
+    on its own, so a line-by-line scan filed the same meaning twice under two
+    line numbers -- 105 times over in Gladstone. The body belongs to the entry
+    above it and the scan steps over it."""
+    got = read(
+        "\n".join(
+            [
+                "17.04.670 Lot coverage.",
+                '"Lot coverage" means the area of a lot covered by the footprint of',
+                "all structures two hundred square feet or greater.",
+            ]
+        )
+    )
+
+    assert [(e.term, e.line) for e in got] == [("Lot coverage", 1)]

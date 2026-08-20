@@ -79,6 +79,10 @@ code:
     # Layout-mode extraction fuses 2.2% of this PDF's words, silently hiding
     # standards from every subject phrase; plain mode reads them.
     extraction: plain
+    # Section 4.001, "Definitions", opens the chapter and runs to Section
+    # 4.002. The chapter is named for planning rather than for words, so
+    # the glossary inside it was invisible.
+    definitions_at: L232-L1674
 zones:
   R:
     section: ["4.122", "4.113", "4.001"]

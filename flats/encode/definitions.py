@@ -252,11 +252,11 @@ def _chapter(layer: Layer) -> tuple[str, bool]:
     "we never fetched the chapter that would", which are the same row in a
     naive report and opposite instructions to whoever reads it.
     """
+    from flats.encode.glossary import declared
+
     stored = {p.stem for p in _stored(layer.layer)}
-    for doc in layer.code:
-        if CHAPTER.search(f"{doc.id} {doc.title}"):
-            return doc.id, doc.id in stored
-    return "", False
+    doc = declared(layer)
+    return ("", False) if doc is None else (doc.id, doc.id in stored)
 
 
 def coverage_for(rules: RuleSet, layer_id: str) -> list[Coverage]:

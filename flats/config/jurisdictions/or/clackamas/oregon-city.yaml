@@ -53,6 +53,13 @@ code:
     # for ten thousand square feet. Declared rather than detected — see
     # CodeDocument.spaced.
     spaced: true
+    # Chapter 17.04, "DEFINITIONS", runs from 17.04.005 to the head of
+    # Chapter 17.08. Oregon City publishes no separate definitions
+    # document, so nothing keyed on a document's name could find the 334
+    # terms in here and the city read as a code that defines no words.
+    # 17.04.808 "Net density" is one of them, and it is the sentence the
+    # five density values in this file are measured on.
+    definitions_at: L834-L4015
 zones:
   R-10:
     section: ["17.08.", "17.16."]
@@ -105,14 +112,20 @@ zones:
       # that, so the lot's own area serves as the bound it is.
       measured_on:
         fact: net_developable_area
-        # This city's own subtraction list: net developable area, undefined in the glossary and shown by worked
-      # example instead: the Code's own illustration takes 4.84 gross
-      # acres to 3.87 and annotates it "80% is developable, 20% is
-      # right-of-way, slopes, etc." An example is not a rule and 80
-      # percent is not encoded, but it is the only figure the Code offers
-      # for how much of a lot survives the deduction.
-        cite: OCMC 17.04.808 "Net density"
-        quote: "or/clackamas/oregon-city/17.zoning.txt#L2441-L2443,L2454-L2455"
+        # This city's own subtraction list, OCMC 17.04.810, six items: the
+        # 100-year floodplain, the Natural Resource Overlay District, slopes
+        # over thirty-five percent (with a discretionary adjustment down to
+        # twenty-five), open space, public facilities and rights-of-way, and
+        # -- on the director's approval -- land an easement bars a building
+        # from. Close to Milwaukie's list and nothing like Fairview's.
+        #
+        # 17.04.808 works the arithmetic through an example: 4.84 gross acres
+        # to 3.87, annotated "80% is developable, 20% is right-of-way, slopes,
+        # etc." An illustration is not a standard and the 80 percent is not
+        # encoded, but it is the only figure this Code offers for how much of
+        # a lot survives the deduction.
+        cite: OCMC 17.04.810 "Net developable area"; 17.04.808 "Net density"
+        quote: "or/clackamas/oregon-city/17.zoning.txt#L2441-L2443,L2468-L2491"
     notes: 'quadfit confidence: verified | Height 35 ft. Front 15 ft for a porch. Rear 10 ft for ADU/cottage
       cluster. No FAR. Quadplex uses base-zone dimensions per 17.16.060.A; >=1 street-facing main entrance
       req''d (17.16.060.C). Coverage 45% only with an ADU.'
@@ -170,14 +183,20 @@ zones:
       # that, so the lot's own area serves as the bound it is.
       measured_on:
         fact: net_developable_area
-        # This city's own subtraction list: net developable area, undefined in the glossary and shown by worked
-      # example instead: the Code's own illustration takes 4.84 gross
-      # acres to 3.87 and annotates it "80% is developable, 20% is
-      # right-of-way, slopes, etc." An example is not a rule and 80
-      # percent is not encoded, but it is the only figure the Code offers
-      # for how much of a lot survives the deduction.
-        cite: OCMC 17.04.808 "Net density"
-        quote: "or/clackamas/oregon-city/17.zoning.txt#L2441-L2443,L2454-L2455"
+        # This city's own subtraction list, OCMC 17.04.810, six items: the
+        # 100-year floodplain, the Natural Resource Overlay District, slopes
+        # over thirty-five percent (with a discretionary adjustment down to
+        # twenty-five), open space, public facilities and rights-of-way, and
+        # -- on the director's approval -- land an easement bars a building
+        # from. Close to Milwaukie's list and nothing like Fairview's.
+        #
+        # 17.04.808 works the arithmetic through an example: 4.84 gross acres
+        # to 3.87, annotated "80% is developable, 20% is right-of-way, slopes,
+        # etc." An illustration is not a standard and the 80 percent is not
+        # encoded, but it is the only figure this Code offers for how much of
+        # a lot survives the deduction.
+        cite: OCMC 17.04.810 "Net developable area"; 17.04.808 "Net density"
+        quote: "or/clackamas/oregon-city/17.zoning.txt#L2441-L2443,L2468-L2491"
     notes: 'quadfit confidence: verified | Height 35 ft. Front 10 ft for a porch. No FAR. One street-facing
       entrance per quadplex (17.16.060.C). Coverage 45% only with an ADU.'
     setback_garage_entrance_ft:
@@ -234,14 +253,20 @@ zones:
       # that, so the lot's own area serves as the bound it is.
       measured_on:
         fact: net_developable_area
-        # This city's own subtraction list: net developable area, undefined in the glossary and shown by worked
-      # example instead: the Code's own illustration takes 4.84 gross
-      # acres to 3.87 and annotates it "80% is developable, 20% is
-      # right-of-way, slopes, etc." An example is not a rule and 80
-      # percent is not encoded, but it is the only figure the Code offers
-      # for how much of a lot survives the deduction.
-        cite: OCMC 17.04.808 "Net density"
-        quote: "or/clackamas/oregon-city/17.zoning.txt#L2441-L2443,L2454-L2455"
+        # This city's own subtraction list, OCMC 17.04.810, six items: the
+        # 100-year floodplain, the Natural Resource Overlay District, slopes
+        # over thirty-five percent (with a discretionary adjustment down to
+        # twenty-five), open space, public facilities and rights-of-way, and
+        # -- on the director's approval -- land an easement bars a building
+        # from. Close to Milwaukie's list and nothing like Fairview's.
+        #
+        # 17.04.808 works the arithmetic through an example: 4.84 gross acres
+        # to 3.87, annotated "80% is developable, 20% is right-of-way, slopes,
+        # etc." An illustration is not a standard and the 80 percent is not
+        # encoded, but it is the only figure this Code offers for how much of
+        # a lot survives the deduction.
+        cite: OCMC 17.04.810 "Net developable area"; 17.04.808 "Net density"
+        quote: "or/clackamas/oregon-city/17.zoning.txt#L2441-L2443,L2468-L2491"
     notes: 'quadfit confidence: verified | Height 35 ft. Front 5 ft for a porch. Quadplex min lot (7,000)
       exceeds detached-SFD min (6,000). No FAR. Coverage 45% only with an ADU.'
     setback_garage_entrance_ft:
@@ -304,14 +329,20 @@ zones:
       # that, so the lot's own area serves as the bound it is.
       measured_on:
         fact: net_developable_area
-        # This city's own subtraction list: net developable area, undefined in the glossary and shown by worked
-      # example instead: the Code's own illustration takes 4.84 gross
-      # acres to 3.87 and annotates it "80% is developable, 20% is
-      # right-of-way, slopes, etc." An example is not a rule and 80
-      # percent is not encoded, but it is the only figure the Code offers
-      # for how much of a lot survives the deduction.
-        cite: OCMC 17.04.808 "Net density"
-        quote: "or/clackamas/oregon-city/17.zoning.txt#L2441-L2443,L2454-L2455"
+        # This city's own subtraction list, OCMC 17.04.810, six items: the
+        # 100-year floodplain, the Natural Resource Overlay District, slopes
+        # over thirty-five percent (with a discretionary adjustment down to
+        # twenty-five), open space, public facilities and rights-of-way, and
+        # -- on the director's approval -- land an easement bars a building
+        # from. Close to Milwaukie's list and nothing like Fairview's.
+        #
+        # 17.04.808 works the arithmetic through an example: 4.84 gross acres
+        # to 3.87, annotated "80% is developable, 20% is right-of-way, slopes,
+        # etc." An illustration is not a standard and the 80 percent is not
+        # encoded, but it is the only figure this Code offers for how much of
+        # a lot survives the deduction.
+        cite: OCMC 17.04.810 "Net developable area"; 17.04.808 "Net density"
+        quote: "or/clackamas/oregon-city/17.zoning.txt#L2441-L2443,L2468-L2491"
     notes: 'quadfit confidence: verified | Height 35 ft. Ch 17.10 ''Medium Density'' but permits detached
       SFD (17.10.020.A) so HB 2001 attaches. Quadplex min lot 7,000 > detached 5,000. Coverage 50%.'
     setback_garage_entrance_ft:
@@ -374,14 +405,20 @@ zones:
       # that, so the lot's own area serves as the bound it is.
       measured_on:
         fact: net_developable_area
-        # This city's own subtraction list: net developable area, undefined in the glossary and shown by worked
-      # example instead: the Code's own illustration takes 4.84 gross
-      # acres to 3.87 and annotates it "80% is developable, 20% is
-      # right-of-way, slopes, etc." An example is not a rule and 80
-      # percent is not encoded, but it is the only figure the Code offers
-      # for how much of a lot survives the deduction.
-        cite: OCMC 17.04.808 "Net density"
-        quote: "or/clackamas/oregon-city/17.zoning.txt#L2441-L2443,L2454-L2455"
+        # This city's own subtraction list, OCMC 17.04.810, six items: the
+        # 100-year floodplain, the Natural Resource Overlay District, slopes
+        # over thirty-five percent (with a discretionary adjustment down to
+        # twenty-five), open space, public facilities and rights-of-way, and
+        # -- on the director's approval -- land an easement bars a building
+        # from. Close to Milwaukie's list and nothing like Fairview's.
+        #
+        # 17.04.808 works the arithmetic through an example: 4.84 gross acres
+        # to 3.87, annotated "80% is developable, 20% is right-of-way, slopes,
+        # etc." An illustration is not a standard and the 80 percent is not
+        # encoded, but it is the only figure this Code offers for how much of
+        # a lot survives the deduction.
+        cite: OCMC 17.04.810 "Net developable area"; 17.04.808 "Net density"
+        quote: "or/clackamas/oregon-city/17.zoning.txt#L2441-L2443,L2468-L2491"
     notes: 'quadfit confidence: verified | Height 35 ft. Permits detached SFD (17.10.020.A). Quadplex
       min lot 7,000 >> detached 3,500. Coverage 55%. NOT the multi-family zone (that is R-2 / Ch 17.12,
       excluded).'

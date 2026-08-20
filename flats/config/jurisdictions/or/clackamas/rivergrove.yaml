@@ -36,6 +36,10 @@ code:
 - id: rldo.composite
   url: https://www.cityofrivergrove.org/s/RLDOComposite-with-cover.pdf
   title: Rivergrove Land Development Ordinance (composite compilation)
+  # Section 1.050, "Definitions", runs to Section 2.010. The city posts one
+  # composite PDF for the whole ordinance, so there is no document named
+  # for definitions to find.
+  definitions_at: L284-L409
 zones:
   R10:
     section:

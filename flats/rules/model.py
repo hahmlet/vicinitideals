@@ -1102,6 +1102,32 @@ class CodeDocument(BaseModel):
     #: Set only for a genuinely short section, and only by somebody who has read
     #: it. Never to silence a URL that is serving the wrong thing.
     allow_thin: bool = False
+    #: The line span, "L834-L4015", where this document holds the
+    #: jurisdiction's definitions -- for codes that print their glossary inside
+    #: a chapter rather than as one. Oregon City's Title 17 defines 334 terms
+    #: in Chapter 17.04 and publishes no separate definitions document, so
+    #: matching on a document's name found nothing and the whole city read as a
+    #: code that defines no words. It defines more of them than most.
+    #:
+    #: A span rather than a second fetch: the text is already stored, the
+    #: quotes already point into it, and re-slicing the same PDF under a second
+    #: id would give one sentence two citations.
+    definitions_at: str = ""
+
+    @field_validator("definitions_at")
+    @classmethod
+    def _span_is_a_line_range(cls, raw: str) -> str:
+        if not raw:
+            return raw
+        match = re.fullmatch(r"L(\d+)-L(\d+)", raw.strip())
+        if match is None:
+            raise ValueError(
+                f"definitions_at {raw!r}: expected a line range like 'L834-L4015'"
+            )
+        first, last = int(match.group(1)), int(match.group(2))
+        if first < 1 or last < first:
+            raise ValueError(f"definitions_at {raw!r}: not a range")
+        return raw.strip()
 
     @model_validator(mode="after")
     def _id_is_a_filename(self) -> CodeDocument:

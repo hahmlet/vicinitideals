@@ -45,7 +45,7 @@ from typing import Sequence
 
 from flats.encode.definitions import CHAPTER, _stored
 from flats.rules.loader import load_rules
-from flats.rules.model import Layer
+from flats.rules.model import CodeDocument, Layer
 
 #: An entry opens its own line: an optional bullet or list marker, the term,
 #: a separator, then the body. The term is a noun phrase, so it is bounded --
@@ -58,7 +58,7 @@ ENTRY = re.compile(
     r"^(?:[•·▪◦*(\-–—]\s*){0,2}"
     r"(?:\(?[0-9ivxIVX]{1,5}[.)]\s+)?"  # a list marker, if the code numbers them
     r"(?:\d{1,3}\.\d{2,4}(?:\.\d{1,4})?\s+)?"  # or a section number
-    r"[\"“]?(?P<term>[A-Z][A-Za-z0-9'’/()\-]*(?:[ ,](?:[A-Za-z0-9'’/()\-]+)){0,6})[\"”]?"
+    r"[\"“]?(?P<term>[A-Z][A-Za-z0-9'’/()\-]*(?:(?:,\s|[ ,])(?:[A-Za-z0-9'’/()\-]+)){0,6})[\"”]?"
     r"(?P<sep>\s*[.:]\s+|\s*[–—-]\s+|\s+(?:means|shall mean|refers to|is defined as)\s+)"
     r"(?P<body>\S.*)$"
 )
@@ -67,7 +67,7 @@ ENTRY = re.compile(
 #: and Happy Valley's codifier sets every entry this way, and a rule that only
 #: knows the inline form reads their entire chapters as prose.
 STACKED = re.compile(
-    r"^[\"“]?(?P<term>[A-Z][A-Za-z0-9'’/()\-]*(?:[ ,](?:[A-Za-z0-9'’/()\-]+)){0,6})"
+    r"^(?:\d{1,3}\.\d{2,4}(?:\.\d{1,4})?\s+)?[\"“]?(?P<term>[A-Z][A-Za-z0-9'’/()\-]*(?:(?:,\s|[ ,])(?:[A-Za-z0-9'’/()\-]+)){0,6})"
     r"[\"”]?\s*[.:]?$"
 )
 
@@ -206,15 +206,39 @@ def _misfiled(term: str, body: str) -> bool:
     if _CROSS_REFERENCE.match(term):
         return True
     inside = ENTRY.match(body)
-    return inside is not None and MIN_TERM <= len(inside.group("term")) <= MAX_TERM
+    if inside is None or not MIN_TERM <= len(inside.group("term")) <= MAX_TERM:
+        return False
+    # ...unless the body opens by quoting its own heading back. A codifier that
+    # numbers its entries usually prints the term twice -- "17.04.808 Net
+    # density." and then "Net density" means ... -- and the second printing is
+    # this entry's body, not the next entry. Read as a misfiling it discarded
+    # 99 of Oregon City's 118 definitions, including the one every density
+    # value in that city is measured on.
+    #
+    # The heading is often the index form and the body the reading form:
+    # "17.04.665 Lot, corner." over "Corner lot" means ... Same words, filed
+    # for an alphabetical list rather than for a sentence, so the comparison
+    # is on the words and not on their order.
+    return _words(inside.group("term")) != _words(term)
 
 
-def _entries(text: str, *, layer: str, doc: str) -> list[Entry]:
+def _key(term: str) -> str:
+    """A term as it compares: case-folded, punctuation dropped, collapsed."""
+    return _collapse(re.sub(r"[^a-z0-9 ]", " ", term.lower()))
+
+
+def _words(term: str) -> tuple[str, ...]:
+    """A term as a sorted bag of words, so an inversion compares equal."""
+    return tuple(sorted(_key(term).split()))
+
+
+def _entries(text: str, *, layer: str, doc: str, offset: int = 0) -> list[Entry]:
     lines = text.splitlines()
     out: list[Entry] = []
+    spoken_for: set[int] = set()
     for i, raw in enumerate(lines):
         stripped = raw.strip()
-        if not stripped:
+        if not stripped or i in spoken_for:
             continue
         if PUBLISHER_FOOTER.match(stripped):
             # Everything below is the website, not the chapter.
@@ -233,7 +257,7 @@ def _entries(text: str, *, layer: str, doc: str) -> list[Entry]:
                     Entry(
                         layer=layer,
                         doc=doc,
-                        line=i + 1,
+                        line=i + 1 + offset,
                         term=inline.group("term").strip(),
                         text=_whole(lines, i + 1, body),
                     )
@@ -242,7 +266,8 @@ def _entries(text: str, *, layer: str, doc: str) -> list[Entry]:
         stacked = STACKED.match(stripped)
         if stacked is None or not MIN_TERM <= len(stacked.group("term")) <= MAX_TERM:
             continue
-        body = _collapse(_below(lines, i))
+        at, raw_body = _below(lines, i)
+        body = _collapse(raw_body)
         if len(body) < MIN_BODY or NOT_A_DEFINITION.match(body):
             continue
         if APPARATUS.match(stacked.group("term")) or APPARATUS.match(body):
@@ -259,12 +284,17 @@ def _entries(text: str, *, layer: str, doc: str) -> list[Entry]:
             Entry(
                 layer=layer,
                 doc=doc,
-                line=i + 1,
+                line=i + 1 + offset,
                 term=stacked.group("term").strip(),
                 text=_whole(lines, i + 2, body),
                 shape="stacked",
             )
         )
+        # This entry's body is spoken for. Read on its own it is often a
+        # perfectly good inline entry for the same term, and capturing it
+        # again would file one meaning twice under two line numbers.
+        if at >= 0:
+            spoken_for.add(at)
     return out
 
 
@@ -295,13 +325,20 @@ def _whole(lines: Sequence[str], start: int, first: str) -> str:
     return _collapse(" ".join(body))
 
 
-def _below(lines: Sequence[str], i: int) -> str:
-    """The first non-blank line under an entry, which is its body."""
-    for line in lines[i + 1 : i + 3]:
-        stripped = line.strip()
+def _below(lines: Sequence[str], i: int) -> tuple[int, str]:
+    """The first non-blank line under an entry, which is its body, and where.
+
+    The index matters: a codifier that opens a body by quoting its own heading
+    back writes a line that is a well-formed entry on its own, and a scanner
+    that read every line independently filed the same term twice -- 105 times
+    over in Gladstone. Knowing which line the body was taken from is what lets
+    the scan step over it.
+    """
+    for j in range(i + 1, min(i + 3, len(lines))):
+        stripped = lines[j].strip()
         if stripped:
-            return stripped
-    return ""
+            return j, stripped
+    return -1, ""
 
 
 def _disorder(entries: Sequence[Entry]) -> list[Entry]:
@@ -388,26 +425,58 @@ def _out_of_order(entries: Sequence[Entry]) -> list[Entry]:
     return [e for i, e in enumerate(entries) if i not in keep]
 
 
-def read(layer: Layer) -> Chapter | None:
-    """One jurisdiction's definitions chapter, if it declared one and we hold it."""
-    stored = {p.stem: p for p in _stored(layer.layer)}
+def declared(layer: Layer) -> CodeDocument | None:
+    """Whichever document holds this jurisdiction's definitions.
+
+    A declared span wins over a matching name. Most codes publish a chapter
+    called Definitions and the name is enough to find it; some print their
+    glossary inside a chapter about something else, and the only thing that
+    can say where it starts is somebody who read it.
+    """
     for doc in layer.code:
-        if not CHAPTER.search(f"{doc.id} {doc.title}"):
-            continue
-        path = stored.get(doc.id)
-        if path is None:
-            return None
-        name = f"{layer.layer}/{path.name}"
-        text = path.read_text(encoding="utf-8", errors="replace")
-        entries = _entries(text, layer=layer.layer, doc=name)
-        return Chapter(
-            layer=layer.layer,
-            doc=name,
-            entries=tuple(entries),
-            disorder=tuple(_disorder(entries)),
-            lines=len(text.splitlines()),
-        )
+        if doc.definitions_at:
+            return doc
+    for doc in layer.code:
+        if CHAPTER.search(f"{doc.id} {doc.title}"):
+            return doc
     return None
+
+
+def _span(raw: str) -> tuple[int, int]:
+    first, _, last = raw.partition("-")
+    return int(first.lstrip("L")), int(last.lstrip("L"))
+
+
+def read(layer: Layer) -> Chapter | None:
+    """One jurisdiction's definitions, if it declared them and we hold them."""
+    doc = declared(layer)
+    if doc is None:
+        return None
+    stored = {p.stem: p for p in _stored(layer.layer)}
+    path = stored.get(doc.id)
+    if path is None:
+        return None
+
+    name = f"{layer.layer}/{path.name}"
+    text = path.read_text(encoding="utf-8", errors="replace")
+    offset = 0
+    if doc.definitions_at:
+        # The glossary is a chapter of a larger document, so the scan is
+        # bounded and every entry's line number is still the line in the file
+        # a reviewer will open. An offset rather than a re-fetch: the same
+        # sentence under two document ids would be the same rule with two
+        # citations, and the drift check would then have two answers.
+        first, last = _span(doc.definitions_at)
+        text = "\n".join(text.splitlines()[first - 1 : last])
+        offset = first - 1
+    entries = _entries(text, layer=layer.layer, doc=name, offset=offset)
+    return Chapter(
+        layer=layer.layer,
+        doc=name,
+        entries=tuple(entries),
+        disorder=tuple(_disorder(entries)),
+        lines=len(text.splitlines()),
+    )
 
 
 def chapters(layer_id: str | None = None) -> list[Chapter]:
