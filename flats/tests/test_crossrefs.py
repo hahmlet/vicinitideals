@@ -35,6 +35,7 @@ import pytest
 
 from flats.encode.crossrefs import (
     BINDING_WINDOW,
+    _REF,
     Dangling,
     _doc_ids,
     _headings,
@@ -81,17 +82,28 @@ def test_the_chapter_that_hid_the_five_feet_is_held_now(
     assert "7.0420" not in {d.ref for d in dangling(layers[GRESHAM])}
 
 
-def test_the_reference_worth_chasing_ranks_first(
+def test_the_reference_worth_chasing_was_chased(
     tualatin: dict[str, Dangling]
 ) -> None:
-    """Tualatin holds two documents. Its residential chapter points eighteen
-    times at TDC 36.410, fifteen of them beside a number this screen uses, and
-    the chapter is not in the store."""
-    top = max(tualatin.values(), key=lambda d: d.rank)
+    """This ledger's first answer, and then what happened to it.
 
-    assert top.ref == "36.410"
-    assert top.binding >= 10
-    assert top.sources[0].endswith("residential.txt")
+    Tualatin held two documents, and its residential chapter pointed eighteen
+    times at TDC 36.410 — fifteen of them beside a number this screen uses,
+    the loudest unread reference in the corpus. So it was fetched and read.
+    It reduces the minimum lot size in a flexible lot subdivision, states its
+    own path to be discretionary rather than clear and objective, and
+    therefore cannot bind a by-right screen in either direction. Twenty-two
+    binding references became two.
+
+    Asserted as an absence because that is what working the queue looks like:
+    a reference this loud reappearing means the document left the store.
+    """
+    assert "36.410" not in tualatin
+    assert "73A" not in tualatin
+    # Nothing left in this city is loud. The two that still bind are a
+    # nonconforming-situations chapter and a retirement-housing section, at
+    # two apiece against the fifteen this started with.
+    assert max(d.binding for d in tualatin.values()) <= 2
 
 
 def test_binding_is_what_orders_the_queue() -> None:
@@ -146,25 +158,38 @@ def test_a_suffix_letter_belongs_to_the_section_not_to_the_sentence(
 ) -> None:
     """Tualatin really does have a Chapter 73A. It does not have a section
     40.220L — that is "TDC 40.220LOW DENSITY RESIDENTIAL ZONE" with a space
-    lost in extraction."""
-    assert "73A" in tualatin
-    assert not [ref for ref in tualatin if ref.endswith("L") and ref != "73A"]
+    lost in extraction.
+
+    The bare chapter no longer appears, because a slice of it is held and a
+    chapter reference resolves against anything under it. Its sections do,
+    which is the same letter surviving the same reader.
+    """
+    assert "73A.170" in tualatin
+    assert not [ref for ref in tualatin if ref.endswith("L")]
 
 
 # -- reading too tightly ----------------------------------------------------
 
 
-def test_a_wrapped_reference_does_not_answer_for_itself(
-    tualatin: dict[str, Dangling]
-) -> None:
+def test_a_wrapped_reference_does_not_answer_for_itself() -> None:
     """The trap that makes this whole check worth writing carefully.
 
     Extracted table text wraps, and eight lines of Tualatin's residential
     chapter begin with a bare ``TDC 36.410.``. Read as headings they would say
-    the store holds chapter 36, and the most-referenced gap in the city would
-    report as fetched. A heading has to belong to the document it is in.
+    the store holds chapter 36, and for a year the most-referenced gap in the
+    city would have reported as fetched. A heading has to belong to the
+    document it is in.
+
+    Stated against the reader rather than against the corpus, because the
+    corpus moved: 36.410 was fetched, and a test that watched for it in the
+    ledger would now pass whether or not the ownership rule survived.
     """
-    assert "36.410" in tualatin
+    wrapped = (
+        "TDC 36.410. Flexible Lot Subdivisions\n"
+        "TDC 40.300. Development Standards\n"
+    )
+
+    assert _headings(wrapped, {"40", "41"}) == {"40.300"}
 
 
 def test_a_whole_title_answers_for_every_section_inside_it(
@@ -213,6 +238,44 @@ def test_only_the_section_symbol_earns_that(layers: dict[str, Layer]) -> None:
     name."""
     text = "§ 19.302.4. Development Standards.\n     [19.400-7]\n  19.302.9 x\n"
     assert _headings(text, {"19"}) == {"19.302.4", "19.302.9"}
+
+
+def test_a_chapter_may_carry_a_letter() -> None:
+    """Tualatin's design standards are Chapter 73A, and a reader that stopped
+    at the first non-digit gave that document no sections at all: it claimed
+    nothing, and the chapter it held went on reporting as unfetched."""
+    assert _doc_ids(["or/clackamas/tualatin/73A.020-060.residential-design.txt"]) == {
+        f"73A.{n:03d}" for n in range(20, 61)
+    }
+
+
+def test_a_span_is_read_wherever_it_sits_in_the_name() -> None:
+    """``40-41`` is two chapters and ``36.400-420`` is three sections of one,
+    and the range was read only in the first group. So a document holding
+    36.400, 36.410 and 36.420 claimed a section number that does not exist and
+    answered for none of the three."""
+    ids = _doc_ids(["or/clackamas/tualatin/36.400-420.lot-dimensions.txt"])
+
+    assert {"36.400", "36.410", "36.420"} <= ids
+    assert "36.400-420" not in ids
+
+
+def test_a_reference_to_a_lettered_chapter_s_section_is_read_at_all() -> None:
+    """Not read loosely — not read. The abbreviation branch failed at the
+    letter, the keyword branch wants a keyword and the bare branch wants three
+    dotted groups, so "Subject to TDC 73A.170" appeared in no ledger. A
+    reference nobody can see is worse than one ranked badly."""
+    refs = {
+        (m.group("named") or m.group("abbrev") or m.group("dotted")).rstrip(".")
+        for m in _REF.finditer(
+            "Accessory Dwelling Unit P Subject to TDC 73A.170.\n"
+            "TDC 40.220LOW DENSITY RESIDENTIAL ZONE (RL)\n"
+        )
+    }
+
+    assert "73A.170" in refs
+    # And the reason the letter has to end the token is still true.
+    assert not [r for r in refs if r.endswith("L")]
 
 
 def test_a_filename_may_claim_more_than_one_chapter() -> None:

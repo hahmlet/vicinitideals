@@ -88,7 +88,15 @@ _REF = re.compile(
     #: 10. Requiring a dot in the number is what separates the two, because a
     #: section number has one and a table cell does not. ORS and OAR are
     #: excluded here and counted by :func:`state_law`.
-    r"|(?<![A-Za-z])(?!ORS\b|OAR\b)[A-Z]{2,4}\b\s+(?P<abbrev>\d+\.[\d.\-]*\d)"
+    #: The chapter may carry a letter — "TDC 73A.170" — and without it the
+    #: whole reference went unread rather than being read loosely: the abbrev
+    #: branch failed at the "A", and the other two branches want a keyword or
+    #: three dotted groups. Tualatin's accessory-dwelling standards were cited
+    #: twice in a held document and appeared in no ledger at all. The letter
+    #: must end the chapter token, which is the same rule the named branch
+    #: uses and the reason "40.220LOW DENSITY" is still not section 40.220L.
+    r"|(?<![A-Za-z])(?!ORS\b|OAR\b)[A-Z]{2,4}\b\s+"
+    r"(?P<abbrev>\d+(?:[A-Z](?![A-Za-z]))?\.[\d.\-]*\d)"
     #: And a number with three dotted groups needs no introduction at all — a
     #: decimal never has two dots, and a section number often does.
     r"|(?<![\d.])(?P<dotted>\d+\.\d+\.\d+[\d.]*))"
@@ -147,22 +155,41 @@ def _doc_ids(paths: Iterable[str]) -> set[str]:
         stem = Path(path).stem
         lead = []
         for part in stem.split("."):
-            if not re.fullmatch(r"[\d\-]+", part):
+            # A trailing letter belongs to the chapter: Tualatin's design
+            # standards are Chapter 73A and its condominium rules are 73C, and
+            # a reader that stopped at the first non-digit gave that document
+            # no sections at all — it claimed nothing and the chapter it held
+            # went on reporting as unfetched.
+            if not re.fullmatch(r"\d[\d\-]*[A-Z]?", part):
                 break
             lead.append(part)
         if not lead:
             continue
-        head = ".".join(lead)
-        # A range in the first group ("40-41") is two chapters, not one name.
-        first, _, rest = head.partition(".")
-        if "-" in first:
-            lo, _, hi = first.partition("-")
-            if lo.isdigit() and hi.isdigit():
-                for n in range(int(lo), int(hi) + 1):
-                    ids.add(f"{n}.{rest}" if rest else str(n))
-                continue
-        ids.add(head)
+        ids |= _spanned(".".join(lead))
     return ids
+
+
+def _spanned(head: str) -> set[str]:
+    """The sections a hyphenated name covers, in whichever group it is in.
+
+    ``40-41`` is two chapters and ``73A.020-060`` is a span within one, and a
+    document that names a span answers for everything inside it. The range
+    read only in the first group before, so ``36.400-420`` claimed a section
+    number that does not exist and answered for none of the three it held.
+    """
+    groups = head.split(".")
+    for i, group in enumerate(groups):
+        lo, sep, hi = group.partition("-")
+        if not sep or not (lo.isdigit() and hi.isdigit()) or int(lo) > int(hi):
+            continue
+        # Width preserved: this code prints 73A.030, and 73A.30 is a section
+        # of some other city's code.
+        wide = len(lo) if lo.startswith("0") else 0
+        return {
+            ".".join(groups[:i] + [f"{n:0{wide}d}" if wide else str(n)] + groups[i + 1 :])
+            for n in range(int(lo), int(hi) + 1)
+        }
+    return {head}
 
 
 def _headings(text: str, owns: set[str]) -> set[str]:

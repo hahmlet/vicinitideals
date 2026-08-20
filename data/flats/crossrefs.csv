@@ -1,16 +1,14 @@
 layer,ref,mentions,binding,sources,sample
-or/clackamas/tualatin,36.410,18,15,40-41.residential.txt,ject to TDC 36.410
 or/clackamas/gladstone,17.62.070,10,10,17.10.r-7.2.txt 17.12.r-5.txt,Setbacks for manufactured homes in a mobile home park are subject to the standards in GMC Section 17.62.070(4).
-or/clackamas/west-linn,41.010,10,10,15.r-3.txt 08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 16.r-2.1.txt,Except for steeply sloped lots where the provisions of CDC 41.010 shall apply
-or/clackamas/west-linn,41,18,9,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"Except for steeply sloped lots, in which case the provisions of Chapter 41 CDC shall apply"
+or/clackamas/west-linn,66,19,9,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt 02.definitions.txt,"Type I and II lands shall not be counted toward lot area when determining allowable floor area ratio, except that a minimum floor area ratio of 0.30 shall be al"
 or/multnomah/gresham,10.1700,34,8,4.1400.pleasant-valley.txt 4.1500.springwater.txt 4.1100.downtown.txt 4.0100.residential.txt 4.0400.corridor.txt 4.1200.civic-neighborhood.txt 4.0200.commercial.txt 4.0300.industrial.txt,6.                                    Affordable housing development is subject to the provisions in Section                                       10.1700.
-or/clackamas/west-linn,66,19,8,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt 02.definitions.txt,"Type I and II lands shall not be counted toward lot area when determining allowable floor area ratio, except that a minimum floor area ratio of 0.30 shall be al"
 or/multnomah/wood-village,300,14,8,230.200.txt 235.200.txt 240.200.txt 250.200.txt 260.200.txt 210.310.txt 210.320.txt 220.310.txt 220.320.txt,Housing types are flexible but limited in the light residential zones in order to maintain and enhance the overall character of less dense neighborhoods compare
 or/clackamas/happy-valley,16.42.080,11,8,16.22.residential.txt,Shared outdoor recreation areas                                                                                400 sq. ft./unit provided in accordance with Sect
+or/clackamas/west-linn,60.070,9,8,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"Except as may otherwise be established by this code, the appropriate lot or parcel size for a conditional use shall be determined by the approval authority at t"
 or/multnomah/gresham,7.0512,7,6,4.0400.corridor.txt,(Sections                                7.0512.A.2                                     7.0512.A.2                                     Section 7.0512.A.2       
 or/multnomah/gresham,9.0851,22,5,4.1400.pleasant-valley.txt 4.1500.springwater.txt 4.0300.industrial.txt 4.0400.corridor.txt,G. Minimum Bicycle Parking Required                                                         See Section 9.0851                                            See Se
+or/clackamas/west-linn,75,10,5,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt 43.sidewall.txt,"5. Chapter 75 CDC, Variance. (Ord. 1745 § 1 (Exh. A), 2023)"
 or/clackamas/happy-valley,16.63.020,9,5,16.22.residential.txt 16.12.definitions.txt,"The ratio of the total amount of enclosed gross floor area within a structure to the amount of buildable acreage pursuant to Section 16.63.020(F), Density Calcu"
-or/clackamas/west-linn,75,9,5,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"5. Chapter 75 CDC, Variance. (Ord. 1745 § 1 (Exh. A), 2023)"
 or/multnomah/fairview,19.480,6,5,19.135.txt 19.30.txt 19.65.txt 19.70.txt 19.80.txt 19.85.txt,a. Uses similar to those listed above                                                                                                                           
 or/multnomah/troutdale,6.300,5,5,3.zoning-districts.txt,B.     Uses that require conditional use approval in accordance with Section 6.300 of this Code are
 or/clackamas/west-linn,34,18,4,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"Accessory uses are allowed in this zone as provided by Chapter 34 CDC. (Ord. 1745 § 1 (Exh. A), 2023)"
@@ -27,12 +25,10 @@ or/multnomah/wood-village,640,6,3,240.200.txt 230.200.txt 235.200.txt 250.200.tx
 or/clackamas/happy-valley,16.63.130,5,3,16.22.residential.txt 16.12.definitions.txt,"See Section 16.63.130 of this title. The development of a parcel or contiguous parcels or portions of such parcel or contiguous parcels, as individually subdivi"
 or/multnomah/gresham,10.1520,5,3,4.0100.residential.txt 4.0400.corridor.txt 4.1100.downtown.txt 4.1400.pleasant-valley.txt,with Section 10.1520                                            of the Community Development Code.
 or/multnomah/wood-village,220.400,5,3,210.310.txt 210.375.txt 220.310.txt 220.320.txt 220.355.txt,*See Section 220.400 for additional standards and requirements on cottage housing.
-or/clackamas/tualatin,36.420,4,3,40-41.residential.txt,as provided in TDC 36.420.
 or/multnomah/_unincorporated,004,4,3,39.rural-residential.txt 39.mua-20.txt 39.or.txt,"660, Division 004;"
 or/multnomah/portland,33.251,4,3,33.120.txt 33.110.txt 33.266.txt,(See Chapter 33.251)                                                               Yes                                  Yes                                   Ye
 or/multnomah/portland,33.236,3,3,33.110.txt 33.120.txt 33.140.txt,(See Chapter 33.236)                                                               Yes                                  Yes                                   Ye
 or/multnomah/_unincorporated,39.8860,12,2,39.cfu.txt 39.efu.txt 39.mua-20.txt 39.oci.txt 39.or.txt 39.rural-residential.txt,(5) Compliance with MCC 39.8860 is
-or/clackamas/west-linn,43,11,2,02.definitions.txt 08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"Incombustible material. Flame-resistant material as defined in the Uniform Building Code, Chapter 43, Fire-Resistive Standards."
 or/clackamas/west-linn,60.090,10,2,02.definitions.txt 08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"2. Transportation facilities (Type II) are those which are not designated in the adopted TSP or part of an approved, active development order. Type II transport"
 or/multnomah/gresham,7.0112,10,2,4.1400.pleasant-valley.txt 4.0400.corridor.txt 4.1500.springwater.txt 4.0100.residential.txt 7.0400.middle-housing-design.txt,Residential Design Standards. The Corridor Design District standards in Section 7.0112          shall apply to new
 or/multnomah/_unincorporated,39.9200,9,2,39.cfu.txt 39.efu.txt 39.lr-10.txt 39.lr-5.txt 39.lr-7.txt 39.mua-20.txt 39.oci.txt 39.or.txt 39.rural-residential.txt,pursuant to MCC 39.9200.
@@ -56,6 +52,7 @@ or/clackamas/_unincorporated,1012.03,2,2,zdo.1012.txt,"In subdivisions, partitio
 or/clackamas/lake-oswego,50.04.003.10,2,2,50.04.dimensional.txt,"When subdivisions are proposed, the number of lots required shall be determined by dividing the net developable area by the minimum lot size per unit required i"
 or/clackamas/milwaukie,19.910.3,2,2,19.300.base-zones.txt,Manufactured dwelling park                                                                                    III                                               
 or/clackamas/tualatin,34.400,2,2,40-41.residential.txt,Retirement Housing Facility C Subject to TDC 34.400
+or/clackamas/tualatin,73A.170,2,2,40-41.residential.txt,Accessory Dwelling Unit P Subject to TDC 73A.170.
 or/clackamas/west-linn,25.070,2,2,11.r-10.txt 13.r-5.txt,Except as specified in CDC 25.070(C)(1) through (4) for the Willamette Historic District.
 or/multnomah/_unincorporated,33.236,2,2,33.110.txt 33.140.txt,(See Chapter 33.236)                                                               Yes                                  Yes                                   Ye
 or/multnomah/fairview,19.170,2,2,19.120.txt 19.125.txt,H. Signs – see Chapter 19.170 FMC.
@@ -151,14 +148,13 @@ or,35,22,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt
 or,9.0851,22,0,4.1400.pleasant-valley.txt 4.1500.springwater.txt 4.0300.industrial.txt 4.0400.corridor.txt,G. Minimum Bicycle Parking Required                                                         See Section 9.0851                                            See Se
 or,52,21,0,02.definitions.txt 08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt 17.zoning.txt,cle parking spaces as required in Chapter 52 of this title.
 or/clackamas/west-linn,52,20,0,02.definitions.txt 08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"The following terms and phrases shall have the meanings given to them below with regard to Chapter 52 CDC, Signs:"
+or,60,19,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt 41.steep-lots.txt,C. The approval of a conditional use (CDC 08.060) is discretionary with the Planning Commission. The approval process and criteria for approval are set forth in
 or,66,19,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt 02.definitions.txt,"Type I and II lands shall not be counted toward lot area when determining allowable floor area ratio, except that a minimum floor area ratio of 0.30 shall be al"
+or/clackamas/west-linn,60,19,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt 41.steep-lots.txt,C. The approval of a conditional use (CDC 08.060) is discretionary with the Planning Commission. The approval process and criteria for approval are set forth in
 or,11.50,18,0,33.100.txt 33.110.txt 33.140.txt 33.120.txt 33.130.txt 33.150.txt,"preservation and protection requirements of Title 11, Trees.  See Chapter 11.50, Trees in"
 or,33.258,18,0,33.100.txt 33.110.txt 33.140.txt 33.120.txt 33.130.txt 33.150.txt,"categories listed as prohibited may be subject to the regulations of Chapter 33.258,"
-or,36.410,18,0,40-41.residential.txt,ject to TDC 36.410
-or,60,18,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,C. The approval of a conditional use (CDC 08.060) is discretionary with the Planning Commission. The approval process and criteria for approval are set forth in
 or,80,18,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"A. A use permitted outright, CDC 08.030, is a use which requires no approval under the provisions of this code, except that some uses require design review purs"
 or/clackamas/west-linn,35,18,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,3. Temporary use subject to the provisions of Chapter 35 CDC.
-or/clackamas/west-linn,60,18,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,C. The approval of a conditional use (CDC 08.060) is discretionary with the Planning Commission. The approval process and criteria for approval are set forth in
 or/clackamas/west-linn,80,18,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"A. A use permitted outright, CDC 08.030, is a use which requires no approval under the provisions of this code, except that some uses require design review purs"
 or,32,17,0,02.definitions.txt 33.110.txt 33.100.txt 33.120.txt 33.140.txt 33.130.txt 33.150.txt 33.910.definitions.txt,"Maximum disturbed area (MDA). The MDA, as measured in square feet, is the maximum area within a WRA that can be disturbed in hardship cases under Chapter 32 CDC"
 or,1012,16,0,zdo.315.txt zdo.1012.txt 16.22.residential.txt,"Section 1012 applies to the following land use permit applications in any zoning district that has a minimum lot size standard, district land area standard, or "
@@ -186,11 +182,10 @@ or,16.42.080,11,0,16.22.residential.txt,Shared outdoor recreation areas         
 or,17.102.270,11,0,33.110.txt 33.100.txt 33.140.txt 33.120.txt 33.130.txt 33.150.txt,"See Section 17.102.270, Businesses and Multifamily Complexes Required to Recycle, of the Portland"
 or,19.245,11,0,19.65.txt 19.70.txt 19.85.txt 19.13.definitions.txt 19.135.txt 19.80.txt,"“Wireless communication equipment” includes cell towers, antennas, monopoles, and related facilities used for radio signal transmission and receiving (see Chapt"
 or,38,11,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt 3.zoning-districts.txt 31.definitions.txt,Subdivision Sign. See Chapter 38 (Signs).
-or,43,11,0,02.definitions.txt 08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"Incombustible material. Flame-resistant material as defined in the Uniform Building Code, Chapter 43, Fire-Resistive Standards."
+or,75,11,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt 36.400-420.lot-dimensions.txt 43.sidewall.txt,right-of-way in accordance with TDC 73C and TDC Chapter 75 via permanent access
 or,17.62.070,10,0,17.10.r-7.2.txt 17.12.r-5.txt,Setbacks for manufactured homes in a mobile home park are subject to the standards in GMC Section 17.62.070(4).
 or,24,10,0,33.100.txt 33.110.txt 33.140.txt 33.120.txt 33.130.txt 33.150.txt 33.910.definitions.txt,"Regulations. The use of barbed wire is regulated under Title 24, Building Regulations."
 or,37,10,0,02.definitions.txt 08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"Home occupation. Any activity carried out for gain by a resident and conducted as a customary, incidental, and accessory use in the resident’s dwelling unit. St"
-or,41.010,10,0,15.r-3.txt 08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 16.r-2.1.txt,Except for steeply sloped lots where the provisions of CDC 41.010 shall apply
 or,50.03.003.3,10,0,50.03.002.use-table.txt,§ 50.03.003.4.a and b; R-2 zone: § 50.03.003.3
 or,50.04.003.4,10,0,50.04.dimensional.txt,[Cross-References: Height Limitation: see Charter Section 46A for 50 ft. Maximum Height of Structures in Residential Areas; Height Measure: see LOC § 50.04.003.
 or,60.090,10,0,02.definitions.txt 08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"2. Transportation facilities (Type II) are those which are not designated in the adopted TSP or part of an approved, active development order. Type II transport"
@@ -217,7 +212,6 @@ or,65,9,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 
 or,67,9,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"3. Chapter 67 CDC, Non-conforming Uses of Land."
 or,68,9,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"4. Chapter 68 CDC, Non-conforming Lots, Lots of Record."
 or,7.0320,9,0,4.0300.industrial.txt 4.0400.corridor.txt 4.1100.downtown.txt 4.1200.civic-neighborhood.txt 4.1500.springwater.txt,I. Pedestrian Circulation and Standards                                                     See Section 7.0320                                            See Se
-or,75,9,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"5. Chapter 75 CDC, Variance. (Ord. 1745 § 1 (Exh. A), 2023)"
 or,9.0200,9,0,4.1200.civic-neighborhood.txt 4.1100.downtown.txt 4.1400.pleasant-valley.txt 4.1500.springwater.txt 7.0400.middle-housing-design.txt,5.                              Comply with Section 9.0200 – Clear Vision Area.                                                                                 
 or,99.060,9,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"1. The Planning Director shall make the decision in the manner provided by CDC 99.060(A)(2), Administrative Procedures, except that no notice shall be required;"
 or,99.240,9,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,2. The decision may be appealed by the applicant to the Planning Commission as provided by CDC 99.240(A).
@@ -229,7 +223,6 @@ or/clackamas/west-linn,42,9,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12
 or/clackamas/west-linn,44,9,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"6. Chapter 44 CDC, Fences."
 or/clackamas/west-linn,48,9,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"8. Chapter 48 CDC, Access, Egress and Circulation."
 or/clackamas/west-linn,54,9,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"10. Chapter 54 CDC, Landscaping."
-or/clackamas/west-linn,60.070,9,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"Except as may otherwise be established by this code, the appropriate lot or parcel size for a conditional use shall be determined by the approval authority at t"
 or/clackamas/west-linn,65,9,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"1. Chapter 65 CDC, Non-conforming Uses Involving a Structure."
 or/clackamas/west-linn,67,9,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"3. Chapter 67 CDC, Non-conforming Uses of Land."
 or/clackamas/west-linn,68,9,0,08.r-40.txt 09.r-20.txt 10.r-15.txt 11.r-10.txt 12.r-7.txt 13.r-5.txt 14.r-4.5.txt 15.r-3.txt 16.r-2.1.txt,"4. Chapter 68 CDC, Non-conforming Lots, Lots of Record."
@@ -355,7 +348,6 @@ or,19.911.6,4,0,19.300.base-zones.txt,Subsection 19.911.6 Building Height Varian
 or,19.911.7,4,0,19.300.base-zones.txt 19.500.supplementary.txt,Subsection 19.911.7 Building Height Variance in the General Mixed Use Zone
 or,29,4,0,33.910.definitions.txt 33.266.txt 39.2000.definitions.txt,"to MCC Chapter 29, certifying compliance with"
 or,33.677.300,4,0,33.110.txt,"through a property line adjustment under 33.677.300.A.4. or 33.677.300.C. are 36 ft. wide and 1,600"
-or,36.420,4,0,40-41.residential.txt,as provided in TDC 36.420.
 or,39.3120,4,0,39.oci.txt 39.or.txt,"(A) Except as provided in MCC 39.3120,"
 or,39.3140,4,0,39.lr-10.txt 39.lr-5.txt 39.lr-7.txt 39.mr-4.txt,(A) Except as provided in MCC 39.3140(B)
 or,46A,4,0,50.04.dimensional.txt,[Cross-References: Height Limitation: see Charter Section 46A for 50 ft. Maximum Height of Structures in Residential Areas; Height Measure: see LOC § 50.04.003.
@@ -409,7 +401,6 @@ or,19.911.4,3,0,19.300.base-zones.txt 19.500.supplementary.txt,"A Type II varian
 or,197,3,0,16.12.definitions.txt 19.30.txt 4.planning.txt,Urban growth boundary adopted pursuant to ORS Chapter 197.
 or,215,3,0,39.efu.txt,Oregon Revised Statutes Chapter 215 and the
 or,33.930.100,3,0,33.110.txt 33.120.txt,width for a cottage cluster is measured as lot width is measured. See 33.930.100.
-or,36,3,0,13.r-5.txt 14.r-4.5.txt,"1. Manufactured dwelling park, subject to the provisions of Chapters 36 and 55 CDC."
 or,39.4778,3,0,39.lr-10.txt 39.lr-5.txt 39.lr-7.txt,Provisions (MCC 39.4778 through 39.4786)
 or,39.7020,3,0,39.efu.txt,MCC 39.7015 and MCC 39.7020:
 or,5.010,3,0,rldo.composite.txt 3.zoning-districts.txt,Section 5.010.  Land Use.           All land within the city of Rivergrove is zoned residential.  The
@@ -563,6 +554,8 @@ or,7.0430,2,0,4.1100.downtown.txt 4.1200.civic-neighborhood.txt,c.              
 or,7.05,2,0,4.0400.corridor.txt,a.                                   Triangle Area. For lands in the Triangle Area as described in Section 7.05         10                                      
 or,705,2,0,zdo.1012.txt,"The Willamette River and the required buffer area regulated by Section 705, Willamette River Greenway;"
 or,709,2,0,zdo.1012.txt,"Water Quality Resource Areas regulated by Section 709, Water Quality Resource Area District; and"
+or,72,2,0,36.400-420.lot-dimensions.txt 40-41.residential.txt,(a)  Natural Resource Protection Overlay (NRPO) District (TDC Chapter 72); or
+or,73A.170,2,0,40-41.residential.txt,Accessory Dwelling Unit P Subject to TDC 73A.170.
 or,73F,2,0,40-41.residential.txt,backs subject to TDC Chapter 73F.
 or,8.0100,2,0,4.1100.downtown.txt 4.1200.civic-neighborhood.txt,Table 4.1120 and as provided in Section 8.0100           Special Use Review.
 or,8.08,2,0,17.zoning.txt 19.300.base-zones.txt,The City's noise control standards and requirements in Chapter 8.08 apply.
@@ -632,6 +625,7 @@ or/clackamas/rivergrove,8.070,2,0,rldo.composite.txt,Section 8.070.  Disqualific
 or/clackamas/rivergrove,8.200,2,0,rldo.composite.txt,statement relating the request to the factors listed in Section 8.200 (a).
 or/clackamas/rivergrove,9.010,2,0,rldo.composite.txt,the public improvements as required by §6.160( c) and Section 9.010 of this
 or/clackamas/tualatin,34.800,2,0,40-41.residential.txt,religious worship. See TDC 34.800 Re-
+or/clackamas/tualatin,72,2,0,36.400-420.lot-dimensions.txt 40-41.residential.txt,(a)  Natural Resource Protection Overlay (NRPO) District (TDC Chapter 72); or
 or/clackamas/tualatin,73F,2,0,40-41.residential.txt,backs subject to TDC Chapter 73F.
 or/clackamas/west-linn,25,2,0,02.definitions.txt,"The following terms and phrases shall have the meanings given to them below with regard to Chapter 25 CDC, Historic Resources:"
 or/clackamas/west-linn,42.050,2,0,02.definitions.txt,Clear vision area. An area of unobstructed visibility which must be maintained for corner lots and driveways as specified in CDC 42.050. See illustration below.
@@ -784,6 +778,7 @@ or,235.490,1,0,235.420.txt,F. Modifications. The requirements of this section 
 or,261.33,1,0,zdo.202.definitions.txt,"Resource Conservation and Recovery Act (RCRA) of 1976 and 1984 Amendments, Hazardous Wastes List (P & U Categories) (40 C.F.R Section 261.33(e) and (f)); and"
 or,28.040,1,0,02.definitions.txt,"Development. Any manmade change defined as the construction of buildings or other structures, mining, dredging, paving, filling, grading or site clearing, and g"
 or,29.20.010,1,0,33.266.txt,"discarded vehicles is regulated by Section 29.20.010 of Title 29, Property and"
+or,3-5,1,0,36.400-420.lot-dimensions.txt,"Quality Control Facilities identified by TDC Chapters 71, 72, and TMC Chapter 3-5 Surface"
 or,3.01,1,0,3.0100.definitions.txt,See also Overlay District D          efinitions in Section 3.01           20 for specific applications of this term in those areas.
 or,3.0204,1,0,3.0100.definitions.txt,"which the premises exists. See also Section 3.0204         , Classifying a Use."
 or,3.0220,1,0,3.0100.definitions.txt,"Residential Facility.                        See Residential Facility Land Use Classification, Section 3.0220       ."
@@ -820,6 +815,7 @@ or,34.010,1,0,40-41.residential.txt,to TDC 34.010 to 34.030.
 or,34.020,1,0,40-41.residential.txt,Facility subject to TDC 34.020 and TDC
 or,340,1,0,4.planning.txt,"Quality definition of water quality limited water body in OAR Chapter 340, Division"
 or,340.020,1,0,220.310.txt,Manufactured Home Park (See Section 340.020)  N    Y
+or,36.120,1,0,36.400-420.lot-dimensions.txt,subdivision standards in TDC 36.120 and not the Housing Clear and Objective Standards in TDC
 or,36.3527,1,0,4.1500.springwater.txt,would apply. Permitted uses are not required to meet approval criteria of West of Sandy Plan Section 36.3527.
 or,372.65,1,0,zdo.202.definitions.txt,"SARA of 1986, Section 313, Toxic Chemicals List (40 C.F.R Section 372.65);"
 or,39.1600,1,0,39.2000.definitions.txt,established under MCC 39.1600.
@@ -995,9 +991,10 @@ or,7.0502,1,0,4.0400.corridor.txt,Section 7.0502    .
 or,7.0510,1,0,4.0400.corridor.txt,b.                                 Outside Triangle Area. For lands in the Outside Triangle Area as described in Section 7.0510                                 
 or,7.15.025,1,0,3.0100.definitions.txt,Invasive Plant List (Gresham Revised Code 7.15.025).
 or,707,1,0,zdo.202.definitions.txt,"CULTURAL RESOURCE INVENTORY: The official list of designated cultural features, sites, districts subject to the provisions of Section 707, Historic Landmark (HL"
-or,72,1,0,40-41.residential.txt,(a)  Natural Resource Protection Overlay (NRPO) District (TDC Chapter 72); or
+or,71,1,0,36.400-420.lot-dimensions.txt,"Quality Control Facilities identified by TDC Chapters 71, 72, and TMC Chapter 3-5 Surface"
 or,720.030,1,0,235.340.txt,B. FAR Standard. “Floor area ratio” is defined as the amount of floor area in square feet divided by the amount of net land area in square feet (see definitions
-or,73A,1,0,31.definitions.txt,"courtyard, subject to the provisions of Chapter 73A."
+or,73A.010,1,0,73A.020-060.residential-design.txt,TDC 73A.010 TUALATIN DEVELOPMENT CODE
+or,74,1,0,36.400-420.lot-dimensions.txt,required by TDC Chapter 74;
 or,8.0114,1,0,4.0100.residential.txt,"4.    May have locational limitations, see Section 8.0114."
 or,8.0117,1,0,4.1400.pleasant-valley.txt,"Yes, except as provided in Section 8.0117(C)(3)"
 or,8.08.040,1,0,17.zoning.txt,8.08.040;
@@ -1036,6 +1033,7 @@ or,903.08,1,0,zdo.202.definitions.txt,"Except as otherwise provided in Subsectio
 or,98,1,0,05.density.txt,C. Amendments to the City Zoning Map may be made in accordance with the provisions of Chapters 98 and 99 CDC. Copies of all map amendments shall be dated with t
 or,99,1,0,02.definitions.txt,Review. A request that a final decision by the initial approval authority be considered by a higher authority as set forth in Chapter 99 CDC.
 or,99.110,1,0,02.definitions.txt,"Final action, final decision, or final order. A determination reduced to writing, signed and filed under CDC 99.110(F) by the appropriate approval authority."
+or,99.140,1,0,43.sidewall.txt,The Planning Director shall apply the standards of this chapter during the administrative review of building permits. No notice is required. In the event that a
 or/clackamas/_unincorporated,10.03,1,0,zdo.202.definitions.txt,"SOLID WASTE: As defined in Chapter 10.03, Solid Waste and Wastes Management, of the Clackamas County Code."
 or/clackamas/_unincorporated,1002.04,1,0,zdo.202.definitions.txt,STREAM CORRIDOR AREA: An area including the streambed and a required strip or buffer of land on each side of the streambed necessary to maintain streamside amen
 or/clackamas/_unincorporated,1002.06,1,0,zdo.1012.txt,Wetlands and required buffer areas regulated by Subsection 1002.06 or another public agency.
@@ -1300,20 +1298,25 @@ or/clackamas/rivergrove,8.210,1,0,rldo.composite.txt,Section 8.210.  Decision Up
 or/clackamas/rivergrove,8.8170,1,0,rldo.composite.txt,decision.  Notice of appeal shall be as set out in Section 8.8170.
 or/clackamas/rivergrove,9.020,1,0,rldo.composite.txt,Section 9.020.  Penalties and Abatement.  This ordinance may be enforced in any manner now or
 or/clackamas/tualatin,174,1,0,31.definitions.txt,"statutory construction under ORS Chapter 174, as interpreted by Oregon courts, apply to the"
+or/clackamas/tualatin,3-5,1,0,36.400-420.lot-dimensions.txt,"Quality Control Facilities identified by TDC Chapters 71, 72, and TMC Chapter 3-5 Surface"
 or/clackamas/tualatin,31.076,1,0,31.definitions.txt,Council pursuant to the provisions of TDC 31.076 and 31.077.
 or/clackamas/tualatin,34.010,1,0,40-41.residential.txt,to TDC 34.010 to 34.030.
 or/clackamas/tualatin,34.020,1,0,40-41.residential.txt,Facility subject to TDC 34.020 and TDC
+or/clackamas/tualatin,36.120,1,0,36.400-420.lot-dimensions.txt,subdivision standards in TDC 36.120 and not the Housing Clear and Objective Standards in TDC
 or/clackamas/tualatin,38,1,0,31.definitions.txt,Subdivision Sign. See Chapter 38 (Signs).
 or/clackamas/tualatin,39,1,0,31.definitions.txt,Retail Commercial Use. See Chapter 39 (Use Categories).
 or/clackamas/tualatin,39.200,1,0,31.definitions.txt,in Section 39.200 and Group Living in Section 39.210).
 or/clackamas/tualatin,39.210,1,0,31.definitions.txt,in Section 39.200 and Group Living in Section 39.210).
-or/clackamas/tualatin,72,1,0,40-41.residential.txt,(a)  Natural Resource Protection Overlay (NRPO) District (TDC Chapter 72); or
-or/clackamas/tualatin,73A,1,0,31.definitions.txt,"courtyard, subject to the provisions of Chapter 73A."
+or/clackamas/tualatin,71,1,0,36.400-420.lot-dimensions.txt,"Quality Control Facilities identified by TDC Chapters 71, 72, and TMC Chapter 3-5 Surface"
+or/clackamas/tualatin,73A.010,1,0,73A.020-060.residential-design.txt,TDC 73A.010 TUALATIN DEVELOPMENT CODE
+or/clackamas/tualatin,74,1,0,36.400-420.lot-dimensions.txt,required by TDC Chapter 74;
+or/clackamas/tualatin,75,1,0,36.400-420.lot-dimensions.txt,right-of-way in accordance with TDC 73C and TDC Chapter 75 via permanent access
 or/clackamas/west-linn,3.07,1,0,02.definitions.txt,UGMFP    Urban Growth Management Functional Plan (Metro Code Chapter 3.07)
 or/clackamas/west-linn,55.105,1,0,05.density.txt,"e. Optionally, the applicant may subtract the following (as measured in CDC 55.105(C)(2)(a)):"
 or/clackamas/west-linn,98,1,0,05.density.txt,C. Amendments to the City Zoning Map may be made in accordance with the provisions of Chapters 98 and 99 CDC. Copies of all map amendments shall be dated with t
 or/clackamas/west-linn,99,1,0,02.definitions.txt,Review. A request that a final decision by the initial approval authority be considered by a higher authority as set forth in Chapter 99 CDC.
 or/clackamas/west-linn,99.110,1,0,02.definitions.txt,"Final action, final decision, or final order. A determination reduced to writing, signed and filed under CDC 99.110(F) by the appropriate approval authority."
+or/clackamas/west-linn,99.140,1,0,43.sidewall.txt,The Planning Director shall apply the standards of this chapter during the administrative review of building permits. No notice is required. In the event that a
 or/clackamas/wilsonville,1.013,1,0,4.planning.txt,"ordinance constitutes a violation punishable as a separate infraction under WC 1.013. In addition,"
 or/clackamas/wilsonville,197,1,0,4.planning.txt,"this Code and ORS Chapter 197 shall be processed without public hearing, and shall be"
 or/clackamas/wilsonville,2.560,1,0,4.planning.txt,"forth in Section 2.560 of the Wilsonville Code, or as otherwise amended by City Council action."

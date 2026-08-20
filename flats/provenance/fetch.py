@@ -58,7 +58,7 @@ from flats.rules.model import CodeDocument, Layer
 
 #: Bumped when the extraction algorithm changes. A hash that moves because the
 #: extractor changed is not an amendment, and the two must be tellable apart.
-EXTRACTOR = "flats-html-text/3"
+EXTRACTOR = "flats-html-text/4"
 #: A slice shorter than this is reported. Legitimate one-line sections exist;
 #: a marker that hit the table of contents is far more common.
 SHORT_SLICE = 3
@@ -98,6 +98,29 @@ _BLOCK = frozenset(
 
 _SPACES = re.compile(r"[ \t   ]+")
 _BLANKS = re.compile(r"\n{3,}")
+
+#: eCode360 stamps the day you printed the page into the page. Seven documents
+#: in this corpus come from it, and every one of them reported CHANGED against
+#: the store on any day but the day it was fetched — a watch that cries wolf
+#: daily is a watch nobody reads, and accepting those refreshes would have
+#: withdrawn real reviews over a date.
+#:
+#: Replaced rather than removed, because every citation in this system is a
+#: line number. Dropping the line lifts 4,700 lines by one in a single document
+#: and silently re-points every quote below it.
+_PRINT_DATE = re.compile(
+    r"^(?:Mon|Tues|Wednes|Thurs|Fri|Satur|Sun)day, "
+    r"(?:January|February|March|April|May|June|July|August|September|"
+    r"October|November|December) \d{1,2}, \d{4}$"
+)
+#: Where the codifier's furniture lives — print controls, masthead, date. A
+#: standards page whose first twenty lines are a bare date does not exist, and
+#: confining the rule to the header keeps it from ever eating an effective date
+#: printed inside a section.
+HEADER_LINES = 20
+#: What stands in its place. Says what was there, so a reviewer wondering where
+#: the date went is not left to guess.
+PRINT_DATE_MARK = "[print date]"
 
 
 #: Newlines inside a block are HTML formatting, not text, and the two markers
@@ -304,6 +327,9 @@ def html_to_text(source: str) -> str:
         line[1:].rstrip() if line.startswith("\x00") else _SPACES.sub(" ", line).strip()
         for line in text.split("\n")
     ]
+    for i, line in enumerate(lines[:HEADER_LINES]):
+        if _PRINT_DATE.match(line):
+            lines[i] = PRINT_DATE_MARK
     return _BLANKS.sub("\n\n", "\n".join(lines)).strip() + "\n"
 
 

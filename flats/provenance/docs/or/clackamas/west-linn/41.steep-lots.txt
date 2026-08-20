@@ -1,0 +1,89 @@
+Chapter 41
+
+BUILDING HEIGHT, STRUCTURES ON STEEP LOTS, EXCEPTIONS
+
+Sections:
+
+41.005 DETERMINING HEIGHT OF BUILDING
+
+41.010 FRONT YARD SETBACK EXCEPTION
+
+41.020 HEIGHT EXCEPTIONS
+
+41.030 PROJECTIONS NOT USED FOR HUMAN HABITATION
+
+41.040 PLACES OF WORSHIP OR GOVERNMENT BUILDINGS
+
+41.005 DETERMINING HEIGHT OF BUILDING
+
+A. For all zoning districts, building height shall be the vertical distance above a reference datum measured to the highest point of a flat roof or to the deck line of a mansard roof or to the highest gable, ridgeline or peak of a pitched or hipped roof, not including projections not used for human habitation, as provided in CDC 41.030. The reference datum shall be selected by either of the following, whichever yields a greater height of building.
+
+1. For relatively flat sites where there is less than a 10-foot difference in grade between the front and rear of the building, the height of the building shall be measured from the proposed finished grade five feet out from the exterior wall at the front of the building (Figure 1); or
+
+2. For steeper lots where there is more than a 10-foot difference in grade between the front and rear of the building, the height of the building is measured from the proposed finished grade at a point five feet out from the exterior wall on the lowest side (front or rear) of the building. One then measures vertically to the peak or ridgeline of the roof to determine the height (Figure 2).
+
+3. Buildings on cross slopes or side slopes are measured at either the front or rear of the building using methods described in subsections (A)(1) and (2) of this definition only (Figure 3).
+
+Even if the cross slope creates a tall elevation on the side, the method of determining height is not modified.
+
+Also see CDC 41.020, Height Exceptions.
+
+Figure 1. Height of building on relatively flat lot is measured from proposed finished grade at front of house to peak of roof.
+Figure 1. Height of building on relatively flat lot is measured from proposed finished grade at front of house to peak of roof.
+Figure 1. Height of building on relatively flat lot is measured from proposed finished grade at front of house to peak of roof.
+Figure 2. Height of building on steep lots where there is more than a 10-foot difference in elevation between the front and rear of the building is measured from the proposed finished grade at a point five feet out from the front or rear exterior wall on the lowest side of the house to the peak of the building.
+Figure 2. Height of building on steep lots where there is more than a 10-foot difference in elevation between the front and rear of the building is measured from the proposed finished grade at a point five feet out from the front or rear exterior wall on the lowest side of the house to the peak of the building.
+Figure 3. Height of building with a cross slope is still measured at either the front or rear by methods described in subsection (A)(1) or (2) of this definition.
+Figure 3. Height of building with a cross slope is still measured at either the front or rear by methods described in subsection (A)(1) or (2) of this definition.
+
+(Ord. 1604 § 42, 2011; Ord. 1745 § 1 (Exh. A), 2023)
+
+41.010 FRONT YARD SETBACK EXCEPTION
+
+If the average slope of a building site is 25 percent or greater, as measured along the planes of the proposed structure, the standards in subsections A and B of this section shall be met.
+
+A. The minimum front yard setback for the garage shall be three feet. All structures other than the garage shall meet the setback requirement of the underlying zone, or as otherwise specified in this code.
+
+B. When a garage is situated less than 20 feet from the front property line or less than 15 feet from a side property line facing a street, the following conditions shall apply:
+
+1. The garage shall be positioned so the doors are perpendicular to the street (facing sideways, not directly onto the street).
+
+2. If the lot width prohibits the garage with doors perpendicular to the street, an applicant may request an exception as part of a discretionary review, and the garage may be positioned with the garage doors facing directly onto the street. (Ord. 1745 § 1 (Exh. A), 2023; Ord. 1754 § 1 (Exh. A), 2024)
+
+41.020 HEIGHT EXCEPTIONS
+
+A. Exceptions to the maximum building height standards provided in the underlying zone shall be permitted on sloped lots under the circumstances specified in subsections B and C of this section.
+
+B. Buildings on sites that front onto the downslope side of a street may exceed the building height standard, provided the following are met:
+
+1. The highest grade of the building site is greater than 10 feet above the lowest grade, as measured along the planes of the proposed structure;
+
+2. The total building height does not exceed 45 feet, as measured from the lowest grade at a point five feet downhill from the rear of the building (or 50 feet in the R-15, R-20, and R-40 zones); and
+
+3. The building height does not project more than 24 feet above the average grade of the street.
+
+C. Buildings on sites that front onto the upslope side of a street may exceed the building height standard, provided the following are met:
+
+1. The highest grade of the building site is greater than 10 feet above the lowest grade, as measured along the planes of the proposed structure;
+
+2. The total building height does not exceed 45 feet, as measured from a point five feet downhill from the front of the building (or 50 feet in the R-15, R-20, and R-40 zones).
+
+Figure 2. Height exceptions
+
+Height of buildings on the upslope side of a street, as described in subsection C of this section.
+
+Height of buildings on the downslope side of a street, as described in subsection B of this section. (Ord. 1276, 1990; Ord. 1308, 1991; Ord. 1538, 2006; Ord. 1604 § 43, 2011; Ord. 1745 § 1 (Exh. A), 2023)
+
+41.030 PROJECTIONS NOT USED FOR HUMAN HABITATION
+
+Projections such as chimneys, spires, domes, elevator shaft housings, towers, aerials, flag poles, and other similar objects not used for human occupancy are not subject to the building height limitations of this code. (Ord. 1604 § 44, 2011; Ord. 1745 § 1 (Exh. A), 2023)
+
+41.040 PLACES OF WORSHIP OR GOVERNMENT BUILDINGS
+
+The height of a place of worship or governmental building may be built to a maximum height of 50 feet provided:
+
+A. The total floor area of the building does not exceed one and one-half times the area of the site;
+
+B. The yard dimensions in each case are equal to at least two-thirds of the building height of the principal structure; and
+
+C. The approval of this exception is a part of the approval of the conditional use allowed under Chapter 60 CDC. (Ord. 1604 § 45, 2011; Ord. 1745 § 1 (Exh. A), 2023)

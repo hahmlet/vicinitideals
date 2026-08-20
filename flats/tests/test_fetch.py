@@ -7,6 +7,7 @@ hash being quietly repaired underneath a signature.
 
 from __future__ import annotations
 
+import re
 from datetime import date
 from pathlib import Path
 
@@ -14,6 +15,8 @@ import pytest
 
 from flats.encode.verify import VerificationLog, sign
 from flats.provenance.fetch import (
+    HEADER_LINES,
+    PRINT_DATE_MARK,
     citing,
     fetch_text,
     html_to_text,
@@ -618,3 +621,104 @@ def test_a_document_that_lost_nothing_says_nothing() -> None:
     pdf_to_text(buf.getvalue(), lost=lost)
 
     assert lost == []
+
+
+@pytest.fixture(scope="module")
+def corpus() -> ProvenanceStore:
+    return ProvenanceStore()
+
+
+# -- the codifier's date stamp ----------------------------------------------
+
+
+#: eCode360's print header, which is what seven documents in this corpus begin
+#: with. Line 7 is the day you pressed print.
+#: Written independently of the extractor's own pattern on purpose. A test
+#: that imported `_PRINT_DATE` would pass on a rule that matched nothing.
+_DATED = re.compile(r"^\w+day, \w+ \d{1,2}, \d{4}$")
+
+ECODE = (
+    "<div>Close</div><div>Print</div><div>Resize:</div><div></div>"
+    "<div>City of Milwaukie, OR</div><div></div>"
+    "<div>{day}</div><div></div>"
+    "<div>Title 19. Zoning</div>"
+    "<div>19.301.4 Side yard 5 ft</div>"
+)
+
+
+def test_the_same_page_on_two_days_is_the_same_document() -> None:
+    """The bug this exists for. Seven eCode360 documents reported CHANGED
+    against the store every day after the day they were fetched, because the
+    codifier prints the date you fetched it into the page. A corpus watch that
+    raises seven false alarms daily is a watch nobody reads, and accepting
+    those refreshes would have withdrawn real reviews over a date."""
+    monday = html_to_text(ECODE.format(day="Monday, August 3, 2026"))
+    friday = html_to_text(ECODE.format(day="Friday, August 14, 2026"))
+
+    assert monday == friday
+    assert "August" not in monday
+
+
+def test_the_line_is_replaced_and_never_removed() -> None:
+    """Every citation in this system is a line number. Dropping the date line
+    would lift 4,700 lines by one in a single Milwaukie document and re-point
+    every quote below it at the sentence above the one it was written for --
+    silently, since the text would still be real code."""
+    dated = html_to_text(ECODE.format(day="Friday, August 14, 2026")).splitlines()
+    undated = html_to_text(ECODE.format(day="[nothing here]")).splitlines()
+
+    assert len(dated) == len(undated)
+    assert dated.index(PRINT_DATE_MARK) == undated.index("[nothing here]")
+    assert dated[-1] == "19.301.4 Side yard 5 ft"
+
+
+def test_a_date_printed_inside_a_section_is_left_alone() -> None:
+    """An effective date, an amendment date, a date a variance expires -- all
+    of those are the code speaking, and none of them are furniture. The rule
+    reaches the masthead and stops."""
+    body = "<div>x</div>" * HEADER_LINES + "<div>Monday, March 3, 2025</div>"
+
+    assert "Monday, March 3, 2025" in html_to_text(body)
+
+
+def test_the_header_window_is_the_masthead_and_not_the_page() -> None:
+    assert 0 < HEADER_LINES <= 30
+
+
+def test_only_that_shape_of_line_counts() -> None:
+    """A whole line and nothing else. "Adopted Friday, August 14, 2026 by
+    Ordinance 2181" is a sentence about the code."""
+    kept = html_to_text(
+        "<div>Adopted Friday, August 14, 2026 by Ordinance 2181</div>"
+        "<div>19.301.4 Side yard 5 ft</div>"
+    )
+
+    assert "Ordinance 2181" in kept
+    assert PRINT_DATE_MARK not in kept
+
+
+def test_the_stored_ecode_documents_carry_the_mark(corpus: ProvenanceStore) -> None:
+    """The regression on the corpus rather than on the function. If a re-fetch
+    ever stores a dated header again, the watch starts crying wolf again."""
+    dated = [
+        path
+        for path in corpus.documents()
+        if any(
+            line == PRINT_DATE_MARK or _DATED.match(line)
+            for line in corpus.load(path).text.splitlines()[:HEADER_LINES]
+        )
+    ]
+    assert dated, "no eCode360 documents found -- has the corpus moved?"
+    for path in dated:
+        head = corpus.load(path).text.splitlines()[:HEADER_LINES]
+        assert PRINT_DATE_MARK in head, path
+        assert not [line for line in head if _DATED.match(line)], path
+
+
+def test_the_body_did_not_move_under_the_header(corpus: ProvenanceStore) -> None:
+    """Milwaukie's R-MD side yard is cited at line 194 of a 4,368-line
+    document whose seventh line was rewritten. Cheapest possible proof that
+    rewriting it in place moved nothing."""
+    doc = "or/clackamas/milwaukie/19.300.base-zones.txt"
+    assert corpus.quote(f"{doc}#L194").strip() == "5"
+    assert "Side yard height plane limit" in corpus.quote(f"{doc}#L229")

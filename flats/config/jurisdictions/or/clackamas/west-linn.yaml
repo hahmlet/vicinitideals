@@ -10,7 +10,25 @@ notes: 'Ported from quadfit rules.yaml, then re-cited value by value against the
   by min_lot_width_ft: what the code states is "Minimum lot width at front lot line", the "Average
   minimum lot width" printed beneath it is a subdivision average and not encoded, and no chapter states
   a frontage standard as such. UNPORTED: orientation_constraint=''entrance_only''. quadfit justified this
-  in a YAML comment with no citation; it needs its own encoding rather than invented provenance.'
+  in a YAML comment with no citation; it needs its own encoding rather than invented provenance.
+  (3) READ AND NOT ENCODED — CDC Chapter 43, the sidewall provisions every dimensional table points at.
+  It applies to "all new single-family attached and detached construction", and CDC 02.030 defines
+  single-family attached as "two or more dwelling units attached side by side ... on separate lots or
+  parcels. This may be further defined as a duplex, triplex, or quadplex" — so it reaches this pod in
+  the unit-lot configuration and not on a single lot, where the same building is a "quadplex residential
+  unit" by a different definition. What it then requires is that a side elevation over 700 sq ft be
+  divided into distinct planes of 700 sq ft or less. The pod''s side elevation is 36 ft by 26 ft, about
+  936 sq ft, so the standard would reach it and two of the seven exemptions might not: 20 ft from the
+  side lot line, and a sidewall no more than 22 ft from grade to the eaves. It is not encoded because
+  no field in this system can hold it — it constrains how a wall is articulated, not how far the wall
+  stands from the line — and inventing a setback to stand in for it would produce a number no reviewer
+  could find on the page. It is written here so the next reader starts from the reading rather than
+  from the reference.
+  (4) max_far is read against CDC 02.030''s own definition, at 02.definitions.txt#L440: "the FAR is that
+  percentage of the total lot size that can be built as habitable space ... on a 10,000-square-foot lot,
+  an FAR of 0.45 will allow a 4,500-square-foot house". Habitable floor area over lot area, which is
+  what the screen computes; the definition excludes attached and detached garages, accessory dwellings
+  and basements predominantly below grade, none of which this pod has.'
 ingest:
   geoid: null
   juris_city_codes:
@@ -69,6 +87,28 @@ code:
     # this, and it is not being made for one city. Left off, which is the
     # conservative direction: an unencoded floor is a check that does not run
     # rather than a lot wrongly called RED.
+  # Every zone chapter hangs the same sentence off its height row: "Except
+  # for steeply sloped lots, in which case the provisions of Chapter 41 CDC
+  # shall apply." Nineteen mentions across nine chapters, ten of them beside
+  # a number this screen uses, and it was the loudest unread reference in the
+  # county. Fetched and read 2026-08-20: 41.005 is how height is measured on a
+  # slope, 41.010 drops the garage front setback to three feet on a site
+  # averaging 25 percent or steeper and holds everything else to the
+  # underlying zone, and 41.020 lets a building on a slope exceed the zone's
+  # height. Relief in all three directions and no new ceiling, so no value
+  # cites it — it is held so the reference is read rather than open.
+  # "A. The sidewall provisions of Chapter 43 CDC shall apply", printed under
+  # every dimensional table in all nine chapters. Fetched and read 2026-08-20;
+  # see the reading recorded in this layer's notes.
+  - id: "43.sidewall"
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC43.html
+    title: "CDC Chapter 43 - Single-Family Residential Side-Yard Transitions"
+    # Sixty-five lines of design prose with five numbers in it, which is what
+    # the chapter is rather than a bad fetch. Read before declaring.
+    allow_thin: true
+  - id: "41.steep-lots"
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC41.html
+    title: "CDC Chapter 41 - Building Height, Structures on Steep Lots, Exceptions"
   - id: "08.r-40"
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC08.html
     title: "CDC Chapter 08 - Low Density Residential R-40"
@@ -168,6 +208,14 @@ zones:
       quote: "or/clackamas/west-linn/08.r-40.txt#L167"
     notes: 'quadfit confidence: verified | Detached SFD + quadplex outright. Coverage 25% applies to quadplex
       (only cottage clusters exempt). Corner side-yard read as 30 ft.'
+    max_far:
+      # This zone's FAR row exempts cottage clusters and nobody else, so the
+      # 0.45 is the pod's ceiling: 4,032 sq ft of floor over two storeys wants
+      # 8,960 sq ft of lot. That clears the zone's own minimum comfortably and
+      # binds only on an undersized lot, which is what a screen over existing
+      # parcels mostly sees.
+      value: 0.45
+      quote: "or/clackamas/west-linn/08.r-40.txt#L175,L176"
     max_height_ft:
       value: 40
       quote: "or/clackamas/west-linn/08.r-40.txt#L163"
@@ -241,6 +289,14 @@ zones:
       value: 25
       quote: "or/clackamas/west-linn/09.r-20.txt#L169"
     notes: 'quadfit confidence: verified | Detached SFD + quadplex outright. Coverage 25% applies to quadplex.'
+    max_far:
+      # This zone's FAR row exempts cottage clusters and nobody else, so the
+      # 0.45 is the pod's ceiling: 4,032 sq ft of floor over two storeys wants
+      # 8,960 sq ft of lot. That clears the zone's own minimum comfortably and
+      # binds only on an undersized lot, which is what a screen over existing
+      # parcels mostly sees.
+      value: 0.45
+      quote: "or/clackamas/west-linn/09.r-20.txt#L177,L178"
     max_height_ft:
       value: 40
       quote: "or/clackamas/west-linn/09.r-20.txt#L165"
@@ -385,10 +441,23 @@ zones:
       value: 35
       quote: "or/clackamas/west-linn/11.r-10.txt#L142"
     max_coverage_pct:
-      quote: "or/clackamas/west-linn/11.r-10.txt#L161"
+      # Was cited at L161, which is "35 ft" — the maximum building height.
+      # The citation check passed because this zone's coverage and its height
+      # are both 35, so the figure matched a line about something else. L164
+      # is "35%", the coverage cell.
+      quote: "or/clackamas/west-linn/11.r-10.txt#L164"
       value: 35
+    max_far:
+      # The FAR row states 0.45, then a second row: "Duplex, triplex, and
+      # quadplex 0.60". The pod is 2,016 sq ft on two floors, so 0.60 asks for
+      # a 6,720 sq ft lot — under R-10's own minimum, but not under the
+      # minimum of an existing undersized lot, which is most of what this
+      # screen looks at.
+      value: 0.60
+      quote: "or/clackamas/west-linn/11.r-10.txt#L170,L173-L174"
     notes: 'quadfit confidence: verified | Width 35 ft at front line / 50 ft avg (frontage=35). Coverage
-      35% applies to quadplex.'
+      35% applies to quadplex, and the FAR row states a separate 0.60 for duplex, triplex and quadplex
+      against the 0.45 the zone states for everything else.'
     max_height_ft:
       value: 35
       quote: "or/clackamas/west-linn/11.r-10.txt#L161"
@@ -461,6 +530,12 @@ zones:
     max_coverage_pct:
       quote: "or/clackamas/west-linn/12.r-7.txt#L166"
       value: 35
+    max_far:
+      # "Duplex, triplex, and quadplex 0.60", printed under the 0.45 that
+      # applies to everything else. The note below has said so since the
+      # quadfit import and no value carried it.
+      value: 0.60
+      quote: "or/clackamas/west-linn/12.r-7.txt#L172,L175-L176"
     notes: 'quadfit confidence: verified | Detached SFD + quadplex outright. Coverage 35% applies to quadplex;
       max FAR 0.60 for duplex/triplex/quadplex.'
     max_height_ft:
@@ -535,8 +610,21 @@ zones:
     notes: 'quadfit confidence: verified | Max lot coverage does NOT apply to quadplexes (CDC 13.070)
       -> no coverage cap for a 4-plex; SFD base coverage 40%.'
     max_coverage_pct:
-      value: 40
-      quote: "or/clackamas/west-linn/13.r-5.txt#L178"
+      # "Maximum lot coverage does not apply to duplexes, triplexes,
+      # quadplexes, townhouses or cottage clusters." The 40% on the line
+      # above is the detached-dwelling figure, and this file carried it
+      # against the pod — a ceiling the code does not put on this building.
+      # The zone's own note has said the standard does not apply since the
+      # quadfit import; the value did not.
+      exempt: true
+      quote: "or/clackamas/west-linn/13.r-5.txt#L178,L179"
+    max_far:
+      # "Maximum FAR does not apply to duplexes, triplexes, quadplexes ..."
+      # Recorded rather than left absent: an absent field and a field the code
+      # switches off read the same to the screen and not to a reviewer, and
+      # this city states both in zones two pages apart.
+      exempt: true
+      quote: "or/clackamas/west-linn/13.r-5.txt#L186,L188"
     max_height_ft:
       value: 35
       quote: "or/clackamas/west-linn/13.r-5.txt#L174"
@@ -609,8 +697,21 @@ zones:
     notes: 'quadfit confidence: verified | Coverage max does NOT apply to quadplexes (CDC 14.070); SFD
       base 40%.'
     max_coverage_pct:
-      value: 40
-      quote: "or/clackamas/west-linn/14.r-4.5.txt#L203"
+      # "Maximum lot coverage does not apply to duplexes, triplexes,
+      # quadplexes, townhouses or cottage clusters." The 40% on the line
+      # above is the detached-dwelling figure, and this file carried it
+      # against the pod — a ceiling the code does not put on this building.
+      # The zone's own note has said the standard does not apply since the
+      # quadfit import; the value did not.
+      exempt: true
+      quote: "or/clackamas/west-linn/14.r-4.5.txt#L203,L204"
+    max_far:
+      # "Maximum FAR does not apply to duplexes, triplexes, quadplexes ..."
+      # Recorded rather than left absent: an absent field and a field the code
+      # switches off read the same to the screen and not to a reviewer, and
+      # this city states both in zones two pages apart.
+      exempt: true
+      quote: "or/clackamas/west-linn/14.r-4.5.txt#L211,L213"
     max_height_ft:
       value: 35
       quote: "or/clackamas/west-linn/14.r-4.5.txt#L199"
@@ -683,8 +784,21 @@ zones:
     notes: 'quadfit confidence: verified | Coverage max does NOT apply to quadplexes (CDC 15.070); SFD
       base 50%. FAR 0.45 (n/a to middle housing).'
     max_coverage_pct:
-      value: 50
-      quote: "or/clackamas/west-linn/15.r-3.txt#L200"
+      # "Maximum lot coverage does not apply to duplexes, triplexes,
+      # quadplexes, townhouses or cottage clusters." The 50% on the line
+      # above is the detached-dwelling figure, and this file carried it
+      # against the pod — a ceiling the code does not put on this building.
+      # The zone's own note has said the standard does not apply since the
+      # quadfit import; the value did not.
+      exempt: true
+      quote: "or/clackamas/west-linn/15.r-3.txt#L200,L201"
+    max_far:
+      # "Maximum FAR does not apply to duplexes, triplexes, quadplexes ..."
+      # Recorded rather than left absent: an absent field and a field the code
+      # switches off read the same to the screen and not to a reviewer, and
+      # this city states both in zones two pages apart.
+      exempt: true
+      quote: "or/clackamas/west-linn/15.r-3.txt#L205,L207"
     max_height_ft:
       value: 35
       quote: "or/clackamas/west-linn/15.r-3.txt#L196"
@@ -758,8 +872,21 @@ zones:
       quadplex are CONDITIONAL only (16.050(6)). Coverage max does not apply to quadplexes; SFD base 50%.
       Min lot 4,000 for detached SFD - verify.'
     max_coverage_pct:
-      value: 50
-      quote: "or/clackamas/west-linn/16.r-2.1.txt#L221"
+      # "Maximum lot coverage does not apply to duplexes, triplexes,
+      # quadplexes, townhouses or cottage clusters." The 50% on the line
+      # above is the detached-dwelling figure, and this file carried it
+      # against the pod — a ceiling the code does not put on this building.
+      # The zone's own note has said the standard does not apply since the
+      # quadfit import; the value did not.
+      exempt: true
+      quote: "or/clackamas/west-linn/16.r-2.1.txt#L221,L222"
+    max_far:
+      # "Maximum FAR does not apply to duplexes, triplexes, quadplexes ..."
+      # Recorded rather than left absent: an absent field and a field the code
+      # switches off read the same to the screen and not to a reviewer, and
+      # this city states both in zones two pages apart.
+      exempt: true
+      quote: "or/clackamas/west-linn/16.r-2.1.txt#L226,L228"
     max_height_ft:
       value: 35
       quote: "or/clackamas/west-linn/16.r-2.1.txt#L215"

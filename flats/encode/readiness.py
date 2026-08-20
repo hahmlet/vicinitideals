@@ -49,6 +49,7 @@ from flats.encode.load import Trusted
 from flats.encode.qualified import qualified
 from flats.encode.tagging import blocked, gaps
 from flats.provenance.store import ProvenanceError, ProvenanceStore
+from flats.rules.fields import FIELDS
 from flats.rules.model import LIKE, Layer, Status
 
 #: Rungs, blocking-order first. A jurisdiction reports the first one it fails.
@@ -451,6 +452,64 @@ def _unmarked(text: str) -> str:
     return _GLUED.sub(cut, text)
 
 
+_NUMBER = re.compile(r"\d[\d,]*(?:\.\d+)?")
+#: What follows a number, where anything does. Area before length on purpose:
+#: "square feet" ends in a length unit and is not one.
+_UNIT = re.compile(
+    r"\s*(sq\.?\s*ft\.?|square\s+feet|sf\b|acres?\b"
+    r"|%|percent|per\s*cent"
+    r"|ft\.?|feet|foot)",
+    re.I,
+)
+#: Which of those a field is measured in. Only the two kinds that share a
+#: number space are listed: a coverage of 35 and a height of 35 ft are both
+#: "35", and nothing else in this corpus collides that way.
+_OWN_UNIT = {
+    "percent": ("%", "percent", "per cent"),
+    "length_ft": ("ft", "ft.", "feet", "foot"),
+}
+
+
+def cites_a_different_unit(text: str, field: str, value) -> bool:
+    """Whether the line prints this number, but never in this field's unit.
+
+    The gap that made this necessary was silent for as long as it existed.
+    West Linn R-10 allows 35 percent lot coverage and a 35 ft building, and
+    the coverage value cited the height line. Every check passed: the quote
+    resolved, the line printed 35, and a reviewer opening it would have found
+    a sentence about how tall the building may be.
+
+    Deliberately narrow. It fires only when *every* printing of the number in
+    the line carries a unit this field is not measured in — one bare number,
+    or one in the right unit, and the citation stands. A check that guessed
+    would cost more than the one it replaces.
+    """
+    kind = FIELDS[field].kind if field in FIELDS else None
+    own = _OWN_UNIT.get(kind or "")
+    if own is None or isinstance(value, bool) or not isinstance(value, (int, float)):
+        return False
+
+    seen = False
+    for found in _NUMBER.finditer(text):
+        try:
+            if float(found.group(0).replace(",", "")) != float(value):
+                continue
+        except ValueError:
+            continue
+        after = _UNIT.match(text, found.end())
+        if after is None:
+            # A bare number. Half this corpus is tables stripped of their
+            # units — "35" in a cell under a header reading "(ft)" — and a
+            # bare printing evidences anything.
+            return False
+        if " ".join(after.group(1).lower().split()) in own:
+            return False
+        seen = True
+    # If the number never appeared, the line not stating it is the other
+    # check's business and not this one's.
+    return seen
+
+
 def quotes_the_number(
     text: str, value, *, spaced: bool = False, glued: bool = False
 ) -> bool:
@@ -532,7 +591,7 @@ def readiness_for(
         doc_id = quote.split("#", 1)[0]
         if not quotes_the_number(
             cited, number, spaced=doc_id in spaced, glued=doc_id in glued
-        ):
+        ) or cites_a_different_unit(cited, name, number):
             misquoted.append((zone_code, name))
 
     if not parts:

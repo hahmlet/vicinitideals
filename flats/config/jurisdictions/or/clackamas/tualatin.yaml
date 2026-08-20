@@ -53,6 +53,34 @@ code:
     # plain mode reads it cleanly. Tables 40-1/40-2 lose their geometry, which
     # is the declared trade until the grid matters more than the prose.
     extraction: plain
+  # The two chapters both residential tables point at. Fetched because the
+  # cross-reference ledger ranked TDC 36.410 the loudest unread reference in
+  # this corpus -- eighteen mentions, fifteen of them beside a number this
+  # screen uses -- and a reference that loud is either a standard we are
+  # missing or a question we can close in writing. It was the second.
+  - id: "36.400-420.lot-dimensions"
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    title: "TDC 36.400-36.420 - Lot Dimensions, Flexible Lot Subdivisions"
+    start: "TDC 36.400.  Lot Dimensions."
+    end: "TDC 36.500.  Enforcement"
+    extraction: plain
+  # Named for the span it holds, not for the chapter. 73A runs to .130 and
+  # this is .020 through .060; a document called "73A" would answer for
+  # 73A.170, the accessory-dwelling standards, which is not in it.
+  - id: "73A.020-060.residential-design"
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    title: "TDC 73A.020-73A.060 - Residential Design Standards"
+    start: "TDC 73A.020.  Residential Design Standards Applicability"
+    end: "TDC 73A.070.  Clear and Objective (Type I) Cottage Cluster"
+    extraction: plain
+    # Six of 147 lines read like regulation, which trips the plausibility
+    # guard and is the correct reading of the chapter: it is written in
+    # design elements rather than dimensions. "At least three Residential
+    # Roof Design Elements", "windows that occupy at least 12 percent of the
+    # wall plane", a three-foot walkway. Read 2026-08-20; nothing in it moves
+    # a wall, so nothing cites it. It is held so the reference stops being
+    # unread rather than so a value can quote it.
+    allow_thin: true
 zones:
   RL:
     max_density_du_per_acre:
@@ -128,7 +156,15 @@ zones:
       test on a flag or cul-de-sac lot. Relief the table states and this file does not encode: front
       12 ft to an unenclosed porch, lot width 30 ft on a cul-de-sac, zero side setback where townhouse
       units attach, height to 50 ft through Type II Architectural Review. Corner-lot street side is 10
-      ft measured from the secondary frontage, which the code determines by where the front door faces.'
+      ft measured from the secondary frontage, which the code determines by where the front door faces.
+      TDC 36.410 is read and ruled: it reduces the RL minimum lot to 5,000 sq ft in a Flexible Lot
+      Subdivision, and the chapter opens by putting itself under "the discretionary subdivision
+      standards in TDC 36.120 and not the Housing Clear and Objective Standards". A discretionary
+      path that only ever loosens a standard cannot turn this screen red and must not be allowed to
+      turn it green, so it stays out of the encoding rather than being carried as relief. TDC 36.400
+      is lot creation — double frontage, side lot lines at right angles, and a public-street frontage
+      requirement on lots created after 1 September 1979 — none of which bind development on a lot
+      that already exists.'
   RML:
     max_density_du_per_acre:
       # Table 41-3, MAXIMUM DENSITY. The table states a ceiling per
@@ -191,4 +227,10 @@ zones:
       the front-yard setback on any street-facing side except for duplexes, triplexes and quadplexes,
       where it is 10 ft. Relief not encoded: lot size and width reductions for Flexible Lot
       Subdivisions under TDC 36.410, width 30 ft on a cul-de-sac, zero side setback where townhouse
-      units attach, height to 50 ft where setbacks are 1.5x the height.'
+      units attach, height to 50 ft where setbacks are 1.5x the height. TDC 36.410 is read: 3,000 sq
+      ft in RML, discretionary, and conditioned on a one-acre site, five percent open space and a
+      unit mix — a loosening this screen has no business claiming. One error found in reading it.
+      TDC 41.300(1) sends the reader to "TDC 36.410(2)(b)" for the lot size, lot width, building
+      coverage and setbacks that apply in small lot subdivisions; Ord. 1463-21 repealed that section
+      and enacted a new 36.410 that states lot size and nothing else. The cross-reference points at a
+      rule that no longer exists, so there is nothing behind it to encode.'
