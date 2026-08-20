@@ -204,6 +204,11 @@ def _quoted_parts(layer: Layer) -> Iterable[tuple[str, str, str | None, object]]
                 if getattr(value, "acres", None) is not None
                 else value.acres_per_dwelling
                 if getattr(value, "acres_per_dwelling", None) is not None
+                # A standard measured off the building is checked against the
+                # ratio the code prints, not against what it comes to. Table
+                # 150-2 prints 2 and prints 10 and prints 13 nowhere.
+                else value.per_height_ft
+                if getattr(value, "per_height_ft", None) is not None
                 else getattr(value, "value", None),
             )
             if value.measured_on_quote:

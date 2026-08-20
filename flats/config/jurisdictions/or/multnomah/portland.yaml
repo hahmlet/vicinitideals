@@ -1482,17 +1482,30 @@ zones:
       exempt: true
       quote: "or/multnomah/portland/33.150.txt#L401-L403"
     setback_front_ft:
-      # Table 150-2 states no minimum street setback for CI2 at all -- the
-      # three setback rows in this table are all lot-line rows, and the only
-      # street standard is a maximum. Note [5] says so outright for the
-      # frontages the maximum reaches.
-      value: 0
-      quote: "or/multnomah/portland/33.150.txt#L531,L546-L547"
+      # The same three rows as the side and rear yards, and for the same
+      # reason: each is headed "Lot line abutting OR ACROSS THE STREET FROM"
+      # a zone, which is a front lot line described. 33.150.215.B states that
+      # the minimums for this zone are the ones in Table 150-2 and names no
+      # other source, and note [5] -- "for frontages where the maximum
+      # building setback applies, there is no minimum setback" -- only means
+      # something if a minimum otherwise reaches a frontage.
+      value: 10
+      quote: "or/multnomah/portland/33.150.txt#L531,L540-L543"
+      variants:
+        - value: 0
+          when: [abuts_nonresidential_zone]
+          quote: "or/multnomah/portland/33.150.txt#L531,L544-L545"
+        # Note [5]. The frontage that must be built up to the street is the
+        # one released from standing back from it -- but only where the
+        # maximum applies, which 33.150.215.C.1 limits to a transit street or
+        # a street lot line in a Pedestrian District. Nothing here reads
+        # either map, so the 10 binds.
+        - exempt: true
+          when: [on_transit_street]
+          quote: "or/multnomah/portland/33.150.txt#L574"
     setback_front_max_ft:
       # Table 150-2, "Maximum Building Setbacks Street Lot Line, Transit
-      # Street or Pedestrian District". Note [5] is the half that matters and
-      # it runs the useful way: "for frontages where the maximum building
-      # setback applies, there is no minimum setback".
+      # Street or Pedestrian District".
       value: 10
       quote: "or/multnomah/portland/33.150.txt#L531,L546-L547"
     setback_side_ft:
@@ -1544,52 +1557,45 @@ zones:
       exempt: true
       quote: "or/multnomah/portland/33.150.txt#L401-L403"
     setback_front_ft:
-      # Table 150-2 states no minimum street setback for CI2 at all -- the
-      # three setback rows in this table are all lot-line rows, and the only
-      # street standard is a maximum. Note [5] says so outright for the
-      # frontages the maximum reaches.
-      value: 0
-      quote: "or/multnomah/portland/33.150.txt#L531,L546-L547"
+      # IR's column of the three minimum-setback rows is ONE merged cell, so
+      # unlike CI1 and CI2 the neighbour's zoning does not change the answer
+      # and there is no variant for it. Front, side and rear are the same
+      # standard here; the rows reach a street lot line because each is headed
+      # "Lot line abutting or ACROSS THE STREET FROM" a zone.
+      per_height_ft: 2
+      floor_ft: 10
+      quote: "or/multnomah/portland/33.150.txt#L531,L538-L545"
+      variants:
+        # Note [5], as in CI2: no minimum where the maximum applies, and the
+        # maximum applies only on a transit street or in a Pedestrian
+        # District. Neither map is read here.
+        - exempt: true
+          when: [on_transit_street]
+          quote: "or/multnomah/portland/33.150.txt#L574"
     setback_front_max_ft:
       # Table 150-2, "Maximum Building Setbacks Street Lot Line, Transit
-      # Street or Pedestrian District". Note [5] is the half that matters and
-      # it runs the useful way: "for frontages where the maximum building
-      # setback applies, there is no minimum setback".
+      # Street or Pedestrian District".
       value: 10
       quote: "or/multnomah/portland/33.150.txt#L531,L546-L547"
-    # The two standards this file cannot yet state, and they are not missing
-    # for want of reading. Table 150-2 gives IR one merged cell covering all
-    # three lot-line rows: "1 ft. for every 2 ft. of building height but not
-    # less than 10 ft." It is the only setback in the corpus measured off the
-    # building rather than off the lot, and a Value holds a number, not a
-    # function of the design.
+    # "1 ft. for every 2 ft. of building height but not less than 10 ft." --
+    # the only standard in the corpus measured off the BUILDING rather than
+    # off the lot. Both printed figures are in the file and the 13 ft it comes
+    # to for a 26 ft pod is not, which is the same bargain every other derived
+    # form here strikes: `per_height_ft` carries the 2, `floor_ft` carries the
+    # 10, and DESIGN_HEIGHT_FT supplies the height.
     #
-    # For a 26 ft pod the answer is 13 ft. Typing 13 would put a number in the
-    # file that appears nowhere in the sentence cited for it, which is the
-    # misquote this whole ladder exists to catch -- and typing the printed 10
-    # would state a floor as if it were the standard, three feet looser than
-    # the rule on every lot line. `reduce_pct` is the nearest existing
-    # mechanism and it is the wrong shape: it reduces a base by a percentage
-    # the code prints, and this multiplies a dimension of the building the
-    # rules layer deliberately does not know.
-    #
-    # So they go to the work queue with their citation and no quote, which is
-    # what `wanted` is for: encoding debt named out loud rather than a number
-    # nobody read. The zone screens as owing two required fields, which is
-    # true.
+    # Held as encoding debt with no quote until now, on the reading that a
+    # Value holds a number and not a function of the design. That was true of
+    # the model and not of the code: the ratio and the floor are both printed,
+    # and it is the product that was unquotable.
     setback_side_ft:
-      value: 13
-      cite: PCC 33.150 Table 150-2, the IR column of the three minimum-building-setback
-        rows -- "1 ft. for every 2 ft. of building height but not less than 10 ft.",
-        which is 13 ft for a 26 ft pod and cannot be stated as a constant
-      url: https://www.portland.gov/sites/default/files/code/150-campus-inst-zones_1.pdf
-      retrieved: '2026-08-19'
+      per_height_ft: 2
+      floor_ft: 10
+      quote: "or/multnomah/portland/33.150.txt#L531,L538-L545"
     setback_rear_ft:
-      value: 13
-      cite: PCC 33.150 Table 150-2, the IR column of the three minimum-building-setback
-        rows -- the same merged cell governs the rear lot line
-      url: https://www.portland.gov/sites/default/files/code/150-campus-inst-zones_1.pdf
-      retrieved: '2026-08-19'
+      per_height_ft: 2
+      floor_ft: 10
+      quote: "or/multnomah/portland/33.150.txt#L531,L538-L545"
     max_height_ft:
       value: 75
       quote: "or/multnomah/portland/33.150.txt#L531,L536-L537"
@@ -1602,4 +1608,4 @@ zones:
     min_landscaped_pct:
       value: 20
       quote: "or/multnomah/portland/33.150.txt#L531,L552-L553"
-    notes: 'Institutional Residential. Sixty lots, and the only zone in the corpus whose setback is measured off the building instead of the lot: 1 ft for every 2 ft of height, floored at 10, which for a 26 ft pod is 13 ft on every non-street lot line regardless of what is on the other side of it. No minimum lot size, 75 ft of height, 70 percent coverage, 20 percent landscaped. NOT ENCODED, on purpose: Maps 150-1 through 150-5 supersede the Table 150-2 setback and height rows where they apply, and this screen does not read them; and note [1] treats an entire CI zone as one site for Colleges and Medical Centers, which is a different applicant than this one.'
+    notes: 'Institutional Residential. Sixty lots, and the only zone in the corpus whose setback is measured off the building instead of the lot: 1 ft for every 2 ft of height, floored at 10, which for a 26 ft pod is 13 ft. Its column of Table 150-2''s three minimum-setback rows is one merged cell, so unlike CI1 and CI2 the neighbour''s zoning changes nothing -- and the rows are headed "Lot line abutting or across the street from", so the front lot line owes the same 13. The one frontage that does not is a transit street or a street lot line in a Pedestrian District, where note [5] removes the minimum outright; neither map is read here. No minimum lot size, 75 ft of height, 70 percent coverage, 20 percent landscaped. NOT ENCODED, on purpose: Maps 150-1 through 150-5 supersede the Table 150-2 setback and height rows where they apply, and this screen does not read them; and note [1] treats an entire CI zone as one site for Colleges and Medical Centers, which is a different applicant than this one.'

@@ -559,17 +559,19 @@ def test_what_the_loader_still_drops_is_named() -> None:
     # was quoted once the Rural Residential article was sliced out of the
     # chapter PDF the LR-7 slice already comes from.
     #
-    # Then Portland's IR zone put two back, and they are a different kind of
-    # debt from any of those three. Nothing is unread: Table 150-2 states the
-    # standard plainly, as "1 ft. for every 2 ft. of building height but not
-    # less than 10 ft." It is the file that cannot say it. A Value holds a
-    # number and this one is a function of the design, so 13 ft is the answer
-    # for a 26 ft pod and appears in no sentence anyone could cite for it.
-    # Listing them is the point of the list.
-    assert debt == {
-        ("or/multnomah/portland", "IR", "setback_side_ft"),
-        ("or/multnomah/portland", "IR", "setback_rear_ft"),
-    }
+    # Then Portland's IR zone put two back, and they came off again a different
+    # way from the other three. Nothing there was ever unread: Table 150-2
+    # states the standard plainly, as "1 ft. for every 2 ft. of building height
+    # but not less than 10 ft." It was the file that could not say it, because
+    # a Value held a number and the answer was a function of the design -- 13
+    # ft for a 26 ft pod, in no sentence anyone could cite. The fix was a form
+    # for the ratio rather than a quote for the product, which is the same
+    # bargain `acres` and `per_dwelling` strike; see test_height_ratio.py.
+    #
+    # So the list is empty, and empty is the only reading of it that means
+    # anything. A value with no quote does not resolve, and a zone can pass
+    # every other rung of the ladder while one of its standards is invisible.
+    assert debt == set()
 
 
 def test_a_schedule_and_an_enum_are_values_too() -> None:

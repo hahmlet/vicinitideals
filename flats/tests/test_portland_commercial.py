@@ -282,19 +282,22 @@ def test_the_campus_chapter_exempts_lot_size_twice_over(portland: Layer) -> None
         assert portland.zones[zone].values["min_lot_sqft"].exempt, zone
 
 
-def test_the_one_setback_measured_off_the_building_is_owed_not_guessed(
+def test_the_one_setback_measured_off_the_building_states_its_ratio(
     portland: Layer,
 ) -> None:
     """IR states "1 ft. for every 2 ft. of building height but not less than
-    10 ft.", which for a 26 ft pod is 13 -- a number no sentence in the
-    chapter contains. Typing it would be the misquote the ladder exists to
-    catch; typing the printed 10 would state a floor as the standard, three
-    feet looser on every lot line. Both fields carry their citation and no
-    quote, which routes them to the work queue instead of the screen."""
-    owed = {(w.zone, w.field) for w in portland.wanted}
+    10 ft.", which for a 26 ft pod is 13 -- a number no sentence in the chapter
+    contains. Typing 13 would be the misquote the ladder exists to catch, and
+    typing the printed 10 would state a floor as the standard, three feet
+    looser on every lot line. Both printed figures go in the file instead and
+    the product is made at load, which is what left the work queue empty."""
+    assert {(w.zone, w.field) for w in portland.wanted} == set()
 
-    assert owed == {("IR", "setback_side_ft"), ("IR", "setback_rear_ft")}
-    assert "setback_side_ft" not in portland.zones["IR"].values
+    for field in ("setback_front_ft", "setback_side_ft", "setback_rear_ft"):
+        held = portland.zones["IR"].values[field]
+        assert held.per_height_ft == 2, field
+        assert held.floor_ft == 10, field
+        assert held.value == 13, field
 
 
 def test_a_zone_decided_at_the_use_gate_owes_no_dimensions(portland: Layer) -> None:

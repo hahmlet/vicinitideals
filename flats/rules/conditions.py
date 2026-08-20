@@ -260,6 +260,25 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "on_transit_street",
+        "site_fact",
+        "The frontage is on a transit street, or is a street lot line inside a "
+        "Pedestrian District. Portland's maximum building setbacks apply there "
+        "and nowhere else, and note [5] of Table 150-2 turns that into a "
+        "relief: 'for frontages where the maximum building setback applies, "
+        "there is no minimum setback'. So the frontage that must be built up "
+        "to the street is the one released from standing back from it. "
+        "Distinct from `civic_corridor`, which is a corridor the code maps to "
+        "allow more intensity; this is a street classification carried in the "
+        "Transportation System Plan, and nothing here reads either. Assumed "
+        "unknown, which leaves the minimum binding.",
+        evidence=(
+            "Portland's transit street classification and Pedestrian District "
+            "map, cut against the frontage — neither held"
+        ),
+        assume=None,
+    ),
+    ConditionDef(
         "inside_mapped_use_area",
         "site_fact",
         "The parcel lies inside a boundary the code draws INSIDE a zone to "

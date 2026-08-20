@@ -25,7 +25,7 @@ from typing import Any
 
 import yaml
 
-from flats.rules.fields import DWELLINGS, SQFT_PER_ACRE, field
+from flats.rules.fields import DESIGN_HEIGHT_FT, DWELLINGS, SQFT_PER_ACRE, field
 from flats.rules.definitions import parse as parse_definitions
 from flats.rules.model import (
     LAYER_META,
@@ -103,7 +103,7 @@ def _parse_values(
 
         if isinstance(node, dict) and (
             {"value", "exempt", "per_dwelling", "sqft_per_unit", "acres",
-             "acres_per_dwelling"} & set(node)
+             "acres_per_dwelling", "per_height_ft", "floor_ft"} & set(node)
         ):
             body = dict(node)
             value = body.pop("value", None)
@@ -112,6 +112,8 @@ def _parse_values(
             sqft_per_unit = body.pop("sqft_per_unit", None)
             acres = body.pop("acres", None)
             acres_each = body.pop("acres_per_dwelling", None)
+            per_height = body.pop("per_height_ft", None)
+            floor_ft = body.pop("floor_ft", None)
             measured_on, measured_on_cite, measured_on_quote = _parse_measured_on(
                 body.pop("measured_on", None), f"{where}.{key}", problems
             )
@@ -204,6 +206,44 @@ def _parse_values(
                 # is five acres. Four dwellings therefore need twenty, and
                 # twenty is a figure the code prints nowhere.
                 value = _per_dwelling(_in_acres(float(acres_each)))
+            if floor_ft is not None and per_height is None:
+                problems.append(
+                    f"{where}.{key}: 'floor_ft' is the least a height-"
+                    f"proportional standard may come to, and there is no "
+                    f"'per_height_ft' here for it to floor"
+                )
+                continue
+            if per_height is not None:
+                if value is not None or exempt:
+                    problems.append(
+                        f"{where}.{key}: a value states a distance or a ratio of "
+                        f"building height, not both"
+                    )
+                    continue
+                if not isinstance(per_height, (int, float)) or isinstance(
+                    per_height, bool
+                ):
+                    problems.append(f"{where}.{key}: 'per_height_ft' expects a number")
+                    continue
+                if per_height <= 0:
+                    problems.append(
+                        f"{where}.{key}: per_height_ft {per_height} is not a ratio"
+                    )
+                    continue
+                if floor_ft is not None and (
+                    not isinstance(floor_ft, (int, float))
+                    or isinstance(floor_ft, bool)
+                    or floor_ft < 0
+                ):
+                    problems.append(
+                        f"{where}.{key}: floor_ft {floor_ft!r} is not a distance"
+                    )
+                    continue
+                # "1 ft. for every 2 ft. of building height but not less than
+                # 10 ft." is 13 ft for a 26 ft pod, and 13 is printed nowhere.
+                value = _off_the_building(
+                    float(per_height), None if floor_ft is None else float(floor_ft)
+                )
             if not exempt and value is None:
                 problems.append(f"{where}.{key}: expected a 'value' or 'exempt: true'")
                 continue
@@ -212,6 +252,8 @@ def _parse_values(
             body = {}
             value = node
             exempt = False
+            per_height = None
+            floor_ft = None
             per_dwelling = None
             sqft_per_unit = None
             acres = None
@@ -257,6 +299,8 @@ def _parse_values(
                 acres_per_dwelling=(
                     None if acres_each is None else float(acres_each)
                 ),
+                per_height_ft=None if per_height is None else float(per_height),
+                floor_ft=None if floor_ft is None else float(floor_ft),
                 measured_on=None if measured_on is None else str(measured_on),
                 measured_on_cite=measured_on_cite,
                 measured_on_quote=measured_on_quote,
@@ -300,6 +344,23 @@ def _in_acres(size: float) -> float:
     where it is whole, for the reason `_per_dwelling` gives.
     """
     total = round(size * SQFT_PER_ACRE, 3)
+    return int(total) if float(total).is_integer() else total
+
+
+def _off_the_building(per_height: float, floor: float | None) -> float:
+    """What a height-proportional standard comes to for the pod.
+
+    Portland's Table 150-2 states IR's minimum setback as "1 ft. for every 2
+    ft. of building height but not less than 10 ft." Both figures are printed
+    and 13 is not, so the file keeps the two a reader can find and the quotient
+    is made here -- the same bargain `_in_acres` and `_per_dwelling` strike.
+
+    The floor is a maximum against the ratio, not a substitute for it: below
+    the floor the ratio governs and above it the floor does, and which one
+    binds depends on the building rather than on the code.
+    """
+    off_height = round(DESIGN_HEIGHT_FT / per_height, 3)
+    total = max(off_height, floor) if floor is not None else off_height
     return int(total) if float(total).is_integer() else total
 
 

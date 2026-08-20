@@ -304,6 +304,41 @@ ACRE_STATED_FIELDS: frozenset[str] = frozenset({"min_lot_sqft"})
 #: the file states the acreage.
 ACRE_PER_DWELLING_FIELDS: frozenset[str] = frozenset({"min_lot_sqft"})
 
+#: The height, in feet, of the building this screen answers for. A design
+#: constant in the rules registry for the same reason :data:`DWELLINGS` is one:
+#: some codes state a standard as a function of the building rather than of the
+#: lot, and the multiplication has to happen somewhere. The two honest places
+#: are here or nowhere, and nowhere means a rule file typing a product that
+#: appears in no ordinance.
+#:
+#: Portland's Table 150-2 is the case that forced it. The IR column of all
+#: three minimum-setback rows is one merged cell: "1 ft. for every 2 ft. of
+#: building height but not less than 10 ft." For a 26 ft pod that is 13 ft, and
+#: 13 is printed nowhere.
+#:
+#: It is the TALLEST design in the catalog, not an average, because a taller
+#: building owes a larger setback and the conservative answer is the strict
+#: one. `flats/tests/test_height_ratio.py` fails the moment a catalog entry
+#: exceeds it, which is the revisit this constant is owed rather than a number
+#: that silently goes stale.
+DESIGN_HEIGHT_FT = 26
+
+#: Fields a rule file may state as a ratio of building height. Restricted to
+#: the yards and the separation between buildings, because those are the
+#: standards codes actually write this way -- a step-back against a smaller
+#: neighbour, a light-and-air rule, a fire-separation rule. A minimum lot AREA
+#: stated per foot of height is not a rule any code writes, and a maximum
+#: height stated as a fraction of itself is not one either.
+HEIGHT_RATIO_FIELDS: frozenset[str] = frozenset(
+    {
+        "setback_front_ft",
+        "setback_side_ft",
+        "setback_street_side_ft",
+        "setback_rear_ft",
+        "min_building_separation_ft",
+    }
+)
+
 #: Fields whose absence should not by itself block a zone from `verified`.
 #: Everything else, if the code speaks to it, must be encoded or explicitly
 #: recorded as not-applicable via the clause ledger.

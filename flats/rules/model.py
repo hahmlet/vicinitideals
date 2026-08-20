@@ -42,6 +42,7 @@ from flats.rules.conditions import condition
 from flats.rules.fields import (
     ACRE_PER_DWELLING_FIELDS,
     ACRE_STATED_FIELDS,
+    HEIGHT_RATIO_FIELDS,
     MEASURED_ON_FIELDS,
     PER_DWELLING_FIELDS,
     PER_UNIT_AREA_FIELDS,
@@ -571,6 +572,26 @@ class Value(BaseModel):
     #: Residential. `value` carries four of them because that is what this
     #: building needs; this carries the one figure the article prints.
     acres_per_dwelling: float | None = None
+    #: The height ratio the code prints, where it states a standard as a
+    #: function of the building instead of a constant. Portland's Table 150-2
+    #: gives IR one merged cell across all three minimum-setback rows: "1 ft.
+    #: for every 2 ft. of building height but not less than 10 ft.", so this
+    #: carries the 2 and :data:`~flats.rules.fields.DESIGN_HEIGHT_FT` supplies
+    #: the height. `value` carries what that comes to, because a lot is checked
+    #: against a distance.
+    #:
+    #: The only form in this model that reads a dimension of the BUILDING. Every
+    #: other one converts a unit or multiplies by the dwelling count, and both of
+    #: those are properties of the standard; this is a property of what is being
+    #: put on the lot, which is why the constant it uses is the tallest design
+    #: rather than a typical one.
+    per_height_ft: float | None = None
+    #: The floor the same sentence states -- "but not less than 10 ft." Stated
+    #: separately because it is a second printed number, and because a ratio
+    #: without one is a real rule too: below the floor the ratio governs, above
+    #: it the floor does, and which of the two binds for this building is
+    #: arithmetic the file should not have to do.
+    floor_ft: float | None = None
     #: The quantity a rate is measured against, where the code names one this
     #: screen does not hold. A density per *net acre* is computed on the lot
     #: less rights-of-way, floodplain, steep slopes and Goal 5 resources, and
@@ -709,6 +730,30 @@ class Value(BaseModel):
                 f"{self.name}: acres_per_dwelling {self.acres_per_dwelling} "
                 f"is not an area"
             )
+        return self
+
+    @model_validator(mode="after")
+    def _a_height_ratio_is_a_positive_divisor(self) -> Value:
+        if self.per_height_ft is None:
+            if self.floor_ft is None:
+                return self
+            raise ValueError(
+                f"{self.name}: 'floor_ft' is the least a height-proportional "
+                f"standard may come to, and there is no ratio here for it to "
+                f"floor"
+            )
+        if self.name not in HEIGHT_RATIO_FIELDS:
+            raise ValueError(
+                f"{self.name}: 'per_height_ft' states a standard as a ratio of "
+                f"building height, and applies to "
+                f"{', '.join(sorted(HEIGHT_RATIO_FIELDS))}"
+            )
+        if self.per_height_ft <= 0:
+            raise ValueError(
+                f"{self.name}: per_height_ft {self.per_height_ft} is not a ratio"
+            )
+        if self.floor_ft is not None and self.floor_ft < 0:
+            raise ValueError(f"{self.name}: floor_ft {self.floor_ft} is not a distance")
         return self
 
     @model_validator(mode="after")
