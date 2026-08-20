@@ -194,6 +194,23 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "beyond_ugb_mile",
+        "site_fact",
+        "The parcel is more than one mile from the Metro Urban Growth "
+        "Boundary. Multnomah County's Rural Residential zone states two "
+        "minimum lot sizes in one sentence -- five acres, and \"for "
+        "properties within one mile of the Urban Growth Boundary ... as "
+        "currently required in the Oregon Administrative Rules Chapter 660, "
+        "Division 004 (20 acre minimum as of October 4, 2000)\" -- so which "
+        "figure binds is a distance nobody has measured. Assumed unknown, "
+        "which leaves the twenty-acre number in force, because that is the "
+        "half that cannot turn a RED lot green by mistake. Being outside the "
+        "UGB is not the same as being a mile from it, which is why the zone "
+        "note saying RR is overwhelmingly rural does not settle this.",
+        evidence="Metro UGB polygon, buffered one mile",
+        assume=None,
+    ),
+    ConditionDef(
         "public_sewer",
         "site_fact",
         "A public sanitary main is close enough to connect to.",
@@ -517,6 +534,25 @@ _C: tuple[ConditionDef, ...] = (
         "conservative of the two readings, until the Part 7 procedure is "
         "stored and says which it is.",
         evidence="the zone review-use list; MCC Chapter 39 Part 7 procedure is unread",
+        tier=Tier.discretionary,
+    ),
+    ConditionDef(
+        "planned_development",
+        "relief",
+        "Approval of a Planned Development overlay on the site. Multnomah "
+        "County's PD, MCC 39.5300 through 39.5350, is the one place in this "
+        "corpus where a rural residential zone names an attached dwelling: "
+        "39.5350(A) says the housing types in a residential PD \"may include "
+        "only duplexes and single family detached or attached dwellings\". "
+        "It is expensive in exactly the way that sentence is cheap. A PD is a "
+        "Planning Commission decision on a preliminary and then a final "
+        "development plan; 39.5320 lets the PD's own standards override the "
+        "base zone's on conflict, so nothing dimensional is fixed in advance; "
+        "and 39.5340(A) computes the units the site may hold by dividing it "
+        "by the underlying district's minimum lot area per dwelling, which in "
+        "rural zones is acres. Tiered discretionary because it is a hearing "
+        "with findings, not a permit counter.",
+        evidence="a Planning Commission decision on a PD development plan and program",
         tier=Tier.discretionary,
     ),
 )

@@ -40,6 +40,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 
 from flats.rules.conditions import condition
 from flats.rules.fields import (
+    ACRE_PER_DWELLING_FIELDS,
     ACRE_STATED_FIELDS,
     MEASURED_ON_FIELDS,
     PER_DWELLING_FIELDS,
@@ -308,6 +309,19 @@ class Variant(BaseModel):
     #: exists to catch -- so the file states the percentage the code states,
     #: and the arithmetic is done here where it can be checked.
     reduce_pct: float | None = None
+    #: The acreage per dwelling unit the code prints, where a condition
+    #: changes which acreage applies. Multnomah County's Planned Development
+    #: overlay turns a rural district's minimum lot size into a per-dwelling
+    #: divisor -- one acre in Orient Rural Center Residential, so four acres
+    #: for this building -- and prints the product nowhere. Same bargain as
+    #: `reduce_pct`: the file states the figure a reader will find, and the
+    #: arithmetic is done where it can be checked.
+    acres_per_dwelling: float | None = None
+    #: The acreage the code prints, where a condition decides which acreage
+    #: applies. MCC 39.4375(A) asks twenty acres of a Rural Residential parcel
+    #: within a mile of the Urban Growth Boundary and five of one beyond it,
+    #: in one sentence, and prints no square footage at all.
+    acres: float | None = None
     #: Registered condition names, all of which must hold. Empty is allowed
     #: only alongside a band: a variant with neither is the base value written
     #: twice, and two bases cannot be told apart.
@@ -366,6 +380,34 @@ class Variant(BaseModel):
         if not 0 < self.reduce_pct <= 100:
             raise ValueError(
                 f"reduce_pct {self.reduce_pct} is not a percentage of the base value"
+            )
+        return self
+
+    @model_validator(mode="after")
+    def _an_acreage_is_an_area(self) -> Variant:
+        if self.acres is None:
+            return self
+        if self.exempt or self.reduce_pct is not None:
+            raise ValueError(
+                "a variant states an acreage, a reduction or an exemption, "
+                "not more than one"
+            )
+        if self.acres <= 0:
+            raise ValueError(f"acres {self.acres} is not an area")
+        return self
+
+    @model_validator(mode="after")
+    def _a_per_dwelling_acreage_is_an_area(self) -> Variant:
+        if self.acres_per_dwelling is None:
+            return self
+        if self.exempt or self.reduce_pct is not None:
+            raise ValueError(
+                "a variant states an acreage per dwelling, a reduction or an "
+                "exemption, not more than one"
+            )
+        if self.acres_per_dwelling <= 0:
+            raise ValueError(
+                f"acres_per_dwelling {self.acres_per_dwelling} is not an area"
             )
         return self
 
@@ -521,6 +563,14 @@ class Value(BaseModel):
     #: `per_dwelling` and `sqft_per_unit`, and it exists because every rural
     #: zone in Oregon states its lot minimum this way.
     acres: float | None = None
+    #: The acreage the code prints where it states an area PER DWELLING UNIT.
+    #: Multnomah County's Planned Development overlay computes the units a site
+    #: may hold by dividing the site by "the minimum lot area per dwelling unit
+    #: required by the underlying district", and the rural districts state that
+    #: minimum in acres -- one in Orient Rural Center Residential, five in Rural
+    #: Residential. `value` carries four of them because that is what this
+    #: building needs; this carries the one figure the article prints.
+    acres_per_dwelling: float | None = None
     #: The quantity a rate is measured against, where the code names one this
     #: screen does not hold. A density per *net acre* is computed on the lot
     #: less rights-of-way, floodplain, steep slopes and Goal 5 resources, and
@@ -637,6 +687,28 @@ class Value(BaseModel):
             )
         if self.acres <= 0:
             raise ValueError(f"{self.name}: acres {self.acres} is not an area")
+        return self
+
+    @model_validator(mode="after")
+    def _acres_per_dwelling_is_a_positive_area(self) -> Value:
+        if self.acres_per_dwelling is None:
+            return self
+        if self.acres is not None:
+            raise ValueError(
+                f"{self.name}: an area is stated in acres or in acres per "
+                f"dwelling unit, not both"
+            )
+        if self.name not in ACRE_PER_DWELLING_FIELDS:
+            raise ValueError(
+                f"{self.name}: 'acres_per_dwelling' states an area per dwelling "
+                f"unit, and applies to "
+                f"{', '.join(sorted(ACRE_PER_DWELLING_FIELDS))}"
+            )
+        if self.acres_per_dwelling <= 0:
+            raise ValueError(
+                f"{self.name}: acres_per_dwelling {self.acres_per_dwelling} "
+                f"is not an area"
+            )
         return self
 
     @model_validator(mode="after")

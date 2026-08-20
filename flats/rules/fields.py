@@ -288,6 +288,22 @@ PER_DWELLING_FIELDS: frozenset[str] = frozenset({"min_lot_sqft"})
 #: writes.
 ACRE_STATED_FIELDS: frozenset[str] = frozenset({"min_lot_sqft"})
 
+#: Fields a rule file may state as ACRES PER DWELLING UNIT -- the two
+#: conversions above, composed, and the composition is the whole reason it
+#: exists. Multnomah County's Planned Development overlay is the case: MCC
+#: 39.5340(A) sets the number of dwellings a PD may hold by "dividing the total
+#: site area by the minimum lot area per dwelling unit required by the
+#: underlying district", and the underlying districts state that minimum in
+#: acres -- one acre in the Orient Rural Center Residential zone, five in Rural
+#: Residential. So a four-unit PD needs four acres in the first and twenty in
+#: the second, and neither article prints either figure.
+#:
+#: Written as its own form rather than by letting a value carry `acres` and
+#: `per_dwelling` together, because the citation check has to know which single
+#: figure a reader will find in the text. Here that figure is the acreage, and
+#: the file states the acreage.
+ACRE_PER_DWELLING_FIELDS: frozenset[str] = frozenset({"min_lot_sqft"})
+
 #: Fields whose absence should not by itself block a zone from `verified`.
 #: Everything else, if the code speaks to it, must be encoded or explicitly
 #: recorded as not-applicable via the clause ledger.

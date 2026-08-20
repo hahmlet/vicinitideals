@@ -202,6 +202,8 @@ def _quoted_parts(layer: Layer) -> Iterable[tuple[str, str, str | None, object]]
                 if value.sqft_per_unit is not None
                 else value.acres
                 if getattr(value, "acres", None) is not None
+                else value.acres_per_dwelling
+                if getattr(value, "acres_per_dwelling", None) is not None
                 else getattr(value, "value", None),
             )
             if value.measured_on_quote:
@@ -226,7 +228,11 @@ def _quoted_parts(layer: Layer) -> Iterable[tuple[str, str, str | None, object]]
                     # 12,000 and prints 10 and prints 10,800 nowhere, so
                     # looking for the result would flag the one encoding that
                     # did not invent it.
-                    variant.reduce_pct
+                    variant.acres
+                    if getattr(variant, "acres", None) is not None
+                    else variant.acres_per_dwelling
+                    if getattr(variant, "acres_per_dwelling", None) is not None
+                    else variant.reduce_pct
                     if variant.reduce_pct is not None
                     else getattr(variant, "value", None),
                 )

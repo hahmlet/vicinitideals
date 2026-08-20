@@ -1,0 +1,260 @@
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Chapter 33.100
+3/1/25                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          Open Space Zone
+
+33.100 Open Space Zone
+                                                                                                                                                                                                                                                                                                                              100
+
+Sections:
+General
+              33.100.010                                                                           Purpose
+              33.100.020                                                                           Short Name
+              33.100.030                                                                           Where the Zone Is Applied
+              33.100.040                                                                           Other Zoning Regulations
+Use Regulations
+              33.100.100                                                                           Primary Uses
+              33.100.110                                                                           Accessory Uses
+Development Standards
+              33.100.200                                                                           Development Standards
+              33.100.205 Fences
+              33.100.210 Demolitions
+              33.100.220                                                                           Nonconforming Development
+              33.100.225                                                                           Signs
+              33.100.230 Trees
+              33.100.240 Recycling Areas
+
+                                                                                                                                                                General
+33.100.010 Purpose
+The Open Space zone is intended to preserve and enhance public and private open, natural, and
+improved park and recreational areas identified in the Comprehensive Plan. These areas serve many
+functions including:
+              •                                             Providing opportunities for outdoor recreation;
+              •                                             Providing contrasts to the built environment;
+              •                                             Preserving scenic qualities;
+              •                                             Protecting sensitive or fragile environmental areas;
+              •                                             Enhancing and protecting the values and functions of trees and the urban forest;
+              •                                             Preserving the capacity and water quality of the stormwater drainage system; and
+              •                                            Providing                       pedestrian and bicycle transportation connections.
+33.100.020 Short Name
+The short name and map symbol of the Open Space zone is OS.
+33.100.030 Where the Zone Is Applied
+The Open Space zone is applied to all land designated as "Open Space" on the Comprehensive Plan
+map.             In addition, property owners may request an open space designation for open or natural areas
+that meet the purpose of the zone, and for view, conservation, or similar easements that can be
+shown as open space.             See Chapter 33.810, Comprehensive Plan Amendments.
+
+                                                                                                                                                                       100-1
+Chapter 33.100                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Title 33, Planning and Zoning
+Open Space Zone                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     3/1/25
+33.100.040 Other Zoning Regulations
+The regulations in this chapter state the allowed uses and the development standards for the open
+space zone. Sites in overlay zones, plan districts, or with            designated historic landmarks are subject to
+additional regulations.             The Official Zoning Maps indicate which sites are subject to the additional
+regulations. Specific uses or development types may also be subject to regulations in the 200s series
+of chapters.
+
+                                                                                                                                                  Table 100-1
+                                                                                                              Open Space Zone Primary Uses
+                   Use Categories                                                                                                                                                                                     OS Zone
+                   Residential Categories
+                   Household Living                                                                                                                                                                                   N
+                   Group Living                                                                                                                                                                                       N
+                   Commercial Categories
+                   Retail Sales And Service                                                                                                                                                                           CU [1]
+                   Office                                                                                                                                                                                             N
+                   Quick Vehicle Servicing                                                                                                                                                                            N
+                   Vehicle Repair                                                                                                                                                                                     N
+                   Commercial Parking                                                                                                                                                                                 N
+                   Self-Service Storage                                                                                                                                                                               N
+                   Commercial Outdoor Recreation                                                                                                                                                                      CU
+                   Major Event Entertainment                                                                                                                                                                          N
+                   Industrial Categories
+                   Manufacturing And Production                                                                                                                                                                       CU [6]
+                   Warehouse And Freight Movement                                                                                                                                                                     N
+                   Wholesale Sales                                                                                                                                                                                    N
+                   Industrial Service                                                                                                                                                                                 N
+                   Bulk Fossil Fuel Terminal                                                                                                                                                                          N
+                   Railroad Yards                                                                                                                                                                                     N
+                   Waste-Related                                                                                                                                                                                      N
+                   Institutional Categories
+                   Basic Utilities                                                                                                                                                                                    L/CU [5]
+                   Community Service                                                                                                                                                                                  CU [4]
+                   Parks And Open Areas                                                                                                                                                                               L/CU [2]
+                   Schools                                                                                                                                                                                            CU
+                   Colleges                                                                                                                                                                                           N
+                   Medical Centers                                                                                                                                                                                    N
+                   Religious Institutions                                                                                                                                                                             N
+                   Daycare                                                                                                                                                                                            CU
+                   Other Categories
+                   Agriculture                                                                                                                                                                                        L[7]
+                   Aviation And Surface Passenger Terminals                                                                                                                                                           N
+                   Detention Facilities                                                                                                                                                                               N
+                   Mining                                                                                                                                                                                             CU
+                   Radio Frequency Transmission Facilities                                                                                                                                                            L/CU [3]
+                   Rail Lines And Utility Corridors                                                                                                                                                                   CU
+                   Y = Yes, Allowed                                      L = Allowed, But Special Limitations  CU = Conditional Use Review Required
+                   N = No, Prohibited
+
+                                                                                                                                                                100-                                                            2
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Chapter 33.100
+3/1/25                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          Open Space Zone
+
+                 Notes:
+                            •                                               The use categories are described in Chapter 33.920.
+                            •                                               Regulations that correspond to the bracketed numbers [ ] are stated in 33.100.100.B.
+                            •                                               Specific uses and developments may also be subject to regulations in the 200s series of
+                                        chapters.
+
+                                                                                                                      Use Regulations
+33.100.100 Primary Uses
+           A.                                                          Allowed uses. Uses allowed in the open space zone are listed in Table 100-1 with a "Y".
+                         These uses are allowed if they comply with the development standards and other
+                         regulations of this Title. Being listed as an allowed use does not mean that a proposed
+                         development will be granted an adjustment or other exception to the regulations of this
+                         Title. In addition, a use or development listed in the 200s series of chapters is also subject
+                         to the regulations of those chapters.
+           B.                                               Limited uses. Uses allowed that are subject to limitations are listed in Table 100-1 with an
+                         "L". These uses are allowed if they comply with the limitations listed below and the
+                         development standards and other regulations of this Title. In addition, a use or
+                         development listed in the 200s series of chapters is also subject to the regulations of those
+                         chapters.             The paragraphs listed below contain the limitations and correspond with the
+                         footnote numbers from Table 100-1.
+                         1.                                                    Retail Sales And Service. This regulation applies to all parts of Table 100-1 that have
+                                        note [1].             Retail Sales And Services uses are conditional uses only when they are
+                                        associated with a Park And Open Areas use.  In other situations they are prohibited.
+                         2.                                                    Parks And Open Areas.             This regulation applies to all parts of Table 100-1 that have
+                                        note [2].             Uses in the Park And Open Areas category are allowed by right.            However,
+                                        certain accessory uses and facilities which are part of a Park And Open Areas use
+                                        require a conditional use review. These facilities are listed below.
+                                        a.                                                    Swimming pools.
+                                        b.                                                  Cemeteries, including mausoleums, chapels, and similar accessory structures
+                                                      associated with funerals or burial.
+                                        c.                                                        Golf courses including club houses, restaurants and driving ranges.
+                                        d.                                                  Boat ramps.
+                                        e.                                                    Parking areas.
+                                        f.                                                             Recreational fields for organized sports. Recreational fields used for organized
+                                                       sports are subject to the regulations of Chapter 33.279, Recreational Fields for
+                                                       Organized Sports.
+                         3.                                                    Radio Frequency Transmission Facilities. This regulation applies to all parts of Table
+                                        100-1 that have note [3].                                                                                         Some Radio Frequency Transmission Facilities are allowed by
+                                        right. See Chapter 33.274.
+
+                                                                                                                                         100-                                                            3
+
+Chapter 33.100                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Title 33, Planning and Zoning
+Open Space Zone                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     3/1/25
+
+                       4.                                                    Community Services.             This regulation applies to all parts of Table 100-1 that have note
+                                     [4].                            Most Community Service uses are a conditional use. However, short term, mass,
+                                     and outdoor shelters are prohibited.
+                       5.                                                    Basic Utilities. This regulation applies to all parts of Table 100-1 that have note [5].
+                                     a.                                           Basic Utilities that serve a development site are accessory uses to the primary
+                                                  use being served.
+                                     b.                                                  Small Scale Energy Production that provides energy for on-site or off              -site use are
+                                                  considered accessory to the primary use on the site. Installations that sell power
+                                                  they generate—                        at retail (net metered) or wholesale—are included.             However,
+                                                  they are only considered accessory if they generate energy from biological
+                                                  materials or byproducts from the site itself, or conditions on the site itself;
+                                                  materials from other sites may not be used to generate energy.
+                                     c.                                                        All other Basic Utilities are conditional uses.
+                       6.                                         Manufacturing and Production.             This regulation applies to all parts of Table 100-1 that
+                                     have note [6].             Utility Scale Energy Production from Large Wind Turbines is a
+                                     conditional use. All other Manufacturing And Production uses are prohibited.
+                       7.                                                   Agriculture. This regulation applies to all parts of Table 100-1 that have note [7].
+                                     Agriculture is an allowed use. Where the use and site meet the regulations of Chapter
+                                     33.237, Food Production and Distribution, the applicant may choose whether it is
+                                     allowed as a Market Garden.
+          C.                                                                                         Conditional uses. Uses which are allowed if approved through the conditional use review
+                       process are listed in Table 100-1 with a "CU".               These uses are allowed provided they comply
+                       with the conditional use approval criteria for that use, the development standards, and
+                       other regulations of this Title. Uses listed with a "CU" that also have a footnote number in
+                       the table are subject to the regulations cited in the footnote. In addition, a use or
+                       development listed in the 200s series of chapters is also subject to the regulations of those
+                       chapters.             The conditional use review process and approval criteria are stated in Chapter
+                       33.815, Conditional Uses.
+          D.                                             Prohibited uses. Uses listed in Table 100-1 with an "N" are prohibited.               Existing uses in
+                       categories listed as prohibited may be subject to the regulations of Chapter 33.258,
+                       Nonconforming Uses and Development.
+33.100.110 Accessory Uses
+Uses that are accessory to a primary use are allowed if they comply with specific regulations for the
+accessory uses and all applicable development standards.
+
+                                                                                                 Development Standards
+33.100.200 Development Standards
+          A.                                                           Allowed or limited uses. Allowed or limited uses are subject to the development standards
+                       stated below.
+                       1.                                                    Building setbacks.             Except as specified in paragraph A.3., buildings must be set back
+                                     from all property lines a minimum of 1 foot for each foot of building height.
+
+                                                                                                                               100-                                                            4
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Chapter 33.100
+3/1/25                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          Open Space Zone
+
+                      2.                                                    Outdoor activity facility setbacks. Except as specified in paragraph A.3. below, outdoor
+                                   activity facilities, such as swimming pools, basketball courts, tennis courts, or baseball
+                                   diamonds must be set back 50 feet from abutting R-zoned properties.                           Playground
+                                   facilities must be set back 25 feet from abutting R-zoned properties if not illuminated,
+                                   and 50 feet if illuminated.             Where the outdoor activity facility abuts R-zoned properties
+                                   in School uses, the required setback is reduced to zero.
+                      3.                                                    Recreational fields for organized sports. Recreational fields used for organized sports
+                                   are subject to Chapter 33.279, Recreational Fields for Organized Sports.
+          B.                                                Conditional uses. Conditional uses are subject to the development standards stated below.
+                      1.                                                    Generally. Except as modified by paragraph B.2 and B.3, the development standards of
+                                   Table 110-9               , in Chapter 33.110, Single-Dwelling Zones, apply              .
+                      2.                                                    Minimum setbacks. Buildings must be set back from all property lines a minimum of 1
+                                   foot for each foot of building height. Setbacks for structures that are accessory to
+                                   recreational fields used for organized sports are subject to Chapter 33.279,
+                                   Recreational Fields for Organized Sports.
+                      3.                                                   Parking.                                    Conditional uses must meet the parking standards for that use in the CE zone,
+                                   as stated in Chapter 33.266, Parking and Loading.
+33.100.205 Fences
+          A.                                                           Purpose. The fence standards promote the positive benefits of fences without negatively
+                      impacting the community or endangering public or vehicle safety. Fences can create a
+                      sense of privacy, protect children and pets, provide separation from busy streets, and
+                      enhance the appearance of property by providing attractive landscape materials.            The
+                      negative effects of fences can include the creation of street walls that inhibit police and
+                      community surveillance, decrease the sense of community, hinder emergency access,
+                      lessen solar access, hinder the safe movement of pedestrians and vehicles, and create an
+                      unattractive appearance. These standards are intended to promote the positive aspects of
+                      fences and to limit the negative ones.
+          B.                                                Types of fences. The standards apply to walls, fences and screens of all types whether
+                      open, solid, wood, metal, wire, masonry, or other material.
+          C.                                                                                        Location. Fences may be 8 feet tall at the property line. Fences taller than 8 feet must be
+                      set back from the property line one additional foot for each additional foot of fence height
+                      over 8 feet. A fence within 30 feet of a street lot line may not be more than 10 percent
+                      sight obscuring.
+          D.                                            Reference to other regulations. Electrified fences are regulated under Title 26, Electrical
+                      Regulations. The use of barbed wire is regulated under Title 24, Building Regulations.
+33.100.210 Demolitions
+          A.                                                           Generally. Demolition on a site that requires a demolition permit is subject to the tree
+                      preservation and protection requirements of Title 11, Trees.  See Chapter 11.50, Trees in
+                      Development Situations.
+          B.                                                Historic resources. Demolition of historic resources is regulated by Chapter 33.445, Historic
+                      Resource Overlay Zone.
+
+                                                                                                                        100-                                                            5
+Chapter 33.100                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Title 33, Planning and Zoning
+Open Space Zone                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     3/1/25
+33.100.220 Nonconforming Development
+Existing developments that do not conform to the development standards of this chapter may be
+subject to the regulations of Chapter 33.258, Nonconforming Situations.
+33.100.225 Signs
+The sign regulations are stated in Title 32, Signs and Related Regulations.
+33.100.230 Trees
+Requirements for street trees and for on-site tree preservation, protection, and overall tree density
+are in Title 11, Trees. See Chapter 11.50, Trees in Development Situations.
+33.100.240 Recycling Areas
+See Section 17.102.270, Businesses and Multifamily Complexes Required to Recycle, of the Portland
+City Code for additional requirements for recycling areas.
+
+(Amended by: Ord. No. 165376, effective 5/29/92; Ord. No. 167189, effective 1/14/94; Ord. No.
+170704, effective 1/1/97; Ord. No. 171219, effective 7/1/97; Ord. No. 171718, effective 11/29/97;
+Ord. No. 174160, effective 2/9/00; Ord. No. 174263, effective 4/15/00; Ord. No. 174378, effective
+5/26/00; Ord. No. 175204, effective 3/1/01; Ord. No. 177028, effective 12/14/02; Ord. No. 177422,
+effective 6/7/03; Ord. No. 178509, effective 7/16/04; Ord. No. 183750, effective 6/4/10, Ord. No.
+184016, effective 8/20/10; Ord. No. 184443, effective 4/1/11; Ord. No. 184524, effective 7/1/11;
+Ord. No. 185412, effective 6/13/12; Ord. No. 185915, effective 5/1/13; Ord. No. 186053, effective
+1/1/15; Ord. No. 187216, effective 7/24/15; Ord. No. 188142,                                                                                                                                                                                                                                                                                effective 1/13/17; Ord. No.                         189807,
+effective 12/18/19; Ord. No. 190380, effective 4/                                                                                                                                                                                                                            30/21; Ord. No.                                                  190978, effective 8                                                                                                                                                              /31/22; Ord. No.
+191961, effective 3/1/25.)
+
+                                                                                                                                                                          100-6

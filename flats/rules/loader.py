@@ -102,7 +102,8 @@ def _parse_values(
             continue
 
         if isinstance(node, dict) and (
-            {"value", "exempt", "per_dwelling", "sqft_per_unit", "acres"} & set(node)
+            {"value", "exempt", "per_dwelling", "sqft_per_unit", "acres",
+             "acres_per_dwelling"} & set(node)
         ):
             body = dict(node)
             value = body.pop("value", None)
@@ -110,6 +111,7 @@ def _parse_values(
             per_dwelling = body.pop("per_dwelling", None)
             sqft_per_unit = body.pop("sqft_per_unit", None)
             acres = body.pop("acres", None)
+            acres_each = body.pop("acres_per_dwelling", None)
             measured_on, measured_on_cite, measured_on_quote = _parse_measured_on(
                 body.pop("measured_on", None), f"{where}.{key}", problems
             )
@@ -177,6 +179,31 @@ def _parse_values(
                 # "80 acres in the EFU base zone" is 3,484,800 square feet, and
                 # 3,484,800 is in no ordinance anywhere.
                 value = _in_acres(float(acres))
+            if acres_each is not None:
+                if value is not None or exempt:
+                    problems.append(
+                        f"{where}.{key}: a value states an area outright or per "
+                        f"dwelling unit, not both"
+                    )
+                    continue
+                if not isinstance(acres_each, (int, float)) or isinstance(
+                    acres_each, bool
+                ):
+                    problems.append(
+                        f"{where}.{key}: 'acres_per_dwelling' expects a number"
+                    )
+                    continue
+                if acres_each <= 0:
+                    problems.append(
+                        f"{where}.{key}: acres_per_dwelling {acres_each} is not "
+                        f"an area"
+                    )
+                    continue
+                # MCC 39.5340(A) divides the site by the underlying district's
+                # minimum lot area per dwelling unit, which in Rural Residential
+                # is five acres. Four dwellings therefore need twenty, and
+                # twenty is a figure the code prints nowhere.
+                value = _per_dwelling(_in_acres(float(acres_each)))
             if not exempt and value is None:
                 problems.append(f"{where}.{key}: expected a 'value' or 'exempt: true'")
                 continue
@@ -188,6 +215,7 @@ def _parse_values(
             per_dwelling = None
             sqft_per_unit = None
             acres = None
+            acres_each = None
             measured_on = measured_on_cite = measured_on_quote = None
             unless = ()
             raw_variants = ()
@@ -226,6 +254,9 @@ def _parse_values(
                 per_dwelling=None if per_dwelling is None else float(per_dwelling),
                 sqft_per_unit=None if sqft_per_unit is None else float(sqft_per_unit),
                 acres=None if acres is None else float(acres),
+                acres_per_dwelling=(
+                    None if acres_each is None else float(acres_each)
+                ),
                 measured_on=None if measured_on is None else str(measured_on),
                 measured_on_cite=measured_on_cite,
                 measured_on_quote=measured_on_quote,
@@ -319,14 +350,54 @@ def _parse_variants(
     out: list[Variant] = []
     for i, node in enumerate(raw):
         at = f"{where}.variants[{i}]"
-        if not isinstance(node, dict) or not ({"value", "exempt", "reduce_pct"} & set(node)):
+        if not isinstance(node, dict) or not (
+            {"value", "exempt", "reduce_pct", "acres", "acres_per_dwelling"}
+            & set(node)
+        ):
             problems.append(
-                f"{at}: expected a mapping with a 'value', a 'reduce_pct', or 'exempt: true'"
+                f"{at}: expected a mapping with a 'value', a 'reduce_pct', an "
+                f"'acres', an 'acres_per_dwelling', or 'exempt: true'"
             )
             continue
         body = dict(node)
         value = body.pop("value", None)
         exempt = bool(body.pop("exempt", False))
+        acres = body.pop("acres", None)
+        if acres is not None:
+            if value is not None:
+                problems.append(
+                    f"{at}: a variant states a number or an acreage, not both"
+                )
+                continue
+            if not isinstance(acres, (int, float)) or isinstance(acres, bool):
+                problems.append(f"{at}: 'acres' expects a number")
+                continue
+            if acres <= 0:
+                problems.append(f"{at}: acres {acres} is not an area")
+                continue
+            value = _in_acres(float(acres))
+        acres_each = body.pop("acres_per_dwelling", None)
+        if acres_each is not None:
+            if value is not None:
+                problems.append(
+                    f"{at}: a variant states a number or an acreage per "
+                    f"dwelling unit, not both"
+                )
+                continue
+            if not isinstance(acres_each, (int, float)) or isinstance(
+                acres_each, bool
+            ):
+                problems.append(f"{at}: 'acres_per_dwelling' expects a number")
+                continue
+            if acres_each <= 0:
+                problems.append(
+                    f"{at}: acres_per_dwelling {acres_each} is not an area"
+                )
+                continue
+            # MCC 39.5340(A) divides the site by the underlying district's
+            # minimum lot area per dwelling unit. One acre in OR, four
+            # dwellings, four acres -- a figure neither article prints.
+            value = _per_dwelling(_in_acres(float(acres_each)))
         reduce_pct = body.pop("reduce_pct", None)
         if reduce_pct is not None:
             if value is not None:
@@ -398,6 +469,10 @@ def _parse_variants(
                     value=value,
                     exempt=exempt,
                     reduce_pct=None if reduce_pct is None else float(reduce_pct),
+                    acres=None if acres is None else float(acres),
+                    acres_per_dwelling=(
+                        None if acres_each is None else float(acres_each)
+                    ),
                     when=tuple(str(c) for c in when),
                     band=band,
                     prov=Provenance(**{k: merged.get(k) for k in _PROV_KEYS}),

@@ -63,6 +63,12 @@ def test_relief_is_a_condition_like_any_other() -> None:
         # findings. Folding it into `conditional_use` would report a cost the
         # county does not charge.
         "review_use",
+        # And a fourth thing again: a Planned Development is not permission for
+        # a use, it is permission to replace the base zone's standards with a
+        # plan. MCC 39.5350(A) is the only sentence in Chapter 39 that names an
+        # attached dwelling for a rural residential zone, and it is inside that
+        # overlay rather than inside any zone's use list.
+        "planned_development",
     }
 
 

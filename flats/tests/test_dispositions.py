@@ -389,10 +389,17 @@ def test_adoption_does_not_chain(config: Path) -> None:
 
 
 def test_the_county_pockets_carry_portland_s_rulings() -> None:
-    """No config fixture: the adoption actually shipped. All fifteen captured
-    notes here are 33.110's, and none of them blocks."""
-    rows = notes("or/multnomah/_unincorporated")
+    """No config fixture: the adoption actually shipped.
 
-    assert len(rows) == 15
-    assert all(row.doc.endswith("33.110.txt") for row in rows)
+    Every captured note in this layer comes out of a Portland chapter -- 33.110
+    for the single-dwelling pockets and 33.140 for the employment and
+    industrial ones -- and none of them blocks. Multnomah County's own Chapter
+    39 articles contribute none at all, because the chapter is prose and
+    prose carries its conditions in the sentence rather than under a table.
+    """
+    rows = notes("or/multnomah/_unincorporated")
+    docs = {row.doc.rsplit("/", 1)[-1] for row in rows}
+
+    assert len(rows) == 19
+    assert docs == {"33.110.txt", "33.140.txt"}
     assert not any(row.blocking for row in rows)

@@ -101,6 +101,38 @@ code:
 # The three articles that close out this layer's MCC labels: the medium
 # density zone that permits the pod outright, the urban future holding zone,
 # and the retail commercial zone that forbids a residence in one sentence.
+# The Orient rural community: a residential zone and a commercial-industrial
+# one, sliced from the same chapter PDF as the rest. And the Planned
+# Development overlay they both point at, which is the only article in this
+# chapter that names an attached dwelling in a residential zone.
+# The two Portland chapters this layer needed beyond the single-dwelling one.
+# Same pattern as 33.110 above: county land inside Portland's urban planning
+# area carries Portland's label, so the standards come from Portland's code and
+# the document is fetched into this layer rather than borrowed from that one.
+- id: "33.100"
+  url: https://www.portland.gov/sites/default/files/code/100-os-zone_0.pdf
+  title: PCC Chapter 33.100 Open Space Zone
+- id: "33.140"
+  url: https://www.portland.gov/sites/default/files/code/140-ind-zones_1.pdf
+  title: PCC Chapter 33.140 Employment and Industrial Zones
+- id: "39.or"
+  url: https://multco.us/file/chapter_39_-_zoning_code/download
+  title: MCC 39.4600-39.4645 Orient Rural Center Residential (OR)
+  start: "39.4600  PURPOSE"
+  end: "39.4650- PURPOSE"
+  extraction: plain
+- id: "39.oci"
+  url: https://multco.us/file/chapter_39_-_zoning_code/download
+  title: MCC 39.4650-39.4695 Orient Commercial-Industrial (OCI)
+  start: "39.4650- PURPOSE"
+  end: "39.4700  PURPOSES"
+  extraction: plain
+- id: "39.pd"
+  url: https://multco.us/file/chapter_39_-_zoning_code/download
+  title: MCC 39.5300-39.5350 Planned Development Overlay (PD)
+  start: "39.5300- PURPOSES"
+  end: "39.5400- PURPOSES"
+  extraction: plain
 - id: "39.mr-4"
   url: https://multco.us/file/chapter_39_-_zoning_code/download
   title: MCC 39.4968-39.4990 Urban Medium Density Residential - 4 (MR-4)
@@ -160,6 +192,228 @@ code:
   end: "39.4735 USES"
   extraction: plain
 zones:
+  EG2:
+    section: ["33.140"]
+    cite_default:
+      cite: PCC 33.140 Table 140-1 (33.140.100 Primary Uses) and 33.140.100.B.1
+      url: https://www.portland.gov/sites/default/files/code/140-ind-zones_1.pdf
+      retrieved: '2026-08-20'
+    quadplex_allowed:
+      # Table 140-1 gives Household Living an L[1] in the EG2 column, and
+      # 33.140.100.B.1 is what the bracket means: "Limited use. Household
+      # Living and Group Living are allowed uses when an existing hotel or
+      # motel is converted to dwelling units". A conversion is not new
+      # construction, so the pod does not reach it.
+      #
+      # Quoted with the footnote rather than from the table cell alone,
+      # because an L on its own reads as a yes with conditions and the
+      # condition here excludes the whole category of thing being screened.
+      value: false
+      quote: "or/multnomah/_unincorporated/33.140.txt#L181-L196,L322,L324"
+    notes: >-
+      Five lots, all with Portland addresses, and the same General Employment
+      column Portland's own layer reads. Encoded here rather than left to a
+      cross-layer reference because a `like` in this system names a zone in the
+      same layer, and duplicating the citation is cheaper than inventing a
+      mechanism for three zones.
+  IG2:
+    section: ["33.140"]
+    cite_default:
+      cite: PCC 33.140 Table 140-1 (33.140.100 Primary Uses) and 33.140.100.B.2
+      url: https://www.portland.gov/sites/default/files/code/140-ind-zones_1.pdf
+      retrieved: '2026-08-20'
+    quadplex_allowed:
+      # Table 140-1 gives Household Living a CU [2] in the IG2 column, which
+      # looks like a conditional-use door until the note is read. 33.140.100.B.2
+      # is one sentence long in the part that matters: Household and Group
+      # Living "in houseboats and houseboat moorages in I zones are regulated
+      # by Chapter 33.236, Floating Structures. Household and Group Living in
+      # other structures is prohibited."
+      #
+      # So the conditional use is a conditional use for a houseboat. A
+      # factory-built townhome on land is the other structures, and the code
+      # says prohibited in as many words.
+      value: false
+      quote: "or/multnomah/_unincorporated/33.140.txt#L197-L200,L322,L324"
+    notes: >-
+      Three lots. The reason this zone is worth encoding rather than leaving in
+      the ledger is the shape of the refusal: a table cell reading CU is the
+      most inviting thing a screen can find, and the footnote under it turns
+      the permission into a prohibition. A ledger row saying "unencoded" and a
+      value saying "false, and here is why" cost the same to write and are not
+      the same fact.
+  OS:
+    section: ["33.100"]
+    cite_default:
+      cite: PCC 33.100 Table 100-1 (33.100.100 Primary Uses)
+      url: https://www.portland.gov/sites/default/files/code/100-os-zone_0.pdf
+      retrieved: '2026-08-20'
+    quadplex_allowed:
+      # Table 100-1 gives Household Living a bare N in the zone's single
+      # column: prohibited, with no bracketed limitation and no conditional
+      # use path beside it. Parks, cemeteries and golf courses are what the
+      # zone is for.
+      #
+      # This is the same encoding the Portland layer carries for its own 2,717
+      # OS lots, read off the same table. Twenty-eight lots here, twenty-five
+      # of them with Portland addresses and four with Gresham ones -- see the
+      # note.
+      value: false
+      quote: "or/multnomah/_unincorporated/33.100.txt#L57,L59"
+    notes: >-
+      A Portland-administered pocket, the same reading R20, R10, R7, R5 and RF
+      get in this layer: land the county administers inside Portland's urban
+      planning area carries Portland's zone label, so PCC Chapter 33 is the
+      code that answers it.
+
+
+      Four of the twenty-eight lots carry Gresham mailing addresses rather than
+      Portland ones, which is the one loose end. It does not change the answer
+      -- Gresham's open space land and Troutdale's OS refuse a dwelling too --
+      but it is a label this file has assigned rather than one it read off a
+      county map, and if somebody ever needs an OS lot to come back GREEN, that
+      is where to start looking.
+  OCI:
+    section: ["39.oci"]
+    cite_default:
+      cite: MCC 39.4655 (Uses), 39.4660(A) (Allowed Uses), 39.4675 (Conditional Uses)
+      url: https://multco.us/file/chapter_39_-_zoning_code/download
+      retrieved: '2026-08-20'
+    quadplex_allowed:
+      # The other half of the Orient rural community, and it answers the way
+      # C-3 does. 39.4655 closes the list; 39.4660(A) is "Single-family
+      # detached dwelling" and detached is the word that ends it; the review
+      # uses are shops, storage and a vehicle repair business; and the two
+      # conditional uses are community service uses and a state or regional
+      # trail.
+      #
+      # No planned development entry, which is the difference from the
+      # residential zone across the road. The PD is a conditional use where an
+      # article lists it, and this article does not.
+      value: false
+      quote: "or/multnomah/_unincorporated/39.oci.txt#L16-L30,L453-L458"
+    notes: >-
+      Six lots. The dimensional section (39.4680) sets a one acre minimum lot,
+      35 feet of height and the same 30/10/30/30 yard row the rest of rural
+      Multnomah prints; none of it is encoded, because the use list settles the
+      zone and a dimensional row on a refused zone is a row nobody can act on.
+
+
+      Worth saying why this zone and OR differ, since they cover the same
+      crossroads and were written in the same ordinance. OR lists Planned
+      Developments as a conditional use without qualification, which reaches
+      MCC 39.5350(A) and its attached dwellings. OCI lists community service
+      uses and a trail. The absence is the answer, and the closure sentence
+      above the list is what makes an absence usable.
+  OR:
+    section: ["39.or", "39.pd"]
+    cite_default:
+      cite: MCC 39.4605 (Uses), 39.4610(A) (Allowed Uses), 39.4620(A) (Conditional
+        Uses), 39.4625 (Dimensional Requirements)
+      url: https://multco.us/file/chapter_39_-_zoning_code/download
+      retrieved: '2026-08-20'
+    quadplex_allowed:
+      # Orient Rural Center Residential, and the base is the usual county
+      # shape: 39.4605 closes the list, 39.4610(A) is a single-family detached
+      # dwelling, the review uses are farm sales and property line adjustments,
+      # and the conditional uses are two entries long.
+      #
+      # The first of those two is the door. 39.4620(A) is "Planned Developments
+      # pursuant to the provisions of MCC 39.5300 through 39.5350" with no
+      # narrowing clause after it, and 39.5350 is titled PERMITTED USES: "In a
+      # residential zone, the following uses may be permitted in a Planned
+      # Development overlay: (A) Housing types may include only duplexes and
+      # single family detached or attached dwellings."
+      #
+      # Single family ATTACHED dwellings, printed, in a zone whose name ends in
+      # Residential. That is this building, and it is the only sentence in
+      # Chapter 39 outside MR-4 that reaches it. Quoted from the PD article
+      # rather than from this one because that is where the words are.
+      value: false
+      quote: "or/multnomah/_unincorporated/39.or.txt#L20-L33,L385-L390"
+      variants:
+        - value: true
+          when: [planned_development]
+          cite: MCC 39.4620(A) with MCC 39.5350(A)
+          quote: "or/multnomah/_unincorporated/39.pd.txt#L257-L262"
+    min_lot_sqft:
+      # 39.4625(A): "Except as provided in MCC 39.3120, 39.4630, and 39.4635,
+      # and 39.5300 through 39.5350, the minimum lot size shall be one acre."
+      # The exception list names the PD, which matters twice over -- once
+      # because a PD may plat smaller lots than an acre, and once because
+      # 39.5340(A) turns the same acre into the divisor that caps how many
+      # dwellings the site may hold.
+      acres: 1
+      cite: MCC 39.4625(A)
+      quote: "or/multnomah/_unincorporated/39.or.txt#L420-L422"
+      variants:
+        # Four dwellings, one acre each, four acres of site -- and four acres
+        # is a figure neither article prints. 39.5340(A) computes the units a
+        # residential PD may hold "by dividing the total site area by the
+        # minimum lot area per dwelling unit required by the underlying
+        # district", and this district requires an acre. The quote is the
+        # sentence that states the acre and names the PD as its exception; the
+        # citation carries both sections, because the arithmetic is theirs
+        # jointly and neither says it alone.
+        - acres_per_dwelling: 1
+          when: [planned_development]
+          cite: MCC 39.4625(A) with MCC 39.5340(A)
+          quote: "or/multnomah/_unincorporated/39.or.txt#L420-L422"
+    max_height_ft:
+      value: 35
+      cite: MCC 39.4625(B)
+      quote: "or/multnomah/_unincorporated/39.or.txt#L423,L427"
+    setback_front_ft:
+      # One printed row again -- "Front Side Street Side Rear / 30 10 30 30" --
+      # and the same row EFU, MUA-20 and RR print. Four columns off one line,
+      # read across.
+      value: 30
+      cite: MCC 39.4625(B)
+      quote: "or/multnomah/_unincorporated/39.or.txt#L424-L425"
+    setback_side_ft:
+      value: 10
+      cite: MCC 39.4625(B)
+      quote: "or/multnomah/_unincorporated/39.or.txt#L424-L425"
+    setback_street_side_ft:
+      value: 30
+      cite: MCC 39.4625(B)
+      quote: "or/multnomah/_unincorporated/39.or.txt#L424-L425"
+    setback_rear_ft:
+      value: 30
+      cite: MCC 39.4625(B)
+      quote: "or/multnomah/_unincorporated/39.or.txt#L424-L425"
+    min_frontage_ft:
+      value: 50
+      cite: MCC 39.4625(B)
+      quote: "or/multnomah/_unincorporated/39.or.txt#L423,L428"
+    notes: >-
+      THE PLANNED DEVELOPMENT DOOR, and what it does not promise. MCC 39.5320
+      says that where a PD standard conflicts with a base zone standard, "the
+      standard of the PD shall apply", so every dimension encoded above is
+      negotiable inside an approved plan. Nothing in the PD article prints a
+      relieved number to put in their place, which is why none is encoded: a
+      relief this system can carry is one the code states, and flexible and
+      diversified land development standards is not a number.
+
+
+      The one figure the PD does fix is the count. 39.5340(A) divides the site
+      by the underlying acre, so four units want four acres, and 39.5340(B)(1)
+      allows the Planning Commission to raise the permitted count by up to 25
+      percent on six findings about housing need, energy and land use pattern
+      -- which would bring four units within reach of 3.2 acres. That bonus is
+      a discretionary finding rather than an entitlement and is not encoded.
+
+
+      39.4620(A) adds a second condition this file cannot see: if the property
+      is outside an "acknowledged unincorporated community", the OAR Chapter
+      660 Division 004 planned unit development standards apply as well. Orient
+      is an acknowledged rural community, which is what the whole article is
+      about, so the clause should not bite here -- but the OAR is not a stored
+      document and nobody has checked the acknowledgement.
+
+
+      Seventeen lots, one acre minimum, and a hearing between them and any
+      answer but no.
   C3:
     section: ["39.c-3"]
     cite_default:
@@ -571,6 +825,26 @@ zones:
       value: false
       quote: "or/multnomah/_unincorporated/39.mua-20.txt#L18-L25,L30-L31"
     notes: >-
+      THE PLANNED DEVELOPMENT ENTRY, and why it is not a door here. 39.4320(C)(1)
+      lists "Planned Development for single family residences, as provided in
+      MCC 39.5300 through MCC 39.5350" as a conditional use on lands not
+      predominantly of Agricultural Capability Class I, II or III soils. In
+      Rural Residential and in Orient Rural Center Residential that same
+      reference reaches 39.5350(A) and its "single family detached or attached
+      dwellings", and both zones are encoded with the door open behind a
+      hearing. This zone is not, because 39.5350 opens "In a residential zone"
+      and Multiple Use Agriculture is an agricultural one -- so what housing
+      types a PD may hold here is unstated rather than permitted, and an
+      unstated permission is a refusal until somebody finds the sentence.
+
+
+      Two things would settle it and neither is in hand: a reading of the OAR
+      Chapter 660 Division 004 planned unit development standards the entry
+      also invokes, and the soils class of the parcel, which is a survey
+      nothing in this system holds. Recorded here rather than encoded, because
+      a variant behind two unread rules is a permission nobody could check.
+
+
       Twenty-acre minimum lot, 35 feet of height, yards of 30 front / 10 side
       / 30 street side / 30 rear, and a 50-foot minimum front lot line
       (39.4325). None of that is encoded, because the use list settles the
@@ -1162,11 +1436,28 @@ zones:
       # family dwelling on a Lot of Record." The review uses (39.4365) and the
       # conditional uses (39.4370) were read through: temporary uses, farm
       # stands, property line adjustments, wireless facilities, mining, kennels,
-      # home occupations, a planned development for SINGLE FAMILY residences.
-      # No duplex, triplex, quadplex or middle housing anywhere in the article.
+      # home occupations, and a planned development.
+      #
+      # That last entry was read as a refusal until 2026-08-20 and it is not
+      # one. 39.4370(B)(8) is "Planned Development for single family residences
+      # as provided in MCC 39.5300 through 39.5350", and 39.5350 is titled
+      # PERMITTED USES: "In a residential zone, the following uses may be
+      # permitted in a Planned Development overlay: (A) Housing types may
+      # include only duplexes and single family detached or attached
+      # dwellings." Rural Residential is a residential zone by its own name and
+      # its own purpose section, so the housing-type list reaches it, and
+      # single family ATTACHED is this building.
+      #
+      # No duplex, triplex or quadplex is named anywhere in the article itself.
+      # The door is entirely in the overlay it points at.
       value: false
-      quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L19-L26,L27-L32"
-      cite: "MCC 39.4355 and 39.4360(A)"
+      quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L19-L26,L27-L32,L386-L389,L392-L393,L412-L418"
+      cite: "MCC 39.4355, 39.4360(A) and 39.4370(B)(8)"
+      variants:
+        - value: true
+          when: [planned_development]
+          cite: MCC 39.4370(B)(8) with MCC 39.5350(A)
+          quote: "or/multnomah/_unincorporated/39.pd.txt#L257-L262"
     max_height_ft:
       # MCC 39.4375: "Maximum Structure Height - 35 feet", printed directly
       # under the minimum yard table.
@@ -1177,11 +1468,99 @@ zones:
       # pod and no variant carries it.
       value: 35
       cite: MCC 39.4375 Dimensional Requirements
-      quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L454"
-    notes: 'quadfit confidence: verified. County RURAL zone, overwhelmingly outside the Metro UGB. Any
-      RR parcel inside the UGB needs individual review.
+      quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L450,L454"
+    min_lot_sqft:
+      # 39.4375(A) states two minimums in one sentence and a distance decides
+      # which: five acres for new parcels, or, "for properties within one mile
+      # of the Urban Growth Boundary", whatever OAR Chapter 660 Division 004
+      # currently requires -- "20 acre minimum as of October 4, 2000".
+      #
+      # Nothing here measures distance to the UGB, so the base is the twenty
+      # and the five is the variant. That is the strict direction, and it is
+      # the right one twice over: the zone note below says RR sits
+      # overwhelmingly outside the Metro UGB, which is not the same claim as
+      # being a mile from it, and a lot that is near the boundary is exactly
+      # the lot somebody would want to build four units on.
+      acres: 20
+      cite: MCC 39.4375(A)
+      quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L440-L445"
+      variants:
+        - acres: 5
+          when: [beyond_ugb_mile]
+          cite: MCC 39.4375(A)
+          quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L437-L440"
+        # Under a Planned Development the minimum becomes the divisor rather
+        # than the floor: 39.5340(A) sets the units a site may hold by dividing
+        # it by "the minimum lot area per dwelling unit required by the
+        # underlying district". Twenty acres each, four dwellings, eighty acres
+        # of site -- and eighty is a figure no article in this chapter prints.
+        - acres_per_dwelling: 20
+          when: [planned_development]
+          cite: MCC 39.4375(A) with MCC 39.5340(A)
+          quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L440-L445"
+        - acres_per_dwelling: 5
+          when: [planned_development, beyond_ugb_mile]
+          cite: MCC 39.4375(A) with MCC 39.5340(A)
+          quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L437-L440"
+    setback_front_ft:
+      # "Front Side Street Side Rear / 30 10 30 30" -- the row EFU, MUA-20, OR
+      # and this zone all print, read across rather than down.
+      value: 30
+      cite: MCC 39.4375(C)
+      quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L450-L452"
+    setback_side_ft:
+      value: 10
+      cite: MCC 39.4375(C)
+      quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L450-L452"
+    setback_street_side_ft:
+      value: 30
+      cite: MCC 39.4375(C)
+      quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L450-L452"
+    setback_rear_ft:
+      value: 30
+      cite: MCC 39.4375(C)
+      quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L450-L452"
+    min_frontage_ft:
+      value: 50
+      cite: MCC 39.4375(C)
+      quote: "or/multnomah/_unincorporated/39.rural-residential.txt#L450,L455"
+    notes: >-
+      quadfit confidence: verified. County RURAL zone, overwhelmingly outside
+      the Metro UGB. Any RR parcel inside the UGB needs individual review.
 
-      The use flag was this layer''s one unquoted value until 2026-08-19, on the ground that MCC
-      39.4350-.4395 was not a stored document and quoting a false from a document that does not state
-      it is worse than leaving the debt visible. The article is now sliced out of the same chapter PDF
-      the LR-7 slice comes from, and the flag is quoted from the sentence that closes the use list.'
+
+      The use flag was this layer's one unquoted value until 2026-08-19, on the
+      ground that MCC 39.4350-.4395 was not a stored document and quoting a
+      false from a document that does not state it is worse than leaving the
+      debt visible. The article is now sliced out of the same chapter PDF the
+      LR-7 slice comes from, and the flag is quoted from the sentence that
+      closes the use list.
+
+
+      THE PLANNED DEVELOPMENT DOOR opened on 2026-08-20, and it was open the
+      whole time. The comment above the use flag used to end "a planned
+      development for SINGLE FAMILY residences" and treat that as a refusal.
+      MCC 39.5350(A) says the housing types a residential PD may hold are
+      "duplexes and single family detached or attached dwellings", so single
+      family residences is not the narrowing it looked like -- attached is a
+      single family form and it is the form this building takes. The same
+      correction reaches Orient Rural Center Residential, which lists the PD
+      without any narrowing at all.
+
+
+      What the door costs is the point. A PD is a Planning Commission decision
+      on a preliminary and then a final development plan; 39.5320 lets the PD's
+      own standards displace the base zone's wherever they conflict, so every
+      dimension above is negotiable and none of the replacements is printed;
+      and 39.5340(A) turns the base zone minimum into a per-dwelling divisor,
+      which is why four units want eighty acres here and only four in OR. The
+      OAR Chapter 660 Division 004 planned unit development standards apply as
+      well and are not a stored document.
+
+
+      MUA-20 lists the same entry and is deliberately NOT encoded this way.
+      39.5350 opens "In a residential zone", Multiple Use Agriculture is not
+      one, and no other sentence in the chapter names an attached dwelling for
+      an agricultural zone -- so the housing types a MUA-20 planned development
+      may hold are unstated rather than permissive. That reading is the widest
+      remaining doubt in this layer and it is a reading, not a quote.
