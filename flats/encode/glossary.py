@@ -56,7 +56,11 @@ ENTRY = re.compile(
     # sets a bullet at the left margin and the term forty spaces later, so a
     # fixed-width prefix reads its entire glossary as prose.
     r"^(?:[•·▪◦*(\-–—]\s*){0,2}"
-    r"(?:\(?[0-9ivxIVX]{1,5}[.)]\s+)?"  # a list marker, if the code numbers them
+    # A list marker, if the code numbers them. A marker in full parentheses
+    # may be any short letter run -- Rivergrove letters its whole glossary
+    # "(a)" through "(z)", and a class of roman numerals matched three of
+    # them and read the other twenty-three as prose.
+    r"(?:\((?:[0-9]{1,3}|[A-Za-z]{1,3})\)\s+|\(?[0-9ivxIVX]{1,5}[.)]\s+)?"
     r"(?:\d{1,3}\.\d{2,4}(?:\.\d{1,4})?\s+)?"  # or a section number
     r"[\"“]?(?P<term>[A-Z][A-Za-z0-9'’/()\-]*(?:(?:,\s|[ ,])(?:[A-Za-z0-9'’/()\-]+)){0,6})[\"”]?"
     r"(?P<sep>\s*[.:]\s+|\s*[–—-]\s+|\s+(?:means|shall mean|refers to|is defined as)\s+)"
@@ -120,6 +124,16 @@ PUBLISHER_FOOTER = re.compile(
 #: A term that opens with a pointer is the tail of somebody else's entry.
 _CROSS_REFERENCE = re.compile(r"^(?:see|also|and|or|of|the)\b", re.I)
 
+#: A bullet at the head of an entry's own line. Portland files sub-terms this
+#: way -- "Setback." at the margin, then "• Front Setback.", "• Rear Setback."
+#: -- and a sub-list is ordered however its codifier wanted it.
+_BULLETED = re.compile(r"^[•·▪◦]")
+
+#: A list marker alone on the line above an entry, which is the same nesting
+#: said with a letter instead of a bullet. Milwaukie writes "Garage" at the
+#: margin, then "A." on its own line, then "Carport" beneath it.
+_MARKER_ONLY = re.compile(r"^\(?[0-9a-zA-Z]{1,3}[.)]$")
+
 _SPACE = re.compile(r"\s+")
 
 
@@ -141,6 +155,12 @@ class Entry:
     text: str
     #: How it was set: inline on one line, or the term alone above its body.
     shape: str = "inline"
+    #: True where this entry is an item in a list under the entry above it.
+    #: A chapter's alphabet is a property of its top-level list; Portland's
+    #: six setbacks and Milwaukie's carport are ordered by their parent, and
+    #: judging them against the chapter's sequence measured our reading rather
+    #: than theirs.
+    nested: bool = False
 
     @property
     def quote(self) -> str:
@@ -240,14 +260,23 @@ def _entries(text: str, *, layer: str, doc: str, offset: int = 0) -> list[Entry]
         stripped = raw.strip()
         if not stripped or i in spoken_for:
             continue
+        nested = bool(_BULLETED.match(stripped)) or _under_a_marker(lines, i)
         if PUBLISHER_FOOTER.match(stripped):
             # Everything below is the website, not the chapter.
             break
         inline = ENTRY.match(stripped)
         if inline is not None and MIN_TERM <= len(inline.group("term")) <= MAX_TERM:
             body = _collapse(inline.group("body"))
+            whole = _whole(lines, i + 1, body)
             if (
-                len(body) >= MIN_BODY
+                # Length is asked of the whole body, wraps included. Multnomah
+                # County's chapter is set in a 45-character column, so most of
+                # its meanings open with a line too short to be one -- and
+                # "Accessory Use - A lawful use that is" was thrown away for
+                # being 35 characters of a 96-character definition. `_whole`
+                # stops at the next entry, so a fragment that really is one
+                # still cannot borrow length from the entry beneath it.
+                len(whole) >= MIN_BODY
                 and not NOT_A_DEFINITION.match(body)
                 and not APPARATUS.match(inline.group("term"))
                 and not APPARATUS.match(body)
@@ -259,7 +288,8 @@ def _entries(text: str, *, layer: str, doc: str, offset: int = 0) -> list[Entry]
                         doc=doc,
                         line=i + 1 + offset,
                         term=inline.group("term").strip(),
-                        text=_whole(lines, i + 1, body),
+                        text=whole,
+                        nested=nested,
                     )
                 )
                 continue
@@ -268,7 +298,8 @@ def _entries(text: str, *, layer: str, doc: str, offset: int = 0) -> list[Entry]
             continue
         at, raw_body = _below(lines, i)
         body = _collapse(raw_body)
-        if len(body) < MIN_BODY or NOT_A_DEFINITION.match(body):
+        whole = _whole(lines, i + 2, body)
+        if len(whole) < MIN_BODY or NOT_A_DEFINITION.match(body):
             continue
         if APPARATUS.match(stacked.group("term")) or APPARATUS.match(body):
             continue
@@ -286,8 +317,9 @@ def _entries(text: str, *, layer: str, doc: str, offset: int = 0) -> list[Entry]
                 doc=doc,
                 line=i + 1 + offset,
                 term=stacked.group("term").strip(),
-                text=_whole(lines, i + 2, body),
+                text=whole,
                 shape="stacked",
+                nested=nested,
             )
         )
         # This entry's body is spoken for. Read on its own it is often a
@@ -325,6 +357,21 @@ def _whole(lines: Sequence[str], start: int, first: str) -> str:
     return _collapse(" ".join(body))
 
 
+def _under_a_marker(lines: Sequence[str], i: int) -> bool:
+    """Whether the nearest line above this one is a bare list marker.
+
+    Codes that nest without bullets put the marker on its own line: "Garage",
+    then "A.", then "Carport". The marker says the term beneath belongs to the
+    term above, which is the same statement Portland makes with a bullet.
+    """
+    for j in range(i - 1, max(i - 4, -1), -1):
+        stripped = lines[j].strip()
+        if not stripped:
+            continue
+        return bool(_MARKER_ONLY.match(stripped))
+    return False
+
+
 def _below(lines: Sequence[str], i: int) -> tuple[int, str]:
     """The first non-blank line under an entry, which is its body, and where.
 
@@ -351,8 +398,16 @@ def _disorder(entries: Sequence[Entry]) -> list[Entry]:
     longest non-decreasing run of keys and calls everything outside it
     disorder. A chapter is alphabetical; whatever cannot fit that is either
     not an entry or the tell that a real one above it was missed.
+
+    Nested entries sit this out. The invariant belongs to the chapter's
+    top-level list -- a sub-list under one heading is ordered however its
+    codifier wanted, and Portland's runs Historic, Conservation, National
+    Register by significance rather than by letter. Judged against the
+    chapter's sequence they produced ten findings about our reading and none
+    about Portland's code.
     """
-    return [e for run in _runs(entries) for e in _out_of_order(run)]
+    top = [e for e in entries if not e.nested]
+    return [e for run in _runs(top) for e in _out_of_order(run)]
 
 
 #: Entries a run needs before a backwards key can be read as a second

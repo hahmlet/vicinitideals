@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import pytest
 
-from flats.encode.glossary import Entry
+from flats.encode.glossary import Chapter, Entry
 from flats.encode.readiness import ACTION, STAGES, readiness_for
 from flats.encode.tagging import (
     Gap,
@@ -29,6 +29,8 @@ from flats.provenance.store import ProvenanceStore
 from flats.rules.loader import load_rules
 
 pytestmark = pytest.mark.unit
+
+GRESHAM = "or/multnomah/gresham"
 
 
 def entry(term: str, *, line: int = 1) -> Entry:
@@ -134,15 +136,31 @@ def test_silence_is_only_evidence_if_the_chapter_was_read(
 ) -> None:
     """The same gap wearing its other face. Their code saying nothing and our
     matcher finding nothing produce the same empty result and license opposite
-    conclusions; only one of them is a finding about the code."""
-    layer = load_rules()["or/multnomah/_unincorporated"]
+    conclusions; only one of them is a finding about the code.
+
+    Both halves are held false here on purpose: the layer captures no
+    definition, and the chapter it would have been read from is thin. Every
+    chapter in the corpus reads whole today, so this rung has no live example
+    -- which is the point of pinning it, since the day one stops is the day it
+    has to fire without anyone having remembered it exists."""
+    layer = load_rules()[GRESHAM]
     stripped = layer.model_copy(update={"definitions": {}})
-    monkeypatch.setattr(
-        "flats.encode.tagging.load_rules", lambda: {"or/multnomah/_unincorporated": stripped}
+    unread = Chapter(
+        layer=GRESHAM,
+        doc=f"{GRESHAM}/3.definitions.txt",
+        entries=(entry("Abut"), entry("Building", line=9)),
+        disorder=(),
+        lines=1300,
     )
+    assert not unread.read_whole, "the chapter this test rests on reads whole"
+
+    monkeypatch.setattr("flats.encode.tagging.load_rules", lambda: {GRESHAM: stripped})
+    monkeypatch.setattr("flats.encode.tagging.index", lambda _layer: Index(unread))
+
     rows = gaps()
-    assert [g.kind for g in rows] == ["unread"]
+    assert [(g.term, g.kind) for g in rows] == [("corner_lot", "unread")]
     assert "/100 lines" in rows[0].detail
+    assert rows[0].affected, "the gap names no values, so it blocks nothing"
 
 
 def test_the_gate_reports_which_values_it_blocks() -> None:

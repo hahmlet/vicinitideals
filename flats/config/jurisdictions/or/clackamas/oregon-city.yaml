@@ -59,7 +59,12 @@ code:
     # terms in here and the city read as a code that defines no words.
     # 17.04.808 "Net density" is one of them, and it is the sentence the
     # five density values in this file are measured on.
-    definitions_at: L834-L4015
+    #
+    # Ends at 17.04.1530 "Yard, side, corner", the last entry, rather than at
+    # the head of Chapter 17.08 -- Chapter 17.06 sits between them, and read
+    # as glossary its section list and its zoning-map paragraph came back as
+    # four defined terms this city never defined.
+    definitions_at: L834-L3883
 zones:
   R-10:
     section: ["17.08.", "17.16."]

@@ -233,14 +233,39 @@ def test_every_held_definitions_chapter_is_read(corpus: list[Chapter]) -> None:
     assert all(c.entries for c in corpus)
 
 
-def test_the_chapters_we_have_not_really_read_are_named(corpus: list[Chapter]) -> None:
-    """Multnomah County's chapter is a two-column PDF whose entries are set in
-    a shape this matcher does not know: 1,300 lines and 28 entries. It reports
-    thin rather than reporting done."""
-    thin = [c.layer for c in corpus if not c.read_whole]
-    assert "or/multnomah/_unincorporated" in thin
-    # And the rest are read, or this test is measuring nothing.
-    assert len(thin) < len(corpus) // 2
+def test_no_chapter_in_the_corpus_is_only_skimmed(corpus: list[Chapter]) -> None:
+    """Every held chapter now reads whole, and the failure names the ones that
+    stop doing so.
+
+    Multnomah County was the last holdout and the reason this assertion used
+    to run the other way: a narrow two-column PDF that wraps every body across
+    three or four short lines, which the matcher measured by its first line
+    and discarded as too short to be a definition. 1,300 lines yielded 20
+    entries and reported thin -- correctly, because that was not a reading.
+    Measuring the length of the *assembled* body instead recovered 185.
+
+    This is an assertion about the corpus, not about the machinery. If a new
+    jurisdiction arrives set in a shape nothing here knows, this is what says
+    so, and the signal itself is pinned by the constructed chapters above."""
+    doubtful = [
+        f"{c.layer} ({len(c.entries)} entries, {len(c.disorder)} out of order, "
+        f"{c.density:.1f}/100 lines)"
+        for c in corpus
+        if not c.read_whole
+    ]
+    assert doubtful == []
+
+
+def test_a_chapter_that_is_only_skimmed_is_still_reported(corpus: list[Chapter]) -> None:
+    """The corpus being clean must not be able to look like the check being
+    off. A thin chapter dropped in among fifteen good ones is still named."""
+    skimmed = chapter(["Abut", "Building"], lines=1300)
+
+    assert not skimmed.read_whole
+    text = render([*corpus, skimmed])
+    assert "  THIN" in text
+    assert f"chapters={len(corpus) + 1}" in text
+    assert f"read_whole={len(corpus)}" in text
 
 
 def test_an_encoded_definition_lands_on_a_captured_entry(corpus: list[Chapter]) -> None:
