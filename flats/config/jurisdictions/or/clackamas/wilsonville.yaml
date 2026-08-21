@@ -52,7 +52,31 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
 
   ALSO READ: 4.132''s requirement that buildings over three storeys step the
   facade back six feet at the fourth is a Town Center standard, and neither
-  that zone nor a third storey is in reach.'
+  that zone nor a third storey is in reach.
+
+
+  HEIGHT, read 2026-08-20. Seven of this layer''s zones permitted a quadplex and stated no height at
+  all, so the screen was placing a 26 ft building against no ceiling in each of them. The numbers were
+  not unknown -- "height 35ft" sat in the note each zone was ported with -- but a number with nothing
+  pointing at a page is a number this project does not have, so they were correctly not encoded and
+  incorrectly left alone. R takes 35 from 4.122(.05)E, which states it in a sentence. PDR-1 through
+  PDR-6 take 35 from Table 2, whose height column is a single merged cell spanning all seven PDR rows.
+
+
+  That merged cell is why the table was misread rather than unread. The stored text is the plain
+  extraction -- declared, because layout mode fuses this PDF''s prose -- and flattening the grid prints
+  the merged cell once, after the PDR-1 row, where it reads as PDR-1''s own number and leaves five zones
+  looking silent. Re-extracting the same PDF in layout mode shows both merged cells, Setbacks and
+  Height, rendered together at the table''s vertical midpoint on the PDR-3 row: "60 4.113 (.02)35".
+  This layer already reads the Setbacks cell as spanning every PDR row. The Height cell is the same
+  shape in the same rendering.
+
+
+  OTR is deliberately still without one, and should stay that way until somebody fetches the book:
+  4.123(.06)A hands height to the Old Town Residential Design Standards Book by name. There is no
+  citywide fallback to borrow -- 4.113(.03) "Height Guidelines" is discretionary, a list of things the
+  Development Review Board MAY regulate, and states no number. A zone that reports no height is the
+  ledger working.'
 ingest:
   geoid: null
   juris_city_codes:
@@ -122,6 +146,16 @@ zones:
       cite: Wilsonville Development Code 4.122(.04)B (R Zone permitted uses) + 4.001(181) definition of Middle Housing; Ord. 841
       value: true
       quote: "or/clackamas/wilsonville/4.planning.txt#L874-L875,L4408-L4412"
+    max_height_ft:
+      # 4.122(.05)E, the R zone's own lot standards, states it in a sentence
+      # of its own: "Maximum building or structure height: 35 feet." No
+      # footnote, no housing-type split, no delegation. The number was sitting
+      # in the note this zone was ported with -- "height 35ft" -- with nothing
+      # pointing at a page, which is a number that does not exist for this
+      # project's purposes. Now it points at one.
+      value: 35
+      cite: Wilsonville Development Code 4.122(.05)E (R Zone lot standards)
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4457"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
@@ -338,6 +372,27 @@ zones:
       # zones rather than six blocks that happen to agree.
       value: true
       quote: "or/clackamas/wilsonville/4.planning.txt#L4572-L4576"
+    max_height_ft:
+      # Table 2, "Lot Standards for All PDR Zoned Lots", last column: Maximum
+      # Building Height (feet), 35, one merged cell spanning all seven PDR
+      # rows. The stored text is the plain extraction, which flattens the grid
+      # and prints that cell once, on its own line, after the PDR-1 row -- so
+      # read raw it looks like a number belonging to PDR-1 alone and every
+      # other PDR zone looks silent.
+      #
+      # Settled by re-extracting the same PDF in layout mode rather than by
+      # inferring it. There the row reads "PDR-3  4,500  50/60  40/40F  60
+      # 4.113 (.02)35": both merged cells, the Setbacks column and the Height
+      # column, rendered at the table's vertical midpoint, which lands on the
+      # PDR-3 row. This layer already reads the Setbacks cell as spanning all
+      # rows -- every PDR zone here takes its setbacks from 4.113(.02) -- and
+      # the height cell is the same cell shape in the same rendering.
+      #
+      # The quote carries the table title, the column header and the figure,
+      # because in the flattened text the figure alone names nothing.
+      value: 35
+      cite: Wilsonville Development Code 4.124(.07) Table 2, Maximum Building Height
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4690,L4710-L4712,L4717"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
@@ -409,6 +464,27 @@ zones:
       # zones rather than six blocks that happen to agree.
       value: true
       quote: "or/clackamas/wilsonville/4.planning.txt#L4572-L4576"
+    max_height_ft:
+      # Table 2, "Lot Standards for All PDR Zoned Lots", last column: Maximum
+      # Building Height (feet), 35, one merged cell spanning all seven PDR
+      # rows. The stored text is the plain extraction, which flattens the grid
+      # and prints that cell once, on its own line, after the PDR-1 row -- so
+      # read raw it looks like a number belonging to PDR-1 alone and every
+      # other PDR zone looks silent.
+      #
+      # Settled by re-extracting the same PDF in layout mode rather than by
+      # inferring it. There the row reads "PDR-3  4,500  50/60  40/40F  60
+      # 4.113 (.02)35": both merged cells, the Setbacks column and the Height
+      # column, rendered at the table's vertical midpoint, which lands on the
+      # PDR-3 row. This layer already reads the Setbacks cell as spanning all
+      # rows -- every PDR zone here takes its setbacks from 4.113(.02) -- and
+      # the height cell is the same cell shape in the same rendering.
+      #
+      # The quote carries the table title, the column header and the figure,
+      # because in the flattened text the figure alone names nothing.
+      value: 35
+      cite: Wilsonville Development Code 4.124(.07) Table 2, Maximum Building Height
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4690,L4710-L4712,L4717"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
@@ -480,6 +556,27 @@ zones:
       # zones rather than six blocks that happen to agree.
       value: true
       quote: "or/clackamas/wilsonville/4.planning.txt#L4572-L4576"
+    max_height_ft:
+      # Table 2, "Lot Standards for All PDR Zoned Lots", last column: Maximum
+      # Building Height (feet), 35, one merged cell spanning all seven PDR
+      # rows. The stored text is the plain extraction, which flattens the grid
+      # and prints that cell once, on its own line, after the PDR-1 row -- so
+      # read raw it looks like a number belonging to PDR-1 alone and every
+      # other PDR zone looks silent.
+      #
+      # Settled by re-extracting the same PDF in layout mode rather than by
+      # inferring it. There the row reads "PDR-3  4,500  50/60  40/40F  60
+      # 4.113 (.02)35": both merged cells, the Setbacks column and the Height
+      # column, rendered at the table's vertical midpoint, which lands on the
+      # PDR-3 row. This layer already reads the Setbacks cell as spanning all
+      # rows -- every PDR zone here takes its setbacks from 4.113(.02) -- and
+      # the height cell is the same cell shape in the same rendering.
+      #
+      # The quote carries the table title, the column header and the figure,
+      # because in the flattened text the figure alone names nothing.
+      value: 35
+      cite: Wilsonville Development Code 4.124(.07) Table 2, Maximum Building Height
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4690,L4710-L4712,L4717"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
@@ -551,6 +648,27 @@ zones:
       # zones rather than six blocks that happen to agree.
       value: true
       quote: "or/clackamas/wilsonville/4.planning.txt#L4572-L4576"
+    max_height_ft:
+      # Table 2, "Lot Standards for All PDR Zoned Lots", last column: Maximum
+      # Building Height (feet), 35, one merged cell spanning all seven PDR
+      # rows. The stored text is the plain extraction, which flattens the grid
+      # and prints that cell once, on its own line, after the PDR-1 row -- so
+      # read raw it looks like a number belonging to PDR-1 alone and every
+      # other PDR zone looks silent.
+      #
+      # Settled by re-extracting the same PDF in layout mode rather than by
+      # inferring it. There the row reads "PDR-3  4,500  50/60  40/40F  60
+      # 4.113 (.02)35": both merged cells, the Setbacks column and the Height
+      # column, rendered at the table's vertical midpoint, which lands on the
+      # PDR-3 row. This layer already reads the Setbacks cell as spanning all
+      # rows -- every PDR zone here takes its setbacks from 4.113(.02) -- and
+      # the height cell is the same cell shape in the same rendering.
+      #
+      # The quote carries the table title, the column header and the figure,
+      # because in the flattened text the figure alone names nothing.
+      value: 35
+      cite: Wilsonville Development Code 4.124(.07) Table 2, Maximum Building Height
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4690,L4710-L4712,L4717"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
@@ -622,6 +740,27 @@ zones:
       # zones rather than six blocks that happen to agree.
       value: true
       quote: "or/clackamas/wilsonville/4.planning.txt#L4572-L4576"
+    max_height_ft:
+      # Table 2, "Lot Standards for All PDR Zoned Lots", last column: Maximum
+      # Building Height (feet), 35, one merged cell spanning all seven PDR
+      # rows. The stored text is the plain extraction, which flattens the grid
+      # and prints that cell once, on its own line, after the PDR-1 row -- so
+      # read raw it looks like a number belonging to PDR-1 alone and every
+      # other PDR zone looks silent.
+      #
+      # Settled by re-extracting the same PDF in layout mode rather than by
+      # inferring it. There the row reads "PDR-3  4,500  50/60  40/40F  60
+      # 4.113 (.02)35": both merged cells, the Setbacks column and the Height
+      # column, rendered at the table's vertical midpoint, which lands on the
+      # PDR-3 row. This layer already reads the Setbacks cell as spanning all
+      # rows -- every PDR zone here takes its setbacks from 4.113(.02) -- and
+      # the height cell is the same cell shape in the same rendering.
+      #
+      # The quote carries the table title, the column header and the figure,
+      # because in the flattened text the figure alone names nothing.
+      value: 35
+      cite: Wilsonville Development Code 4.124(.07) Table 2, Maximum Building Height
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4690,L4710-L4712,L4717"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
@@ -693,6 +832,27 @@ zones:
       # zones rather than six blocks that happen to agree.
       value: true
       quote: "or/clackamas/wilsonville/4.planning.txt#L4572-L4576"
+    max_height_ft:
+      # Table 2, "Lot Standards for All PDR Zoned Lots", last column: Maximum
+      # Building Height (feet), 35, one merged cell spanning all seven PDR
+      # rows. The stored text is the plain extraction, which flattens the grid
+      # and prints that cell once, on its own line, after the PDR-1 row -- so
+      # read raw it looks like a number belonging to PDR-1 alone and every
+      # other PDR zone looks silent.
+      #
+      # Settled by re-extracting the same PDF in layout mode rather than by
+      # inferring it. There the row reads "PDR-3  4,500  50/60  40/40F  60
+      # 4.113 (.02)35": both merged cells, the Setbacks column and the Height
+      # column, rendered at the table's vertical midpoint, which lands on the
+      # PDR-3 row. This layer already reads the Setbacks cell as spanning all
+      # rows -- every PDR zone here takes its setbacks from 4.113(.02) -- and
+      # the height cell is the same cell shape in the same rendering.
+      #
+      # The quote carries the table title, the column header and the figure,
+      # because in the flattened text the figure alone names nothing.
+      value: 35
+      cite: Wilsonville Development Code 4.124(.07) Table 2, Maximum Building Height
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4690,L4710-L4712,L4717"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"

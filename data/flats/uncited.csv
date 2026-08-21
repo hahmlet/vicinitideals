@@ -111,6 +111,8 @@ or,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,1001,16.22.050,1,1
 or,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,1005,16.22.050,1,35 feet
 or,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,1007,16.22.050,3,400 sq. ft./unit provided in accordance with Section 16.42.080
 or,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,1114,16.22.050,1,Only one accessory structure per lot may exceed 100 square feet in area.
+or,unfielded,,or/clackamas/happy-valley/16.42.landscaping.txt,620,16.42.080,1,Size. Each tract must be at least 100 feet wide by 100 feet deep;
+or,unfielded,,or/clackamas/happy-valley/16.42.landscaping.txt,628,16.42.080,1,Accessibility. Each recreation area tract must have at least 30 feet of street frontage;
 or,unfielded,,or/clackamas/lake-oswego/50.03.002.use-table.txt,882,50.03.003.6,1,"Food markets < 25,000 sq. ft. gross floor area"
 or,unfielded,,or/clackamas/lake-oswego/50.03.002.use-table.txt,890,50.03.003.6,1,"Food markets 25,000 sq. ft. gross floor area or more"
 or,unfielded,,or/clackamas/lake-oswego/50.03.002.use-table.txt,1008,50.03.003.6,1,"Commercial recreational facility < 5,000 sq. ft. gross floor area"
@@ -388,6 +390,10 @@ or,unfielded,,or/clackamas/rivergrove/rldo.composite.txt,1926,,1,(b) A list of t
 or,unfielded,,or/clackamas/tualatin/31.definitions.txt,106,31.060,1,(b) Land exceeding 25 percent slope;
 or,unfielded,,or/clackamas/tualatin/31.definitions.txt,112,31.060,1,(a) Single-family development: allocate 20 percent of gross acres;
 or,unfielded,,or/clackamas/tualatin/31.definitions.txt,114,31.060,1,and townhouses: allocate 15 percent of gross acres.
+or,unfielded,,or/clackamas/tualatin/36.400-420.lot-dimensions.txt,67,36.125,1,"Triplexes, and Quadplexes may be reduced to 3,000 square feet if:"
+or,unfielded,,or/clackamas/tualatin/36.400-420.lot-dimensions.txt,77,36.125,1,(v) No more than 70 percent of the approved Single-Family Dwellings may be issued
+or,unfielded,,or/clackamas/tualatin/36.400-420.lot-dimensions.txt,95,36.420,1,"(a) Be no less than 5,000 square feet and no more than 5,999.99 square feet;"
+or,unfielded,,or/clackamas/tualatin/36.400-420.lot-dimensions.txt,107,36.420,1,least 50 feet; and
 or,unfielded,,or/clackamas/tualatin/40-41.residential.txt,142,40.300,1,Minimum: 1 unit per acre
 or,unfielded,,or/clackamas/tualatin/40-41.residential.txt,156,40.220,1,"Single-Family Dwelling Average of 6,500 square feet"
 or,unfielded,,or/clackamas/tualatin/40-41.residential.txt,162,40.220,1,"Duplex 6,500 square feet"
@@ -439,6 +445,11 @@ or,unfielded,,or/clackamas/tualatin/40-41.residential.txt,563,41,1,"10 feet For 
 or,unfielded,,or/clackamas/tualatin/40-41.residential.txt,570,41,1,50 feet
 or,unfielded,,or/clackamas/tualatin/40-41.residential.txt,577,41.300,1,All Uses 35 feet If all setbacks are equal to or greater
 or,unfielded,,or/clackamas/tualatin/40-41.residential.txt,580,41.300,1,to a maximum of 50 feet with a
+or,unfielded,,or/clackamas/tualatin/73A.020-060.residential-design.txt,8,73A,1,(i) A 35 percent or more expansion of the structure's existing footprint.
+or,unfielded,,or/clackamas/tualatin/73A.020-060.residential-design.txt,10,73A,1,(iii) A 35 percent or more alteration of an existing wall plane.
+or,unfielded,,or/clackamas/tualatin/73A.020-060.residential-design.txt,23,73A,1,(a) Windows that occupy at least 12 percent of the wall plane.
+or,unfielded,,or/clackamas/tualatin/73A.020-060.residential-design.txt,34,73A,1,(a) Windows that occupy at least 12 percent of the wall plane
+or,unfielded,,or/clackamas/tualatin/73A.020-060.residential-design.txt,86,73A,1,(3) Covered porch at least 36 square feet in area and at least four feet deep;
 or,unfielded,,or/clackamas/west-linn/02.definitions.txt,448,02.030,2,Basements are exempt from FAR if less than 50 percent of basement is exposed above grade.
 or,unfielded,,or/clackamas/west-linn/02.definitions.txt,1031,02.030,1,"1. Slope: Land that has slopes over 25 percent, as shown on the RLIS topography GIS layer."
 or,unfielded,,or/clackamas/west-linn/08.r-40.txt,140,08.070,2,150 ft
@@ -483,6 +494,8 @@ or,unfielded,,or/clackamas/west-linn/16.r-2.1.txt,193,16.070,3,35 ft
 or,unfielded,,or/clackamas/west-linn/16.r-2.1.txt,203,16.070,3,15 ft
 or,unfielded,,or/clackamas/west-linn/16.r-2.1.txt,206,16.070,1,5 ft
 or,unfielded,,or/clackamas/west-linn/16.r-2.1.txt,217,16.070,1,3.5 stories or 45 feet for a garden apartment medium rise unit;
+or,unfielded,,or/clackamas/west-linn/25.willamette-historic.txt,120,25.040,1,2) Does not have solid portions exceeding 50 percent; and
+or,unfielded,,or/clackamas/west-linn/25.willamette-historic.txt,180,25.040,1,5. Art and statuary. Construction of freestanding art and statuary over 10 feet tall.
 or,unfielded,,or/clackamas/wilsonville/4.planning.txt,269,4,1,common area. An alley typically has a width of no more than 20 feet.
 or,unfielded,,or/clackamas/wilsonville/4.planning.txt,282,4,1,signals in a directional pattern typically encompassing an arc of 120 degrees.
 or,unfielded,,or/clackamas/wilsonville/4.planning.txt,304,4.001,1,is 50 feet.
@@ -1430,6 +1443,8 @@ or,unfielded,,or/multnomah/fairview/19.65.txt,582,19.65.090,2,a. The fixtures mu
 or,unfielded,,or/multnomah/fairview/19.65.txt,632,19.65.090,1,b. The mural is at least 32 square feet in area.
 or,unfielded,,or/multnomah/fairview/19.70.txt,80,19.70.030,1,b. Maximum Setback. The maximum setback is 20 feet.
 or,unfielded,,or/multnomah/fairview/19.80.txt,63,19.80.020,1,"j. Retail trade and services, not exceeding 5,000 square feet of floor area per building P"
+or,unfielded,,or/multnomah/gresham/10.1700.affordable.txt,211,10.1733,1,families with incomes of 60 percent or less of the area median income; or
+or,unfielded,,or/multnomah/gresham/10.1700.affordable.txt,214,10.1733,1,and greater than 80 percent of the area median income.
 or,unfielded,,or/multnomah/gresham/3.0100.definitions.txt,1305,3,1,"inside curve of a street with a delta angle, as used on plats, of 60 degrees or more."
 or,unfielded,,or/multnomah/gresham/3.0100.definitions.txt,1898,3,1,• Temporary Lawn Sign. A temporary rigid sign no more than 6 square feet in area.
 or,unfielded,,or/multnomah/gresham/3.0100.definitions.txt,1913,3,1,more than 50 percent of the window face.
@@ -2019,6 +2034,221 @@ or,unfielded,,or/multnomah/gresham/7.0400.middle-housing-design.txt,1120,7,1,and
 or,unfielded,,or/multnomah/gresham/7.0400.middle-housing-design.txt,1127,7,1,a. Benches and picnic tables shall be a minimum of 6 feet long.
 or,unfielded,,or/multnomah/gresham/7.0400.middle-housing-design.txt,1193,7,1,c. Trees shall be capable of achieving a minimum spread of at least 20 feet at maturity.
 or,unfielded,,or/multnomah/gresham/7.0400.middle-housing-design.txt,1194,7,1,d. Trees shall be planted a minimum of 15 feet apart.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,327,7.0512,1,a. Connections shall be provided spacing no greater than 400 feet.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,355,7.0512,1,a. The 7.0512(A)(1)(S4)(a) clear accessible walking route of a minimum 5 feet width
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,356,7.0512,1,standard shall be met. provided in a sidewalk with a minimum width of either 5 feet
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,357,7.0512,1,b. Internal drives shall be or 6 feet.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,362,7.0512,1,appropriate per the Manager a minimum width of 26 feet to accommodate emergency
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,388,7.0512,1,"patterns. a minimum of 6 feet from the base of a tree, extending"
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,437,7.0512,1,"d. Be a minimum of 16 feet in width, and include:"
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,438,7.0512,1,i. An accessible paved walkway of at least 6 feet in width.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,442,7.0512,1,e. Provide lighting ﬁxtures no taller than 18 feet.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,470,7.0512,1,development shall be limited to of 250 feet by 250 feet from curb to curb.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,474,7.0512,1,Departures from the standard may length of 300 feet by 300 feet from curb to curb.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,492,7.0512,1,"promote pedestrian connectivity, of 250 feet by 250 feet from curb to curb."
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,496,7.0512,1,be allowed pursuant to Section length of 300 feet by 300 feet from curb to curb.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,533,7.0512,1,Stark St. 0 ft. 5 ft.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,534,7.0512,1,181st Ave. 0 ft. 5 ft.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,535,7.0512,1,Burnside St. 10 ft. 15 ft.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,536,7.0512,1,Pine St. 10 ft. 15 ft.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,537,7.0512,1,Oak St. 10 ft. 15 ft.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,538,7.0512,1,185th Ave. 10 ft. 15 ft.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,539,7.0512,1,187th Ave. 10 ft. 15 ft.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,540,7.0512,1,Ash St. 10 ft. 15 ft.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,541,7.0512,1,Future 182nd Ave. 10 ft. 15 ft.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,542,7.0512,1,Future 183rd Ave . 10 ft. 15 ft.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,565,7.0512,1,RTC 0 ft. 10 ft.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,566,7.0512,1,SC 0 ft. 20 ft.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,567,7.0512,1,SC-RJ 10 ft. 20 ft.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,573,7.0512,1,RTC 5 ft. 20 ft.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,574,7.0512,1,SC 5 ft. 20 ft.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,575,7.0512,1,SC-RJ 5 ft. 20 ft.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,580,7.0512,1,setback for a townhouse unit is 20 feet.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,613,7.0512,1,a. SE Stark Street: 90 percent building frontage
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,614,7.0512,1,b. 181st Avenue: 90 percent building frontage
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,615,7.0512,1,c. E Burnside Street: 75 percent building frontage
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,617,7.0512,1,183rd Avenues: 75 percent building frontage
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,618,7.0512,1,e. SE Pine/Oak Streets: 75 percent building frontage
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,627,7.0512,1,for a minimum of 50 percent of the frontage length.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,647,7.0512,1,"realm. a minimum distance of 60 feet along each frontage, as"
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,670,7.0512,1,corner occupies 100 percent of the corner.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,689,7.0512,1,more than 40 feet from the right of way.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,710,7.0512,1,a minimum of 600 square feet in size adjacent to a street or
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,726,7.0512,1,"one multi-family building, face one another, a minimum separation of 20 feet shall be"
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,804,7.0512,1,"1,500 feet of sites shall also be"
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,830,7.0512,1,"passage for pedestrians. parking stalls, walkways shall be at least 7 feet in width or"
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,866,7.0512,1,sidewalks (more than 6 feet wid e outside the public right of
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,902,7.0512,1,7.0512(A)(3)(S6) standard shall be and a minimum 4 feet wide.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,904,7.0512,1,the walkway width shall extend at least 3 feet beyond the
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,908,7.0512,1,identiﬁes addresses and locations of buildings on developments are a minimum 4 feet wide.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,945,7.0512,1,"to create a pedestrian-friendly area be closer than 8 feet to the right -of-w a y, t o"
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,955,7.0512,1,o f w a y. in a planter strip a minimum of 8 feet in depth.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1017,7.0512,1,institutional or residential uses; i. A minimum of 50 percent of the ground ﬂoor street-
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1020,7.0512,1,facing façade; or dense within 40 feet of the abutting right-of-way shall be
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1024,7.0512,1,to the architectural quality and residential space shall be a minimum of 30 feet.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1040,7.0512,1,b. Parking structures should ii. Landscaping in a planter area a minimum of 8 feet in
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1043,7.0512,1,realm. of 25 feet on center; shrubs capable of reaching 5 feet
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1047,7.0512,1,the majority (a minimum of 51 percent) of the
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1055,7.0512,1,"doors, or display windows for 20 percent of the ground ﬂoor"
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1170,7.0512,1,at least 4 feet behind the street-facing wall closest to the
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1174,7.0512,1,no more than 50 percent of the façade with the unit’s primary
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1175,7.0512,1,entry. Garages are set back 4 feet behind the street -facing wall.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1201,7.0512,1,occupy no more than 18 feet or 34 percent of that
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1232,7.0512,1,not exceed 12 feet wide on any lot.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1233,7.0512,1,"v. The garage width does not exceed 12 feet, as"
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1275,7.0512,1,"least 8.5 feet wide by 18 feet deep, or 8 feet wide by 24"
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1311,7.0512,1,shall be designed with strategies 200 square feet and shall contain improvements and
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1320,7.0512,1,pedestrians are typically b. Provide a building entrance located within 40 feet of the
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1340,7.0512,1,and the sidewalk when direct dimensions of no less than 12 feet in width and depth.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1388,7.0512,1,encourage activity within the b. At least 50 percent of the area shall be hardscaped with
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1392,7.0512,1,"hardscaped and landscaped, d. Pedestrian scaled lighting ﬁxtures no taller than 18 feet."
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1458,7.0512,1,contain transparent glazing for 50 percent of the area
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1483,7.0512,1,no greater than 35 feet apart.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1487,7.0512,1,greater than 35 feet apart.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1491,7.0512,1,iv. Include one public art piece per 200 feet of sidewalk.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1502,7.0512,1,"residents of a development. A a minimum of 4 percent of the gross site area, but not"
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1505,7.0512,1,"amenity spaces designed for and minimum of 4 percent of the gross site area, but not less"
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1529,7.0512,1,20 feet in length and width.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1535,7.0512,1,"e. For sites 20,000 square feet and greater, a maximum of 20"
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1547,7.0512,1,"square feet, with no dimension being less than 20 feet."
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1552,7.0512,1,building wall. A minimum of 25 percent of the exterior
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1569,7.0512,1,Developments shall include private space of no less than 64 square feet in area shall be
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1621,7.0512,1,"the development. a. For sites 20,000 square feet and greater in gross site area,"
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1623,7.0512,1,proportional to the size of the 20 feet in length and width and be a minimum of 500 square
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1668,7.0512,1,added and incorporated into a and be 64 square feet or larger with minimum
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1671,7.0512,1,space of 100 square feet or larger with minimum
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1672,7.0512,1,dimensions of 8 feet in each direction .
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1675,7.0512,1,dimensions of 12 feet in length and width and meeting
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1841,7.0512,1,b. A minimum of 70 percent of all landscaped area shall be
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1848,7.0512,1,overhang distances no less than 2 feet when abutting shrubs
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1849,7.0512,1,or 3 feet when abutting trees. Wheel stops may be used in
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1866,7.0512,1,less 1 foot.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1881,7.0512,1,modules shall have a width not less than 6 feet including
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1883,7.0512,1,at spacing no greater than 35 feet on center.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1888,7.0512,1,no less than 6 feet on each side and may be ro tate d to
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1897,7.0512,1,"development and use, and the a. Preserve a minimum of 50 percent of existing regulated"
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1908,7.0512,1,between site users. with 20 percent sustainably harvested materials (such as
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1912,7.0512,1,"d. For developments exceeding 5,000 square feet in ﬂoor area,"
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1913,7.0512,1,at least 20 percent of building materials by weight or cost
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1931,7.0512,1,"e. At least 50 percent of all exterior site hardscape, including"
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1952,7.0512,1,shall be shaded as a means of of 30 percent of on-site hardscape area shall be shaded.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1968,7.0512,1,e. Permeable pavement used for at least 40 percent of all site
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1995,7.0512,1,provided based on 110 percent of the estimated cost of
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2008,7.0512,1,"period, any plantings which are 20 percent dead or greater"
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2063,7.0512,1,INSIDE THE TRIANGLE: Up to 5 percent of the required
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2079,7.0512,1,OUTSIDE THE TRIANGLE: Up to 20 percent of the required
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2111,7.0512,1,"f. Where a setback is less than 8 feet in width, columnar tree"
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2134,7.0512,1,6 feet.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2238,7.0512,1,development) shall not exceed 0.5 foot-candles. Maximum
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2329,7.0512,1,"middle, and cap. i. Set back at least 50 percent of the top one or two ﬂoors"
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2330,7.0512,1,for a minimum of 10 feet.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2333,7.0512,1,iii. Provide a minimum facade transparency of 50 percent or
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2338,7.0512,1,two ﬂoors across a minimum of 50 percent of the facade
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2375,7.0512,1,distinction between wall planes. intervals of not greater than 30 feet on facades with
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2378,7.0512,1,projections shall be at intervals not greater than 100 feet.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2380,7.0512,1,intervals of not less than 25 feet and not more than 100 feet.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2412,7.0512,1,"depth, shadows, and visual feet over 6 feet in width."
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2450,7.0512,1,minimum 2 feet.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2552,7.0512,1,include protection from the not project more than 2 feet into a required minimum setback.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2594,7.0512,1,c. A structural canopy extending a minimum of 5 feet from the
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2724,7.0512,1,i. An operable building entry located within 10 feet of
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2733,7.0512,1,v. An entry courtyard a minimum of 40 square feet. The
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2756,7.0512,1,on abutting streets. ﬂoor unit. The walkway shall be a minimum of 5 feet wide.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2773,7.0512,1,b. Landscape treatment 5 to 15 feet in depth between the
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2774,7.0512,1,unit and the right-of-way for 60 percent of the setback
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2784,7.0512,1,or wall of 5 feet.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2788,7.0512,1,shall have a length at least 50 percent of the linear frontage
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2917,7.0512,1,not be located within 8 feet of primary entrances and shall
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2950,7.0512,1,carport(s) that covers 20 percent of the footprint for all new
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2952,7.0512,1,e. Include a minimum of 20 percent of building materials that
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2956,7.0512,1,f. Include a minimum of 5 percent of the building materials
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2959,7.0512,1,g. Include a minimum of 20 percent of wood -based materials
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2967,7.0512,1,minimum of 10 percent.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2986,7.0512,1,l. Divert at least 75 percent of non- hazardous construction and
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3039,7.0512,1,on a minimum of 5 percent of the ground level facade.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3042,7.0512,1,regular spacing no greater than 30 feet.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3045,7.0512,1,projection of 4 feet.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3048,7.0512,1,"i. Planter boxes, a minimum of 6 square feet, and not located"
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3051,7.0512,1,greater than 30 feet apart.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3056,7.0512,1,awning. greater than 30 feet.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3072,7.0512,1,easy access between public and elevation no more than 2 feet above or below the sidewalk
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3109,7.0512,1,street unless required by the Building Code. If a blank wall greater than 40 feet long is
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3115,7.0512,1,of the blank wall. The plantings shall be at least 4 feet tall
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3116,7.0512,1,or cover at least 50 percent of each trellis at the time of
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3118,7.0512,1,b. Patterned tile work that covers an area at least 40 percent
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3122,7.0512,1,covers an area at least 40 percent of the blank wall and
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3125,7.0512,1,that will be 25 feet or shorter at maturity) every 15 feet
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3127,7.0512,1,shrubs located every 3 feet on center and a minimum of 3
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3150,7.0512,1,detailing responding to individual a. A roof dormer a minimum of 4 feet in width.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3155,7.0512,1,"scaled articulation to the d. An oﬀset of the facade of a minimum of 2 feet in depth,"
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3158,7.0512,1,e. An entryway that is recessed a minimum of 3 feet.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3159,7.0512,1,f. A covered entryway with a minimum depth of 4 feet.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3225,7.0512,1,facade. ground-ﬂoor facade between zero and 12 feet) shall be
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3228,7.0512,1,limit the visual connection more than 50 percent between the interior and exterior
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3255,7.0512,1,pedestrian engagement through glass for a minimum of 30 percent of the ground ﬂoor
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3259,7.0512,1,encouraged to allow interior for a minimum of 40 percent of the ground ﬂoor between
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3262,7.0512,1,pedestrian and vehicular activity minimum of 30 percent of the ground ﬂoo r between the
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3276,7.0512,1,for a minimum of 50 percent of the ground ﬂoor between
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3278,7.0512,1,composed of clear glass for a minimum of 30 percent of the
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3283,7.0512,1,composed of clear glass for a minimum of 40 percent of the
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3287,7.0512,1,façade facing Burnside contains less and 12 feet.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3304,7.0512,1,and 12 feet to allow for passive surveillance of these areas.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3313,7.0512,1,clear glass for a minimum of 25 percent of the wall area
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3317,7.0512,1,clear glass for a minimum of 20 percent of the wall area
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3327,7.0512,1,views into the building are not a. Up to 25 percent of the required transparency in the
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3332,7.0512,1,b. Up to 50 percent of the required transparency in the
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3353,7.0512,1,high levels of transparency. minimum of 20 percent of the pedestrian level
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3407,7.0512,1,"on the façade, daylighting of occupy a minimum of 17 percent of the total street-fac i ng"
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3417,7.0512,1,greater than 45 degrees from the street.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3419,7.0512,1,minimum of 5 percent of each non-street facing facades.
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3423,7.0512,1,Figure 7.0512(B)(5)(S10). Windows occupy 17 percent of the
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3461,7.0512,1,intersection. three- story mass shall extend no less than 60 feet along each
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3496,7.0512,1,c. Oversized windows: within 20 feet of the building corner at
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3502,7.0512,1,e. Higher bays: Within 20 feet of the building corner at the
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3506,7.0512,1,300 square feet including the following pedestrian amenities:
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3513,7.0512,1,for no less than 80 percent of the street-facing facades
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3514,7.0512,1,within 20 feet of the building corner. Primary material usage
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3534,7.0512,1,encourage pedestrian gathering a. At least 20 percent of the area shall be hardscaped with
+or,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3536,7.0512,1,b. At least 30 percent of the area shall be landscaped with
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,160,9.0822,1,"Oregon Fire Code. If the lot depth exceeds 150 feet, the paved width sh all comply with"
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,222,9.0823,1,"d. Ground cover shall be a minimum 4-inch pot, spaced at a minimum of 2 feet on center."
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,258,9.0823,1,"ground cover, and large-scale, high canopy shade trees placed 20 to 30 feet on center."
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,261,9.0823,1,open without damage and a minimum area of 180 square feet. Each island shall be curbed and
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,289,9.0824,1,3 feet.
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,298,9.0824,1,"E. Walkway Width. Where walkways abut parking, the minimum walkway width shall be 7 feet."
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,348,9.0825,1,way traffic and for emergency vehicle access is 20 feet.
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,486,9.0831,1,d. Within 100 feet of an attendant or security guard;
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,604,9,1,clearance of 10 feet with approval by the Manager or Design Commission if the applicant
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,609,9,1,USE CATEGORY OR SUBCATEGORY AGGREGATED FLOOR AREA (SQUARE FEET) NUMBER OF
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,744,9.0851,1,"30,000 sq. ft.; 3, or 1 20 Spaces"
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,745,9.0851,1,"per 18,000 sq. ft. for"
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,747,9.0851,2,"30,000 sq. ft. of Floor"
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,762,9.0851,1,"(g) Meeting Room 5 Spaces per 1,000 sq. ft. of None None"
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,765,9.0851,1,"(i) Restaurants 12.4 Spaces per 1,000 sq. ft. 2, or 1 per 12,000 sq. 2, or 1 per 5,000 sq."
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,771,9.0851,1,"(i) Sports 5.4 Spaces per 1,000 sq. ft. of 2, or 1 per 10,000 sq. 2, or 1 per 5,000 sq."
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,783,9.0851,1,"(k) Tennis and Racquet 1.3 Spaces per 1,000 sq. ft. of 2 2, or 1 per 10,000 sq."
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,785,9.0851,1,"(l) Funeral Homes and 0.6 Space per Seat in 1 per 40,000 sq. ft. of 2 per 40,000 sq. ft."
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,791,9.0851,1,"(n) Truck, Trailer, Boat 1.3 Space per 1,000 sq. ft. of 2, or 1 per 5,000 sq. ft. 2"
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,794,9.0851,1,"(o) Open Air 1.3 Space per 1,000 sq. ft. of 2, or 1 per 5,000 sq. ft. 2"
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,798,9.0851,1,"(p) Equipment Rental, 1.3 Space per 1,000 sq. ft. of Equipment Rental & 2"
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,800,9.0851,1,"Mini-Storage 1 per 5,000 sq. ft. of"
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,803,9.0851,1,"(q) Commercial 3.8 Space per 1,000 sq. ft. of 2, or 1 per 20,000 sq. 2, or 1 per 4,000 sq."
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,810,9.0851,1,"Clinics Floor Area of Floor Area for 20,000 sq. ft. of"
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,824,9.0851,1,"(a) Service Station 4 Spaces Plus 2.5 Spaces per 2, or 1 per 5,000 sq. ft. 1"
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,830,9.0851,1,"(c) Vehicle Repair 5 Spaces per Service Bay 2, or 1 per 5,000 sq. ft. 1"
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,832,9.0851,1,"(d) Car Wash 3 Spaces per Service Bay or 2, or 1 per 5,000 sq. ft. None Required"
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,867,9.0851,1,"(d) College 3.8 Spaces per 1,000 sq. ft. of 2, or 1 per 20,000 sq. 2, or 1 per 4,000 sq."
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,911,9.0851,1,"Assembly, & 2.0 Spaces per 1,000 sq. ft. of a maximum of 20"
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,913,9.0851,1,"(2) Warehouse, Freight 0.7 Space per 1,000 sq. ft. of 2, or 1 per 25,000 sq. None Required"
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,915,9.0851,1,"Distribution, and 150,000 sq. ft. of Floor Area); a maximum of 20"
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,916,9.0851,1,"Storage 0.4 Space per 1,000 sq. ft. of Spaces"
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,918,9.0851,1,"greater than 150,000 sq. ft."
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,921,9.0851,1,"Sales Floor Area 25,000 sq. ft. of Floor Commercial Retail"
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,927,9.0851,1,"(4) Industrial, 1.0 Space per 1,000 sq. ft. of See Commercial Retail See Commercial"
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,929,9.0851,1,"(5) Laboratories, 4.1 Space per 1,000 sq. ft. of 2, or 1 per 25,000 sq. None Required"
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,965,9.0852,1,"USE (SECTION TO 65,000 SQ. FT. OF 65,000 TO 90,000 SQ. FT. GREATER THAN 90,000"
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,967,9.0852,1,"Retail & Commercial 4.5 : 1,000 sq. ft. 3.61 : 1,000 sq. ft. 2.89 : 1,000 sq. ft."
+or,unfielded,,or/multnomah/gresham/9.0800.parking.txt,968,9.0852,1,"Office 2.75 : 1,000 sq. ft. 2.75 : 1,000 sq. ft. 2.75 : 1,000 sq. ft."
 or,unfielded,,or/multnomah/portland/33.100.txt,194,33.100.200,1,diamonds must be set back 50 feet from abutting R-zoned properties. Playground
 or,unfielded,,or/multnomah/portland/33.100.txt,195,33.100.200,1,"facilities must be set back 25 feet from abutting R-zoned properties if not illuminated,"
 or,unfielded,,or/multnomah/portland/33.100.txt,196,33.100.200,1,and 50 feet if illuminated. Where the outdoor activity facility abuts R-zoned properties
@@ -2878,6 +3108,19 @@ or,unfielded,,or/multnomah/wood-village/230.390.txt,231,230.390,1,• A feature 
 or,unfielded,,or/multnomah/wood-village/235.300.txt,74,235.300,1,"Garage setback 20 ft(5) None(3), 22 ft minimum when parallels street"
 or,unfielded,,or/multnomah/wood-village/240.200.txt,72,240.200,1,"2. Within 1,000 feet of the real property comprising a:"
 or,unfielded,,or/multnomah/wood-village/240.200.txt,78,240.200,1,"4. Within 1,000 feet of another marijuana facility."
+or,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,102,350.045,1,"Retail Sales & Service Restaurants, bars 8 per 1000 sq.ft. GLA"
+or,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,103,350.045,1,"Retail Sales & Service Sports clubs, Recreation facilities 4.3 per 1000 sq. ft. GLA"
+or,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,104,350.045,1,Retail Sales & Service Drive-thru restaurants 9.9 per 1000 sq.ft. GLA
+or,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,106,350.045,1,Retail Sales & Service Theaters 1 per 4 seats or 1 per 6 feet of bench area
+or,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,107,350.045,1,Office 1 per 400 sq.ft. GLA
+or,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,108,350.045,1,Quick Vehicle Servicing 1 per 500 sq.ft. GLA
+or,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,109,350.045,1,Vehicle Repair 1 per 750 sq.ft. GLA
+or,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,111,350.045,1,Commercial Recreation 4.3 per 1000 sq.ft. of GLA
+or,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,114,350.045,1,Manufacturing & Production 1 per 625 sq.ft. GLA
+or,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,116,350.045,1,"Wholesale Sales, Industrial Service 1 per 750 sq.ft. of GLA"
+or,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,120,350.045,1,Community Service 1 per 400 sq.ft. of floor area or per CU review
+or,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,124,350.045,1,Medical Center 1 per 300 sq.ft. of floor area or per CU review
+or,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,126,350.045,1,Daycare 1 per 300 sq.ft. of GLA
 or,unfielded,,or/oar.660-046-0220.txt,76,,1,"For Lots or Parcels greater than or equal to 5,000 square feet: three spaces in total."
 or,unread,max_units,or/clackamas/_unincorporated/zdo.1012.txt,151,,1,"In the MRR District, dwelling units allowed through the bonus density provisions shall be developed with the same unit size mixture as provided in the BD. For example, if a development is proposed wit"
 or,unread,max_units,or/clackamas/_unincorporated/zdo.1012.txt,161,,1,(b) The average of all units on the property is made available to families with incomes of 60 percent or less of AMI; or
@@ -2988,6 +3231,14 @@ or,unread,max_height_ft,or/clackamas/happy-valley/16.22.residential.txt,1142,16.
 or,unread,max_height_ft,or/clackamas/happy-valley/16.22.residential.txt,1146,16.22.050,1,"For structures greater than eight feet and up to 20 feet in height, the minimum side yard setbacks shall be zero on one side and three feet on the other side. The minimum rear yard setback where the r"
 or,unread,max_height_ft,or/clackamas/happy-valley/16.22.residential.txt,1150,16.22.050,1,"For structures greater than 20 feet in height, the minimum side yard setbacks shall be zero on one side and five feet on the other side. The minimum rear yard setback where the rear property line abut"
 or,unread,max_height_ft,or/clackamas/happy-valley/16.22.residential.txt,1321,16.22.060,1,4 Building height is measured pursuant to Chapter 16.12 Definitions. Maximum building height for single-family (attached) is 45 feet at the front elevation; the building height may not exceed 49 feet 
+or,unread,parking_min_per_unit,or/clackamas/happy-valley/16.42.landscaping.txt,265,16.42.030,1,Any use which is required to provide off-street parking for five or more vehicles shall provide buffering of the parking areas on all sides which face directly upon and are within 100 feet of any prop
+or,unread,max_height_ft,or/clackamas/happy-valley/16.42.landscaping.txt,395,16.42.050,1,"Optimal Tree Protection Zone. The minimum distance from the center of a tree to the disturbance line shall be one foot of radius per inch of diameter at breast height (dbh), as measured four and one-h"
+or,unread,max_height_ft,or/clackamas/happy-valley/16.42.landscaping.txt,570,16.42.060,1,"Height and Opacity. Where landscaping is used for required screening, it shall be at least six feet in height and at least 80% opaque, as seen from a perpendicular line of sight, within two years foll"
+or,unread,max_units,or/clackamas/happy-valley/16.63.land-divisions.txt,157,16.63.020,1,No density is allowed within constrained land except for the reduced rate within the Steep Slopes Development Overlay Zone and the Natural Resources Overlay Zone per LDC Section 16.32.090 and/or Secti
+or,unread,min_lot_sqft,or/clackamas/happy-valley/16.63.land-divisions.txt,229,16.63.030,1,"Flexible Lot Size. To allow creativity and flexibility in subdivision design and to address physical constraints, such as topography, existing development, significant trees and other natural and buil"
+or,unread,max_units,or/clackamas/happy-valley/16.63.land-divisions.txt,243,16.63.030,1,"Driveway and Lane Width. The minimum paved width of all shared drives and lanes shall be 12 feet within a 20 foot easement, and may serve up to two dwelling units, or as required by the Uniform Fire C"
+or,unread,min_lot_sqft,or/clackamas/happy-valley/16.63.land-divisions.txt,1149,16.63.130,1,"Lot Size and Dimensions. Minimum area, width, depth, frontage and setback requirements may be less than development district minimums if in accordance with the general development plan, except that th"
+or,unread,min_lot_sqft,or/clackamas/happy-valley/16.63.land-divisions.txt,1285,16.63.140,1,"Lot Standards. All lots and parcels conform to the applicable lot standards of the land use district (Article 16.2) including lot area, frontage, dimensions, setbacks, and coverage, and no resulting l"
 or,unread,max_units,or/clackamas/johnson-city/ors.197a.420.txt,39,,1,“Cottage clusters” means groupings of no fewer than four detached housing units per acre with a footprint of less than 900 square feet each and that include a common courtyard.
 or,unread,min_lot_sqft,or/clackamas/lake-oswego/50.03.002.use-table.txt,1268,50.03.004.1,1,"At a net site density of 2,500 sq. ft./lot area per unit area allowed in conjunction with office uses in the same building."
 or,unread,min_lot_sqft,or/clackamas/lake-oswego/50.04.dimensional.txt,96,50.04.001.1,4,"3,000 sq. ft. + [(actual lot size – 5,800 sq. ft.) x 0.19]"
@@ -3177,6 +3428,11 @@ or,unread,setback_rear_ft,or/clackamas/rivergrove/rldo.composite.txt,1046,,1,Rea
 or,unread,max_height_ft,or/clackamas/rivergrove/rldo.composite.txt,1058,,1,(a) No new residential structure may exceed 35 feet in height (not including the height
 or,unread,max_height_ft,or/clackamas/rivergrove/rldo.composite.txt,1061,,1,(b) No new accessory structures may exceed 20 feet in height.
 or,unread,min_frontage_ft,or/clackamas/rivergrove/rldo.composite.txt,1549,,1,(c) The partition contains a parcel having 25 feet or less street frontage;
+or,unread,min_lot_sqft,or/clackamas/tualatin/36.400-420.lot-dimensions.txt,58,36.125,1,"(a) RL Zone. The minimum lot size may be reduced to 5,000 square feet if:"
+or,unread,max_units,or/clackamas/tualatin/36.400-420.lot-dimensions.txt,75,36.125,1,"(iv) A minimum of 20 percent of the dwelling units must include Townhomes, Duplexes,"
+or,unread,min_lot_width_ft,or/clackamas/tualatin/36.400-420.lot-dimensions.txt,96,36.420,1,(b) Have an average lot width of at least 30 feet;
+or,unread,min_lot_width_ft,or/clackamas/tualatin/36.400-420.lot-dimensions.txt,97,36.420,1,(c) Lots that have frontage on a public street must have a minimum lot width of 50 feet or 30
+or,unread,max_coverage_pct,or/clackamas/tualatin/36.400-420.lot-dimensions.txt,99,36.420,1,(d) Have a maximum building coverage of 45 percent;
 or,unread,max_units,or/clackamas/tualatin/40-41.residential.txt,141,40.300,1,Single-Family Dwelling Maximum: 6.4 units per acre
 or,unread,max_units,or/clackamas/tualatin/40-41.residential.txt,144,40.300,1,Townhouse 25 units per acre
 or,unread,max_units,or/clackamas/tualatin/40-41.residential.txt,150,40.300,1,Congregate Care Facility 10 units per acre
@@ -3192,6 +3448,7 @@ or,unread,max_units,or/clackamas/tualatin/40-41.residential.txt,463,41.300,1,Nur
 or,unread,max_units,or/clackamas/tualatin/40-41.residential.txt,464,41.300,1,Group Living Uses 15 units per acre
 or,unread,min_lot_width_ft,or/clackamas/tualatin/40-41.residential.txt,516,41.220,1,Conditional Uses 100 feet Minimum lot width at street is 40 feet.
 or,unread,setback_side_ft,or/clackamas/tualatin/40-41.residential.txt,534,41,1,Side 5 feet Zero-foot side setbacks permitted for
+or,unread,max_height_ft,or/clackamas/tualatin/73A.020-060.residential-design.txt,9,73A,1,(ii) An increase in building height of 35 percent or more.
 or,unread,max_units,or/clackamas/west-linn/02.definitions.txt,179,02.030,1,Cottage cluster. A grouping of at least four detached dwelling units per acre. Dwelling units have a building footprint of less than 900 square feet per dwelling unit that includes a common courtyard 
 or,unread,min_frontage_ft,or/clackamas/west-linn/02.definitions.txt,281,02.030,1,"Flag lot. A lot complying with all other provisions of the Community Development Code which does not meet the minimum street frontage requirement of 35 feet, and which gains access to the public right"
 or,unread,max_far,or/clackamas/west-linn/02.definitions.txt,440,02.030,1,Floor area ratio (FAR). The FAR is that percentage of the total lot size that can be built as habitable space. A FAR of 0.45 means that the square footage of the lot is multiplied by 0.45 to yield the
@@ -3231,6 +3488,15 @@ or,unread,max_units,or/clackamas/west-linn/16.r-2.1.txt,129,16.050,1,2) No more 
 or,unread,setback_side_ft,or/clackamas/west-linn/16.r-2.1.txt,201,16.070,1,"Front, rear, and side yard setbacks for a cottage cluster project are 10 ft. There are no additional setbacks for individual structures on individual lots, but minimum distance between structures shal"
 or,unread,max_units,or/clackamas/west-linn/16.r-2.1.txt,218,16.070,1,Multifamily dwelling units are limited to 3.5 stories in height.
 or,unread,min_lot_sqft,or/clackamas/west-linn/16.r-2.1.txt,229,16.070,1,"Type I and II lands shall not be counted toward lot area when determining allowable floor area ratio, except that a minimum floor area ratio of 0.30 shall be allowed regardless of the classification o"
+or,unread,max_height_ft,or/clackamas/west-linn/25.willamette-historic.txt,168,25.040,1,"16. Accessory structures. Construction of accessory structures under 120 square feet and 10 feet in height (greenhouses, storage sheds, jacuzzis, spas, structures, gazebos, etc.) in a side or rear yar"
+or,unread,setback_front_ft,or/clackamas/west-linn/25.willamette-historic.txt,392,25.070,1,"a. The front yard setback shall equal the average of the front setbacks of adjacent homes on the block face. For corner lots, the setback shall be the average between the adjacent house to the side an"
+or,unread,setback_side_ft,or/clackamas/west-linn/25.willamette-historic.txt,400,25.070,1,"a. Bays, porches and chimneys and other projections that are cumulatively no more than 20 percent of the overall respective building wall length may intrude 18 inches into the side yard setback; and"
+or,unread,setback_rear_ft,or/clackamas/west-linn/25.willamette-historic.txt,410,25.070,1,"4. Rear yard setback. The rear yard setback shall be a minimum of 20 feet, except for accessory structures, which may be sited to within three feet of the rear property lines."
+or,unread,max_height_ft,or/clackamas/west-linn/25.willamette-historic.txt,418,25.070,1,a. Residential structures are limited to 28 feet in height. Cupolas and towers shall not exceed 50 feet in height.
+or,unread,max_height_ft,or/clackamas/west-linn/41.steep-lots.txt,61,41.020,1,"2. The total building height does not exceed 45 feet, as measured from the lowest grade at a point five feet downhill from the rear of the building (or 50 feet in the R-15, R-20, and R-40 zones); and"
+or,unread,max_height_ft,or/clackamas/west-linn/41.steep-lots.txt,63,41.020,1,3. The building height does not project more than 24 feet above the average grade of the street.
+or,unread,max_height_ft,or/clackamas/west-linn/41.steep-lots.txt,69,41.020,1,"2. The total building height does not exceed 45 feet, as measured from a point five feet downhill from the front of the building (or 50 feet in the R-15, R-20, and R-40 zones)."
+or,unread,max_height_ft,or/clackamas/west-linn/41.steep-lots.txt,83,41.040,1,The height of a place of worship or governmental building may be built to a maximum height of 50 feet provided:
 or,unread,max_units,or/clackamas/wilsonville/4.planning.txt,251,4,1,7. Accessory Dwelling Unit: A dwelling unit of not more than 800 square feet of habitable floor
 or,unread,max_units,or/clackamas/wilsonville/4.planning.txt,391,4.001,1,the dwelling unit consists of a ground floor footprint less than or equal to 40 percent of the
 or,unread,max_units,or/clackamas/wilsonville/4.planning.txt,423,4,1,footprint of 900 square feet or less and units have a common courtyard(s) containing
@@ -3565,6 +3831,9 @@ or,unread,max_height_ft,or/multnomah/fairview/19.85.txt,157,19.85.060,1,"B. Perf
 or,unread,max_coverage_pct,or/multnomah/fairview/19.85.txt,187,19.85.070,1,1. Lot Coverage. The maximum allowable lot coverage in the general industrial district is 90 percent. The maximum allowable lot coverage is computed by calculating the total area covered by buildings 
 or,unread,max_height_ft,or/multnomah/fairview/19.85.txt,191,19.85.070,1,"a. Base Requirement. Buildings shall be no more than 60 feet in height, and shall comply with the building setback/height standards in FMC 19.85.030, unless subject to additional standards in the airp"
 or,unread,max_height_ft,or/multnomah/fairview/19.85.txt,193,19.85.070,1,"b. Performance Option. The allowable building height may be increased to 70 feet, when approved as part of a conditional use permit. The development approval may require additional setbacks, stepping-"
+or,unread,max_units,or/multnomah/gresham/10.1700.affordable.txt,136,10.1711,1,16 units per acre or fewer 200% 12 ft
+or,unread,max_units,or/multnomah/gresham/10.1700.affordable.txt,137,10.1711,1,16.1 to 45 units per acre 150% 24 ft
+or,unread,max_units,or/multnomah/gresham/10.1700.affordable.txt,138,10.1711,1,45.1 units per acre or more 125% 36 ft
 or,unread,max_units,or/multnomah/gresham/3.0100.definitions.txt,567,3.0103,1,2. At least 50 percent of the multi-family units being affordable to households with incomes at or below 60
 or,unread,max_units,or/multnomah/gresham/3.0100.definitions.txt,915,3.0120,1,• Cottage. A detached dwelling unit with a footprint of less than 900 square feet that is part of a cottage
 or,unread,max_height_ft,or/multnomah/gresham/3.0100.definitions.txt,1109,3,1,• Portions of attics where the finished ceiling height is less than 6 feet 8 inches;
@@ -3826,8 +4095,64 @@ or,unread,max_coverage_pct,or/multnomah/gresham/7.0400.middle-housing-design.txt
 or,unread,open_space_min_pct,or/multnomah/gresham/7.0400.middle-housing-design.txt,1030,7,1,"b. Each common open space tract shall be a minimum of 1,200 square feet and shall include at least"
 or,unread,max_height_ft,or/multnomah/gresham/7.0400.middle-housing-design.txt,1078,7,1,b. Common greens shall have a perimeter fence 3 to 4.5 feet in height that is a maximum of 25
 or,unread,max_height_ft,or/multnomah/gresham/7.0400.middle-housing-design.txt,1097,7,1,b. Dog areas shall have a perimeter fence 4 to 6 feet in height that is a maximum of 25 percent
+or,unread,min_frontage_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,621,7.0512,1,"90 percent frontage requirement with the majority Mi xe d-Use development, street frontages shall be occupied by"
+or,unread,min_frontage_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,645,7.0512,1,the most active street to b. 100 percent of the street frontage at intersections shall be
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,1109,7.0512,1,designed and constructed as fence or wall of at least 6 feet in height. Walls shall be designed
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,1459,7.0512,1,between the heights of zero feet and 12 feet.
+or,unread,open_space_min_pct,or/multnomah/gresham/7.0500.rockwood-design.txt,1503,7.0512,1,"portion of the shared open space less than 1,000 square feet, shall be shared open space."
+or,unread,open_space_min_pct,or/multnomah/gresham/7.0500.rockwood-design.txt,1506,7.0512,1,"accessible only to tenants, with than 500 square feet, shall be shared open space."
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,1548,7.0512,1,"The indoor area shall have a minimum height of 9 feet,"
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,1584,7.0512,1,exceed 4 feet in height and must be consistent with standard
+or,unread,min_frontage_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,1594,7.0512,1,Streets. Communal gathering areas street frontage shall be visible from 50 percent of the units that
+or,unread,open_space_min_pct,or/multnomah/gresham/7.0500.rockwood-design.txt,1661,7.0512,1,G10. Open Space for Townhouse Style. S10. Open Space for Townhouse Style. A minimum of 15 percent of
+or,unread,open_space_min_pct,or/multnomah/gresham/7.0500.rockwood-design.txt,1669,7.0512,1,shared open space area. dimensions of 6 feet in each direction .
+or,unread,open_space_min_pct,or/multnomah/gresham/7.0500.rockwood-design.txt,1682,7.0512,1,b. No more than 50 percent of the required open space area
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,1759,7.0512,1,create an attractive site. a. Site trees must be capable of a height of 25 feet.
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,1803,7.0512,1,c. Evergreen trees shall be a minimum of 6 feet in height and
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,2096,7.0512,1,trees in the setback areas to a. Such trees shall be capable of at least 25 feet in height and
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,2097,7.0512,1,create an attractive site and to spread at maturity and be not less than 10 feet in height
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,2101,7.0512,1,the trees are capable of at least 25 feet in height and are
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,2102,7.0512,1,at least 8 feet in height at the time of planting.
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,2112,7.0512,1,species with a minimum mature height of 25 feet may be
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,2126,7.0512,1,G15. Fencing. High quality and S15. Fencing. Fences or walls shall not exceed 4 feet in height when
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,2133,7.0512,1,"exceed 10 feet in height, with a maximum depth or width of"
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,2168,7.0512,1,minimum of 6 feet in height at time of planting.
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,2264,7.0512,1,G3. Light Fixtures. Lighting ﬁxtures in S3. Light Fixtures. Light ﬁxtures shall not exceed 25 feet in height.
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,2324,7.0512,1,buildings shall maintain a sense of Upper Floor Articulation. Buildings 5 stories or greater in height
+or,unread,max_units,or/multnomah/gresham/7.0500.rockwood-design.txt,2445,7.0512,1,scale and building articulation. dwelling units from the next dwelling unit by a minimum 2 feet
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,2591,7.0512,1,strategies which highlight these a. Oversized entry door(s) of a minimum height of 8 feet .
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,2780,7.0512,1,shall not exceed 4 feet in height and shall include a
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,2786,7.0512,1,planters and an elevated entry provide a sense in height and 4 feet in depth as measured from the point of
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,2907,7.0512,1,"sidewalk, at a height of 6 feet above grade."
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3000,7.0512,1,b. The base shall be a minimum height no less than 5 percent
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3001,7.0512,1,"of the facade height, or 3 feet, whichever is greater, and shall"
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3002,7.0512,1,not exceed 20 percent of the facade height. Multi -stor y
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3006,7.0512,1,"material at least 5 percent of the facade height, or 3 feet,"
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3083,7.0512,1,"element of the adjacent building. ﬂoor of the building it is associated with or 12 feet in height,"
+or,unread,max_units,or/multnomah/gresham/7.0500.rockwood-design.txt,3151,7.0512,1,units to convey a sense of b. A balcony a minimum of 2 feet in depth and 4 feet in width
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3253,7.0512,1,highest levels of transparency at of 50 percent of the ground ﬂoor between the heights of 0
+or,unread,max_units,or/multnomah/gresham/7.0500.rockwood-design.txt,3254,7.0512,1,the pedestrian level to promote feet and 12 feet. Live- work units shall be composed of clear
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3256,7.0512,1,visual connections between between the heights of 0 feet and 12 feet.
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3260,7.0512,1,"daylighting. the heights of 0 feet and 12 feet, except as noted below."
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3263,7.0512,1,shall provide adequate levels of heights of 0 feet and 12 feet.
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3267,7.0512,1,interior daylighting. 20 percent of the ground ﬂoor between the heights of 0 feet
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3277,7.0512,1,the heights of 0 feet and 12 feet. Live- work units shall be
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3279,7.0512,1,ground ﬂoor between the heights of 0 feet and 12 feet.
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3284,7.0512,1,ground ﬂoor between the heights of 0 feet and 12 feet. Live-
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3286,7.0512,1,Figure 7.0512(B)(5)(S3)(b). A ground ﬂoor 30 percent of the ground ﬂoor between the heights o f 0 feet
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3303,7.0512,1,20 percent of the ground ﬂoor between the heights of 0 feet
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3458,7.0512,1,"than the surrounding buildings, than 3 stories in height. An occupiable story may include a"
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3494,7.0512,1,height no less than 10 percent of the abutting wall or
+or,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3503,7.0512,1,"Figure 7.0512(B)(6)(S2). Examples of proﬁles intersection, provide bays a minimum 18 feet in height, that"
 or,unread,max_height_ft,or/multnomah/gresham/9.0600.height-transition.txt,49,9.0610,1,"or TLDR, the maximum building height shall be 30 feet."
 or,unread,max_height_ft,or/multnomah/gresham/9.0600.height-transition.txt,51,9.0610,1,"zoned LDR-5, LDR-7, TR or TLDR, the maximum building height shall be 45 feet."
+or,unread,parking_min_per_unit,or/multnomah/gresham/9.0800.parking.txt,109,9.0821,1,"not available, the Manager may authorize the parking spaces to be on any lot within 1,000 feet walking"
+or,unread,parking_min_per_unit,or/multnomah/gresham/9.0800.parking.txt,315,9.0825,1,D. Parallel Parking Space Dimensions. All parallel parking spaces will have a minimum measurement of 8 feet
+or,unread,parking_min_per_unit,or/multnomah/gresham/9.0800.parking.txt,368,9.0826,1,Accessible parking spaces shall be a minimum of 9 feet wide with a 6 -foot-wide access aisle between each
+or,unread,parking_min_per_unit,or/multnomah/gresham/9.0800.parking.txt,385,9,1,"impairments shall provide 20 percent of parking spaces as accessible as outlined in the Building Code,"
+or,unread,parking_min_per_unit,or/multnomah/gresham/9.0800.parking.txt,386,9,1,"Chapter XI. Exception: For outpatient facilities, 10 percent of parking spaces need to be accessible as"
+or,unread,parking_min_per_unit,or/multnomah/gresham/9.0800.parking.txt,400,9.0827,1,"capacity, as defined in ORS 455.417, to accommodate no less than 40 percent of all vehicle parking spaces"
+or,unread,max_height_ft,or/multnomah/gresham/9.0800.parking.txt,1090,9.0861,1,maximum sill height of 6 feet above grade.
 or,unread,max_height_ft,or/multnomah/portland/33.100.txt,186,33.100.200,1,from all property lines a minimum of 1 foot for each foot of building height.
 or,unread,min_lot_sqft,or/multnomah/portland/33.110.txt,376,33.110,1,minimum lot size requirements by up to 10 percent may be requested. Beginning
 or,unread,max_height_ft,or/multnomah/portland/33.110.txt,454,33.110.265,1,Maximum Height 30 ft. 30 ft. [3] 30 ft. [3] 30 ft. [3] 30 ft. [3] 35 ft.
@@ -4130,7 +4455,7 @@ or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.10.r-7.2.txt,63,17.1
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.10.r-7.2.txt,67,17.10.030,1,(a) Are detached from other buildings on the same lot by a minimum of 10 feet;
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.10.r-7.2.txt,71,17.10.030,1,(c) Do not exceed a floor area of 450 square feet.
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.10.r-7.2.txt,75,17.10.030,1,(a) Do not exceed a floor area of 120 square feet.
-or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.10.r-7.2.txt,176,17.10.050,1,7.5 ft or 5 ft due to irregular shaped lots
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.10.r-7.2.txt,190,17.10.050,1,5 ft
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.10.r-7.2.txt,339,17.10.065,1,(c) The common courtyard must be a minimum of 15 feet wide at its narrowest dimension.
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.10.r-7.2.txt,363,17.10.065,1,"(A) Within 20 feet from any street property line, except alley property lines;"
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.10.r-7.2.txt,379,17.10.065,1,(c) Individual detached garages must not exceed 400 square feet in floor area.
@@ -4149,7 +4474,7 @@ or/clackamas/gladstone,unread,max_units,or/clackamas/gladstone/17.06.definitions
 or/clackamas/gladstone,unread,setback_rear_ft,or/clackamas/gladstone/17.10.r-7.2.txt,81,17.10.030,1,"(4) Courtyards, Patios and Decks. The minimum side, except street side, and rear setbacks for uncovered courtyards, patios and decks in excess of 30 inches in height shall be five feet. The minimum fr"
 or/clackamas/gladstone,unread,max_units,or/clackamas/gladstone/17.10.r-7.2.txt,97,17.10.030,1,"(b) The floor area of an accessory dwelling unit shall not exceed 800 square feet or 75 percent gross square feet of the primary dwelling, whichever is less. Conversion of an existing basement to an A"
 or/clackamas/gladstone,unread,max_units,or/clackamas/gladstone/17.10.r-7.2.txt,111,17.10.030,1,(d) A detached accessory dwelling unit shall be allowed to be a maximum building height of 26 feet.
-or/clackamas/gladstone,unread,max_units,or/clackamas/gladstone/17.10.r-7.2.txt,173,17.10.050,5,"Cottage cluster minimum setbacks can be reduced to five feet, if there is more than 150 square feet per dwelling unit of common open space provided, as defined in GMC Section 17.12.065(2)."
+or/clackamas/gladstone,unread,max_units,or/clackamas/gladstone/17.10.r-7.2.txt,173,17.10.050,4,"Cottage cluster minimum setbacks can be reduced to five feet, if there is more than 150 square feet per dwelling unit of common open space provided, as defined in GMC Section 17.12.065(2)."
 or/clackamas/gladstone,unread,min_density_du_per_acre,or/clackamas/gladstone/17.10.r-7.2.txt,207,17.10.050,1,Subdivisions and PUDs shall provide a minimum density of 80 percent of the maximum density per net acre.
 or/clackamas/gladstone,unread,max_units,or/clackamas/gladstone/17.10.r-7.2.txt,221,17.10.050,1,(1) All PUDs with residential uses must include a mix of two or more middle housing types for a minimum of 25 percent of the total dwelling units proposed.
 or/clackamas/gladstone,unread,setback_front_ft,or/clackamas/gladstone/17.10.r-7.2.txt,243,17.10.055,1,(i) Front setbacks: 10 feet;
@@ -4160,7 +4485,7 @@ or/clackamas/gladstone,unread,parking_min_per_unit,or/clackamas/gladstone/17.10.
 or/clackamas/gladstone,unread,setback_rear_ft,or/clackamas/gladstone/17.12.r-5.txt,79,17.12.030,1,"(3) Courtyards, Patios and Decks. The minimum side, except street side, and rear setbacks for uncovered courtyards, patios and decks in excess of 30 inches in height shall be five feet. The minimum fr"
 or/clackamas/gladstone,unread,max_units,or/clackamas/gladstone/17.12.r-5.txt,95,17.12.030,1,"(b) The floor area of an accessory dwelling unit shall not exceed 800 square feet or 75 percent gross square feet of the primary dwelling, whichever is less. Conversion of an existing basement to an A"
 or/clackamas/gladstone,unread,max_units,or/clackamas/gladstone/17.12.r-5.txt,109,17.12.030,1,(d) A detached accessory dwelling unit shall be allowed a maximum building height of 26 feet.
-or/clackamas/gladstone,unread,max_units,or/clackamas/gladstone/17.12.r-5.txt,187,17.12.050,4,"Cottage cluster minimum setbacks can be reduced to five feet, if there is more than 150 square feet per dwelling unit of common open space provided, as defined in GMC Section 17.12.065(2)."
+or/clackamas/gladstone,unread,max_units,or/clackamas/gladstone/17.12.r-5.txt,187,17.12.050,3,"Cottage cluster minimum setbacks can be reduced to five feet, if there is more than 150 square feet per dwelling unit of common open space provided, as defined in GMC Section 17.12.065(2)."
 or/clackamas/gladstone,unread,max_units,or/clackamas/gladstone/17.12.r-5.txt,226,17.12.050,1,(1) All PUDs with residential uses must include a mix of two or more middle housing types for a minimum of 25 percent of the total dwelling units proposed.
 or/clackamas/gladstone,unread,setback_front_ft,or/clackamas/gladstone/17.12.r-5.txt,248,17.12.055,1,(i) Front setbacks: 10 feet;
 or/clackamas/gladstone,unread,setback_rear_ft,or/clackamas/gladstone/17.12.r-5.txt,252,17.12.055,1,(iii) Rear setbacks: 10 feet.
@@ -4175,25 +4500,15 @@ or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential
 or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,295,16.22.020,1,"Cottage cluster, rear 10 feet 10 feet 10 feet"
 or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,296,16.22.020,1,"Cottage cluster, interior side 10 feet 10 feet 7 feet"
 or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,297,16.22.020,1,"Cottage cluster, street side 10 feet 10 feet 10 feet"
-or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,475,16.22.030,1,Lots fronting on cul-de-sac 35 feet 35 feet 35 feet
-or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,476,16.22.030,1,All other lots 50 feet 50 feet 50 feet
-or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,477,16.22.030,1,Townhomes 20 feet 20 feet 20 feet
 or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,487,16.22.030,1,"Cottage clusters, side 7 feet 7 feet 7 feet"
-or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,651,16.22.040,1,Lots fronting on cul-de-sac 35 feet Variable4
-or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,652,16.22.040,1,All other lots 40 feet Variable4
-or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,653,16.22.040,1,Townhomes 20 feet 20 feet
 or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,664,16.22.040,1,"Cottage cluster, rear 10 feet 10 feet"
 or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,665,16.22.040,1,"Cottage cluster, interior side 5 feet 5 feet"
 or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,666,16.22.040,1,"Cottage cluster, street side 8 feet 8 feet"
 or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,668,16.22.040,1,Entrances not facing an alley 22 feet 22 feet4
-or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,963,16.22.050,2,75%12
-or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,982,16.22.050,1,"5 feet 10,11"
-or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,984,16.22.050,4,10 feet
-or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,987,16.22.050,2,22 feet
-or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,1001,16.22.050,1,18 feet
-or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,1005,16.22.050,1,35 feet
 or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,1007,16.22.050,3,400 sq. ft./unit provided in accordance with Section 16.42.080
 or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,1114,16.22.050,1,Only one accessory structure per lot may exceed 100 square feet in area.
+or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.42.landscaping.txt,620,16.42.080,1,Size. Each tract must be at least 100 feet wide by 100 feet deep;
+or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.42.landscaping.txt,628,16.42.080,1,Accessibility. Each recreation area tract must have at least 30 feet of street frontage;
 or/clackamas/happy-valley,unread,max_height_ft,or/clackamas/happy-valley/16.12.definitions.txt,123,16.12.030,1,"Roofs of buildings, provided they are 30 feet or more in height above the street grade upon which such buildings front, church steeples, existing and replacement utility poles, flagpoles, street light"
 or/clackamas/happy-valley,unread,max_units,or/clackamas/happy-valley/16.12.definitions.txt,558,16.12.030,1,A building containing four dwelling units on a single lot. The units must comply with the definition of an attached structure and share a common wall of at least 20 feet in width or common floor/ceili
 or/clackamas/happy-valley,unread,max_units,or/clackamas/happy-valley/16.12.definitions.txt,567,16.12.030,1,"A dwelling, located on its own lot excluding an accessory dwelling unit, which shares one or more common or abutting walls of at least 20 feet in width with one or more other dwellings on another lot."
@@ -4212,14 +4527,12 @@ or/clackamas/happy-valley,unread,max_density_du_per_acre,or/clackamas/happy-vall
 or/clackamas/happy-valley,unread,max_coverage_pct,or/clackamas/happy-valley/16.22.residential.txt,308,16.22.020,2,"7 Maximum lot coverage for townhomes is the greater of the percentage identified in the table or up to 1,000 square feet of buildings, decks, stairways and entry bridges that are more than 30 inches a"
 or/clackamas/happy-valley,unread,max_density_du_per_acre,or/clackamas/happy-valley/16.22.residential.txt,327,16.22.030,1,"Residential—Eight thousand five hundred Square Feet (R-8.5). This urban residential district responds to the continuing urbanization of the City. Single-family detached dwellings are encouraged, but m"
 or/clackamas/happy-valley,unread,max_density_du_per_acre,or/clackamas/happy-valley/16.22.residential.txt,331,16.22.030,1,Residential—Seven thousand Square Feet (R-7). This development district will allow more urban residential density within the City through the use of small lots and a variation in dwelling types. Trend
-or/clackamas/happy-valley,unread,max_height_ft,or/clackamas/happy-valley/16.22.residential.txt,496,16.22.030,1,5 The single-family residential building height maximum is 45 feet at the front elevation; side and rear elevations may not exceed 49 feet.
 or/clackamas/happy-valley,unread,min_density_du_per_acre,or/clackamas/happy-valley/16.22.residential.txt,517,16.22.040,1,"Mixed Use Residential—Single-Family (MUR-S). Mixed use residential will promote compact form, and residential and commercial or residential and office mixed vertically, in addition to across the distr"
 or/clackamas/happy-valley,unread,max_height_ft,or/clackamas/happy-valley/16.22.residential.txt,680,16.22.040,1,7 The single-family residential building height maximum is 45 feet at the front elevation; side and rear elevations may not exceed 49 feet.
 or/clackamas/happy-valley,unread,max_coverage_pct,or/clackamas/happy-valley/16.22.residential.txt,682,16.22.040,1,"9 Maximum lot coverage for townhomes is the greater of the percentage identified in the table or up to 1,000 square feet of buildings, decks, stairways and entry bridges that are more than 30 inches a"
 or/clackamas/happy-valley,unread,max_units,or/clackamas/happy-valley/16.22.residential.txt,928,16.22.050,1,"8 Single-family detached units with a maximum floor area of 2,000 square feet are permitted in the MUR-A zone within the Happy Valley Town Center Plan Area."
 or/clackamas/happy-valley,unread,setback_street_side_ft,or/clackamas/happy-valley/16.22.residential.txt,1018,16.22.050,1,"The minimum front, rear, side and street side building setbacks for public and institutional uses in the SFA district is 20 feet. Cottage clusters shall have a perimeter setback of 10 feet in the MUR-"
 or/clackamas/happy-valley,unread,max_height_ft,or/clackamas/happy-valley/16.22.residential.txt,1026,16.22.050,1,Maximum building height for single-family detached/attached is 45 feet at the front elevation; side and rear elevations may not exceed 49 feet in height.
-or/clackamas/happy-valley,unread,min_lot_sqft,or/clackamas/happy-valley/16.22.residential.txt,1028,16.22.050,1,"Each lot for an attached single-family (townhouse) dwelling in the SFA and VTH zones shall have a minimum size of 2,000 square feet and a maximum size of 3,000 square feet, or each lot shall have a mi"
 or/clackamas/happy-valley,unread,max_units,or/clackamas/happy-valley/16.22.residential.txt,1126,16.22.050,1,"The square footage of the ground floor of the accessory structure shall not exceed either 500 square feet or the square footage of the ground floor of the primary dwelling, whichever is less. An acces"
 or/clackamas/happy-valley,unread,max_height_ft,or/clackamas/happy-valley/16.22.residential.txt,1130,16.22.050,1,"The detached accessory structure shall have a maximum building height of 25 feet or the building height of the primary dwelling, whichever is less."
 or/clackamas/happy-valley,unread,setback_rear_ft,or/clackamas/happy-valley/16.22.residential.txt,1138,16.22.050,1,No side or rear yard setback shall be required for any detached accessory structure that is 100 square feet or less in area and does not exceed a height of feet.
@@ -4227,6 +4540,14 @@ or/clackamas/happy-valley,unread,max_height_ft,or/clackamas/happy-valley/16.22.r
 or/clackamas/happy-valley,unread,max_height_ft,or/clackamas/happy-valley/16.22.residential.txt,1146,16.22.050,1,"For structures greater than eight feet and up to 20 feet in height, the minimum side yard setbacks shall be zero on one side and three feet on the other side. The minimum rear yard setback where the r"
 or/clackamas/happy-valley,unread,max_height_ft,or/clackamas/happy-valley/16.22.residential.txt,1150,16.22.050,1,"For structures greater than 20 feet in height, the minimum side yard setbacks shall be zero on one side and five feet on the other side. The minimum rear yard setback where the rear property line abut"
 or/clackamas/happy-valley,unread,max_height_ft,or/clackamas/happy-valley/16.22.residential.txt,1321,16.22.060,1,4 Building height is measured pursuant to Chapter 16.12 Definitions. Maximum building height for single-family (attached) is 45 feet at the front elevation; the building height may not exceed 49 feet 
+or/clackamas/happy-valley,unread,parking_min_per_unit,or/clackamas/happy-valley/16.42.landscaping.txt,265,16.42.030,1,Any use which is required to provide off-street parking for five or more vehicles shall provide buffering of the parking areas on all sides which face directly upon and are within 100 feet of any prop
+or/clackamas/happy-valley,unread,max_height_ft,or/clackamas/happy-valley/16.42.landscaping.txt,395,16.42.050,1,"Optimal Tree Protection Zone. The minimum distance from the center of a tree to the disturbance line shall be one foot of radius per inch of diameter at breast height (dbh), as measured four and one-h"
+or/clackamas/happy-valley,unread,max_height_ft,or/clackamas/happy-valley/16.42.landscaping.txt,570,16.42.060,1,"Height and Opacity. Where landscaping is used for required screening, it shall be at least six feet in height and at least 80% opaque, as seen from a perpendicular line of sight, within two years foll"
+or/clackamas/happy-valley,unread,max_units,or/clackamas/happy-valley/16.63.land-divisions.txt,157,16.63.020,1,No density is allowed within constrained land except for the reduced rate within the Steep Slopes Development Overlay Zone and the Natural Resources Overlay Zone per LDC Section 16.32.090 and/or Secti
+or/clackamas/happy-valley,unread,min_lot_sqft,or/clackamas/happy-valley/16.63.land-divisions.txt,229,16.63.030,1,"Flexible Lot Size. To allow creativity and flexibility in subdivision design and to address physical constraints, such as topography, existing development, significant trees and other natural and buil"
+or/clackamas/happy-valley,unread,max_units,or/clackamas/happy-valley/16.63.land-divisions.txt,243,16.63.030,1,"Driveway and Lane Width. The minimum paved width of all shared drives and lanes shall be 12 feet within a 20 foot easement, and may serve up to two dwelling units, or as required by the Uniform Fire C"
+or/clackamas/happy-valley,unread,min_lot_sqft,or/clackamas/happy-valley/16.63.land-divisions.txt,1149,16.63.130,1,"Lot Size and Dimensions. Minimum area, width, depth, frontage and setback requirements may be less than development district minimums if in accordance with the general development plan, except that th"
+or/clackamas/happy-valley,unread,min_lot_sqft,or/clackamas/happy-valley/16.63.land-divisions.txt,1285,16.63.140,1,"Lot Standards. All lots and parcels conform to the applicable lot standards of the land use district (Article 16.2) including lot area, frontage, dimensions, setbacks, and coverage, and no resulting l"
 or/clackamas/johnson-city,unread,max_units,or/clackamas/johnson-city/ors.197a.420.txt,39,,1,“Cottage clusters” means groupings of no fewer than four detached housing units per acre with a footprint of less than 900 square feet each and that include a common courtyard.
 or/clackamas/lake-oswego,unfielded,,or/clackamas/lake-oswego/50.03.002.use-table.txt,882,50.03.003.6,1,"Food markets < 25,000 sq. ft. gross floor area"
 or/clackamas/lake-oswego,unfielded,,or/clackamas/lake-oswego/50.03.002.use-table.txt,890,50.03.003.6,1,"Food markets 25,000 sq. ft. gross floor area or more"
@@ -4651,6 +4972,10 @@ or/clackamas/rivergrove,unread,min_frontage_ft,or/clackamas/rivergrove/rldo.comp
 or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/31.definitions.txt,106,31.060,1,(b) Land exceeding 25 percent slope;
 or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/31.definitions.txt,112,31.060,1,(a) Single-family development: allocate 20 percent of gross acres;
 or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/31.definitions.txt,114,31.060,1,and townhouses: allocate 15 percent of gross acres.
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/36.400-420.lot-dimensions.txt,67,36.125,1,"Triplexes, and Quadplexes may be reduced to 3,000 square feet if:"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/36.400-420.lot-dimensions.txt,77,36.125,1,(v) No more than 70 percent of the approved Single-Family Dwellings may be issued
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/36.400-420.lot-dimensions.txt,95,36.420,1,"(a) Be no less than 5,000 square feet and no more than 5,999.99 square feet;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/36.400-420.lot-dimensions.txt,107,36.420,1,least 50 feet; and
 or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/40-41.residential.txt,142,40.300,1,Minimum: 1 unit per acre
 or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/40-41.residential.txt,156,40.220,1,"Single-Family Dwelling Average of 6,500 square feet"
 or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/40-41.residential.txt,162,40.220,1,"Duplex 6,500 square feet"
@@ -4685,6 +5010,16 @@ or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/40-41.residential.txt,560
 or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/40-41.residential.txt,563,41,1,"10 feet For Townhouses, determined through"
 or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/40-41.residential.txt,570,41,1,50 feet
 or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/40-41.residential.txt,580,41.300,1,to a maximum of 50 feet with a
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/73A.020-060.residential-design.txt,8,73A,1,(i) A 35 percent or more expansion of the structure's existing footprint.
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/73A.020-060.residential-design.txt,10,73A,1,(iii) A 35 percent or more alteration of an existing wall plane.
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/73A.020-060.residential-design.txt,23,73A,1,(a) Windows that occupy at least 12 percent of the wall plane.
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/73A.020-060.residential-design.txt,34,73A,1,(a) Windows that occupy at least 12 percent of the wall plane
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/73A.020-060.residential-design.txt,86,73A,1,(3) Covered porch at least 36 square feet in area and at least four feet deep;
+or/clackamas/tualatin,unread,min_lot_sqft,or/clackamas/tualatin/36.400-420.lot-dimensions.txt,58,36.125,1,"(a) RL Zone. The minimum lot size may be reduced to 5,000 square feet if:"
+or/clackamas/tualatin,unread,max_units,or/clackamas/tualatin/36.400-420.lot-dimensions.txt,75,36.125,1,"(iv) A minimum of 20 percent of the dwelling units must include Townhomes, Duplexes,"
+or/clackamas/tualatin,unread,min_lot_width_ft,or/clackamas/tualatin/36.400-420.lot-dimensions.txt,96,36.420,1,(b) Have an average lot width of at least 30 feet;
+or/clackamas/tualatin,unread,min_lot_width_ft,or/clackamas/tualatin/36.400-420.lot-dimensions.txt,97,36.420,1,(c) Lots that have frontage on a public street must have a minimum lot width of 50 feet or 30
+or/clackamas/tualatin,unread,max_coverage_pct,or/clackamas/tualatin/36.400-420.lot-dimensions.txt,99,36.420,1,(d) Have a maximum building coverage of 45 percent;
 or/clackamas/tualatin,unread,max_units,or/clackamas/tualatin/40-41.residential.txt,150,40.300,1,Congregate Care Facility 10 units per acre
 or/clackamas/tualatin,unread,max_height_ft,or/clackamas/tualatin/40-41.residential.txt,371,41.220,1,with a maximum height of 75 feet.
 or/clackamas/tualatin,unread,max_units,or/clackamas/tualatin/40-41.residential.txt,454,41.300,1,10 units per acre
@@ -4693,6 +5028,7 @@ or/clackamas/tualatin,unread,max_units,or/clackamas/tualatin/40-41.residential.t
 or/clackamas/tualatin,unread,max_units,or/clackamas/tualatin/40-41.residential.txt,463,41.300,1,Nursing Facility 15 units per acre
 or/clackamas/tualatin,unread,max_units,or/clackamas/tualatin/40-41.residential.txt,464,41.300,1,Group Living Uses 15 units per acre
 or/clackamas/tualatin,unread,min_lot_width_ft,or/clackamas/tualatin/40-41.residential.txt,516,41.220,1,Conditional Uses 100 feet Minimum lot width at street is 40 feet.
+or/clackamas/tualatin,unread,max_height_ft,or/clackamas/tualatin/73A.020-060.residential-design.txt,9,73A,1,(ii) An increase in building height of 35 percent or more.
 or/clackamas/west-linn,unfielded,,or/clackamas/west-linn/02.definitions.txt,448,02.030,2,Basements are exempt from FAR if less than 50 percent of basement is exposed above grade.
 or/clackamas/west-linn,unfielded,,or/clackamas/west-linn/02.definitions.txt,1031,02.030,1,"1. Slope: Land that has slopes over 25 percent, as shown on the RLIS topography GIS layer."
 or/clackamas/west-linn,unfielded,,or/clackamas/west-linn/08.r-40.txt,173,08.070,1,20 ft
@@ -4700,6 +5036,8 @@ or/clackamas/west-linn,unfielded,,or/clackamas/west-linn/10.r-15.txt,144,10.070,
 or/clackamas/west-linn,unfielded,,or/clackamas/west-linn/11.r-10.txt,145,11.070,1,50 ft
 or/clackamas/west-linn,unfielded,,or/clackamas/west-linn/15.r-3.txt,184,15,1,20 ft
 or/clackamas/west-linn,unfielded,,or/clackamas/west-linn/16.r-2.1.txt,217,16.070,1,3.5 stories or 45 feet for a garden apartment medium rise unit;
+or/clackamas/west-linn,unfielded,,or/clackamas/west-linn/25.willamette-historic.txt,120,25.040,1,2) Does not have solid portions exceeding 50 percent; and
+or/clackamas/west-linn,unfielded,,or/clackamas/west-linn/25.willamette-historic.txt,180,25.040,1,5. Art and statuary. Construction of freestanding art and statuary over 10 feet tall.
 or/clackamas/west-linn,unread,max_units,or/clackamas/west-linn/02.definitions.txt,179,02.030,1,Cottage cluster. A grouping of at least four detached dwelling units per acre. Dwelling units have a building footprint of less than 900 square feet per dwelling unit that includes a common courtyard 
 or/clackamas/west-linn,unread,min_frontage_ft,or/clackamas/west-linn/02.definitions.txt,281,02.030,1,"Flag lot. A lot complying with all other provisions of the Community Development Code which does not meet the minimum street frontage requirement of 35 feet, and which gains access to the public right"
 or/clackamas/west-linn,unread,max_far,or/clackamas/west-linn/02.definitions.txt,440,02.030,1,Floor area ratio (FAR). The FAR is that percentage of the total lot size that can be built as habitable space. A FAR of 0.45 means that the square footage of the lot is multiplied by 0.45 to yield the
@@ -4707,36 +5045,36 @@ or/clackamas/west-linn,unread,min_lot_sqft,or/clackamas/west-linn/02.definitions
 or/clackamas/west-linn,unread,max_height_ft,or/clackamas/west-linn/02.definitions.txt,678,02.030,1,"Minor modification. A change in the approved design that is equal to or less than a 10 percent increase in the length, width or height of the facility. A change of location by under 20 feet laterally "
 or/clackamas/west-linn,unread,max_height_ft,or/clackamas/west-linn/02.definitions.txt,1015,02.030,1,"Tree. A woody perennial plant usually having one dominant trunk, the capacity to achieve a mature height greater than 16 feet, and primarily referred to as a tree in scientific literature."
 or/clackamas/west-linn,unread,setback_side_ft,or/clackamas/west-linn/08.r-40.txt,148,08.070,1,"Front, rear, and side yard setbacks for a cottage cluster project are 10 ft. There are no additional setbacks for individual structures on individual lots, but minimum distance between structures shal"
-or/clackamas/west-linn,unread,min_lot_sqft,or/clackamas/west-linn/08.r-40.txt,178,08.070,1,"Type I and II lands shall not be counted toward lot area when determining allowable floor area ratio, except that a minimum floor area ratio of 0.30 shall be allowed regardless of the classification o"
 or/clackamas/west-linn,unread,setback_side_ft,or/clackamas/west-linn/09.r-20.txt,152,09.070,1,"Front, rear, and side yard setbacks in a cottage cluster project are 10 ft. There are no additional setbacks for individual structures on individual lots, but minimum distance between structures shall"
-or/clackamas/west-linn,unread,min_lot_sqft,or/clackamas/west-linn/09.r-20.txt,180,09.070,1,"Type I and II lands shall not be counted toward lot area when determining allowable floor area ratio, except that a minimum floor area ratio of 0.30 shall be allowed regardless of the classification o"
 or/clackamas/west-linn,unread,setback_side_ft,or/clackamas/west-linn/10.r-15.txt,148,10.070,1,"Front, rear, and side yard setbacks in a cottage cluster project are 10 ft. There are no additional setbacks for individual structures on individual lots, but minimum distance between structures shall"
 or/clackamas/west-linn,unread,min_lot_sqft,or/clackamas/west-linn/10.r-15.txt,176,10.070,1,"Type I and II lands shall not be counted toward lot area when determining allowable floor area ratio, except that a minimum floor area ratio of 0.30 shall be allowed regardless of the classification o"
 or/clackamas/west-linn,unread,setback_side_ft,or/clackamas/west-linn/11.r-10.txt,149,11.070,1,"Front, rear, and side yard setbacks in a cottage cluster project are 10 ft. There are no additional setbacks for individual structures on individual lots, but minimum distance between structures shall"
-or/clackamas/west-linn,unread,min_lot_sqft,or/clackamas/west-linn/11.r-10.txt,175,11.070,1,"Type I and II lands shall not be counted toward lot area when determining allowable floor area ratio, except that a minimum floor area ratio of 0.30 shall be allowed regardless of the classification o"
 or/clackamas/west-linn,unread,setback_side_ft,or/clackamas/west-linn/12.r-7.txt,151,12.070,1,"Front, rear, and side yard setbacks in a cottage cluster project are 10 ft. There are no additional setbacks for individual structures on individual lots, but minimum distance between structures shall"
-or/clackamas/west-linn,unread,min_lot_sqft,or/clackamas/west-linn/12.r-7.txt,177,12.070,1,"Type I and II lands shall not be counted toward lot area when determining allowable floor area ratio, except that a minimum floor area ratio of 0.30 shall be allowed regardless of the classification o"
 or/clackamas/west-linn,unread,setback_side_ft,or/clackamas/west-linn/13.r-5.txt,161,13.070,1,"Front, rear, and side yard setbacks for a cottage cluster project are 10 ft. There are no additional setbacks for individual structures on individual lots, but minimum distance between structures shal"
-or/clackamas/west-linn,unread,min_lot_sqft,or/clackamas/west-linn/13.r-5.txt,189,13.070,1,"Type I and II lands shall not be counted toward lot area when determining allowable floor area ratio, except that a minimum floor area ratio of 0.30 shall be allowed regardless of the classification o"
 or/clackamas/west-linn,unread,max_units,or/clackamas/west-linn/14.r-4.5.txt,101,14.050,1,"7. Senior citizen/handicapped housing facilities with a maximum number of units 50 percent above the allowed density for the property; provided, that the following conditions shall apply:"
 or/clackamas/west-linn,unread,max_units,or/clackamas/west-linn/14.r-4.5.txt,111,14.050,1,"e. A minimum of 10 square feet of general storage area other than regular kitchen, bedroom and linen storage shall be provided within each unit. Complexes which do not include laundry facilities in th"
 or/clackamas/west-linn,unread,max_units,or/clackamas/west-linn/14.r-4.5.txt,113,14.050,1,f. The maximum number of units allowed in a senior citizen or handicapped housing facility shall be 50 percent above the allowed density for the property.
 or/clackamas/west-linn,unread,max_units,or/clackamas/west-linn/14.r-4.5.txt,119,14.050,1,2) No more than 25 percent of the total number of units may be used for nursing care patients.
 or/clackamas/west-linn,unread,setback_side_ft,or/clackamas/west-linn/14.r-4.5.txt,186,14.070,1,"Front, rear, and side yard setbacks for a cottage cluster project are 10 ft. There are no additional setbacks for individual structures on individual lots, but minimum distance between structures shal"
-or/clackamas/west-linn,unread,min_lot_sqft,or/clackamas/west-linn/14.r-4.5.txt,214,14.070,1,"Type I and II lands shall not be counted toward lot area when determining allowable floor area ratio, except that a minimum floor area ratio of 0.30 shall be allowed regardless of the classification o"
 or/clackamas/west-linn,unread,max_units,or/clackamas/west-linn/15.r-3.txt,105,15.050,1,"6. Senior citizen/handicapped housing facilities with a maximum number of units 50 percent above the allowed density for the property; provided, that the following conditions shall apply:"
 or/clackamas/west-linn,unread,max_units,or/clackamas/west-linn/15.r-3.txt,115,15.050,1,"e. A minimum of 10 square feet of general storage area other than regular kitchen, bedroom and linen storage shall be provided within each unit. Complexes which do not include laundry facilities in th"
 or/clackamas/west-linn,unread,max_units,or/clackamas/west-linn/15.r-3.txt,117,15.050,1,f. The maximum number of units allowed in a senior citizen or handicapped housing facility shall be 50 percent above the allowed density for the property.
 or/clackamas/west-linn,unread,max_units,or/clackamas/west-linn/15.r-3.txt,123,15.050,1,2) No more than 25 percent of the total number of units may be used for nursing care patients.
 or/clackamas/west-linn,unread,setback_side_ft,or/clackamas/west-linn/15.r-3.txt,179,15.070,1,"Front, rear, and side yard setbacks for a cottage cluster project are 10 ft. There are no additional setbacks for individual structures on individual lots, but minimum distance between structures shal"
-or/clackamas/west-linn,unread,min_lot_sqft,or/clackamas/west-linn/15.r-3.txt,208,15,1,"Type I and II lands shall not be counted toward lot area when determining allowable floor area ratio, except that a minimum floor area ratio of 0.30 shall be allowed regardless of the classification o"
 or/clackamas/west-linn,unread,max_units,or/clackamas/west-linn/16.r-2.1.txt,111,16.050,1,"8. Senior citizen/handicapped housing facilities with a maximum number of units 50 percent above the allowed density for the property; provided, that the following conditions shall apply:"
 or/clackamas/west-linn,unread,max_units,or/clackamas/west-linn/16.r-2.1.txt,121,16.050,1,"e. A minimum of 10 square feet of general storage area other than regular kitchen, bedroom and linen storage shall be provided within each unit. Complexes which do not include laundry facilities in th"
 or/clackamas/west-linn,unread,max_units,or/clackamas/west-linn/16.r-2.1.txt,123,16.050,1,f. The maximum number of units allowed in a senior citizens or handicapped housing facility shall be 50 percent above the allowed density for the property.
 or/clackamas/west-linn,unread,max_units,or/clackamas/west-linn/16.r-2.1.txt,129,16.050,1,2) No more than 25 percent of the total number of units may be used for nursing care patients.
 or/clackamas/west-linn,unread,setback_side_ft,or/clackamas/west-linn/16.r-2.1.txt,201,16.070,1,"Front, rear, and side yard setbacks for a cottage cluster project are 10 ft. There are no additional setbacks for individual structures on individual lots, but minimum distance between structures shal"
 or/clackamas/west-linn,unread,max_units,or/clackamas/west-linn/16.r-2.1.txt,218,16.070,1,Multifamily dwelling units are limited to 3.5 stories in height.
-or/clackamas/west-linn,unread,min_lot_sqft,or/clackamas/west-linn/16.r-2.1.txt,229,16.070,1,"Type I and II lands shall not be counted toward lot area when determining allowable floor area ratio, except that a minimum floor area ratio of 0.30 shall be allowed regardless of the classification o"
+or/clackamas/west-linn,unread,max_height_ft,or/clackamas/west-linn/25.willamette-historic.txt,168,25.040,1,"16. Accessory structures. Construction of accessory structures under 120 square feet and 10 feet in height (greenhouses, storage sheds, jacuzzis, spas, structures, gazebos, etc.) in a side or rear yar"
+or/clackamas/west-linn,unread,setback_side_ft,or/clackamas/west-linn/25.willamette-historic.txt,400,25.070,1,"a. Bays, porches and chimneys and other projections that are cumulatively no more than 20 percent of the overall respective building wall length may intrude 18 inches into the side yard setback; and"
+or/clackamas/west-linn,unread,setback_rear_ft,or/clackamas/west-linn/25.willamette-historic.txt,410,25.070,1,"4. Rear yard setback. The rear yard setback shall be a minimum of 20 feet, except for accessory structures, which may be sited to within three feet of the rear property lines."
+or/clackamas/west-linn,unread,max_height_ft,or/clackamas/west-linn/25.willamette-historic.txt,418,25.070,1,a. Residential structures are limited to 28 feet in height. Cupolas and towers shall not exceed 50 feet in height.
+or/clackamas/west-linn,unread,max_height_ft,or/clackamas/west-linn/41.steep-lots.txt,61,41.020,1,"2. The total building height does not exceed 45 feet, as measured from the lowest grade at a point five feet downhill from the rear of the building (or 50 feet in the R-15, R-20, and R-40 zones); and"
+or/clackamas/west-linn,unread,max_height_ft,or/clackamas/west-linn/41.steep-lots.txt,63,41.020,1,3. The building height does not project more than 24 feet above the average grade of the street.
+or/clackamas/west-linn,unread,max_height_ft,or/clackamas/west-linn/41.steep-lots.txt,69,41.020,1,"2. The total building height does not exceed 45 feet, as measured from a point five feet downhill from the front of the building (or 50 feet in the R-15, R-20, and R-40 zones)."
+or/clackamas/west-linn,unread,max_height_ft,or/clackamas/west-linn/41.steep-lots.txt,83,41.040,1,The height of a place of worship or governmental building may be built to a maximum height of 50 feet provided:
 or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/4.planning.txt,269,4,1,common area. An alley typically has a width of no more than 20 feet.
 or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/4.planning.txt,282,4,1,signals in a directional pattern typically encompassing an arc of 120 degrees.
 or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/4.planning.txt,304,4.001,1,is 50 feet.
@@ -5898,6 +6236,8 @@ or/multnomah/fairview,unread,max_height_ft,or/multnomah/fairview/19.85.txt,157,1
 or/multnomah/fairview,unread,max_coverage_pct,or/multnomah/fairview/19.85.txt,187,19.85.070,1,1. Lot Coverage. The maximum allowable lot coverage in the general industrial district is 90 percent. The maximum allowable lot coverage is computed by calculating the total area covered by buildings 
 or/multnomah/fairview,unread,max_height_ft,or/multnomah/fairview/19.85.txt,191,19.85.070,1,"a. Base Requirement. Buildings shall be no more than 60 feet in height, and shall comply with the building setback/height standards in FMC 19.85.030, unless subject to additional standards in the airp"
 or/multnomah/fairview,unread,max_height_ft,or/multnomah/fairview/19.85.txt,193,19.85.070,1,"b. Performance Option. The allowable building height may be increased to 70 feet, when approved as part of a conditional use permit. The development approval may require additional setbacks, stepping-"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/10.1700.affordable.txt,211,10.1733,1,families with incomes of 60 percent or less of the area median income; or
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/10.1700.affordable.txt,214,10.1733,1,and greater than 80 percent of the area median income.
 or/multnomah/gresham,unfielded,,or/multnomah/gresham/3.0100.definitions.txt,1305,3,1,"inside curve of a street with a delta angle, as used on plats, of 60 degrees or more."
 or/multnomah/gresham,unfielded,,or/multnomah/gresham/3.0100.definitions.txt,1898,3,1,• Temporary Lawn Sign. A temporary rigid sign no more than 6 square feet in area.
 or/multnomah/gresham,unfielded,,or/multnomah/gresham/3.0100.definitions.txt,1913,3,1,more than 50 percent of the window face.
@@ -6401,6 +6741,224 @@ or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0400.middle-housing-desig
 or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0400.middle-housing-design.txt,1127,7,1,a. Benches and picnic tables shall be a minimum of 6 feet long.
 or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0400.middle-housing-design.txt,1193,7,1,c. Trees shall be capable of achieving a minimum spread of at least 20 feet at maturity.
 or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0400.middle-housing-design.txt,1194,7,1,d. Trees shall be planted a minimum of 15 feet apart.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,327,7.0512,1,a. Connections shall be provided spacing no greater than 400 feet.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,355,7.0512,1,a. The 7.0512(A)(1)(S4)(a) clear accessible walking route of a minimum 5 feet width
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,356,7.0512,1,standard shall be met. provided in a sidewalk with a minimum width of either 5 feet
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,357,7.0512,1,b. Internal drives shall be or 6 feet.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,362,7.0512,1,appropriate per the Manager a minimum width of 26 feet to accommodate emergency
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,388,7.0512,1,"patterns. a minimum of 6 feet from the base of a tree, extending"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,437,7.0512,1,"d. Be a minimum of 16 feet in width, and include:"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,438,7.0512,1,i. An accessible paved walkway of at least 6 feet in width.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,442,7.0512,1,e. Provide lighting ﬁxtures no taller than 18 feet.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,470,7.0512,1,development shall be limited to of 250 feet by 250 feet from curb to curb.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,474,7.0512,1,Departures from the standard may length of 300 feet by 300 feet from curb to curb.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,492,7.0512,1,"promote pedestrian connectivity, of 250 feet by 250 feet from curb to curb."
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,496,7.0512,1,be allowed pursuant to Section length of 300 feet by 300 feet from curb to curb.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,533,7.0512,1,Stark St. 0 ft. 5 ft.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,534,7.0512,1,181st Ave. 0 ft. 5 ft.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,535,7.0512,1,Burnside St. 10 ft. 15 ft.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,536,7.0512,1,Pine St. 10 ft. 15 ft.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,537,7.0512,1,Oak St. 10 ft. 15 ft.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,538,7.0512,1,185th Ave. 10 ft. 15 ft.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,539,7.0512,1,187th Ave. 10 ft. 15 ft.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,540,7.0512,1,Ash St. 10 ft. 15 ft.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,541,7.0512,1,Future 182nd Ave. 10 ft. 15 ft.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,542,7.0512,1,Future 183rd Ave . 10 ft. 15 ft.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,565,7.0512,1,RTC 0 ft. 10 ft.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,566,7.0512,1,SC 0 ft. 20 ft.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,567,7.0512,1,SC-RJ 10 ft. 20 ft.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,573,7.0512,1,RTC 5 ft. 20 ft.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,574,7.0512,1,SC 5 ft. 20 ft.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,575,7.0512,1,SC-RJ 5 ft. 20 ft.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,580,7.0512,1,setback for a townhouse unit is 20 feet.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,613,7.0512,1,a. SE Stark Street: 90 percent building frontage
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,614,7.0512,1,b. 181st Avenue: 90 percent building frontage
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,615,7.0512,1,c. E Burnside Street: 75 percent building frontage
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,617,7.0512,1,183rd Avenues: 75 percent building frontage
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,618,7.0512,1,e. SE Pine/Oak Streets: 75 percent building frontage
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,627,7.0512,1,for a minimum of 50 percent of the frontage length.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,647,7.0512,1,"realm. a minimum distance of 60 feet along each frontage, as"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,670,7.0512,1,corner occupies 100 percent of the corner.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,689,7.0512,1,more than 40 feet from the right of way.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,710,7.0512,1,a minimum of 600 square feet in size adjacent to a street or
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,726,7.0512,1,"one multi-family building, face one another, a minimum separation of 20 feet shall be"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,804,7.0512,1,"1,500 feet of sites shall also be"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,830,7.0512,1,"passage for pedestrians. parking stalls, walkways shall be at least 7 feet in width or"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,866,7.0512,1,sidewalks (more than 6 feet wid e outside the public right of
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,902,7.0512,1,7.0512(A)(3)(S6) standard shall be and a minimum 4 feet wide.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,904,7.0512,1,the walkway width shall extend at least 3 feet beyond the
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,908,7.0512,1,identiﬁes addresses and locations of buildings on developments are a minimum 4 feet wide.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,945,7.0512,1,"to create a pedestrian-friendly area be closer than 8 feet to the right -of-w a y, t o"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,955,7.0512,1,o f w a y. in a planter strip a minimum of 8 feet in depth.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1017,7.0512,1,institutional or residential uses; i. A minimum of 50 percent of the ground ﬂoor street-
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1020,7.0512,1,facing façade; or dense within 40 feet of the abutting right-of-way shall be
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1024,7.0512,1,to the architectural quality and residential space shall be a minimum of 30 feet.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1040,7.0512,1,b. Parking structures should ii. Landscaping in a planter area a minimum of 8 feet in
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1043,7.0512,1,realm. of 25 feet on center; shrubs capable of reaching 5 feet
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1047,7.0512,1,the majority (a minimum of 51 percent) of the
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1055,7.0512,1,"doors, or display windows for 20 percent of the ground ﬂoor"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1170,7.0512,1,at least 4 feet behind the street-facing wall closest to the
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1174,7.0512,1,no more than 50 percent of the façade with the unit’s primary
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1175,7.0512,1,entry. Garages are set back 4 feet behind the street -facing wall.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1201,7.0512,1,occupy no more than 18 feet or 34 percent of that
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1232,7.0512,1,not exceed 12 feet wide on any lot.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1233,7.0512,1,"v. The garage width does not exceed 12 feet, as"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1275,7.0512,1,"least 8.5 feet wide by 18 feet deep, or 8 feet wide by 24"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1311,7.0512,1,shall be designed with strategies 200 square feet and shall contain improvements and
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1320,7.0512,1,pedestrians are typically b. Provide a building entrance located within 40 feet of the
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1340,7.0512,1,and the sidewalk when direct dimensions of no less than 12 feet in width and depth.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1388,7.0512,1,encourage activity within the b. At least 50 percent of the area shall be hardscaped with
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1392,7.0512,1,"hardscaped and landscaped, d. Pedestrian scaled lighting ﬁxtures no taller than 18 feet."
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1458,7.0512,1,contain transparent glazing for 50 percent of the area
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1483,7.0512,1,no greater than 35 feet apart.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1487,7.0512,1,greater than 35 feet apart.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1491,7.0512,1,iv. Include one public art piece per 200 feet of sidewalk.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1502,7.0512,1,"residents of a development. A a minimum of 4 percent of the gross site area, but not"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1505,7.0512,1,"amenity spaces designed for and minimum of 4 percent of the gross site area, but not less"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1529,7.0512,1,20 feet in length and width.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1535,7.0512,1,"e. For sites 20,000 square feet and greater, a maximum of 20"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1547,7.0512,1,"square feet, with no dimension being less than 20 feet."
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1552,7.0512,1,building wall. A minimum of 25 percent of the exterior
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1569,7.0512,1,Developments shall include private space of no less than 64 square feet in area shall be
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1621,7.0512,1,"the development. a. For sites 20,000 square feet and greater in gross site area,"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1623,7.0512,1,proportional to the size of the 20 feet in length and width and be a minimum of 500 square
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1668,7.0512,1,added and incorporated into a and be 64 square feet or larger with minimum
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1671,7.0512,1,space of 100 square feet or larger with minimum
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1672,7.0512,1,dimensions of 8 feet in each direction .
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1675,7.0512,1,dimensions of 12 feet in length and width and meeting
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1841,7.0512,1,b. A minimum of 70 percent of all landscaped area shall be
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1848,7.0512,1,overhang distances no less than 2 feet when abutting shrubs
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1849,7.0512,1,or 3 feet when abutting trees. Wheel stops may be used in
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1866,7.0512,1,less 1 foot.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1881,7.0512,1,modules shall have a width not less than 6 feet including
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1883,7.0512,1,at spacing no greater than 35 feet on center.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1888,7.0512,1,no less than 6 feet on each side and may be ro tate d to
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1897,7.0512,1,"development and use, and the a. Preserve a minimum of 50 percent of existing regulated"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1908,7.0512,1,between site users. with 20 percent sustainably harvested materials (such as
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1912,7.0512,1,"d. For developments exceeding 5,000 square feet in ﬂoor area,"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1913,7.0512,1,at least 20 percent of building materials by weight or cost
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1931,7.0512,1,"e. At least 50 percent of all exterior site hardscape, including"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1952,7.0512,1,shall be shaded as a means of of 30 percent of on-site hardscape area shall be shaded.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1968,7.0512,1,e. Permeable pavement used for at least 40 percent of all site
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,1995,7.0512,1,provided based on 110 percent of the estimated cost of
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2008,7.0512,1,"period, any plantings which are 20 percent dead or greater"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2063,7.0512,1,INSIDE THE TRIANGLE: Up to 5 percent of the required
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2079,7.0512,1,OUTSIDE THE TRIANGLE: Up to 20 percent of the required
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2111,7.0512,1,"f. Where a setback is less than 8 feet in width, columnar tree"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2134,7.0512,1,6 feet.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2238,7.0512,1,development) shall not exceed 0.5 foot-candles. Maximum
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2329,7.0512,1,"middle, and cap. i. Set back at least 50 percent of the top one or two ﬂoors"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2330,7.0512,1,for a minimum of 10 feet.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2333,7.0512,1,iii. Provide a minimum facade transparency of 50 percent or
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2338,7.0512,1,two ﬂoors across a minimum of 50 percent of the facade
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2375,7.0512,1,distinction between wall planes. intervals of not greater than 30 feet on facades with
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2378,7.0512,1,projections shall be at intervals not greater than 100 feet.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2380,7.0512,1,intervals of not less than 25 feet and not more than 100 feet.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2412,7.0512,1,"depth, shadows, and visual feet over 6 feet in width."
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2450,7.0512,1,minimum 2 feet.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2552,7.0512,1,include protection from the not project more than 2 feet into a required minimum setback.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2594,7.0512,1,c. A structural canopy extending a minimum of 5 feet from the
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2724,7.0512,1,i. An operable building entry located within 10 feet of
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2733,7.0512,1,v. An entry courtyard a minimum of 40 square feet. The
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2756,7.0512,1,on abutting streets. ﬂoor unit. The walkway shall be a minimum of 5 feet wide.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2773,7.0512,1,b. Landscape treatment 5 to 15 feet in depth between the
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2774,7.0512,1,unit and the right-of-way for 60 percent of the setback
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2784,7.0512,1,or wall of 5 feet.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2788,7.0512,1,shall have a length at least 50 percent of the linear frontage
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2917,7.0512,1,not be located within 8 feet of primary entrances and shall
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2950,7.0512,1,carport(s) that covers 20 percent of the footprint for all new
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2952,7.0512,1,e. Include a minimum of 20 percent of building materials that
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2956,7.0512,1,f. Include a minimum of 5 percent of the building materials
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2959,7.0512,1,g. Include a minimum of 20 percent of wood -based materials
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2967,7.0512,1,minimum of 10 percent.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,2986,7.0512,1,l. Divert at least 75 percent of non- hazardous construction and
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3039,7.0512,1,on a minimum of 5 percent of the ground level facade.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3042,7.0512,1,regular spacing no greater than 30 feet.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3045,7.0512,1,projection of 4 feet.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3048,7.0512,1,"i. Planter boxes, a minimum of 6 square feet, and not located"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3051,7.0512,1,greater than 30 feet apart.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3056,7.0512,1,awning. greater than 30 feet.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3072,7.0512,1,easy access between public and elevation no more than 2 feet above or below the sidewalk
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3109,7.0512,1,street unless required by the Building Code. If a blank wall greater than 40 feet long is
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3115,7.0512,1,of the blank wall. The plantings shall be at least 4 feet tall
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3116,7.0512,1,or cover at least 50 percent of each trellis at the time of
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3118,7.0512,1,b. Patterned tile work that covers an area at least 40 percent
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3122,7.0512,1,covers an area at least 40 percent of the blank wall and
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3125,7.0512,1,that will be 25 feet or shorter at maturity) every 15 feet
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3127,7.0512,1,shrubs located every 3 feet on center and a minimum of 3
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3150,7.0512,1,detailing responding to individual a. A roof dormer a minimum of 4 feet in width.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3155,7.0512,1,"scaled articulation to the d. An oﬀset of the facade of a minimum of 2 feet in depth,"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3158,7.0512,1,e. An entryway that is recessed a minimum of 3 feet.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3159,7.0512,1,f. A covered entryway with a minimum depth of 4 feet.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3225,7.0512,1,facade. ground-ﬂoor facade between zero and 12 feet) shall be
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3228,7.0512,1,limit the visual connection more than 50 percent between the interior and exterior
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3255,7.0512,1,pedestrian engagement through glass for a minimum of 30 percent of the ground ﬂoor
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3259,7.0512,1,encouraged to allow interior for a minimum of 40 percent of the ground ﬂoor between
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3262,7.0512,1,pedestrian and vehicular activity minimum of 30 percent of the ground ﬂoo r between the
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3276,7.0512,1,for a minimum of 50 percent of the ground ﬂoor between
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3278,7.0512,1,composed of clear glass for a minimum of 30 percent of the
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3283,7.0512,1,composed of clear glass for a minimum of 40 percent of the
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3287,7.0512,1,façade facing Burnside contains less and 12 feet.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3304,7.0512,1,and 12 feet to allow for passive surveillance of these areas.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3313,7.0512,1,clear glass for a minimum of 25 percent of the wall area
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3317,7.0512,1,clear glass for a minimum of 20 percent of the wall area
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3327,7.0512,1,views into the building are not a. Up to 25 percent of the required transparency in the
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3332,7.0512,1,b. Up to 50 percent of the required transparency in the
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3353,7.0512,1,high levels of transparency. minimum of 20 percent of the pedestrian level
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3407,7.0512,1,"on the façade, daylighting of occupy a minimum of 17 percent of the total street-fac i ng"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3417,7.0512,1,greater than 45 degrees from the street.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3419,7.0512,1,minimum of 5 percent of each non-street facing facades.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3423,7.0512,1,Figure 7.0512(B)(5)(S10). Windows occupy 17 percent of the
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3461,7.0512,1,intersection. three- story mass shall extend no less than 60 feet along each
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3496,7.0512,1,c. Oversized windows: within 20 feet of the building corner at
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3502,7.0512,1,e. Higher bays: Within 20 feet of the building corner at the
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3506,7.0512,1,300 square feet including the following pedestrian amenities:
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3513,7.0512,1,for no less than 80 percent of the street-facing facades
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3514,7.0512,1,within 20 feet of the building corner. Primary material usage
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3534,7.0512,1,encourage pedestrian gathering a. At least 20 percent of the area shall be hardscaped with
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/7.0500.rockwood-design.txt,3536,7.0512,1,b. At least 30 percent of the area shall be landscaped with
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,160,9.0822,1,"Oregon Fire Code. If the lot depth exceeds 150 feet, the paved width sh all comply with"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,222,9.0823,1,"d. Ground cover shall be a minimum 4-inch pot, spaced at a minimum of 2 feet on center."
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,258,9.0823,1,"ground cover, and large-scale, high canopy shade trees placed 20 to 30 feet on center."
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,261,9.0823,1,open without damage and a minimum area of 180 square feet. Each island shall be curbed and
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,289,9.0824,1,3 feet.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,298,9.0824,1,"E. Walkway Width. Where walkways abut parking, the minimum walkway width shall be 7 feet."
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,348,9.0825,1,way traffic and for emergency vehicle access is 20 feet.
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,486,9.0831,1,d. Within 100 feet of an attendant or security guard;
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,604,9,1,clearance of 10 feet with approval by the Manager or Design Commission if the applicant
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,609,9,1,USE CATEGORY OR SUBCATEGORY AGGREGATED FLOOR AREA (SQUARE FEET) NUMBER OF
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,744,9.0851,1,"30,000 sq. ft.; 3, or 1 20 Spaces"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,745,9.0851,1,"per 18,000 sq. ft. for"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,747,9.0851,2,"30,000 sq. ft. of Floor"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,762,9.0851,1,"(g) Meeting Room 5 Spaces per 1,000 sq. ft. of None None"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,765,9.0851,1,"(i) Restaurants 12.4 Spaces per 1,000 sq. ft. 2, or 1 per 12,000 sq. 2, or 1 per 5,000 sq."
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,771,9.0851,1,"(i) Sports 5.4 Spaces per 1,000 sq. ft. of 2, or 1 per 10,000 sq. 2, or 1 per 5,000 sq."
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,783,9.0851,1,"(k) Tennis and Racquet 1.3 Spaces per 1,000 sq. ft. of 2 2, or 1 per 10,000 sq."
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,785,9.0851,1,"(l) Funeral Homes and 0.6 Space per Seat in 1 per 40,000 sq. ft. of 2 per 40,000 sq. ft."
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,791,9.0851,1,"(n) Truck, Trailer, Boat 1.3 Space per 1,000 sq. ft. of 2, or 1 per 5,000 sq. ft. 2"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,794,9.0851,1,"(o) Open Air 1.3 Space per 1,000 sq. ft. of 2, or 1 per 5,000 sq. ft. 2"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,798,9.0851,1,"(p) Equipment Rental, 1.3 Space per 1,000 sq. ft. of Equipment Rental & 2"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,800,9.0851,1,"Mini-Storage 1 per 5,000 sq. ft. of"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,803,9.0851,1,"(q) Commercial 3.8 Space per 1,000 sq. ft. of 2, or 1 per 20,000 sq. 2, or 1 per 4,000 sq."
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,810,9.0851,1,"Clinics Floor Area of Floor Area for 20,000 sq. ft. of"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,824,9.0851,1,"(a) Service Station 4 Spaces Plus 2.5 Spaces per 2, or 1 per 5,000 sq. ft. 1"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,830,9.0851,1,"(c) Vehicle Repair 5 Spaces per Service Bay 2, or 1 per 5,000 sq. ft. 1"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,832,9.0851,1,"(d) Car Wash 3 Spaces per Service Bay or 2, or 1 per 5,000 sq. ft. None Required"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,867,9.0851,1,"(d) College 3.8 Spaces per 1,000 sq. ft. of 2, or 1 per 20,000 sq. 2, or 1 per 4,000 sq."
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,911,9.0851,1,"Assembly, & 2.0 Spaces per 1,000 sq. ft. of a maximum of 20"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,913,9.0851,1,"(2) Warehouse, Freight 0.7 Space per 1,000 sq. ft. of 2, or 1 per 25,000 sq. None Required"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,915,9.0851,1,"Distribution, and 150,000 sq. ft. of Floor Area); a maximum of 20"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,916,9.0851,1,"Storage 0.4 Space per 1,000 sq. ft. of Spaces"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,918,9.0851,1,"greater than 150,000 sq. ft."
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,921,9.0851,1,"Sales Floor Area 25,000 sq. ft. of Floor Commercial Retail"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,927,9.0851,1,"(4) Industrial, 1.0 Space per 1,000 sq. ft. of See Commercial Retail See Commercial"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,929,9.0851,1,"(5) Laboratories, 4.1 Space per 1,000 sq. ft. of 2, or 1 per 25,000 sq. None Required"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,965,9.0852,1,"USE (SECTION TO 65,000 SQ. FT. OF 65,000 TO 90,000 SQ. FT. GREATER THAN 90,000"
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,967,9.0852,1,"Retail & Commercial 4.5 : 1,000 sq. ft. 3.61 : 1,000 sq. ft. 2.89 : 1,000 sq. ft."
+or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,968,9.0852,1,"Office 2.75 : 1,000 sq. ft. 2.75 : 1,000 sq. ft. 2.75 : 1,000 sq. ft."
+or/multnomah/gresham,unread,max_units,or/multnomah/gresham/10.1700.affordable.txt,136,10.1711,1,16 units per acre or fewer 200% 12 ft
+or/multnomah/gresham,unread,max_units,or/multnomah/gresham/10.1700.affordable.txt,137,10.1711,1,16.1 to 45 units per acre 150% 24 ft
+or/multnomah/gresham,unread,max_units,or/multnomah/gresham/10.1700.affordable.txt,138,10.1711,1,45.1 units per acre or more 125% 36 ft
 or/multnomah/gresham,unread,max_units,or/multnomah/gresham/3.0100.definitions.txt,567,3.0103,1,2. At least 50 percent of the multi-family units being affordable to households with incomes at or below 60
 or/multnomah/gresham,unread,max_units,or/multnomah/gresham/3.0100.definitions.txt,915,3.0120,1,• Cottage. A detached dwelling unit with a footprint of less than 900 square feet that is part of a cottage
 or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/3.0100.definitions.txt,1109,3,1,• Portions of attics where the finished ceiling height is less than 6 feet 8 inches;
@@ -6637,8 +7195,64 @@ or/multnomah/gresham,unread,max_coverage_pct,or/multnomah/gresham/7.0400.middle-
 or/multnomah/gresham,unread,open_space_min_pct,or/multnomah/gresham/7.0400.middle-housing-design.txt,1030,7,1,"b. Each common open space tract shall be a minimum of 1,200 square feet and shall include at least"
 or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0400.middle-housing-design.txt,1078,7,1,b. Common greens shall have a perimeter fence 3 to 4.5 feet in height that is a maximum of 25
 or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0400.middle-housing-design.txt,1097,7,1,b. Dog areas shall have a perimeter fence 4 to 6 feet in height that is a maximum of 25 percent
+or/multnomah/gresham,unread,min_frontage_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,621,7.0512,1,"90 percent frontage requirement with the majority Mi xe d-Use development, street frontages shall be occupied by"
+or/multnomah/gresham,unread,min_frontage_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,645,7.0512,1,the most active street to b. 100 percent of the street frontage at intersections shall be
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,1109,7.0512,1,designed and constructed as fence or wall of at least 6 feet in height. Walls shall be designed
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,1459,7.0512,1,between the heights of zero feet and 12 feet.
+or/multnomah/gresham,unread,open_space_min_pct,or/multnomah/gresham/7.0500.rockwood-design.txt,1503,7.0512,1,"portion of the shared open space less than 1,000 square feet, shall be shared open space."
+or/multnomah/gresham,unread,open_space_min_pct,or/multnomah/gresham/7.0500.rockwood-design.txt,1506,7.0512,1,"accessible only to tenants, with than 500 square feet, shall be shared open space."
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,1548,7.0512,1,"The indoor area shall have a minimum height of 9 feet,"
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,1584,7.0512,1,exceed 4 feet in height and must be consistent with standard
+or/multnomah/gresham,unread,min_frontage_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,1594,7.0512,1,Streets. Communal gathering areas street frontage shall be visible from 50 percent of the units that
+or/multnomah/gresham,unread,open_space_min_pct,or/multnomah/gresham/7.0500.rockwood-design.txt,1661,7.0512,1,G10. Open Space for Townhouse Style. S10. Open Space for Townhouse Style. A minimum of 15 percent of
+or/multnomah/gresham,unread,open_space_min_pct,or/multnomah/gresham/7.0500.rockwood-design.txt,1669,7.0512,1,shared open space area. dimensions of 6 feet in each direction .
+or/multnomah/gresham,unread,open_space_min_pct,or/multnomah/gresham/7.0500.rockwood-design.txt,1682,7.0512,1,b. No more than 50 percent of the required open space area
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,1759,7.0512,1,create an attractive site. a. Site trees must be capable of a height of 25 feet.
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,1803,7.0512,1,c. Evergreen trees shall be a minimum of 6 feet in height and
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,2096,7.0512,1,trees in the setback areas to a. Such trees shall be capable of at least 25 feet in height and
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,2097,7.0512,1,create an attractive site and to spread at maturity and be not less than 10 feet in height
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,2101,7.0512,1,the trees are capable of at least 25 feet in height and are
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,2102,7.0512,1,at least 8 feet in height at the time of planting.
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,2112,7.0512,1,species with a minimum mature height of 25 feet may be
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,2126,7.0512,1,G15. Fencing. High quality and S15. Fencing. Fences or walls shall not exceed 4 feet in height when
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,2133,7.0512,1,"exceed 10 feet in height, with a maximum depth or width of"
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,2168,7.0512,1,minimum of 6 feet in height at time of planting.
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,2264,7.0512,1,G3. Light Fixtures. Lighting ﬁxtures in S3. Light Fixtures. Light ﬁxtures shall not exceed 25 feet in height.
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,2324,7.0512,1,buildings shall maintain a sense of Upper Floor Articulation. Buildings 5 stories or greater in height
+or/multnomah/gresham,unread,max_units,or/multnomah/gresham/7.0500.rockwood-design.txt,2445,7.0512,1,scale and building articulation. dwelling units from the next dwelling unit by a minimum 2 feet
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,2591,7.0512,1,strategies which highlight these a. Oversized entry door(s) of a minimum height of 8 feet .
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,2780,7.0512,1,shall not exceed 4 feet in height and shall include a
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,2786,7.0512,1,planters and an elevated entry provide a sense in height and 4 feet in depth as measured from the point of
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,2907,7.0512,1,"sidewalk, at a height of 6 feet above grade."
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3000,7.0512,1,b. The base shall be a minimum height no less than 5 percent
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3001,7.0512,1,"of the facade height, or 3 feet, whichever is greater, and shall"
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3002,7.0512,1,not exceed 20 percent of the facade height. Multi -stor y
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3006,7.0512,1,"material at least 5 percent of the facade height, or 3 feet,"
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3083,7.0512,1,"element of the adjacent building. ﬂoor of the building it is associated with or 12 feet in height,"
+or/multnomah/gresham,unread,max_units,or/multnomah/gresham/7.0500.rockwood-design.txt,3151,7.0512,1,units to convey a sense of b. A balcony a minimum of 2 feet in depth and 4 feet in width
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3253,7.0512,1,highest levels of transparency at of 50 percent of the ground ﬂoor between the heights of 0
+or/multnomah/gresham,unread,max_units,or/multnomah/gresham/7.0500.rockwood-design.txt,3254,7.0512,1,the pedestrian level to promote feet and 12 feet. Live- work units shall be composed of clear
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3256,7.0512,1,visual connections between between the heights of 0 feet and 12 feet.
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3260,7.0512,1,"daylighting. the heights of 0 feet and 12 feet, except as noted below."
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3263,7.0512,1,shall provide adequate levels of heights of 0 feet and 12 feet.
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3267,7.0512,1,interior daylighting. 20 percent of the ground ﬂoor between the heights of 0 feet
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3277,7.0512,1,the heights of 0 feet and 12 feet. Live- work units shall be
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3279,7.0512,1,ground ﬂoor between the heights of 0 feet and 12 feet.
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3284,7.0512,1,ground ﬂoor between the heights of 0 feet and 12 feet. Live-
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3286,7.0512,1,Figure 7.0512(B)(5)(S3)(b). A ground ﬂoor 30 percent of the ground ﬂoor between the heights o f 0 feet
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3303,7.0512,1,20 percent of the ground ﬂoor between the heights of 0 feet
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3458,7.0512,1,"than the surrounding buildings, than 3 stories in height. An occupiable story may include a"
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3494,7.0512,1,height no less than 10 percent of the abutting wall or
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0500.rockwood-design.txt,3503,7.0512,1,"Figure 7.0512(B)(6)(S2). Examples of proﬁles intersection, provide bays a minimum 18 feet in height, that"
 or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/9.0600.height-transition.txt,49,9.0610,1,"or TLDR, the maximum building height shall be 30 feet."
 or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/9.0600.height-transition.txt,51,9.0610,1,"zoned LDR-5, LDR-7, TR or TLDR, the maximum building height shall be 45 feet."
+or/multnomah/gresham,unread,parking_min_per_unit,or/multnomah/gresham/9.0800.parking.txt,109,9.0821,1,"not available, the Manager may authorize the parking spaces to be on any lot within 1,000 feet walking"
+or/multnomah/gresham,unread,parking_min_per_unit,or/multnomah/gresham/9.0800.parking.txt,315,9.0825,1,D. Parallel Parking Space Dimensions. All parallel parking spaces will have a minimum measurement of 8 feet
+or/multnomah/gresham,unread,parking_min_per_unit,or/multnomah/gresham/9.0800.parking.txt,368,9.0826,1,Accessible parking spaces shall be a minimum of 9 feet wide with a 6 -foot-wide access aisle between each
+or/multnomah/gresham,unread,parking_min_per_unit,or/multnomah/gresham/9.0800.parking.txt,385,9,1,"impairments shall provide 20 percent of parking spaces as accessible as outlined in the Building Code,"
+or/multnomah/gresham,unread,parking_min_per_unit,or/multnomah/gresham/9.0800.parking.txt,386,9,1,"Chapter XI. Exception: For outpatient facilities, 10 percent of parking spaces need to be accessible as"
+or/multnomah/gresham,unread,parking_min_per_unit,or/multnomah/gresham/9.0800.parking.txt,400,9.0827,1,"capacity, as defined in ORS 455.417, to accommodate no less than 40 percent of all vehicle parking spaces"
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/9.0800.parking.txt,1090,9.0861,1,maximum sill height of 6 feet above grade.
 or/multnomah/portland,unfielded,,or/multnomah/portland/33.100.txt,194,33.100.200,1,diamonds must be set back 50 feet from abutting R-zoned properties. Playground
 or/multnomah/portland,unfielded,,or/multnomah/portland/33.100.txt,195,33.100.200,1,"facilities must be set back 25 feet from abutting R-zoned properties if not illuminated,"
 or/multnomah/portland,unfielded,,or/multnomah/portland/33.100.txt,196,33.100.200,1,and 50 feet if illuminated. Where the outdoor activity facility abuts R-zoned properties
@@ -7605,6 +8219,19 @@ or/multnomah/wood-village,unfielded,,or/multnomah/wood-village/230.390.txt,221,2
 or/multnomah/wood-village,unfielded,,or/multnomah/wood-village/230.390.txt,231,230.390,1,• A feature area of at least 25 square feet that contains water year-round; and
 or/multnomah/wood-village,unfielded,,or/multnomah/wood-village/240.200.txt,72,240.200,1,"2. Within 1,000 feet of the real property comprising a:"
 or/multnomah/wood-village,unfielded,,or/multnomah/wood-village/240.200.txt,78,240.200,1,"4. Within 1,000 feet of another marijuana facility."
+or/multnomah/wood-village,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,102,350.045,1,"Retail Sales & Service Restaurants, bars 8 per 1000 sq.ft. GLA"
+or/multnomah/wood-village,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,103,350.045,1,"Retail Sales & Service Sports clubs, Recreation facilities 4.3 per 1000 sq. ft. GLA"
+or/multnomah/wood-village,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,104,350.045,1,Retail Sales & Service Drive-thru restaurants 9.9 per 1000 sq.ft. GLA
+or/multnomah/wood-village,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,106,350.045,1,Retail Sales & Service Theaters 1 per 4 seats or 1 per 6 feet of bench area
+or/multnomah/wood-village,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,107,350.045,1,Office 1 per 400 sq.ft. GLA
+or/multnomah/wood-village,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,108,350.045,1,Quick Vehicle Servicing 1 per 500 sq.ft. GLA
+or/multnomah/wood-village,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,109,350.045,1,Vehicle Repair 1 per 750 sq.ft. GLA
+or/multnomah/wood-village,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,111,350.045,1,Commercial Recreation 4.3 per 1000 sq.ft. of GLA
+or/multnomah/wood-village,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,114,350.045,1,Manufacturing & Production 1 per 625 sq.ft. GLA
+or/multnomah/wood-village,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,116,350.045,1,"Wholesale Sales, Industrial Service 1 per 750 sq.ft. of GLA"
+or/multnomah/wood-village,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,120,350.045,1,Community Service 1 per 400 sq.ft. of floor area or per CU review
+or/multnomah/wood-village,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,124,350.045,1,Medical Center 1 per 300 sq.ft. of floor area or per CU review
+or/multnomah/wood-village,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,126,350.045,1,Daycare 1 per 300 sq.ft. of GLA
 or/multnomah/wood-village,unread,min_frontage_ft,or/multnomah/wood-village/230.310.txt,80,230.310,1,– Street frontage(4) 3 – 10 feet
 or/multnomah/wood-village,unread,max_units,or/multnomah/wood-village/230.390.txt,119,230.390,1,Ground Floor Windows – Nonresidential Uses. The following standards apply to the portions of a ground floor wall of a street-facing façade that are 20 feet or closer to a street lot line or a publicly
 or/multnomah/wood-village,unread,max_units,or/multnomah/wood-village/230.390.txt,125,230.390,1,Ground Floor Design – Residential Uses. The ground floor wall area of street-facing façades of dwelling units that are 20 feet or closer to a street lot line must meet at least one of the following st
