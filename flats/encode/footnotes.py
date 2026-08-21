@@ -507,9 +507,92 @@ FURNITURE = re.compile(
     # whole, because a note that ends "all other applicable requirements of
     # the Community Development Code" is a sentence, not the head of a page.
     r"|^City of [A-Z][\w ]{2,20} Development Code$"
-    r"|^\(\d{1,2}/\d{2,4}\)$",
+    r"|^\(\d{1,2}/\d{2,4}\)$"
+    # Portland stamps the page with the chapter number and the page across
+    # the gutter. The column gap is load-bearing: without it this claims
+    # Milwaukie's ordinance numbers -- "45-90", "10-301", printed alone on a
+    # line -- which are evidence, not furniture. The other two lines of
+    # Portland's frame are `_page_frame`.
+    r"|^\d{2,3}-\s{2,}\d{1,3}$",
     re.I,
 )
+
+#: The chapter half of Portland's running footer, and the title half it is
+#: printed beside. See `_page_frame`.
+FRAME_CHAPTER = re.compile(r"^Chapter\s+\d{1,3}\.\d{2,4}$", re.I)
+FRAME_TITLE = re.compile(r"^Title\s+\d{1,2},\s+Planning and Zoning$", re.I)
+
+#: The edition date the other line of that footer carries, and the chapter's
+#: short name it is printed beside -- "Single-Dwelling Zones", "Commercial/
+#: Mixed Use  Zones". See `_page_frame`.
+FRAME_DATE = re.compile(r"^\d{1,2}/\d{1,2}/\d{2,4}$")
+FRAME_NAME = re.compile(r"^[A-Za-z][\w /,'.-]{0,50}$")
+
+
+#: The page stamp with the gutter closed up -- "110-8" instead of "110-   8".
+#: Extraction does it about half the time, and the result is shaped exactly
+#: like an ordinance number: Milwaukie prints "45-90" and "10-301" alone on a
+#: line and means the ordinance that added the row above. So this one is never
+#: believed on its own, only where the rest of the frame is standing next to
+#: it. See `_near_frame`.
+TIGHT_STAMP = re.compile(r"^\d{2,3}-\s?\d{1,3}$")
+
+#: How far from a stamp the rest of the frame may be. The two lines of the
+#: footer sit under the stamp with at most a blank between them.
+STAMP_REACH = 3
+
+
+def _near_frame(lines: Sequence[str], i: int) -> bool:
+    """Whether a line of Portland's running footer is printed beside line `i`."""
+    for j in range(max(0, i - STAMP_REACH), min(len(lines), i + STAMP_REACH + 1)):
+        if j != i and _page_frame(lines[j].strip()):
+            return True
+    return False
+
+
+def _page_frame(stripped: str) -> bool:
+    """Whether this is one of the two lines of Portland's running footer.
+
+    Extraction lays the footer out as two lines, each carrying two halves
+    across the gutter, and the order swaps from one side of the spread to the
+    other::
+
+        110-        10
+        Title 33, Planning and Zoning        Chapter 33.110
+        1/1/25        Single-Dwelling Zones
+
+        Chapter 33.130        Title 33, Planning and Zoning
+        Commercial/Mixed Use   Zones   1/1/25
+
+    The chapter line is what did the real damage: "Chapter 33.130" followed by
+    a capital is shaped exactly like the next chapter starting, so
+    `ENDS_BLOCK` took it for one and notes lists in eight Portland-family
+    documents stopped at their first page break -- Chapter 33.266's parking
+    standards among them. The date line did the quieter kind, arriving as more
+    of the note above it, so five notes carried a page footer in their bodies
+    and the digest of a note recorded the edition it was printed in.
+
+    The pairing across the column gap is what makes either safe to step over.
+    A note may well cite Chapter 33.266 in prose, and one may end on a date;
+    neither writes both halves of a footer with a gutter between them. Split
+    on the gap rather than matched whole, because a nested quantifier over
+    this shape does not terminate.
+    """
+    cells = [cell for cell in GAP.split(stripped) if cell]
+    if len(cells) < 2:
+        return False
+    if len(cells) == 2 and (
+        (FRAME_TITLE.match(cells[0]) and FRAME_CHAPTER.match(cells[1]))
+        or (FRAME_CHAPTER.match(cells[0]) and FRAME_TITLE.match(cells[1]))
+    ):
+        return True
+    if FRAME_DATE.match(cells[0]):
+        rest = cells[1:]
+    elif FRAME_DATE.match(cells[-1]):
+        rest = cells[:-1]
+    else:
+        return False
+    return all(FRAME_NAME.match(cell) for cell in rest)
 
 #: The page frame, in the one shape that cannot be case-folded. Troutdale
 #: stamps every page "TDC3-7" and runs a header over it that pairs the section
@@ -1205,6 +1288,8 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
         lead = FRAME_HEAD_LEADING.match(stripped)
         furniture = bool(
             FURNITURE.search(stripped)
+            or _page_frame(stripped)
+            or (TIGHT_STAMP.match(stripped) and _near_frame(lines, i))
             or FRAME_HEAD_TRAILING.match(stripped)
             or (
                 lead is not None

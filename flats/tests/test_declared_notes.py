@@ -190,13 +190,19 @@ def test_the_use_table_limitation_that_decides_two_zones(
 
 
 def test_every_portland_use_table_limitation_is_ruled_and_none_blocks() -> None:
-    """A hundred and eighteen notes, a hundred and four ruled, none blocking.
-    The fourteen left unread are Chapter 33.266's parking tables, which govern
-    no value this layer encodes and were unread before any of this."""
+    """A hundred and nineteen notes, a hundred and six ruled, none blocking.
+
+    One more note than there used to be, and one document fewer left unread.
+    Portland's running footer used to end a block at its page break, so note
+    5 of Table 120-3 -- the one sending vehicle areas to Chapter 33.266 --
+    was stranded in a block of its own that governed nothing. With the frame
+    recognised it rejoins its list and is ruled, and the thirteen still unread
+    are all Chapter 33.266's parking tables, which govern no value this layer
+    encodes and were unread before any of this."""
     ruled = list(dispositions(PORTLAND))
-    assert len(ruled) == 118
+    assert len(ruled) == 119
     unread = {row.doc.rsplit("/", 1)[-1] for row in ruled if row.state == "unread"}
-    assert unread == {"33.266.txt", "33.120.txt"}
+    assert unread == {"33.266.txt"}
     assert not [row for row in qualified() if row.blocking]
 
 
