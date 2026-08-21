@@ -314,3 +314,72 @@ def test_the_two_that_only_ever_loosen_are_dismissed_as_such() -> None:
     for line in (1440, 1448):
         assert ruled[line].state == "dismissed", line
         assert "side lot line" in ruled[line].text, line
+
+
+# --- and the lists that are not lists of provisions ---------------------
+
+
+def test_a_breadcrumb_is_an_ordered_list_and_is_not_numbered() -> None:
+    """The regression the fix above walked into. Both Oregon state sources --
+    the Secretary of State's rules and the Legislature's statutes -- open every
+    page with a breadcrumb trail marked up as an <ol>, so numbering ordered
+    lists put "1 OAR", "2 Chap. 660", "3 Division 46" above the text of the law
+    and pushed everything under it down by two lines.
+
+    Two lines is the whole danger. Every citation in this system is a line
+    number, and three state documents carry citations that other layers lean
+    on -- the middle housing rules that bar a city from applying a density
+    maximum to a quadplex among them."""
+    got = html_to_text(
+        '<nav><ol class="breadcrumb"><li><a href="/">OAR</a></li>'
+        "<li>Chap. 660</li><li>Rule 660-046-0220</li></ol></nav>"
+        "<p>(2)(b) A Large City shall not apply a density maximum.</p>"
+    )
+    kept = [line for line in got.splitlines() if line]
+    assert kept == ["OAR", "Chap. 660", "Rule 660-046-0220",
+                    "(2)(b) A Large City shall not apply a density maximum."]
+
+
+def test_the_class_alone_is_enough_without_a_nav_wrapper() -> None:
+    for markup in (
+        '<ol class="breadcrumb"><li>OAR</li><li>Chap. 660</li></ol>',
+        '<ol id="site-nav"><li>OAR</li><li>Chap. 660</li></ol>',
+        '<ol role="navigation"><li>OAR</li><li>Chap. 660</li></ol>',
+    ):
+        assert "1 OAR" not in html_to_text(markup), markup
+
+
+def test_a_list_nested_inside_navigation_stays_unnumbered() -> None:
+    """A menu's submenu is still a menu."""
+    got = html_to_text(
+        '<nav><ol><li>Chapters<ol><li>Chapter 16</li><li>Chapter 17</li></ol></li></ol></nav>'
+    )
+    assert "1 Chapter 16" not in got
+    assert "Chapter 16" in got
+
+
+def test_but_an_ordinary_list_after_a_breadcrumb_is_still_numbered() -> None:
+    """The guard is scoped to the nav element and to the list that declares
+    itself one. A page is a breadcrumb followed by the law, and the law keeps
+    its numbering."""
+    got = html_to_text(
+        '<nav><ol class="breadcrumb"><li>OAR</li></ol></nav>'
+        "<ol><li>The minimum lot size standards apply.</li>"
+        "<li>In a planned unit development, there is no minimum.</li></ol>"
+    )
+    assert "1 The minimum lot size standards apply." in got
+    assert "2 In a planned unit development, there is no minimum." in got
+    assert "1 OAR" not in got
+
+
+def test_the_three_state_documents_that_caught_it_are_line_stable() -> None:
+    """What the sweep is for. These are the only documents in the corpus that
+    moved, they are the ones state law is quoted from, and a quote into them is
+    a line number that has to mean today what it meant when it was written."""
+    store = ProvenanceStore()
+    assert len(store.load("or/oar.660-046-0020.txt").text.splitlines()) == 226
+    assert len(store.load("or/oar.660-046-0220.txt").text.splitlines()) == 287
+    assert (
+        len(store.load("or/clackamas/johnson-city/ors.197a.420.txt").text.splitlines())
+        == 343
+    )

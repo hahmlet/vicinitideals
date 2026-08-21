@@ -58,7 +58,7 @@ from flats.rules.model import CodeDocument, Layer
 
 #: Bumped when the extraction algorithm changes. A hash that moves because the
 #: extractor changed is not an amendment, and the two must be tellable apart.
-EXTRACTOR = "flats-html-text/5"
+EXTRACTOR = "flats-html-text/6"
 #: A slice shorter than this is reported. Legitimate one-line sections exist;
 #: a marker that hit the table of contents is far more common.
 SHORT_SLICE = 3
@@ -98,6 +98,20 @@ _BLOCK = frozenset(
 
 _SPACES = re.compile(r"[ \t   ]+")
 _BLANKS = re.compile(r"\n{3,}")
+
+#: What an <ol> is called when it is a trail of links rather than a list of
+#: provisions. Numbering one puts "1 OAR", "2 Chap. 660" above the text of a
+#: rule and pushes every line under it down, so the shape has to be recognised
+#: on the way past -- once the tags are gone there is nothing left to tell a
+#: breadcrumb from a list.
+_NAV_HINT = re.compile(r"breadcrumb|navigation|\bnav\b|\bmenu\b|\btoc\b|pagination|pager")
+
+
+def _navigation(attrs: Sequence[tuple[str, str | None]]) -> bool:
+    return any(
+        name in ("class", "id", "role") and value and _NAV_HINT.search(value.lower())
+        for name, value in attrs
+    )
 
 #: eCode360 stamps the day you printed the page into the page. Seven documents
 #: in this corpus come from it, and every one of them reported CHANGED against
@@ -254,8 +268,12 @@ class _Extractor(html.parser.HTMLParser):
         self._skip = 0
         self._tables: list[_Table] = []
         #: One counter per open <ol>, so a nested list restarts and its parent
-        #: resumes. See `handle_starttag`.
-        self._ordinals: list[int] = []
+        #: resumes. ``None`` where the list is site navigation rather than a
+        #: list of provisions. See `handle_starttag`.
+        self._ordinals: list[int | None] = []
+        #: Depth of open <nav> elements. A breadcrumb is an <ol> and reads
+        #: exactly like one; what tells them apart is where it sits.
+        self._nav = 0
 
     def handle_starttag(self, tag: str, attrs) -> None:
         if tag in _DROP:
@@ -270,10 +288,20 @@ class _Extractor(html.parser.HTMLParser):
                 table.open_cell(attrs)
             elif tag in _BLOCK:
                 table.data(_CELL_BLOCK)
-        elif tag == "ol":
-            self._ordinals.append(0)
+        elif tag == "nav":
+            self._nav += 1
             self.parts.append("\n")
-        elif tag == "li" and self._ordinals:
+        elif tag == "ol":
+            # A breadcrumb trail is an <ol>. The Oregon Legislature and the
+            # Secretary of State both publish one at the top of every rule --
+            # "OAR / Chap. 660 / Division 46 / Rule 660-046-0220" -- and
+            # numbering it invents provisions 1 through 5 above the text of
+            # the law and pushes every line below it down by two. That is the
+            # same silent re-pointing the prefix rule below exists to avoid,
+            # arriving through a different door.
+            self._ordinals.append(None if self._nav or _navigation(attrs) else 0)
+            self.parts.append("\n")
+        elif tag == "li" and self._ordinals and None not in self._ordinals:
             # An ordered list keeps its numbers in the browser, not in the
             # text: <ol><li>The minimum lot size standards apply...</li> shows
             # as "1." on the page and arrives here with nothing to say which
@@ -289,8 +317,10 @@ class _Extractor(html.parser.HTMLParser):
             # Only outside a table. A <td> holding a list collapses to one
             # cell line, so numbering there would inject "1 2 3" into a grid
             # row and cost more than the omission does.
-            self._ordinals[-1] += 1
-            self.parts.append(f"\n{self._ordinals[-1]} ")
+            count = self._ordinals[-1]
+            assert count is not None
+            self._ordinals[-1] = count + 1
+            self.parts.append(f"\n{count + 1} ")
         elif tag in _BLOCK:
             self.parts.append("\n")
 
@@ -317,6 +347,9 @@ class _Extractor(html.parser.HTMLParser):
                 table.close_row()
             elif tag in _BLOCK:
                 table.data(_CELL_BLOCK)
+        elif tag == "nav":
+            self._nav = max(0, self._nav - 1)
+            self.parts.append("\n")
         elif tag == "ol":
             if self._ordinals:
                 self._ordinals.pop()
