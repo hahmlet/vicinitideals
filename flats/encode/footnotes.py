@@ -312,6 +312,22 @@ CELL_MARKER = re.compile(
     r"(?P<n>\d{1,2}(?:\s*,\s*\d{1,2})*)(?![\d])"
 )
 
+#: Portland's landscaping levels, which are spelled exactly like the "limited"
+#: permission code with a footnote on it. "Landscaped to at least the L1
+#: standard" is a cross-reference to Chapter 33.248, and "10 ft. @ L3" is a
+#: buffer width and the standard it is planted to. Neither is a marker.
+#:
+#: Nineteen of the twenty orphans Chapter 33.130 reported were this, and a
+#: ledger of invented orphans is worse than useless -- it hides the one real
+#: marker underneath them and asks somebody to go looking for nineteen notes
+#: that were never written. The same argument that keeps "A", "N" and "S" out
+#: of the permission vocabulary, made one level down: the code is real, the
+#: context is what says this is not it.
+LANDSCAPE_LEVEL = re.compile(
+    r"(?:@\s*|/\s*|(?i:\b(?:the|to|least|or)\s+))(?P<n>[LF]\d)\b"
+    r"|(?P<m>[LF]\d)(?=\s+(?i:standards?|levels?)\b)"
+)
+
 #: A line that is nothing but one permission code and the notes on it. An HTML
 #: table extraction puts every cell on its own line, so the row that says a
 #: quadplex is permitted subject to notes 7 and 8 arrives as the four
@@ -475,7 +491,7 @@ SECTION_HEAD = re.compile(r"^\d{1,3}\.\d{2,4}(?:\.\d{1,4})?\s+[A-Z]")
 #: declared paragraph has to read through them, since Portland breaks pages
 #: inside a single limitation and the rest of it is still the note.
 RUNNING_HEADER = re.compile(
-    r"^Chapter\s+\d|^Title\s+\d{1,2},|^\d{1,2}/\d{1,2}/\d{2,4}"
+    r"^Chapter\s+\d|^Title\s+\d{1,2},|^\d{1,2}/\d{1,2}/\d{2,4}\b"
     r"|^\d{1,3}-\s*\d{0,3}$|^\d{1,3}$"
 )
 
@@ -1166,7 +1182,13 @@ def _markers(lines: Sequence[str], inside: Sequence[tuple[int, int]]) -> list[Ma
             if got is not None:
                 for part in got.group("n").split(","):
                     add(part, "letter")
-        marked_cells = list(CELL_MARKER.finditer(stripped))
+        planted = {
+            (m.start("n") if m.group("n") else m.start("m"))
+            for m in LANDSCAPE_LEVEL.finditer(stripped)
+        }
+        marked_cells = [
+            m for m in CELL_MARKER.finditer(stripped) if m.start() not in planted
+        ]
         lone = LONE_CELL.match(stripped) is not None
         if _cell_row(raw, stripped):
             for m in marked_cells:

@@ -144,7 +144,15 @@ def test_the_industrial_chapter_does_not_swallow_its_own_table(
     assert [b.mark for b in block.bodies] == [str(n) for n in range(1, 17)]
     assert block.region == (318, 384)
     assert not any(low <= 350 < high for low, high in block.covered)
-    assert got.unmarked == ()
+    assert all(b.mark not in block.marks or b.line > 384 for b in got.unmarked)
+    # The chapter's other unmarked body is a screening note a thousand lines
+    # down -- "when the F2 + L2 option is used, the fence must be placed along
+    # the interior side of the landscaped area" -- and the only thing that
+    # ever pointed at it was the "L3" in "25 ft. / L3 or", which is a
+    # landscaping standard and not a marker at all. Losing the false pointer
+    # is what makes the report true; the real superscript did not survive
+    # extraction.
+    assert [b.line for b in got.unmarked] == [1200]
 
 
 def test_the_multi_dwelling_chapter_leaves_the_other_table_its_own_notes(

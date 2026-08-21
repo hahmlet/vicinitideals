@@ -109,7 +109,7 @@ notes:
   # Different chapters of the same document. No MU, CC or GC zone is encoded
   # in this layer, so nothing here reaches a value we screen.
   - quote: "or/multnomah/troutdale/3.zoning-districts.txt#L680"
-    digest: "d54b012eca57"
+    digest: "3c86e9804fc1"
     state: dismissed
     reason: >-
       exempts buildings standing before March 10, 1950 from a maximum building
