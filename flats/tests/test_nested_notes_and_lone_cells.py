@@ -221,7 +221,10 @@ def test_the_use_table_block_reaches_the_notes_on_the_cell(store: ProvenanceStor
     got = census(store.load(ZDO).text, layer=CLACKAMAS, doc=ZDO)
     first = got.blocks[0]
     assert first.head == 1040
-    assert [b.mark for b in first.bodies] == [str(n) for n in range(1, 24)]
+    # Twenty-three when a block was capped at eighty lines from its head:
+    # note 23 carries five lettered criteria of its own and spent what was
+    # left. See test_block_limit.py.
+    assert [b.mark for b in first.bodies] == [str(n) for n in range(1, 31)]
     seven, eight = (b for b in first.bodies if b.mark in ("7", "8"))
     assert "each lot of record may be developed with only one" in seven.text
     assert eight.text.startswith("The development of a triplex, quadplex, townhouse")
@@ -234,11 +237,12 @@ def test_and_the_cell_that_points_at_them_is_read_as_a_row(store: ProvenanceStor
 
 
 def test_every_note_in_this_layer_is_ruled_and_none_of_them_blocks() -> None:
-    """Seventy-seven, from four blocks, none left unread. The count is the
-    point: the layer reported clean at zero, at fifty-seven, and again at
-    seventy-seven, and only the last of those is because it is."""
+    """Eighty-four, from four blocks, none left unread. The count is the
+    point: the layer reported clean at zero, at fifty-seven, at
+    seventy-seven and now at eighty-four, and only the last of those is
+    because it is."""
     ruled = list(dispositions(CLACKAMAS))
-    assert len(ruled) == 77
+    assert len(ruled) == 84
     assert not [n for n in ruled if n.state == "unread"]
     rows = [r for r in qualified() if r.layer == CLACKAMAS]
     assert len(rows) == 64

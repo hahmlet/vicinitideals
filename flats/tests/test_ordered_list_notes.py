@@ -199,7 +199,7 @@ def test_the_worst_document_in_the_corpus_now_has_bodies(store: ProvenanceStore)
     got = census(store.load(ZDO).text, layer=CLACKAMAS, doc=ZDO)
     assert len(got.markers) > 400
     assert len(got.blocks) == 4
-    assert len(got.bodies) == 77
+    assert len(got.bodies) == 84
     assert len(got.unbodied) < len(got.markers) / 4
 
 

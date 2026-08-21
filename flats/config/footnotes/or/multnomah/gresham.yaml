@@ -620,10 +620,14 @@ notes:
       switches off the minimum net density for affordable housing; a relaxation resting on an election nobody has made
 
   - quote: "or/multnomah/gresham/4.0400.corridor.txt#L492"
-    digest: "f0caedc075a1"
+    digest: "bd316ba6a05b"
     state: dismissed
     reason: >-
-      sets townhouse height in CMF at a one-storey minimum and a 45-foot maximum; the pod is two storeys at 26 feet, inside both ends
+      sets townhouse height in CMF at a one-storey minimum and a 45-foot
+      maximum; the pod is two storeys at 26 feet, inside both ends. The
+      digest moved because the body used to stop mid-sentence at "CMU and
+      CMF districts: 1 Story" -- the block cap cut it three lines short --
+      and now carries the maximum this reason was already written against
 
   # --- encoded, because they state CMF's townhouse standards ----------
   - quote: "or/multnomah/gresham/4.0400.corridor.txt#L416"
@@ -1087,10 +1091,16 @@ notes:
       Table 4.1415A note 1 switches off the minimum net density for affordable housing; a relaxation resting on an election nobody has made
 
   - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L352"
-    digest: "1cb295912823"
+    digest: "2226719577db"
     state: dismissed
     reason: >-
-      note 3 marks the Minimum Street Frontage heading and offers a reduction the applicant may be granted on documenting compliance with Section 10.1520; the encoded minimum is the number that binds without an approval nobody has applied for
+      note 3 marks the Minimum Street Frontage heading and offers a reduction
+      the applicant may be granted on documenting compliance with Section
+      10.1520; the encoded minimum is the number that binds without an
+      approval nobody has applied for. The digest moved because the body used
+      to stop at "compliance with" -- the wrapped citation on the next line
+      was read as the start of a new section, which is also what cost notes 4
+      through 7
 
   - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L416"
     digest: "85e42eca5b42"
@@ -1626,3 +1636,47 @@ notes:
       only the L1 in DCC and DTM, and the Townhouse row, which is a bare
       P in all six sub-districts. A cottage cluster is detached units
       around a common court and the pod is one attached building
+
+  # --- Table 4.1415A, the notes behind the wrapped citation -----------
+  #
+  # Notes 4 to 7 were invisible while note 3's second line, "Section 10.1520
+  # of the Community Development Code.", ended the block. Note 4 is the
+  # affordable housing height bonus and is already ruled by its digest in
+  # Chapter 4.0100. These are the other three.
+
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L355"
+    digest: "ad36aeea6ced"
+    state: dismissed
+    reason: >-
+      note 5 attaches Section 4.1416's building height transition
+      standards to the height row wherever an abutting lot is in the
+      LDR-PV sub-district. It is read and it cannot bind: 4.1416(B)
+      allows 35 feet AT the minimum building setback from that lot line
+      and adds a foot of height for every additional foot of setback,
+      and the pod is 26 feet -- nine feet under the allowance before it
+      steps back at all. Pleasant Valley writes its own transition
+      rather than using Section 9.0600, which 9.0602 excludes this plan
+      district from by name
+
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L356"
+    digest: "0fd57b8b26e8"
+    state: dismissed
+    reason: >-
+      note 6 narrows row K, the alley access requirement for garage
+      entrances, to developments in which dwelling units have individual
+      garage entrances, and exempts developments with shared parking
+      areas or parking garages. The pod parks in a shared rear court and
+      has no individual garage entrances, so the requirement the note
+      qualifies does not reach it. Row K itself is unencoded and has no
+      field
+
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L358"
+    digest: "2637ff346ac4"
+    state: dismissed
+    reason: >-
+      note 7 sends new multi-family, elderly housing, residential
+      facilities, mixed-use and non-residential development to the
+      Corridor Design District standards of Section 7.0112. It is marked
+      on row O's "All Other Uses" line; the row above it sends single
+      detached, duplex, triplex, quadplex, townhouse and cottage cluster
+      to Section 7.0400 instead, and the pod is on that line

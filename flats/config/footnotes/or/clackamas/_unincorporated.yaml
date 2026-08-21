@@ -771,3 +771,62 @@ notes:
     reason: >-
       Table 315-4, another district's table: a side lot line abutting a
       residential district
+
+  # --- Table 315-1, notes 24 to 30 -------------------------------------
+  #
+  # The tail of the use table's note list, which the block reader used to
+  # cut off at note 23 because a block was capped at eighty lines from its
+  # heading rather than eighty from its last note. Note 23 alone carries
+  # five lettered criteria and ate the remaining budget. All seven are use
+  # permissions for things this screen does not place.
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1120"
+    digest: "6315ce932f17"
+    state: dismissed
+    reason: >-
+      note 24 permits only commercial schools, and exempts them from Section
+      805. Not the use being placed
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1122"
+    digest: "cb8e3c726d32"
+    state: dismissed
+    reason: >-
+      note 25 prohibits a use in a recreational vehicle established as a
+      second dwelling under Section 847, and in the primary dwelling on the
+      same lot as one. The pod is neither an RV nor a lot carrying one
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1124"
+    digest: "5c7c81f190f3"
+    state: dismissed
+    reason: >-
+      note 26 makes temporary signs regulated under Subsection 1010.13(A) a
+      primary use. Signage is not a standard this screen reads
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1126"
+    digest: "007da889bfe5"
+    state: dismissed
+    reason: >-
+      note 27 makes stormwater management facilities a primary use when they
+      are underground, vegetated, or approved alongside another land use
+      permit. It classifies a facility, and imposes nothing on a dwelling
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1134"
+    digest: "bad37a40addd"
+    state: dismissed
+    reason: >-
+      note 28 makes a utility cabinet a primary use where it complies with
+      Section 830 or sits inside a road right-of-way. Not the use being
+      placed
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1136"
+    digest: "0268a5612847"
+    state: dismissed
+    reason: >-
+      note 29 excludes shops, garages and administrative offices from the
+      utility facility category. Not the use being placed
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1138"
+    digest: "c110135a8526"
+    state: dismissed
+    reason: >-
+      note 30 makes gas and electric transmission lines a conditional use.
+      Not the use being placed

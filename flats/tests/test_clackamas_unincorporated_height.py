@@ -190,7 +190,7 @@ def test_the_document_behind_this_whole_layer_had_no_readable_footnotes(
     which is the ledger being honest rather than a claim of completeness."""
     got = census(store.load(ZDO).text, layer=CLACKAMAS, doc=ZDO)
     assert len(got.markers) > 400
-    assert len(got.bodies) == 77
+    assert len(got.bodies) == 84
     assert len(got.unbodied) < len(got.markers) / 4
     assert not got.reconciled
 

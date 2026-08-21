@@ -236,8 +236,17 @@ STACKED_LETTER = re.compile(r"^\(?(?P<n>[A-Z])\)?\s?[.)]$")
 #: unrecognised line has to be read as continuation, so the block needs an
 #: explicit floor: the codifier's amendment history, the next section, the next
 #: table, or the running header.
+#: A "Section" or "Chapter" that opens a line is only the next section where
+#: what follows the number is not a lowercase word. Gresham wraps note 3 of
+#: Table 4.1415A onto "Section 10.1520 of the Community Development Code." and
+#: the block ended there, losing notes 4 through 7 -- including the height
+#: transition that applies when an abutting lot is in the LDR-PV sub-district.
+#: A heading reads "Section 4.1416 Building Height and Height Transition
+#: Standards", or "Section 845, Triplexes"; a wrapped citation reads "of", "in"
+#: or "and". The negative lookahead is case-scoped because the pattern is not.
 ENDS_BLOCK = re.compile(
-    r"^(?:\(Ord[.\s]|\(Added|§|Section\s+\d|Chapter\s+\d|Table\s+[\w.-]+"
+    r"^(?:\(Ord[.\s]|\(Added|§|Table\s+[\w.-]+"
+    r"|(?:Section|Chapter)\s+\d[\d.]*(?:[,.]?\s+(?-i:(?![a-z]))|\s*$)"
     r"|\d{1,3}\.\d{2,4}(?:\.\d{1,4})?\s+[A-Z])",
     re.I,
 )
@@ -251,6 +260,15 @@ PROVISIONAL = ("lone", "letter")
 #: A block cannot run forever. Past this the "unrecognised line continues the
 #: previous note" rule is doing more harm than good, and whatever we are
 #: reading is not a notes block any more.
+#:
+#: Counted from the last note taken, not from the head. As a cap on the whole
+#: block it was measuring the wrong thing: Clackamas County's Table 315-1 runs
+#: thirty notes, several of which carry their own lettered criteria, and the
+#: reading stopped mid-list at note 23 with notes 24 through 30 left orphaned
+#: on the table above. Length was never the danger -- a long run of numbered
+#: notes is a long run of evidence. The danger is a block that stopped being
+#: one and is swallowing prose, and that shows as a stretch with no note in
+#: it, which is exactly what this now measures.
 BLOCK_LIMIT = 80
 
 #: How far above a block to look for the table header it is repeating. About a
@@ -1116,7 +1134,10 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
     #: reading is at the top level. See the restart branch below.
     sub_high = 0
     i = start
-    while i < len(lines) and i - start < BLOCK_LIMIT:
+    #: Where the last note was taken, which is what `BLOCK_LIMIT` is
+    #: measured from.
+    anchor = start
+    while i < len(lines) and i - anchor < BLOCK_LIMIT:
         stripped = lines[i].strip()
         if (stamp := PAGE_STAMP.match(stripped)) is not None:
             stamped = i
@@ -1227,6 +1248,7 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
             bodies.append(Body(doc="", line=i + 1, mark=mark, text=text))
             texts.append([text] if text else [])
             highest = _order(mark)
+            anchor = i
             i += 1
             continue
         if not bodies:
