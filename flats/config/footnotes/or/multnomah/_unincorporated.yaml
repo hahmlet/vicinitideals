@@ -1,16 +1,23 @@
-# Multnomah County unincorporated -- the notes of a chapter the county does not
+# Multnomah County unincorporated -- the notes of chapters the county does not
 # write.
 #
-# Fifteen footnotes are captured here and all fifteen are PCC 33.110's, because
-# this layer's 33.110.txt is Portland's chapter fetched a second time. R10,
-# R20, RF and R7 in unincorporated Multnomah are Portland-administered pockets:
-# the county's map names the zone and Portland's code states the standards, and
-# the encoded values in those zones cite 33.110 for exactly that reason.
+# Fifty-three footnotes are captured here and all fifty-three are Portland's:
+# PCC 33.110 for the residential pockets, and PCC 33.100 and 33.140 for the
+# open space and industrial land the same map assigns. R10, R20, RF and R7 in
+# unincorporated Multnomah are Portland-administered pockets -- the county's
+# map names the zone and Portland's code states the standards -- and the
+# encoded values in those zones cite Portland's chapters for exactly that
+# reason.
 #
-# So the rulings are adopted rather than re-typed. Fifteen reasons written out
-# twice would be fifteen chances for the two copies to disagree, and a reader
-# comparing them would have no way to tell a considered difference from a
-# stale paste.
+# So the rulings are adopted rather than re-typed. Fifty-three reasons written
+# out twice would be fifty-three chances for the two copies to disagree, and a
+# reader comparing them would have no way to tell a considered difference from
+# a stale paste.
+#
+# Thirty-eight of the fifty-three arrived at once, when the census learned to
+# read a footnote body that names its own marker -- Portland's way of
+# answering a use table, and invisible to every layout test before it. Two of
+# them settle EG2 and IG2 here exactly as they settle EG1 and IG1 in Portland.
 #
 # What is NOT adopted, and would have to be written here: anything about the
 # county's own zones. LR7 comes from MCC 39.4848-.4868 and RR from MCC

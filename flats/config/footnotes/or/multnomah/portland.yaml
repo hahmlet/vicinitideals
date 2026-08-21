@@ -1,20 +1,44 @@
-# Portland -- PCC 33.110 (single-dwelling), 33.120 (multi-dwelling), 33.266
-# (parking).
+# Portland -- PCC 33.100 (open space), 33.110 (single-dwelling), 33.120
+# (multi-dwelling), 33.130 (commercial/mixed use), 33.140 (employment and
+# industrial), 33.150 (campus institutional), 33.266 (parking).
 #
-# Forty notes captured, twenty-five of them over a value this corpus encodes,
-# and every one of the twenty-five is dismissed. That is a real finding rather
-# than a shrug: Portland writes its qualifications into the regulation text
-# and keeps its table notes for other tables, other uses and relief.
+# A hundred and eighteen notes captured, a hundred and four of them ruled, and
+# not one of them moves a number this layer encodes. That is a real finding
+# rather than a shrug, and it is worth reading twice, because for most of this
+# corpus's life the ledger said forty -- and the seventy-eight it did not say
+# were the ones over Portland's whole non-residential half.
 #
-# Three groups account for all of them.
+# **How they were hidden.** Portland prints no notes block under a use table.
+# The limitations are numbered subsections of the Primary Uses section --
+# ordinary prose, ordinary layout, nothing on the page that says "footnote" --
+# and each one names its own marker in its first sentence: "This regulation
+# applies to all parts of Table 120-1 that have a [4]." Six chapters are
+# written that way. Until the census learned to read a body that declares
+# itself, those chapters carried a hundred and seventy-three markers with
+# nothing to answer them, and the gate that holds a value back when an unread
+# note governs it had nothing to hold.
+#
+# **What the seventy-eight say.** Two of them decide a zone, and both were
+# already read when the zone was encoded: 33.140's note [1] allows Household
+# Living in EG1 and EG2 only where an existing hotel is converted to
+# affordable units under a 30-year covenant, and its note [2] prohibits
+# Household Living in the I zones outside a houseboat moorage. Every other one
+# is a limitation on a use this screen does not place -- retail floor area,
+# industrial size caps, agriculture, basic utilities, radio frequency
+# transmission, commercial parking, waste, bulk fossil fuel. Portland's use
+# tables give Household Living a bare letter in every zone this layer holds.
+#
+# Four groups account for all hundred and four.
+#
+# **Another use.** Seventy-eight of them, described above. They reach a value
+# at all because the permission is quoted from a cell of the table the note
+# marks, and the region rule governs by table rather than by row -- which is
+# the deliberately wide reading, and the reason there are so many.
 #
 # **Other tables.** Chapter 33.110's institutional development standards and
 # 33.120's carry seven and three notes about campuses, towers and spires, and
 # conditional use review. Chapter 33.120's FAR bonus table carries three about
 # transfers and bonuses. Chapter 33.266's maximum-parking table carries two.
-# None of those tables is encoded here; the notes reach a value at all because
-# a block's region runs back to the previous block, which is the deliberately
-# wide reading.
 #
 # **Other buildings.** Congregate housing, accessory dwellings, manufactured
 # dwellings in a manufactured dwelling park.
@@ -25,9 +49,9 @@
 # declining a widening can only cost a lot that would have qualified.
 #
 # What is NOT here, and worth saying because it is what a reader will look
-# for: nothing in these forty notes is a hidden condition on the numbers this
-# layer encodes. Portland's conditions -- the civic corridor coverage bonus,
-# the deeper setbacks on a narrow lot -- are in the section text, and they are
+# for: nothing in these notes is a hidden condition on the numbers this layer
+# encodes. Portland's conditions -- the civic corridor coverage bonus, the
+# deeper setbacks on a narrow lot -- are in the section text, and they are
 # encoded as variants where they were read.
 notes:
   # --- 33.110 Table 110-3, minimum lot dimensions --------------------
@@ -377,3 +401,744 @@ notes:
       A relief, and one this file already takes the conservative side of: the
       street minimum is encoded at 0 from the table's own rows, so the note
       cannot loosen anything further
+
+  # --- 33.100, the Open Space zone's use table, answered in prose ---
+
+  - quote: "or/multnomah/portland/33.100.txt#L121"
+    digest: "7a86539b3603"
+    state: dismissed
+    reason: >-
+      note 1 makes Retail Sales And Service a conditional use only where
+      it is associated with a Park And Open Areas use, and prohibits it
+      otherwise. a limitation on a use this screen does not place. It is
+      governed here because Table 100-1's cells are quoted for the
+      permission, and the note sits on another row of the same table
+
+  - quote: "or/multnomah/portland/33.100.txt#L124"
+    digest: "c038db8f4f85"
+    state: dismissed
+    reason: >-
+      note 2 allows Parks And Open Areas by right and sends six
+      accessory facilities -- swimming pools, cemeteries, golf courses,
+      boat ramps, parking areas, organised sports fields -- to
+      conditional use review. The use this zone exists for, and not this
+      building. a limitation on a use this screen does not place. It is
+      governed here because Table 100-1's cells are quoted for the
+      permission, and the note sits on another row of the same table
+
+  - quote: "or/multnomah/portland/33.100.txt#L137"
+    digest: "4a520d974b28"
+    state: dismissed
+    reason: >-
+      note 3 allows some Radio Frequency Transmission Facilities by
+      right and sends the rest to Chapter 33.274. a limitation on a use
+      this screen does not place. It is governed here because Table
+      100-1's cells are quoted for the permission, and the note sits on
+      another row of the same table
+
+  - quote: "or/multnomah/portland/33.100.txt#L146"
+    digest: "1f8dd5da57eb"
+    state: dismissed
+    reason: >-
+      note 4 makes most Community Service uses a conditional use and
+      prohibits short term, mass and outdoor shelters. a limitation on a
+      use this screen does not place. It is governed here because Table
+      100-1's cells are quoted for the permission, and the note sits on
+      another row of the same table
+
+  - quote: "or/multnomah/portland/33.100.txt#L149"
+    digest: "780e5351d9ab"
+    state: dismissed
+    reason: >-
+      note 5 treats Basic Utilities serving a development site as
+      accessory, treats small scale energy production as accessory where
+      it burns the site's own material, and makes every other Basic
+      Utility a conditional use. a limitation on a use this screen does
+      not place. It is governed here because Table 100-1's cells are
+      quoted for the permission, and the note sits on another row of the
+      same table
+
+  - quote: "or/multnomah/portland/33.100.txt#L159"
+    digest: "af31c620b101"
+    state: dismissed
+    reason: >-
+      note 6 prohibits Manufacturing And Production except utility scale
+      energy production from large wind turbines, which is a conditional
+      use. a limitation on a use this screen does not place. It is
+      governed here because Table 100-1's cells are quoted for the
+      permission, and the note sits on another row of the same table
+
+  - quote: "or/multnomah/portland/33.100.txt#L162"
+    digest: "0a0fc1f1992e"
+    state: dismissed
+    reason: >-
+      note 7 allows Agriculture and lets an applicant elect Market
+      Garden status under Chapter 33.237. a limitation on a use this
+      screen does not place. It is governed here because Table 100-1's
+      cells are quoted for the permission, and the note sits on another
+      row of the same table
+
+
+  # --- 33.130, the commercial and mixed use table, answered in prose ---
+
+  - quote: "or/multnomah/portland/33.130.txt#L219"
+    digest: "8e66dfa99c6b"
+    state: dismissed
+    reason: >-
+      note 1 caps each Retail Sales And Service and Office use at 5,000
+      square feet of net building area in CR and CM1 -- 40,000 on a
+      large CM1 site on a collector or better -- limits CR retail to
+      6:00 AM through 11:00 PM, and grandfathers Quick Vehicle Servicing
+      that existed on 24 May 2018. Three real standards and none of them
+      dimensional in the sense this screen means: they are floor area
+      and opening hours for commerce. a limitation on a use this screen
+      does not place. It is governed here because Table 130-1's cells
+      are quoted for the permission, and the note sits on another row of
+      the same table
+
+  - quote: "or/multnomah/portland/33.130.txt#L239"
+    digest: "8127f5b36788"
+    state: dismissed
+    reason: >-
+      note 2 makes Utility Scale Energy Production and Industrial
+      Service conditional uses and caps every industrial use by floor
+      area, zone by zone. a limitation on a use this screen does not
+      place. It is governed here because Table 130-1's cells are quoted
+      for the permission, and the note sits on another row of the same
+      table
+
+  - quote: "or/multnomah/portland/33.130.txt#L257"
+    digest: "f0255bcbf872"
+    state: dismissed
+    reason: >-
+      note 3 sends Self-Service Storage to the special regulations in
+      Chapter 33.284. a limitation on a use this screen does not place.
+      It is governed here because Table 130-1's cells are quoted for the
+      permission, and the note sits on another row of the same table
+
+  - quote: "or/multnomah/portland/33.130.txt#L260"
+    digest: "1e44764605fa"
+    state: dismissed
+    reason: >-
+      note 4 prohibits exterior display or storage of industrial
+      equipment. A rule about what stands in the yard of a business, and
+      it marks the industrial rows. a limitation on a use this screen
+      does not place. It is governed here because Table 130-1's cells
+      are quoted for the permission, and the note sits on another row of
+      the same table
+
+  - quote: "or/multnomah/portland/33.130.txt#L264"
+    digest: "a7096be65790"
+    state: dismissed
+    reason: >-
+      note 5 allows most Community Service uses by right and sends
+      shelters to Chapter 33.285. a limitation on a use this screen does
+      not place. It is governed here because Table 130-1's cells are
+      quoted for the permission, and the note sits on another row of the
+      same table
+
+  - quote: "or/multnomah/portland/33.130.txt#L268"
+    digest: "ef3a86512be9"
+    state: dismissed
+    reason: >-
+      note 6 allows some Radio Frequency Transmission Facilities by
+      right and sends the rest to Chapter 33.274. a limitation on a use
+      this screen does not place. It is governed here because Table
+      130-1's cells are quoted for the permission, and the note sits on
+      another row of the same table
+
+  - quote: "or/multnomah/portland/33.130.txt#L271"
+    digest: "0d8fc2144aec"
+    state: dismissed
+    reason: >-
+      note 7 makes public safety facilities carrying transmission
+      equipment a conditional use, treats small scale energy production
+      as accessory within limits, and allows all other Basic Utilities.
+      a limitation on a use this screen does not place. It is governed
+      here because Table 130-1's cells are quoted for the permission,
+      and the note sits on another row of the same table
+
+  - quote: "or/multnomah/portland/33.130.txt#L282"
+    digest: "7039ebd66e1b"
+    state: dismissed
+    reason: >-
+      note 8 makes Commercial Parking a conditional use in CX and sets
+      out when it is allowed by right in CM2 and CM3. Parking as a
+      business, which is not the parking this screen counts -- that is
+      the accessory parking a dwelling owes, and it is read from Chapter
+      33.266. a limitation on a use this screen does not place. It is
+      governed here because Table 130-1's cells are quoted for the
+      permission, and the note sits on another row of the same table
+
+  - quote: "or/multnomah/portland/33.130.txt#L301"
+    digest: "79a2ca2b4bff"
+    state: dismissed
+    reason: >-
+      note 9 prohibits Agriculture in CR and CM1 where the site fails
+      Chapter 33.237. a limitation on a use this screen does not place.
+      It is governed here because Table 130-1's cells are quoted for the
+      permission, and the note sits on another row of the same table
+
+  - quote: "or/multnomah/portland/33.130.txt#L304"
+    digest: "0bbc2768113d"
+    state: dismissed
+    reason: >-
+      note 10 makes Agriculture a conditional use in CM2 and CX with a
+      Market Garden election. a limitation on a use this screen does not
+      place. It is governed here because Table 130-1's cells are quoted
+      for the permission, and the note sits on another row of the same
+      table
+
+  - quote: "or/multnomah/portland/33.130.txt#L309"
+    digest: "65b5973f8546"
+    state: dismissed
+    reason: >-
+      note 11 makes outdoor Agriculture a conditional use in CM3 and CE
+      and caps indoor Agriculture by floor area. a limitation on a use
+      this screen does not place. It is governed here because Table
+      130-1's cells are quoted for the permission, and the note sits on
+      another row of the same table
+
+
+  # --- 33.140, the employment and industrial table, answered in prose ---
+
+  - quote: "or/multnomah/portland/33.140.txt#L181"
+    digest: "148099e3f745"
+    state: encoded
+    encoded_as: >-
+      quadplex_allowed `value: false` in EG1 and EG2, with the note's
+      reasoning carried in the zone notes.
+    reason: >-
+      note 1 is the whole basis of the EG1 and EG2 verdict, and it was
+      read when those zones were encoded -- the quote already spans its
+      lines. Household Living is "L [1]" on Table 140-1, and the
+      limitation allows it in exactly one circumstance: an existing
+      hotel or motel converted to dwelling units, all of them affordable
+      at 60 percent of area median family income under a 30 year
+      covenant with the City. Then it closes the door in the negative --
+      "Except as specified in Subparagraph B.1.a, Household Living and
+      Group Living use are prohibited." New construction is not a
+      conversion, so a pod is prohibited outright
+
+  - quote: "or/multnomah/portland/33.140.txt#L197"
+    digest: "02809b866030"
+    state: encoded
+    encoded_as: >-
+      quadplex_allowed `value: false` in IG1, IG2 and IH, with the
+      note's reasoning carried in the zone notes.
+    reason: >-
+      note 2 is the same for the industrial zones and was read the same
+      way. Household and Group Living in houseboats and houseboat
+      moorages go to Chapter 33.236; "Household and Group Living in
+      other structures is prohibited." A four-unit townhome is another
+      structure. The "CU" in the cell is not a door this building can
+      walk through, which is why the value is a settled false rather
+      than a conditional
+
+  - quote: "or/multnomah/portland/33.140.txt#L201"
+    digest: "1387a31d0e82"
+    state: dismissed
+    reason: >-
+      note 3 caps Retail Sales And Service in the EG zones at 20,000
+      square feet of net building area plus exterior activity area, or
+      the site's own square footage, whichever is less. a limitation on
+      a use this screen does not place. It is governed here because
+      Table 140-1's cells are quoted for the permission, and the note
+      sits on another row of the same table
+
+  - quote: "or/multnomah/portland/33.140.txt#L212"
+    digest: "d5c6b4c663c2"
+    state: dismissed
+    reason: >-
+      note 4 allows one Retail or Office use per site in IG1, up to
+      3,000 square feet. a limitation on a use this screen does not
+      place. It is governed here because Table 140-1's cells are quoted
+      for the permission, and the note sits on another row of the same
+      table
+
+  - quote: "or/multnomah/portland/33.140.txt#L241"
+    digest: "e4986d532489"
+    state: dismissed
+    reason: >-
+      note 5 is note 4 for IG2, at up to four uses per site. a
+      limitation on a use this screen does not place. It is governed
+      here because Table 140-1's cells are quoted for the permission,
+      and the note sits on another row of the same table
+
+  - quote: "or/multnomah/portland/33.140.txt#L266"
+    digest: "1db9c888e19b"
+    state: dismissed
+    reason: >-
+      note 6 is note 5 for IH. a limitation on a use this screen does
+      not place. It is governed here because Table 140-1's cells are
+      quoted for the permission, and the note sits on another row of the
+      same table
+
+  - quote: "or/multnomah/portland/33.140.txt#L296"
+    digest: "86642b11bbb8"
+    state: dismissed
+    reason: >-
+      note 7 sends Self-Service Storage to its special regulations. a
+      limitation on a use this screen does not place. It is governed
+      here because Table 140-1's cells are quoted for the permission,
+      and the note sits on another row of the same table
+
+  - quote: "or/multnomah/portland/33.140.txt#L299"
+    digest: "ad4ea777fa0d"
+    state: dismissed
+    reason: >-
+      note 8 makes Waste-Related uses conditional unless Metro has
+      approved them with a mitigation plan under ORS 268.317 and the
+      location conforms to the Regional Solid Waste Management Plan. a
+      limitation on a use this screen does not place. It is governed
+      here because Table 140-1's cells are quoted for the permission,
+      and the note sits on another row of the same table
+
+  - quote: "or/multnomah/portland/33.140.txt#L310"
+    digest: "553fe2eed2a2"
+    state: dismissed
+    reason: >-
+      note 9 allows most Community Service uses by right in the E zones
+      and sends shelters to Chapter 33.285. a limitation on a use this
+      screen does not place. It is governed here because Table 140-1's
+      cells are quoted for the permission, and the note sits on another
+      row of the same table
+
+  - quote: "or/multnomah/portland/33.140.txt#L385"
+    digest: "3743f80bd47b"
+    state: dismissed
+    reason: >-
+      note 10 prohibits short term and mass shelters in the I zones and
+      makes Daycare and Community Service over 3,000 square feet a
+      conditional use. a limitation on a use this screen does not place.
+      It is governed here because Table 140-1's cells are quoted for the
+      permission, and the note sits on another row of the same table
+
+  - quote: "or/multnomah/portland/33.140.txt#L392"
+    digest: "59753b578b50"
+    state: dismissed
+    reason: >-
+      note 11 allows Basic Utilities in the E zones and sends public
+      safety transmission facilities to Chapter 33.274. a limitation on
+      a use this screen does not place. It is governed here because
+      Table 140-1's cells are quoted for the permission, and the note
+      sits on another row of the same table
+
+  - quote: "or/multnomah/portland/33.140.txt#L395"
+    digest: "b8a35e03934e"
+    state: dismissed
+    reason: >-
+      note 12 is note 11 for the I zones, with public safety facilities
+      over 3,000 square feet a conditional use. a limitation on a use
+      this screen does not place. It is governed here because Table
+      140-1's cells are quoted for the permission, and the note sits on
+      another row of the same table
+
+  - quote: "or/multnomah/portland/33.140.txt#L405"
+    digest: "eb527b275d14"
+    state: dismissed
+    reason: >-
+      note 13 allows some Radio Frequency Transmission Facilities by
+      right. a limitation on a use this screen does not place. It is
+      governed here because Table 140-1's cells are quoted for the
+      permission, and the note sits on another row of the same table
+
+  - quote: "or/multnomah/portland/33.140.txt#L408"
+    digest: "4029f89b83d7"
+    state: dismissed
+    reason: >-
+      note 14 makes Commercial Parking a conditional use in the E and I
+      zones unless a plan district says otherwise. a limitation on a use
+      this screen does not place. It is governed here because Table
+      140-1's cells are quoted for the permission, and the note sits on
+      another row of the same table
+
+  - quote: "or/multnomah/portland/33.140.txt#L412"
+    digest: "a64cf143b92d"
+    state: dismissed
+    reason: >-
+      note 15 allows Agriculture with a Market Garden election. a
+      limitation on a use this screen does not place. It is governed
+      here because Table 140-1's cells are quoted for the permission,
+      and the note sits on another row of the same table
+
+  - quote: "or/multnomah/portland/33.140.txt#L416"
+    digest: "5f8d2a3bc634"
+    state: dismissed
+    reason: >-
+      note 16 freezes Bulk Fossil Fuel Terminals at their 31 August 2022
+      storage capacity, prohibits coal storage, and prohibits new
+      terminals outright. a limitation on a use this screen does not
+      place. It is governed here because Table 140-1's cells are quoted
+      for the permission, and the note sits on another row of the same
+      table
+
+
+  # --- 33.150, the campus institutional table, answered in prose ---
+
+  - quote: "or/multnomah/portland/33.150.txt#L178"
+    digest: "2b114eefe29b"
+    state: dismissed
+    reason: >-
+      note 1 allows up to 10,000 square feet of Retail Sales And Service
+      per site in CI1 as a conditional use. a limitation on a use this
+      screen does not place. It is governed here because Table 150-1's
+      cells are quoted for the permission, and the note sits on another
+      row of the same table
+
+  - quote: "or/multnomah/portland/33.150.txt#L181"
+    digest: "fd69d22acec4"
+    state: dismissed
+    reason: >-
+      note 2 allows 10,000 square feet each of Manufacturing And
+      Production and Industrial Service per site in CI1 and CI2, with
+      more allowed conditionally in CI2 and prohibited in CI1. a
+      limitation on a use this screen does not place. It is governed
+      here because Table 150-1's cells are quoted for the permission,
+      and the note sits on another row of the same table
+
+  - quote: "or/multnomah/portland/33.150.txt#L193"
+    digest: "5556aba78db6"
+    state: dismissed
+    reason: >-
+      note 3 treats site-serving Basic Utilities and small scale energy
+      production as accessory within stated limits and makes all other
+      Basic Utilities conditional uses. a limitation on a use this
+      screen does not place. It is governed here because Table 150-1's
+      cells are quoted for the permission, and the note sits on another
+      row of the same table
+
+  - quote: "or/multnomah/portland/33.150.txt#L205"
+    digest: "09512af2a395"
+    state: dismissed
+    reason: >-
+      note 4 sends most Community Service uses to conditional use review
+      under Chapter 33.815 and shelters to Chapter 33.285. a limitation
+      on a use this screen does not place. It is governed here because
+      Table 150-1's cells are quoted for the permission, and the note
+      sits on another row of the same table
+
+  - quote: "or/multnomah/portland/33.150.txt#L213"
+    digest: "1b688cae01de"
+    state: dismissed
+    reason: >-
+      note 5 allows Parks And Open Areas by right and sends six
+      accessory facilities to conditional use review. a limitation on a
+      use this screen does not place. It is governed here because Table
+      150-1's cells are quoted for the permission, and the note sits on
+      another row of the same table
+
+  - quote: "or/multnomah/portland/33.150.txt#L226"
+    digest: "911f7316ede1"
+    state: dismissed
+    reason: >-
+      note 6 allows Colleges by right and sends large outdoor sports
+      facilities to conditional use review. a limitation on a use this
+      screen does not place. It is governed here because Table 150-1's
+      cells are quoted for the permission, and the note sits on another
+      row of the same table
+
+  - quote: "or/multnomah/portland/33.150.txt#L230"
+    digest: "e273c8934747"
+    state: dismissed
+    reason: >-
+      note 7 prohibits Agriculture where the site fails Chapter 33.237.
+      a limitation on a use this screen does not place. It is governed
+      here because Table 150-1's cells are quoted for the permission,
+      and the note sits on another row of the same table
+
+  - quote: "or/multnomah/portland/33.150.txt#L238"
+    digest: "ad723b0ff780"
+    state: dismissed
+    reason: >-
+      note 8 allows some Radio Frequency Transmission Facilities by
+      right. a limitation on a use this screen does not place. It is
+      governed here because Table 150-1's cells are quoted for the
+      permission, and the note sits on another row of the same table
+
+  - quote: "or/multnomah/portland/33.150.txt#L241"
+    digest: "c722458b0ff6"
+    state: dismissed
+    reason: >-
+      note 9 conditions Group Living in the IR zone on the campus's
+      impact mitigation plan naming it in the mission statement and
+      accommodating its impacts. The closest call in this group and
+      still not this building: Group Living and Household Living are
+      different use categories in Title 33, and four dwelling units with
+      their own kitchens are Household Living, which Table 150-1 gives
+      IR as a bare Y with no bracket on it
+
+  - quote: "or/multnomah/portland/33.150.txt#L247"
+    digest: "aae2b91755b4"
+    state: dismissed
+    reason: >-
+      note 10 allows Retail Sales And Service and Office uses on an
+      institutional campus in the IR zone, accessory by right where the
+      impact mitigation plan names them and as primary uses on stated
+      conditions. a limitation on a use this screen does not place. It
+      is governed here because Table 150-1's cells are quoted for the
+      permission, and the note sits on another row of the same table
+
+  - quote: "or/multnomah/portland/33.150.txt#L293"
+    digest: "fe0d31da4507"
+    state: dismissed
+    reason: >-
+      note 11 limits Schools, Colleges and Medical Centers in the IR
+      zone to the large institutional campuses the zone was created to
+      hold. a limitation on a use this screen does not place. It is
+      governed here because Table 150-1's cells are quoted for the
+      permission, and the note sits on another row of the same table
+
+  # --- 33.110, the single-dwelling use table, answered in prose ---
+
+  - quote: "or/multnomah/portland/33.110.txt#L137"
+    digest: "ed9025100182"
+    state: dismissed
+    reason: >-
+      note 1 caps Group Living at 3,500 square feet of net building area
+      on the site and makes anything larger a conditional use. Group
+      Living is its own use category in Title 33 -- rooms without
+      individual kitchens, occupancy rather than tenancy -- and four
+      self-contained dwellings are Household Living. a limitation on a
+      use this screen does not place. Table 110-1's Household Living row
+      carries no bracket at all in the zones this layer holds, and the
+      permission for a four-unit building is read from Table 110-3's lot
+      dimensions and 33.110.100.A rather than from this table
+
+  - quote: "or/multnomah/portland/33.110.txt#L142"
+    digest: "fedd1cf2deee"
+    state: dismissed
+    reason: >-
+      note 2 makes retail plant nurseries a conditional use and
+      prohibits every other Retail Sales And Service use. a limitation
+      on a use this screen does not place. Table 110-1's Household
+      Living row carries no bracket at all in the zones this layer
+      holds, and the permission for a four-unit building is read from
+      Table 110-3's lot dimensions and 33.110.100.A rather than from
+      this table
+
+  - quote: "or/multnomah/portland/33.110.txt#L145"
+    digest: "dd396178a8a4"
+    state: dismissed
+    reason: >-
+      note 3 makes utility scale energy production from large wind
+      turbines a conditional use in RF and prohibits every other
+      Manufacturing And Production use. a limitation on a use this
+      screen does not place. Table 110-1's Household Living row carries
+      no bracket at all in the zones this layer holds, and the
+      permission for a four-unit building is read from Table 110-3's lot
+      dimensions and 33.110.100.A rather than from this table
+
+  - quote: "or/multnomah/portland/33.110.txt#L148"
+    digest: "d010b0bf0016"
+    state: dismissed
+    reason: >-
+      note 4 treats site-serving Basic Utilities and small scale energy
+      production as accessory and makes all other Basic Utilities
+      conditional uses. a limitation on a use this screen does not
+      place. Table 110-1's Household Living row carries no bracket at
+      all in the zones this layer holds, and the permission for a four-
+      unit building is read from Table 110-3's lot dimensions and
+      33.110.100.A rather than from this table
+
+  - quote: "or/multnomah/portland/33.110.txt#L165"
+    digest: "be92919b2c47"
+    state: dismissed
+    reason: >-
+      note 5 sends most Community Service uses to conditional use review
+      under Chapter 33.815 and shelters to Chapter 33.285. a limitation
+      on a use this screen does not place. Table 110-1's Household
+      Living row carries no bracket at all in the zones this layer
+      holds, and the permission for a four-unit building is read from
+      Table 110-3's lot dimensions and 33.110.100.A rather than from
+      this table
+
+  - quote: "or/multnomah/portland/33.110.txt#L170"
+    digest: "5cdd0e003953"
+    state: dismissed
+    reason: >-
+      note 6 allows Parks And Open Areas by right and sends six
+      accessory facilities -- swimming pools, cemeteries, golf courses,
+      boat ramps, parking areas, organised sports fields -- to
+      conditional use review. a limitation on a use this screen does not
+      place. Table 110-1's Household Living row carries no bracket at
+      all in the zones this layer holds, and the permission for a four-
+      unit building is read from Table 110-3's lot dimensions and
+      33.110.100.A rather than from this table
+
+  - quote: "or/multnomah/portland/33.110.txt#L186"
+    digest: "fcc9556e5d4e"
+    state: dismissed
+    reason: >-
+      note 7 allows Daycare by right inside a building that contains or
+      contained a College, Medical Center, School, Religious Institution
+      or Community Service use. a limitation on a use this screen does
+      not place. Table 110-1's Household Living row carries no bracket
+      at all in the zones this layer holds, and the permission for a
+      four-unit building is read from Table 110-3's lot dimensions and
+      33.110.100.A rather than from this table
+
+  - quote: "or/multnomah/portland/33.110.txt#L189"
+    digest: "8ab14e2b19c6"
+    state: dismissed
+    reason: >-
+      note 8 allows Agriculture in RF and R20 with a Market Garden
+      election under Chapter 33.237. a limitation on a use this screen
+      does not place. Table 110-1's Household Living row carries no
+      bracket at all in the zones this layer holds, and the permission
+      for a four-unit building is read from Table 110-3's lot dimensions
+      and 33.110.100.A rather than from this table
+
+  - quote: "or/multnomah/portland/33.110.txt#L193"
+    digest: "0e53ea303036"
+    state: dismissed
+    reason: >-
+      note 9 makes Agriculture a conditional use in R10 and R7, with the
+      same election. a limitation on a use this screen does not place.
+      Table 110-1's Household Living row carries no bracket at all in
+      the zones this layer holds, and the permission for a four-unit
+      building is read from Table 110-3's lot dimensions and
+      33.110.100.A rather than from this table
+
+  - quote: "or/multnomah/portland/33.110.txt#L203"
+    digest: "b086a75a5830"
+    state: dismissed
+    reason: >-
+      note 10 prohibits Agriculture in R5 and R2.5 where the site fails
+      Chapter 33.237. a limitation on a use this screen does not place.
+      Table 110-1's Household Living row carries no bracket at all in
+      the zones this layer holds, and the permission for a four-unit
+      building is read from Table 110-3's lot dimensions and
+      33.110.100.A rather than from this table
+
+  - quote: "or/multnomah/portland/33.110.txt#L206"
+    digest: "c103856b4371"
+    state: dismissed
+    reason: >-
+      note 11 allows some Radio Frequency Transmission Facilities by
+      right and sends the rest to Chapter 33.274. a limitation on a use
+      this screen does not place. Table 110-1's Household Living row
+      carries no bracket at all in the zones this layer holds, and the
+      permission for a four-unit building is read from Table 110-3's lot
+      dimensions and 33.110.100.A rather than from this table
+
+
+  # --- 33.120, the multi-dwelling use table, answered in prose ---
+
+  - quote: "or/multnomah/portland/33.120.txt#L197"
+    digest: "1f548218deb3"
+    state: dismissed
+    reason: >-
+      note 1 states when Retail Sales And Service and Office uses are
+      allowed in the multi-dwelling zones and when they need a
+      conditional use. a limitation on a use this screen does not place.
+      Table 120-1's Household Living row carries no bracket at all in
+      the zones this layer holds, and the permission for a four-unit
+      building is read from Table 120-2, the housing types table, which
+      is what this layer quotes rather than from this table
+
+  - quote: "or/multnomah/portland/33.120.txt#L231"
+    digest: "d7f038d7c24a"
+    state: dismissed
+    reason: >-
+      note 2 makes Commercial Parking in structures a conditional use in
+      RX outside the Central City and prohibits it on surface lots. a
+      limitation on a use this screen does not place. Table 120-1's
+      Household Living row carries no bracket at all in the zones this
+      layer holds, and the permission for a four-unit building is read
+      from Table 120-2, the housing types table, which is what this
+      layer quotes rather than from this table
+
+  - quote: "or/multnomah/portland/33.120.txt#L237"
+    digest: "6dda5732c632"
+    state: dismissed
+    reason: >-
+      note 3 sends most Community Service and Schools uses in RX to
+      conditional use review, with a ground-floor allowance up to 20
+      percent of net building area. a limitation on a use this screen
+      does not place. Table 120-1's Household Living row carries no
+      bracket at all in the zones this layer holds, and the permission
+      for a four-unit building is read from Table 120-2, the housing
+      types table, which is what this layer quotes rather than from this
+      table
+
+  - quote: "or/multnomah/portland/33.120.txt#L254"
+    digest: "7e36733bf0cd"
+    state: dismissed
+    reason: >-
+      note 4 is note 3 for RM1 through RM4 and RMP. a limitation on a
+      use this screen does not place. Table 120-1's Household Living row
+      carries no bracket at all in the zones this layer holds, and the
+      permission for a four-unit building is read from Table 120-2, the
+      housing types table, which is what this layer quotes rather than
+      from this table
+
+  - quote: "or/multnomah/portland/33.120.txt#L258"
+    digest: "2b225d2cb75d"
+    state: dismissed
+    reason: >-
+      note 5 allows Parks And Open Areas by right and sends its
+      accessory facilities to conditional use review. a limitation on a
+      use this screen does not place. Table 120-1's Household Living row
+      carries no bracket at all in the zones this layer holds, and the
+      permission for a four-unit building is read from Table 120-2, the
+      housing types table, which is what this layer quotes rather than
+      from this table
+
+  - quote: "or/multnomah/portland/33.120.txt#L271"
+    digest: "af5bce71564e"
+    state: dismissed
+    reason: >-
+      note 6 allows Daycare by right inside a building that contains or
+      contained a College, Medical Center, School, Religious Institution
+      or Community Service use. a limitation on a use this screen does
+      not place. Table 120-1's Household Living row carries no bracket
+      at all in the zones this layer holds, and the permission for a
+      four-unit building is read from Table 120-2, the housing types
+      table, which is what this layer quotes rather than from this table
+
+  - quote: "or/multnomah/portland/33.120.txt#L289"
+    digest: "610421903227"
+    state: dismissed
+    reason: >-
+      note 7 allows some Radio Frequency Transmission Facilities by
+      right. a limitation on a use this screen does not place. Table
+      120-1's Household Living row carries no bracket at all in the
+      zones this layer holds, and the permission for a four-unit
+      building is read from Table 120-2, the housing types table, which
+      is what this layer quotes rather than from this table
+
+  - quote: "or/multnomah/portland/33.120.txt#L292"
+    digest: "5c5aab108799"
+    state: dismissed
+    reason: >-
+      note 8 treats site-serving Basic Utilities and small scale energy
+      production as accessory and makes all other Basic Utilities
+      conditional uses. a limitation on a use this screen does not
+      place. Table 120-1's Household Living row carries no bracket at
+      all in the zones this layer holds, and the permission for a four-
+      unit building is read from Table 120-2, the housing types table,
+      which is what this layer quotes rather than from this table
+
+  - quote: "or/multnomah/portland/33.120.txt#L307"
+    digest: "36c85dc20797"
+    state: dismissed
+    reason: >-
+      note 9 prohibits Agriculture where the site fails Chapter 33.237.
+      a limitation on a use this screen does not place. Table 120-1's
+      Household Living row carries no bracket at all in the zones this
+      layer holds, and the permission for a four-unit building is read
+      from Table 120-2, the housing types table, which is what this
+      layer quotes rather than from this table
+
+  - quote: "or/multnomah/portland/33.120.txt#L310"
+    digest: "0c4280ed5862"
+    state: dismissed
+    reason: >-
+      note 10 allows recreational vehicle parks by right in RMP and
+      prohibits every other Retail Sales And Service use there. a
+      limitation on a use this screen does not place. Table 120-1's
+      Household Living row carries no bracket at all in the zones this
+      layer holds, and the permission for a four-unit building is read
+      from Table 120-2, the housing types table, which is what this
+      layer quotes rather than from this table

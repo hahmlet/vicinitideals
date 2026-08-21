@@ -290,6 +290,61 @@ CROSS_REFERENCE = re.compile(
     r"(?:figure|table|section|§|�)\s*[\w.\-]*\[\d{1,2}\]", re.I
 )
 
+#: The head of a numbered paragraph: "4. Community Service in RM1 through RM4".
+#: Deliberately the ordinary shape, because the paragraph earns its reading
+#: from what it *says* rather than from how it is laid out -- see `DECLARES`.
+DECLARED_HEAD = re.compile(r"^\(?(?P<n>\d{1,2})\)?[.)]\s+\S")
+
+#: A paragraph naming the marker it answers, and the table that marker is on:
+#: "This regulation applies to all parts of Table 120-1 that have a [4]."
+#:
+#: Portland prints no notes block under its use tables. The limitations are
+#: numbered subsections of the Primary Uses section -- ordinary prose by every
+#: layout test this module has -- and each one declares its own marker in its
+#: first sentence. Nothing about the page says "footnote"; the sentence does.
+#: Five base-zone chapters are written this way, including 33.120, the chapter
+#: that decides whether a four-unit building is allowed at all, and between
+#: them they carried a hundred and fifty markers no block could answer.
+#:
+#: The slack in the middle is extraction's. A page break lands inside the
+#: table's own name -- "Table 120-" then "1 that have a [3]" -- and the
+#: indefinite article arrives split as "a n [8]", so the table number is read
+#: across the hyphen and a couple of short words are allowed before the
+#: bracket, and the bracket itself is allowed to have picked up whitespace --
+#: Portland's single-dwelling chapter prints "that have a [ 4]". The closing
+#: bracket is required: without it the pattern reads any sentence that
+#: mentions a table and a number.
+DECLARES = re.compile(
+    r"table\s+(?P<a>\d{2,3})\s*-\s*(?P<b>\d{1,2})\s+that\s+have\s+"
+    r"(?:[a-z]{1,4}\s+){0,2}\[\s*(?P<n>\d{1,2})\s*\]",
+    re.I,
+)
+
+#: A table's caption, printed on a line of its own: "Table 120-1". A wide table
+#: repeats it on every page it crosses, so the first occurrence opens the span
+#: and a *different* table's caption closes it.
+TABLE_CAPTION = re.compile(r"^table\s+(?P<a>\d{2,3})\s*-\s*(?P<b>\d{1,2})\s*$", re.I)
+
+#: The head of a code section: "33.120.205 When Primary Structures are
+#: Allowed". Closes a table's span where no other table follows it.
+SECTION_HEAD = re.compile(r"^\d{1,3}\.\d{2,4}(?:\.\d{1,4})?\s+[A-Z]")
+
+#: The header a chapter prints on every page, which lands in the middle of a
+#: declared limitation every time one crosses a page break. `_bodies` never
+#: sees these because `ENDS_BLOCK` stops a block at "Chapter 33.100"; a
+#: declared paragraph has to read through them, since Portland breaks pages
+#: inside a single limitation and the rest of it is still the note.
+RUNNING_HEADER = re.compile(
+    r"^Chapter\s+\d|^Title\s+\d{1,2},|^\d{1,2}/\d{1,2}/\d{2,4}"
+    r"|^\d{1,3}-\s*\d{0,3}$|^\d{1,3}$"
+)
+
+#: How far a declared paragraph is read for its declaration, and how far the
+#: last one in a run runs on. Long enough for the sentence to survive a page
+#: break, short enough that a paragraph which declares nothing is not searched
+#: into the next section.
+DECLARED_LIMIT = 14
+
 
 @dataclass(frozen=True, slots=True)
 class Marker:
@@ -338,10 +393,22 @@ class Block:
     end: int
     region: tuple[int, int]
     bodies: tuple[Body, ...]
+    #: The lines this block's own text occupies, where that is not simply
+    #: everything from its head to its end. Portland prints half a use table's
+    #: limitations, then the table, then the rest of them, so a declared block
+    #: straddles its own table -- and a table inside a block is a table whose
+    #: markers are never counted. Empty means the ordinary reading.
+    spans: tuple[tuple[int, int], ...] = ()
 
     @property
     def marks(self) -> frozenset[str]:
         return frozenset(b.mark for b in self.bodies)
+
+    @property
+    def covered(self) -> tuple[tuple[int, int], ...]:
+        """Where this block's text sits, for the rule that markers inside a
+        block are declarations rather than references."""
+        return self.spans or ((self.head - 1, self.end),)
 
 
 @dataclass(frozen=True, slots=True)
@@ -416,6 +483,139 @@ def _blocks(lines: Sequence[str]) -> list[Block]:
         previous_end = end
         i = max(end, i + 1)
     return found
+
+
+def _table_span(
+    lines: Sequence[str], a: str, b: str, bar: Sequence[int] = ()
+) -> tuple[int, int] | None:
+    """The lines of the table a declaration names, or None if it is not here.
+
+    A declared note is not positional -- it says which table it is about -- so
+    it governs that table's markers wherever the codifier chose to print the
+    table. Portland prints Table 100-1 above its limitations and Table 120-1
+    below them, which is exactly the ambiguity the region rule exists to
+    refuse, and exactly the ambiguity the codifier resolved by naming it.
+
+    Returning None where the caption is missing is the point of the rule: a
+    note that claims a table we cannot find governs nothing, and its markers
+    stay orphans.
+    """
+    caption = re.compile(rf"^table\s+{a}\s*-\s*{b}\s*$", re.I)
+    first = next(
+        (i for i, raw in enumerate(lines) if caption.match(raw.strip())), None
+    )
+    if first is None:
+        return None
+    high = min((j for j in bar if j > first), default=len(lines))
+    for j in range(first + 1, high):
+        stripped = lines[j].strip()
+        if TABLE_CAPTION.match(stripped) and not caption.match(stripped):
+            return first, j
+        if SECTION_HEAD.match(stripped):
+            return first, j
+    return first, high
+
+
+def _paragraph_end(
+    lines: Sequence[str], i: int, heads: Sequence[int], k: int
+) -> int:
+    """Where the numbered paragraph starting at ``i`` stops.
+
+    The next numbered paragraph is the obvious floor and not a sufficient one:
+    the last limitation in a run is followed by the lettered subsection that
+    ends the list, and then by the table itself. Reading to the next number
+    swallows that table, and a table inside a block is a table whose markers
+    are never counted -- which turns eleven captured notes into eleven notes
+    nobody points at, and reports the document reconciled the wrong way round.
+    """
+    stop = heads[k + 1] if k + 1 < len(heads) else len(lines)
+    for j in range(i + 1, min(stop, i + DECLARED_LIMIT * 2)):
+        stripped = lines[j].strip()
+        if (
+            TABLE_CAPTION.match(stripped)
+            or SECTION_HEAD.match(stripped)
+            or LETTER_NOTE.match(stripped)
+        ):
+            return j
+    return min(stop, i + DECLARED_LIMIT * 2)
+
+
+def _declared_text(lines: Sequence[str], start: int, stop: int) -> str:
+    """One declared paragraph, with the page furniture taken back out.
+
+    A chapter header is two lines -- "Chapter 33.100" and the chapter's name
+    under it -- and only the first is recognisable on its own. The second is
+    dropped for sitting where it sits, which is the only thing that
+    distinguishes "Open Space Zone" from a sentence.
+    """
+    out: list[str] = []
+    header = False
+    for raw in lines[start:stop]:
+        stripped = raw.strip()
+        if not stripped:
+            continue
+        if FURNITURE.search(stripped) or RUNNING_HEADER.match(stripped):
+            header = stripped.lower().startswith("chapter")
+            continue
+        if header:
+            header = False
+            continue
+        out.append(stripped)
+    return " ".join(out)
+
+
+def _declared(lines: Sequence[str], doc: str) -> list[Block]:
+    """Runs of numbered paragraphs that name the marker each one answers.
+
+    Two paragraphs are demanded before the run is believed, and each has to
+    carry its own declaration -- there is no "the next one is probably a note
+    too". The paragraph's own number must equal the mark it declares, which
+    across the corpus it does in all ninety-one cases and which keeps a
+    sentence that merely mentions another table's footnote out.
+    """
+    heads = [i for i, raw in enumerate(lines) if DECLARED_HEAD.match(raw.strip())]
+    found: list[tuple[int, int, str, str, str]] = []
+    for k, i in enumerate(heads):
+        stop = heads[k + 1] if k + 1 < len(heads) else len(lines)
+        stop = min(stop, i + DECLARED_LIMIT)
+        joined = " ".join(raw.strip() for raw in lines[i:stop])
+        got = DECLARES.search(joined)
+        if got is None:
+            continue
+        head = DECLARED_HEAD.match(lines[i].strip())
+        if head is None or head.group("n") != got.group("n"):
+            continue
+        found.append((i, _paragraph_end(lines, i, heads, k), got.group("n"), *got.group("a", "b")))
+
+    out: list[Block] = []
+    run: list[tuple[int, int, str, str, str]] = []
+    for entry in found + [None]:  # type: ignore[list-item]
+        same = bool(run) and entry is not None and entry[3:] == run[0][3:]
+        if same:
+            run.append(entry)  # type: ignore[arg-type]
+            continue
+        if len(run) >= 2:
+            span = _table_span(lines, run[0][3], run[0][4], [e[0] for e in found])
+            if span is not None:
+                out.append(
+                    Block(
+                        head=run[0][0] + 1,
+                        end=run[-1][1],
+                        region=span,
+                        spans=tuple((start, stop) for start, stop, _, _, _ in run),
+                        bodies=tuple(
+                            Body(
+                                doc=doc,
+                                line=start + 1,
+                                mark=mark,
+                                text=_declared_text(lines, start, stop),
+                            )
+                            for start, stop, mark, _, _ in run
+                        ),
+                    )
+                )
+        run = [entry] if entry is not None else []  # type: ignore[list-item]
+    return out
 
 
 def _order(mark: str) -> tuple[int, int]:
@@ -777,8 +977,8 @@ def _markers(lines: Sequence[str], inside: Sequence[tuple[int, int]]) -> list[Ma
 def census(text: str, *, layer: str = "", doc: str = "") -> Census:
     """The footnote census of one document."""
     lines = text.splitlines()
-    blocks = _blocks(lines)
-    inside = tuple((b.head - 1, b.end) for b in blocks)
+    blocks = _blocks(lines) + _declared(lines, doc)
+    inside = tuple(span for b in blocks for span in b.covered)
     markers = [
         Marker(doc=doc, line=m.line, mark=m.mark, kind=m.kind, text=m.text)
         for m in _markers(lines, inside)
@@ -792,6 +992,7 @@ def census(text: str, *, layer: str = "", doc: str = "") -> Census:
                 Body(doc=doc, line=body.line, mark=body.mark, text=body.text)
                 for body in b.bodies
             ),
+            spans=b.spans,
         )
         for b in blocks
     )
@@ -837,12 +1038,19 @@ def _governing(blocks: Sequence[Block], index: int) -> Block | None:
 
     A marker below the last block has no block at all -- its notes are in a
     document we do not hold, or in one the extractor lost.
+
+    Regions used to be disjoint by construction, because each one ran from the
+    previous block's end to this block's heading. A declared block's region is
+    the table it names, which can sit anywhere -- including inside the sweep a
+    later block claims by default. Where two regions contain the same line the
+    tighter one wins, which is the one that had a reason for its bounds.
     """
+    best: Block | None = None
     for block in blocks:
         low, high = block.region
-        if low <= index < high:
-            return block
-    return None
+        if low <= index < high and (best is None or high - low < best.region[1] - best.region[0]):
+            best = block
+    return best
 
 
 def _stored(layer_id: str) -> list[Path]:

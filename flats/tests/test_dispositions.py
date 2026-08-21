@@ -392,14 +392,21 @@ def test_the_county_pockets_carry_portland_s_rulings() -> None:
     """No config fixture: the adoption actually shipped.
 
     Every captured note in this layer comes out of a Portland chapter -- 33.110
-    for the single-dwelling pockets and 33.140 for the employment and
-    industrial ones -- and none of them blocks. Multnomah County's own Chapter
-    39 articles contribute none at all, because the chapter is prose and
-    prose carries its conditions in the sentence rather than under a table.
+    for the single-dwelling pockets, 33.100 for the open space land and 33.140
+    for the employment and industrial ones -- and none of them blocks.
+    Multnomah County's own Chapter 39 articles contribute none at all, because
+    the chapter is prose and prose carries its conditions in the sentence
+    rather than under a table.
+
+    Nineteen for most of this ledger's life, and fifty-three once the census
+    could read a body that names its own marker. The thirty-four that arrived
+    are Portland's use-table limitations, which are printed as numbered
+    subsections of the Primary Uses section and look like nothing at all.
     """
     rows = notes("or/multnomah/_unincorporated")
     docs = {row.doc.rsplit("/", 1)[-1] for row in rows}
 
-    assert len(rows) == 19
-    assert docs == {"33.110.txt", "33.140.txt"}
+    assert len(rows) == 53
+    assert docs == {"33.100.txt", "33.110.txt", "33.140.txt"}
     assert not any(row.blocking for row in rows)
+    assert not [row for row in rows if row.state == "unread"]
