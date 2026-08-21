@@ -14,7 +14,7 @@ import pytest
 
 from flats.encode import dispositions
 from flats.encode.dispositions import digest
-from flats.encode.qualified import Qualified, qualified, render
+from flats.encode.qualified import Qualified, _quoted, qualified, render
 from flats.encode.readiness import ACTION, STAGES, Readiness, readiness_for
 from flats.provenance.store import ProvenanceStore
 from flats.rules.loader import load_rules
@@ -96,19 +96,14 @@ def test_a_value_quoted_below_every_block_is_not_governed(rows: list[Qualified])
     last notes block has no footnote over it. If this ever fails, the region
     model has been replaced by "the whole document", which would block
     everything and mean nothing."""
-    ungoverned = [
-        (zone, field)
-        for layer in load_rules().values()
-        for zone, field in _quoted_fields(layer)
+    quoted = [
+        (identifier, zone, field)
+        for identifier, layer in load_rules().items()
+        for zone, field, _ in _quoted(layer)
     ]
-    assert len(ungoverned) > len(rows)
-
-
-def _quoted_fields(layer) -> list[tuple[str, str]]:
-    out = []
-    for code, zone in layer.zones.items():
-        out.extend((code, name) for name, v in zone.values.items() if v.prov.quote)
-    return out
+    governed = {(r.layer, r.zone, r.field) for r in rows}
+    assert governed < set(quoted), "every quoted value is governed, which is the whole document"
+    assert len(quoted) > len(rows)
 
 
 def test_ruling_on_the_note_clears_the_values_under_it(
@@ -140,6 +135,51 @@ def test_ruling_on_the_note_clears_the_values_under_it(
     assert again.governing
     assert not again.blocking
     assert again.clear
+
+
+def test_a_citation_that_names_two_lines_still_reaches_the_gate(
+    rows: list[Qualified],
+) -> None:
+    """The join used to read the first number of a citation with a string
+    split and give up on anything that did not parse.
+
+    ``doc.txt#L950-L951`` parsed. ``doc.txt#L950,L951`` did not, and returned
+    line zero, which the join skipped. That second form is the ordinary shape
+    of a citation into an extracted table -- the row label sits on one line and
+    the cell under it on another -- so 583 of the corpus's 1,952 quoted values,
+    thirty percent, never reached the footnote gate at all, while the report
+    read as though they had passed it. Fixing it added 445 governed values and
+    57 capped ones: values whose footnotes are read and waiting on data, which
+    were resolving as though nothing qualified them.
+
+    Pinned as a shape rather than a count. What matters is that a comma-form
+    citation is in the join, not how many of them there are this week.
+    """
+    commas = [r for r in rows if "," in r.quote.partition("#")[2]]
+    assert commas, "no comma-form citation is governed, which is how this broke"
+    assert len({r.layer for r in commas}) > 1
+
+
+def test_a_quote_that_straddles_a_notes_block_takes_both_regions(
+    rows: list[Qualified],
+) -> None:
+    """A value cited to its table cell *and* to the footnote body under it
+    names lines on both sides of a notes block. Both regions govern it: a
+    footnote over any line a value was read from qualifies that value, and
+    taking only the first line's region would drop half the evidence.
+
+    Happy Valley's party-wall zero is the case in hand -- it quotes the row,
+    the cell, and note 5 that explains what the zero is for.
+    """
+    straddling = next(
+        r
+        for r in rows
+        if r.layer == "or/clackamas/happy-valley"
+        and r.field.startswith("setback_side_ft [")
+        and r.zone == "SFA"
+    )
+    assert "L1022" in straddling.quote
+    assert straddling.governing
 
 
 def test_the_report_counts_what_is_blocked(rows: list[Qualified]) -> None:

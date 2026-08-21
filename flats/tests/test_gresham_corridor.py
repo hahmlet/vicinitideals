@@ -157,8 +157,11 @@ def test_a_storey_count_answers_the_height_requirement(rules: RuleSet) -> None:
     assert ALTERNATIVES == {"max_height_ft": "max_height_stories"}
     assert "max_height_ft" in REQUIRED_FIELDS
     assert "max_height_stories" in OPTIONAL_FIELDS
-    for zone in CORRIDOR:
+    for zone in PERMITTED:
         assert rules.resolve(GRESHAM, zone).missing_required == (), zone
+    # BARRED is deliberately not in this loop. Those three owe five standards
+    # each, because an unmeasured footnote over the table levers their
+    # prohibition -- see test_gresham_complete, which states the finding.
 
 
 def test_the_residential_setbacks_are_the_same_in_every_permitted_column(

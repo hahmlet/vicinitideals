@@ -38,6 +38,17 @@ REFUSED = ("NC", "HI", "GI", "CNTH", "CNTM", "CNRM")
 #: Every zone the Gresham zoning layer reports, which the rules now carry in
 #: full. Kept as a list rather than a count so that a zone appearing or
 #: disappearing says which one.
+#: RTC, CC and MC read a bare NP on the quadplex row, and a footnote over the
+#: same table region is ruled `unmeasured` against `civic_corridor`. That makes
+#: the prohibition levered rather than settled, so the resolver asks these three
+#: for the dimensions a permitted zone owes. See
+#: test_a_levered_prohibition_owes_its_dimensions_like_any_other.
+LEVERED = ("RTC", "CC", "MC")
+#: What each of them owes. Table 4.0430 states all five, in columns the
+#: extraction shifts badly enough that reading them would be a guess.
+OWED = ("max_height_ft", "min_lot_sqft", "setback_front_ft", "setback_rear_ft",
+        "setback_side_ft")
+
 ALL_ZONES = (
     "LDR-5", "LDR-7", "TLDR", "TR", "OFR", "MDR-12", "MDR-24",
     "LDR-PV", "MDR-PV", "HDR-PV", "NC-PV", "PUB-PV",
@@ -179,7 +190,42 @@ def test_the_alley_buys_nothing_here_unless_the_plat_is_split(
 
 def test_every_gresham_zone_owes_nothing_more(rules: RuleSet) -> None:
     for zone in ALL_ZONES:
+        if zone in LEVERED:
+            continue
         assert rules.resolve(GRESHAM, zone).missing_required == (), zone
+
+
+def test_a_levered_prohibition_owes_its_dimensions_like_any_other(
+    rules: RuleSet,
+) -> None:
+    """Three corridor districts that used to owe nothing now owe five each.
+
+    A zone whose quadplex row reads a bare NP needs no setbacks: there is no
+    path to a building, so there is nothing to measure. That shortcut is only
+    sound while the NP is *settled*. RTC, CC and MC sit in the region of a
+    footnote ruled `unmeasured` against `civic_corridor` -- read, understood,
+    waiting on a corridor map nobody holds -- and an unmeasured fact over a
+    prohibition is a prohibition that might not hold. The resolver treats it as
+    a lever and asks for the dimensions again, which is right.
+
+    They were exempt until now for the wrong reason. The join that hangs
+    footnotes on values read only the first line of a citation and gave up on
+    any it could not parse, so these three -- cited to a header line and a cell
+    line, comma-separated -- never reached the gate at all. Thirty percent of
+    the corpus was in the same position.
+
+    NOT ENCODED, and not because nobody looked. Table 4.0430 states all five
+    standards for all seven corridor districts, but its cells wrap across a
+    dozen lines each and the extraction shifts fragments between columns; the
+    setback rows in particular cannot be assigned to a district by reading the
+    text. Encoding them from this document would be a guess wearing a
+    citation. The table needs a better extraction first.
+    """
+    for zone in LEVERED:
+        held = rules.resolve(GRESHAM, zone)
+        assert held.values["quadplex_allowed"].value is False, zone
+        assert held.values["quadplex_allowed"].levers == frozenset({"civic_corridor"}), zone
+        assert held.missing_required == OWED, zone
 
 
 def test_the_new_citations_all_point_at_their_own_sentence(gresham: Layer) -> None:

@@ -121,7 +121,7 @@ def test_written_config_loads_through_the_real_loader() -> None:
     rules = RuleSet(load_rules())
 
     assert len(rules.layers) == 19  # 18 jurisdictions + the state layer
-    assert sum(len(l.zones) for l in rules.layers.values()) == 182
+    assert sum(len(l.zones) for l in rules.layers.values()) == 187
 
 
 def test_state_parking_preemption_reaches_a_city_zone() -> None:

@@ -37,6 +37,7 @@ from typing import Iterable, Sequence
 
 from flats.encode.dispositions import Note, notes
 from flats.encode.footnotes import Census, survey
+from flats.provenance.store import ProvenanceError, parse_quote
 from flats.rules.caps import LEDGER as CAPS
 from flats.rules.loader import load_rules
 from flats.rules.model import LIKE, Layer
@@ -92,24 +93,44 @@ def _quoted(layer: Layer) -> Iterable[tuple[str, str, str]]:
             yield zone_code, LIKE, zone.like.prov.quote
 
 
-def _first_line(quote: str) -> tuple[str, int]:
-    """The document and first line a quote points at, or ("", 0)."""
-    doc, _, ref = quote.partition("#")
-    if not ref.startswith("L"):
-        return doc, 0
-    first = ref[1:].split("-", 1)[0]
-    return (doc, int(first)) if first.isdigit() else (doc, 0)
+def _cited_lines(quote: str) -> tuple[str, tuple[int, ...]]:
+    """The document a quote points at and every line it names.
+
+    Every line, not the first one. This used to read the first number and give
+    up on anything it could not parse with a string split, which meant a quote
+    of the form ``doc.txt#L950,L951`` -- a row label on one line and the cell
+    under it on another, the ordinary shape of a citation into an extracted
+    table -- returned line zero and dropped out of the join entirely. That was
+    583 of the corpus's 1,952 quoted values, thirty percent, silently exempt
+    from the footnote gate while the report read as though they had passed it.
+
+    A quote may also straddle two regions: a value cited to its table cell and
+    to the footnote body under it names lines on both sides of a notes block.
+    Both are returned and the caller takes the union, because a footnote over
+    any line a value was read from qualifies that value.
+    """
+    try:
+        ref = parse_quote(quote)
+    except ProvenanceError:
+        # A malformed citation is somebody else's rung: readiness fails it at
+        # `misquoted`, well below this one. Skipping it here keeps one broken
+        # quote from taking the whole join down with it.
+        return quote.partition("#")[0], ()
+    return ref.path, ref.numbers
 
 
-def _governing(census: Census, line: int, per_doc: dict[str, list[Note]]) -> tuple[Note, ...]:
-    """The notes of whichever block's region contains this line."""
+def _governing(
+    census: Census, lines: Sequence[int], per_doc: dict[str, list[Note]]
+) -> tuple[Note, ...]:
+    """The notes of every block whose region contains one of these lines."""
+    bodies: set[int] = set()
     for block in census.blocks:
         low, high = block.region
-        if not low <= line - 1 < high:
-            continue
-        lines = {body.line for body in block.bodies}
-        return tuple(note for note in per_doc.get(census.doc, []) if note.line in lines)
-    return ()
+        if any(low <= line - 1 < high for line in lines):
+            bodies |= {body.line for body in block.bodies}
+    if not bodies:
+        return ()
+    return tuple(note for note in per_doc.get(census.doc, []) if note.line in bodies)
 
 
 def qualified(layer_id: str | None = None) -> list[Qualified]:
@@ -124,11 +145,11 @@ def qualified(layer_id: str | None = None) -> list[Qualified]:
         if layer_id and identifier != layer_id:
             continue
         for zone, field, quote in _quoted(layer):
-            doc, line = _first_line(quote)
+            doc, lines = _cited_lines(quote)
             census = censuses.get(doc)
-            if census is None or not line:
+            if census is None or not lines:
                 continue
-            governing = _governing(census, line, per_doc)
+            governing = _governing(census, lines, per_doc)
             if governing:
                 out.append(
                     Qualified(

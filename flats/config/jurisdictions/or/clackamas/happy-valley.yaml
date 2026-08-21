@@ -26,12 +26,30 @@ notes: >-
   from 16.42.030(D), (F), (G), (H), (J) and (K), and (B) is not on the list.
 
 
-  (4) NOT ENCODED AND SHOULD BE. Table 16.22.050 states the standards for the SFA, MUR-A and VTH
-  districts and Table 16.22.060 for MUR-M and MUR-X. A quadplex is permitted by right in all three
-  attached districts -- "Four-family dwelling (quadplex): P, P, P" -- and they are the densest
+  (4) The attached districts, now encoded. Table 16.22.050-2 states the standards for SFA, MUR-A and
+  VTH and Table 16.22.060-1 the uses for MUR-M and MUR-X. A quadplex is permitted by right in all
+  three attached districts -- "Four-family dwelling (quadplex): P, P, P" -- and they are the densest
   residential land in the city, with lot minimums of 2,000 and 3,000 square feet against R-40's
-  40,000. Fifteen footnotes are dismissed as scoped to those tables, and that dismissal is only
-  honest while this item stands: encoding the districts returns all fifteen to the queue.
+  40,000. The fifteen footnotes dismissed as scoped to those tables are back in scope and were
+  already ruled on; nothing in this layer blocks.
+
+
+  Two things in that slice are worth carrying forward. VTH is the only district in the chapter whose
+  density is stated as an area per primary unit rather than units per acre, and it is the one place
+  where reading the lot-size row alone misleads by four times: 2,000 square feet of lot minimum
+  against 8,000 square feet of net developable area for four units at the maximum density. It is
+  also the only Happy Valley district with a maximum street setback.
+
+
+  And MUR-M and MUR-X refuse the building rather than dimension it. Their use table is a closed list
+  -- no "uses similar to" row, unlike the three attached districts -- and its residential rows are
+  attached dwellings (townhouses, attached duplex, rowhouses) and multifamily, which 16.12 defines as
+  five or more families. A four-family dwelling on one lot is neither, and this chapter names
+  "Four-family dwelling (quadplex)" as its own row in every other use table it appears in. On unit
+  lots the same table says yes, and that is carried as a variant -- which is when Table 16.22.060-2's
+  "Variable" dimensions start to matter, and they are the one thing here that cannot be encoded at
+  all: "Standards are flexible and shall be determined through the master plan process or design
+  review application."
 
 
   (5) The townhome column. Every residential table in 16.22 prints a townhome row beside the row a
@@ -1463,6 +1481,493 @@ zones:
     notes: 'quadfit confidence: needs_verification | Layer value ''MURS'' = code ''MUR-S''. Setbacks from
       Model Home form (verified); max_coverage not shown in form (verify Table 16.22.040-2). Front 20
       street/10 alley. In HV middle-housing zone list.'
+  SFA:
+    section:
+    - '16.22.050'
+    cite_default:
+      cite: HV LDC 16.22.050 (SFA, Single-Family Attached); Table 16.22.050-1 permitted uses, Table 16.22.050-2 development standards
+      url: https://ecode360.com/print/HA4934?guid=43529907
+      retrieved: '2026-08-20'
+    quadplex_allowed:
+      # Table 16.22.050-1, row "Four-family dwelling (quadplex)": P in all
+      # three attached districts, with no footnote on the cell and no
+      # child-lot note over this table -- that note is printed over the
+      # three lower-density use tables only.
+      value: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L775,L776"
+    min_lot_sqft:
+      value: 2000
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L950,L951"
+    min_lot_width_ft:
+      # The cell reads "None". A stated absence is an answered standard,
+      # not a missing one.
+      exempt: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L954,L955"
+    min_lot_depth_ft:
+      exempt: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L958,L959"
+    max_coverage_pct:
+      # Note 12 lowers this to 50 percent for single-family detached and
+      # lifts it off cottage clusters. A quadplex is neither.
+      value: 75
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L962,L963"
+    setback_front_ft:
+      value: 10
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L967,L968"
+    setback_rear_ft:
+      value: 15
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L971,L972"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L975,L976"
+      variants:
+        # Note 5: "Side yard building setbacks for attached single-family
+        # (townhouse) may be reduced to zero in compliance with applicable
+        # sections of the adopted Uniform Building Code." A townhouse in
+        # 16.12 is a dwelling "located on its own lot" sharing walls with
+        # dwellings "on another lot", so the zero is relief for a party wall
+        # that runs along a property line. Four units on one lot have no
+        # interior lot line for it to apply to.
+        - value: 0
+          when: [attached_wall, unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L975,L976,L1022"
+    setback_street_side_ft:
+      value: 8
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L979,L980"
+    setback_garage_entrance_ft:
+      # "Garage and carport entrances -- entrances not facing an alley: 22
+      # feet." The alley row is a two-part standard (22 feet to the base
+      # floor, 6 to upper floors) that this field cannot hold, and it only
+      # ever applies to a lot with an alley, which nothing measures.
+      value: 22
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L985,L986,L987"
+    min_building_separation_ft:
+      value: 10
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L994,L995"
+    max_height_ft:
+      # Note 8: "Maximum building height for single-family
+      # detached/attached is 45 feet at the front elevation; side and rear
+      # elevations may not exceed 49 feet in height." That is a relief
+      # above the cell figure for SFA and a restriction below it for
+      # MUR-A's 65; either way the pod stands 26 feet and clears both.
+      value: 45
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L1002,L1003"
+    max_density_du_per_acre:
+      # Note 2: "Residential care homes/facilities, duplexes, triplexes,
+      # quadplexes, cottage clusters, and accessory dwellings are exempt
+      # from the density standards. Townhouses have a maximum density of
+      # 25 units/acre." The exemption is the whole of it for a quadplex;
+      # the townhouse ceiling is carried as the variant it is.
+      exempt: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L942,L943,L1016"
+      variants:
+        - value: 25
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L1016"
+      # Stated per NET acre, which 16.12 defines as "one acre of developable
+      # land, as calculated pursuant to Section 16.63.020(F)" -- a survey of
+      # the parcel rather than an attribute of it.
+      measured_on:
+        fact: net_developable_area
+        cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
+        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+    min_density_du_per_acre:
+      # Exempt by the same sentence, which excuses these buildings from
+      # "the density standards" rather than from the maximum alone.
+      exempt: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L946,L947,L1016"
+      # Stated per NET acre, which 16.12 defines as "one acre of developable
+      # land, as calculated pursuant to Section 16.63.020(F)" -- a survey of
+      # the parcel rather than an attribute of it.
+      measured_on:
+        fact: net_developable_area
+        cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
+        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+    min_landscaped_pct:
+      # Citywide by housing type, not a district standard: 16.42.030(B)(1)
+      # names "single-family attached dwellings, duplexes, triplexes and
+      # fourplexes: 20%", and 16.42.020's exemption list for quadplexes
+      # covers (D), (F), (G), (H), (J) and (K) but not (B).
+      value: 20
+      cite: HV LDC 16.42.030(B)(1)
+      url: https://ecode360.com/print/HA4934?guid=43529965
+      retrieved: '2026-08-20'
+      quote: "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93"
+    notes: >-
+      The densest by-right ground for this building in Happy Valley, and it was
+      not in the file at all. A quadplex is permitted outright, the lot minimum
+      is 2,000 sq ft against R-5's 7,000, coverage runs to 75 percent and the
+      density standards do not reach the building. What binds instead is the
+      envelope: 10 front, 15 rear, 5 each side, 8 to a street side.
+
+
+      NOT ENCODED, on purpose. (1) Note 9 caps a townhouse lot at 3,000 sq ft
+      and the average of all lots at 2,500. Both are maxima on lot size, which
+      is a shape no field here holds and which cannot fail a fixed building on
+      a lot that already exists -- it is a standard for the plat, not the pod.
+      (2) The alley form of the garage entrance setback, 22 feet to the base
+      floor and 6 to upper floors, needs a lot fact nothing measures.
+      (3) Note 4 asks for a 10-foot landscaped buffer in the yards where SFA
+      abuts a lower density district. It is a planting requirement inside a
+      15-foot rear and 5-foot side yard, not an increase to either, and the
+      abutting-zone fact is unmeasured.
+  MURA:
+    section:
+    - '16.22.050'
+    cite_default:
+      cite: HV LDC 16.22.050 (MUR-A, Mixed Use Residential-Attached); Table 16.22.050-1 permitted uses, Table 16.22.050-2 development standards
+      url: https://ecode360.com/print/HA4934?guid=43529907
+      retrieved: '2026-08-20'
+    quadplex_allowed:
+      # Table 16.22.050-1, row "Four-family dwelling (quadplex)": P in all
+      # three attached districts, with no footnote on the cell and no
+      # child-lot note over this table -- that note is printed over the
+      # three lower-density use tables only.
+      value: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L775,L777"
+    min_lot_sqft:
+      value: 3000
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L950,L952"
+      variants:
+        # Note 9: "Each lot for a townhouse in the MUR-A zone shall have a
+        # minimum size of 1,500 square feet and no maximum lot size." The
+        # same note exempts congregate care, two- and three-family and
+        # multifamily lots from lot size entirely and does not name a
+        # four-family dwelling, so the 3,000 above stands for the pod.
+        - per_dwelling: 1500
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L1028"
+    min_lot_width_ft:
+      # The cell reads "None". A stated absence is an answered standard,
+      # not a missing one.
+      exempt: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L954,L956"
+    min_lot_depth_ft:
+      exempt: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L958,L960"
+    max_coverage_pct:
+      # Note 12 lowers this to 50 percent for single-family detached and
+      # lifts it off cottage clusters. A quadplex is neither.
+      value: 75
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L962,L964"
+    setback_front_ft:
+      value: 10
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L967,L969"
+    setback_rear_ft:
+      value: 15
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L971,L973"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L975,L977"
+      variants:
+        # Note 5: "Side yard building setbacks for attached single-family
+        # (townhouse) may be reduced to zero in compliance with applicable
+        # sections of the adopted Uniform Building Code." A townhouse in
+        # 16.12 is a dwelling "located on its own lot" sharing walls with
+        # dwellings "on another lot", so the zero is relief for a party wall
+        # that runs along a property line. Four units on one lot have no
+        # interior lot line for it to apply to.
+        - value: 0
+          when: [attached_wall, unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L975,L977,L1022"
+    setback_street_side_ft:
+      value: 8
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L979,L981"
+    setback_garage_entrance_ft:
+      # "Garage and carport entrances -- entrances not facing an alley: 22
+      # feet." The alley row is a two-part standard (22 feet to the base
+      # floor, 6 to upper floors) that this field cannot hold, and it only
+      # ever applies to a lot with an alley, which nothing measures.
+      value: 22
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L985,L986,L988"
+    min_building_separation_ft:
+      value: 10
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L994,L996"
+    max_height_ft:
+      # Note 8: "Maximum building height for single-family
+      # detached/attached is 45 feet at the front elevation; side and rear
+      # elevations may not exceed 49 feet in height." That is a relief
+      # above the cell figure for SFA and a restriction below it for
+      # MUR-A's 65; either way the pod stands 26 feet and clears both.
+      value: 65
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L1002,L1004"
+    max_density_du_per_acre:
+      # Note 2: "Residential care homes/facilities, duplexes, triplexes,
+      # quadplexes, cottage clusters, and accessory dwellings are exempt
+      # from the density standards. Townhouses have a maximum density of
+      # 25 units/acre." The exemption is the whole of it for a quadplex;
+      # the townhouse ceiling is carried as the variant it is.
+      exempt: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L942,L944,L1016"
+      variants:
+        - value: 25
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L1016"
+      # Stated per NET acre, which 16.12 defines as "one acre of developable
+      # land, as calculated pursuant to Section 16.63.020(F)" -- a survey of
+      # the parcel rather than an attribute of it.
+      measured_on:
+        fact: net_developable_area
+        cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
+        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+    min_density_du_per_acre:
+      # Exempt by the same sentence, which excuses these buildings from
+      # "the density standards" rather than from the maximum alone.
+      exempt: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L946,L948,L1016"
+      # Stated per NET acre, which 16.12 defines as "one acre of developable
+      # land, as calculated pursuant to Section 16.63.020(F)" -- a survey of
+      # the parcel rather than an attribute of it.
+      measured_on:
+        fact: net_developable_area
+        cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
+        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+    min_landscaped_pct:
+      # Citywide by housing type, not a district standard: 16.42.030(B)(1)
+      # names "single-family attached dwellings, duplexes, triplexes and
+      # fourplexes: 20%", and 16.42.020's exemption list for quadplexes
+      # covers (D), (F), (G), (H), (J) and (K) but not (B).
+      value: 20
+      cite: HV LDC 16.42.030(B)(1)
+      url: https://ecode360.com/print/HA4934?guid=43529965
+      retrieved: '2026-08-20'
+      quote: "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93"
+    notes: >-
+      Same table as SFA, two columns over: a higher lot minimum (3,000), the
+      same 75 percent coverage and 65 feet of height instead of 45. The
+      townhouse lot minimum drops to 1,500 here with no maximum, which is the
+      loosest lot standard in the city.
+
+
+      NOT ENCODED, on purpose. (1) The alley form of the garage entrance
+      setback. (2) Note 3's 10-foot perimeter setback for cottage clusters in
+      MUR-A, which is a different building. (3) Note 8's 45-foot front
+      elevation ceiling for single-family attached, which sits below the 65 in
+      the cell; the pod stands 26 and clears either, so the two readings do not
+      separate until a taller design enters the catalog.
+  VTH:
+    section:
+    - '16.22.050'
+    cite_default:
+      cite: HV LDC 16.22.050 (VTH, Village Townhome); Table 16.22.050-1 permitted uses, Table 16.22.050-2 development standards
+      url: https://ecode360.com/print/HA4934?guid=43529907
+      retrieved: '2026-08-20'
+    quadplex_allowed:
+      # Table 16.22.050-1, row "Four-family dwelling (quadplex)": P in all
+      # three attached districts, with no footnote on the cell and no
+      # child-lot note over this table -- that note is printed over the
+      # three lower-density use tables only.
+      value: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L775,L778"
+    min_lot_sqft:
+      value: 2000
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L950,L953"
+    min_lot_width_ft:
+      # The cell reads "None". A stated absence is an answered standard,
+      # not a missing one.
+      exempt: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L954,L957"
+    min_lot_depth_ft:
+      exempt: true
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L958,L961"
+    max_coverage_pct:
+      # 65 percent, and unlike the other two columns it carries no note 12.
+      value: 65
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L962,L965"
+    setback_front_ft:
+      value: 10
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L967,L970"
+    setback_rear_ft:
+      value: 15
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L971,L974"
+    setback_side_ft:
+      value: 5
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L975,L978"
+      variants:
+        # Note 5: "Side yard building setbacks for attached single-family
+        # (townhouse) may be reduced to zero in compliance with applicable
+        # sections of the adopted Uniform Building Code." A townhouse in
+        # 16.12 is a dwelling "located on its own lot" sharing walls with
+        # dwellings "on another lot", so the zero is relief for a party wall
+        # that runs along a property line. Four units on one lot have no
+        # interior lot line for it to apply to.
+        - value: 0
+          when: [attached_wall, unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L975,L978,L1022"
+    setback_street_side_ft:
+      value: 5
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L979,L982"
+    setback_front_max_ft:
+      # A maximum, not a minimum: "Setback (maximum from street
+      # right-of-way or designated accessway) -- 18 feet". SFA and MUR-A
+      # print "None" in the same row. This is the standard a village
+      # townhome district uses to hold the street wall, and it is the one
+      # dimension here that a deep-setback site plan fails.
+      value: 18
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L998,L1001"
+    setback_garage_entrance_ft:
+      # "Garage and carport entrances -- entrances not facing an alley: 22
+      # feet." The alley row is a two-part standard (22 feet to the base
+      # floor, 6 to upper floors) that this field cannot hold, and it only
+      # ever applies to a lot with an alley, which nothing measures.
+      value: 22
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L985,L986,L989"
+    min_building_separation_ft:
+      value: 10
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L994,L997"
+    max_height_ft:
+      # 35 feet flat. Note 8's 45-foot front elevation allowance is marked
+      # on the SFA and MUR-A cells only.
+      value: 35
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L1002,L1005"
+    max_density_du_per_acre:
+      # VTH states density as an area per primary unit rather than units
+      # per acre, and note 2's quadplex exemption is marked on the SFA and
+      # MUR-A cells only -- this column carries note 9 instead. So the
+      # pod is held to it: at most one unit per 2,000 sq ft, which is a
+      # floor of 8,000 sq ft of net developable area for four. The lot
+      # minimum two rows down is 2,000. The density is the binding half,
+      # and reading the lot row alone would have missed it fourfold.
+      sqft_per_unit: 2000
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L942,L945,L1014"
+      # Stated per NET acre, which 16.12 defines as "one acre of developable
+      # land, as calculated pursuant to Section 16.63.020(F)" -- a survey of
+      # the parcel rather than an attribute of it.
+      measured_on:
+        fact: net_developable_area
+        cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
+        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+    min_density_du_per_acre:
+      # And at least one unit per 3,000 sq ft, so four units need no more
+      # than 12,000 sq ft of net developable area. The pair is a band.
+      sqft_per_unit: 3000
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L946,L949,L1014"
+      # Stated per NET acre, which 16.12 defines as "one acre of developable
+      # land, as calculated pursuant to Section 16.63.020(F)" -- a survey of
+      # the parcel rather than an attribute of it.
+      measured_on:
+        fact: net_developable_area
+        cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
+        quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+    min_landscaped_pct:
+      # Citywide by housing type, not a district standard: 16.42.030(B)(1)
+      # names "single-family attached dwellings, duplexes, triplexes and
+      # fourplexes: 20%", and 16.42.020's exemption list for quadplexes
+      # covers (D), (F), (G), (H), (J) and (K) but not (B).
+      value: 20
+      cite: HV LDC 16.42.030(B)(1)
+      url: https://ecode360.com/print/HA4934?guid=43529965
+      retrieved: '2026-08-20'
+      quote: "or/clackamas/happy-valley/16.42.landscaping.txt#L89,L93"
+    notes: >-
+      The one district in the chapter whose density is stated as an area per
+      unit, and the one where reading the lot-size row alone would mislead by
+      four times: 2,000 sq ft of lot minimum, 8,000 sq ft of net developable
+      area to carry four units at the maximum density. It is also the only
+      Happy Valley district with a maximum street setback -- 18 feet -- so a
+      site plan that pushes the building back to gain parking depth fails here
+      on a standard no other zone in the city has.
+
+
+      NOT ENCODED, on purpose. (1) Note 11 lets one of the two required front
+      setbacks on a corner lot drop to 8 feet "when abutting a local or
+      connector street". It is optional relief conditioned on a street
+      classification nothing here holds, and declining relief is the
+      conservative half. (2) Note 10 sends preexisting dwellings and their
+      accessory structures to Clackamas County VR-4/5 standards, which is a
+      rule for a building already there. (3) Note 9's 3,000 sq ft maximum and
+      2,500 average on townhouse lots, as in SFA.
+  MURM:
+    section:
+    - '16.22.060'
+    cite_default:
+      cite: HV LDC 16.22.060 (MUR-M, Mixed Use Residential-Multifamily); Table 16.22.060-1 permitted uses
+      url: https://ecode360.com/print/HA4934?guid=43529907
+      retrieved: '2026-08-20'
+    quadplex_allowed:
+      # Table 16.22.060-1 "identifies the land uses that are allowed in the
+      # MUR-M and MUR-X Districts" and is a closed list -- unlike the three
+      # attached districts it carries no "uses similar to those upon
+      # administrative determination" row. Its residential rows are "Attached
+      # dwellings, (townhouses, attached duplex, rowhouses)" and "Multifamily
+      # dwellings", low, medium and high.
+      #
+      # Neither reaches four units on one lot. 16.12 defines multifamily as
+      # "five or more families" and the parenthetical after attached dwellings
+      # enumerates three types a quadplex is not. This chapter names
+      # "Four-family dwelling (quadplex)" as its own row in every other use
+      # table it appears in, so its absence here is a distinction the code is
+      # drawing rather than an omission.
+      value: false
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L1225,L1229,L1232,L1233"
+      variants:
+        # Split the units onto their own lots and the same table says yes:
+        # townhouses and rowhouses are permitted outright. That is the whole
+        # of what changes -- the dimensions stay unencodable, see the note.
+        - value: true
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L1229,L1232"
+    max_height_ft:
+      value: 65
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L1306,L1315"
+    notes: >-
+      A zone the screen cannot clear and should not pretend to. Table
+      16.22.060-2 prints "Variable" for lot size, lot width, lot depth, lot
+      coverage and every building setback, and note 2 says why: "Standards are
+      flexible and shall be determined through the master plan process or
+      design review application." There is no by-right envelope to test a
+      building against. Height and density are the only fixed figures, and
+      density does not reach a four-unit building.
+
+
+      So the missing required fields in this zone are not encoding debt. They
+      are the answer: a site here is a design-review question, not a screening
+      one. The four-family permission is settled false regardless, which is
+      what actually decides the pod today; the unit-lot variant is what makes
+      the dimensions matter, and it is the variant that cannot be dimensioned.
+      A lot in MUR-M reaching the fit stage under a unit-lot design should come
+      back REVIEW, and it will.
+
+
+      Table 16.22.060-2 splits the district into MUR-M1, MUR-M2 and MUR-M3 by
+      density -- 24.99, 34.99 and 50 du per net acre at the maximum, 15, 25 and
+      35 at the minimum -- while the use table that decides this building
+      treats MUR-M as one district. Those three codes are not carried as zones
+      here: nothing confirms the zoning layer prints them, and a zone whose
+      base was inferred rather than read is a gap the ledger cannot close by
+      reading a code. If the layer does print them, they are three `like`
+      entries and this note is the reading behind them.
+  MURX:
+    section:
+    - '16.22.060'
+    cite_default:
+      cite: HV LDC 16.22.060 (MUR-X, Mixed Use Buildings with Residential Emphasis); Table 16.22.060-1 permitted uses
+      url: https://ecode360.com/print/HA4934?guid=43529907
+      retrieved: '2026-08-20'
+    quadplex_allowed:
+      # The second column of the same closed list, and it answers the same way.
+      # MUR-X permits "attached dwellings, (townhouses, attached duplex,
+      # rowhouses)" and multifamily low, medium and high, and names no
+      # four-family dwelling anywhere.
+      value: false
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L1225,L1229,L1232,L1233"
+      variants:
+        - value: true
+          when: [unit_lots]
+          quote: "or/clackamas/happy-valley/16.22.residential.txt#L1229,L1232"
+    notes: >-
+      Stated from its own column rather than borrowed from MUR-M, because the
+      two districts part company below the use table: 16.22.060-2 is headed
+      MUR-M1, MUR-M2 and MUR-M3 and carries no MUR-X column at all. So MUR-X
+      has no printed dimensional standards in the chapter that governs it --
+      not "Variable", not deferred, absent -- which is the strongest form of
+      the same finding as MUR-M. There is nothing here for a by-right screen
+      to measure a building against, and the permission is what decides the
+      pod regardless.
+
+
+      Height is deliberately not carried across from MUR-M's 65 feet. That
+      figure is printed in a table this district is not named in.
   R20CC:
     section:
     - '16.22.020'
