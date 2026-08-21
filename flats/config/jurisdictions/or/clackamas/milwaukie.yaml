@@ -233,8 +233,23 @@ zones:
       # minimum side yard and the same 45 degrees. A 26 ft wall is one foot
       # over and stands at 6 ft. See the R-MD note above for the definition
       # that fixes where the plane starts and for what 19.501.3 exempts.
+      #
+      # Table 19.302.4's side yard row prints no number at all -- it reads
+      # "See Subsection 19.302.5.A" -- and 19.302.5.A is two paragraphs, not
+      # one. A.1 is the 5 ft, and it says "for development other than a
+      # townhouse". A.2 is the townhouse rule: no side yard where two common
+      # walls are shared, and for an exterior townhouse with one common wall,
+      # zero at the wall and 5 ft on the opposite side. Both are quoted
+      # because both readings of this building exist. On one lot it is a
+      # quadplex -- 19.505.5 applies only to a dwelling on its own lot
+      # sharing a common wall across a side LOT line -- so A.1 governs and
+      # the yard is 5 ft either side. Split onto four unit lots the two end
+      # units are exterior townhouses and owe 5 ft on their outer side, which
+      # is the same envelope. The number does not change; the sentence that
+      # was cited for it did not cover the case, which is the whole reason
+      # for quoting the pair.
       value: 5
-      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L526"
+      quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L526,L530"
       step_back:
         height_ft: 25
         slope_degrees: 45

@@ -107,3 +107,120 @@ notes:
       commercial mixed-use zones of Table 19.303.3. This layer encodes no GMU,
       NMU or SMU zone, and the R-HD value it reaches is read from Table
       19.302.4 several pages earlier
+
+  # --- Table 19.303.2, the commercial mixed-use use table -------------
+  #
+  # Eight notes that sat under a heading the reader walked away from: the
+  # table prints "Notes:", then eight lines of permission legend, then the
+  # footnotes. They reach one encoded value, R-HD's side yard, and only
+  # because the block's region runs back four hundred lines to the end of
+  # the last block. Every one of them speaks to GMU, NMU or SMU.
+  #
+  # Note 1 is worth reading anyway. It says the four-consecutive-townhouse
+  # limit of 19.505.5 does not apply in GMU -- which is the code confirming
+  # that the limit binds everywhere else, and 19.505.5 prints it twice: no
+  # more than 4 consecutive townhouses in the High Density Zone, and a
+  # maximum of 4 in R-MD. The pod is four attached units. It is exactly at
+  # that limit, not over it, and a fifth would not be placeable in either
+  # zone on the townhouse path.
+  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L921"
+    digest: "d78fa7eb669e"
+    state: dismissed
+    reason: >-
+      note 1 lifts the four-consecutive-townhouse limit of 19.505.5 in the GMU
+      zone only. This layer encodes no GMU zone. The limit itself binds R-MD
+      and the High Density Zone at 4, and the pod is 4, so the relief this
+      note grants is relief the screen has no use for
+
+  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L923"
+    digest: "91c3a69264e6"
+    state: dismissed
+    reason: >-
+      note 2 exempts residential uses in a vertical mixed-use building from
+      conditional use review in the NMU zone. No NMU zone is encoded, and the
+      pod is not a vertical mixed-use building
+
+  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L925"
+    digest: "9978199cdba9"
+    state: dismissed
+    reason: >-
+      note 3 caps nonresidential uses in the NMU zone at 10,000 sq ft. No NMU
+      zone is encoded and the pod is residential
+
+  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L927"
+    digest: "4712ab671432"
+    state: dismissed
+    reason: >-
+      note 4 exempts one address, 4320 SE King Rd, from the 10,000 sq ft
+      nonresidential cap of note 3. A single named lot, a nonresidential use,
+      and a zone this layer does not encode
+
+  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L929"
+    digest: "92169e06e893"
+    state: dismissed
+    reason: >-
+      note 5 requires vehicle retail sales in the GMU zone to be conducted
+      indoors. Not a residential use and not an encoded zone
+
+  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L931"
+    digest: "4843487e6d01"
+    state: dismissed
+    reason: >-
+      note 6 requires vehicle repair and service in the commercial mixed-use
+      zones to be conducted indoors. Not a residential use and not an encoded
+      zone
+
+  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L933"
+    digest: "170f39a1c4f3"
+    state: dismissed
+    reason: >-
+      note 7 limits day care and child care uses to 5,000 sq ft. Not the use
+      being placed
+
+  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L935"
+    digest: "61372e1c8420"
+    state: dismissed
+    reason: >-
+      note 8 limits manufacturing and production uses to 5,000 sq ft on the
+      ground floor and only as accessory to a retail or eating and drinking
+      use. Not the use being placed
+
+  # --- Table 19.312.2, the North Milwaukie Innovation Area use table ---
+  #
+  # Four more notes behind a legend, this one pulled apart by the extraction
+  # into a code, an equals sign and a definition on three separate lines.
+  # They govern the NMIA zones -- NME and MUTSA -- and this layer encodes
+  # neither, so the only thing they reach is the width of their own block's
+  # region. Ruled rather than left unread because an unread note is a claim
+  # that nobody has looked, and somebody has.
+  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L3809"
+    digest: "f95296254a7d"
+    state: dismissed
+    reason: >-
+      note 1 permits multifamily residential outright in the NMIA, standing
+      alone or above a ground-floor commercial use, subject to deed
+      restrictions giving notice of the surrounding industrial uses. No NMIA
+      zone is encoded, and the note widens what may be built rather than
+      narrowing it
+
+  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L3812"
+    digest: "4c9baa0192c1"
+    state: dismissed
+    reason: >-
+      note 2 sets the siting criteria for adult entertainment businesses.
+      Not the use being placed
+
+  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L3819"
+    digest: "230419440ff3"
+    state: dismissed
+    reason: >-
+      note 3 requires trade school activities to be conducted indoors. Not
+      the use being placed
+
+  - quote: "or/clackamas/milwaukie/19.300.base-zones.txt#L3822"
+    digest: "8685e08aea37"
+    state: dismissed
+    reason: >-
+      note 4 grandfathers waste management uses in existence before 31
+      December 2017 and makes later ones conditional. Not the use being
+      placed, and no NMIA zone is encoded

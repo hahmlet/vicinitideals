@@ -86,6 +86,28 @@ NOTES_HEAD = re.compile(
 #: DTM and DMU on a lot of record of 6,500 square feet or smaller.
 NOTES_LEAD = re.compile(r"(?=.*\bthe following\b)(?=.*\btable\s+[\w.-]+)", re.I)
 
+#: A line of the permission legend, which a table prints under the same
+#: "Notes:" heading as its footnotes and before them: "P = Permitted.", "CSU =
+#: Permitted with community service use approval subject to Section 19.904."
+#:
+#: The legend is why the reader insists on a number under the heading -- in
+#: this corpus a "Notes:" heading sits over a legend far more often than over
+#: notes. But Milwaukie prints both, legend first, and refusing the block on
+#: sight of the legend lost eight footnotes to Table 19.303.2 including the one
+#: that lifts the four-consecutive-townhouse limit in the GMU zone. So a legend
+#: line is stepped over rather than believed, and anything else that is not a
+#: note still ends it.
+LEGEND_LINE = re.compile(r"^(?P<code>[A-Z][A-Z/-]{0,6})\s*=\s*\S")
+
+#: The same legend with the extraction pulled apart: the code, the equals sign
+#: and the definition each arriving on a line of their own. Milwaukie's second
+#: use table prints "P", "=", "Permitted." over four lines and then its notes.
+#:
+#: A bare "P" on a line is a permission cell far more often than it is a legend
+#: code, so this shape is never believed on its own -- only where the very next
+#: line is nothing but the equals sign, which no table cell in this corpus is.
+LEGEND_CODE = re.compile(r"^[A-Z]{1,4}$")
+
 #: One numbered note *inside* a block, in any of the spellings codifiers use:
 #: "1 Density calculations...", "2. Zero lot line dwellings...", "[3] Additional
 #: height...", "(4) Townhomes are exempt...".
@@ -125,6 +147,14 @@ BRACKET_NOTE = re.compile(r"^\[(?P<n>\d{1,2})\]\s+(?P<text>\S.*)$")
 #: earns the reading -- an ordinary numbered paragraph is "1. The applicant
 #: shall", one space and a period -- and the run is only believed where it
 #: starts at 1 and ascends, which is checked in `_blocks` rather than here.
+#:
+#: The period may not join the gap, tempting as it is. Milwaukie prints two
+#: real notes as "1.  Properties in the MUTSA have a maximum front yard
+#: setback of 10 ft", and admitting that shape to reach them turned 1,200
+#: ordinary numbered subsections into footnote bodies across twenty-eight
+#: documents -- Troutdale's development standards chapter alone claimed
+#: seventy-nine. Punctuation plus a column is how this corpus writes a
+#: subsection, not how it writes a note.
 HEADLESS_NOTE = re.compile(r"^(?P<n>\d{1,2})\s{2,}(?P<text>\S.*)$")
 
 #: The same run, parenthesised and glued: "(1)For commercial or residential
@@ -212,15 +242,15 @@ ENDS_BLOCK = re.compile(
     re.I,
 )
 
-#: A block cannot run forever. Past this the "unrecognised line continues the
-#: previous note" rule is doing more harm than good, and whatever we are
-#: reading is not a notes block any more.
 #: The marker kinds that carry no weight of their own. A lone permission code
 #: and a bare capital letter are both shapes prose can wear by accident, so
 #: `census` keeps them only where the block governing the line states a note
 #: by that mark.
 PROVISIONAL = ("lone", "letter")
 
+#: A block cannot run forever. Past this the "unrecognised line continues the
+#: previous note" rule is doing more harm than good, and whatever we are
+#: reading is not a notes block any more.
 BLOCK_LIMIT = 80
 
 #: How far above a block to look for the table header it is repeating. About a
@@ -832,6 +862,15 @@ def _order(mark: str) -> tuple[int, int]:
     return (0, int(mark)) if mark.isdigit() else (1, ord(mark))
 
 
+def _next_content(lines: Sequence[str], i: int) -> str:
+    """The next line with anything on it, stripped, or "" at the end."""
+    for raw in lines[i : i + 4]:
+        stripped = raw.strip()
+        if stripped:
+            return stripped
+    return ""
+
+
 def _headless_run(lines: Sequence[str], i: int) -> bool:
     """Whether a numbered notes run starts here with nothing announcing it.
 
@@ -1068,6 +1107,10 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
     chapter = ""
     #: Whether the one allowed line of scope has been spent. See `NOTES_LEAD`.
     led = False
+    #: Whether a legend has been stepped over. See `LEGEND_LINE`.
+    legend = False
+    #: Whether that legend arrived one part per line. See `LEGEND_CODE`.
+    split = False
     highest = (-1, -1)
     #: Highest mark seen inside the sub-list a note introduced, or 0 when the
     #: reading is at the top level. See the restart branch below.
@@ -1080,17 +1123,26 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
             chapter = (stamp.groupdict().get("ident") or "").strip()
             i += 1
             continue
+        if not stripped:
+            i += 1
+            continue
         lead = FRAME_HEAD_LEADING.match(stripped)
-        if (
-            not stripped
-            or FURNITURE.search(stripped)
+        furniture = bool(
+            FURNITURE.search(stripped)
             or FRAME_HEAD_TRAILING.match(stripped)
             or (
                 lead is not None
                 and i - stamped <= FRAME_REACH
                 and (not chapter or lead.group("n") == chapter)
             )
-        ):
+        )
+        if furniture and not (legend and not bodies):
+            # Furniture is stepped over anywhere except between a legend and
+            # the note it is supposed to be standing in front of. Milwaukie
+            # ends three of its legends with a section heading -- and a section
+            # heading is furniture by the same rule that skips running headers
+            # -- so the block walked out of the table it belonged to and read
+            # the next subsection's "A." as a note. Nothing may come between.
             i += 1
             continue
         if ENDS_BLOCK.match(stripped) or (bodies and NOTES_HEAD.match(stripped)):
@@ -1182,6 +1234,28 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
                 # One sentence of scope between the heading and note 1. See
                 # `NOTES_LEAD` for why it has to name the table to get this.
                 led = True
+                i += 1
+                continue
+            if not furniture and LEGEND_LINE.match(stripped):
+                # A permission legend under the same heading as the notes.
+                # Stepped over rather than believed: a legend alone still
+                # yields no bodies and is still refused. See `LEGEND_LINE`.
+                legend = True
+                i += 1
+                continue
+            if not furniture and (
+                split
+                or (
+                    LEGEND_CODE.match(stripped)
+                    and _next_content(lines, i + 1) == "="
+                )
+            ):
+                # The same legend with its code, its equals sign and its
+                # definition on three lines. Entered only on that pair and
+                # left at the first note, at anything that ends a block, or
+                # at the page furniture the guard above stops skipping while
+                # a legend is open. See `LEGEND_CODE`.
+                legend = split = True
                 i += 1
                 continue
             # The first line under the heading is not numbered, so whatever
