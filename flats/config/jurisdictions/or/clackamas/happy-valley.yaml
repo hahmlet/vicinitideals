@@ -143,6 +143,20 @@ zones:
         - value: false
           when: [middle_housing_child_lot]
           quote: "or/clackamas/happy-valley/16.22.residential.txt#L271"
+    max_height_ft:
+      # Table 16.22.020-2, the "Building height (maximum)" row: 45 feet in all
+      # three columns. The quote carries the column header line as well as the
+      # row, because the row prints the same figure three times and on its own
+      # it does not say which zone is being read.
+      #
+      # Note 5 is the marker on the cell: "The single-family residential
+      # building height maximum is 45 feet at the front elevation; side and
+      # rear elevations may not exceed 49 feet." It grants single-family
+      # residential four extra feet at the back and sides. This building is
+      # four attached dwellings, so the relief is not available to it and the
+      # cell figure stands unqualified. Either way 26 feet clears.
+      value: 45
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L278,L298"
     max_density_du_per_acre:
       # Table 16.22.020-2 prints no ceiling against the quadplex row -- the
       # standard there is "Lot size (minimum and maximum density)", a lot area
@@ -314,6 +328,20 @@ zones:
         - value: false
           when: [middle_housing_child_lot]
           quote: "or/clackamas/happy-valley/16.22.residential.txt#L271"
+    max_height_ft:
+      # Table 16.22.020-2, the "Building height (maximum)" row: 45 feet in all
+      # three columns. The quote carries the column header line as well as the
+      # row, because the row prints the same figure three times and on its own
+      # it does not say which zone is being read.
+      #
+      # Note 5 is the marker on the cell: "The single-family residential
+      # building height maximum is 45 feet at the front elevation; side and
+      # rear elevations may not exceed 49 feet." It grants single-family
+      # residential four extra feet at the back and sides. This building is
+      # four attached dwellings, so the relief is not available to it and the
+      # cell figure stands unqualified. Either way 26 feet clears.
+      value: 45
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L278,L298"
     max_density_du_per_acre:
       # Table 16.22.020-2 prints no ceiling against the quadplex row -- the
       # standard there is "Lot size (minimum and maximum density)", a lot area
@@ -483,6 +511,20 @@ zones:
         - value: false
           when: [middle_housing_child_lot]
           quote: "or/clackamas/happy-valley/16.22.residential.txt#L271"
+    max_height_ft:
+      # Table 16.22.020-2, the "Building height (maximum)" row: 45 feet in all
+      # three columns. The quote carries the column header line as well as the
+      # row, because the row prints the same figure three times and on its own
+      # it does not say which zone is being read.
+      #
+      # Note 5 is the marker on the cell: "The single-family residential
+      # building height maximum is 45 feet at the front elevation; side and
+      # rear elevations may not exceed 49 feet." It grants single-family
+      # residential four extra feet at the back and sides. This building is
+      # four attached dwellings, so the relief is not available to it and the
+      # cell figure stands unqualified. Either way 26 feet clears.
+      value: 45
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L278,L298"
     max_density_du_per_acre:
       # Table 16.22.020-2 prints no ceiling against the quadplex row -- the
       # standard there is "Lot size (minimum and maximum density)", a lot area
@@ -652,6 +694,12 @@ zones:
         - value: false
           when: [middle_housing_child_lot]
           quote: "or/clackamas/happy-valley/16.22.residential.txt#L460"
+    max_height_ft:
+      # Table 16.22.030-2, same row and same reading as the very low density
+      # table above: 45 feet in all three columns, note 5 the single-family
+      # front/side-and-rear relief that a quadplex cannot take.
+      value: 45
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L468,L488"
     max_density_du_per_acre:
       # Table 16.22.030-2 prints no ceiling against the quadplex row -- the
       # standard there is "Lot size (minimum and maximum density)", a lot area
@@ -822,6 +870,12 @@ zones:
         - value: false
           when: [middle_housing_child_lot]
           quote: "or/clackamas/happy-valley/16.22.residential.txt#L460"
+    max_height_ft:
+      # Table 16.22.030-2, same row and same reading as the very low density
+      # table above: 45 feet in all three columns, note 5 the single-family
+      # front/side-and-rear relief that a quadplex cannot take.
+      value: 45
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L468,L488"
     max_density_du_per_acre:
       # Table 16.22.030-2 prints no ceiling against the quadplex row -- the
       # standard there is "Lot size (minimum and maximum density)", a lot area
@@ -992,6 +1046,12 @@ zones:
         - value: false
           when: [middle_housing_child_lot]
           quote: "or/clackamas/happy-valley/16.22.residential.txt#L460"
+    max_height_ft:
+      # Table 16.22.030-2, same row and same reading as the very low density
+      # table above: 45 feet in all three columns, note 5 the single-family
+      # front/side-and-rear relief that a quadplex cannot take.
+      value: 45
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L468,L488"
     max_density_du_per_acre:
       # Table 16.22.030-2 prints no ceiling against the quadplex row -- the
       # standard there is "Lot size (minimum and maximum density)", a lot area
@@ -1168,6 +1228,26 @@ zones:
         # answers no question a screen can ask.
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
         quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+    max_height_ft:
+      # Table 16.22.040-2: 45 feet in the R-5 column.
+      #
+      # The marker on this cell is 6, and note 6 in this table is not about
+      # height -- it reads "Pursuant to Section 16.42.030, 20% of the net
+      # developable area must be usable open space." The single-family height
+      # relief is note 7, printed one line below it. The chapter's other three
+      # dimensional tables all point their height row at their own height note
+      # (16.22.010-2 note 2, 16.22.020-2 note 5, 16.22.030-2 note 5); this is
+      # the only one that lands one short. Confirmed in the source rather than
+      # blamed on extraction: the document was fetched twice, and both copies
+      # print 6.
+      #
+      # It does not move the number under either reading. Note 6 is an open
+      # space standard rather than a height qualifier, and note 7 relieves
+      # single-family residential only. Recorded because a reviewer who follows
+      # the marker arrives at a note about open space and has no way to tell
+      # whether the height was read.
+      value: 45
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L642,L670"
     max_density_du_per_acre:
       # No ceiling is printed for the quadplex on one lot. The townhome row is
       # a different standard for a different plat, carried as the variant.
@@ -1363,6 +1443,11 @@ zones:
         # answers no question a screen can ask.
         cite: HV LDC 16.63.020(F)(1), by way of 16.12 "Net acre"
         quote: "or/clackamas/happy-valley/16.63.land-divisions.txt#L133,L137,L141,L145,L149,L153"
+    max_height_ft:
+      # Table 16.22.040-2, MUR-S column: 65 feet, twenty above the R-5 cell
+      # beside it. Same marker 6 and the same discrepancy recorded on R-5.
+      value: 65
+      quote: "or/clackamas/happy-valley/16.22.residential.txt#L642,L670"
     max_density_du_per_acre:
       exempt: true
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L642,L646,L647"
