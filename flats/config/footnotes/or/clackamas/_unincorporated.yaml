@@ -1,0 +1,403 @@
+# Clackamas County unincorporated -- ZDO Section 315 footnotes.
+#
+# Three hundred and five markers, and until now not one of them had a body.
+# This is the document every value in the layer cites, and the gate that holds
+# a value back when an unread note governs it had nothing to hold: it reported
+# the whole layer clean because it could not see a single note.
+#
+# Two readers were blind in series. The county writes each table's notes as an
+# HTML ordered list, where the numbers are the browser's and never appear in
+# the text, so the extractor stored ten bodies stripped of the only thing tying
+# them to a marker. The notes that DID carry their numbers -- Table 315-3
+# prints them as superscripts -- arrived as "9 Except for middle housing", one
+# space and no heading, which is the one run shape the census declined. Fixing
+# the extractor and teaching the census that shape is what produced this file.
+#
+# Forty-one notes over four blocks. They fall into five groups.
+#
+# **Other housing types.** Most of the relief in this chapter names detached
+# single-family dwellings, duplexes, manufactured homes, prefabricated
+# structures and single room occupancies. Four attached dwellings are none of
+# those, so the relief is not available -- which is the direction that keeps
+# the encoded number.
+#
+# **Other application paths.** A planned unit development has no minimum lot
+# size, no minimum rear or side setback and 65 percent coverage; a zero-lot-line
+# development has no rear or side minimum either. Neither is a standard a
+# by-right lot is measured against.
+#
+# **The split plat.** Six notes describe what happens on a middle housing lot:
+# no minimum lot size, a third or a quarter of the DLA, coverage and setbacks
+# measured from the parent lot. This layer screens the parent lot and carries
+# the density half as `unless: [unit_lots]`.
+#
+# **A boundary nobody measures.** Three notes re-label a lot line, and only
+# one of them can hurt. Frontage on a pedestrian connection becomes a SIDE
+# line at five feet, which is the side setback already encoded, so those two
+# cannot move a value. Frontage on an accessway becomes a FRONT line, which
+# turns a five foot side into a ten foot front on whichever face it lands --
+# and an accessway is not a street, so no street layer answers it. That one is
+# `unmeasured` against a new condition, `abuts_accessway`.
+#
+# **One relief this building can actually take.** Note 12 states that the
+# maximum setback standards do not apply to quadplexes developed under Section
+# 845, so the 18 foot maximum front setback encoded on both village zones does
+# not bind this pod. It is dismissed rather than encoded here because declining
+# a relief is the safe direction -- a maximum nobody enforces can only ever
+# have been satisfied -- and because taking it changes a value, which is a
+# separate change with its own citation.
+#
+# Nothing in this file loosens a standard. That is worth saying plainly: the
+# gate went from governing nothing in this layer to governing sixty-four
+# values, and not one encoded number moved as a result.
+notes:
+  # --- Table 315-1, limited-use conditions ---------------------------
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1042"
+    digest: "c75ea91036f5"
+    state: dismissed
+    reason: >-
+      one of the four conditions on Table 315-1's LIMITED USE column. The
+      Quadplexes row reads "P" in every district this layer holds -- a primary
+      use, not a limited one -- so none of the four reaches this building.
+      They are governed here only because the permission is quoted from lines
+      this block's region covers
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1044"
+    digest: "962a2294adc9"
+    state: dismissed
+    reason: >-
+      one of the four conditions on Table 315-1's LIMITED USE column. The
+      Quadplexes row reads "P" in every district this layer holds -- a primary
+      use, not a limited one -- so none of the four reaches this building.
+      They are governed here only because the permission is quoted from lines
+      this block's region covers
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1046"
+    digest: "b95e0c3e15aa"
+    state: dismissed
+    reason: >-
+      one of the four conditions on Table 315-1's LIMITED USE column. The
+      Quadplexes row reads "P" in every district this layer holds -- a primary
+      use, not a limited one -- so none of the four reaches this building.
+      They are governed here only because the permission is quoted from lines
+      this block's region covers
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1048"
+    digest: "28b15da20621"
+    state: dismissed
+    reason: >-
+      one of the four conditions on Table 315-1's LIMITED USE column. The
+      Quadplexes row reads "P" in every district this layer holds -- a primary
+      use, not a limited one -- so none of the four reaches this building.
+      They are governed here only because the permission is quoted from lines
+      this block's region covers
+
+  # --- Table 315-2, the eight low-density districts -------------------
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1249"
+    digest: "b3163e8fb64f"
+    state: dismissed
+    reason: >-
+      note 1 sends minimum lot size to Sections 1012 and 1107. This layer does
+      not read its minimum lot size from Table 315-2 at all -- Section 845.01
+      sets 7,000 square feet for a quadplex in every district, which is the
+      figure encoded and the one this note does not touch
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1251"
+    digest: "96b0141d95e6"
+    state: dismissed
+    reason: >-
+      note 2 removes the minimum lot size inside a planned unit development. A
+      PUD is a different application with its own approval, not a standard a
+      by-right lot is measured against, and it is looser than what is encoded
+      either way
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1253"
+    digest: "ed75256d354d"
+    state: dismissed
+    reason: >-
+      note 3 gives a TOWNHOUSE project under Section 845 no minimum lot size
+      and one-third of the DLA. That is the split-plat path, which this layer
+      already carries as `unless: [unit_lots]` on the density exemption rather
+      than as a standard on the parent lot
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1255"
+    digest: "5b64244d9473"
+    state: dismissed
+    reason: >-
+      note 4 is note 3 at one-quarter of the DLA. Same path, same lever, same
+      reason
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1257"
+    digest: "5db2b66c057b"
+    state: dismissed
+    reason: >-
+      note 5 raises maximum lot coverage to 65 percent in a planned unit
+      development. Looser than the encoded 50, and a PUD is a different
+      application rather than a by-right standard
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1259"
+    digest: "e26109f776ae"
+    state: dismissed
+    reason: >-
+      note 6 says coverage on a middle housing lot is calculated on the whole
+      parent lot. It changes what the 50 percent is measured against on a
+      split plat, not what the percentage is, and this layer screens the
+      parent lot
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1261"
+    digest: "88f1b6e93c2c"
+    state: dismissed
+    reason: >-
+      note 7 gives a swimming pool accessory to a dwelling its own setbacks. A
+      different structure
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1263"
+    digest: "78ce92f882aa"
+    state: dismissed
+    reason: >-
+      note 8 removes minimum rear and side setbacks inside a planned unit
+      development or a zero-lot-line development, and names detached
+      single-family dwellings, manufactured homes, prefabricated structures
+      and single room occupancies. Four attached dwellings are none of those,
+      and both regimes are looser than the encoded 5 and 20
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1265"
+    digest: "5b676117a183"
+    state: dismissed
+    reason: >-
+      note 9 keeps measuring setbacks from the parent lot's lines on a middle
+      housing lot, except for townhouses. A measurement rule for a split plat;
+      this layer screens the parent lot
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1267"
+    digest: "20d8f85e796d"
+    state: dismissed
+    reason: >-
+      note 10 opens a list of exceptions for a lot of record of 6,000 square
+      feet or less created before the district applied -- rear 10 and side 5
+      in total. The relief names detached single-family dwellings, duplexes,
+      manufactured homes, prefabricated structures and single room
+      occupancies; a quadplex is not among them, so it cannot take the relief,
+      and the relief is looser than what is encoded
+
+  # --- Table 315-3, VR-5/7 and VR-4/5 ---------------------------------
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1398"
+    digest: "f23e9c93bc7f"
+    state: dismissed
+    reason: >-
+      note 1 sends minimum and maximum lot size to Sections 1012 and 1107.
+      Minimum lot size here comes from Section 845.01, and maximum lot size is
+      not encoded
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1400"
+    digest: "ed75256d354d"
+    state: dismissed
+    reason: >-
+      note 2 is the townhouse one-third DLA again, carried by this layer's
+      `unless: [unit_lots]` lever rather than as a standard on the parent lot
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1402"
+    digest: "3bfb3f0b8b36"
+    state: dismissed
+    reason: >-
+      note 3 confines the minimum and maximum lot size standards to lots for
+      townhouses. Neither is encoded from this table
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1404"
+    digest: "7293fefcf19e"
+    state: dismissed
+    reason: >-
+      note 4 confines the maximum lot size standard, which is not encoded
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1406"
+    digest: "3385a2b1d079"
+    state: dismissed
+    reason: >-
+      note 5 offers an average-lot-size alternative in a subdivision. A
+      lot-size standard, and this layer takes lot size from Section 845
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1408"
+    digest: "2fd129b8d35b"
+    state: dismissed
+    reason: >-
+      note 6 is note 5 at 5,000 square feet. Same reason
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1410"
+    digest: "63059334807c"
+    state: dismissed
+    reason: >-
+      note 7 is note 5 at 2,500 square feet. Same reason
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1412"
+    digest: "e26109f776ae"
+    state: dismissed
+    reason: >-
+      note 8 calculates coverage on the parent lot for a middle housing lot.
+      The percentage is unchanged and this layer screens the parent lot
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1414"
+    digest: "b5991bc086a7"
+    state: dismissed
+    reason: >-
+      note 9 relieves lots in the plat of Sieben Creek Estates of the standard
+      they are marked against -- and names middle housing developed under
+      Section 845 as what the relief does NOT reach. A quadplex is exactly
+      that, so on the height cells this note reads in the direction that keeps
+      the 35 feet. It cannot loosen anything here
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1416"
+    digest: "736add88455b"
+    state: dismissed
+    reason: >-
+      note 10 defines a recessed garage: its vehicle entry set back at least
+      five feet further than the dwelling's facade. A definition. This layer
+      already encodes both halves of the cell it defines -- 10 feet to a
+      recessed or absent garage, 19.5 to a non-recessed one
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1418"
+    digest: "bc6e21f7d3e4"
+    state: dismissed
+    reason: >-
+      note 11 defines a non-recessed garage. The other half of note 10
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1420"
+    digest: "82298db45ec0"
+    state: dismissed
+    reason: >-
+      note 12 does two things and the second one reaches this building: it
+      suspends minimum and maximum setbacks inside a Sunnyside Village
+      Resource Protection Area, and it states that the MAXIMUM setback
+      standards do not apply to triplexes, quadplexes, townhouses or cottage
+      clusters developed under Section 845. So the encoded maximum front
+      setback of 18 feet does not bind this pod at all. Dismissed rather than
+      encoded because declining a relief is the safe direction -- a maximum
+      nobody enforces can only ever have been met, so holding it can refuse a
+      lot the county would pass but can never pass one it would refuse. Taking
+      the relief is a change to the value and is tracked as one
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1422"
+    digest: "74d7b505ab19"
+    state: dismissed
+    reason: >-
+      note 13 removes minimum setbacks on a middle housing lot except at the
+      plat perimeter and against a road. The split-plat regime, looser, and
+      this layer screens the parent lot
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1424"
+    digest: "e5aac3f422d5"
+    state: dismissed
+    reason: >-
+      note 14 lets a porch or patio project four feet into the minimum front
+      yard. A projection allowance for a feature the pod does not have, and
+      looser than the setback encoded
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1426"
+    digest: "9add6dbbdb66"
+    state: unmeasured
+    fact: abuts_accessway
+    reason: >-
+      note 15 makes frontage on an accessway a front lot line. Which of a
+      lot's boundaries is a front line decides which setback each side of the
+      pod is measured against, and nothing here holds a lot's accessways. It
+      can only add a front line, so it is the direction that tightens
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1428"
+    digest: "f27e86f0edb8"
+    state: dismissed
+    reason: >-
+      note 16 cuts the minimum setback from one front lot line to eight feet
+      on a corner lot abutting a local or connector road. A relief that needs
+      a corner lot and a road classification this screen does not hold -- and
+      one that only ever loosens, so declining it keeps the encoded 10 feet,
+      which is the safe direction
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1430"
+    digest: "eb8ff75c4145"
+    state: dismissed
+    reason: >-
+      note 17 lets awnings, porches, bays and overhangs project four feet into
+      the minimum front setback. A projection allowance, looser
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1432"
+    digest: "19199f481184"
+    state: dismissed
+    reason: >-
+      note 18 relaxes the MAXIMUM front setback where a public utility
+      easement prevents compliance. The maximum is what note 12 already puts
+      out of reach of this building
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1434"
+    digest: "bdb1953624c8"
+    state: dismissed
+    reason: >-
+      note 19 exempts dwellings on lots with less than 35 feet of street
+      frontage from the maximum front setback. The maximum again
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1436"
+    digest: "44d241bbf4f0"
+    state: dismissed
+    reason: >-
+      note 20 requires compliance with the maximum front setback from only two
+      intersecting front lot lines. The maximum again
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1438"
+    digest: "8a24ae670fb1"
+    state: dismissed
+    reason: >-
+      note 21 removes minimum rear and side setbacks inside a planned unit
+      development except at the plat perimeter. A different application path,
+      and looser than the encoded 15 and 5
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1440"
+    digest: "8ec28c857dde"
+    state: dismissed
+    reason: >-
+      note 22 makes frontage on a pedestrian connection a side lot line. It
+      re-labels a boundary like note 15 does, but in the opposite direction: a
+      face called a side answers the 5 foot side setback instead of the 10
+      foot front one, so the note can only ever loosen. Declining it keeps the
+      front setback on that face, which is the safe reading
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1442"
+    digest: "1a5578c49dfc"
+    state: dismissed
+    reason: >-
+      note 23 adds Section 845's design standards on top of Table 315-3 for
+      triplexes, quadplexes and townhouses. Read, and it is where this layer's
+      7,000 square foot minimum lot size comes from; 845 states no height,
+      setback or coverage of its own to add here
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1444"
+    digest: "e76ff403aae3"
+    state: dismissed
+    reason: >-
+      note 24 confines a maximum building height standard to accessory
+      buildings larger than 100 square feet. It is not on the cells this layer
+      reads: the Standards for Primary Dwellings height row is marked 9, and
+      24 belongs to the accessory-building table below it
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1446"
+    digest: "59b7f4212530"
+    state: dismissed
+    reason: >-
+      note 25 may require a garage to be recessed to satisfy the
+      garage/carport design standard. A design requirement on a garage, and
+      this layer already measures against the non-recessed figure of 19.5
+      feet, which is the stricter of the two
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1448"
+    digest: "cce7b76698f3"
+    state: dismissed
+    reason: >-
+      note 26 is note 22 with the number printed: frontage on a pedestrian
+      connection is a side lot line and the minimum setback is five feet. Five
+      is exactly the side setback already encoded, so the note cannot move the
+      value under any reading of which face it lands on
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1450"
+    digest: "32b61c84b873"
+    state: dismissed
+    reason: >-
+      note 27 lets a second-storey accessory dwelling unit cantilever four
+      feet into the minimum rear setback over an alley. A different building,
+      and a projection allowance

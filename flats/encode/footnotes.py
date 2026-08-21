@@ -119,6 +119,23 @@ HEADLESS_NOTE = re.compile(r"^(?P<n>\d{1,2})\s{2,}(?P<text>\S.*)$")
 #: minimum depth -- and it was invisible while this shape was.
 GLUED_PAREN_NOTE = re.compile(r"^\((?P<n>\d{1,2})\)(?!\s)(?P<text>\S.*)$")
 
+#: The same run with no gap, no bracket and no weld: the number, one space, the
+#: text. Clackamas County prints every table's notes this way -- "9 Except for
+#: middle housing developed pursuant to Section 845" -- and nothing announces
+#: them.
+#:
+#: One space is the weakest discriminator of the three, because it is also how
+#: a great deal of ordinary prose begins, so this shape buys its reading with
+#: the run instead: `_tight_run` demands notes 1, 2 AND 3 with nothing but
+#: blank lines between them, where the gapped and glued forms are believed from
+#: two. Across the whole corpus that bar admits three blocks and no false one.
+#:
+#: Missing it cost a county. ZDO Section 315 is the only document behind every
+#: value in Clackamas unincorporated, and it carried 305 footnote markers and
+#: zero bodies -- so the gate that holds a value back when an unread note
+#: governs it had nothing to hold, and reported the layer clean.
+TIGHT_NOTE = re.compile(r"^(?P<n>\d{1,2}) (?P<text>\S.*)$")
+
 #: The number on its own line, with the text beneath it. An HTML table renders
 #: each cell as its own line, so a block that reads "1  Density calculations
 #: shall be..." on the page arrives as "1", newline, "Density calculations
@@ -358,7 +375,11 @@ def _blocks(lines: Sequence[str]) -> list[Block]:
         stripped = lines[i].strip()
         headed = bool(stripped) and NOTES_HEAD.match(stripped) is not None
         bracketed = BRACKET_NOTE.match(stripped) is not None
-        headless = _headless_run(lines, i) or _glued_paren_run(lines, i)
+        headless = (
+            _headless_run(lines, i)
+            or _glued_paren_run(lines, i)
+            or _tight_run(lines, i, previous_end)
+        )
         if not headed and not bracketed and not headless:
             i += 1
             continue
@@ -443,6 +464,52 @@ def _glued_paren_run(lines: Sequence[str], i: int) -> bool:
         if following is not None:
             return following.group("n") == "2"
     return False
+
+
+def _tight_run(lines: Sequence[str], i: int, since: int) -> bool:
+    """Whether a one-space notes run starts here.
+
+    A higher standard of proof than its two siblings, because its shape is the
+    weakest. A column gap or a welded bracket is enough on its own to tell a
+    note from a numbered paragraph; one space is not, because one space is also
+    how an ordered list of ordinary provisions arrives. So this shape has to
+    prove itself twice.
+
+    First the run: 1, then 2, then 3, in order, with nothing but blank lines
+    between them. Nothing but blank lines is the load-bearing half -- a code's
+    numbered subsections are separated by the prose they govern, so a single
+    interposed sentence declines the whole run and only a bare stacked list
+    survives.
+
+    Then the markers. A notes block exists to answer markers, so a run with
+    nothing pointing into it from the region it would govern is a list, not a
+    block -- and reading it as one manufactures bodies nobody references, which
+    is worse than missing it: ``unmarked`` is how this census reports a marker
+    lost in extraction, and filling it with ordinary prose lists destroys the
+    signal. ZDO 845 is the case that proves it: sixteen numbered lists, not one
+    footnote marker in the document.
+
+    The other shapes are exempt from that second test on purpose. A "NOTES:"
+    heading, a bracket, a column gap and a welded parenthesis each say what
+    they are without help, and a block that says what it is should still be
+    read when its markers are the thing that went missing.
+    """
+    if TIGHT_NOTE.match(lines[i].strip()) is None:
+        return False
+    want = 1
+    for raw in lines[i : i + 60]:
+        stripped = raw.strip()
+        if not stripped:
+            continue
+        following = TIGHT_NOTE.match(stripped)
+        if following is None or int(following.group("n")) != want:
+            return False
+        want += 1
+        if want > 3:
+            break
+    else:
+        return False
+    return any(_bears_a_marker(lines[k]) for k in range(since, i))
 
 
 def _cell_row(raw: str, stripped: str) -> bool:

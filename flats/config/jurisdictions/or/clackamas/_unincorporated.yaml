@@ -30,13 +30,29 @@ notes: 'Table 315-2 (R-2.5 through R-30) read against the adopted ZDO on 2026-08
   Estates) of the standard and expressly excludes middle housing developed under Section 845 from
   that relief. A quadplex is middle housing under 845, so the note cannot loosen this ceiling.
 
-  That note was read by hand, and it had to be. zdo.315.txt is the corpus''s worst unreconciled
-  document -- 305 footnote markers and ZERO bodies found -- so the footnote gate governs nothing in
-  this layer and would have let every value here certify under notes nobody read. The cause is the
-  spelling: this code writes its notes as "9 Except for middle housing", one space and no heading,
-  and the headless-run reader demands a column gap because at one space that pattern matches every
-  numbered paragraph in the code. The gate is silent here because it is blind, not because the notes
-  are clean. Fixing the reader is its own change and is not made here.'
+  That note had to be read by hand, because when the heights were encoded nothing could read it.
+  zdo.315.txt was the corpus''s worst unreconciled document -- 305 footnote markers and ZERO bodies
+  -- so the footnote gate governed nothing in this layer and would have let every value here certify
+  under notes nobody had read. It was silent because it was blind, not because the notes were clean.
+
+  FOOTNOTES, read 2026-08-21. Both causes fixed, and all 41 notes ruled in
+  flats/config/footnotes/or/clackamas/_unincorporated.yaml. The county writes each table''s notes as
+  an HTML ordered list, whose numbers the browser draws and the text never carries, so ten bodies
+  were stored stripped of the only thing tying them to a marker; the notes that did keep their
+  numbers arrived as "9 Except for middle housing", one space and no heading, which is the one run
+  shape the census declined. The gate now governs 64 values here and blocks none of them.
+
+  Nothing in those 41 notes moved a number. The relief in this chapter is for other housing types
+  (the lot-of-record exceptions name detached dwellings, duplexes, manufactured homes, prefabricated
+  structures and single room occupancies -- a quadplex is none of them), for other application paths
+  (a planned unit development or a zero-lot-line development), or for the split plat. Two notes are
+  worth carrying forward. Table 315-3 note 12 states that the MAXIMUM setback standards do not apply
+  to quadplexes developed under Section 845, so the 18 ft maximum front setback encoded on both
+  village zones does not bind this building at all -- declined rather than taken, because holding a
+  maximum nobody enforces can only ever refuse a lot the county would pass, never pass one it would
+  refuse. And note 15 makes frontage on an accessway a front lot line, which turns a 5 ft side into
+  a 10 ft front on whichever face it lands; an accessway is not a street and no layer here answers
+  it, so it is `unmeasured` against the `abuts_accessway` condition and caps the VR zones.'
 ingest:
   geoid: null
   juris_city_codes:

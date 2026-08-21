@@ -8,29 +8,29 @@ Section 315 applies to land in the Urban Low Density Residential (R-2.5, R-5, R-
 
 315.03 Uses permitted
 
-Uses permitted in each urban residential zoning district are listed in Table 315-1, Permitted Uses in the Urban Residential Zoning Districts. Uses not listed are prohibited, except:
+1 Uses permitted in each urban residential zoning district are listed in Table 315-1, Permitted Uses in the Urban Residential Zoning Districts. Uses not listed are prohibited, except:
 
-In the PMD District, uses similar to one or more of the listed uses for the PMD District may be authorized pursuant to Section 106, Authorizations of Similar Uses; and
+1 In the PMD District, uses similar to one or more of the listed uses for the PMD District may be authorized pursuant to Section 106, Authorizations of Similar Uses; and
 
-In the HDR, SHD, and RCHDR Districts, uses similar to one or more of the listed limited uses for the applicable zoning district may be authorized pursuant to Section 106.
+2 In the HDR, SHD, and RCHDR Districts, uses similar to one or more of the listed limited uses for the applicable zoning district may be authorized pursuant to Section 106.
 
-As used in Table 315-1:
+2 As used in Table 315-1:
 
-"P" means the use is a primary use.
+1 "P" means the use is a primary use.
 
-"A" means the use is an accessory use.
+2 "A" means the use is an accessory use.
 
-"L" means the use is a limited use and shall be developed concurrently with or after a primary use is developed on the same site.
+3 "L" means the use is a limited use and shall be developed concurrently with or after a primary use is developed on the same site.
 
-"C" means the use is a conditional use, approval of which is subject to Section 1203, Conditional Uses.
+4 "C" means the use is a conditional use, approval of which is subject to Section 1203, Conditional Uses.
 
-"CPUD" means the use is allowed as a conditional use in a planned unit development.
+5 "CPUD" means the use is allowed as a conditional use in a planned unit development.
 
-"X" means the use is prohibited.
+6 "X" means the use is prohibited.
 
-Numbers in superscript correspond to the notes that follow Table 315-1.
+7 Numbers in superscript correspond to the notes that follow Table 315-1.
 
-Permitted uses are subject to the applicable provisions of Subsection 315.04, Dimensional and Building Design Standards; Section 1000, Development Standards; and Section 1100, Development Review Process.
+3 Permitted uses are subject to the applicable provisions of Subsection 315.04, Dimensional and Building Design Standards; Section 1000, Development Standards; and Section 1100, Development Review Process.
 
 315.04 Dimensional and Building Design Standards
 
@@ -1037,105 +1037,105 @@ See Table 835-1
 See Table 835-1
 See Table 835-1
 
-The limited use is permitted subject to the following criteria:
+1 The limited use is permitted subject to the following criteria:
 
-The use shall be allowed only in a development meeting the minimum residential density for the entire site area.
+1 The use shall be allowed only in a development meeting the minimum residential density for the entire site area.
 
-The building floor area occupied by all limited uses shall not exceed 15 percent of the building floor area occupied by primary uses.
+2 The building floor area occupied by all limited uses shall not exceed 15 percent of the building floor area occupied by primary uses.
 
-No outdoor storage of materials associated with the use shall be allowed.
+3 No outdoor storage of materials associated with the use shall be allowed.
 
-The use shall not be of a type or intensity which produces odor, smoke, fumes, noise, glare, heat, or vibration which are detectable outside of the premises and are incompatible with primary uses.
+4 The use shall not be of a type or intensity which produces odor, smoke, fumes, noise, glare, heat, or vibration which are detectable outside of the premises and are incompatible with primary uses.
 
-The use shall be developed in conjunction with a primary use on the same site, which is developed at the maximum allowed density for the site area.
+2 The use shall be developed in conjunction with a primary use on the same site, which is developed at the maximum allowed density for the site area.
 
-The limited use is permitted subject to the following criteria:
+3 The limited use is permitted subject to the following criteria:
 
-The use shall be allowed only in a development meeting the minimum residential density for the entire site area.
+1 The use shall be allowed only in a development meeting the minimum residential density for the entire site area.
 
-No outdoor storage of materials or display of merchandise associated with the use shall be allowed.
+2 No outdoor storage of materials or display of merchandise associated with the use shall be allowed.
 
-The limited use is permitted subject to the following criteria:
+4 The limited use is permitted subject to the following criteria:
 
-The use shall be part of a development within a Design Plan area.
+1 The use shall be part of a development within a Design Plan area.
 
-The use shall be allowed only in a development meeting the minimum residential density for the entire site area.
+2 The use shall be allowed only in a development meeting the minimum residential density for the entire site area.
 
-The building floor area occupied by all limited uses shall not exceed 10 percent of the building floor area occupied by primary uses. No single limited commercial use shall occupy more than 1,500 square feet of building floor area.
+3 The building floor area occupied by all limited uses shall not exceed 10 percent of the building floor area occupied by primary uses. No single limited commercial use shall occupy more than 1,500 square feet of building floor area.
 
-Allowing the use will not adversely impact the livability, value, and appropriate development of the site and abutting properties considering the location, size, design, and operating characteristics of the use.
+4 Allowing the use will not adversely impact the livability, value, and appropriate development of the site and abutting properties considering the location, size, design, and operating characteristics of the use.
 
-No outdoor storage of materials associated with the use shall be allowed.
+5 No outdoor storage of materials associated with the use shall be allowed.
 
-The use shall not be of a type or intensity which produces odor, smoke, fumes, noise, glare, heat, or vibration which are detectable outside of the premises and are incompatible with primary uses.
+6 The use shall not be of a type or intensity which produces odor, smoke, fumes, noise, glare, heat, or vibration which are detectable outside of the premises and are incompatible with primary uses.
 
-The use shall be developed in conjunction with a primary use on the same site, which is developed at the maximum allowed density for the site area. The building floor area occupied by all limited uses, and by all conditional uses that are subject to Note 6, shall not exceed 10 percent of the building floor area occupied by primary uses.
+5 The use shall be developed in conjunction with a primary use on the same site, which is developed at the maximum allowed density for the site area. The building floor area occupied by all limited uses, and by all conditional uses that are subject to Note 6, shall not exceed 10 percent of the building floor area occupied by primary uses.
 
-Dwellings not otherwise permitted in the applicable zoning district may nonetheless be permitted if they are developed as affordable housing, as defined in ORS 197A.445(1), and subject to Section 846, Affordable Housing.
+6 Dwellings not otherwise permitted in the applicable zoning district may nonetheless be permitted if they are developed as affordable housing, as defined in ORS 197A.445(1), and subject to Section 846, Affordable Housing.
 
-Except as allowed by Section 839, Accessory Dwelling Units, or Section 1204, Temporary Permits, each lot of record may be developed with only one of the following: cottage cluster development, detached single-family dwelling, duplex, manufactured home, prefabricated structure, quadplex, single room occupancy, townhouse, or triplex.
+7 Except as allowed by Section 839, Accessory Dwelling Units, or Section 1204, Temporary Permits, each lot of record may be developed with only one of the following: cottage cluster development, detached single-family dwelling, duplex, manufactured home, prefabricated structure, quadplex, single room occupancy, townhouse, or triplex.
 
-The development of a triplex, quadplex, townhouse, or cottage cluster is subject to Section 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters.
+8 The development of a triplex, quadplex, townhouse, or cottage cluster is subject to Section 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters.
 
-A manufactured dwelling park that also qualifies as a cottage cluster development pursuant to Section 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters, is a primary use. All other manufactured dwelling parks are conditional uses.
+9 A manufactured dwelling park that also qualifies as a cottage cluster development pursuant to Section 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters, is a primary use. All other manufactured dwelling parks are conditional uses.
 
-A manufactured dwelling park that also qualifies as a cottage cluster development pursuant to Section 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters, is a primary use. All other manufactured dwelling parks are prohibited.
+10 A manufactured dwelling park that also qualifies as a cottage cluster development pursuant to Section 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters, is a primary use. All other manufactured dwelling parks are prohibited.
 
-A single room occupancy shall contain a maximum of six units.
+11 A single room occupancy shall contain a maximum of six units.
 
-For a townhouse, the minimum lot size is 3,630 square feet in the MR-1 District and 2,420 square feet in the MR-2 District unless, as part of an application filed pursuant to Section 1105, Subdivisions, Partitions, Replats, Condominium Plats, and Vacations of Recorded Plats, new lots or parcels are proposed for townhouses. In that case, there is no minimum lot size provided that the density of the entire development complies with the maximum density standards of Subsection 1012.05.
+12 For a townhouse, the minimum lot size is 3,630 square feet in the MR-1 District and 2,420 square feet in the MR-2 District unless, as part of an application filed pursuant to Section 1105, Subdivisions, Partitions, Replats, Condominium Plats, and Vacations of Recorded Plats, new lots or parcels are proposed for townhouses. In that case, there is no minimum lot size provided that the density of the entire development complies with the maximum density standards of Subsection 1012.05.
 
-Only indoor facilities are permitted.
+13 Only indoor facilities are permitted.
 
-Uses similar to this use may be authorized pursuant to Section 106, Authorizations of Similar Uses.
+14 Uses similar to this use may be authorized pursuant to Section 106, Authorizations of Similar Uses.
 
-A use may be permitted as a home occupation, subject to Section 822, Home Occupations, even if such use is also identified in another use listing in Table 315-1.
+15 A use may be permitted as a home occupation, subject to Section 822, Home Occupations, even if such use is also identified in another use listing in Table 315-1.
 
-Hotels in the SHD District are limited to a maximum of 80 units per gross acre.
+16 Hotels in the SHD District are limited to a maximum of 80 units per gross acre.
 
-An accessory kitchen is permitted only in a townhouse, a detached single-family dwelling, a manufactured home, or a prefabricated structure, to the extent that these dwelling types are permitted in the applicable zoning district. Only one accessory kitchen is permitted in each townhouse, detached single-family dwelling, manufactured home, or prefabricated structure.
+17 An accessory kitchen is permitted only in a townhouse, a detached single-family dwelling, a manufactured home, or a prefabricated structure, to the extent that these dwelling types are permitted in the applicable zoning district. Only one accessory kitchen is permitted in each townhouse, detached single-family dwelling, manufactured home, or prefabricated structure.
 
-The base of such towers shall not be closer to the property line than a distance equal to the height of the tower.
+18 The base of such towers shall not be closer to the property line than a distance equal to the height of the tower.
 
-This use may include concessions, restrooms, maintenance facilities, and similar support uses.
+19 This use may include concessions, restrooms, maintenance facilities, and similar support uses.
 
-Any principal building, swimming pool, or use shall be located a minimum of 45 feet from any other lot in a residential zoning district.
+20 Any principal building, swimming pool, or use shall be located a minimum of 45 feet from any other lot in a residential zoning district.
 
-Any principal building or swimming pool shall be located a minimum of 30 feet from any other lot in a residential zoning district.
+21 Any principal building or swimming pool shall be located a minimum of 30 feet from any other lot in a residential zoning district.
 
-Recyclable drop-off sites are permitted only if accessory to an institutional use.
+22 Recyclable drop-off sites are permitted only if accessory to an institutional use.
 
-The use is subject to the following standards and criteria:
+23 The use is subject to the following standards and criteria:
 
-The use shall be located in a planned unit development (PUD) with a minimum of 100 dwelling units. No building permit for the use shall be issued until a minimum of 100 dwelling units are constructed within the PUD.
+1 The use shall be located in a planned unit development (PUD) with a minimum of 100 dwelling units. No building permit for the use shall be issued until a minimum of 100 dwelling units are constructed within the PUD.
 
-The area occupied by all uses subject to Note 22 and located in a single PUD, including their parking, loading, and maneuvering areas, shall not exceed a ratio of one-half acre per 100 dwelling units in the PUD.
+2 The area occupied by all uses subject to Note 22 and located in a single PUD, including their parking, loading, and maneuvering areas, shall not exceed a ratio of one-half acre per 100 dwelling units in the PUD.
 
-The use shall be an integral part of the general plan of development for the PUD and provide facilities related to the needs of residents of the PUD.
+3 The use shall be an integral part of the general plan of development for the PUD and provide facilities related to the needs of residents of the PUD.
 
-The use shall be located, designed, and operated to efficiently serve frequent trade and service needs of residents of the PUD and not persons residing elsewhere.
+4 The use shall be located, designed, and operated to efficiently serve frequent trade and service needs of residents of the PUD and not persons residing elsewhere.
 
-The use shall not, by reason of its location, construction, manner or hours of operation, signs, lighting, parking arrangements, or other characteristics, have adverse effects on residential uses within or adjoining the PUD.
+5 The use shall not, by reason of its location, construction, manner or hours of operation, signs, lighting, parking arrangements, or other characteristics, have adverse effects on residential uses within or adjoining the PUD.
 
-Only commercial schools are permitted, and such schools are not subject to Section 805, Schools.
+24 Only commercial schools are permitted, and such schools are not subject to Section 805, Schools.
 
-This use is prohibited in a recreational vehicle established pursuant to Section 847, Recreational Vehicles as Second Dwellings, and in the primary dwelling on the same lot of record as the recreational vehicle.
+25 This use is prohibited in a recreational vehicle established pursuant to Section 847, Recreational Vehicles as Second Dwellings, and in the primary dwelling on the same lot of record as the recreational vehicle.
 
-Temporary signs regulated under Subsection 1010.13(A) are a primary use.
+26 Temporary signs regulated under Subsection 1010.13(A) are a primary use.
 
-Stormwater management facilities are a primary use if:
+27 Stormwater management facilities are a primary use if:
 
-They are underground, except for an outlet structure if applicable;
+1 They are underground, except for an outlet structure if applicable;
 
-They are vegetated, except for an outlet structure if applicable; or
+2 They are vegetated, except for an outlet structure if applicable; or
 
-They are approved in conjunction with a development approved through another land use permit (e.g., a subdivision or design review).
+3 They are approved in conjunction with a development approved through another land use permit (e.g., a subdivision or design review).
 
-Utility cabinets are a primary use if they comply with Section 830, Utility Cabinets, or if they are inside a road right-of-way.
+28 Utility cabinets are a primary use if they comply with Section 830, Utility Cabinets, or if they are inside a road right-of-way.
 
-Except for hydroelectric facilities and telephone exchanges, utility facilities shall not include shops, garages, or general administrative offices.
+29 Except for hydroelectric facilities and telephone exchanges, utility facilities shall not include shops, garages, or general administrative offices.
 
-Utility lines are a conditional use only if they are gas transmission lines or electric transmission lines.
+30 Utility lines are a conditional use only if they are gas transmission lines or electric transmission lines.
 
 Table 315-2: Dimensional and Building Design Standards in the Urban Low Density Residential Zoning Districts
 
@@ -1246,31 +1246,31 @@ Metal buildings greater than 500 square feet in area shall include roof overhang
 Freight shipping containers shall be located behind the building line of the dwelling, and the exterior shall be painted similar in color to that of the dwelling.
 Metal buildings greater than 500 square feet in area shall include roof overhangs, gutters, and downspouts, and the exterior shall be painted similar in color to that of the dwelling.
 
-The minimum lot size standards apply as established by Sections 1012 and 1107. Notwithstanding the minimum lot size standard, a lot of record may be developed subject to other applicable standards of this Ordinance, except minimum lot size standards of Section 800 apply.
+1 The minimum lot size standards apply as established by Sections 1012 and 1107. Notwithstanding the minimum lot size standard, a lot of record may be developed subject to other applicable standards of this Ordinance, except minimum lot size standards of Section 800 apply.
 
-In a planned unit development, there is no minimum lot size. However, the DLA standard applies pursuant to Section 1012, Lot Size and Density.
+2 In a planned unit development, there is no minimum lot size. However, the DLA standard applies pursuant to Section 1012, Lot Size and Density.
 
-For townhouses developed pursuant to Section 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters, there is no minimum lot size and the DLA shall be one-third of the DLA.
+3 For townhouses developed pursuant to Section 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters, there is no minimum lot size and the DLA shall be one-third of the DLA.
 
-For townhouses developed pursuant to Section 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters, there is no minimum lot size and the DLA shall be one-quarter of the DLA in the applicable zoning district.
+4 For townhouses developed pursuant to Section 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters, there is no minimum lot size and the DLA shall be one-quarter of the DLA in the applicable zoning district.
 
-Maximum lot coverage in a planned unit development is 65 percent.
+5 Maximum lot coverage in a planned unit development is 65 percent.
 
-For development on a middle housing lot, the lot coverage is calculated on the entire parent lot that was divided through a middle housing land division.
+6 For development on a middle housing lot, the lot coverage is calculated on the entire parent lot that was divided through a middle housing land division.
 
-For a swimming pool that is accessory to a dwelling, the minimum front setback is 10 feet, and the minimum side and rear setbacks are three feet.
+7 For a swimming pool that is accessory to a dwelling, the minimum front setback is 10 feet, and the minimum side and rear setbacks are three feet.
 
-In a planned unit development, there are no minimum rear and side setbacks except from rear and side lot lines on the perimeter of the final plat. In a zero-lot-line development, approved pursuant to Subsection 1105.03(B), there are no minimum rear and side setbacks for detached single-family dwellings, manufactured homes, prefabricated structures, single room occupancies, and structures accessory to such dwellings, except from rear and side lot lines on the perimeter of the final plat. Where either of these standards applies, it supersedes any other rear or side setback standard in Table 315-2.
+8 In a planned unit development, there are no minimum rear and side setbacks except from rear and side lot lines on the perimeter of the final plat. In a zero-lot-line development, approved pursuant to Subsection 1105.03(B), there are no minimum rear and side setbacks for detached single-family dwellings, manufactured homes, prefabricated structures, single room occupancies, and structures accessory to such dwellings, except from rear and side lot lines on the perimeter of the final plat. Where either of these standards applies, it supersedes any other rear or side setback standard in Table 315-2.
 
-Except for townhouses, setbacks for structures on a middle housing lot shall continue to be measured from the lot lines of the parent lot that was divided through the middle housing land division..
+9 Except for townhouses, setbacks for structures on a middle housing lot shall continue to be measured from the lot lines of the parent lot that was divided through the middle housing land division..
 
-The following exceptions apply to a lot of record that is 6,000 square feet or less in area and was created prior to the application of an Urban Low Density Residential District to the subject lot of record:
+10 The following exceptions apply to a lot of record that is 6,000 square feet or less in area and was created prior to the application of an Urban Low Density Residential District to the subject lot of record:
 
-The minimum rear setback for a detached single-family dwelling, duplex, manufactured home, prefabricated structure, or single room occupancy is 10 feet.
+1 The minimum rear setback for a detached single-family dwelling, duplex, manufactured home, prefabricated structure, or single room occupancy is 10 feet.
 
-The minimum side setback for a detached single-family dwelling, duplex, manufactured home, prefabricated structure, or single room occupancy is a total of five feet (e.g., five feet from one side lot line and zero from the other, three feet from one side lot line and two feet from the other) except that if the subject lot of record has more than two side lot lines, the minimum side setback from each of the additional side lot lines is five feet.
+2 The minimum side setback for a detached single-family dwelling, duplex, manufactured home, prefabricated structure, or single room occupancy is a total of five feet (e.g., five feet from one side lot line and zero from the other, three feet from one side lot line and two feet from the other) except that if the subject lot of record has more than two side lot lines, the minimum side setback from each of the additional side lot lines is five feet.
 
-If an accessory building is located behind the building line of the main building, the applicable minimum rear and side setback standards for that accessory building are based on the accessory building area and accessory building height, as follows:
+11 If an accessory building is located behind the building line of the main building, the applicable minimum rear and side setback standards for that accessory building are based on the accessory building area and accessory building height, as follows:
 
 Building Area                               Building Height ≤ 8 feet   Building Height > 8 feet and ≤ 10 feet  Building Height > 10 feet and ≤ 15 feet  Building Height > 15 feet
 ≤ 100 square feet                           None                       3 feet side and rear                    5 feet side and rear                     5 feet side, 10 feet rear
@@ -1278,7 +1278,7 @@ Building Area                               Building Height ≤ 8 feet   Buildin
 > 200 square feet and ≤ to 500 square feet  5 feet side and rear       5 feet side and rear                    5 feet side and rear                     5 feet side, 10 feet rear
 > 500 square feet                           5 feet side; 10 feet rear  5 feet side; 10 feet rear               5 feet side, 10 feet rear                5 feet side, 10 feet rear
 
-These building design standards do not apply to temporary dwellings approved pursuant to Section 1204, Temporary Permits, or to manufactured homes or prefabricated structures in manufactured dwelling parks.
+1 These building design standards do not apply to temporary dwellings approved pursuant to Section 1204, Temporary Permits, or to manufactured homes or prefabricated structures in manufactured dwelling parks.
 
 Table 315-3: Dimensional and Building Design Standards in the VR-5/7, VR-4/5, and VTH Districts
 

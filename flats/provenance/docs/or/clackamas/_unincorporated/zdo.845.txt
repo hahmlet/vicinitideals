@@ -1,217 +1,217 @@
 845.01 General Standards
 
-Minimum Lot Size: The subject lot shall be a minimum of:
+1 Minimum Lot Size: The subject lot shall be a minimum of:
 
-5,000 square feet for a triplex, except in the VR-4/5 and VR-5/7 Districts, where there is no minimum; and
+1 5,000 square feet for a triplex, except in the VR-4/5 and VR-5/7 Districts, where there is no minimum; and
 
-7,000 square feet for a quadplex or a cottage cluster.
+2 7,000 square feet for a quadplex or a cottage cluster.
 
-Exemptions: Subsections 845.02 through 845.04 do not apply to middle housing created through a conversion of the following, provided the conversion does not add any building square footage to the existing structure:
+2 Exemptions: Subsections 845.02 through 845.04 do not apply to middle housing created through a conversion of the following, provided the conversion does not add any building square footage to the existing structure:
 
-An existing detached single-family dwelling;
+1 An existing detached single-family dwelling;
 
-An existing detached single-family dwelling with an attached accessory dwelling unit; or
+2 An existing detached single-family dwelling with an attached accessory dwelling unit; or
 
-An existing duplex.
+3 An existing duplex.
 
-Prohibition: Development of triplexes, quadplexes, townhouses, and cottage clusters, either through new construction or through a conversion of a detached, single-family dwelling, is prohibited in the Floodplain Management District.
+3 Prohibition: Development of triplexes, quadplexes, townhouses, and cottage clusters, either through new construction or through a conversion of a detached, single-family dwelling, is prohibited in the Floodplain Management District.
 
 845.02 Triplexes And Quadplexes
 
 Triplexes and quadplexes shall comply with the following standards:
 
-Windows: A minimum of 15 percent of the area of all street-facing facades shall include windows or entrance doors. Facades separated from a street by a dwelling are exempt from compliance with this standard (see Figure 845-1, Window Coverage).
+1 Windows: A minimum of 15 percent of the area of all street-facing facades shall include windows or entrance doors. Facades separated from a street by a dwelling are exempt from compliance with this standard (see Figure 845-1, Window Coverage).
 
-Entry Orientation: At least one external door that enters into a common room of the triplex or quadplex shall comply with the standards of Subsections 845.02(B)(1) and (2). Any triplex or quadplex for which more than 50 percent of its street-facing facade is separated from the street by a dwelling is exempt from meeting these standards.
+2 Entry Orientation: At least one external door that enters into a common room of the triplex or quadplex shall comply with the standards of Subsections 845.02(B)(1) and (2). Any triplex or quadplex for which more than 50 percent of its street-facing facade is separated from the street by a dwelling is exempt from meeting these standards.
 
-The entrance shall be within eight feet of the longest street-facing wall of the dwelling unit; and
+1 The entrance shall be within eight feet of the longest street-facing wall of the dwelling unit; and
 
-The entrance shall either:
+2 The entrance shall either:
 
-Face the street (see Figure 845-2, Entrance Facing the Street);
+1 Face the street (see Figure 845-2, Entrance Facing the Street);
 
-Be at an angle of up to 45 degrees from the street (see Figure 845-3, Entrance at 45-Degree Angle from the Street);
+2 Be at an angle of up to 45 degrees from the street (see Figure 845-3, Entrance at 45-Degree Angle from the Street);
 
-Face a common outdoor area that is adjacent to the street and is abutted by dwellings on at least two sides (see Figure 845-4, Entrance Facing Common Outdoor Area); or
+3 Face a common outdoor area that is adjacent to the street and is abutted by dwellings on at least two sides (see Figure 845-4, Entrance Facing Common Outdoor Area); or
 
-Open onto a porch (see Figure 845-5, Entrance Opening onto a Porch) that:
+4 Open onto a porch (see Figure 845-5, Entrance Opening onto a Porch) that:
 
-Is a minimum of 25 square feet in area; and
+1 Is a minimum of 25 square feet in area; and
 
-Either has at least one entrance facing the street or has a roof.
+2 Either has at least one entrance facing the street or has a roof.
 
-Driveway Entries: Driveway entries shall comply with the following:
+3 Driveway Entries: Driveway entries shall comply with the following:
 
-The total width of all driveway entries shall not exceed 32 feet.(see Figure 845-6, Driveway Entry Width and Separation on Local Street).
+1 The total width of all driveway entries shall not exceed 32 feet.(see Figure 845-6, Driveway Entry Width and Separation on Local Street).
 
-Driveway entries may be separated when located on a local street (see Figure 845-6). If entries are separated, they shall comply with the driveway spacing standards of the Clackamas County Roadway Standards.
+2 Driveway entries may be separated when located on a local street (see Figure 845-6). If entries are separated, they shall comply with the driveway spacing standards of the Clackamas County Roadway Standards.
 
-Unless an exception is available under the Clackamas County Roadway Standards, lots of record with more than one street frontage shall access only the street with the lowest functional classification from which the lot has legal access. For lots abutting an improved alley that complies with Comprehensive Plan Figure 5-1e or 10-SV-6, access shall be taken only from the alley.
+3 Unless an exception is available under the Clackamas County Roadway Standards, lots of record with more than one street frontage shall access only the street with the lowest functional classification from which the lot has legal access. For lots abutting an improved alley that complies with Comprehensive Plan Figure 5-1e or 10-SV-6, access shall be taken only from the alley.
 
-Garages and Off-Street Parking Areas: Garages and off-street parking areas shall not be located between a building and a public street (other than an improved alley that complies with Comprehensive Plan Figure 5-1e or 10-SV-6), except in compliance with Subsections 845.02(1) and (2).
+4 Garages and Off-Street Parking Areas: Garages and off-street parking areas shall not be located between a building and a public street (other than an improved alley that complies with Comprehensive Plan Figure 5-1e or 10-SV-6), except in compliance with Subsections 845.02(1) and (2).
 
-The garage or off-street parking area is separated from the street by a dwelling; or
+1 The garage or off-street parking area is separated from the street by a dwelling; or
 
-The combined width of all garages and off-street parking areas located between a building and a public street does not exceed a total of 50 percent of the street frontage (see Figure 845-7, Width of Garages and Parking Areas)
+2 The combined width of all garages and off-street parking areas located between a building and a public street does not exceed a total of 50 percent of the street frontage (see Figure 845-7, Width of Garages and Parking Areas)
 
 845.03 Townhouses
 
 Townhouses shall comply with the following standards:
 
-Setbacks: No minimum side setbacks shall be required from any side lot line where two townhouses share a common wall. No minimum rear setbacks shall be required from any rear lot line where two townhouses share a common wall.
+1 Setbacks: No minimum side setbacks shall be required from any side lot line where two townhouses share a common wall. No minimum rear setbacks shall be required from any rear lot line where two townhouses share a common wall.
 
-Entry Orientation: At least one external door that enters into a common room of each townhouse shall:
+2 Entry Orientation: At least one external door that enters into a common room of each townhouse shall:
 
-Be within eight feet of the longest street-facing wall of the dwelling unit, if the lot has public street frontage; and
+1 Be within eight feet of the longest street-facing wall of the dwelling unit, if the lot has public street frontage; and
 
-Either:
+2 Either:
 
-Face the street (see Figure 845-2, Entrance Facing the Street);
+1 Face the street (see Figure 845-2, Entrance Facing the Street);
 
-Be at an angle of up to 45 degrees from the street (see Figure 845-3, Entrance at 45-Degree Angle from the Street);
+2 Be at an angle of up to 45 degrees from the street (see Figure 845-3, Entrance at 45-Degree Angle from the Street);
 
-Face a common open space or access drive or driveway that is abutted by dwellings on at least two sides (see Figure 845-4, Entrance Facing Common Outdoor Area); or
+3 Face a common open space or access drive or driveway that is abutted by dwellings on at least two sides (see Figure 845-4, Entrance Facing Common Outdoor Area); or
 
-Open onto a porch (see Figure 845-5, Entrance Opening onto a Porch) that:
+4 Open onto a porch (see Figure 845-5, Entrance Opening onto a Porch) that:
 
-Is a minimum of 25 square feet in area; and
+1 Is a minimum of 25 square feet in area; and
 
-ii. Either has at least one entrance facing the street or has a roof.
+2 ii. Either has at least one entrance facing the street or has a roof.
 
-Unit Definition: Each townhouse shall include at least one of the following on at least one street-facing facade (see Figure 845-8, Townhouse Unit Definition):
+3 Unit Definition: Each townhouse shall include at least one of the following on at least one street-facing facade (see Figure 845-8, Townhouse Unit Definition):
 
-A roof dormer a minimum of four feet in width;
+1 A roof dormer a minimum of four feet in width;
 
-A balcony a minimum of two feet in depth and four feet in width and accessible from an interior room;
+2 A balcony a minimum of two feet in depth and four feet in width and accessible from an interior room;
 
-A bay window that extends from the facade a minimum of two feet;
+3 A bay window that extends from the facade a minimum of two feet;
 
-An offset of the facade of a minimum of two feet in depth, either from the neighboring townhouse or within the facade of a single townhouse;
+4 An offset of the facade of a minimum of two feet in depth, either from the neighboring townhouse or within the facade of a single townhouse;
 
-An entryway that is recessed a minimum of three feet;
+5 An entryway that is recessed a minimum of three feet;
 
-A covered entryway with a minimum depth of four feet; or
+6 A covered entryway with a minimum depth of four feet; or
 
-A porch meeting the standards of Subsection 845.03(B)(2)(d).
+7 A porch meeting the standards of Subsection 845.03(B)(2)(d).
 
-Windows: A minimum of 15 percent of the area of all street-facing facades on each townhouse shall include windows or entrance doors. Fifty percent of the window area in the door of an attached garage may count toward meeting this standard. (see Figure 845-1, Window Coverage)
+4 Windows: A minimum of 15 percent of the area of all street-facing facades on each townhouse shall include windows or entrance doors. Fifty percent of the window area in the door of an attached garage may count toward meeting this standard. (see Figure 845-1, Window Coverage)
 
-Driveway Access and Parking: Townhouse lots with frontage on a public street shall comply with the following standards:
+5 Driveway Access and Parking: Townhouse lots with frontage on a public street shall comply with the following standards:
 
-Attached garages, off-street parking areas, and driveways are allowed to be located between a townhouse and a public street if they meet the following standards:
+1 Attached garages, off-street parking areas, and driveways are allowed to be located between a townhouse and a public street if they meet the following standards:
 
-Each townhouse lot for which the parking is being provided between a townhouse and a public street shall have a minimum of 15 feet of street frontage on a local street.
+1 Each townhouse lot for which the parking is being provided between a townhouse and a public street shall have a minimum of 15 feet of street frontage on a local street.
 
-A maximum of one driveway entry shall be allowed for each townhouse.
+2 A maximum of one driveway entry shall be allowed for each townhouse.
 
-Driveways and off-street parking areas shall not exceed 12 feet wide.
+3 Driveways and off-street parking areas shall not exceed 12 feet wide.
 
-The garage width shall not exceed 12 feet, as measured from the inside of the garage door frame.
+4 The garage width shall not exceed 12 feet, as measured from the inside of the garage door frame.
 
-The following standards apply to driveways and parking areas for townhouse developments that do not comply with all of the standards in Subsection 845.03(E)(1).
+2 The following standards apply to driveways and parking areas for townhouse developments that do not comply with all of the standards in Subsection 845.03(E)(1).
 
-Off-street parking areas shall not be located between a townhouse and a public street.
+1 Off-street parking areas shall not be located between a townhouse and a public street.
 
-Townhouse developments shall consolidate access for all lots into a single driveway. The driveway and entry are not allowed in the area directly between a townhouse and the front lot line (see Figures 845-9, Townhouses on Corner Lot with Consolidated Access, and 845-10, Townhouses with Consolidated Access).
+2 Townhouse developments shall consolidate access for all lots into a single driveway. The driveway and entry are not allowed in the area directly between a townhouse and the front lot line (see Figures 845-9, Townhouses on Corner Lot with Consolidated Access, and 845-10, Townhouses with Consolidated Access).
 
-A townhouse development that includes consolidated access shall grant access easements for shared and emergency vehicle access.
+3 A townhouse development that includes consolidated access shall grant access easements for shared and emergency vehicle access.
 
-Townhouse developments in which all townhouses take exclusive access from an improved alley that complies with Comprehensive Plan Figure 5-1e or 10-SV-6 are exempt from Subsection 845.03(E)(2).
+3 Townhouse developments in which all townhouses take exclusive access from an improved alley that complies with Comprehensive Plan Figure 5-1e or 10-SV-6 are exempt from Subsection 845.03(E)(2).
 
 845.04 Cottage Clusters
 
 Cottage clusters shall comply with the following standards:
 
-Cluster Size: Dwelling units shall be developed in clusters of four to nine per cluster sharing a common courtyard.
+1 Cluster Size: Dwelling units shall be developed in clusters of four to nine per cluster sharing a common courtyard.
 
-Development Size: A lot of record may contain more than one cottage cluster.
+2 Development Size: A lot of record may contain more than one cottage cluster.
 
-Maximum Ground Floor Area: The maximum ground floor area of each dwelling shall be 900 square feet.
+3 Maximum Ground Floor Area: The maximum ground floor area of each dwelling shall be 900 square feet.
 
-Garages: Each dwelling may have a maximum of 200 square feet for an attached garage that is not included in the maximum ground floor area permitted pursuant to Subsection 845.04(C). Any additional garage square footage shall be deducted from the maximum ground floor area. Dwellings may have detached garages.
+4 Garages: Each dwelling may have a maximum of 200 square feet for an attached garage that is not included in the maximum ground floor area permitted pursuant to Subsection 845.04(C). Any additional garage square footage shall be deducted from the maximum ground floor area. Dwellings may have detached garages.
 
-Maximum Average Floor Area: The average floor area of all dwellings in a cottage cluster development shall not exceed 1,400 square feet. For the purpose of this provision, floor area of a dwelling includes the area of any attached garage.If the cottage cluster development includes community buildings, the community buildings shall be included in the average floor area calculation.
+5 Maximum Average Floor Area: The average floor area of all dwellings in a cottage cluster development shall not exceed 1,400 square feet. For the purpose of this provision, floor area of a dwelling includes the area of any attached garage.If the cottage cluster development includes community buildings, the community buildings shall be included in the average floor area calculation.
 
-Maximum Detached Accessory Building Floor Area: 400 square feet per building, except as provided under Subsections 845.04(E) and 845.04(L) for a community building.
+6 Maximum Detached Accessory Building Floor Area: 400 square feet per building, except as provided under Subsections 845.04(E) and 845.04(L) for a community building.
 
-Minimum Setbacks: The minimum front and rear setbacks are 10 feet. The minimum side setback is five feet.
+7 Minimum Setbacks: The minimum front and rear setbacks are 10 feet. The minimum side setback is five feet.
 
-Minimum Separation Distance: The minimum distance between dwellings is six feet.
+8 Minimum Separation Distance: The minimum distance between dwellings is six feet.
 
-Maximum Lot Coverage: There is no maximum lot coverage for a cottage cluster development.
+9 Maximum Lot Coverage: There is no maximum lot coverage for a cottage cluster development.
 
-Dwelling Orientation: Dwellings in a cottage cluster shall comply with the following standards (see Figure 845-11, Cottage Cluster Orientation and Courtyard Standards):
+10 Dwelling Orientation: Dwellings in a cottage cluster shall comply with the following standards (see Figure 845-11, Cottage Cluster Orientation and Courtyard Standards):
 
-Each dwelling shall either abut the common courtyard or else it shall have a door that enters into a common room of the dwelling connected to a walkway leading to the common courtyard.
+1 Each dwelling shall either abut the common courtyard or else it shall have a door that enters into a common room of the dwelling connected to a walkway leading to the common courtyard.
 
-A minimum of 50 percent of dwellings within a cluster shall:
+2 A minimum of 50 percent of dwellings within a cluster shall:
 
-Have a door that enters into a common room of the dwelling and faces the common courtyard;
+1 Have a door that enters into a common room of the dwelling and faces the common courtyard;
 
-Be within 10 feet of the common courtyard, as measured from a façade of the dwelling to the nearest edge of the common courtyard; and
+2 Be within 10 feet of the common courtyard, as measured from a façade of the dwelling to the nearest edge of the common courtyard; and
 
-Be connected to the common courtyard by a walkway.
+3 Be connected to the common courtyard by a walkway.
 
-Common Courtyard Design Standards: Each common courtyard shall comply with the following standards (see Figure 845-11):
+11 Common Courtyard Design Standards: Each common courtyard shall comply with the following standards (see Figure 845-11):
 
-The common courtyard shall be a single, contiguous piece. The courtyard shall be a minimum of 15 feet wide at its narrowest dimension. A "single, contiguous piece" may include a courtyard that is divided by gardens or a pathway.
+1 The common courtyard shall be a single, contiguous piece. The courtyard shall be a minimum of 15 feet wide at its narrowest dimension. A "single, contiguous piece" may include a courtyard that is divided by gardens or a pathway.
 
-Dwellings shall abut more than one side of the courtyard, unless the courtyard is roundeIf the courtyard is rounded, dwellings shall abut a minimum of 50 percent of the perimeter of the courtyard.
+2 Dwellings shall abut more than one side of the courtyard, unless the courtyard is roundeIf the courtyard is rounded, dwellings shall abut a minimum of 50 percent of the perimeter of the courtyard.
 
-The common courtyard shall contain a minimum of 150 square feet per dwelling within the associated cluster, as described in Subsection 845.04(A).
+3 The common courtyard shall contain a minimum of 150 square feet per dwelling within the associated cluster, as described in Subsection 845.04(A).
 
-The common courtyard shall be developed with a hard-surfaced walkway, landscaping, and a minimum of one of the following: recreational amenities, a patio, seating, or a gazebo. Impervious elements and recreational amenities of the common courtyard shall not exceed 75 percent of the total common courtyard area.
+4 The common courtyard shall be developed with a hard-surfaced walkway, landscaping, and a minimum of one of the following: recreational amenities, a patio, seating, or a gazebo. Impervious elements and recreational amenities of the common courtyard shall not exceed 75 percent of the total common courtyard area.
 
-The courtyard shall include a walkway. Walkways on the perimeter of or crossing the courtyard shall count toward the courtyard's minimum dimensions and area. Parking areas, required setbacks, and driveways do not qualify as part of a common courtyard.
+5 The courtyard shall include a walkway. Walkways on the perimeter of or crossing the courtyard shall count toward the courtyard's minimum dimensions and area. Parking areas, required setbacks, and driveways do not qualify as part of a common courtyard.
 
-Community Buildings: Cottage clusters may include a community building for the shared accessory uses of the cottage cluster's residents and their guests. Community buildings shall comply with the following standards:
+12 Community Buildings: Cottage clusters may include a community building for the shared accessory uses of the cottage cluster's residents and their guests. Community buildings shall comply with the following standards:
 
-Each cottage cluster is permitted one community building.
+1 Each cottage cluster is permitted one community building.
 
-The community building shall not be used as a dwelling.
+2 The community building shall not be used as a dwelling.
 
-Pedestrian Access: A hard-surfaced walkway a minimum of five feet wide shall connect a door that enters into a common room of each dwelling in a cottage cluster to the following:
+13 Pedestrian Access: A hard-surfaced walkway a minimum of five feet wide shall connect a door that enters into a common room of each dwelling in a cottage cluster to the following:
 
-The common courtyard;
+1 The common courtyard;
 
-Any shared parking areas;
+2 Any shared parking areas;
 
-The community building, if the cottage cluster contains a community building; and
+3 The community building, if the cottage cluster contains a community building; and
 
-Sidewalks abutting the site, or roadways abutting the site if there are no sidewalks.
+4 Sidewalks abutting the site, or roadways abutting the site if there are no sidewalks.
 
-Parking Design:
+14 Parking Design:
 
-Off-street motor vehicle parking shall be subject to the following standards:
+1 Off-street motor vehicle parking shall be subject to the following standards:
 
-Developments with 15 or fewer dwellings shall not have more than five contiguous spaces.
+1 Developments with 15 or fewer dwellings shall not have more than five contiguous spaces.
 
-Developments with 16 or more cottages shall not have more than eight contiguous spaces.
+2 Developments with 16 or more cottages shall not have more than eight contiguous spaces.
 
-Each group of contiguous parking spaces shall be separated from any other group of parking spaces serving a cottage cluster development by landscaping that is a minimum of four feet wide.
+3 Each group of contiguous parking spaces shall be separated from any other group of parking spaces serving a cottage cluster development by landscaping that is a minimum of four feet wide.
 
-Off-street motor vehicle parking spaces and motor vehicle maneuvering areas, except driveways, shall not be located:
+2 Off-street motor vehicle parking spaces and motor vehicle maneuvering areas, except driveways, shall not be located:
 
-Within 10 feet of a front lot line, except from a front lot line that separates the lot from an improved alley that complies with Comprehensive Plan Figure 5-1e or 10-SV-6; or
+1 Within 10 feet of a front lot line, except from a front lot line that separates the lot from an improved alley that complies with Comprehensive Plan Figure 5-1e or 10-SV-6; or
 
-Between a front lot line and the front facade of the dwelling(s) located closest to the front lot line, except from a front lot line that separates the lot from an alley.
+2 Between a front lot line and the front facade of the dwelling(s) located closest to the front lot line, except from a front lot line that separates the lot from an alley.
 
-Off-street motor vehicle parking spaces shall not be located within 10 feet of rear or side lot lines, except a lot line that separates the lot from an improved alley that complies with Comprehensive Plan Figure 5-1e or 10-SV-6. Motor vehicle maneuvering areas are permitted within 10 feet of rear or side lot lines.
+3 Off-street motor vehicle parking spaces shall not be located within 10 feet of rear or side lot lines, except a lot line that separates the lot from an improved alley that complies with Comprehensive Plan Figure 5-1e or 10-SV-6. Motor vehicle maneuvering areas are permitted within 10 feet of rear or side lot lines.
 
-Garages and carports:
+4 Garages and carports:
 
-Detached garages or carports shall be separated from other detached garages or carports by a minimum of six feet.
+1 Detached garages or carports shall be separated from other detached garages or carports by a minimum of six feet.
 
-The maximum width of each garage door is 20 feet.
+2 The maximum width of each garage door is 20 feet.
 
-Screening: Landscaping, fencing, or walls, any of which shall be aminimum of three feet high, shall separate the off-street parking areas, garages, and carports from all common courtyards in the cottage cluster development.
+5 Screening: Landscaping, fencing, or walls, any of which shall be aminimum of three feet high, shall separate the off-street parking areas, garages, and carports from all common courtyards in the cottage cluster development.
 
-Existing Structures: On a lot of record to be developed with a cottage cluster, an existing lawfully established detached single-family dwelling may remain within the cottage cluster under the following conditions:
+15 Existing Structures: On a lot of record to be developed with a cottage cluster, an existing lawfully established detached single-family dwelling may remain within the cottage cluster under the following conditions:
 
-An existing dwelling that exceeds the maximum footprint or unit size of Subsections 845.04(C) through (E) may not be expanded.
+1 An existing dwelling that exceeds the maximum footprint or unit size of Subsections 845.04(C) through (E) may not be expanded.
 
-The floor area of the existing dwelling shall not count towards the maximum average floor area of dwellings in a cottage cluster development calculated pursuant to Subsection 845.04(E).
+2 The floor area of the existing dwelling shall not count towards the maximum average floor area of dwellings in a cottage cluster development calculated pursuant to Subsection 845.04(E).
 
-The existing dwelling shall be excluded from the calculation of orientation toward the common courtyard in Subsection 845.04(J).
+3 The existing dwelling shall be excluded from the calculation of orientation toward the common courtyard in Subsection 845.04(J).
 
 [Added by Ord. ZDO-282, 7/1/22; Amended by Ord. ZDO-283, 9/5/23]

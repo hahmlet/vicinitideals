@@ -58,7 +58,7 @@ from flats.rules.model import CodeDocument, Layer
 
 #: Bumped when the extraction algorithm changes. A hash that moves because the
 #: extractor changed is not an amendment, and the two must be tellable apart.
-EXTRACTOR = "flats-html-text/4"
+EXTRACTOR = "flats-html-text/5"
 #: A slice shorter than this is reported. Legitimate one-line sections exist;
 #: a marker that hit the table of contents is far more common.
 SHORT_SLICE = 3
@@ -253,6 +253,9 @@ class _Extractor(html.parser.HTMLParser):
         self.parts: list[str] = []
         self._skip = 0
         self._tables: list[_Table] = []
+        #: One counter per open <ol>, so a nested list restarts and its parent
+        #: resumes. See `handle_starttag`.
+        self._ordinals: list[int] = []
 
     def handle_starttag(self, tag: str, attrs) -> None:
         if tag in _DROP:
@@ -267,6 +270,27 @@ class _Extractor(html.parser.HTMLParser):
                 table.open_cell(attrs)
             elif tag in _BLOCK:
                 table.data(_CELL_BLOCK)
+        elif tag == "ol":
+            self._ordinals.append(0)
+            self.parts.append("\n")
+        elif tag == "li" and self._ordinals:
+            # An ordered list keeps its numbers in the browser, not in the
+            # text: <ol><li>The minimum lot size standards apply...</li> shows
+            # as "1." on the page and arrives here with nothing to say which
+            # note it is. Clackamas County writes every Table 315-2 footnote
+            # that way -- 305 markers in ZDO 315 pointed at bodies that had
+            # been stripped of the only thing tying them to a marker.
+            #
+            # Written as a prefix on the line the item already occupies rather
+            # than a line of its own, because every citation in this system is
+            # a line number: a new line here would lift every quote below it in
+            # the document and silently re-point them.
+            #
+            # Only outside a table. A <td> holding a list collapses to one
+            # cell line, so numbering there would inject "1 2 3" into a grid
+            # row and cost more than the omission does.
+            self._ordinals[-1] += 1
+            self.parts.append(f"\n{self._ordinals[-1]} ")
         elif tag in _BLOCK:
             self.parts.append("\n")
 
@@ -293,6 +317,10 @@ class _Extractor(html.parser.HTMLParser):
                 table.close_row()
             elif tag in _BLOCK:
                 table.data(_CELL_BLOCK)
+        elif tag == "ol":
+            if self._ordinals:
+                self._ordinals.pop()
+            self.parts.append("\n")
         elif tag in _BLOCK:
             self.parts.append("\n")
 
@@ -689,8 +717,14 @@ def fetch_one(
         return 0
 
     if not refresh:
+        # The line delta is the first thing a reviewer needs and the message
+        # never said it. Every citation in this system is a line number, so
+        # "same length" and "shifted by nine" are different sizes of problem:
+        # the first can only have changed words, the second re-points quotes.
+        was = len(stored.text.splitlines())
+        moved = "same length" if was == lines else f"was {was} lines, now {lines}"
         print(
-            f"CHANGED {path} — the source no longer matches what is stored.\n"
+            f"CHANGED {path} — the source no longer matches what is stored ({moved}).\n"
             f"  Re-run with --refresh to accept it. Doing so withdraws the reviews\n"
             f"  that were made against the old text.",
             file=sys.stderr,

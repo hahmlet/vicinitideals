@@ -434,6 +434,20 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "abuts_accessway",
+        "site_fact",
+        "A lot line abuts an accessway rather than a road, and the code counts "
+        "it as a front lot line. Clackamas County's Table 315-3 note 15 says "
+        "so in six words -- \"frontage on an accessway shall be considered a "
+        "front lot line\" -- which turns a 5 ft side into a 10 ft front on "
+        "whichever face it lands, and an accessway is not a street, so nothing "
+        "in a street layer answers it. Same shape as the through lot and the "
+        "same asymmetry: reading an accessway frontage as an ordinary side is "
+        "how a lot with no room for the pod screens as buildable.",
+        evidence="jurisdiction accessway / private-lane layer -- none held",
+        assume=None,
+    ),
+    ConditionDef(
         "sidewalk_easement",
         "site_fact",
         "Sidewalk access is carried by an easement rather than by the "

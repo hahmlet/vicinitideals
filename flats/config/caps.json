@@ -1,4 +1,49 @@
 {
+  "or/clackamas/_unincorporated": {
+    "VR45": {
+      "max_coverage_pct": [
+        "abuts_accessway"
+      ],
+      "max_height_ft": [
+        "abuts_accessway"
+      ],
+      "setback_front_ft": [
+        "abuts_accessway"
+      ],
+      "setback_front_max_ft": [
+        "abuts_accessway"
+      ],
+      "setback_rear_ft": [
+        "abuts_accessway"
+      ],
+      "setback_side_ft": [
+        "abuts_accessway"
+      ]
+    },
+    "VR57": {
+      "max_coverage_pct": [
+        "abuts_accessway"
+      ],
+      "max_height_ft": [
+        "abuts_accessway"
+      ],
+      "setback_front_ft": [
+        "abuts_accessway"
+      ],
+      "setback_front_max_ft": [
+        "abuts_accessway"
+      ],
+      "setback_garage_entrance_ft": [
+        "abuts_accessway"
+      ],
+      "setback_rear_ft": [
+        "abuts_accessway"
+      ],
+      "setback_side_ft": [
+        "abuts_accessway"
+      ]
+    }
+  },
   "or/clackamas/lake-oswego": {
     "R-0": {
       "max_coverage_pct": [

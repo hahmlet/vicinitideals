@@ -2,153 +2,153 @@
 
 Section 1012 applies to the following land use permit applications in any zoning district that has a minimum lot size standard, district land area standard, or minimum density standard, except the AG/F, EFU, and TBR Districts:
 
-Subdivisions;
+1 Subdivisions;
 
-Partitions;
+2 Partitions;
 
-Replats reviewed as a Type II application pursuant to Section 1307, Procedures;
+3 Replats reviewed as a Type II application pursuant to Section 1307, Procedures;
 
-Design review for manufactured home parks, congregate housing facilities, and dwellings, including residential condominiums; and
+4 Design review for manufactured home parks, congregate housing facilities, and dwellings, including residential condominiums; and
 
-Conditional uses for manufactured home parks and dwellings.
+5 Conditional uses for manufactured home parks and dwellings.
 
 1012.02 Minimum Lot Size Exceptions
 
 In subdivisions, partitions, and replats, lots and parcels shall comply with the minimum lot size standards, if any, of the applicable zoning district, except as established by Subsections 1012.02(A) through (I).
 
-Limitation: Notwithstanding Subsections 1012.02(C) through (F), the minimum lot size inside the Portland Metropolitan Urban Growth Boundary is 20 acres in the FF-10, RA-1, RA-2, RC, RI, and RRFF-5 Districts, except as provided by Subsection 3.07.1130(c) of the Code of the Metropolitan Service District.
+1 Limitation: Notwithstanding Subsections 1012.02(C) through (F), the minimum lot size inside the Portland Metropolitan Urban Growth Boundary is 20 acres in the FF-10, RA-1, RA-2, RC, RI, and RRFF-5 Districts, except as provided by Subsection 3.07.1130(c) of the Code of the Metropolitan Service District.
 
-Bonus Density: If a smaller lot size is necessary to provide bonus density dwelling units awarded under Subsection 1012.05(E), the minimum lot size standard of the applicable zoning district is waived. Demonstrating compliance with this standard shall not require the proposed development to be a planned unit development or require that townhouses be developed.
+2 Bonus Density: If a smaller lot size is necessary to provide bonus density dwelling units awarded under Subsection 1012.05(E), the minimum lot size standard of the applicable zoning district is waived. Demonstrating compliance with this standard shall not require the proposed development to be a planned unit development or require that townhouses be developed.
 
-Two or More Lawfully Established Dwellings on One Lot of Record: If a lot of record is not large enough to be divided in compliance with the minimum lot size standard of the applicable zoning district, the standard is waived if there are two or more lawfully established dwellings located on one lot of record with a Comprehensive Plan land use plan designation of Low Density Residential, Unincorporated Community Residential, or Rural. At least one of the lawfully established dwellings shall be located on each lot or parcel created pursuant to Subsection 1012.02(C). Subsection 1012.02(C) does not apply to the creation of separate lots or parcels for:
+3 Two or More Lawfully Established Dwellings on One Lot of Record: If a lot of record is not large enough to be divided in compliance with the minimum lot size standard of the applicable zoning district, the standard is waived if there are two or more lawfully established dwellings located on one lot of record with a Comprehensive Plan land use plan designation of Low Density Residential, Unincorporated Community Residential, or Rural. At least one of the lawfully established dwellings shall be located on each lot or parcel created pursuant to Subsection 1012.02(C). Subsection 1012.02(C) does not apply to the creation of separate lots or parcels for:
 
-Accessory dwelling units;
+1 Accessory dwelling units;
 
-Accessory historic dwellings;
+2 Accessory historic dwellings;
 
-Accessory farm dwellings on a lot of record with a land use plan designation of Rural if the accessory farm dwelling was established after October 4, 2000;
+3 Accessory farm dwellings on a lot of record with a land use plan designation of Rural if the accessory farm dwelling was established after October 4, 2000;
 
-Manufactured dwellings and residential trailers established under a temporary permit;
+4 Manufactured dwellings and residential trailers established under a temporary permit;
 
-Manufactured dwellings and residential trailers established within a manufactured dwelling park or a manufactured home park;
+5 Manufactured dwellings and residential trailers established within a manufactured dwelling park or a manufactured home park;
 
-Dwellings established as a "replacement" for a historic landmark dwelling, where the continued use of the historic landmark dwelling for residential purposes was permitted as a conditional use in the HL, HD, or HC overlay zoning district; or
+6 Dwellings established as a "replacement" for a historic landmark dwelling, where the continued use of the historic landmark dwelling for residential purposes was permitted as a conditional use in the HL, HD, or HC overlay zoning district; or
 
-Middle housing dwelling units; however, middle housing land divisions are permitted pursuant to Section 1105, Subdivisions, Partitions, Replats, Middle Housing Land Divisions, Condominium Plats, and Vacations of Recorded Plats.
+7 Middle housing dwelling units; however, middle housing land divisions are permitted pursuant to Section 1105, Subdivisions, Partitions, Replats, Middle Housing Land Divisions, Condominium Plats, and Vacations of Recorded Plats.
 
-Conditional Use: If the subject property is developed, or approved to be developed, with a conditional use, the minimum lot size standards of the applicable zoning district are waived, provided:
+4 Conditional Use: If the subject property is developed, or approved to be developed, with a conditional use, the minimum lot size standards of the applicable zoning district are waived, provided:
 
-If a minimum lot size for the conditional use is established by Section 800, Special Use Requirements, it remains applicable.
+1 If a minimum lot size for the conditional use is established by Section 800, Special Use Requirements, it remains applicable.
 
-The proposed lot size requires approval pursuant to Section 1203, Conditional Uses. However, approval pursuant to Section 1203 does not waive the requirement to also receive approval pursuant to Section 1105, Subdivisions, Partitions, Replats, Condominium Plats, and Vacations of Recorded Plats.
+2 The proposed lot size requires approval pursuant to Section 1203, Conditional Uses. However, approval pursuant to Section 1203 does not waive the requirement to also receive approval pursuant to Section 1105, Subdivisions, Partitions, Replats, Condominium Plats, and Vacations of Recorded Plats.
 
-The minimum lot size waiver applies only to a lot or parcel developed with the conditional use and not to any other lots or parcels in the proposed subdivision, partition, or replat.
+3 The minimum lot size waiver applies only to a lot or parcel developed with the conditional use and not to any other lots or parcels in the proposed subdivision, partition, or replat.
 
-A deed restriction limiting development of an undersized lot or parcel to the approved conditional use shall be recorded in conjunction with the recording of the final plat.
+4 A deed restriction limiting development of an undersized lot or parcel to the approved conditional use shall be recorded in conjunction with the recording of the final plat.
 
-This lot size exception does not apply in the RA-2 or RR Districts, and the minimum lot size for the lot or parcel developed with the conditional use is two acres in the RRFF-5 and FF-10 Districts. In addition, duplexes in the RA-1 District are subject to Subsection 1012.02(F) in lieu of Subsection 1012.02(D).
+5 This lot size exception does not apply in the RA-2 or RR Districts, and the minimum lot size for the lot or parcel developed with the conditional use is two acres in the RRFF-5 and FF-10 Districts. In addition, duplexes in the RA-1 District are subject to Subsection 1012.02(F) in lieu of Subsection 1012.02(D).
 
-Comprehensive Plan Boundary: If through a Type IV Comprehensive Plan map amendment, a lot of record is divided by a Comprehensive Plan land use plan designation boundary, the lot of record may be partitioned along that boundary (access strips and parcels of less than one acre are excluded). If the boundary separates an Agriculture or Forest designation from an Urban, Unincorporated Community, or Rural designation, or if the boundary separates an Agriculture designation from a Forest designation, the exception to the minimum lot size standards does not apply to any portion of the subject property designated Agriculture or Forest, except to the extent that Subsection 401.08(K) or 406.09(G) also applies.
+5 Comprehensive Plan Boundary: If through a Type IV Comprehensive Plan map amendment, a lot of record is divided by a Comprehensive Plan land use plan designation boundary, the lot of record may be partitioned along that boundary (access strips and parcels of less than one acre are excluded). If the boundary separates an Agriculture or Forest designation from an Urban, Unincorporated Community, or Rural designation, or if the boundary separates an Agriculture designation from a Forest designation, the exception to the minimum lot size standards does not apply to any portion of the subject property designated Agriculture or Forest, except to the extent that Subsection 401.08(K) or 406.09(G) also applies.
 
-Duplexes in the RA-1 District: In the RA-1 District, there is no minimum lot size for a lot or parcel to be developed with duplexes pursuant to Section 1203, Conditional Uses. However, the maximum density standards of Subsection 1012.07 apply to the entire property proposed for development with duplexes prior to the creation of new lots or parcels.
+6 Duplexes in the RA-1 District: In the RA-1 District, there is no minimum lot size for a lot or parcel to be developed with duplexes pursuant to Section 1203, Conditional Uses. However, the maximum density standards of Subsection 1012.07 apply to the entire property proposed for development with duplexes prior to the creation of new lots or parcels.
 
-Townhouses: In the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5, or VR-5/7 District, the minimum lot size standards are waived for townhouses.
+7 Townhouses: In the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5, or VR-5/7 District, the minimum lot size standards are waived for townhouses.
 
-Middle Housing Land Divisions: In the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5, or VR-5/7 District, the minimum lot size standards are waived for middle housing land divisions approved pursuant to Section 1105, Subdivisions, Partitions, Replats, Middle Housing Land Divisions, Condominium Plats, and Vacations of Recorded Plats.
+8 Middle Housing Land Divisions: In the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5, or VR-5/7 District, the minimum lot size standards are waived for middle housing land divisions approved pursuant to Section 1105, Subdivisions, Partitions, Replats, Middle Housing Land Divisions, Condominium Plats, and Vacations of Recorded Plats.
 
-Nonresidential Tracts: The minimum lot size standards are waived for a designated nonresidential tract for a private road, open space, or similar support purpose.
+9 Nonresidential Tracts: The minimum lot size standards are waived for a designated nonresidential tract for a private road, open space, or similar support purpose.
 
 1012.03 Maximum Lot Size
 
 In subdivisions, partitions, and replats in the VR-5/7, VR-4/5, and VTH Districts, lots and parcels shall comply with the maximum lot size standards of the applicable zoning district, except as established by Subsections 1012.03(A) through (C) for the VR-5/7 and VR-4/5 Districts.
 
-A portion of the subject property may be excluded when calculating average lot size for the subdivision, partition, or replat pursuant to Note 4 or 5 of Table 315-3, Dimensional and Building Design Standards in the VR-5/7, VR-4/5, and VTH Districts, or when calculating maximum individual lot size, provided that a master plan for the excluded portion of the subject property demonstrates that the maximum lot size standards can be met for the entire property through future land division.
+1 A portion of the subject property may be excluded when calculating average lot size for the subdivision, partition, or replat pursuant to Note 4 or 5 of Table 315-3, Dimensional and Building Design Standards in the VR-5/7, VR-4/5, and VTH Districts, or when calculating maximum individual lot size, provided that a master plan for the excluded portion of the subject property demonstrates that the maximum lot size standards can be met for the entire property through future land division.
 
-Unless a master plan is provided pursuant to Subsection 1012.03(A), the maximum size of a lot or parcel created for a dwelling lawfully established prior to being zoned VR-5/7 or VR-4/5 is 15,000 square feet unless the dwelling is in a resource protection area, as shown on Comprehensive Plan Map X-SV-1, Sunnyside Village Plan Land Use Plan Map, in which case there is no maximum lot size standard. Such a lot or parcel is excluded when calculating average lot size for the subdivision, partition, or replat pursuant to Note 4 or 5 of Table 315-3.
+2 Unless a master plan is provided pursuant to Subsection 1012.03(A), the maximum size of a lot or parcel created for a dwelling lawfully established prior to being zoned VR-5/7 or VR-4/5 is 15,000 square feet unless the dwelling is in a resource protection area, as shown on Comprehensive Plan Map X-SV-1, Sunnyside Village Plan Land Use Plan Map, in which case there is no maximum lot size standard. Such a lot or parcel is excluded when calculating average lot size for the subdivision, partition, or replat pursuant to Note 4 or 5 of Table 315-3.
 
-Resource protection area, as shown on Comprehensive Plan Map X-SV-1, is excluded when calculating average lot size for the subdivision, partition, or replat pursuant to Note 4 or 5 of Table 315-3 or when calculating maximum individual lot size.
+3 Resource protection area, as shown on Comprehensive Plan Map X-SV-1, is excluded when calculating average lot size for the subdivision, partition, or replat pursuant to Note 4 or 5 of Table 315-3 or when calculating maximum individual lot size.
 
 1012.04 General Density Provisions
 
-Density is a measurement of the number of dwelling units in relationship to a specified amount of land. In the context of a partition, subdivision, replat, or manufactured home park, density typically relates to potential dwelling units in the form of lots, parcels, or manufactured home park spaces. Density often is expressed as dwelling units per acre; however, this Ordinance implements density standards in many zoning districts by assigning a district land area (DLA), which is the starting point for determining the maximum number of dwelling units allowed on a particular site. In general, the DLA is the minimum lot area required per dwelling unit; however, the DLA is subject to adjustment for density bonuses, restricted area development limitations, and limits on the extent of new road area that must be subtracted. In addition, for a duplex, triplex, quadplex, or cottage cluster in the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5, or VR-5/7 District, and for accessory dwelling units, DLA is not the minimum lot area required per dwelling unit.
+1 Density is a measurement of the number of dwelling units in relationship to a specified amount of land. In the context of a partition, subdivision, replat, or manufactured home park, density typically relates to potential dwelling units in the form of lots, parcels, or manufactured home park spaces. Density often is expressed as dwelling units per acre; however, this Ordinance implements density standards in many zoning districts by assigning a district land area (DLA), which is the starting point for determining the maximum number of dwelling units allowed on a particular site. In general, the DLA is the minimum lot area required per dwelling unit; however, the DLA is subject to adjustment for density bonuses, restricted area development limitations, and limits on the extent of new road area that must be subtracted. In addition, for a duplex, triplex, quadplex, or cottage cluster in the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5, or VR-5/7 District, and for accessory dwelling units, DLA is not the minimum lot area required per dwelling unit.
 
-The DLA and the minimum lot size standard applicable to a particular zoning district are seldom the same. Often this is because the maximum density derived from the DLA standard is calculated over the entire site prior to any platting of new lots or parcels. The minimum lot size standard then typically permits flexibility in determining where on the site the allowed dwelling units will be developed. For example, some lots may be relatively large while others are smaller, or open space tracts may be platted while all lot sizes are relatively small. Regardless of allowed flexible sizing of individual lots or parcels, however, the maximum density allowed for the entire site remains the same.
+2 The DLA and the minimum lot size standard applicable to a particular zoning district are seldom the same. Often this is because the maximum density derived from the DLA standard is calculated over the entire site prior to any platting of new lots or parcels. The minimum lot size standard then typically permits flexibility in determining where on the site the allowed dwelling units will be developed. For example, some lots may be relatively large while others are smaller, or open space tracts may be platted while all lot sizes are relatively small. Regardless of allowed flexible sizing of individual lots or parcels, however, the maximum density allowed for the entire site remains the same.
 
-Except for middle housing land divisions approved pursuant to Section 1105, Subdivisions, Partitions, Replats, Middle Housing Land Divisions, Condominium Plats, and Vacations of Recorded Plats, if the subject property is currently developed with one or more dwelling units that will be retained, such dwelling units shall be included in demonstrating compliance with the maximum and minimum density standards of Section 1012. Notwithstanding this provision, accessory dwelling units and temporary dwellings approved pursuant to Section 1204, Temporary Permits, are not included in demonstrating compliance with the density standards, provided that these dwellings will continue to comply with the requirements for accessory dwelling units or temporary dwellings, respectively.
+3 Except for middle housing land divisions approved pursuant to Section 1105, Subdivisions, Partitions, Replats, Middle Housing Land Divisions, Condominium Plats, and Vacations of Recorded Plats, if the subject property is currently developed with one or more dwelling units that will be retained, such dwelling units shall be included in demonstrating compliance with the maximum and minimum density standards of Section 1012. Notwithstanding this provision, accessory dwelling units and temporary dwellings approved pursuant to Section 1204, Temporary Permits, are not included in demonstrating compliance with the density standards, provided that these dwellings will continue to comply with the requirements for accessory dwelling units or temporary dwellings, respectively.
 
-If a subdivision, partition, or replat is proposed on property currently developed with duplexes, triplexes, quadplexes, or multifamily dwellings (or with a current design review approval for such development), maximum and minimum density shall be calculated separately for each proposed lot or parcel, except:
+4 If a subdivision, partition, or replat is proposed on property currently developed with duplexes, triplexes, quadplexes, or multifamily dwellings (or with a current design review approval for such development), maximum and minimum density shall be calculated separately for each proposed lot or parcel, except:
 
-In a planned unit development or a development of duplexes approved pursuant to Subsection 1012.07, maximum and minimum density shall be calculated for the entire property proposed for development prior to the creation of new lots or parcels.
+1 In a planned unit development or a development of duplexes approved pursuant to Subsection 1012.07, maximum and minimum density shall be calculated for the entire property proposed for development prior to the creation of new lots or parcels.
 
-Middle housing land divisions approved pursuant to Section 1105 are exempt.
+2 Middle housing land divisions approved pursuant to Section 1105 are exempt.
 
-In a zoning district that does not allow new detached single-family dwellings, a lot created for a nonconforming detached single-family dwelling shall not be included in the gross site area used to calculate minimum and maximum density for the remaining lot(s).
+5 In a zoning district that does not allow new detached single-family dwellings, a lot created for a nonconforming detached single-family dwelling shall not be included in the gross site area used to calculate minimum and maximum density for the remaining lot(s).
 
-Except in Urban Low Density Residential, VR-4/5, and VR-5/7 Districts, each unit in a single room occupancy is considered a dwelling unit for the purposes of calculating minimum and maximum density.
+6 Except in Urban Low Density Residential, VR-4/5, and VR-5/7 Districts, each unit in a single room occupancy is considered a dwelling unit for the purposes of calculating minimum and maximum density.
 
 1012.05 Maximum Density
 
 If this Ordinance establishes a district land area (DLA) for the applicable zoning district, the proposed development shall be limited to a maximum density. Except as necessary to implement a minimum lot size exception granted pursuant to Subsection 1012.02 or as established by Subsection 1012.06, maximum density shall be calculated as follows.
 
-Calculate the land area of the subject property. The result is gross site area (GSA).
+1 Calculate the land area of the subject property. The result is gross site area (GSA).
 
-Subtract the following from GSA to determine net site area (NSA). In the event of an overlap between categories requiring a subtraction, the area of overlap shall be classified in the most restrictive category.
+2 Subtract the following from GSA to determine net site area (NSA). In the event of an overlap between categories requiring a subtraction, the area of overlap shall be classified in the most restrictive category.
 
-The land area of new county, public, or private roads (NR) in the HR, MRR, Urban Low Density Residential, VR-4/5, VR-5/7, and VTH Districts, except:
+1 The land area of new county, public, or private roads (NR) in the HR, MRR, Urban Low Density Residential, VR-4/5, VR-5/7, and VTH Districts, except:
 
-If NR exceeds 15 percent of the GSA, only 15 percent of the GSA shall be subtracted.
+1 If NR exceeds 15 percent of the GSA, only 15 percent of the GSA shall be subtracted.
 
-No subtraction shall be made for strips of land adjacent to existing road rights-of-way when such strips are required to be dedicated as a condition of approval;
+2 No subtraction shall be made for strips of land adjacent to existing road rights-of-way when such strips are required to be dedicated as a condition of approval;
 
-In a zoning district other than HR and MRR, any land area of the GSA in the following highly restricted areas (HRA), except that no subtraction shall be made for HRA that will remain undeveloped, in which case density accruing to these areas may be transferred to unrestricted areas:
+2 In a zoning district other than HR and MRR, any land area of the GSA in the following highly restricted areas (HRA), except that no subtraction shall be made for HRA that will remain undeveloped, in which case density accruing to these areas may be transferred to unrestricted areas:
 
-Slopes greater than 50 percent;
+1 Slopes greater than 50 percent;
 
-Mass movement hazards regulated by Section 1003, Hazards to Safety;
+2 Mass movement hazards regulated by Section 1003, Hazards to Safety;
 
-The floodway of the Floodplain Management District regulated by Section 703, Floodplain Management District;
+3 The floodway of the Floodplain Management District regulated by Section 703, Floodplain Management District;
 
-The Willamette River and the required buffer area regulated by Section 705, Willamette River Greenway;
+4 The Willamette River and the required buffer area regulated by Section 705, Willamette River Greenway;
 
-Habitat Conservation Areas regulated by Section 706, Habitat Conservation Area District (HCAD); and
+5 Habitat Conservation Areas regulated by Section 706, Habitat Conservation Area District (HCAD); and
 
-Water Quality Resource Areas regulated by Section 709, Water Quality Resource Area District; and
+6 Water Quality Resource Areas regulated by Section 709, Water Quality Resource Area District; and
 
-In a zoning district other than HR and MRR, fifty percent of the land area of any portions of the GSA in the following moderately restricted areas (MRA), except that no subtraction shall be made for MRA that will remain undeveloped, in which case density accruing to these areas may be transferred to unrestricted areas.:
+3 In a zoning district other than HR and MRR, fifty percent of the land area of any portions of the GSA in the following moderately restricted areas (MRA), except that no subtraction shall be made for MRA that will remain undeveloped, in which case density accruing to these areas may be transferred to unrestricted areas.:
 
-Slopes equal to or greater than 20 percent and less than or equal to 50 percent; and
+1 Slopes equal to or greater than 20 percent and less than or equal to 50 percent; and
 
-Areas outside the floodway but within the Floodplain Management District regulated by Section 703.
+2 Areas outside the floodway but within the Floodplain Management District regulated by Section 703.
 
-In the HR and MRR Districts, any land area of the GSA in the following highly restricted area (HRA). Residential development is prohibited in the HRA.
+4 In the HR and MRR Districts, any land area of the GSA in the following highly restricted area (HRA). Residential development is prohibited in the HRA.
 
-The Floodplain Management District regulated by Section 703; and
+1 The Floodplain Management District regulated by Section 703; and
 
-In the HR and MRR Districts, 50 percent of the land area of the GSA in the following moderately restricted areas (MRA). Residential development is prohibited in the MRA.
+5 In the HR and MRR Districts, 50 percent of the land area of the GSA in the following moderately restricted areas (MRA). Residential development is prohibited in the MRA.
 
-Slopes greater than 25 percent;
+1 Slopes greater than 25 percent;
 
-Mass movement hazards regulated by Section 1003; and
+2 Mass movement hazards regulated by Section 1003; and
 
-Wetlands and required buffer areas regulated by Subsection 1002.06 or another public agency.
+3 Wetlands and required buffer areas regulated by Subsection 1002.06 or another public agency.
 
-In the HR and MRR Districts, although no subtraction is required for stream corridor areas, residential development is prohibited in these areas.
+6 In the HR and MRR Districts, although no subtraction is required for stream corridor areas, residential development is prohibited in these areas.
 
-Divide the NSA by the DLA of the applicable zoning district. The result is base density (BD). The calculations that result in a determination of BD are represented by the following formula:
+3 Divide the NSA by the DLA of the applicable zoning district. The result is base density (BD). The calculations that result in a determination of BD are represented by the following formula:
 
 {GSA – [NR + HRA + (MRA x 0.5)]} / DLA = BD*
 
 * Except in the HR and MRR Districts, HRA and MRA may be reduced to zero as provided by Subsections 1012.05(B)(2) and (3).
 
-In the MRR District, the calculation in Subsection 1012.05(C) shall be done separately for each proposed unit size category identified in Table 317-3, District Land Area Standards in the MRR District. This requires the applicant to identify the square footage of the NSA that is attributed to each unit size category. The results of each separate calculation shall be added to determine BD.
+4 In the MRR District, the calculation in Subsection 1012.05(C) shall be done separately for each proposed unit size category identified in Table 317-3, District Land Area Standards in the MRR District. This requires the applicant to identify the square footage of the NSA that is attributed to each unit size category. The results of each separate calculation shall be added to determine BD.
 
-Add any applicable density bonuses to BD. Bonus density shall be allowed subject to the following criteria:
+5 Add any applicable density bonuses to BD. Bonus density shall be allowed subject to the following criteria:
 
-Unless using the affordable housing bonus under option 1 in Table 1012-1, Bonus Density, the proposed development shall include a minimum of four dwelling units, excluding accessory dwelling units and temporary dwellings approved pursuant to Section 1204, Temporary Permits.
+1 Unless using the affordable housing bonus under option 1 in Table 1012-1, Bonus Density, the proposed development shall include a minimum of four dwelling units, excluding accessory dwelling units and temporary dwellings approved pursuant to Section 1204, Temporary Permits.
 
-The bonus density categories and corresponding maximum increases to BD, as well as the zoning districts to which the bonus density categories are applicable, are identified in Table 1012-1, Bonus Density.
+2 The bonus density categories and corresponding maximum increases to BD, as well as the zoning districts to which the bonus density categories are applicable, are identified in Table 1012-1, Bonus Density.
 
-In the MRR District, dwelling units allowed through the bonus density provisions shall be developed with the same unit size mixture as provided in the BD. For example, if a development is proposed with a BD of 50 units of 700 square feet and 50 units of 500 square feet, and a bonus density of 10 units is allowed, the 10 bonus units shall include 5 units of 700 square feet and 5 units of 500 square feet.
+3 In the MRR District, dwelling units allowed through the bonus density provisions shall be developed with the same unit size mixture as provided in the BD. For example, if a development is proposed with a BD of 50 units of 700 square feet and 50 units of 500 square feet, and a bonus density of 10 units is allowed, the 10 bonus units shall include 5 units of 700 square feet and 5 units of 500 square feet.
 
 Table 1012-1: Bonus Density
 
@@ -189,66 +189,66 @@ MAXIMUM TOTAL INCREASE5
 4Does not apply in the VR-4/5, VR-5/7, or VTH Districts
 5For affordable housing developed using the bonus in option 1, the maximum is that allowed under option 1; it may not be combined with a mixed-use development, park dedication, or Habitat Conservation Area bonus.
 
-Any partial figure of one-half or greater shall be rounded up to the next whole number, except partial figures shall be rounded down for a subdivision, partition, or replat of 10 lots or fewer in the Urban Low Density Residential, VR-4/5, or VR-5/7 District.
+1 Any partial figure of one-half or greater shall be rounded up to the next whole number, except partial figures shall be rounded down for a subdivision, partition, or replat of 10 lots or fewer in the Urban Low Density Residential, VR-4/5, or VR-5/7 District.
 
-The result is maximum density, except that the result shall be reduced as necessary to comply with the minimum lot size standards, if any, of the applicable zoning district, as modified by Subsection 1012.02.
+2 The result is maximum density, except that the result shall be reduced as necessary to comply with the minimum lot size standards, if any, of the applicable zoning district, as modified by Subsection 1012.02.
 
 1012.06 Maximum Density in the VA, VR-4/5, VR-5/7, and VTH Districts
 
 In the VA, VR-4/5, VR-5/7, and VTH Districts, maximum density shall be calculated pursuant to Subsection 1012.05, except if any restricted areas, as identified in Subsections 1012.05(B)(2) and (3), are to be developed, in which case:
 
-A district land area of one acre shall apply to the restricted areas proposed for development, and such areas shall not be developed at a density greater than one dwelling unit per acre.
+1 A district land area of one acre shall apply to the restricted areas proposed for development, and such areas shall not be developed at a density greater than one dwelling unit per acre.
 
-The steps identified in Subsections 1012.05(B)(2) and (3) shall be omitted when completing the calculations for the restricted areas to be developed.
+2 The steps identified in Subsections 1012.05(B)(2) and (3) shall be omitted when completing the calculations for the restricted areas to be developed.
 
 1012.07 Maximum Density For Duplexes In The RA-1 District
 
 In the RA-1 District, developments of duplexes approved pursuant to Section 1203, Conditional Uses, shall be limited to a maximum density, which shall be calculated as follows:
 
-Calculate the land area of the subject property. The result is gross site area.
+1 Calculate the land area of the subject property. The result is gross site area.
 
-Divide GSA by the minimum lot area per dwelling unit of 43,560 square feet. The result is base density.
+2 Divide GSA by the minimum lot area per dwelling unit of 43,560 square feet. The result is base density.
 
-Any partial figure of one-half or greater shall be rounded up to the next whole number, except partial figures shall be rounded down in a subdivision, partition, or replat of 10 lots or fewer.
+3 Any partial figure of one-half or greater shall be rounded up to the next whole number, except partial figures shall be rounded down in a subdivision, partition, or replat of 10 lots or fewer.
 
-The result is maximum density.
+4 The result is maximum density.
 
 1012.08 Minimum Density
 
 A minimum density standard applies in the Urban Low Density Residential, HDR, MR-1, MR-2, PMD, RCHDR, SHD, and VA Districts. Minimum density shall be calculated as follows:
 
-Calculate the land area of the subject property. The result is gross site area (GSA).
+1 Calculate the land area of the subject property. The result is gross site area (GSA).
 
-Subtract the following land area from GSA to determine net acreage:
+2 Subtract the following land area from GSA to determine net acreage:
 
-New county, public, or private roads and strips of land dedicated adjacent to existing road rights-of-way;
+1 New county, public, or private roads and strips of land dedicated adjacent to existing road rights-of-way;
 
-Slopes equal to or greater than 20 percent;
+2 Slopes equal to or greater than 20 percent;
 
-Mass movement hazards regulated by Section 1003, Hazards to Safety;
+3 Mass movement hazards regulated by Section 1003, Hazards to Safety;
 
-Areas in the Floodplain Management District regulated by Section 703, Floodplain Management District;
+4 Areas in the Floodplain Management District regulated by Section 703, Floodplain Management District;
 
-The Willamette River and the required buffer area regulated by Section 705, Willamette River Greenway;
+5 The Willamette River and the required buffer area regulated by Section 705, Willamette River Greenway;
 
-Habitat Conservation Areas (HCA) regulated by Section 706, Habitat Conservation Area District (HCAD), provided that the HCA, or portion thereof, to be subtracted is protected from development by a restrictive covenant or a public dedication, and provided that the subject property was inside the Portland Metropolitan Urban Growth Boundary on January 1, 2002;
+6 Habitat Conservation Areas (HCA) regulated by Section 706, Habitat Conservation Area District (HCAD), provided that the HCA, or portion thereof, to be subtracted is protected from development by a restrictive covenant or a public dedication, and provided that the subject property was inside the Portland Metropolitan Urban Growth Boundary on January 1, 2002;
 
-Water Quality Resource Areas regulated by Section 709, Water Quality Resource Area District (WQRAD); and
+7 Water Quality Resource Areas regulated by Section 709, Water Quality Resource Area District (WQRAD); and
 
-Land to be dedicated to the public for park or open space use.
+8 Land to be dedicated to the public for park or open space use.
 
-In the RCHDR District, the minimum density is 30 dwelling units per net acre. Otherwise, divide by the district land area of the applicable zoning district and multiply the result:
+3 In the RCHDR District, the minimum density is 30 dwelling units per net acre. Otherwise, divide by the district land area of the applicable zoning district and multiply the result:
 
-By 80 percent in Urban Low Density Residential Districts. However, partitions in these districts have no minimum density requirement provided that a master plan demonstrates that the minimum density for the entire property can be met through future land division;
+1 By 80 percent in Urban Low Density Residential Districts. However, partitions in these districts have no minimum density requirement provided that a master plan demonstrates that the minimum density for the entire property can be met through future land division;
 
-By 80 percent in the PMD and MR-1 Districts, except in the case of a manufactured home park where the result shall be multiplied by 50 percent;
+2 By 80 percent in the PMD and MR-1 Districts, except in the case of a manufactured home park where the result shall be multiplied by 50 percent;
 
-By 90 percent in the MR-2, HDR, and SHD Districts; or
+3 By 90 percent in the MR-2, HDR, and SHD Districts; or
 
-By 50 percent in the VA District.
+4 By 50 percent in the VA District.
 
-Any partial figure of one-half or greater shall be rounded up to the next whole number.
+4 Any partial figure of one-half or greater shall be rounded up to the next whole number.
 
-The result is minimum density.
+5 The result is minimum density.
 
 [Amended by Ord. ZDO-245, 7/1/2013; Amended by Ord. ZDO-249, 10/13/2014; Amended by Ord. ZDO-250, 10/13/2014; Amended by Ord. ZDO-252, 6/1/2015; Amended by Ord. ZDO-266, 5/23/2018; Amended by Ord. ZDO-280, 10/23/2021; Amended by Ord. ZDO-277, 1/1/2022; Amended by Ord. ZDO-282, 7/1/2022; Amended by Ord. ZDO-283, 9/5/2023; Amended by Ord. ZDO-285, 9/3/2024]

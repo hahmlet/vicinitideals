@@ -28,7 +28,7 @@ I want to...
 
 Alert
 
-A Level 3 (Go Now!) evacuation notice has been issued for the area around the Austin fire; other evacuation notices remain READ MORE
+Evacuation notices have been issued for the areas around the Austin fire READ MORE
 
 Planning and Zoning
 
@@ -212,15 +212,15 @@ HARDSCAPES: In the practice of landscaping, refers to the inanimate, manmade, no
 
 HAZARDOUS SUBSTANCE, MATERIAL, OR WASTE: Any hazardous substance, material, or waste listed in the following federal regulations:
 
-Superfund Amendments and Reauthorization Act (SARA) of 1986, Section 302 Extremely Hazardous Substances List (40 C.F.R 355, App. A and B);
+1 Superfund Amendments and Reauthorization Act (SARA) of 1986, Section 302 Extremely Hazardous Substances List (40 C.F.R 355, App. A and B);
 
-Comprehensive Environmental Response Compensation & Liability Act Superfund (CERCLA) of 1980, Hazardous Substances List (40 C.F.R 302, Table 302.4);
+2 Comprehensive Environmental Response Compensation & Liability Act Superfund (CERCLA) of 1980, Hazardous Substances List (40 C.F.R 302, Table 302.4);
 
-SARA of 1986, Section 313, Toxic Chemicals List (40 C.F.R Section 372.65);
+3 SARA of 1986, Section 313, Toxic Chemicals List (40 C.F.R Section 372.65);
 
-Resource Conservation and Recovery Act (RCRA) of 1976 and 1984 Amendments, Hazardous Wastes List (P & U Categories) (40 C.F.R Section 261.33(e) and (f)); and
+4 Resource Conservation and Recovery Act (RCRA) of 1976 and 1984 Amendments, Hazardous Wastes List (P & U Categories) (40 C.F.R Section 261.33(e) and (f)); and
 
-DOT Hazardous Materials Table (49 C.F.R Part 172.101).
+5 DOT Hazardous Materials Table (49 C.F.R Part 172.101).
 
 HISTORIC AREA: Any area containing improvements which have a special character, historical interest or aesthetic value or which represent one or more architectural periods or styles typical of the history of the County and which improvements constitute a distinct section of the County that has been designated a cultural resource district pursuant to this ordinance.
 
@@ -254,13 +254,13 @@ KIOSK: A small structure used as a newsstand, information booth, refreshment sta
 
 KITCHEN, ACCESSORY: A kitchen that complies with all of the following standards:
 
-It shall be incidental to a primary dwelling.
+1 It shall be incidental to a primary dwelling.
 
-It shall be located in a room that is approved for residential occupancy and used for a purpose in addition to that of a kitchen (e.g., a recreation room, a bedroom).
+2 It shall be located in a room that is approved for residential occupancy and used for a purpose in addition to that of a kitchen (e.g., a recreation room, a bedroom).
 
-It shall not be located in a detached accessory building.
+3 It shall not be located in a detached accessory building.
 
-Any of the following features shall be located within a contiguous area that is no more than 30 inches deep and 10 feet long: cooking appliances, sinks, refrigerators, dishwashers, counters, and cabinets.
+4 Any of the following features shall be located within a contiguous area that is no more than 30 inches deep and 10 feet long: cooking appliances, sinks, refrigerators, dishwashers, counters, and cabinets.
 
 LANDSCAPING: Areas of land planted with groundcover, grasses, shrubs, annuals, perennials, or trees.
 
@@ -282,19 +282,19 @@ LOT, FLAG: A lot that has access to a road by means of a narrow strip of lot or 
 
 LOT LINE, FRONT: Any boundary line separating a lot from a County, public, state, or private road, or from an access drive. Exceptions are:
 
-Except as otherwise provided in Subsection 903.08, the front lot line of a flag lot shall be within the boundaries of the lot by a distance equal to the width of the narrow strip of lot or easement providing access to the lot. The front lot line shall be parallel to the lot line extending from the road to the lot line opposite and most distant from the road. (See Figure 202-1.)
+1 Except as otherwise provided in Subsection 903.08, the front lot line of a flag lot shall be within the boundaries of the lot by a distance equal to the width of the narrow strip of lot or easement providing access to the lot. The front lot line shall be parallel to the lot line extending from the road to the lot line opposite and most distant from the road. (See Figure 202-1.)
 
-A corner lot has at least two front lot lines, except where one of the lot lines that would otherwise be a front lot line abuts a private road or access drive and motor vehicle access from the lot is not taken to that private road or access drive. In that case, the lot line where motor vehicle access is not taken is a side lot line.
+2 A corner lot has at least two front lot lines, except where one of the lot lines that would otherwise be a front lot line abuts a private road or access drive and motor vehicle access from the lot is not taken to that private road or access drive. In that case, the lot line where motor vehicle access is not taken is a side lot line.
 
-A through lot has at least two front lot lines except where one of the lot lines that would otherwise be a front lot line abuts a collector, arterial, expressway, interstate, or other feature that precludes motor vehicle access. In that case, the lot line where access is precluded is the rear lot line.
+3 A through lot has at least two front lot lines except where one of the lot lines that would otherwise be a front lot line abuts a collector, arterial, expressway, interstate, or other feature that precludes motor vehicle access. In that case, the lot line where access is precluded is the rear lot line.
 
 LOT LINE, REAR: Any boundary line opposite and most distant from the front lot line and not intersecting a front lot line. Exceptions are:
 
-For a corner lot, the rear lot line is any one of the boundary lines opposite the front lot lines. Any other opposite boundary line is a side lot line. (See Figure 202-2.)
+1 For a corner lot, the rear lot line is any one of the boundary lines opposite the front lot lines. Any other opposite boundary line is a side lot line. (See Figure 202-2.)
 
-A triangular-shaped lot has no rear lot line.
+2 A triangular-shaped lot has no rear lot line.
 
-A through lot has no rear lot line except where one of the lot lines that would otherwise be a front lot line abuts a collector, arterial, expressway, interstate, or other feature that precludes motor vehicle access. In that case, the lot line where access is precluded is a rear lot line.
+3 A through lot has no rear lot line except where one of the lot lines that would otherwise be a front lot line abuts a collector, arterial, expressway, interstate, or other feature that precludes motor vehicle access. In that case, the lot line where access is precluded is a rear lot line.
 
 LOT LINE, SIDE: Any boundary line that is not a front or rear lot line.
 
@@ -540,9 +540,9 @@ SOIL MOISTURE SENSOR: A device that measures the amount of water in the soil. Th
 
 SOLAR ENERGY SYSTEM: Any solar collector, or other solar energy device, the primary purpose of which is to provide for the collection, storage, and distribution of solar energy for space heating or cooling, water heating, or electricity.
 
-The power generating capacity of a roof-mounted solar energy system that is located on a primary use, conditional use, or limited use structure is limited only by the size of the system that can fit within the confines of the roof surface to which it is mounted.
+1 The power generating capacity of a roof-mounted solar energy system that is located on a primary use, conditional use, or limited use structure is limited only by the size of the system that can fit within the confines of the roof surface to which it is mounted.
 
-The power generating capacity of a ground-mounted solar energy system, or of a roof-mounted solar energy system that is located on an accessory structure, is limited to power consumed by the development to which the system is accessory, or—if the system feeds power into the grid of a public utility company—to an amount equivalent to no more than the annual usage of the development to which the system is accessory.
+2 The power generating capacity of a ground-mounted solar energy system, or of a roof-mounted solar energy system that is located on an accessory structure, is limited to power consumed by the development to which the system is accessory, or—if the system feeds power into the grid of a public utility company—to an amount equivalent to no more than the annual usage of the development to which the system is accessory.
 
 SOLID WASTE: As defined in Chapter 10.03, Solid Waste and Wastes Management, of the Clackamas County Code.
 
@@ -657,9 +657,9 @@ Related Events
 
 Related Events
 Planning and Zoning
-Aug 20
-9:30 am - 10:00 am
-Hearings Officer: Z0096-26 - Aug. 20, 2026
+Aug 24
+6:30 pm - 8:30 pm
+Planning Commission - Aug. 24, 2026
 More details
 Planning and Zoning
 Sep 03

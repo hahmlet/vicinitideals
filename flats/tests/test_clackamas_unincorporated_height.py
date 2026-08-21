@@ -12,12 +12,16 @@ quadplex is designed here -- states no height of its own, so the district table
 is the whole of it.
 
 The finding worth keeping is not about height. Reading these cells is what
-surfaced that ``zdo.315.txt`` carries 305 footnote markers and zero bodies: the
+surfaced that ``zdo.315.txt`` carried 305 footnote markers and zero bodies: the
 worst unreconciled document in the corpus, and the source of every value in this
-layer. The footnote gate governs nothing here. It is silent because it cannot
-see, not because the notes are clean -- so note 9 on the VR cells was read by
-hand, and this file pins the reading and the blindness together, because the
-second is the reason the first had to happen.
+layer. The footnote gate governed nothing here, and it was silent because it
+could not see rather than because the notes were clean -- so note 9 on the VR
+cells was read by hand, and this file pinned the reading and the blindness
+together, because the second is the reason the first had to happen.
+
+Both causes are fixed now, in ``test_ordered_list_notes.py``, and the tests
+below that held the blindness hold the repair instead. That is what they were
+for: a test that describes a fault has to fail when somebody fixes it.
 """
 
 from __future__ import annotations
@@ -176,49 +180,59 @@ def test_and_section_845_states_no_height_of_its_own(store: ProvenanceStore) -> 
 # -- why that note had to be read by hand ------------------------------------
 
 
-def test_the_document_behind_this_whole_layer_has_no_readable_footnotes(
+def test_the_document_behind_this_whole_layer_had_no_readable_footnotes(
     store: ProvenanceStore,
 ) -> None:
-    """305 markers, zero bodies. The worst unreconciled document in the corpus,
-    and every value in this layer cites it."""
+    """305 markers and zero bodies when these heights were encoded: the worst
+    unreconciled document in the corpus, and every value in this layer cites
+    it. Both causes are fixed now -- see test_ordered_list_notes.py -- so what
+    this holds is the shape of the repair, not the fault. Still unreconciled,
+    which is the ledger being honest rather than a claim of completeness."""
     got = census(store.load(ZDO).text, layer=CLACKAMAS, doc=ZDO)
     assert len(got.markers) > 300
-    assert got.bodies == ()
-    assert len(got.unbodied) == len(got.markers)
+    assert len(got.bodies) == 57
+    assert len(got.unbodied) < len(got.markers) / 4
     assert not got.reconciled
 
 
-def test_so_the_footnote_gate_governs_nothing_here(clackamas: Layer) -> None:
-    """The fault this pins is not a wrong number, it is a check that cannot
+def test_and_the_gate_that_governed_nothing_here_now_governs_all_of_it(
+    clackamas: Layer,
+) -> None:
+    """The fault this pins is not a wrong number, it is a check that could not
     run. Every other layer's values are held back when a note above them is
-    unread; this layer's would certify under all 305."""
-    assert [r for r in qualified() if r.layer == CLACKAMAS] == []
+    unread; this layer's would have certified under all 305. Sixty-four are
+    governed now, and none of them blocked -- every note was read and ruled."""
+    rows = [r for r in qualified() if r.layer == CLACKAMAS]
+    assert len(rows) == 64
+    assert not any(r.blocking for r in rows)
 
 
-def test_and_the_cause_is_the_spelling_not_the_absence_of_notes(
+def test_and_the_cause_was_the_spelling_not_the_absence_of_notes(
     lines: list[str],
 ) -> None:
-    """The notes are there and they are numbered. This code writes them as "1
-    The minimum and maximum lot size standards" -- one space, no heading -- and
-    the headless-run reader demands a column gap, because at one space that
-    pattern matches every numbered paragraph in the code. Declining it is the
-    right call in general and wrong for this document, which is a reader
-    change rather than a data one, and is not made here."""
-    from flats.encode.footnotes import HEADLESS_NOTE, NOTES_HEAD
+    """The notes were always there and always numbered. This code writes them
+    as "1 The minimum and maximum lot size standards" -- one space, no heading
+    -- and the gapped-run reader demands a column gap, because at one space
+    that pattern also matches every numbered paragraph in a code. Declining it
+    there is still right; the run had to earn its reading another way."""
+    from flats.encode.footnotes import HEADLESS_NOTE, NOTES_HEAD, _tight_run
 
     first = lines[1397]
     assert first.startswith("1 The minimum and maximum lot size standards apply")
-    assert HEADLESS_NOTE.match(first) is None  # one space, so not seen
-    assert HEADLESS_NOTE.match(first.replace("1 ", "1   ")) is not None  # a gap would be
+    assert HEADLESS_NOTE.match(first) is None  # one space, so the gapped rule declines
+    assert HEADLESS_NOTE.match(first.replace("1 ", "1   ")) is not None  # a gap would not
     assert not any(NOTES_HEAD.match(line.strip()) for line in lines)
+    # What reads it instead: the run proves itself 1, 2, 3, and something above
+    # it in the region actually bears a marker.
+    assert _tight_run(lines, 1397, 0)
 
 
 def test_which_is_why_the_reading_is_written_into_the_layer_rather_than_left_to_it() -> None:
     yaml = Path("flats/config/jurisdictions/or/clackamas/_unincorporated.yaml").read_text(
         encoding="utf-8"
     )
-    assert "305 footnote markers and ZERO bodies found" in yaml
-    assert "silent here because it is blind, not because the notes" in yaml
+    assert "305 footnote markers and ZERO bodies" in yaml
+    assert "silent because it was blind, not because the notes were clean" in yaml
     assert "Sieben Creek" in yaml
 
 
