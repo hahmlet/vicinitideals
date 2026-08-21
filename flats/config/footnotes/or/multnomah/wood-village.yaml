@@ -43,6 +43,21 @@
 # marker rule will not read as a weld. None of the six sits over a value this
 # layer encodes; all six were silently absent until now.
 
+# **The use tables, added later.** Sections 240.200 and 250.200 answer their
+# tables the way Portland does -- a numbered paragraph that names its own
+# marker, "This regulation applies to all parts of Table 240-1 marked with a
+# (1)" -- and carried ten orphan markers until the census learned to read the
+# sentence with Wood Village's verb and Wood Village's brackets in it. All
+# five are caps on retail, office or daycare floor area. None of them touches
+# Household Living, which is N in every one of these zones.
+#
+# Section 230.200 is worth a line for what it does NOT have. Its note (1)
+# limits Manufacturing and Production and Wholesale Sales "in the General
+# Commercial zone", and Table 230-1 as published has one column, NC. There is
+# no General Commercial zone left in the code and no marker anywhere in the
+# table, so the note is the city's own dangling reference rather than a column
+# this corpus lost -- the neighbouring section prints its two columns, LM and
+# GM, side by side.
 notes:
   # --- 210.320, Table 210-3: LR12 and LR7.5 -------------------------------
   - quote: "or/multnomah/wood-village/210.320.txt#L82"
@@ -213,3 +228,65 @@ notes:
       and twenty-foot garage setback its markers sit on are encoded from the
       cells themselves; the facade-plane rule the note adds on top does not
       reach this building.
+
+  # --- the use tables, answered in prose ---
+
+  - quote: "or/multnomah/wood-village/240.200.txt#L84"
+    digest: "a4bb4978edcc"
+    state: dismissed
+    reason: >-
+      Caps Retail Sales and Service at 35 percent of the footprint of
+      all buildings on a lot in the Light Manufacturing and General
+      Manufacturing zones, and sends anything larger to conditional use
+      review. The value these notes hold back is quadplex_allowed, read
+      from the Household Living row, and that row carries no marker in
+      any of the three zones -- it reads a bare N. They reach it only
+      because a declared note's region is the whole table it names
+
+  - quote: "or/multnomah/wood-village/240.200.txt#L86"
+    digest: "8dbae1eade40"
+    state: dismissed
+    reason: >-
+      The same 35 percent footprint cap for Office uses in the Light
+      Manufacturing and General Manufacturing zones. The value these
+      notes hold back is quadplex_allowed, read from the Household
+      Living row, and that row carries no marker in any of the three
+      zones -- it reads a bare N. They reach it only because a declared
+      note's region is the whole table it names
+
+  - quote: "or/multnomah/wood-village/240.200.txt#L88"
+    digest: "243a3b9d791f"
+    state: dismissed
+    reason: >-
+      Caps Daycare at 3,000 gross square feet in the Light Manufacturing
+      and General Manufacturing zones. The value these notes hold back
+      is quadplex_allowed, read from the Household Living row, and that
+      row carries no marker in any of the three zones -- it reads a bare
+      N. They reach it only because a declared note's region is the
+      whole table it names
+
+  - quote: "or/multnomah/wood-village/250.200.txt#L68"
+    digest: "ba3d6b8428c7"
+    state: dismissed
+    reason: >-
+      Caps Daycare at three thousand gross square feet in the
+      Commercial/Industrial Mixed Use zone. The value these notes hold
+      back is quadplex_allowed, read from the Household Living row, and
+      that row carries no marker in any of the three zones -- it reads a
+      bare N. They reach it only because a declared note's region is the
+      whole table it names
+
+  - quote: "or/multnomah/wood-village/250.200.txt#L70"
+    digest: "03bb88e5474a"
+    state: dismissed
+    reason: >-
+      Metro Title 4's limits on new retail commercial buildings in
+      regionally significant industrial, industrial overlay and
+      employment overlay areas -- floor area caps on stores, restaurants
+      and customer-facing professional services, with exceptions for
+      airport and training uses. It is a limit on retail floor area in a
+      zone that prohibits dwellings outright. The value these notes hold
+      back is quadplex_allowed, read from the Household Living row, and
+      that row carries no marker in any of the three zones -- it reads a
+      bare N. They reach it only because a declared note's region is the
+      whole table it names

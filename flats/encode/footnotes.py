@@ -346,16 +346,34 @@ DECLARED_HEAD = re.compile(r"^\(?(?P<n>\d{1,2})\)?[.)]\s+\S")
 #: Portland's single-dwelling chapter prints "that have a [ 4]". The closing
 #: bracket is required: without it the pattern reads any sentence that
 #: mentions a table and a number.
+#:
+#: Three verbs and two brackets, and a corpus-wide sweep for "Table N-M
+#: <words> (n)" finds no fourth of either. Portland says "that have a [4]",
+#: "that have note [4]", "that have a note [4]"; Wood Village says "marked
+#: with a (1)" and, once, "with the number '(2)'", and parenthesises its
+#: markers to match. Widening the verb without widening the bracket would have
+#: read Wood Village's sentence and then looked for a mark it does not print.
+#: The curly quotes are that one sentence's -- it quotes its own marker.
 DECLARES = re.compile(
-    r"table\s+(?P<a>\d{2,3})\s*-\s*(?P<b>\d{1,2})\s+that\s+have\s+"
-    r"(?:[a-z]{1,4}\s+){0,2}\[\s*(?P<n>\d{1,2})\s*\]",
+    r"table\s+(?P<a>\d{2,3})\s*-\s*(?P<b>\d{1,2})\s+"
+    r"(?:that\s+have|marked\s+with|with\s+the\s+number)\s+"
+    r"(?:[a-z]{1,4}\s+){0,2}[“”\"']?"
+    r"(?:\[\s*(?P<n>\d{1,2})\s*\]|\(\s*(?P<p>\d{1,2})\s*\))",
     re.I,
 )
 
 #: A table's caption, printed on a line of its own: "Table 120-1". A wide table
 #: repeats it on every page it crosses, so the first occurrence opens the span
 #: and a *different* table's caption closes it.
-TABLE_CAPTION = re.compile(r"^table\s+(?P<a>\d{2,3})\s*-\s*(?P<b>\d{1,2})\s*$", re.I)
+#:
+#: Wood Village titles its captions -- "Table 240-1. Uses in Manufacturing
+#: Zones" -- so a title is allowed, behind a period or a colon. The
+#: punctuation is what keeps a declaring sentence out: "Table 240-1 marked
+#: with a (1)" also starts a line and also names the table, and reading it as
+#: the caption would open the region at the note instead of at the table.
+TABLE_CAPTION = re.compile(
+    r"^table\s+(?P<a>\d{2,3})\s*-\s*(?P<b>\d{1,2})\s*(?:[.:]\s+\S|$)", re.I
+)
 
 #: The head of a code section: "33.120.205 When Primary Structures are
 #: Allowed". Closes a table's span where no other table follows it.
@@ -533,7 +551,7 @@ def _table_span(
     note that claims a table we cannot find governs nothing, and its markers
     stay orphans.
     """
-    caption = re.compile(rf"^table\s+{a}\s*-\s*{b}\s*$", re.I)
+    caption = re.compile(rf"^table\s+{a}\s*-\s*{b}\s*(?:[.:]\s+\S|$)", re.I)
     first = next(
         (i for i, raw in enumerate(lines) if caption.match(raw.strip())), None
     )
@@ -615,10 +633,11 @@ def _declared(lines: Sequence[str], doc: str) -> list[Block]:
         got = DECLARES.search(joined)
         if got is None:
             continue
+        mark = got.group("n") or got.group("p")
         head = DECLARED_HEAD.match(lines[i].strip())
-        if head is None or head.group("n") != got.group("n"):
+        if head is None or head.group("n") != mark:
             continue
-        found.append((i, _paragraph_end(lines, i, heads, k), got.group("n"), *got.group("a", "b")))
+        found.append((i, _paragraph_end(lines, i, heads, k), mark, *got.group("a", "b")))
 
     out: list[Block] = []
     run: list[tuple[int, int, str, str, str]] = []

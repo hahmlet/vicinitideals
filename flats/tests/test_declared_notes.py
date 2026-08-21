@@ -206,3 +206,61 @@ def test_and_not_one_encoded_number_moved() -> None:
         assert rules.resolve(PORTLAND, zone).values["quadplex_allowed"].value is False
     for zone in ("CM1", "CM2", "CM3", "CX", "CE", "CR", "CI2", "IR"):
         assert rules.resolve(PORTLAND, zone).values["quadplex_allowed"].value is True
+
+
+# --- the same shape in another city's words --------------------------------
+
+
+WV_TABLE = [
+    "Table 240-1. Uses in Manufacturing Zones",
+    "LM                        GM",
+    "Household Living                          N     N",
+    "Retail Sales and Service                  L(1)  L(1)",
+    "Office                                    L(2)  L(2)",
+]
+
+WV_LIMITS = [
+    "D. Limited Uses. Uses shown in Table 240-1 with the letter L are allowed",
+    "subject to the following limitations.",
+    "(1) This regulation applies to all parts of Table 240-1 marked with a (1).",
+    "Retail uses are limited to 35% of the footprint of all buildings.",
+    "(2) This regulation applies to all parts of Table 240-1 marked with a (2).",
+    "Office uses are limited to 35% of the footprint of all buildings.",
+]
+
+
+def test_the_declaring_sentence_reads_in_wood_village_s_words() -> None:
+    """Same shape, different verb and different bracket. Portland writes "that
+    have a [4]" and Wood Village writes "marked with a (1)", and the marks in
+    its tables are parenthesised to match -- so widening the verb without
+    widening the bracket would read the sentence and then look for a mark the
+    city does not print."""
+    seen = census("\n".join(WV_LIMITS + WV_TABLE), doc="d.txt")
+    assert [b.mark for b in seen.bodies] == ["1", "2"]
+    assert seen.reconciled
+
+
+def test_a_titled_caption_is_still_a_caption() -> None:
+    """Portland captions a table "Table 120-1" and nothing else; Wood Village
+    writes "Table 240-1. Uses in Manufacturing Zones". The punctuation is what
+    keeps the declaring sentence itself out of the caption rule -- "Table 240-1
+    marked with a (1)" also starts a line and also names the table, and reading
+    it as the caption opens the region at the note instead of the table."""
+    from flats.encode.footnotes import TABLE_CAPTION
+
+    assert TABLE_CAPTION.match("Table 240-1. Uses in Manufacturing Zones")
+    assert TABLE_CAPTION.match("Table 120-1")
+    assert not TABLE_CAPTION.match(
+        "Table 240-1 marked with a (1). Retail uses are limited"
+    )
+
+
+def test_the_two_manufacturing_tables_reconcile(store: ProvenanceStore) -> None:
+    """Ten orphan markers between them, before. Section 250.200 needed a third
+    verb on top: its second note declares itself as "Uses shown in Table 250-1
+    with the number (2)", quoting its own marker."""
+    for stem, marks in (("240.200", ["1", "2", "3"]), ("250.200", ["1", "2"])):
+        doc = f"or/multnomah/wood-village/{stem}.txt"
+        got = census(store.load(doc).text, layer="or/multnomah/wood-village", doc=doc)
+        assert [b.mark for b in got.bodies] == marks, stem
+        assert got.reconciled, stem
