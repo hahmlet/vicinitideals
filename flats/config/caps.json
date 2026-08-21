@@ -903,6 +903,9 @@
       "max_height_ft": [
         "abuts_lower_density_zone"
       ],
+      "min_density_du_per_acre": [
+        "abuts_lower_density_zone"
+      ],
       "setback_front_ft": [
         "abuts_lower_density_zone"
       ],

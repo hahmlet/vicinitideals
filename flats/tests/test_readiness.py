@@ -516,3 +516,58 @@ def test_a_marker_glued_to_a_decimal_is_read_the_same_way() -> None:
     assert not quotes_the_number("Setback 7.1 feet", 7, glued=True)
     # And a comma still keeps the whole token out of it, so 7,500 is not 750.
     assert not quotes_the_number("Minimum lot area 7,500", 750, glued=True)
+
+
+def test_a_decimal_printed_without_its_leading_zero_still_reads() -> None:
+    """Wood Village's Table 210-3 gives its LR12 density floor as ".9 (25%)"
+    and Table 220-3 gives a coverage as ".80". Both are how a table prints a
+    figure below one, and the scan saw no number there at all -- so a value
+    encoded 0.9 against the line that states it came back misquoted, which is
+    the check disagreeing with the typography rather than with the encoding.
+    """
+    from flats.encode.readiness import quotes_the_number
+
+    assert quotes_the_number("Minimum Number of Dwellings Per Net Acre  .9 (25%)", 0.9)
+    assert quotes_the_number("Maximum lot coverage  .80", 0.8)
+    # And it is still the number it prints, not one nearby.
+    assert not quotes_the_number("Minimum Number of Dwellings Per Net Acre  .9", 9)
+    assert not quotes_the_number("Maximum lot coverage  .80", 80)
+
+
+def test_the_tail_of_a_citation_is_not_a_number_the_line_states() -> None:
+    """The guard that says so had never run. `_NUMBER` was defined twice at
+    module scope, three hundred lines apart, and the second definition -- which
+    carried no guard -- silently won every lookup. So for as long as the check
+    has existed, a value could have been evidenced by the section number of the
+    sentence it was cited from: 33.110.220 reading as 220 feet.
+
+    Nothing in the corpus was resting on that. Un-shadowing the guard moved no
+    jurisdiction on the ladder, which is the answer to whether it mattered in
+    practice and not the answer to whether it should have been live.
+    """
+    from flats.encode.readiness import quotes_the_number
+
+    assert not quotes_the_number("PCC 33.110.220 Development standards", 220)
+    assert not quotes_the_number("PCC 33.110.220 Development standards", 110)
+    # A bare decimal is read, and the dot in a citation still is not.
+    assert not quotes_the_number("See CDC 25.070 for the district", 70)
+    assert quotes_the_number("a floor of .070", 0.07)
+
+
+def test_no_value_anywhere_in_the_corpus_is_misquoted() -> None:
+    """A ratchet, in the shape the footnote gate already uses.
+
+    Eighteen jurisdictions assert this about themselves and the nineteenth does
+    not, which is how a misquote reaches production: it arrives in the layer
+    nobody wrote the assertion for. Stated once, over everything, so that a
+    quote pointing at a line that does not carry its number fails the suite in
+    the slice that introduced it rather than in the review it was meant to make
+    possible.
+    """
+    store = ProvenanceStore()
+    found = [
+        (name, zone, field)
+        for name, layer in sorted(load_rules().items())
+        for zone, field in readiness_for(layer, store=store).misquoted
+    ]
+    assert found == []

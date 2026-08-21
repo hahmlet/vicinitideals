@@ -18,7 +18,47 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
   260-1 three times — outright uses, conditional uses, prohibited uses — and the table does not come
   down with the page under this extractor, so nothing here can say what it permits. Six lots, and the
   honest state is unread. The section is declared and stored anyway so the absence is checkable rather
-  than remembered.'
+  than remembered.
+
+
+  PARKING, read 2026-08-20 and encoded as a layer default. Table 350-1A is headed "Minimum Required
+  Parking Spaces in All Zones" and is stated by use category rather than by district: Household
+  Living, "1 - 4 units", one space per unit. Four stalls is roughly 1,300 square feet of a site that
+  also has to hold the pod and its access, which on the narrow lots this screen exists to find is
+  routinely the difference between fitting and not.
+
+
+  The resolved number does not move. OAR 660-046-0220 caps a city at one stall per unit and Wood
+  Village asks exactly one, so the state row still wins the attribution at equality. What moves is
+  what the number rests on: until now every lot in this city was screened against a ceiling on what
+  the city MAY require, with nothing on file about what it does require, and a ceiling standing in
+  for a rule is a rule nobody read.
+
+
+  Two things in that table are read and not encoded, both because they can only loosen. The asterisk
+  on the Household Living row grants a credit against the minimum for abutting on-street spaces at
+  least twenty-two feet long, where the jurisdiction allows parking and clear of a required sight
+  distance area -- fewer off-street stalls, never more, and nothing here holds the kerb. The same
+  footnote adds that "no additional parking spaces shall be required for conversion of a detached
+  single-unit dwelling to a triplex or quadplex", which is a conversion where this is new
+  construction. Table 350-1B sets no maximum for Household Living in either column.
+
+
+  MINIMUM DENSITY, also encoded now. Table 210-3 prints a "Minimum Number of Dwellings Per Net Acre"
+  row -- .9 in LR12, 4.6 in LR7.5 -- and Table 220-3 prints 8.7 in its Duplex Triplex Quadplex
+  column. A floor is a standard a lot can fail, and all three sat between the lot dimensions and the
+  height unread. "Net acre" is defined nowhere in the fetched code, and the parenthesised (25%),
+  (80%) and (.80) beside the figures are unexplained, so no denominator is stated: a gross acre is
+  never smaller than a net one, so measuring against the lot''s own area computes a lower density,
+  which is the stricter reading for a floor.
+
+
+  The Town Center then had to state its own answer, because `like:` has no field list. Table 235-2
+  hands three rows to MR2 by name -- lot size and dimensions, maximum lot coverage, minimum
+  landscaping -- and states height and the four setbacks for itself. It prints no density row in
+  either column and neither does any other section of Chapter 235, so encoding MR2''s floor would
+  otherwise have handed the Town Center a standard its own table does not carry, off a pointer to a
+  lot-size row.'
 ingest:
   geoid: null
   juris_city_codes:
@@ -113,6 +153,18 @@ code:
     url: https://woodvillage.municipal.codes/WVDC/250.200
     title: "WVDC 250.200 - Primary Uses (Commercial/Industrial Mixed Use, Table 250-1)"
     allow_thin: true
+  # Section 300 is a container -- eleven subsections of "additional use and
+  # development regulations" that every use table in the city points at. Two
+  # of them reach this building and both are here.
+  - id: "350.045.required-spaces"
+    url: https://woodvillage.municipal.codes/WVDC/350.045
+    title: "WVDC 350.045 - Number of Required Spaces (Tables 350-1A, 350-1B)"
+  - id: "390.020.applicability"
+    url: https://woodvillage.municipal.codes/WVDC/390.020
+    title: "WVDC 390.020 - Applicability (solid waste and recyclables storage)"
+    # One sentence of scope. Fetched to establish an absence rather than
+    # assume one: five or more units, and this building is four.
+    allow_thin: true
   # Fetched and kept even though nothing is encoded from it. The section's
   # prose names Table 260-1 three times and the table itself does not come
   # down with the page, so the Open Space zone stays unread rather than
@@ -155,6 +207,75 @@ code:
     url: https://woodvillage.municipal.codes/WVDC/230.335
     title: "WVDC 230.335 - Height"
     allow_thin: true
+crossrefs:
+  "300": >-
+    Additional Use and Development Regulations, and the fourteen mentions are one sentence repeated in
+    every use table in the city: "Additional regulations are listed in Section 300." It is a container
+    rather than a chapter -- eleven subsections, 310 through 395 -- so the reference cannot be ruled on
+    without reading what is in it. Read 2026-08-20. Two subsections reach this building. 350, Parking
+    and Loading, is fetched and its Table 350-1A is now this layer''s parking default. 390, solid waste
+    and recyclables storage, is fetched and does not reach it: 390.020 applies "to new multi-unit
+    residential buildings containing five or more units", and this is four. The other nine are other
+    use types or other procedures -- home occupations, group living, essential service providers,
+    landscaping (330, reached only through the five-or-more-unit table), manufactured homes, mobile
+    food units, the planned development district, signs and temporary uses.
+
+
+    Worth recording that the code''s own pointers went stale in the renumbering. WVDC 230.310 footnote
+    (5) reads "See Section 350 - Landscaping and Screening", and after Ord. 2-2022 Section 350 is
+    Parking and Loading while landscaping is 330. The footnote names the right subject and the wrong
+    number, which is exactly the shape of reference that sends a reader to the wrong chapter and looks
+    settled when they get there.
+  "640": >-
+    Non-conforming uses. Every mention is the third paragraph of a zone''s use section: "Legally
+    established uses and development which existed at the time this Code was adopted and would
+    otherwise be prohibited, are subject to additional regulations in Section 640." A building that
+    already exists, not one this screen places.
+  "220.400": >-
+    Cottage housing. Its mentions are the asterisk under Table 210-2 and the same reference in Table
+    220-2, both hanging off the Cottage Housing row. Cottage housing is a separate housing type in
+    those tables from "Attached or Detached Tri- or Quadplex", which carries a bare Y.
+  "340.010": >-
+    Manufactured homes. The mention is a row label -- "Manufactured Home (See Section 340.010): Y Y" --
+    in the same table that lists "Attached or Detached Tri- or Quadplex" as its own row with no
+    reference. A factory-built pod is not thereby a manufactured home: the table decides which row a
+    building takes, and this one is the quadplex row.
+  "340.020": >-
+    Manufactured home parks, and the mention is the row for them in Table 220-2. A different housing
+    type in the same table, and prohibited in MR4 besides.
+  "395": >-
+    Accessory dwelling units, cited from the ADU row of Tables 210-2 and 220-2. An accessory dwelling
+    is by definition subordinate to a primary one; this building is four primary dwellings.
+  "330": >-
+    Landscaping and Screening. Its one binding mention is footnote (2) to Table 220-4, and Table 220-4
+    is headed "Development Standards for Multi-Dwelling Structures in the MR2 Zone" -- five units and
+    up. A quadplex takes Table 220-3, which has no landscaping row. Not fetched for that reason; the
+    NC zone''s five percent is encoded from its own table and points here for how rather than how much.
+  "660": >-
+    Variance. Its mention is WVDC 220.320(B): "In the MR4 & MR2 zones reductions to the minimum lot
+    size & dimensions for detached single dwelling units may be approved through the variance process."
+    Detached single dwelling units. This pod is four attached ones, so the exception is not available
+    to it and the base lot minimum stands.
+
+defaults:
+  # Table 350-1A is headed "Minimum Required Parking Spaces in All Zones" and
+  # is stated by use category rather than by district, so it belongs to the
+  # layer rather than to any zone. Household Living, "1 - 4 units": one space
+  # per unit. Four units, four stalls, about 1,300 sq ft of a site that also
+  # has to hold the pod and its access.
+  #
+  # The state's OAR 660-046-0220 ceiling is also one per unit, so the resolved
+  # number does not move. What moves is what it rests on: until now every Wood
+  # Village lot was screened against a state cap on what the city MAY require,
+  # with nothing on file about what it does require. A ceiling standing in for
+  # a rule is a rule nobody read.
+  parking_min_per_unit:
+    value: 1
+    cite: "WVDC 350.045, Table 350-1A -- Household Living, 1-4 units"
+    url: https://woodvillage.municipal.codes/WVDC/350.045
+    retrieved: '2026-08-20'
+    quote: "or/multnomah/wood-village/350.045.required-spaces.txt#L94-L95,L97"
+
 zones:
   NC:
     section: ["230.200", "230.310", "230.315", "230.330", "230.335", "710.100"]
@@ -297,6 +418,24 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/multnomah/wood-village/235.200.txt#L60,L66,L68"
+    min_density_du_per_acre:
+      # Stated here because the pointer above has no field list. Table 235-2
+      # hands three rows to MR2 by name -- lot size and dimensions, maximum lot
+      # coverage, minimum landscaping -- and states height and the four
+      # setbacks for itself. It has no density row at all, in either column,
+      # and neither does any other section of Chapter 235. So the day MR2's
+      # density floor was encoded, the Town Center silently acquired a standard
+      # its own table does not print, and a lot here would have been measured
+      # against 8.7 dwellings to the net acre on the strength of a reference to
+      # a lot-size row.
+      #
+      # The exemption is the table's own list of what a Town Center development
+      # is held to. A complete enumeration that omits density is the code
+      # saying there is none, which is a different sentence from nobody having
+      # looked.
+      exempt: true
+      cite: "WVDC 235.300, Table 235-2 -- the Town Center's own list of development standards, which has no density row"
+      quote: "or/multnomah/wood-village/235.300.txt#L68-L77"
     # 35 feet in the residential column against 115 in the nonresidential one,
     # which is the widest split in this city's tables. Footnote (2) hangs off
     # the 115 and not off the 35.
@@ -371,6 +510,22 @@ zones:
         210.375 (Ord. 2-2022)
       url: https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf
       retrieved: '2026-07-24'
+    min_density_du_per_acre:
+      # The row this file skipped. "Minimum Number of Dwellings Per Net Acre"
+      # is printed between the lot dimensions and the height, and a floor is a
+      # standard a lot can fail: a pod of four units on a large lot in LR 7.5
+      # can be under it where the same pod on a small one is not.
+      #
+      # "Net acre" is not defined anywhere in the fetched code -- the term is
+      # used once, here, and WVDC 710.100 does not carry it. The parenthesised
+      # (80%) beside the figure is unexplained in the same way. So no
+      # `measured_on` is stated: inventing a subtraction list would be worse
+      # than measuring against the lot's own acre, which for a FLOOR is the
+      # stricter reading anyway -- a gross acre is never smaller than a net
+      # one, so the density it computes is never higher.
+      value: 4.6
+      cite: "WVDC 210.320, Table 210-3 -- Minimum Number of Dwellings Per Net Acre, LR7.5"
+      quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L68"
     quadplex_allowed:
       # Table 210-2, "Attached or Detached Tri- or Quadplex": Y in both light
       # residential zones. Permitted outright by the city's own table, not by
@@ -470,6 +625,22 @@ zones:
         210.375 (Ord. 2-2022)
       url: https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf
       retrieved: '2026-07-24'
+    min_density_du_per_acre:
+      # The row this file skipped. "Minimum Number of Dwellings Per Net Acre"
+      # is printed between the lot dimensions and the height, and a floor is a
+      # standard a lot can fail: a pod of four units on a large lot in LR 12
+      # can be under it where the same pod on a small one is not.
+      #
+      # "Net acre" is not defined anywhere in the fetched code -- the term is
+      # used once, here, and WVDC 710.100 does not carry it. The parenthesised
+      # (25%) beside the figure is unexplained in the same way. So no
+      # `measured_on` is stated: inventing a subtraction list would be worse
+      # than measuring against the lot's own acre, which for a FLOOR is the
+      # stricter reading anyway -- a gross acre is never smaller than a net
+      # one, so the density it computes is never higher.
+      value: 0.9
+      cite: "WVDC 210.320, Table 210-3 -- Minimum Number of Dwellings Per Net Acre, LR12"
+      quote: "or/multnomah/wood-village/210.320.txt#L62-L63,L68"
     quadplex_allowed:
       # Table 210-2, "Attached or Detached Tri- or Quadplex": Y in both light
       # residential zones. Permitted outright by the city's own table, not by
@@ -569,6 +740,22 @@ zones:
         220.355 (Ord. 2-2022)
       url: https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf
       retrieved: '2026-07-24'
+    min_density_du_per_acre:
+      # The row this file skipped. "Minimum Number of Dwellings Per Net Acre"
+      # is printed between the lot dimensions and the height, and a floor is a
+      # standard a lot can fail: a pod of four units on a large lot in MR 2
+      # can be under it where the same pod on a small one is not.
+      #
+      # "Net acre" is not defined anywhere in the fetched code -- the term is
+      # used once, here, and WVDC 710.100 does not carry it. The parenthesised
+      # (.80) beside the figure is unexplained in the same way. So no
+      # `measured_on` is stated: inventing a subtraction list would be worse
+      # than measuring against the lot's own acre, which for a FLOOR is the
+      # stricter reading anyway -- a gross acre is never smaller than a net
+      # one, so the density it computes is never higher.
+      value: 8.7
+      cite: "WVDC 220.320, Table 220-3 -- Minimum No. of Dwellings Per Net Acre, Duplex Triplex Quadplex"
+      quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L77"
     quadplex_allowed:
       # Table 220-2, "Attached or Detached Tri- or Quadplex": Y in both
       # multi-residential zones.
@@ -657,6 +844,22 @@ zones:
         220.355 (Ord. 2-2022)
       url: https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf
       retrieved: '2026-07-24'
+    min_density_du_per_acre:
+      # The row this file skipped. "Minimum Number of Dwellings Per Net Acre"
+      # is printed between the lot dimensions and the height, and a floor is a
+      # standard a lot can fail: a pod of four units on a large lot in MR 4
+      # can be under it where the same pod on a small one is not.
+      #
+      # "Net acre" is not defined anywhere in the fetched code -- the term is
+      # used once, here, and WVDC 710.100 does not carry it. The parenthesised
+      # (.80) beside the figure is unexplained in the same way. So no
+      # `measured_on` is stated: inventing a subtraction list would be worse
+      # than measuring against the lot's own acre, which for a FLOOR is the
+      # stricter reading anyway -- a gross acre is never smaller than a net
+      # one, so the density it computes is never higher.
+      value: 8.7
+      cite: "WVDC 220.320, Table 220-3 -- Minimum No. of Dwellings Per Net Acre, Duplex Triplex Quadplex"
+      quote: "or/multnomah/wood-village/220.320.txt#L64-L66,L77"
     quadplex_allowed:
       # Table 220-2, "Attached or Detached Tri- or Quadplex": Y in both
       # multi-residential zones.

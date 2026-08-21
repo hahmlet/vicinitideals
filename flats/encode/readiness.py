@@ -282,11 +282,23 @@ def _quoted_parts(layer: Layer) -> Iterable[tuple[str, str, str | None, object]]
         yield w.zone, w.field, None, getattr(w.value, "value", None)
 
 
-#: How a number can be printed in an ordinance: 7500, 7,500, 7500.0, 7.5.
-#: A number as an ordinance prints one: grouped by commas, possibly decimal,
-#: and not preceded by a digit or a dot — the second guard is what keeps the
-#: tail of a citation like 33.110.220 from reading as the number 220.
-_NUMBER = re.compile(r"(?<![\d.,])\d[\d,]*(?:\.\d+)?")
+#: A number as an ordinance prints one: 7500, 7,500, 7500.0, 7.5 -- grouped by
+#: commas, possibly decimal, and not preceded by a digit or a dot. That last
+#: guard is what keeps the tail of a citation like 33.110.220 from reading as
+#: the number 220.
+#:
+#: The second alternative is a decimal with no leading zero, which is how a
+#: table prints a figure below one: Wood Village's Table 210-3 gives its LR12
+#: density floor as ".9 (25%)" and Table 220-3 gives a coverage as ".80". The
+#: pattern read those as no number at all, so a value encoded 0.9 against the
+#: line that states it came back misquoted -- the check disagreeing with the
+#: typography rather than with the encoding. The lookbehind still applies to
+#: it, so the ".220" of a citation is no more a number than it was.
+#:
+#: Defined once. It was defined twice, and the second definition -- unguarded,
+#: three hundred lines further down -- silently won every lookup, which meant
+#: the citation-tail guard this comment describes had never once run.
+_NUMBER = re.compile(r"(?<![\d.,])(?:\d[\d,]*(?:\.\d+)?|\.\d+)")
 
 
 def _states(text: str, number: float) -> bool:
@@ -454,7 +466,6 @@ def _unmarked(text: str) -> str:
     return _GLUED.sub(cut, text)
 
 
-_NUMBER = re.compile(r"\d[\d,]*(?:\.\d+)?")
 #: What follows a number, where anything does. Area before length on purpose:
 #: "square feet" ends in a length unit and is not one.
 _UNIT = re.compile(
