@@ -144,6 +144,17 @@ GLUED_PAREN_NOTE = re.compile(r"^\((?P<n>\d{1,2})\)(?!\s)(?P<text>\S.*)$")
 #: governs it had nothing to hold, and reported the layer clean.
 TIGHT_NOTE = re.compile(r"^(?P<n>\d{1,2}) (?P<text>\S.*)$")
 
+#: The digit welded to its own first word, with no bracket and no gap:
+#: Wilsonville prints "2No additional off-street parking is required for
+#: middle housing" directly under note 1. Read only inside a block, and only
+#: where a capital and a lowercase letter follow -- which is what keeps a
+#: measurement ("50Feet" does not occur; "10 feet" does) and a citation out.
+#:
+#: One line in the corpus wears this shape, and it is a parking rule, which
+#: is a standard the screen reads. Swallowed as the tail of note 1 it was a
+#: sentence nobody could rule on and nothing pointed at.
+GLUED_NOTE = re.compile(r"^(?P<n>\d{1,2})(?P<text>[A-Z][a-z].*)$")
+
 #: The parenthesised note with a space after the bracket, which is the shape
 #: this module refuses everywhere else: `GLUED_PAREN_NOTE` demands the weld
 #: precisely because "(1) Mixed Use Development Requirement." is how every code
@@ -187,6 +198,12 @@ ENDS_BLOCK = re.compile(
 #: A block cannot run forever. Past this the "unrecognised line continues the
 #: previous note" rule is doing more harm than good, and whatever we are
 #: reading is not a notes block any more.
+#: The marker kinds that carry no weight of their own. A lone permission code
+#: and a bare capital letter are both shapes prose can wear by accident, so
+#: `census` keeps them only where the block governing the line states a note
+#: by that mark.
+PROVISIONAL = ("lone", "letter")
+
 BLOCK_LIMIT = 80
 
 #: How far above a block to look for the table header it is repeating. About a
@@ -246,6 +263,29 @@ BRACKET_MARKER = re.compile(r"\[(?P<n>\d{1,2})\]")
 #: if access is taken from the front, rear yard 0 feet with an alley and 10
 #: without. A screen that reads the cell alone takes the looser number.
 SEE_NOTE = re.compile(r"\bsee\s+notes?\s+(?P<n>\d{1,2})\b", re.I)
+
+#: The lettered marker, which a lettered notes block is the only licence for.
+#: Wilsonville runs its Frog Pond tables' notes A through P and marks the
+#: cells to match -- "8,000 60' 40% E 40 35 20 F 20 M 18G 20" is four of them,
+#: and an HTML extraction puts the header's run on a line of its own, "A,B".
+#:
+#: A bare capital letter is the weakest marker shape there is, so this one
+#: carries no weight of its own: it is emitted provisional, and `census` keeps
+#: it only where the block governing that line actually states a note by that
+#: letter. A document with no lettered block reads none of these at all, and a
+#: stray letter can never invent an orphan -- it can only satisfy a body that
+#: the same block already states.
+#:
+#: Missing it cost Wilsonville forty-three notes, in the document behind a
+#: hundred and seventy-five encoded values: the townhouse minimum lot size,
+#: the quadplex minimum lot size in R-5 and R-7, the shared-wall exemption
+#: from side setbacks, and the combined side yard on a wide lot.
+LETTER_CELL = re.compile(r"^(?P<n>[A-Z](?:,[A-Z])*),?$")
+
+#: The same marker welded to the value it qualifies: "18G", "10D", "6B", "1J".
+#: The value has to come first, which is what keeps the zone code "S3" and the
+#: street name "SW" out.
+LETTER_GLUED = re.compile(r"^\d[\d,.'’%]*(?P<n>[A-Z])$")
 
 #: Markers on a row *label* rather than a cell: "Minimum lot area1,2". Only
 #: read on a line that is laid out as a table row, because in prose a trailing
@@ -988,6 +1028,7 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
             STACKED_NOTE.match(stripped)
             or HEADLESS_NOTE.match(stripped)
             or GLUED_PAREN_NOTE.match(stripped)
+            or GLUED_NOTE.match(stripped)
             or BLOCK_NOTE.match(stripped)
             or STACKED_LETTER.match(stripped)
             or LETTER_NOTE.match(stripped)
@@ -1116,6 +1157,15 @@ def _markers(lines: Sequence[str], inside: Sequence[tuple[int, int]]) -> list[Ma
             add(m.group("n"), "bracket")
         for m in SEE_NOTE.finditer(stripped):
             add(m.group("n"), "phrase")
+
+        # A letter is read per token rather than per cell, because the run a
+        # header states -- "Setbacks K, L, M" -- and the letters a data row
+        # welds to its values sit at opposite ends of the layout.
+        for token in stripped.split():
+            got = LETTER_CELL.match(token) or LETTER_GLUED.match(token)
+            if got is not None:
+                for part in got.group("n").split(","):
+                    add(part, "letter")
         marked_cells = list(CELL_MARKER.finditer(stripped))
         lone = LONE_CELL.match(stripped) is not None
         if _cell_row(raw, stripped):
@@ -1187,14 +1237,14 @@ def census(text: str, *, layer: str = "", doc: str = "") -> Census:
         for b in blocks
     )
 
-    # Provisional lone cells stand only where a note answers them. Done here
+    # Provisional markers stand only where a note answers them. Done here
     # rather than in `_markers` because it is the blocks that decide it.
     markers = [
         Marker(doc=m.doc, line=m.line, mark=m.mark, kind="cell", text=m.text)
         if m.kind == "lone"
         else m
         for m in markers
-        if m.kind != "lone"
+        if m.kind not in PROVISIONAL
         or ((got := _governing(blocks, m.line - 1)) is not None and m.mark in got.marks)
     ]
 

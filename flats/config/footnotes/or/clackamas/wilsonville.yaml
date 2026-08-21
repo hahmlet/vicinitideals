@@ -37,16 +37,27 @@
 # revisited rather than inherited.
 notes:
   # --- Section 4.125 Table V-2, off-street parking -------------------
+  # Note 2 is welded to its own first word -- "2No additional off-street
+  # parking" -- and read as the tail of note 1 until the census learned the
+  # shape. One ruling used to cover both sentences; there are two now.
   - quote: "or/clackamas/wilsonville/4.planning.txt#L5290"
-    digest: "f3d1324c295a"
+    digest: "e947bb3a9564"
     state: dismissed
     reason: >-
-      the notes to the off-street parking table -- a higher minimum for court
-      facilities, and no additional parking where middle housing is created by
-      converting or adding to an existing single-family dwelling. This layer
+      a higher off-street parking minimum for court facilities. This layer
       encodes no parking standard, and the values the block's region reaches
       are setbacks and lot dimensions read from Sections 4.113, 4.122 and
       4.123, printed pages earlier under different tables
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L5291"
+    digest: "5631c7a4ff61"
+    state: dismissed
+    reason: >-
+      no additional off-street parking where middle housing is created by
+      converting or adding to an existing single-family dwelling. It is a
+      parking standard, which the screen does read -- but it relieves a
+      conversion, and the pod is new construction on a lot, so the relief
+      never reaches it. Same region as note 1 and the same reason it governs
+      nothing here: the values it covers are setbacks and lot dimensions
 
   # --- Section 4.127 Table 6B, the middle-housing unit mix -----------
   #
