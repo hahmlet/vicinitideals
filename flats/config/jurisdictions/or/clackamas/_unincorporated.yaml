@@ -16,7 +16,27 @@ notes: 'Table 315-2 (R-2.5 through R-30) read against the adopted ZDO on 2026-08
   are identical gives the same answer whichever column the merge covers (rear 15 and 15, coverage
   50 and 50). The one row that is genuinely two DIFFERENT values under three columns -- minimum lot
   size -- is left unencoded in both zones and the reading is written out in their notes. UNPORTED:
-  orientation_constraint=''entrance_only'', which quadfit justified in a YAML comment with no citation.'
+  orientation_constraint=''entrance_only'', which quadfit justified in a YAML comment with no citation.
+
+  HEIGHT, read 2026-08-20. All nine of this layer''s zones permitted a quadplex and stated no height,
+  so the screen was placing a 26 ft building against no ceiling in every one of them. Table 315-2
+  answers seven and Table 315-3 answers two, all at 35 feet. Section 845, which governs how a
+  quadplex here is designed, states no height of its own, so the district table is the whole of it.
+
+  Table 315-2''s height row prints TWO cells per district and only the second reaches this building:
+  accessory buildings over 500 square feet take 20 feet or the primary dwelling, and "All other
+  buildings, including accessory dwelling units" take 35. Neither sub-line carries a footnote marker.
+  Table 315-3''s three cells each carry note 9, which relieves one platted subdivision (Sieben Creek
+  Estates) of the standard and expressly excludes middle housing developed under Section 845 from
+  that relief. A quadplex is middle housing under 845, so the note cannot loosen this ceiling.
+
+  That note was read by hand, and it had to be. zdo.315.txt is the corpus''s worst unreconciled
+  document -- 305 footnote markers and ZERO bodies found -- so the footnote gate governs nothing in
+  this layer and would have let every value here certify under notes nobody read. The cause is the
+  spelling: this code writes its notes as "9 Except for middle housing", one space and no heading,
+  and the headless-run reader demands a column gap because at one space that pattern matches every
+  numbered paragraph in the code. The gate is silent here because it is blind, not because the notes
+  are clean. Fixing the reader is its own change and is not made here.'
 ingest:
   geoid: null
   juris_city_codes:
@@ -142,6 +162,21 @@ zones:
       url: https://www.clackamas.us/planning/zdo1012
       retrieved: '2026-08-19'
       quote: "or/clackamas/_unincorporated/zdo.1012.txt#L73"
+    max_height_ft:
+      # Table 315-2, the "Maximum Building Height" row. It prints two cells per
+      # district, not one: an accessory-building line capped at 20 feet or the
+      # primary dwelling, and "All other buildings, including accessory
+      # dwelling units: 35 feet". Four attached primary dwellings are not an
+      # accessory building, so this pod is measured against the second, and the
+      # quote takes the row label with the cell so a reviewer can see which of
+      # the two is being read.
+      #
+      # Quoted to the district's own cell, following this layer's convention
+      # for Table 315-2 -- position is what names the column, because all eight
+      # districts print the same sentence. The row carries no footnote marker
+      # in either sub-line.
+      value: 35
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1169,L1173"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1188"
@@ -204,6 +239,21 @@ zones:
       url: https://www.clackamas.us/planning/zdo1012
       retrieved: '2026-08-19'
       quote: "or/clackamas/_unincorporated/zdo.1012.txt#L73"
+    max_height_ft:
+      # Table 315-2, the "Maximum Building Height" row. It prints two cells per
+      # district, not one: an accessory-building line capped at 20 feet or the
+      # primary dwelling, and "All other buildings, including accessory
+      # dwelling units: 35 feet". Four attached primary dwellings are not an
+      # accessory building, so this pod is measured against the second, and the
+      # quote takes the row label with the cell so a reviewer can see which of
+      # the two is being read.
+      #
+      # Quoted to the district's own cell, following this layer's convention
+      # for Table 315-2 -- position is what names the column, because all eight
+      # districts print the same sentence. The row carries no footnote marker
+      # in either sub-line.
+      value: 35
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1169,L1175"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1189"
@@ -265,6 +315,21 @@ zones:
       url: https://www.clackamas.us/planning/zdo1012
       retrieved: '2026-08-19'
       quote: "or/clackamas/_unincorporated/zdo.1012.txt#L73"
+    max_height_ft:
+      # Table 315-2, the "Maximum Building Height" row. It prints two cells per
+      # district, not one: an accessory-building line capped at 20 feet or the
+      # primary dwelling, and "All other buildings, including accessory
+      # dwelling units: 35 feet". Four attached primary dwellings are not an
+      # accessory building, so this pod is measured against the second, and the
+      # quote takes the row label with the cell so a reviewer can see which of
+      # the two is being read.
+      #
+      # Quoted to the district's own cell, following this layer's convention
+      # for Table 315-2 -- position is what names the column, because all eight
+      # districts print the same sentence. The row carries no footnote marker
+      # in either sub-line.
+      value: 35
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1169,L1177"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1190"
@@ -326,6 +391,21 @@ zones:
       url: https://www.clackamas.us/planning/zdo1012
       retrieved: '2026-08-19'
       quote: "or/clackamas/_unincorporated/zdo.1012.txt#L73"
+    max_height_ft:
+      # Table 315-2, the "Maximum Building Height" row. It prints two cells per
+      # district, not one: an accessory-building line capped at 20 feet or the
+      # primary dwelling, and "All other buildings, including accessory
+      # dwelling units: 35 feet". Four attached primary dwellings are not an
+      # accessory building, so this pod is measured against the second, and the
+      # quote takes the row label with the cell so a reviewer can see which of
+      # the two is being read.
+      #
+      # Quoted to the district's own cell, following this layer's convention
+      # for Table 315-2 -- position is what names the column, because all eight
+      # districts print the same sentence. The row carries no footnote marker
+      # in either sub-line.
+      value: 35
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1169,L1179"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1191"
@@ -387,6 +467,21 @@ zones:
       url: https://www.clackamas.us/planning/zdo1012
       retrieved: '2026-08-19'
       quote: "or/clackamas/_unincorporated/zdo.1012.txt#L73"
+    max_height_ft:
+      # Table 315-2, the "Maximum Building Height" row. It prints two cells per
+      # district, not one: an accessory-building line capped at 20 feet or the
+      # primary dwelling, and "All other buildings, including accessory
+      # dwelling units: 35 feet". Four attached primary dwellings are not an
+      # accessory building, so this pod is measured against the second, and the
+      # quote takes the row label with the cell so a reviewer can see which of
+      # the two is being read.
+      #
+      # Quoted to the district's own cell, following this layer's convention
+      # for Table 315-2 -- position is what names the column, because all eight
+      # districts print the same sentence. The row carries no footnote marker
+      # in either sub-line.
+      value: 35
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1169,L1181"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1192"
@@ -448,6 +543,21 @@ zones:
       url: https://www.clackamas.us/planning/zdo1012
       retrieved: '2026-08-19'
       quote: "or/clackamas/_unincorporated/zdo.1012.txt#L73"
+    max_height_ft:
+      # Table 315-2, the "Maximum Building Height" row. It prints two cells per
+      # district, not one: an accessory-building line capped at 20 feet or the
+      # primary dwelling, and "All other buildings, including accessory
+      # dwelling units: 35 feet". Four attached primary dwellings are not an
+      # accessory building, so this pod is measured against the second, and the
+      # quote takes the row label with the cell so a reviewer can see which of
+      # the two is being read.
+      #
+      # Quoted to the district's own cell, following this layer's convention
+      # for Table 315-2 -- position is what names the column, because all eight
+      # districts print the same sentence. The row carries no footnote marker
+      # in either sub-line.
+      value: 35
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1169,L1183"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1193"
@@ -509,6 +619,21 @@ zones:
       url: https://www.clackamas.us/planning/zdo1012
       retrieved: '2026-08-19'
       quote: "or/clackamas/_unincorporated/zdo.1012.txt#L73"
+    max_height_ft:
+      # Table 315-2, the "Maximum Building Height" row. It prints two cells per
+      # district, not one: an accessory-building line capped at 20 feet or the
+      # primary dwelling, and "All other buildings, including accessory
+      # dwelling units: 35 feet". Four attached primary dwellings are not an
+      # accessory building, so this pod is measured against the second, and the
+      # quote takes the row label with the cell so a reviewer can see which of
+      # the two is being read.
+      #
+      # Quoted to the district's own cell, following this layer's convention
+      # for Table 315-2 -- position is what names the column, because all eight
+      # districts print the same sentence. The row carries no footnote marker
+      # in either sub-line.
+      value: 35
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1169,L1185"
     setback_front_ft:
       value: 15
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1194"
@@ -571,6 +696,26 @@ zones:
       url: https://www.clackamas.us/planning/zdo1012
       retrieved: '2026-08-19'
       quote: "or/clackamas/_unincorporated/zdo.1012.txt#L73"
+    max_height_ft:
+      # Table 315-3, "Standards for Primary Dwellings", the Maximum Building
+      # Height row: "35 feet" under all three columns. A three-value row under
+      # three headers is positional and nothing is merged, which is the rule
+      # this layer already states for front, maximum front and side -- and the
+      # three values agree here anyway. Quoted per this layer's Table 315-3
+      # convention, the row label and every value printed under it, so the
+      # count can be checked against the headers.
+      #
+      # The cells carry note 9: "Except for middle housing developed pursuant
+      # to Section 845, Triplexes, Quadplexes, Townhouses, and Cottage
+      # Clusters, development on lots in the plat of Sieben Creek Estates (plat
+      # no. 3039) is not required to comply with this standard." The exception
+      # is relief from the 35 feet for one platted subdivision, and it excludes
+      # middle housing developed under Section 845 -- which is what a quadplex
+      # is. So the note cannot loosen this building's ceiling anywhere, and 35
+      # stands unconditionally. Read by hand because the footnote gate cannot
+      # ask: see the HEIGHT note on this layer.
+      value: 35
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1320-L1323"
     setback_front_ft:
       value: 10
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1324-L1327"
@@ -654,6 +799,26 @@ zones:
       url: https://www.clackamas.us/planning/zdo1012
       retrieved: '2026-08-19'
       quote: "or/clackamas/_unincorporated/zdo.1012.txt#L73"
+    max_height_ft:
+      # Table 315-3, "Standards for Primary Dwellings", the Maximum Building
+      # Height row: "35 feet" under all three columns. A three-value row under
+      # three headers is positional and nothing is merged, which is the rule
+      # this layer already states for front, maximum front and side -- and the
+      # three values agree here anyway. Quoted per this layer's Table 315-3
+      # convention, the row label and every value printed under it, so the
+      # count can be checked against the headers.
+      #
+      # The cells carry note 9: "Except for middle housing developed pursuant
+      # to Section 845, Triplexes, Quadplexes, Townhouses, and Cottage
+      # Clusters, development on lots in the plat of Sieben Creek Estates (plat
+      # no. 3039) is not required to comply with this standard." The exception
+      # is relief from the 35 feet for one platted subdivision, and it excludes
+      # middle housing developed under Section 845 -- which is what a quadplex
+      # is. So the note cannot loosen this building's ceiling anywhere, and 35
+      # stands unconditionally. Read by hand because the footnote gate cannot
+      # ask: see the HEIGHT note on this layer.
+      value: 35
+      quote: "or/clackamas/_unincorporated/zdo.315.txt#L1320-L1323"
     setback_front_ft:
       value: 10
       quote: "or/clackamas/_unincorporated/zdo.315.txt#L1324-L1327"
