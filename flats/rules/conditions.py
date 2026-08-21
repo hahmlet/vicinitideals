@@ -248,6 +248,22 @@ _C: tuple[ConditionDef, ...] = (
         assume=False,
     ),
     ConditionDef(
+        "willamette_historic_district",
+        "site_fact",
+        "The parcel is inside West Linn's Willamette Historic District. Held "
+        "apart from `historic_resource`, which is the general question of "
+        "whether a property is listed or inside any district: this is one "
+        "mapped boundary in one city, and CDC 25.070(C) turns on that "
+        "boundary rather than on a listing. A house individually landmarked "
+        "in R-7 answers the general question yes and this one no, and the "
+        "two would take different standards. Assumed unknown, because the "
+        "district changes the answer in both directions -- it loosens three "
+        "of the four yards and caps building width at 35 feet, which this "
+        "pod cannot meet at all -- so neither default is the safe one.",
+        evidence="the city's adopted Willamette Historic District boundary — not held",
+        assume=None,
+    ),
+    ConditionDef(
         "civic_corridor",
         "site_fact",
         "The site abuts a corridor the jurisdiction has mapped for more "

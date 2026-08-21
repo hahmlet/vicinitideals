@@ -1,0 +1,582 @@
+Chapter 25
+
+OVERLAY ZONES – HISTORIC DISTRICT
+
+Sections:
+
+25.010 PURPOSES
+
+25.020 USE OF THIS CHAPTER
+
+25.030 PERMITTED USES
+
+25.040 HISTORIC DESIGN REVIEW PROCESSES
+
+25.050 APPLICATION REQUIREMENTS
+
+25.060 DESIGN STANDARDS APPLICABLE TO HISTORIC RESOURCES
+
+25.070 ADDITIONAL STANDARDS APPLICABLE TO HISTORIC DISTRICTS
+
+25.080 MODIFICATIONS TO DESIGN STANDARDS
+
+25.090 DESIGNATION OF A HISTORIC RESOURCE
+
+25.100 REMOVAL OF HISTORIC RESOURCE DESIGNATION
+
+25.110 RELOCATION OF A HISTORIC RESOURCE
+
+25.120 DEMOLITION OF A HISTORIC RESOURCE
+
+25.130 DEMOLITION BY NEGLECT
+
+25.140 HISTORIC RESOURCE MAP
+
+25.010 PURPOSES
+
+The purposes of this chapter are to:
+
+A. Foster community and neighborhood pride and sense of community identity based on recognition and use of historic and cultural resources.
+
+B. Identify, protect, repair and maintain the City’s historic resources (see Chapter 2 CDC, Definitions), including the diverse architectural styles that reflect the phases of the City’s history.
+
+C. Encourage preservation and use of historic sites, structures, and districts within the City that reflect special elements of its historical, architectural, archaeological, artistic, cultural, and engineering heritage.
+
+D. Provide procedures and establish approval criteria for all reviews of proposed alterations to the exterior of historic structures and sites and other development in historic districts.
+
+E. Increase economic and financial benefits to historic property owners and the community.
+
+F. Ensure that changes to designated historic resources protect the integrity of the resource and the significant aspects of the area’s heritage.
+
+G. Provide regulations that will ensure the preservation of the quality and historic integrity of historic resources and their sites and, if applicable, ensure compatibility and consistency with the qualities of the respective historic district its nomination was intended to preserve.
+
+H. Provide for creation of new historic districts and designation of new landmarks, as appropriate, and to allow removal of such designations if they are no longer appropriate.
+
+I. Provide a process to enable thoughtful consideration of the proposed demolition of historic structures. (Ord. 1614 § 6, 2013; Ord. 1735 § 3 (Exh. B), 2022)
+
+25.020 USE OF THIS CHAPTER
+
+A. Applicability. This chapter shall apply to all properties designated as historic resources as shown on the City’s zoning map and properties listed on the National Register. Specific sections apply as noted in subsections B and C of this section.
+
+B. Hierarchy of regulation. The provisions of this chapter shall supersede any conflicting standards or criteria elsewhere in the CDC. The underlying zoning provisions for the applicable zone still apply.
+
+1. Exemptions. The items listed in CDC 25.040(A), Exemptions from Historic Design Review, are exempt from historic review; provided, that they comply with any applicable requirements in CDC 25.040(A).
+
+2. Design standards. CDC 25.060, Design standards applicable to historic resources, applies to historic reviews for designated properties, except for CDC 25.060(B), Standards for accessory structures, which applies only to accessory structures on sites containing historic resources.
+
+3. Additional design standards. CDC 25.070, Additional design standards applicable to historic districts, provides additional standards that are applicable to Historic Design Review for historic district properties.
+
+a. CDC 25.070(A), Standards for alterations and additions, applies only to Historic Design Review in a historic district.
+
+b. CDC 25.070(B), Standards for new construction, applies only to new development or construction in a historic district beyond alterations and additions, and including accessory structures.
+
+c. CDC 25.070(C), Willamette Historic District general standards, applies only to alterations and additions, new construction, and accessory structure construction in the Willamette Historic District.
+
+C. Applicability of historic design standards. Development subject to this chapter must comply with applicable Historic Design Review standards unless otherwise approved through the modifications process under CDC 25.080. The “X” in the following chart indicates which standards are applicable to different types of development.
+
+STANDARDS APPLICABILITY MATRIX                                       STANDARDS APPLICABILITY MATRIX                     STANDARDS APPLICABILITY MATRIX  STANDARDS APPLICABILITY MATRIX  STANDARDS APPLICABILITY MATRIX  STANDARDS APPLICABILITY MATRIX  STANDARDS APPLICABILITY MATRIX
+SECTION                                                              PROPOSED ACTIVITY                                  ADDITIONS AND ALTERATIONS       ADDITIONS AND ALTERATIONS       NEW CONSTRUCTION                ACCESSORY STRUCTURES            ACCESSORY STRUCTURES
+SECTION                                                              LOCATION                                           HISTORIC LANDMARK               HISTORIC DISTRICT               HISTORIC DISTRICT               HISTORIC LANDMARK               HISTORIC DISTRICT
+25.060 DESIGN STANDARDS APPLICABLE TO HISTORIC RESOURCES             A. STANDARDS FOR ALTERATIONS AND ADDITIONS         X                               X                               X                               X                               X
+25.060 DESIGN STANDARDS APPLICABLE TO HISTORIC RESOURCES             B. STANDARDS FOR ACCESSORY STRUCTURES                                                                                                              X                               X
+25.070 ADDITIONAL DESIGN STANDARDS APPLICABLE TO HISTORIC DISTRICTS  A. STANDARDS FOR ALTERATIONS AND ADDITIONS                                         X                                                                                               X
+25.070 ADDITIONAL DESIGN STANDARDS APPLICABLE TO HISTORIC DISTRICTS  B. STANDARDS FOR NEW CONSTRUCTION                                                                                  X                                                               X
+25.070 ADDITIONAL DESIGN STANDARDS APPLICABLE TO HISTORIC DISTRICTS  C. WILLAMETTE HISTORIC DISTRICT GENERAL STANDARDS                                  X                               X                                                               X
+
+(Ord. 1614 § 6, 2013; Ord. 1735 § 3 (Exh. B), 2022)
+
+25.030 PERMITTED USES
+
+Unless otherwise provided for in this chapter, uses permitted by the base zoning district that are in accordance with the CDC are allowed on sites containing historic resources. (Ord. 1614 § 6, 2013; Ord. 1735 § 3 (Exh. B), 2022)
+
+25.040 HISTORIC DESIGN REVIEW PROCESSES
+
+Proposed changes to historic resources that are not exempted by subsection A of this section, Exemptions from Historic Design Review, are subject to subsection B of this section, Class I Historic Design Review, or subsection C of this section, Class II Historic Design Review. Class I Historic Design Review addresses significant changes that warrant staff review. Class II Historic Design Review addresses major changes including additions and new construction, subject to Historic Review Board approval. The processes for conducting Class I and Class II Historic Design Review are in Chapter 99 CDC.
+
+A. Exemptions from Historic Design Review. The following are exempt from Historic Design Review:
+
+1. Ordinary maintenance. Ordinary maintenance or repair including a change of facade colors, unless the color is specifically listed in the historic resource inventory, historic resource nomination, or National Register nomination as an attribute that contributes to the resource’s historic significance.
+
+2. Gutters and downspouts. Replacement or addition of gutters and downspouts that are rectangular, ogee, half-round or K-shaped and composed of wood or metal material, or styles and materials that match those that were typically used on similar style buildings of the era, or the era the building style references.
+
+3. Foundation. Repair of a foundation with the same material or construction of a foundation in the same location that does not result in raising or lowering the building elevation.
+
+4. Building material. Replacement of building material, when such material is beyond repair, with building material that matches the original material.
+
+5. Roof material. Repair or replacement of roof material with material comparable to the existing roof, or replacement of the roof in its entirety with cedar shingles, three tab asphalt shingles, or architectural composition shingles.
+
+6. Storm windows. Storm windows made of painted wood, a material with a baked enamel finish, anodized aluminum, or other materials with forms that complement or match the color, detail, and proportions of the building.
+
+7. Egress windows. Addition of egress windows on secondary facades with wood windows or windows that are consistent with subsection (A)(6) of this section.
+
+8. Landscaping. Landscaping changes unless the landscaping is identified in the historic resource inventory, historic resource nomination, or National Register nomination, as an attribute that contributes to the resource’s historic value.
+
+9. Fences. Construction of fences that meet the following requirements in addition to the requirements of Chapter 44 CDC:
+
+a. Traditional fences. Any fence along a front lot line or along the portion of a side lot line between the street and the primary structure (see Figures 1 and 2) which:
+
+1) Consists of pickets, each of which are between one and three inches wide and spaced equally;
+
+2) Does not have solid portions exceeding 50 percent; and
+
+3) Is no greater than 36 inches in height.
+
+b. General fences. Any fence that is not located along a front lot line or along the portion of a side lot line between the street and the primary structure that is:
+
+1) Constructed of wood fence boards, rails, posts, and associated hardware only; and
+
+2) No greater than 72 inches in height.
+
+Figure 1: Example of Exempt Interior Lot Fence Locations
+
+Figure 2: Example of Exempt Corner Lot Fence Locations
+
+10. Retaining walls. Construction of retaining walls that meet the following requirements:
+
+a. No greater than three feet high; and
+
+b. Project above upper grade no more than 12 inches.
+
+11. Swimming pools. Construction of in-ground swimming pools in rear yards.
+
+12. Mechanical equipment. Replacement or installation of mechanical equipment, if 100 percent screened by a permitted building, fence, or landscaping that precludes visibility from any street.
+
+13. Solar energy systems. Replacement or installation of solar energy systems that are not part of a project that includes other elements subject to Historic Design Review, provided the following requirements are met:
+
+a. On a flat roof, the horizontal portion of a mansard roof, or roofs surrounded by a parapet that is at least 12 inches higher than the highest part of the roof surface:
+
+1) The solar energy system must be mounted flush or on racks with the system or rack extending no more than five feet above the top of the highest point of the roof.
+
+2) The solar energy system must be screened from view from all streets by an existing parapet along the street-facing facade that is as tall as the tallest part of the solar energy system, or by setting the solar energy system back from the roof edges facing the street four feet for each foot of solar energy system height.
+
+b. On a pitched roof, solar energy systems may be located on a section of pitched roof facing a rear lot line or on a section of pitched roof facing within 45 degrees of the rear lot line. (See the example on the right side of Figure 3.) The system must be mounted flush, with the plane of the system parallel with the roof surface, with the system no more than 12 inches from the surface of the roof at any point, and set back three feet from the roof edge and ridgeline.
+
+Figure 3: Exempt Solar Energy System Locations
+
+14. Skylights. Replacement or installation of skylights that are not part of a project that includes other elements subject to Historic Design Review, provided the following requirements are met:
+
+a. For skylights that are on a flat roof, the horizontal portion of a mansard roof, or roofs surrounded by a parapet that is at least 12 inches higher than the highest part of the roof surface, the skylight must be screened from view from all streets by:
+
+1) An existing parapet along the street-facing facade that is as tall as the tallest part of the skylight; or
+
+2) Setting the skylight back from the roof edges facing the street four feet for each foot of skylight height.
+
+b. For skylights that are on a pitched roof, the skylight must be flat and must face a side or rear lot line or be located on a section of a pitched roof that faces within 45 degrees of a rear lot line. (See the right side of Figure 3.)
+
+15. Utilities, street infrastructure, and street furniture. Replacement or installation of utilities, street infrastructure, or street furniture except for streetlights, utility boxes, benches, receptacles, and the installation of curbs where there are none. Replacement and new sidewalks shall not exceed four feet in width except as required to comply with the Americans with Disabilities Act and shall be compatible in location, pattern, spacing, dimensions, and materials with existing sidewalks.
+
+16. Accessory structures. Construction of accessory structures under 120 square feet and 10 feet in height (greenhouses, storage sheds, jacuzzis, spas, structures, gazebos, etc.) in a side or rear yard.
+
+B. Class I Historic Design Review. The following are subject to Class I Historic Design Review to determine their compliance with the applicable approval standards:
+
+1. Nonexempt. Items listed in CDC 25.040(A)(1) through (16) that do not qualify for an exemption;
+
+2. Facade alteration. Alteration of a facade when 100 square feet or less of the structure’s facade is being altered;
+
+3. Ingress/egress. Revised points of ingress/egress to a site;
+
+4. Americans with Disabilities Act. Proposals seeking compliance with the Americans with Disabilities Act, not including the public right-of-way; and
+
+5. Art and statuary. Construction of freestanding art and statuary over 10 feet tall.
+
+C. Class II Historic Design Review. All proposed new construction, alterations, and additions, not identified as exempt under subsection A of this section, or subject to Class I Historic Design Review under subsection B of this section, are subject to Class II Historic Design Review and must meet the applicable approval standards. (Ord. 1614 § 6, 2013; Ord. 1735 § 3 (Exh. B), 2022)
+
+25.050 APPLICATION REQUIREMENTS
+
+A. Historic Design Review. Applications for Historic Design Review shall include the following:
+
+1. Narrative. Written narrative explaining the proposal and how it meets the approval criteria in CDC 25.060 and 25.070, as applicable;
+
+2. Existing plan and elevation drawings. Plan and elevation drawings of the existing structure, if applicable, including materials;
+
+3. Proposed plan and elevation drawings. Plan and elevation drawings of the proposed changes, including materials;
+
+4. Current photographs. Current photographs of the existing structure with adjacent properties for context, including all elevations and features proposed for modification;
+
+5. Historic photographs. Historic photographs and/or drawings of the existing structure, if available; and
+
+6. Supplementary. For additions that increase the gross square footage of the structures on the site by more than 50 percent, and/or new construction in a historic district:
+
+a. Plan and elevation drawings of adjacent properties; and
+
+b. A rendering and/or photo-simulation showing the proposal in context.
+
+B. Designation of a historic resource. Applications for designation as a historic resource shall include the following:
+
+1. Narrative. Written narrative description of the proposed historic resource and how it meets one or more of the approval criteria in CDC 25.090(A);
+
+2. Site plan. Site plan depicting the property boundaries and all structures and features on the site;
+
+3. Current photographs. Current photographs of all elevations of the existing structure and any significant features;
+
+4. Historic photographs. Historic photographs, plans, or maps, if available;
+
+5. Supplementary documentation. Any other documentation demonstrating the significance of the proposed historic resource; and
+
+6. Owner consent. Owner consent as follows:
+
+a. Historic landmarks. The property owner must consent, in writing, to a proposed historic landmark designation with the exception that properties listed on the National Register shall be regulated as historic landmarks regardless of the owner’s consent.
+
+b. Historic districts. A property owner may refuse to consent to historic district designation at any point during the designation process. Properties in historic districts listed on the National Register shall be regulated as historic properties regardless of the owner’s consent.
+
+C. Removal of historic resource designation. Applications for removal of historic resource designation shall include the following:
+
+1. Narrative. Written narrative description of the historic resource proposed for removal of designation that addresses the considerations identified in CDC 25.100;
+
+2. Site plan. Site plan depicting the property boundaries and all structures and features on the site;
+
+3. Current photographs. Current photographs of all elevations of the existing structure and any significant features;
+
+4. Historic photographs. Historic photographs, plans, or maps, if available; and
+
+5. Supplementary documentation. Documentation that the property owner objected, on the record, at the time of designation, if applicable.
+
+D. Relocation of a historic resource. Applications for relocation of a historic resource shall include the following:
+
+1. Examination of alternatives. Documentation that all reasonable alternatives to relocation have been explored and that relocation is the preferred alternative.
+
+2. Structure and site documentation. Documentation of the historic structure and site conditions prior to relocation, including detailed photography, notes, drawings, and reference measurements.
+
+3. Moving procedures. Clearly stated moving procedures that will be utilized to protect historic elements and document the relocation, including: plans for minimizing damage to historic materials, labeling system for dismembered elements to assure accurate reconstruction in the new location, and plans for protecting the historic resource until reconstruction is complete.
+
+E. Demolition of a historic resource.
+
+1. Historic landmark or contributing primary structure. An application for the demolition of a historic landmark or contributing primary structure shall include:
+
+a. A statement of the historic significance of the structure or resource to the community, taking into consideration its designation as a historic landmark or its contributing status in a historic district.
+
+b. A statement demonstrating good faith efforts of the property owner to sell or relocate the structure or resources, including property documentation, but not limited to:
+
+1) Real estate taxes for the two years immediately preceding the application;
+
+2) Assessed value for the two years immediately preceding the application;
+
+3) Current fair market value of the structure or resource as determined by an appraiser;
+
+4) All listings for the structure or resource for the past two years including prices asked and offers received; and
+
+5) Documentation of all attempts to relocate the structure or resource.
+
+c. Documentation of the historic structure and site conditions prior to demolition, including detailed photography, notes, drawings, and reference measurements.
+
+d. A report from a structural engineer on the condition of the structure or resource.
+
+e. The estimated cost of rehabilitation of the structure or resource.
+
+f. A report from a real estate or other market professional identifying potential alternative uses for the structure or resource permitted within the existing zoning classification.
+
+g. A report identifying available economic incentives for adaptive reuse of the structure or resource.
+
+h. A proposed plan for redevelopment of the site on which the structure or resource is located.
+
+2. Non-contributing or not in period primary structure and accessory structure. An application for the demolition of a non-contributing or not in period primary structure or an accessory structure shall include:
+
+a. A statement of the historic significance of the structure or resource to the community, taking into consideration its location on the site of a historic landmark or within a historic district.
+
+b. A site plan depicting the property boundaries and all structures and features on the site.
+
+c. A proposed plan for redevelopment of the site on which the structure or resource is located. (Ord. 1614 § 6, 2013; Ord. 1735 § 3 (Exh. B), 2022)
+
+25.060 DESIGN STANDARDS APPLICABLE TO HISTORIC RESOURCES
+
+The following design standards apply to all changes, including alterations, additions, and new construction proposed on a designated historic resource. These standards are intended to preserve the features that made the resource eligible for historic designation. Development must comply with all applicable standards, or be approved through the modifications process specified in CDC 25.080.
+
+A. Standards for alterations and additions. This section applies to historic reviews for alteration of and additions to designated historic resources:
+
+1. Retention of original exterior construction and overall structural integrity. The original exterior construction and structural integrity shall be maintained or restored to the greatest extent practicable. Stylistic features of original construction that shall be preserved include, but are not limited to: a line of columns, decorative shingles, projecting bays, windows and doors including their related functional and decorative features, other primary structural elements, spatial relationships that characterize the property, examples of skilled craftsmanship that characterize the building, and architectural details defining the structure’s character and historic significance.
+
+2. Retention of exterior historic material. Removal or alteration of historic exterior materials and features shall be avoided during the construction of new additions or alterations. Deteriorated materials and architectural features shall be repaired rather than replaced, unless the material is beyond repair. In the event replacement of an existing feature is necessary, new materials shall match those of the original building in terms of composition, design, color, texture, and other visual features.
+
+3. Time period consistency. Buildings shall be recognizable as a physical record of their time and place. Alterations which have no historical basis or which seek to create a false sense of historical development are not allowed.
+
+4. Significance over time. Changes to a property that have acquired historic significance in their own right, and during the period of significance, shall be retained and preserved.
+
+5. Differentiate old from new. Alterations, additions, and related new construction shall be differentiated from the original buildings to avoid creating a false sense of history, and shall be compatible with the historic materials, features, size, scale, proportion, and massing to protect the integrity of the property. Additions and alterations shall be done in accordance with the Secretary of the Interior’s Standards for new exterior additions to historic buildings.
+
+6. Reversibility. Additions and alterations shall be undertaken in such a manner that, if removed in the future, the essential form and integrity of the historic property and its context would be unimpaired.
+
+7. Building additions. Building additions shall be subordinate to the original building, smaller in scale, and attached to the rear or set back along the side. Features of building additions, including the proportions of window and door openings, shall be consistent with those of the existing building. Dimensional and other requirements in the underlying zone, as applicable, shall apply.
+
+8. Building height and roof pitch. Existing or historic building heights and roof pitch shall be maintained.
+
+9. Roof materials. Replacement of a roof or installation of a new roof with materials other than cedar shingles, three tab asphalt shingles, or architectural composition shingles must be demonstrated, using photographic or other evidence, to be in character with those of the original roof, or with materials that are consistent with the original construction.
+
+10. Existing exterior walls and siding. Replacement of the finish materials of existing walls and siding must be with building materials consistent with the original construction.
+
+11. New exterior walls and siding. Wood siding or shingles shall be used unless the applicant demonstrates that an alternative material has a texture and finish typically used on similar style buildings of the era, or the era the building style references. Vinyl or other materials that do not match those that were typically used on similar style buildings of the era, or the era the building style references, are not permitted.
+
+12. Gutters and downspouts. Replacement or new gutters and downspouts shall be rectangular, ogee, half-round or K-shaped and comprised of wood or metal material, or styles and materials that match those that were typically used on similar style buildings of the era, or the era the building style references. Vinyl or other materials and styles that do not match those that were typically used on similar style buildings of the era, or the era the building style references, are not permitted.
+
+13. New windows. New windows shall be located on rear or secondary facades, unless required for a new use. New windows shall match the appearance and size of the original windows as closely as possible. Wood window frames and sashes shall be used unless the applicant demonstrates that the non-wood windows are consistent with the original historic appearance and material, including profile and proportion of the sash, sill, trim, light patterns, glass color, and profile of mullions and muntins. Replacement of existing windows shall meet standards for window replacement.
+
+14. Storm windows. Storm windows shall be made of painted wood, a material with a baked enamel finish, anodized aluminum, or another material that is consistent with the color, detail, and proportions of the building.
+
+15. Window replacement. Replacement of windows or window sashes shall be consistent with the original historic appearance and material, including the profile of the sash, sill, trim, window plane relative to the building wall plane, light pattern, glass color, profile of mullions and muntins, and color, method of operation and related features, such as shutters.
+
+16. Doors. Doors shall be painted or stained wood, fiberglass clad, or metal clad, or another material that is consistent with the original historic appearance.
+
+17. Porches. Front porches are allowed on new construction. No front porch shall be added to a structure if there was not one originally. Existing front porches shall not be enclosed or enlarged. Alterations to existing front porches and side yard porches that face a street shall:
+
+a. Maintain the shape, width, and spacing of the original columns; and
+
+b. Maintain the height, detail, and spacing of the original balustrade.
+
+18. Decks. Decks shall be located in the rear yard or the portion of the side yard behind the front 50 percent of the primary structure.
+
+19. Foundations. Repair or construction of a foundation that results in raising or lowering the building elevation must demonstrate that:
+
+a. The proposal is consistent with the original design and, if applicable, is consistent in the context of adjacent and other structures on the block, based on photographic or other evidence; or
+
+b. It is necessary to satisfy a requirement of the building code and/or floodplain regulations (Chapter 27 CDC).
+
+20. Lighting. Residential lighting shall be shielded to prevent glare and compatible with the architectural character of the building. Blinking, flashing, or moving lighting is not permitted.
+
+B. Standards for accessory structures. The following standards apply to accessory structures on properties designated as historic resources in addition to the regulations in Chapter 34 CDC:
+
+1. All accessory structures.
+
+a. Location.
+
+1) Accessory structures in the Willamette Historic District are subject to the setback requirements of CDC 25.070(C)(1) through (4);
+
+2) Accessory structures on historic landmark properties must meet the setback requirements of the underlying zone and Chapter 34 CDC;
+
+3) Detached accessory structures shall be in the rear yard; and
+
+4) Two-story accessory structures shall be at least 10 feet from the house; and one-story accessory structures shall be at least three feet from the house.
+
+b. Height. Accessory structures in the Willamette Historic District are subject to CDC 25.070(C)(7). Accessory structures on historic landmark properties must meet the height requirements of the underlying zone and Chapter 34 CDC.
+
+2. Conversions and additions. Existing detached, unheated structures including, but not limited to, workshops and garages, may be converted into other allowable accessory uses under the following conditions:
+
+a. The structure is located behind the house’s front building line;
+
+b. A structure in the front yard cannot be converted to a heated accessory structure;
+
+c. A story may be added to an existing non-contributing garage or similar accessory structure; provided, that the final design meets the setback standards of this chapter for a two-story accessory structure (see CDC 25.070(C)(1) through (4)) for the historic district, or the setbacks in Chapter 34 CDC for a historic landmark; and
+
+d. The conversion of an existing structure is not required to meet the design standards in CDC 34.030, but it must conform to all applicable requirements of this chapter. (Ord. 1614 § 6, 2013; Ord. 1735 § 3 (Exh. B), 2022)
+
+25.070 ADDITIONAL STANDARDS APPLICABLE TO HISTORIC DISTRICTS
+
+This section provides additional standards that are applicable to properties within a historic district.
+
+A. Standards for alterations and additions.
+
+1. Compatibility with nearby context. Alterations and additions shall be:
+
+a. Similar in scale and mass to adjacent properties, and constructed such that they maintain the privacy of the residents of adjacent properties through window placement, orientation or landscaping.
+
+2. Not in period buildings. Alterations to compatible, not in period buildings shall follow all applicable standards of this chapter to avoid creating a false sense of history.
+
+3. Not in period noncompatible buildings. Alterations to not in period, noncompatible buildings shall be consistent with applicable standards in CDC 25.060 and 25.070. Such buildings do not contribute to the historic value of the district and are not subject to standards pertaining to siding, windows, and other materials listed in CDC 25.060(A); however, such buildings shall not be so stylistically different from adjacent buildings that they detract from the district’s historic character.
+
+B. Standards for new construction. The standards in this section apply only to new construction, including new accessory structures, in a historic district. The standards for new construction do not apply to alterations and additions to existing structures. These standards shall apply in addition to any other applicable standards (see the Standards Applicability Matrix in CDC 25.020).
+
+1. New construction shall complement and support the district. The historic district’s defining characteristics include a discernible aesthetic rhythm of massing, scale, and siting. Infill buildings shall not deviate in a detracting manner from these elements, but appear as complementary members of the district, by conforming to the following:
+
+a. Massing, scale, proportion, form, siting, floor area ratio, window patterns, building divisions, and height shall correspond to the contributing buildings within the district, and any specific historic district standards and the applicable requirements of the underlying zone.
+
+b. Infill buildings shall relate to and strengthen the defining characteristics, including architectural style, without replicating the historic buildings. Buildings shall differentiate by use of materials, mechanical systems, construction methods, and, if applicable, signage. Architectural style shall not be the primary indicator of differentiation.
+
+c. Mechanical and automobile infrastructure must be appropriately concealed when not consistent with the district’s character.
+
+2. Reconstruction. Reconstruction of buildings that existed within the district during the period of significance is allowed. Reconstructions shall be done in accordance with the Secretary of the Interior’s Standards for Reconstruction.
+
+3. Archaeological resources shall be preserved in place or mitigated. When new construction must disturb archaeological resources, mitigation measures shall be carried out consistent with applicable state and federal laws. As appropriate, information yielded from archaeological mitigation shall be interpreted in the new building or site.
+
+C. Willamette Historic District general design standards. This subsection applies only to alterations and additions, new construction, and accessory structure construction of residential and historically residential properties in the Willamette Historic District. Other buildings are subject to the requirements in Chapter 58 CDC. Dimensional and other requirements of the underlying zone, as applicable, shall apply.
+
+1. Front yard setback.
+
+a. The front yard setback shall equal the average of the front setbacks of adjacent homes on the block face. For corner lots, the setback shall be the average between the adjacent house to the side and 20 feet. The setback shall be the distance measured from the front property line to the dominant vertical face of the building, exclusive of any porches or front landings.
+
+b. Unenclosed porches with no living space above may encroach into the front yard setback six feet from the dominant vertical face of the building.
+
+Figure 4: Front Yard Setback
+
+2. Side yard setback. Side yard setbacks shall be five feet, except:
+
+a. Bays, porches and chimneys and other projections that are cumulatively no more than 20 percent of the overall respective building wall length may intrude 18 inches into the side yard setback; and
+
+b. One-story accessory structures may be sited within three feet of the side property line and two-story accessory structures shall be a minimum of 15 feet from the side property line.
+
+3. Side street setback. Setbacks from side streets shall be 10 feet for both developed and undeveloped streets, except:
+
+a. Bays, porches and chimneys and other projections may intrude two feet into side street yard setback; and
+
+b. One- and two-story accessory structures may be sited within five feet of the side street property line.
+
+4. Rear yard setback. The rear yard setback shall be a minimum of 20 feet, except for accessory structures, which may be sited to within three feet of the rear property lines.
+
+5. Orientation. New home construction on corner lots shall be oriented the same direction as the majority of homes on the street with the longest block frontage.
+
+6. Repealed by Ord. 1675.
+
+7. Building height.
+
+a. Residential structures are limited to 28 feet in height. Cupolas and towers shall not exceed 50 feet in height.
+
+b. Repealed by Ord. 1735.
+
+c. Repealed by Ord. 1735.
+
+d. Accessory structures shall not exceed the height of the primary dwelling.
+
+8. Building shapes and sizes. No building shall exceed 35 feet in overall width. Front facade gables shall not exceed 28 feet in overall width.
+
+9. Roof pitch. Roofs shall have a pitch of at least 6:12.
+
+10. Garage access and parking areas.
+
+a. Garages shall be accessed from an alley, if present. No garage door may face or have access onto a street except when alley access is not available.
+
+b. Parking areas.
+
+1) No residential lot shall be converted solely to parking use.
+
+2) No rear yard area shall be converted solely to parking use.
+
+3) When a lot is adjacent to an alley, all parking access shall be from the alley. (Ord. 1614 § 6, 2013; Ord. 1636 § 23, 2014; Ord. 1675 § 33, 2018; Ord. 1735 § 3 (Exh. B), 2022)
+
+25.080 MODIFICATIONS TO DESIGN STANDARDS
+
+This section provides for deviation from site development standards in this chapter to enable flexibility and innovation consistent with the purposes of this chapter while ensuring that the features that historic designations are intended to preserve are maintained.
+
+A. Applicability. The provisions of Chapter 75 CDC, Variance, shall not apply to the standards in this chapter.
+
+B. Assessment of modification. When an applicant proposes an alternative to the standards of this chapter the approval authority shall grant a modification when:
+
+1. Historical records. The applicant demonstrates by review of historical records or photographs that the proposed alternative is consistent with and appropriate to the architecture in the historic district, or is appropriate to the applicable style of architecture;
+
+2. Consistency. The resulting development of the proposal would be consistent with the intent of the standards for which the modification is requested, as determined by the approval authority;
+
+3. Negative impacts. Negative impacts to adjacent homes and/or a historic district will be minimized. These include, but are not limited to, loss of solar access, light, or air to an adjacent structure, and scale or mass that visually overwhelm or are not deferential to an adjacent landmark or contributing structure; and
+
+4. Exceptional architecture. The proposal incorporates exceptional and appropriate architectural elements into the building.
+
+5. Material substitution. The substitute material conveys the form, design, scale, detailing, and overall appearance of the historic material, and the application of the substitute does not damage, destroy, or obscure historic features. (Ord. 1614 § 6, 2013; Ord. 1735 § 3 (Exh. B), 2022)
+
+25.090 DESIGNATION OF A HISTORIC RESOURCE
+
+The designation of historic resources shall comply with the following criteria; provided, that the age of a specific building shall not be deemed sufficient in itself to warrant designation of a building as historic.
+
+A. Approval criteria. The approval authority may designate additional historic resources if it determines that the site or district proposed for designation meets at least one of the following five criteria:
+
+1. Events. Is associated with an event or events that made a significant contribution to the history of the City, county, state or nation;
+
+2. Persons. Is associated with the life or lives of a significant person or people in the history of the City, county, state or nation;
+
+3. Architecture. Embodies distinctive architectural characteristics of a type, style, period or method of construction;
+
+4. Construction. Represents the work of a master builder, designer, or architect who influenced the development of the City, county, state or nation; or
+
+5. Archaeology. Has yielded, or will likely yield, information important in prehistory or history.
+
+B. Pending designation – Issuance of permits. No building permit for altering, moving, or demolishing any proposed historic resource shall be issued while any advertised public hearing, decision-making process, appeal period, or any appeal affecting the proposed designation of the area or building is pending. (Ord. 1614 § 6, 2013; Ord. 1735 § 3 (Exh. B), 2022)
+
+25.100 REMOVAL OF HISTORIC RESOURCE DESIGNATION
+
+These provisions allow for the removal of the local historic designation when it is no longer appropriate. This review does not affect a property or district’s listing on the National Register. Proposals to remove historic resource designation shall be approved if the approval authority finds that removal of the designation is appropriate after considering the information required under subsections A and B of this section.
+
+A. Assessment of designation. The approval authority shall consider:
+
+1. Criteria. Whether the historic resource meets the criteria for listing under CDC 25.090(A);
+
+2. Hardship. The importance to the public of retaining the historic resource relative to the hardship to the owner and any potential hazard to the public if the historic resource is retained;
+
+3. Condition. The physical condition of the historic resource and any loss of characteristics that originally caused it to be listed;
+
+4. Historic or architectural significance. The historic or architectural significance of the historic resource;
+
+5. Economic use and benefits. The economic use of the historic resource and any economic benefits associated with the proposed new use of the property; and
+
+6. Location. If within a historic district, its contribution to the district and the effect on the district if the designation is removed.
+
+B. Owner consent.
+
+1. Historic landmarks. For historic landmark properties, the property owner at the time of designation must have objected, on the record, to the historic designation.
+
+2. Historic districts. For properties in historic districts, the property owner at the time of designation must have objected, on the record, to inclusion in the district. (Ord. 1614 § 6, 2013; Ord. 1735 § 3 (Exh. B), 2022)
+
+25.110 RELOCATION OF A HISTORIC RESOURCE
+
+Moving a historic structure is generally discouraged. However, in some cases relocation is preferable to loss of the structure. The following requirements apply to the relocation of historic resources:
+
+A. Assessment of relocation. The approval authority shall require, to the extent feasible, that the structure be located on the new site in a manner that does not change its historic orientation to the street, relationship to adjacent properties, and the overall site. In making the determination, considerations shall include:
+
+1. Setbacks. Maintaining relatively similar setbacks, side yard conditions, and relationship to other structures on the site;
+
+2. Site characteristics. Maintaining character similar to the historic site in terms of neighboring structures, materials, site relationships and age (for example, it should not be moved to the back of a lot if that was not the character of the historic location, nor should it be located on a corner lot if historically it was on an interior lot); and
+
+3. Economic and physical feasibility. Demonstrating that it is not economically or physically feasible to locate the structure on a site that meets the characteristics in subsections (A)(1) and (A)(2) of this section; if so, an alternate site may be considered.
+
+B. Written commitment. There must be a written commitment accepted by the City Attorney to complete the relocation and subsequent rehabilitation of the structure and its new site. Bonding or other assurances may be required. Temporary relocations for interim construction may be necessary and must require a plan for protecting the structure at the interim site as well as a commitment to a schedule for completion of relocation to the proposed new site. (Ord. 1614 § 6, 2013; Ord. 1735 § 3 (Exh. B), 2022)
+
+25.120 DEMOLITION OF A HISTORIC RESOURCE
+
+A permit for demolition of a historic resource is required and shall not be issued without approval by the approval authority; provided, nothing contained in this section shall be interpreted as giving permission for any person to violate an order of the Building Official to remove or demolish a structure that the Building Official has designated as dangerous to life, health, or property.
+
+A. Approval criteria.
+
+1. Historic landmark or primary contributing structure. An application for the demolition of a historic landmark or primary contributing structure shall be approved if the following criteria are met:
+
+a. The value to the community of the proposed use of the property outweighs the value of retaining the designated historic resource on the present site;
+
+b. The designated historic resource is not capable of generating a reasonable economic return and the demolition is economically necessary;
+
+c. The owner has documented a good faith effort to sell or relocate the designated resource; and
+
+d. No practicable alternative exists to rehabilitate and reuse the designated resource in its present location.
+
+2. Non-contributing or not in period primary structure, accessory structure. An application for the demolition of a non-contributing or not in period primary structure or an accessory structure shall be approved if it is determined that the property does not have historic significance based on its architectural style, construction method or materials, or other pertinent factors as determined by the approval authority.
+
+B. Issuance of permits. A demolition permit for a historic resource shall not be issued prior to Historic Design Review and any other required approval of plans for the site, if applicable, or the submittal of building plans for a permit for the site. (Ord. 1614 § 6, 2013; Ord. 1735 § 3 (Exh. B), 2022)
+
+25.130 DEMOLITION BY NEGLECT
+
+All properties designated as historic resources shall comply with this section.
+
+A. Criteria for determination of demolition by neglect. Any action or inaction that results in one or more of the following conditions in a historic resource constitutes demolition by neglect and enforcement action to remedy the applicable criteria may be taken pursuant to Chapter 106 CDC, Enforcement:
+
+1. Structural integrity. Faults, defects, or other conditions which render the structure or resource structurally unsafe or not properly watertight.
+
+2. Walls and other support members.
+
+a. Walls or support members that are deteriorated due to failure to paint or otherwise maintain the structure or resource;
+
+b. Members of walls or other vertical supports that split, lean, list or buckle due to defective material or deterioration; and/or
+
+c. Members of walls or other vertical supports that are insufficient to carry imposed loads with safety.
+
+3. Windows and doors. Failure to keep windows and doors secured in a manner that prevents entry by unauthorized persons.
+
+4. Security.
+
+a. Failure to maintain parts of the resource so they are securely attached and will not fall or injure persons or property.
+
+b. Failure to secure the resource from vandals, animals, or pests.
+
+c. Failure to prevent infiltration of water through inadequate gutters, landscaping or other site features.
+
+5. Foundation. Deteriorated or inadequate foundation.
+
+6. Floor supports. Deteriorated floor supports or floor supports that are insufficient to carry imposed loads with safety.
+
+7. Ceiling and roof supports.
+
+a. Members of ceilings, roofs, ceiling and roof supports, or other horizontal members that sag, split, or buckle due to defective material or deterioration.
+
+b. Members of ceilings, roofs, or their supports, or other horizontal members that are insufficient to carry imposed loads with safety.
+
+8. Fireplaces or chimneys. Fireplaces or chimneys which list, bulge, or settle due to defective material or deterioration.
+
+B. Abatement. Nothing in this section shall prevent the abatement of the unsafe or dangerous condition of a historic resource that constitutes an imminent and serious threat to public safety. If a historic resource is destroyed, it may be rebuilt on the original building footprint. (Ord. 1614 § 6, 2013; Ord. 1735 § 3 (Exh. B), 2022)
+
+25.140 HISTORIC RESOURCE MAP
+
+The Historic Resource Map, shown in Figure 1 below, identifies the Willamette Historic District, as shown on the Zoning Map; the Willamette Falls Drive Commercial Design District, as identified in CDC 58.030(C); and the historic landmarks identified on the Zoning Map.
+
+FIGURE 1
+
+(Ord. 1638 § 1, 2015; Ord. 1735 § 3 (Exh. B), 2022)

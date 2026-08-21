@@ -39,7 +39,50 @@ notes: 'Ported from quadfit rules.yaml, then re-cited value by value against the
   `measured_on` and the screen treats the lot''s own area as a bound: a pod already over the ceiling
   on the whole lot is over it on any part of it and still fails, and a pod that clears it is not
   certified. The 0.30 guarantee is a floor under what is allowed, on the whole property, so it can
-  only loosen — read, and not encoded.'
+  only loosen — read, and not encoded.
+
+
+  (6) The Willamette Historic District, read and partly encoded. Two zone chapters hang an exception
+  off the setback row -- "Except as specified in CDC 25.070(C)(1) through (4) for the Willamette
+  Historic District" -- and the chapter it points at was the top of this jurisdiction''s
+  cross-reference queue. Fetched and read 2026-08-20. It does three different things to this building
+  and only one of them is a setback.
+
+
+  The four subsections the row cites are looser than the base zone everywhere they differ: side five
+  feet against R-10''s seven and a half, side street ten against fifteen, rear twenty against twenty.
+  A qualifier that can only loosen is read and not encoded, which is the same reading item (5) takes
+  of the 0.30 FAR floor. The front yard is the exception. 25.070(C)(1)(a) sets it to "the average of
+  the front setbacks of adjacent homes on the block face", which is not a number and could land either
+  side of the zone''s twenty feet, so R-10''s and R-5''s front setback carries `qualified_by` on the
+  district rather than a figure.
+
+
+  What the setback row does NOT cite is 25.070(C)(8): "No building shall exceed 35 feet in overall
+  width." That subsection stands on 25.070(C)''s own applicability sentence rather than on the zone
+  table, and it is the first standard in this corpus the pod fails on its own dimensions rather than
+  on where it sits -- 56 ft by 36 ft is over 35 whichever way the building is turned, on a lot of any
+  size. Encoded as `max_building_width_ft`: exempt outside the district, because 25.070(C) says in
+  terms that it applies only inside it, and 35 ft within. The height cap in the same subsection, 28
+  feet at 25.070(C)(7)(a), the pod clears at 26.
+
+
+  READ AND NOT ENCODED, the narrative half. 25.070(B), "Standards for new construction", reaches new
+  construction anywhere in a historic district and states no figure at all: massing, scale,
+  proportion, form, siting, floor area ratio, window patterns, building divisions and height "shall
+  correspond to the contributing buildings within the district". That is design review, decided by an
+  approval authority against the block rather than against a number, and a screen that scored it would
+  be inventing the finding. Its existence is the reason a district lot is a review lot even where the
+  figures clear.
+
+
+  READ AND NOT ENCODED from subsection (C), because no field holds them: (C)(5) orients new
+  construction on a corner lot to the majority of homes on the longest block frontage; (C)(9) requires
+  a roof pitch of at least 6:12, which a flat-roofed factory pod does not have; (C)(10)(a) requires
+  garage access from an alley wherever one is present. And the relief path is not the usual one --
+  25.080(A), "The provisions of Chapter 75 CDC, Variance, shall not apply to the standards in this
+  chapter." A modification under 25.080(B) is discretionary and turns on historical records, which is
+  a harder ask than a variance and a different one.'
 ingest:
   geoid: null
   juris_city_codes:
@@ -68,6 +111,47 @@ definitions:
     cite: "West Linn CDC 2.030, Corner lot"
 
 crossrefs:
+  "34": >-
+    Accessory Structures, Accessory Dwelling Units, and Accessory Uses, and the twenty-two mentions
+    are two sentences. Every zone chapter says "Accessory uses are allowed in this zone as provided by
+    Chapter 34 CDC" and every zone chapter lists the chapter first among its related procedures. A
+    quadplex is a primary use here -- "c. Quadplex residential units", a row under uses permitted
+    outright in all nine chapters -- so nothing this screen places is an accessory anything, and the
+    chapter is not fetched.
+  "58": >-
+    Willamette Falls Drive Commercial Design District. Its one binding mention is the second sentence
+    of CDC 25.070(C), which sends the buildings that subsection does not reach there: "This subsection
+    applies only to ... residential and historically residential properties in the Willamette Historic
+    District. Other buildings are subject to the requirements in Chapter 58 CDC." This pod is four
+    dwellings, so it is the residential half of that sentence and Chapter 58 is the branch it does not
+    take. Not fetched for that reason and not for the usual one -- if the catalog ever holds a
+    ground-floor-commercial design, this becomes a real gap.
+  "60.070": >-
+    Conditional-use lot sizing: "the appropriate lot or parcel size for a conditional use shall be
+    determined by the approval authority at the time of consideration of the application". Its eight
+    binding mentions are the body of each chapter''s own section headed DIMENSIONAL REQUIREMENTS,
+    CONDITIONAL USES. A quadplex is permitted outright in every one of these zones, so the
+    conditional-use path is not the path this building takes and the section never reaches it.
+  "75": >-
+    Variance. Every mention is an item in a zone chapter''s list of related procedures, beside Chapters
+    34, 44 and 66 -- declined relief rather than a standard. Relief is modelled in the score stage, not
+    encoded here: a pod one foot over a setback is a lot with an application attached. Worth recording
+    that the historic district removes even that. CDC 25.080(A): "The provisions of Chapter 75 CDC,
+    Variance, shall not apply to the standards in this chapter", and what stands in its place is a
+    discretionary modification turning on historical records.
+  "60.090": >-
+    Type II transportation facilities -- "those which are not designated in the adopted TSP or part of
+    an approved, active development order ... allowed in all zoning districts subject to conditional
+    use approval and the additional criteria of CDC 60.090". A road, not a dwelling. Both binding
+    mentions are inside Chapter 2''s definition of a transportation facility.
+  "28.040": >-
+    An exemption inside the definition of Development: within the Willamette and Tualatin River
+    Protection Areas the term also reaches change of use, grading and vegetation removal "unless
+    specifically exempted per CDC 28.040". An exemption list can only narrow what counts as
+    development, so reading it cannot add a standard to this building. What Chapter 28 states about
+    building inside a protection area is a separate gap and a real one -- the areas are boundaries
+    nothing here holds, which is why the river chapters are unencoded. This reference is not what
+    would close it.
   "66": >-
     Non-conforming Structures, and every one of the nineteen mentions is one of two sentences. Eight
     are the zone chapters' own list of related procedures ("2. Chapter 66 CDC, Non-conforming
@@ -82,6 +166,9 @@ code:
   # nine small documents instead of one code-sized one. Section numbers
   # inside chapter NN are NN.xxx, so each zone declares its chapter as
   # its section prefix. Host takes chrome124, refuses newer Chrome.
+  - id: "25.willamette-historic"
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC25.html
+    title: "CDC Chapter 25 - Willamette and Willamette Falls Drive Historic Districts"
   - id: "02.definitions"
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC02.html
     title: CDC Chapter 2 - Definitions
@@ -437,6 +524,16 @@ zones:
     setback_front_ft:
       value: 20
       quote: "or/clackamas/west-linn/11.r-10.txt#L151"
+      # 25.070(C)(1)(a) replaces this inside the district with "the average of
+      # the front setbacks of adjacent homes on the block face" -- a number the
+      # block has and the code does not, which could sit either side of twenty
+      # feet. The other three yards the same exception names are looser than
+      # this zone's, so they are read and left alone; this one moves in a
+      # direction nothing here can bound.
+      qualified_by:
+        fact: willamette_historic_district
+        cite: West Linn CDC 25.070(C)(1)(a), Front yard setback
+        quote: "or/clackamas/west-linn/25.willamette-historic.txt#L392"
     setback_side_ft:
       value: 7.5
       quote: "or/clackamas/west-linn/11.r-10.txt#L154"
@@ -526,6 +623,33 @@ zones:
     max_height_ft:
       value: 35
       quote: "or/clackamas/west-linn/11.r-10.txt#L161"
+    max_building_width_ft:
+      # Not in this zone's dimensional table, and not in the exception its
+      # setback row cites -- that names 25.070(C)(1) through (4), the four
+      # yards. This is (C)(8), and it stands on the subsection's own
+      # applicability sentence instead: it "applies only to alterations and
+      # additions, new construction, and accessory structure construction of
+      # residential and historically residential properties in the Willamette
+      # Historic District". Outside the district no West Linn chapter caps
+      # building width at all, which is what the exemption says and where its
+      # citation points.
+      #
+      # Inside it the cap is 35 ft against a pod 56 ft by 36 ft, so both of the
+      # building's dimensions are over it and no lot is large enough to fix
+      # that. Nothing maps the boundary, so the fact carries no assumption and
+      # the lot comes back naming it.
+      exempt: true
+      cite: West Linn CDC 25.070(C), Willamette Historic District general design standards
+      url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC25.html
+      retrieved: '2026-08-20'
+      quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388"
+      variants:
+        - value: 35
+          when: [willamette_historic_district]
+          cite: West Linn CDC 25.070(C)(8), Building shapes and sizes
+          url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC25.html
+          retrieved: '2026-08-20'
+          quote: "or/clackamas/west-linn/25.willamette-historic.txt#L426"
   R-7:
     section: ["12."]
     cite_default:
@@ -634,6 +758,16 @@ zones:
     setback_front_ft:
       value: 20
       quote: "or/clackamas/west-linn/13.r-5.txt#L163"
+      # 25.070(C)(1)(a) replaces this inside the district with "the average of
+      # the front setbacks of adjacent homes on the block face" -- a number the
+      # block has and the code does not, which could sit either side of twenty
+      # feet. The other three yards the same exception names are looser than
+      # this zone's, so they are read and left alone; this one moves in a
+      # direction nothing here can bound.
+      qualified_by:
+        fact: willamette_historic_district
+        cite: West Linn CDC 25.070(C)(1)(a), Front yard setback
+        quote: "or/clackamas/west-linn/25.willamette-historic.txt#L392"
     setback_side_ft:
       value: 5
       quote: "or/clackamas/west-linn/13.r-5.txt#L166"
@@ -708,6 +842,33 @@ zones:
     max_height_ft:
       value: 35
       quote: "or/clackamas/west-linn/13.r-5.txt#L174"
+    max_building_width_ft:
+      # Not in this zone's dimensional table, and not in the exception its
+      # setback row cites -- that names 25.070(C)(1) through (4), the four
+      # yards. This is (C)(8), and it stands on the subsection's own
+      # applicability sentence instead: it "applies only to alterations and
+      # additions, new construction, and accessory structure construction of
+      # residential and historically residential properties in the Willamette
+      # Historic District". Outside the district no West Linn chapter caps
+      # building width at all, which is what the exemption says and where its
+      # citation points.
+      #
+      # Inside it the cap is 35 ft against a pod 56 ft by 36 ft, so both of the
+      # building's dimensions are over it and no lot is large enough to fix
+      # that. Nothing maps the boundary, so the fact carries no assumption and
+      # the lot comes back naming it.
+      exempt: true
+      cite: West Linn CDC 25.070(C), Willamette Historic District general design standards
+      url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC25.html
+      retrieved: '2026-08-20'
+      quote: "or/clackamas/west-linn/25.willamette-historic.txt#L388"
+      variants:
+        - value: 35
+          when: [willamette_historic_district]
+          cite: West Linn CDC 25.070(C)(8), Building shapes and sizes
+          url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC25.html
+          retrieved: '2026-08-20'
+          quote: "or/clackamas/west-linn/25.willamette-historic.txt#L426"
   R-4.5:
     section: ["14."]
     cite_default:

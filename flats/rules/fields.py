@@ -151,6 +151,20 @@ _F: tuple[FieldDef, ...] = (
         True,
         "max_height",
     ),
+    FieldDef(
+        "max_building_width_ft",
+        "length_ft",
+        "MAXIMUM width of the building itself, measured across it rather than "
+        "from any lot line. West Linn CDC 25.070(C)(8) is the one instance in "
+        "this corpus -- \"No building shall exceed 35 feet in overall width\" "
+        "in the Willamette Historic District -- and it is the only standard "
+        "read so far that the catalog pod fails on its own dimensions rather "
+        "than on how it sits: 56 ft by 36 ft is over the cap whichever way it "
+        "is turned. Not a setback, and not foldable into one: a setback says "
+        "where a building may stand and this says how big it may be, so a lot "
+        "with room to spare on every yard still fails it.",
+        True,
+    ),
     FieldDef("max_far", "ratio", "Maximum floor area ratio.", True, "max_far"),
     FieldDef("max_coverage_pct", "percent", "Maximum building coverage, flat percentage.", True, "max_lot_coverage"),
     FieldDef(
@@ -394,6 +408,10 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         # still surfaces the omission through the clause ledger.
         "min_lot_depth_ft",
         "max_lot_depth_ratio",
+        # One jurisdiction in the corpus caps building width, and only inside
+        # a historic district. A zone that is silent about it is not an
+        # incomplete zone.
+        "max_building_width_ft",
         "land_division_parent_standards",
         "max_far",
         "max_coverage_pct",
