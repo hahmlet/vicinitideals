@@ -319,20 +319,19 @@ notes:
       covers; the pod is neither
 
   - quote: "or/multnomah/gresham/4.0100.residential.txt#L430"
-    digest: "42d473ebf17f"
+    digest: "597723548ac8"
     state: dismissed
     reason: >-
       note 6 sets the distance between two major structures on one lot -- 20
       feet, or 10 for townhouse-style multi-family; the pod is a single
-      structure, so there is no second one to stand away from
+      structure, so there is no second one to stand away from. The digest
+      moved because the 10-foot figure used to be read as a note ten of its
+      own, and is part of note 6's body now
 
-  - quote: "or/multnomah/gresham/4.0100.residential.txt#L431"
-    digest: "c8bcd443d5a5"
-    state: dismissed
-    reason: >-
-      the continuation of note 6, carrying the 10-foot side-to-side figure and
-      the exclusion of carports and garages; same ground, the pod is one
-      structure
+  # Note 6's second line -- "10 feet in between major structures (side to
+  # side) will be required" -- used to be read as a note ten, and had a ruling
+  # of its own saying so. It is part of note 6's body now, and Table 4.0131
+  # has no note ten to rule.
 
   # --- read, and resting on a fact nobody holds ------------------------
   - quote: "or/multnomah/gresham/4.0100.residential.txt#L419"
@@ -1946,3 +1945,19 @@ notes:
       ft. Its marker is the "10 ft.5" in the THR-SW row of the All Other
       Uses block; the encoded values in this region are LDR-SW's, whose
       row carries no marker 5
+
+  # --- the note the wrap cost --------------------------------------------
+
+  - quote: "or/multnomah/gresham/4.0100.residential.txt#L433"
+    digest: "6f6012657f8d"
+    state: dismissed
+    reason: >-
+      note 7 gives MDR-12, MDR-24 and OFR the maximum front and street-
+      side setbacks that Table 4.0430 states for the Corridor Multi-
+      family district -- 20 feet. It is marked on the Multi-family
+      heading at L412 and nowhere else. This layer reads the MDR
+      setbacks off L403, the row for a single detached dwelling, duplex,
+      triplex and quadplex, so the maximum does not reach the pod. Worth
+      remembering if a zone is ever encoded off the Multi-family row:
+      the field exists for the front (setback_front_max_ft, as CMF
+      carries it) and there is no field yet for a street-side maximum

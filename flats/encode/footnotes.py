@@ -279,6 +279,28 @@ PROVISIONAL = ("lone", "letter")
 #: it, which is exactly what this now measures.
 BLOCK_LIMIT = 80
 
+#: How far past a block's own mark column a line has to sit before it stops
+#: being a note and goes back to being the wrap of the one above it.
+#:
+#: A codifier aligns the numbers of a notes list in one column. Gresham runs
+#: note 6 of Table 4.0131 onto "10 feet in between major structures (side to
+#: side) will be required", indented twelve spaces where every note in the
+#: block starts at nought, and a number followed by a space and a word is a
+#: note once a block is open. Ten is above every mark the list had reached, so
+#: it was taken -- and note 7 on the next line, going backwards, ended the
+#: block under the restart rule. Table 4.0131 has seven notes and no note ten.
+#:
+#: Six is wide enough that a codifier's own wobble does not trip it and narrow
+#: enough to catch a wrapped line, which is indented to clear the mark column
+#: by design. Across the whole corpus it refuses exactly one line.
+MARK_COLUMN_SLACK = 6
+
+#: How many notes a block has to have taken before its mark column is worth
+#: believing. The column is the commonest indent among them, so one note is no
+#: evidence and two can disagree; measured from the first note instead of the
+#: commonest, this rule refuses five real notes in two documents.
+MARK_COLUMN_MIN = 3
+
 #: How far above a block to look for the table header it is repeating. About a
 #: page of a codifier's PDF.
 REPEAT_WINDOW = 80
@@ -1111,6 +1133,9 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
     """
     bodies: list[Body] = []
     texts: list[list[str]] = []
+    #: The indent each note's mark was found at, which is what
+    #: `MARK_COLUMN_SLACK` is measured against.
+    cols: list[int] = []
     #: The table's own column header, flattened, from the page this block sits
     #: at the foot of. A wide table reprints its header on every page it
     #: crosses -- Troutdale repeats "Dimensional Standard  LDR-1  LDR-2 ..."
@@ -1252,9 +1277,21 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
                     i += 1
                     continue
                 break
+            col = len(lines[i]) - len(lines[i].lstrip())
+            if (
+                len(cols) >= MARK_COLUMN_MIN
+                and col - max(set(cols), key=cols.count) >= MARK_COLUMN_SLACK
+            ):
+                # Indented well past the column this block keeps its numbers
+                # in, so it is the wrap of the note above rather than a note.
+                # See `MARK_COLUMN_SLACK`.
+                texts[-1].append(stripped)
+                i += 1
+                continue
             text = opening.groupdict().get("text") or ""
             bodies.append(Body(doc="", line=i + 1, mark=mark, text=text))
             texts.append([text] if text else [])
+            cols.append(col)
             highest = _order(mark)
             anchor = i
             i += 1
