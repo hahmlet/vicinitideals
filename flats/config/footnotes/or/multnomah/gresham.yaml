@@ -1404,3 +1404,10 @@ notes:
     reason: >-
       states how an applicant demonstrates compliance with them. Section 7.0450 applies only where the development site is at least 1.5 gross acres and the proposal is a Type II or Type III partition or subdivision of it, and what it then requires is a MIX of building forms across the lots created. The screen places one building on one lot; the four unit lots under a middle housing land division are that same building
 
+
+  # --- 9.0825A, parking lot aisle widths ------------------------------
+  - quote: "or/multnomah/gresham/9.0800.parking.txt#L346"
+    digest: "2a2b93e07b83"
+    state: dismissed
+    reason: >-
+      Table 9.0825A note 1 sets the minimum aisle width inside a parking lot -- 24 feet for two-way traffic and emergency vehicle operations, 20 feet one-way. It is the only note in the document, and it governs the layer's parking default only because the default's citation and the note share a document. It qualifies how wide an aisle must be in a lot somebody builds, not whether a lot must be built, and no reading of an aisle width can restore a minimum 9.0802(A) waives for every land use type. It does not reach this building twice over: 9.0802(F) states that the parking lot design standards of Sections 9.0822 to 9.0840, which is where this table sits, do not apply to quadplexes on a unit-by-unit basis

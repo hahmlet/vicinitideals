@@ -1,0 +1,1132 @@
+SECTION 9.0800
+                                                                                                                                                                                                                                             PARKING
+
+General
+9.0801                                                                                                                                                                      Purpose
+9.0802                                                                                                                                                                             General Provisions
+
+Parking Lot Plan Submittal Requirements
+9.0810                                                                                                                                                                     Submittal Requirements
+
+Standards for Surface Parking Lots
+9.0820                                                                                                                                              Purpose
+9.0821                                                                                             General                                                    Provisions for Parking Lots
+9.0822                                                                                                                                                                      Design                          Standards for Parking Lots
+9.0823                                                                                      Landscaping of Parking Lots
+9.0824                                                                                                                                                                      Pedestrian Circulation/Walkways
+9.0825                                                                                                                                                                     Space and Aisle Standards for Parking Lots
+9.0826                                                                                                                                                                     Accessible Parking
+9.0827                                                                                                                                                                     Electric Vehicle Charging Units
+
+Bicycle Parking
+9.0830                                                                                                                                                                      Purpose
+9.0831                                                                                                                                                                      Standards for Bicycle Parking
+9.0832                                                                                  Additional Standards for                 Short-Term and Long-                      Term Bicycle Parking
+
+Off-                                                                     Street Loading
+9.0840                                                                                                                                                                      Off-                             Street Loading Requirements
+
+Minimum/Maximum Required Off-Street Parking
+9.0850                                                                                                                                                                      General                                                   Provisions for Off-                            Street Parking
+9.0851                                                                                                                                                                     Standards for                 Off-                             Street                                         Parking
+9.0852                                                                                                                                                                             Standards for Off-Street Parking in Plan District                                            s
+9.0853                                                                                            Exceptions to Maximum Parking Space Standards
+9.0854                                                                                            Required Carpool and Vanpool Parking
+9.0855                                                                                             Fleet Motor Vehicle Parking
+
+Other Public Parking Standards
+9.0861                                                                                                                                                                     Parking Structures
+9.0862                                                                                                 MAX Park-and-Ride
+
+                                                                                                                                                                                                                                                             [9.0800]-1
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+GENERAL
+
+9.0801                                       PURPOSE
+
+The purpose of the parking lot standards is to provide for adequate and safe                                      , efficient, and well-                     integrated
+vehicular                                                    and bicycle parking and circulation for a variety of uses. These standards support site design and
+compatibility with surrounding development in an increasingly pedestrian and transit-oriented community.
+
+9.0802                              GENERAL PROVISIONS
+
+A.                        Vehicle parking minimums are not required for any land use type. If vehicle parking is provided, it must
+       meet the standards for this section. Parking maximums apply per Table 9.0851. Off                                                 -street loading areas
+       are required per Section 9.0840(C). Existing parking may be converted to other land uses, as allowed by
+       the Development Code.
+B.                          If off-                             street parking and loading areas are provided, these areas require a development permit and shall be
+       satisfactorily maintained by the owner of the property.
+C.                            No Certificate of Occupancy shall be granted to any structure until the parking areas are completed and
+       ready for use.
+D.                       Parking spaces shall be used by residents, customers, employees, or visitors, and shall not be used for the
+       storage of vehicles or materials, or for the parking of trucks used in conducting business.
+E.                              When calculating the size of a parking lot, it shall include paved parking stalls, drive          aisles, primary internal
+       drives, and those internal public streets which include on-street parking. Service drives and paved loading
+       areas shall not count when calculating the area of the parking lot.
+F.                               By definition, parking lot design standards (Sections 9.0822 to 9.0840) do not apply to single detached
+       dwellings, duplexes, triplexes, quadplexes, cottage clusters, or townhouses on a unit-by-unit basis (see
+       Section 7.0400 for applicable standards). However, shared separate parking areas (such as visitor or
+       overflow parking lot) must comply with the applicable standards of Sections 9.0822 to 9.0827                        , except for
+       clustered parking for cottage clusters which must meet the standards of  7.0440(F).
+
+PARKING LOT PLAN SUBMITTAL REQUIREMENTS
+
+9.0810                              SUBMITTAL REQUIREMENTS
+
+This subsection applies to all developments that pro                              vide or modify a parking lot. The parking lot plan, drawn to
+scale, shall include, at a minimum, the following information:
+A.                        Delineation of individual parking spaces, including the delineation of those parking spaces dedicated to
+       ADA accessible vehicle use, compact vehicle use, or electric vehicle charging units.
+B.                          Circulation area necessary to serve spaces.
+C.                            Access to streets, alleys and properties to be served.
+D.                       Curb cuts.
+E.                              Type of landscaping, fencing or other screening materials.
+
+                                                                                                   [9.0800]                                       -2
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+F.                               Abutting land uses and driveways.
+G.                      Grading, drainage, surfacing and sub-grading details.
+H.                       Location of lighting fixtures.
+I.                                        Delineation of all structures and obstacles to circulation on the site.
+J.                                     Specifications of signs and bumper guards.
+K.                          Pedestrian accessible walks and bicycle parking area.
+L.                                 Location and dimensions of any required loading berth.
+
+STANDARDS FOR SURFACE PARKING LOTS
+
+9.082    0                                           PURPOSE
+
+The purpose of the surface parking lot standards is to establish clear design guidelines for developments that
+include surface parking to ensure parking areas are safe and support the efficient movement of vehicles,
+bicyclists, and pedestrians. These standards promote a walkable, multimodal environment and enhance the
+overall quality of the built environment through intentional site design, layout, and landscaping. If a surface
+parking lot is constructed, it must meet the standards of  Section 9.0821 through Section 9.0827.
+
+9.0821                              GENERAL PROVISIONS FOR PARKING LOTS
+
+A.                        Location. All vehicle parking spaces shall be on the same lot as the main structure they serve or on an
+       abutting lot. However, upon demonstration by the applicant that parking on the same lot or abutting lot is
+       not available, the Manager may authorize the parking spaces to be on any lot within 1,000 feet walking
+       distance from the structure being served upon written findings of compliance with the following
+       provisions:
+       1.                     Loading spaces and vehicle maneuvering areas shall be located only on or abutting the property
+               served; and
+       2.                     Land devoted to off-site vehicle parking facilities is computed as a portion of total land area when
+               determining the minimum and maximum land use intensities in terms of commercial and business
+               office uses, and the minimum and maximum number of residential dwelling units allowed.
+       3.                                The number of parking spaces is included in the maximum allowable parking spaces for a use, unless
+               the off-site parking is shared parking.
+B.                          Shared Parking. The development of shared parking lots, where a parking area is used by more than one
+       development or use, is encouraged as an efficient use of private land. For example, an office and
+       restaurant use could use the shared parking lot during different times of day. Shared parking reduces the
+       need for each development or use to provide its own separate on  -site parking.
+
+9.0822                                           DESIGN STANDARDS FOR PARKING LOTS
+
+A.                        All parking areas shall meet the following minimum design standards, except for clustered parking for
+       cottage clusters as provided in Section 7.0440(F)           .
+
+                                                                                                 [9.0800]                                       -3
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+       1.                             Surfacing and Striping. All parking areas shall be appropriately striped, marked, and signed.
+              a.                             Areas used for parking and maneuvering of vehicles shall be paved with a minimum of 2-inch
+                      asphalt, concrete, or equivalent surface. Pervious pavement may be utilized to help meet
+                      stormwater management requirements; or
+              b.                           Compacted gravel or pervious pavers may be permitted if the site is located in the Downtown Plan
+                      Districts or Rockwood Town Center district and meets the following requirements:
+                      i.                                         The primary use of an existing single detached dwelling is being converted from residential to
+                             commercial;
+                      ii.                             There is no physical change proposed to the primary building that requires a Type II or Type III
+                             Land Use Permit;
+                      iii.                  The parking lot will have no more than five (5) spaces;
+                      iv.                   All ADA requirements are met per the ADA provisions, including walkway connections to the
+                             primary entrance of the commercial use;
+                      v.                              The parking lot location meets the requirements of  Section 9.0822(A)(5) and Section
+                             4.1151.A.4.S1 & S2  or 7.0512.A.4.S1 & S3 ; and
+                      vi.                   Parking lot landscaping meets the requirements of Section 9.0823(C)(2-                         4).
+       2.                             Curb Cuts/Access Points. Street access points shall be the minimum necessary to provide access while
+              not inhibiting the safe circulation and carrying capacity of the street. This standard is met when the
+              number and location of the access points to public rights-of-way shall conform to the provisions of
+              Section A5.503.
+       3.                             Driveway Approach Width. For single detached dwellings, duplexes, triplexes, and quadplexes, see
+              Section 7.0420. For T         ownhouse standards, see Section 7.0431. For all other uses, see the Public Works
+              Standards.
+       4.                             Driveways/Drive Aisle Width.
+              a.                             Driveways shall have a minimum paved width of 20 feet for two-way circulation and 12 feet for
+                      one way, unless otherwise specified in Section           9.0822(A)(4)(b).
+              b.                           For residential developments in the Downtown Plan District with six units or fewer with access
+                      onto local streets and NE Beech Street between 3rd and 7th, driveways shall have a minimum
+                      paved width of 12 feet if the lot depth does not exceed 150 feet, subject to requirements in the
+                      Oregon Fire Code. If the lot depth exceeds 150 feet, the paved width sh  all comply with
+                      9.0822(A)(4)(a).
+              c.                                 Driveways shall not occupy a yard setback or buffer except to pass through the yard in order to
+                      connect directly to a public street or as necessary for shared driveways and internal access
+                      between uses on abutting lots.
+              d.                           Driveways shall have trees planted every 20 feet, with a minimum of one (1) tree per side.
+       5.                             Turnaround Areas. Parking spaces shall be provided with adequate drive aisles or turnaround areas so
+              that all vehicles may enter the street in a forward manner.
+       6.                             Setback Restrictions for Parking Spaces and Drive Aisles. Except in the RTC, SC, CMF and CMU districts,
+              vehicle parking areas, including spaces, aisles, and turnaround and maneuvering areas shall not occupy
+              the required setbacks for multi-dwelling structures containing three or more units, or commercial,
+              industrial and institutional developments. Within the RTC, SC, CMF and CMU districts, parking areas
+              may encroach only into required rear and side setbacks.
+
+                                                                                            [9.0800]                                       -4
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+       7.                             Cluster of Spaces. Clusters of auto parking spaces shall not exceed 50 spaces. Auto parking clusters
+              shall be separated by landscaping as provided in Section 9.0823(C)(5)(c) or by buildings or building
+              groups.
+       8.                             Connect Parking Lots. Auto parking areas shall be designed to connect with auto parking areas on
+              adjacent sites to eliminate the necessity of utilizing the public rights  -of-way for cross movements. Joint
+              or shared access, internal circulation, or parking is encouraged with adjacent uses.
+       9.                             Minimum Clearance. Driveways, aisles, turnaround areas and ramps shall have a minimum vertical
+              clearance of 12 feet for their entire length and width, but such clearance may be reduced in parking
+              structures.
+       10.    Drainage. Drainage for the parking area shall be in conformance with the City of Gresham Stormwater
+              Management Manual.
+       11.    Clear Vision Area. See Section 9.0200 for Driveway Clearance Vision Area Requirements.
+       12.    Service and Loading Areas. Service and Loading areas shall not be located on the frontage of a light rail
+              station or adjacent street, a transitway, a Design Street, or a primary or secondary pedestrian street.
+B.                          DEQ Indirect Source Construction Permit. All parking areas which are designed to contain 250 or more
+       parking spaces, or to contain two or more levels shall require review by the Oregon Department of
+       Environmental Quality (DEQ) to acquire an Indirect Source Construction Permit.
+
+9.0823                              LANDSCAPING OF PARKING LOTS
+
+A.                        Purpose. To reduce the visual impact of glare, headlights, and parking lot lights from the public right-of-
+       way and adjoining properties, all parking lots and maneuvering areas shall be landscaped. Adequately
+       landscaped parking lots will reduce the area of impervious surfaces, can be used to treat and infiltrate
+       stormwater runoff from impervious areas of parking lots, reduce the level of carbon dioxide in areas of
+       heavy vehicle use, return pure oxygen to the atmosphere, and provide shade as a means of alteri   ng the
+       micro-climate of parking lots.
+B.                           General Provisions
+       1.                             Existing non-hazardous and non-invasive trees and shrubs shall be kept on the site unless the applicant
+              can demonstrate there is a health or non -health reason for removal as listed in Section 9.1032(E)(6).
+       2.                             All landscaped areas shall be irrigated with a permanent in-ground irrigation system unless a licensed
+              landscape architect submits written verification that the proposed plant materials do not require
+              irrigation.
+       3.                             The property owner is responsible for the establishment and maintenance of landscaping in
+              accordance with the requirements of this section. Parking lot landscaping shall consist of large
+              canopied (at maturity) deciduous trees, mid-sized shrubs, and ground cover.
+              a.                             A minimum of 70 percent of all landscaped parking areas, including required landscaped           strips,
+                     stormwater planters and landscaped           islands, shall be covered with trees, shrubs, and continuous
+                     ground cover consisting of lawn, low growing evergreen shrubs, or evergreen ground cover.
+              b.                           The minimum planting size for trees shall be 2.0-inch caliper as measured by American Association
+                     of Nurseryman standards. Parking Lot trees shall be deciduous shade trees capable of at least 35
+                     feet in height and spread at maturity.
+              c.                                 Evergreen shrubs shall be at least 24 inches high at finished grade and a minimum of one gallon in
+                     size at the time of planting.
+
+                                                                                         [9.0800]                                       -5
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+              d.                           Ground cover shall be a minimum 4-inch pot, spaced at a minimum of 2 feet on center.
+              e.                             Evergreen shrubs must grow to be at least 36 inches higher than finished grade at the developed
+                     surface area.
+C.                            Parking Lot Landscape Design
+       1.                             Parking Lot Entryway. Entryways into auto parking lots shall be bordered by a minimum 5 feet wide
+              landscaped strip with large-scale, high canopy trees 20 to 30 feet on center and low shrubs or a 2 feet
+              high berm with groundcover.
+       2.                             Parking Area/Building Buffer. Parking areas shall be separated from the exterior wall of a structure,
+              exclusive of pedestrian entranceways or loading areas, by a 5-foot planting bed of trees, shrubs and
+              groundcover, or a pedestrian walkway subject to Section 9.0824(F).
+       3.                             Landscaping/Screening Along a Public Right-of-Way. All public and private surface motor vehicle
+              parking lots shall provide perimeter lot landscaping where parking, maneuvering or loading areas abut
+              a public right-of-way (except alleys and private           accessways), according to the following requirement.
+       4.                             Perimeter Screening. In addition to required street trees, one of the following three types of auto
+              parking perimeter screening shall be provided:
+              a.                             A Landscaped Strip. A landscaped            strip in the required setback between the right-                 of-way and the
+                     parking area. The landscaped strip may be pierced by walkways and driveways. Landscaped strips
+                     shall be planted with large-scale, high-canopy, horizontally-branching street tree species and an
+                     evergreen hedge. Hedge is to be low level, between 30 and 42 inches in height, or
+              b.                           A decorative wall or evergreen hedge screen of 30 to 42 inches in height shall be established
+                     parallel to and not nearer than 2 feet from the right-of-way line. The area between the wall or
+                     hedge and street line shall be landscaped. The required wall or screening shall be designed to
+                     allow for free access to the site and sidewalk by pedestrians, or
+              c.                                 Perimeter screening landscape requirements may be achieved by a combination of berms,
+                     lowering of grade,             and plantings, per Subsection (a) above. Slopes of landscaped berms shall not
+                     exceed 1:4 for lawn areas, or 1:2 for berms planted with groundcover and shrubs.
+              Visual breaks, no more than 5 feet in width, shall be provided every 30 feet within evergreen hedges
+              abutting public rights-                   of-ways.  Shrubs, when used as parking perimeter screens, shall, at the time of
+              planting, be of a size that will achieve the desired screening height of 30 inches within 12 months.
+       5.                             Interior Parking Lot Landscaping. In addition to parking lot perimeter landscaping, surface parking lots
+              shall include landscaping to cover not less than ten percent           of the parking/maneuvering area,
+              including:
+              a.                             A minimum average of 1 tree per 9 parking spaces.
+              b.                           Evergreen ground cover shall cover planting areas not covered by shrubs or trees.
+              c.                                 Where required to separate auto parking clusters, interior landscape strips provided between rows
+                     of parking shall be a minimum of 5 feet in width to accommodate pedestrian walkways, shrubbery,
+                     ground cover, and large-scale, high canopy shade trees placed 20 to 30 feet on center.
+              d.                           A landscaped island shall be located at the end of each parking row and at intervals within the
+                     parking rows. Landscaped islands           shall have a minimum width of 9 feet wide to allow doors to
+                     open without damage and a minimum area of 180 square feet. Each island           shall be curbed and
+                     provide one shade tree having a clear trunk height of at least nine feet when mature.
+              e.                             Angled or perpendicular parking spaces shall provide extruded curbs (bumper stop) or widened
+                     curbs to prevent bumper overhang into interior landscaped strips or walkways.
+
+                                                                                        [9.0800]                                       -6
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+              f.                                      When possible, landscape areas shall be designed to capture and treat stormwater runoff from
+                      parking areas.
+       6.                             Alternate Landscaping Plan. For parking lots with 20 or fewer vehicle parking spaces located in the
+              Rockwood Town Center and Station Center districts, an applicant may prepare an Alternate
+              Landscaping Plan and specifications which meets the intent of the requirement in subsections (C)(1),
+              (2), and (3)           above and the intent of the district. In addition, alternate landscaping plans also can be
+              proposed as part of the discretionary review process in the Downtown Plan District.
+       7.                             Large Parking Lots. Parking lots over one half acre (measured based on the perimeter of all off-                            street
+              parking spaces, maneuvering lanes, and maneuvering areas, including driveways and drive aisles) shall
+              provide additional trees that meet the following requirements:
+              a.                      Parking lot tree spacing, species, and numbers shall be sufficient to provide a minimum of 40
+                      percent canopy cover over the parking lot area within 15 years of planting.
+              b.                              Parking lot trees shall be planted following the most current version of the American National
+                      Standards Institute A300 standards, or better.
+
+9.0824                              PEDESTRIAN CIRCULATION/WALKWAYS
+
+A.                         Walkway in Large Lots. A protected raised accessible walkway,             a minimum of 5 feet wide,            shall be installed
+       through any parking lot of 50 or more spaces, designed to connect to the front building                     sidewalks.
+B.                           Connections to Bike Parking.  An accessible walkway must be provided between the bicycle parking and the
+       building entrance. The walkway must be constructed of hard surfaced materials with a minimum width of
+       3 feet.
+C.                            Walkway Height. All walk           ways constructed within parking lots shall be raised to standard sidewalk height
+       except when a walkway                        crosses a vehicular way. All surface treatment of walks shall be firm, stable and
+       slip resistant.
+D.                       Intersections with Vehicular Ways. Where an accessible route/walk           way crosses or adjoins a vehicular way
+       (and where there are no curbs, railings or other elements separating the pedestrian and vehicular areas
+       detectable by a person who has a severe vision impairment), the walkway area shall be defined by a
+       marked crossing that has a continuous, detectable marking not less than 36 inches wide. Where walkways
+       cross driving aisles, they shall be clearly marked with contrasting slip resistant paving materials.
+E.                               Walkway Width. Where walkways abut parking, the minimum walkway width shall be 7 feet.
+F.                               Accessible routes must comply with the Building Code on Accessibility. The more restrictive walkway
+       standards shall apply when there is a conflict.
+
+9.0825                             SPACE AND AISLE STANDARDS FOR SURFACE PARKING LOTS
+
+A.                        Parking Lot Design. All surface parking lots shall be designed in accordance with City standards for stalls
+       and aisles as set forth in Figure 9.0825A         .
+B.                           Type of Spaces. A minimum of 50  percent of vehicle parking stalls shall be of standard size, and a
+       maximum of 50 percent of vehicle parking stalls shall be compact spaces. All compact spaces shall be
+       labeled as such.
+
+                                                                                            [9.0800]                                       -7
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+C.                             Parallel Parking Space Markings. All parallel parking spaces used in a surface parking lot will be marked
+       with white lines or designated as accessible parking spaces with blue lines and International Symbol of
+       Accessibility Parking Space marking and sign, as required with current ADA regulations.
+D.                        Parallel Parking Space Dimensions. All parallel parking spaces will have a minimum measurement of 8 feet
+       in width and 24 feet in length whether marked or unmarked. The Manager may reduce parallel parking
+       spaces to 20 feet in length when at least 4 feet of adjacent length of maneuvering area   is available for
+       backing or pulling into the parallel parking space (i.e., shared safety zone).
+                                                  Ta   b   l    e  9.0825A                           : Off- Street Surface Parking Matrix
+                                                                OFF-STREET SURFACE PARKING MATRIX
+                                                      REQUIRED SPACE AND AISLE DIMENTIONS IN FEET
+                                              Compact                                                                                              Standard
+  Parking                W                D                A1               A2                   O                  W                 D               A1                A2                   O
+   Angle               Stall            Stall            One-             Two-           Overhang                 Stall             Stall           One-              Two-           Overhang
+                     Width            Depth              Way              Way                                    Width            Depth              Way              Way
+                                                         Aisle            Aisle                                                                     Aisle             Aisle
+                                                       Width1           Width1                                                                    Width1            Width1
+                    7.50             15.50             13.00            24.00            2.00                   8.50             17.50            13.00             24.00            2.00
+      45°           7.75             15.50             12.00            24.00            2.00                   9.00             17.50            12.00             24.00            2.00
+                    7.75             15.50             11.00            24.00            2.00                   9.50             17.50            11.00             24.00            2.00
+                    8.00             15.50             11.00            24.00            2.00                   10.00            17.50            11.00             24.00            2.00
+                    7.50             17.00             18.00            24.00            2.50                   8.50             19.00            18.00             24.00            2.50
+      60°           7.75             17.00             16.00            24.00            2.50                   9.00             19.00            16.00             24.00            2.50
+                    7.75             17.00             15.00            24.00            2.50                   9.50             19.00            15.00             24.00            2.50
+                    8.00             17.00             14.00            24.00            2.50                   10.00            19.00            14.00             24.00            2.50
+                    7.50             17.50             19.00            24.00            2.50                   8.50             19.50            19.00             24.00            2.50
+      75°           7.75             17.50             19.00            24.00            2.50                   9.00             19.50            19.00             24.00            2.50
+                    8.00             17.50             19.00            24.00            2.50                   9.50             19.50            19.00             24.00            2.50
+                                                                                                                10.00            19.50            19.00             24.00            2.50
+                    7.50             16.50             23.00            24.00            3.00                   8.50             18.50            23.00             24.00            3.00
+      90°           7.75             16.50             23.00            24.00            3.00                   9.00             18.50            23.00             24.00            3.00
+                    8.00             16.50             23.00            24.00            3.00                   9.50             18.50            23.00             24.00            3.00
+                                                                                                                10.00            18.50            23.00             24.00            3.00
+
+Table 9.0825A Notes:
+1.                               The minimum aisle width may vary to accommodate emergency vehicle access. The minimum aisle width
+       for two-way traffic and for emergency vehicle operations area is 24 feet. The minimum aisle width for one-
+       way traffic and for emergency vehicle access is 20 feet.
+
+                                                                                           [9.0800]-8
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+                                                                   Figure 9.0825A: Off-Street Parking Diagram
+
+Figure 9.0825A Notes:
+For one (1) row of stalls use stall depth (D) plus aisle width (A1 or A2) as minimum width.
+Public alley width may be included as part of aisle width (A1 or A2) dimension, but all stalls must be on private property,
+off the public right-of-way.
+For estimating available parking area, use 350 square feet per vehicle for stall, aisle, and access areas.
+Where appropriate bumper overhang area (extruded curbs) is provided, overhang (O) can be subtracted from (D) to
+determine stall depth.
+
+9.0826                              ACCESSIBLE PARKING
+
+A.                        All parking areas shall provide accessible parking spaces and accessible aisles as outlined in the Building
+        Code, Chapter XI. These accessible spaces shall be located on the shortest practical accessible route to an
+        accessible building entry. Whenever practical, the accessible route shall not cross lanes of              vehicular traffic.
+        Curb ramps or other sloped areas shall be located to prevent their obstruction by parked vehicles.
+        Accessible parking spaces shall be a minimum of 9 feet wide with a 6          -foot-wide access aisle between each
+        two spaces.
+        1.                             Van Accessible Parking. One in eight parking spaces, but not less than one space, must provide a van-
+                accessible parking space as outlined in the Building Code, Chapter XI. Van accessible parking spaces are
+                9 feet wide with an 8          -foot-wide aisle which can be shared with another 9 foot accessible space. If a
+                single accessible parking space is provided, it shall be designated “van accessible” and shall have an
+                additional sign mounted. Van accessible spaces shall be provided outside of a garage except in public
+                or private parking structures but may have cover such as a carport and shall be available for use by any
+                authorized vehicle. The access aisle shall be located on the passenger side of the parking space except
+                that two adjacent accessible parking spaces may share a common access aisle.
+
+                                                                                                     [9.0800]                                       -9
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+       2.                             Marking. The accessible parking symbol shall be painted on the parking space and an accessible
+              parking sign shall be placed in front of each space according to the Oregon Transportation
+              Commission’s Disabled Parking Standards.
+       3.                             Medical Care. Medical care occupancies specializing in the treatment of persons with mobility
+              impairments shall provide 20 percent of parking spaces as accessible as outlined in the Building Code,
+              Chapter XI. Exception: For outpatient facilities, 10 percent of parking spaces need to be accessible as
+              outlined in the Building Code, Chapter XI.
+       4.                             Passenger Drop-off and Loading Zones. Where provided, passenger drop-off and loading zones shall be
+              located on an accessible route, shall not be less than 12 feet wide by 25 feet long, and the slope not to
+              exceed one vertical in 50 horizontal and a vertical clearance of 114 inches, and shall be designed and
+              constructed according to the Building Code.
+B.                          The quantity and design of accessible spaces and aisles shall comply with the Building Code. Where there is
+       a conflict, the more restrictive standard shall apply.
+
+9.0827                             ELECTRIC VEHICLE CHARGING UNITS
+
+A.                        Electric Charging Readiness. Newly constructed multi-          family residential buildings with five or more
+       residential dwelling units, and newly constructed mixed-use buildings consisting of privately owned
+       commercial space and five or more residential dwelling units, shall provide sufficient electrical service
+       capacity, as defined in ORS 455.417, to accommodate no less than 40 percent of all vehicle parking spaces
+       serving the residential dwelling units. Dwelling units in townhouses are not included for                the purpose of
+       determining the applicability of this regulation.
+       1.                              Per ORS 455.417 the affected parking spaces must have:
+              a.                             Building electrical service, sized for the anticipated load of electric vehicle charging stations, that
+                     has overcurrent devices necessary for electric vehicle charging stations or has adequate space to
+                     add the overcurrent devices; or
+              b.                           Designated space within a building to add electrical service with capacity for electric vehicle
+                     charging stations; or
+              c.                                 A designated location on building property, in or adjacent to a landscaped area, for installing
+                     remote service for electric vehicle charging stations; and
+              d.                           A conduit system installed from building electrical service, or from the dedicated location, to
+                     parking spaces that can support, at a minimum, electrical wiring for installation of level 2 electric
+                     vehicle charging stations, and if the conduit is for future installation of electric vehicle charging
+                     stations, that labels both ends of the conduit to mark the conduit as provided for future electrical
+                     vehicle charging stations.
+       2.                             Installed electric vehicle charging units count towards the requirements listed in 9.0827(A)1.
+       3.                             Newly constructed commercial buildings should reference the building code and ORS 455.417(3)(a)(A)
+              for required electrical service capacity and the percentage                                   of parking spaces affected.
+B.                          Electric vehicle charging units, either public or restricted, shall comply with the following requirements:
+       1.                             Electric Vehicle Charging Unit Placement. The first electric vehicle charging unit in a public parking lot
+              shall be accessible for all potential users and shall provide access for people using mobility devices at
+              the unit itself.
+
+                                                                                          [9.0800]                                       -10
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+       2.                             Parking Space Size. A standard size parking space or an ADA accessible compliant accessible parking
+               space shall be used for an electric vehicle charging unit where such a unit is planned.
+       3.                             Signage.
+               a.                             Each electric vehicle charging unit space shall be posted with signage indicating the space is for
+                      electric vehicle charging purposes.
+               b.                           Necessary safety information, directions and identification of voltage/amperage levels and ADA
+                      accessibility signs, if an ADA exclusive space, shall also be included.
+               c.                                 Time limits may be placed on the number of hours that an electric vehicle is allowed to charge.
+                      Days and hours of operations shall be included if time limits or tow-away provisions are to be
+                      enforced.
+               d.                           Any other signage, such as advertising signage, is subject to the standards of Appendix 6.
+       4.                             Charging Unit Equipment.
+               a.                             Electric vehicle charging unit outlets and operable parts shall be no less than 18 inches off the
+                      ground if indoors and 24 inches off the ground if outdoors and no higher than 48 inches off the
+                      ground to ensure easy access.
+               b.                           Electric vehicle charging units shall contain a retraction device, a place to hang permanent cords
+                      and connectors sufficiently above the ground, or some other mechanism to ensure that the
+                      equipment does not become a safety liability.
+               c.                                 Electric vehicle charging units are not required to be screened as mechanical units.
+
+BICYCLE PARKING
+
+9.0830 PURPOSE
+
+A.                        The purpose of the bicycle parking standards is to encourage the use of bicycles by providing safe and
+       convenient places to park bicycles. The standards address the needs for both short-                  term and long-                      term
+       bicycle parking. The required number of spaces is lower for uses that do not tend to attract bicycle riders
+       and higher for those that do. Additionally, some bicycle parking is required based on specifically
+       encouraging employee, student or customer related bicycle use.
+       Long-                      term bicycle parking spaces accommodate employees, students, residents, commuters, and other
+       persons who expect to leave their bicycle parked for more than two hours. Long  -term parking spaces
+       provide a secure and weather-protected location to park bicycles. As discussed further below, the intent of
+       these standards is to provide long-                     term bicycle parking that is within a reasonable distance of the use.
+       Short-term bicycle parking spaces accommodate visitors, customers, messengers, and other persons
+       expected to depart within approximately two hours.
+
+9.0831                                  STANDARDS FOR BICYCLE PARKING
+
+All developments shall meet the following requirements for bicycle parking and design. The required minimum
+number of bicycle parking spaces for each principal use is given in Table 9.0851. Minimums are provided for
+both short-term and long-                       term standards.
+
+                                                                                             [9.0800]                                       -11
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+A.                        Long-                       Term Bicycle Parking. Required long-term bicycle parking must meet the following standards:
+        1.                             Long-                      term bicycle parking must be provided in racks, lockers or another manager approved type of
+               parking that meet the standards of Section 9.0832, except that if long-term bicycle parking is provided
+               in a dwelling unit, living unit, or dormitory unit, neither racks nor lockers is required.
+        2.                             Location. Long-                      term bicycle parking must be located on the site. Bicycle parking may be located inside
+               a building. Except for multi                      -story residential buildings, bicycle parking must be on a floor which has an
+               outdoor entrance open for use and floor location which does not require stairs to access the space.
+               Multi-story residential buildings with elevator access may have long-term bicycle parking located on
+               floors above the ground floor.
+        3.                             Covered spaces. All long-term bicycle parking must be covered per Section 9.0832(D) below.
+        4.                              Security. To ensure security, long-term bicycle parking for all uses except schools must be in at least
+               one of the following locations:
+               a.                             A locked room;
+               b.                           An area that is enclosed by a fence with a locked gate. The gate must be either eight feet high, or
+                       be floor to ceiling;
+               c.                                 Within view of an attendant or security guard;
+               d.                           Within 100 feet of an attendant or security guard;
+               e.                             In an area that is monitored by a security camera; or
+               f.                                      Contained within a dwelling unit or living unit.
+       5.                             Large Bicycle Parking. For sites with more than 20 long-term bicycle parking spaces provided outside of
+               units, at least five percent of the spaces shall be large bicycle parking spaces meeting the following
+               standards:
+               a.                                The rack provides parking horizontal to the ground; and
+               b.                              An electrical outlet is within three feet of the rack.
+                                                                                   Each required large bicycle parking space replaces two of the required standard bicycle parking
+                       spaces.
+B.                          Short-Term Bicycle Parking. Required short-term bicycle parking must meet the following standards:
+       1.                             Short-term bicycle parking must be provided in racks or lockers that meet the standards of   Subsection
+               9.0832.
+       2.                             Location: Short-term bicycle parking must be:
+               a.                             At the same grade as the sidewalk or at a location that can be reached by an accessible route;
+               b.                           Within 50 feet of at least one main entrance as measured along the most direct pedestrian route
+                       except that on an institutional campus the location of bicycle parking shall be as determined by the
+                       Institutional Campus Master Plan; and
+               c.                                 Visible from the street, unless the applicant demonstrates that it is not feasible, in which case, the
+                       bicycle parking area shall comply with Section 9.0832(F).
+       3.                             Pedestrian Conflicts. Bicycle parking and bicycle racks shall be located to avoid conflict with pedestrian
+               movement and access walk required by the Building Code. With approval of the Manager, short-term
+               bicycle parking may be located in the public sidewalk or right-of-way, where this does not conflict with
+               pedestrian accessibility and ADA access.
+
+                                                                                                  [9.0800]                                       -12
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+9.0832                              ADDITIONAL STANDARDS FOR                  SHORT    -   TERM AND LONG    -    TERM         BICYCLE
+                                                                                                                                                                                                                                  PARKING
+
+A.                        Bicycle Lockers. Where required bicycle parking is provided in lockers, the lockers must be securely
+        anchored.
+B.                          Bicycle Racks. Required bicycle parking may be provided with           floor, wall, or ceiling racks. Where required
+        parking is provided in racks, the racks must meet the following standards:
+        1.                             The frame and one wheel can be locked to the rack with a   high-security, U-                                         shaped shackle lock;
+        2.                             A bicycle six feet long can be securely held with its frame supported so that the bicycle cannot be
+                pushed or fall in a manner that will damage it; and
+        3.                             The rack must be securely anchored.
+        4.                             When racks are mounted near walls, the minimum distance from a wall is two feet six inches.
+C.                             Parking and Maneuvering Areas.
+        1.                             Each required bicycle parking space must be accessible without moving another bicycle.
+        2.                             There must be an aisle at least five feet wide behind all bicycle parking to allow for bicycle
+                maneuvering. If the bicycle parking is adjacent to a sidewalk, the maneuvering area may extend into
+                the right-of-way.
+        3.                             The area designated for bicycle parking must be hard-surfaced.
+D.                        Covered Parking.
+        1.                             Covered parking can be provided by locating bicycle parking within buildings; in bicycle lockers; under
+                roof overhangs, awnings, arcades, or carports; or within or under other structures.
+        2.                             Where covered parking is not within a building or locker, the cover must be designed to protect the
+                bicycle from precipitation, and at least seven feet above the floor or ground.
+E.                              Size of Space.             Standard bicycle parking spaces must be at least two feet wide and six feet long.   Large
+        bicycle parking spaces must be at least ten feet long and three feet wide.
+F.                               Signs. When a bicycle parking area is not visible from the street, a directional sign must be posted at the
+        main building entrance indicating the location of the bicycle parking (see Sign Code Section A6.050(C).
+
+OFF-   STREET LOADING
+
+9.0840                                       OFF    -   STREET LOADING REQUIREMENTS
+
+A.                        Purpose. The purpose of these regulations is to provide the number, size, location, and screening
+        requirements for loading areas in mixed-use, commercial, industrial and institutional uses. The intent of
+        these regulations is to minimize disruption of traffic flow by freight                                                                     -carrying vehicles blocking the public
+        right-of-way and to minimize impacts to vehicular and pedestrian circulation.
+B.                          When Loading Area Regulations Apply. This regulation applies to all non-residential development in mixed-
+        use, commercial, and industrial districts, and elderly housing in any district, whether or not a permit or
+        other approval is required for the development.
+
+                                                                                                       [9.0800]                                       -13
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+C.                            General Provisions.
+       1.                             Loading area requirements are provided in Table 9.0840(C)           . The number of required loading spaces is
+              based on the use of the building(s) on the site                       and the aggregate floor area of the use, minus any
+              residential component square footage. Where two or more uses are located on the same premises,
+              the number of loading area spaces required is the sum of the spaces required for each use (based on
+              square footage of each use) computed separately. Except in Design Districts as described below, the
+              Manager may reduce but not eliminate loading area requirements, where approval criteria are
+              satisfied.
+       2.                             The provision and maintenance of off-                            street loading facilities is a continuing obligation of the property
+              owner.
+       3.                             Loading and maneuvering areas shall be hard surfaced           unless a permeable surface is required to
+              reduce surface runoff, as determined by the Manager.
+       4.                             Parking of passenger vehicles may be allowed in off-                            street loading areas subject to specific time limits
+              to prevent conflicts with off-              street loading activities. If parking is allowed, the parking time limits shall
+              be clearly posted. These parking spaces s hall not count towards meeting general parking
+              requirements.
+       5.                             Required Off-Street Loading Dimensions.
+              a.                             Industrial. Each required off-street loading space in an industrial area shall have a minimum length
+                      of 60 feet, a minimum width of 12 feet, and a minimum vertical clearance of 15 feet high, inside
+                      dimensions with a 60-foot maneuvering apron.
+              b.                           All Other Uses. Each required off-street loading space, shall have a minimum length of 30 feet, a
+                      minimum width of 12 feet, and a minimum vertical clearance of 14 feet 6 inches high, inside
+                      dimensions with 30-foot maneuvering apron.
+       6.                             Loading areas must comply with the setback and perimeter landscaping and screening standards.
+              When parking areas are prohibited or not allowed between a building and a street, loading areas are
+              also not allowed unless approved by the Manager per the criteria in                            Section 9.0840(E).
+       7.                             Uses not specifically mentioned: In the case of a use not specifically mentioned, the requirements for
+              off-                             street loading facilities shall be the same as the above-mentioned uses, as determined by the
+              Manager, which is most similar to the use not specifically mentioned.
+       8.                             Concurrent different uses: When any proposed structure will be used concurrently for different uses          ,
+              determination of loading requirements will be made by the Manager but in no event shall the
+              minimum number of loading spaces required be less than the total required for each use based upon it
+              aggregate floor area, on the same lot or parcel of land as the structure they are intended to serve,
+              unless the criteria for modification of loading facilities, per Section 9.0840(E)                             , are satisfied.
+       9.                              Design Districts: The following off-                              street loading standards apply in DCC, DMU, DTM, DRL-2, CNTM,
+              CNTH, and RTC within the Rockwood triangle as defined in Section 7.0501(D):
+              a.                             Off-                             street loading spaces may be reduced or eliminated with approval by the Manager or Design
+                      Commission. The Manager or Design Commission shall make findings of fact based on evidence
+                      provided by the applicant that the following criteria are satisfied:
+                      i.                                         Loading can be accommodated:
+                             a)                           Off-                             street without designating a loading space on the site; or
+                             b)                         On-street without interfering with travel lanes in a location and configuration approved by
+                                     the Manager; and
+
+                                                                                            [9.0800]                                       -14
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+                      ii.                             Criteria in Section 9.0840(E)(2)(a), (b) and (d).
+               b.                            The maximum required off-street loading spaces is one space.
+               c.                                 Required off-street loading spaces may be reduced to 18 feet long and 9 feet wide with a vertical
+                      clearance of 10 feet with approval by the Manager or Design Commission if the applicant
+                      demonstrates that the configuration of the site and building supports delivery by van for current
+                      and prospective tenants.
+Table 9.0840(C): Off   - Street Loading Requirements
+                                                                                                                                                                                MINIMUM
+  USE CATEGORY OR SUBCATEGORY                                                   AGGREGATED FLOOR AREA (SQUARE FEET)                                                            NUMBER OF
+                                                                                                                                                                          LOADING SPACES
+                                                                                                                                                                                 REQUIRED
+  Residential                                                                                              None Required                                                    None Required
+  Elderly Housing                                                                                        10,000 – 100,000                                                          1 Space
+                                                                                                            Over 100,000                                                           2 Spaces
+  Industrial*                                                                                               Under 50,000                                                           1 Space
+  Freight Terminals, Industrial Plants,                                                                  50,000 – 100,000                                                          2 Spaces
+  Manufacturing, Processing, Wholesale                                           Each Additional 50,000 or Fraction Thereof                                              1 Additional Space
+  Establishments, or Warehouses
+  Mini-Storage Facilities                                                                                  None Required                                                    None Required
+  Visitor Accommodations                                                                                 25,000 – 150,000                                                          1 Space
+  Hotel, Convention Hall, or Sport Arena                                                                150,000 – 400,000                                                          2 Spaces
+                                                                                Each Additional 150,000 or Fraction Thereof                                              1 Additional Space
+  Institutions                                                                                           10,000 – 100,000                                                          1 Space
+  Hospitals                                                                                                 Over 100,000                                                           2 Spaces
+  Schools – Passenger Loading                                                                                 Over 14,000                                                          1 Space
+  Commercial                                                                                               7,000 – 24,000                                                          1 Space
+  Departments Stores, Retail                                                                              24,000 – 50,000                                                          2 Spaces
+  Establishments, Restaurants, and                                                                       50,000 – 100,000                                                          3 Spaces
+  Funeral Homes                                                                 Each Additional 100,000 or Fraction Thereof                                              1 Additional Space
+  Office                                                                                                  25,000 – 40,000                                                          1 Space
+  Office Building, Banks                                                                                 40,000 – 100,000                                                          2 Spaces
+                                                                                Each Additional 100,000 or Fraction Thereof                                              1 Additional Space
+
+D.                       Location of required loading facilities.
+       1.                             The off-street loading facilities, in all cases, shall be on the same lot or parcel of land as the structure
+               they are intended to serve. In no case shall the required off-street loading space be part of the area
+               used to satisfy the off-street parking requirements.
+       2.                             The off-street loading facilities shall be designed and located so that loading vehicles are not parked in
+               required setbacks, driveways, or parking spaces during loading activities.
+
+                                                                                             [9.0800]-                                       15
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+        3.                             No loading space shall be so located that a vehicle using such loading space projects into any public
+                street. Loading space shall be provided with access to an alley, or if no alley adjoins the lot, with access
+                to the street.
+        4.                             In the Industrial zones, loading areas shall be located so that they are not parallel to any adjacent
+                public right-of-way except alleys.
+        5.                             Bays and Doors: Truck loading bays or overhead doors shall be located so there is no                      possibility for
+                trucks to back into bays from major or standard arterial streets.
+E.                               Approval Criteria for Modification of Loading Facilities
+        1.                             The Type I Procedure, as described in Section 11.0300 - Administrative Decision -           of this code, shall
+                apply to any modifications made to loading facilities.
+        2.                             In order to approve a reduction to the number of loading spaces required in Table 9.0840(C)        –
+                Required Off-Street Loading Spaces -            or any locational or                 dimensional changes to the proposed loading
+                spaces or maneuvering areas, the Manager shall make findings of fact based on evidence provided by
+                the applicant demonstrating that all the following criteria are satisfied:
+                a.                             The determination will not create adverse impacts, considering                       the total gross floor area, and the
+                        hours of operation, and type of the use or uses.
+                b.                           The proposal will not interfere with pedestrians or vehicular traffic on the street or to the
+                        proposed on-site traffic circulation patterns.
+                c.                                 The proposal will be able to reasonably accommodate the off-                            street loading needs of the
+                        structure.
+                d.                           The proposed dimensional changes to loading space or maneuvering area or location requirements
+                        can reasonably accommodate the on-site traffic circulation.
+
+OFF-   STREET PARKING
+
+9.0850                                       GENERAL        PROVISIONS FOR OFF                            -   STREET PARKING
+
+A.                        For the purpose of calculating parking ratios in all districts, the following type of parking spaces do not
+        count against the maximum ratio:
+        1.                             Structured parking
+        2.                             Park and Ride lot parking
+        3.                             Vehicle parking within, above, or beneath the building(s) it serves, or within a parking structure, above
+                or below grade
+        4.                             Other high efficiency parking management alternative approved by the Manager
+B.                          For the purpose of calculating parking ratios in all districts the following types of parking are considered
+        outside storage and do not count against the maximum ratio:
+        1.                              Fleet vehicle parking
+        2.                             Parking for vehicles that are for sale, lease, or rent
+C.                            For any parcel or portion of a parcel within a ¾ mile of MAX light rail transit stations or within ½ mile of
+        transit lines that arrive at least four times an hour during peak service the following shall apply:
+        1.                             A building larger than 65,000 square feet of floor area, shall not have surface parking that exceeds the
+                floor area of the building;
+
+                                                                                                    [9.0800]                                       -16
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+       2.                              Parking maximums include Visitor Parking
+D.                       For Electric Vehicle charging units, parking spaces serviced by an associated electric vehicle charging unit
+       count toward the maximum required parking spaces.
+
+9.0851                              STANDARDS FOR                 OFF-                                                                 STREET            PARKING
+
+Except as otherwise provided in the Downtown, Civic Neighborhood, Corridor Districts, and Pleasant Valley
+Subdistricts, and in the Section 7.0410           Manufactured Dwelling Park Design Standards, the parking
+requirements for any development shall be as listed in Table 9.0851. For exceptions to maximum parking
+space standards, see Section 9.0854.
+Table 9.0851: Auto and Bicycle Parking Requirements
+                                                                       AUTO PARKING                                                              BICYCLE PARKING
+                                                                            MAXIMUM                                             LONG-TERM1                                   SHORT-TERM1
+ (A) RESIDENTIAL
+   (1)     Single detached dwellings and middle housing in the LDR-7, LDR-5, LDRGB, LDR-PV, MDR-PV, VLDR-
+           SW, LDR-SW, TR, TLDR, MDR-12, and OFR districts and those portions of CMF along the NE Glisan St                                               .
+           and NE 162nd Ave. corridors.
+         (a)     Single Detached                          None                                                         None                                           None
+                 Dwellings
+         (b)     Duplexes                                 None                                                         None                                           None
+         (c)     Triplexes                                None                                                         None                                           None
+         (d)     Quadplexes                               None                                                         None                                           None
+         (e)     Townhouses                               None                                                         None                                           None
+         (f)     Cottage Clusters                         None                                                         None                                           None
+   (2)     Residential uses not listed in (A)(1) above in all districts, and all residential uses in districts not listed in
+           (A)(1) (including the areas of CMF not along the NE Glisan St. and NE 162nd Ave. corridors), except for
+           Downtown Plan District and Civic Neighborhood Plan District see Section 9.0852.
+         (a)     Two and three unit                       None                                                         None                                           None
+                 developments and
+                 Townhouses
+         (b)     Developments containing four or more dwelling units and cottage clusters in the THR-SW district.
+                (i)     Studio Units                      1.2 Spaces per Dwelling Unit                                 1 per Dwelling Unit                            1 per 20 Dwelling
+                                                          or None2                                                                                                    Units
+                (ii)    One-Bedroom                       2 Spaces per Dwelling Unit or                                1 per Dwelling Unit                            1 per 20 Dwelling
+                        Units                             None2                                                                                                       Units
+                (iii) Two-Bedroom                         2 Spaces per Dwelling Unit or                                1 per Dwelling Unit                            1 per 20 Dwelling
+                        Units                             None2                                                                                                       Units
+                (iv) Three or More                        2 Spaces per Dwelling Unit or                                1 per Dwelling Unit                            1 per 20 Dwelling
+                        Bedroom Units                     None2                                                                                                       Units
+                (v)     Visitor Parking                   None – Visitor Parking is                                    None                                           None
+                                                          Included in the Maximum
+
+                                                                                             [9.0800]-                                       17
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+                                                                         AUTO PARKING                                                               BICYCLE PARKING
+                                                                             MAXIMUM                                              LONG-TERM1                                    SHORT-TERM1
+ (A) RESIDENTIAL
+   (3)     Elderly Housing                                  None                                                         1 per 40 Units                                   1 per 20 Units First
+                                                                                                                                                                          100 Units, 1 per 40
+                                                                                                                                                                          Units thereafter
+   (4)     Houseboat Moorage                                None                                                         None                                             None
+ (B) COMMERCIAL
+   (1)     Retail Services
+          (a)    Grocery Stores and                         3.7 Spaces per 1,000 sq. ft. of                              2, or 1 per 12,000 sq.                           2 or 1 per 5,000 sq.
+                 Supermarket                                Floor Area                                                   ft. of Floor Area for                            ft. of Floor Area,
+                                                                                                                         Stores less than                                 with a Maximum of
+                                                                                                                         30,000 sq. ft.; 3, or 1                          20 Spaces
+                                                                                                                         per 18,000 sq. ft. for
+                                                                                                                         Stores greater than
+                                                                                                                         30,000 sq. ft. of Floor
+                                                                                                                         Area
+          (b)    Commercial,                                4.3 Spaces per 1,000 sq. ft. of                              2, or 1 per 12,000 sq.                           2, or 1 per 12,000 sq.
+                 Personal/Business                          Floor Area                                                   ft. or Floor Area                                ft. or Floor Area
+                 Services
+          (c)    Retail Trade                               5.1 Spaces per 1,000 sq. ft. of                              2, or 1 per 12,000 sq.                           2, or 1 per 12,000 sq.
+                                                            Floor Area                                                   ft. or Floor Area                                ft. or Floor Area
+          (d)    Convenience                                4.3 Spaces per 1,000 sq. ft. of                              2, or 1 per 12,000 sq.                           2, or 1 per 12,000 sq.
+                 Market                                     Floor Area                                                   ft. or Floor Area                                ft. or Floor Area
+          (e)    Retail with Bulky                          1.3 Spaces per 1,000 sq. ft. of                              2, or 1 per 12,000 sq.                           2, or 1 per 12,000 sq.
+                 Merchandise                                Floor Area                                                   ft. or Floor Area                                ft. or Floor Area
+                 (Furniture,
+                 Appliances, Carpet)
+          (f)    Hotel, Bed &                               1.3 Spaces per Guest Room                                    1 per 20 Guest Rooms                             1 per 40 Guest
+                 Breakfast                                  or Suite                                                                                                      Rooms
+          (g)    Meeting Room                               5 Spaces per 1,000 sq. ft. of                                None                                             None
+                                                            Floor Area
+          (h)    Eating or Drinking Establishments
+                 (i)     Restaurants                        12.4 Spaces per 1,000 sq. ft.                                2, or 1 per 12,000 sq.                           2, or 1 per 5,000 sq.
+                         with Drive                         of Floor Area                                                ft. or Floor Area                                ft. or Floor Area
+                         Through
+                 (ii)    Restaurants                        19.1 Spaces per 1,000 sq. ft.                                2, or 1 per 12,000 sq.                           2, or 1 per 5,000 sq.
+                         Without Drive                      of Floor Area                                                ft. or Floor Area                                ft. or Floor Area
+                         Through
+          (i)    Sports                                     5.4 Spaces per 1,000 sq. ft. of                              2, or 1 per 10,000 sq.                           2, or 1 per 5,000 sq.
+                 Clubs/Health Spas                          Floor Area                                                   ft. or Floor Area                                ft. or Floor Area
+
+                                                                                               [9.0800]-                                       18
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+                                                                          AUTO PARKING                                                                 BICYCLE PARKING
+                                                                              MAXIMUM                                                LONG-TERM1                                    SHORT-TERM1
+ (B) COMMERCIAL
+          (j)     Arcades, Bowling                           5.0 Spaces per 1,000 sq. ft. of                               2, or 1 per 10,000 sq.                            2, or 1 per 5,000 sq.
+                  Alleys, Skating                            Floor Area                                                    ft. or Floor Area                                 ft. or Floor Area
+                  Rinks and Other
+                  Indoor/Outdoor
+          (k)     Tennis and Racquet                         1.3 Spaces per 1,000 sq. ft. of                               2                                                 2, or 1 per 10,000 sq.
+                  Ball Clubs                                 Floor Area                                                                                                      ft. or Floor Area
+          (l)     Funeral Homes and                          0.6 Space per Seat in                                         1 per 40,000 sq. ft. of                           2 per 40,000 sq. ft.
+                  Cemeteries                                 Assembly Area or 4.5 Linear                                   Floor Area                                        of Floor Area
+                                                             Feet Bench Seating in Largest
+                                                             Assembly Area
+          (m) Theaters and                                   0.4 Spaces per Seat or 5.0                                    2, or 1 per 450 Seats                             4 or 1 per 110 Seats
+                  Auditoriums                                Linear Feet Bench Seating
+          (n)     Truck, Trailer, Boat                       1.3 Space per 1,000 sq. ft. of                                2, or 1 per 5,000 sq. ft.                         2
+                  Auto Rental or                             Site Area                                                     of Building Area
+                  Sales
+          (o)     Open Air                                   1.3 Space per 1,000 sq. ft. of                                2, or 1 per 5,000 sq. ft.                         2
+                  Commercial                                 Site Area                                                     of Building Area
+                  (Lumber) Yard,
+                  Nursery
+          (p)     Equipment Rental,                          1.3 Space per 1,000 sq. ft. of                                Equipment Rental &                                2
+                  Moving Supplies or                         Site Area                                                     Moving Supplies: 2, or
+                  Mini-Storage                                                                                             1 per 5,000 sq. ft. of
+                  Facilities                                                                                               Building Area; Mini-
+                                                                                                                           Storage: 2
+          (q)     Commercial                                 3.8 Space per 1,000 sq. ft. of                                2, or 1 per 20,000 sq.                            2, or 1 per 4,000 sq.
+                  Schools                                    Floor Area                                                    ft.                                               ft.
+   (2)     General Office                                    3.4 Spaces per 1,000 sq. ft. of                               2, or 1 per 5,000 sq. ft.                         2, or 1 per 10,000 sq.
+                                                             Floor Area                                                    of Floor Area, with a                             ft. of Floor Area,
+                                                                                                                           Maximum of 30                                     with a Maximum of
+                                                                                                                           Spaces                                            10 Spaces
+   (3)     Medical and Dental                                4.9 Spaces per 1,000 sq. ft. of                               2, or 1 per 5,000 sq. ft.                         2, or 1 Space per
+           Clinics                                           Floor Area                                                    of Floor Area for                                 20,000 sq. ft. of
+                                                                                                                           Buildings less than                               Floor Area
+                                                                                                                           30,000 sq. ft. of Floor
+                                                                                                                           Area; 6, or 1 per 7,500
+                                                                                                                           sq. ft. for Buildings
+                                                                                                                           greater than 30,000
+                                                                                                                           sq. ft. of Floor Area
+
+                                                                                                 [9.0800]-                                       19
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+                                                                           AUTO PARKING                                                                 BICYCLE PARKING
+                                                                               MAXIMUM                                                LONG-TERM1                                    SHORT-TERM1
+ (B) COMMERCIAL
+   (4)     Vehicle Servicing
+          (a)     Service Station                            4 Spaces Plus 2.5 Spaces per                                   2, or 1 per 5,000 sq. ft.                         1
+                                                             Service Bay, if any                                            of Floor Area
+          (b)     Service Station                            2.9 Spaces per 1,000 sq. ft. of                                2, or 1 per 12,000 sq.                            4, or 1 per 12,000 sq.
+                  with Convenience                           Floor Area                                                     ft. of Floor Area                                 ft. of Floor Area
+                  Market with Gas
+                  Pumps
+          (c)     Vehicle Repair                             5 Spaces per Service Bay                                       2, or 1 per 5,000 sq. ft.                         1
+                                                                                                                            of Floor Area
+          (d)     Car Wash                                   3 Spaces per Service Bay or                                    2, or 1 per 5,000 sq. ft.                         None Required
+                                                             Lane                                                           of Floor Area
+   (5)     Commercial Parking
+          (a)     Commercial                                 None Required                                                  N/A                                               N/A
+          (b)     Light Rail Stations                        None Required                                                  N/A                                               N/A
+          (c)     Park-and-Ride                              None Required                                                  N/A                                               Subject to Regional
+                                                                                                                                                                              Center Plans, such as
+                                                                                                                                                                              Downtown, Civic,
+                                                                                                                                                                              and Rockwood Plans
+          (d)     Transit Transfer                           None Required                                                  N/A                                               Subject to Regional
+                  Centers                                                                                                                                                     Center Plans, such as
+                                                                                                                                                                              Downtown, Civic,
+                                                                                                                                                                              and Rockwood Plans
+          (e)     Public Parking                             None Required                                                  N/A                                               Subject to Regional
+                                                                                                                                                                              Center Plans, such as
+                                                                                                                                                                              Downtown, Civic,
+                                                                                                                                                                              and Rockwood Plans
+   (6)     Stadium, Arena, and                               0.4 Spaces per Seat or 5.0                                     0, or per Master Plan                             2% of Seats, or per
+           Auditorium                                        Linear ft. Bench Seating                                       Review                                            Master Plan Review
+ (C) INSTITUTIONAL USES
+   (1)     Educational Institutions
+          (a)     Pre-School Child                           2 Spaces per Classroom                                         2, or .5 per Classroom                            2, or .5 per
+                  Care Facilities or                                                                                                                                          Classroom
+                  Kindergarten
+          (b)     Elementary or                              2.5 Spaces per Classroom                                       2, or .5 per Classroom                            2, or .5 per
+                  Middle Schools                                                                                                                                              Classroom
+ (C) INSTITUTIONAL USES
+          (c)     High School                                10.5 Spaces per Classroom                                      2, or .5 per Classroom                            2, or .5 per
+                                                                                                                                                                              Classroom
+
+                                                                                                  [9.0800]-                                       20
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+                                                                      AUTO PARKING                                                             BICYCLE PARKING
+                                                                          MAXIMUM                                            LONG-TERM1                                  SHORT-TERM1
+ (C) INSTITUTIONAL USES
+         (d)     College                                 3.8 Spaces per 1,000 sq. ft. of                             2, or 1 per 20,000 sq.                        2, or 1 per 4,000 sq.
+                                                         Floor Area (Excluding Dorms,                                ft., or per Master Plan                       ft.
+                                                         for which Residential Facility                              Review
+                                                         Standards Apply)
+   (2)     Religious Institutions                        0.6 Spaces per Seat or 1                                    1, or 1 per 1,000 sq. ft.                     2, or 1 per 4,000 sq.
+                                                         Space per 4.5 Linear Feet of                                of Floor Area                                 ft. of Floor Area
+                                                         Bench Seating in Sanctuary
+   (3)     Libraries, Museums                            3.8 Spaces per 1,000 sq. ft. of                             2, or 1 per 6,000 sq. ft.                     4, or 1 per 1,500 sq.
+           and Cultural                                  Floor Area                                                  of Floor Area                                 ft. of Floor Area
+           Institutions
+   (4)     Hospitals                                     2.5 Spaces per 1,000 sq. ft. of                             6, or 1 per 7,500 sq. ft.                     2, or 1 per 20,000 sq.
+                                                         Floor Area (Excluding On-                                   of Floor Area, or as                          ft. of Floor Area, or
+                                                         Campus Medical Office                                       Determined Based on                           as Determined
+                                                         Buildings for which Medical                                 Institutional Master                          Based on
+                                                         or Dental Office Standards                                  Plan Review                                   Institutional Master
+                                                         Apply.                                                                                                    Plan Review
+   (5)     Adult or Senior Center                        2.5 Spaces per 1,000 sq. ft. of                             1 per 20,000 sq. ft. of                       2, or 1 per 20,000 sq.
+                                                         Floor Area                                                  Floor Area                                    ft. of Floor Area
+   (6)     City Recreation                               2.5 Spaces per 1,000 sq. ft. of                             2, or 1 per 10,000 sq.                        2, or 1 per 5,000 sq.
+           Center                                        Floor Area                                                  ft. of Floor Area                             ft. of Floor Area
+   (7)     Marina, Boat                                  None Required                                               None Required                                 None Required
+           Moorage
+   (8)     Helicopter Landing                            2.5 Spaces per Helicopter                                   None Required                                 None Required
+           Facility                                      Based at Facility
+   (9)     Institutions
+         (a)     Welfare                                 0.4 Space per Bed Based on                                  2, or 1 per 20                                2, or 1 per 5
+                 Institutions                            Maximum Capacity                                            Residents                                     Residents
+         (b)     Convalescent                            0.6 Space per Bed Based on                                  2, or 1 per 20 Units                          2, or 1 per 50 Units
+                 Hospital,                               Maximum Capacity                                            First 100 Units; 1 per                        First 100 Units; 1 per
+                 Sanitarium                                                                                          40 Units thereafter                           100 Units thereafter
+   (10)     Private Utility (Gas,                        1 Space per each Employee                                   0.3 per 1,000 sq. ft. of                      2, or 1 per 1,000 sq.
+            Electric, Telephone,                         on Largest Shift                                            Office Floor Area                             ft. of Office Floor
+            etc.)                                                                                                                                                  Area
+   (11)     Parks and Open                               None Required                                               N/A                                           Parks: 2, or 1 per
+            Space                                                                                                                                                  every 2 Acres.
+                                                                                                                                                                   Open Space: N/A
+
+                                                                                            [9.0800]-                                       21
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+                                                                        AUTO PARKING                                                              BICYCLE PARKING
+                                                                            MAXIMUM                                              LONG-TERM1                                   SHORT-TERM1
+  (D) INDUSTRIAL
+   (1)     Manufacturing,                                  Not applicable. In non-                                      2, or 1 per 25,000 sq.                         None Required
+           Processing, Packing                             industrial land use districts,                               ft. of Floor Area, with
+           Assembly, &                                     2.0 Spaces per 1,000 sq. ft. of                              a maximum of 20
+           Fabrication                                     Floor Area                                                   Spaces
+   (2)     Warehouse, Freight                              0.7 Space per 1,000 sq. ft. of                               2, or 1 per 25,000 sq.                         None Required
+           Movement                                        Floor Area (if less than                                     ft. of Floor Area, with
+           Distribution, and                               150,000 sq. ft. of Floor Area);                              a maximum of 20
+           Storage                                         0.4 Space per 1,000 sq. ft. of                               Spaces
+                                                           Floor Area (if equal to or
+                                                           greater than 150,000 sq. ft.
+                                                           of Floor Area)
+   (3)     Wholesale, Retail                               2.0 Space per 1,000 sq. ft. of                               Wholesale: 2, or 1 per                         Retail Sales: see
+           Sales                                           Floor Area                                                   25,000 sq. ft. of Floor                        Commercial Retail
+                                                                                                                        Area, with a maximum                           Services B(1)
+                                                                                                                        of 20 Spaces
+                                                                                                                        Retail Sales: see
+                                                                                                                        Commercial Retail
+                                                                                                                        Services B(1)
+   (4)     Industrial,                                     1.0 Space per 1,000 sq. ft. of                               See Commercial Retail                          See Commercial
+           Commercial Services                             Floor Area                                                   Services B(1)                                  Retail Services B(1)
+   (5)     Laboratories,                                   4.1 Space per 1,000 sq. ft. of                               2, or 1 per 25,000 sq.                         None Required
+           Research and                                    Floor Area                                                   ft. of Floor Area, with
+           Development                                                                                                  a maximum of 20
+           Facilities                                                                                                   Spaces
+  (E) NOT SPECIFICALLY MENTIONED
+                                                           For a use not listed above,                                  For a use not listed                           For a use not listed
+                                                           the required vehicle and                                     above, the required                            above, the required
+                                                           bicycle parking shall be the                                 vehicle and bicycle                            vehicle and bicycle
+                                                           same as for the most similar                                 parking shall be the                           parking shall be the
+                                                           use listed, as determined by                                 same as for the most                           same as for the most
+                                                           the Manager.                                                 similar use listed, as                         similar use listed, as
+                                                                                                                        determined by the                              determined by the
+                                                                                                                        Manager.                                       Manager.
+*More bike parking spaces may be provided at the discretion of the use.
+Table 9.0851                                             Notes
+1.                                  Where two methods are provided for establishing the minimum amount of bicycle parking requirement, the method
+       which results in the most  bicycle parking shall apply.
+2.                                  If the lot or parcel has no area within 3/4 mile of a MAX light rail transit station or within 1/2 mile of transit lines that
+       arrive at least four times an hour during peak service there is no maximum (OAR 660    -012-0415).
+
+                                                                                              [9.0800]-                                       22
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+9.0852                              STANDARDS FOR OFF                  -   STREET PARKING IN PLAN DISTRICTS
+
+A.                        Civic Neighborhood Plan District. Off-                            street parking facilities provided in connection with new
+       development must be appropriate to the dense mix of uses which characterize the Civic Neighborhood
+       Plan District. Parking should be secondary to accessible           and safe pedestrian movement. The scale and
+       orientation of parking lots shall be consistent with their purposes in supporting a mix of commercial and
+       residential uses and the vital, pedestrian and transit oriented community to which they contribute.
+       1.                             Minimum Off-Street Parking. Minimum off-                                                                         street parking for all uses is zero. If required by the Building
+              Code, accessible parking spaces shall be provided regardless of the provisions of this subsection.
+       2.                             Maximum Off-Street Parking.
+              a.                             Maximum off-street parking for commercial and institutional uses shall be as specified in Table
+                      9.0852(A) below:
+Table 9.0852(A)
+     PERMITTED LAND                             MAXIMUM PARKING UP                                         MAXIMUM PARKING                                      MAXIMUM PARKING
+         USE (SECTION                               TO 65,000 SQ. FT. OF                               65,000 TO 90,000 SQ. FT.                                GREATER THAN 90,000
+               4.1220)                                     FLOOR AREA                                          OF FLOOR AREA                                  SQ. FT. OF FLOOR AREA
+  Retail & Commercial                          4.5 : 1,000 sq. ft.                                   3.61 : 1,000 sq. ft.                                    2.89 : 1,000 sq. ft.
+  Office                                       2.75 : 1,000 sq. ft.                                  2.75 : 1,000 sq. ft.                                    2.75 : 1,000 sq. ft.
+                                               The lesser number of                                  The lesser number of                                    The lesser number of
+                                               spaces calculated under                               spaces calculated under                                 spaces calculated under
+  Theatre                                      Section 9.0851, provided                              Section 9.0851, provided                                Section 9.0851, provided
+                                               the minimum FAR                                       the minimum FAR                                         the minimum FAR
+                                               standards in Table                                    standards in Table                                      standards in Table
+                                               4.1230.A are met.                                     4.1230.A are met.                                       4.1230.A are met.
+
+              b.                           Maximum off-street parking for the following residential uses:
+                      i.                                         Townhouses: 1.5 space per unit
+                      ii.                             Multi-family: studio 1.2 space per unit, other units 1.5 space per unit.
+                      iii.                  All other residential uses: See Table 9.0851.
+              c.                                 Maximum off-street parking for other uses: see                                                Table 9.0851.
+       3.                             Under Type II procedures, the Manager may approve off-street parking in excess of the maximum
+              allowed parking spaces specified in this section when the applicant can show that the excess parking is
+              provided only in non-surface parking, such as tuck-under parking, underground and subsurface
+              parking, and parking structures (OAR 660-012-0415).
+       4.                             Bicycle parking shall be provided in conformance with Section 9.0830 and Table 9.0851.
+B.                          Downtown Plan District. Off-street parking facilities provided in connection with new development must
+       be appropriate for the unique characteristics of the Downtown Plan District. This means that parking
+       facilities shall be a secondary use, designed so that they           do not interfere with accessible and safe
+       pedestrian movement. By ensuring that parking lot sizes do not become excessive, and that appropriate
+       landscaping is provided, the downtown area will be more attractive, and more conducive to creating a
+       lively, prosperous district for the benefit of area residents, employees, and visitors.
+
+                                                                                            [9.0800]-                                       23
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+       1.                             Minimum Off-                             Street Parking: Minimum off-                             street parking for all uses is zero spaces. If required by the
+               Building Code, accessible parking spaces shall be provided regardless of the provisions of this
+               subsection.
+       2.                             Maximum Off-                              Street Parking.
+               a.                             Maximum Off-                             Street Parking for commercial and industrial: Maximum off-                            street parking permitted
+                       for Commercial and Industrial uses that exceed 65,000 square feet of floor space shall be the lesser
+                       of: 65,000 square feet or 80 percent of the amount required in Table 9.0851. Additional off-                                                                                          street
+                       parking beyond these maximums may be permitted within the Downtown Plan District, as
+                       provided in 9.0852(B)3.
+               b.                           Maximum Off-                             Street Parking for the following residential uses:
+                       i.                                         Townhouses: 1.5 space per unit
+                       ii.                             Multi-family: studio 1.2 space per unit, other units 1.5 space per unit.
+                       iii.                  All other residential uses: See Table 9.0851.
+       3.                             New surface parking lots in the Downtown Plan District are limited to 40,000 square feet in size per
+               site.
+       4.                             Under Type II procedures, the Manager may approve off-street parking of more than the maximum
+               allowed parking spaces specified in this section when the applicant can show that the excess parking is
+               provided only in non-surface parking, such as tuck-under parking, underground and subsurface
+               parking, and parking structures (OAR 660-012-0415).
+       5.                              Commercial Parking facilities on surface parking lots are prohibited in the Downtown Plan District.
+               Public parking facilities owned by local, county, or regional governments, an urban renewal agency or a
+               transportation management association are allowed on surface lots or in structure          d parking Design
+               standards for surface parking and parking structures in the Downtown Plan District are provided in
+               Section 4.1151.
+       6.                             New surface parking lots shall                                                         only be constructed in the Downtown Plan District with an approved
+               development permit for an allowed use, except for public parking  facilities.
+       7.                             Parking facilities are not allowed as the first phase of a development but must be constructed in
+               conjunction with buildings that are part of the development.
+       8.                             Bicycle parking shall be provided in conformance with Section 9.0830 and Table 9.0851.
+       9.                              Commercial and Industrial uses may occupy an existing building or tenant space even if the existing
+               building                       does not have the minimum required automobile parking for that use. Bicycle parking shall be
+               provided.
+C.                            Downtown and Civic Neighborhood Plan Districts. Surface parking lots shall be designed to allow for                 more
+       intensive future site development.
+
+9.0853                                 EXCEPTIONS TO MAXIMUM PARKING SPACE STANDARDS
+
+A.                        In the following land use districts, the Manager, under Type II procedures, may approve exceptions to the
+       maximum parking space standards based on the criteria provided below:
+       1.                             Station Center and Rockwood Town Center Districts.
+               a.                             The parking is located in non-surface parking, such as tuck-under parking, underground and
+                       subsurface parking, and parking structures (OAR 660-012-0415).
+
+                                                                                                  [9.0800]                                       -24
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+       2.                             Civic Neighborhood and Downtown Plan Districts.
+              a.                             For exceptions to maximum parking spaces in the Downtown Plan Districts refer to  Section
+                      9.0852(B).
+              b.                           For exceptions to maximum parking spaces in the Civic Neighborhood Plan District refer to Section
+                      9.0852(A).
+       3.                              All Other Districts.
+              a.                             The lot or parcel has no area within ¾ mile of a MAX light rail transit station or within ½ mile of
+                      transit lines that arrive at least four times an hour during peak service (OAR 660-012-0440).
+              b.                           The proposed development has unique or unusual characteristics (such as high sales volume per
+                      floor area or low parking turnover) which create a parking demand that exceeds the maximum
+                      ratio and which typically does not apply to comparable uses;
+                      i.                                         The parking demand cannot be accommodated by shared or joint parking or by increasing the
+                             supply of spaces that are exempt from the maximum ratio ( Section 9.0851).
+                      ii.                             The request is the minimum necessary variation from the standard.
+
+9.0854                                 REQUIRED CARPOOL AND VANPOOL PARKING
+
+Developments with 50 or more employees on any single shift, shall designate at least 10   percent, but not
+fewer than two, of the long term (4 hours or more) employee or student parking spaces for carpool/vanpool
+parking. These designated spaces shall be located closer to the building entrances than other employee or
+student parking with the exception of ADA accessible and short-term (less than 4 hours) visitor parking. These
+spaces shall be clearly marked "Reserved -           Carpool/Vanpool Only" and include hours of use, per the Manual of
+Uniform Traffic Control Devices.
+This section also applies to transit park and ride facilities with 50 or more parking spaces.
+
+9.0855                                  FLEET MOTOR VEHICLE PARKING
+
+Vehicle parking spaces may not be used for storage of fleet vehicles, except when the applicant can show that
+employee and fleet parking spaces are used interchangeably. For the purposes of this code, space devoted to
+the parking/ storage of fleet vehicles will be considered as outdoor storage, and will not affect maximum
+parking.
+
+OTHER PUBLIC PARKING                                STANDARDS
+
+9.0861                             PARKING STRUCTURES
+
+A.                        Ground Floor Use. For all new multi-          level parking structures, a minimum of 50 percent of the ground floor
+       street-                facing façade within 40 feet of the street excluding driveway entrances and exits, stairwells,
+       elevators, and centralized payment booths shall be designed to accommodate commercial, institutional, or
+       residential floor space.
+B.                          Ground Floor Transparency          . All parking structures shall provide ground floor windows or wall openings
+       along the street frontages. Blank walls are prohibited, except where required by Building Code. Any wall
+       facing the street shall contain windows, wall openings, doors or display windows for 20                                                   percent of the
+
+                                                                                            [9.0800]                                       -25
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+       ground floor wall area facing the street excluding those portions of the facades                      devoted to driveway
+       entrances and exits, stairwells, elevators, and                         centralized payment booths. Required windows or wall
+       openings shall have a sill no more than 4 feet above grade. Where interior floor levels prohibit such
+       placement, the sill may be raised to allow it to be no more than 2 feet above finished floor up to a
+       maximum sill height of 6 feet above grade.
+C.                            Landscaping, Buffering                       and Screening, and Setbacks. Requirements are determined by Community Plan
+       Map Designations, Design District standards, and Section 9.0100.
+D.                       Design Review. All parking structures where all or a portion of the structure is above ground, are subject to
+       Design Review.
+E.                              Other Standards. Parking structures must comply with all standards of the Building Code for the State of
+       Oregon as it pertains to structural design, ventilation, lighting, and fire/safety requirements and disabled
+       accessibility.
+F.                               Parking Layout and Internal Circulation. The configuration of parking within a parking structure shall be
+       subject to the requirements contained in Table 9.0861, except as described here: A modified Layout and
+       Internal Circulation under Type II procedure may be approved by the Manager when it can be shown that
+       1) a structure meets design guidelines of the Urban Land Institute Dimension of Parking, current edition  , or
+       2) a similar structure functions efficiently using the proposed modified layout, circulation and dimensions.
+Table 9.0861: Parking Structure Matrix
+                                                                              PARKING STRUCTURE MATRIX
+                                                          REQUIRED SPACE AND AISLE DIMENSIONS IN FEET
+                                                Compact                                                                                                     Standard
+  Parking                M1                   A                 W                   D                 IR                 M1                    A                    W                    D                   IR
+    Angle               Base               Aisle              Stall              Stall           Interlock              Base           Aisle Width Stall Width                   Stall Depth           Interlock
+                     Module               Width              Width              Depth          Reduction             Module                                                                           Reduction
+                       Width                                                                                      width (wall
+                     (Wall to                                                                                         to wall)
+                        Wall)
+      45°                 42               11.5                  8                 15                  2                  49                  13                  8.5                   18                  2.5
+      60°                 46               13.5                  8                 16                1.5                  55                  16                  8.5                 19.5                    2
+      75°                 49                 16                  8               16.5                  1                59.5                  20                  8.5                   20                    1
+      90°                 51                 20                  8               15.5                  0                  62                  25                  8.5                   19                    0
+
+                                                                                                 [9.0800]-                                       26
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+9.0862                                  MAX PARK            -    AND    -   RIDE
+
+Park-and-ride facilities serving MAX stations shall be subject to the following requirements:
+A.                        New surface park-and-ride facilities shall not exceed 50 spaces on a contiguous site.
+B.                          New park-and-ride facilities which exceed 50 spaces on a contiguous site shall be contained within a multi-
+            story structure.
+C.                             Expansion of existing surface park-and-ride facilities is not allowed except within a multi-          story structure.
+            Existing surface park-and-ride facilities may be maintained, redeveloped, or re-striped. Redevelopment of
+            existing surface park-and-ride sites for structured parking shall be encouraged, in accordance with
+            standards of Section 9.0861.
+
+                                                                                                                                                       [9.0800]                                       -27
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)

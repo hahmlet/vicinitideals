@@ -52,7 +52,28 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
   and 20 ft maximum for Multi-Family and Townhouse Style in all three. A unit-lot design would owe a
   street name and a triangle boundary before any of that can be screened, and neither is measured.
   Not encoded as a `unit_lots` variant for that reason: an encoded number here would be a guess about
-  which of four bands a lot sits in.'
+  which of four bands a lot sits in.
+
+
+  PARKING, read 2026-08-20 and encoded as a layer default of zero. GDC 9.0802(A): "Vehicle parking
+  minimums are not required for any land use type." Table 9.0851 carries no minimum column for auto
+  parking -- the heading is AUTO PARKING / MAXIMUM -- and the two plan districts that restate the rule
+  say minimum off-street parking for all uses is zero.
+
+
+  Thirty-four of this layer''s thirty-eight zones had no parking value and were falling through to the
+  state''s OAR 660-046-0220 cap of one stall per unit, so every lot in them was screened as owing four
+  stalls it does not owe. A ceiling on what a city MAY require is not a reading of what it does, and
+  standing in for one it was wrong in the direction that refuses a lot. The four Corridor zones that
+  already stated 0 from Table 4.0430 row K keep their own citation: the same answer from the zone''s own
+  table is not the same sentence, and if the city ever restores a minimum in one district the zone row is
+  where it would appear.
+
+
+  Bicycle parking is read and not encoded, and the reason is in the crossref ruling for 9.0851. The short
+  version: in eleven named districts the Quadplexes row states None outright, and everywhere else the
+  long-term requirement of one space per dwelling unit is satisfiable inside the dwelling under
+  9.0831(A)(1) and (A)(4)(f), which costs no site area. Nothing here holds a bicycle rack anyway.'
 ingest:
   geoid: null
   juris_city_codes:
@@ -149,10 +170,10 @@ code:
     extraction: plain
   - id: "7.0400.middle-housing-design"
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+    title: "Section 7.0400 - Middle Housing Design Standards"
   - id: "7.0500.rockwood-design"
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0500.pdf
-    title: Section 7.0500 Rockwood Design District
-    title: "Section 7.0400 - Middle Housing Design Standards"
+    title: "Section 7.0500 - Rockwood Design District"
   # Fetched to settle a doubt three zone notes were carrying rather than to
   # supply a number. 9.0602 excludes middle housing from the whole section,
   # and 9.0610(A) would cap a building at 30 ft near the trigger lot line
@@ -160,6 +181,70 @@ code:
   - id: "9.0600.height-transition"
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-9.0600.pdf
     title: "Section 9.0600 - Height Transition"
+  # The two loudest unfetched references in the corpus, not just in this
+  # jurisdiction: eight zone tables send their parking row to 9.0851 and
+  # eight send an affordable-housing sentence to 10.1700.
+  - id: "9.0800.parking"
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-9.0800.pdf
+    title: "Section 9.0800 - Off-Street Parking and Loading"
+  - id: "10.1700.affordable"
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-10.1700.pdf
+    title: "Section 10.1700 - Affordable Housing with Height and Density Bonuses"
+crossrefs:
+  "10.1700": >-
+    Affordable Housing with Height and Density Bonuses, and the loudest unfetched reference in the whole
+    corpus -- thirty-four mentions, eight of them beside a number this screen uses, one sentence repeated
+    in every zone chapter: "Affordable housing development is subject to the provisions in Section
+    10.1700." Fetched and read 2026-08-20. It is a bonus and nothing else. 10.1711(G) and Table 10.1711(B)
+    grant a density bonus of 125 to 200 percent and a height bonus of 12 to 36 feet, and 10.1711(B)(2)
+    switches the minimum net density off entirely. Every one of those loosens.
+
+
+    It is also elective, and expensively so: 10.1711(A) requires every unit at 80 percent of area median
+    income or an average of 60 percent, enforced by a recorded covenant for no less than thirty years. A
+    market-rate quadplex does not become subject to this section by being built; an owner opts into it. So
+    it is not encoded, on the two grounds this corpus already uses -- a qualifier that can only loosen is
+    recorded rather than encoded, and an elective standard is not one a lot can fail.
+  "9.0851": >-
+    Table 9.0851, Auto and Bicycle Parking Requirements. Twenty-two mentions, five beside a number the
+    screen uses, and every one of them is a zone table's parking row pointing here. Fetched and read
+    2026-08-20, and the answer was not in the table at all -- 9.0802(A) states it in one sentence for the
+    whole city, and this layer now carries it as a default. See the PARKING note.
+
+
+    The bicycle rows are read and not encoded. In the districts 9.0851(A)(1) lists -- LDR-7, LDR-5, LDRGB,
+    LDR-PV, MDR-PV, VLDR-SW, LDR-SW, TR, TLDR, MDR-12, OFR and the Glisan and 162nd stretches of CMF --
+    the Quadplexes row states None in all three columns. Everywhere else a four-unit building falls to
+    (A)(2)(b) and owes one long-term space per dwelling unit and one short-term space per twenty. Neither
+    consumes placeable site area: 9.0831(A)(1) says that where long-term bicycle parking is provided in a
+    dwelling unit neither racks nor lockers are required, (A)(4)(f) names "contained within a dwelling
+    unit" as a compliant security location, and 9.0802(F) exempts quadplexes from the parking-lot design
+    standards on a unit-by-unit basis. The code supplies a compliant path that costs no ground. Four units
+    against one short-term space per twenty is a fifth of a rack, which is not a fitment question at the
+    resolution this screen works at.
+
+defaults:
+  # The city says it once, in a sentence, for everything: GDC 9.0802(A),
+  # "Vehicle parking minimums are not required for any land use type."
+  # Table 9.0851 has no minimum column at all -- auto parking is stated as a
+  # MAXIMUM and nothing else -- and the two plan districts that restate it
+  # (9.0852(A)(1) Civic Neighborhood, 9.0852(B)(1) Downtown) both say minimum
+  # off-street parking for all uses is zero.
+  #
+  # This is the largest single correction this layer has taken. Four of
+  # Gresham's zones read their own Table 4.0430 row K and encoded 0; the other
+  # thirty-four had nothing, so they fell through to OAR 660-046-0220's cap
+  # of one stall per unit and every lot in them was screened as owing four
+  # stalls -- roughly 1,300 square feet of a site that also has to hold the
+  # pod and its access. The state row is a ceiling on what a city MAY require.
+  # Read as what Gresham DOES require, it was wrong by four stalls a lot.
+  parking_min_per_unit:
+    value: 0
+    cite: GDC 9.0802(A), General Provisions
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-9.0800.pdf
+    retrieved: '2026-08-20'
+    quote: "or/multnomah/gresham/9.0800.parking.txt#L53"
+
 zones:
   LDR-5:
     section: ["4.01", "7.042"]

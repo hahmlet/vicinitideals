@@ -1,0 +1,311 @@
+SECTION 10.1700
+                             AFFORDABLE HOUSING WITH HEIGHT AND DENSITY
+                                                                                                                                                                  BONUSES
+
+General
+10.1701                                                                    Purpose
+10.1702                                                                    Applicability
+10.1703                                                                   Coordination with Other Regulations
+
+Standards
+10.1711                                                                   Review Criteria and Standards
+
+Process
+10.1721                                                                    Procedures
+
+10.1730  AFFORDABLE HOUSING ON COMMERCIAL LAND
+General
+10.1731                                                                    Purpose
+10.1732                                                                    Applicability
+Standards
+10.1733                                                                   Review Criteria and Standards
+Process
+10.1734                                                                    Procedures
+
+10.1740  AFFORDABLE HOUSING DEVELOPED BY RELIGIOUS CORPORATION
+General
+10.1741                                                                    Purpose
+10.1742                                                                    Applicability
+Standards
+10.1743                                                                   Review Criteria and Standards
+Process
+10.1744                                                                    Procedures
+
+                                                                                                                                                                             [10.1700]-1
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+GENERAL
+
+10.1701     PURPOSE
+
+The purpose of this section is to expand options for the development of income restricted housing. It describes
+qualifying affordability terms and specifies the applicable standards and procedures. This section also
+authorizes density and height bonuses in land use districts that permit residential use(s) (ORS 197.445).
+
+10.1702    APPLICABILITY
+
+This section shall apply to all affordable housing development throughout the City unless exempted in Section
+10.1703, and except for developments subject to Section 10.1730 Affordable Housing on Commercial Land or
+Section 10.1740 Affordable Housing Developed by Religious Corporation. For a proposed affordable housing
+development that meets the criteria in two or more of these sections, the applicant may choose which set of
+standards to follow.
+
+10.1703    COORDINATION WITH OTHER REGULATIONS
+
+A.                        This section does not apply to property in the Floodplain Overlay District, Highly Sloped Subareas, and the
+       Natural Resource Overlay.
+B.                          Section 10.1100 Shoreline Height Standards does not apply to affordable housing development under this
+       section.
+
+S    TA    N    D   A    R    D    S
+
+10.1711                                                      REVIEW CRITERIA AND STANDARDS
+
+A.                        Affordability.
+       1.                             Units shall be made affordable pursuant to either Subsection(a), (b), or (c).
+               a.                             Each unit on the property shall be made available to own or rent to families with incomes of 80
+                       percent or less of the area median income;
+               b.                           The average of all units on the property shall be made available to families with incomes of 60
+                       percent or less of the area median income; or
+               c.                                 A manufactured dwelling park shall serve only households with incomes of 120 percent or less of
+                       the area median income.
+       2.                             Area median income shall be determined by the Oregon Housing Stability Council based on
+               information from the United States Department of Housing and Urban Development (ORS 458.610).
+       3.                             The affordability shall be enforceable by an affordable housing covenant (ORS 456.270 to 456.295), for
+               a duration of no less than 30 years.
+
+                                                                                                  [10.                                       1700                                        ]-2
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+B.                          Affordable housing may take the form of any residential use, including but not limited to townhouses,
+       multi-family, cottage clusters, and manufactured dwelling parks. When a residential use is only permitted
+       in land use districts under the affordable housing provisions, such as multi-family in GI, the application
+       shall be subject to:
+       1.                             The development standards for the land use district in which the property is located.
+       2.                             Section 7.0000 Design Review, unless exempted in Section 7.0002(D).
+       3.                             The design standards in Table 10.1711(A).
+Table 10.1711(A): Review Standards for Residential Uses Allowed Only as Affordable Housing
+  PROPOSED RESIDENTIAL USE                                                                  LOCATION                                         APPLICABLE DESIGN STANDARD
+  Manufactured Dwelling Park                                            In all locations                                                 Section 7.0410 Manufactured
+                                                                                                                                         Dwelling Park Design Standards
+  Single Detached Dwelling                                              In all locations                                                 Section 7.0420 Design Standards for
+                                                                                                                                         Single Detached Dwellings, Duplexes,
+                                                                                                                                         Triplexes, and Quadplexes
+  Duplexes, Triplex, and Quadplex                                       In all locations                                                 Section 7.0420 Design Standards for
+                                                                                                                                         Single Detached Dwellings, Duplexes,
+                                                                                                                                         Triplexes, and Quadplexes
+  Cottage Cluster                                                       In all locations                                                 Section 7.0440 Cottage Cluster
+                                                                                                                                         Design Standards
+  Townhouse                                                             In a Design District                                             The design standards applicable to
+                                                                                                                                         townhouses in that design district (in
+                                                                                                                                         Corridor Design                                     District, see Section
+                                                                                                                                         7.0431)
+  Townhouse                                                             Not in a Design District                                         Section 7.0431 Residential District
+                                                                                                                                         Townhouse Design Standards
+  Multi-Family or Residential                                           In a Design District                                             The design standards applicable to
+  Portion of Mixed-Use                                                                                                                   multi-family in that design district
+  Multi-Family or Residential                                           Not in a Design District                                         Section 7.0100 Corridor Design
+  Portion of Mixed-Use                                                                                                                   District Design Guidelines and
+                                                                                                                                         Standards
+
+       4.                             Where the code does not define standards for a residential use in a land use district, the Manager shall
+               determine which standards are appropriate.
+C.                            Affordable housing shall be permitted on public parks and open spaces.
+D.                       Residential uses not permitted in the LDR-                           5, LDR-7, TR, TLDR, MDR-                           12, MDR-24, LDR-PV, VLDR-SW and
+       LDR- SW districts shall be permitted as affordable housing when the housing is owned by:
+       1.                             A public body (ORS 174.109);
+       2.                             A nonprofit corporation that is owned by a religious corporation;
+       3.                             A nonprofit corporation that is organized as a public benefit corporation whose primary purpose is the
+               development of affordable housing;
+
+                                                                                              [10.1700]-3
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+       4.                              A housing authority (ORS 456.005); or
+       5.                             A manufactured dwelling park nonprofit cooperative (ORS 62.803).
+E.                              Affordable housing in the IND-SW land use districts shall be permitted on property owned by a public body
+       and adjacent to property where residential uses or school uses are permitted.
+F.                               Affordable housing in the GI district shall be permitted:
+       1.                             On property owned by a public body and adjacent to property where residential uses or school uses
+              are permitted, or
+       2.                             When an applicant demonstrates that the title for the parcel(s) where the facility is to be developed
+              was held by the governing body for the applicant as of April 2, 2009.
+G.                      Affordable housing in the LDR-5, LDR-7, TLDR, TR, MDR-                          12, MDR-24, OFR, RTC, SC, SC-                         RJ, CMU, CMF, CC,
+       MC, DCC, DMU, DTM, DEM, DRL-                     1, DRL-2, DCL, CNTH, CNTM, CNRM, LDR -PV, MDR-PV, HDR-PV, TC-PV,
+       NCPV, ME- PV, VLDR- SW, LDR-SW, THR- SW, VC-SW districts is permitted a density and height bonus
+       based on the maximum density of the property and the residential use, as applicable, (Table 10.1711(B)).
+Table 10.1711(B): Affordable Housing Density and Height Bonus
+  PROPERTY MAXIMUM DENSITY                                                         DENSITY BONUS                                                       HEIGHT BONUS
+  16 units per acre or fewer                                         200%                                                          12 ft
+  16.1 to 45 units per acre                                          150%                                                          24 ft
+  45.1 units per acre or more                                        125%                                                          36 ft
+
+The following exceptions and modifications to the development standards apply:
+       1.                             When determining the maximum net density of a property, the proposed residential use shall be
+              considered in residential districts. Affordable housing on properties in the LDR-5, LDR-7, TR, TLDR,
+              MDR-12, MDR-24, OFR, LDR-PV, MDR-PV, HDR-PV, VLDR-SW, LDR-SW, and THR-SW districts shall use
+              the maximum net density under “All other uses” on the applicable development standards table to
+              determine the maximum net density.
+       2.                             Minimum net density does not apply.
+       3.                             Affordable housing applications on properties subject to Section 7.0420(F) Rear Lot Provisions or
+              Section 9.0610 Height Transition Standards, may add the applicable height bonus in Table 10.1711(B)
+              to the maximum building height described in Section 7.0420(F)            or Section 9.0610.
+
+PROCESS
+
+10.1721    PROCEDURES
+
+A.                        An application, including an application for a residential use only allowed in a land use district as affordable
+       housing, shall be subject to the procedure type specified in Table 11.0204        . An application for affordable
+       housing development is not a unique application type.
+B.                          The applicant shall submit a statement with the development permit application describing how the
+       application shall meet the applicable income restrictions, terms, and ownership standards in Section
+       10.1711. The statement shall be signed by the housing and property owner(s).
+
+                                                                                          [10.1700]-4
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+C.                            Prior to building permit issuance, the applicant shall submit an affordable housing covenant recorded by
+       the County recorder, which demonstrates:
+       1.                             Each unit on the property shall be made available to own or rent to families with incomes of 80
+               percent or less of the area median income or the average of all units on the property shall be made
+               available to families with incomes of 60 percent or less of the area median income; or the proposed
+               development is a manufactured dwelling park that serves only households with incomes of 120
+               percent or less of the area median income. Area median income shall be determined by the Oregon
+               Housing Stability Council based on information from the United States Department of Housing and
+               Urban Development (ORS 458.610).
+       2.                             The affordability shall be enforceable by an affordable housing covenant (ORS 456.270 to 456.295), for
+               a duration of no less than 30 years.
+
+10.1730 Affordable Housing on Commercial Land
+
+GENERAL
+
+10.1731     PURPOSE
+
+The purpose of this section is to expand options to reuse commercial lands for the development of income
+restricted housing. It describes qualifying affordability terms and specifies the applicable standards and
+procedures (ORS 197A.460).
+
+10.1732     APPLICABILITY
+
+A.                        Land Use Districts. This section shall apply to the following land use districts: NC, RTC, SC, CC, MC, TC-PV,
+       NC-PV, VC-SW, and NC-SW.
+B.                          Exemptions. This section does not apply to:
+       1.                             Property in the Floodplain Overlay District, Highly Sloped Subareas, and the Natural Resource Overlay;
+               or
+       2.                             Lands that are vacant or that were added to the urban growth boundary within the last 15 years.
+C.                            Overlapping Criteria. For a proposed affordable housing development that meets the criteria in this section
+       as well as the criteria in Section 10.1700 Affordable Housing with Height and Density Bonuses or Section
+       10.1740 Affordable Housing Developed by Religious Corporation, the applicant may choose which set of
+       standards to follow.
+
+S    TA    N    D   A    R    D    S
+
+10.1733    REVIEW CRITERIA AND STANDARDS
+
+A.                        An affordable housing development is allowed under this section provided the property meets the
+       applicability criteria in Section 10.1732 and the development meets the standards in   Section 10.1733.
+B.                           Affordability and Structure Type.
+
+                                                                                              [10.                                       1700                                        ]-5
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+       1.                             Units shall be made affordable pursuant to either Subsection (a) or (b).
+               a.                             In residential-                                             only structures, each unit on the property shall be made available to own or rent to
+                       families with incomes of 60 percent or less of the area median income; or
+               b.                           In mixed-use structures with ground floor commercial units, each residential unit on the property
+                       shall be made available to own or rent to families with incomes less than or equal to 120 percent
+                       and greater than 80 percent of the area median income.
+       2.                             Area median income shall be determined by the Oregon Housing Stability Council based on
+               information from the United States Department of Housing and Urban Development (ORS 458.610).
+       3.                             The affordability shall be enforceable by an affordable housing covenant (ORS 456.270 to 456.295), for
+               a duration of no less than 60 years.
+C.                            The application shall be subject to:
+       1.                             The development standards for the land use district in which the property is located.
+       2.                             Section 7.0000 Design Review, unless exempted in Section 7.0002(D).
+       3.                             The design standards applicable to the proposed residential use and to the land use district in which
+               the property is located.
+       4.                             Where the code does not define standards for a residential use in a land use district, the Manager shall
+               determine which standards are appropriate.
+
+PROCESS
+
+10.1734     PROCEDURES
+
+A.                        An application shall be subject to the procedure type specified in Table 11.0204. An application for
+       affordable housing development is not a unique application type.
+B.                          The applicant shall submit a statement with the development permit application describing how the
+       application shall meet the applicable income restrictions, terms, and standards in Section 10.1733         . The
+       statement shall be signed by the housing and property owner(s).
+C.                            Prior to building permit issuance, the applicant shall submit an affordable housing covenant recorded by
+       the City recorder, which demonstrates that affordability criteria in Section 10.1733(A)(1) are met.
+
+10.1740                                   Affordable Housing Developed by Religious
+                               Corporation
+
+GENERAL
+
+10.1741     PURPOSE
+
+The purpose of this section is to expand options for the development of income restricted housing by
+nonprofit corporation organized as religious corporations. It describes qualifying affordability terms and
+specifies the applicable standards and procedures (ORS 197A.470(5)-(6)).
+
+                                                                                                [10.                                       1700                                        ]-6
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+10.1742     APPLICABILITY
+
+A.                        Land Use Districts. This section shall apply on land that is in any land use district except for the following
+        industrial districts: HI, GI, ME-PV, RTI-SW, and IND-SW.
+B.                          Overlapping Criteria. For a proposed affordable housing development that meets the criteria in this section
+        as well as the criteria in Section 10.1700 Affordable Housing with Height and Density Bonuses or Section
+        10.1730 Affordable Housing on Commercial Land, the applicant may choose which set of standards to
+        follow.
+
+S    TA    N    D   A    R    D    S
+
+10.1743    REVIEW CRITERIA AND STANDARDS
+
+A.                        An affordable housing development is allowed under this section provided:
+        1.                             The property is owned by a nonprofit corporation organized as a religious corporation;
+        2.                             The property meets the applicability criteria in Section 10.1742; and
+        3.                             The development meets the standards in Section 10.1743.
+B.                          Affordability.
+        1.                             Each unit on the property shall be made available to own or rent to families with incomes of 60
+                percent or less of the median family income for Multnomah County.
+        2.                             The affordability shall be enforceable by an affordable housing covenant (ORS 456.270 to 456.295) for
+                a duration of no less than 60 years from the date of the certificate of occupancy.
+C.                             Nonresidential Land.
+        1.                             Affordable housing proposed on land not zoned to allow residential uses shall only be permitted if the
+                subject property is contiguous to property that is zoned to allow residential uses.
+        2.                             Affordable housing allowed Subsection (B)(1)           shall be subject only to the restrictions applicable to the
+                contiguously zoned residential property as limited in Subsection (C). If there is more than one
+                contiguous residential property, the zoning of the property with the greatest density applies.
+D.                       Applicable Standards. The City shall apply only restrictions or conditions of approval to affordable housing
+        pursuant to Subsections (1) or (2).
+        1.                             Clear and objective regulations as described in ORS 197A.400, including:
+                a.                             The development standards for the land use district in which the property is located.
+                b.                           Section 7.0000                        Design Review, unless exempted in Section 7.0002(D).
+                c.                                 When the proposed residential use is only permitted in the land use district under the provisions
+                        of this section, the design standards specified in Table 10.1711(A)          shall apply.
+                d.                           Where the code does not define standards for a residential use in a land use district, the Manager
+                        shall determine which standards are appropriate.
+
+                                                                                                    [10.                                       1700                                        ]-7
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
+         2.                             Discretionary standards related to health, safety, habitability or infrastructure. For the purposes of this
+                   standard, this means that affordable housing shall not be located on lands where the City determines
+                   that the development                  on the property cannot be adequately served by water, sewer, stormwater
+                   drainage or streets, or will not be adequately served at the time that development on the lot is
+                   complete.
+
+PROCESS
+
+10.1744     PROCEDURES
+
+A.                        An application shall be subject to the procedure type specified in Table 11.0204. An application for
+         affordable housing development is not a unique application type.
+B.                          The applicant shall submit a statement with the development permit application describing how the
+         application shall meet the applicable income restrictions, terms, and ownership standards in Section
+         10.1743. The statement shall be signed by the housing and property owner(s).
+C.                            Prior to building permit issuance, the applicant shall submit an affordable housing covenant recorded by
+         the County recorder, which demonstrates that the affordability criteria in Section 10.1743(A)          are met.
+
+                                                                                                                          [10.                                       1700                                        ]-8
+City of Gresham Development Code                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              (06/26)
