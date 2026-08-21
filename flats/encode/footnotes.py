@@ -60,12 +60,20 @@ from typing import Sequence
 
 DOCS = Path(__file__).resolve().parents[1] / "provenance" / "docs"
 
+#: How a table names itself: a number, and the parenthesised parts a codifier
+#: hangs off it -- "4.1152(B)(8)", "4.1220(A)". The whitespace inside the
+#: brackets is extraction's, not the codifier's: a caption cell spanning the
+#: grid puts "Table 4.1220(" at one end of the line and "A) Notes:" at the
+#: other, which is how Gresham's Civic Neighborhood chapter hid nine notes
+#: blocks and every marker on the tables above them.
+_TABLE_ID = r"[\w.-]+(?:\s*\([\s\w.-]*\))*"
+
 #: A notes block announces itself. Tolerates the colspan repeat a caption cell
 #: makes when it spans the grid -- "NOTES:  NOTES:" -- and the identifier
 #: Gresham puts in front, "Table 4.0130 Notes:".
 NOTES_HEAD = re.compile(
-    r"^(?:table\s+[\w.-]+\s+)?(?:table\s+)?notes?\s*[:.]?"
-    r"(?:\s+(?:table\s+[\w.-]+\s+)?(?:table\s+)?notes?\s*[:.]?)*$",
+    rf"^(?:table\s+{_TABLE_ID}\s+)?(?:table\s+)?notes?\s*[:.]?"
+    rf"(?:\s+(?:table\s+{_TABLE_ID}\s+)?(?:table\s+)?notes?\s*[:.]?)*$",
     re.I,
 )
 

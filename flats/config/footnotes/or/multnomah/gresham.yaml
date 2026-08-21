@@ -1680,3 +1680,269 @@ notes:
       on row O's "All Other Uses" line; the row above it sends single
       detached, duplex, triplex, quadplex, townhouse and cottage cluster
       to Section 7.0400 instead, and the pod is on that line
+
+  # --- the blocks a parenthesised table name was hiding ----------------
+  #
+  # "Table 4.1220(A) Notes:" was not a notes heading to this reader: the
+  # identifier it allowed in front of the word carried no brackets, and the
+  # extraction spans the caption cell across the grid so "Table 4.1220(" and
+  # "A) Notes:" arrive at opposite ends of one line. Ten blocks in the Civic
+  # Neighborhood chapter, one in Downtown, one in Rockwood and one in
+  # Springwater were invisible, and every marker above them was an orphan.
+  #
+  # The Civic Neighborhood districts are the bulk of it. This layer reads one
+  # field there -- quadplex_allowed, off Table 4.1220(A)'s Quadplex row, NP in
+  # all three sub-districts -- so the setback and floor-area notes are read
+  # and recorded rather than encoded. Note 2 of Table 4.1230(B) is the one to
+  # come back to if that ever changes: it defines side setback as the interior
+  # side and not the common wall.
+
+  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L210"
+    digest: "f6dbec7ae66b"
+    state: dismissed
+    reason: >-
+      note 1 permits a temporary health hardship dwelling alongside a
+      pre-existing single detached dwelling. Another housing type, and a
+      permission rather than a limit. The only Civic Neighborhood field
+      this layer encodes is quadplex_allowed, read off Table 4.1220(A)'s
+      Quadplex row, which reads NP
+
+  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L211"
+    digest: "5de0cfbc5529"
+    state: dismissed
+    reason: >-
+      note 2 permits conversion of a hotel or motel to an emergency
+      shelter or to affordable housing. Neither the use nor the building
+      being placed
+
+  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L212"
+    digest: "abbcd5f6566d"
+    state: dismissed
+    reason: >-
+      note 3 permits affordable housing development subject to Section
+      10.1700. A relaxation resting on an election nobody has made, and
+      it would widen the Quadplex row rather than narrow it
+
+  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L226"
+    digest: "e4334284e7ba"
+    state: dismissed
+    reason: >-
+      a cross-reference to Section 4.1232, Limitations on Outdoor
+      Commercial Activity, on the commercial use table. The only Civic
+      Neighborhood field this layer encodes is quadplex_allowed, read
+      off Table 4.1220(A)'s Quadplex row
+
+  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L227"
+    digest: "e8f961f08f98"
+    state: dismissed
+    reason: >-
+      limits a commercial use to sites fronting NW Burnside Road and NW
+      Division Street. The same sentence is printed again under Table
+      4.1220(D) and this ruling covers both. The only Civic Neighborhood
+      field this layer encodes is quadplex_allowed, read off Table
+      4.1220(A)'s Quadplex row
+
+  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L247"
+    digest: "6b4535df7322"
+    state: dismissed
+    reason: >-
+      the conditions on a manufacturing use in the Civic Neighborhood:
+      it must accompany an allowed Business and Retail Service and Trade
+      use, and is capped in floor area. Not the use being placed
+
+  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L266"
+    digest: "5fe42bd0f0cb"
+    state: dismissed
+    reason: >-
+      golf courses are not permitted in the Civic Neighborhood Plan
+      District
+
+  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L283"
+    digest: "946083736e54"
+    state: dismissed
+    reason: >-
+      a cross-reference to Section 4.1234, the Solar Energy System
+      standards for these districts
+
+  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L284"
+    digest: "5822b88910c8"
+    state: dismissed
+    reason: >-
+      a cross-reference to Section 4.1235, the Wind Energy System
+      standards for these districts
+
+  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L285"
+    digest: "d871fe06a20d"
+    state: dismissed
+    reason: >-
+      a cross-reference to Section 4.1236, the Biomass Energy System
+      standards for these districts
+
+  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L286"
+    digest: "97f420f99a67"
+    state: dismissed
+    reason: >-
+      a cross-reference to Section 4.1237, the Geothermal Energy System
+      standards for these districts
+
+  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L287"
+    digest: "2669e0a3ef26"
+    state: dismissed
+    reason: >-
+      a cross-reference to Section 4.1238, the Micro-Hydro Energy System
+      standards for these districts
+
+  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L299"
+    digest: "4ac79c9b137f"
+    state: dismissed
+    reason: >-
+      electrical generating facilities and sewage treatment plants are
+      not permitted in the Civic Neighborhood Plan District. Marked on
+      the civic use table
+
+  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L300"
+    digest: "b96b69236783"
+    state: dismissed
+    reason: >-
+      a cross-reference to Gresham Revised Code 9.63.090 for limitations
+      on a civic use
+
+  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L333"
+    digest: "0aafad52e129"
+    state: dismissed
+    reason: >-
+      note 2 exempts transit facilities, parks and open space, basic
+      utilities and wireless communication facilities from the minimum
+      floor-area ratio and the maximum setback. Neither field is encoded
+      in these districts and none of the listed uses is the pod. The
+      only Civic Neighborhood field this layer encodes is
+      quadplex_allowed, read off Table 4.1220(A)'s Quadplex row
+
+  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L341"
+    digest: "07677bf74cd9"
+    state: dismissed
+    reason: >-
+      note 3 switches off the minimum residential density for affordable
+      housing development. A relaxation on an election nobody has made,
+      and no density field is encoded in these districts
+
+  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L383"
+    digest: "29e07ae4bede"
+    state: dismissed
+    reason: >-
+      note 1 says the street type column includes undesignated street
+      types and primary internal drives. The only Civic Neighborhood
+      field this layer encodes is quadplex_allowed, read off Table
+      4.1220(A)'s Quadplex row; no Civic Neighborhood setback is read
+
+  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L384"
+    digest: "24655473da22"
+    state: dismissed
+    reason: >-
+      note 2 defines side setback in Table 4.1230(B) as the interior
+      side, not the common wall -- the same distinction Gresham draws
+      elsewhere between a shared wall and an exterior one. The only
+      Civic Neighborhood field this layer encodes is quadplex_allowed,
+      read off Table 4.1220(A)'s Quadplex row; no Civic Neighborhood
+      setback is read, and if one is ever added this note is the
+      definition it has to be read under
+
+  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L385"
+    digest: "130602c355d5"
+    state: dismissed
+    reason: >-
+      note 3 sets a 10 ft minimum and 20 ft maximum street side setback
+      where the street side fronts NW Wallula Avenue. A named street,
+      and no Civic Neighborhood setback is encoded. The only Civic
+      Neighborhood field this layer encodes is quadplex_allowed, read
+      off Table 4.1220(A)'s Quadplex row
+
+  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L386"
+    digest: "ed81a833d880"
+    state: dismissed
+    reason: >-
+      note 4 switches off the maximum front setback once the street
+      type's minimum building frontage is satisfied. A relaxation of a
+      maximum, and no Civic Neighborhood setback is encoded
+
+  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L389"
+    digest: "b90b4b4bfc24"
+    state: dismissed
+    reason: >-
+      note 5 repeats note 2's exemption from the minimum floor area
+      ratio and the maximum setback, with a shorter list: transit
+      facilities and wireless communication facilities. Neither field is
+      encoded in these districts and neither use is the pod
+
+  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L397"
+    digest: "b1ad9362b185"
+    state: dismissed
+    reason: >-
+      note 6 splits a mixed-use building's setbacks between its
+      residential and non-residential portions. The pod is neither
+      mixed-use nor governed by an encoded setback here. The only Civic
+      Neighborhood field this layer encodes is quadplex_allowed, read
+      off Table 4.1220(A)'s Quadplex row
+
+  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L4497"
+    digest: "a7ed6faac30a"
+    state: dismissed
+    reason: >-
+      a facade material standard: stone shall be natural, not
+      manufactured or panelized, and deep enough to project beyond the
+      wall plane. A material specification, not a dimension this screen
+      measures
+
+  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L4500"
+    digest: "513967c23a1e"
+    state: dismissed
+    reason: >-
+      a cross-reference to the Section 3.0103 definition of stucco. The
+      same sentence appears in the Downtown and Rockwood material tables
+      and this ruling covers all three. A material specification
+
+  - quote: "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L4501"
+    digest: "ad8cb5b49d3e"
+    state: dismissed
+    reason: >-
+      a facade material standard: metal siding shall be free of oil
+      canning and no thinner than 24 gauge. A material specification
+
+  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L4474"
+    digest: "367ca32e68dd"
+    state: dismissed
+    reason: >-
+      the Downtown material table's stone standard: not manufactured,
+      and in proportion to the height of its application. A material
+      specification, not a dimension this screen measures
+
+  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L4476"
+    digest: "ff5c206c5285"
+    state: dismissed
+    reason: >-
+      the Downtown material table's metal standard: free of oil canning,
+      no thinner than 24 gauge. A material specification
+
+  - quote: "or/multnomah/gresham/7.0500.rockwood-design.txt#L3666"
+    digest: "9ab5e2e81c47"
+    state: dismissed
+    reason: >-
+      the Rockwood material table's stone standard: natural, not
+      panelized, and deep enough to project beyond the wall plane. A
+      material specification
+
+  - quote: "or/multnomah/gresham/7.0500.rockwood-design.txt#L3669"
+    digest: "7534a87912bc"
+    state: dismissed
+    reason: >-
+      the Rockwood material table's metal standard: free of oil canning,
+      no thinner than 24 gauge. A material specification
+
+  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L360"
+    digest: "e787b4bf74df"
+    state: dismissed
+    reason: >-
+      note 5 permits something only on a side frontage longer than 70
+      ft. Its marker is the "10 ft.5" in the THR-SW row of the All Other
+      Uses block; the encoded values in this region are LDR-SW's, whose
+      row carries no marker 5

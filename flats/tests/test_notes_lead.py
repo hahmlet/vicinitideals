@@ -190,7 +190,10 @@ def test_the_downtown_use_table_answers_itself(downtown) -> None:
     the table above them stop being orphans."""
     use_table = next(b for b in downtown.blocks if b.head == 307)
     assert [b.mark for b in use_table.bodies] == [str(n) for n in range(1, 25)]
-    assert len(downtown.unbodied) == 5
+    # The five that were left over belonged to the material palette, whose
+    # heading names itself "Table 4.1152(B)(8) Notes:" -- brackets the table
+    # identifier did not admit until they were let in. Nothing is orphaned now.
+    assert downtown.unbodied == ()
 
 
 def test_the_two_tables_stop_answering_each_other(downtown) -> None:
@@ -200,7 +203,9 @@ def test_the_two_tables_stop_answering_each_other(downtown) -> None:
     superscripts are now visible as unmarked bodies rather than hidden by the
     use table's."""
     heads = sorted(b.head for b in downtown.blocks)
-    assert heads == [307, 527]
+    # 4473 is the material palette, a third block and a third region. It was
+    # invisible while a table identifier could not carry brackets.
+    assert heads == [307, 527, 4473]
     assert [b.region for b in downtown.blocks if b.head == 307] == [(0, 306)]
     assert [b.region for b in downtown.blocks if b.head == 527] == [(365, 526)]
 
