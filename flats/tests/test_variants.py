@@ -979,6 +979,76 @@ def test_an_exempted_standard_leaves_the_resolution_entirely() -> None:
     assert as_townhouses.exempted == ("max_lot_depth_ratio",)
 
 
+def test_but_it_does_not_take_its_lever_with_it() -> None:
+    """The value leaves; the toggle that would bring it back must not.
+
+    `levers` unions over `values`, and an exempted standard is not in `values`
+    -- so a zone whose only conditional standard was switched off offered no
+    toggles at all. Read straight, that says nothing about this zone changes
+    for any election a developer can make, which is the opposite of true: the
+    election is exactly what changes it.
+
+    Written the other way round from the case above -- exempt at the base and
+    stated under the condition -- because that is the shape the corpus holds.
+    Troutdale HDR states no density ceiling for a quadplex on one lot and
+    states one again on unit lots, and offered nothing.
+    """
+    held = Value(
+        name="max_lot_depth_ratio",
+        exempt=True,
+        prov=PROV,
+        variants=(Variant(value=3, when=("unit_lots",), prov=PROV),),
+    )
+    rules = RuleSet(layers(max_lot_depth_ratio=held))
+
+    on_one_lot = rules.resolve(LAYER, "R5")
+    assert on_one_lot.exempted == ("max_lot_depth_ratio",)
+    assert "max_lot_depth_ratio" not in on_one_lot.values
+    assert on_one_lot.levers == frozenset({"unit_lots"})
+
+    as_townhouses = rules.resolve(LAYER, "R5", conditions=["unit_lots"])
+    assert as_townhouses.values["max_lot_depth_ratio"].value == 3
+    assert as_townhouses.exempted == ()
+    assert as_townhouses.levers == frozenset({"unit_lots"})
+
+
+def test_and_a_later_layer_that_states_the_standard_takes_the_lever_back() -> None:
+    """Bookkeeping, and the reason it is per name rather than one flat set. If
+    a more specific layer states the standard outright, the exemption is gone
+    and so is anything it was contributing."""
+    exempt_here = Value(
+        name="max_lot_depth_ratio",
+        exempt=True,
+        prov=PROV,
+        variants=(Variant(value=3, when=("unit_lots",), prov=PROV),),
+    )
+    stated_here = Value(name="max_lot_depth_ratio", value=4, prov=PROV)
+    state = Layer(
+        layer="or",
+        kind="state",
+        label="Oregon",
+        zones={"R5": Zone(zone="R5", values={"max_lot_depth_ratio": exempt_here})},
+    )
+    rules = RuleSet({**layers(max_lot_depth_ratio=stated_here), "or": state})
+
+    got = rules.resolve(LAYER, "R5")
+    assert got.values["max_lot_depth_ratio"].value == 4
+    assert got.exempted == ()
+    assert got.levers == frozenset()
+
+
+def test_the_zone_that_found_this_offers_its_toggle_again() -> None:
+    """Troutdale HDR, against the real corpus. Its density ceiling is the only
+    conditional standard in the zone, the code switches it off for a quadplex
+    on one lot, and until now the resolution reported no levers whatsoever --
+    so a batch view over Troutdale had nothing to offer on the one zone where
+    splitting the plat changes a number."""
+    real = RuleSet(load_rules())
+    got = real.resolve("or/multnomah/troutdale", "HDR")
+    assert "max_density_du_per_acre" in got.exempted
+    assert "unit_lots" in got.levers
+
+
 # --- and a standard the code never states at all --------------------------
 #
 # An exemption under a condition was expressible from the start. A zone that

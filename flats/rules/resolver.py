@@ -153,6 +153,14 @@ class ZoneResolution:
     #: rather than "we never encoded it", which is a different sentence with a
     #: different fix.
     exempted: tuple[str, ...] = ()
+    #: Conditions that move a standard this configuration exempts. Held apart
+    #: from ``values`` because the value they move is not in it: an exempt
+    #: standard is dropped so nothing can compare a lot against it, and the
+    #: lever was being dropped with it. Troutdale HDR is the case -- its
+    #: density ceiling is switched off for a quadplex on one lot and stated
+    #: again on unit lots -- and it offered no toggles at all while splitting
+    #: the plat changed a number a lot is bound by.
+    exempt_levers: frozenset[str] = frozenset()
     #: Zone codes whose standards this resolution read through a reference,
     #: least authoritative first.
     borrowed_from: tuple[str, ...] = ()
@@ -168,7 +176,12 @@ class ZoneResolution:
         The batch view's whole offer: these are the toggles worth putting in
         front of somebody looking at this selection of lots.
         """
-        return frozenset().union(*(r.levers for r in self.values.values())) if self.values else frozenset()
+        held = (
+            frozenset().union(*(r.levers for r in self.values.values()))
+            if self.values
+            else frozenset()
+        )
+        return held | self.exempt_levers
 
     @property
     def reason(self) -> str | None:
@@ -371,6 +384,9 @@ class RuleSet:
         # is not "how much" but "at all".
         locked_exempt: set[str] = set()
         exempted: set[str] = set()
+        # Per name rather than one flat set, so a more specific layer that
+        # states the standard takes its lever back out with it.
+        exempt_levers: dict[str, frozenset[str]] = {}
 
         def apply(
             values: dict[str, Value], layer: str, origin: str, via: str | None = None
@@ -389,6 +405,8 @@ class RuleSet:
                     # and remembered so the absence is explainable.
                     exempted.add(name)
                     resolved.pop(name, None)
+                    if val.levers:
+                        exempt_levers[name] = val.levers
                     if val.preempts is Preempt.always:
                         # An ancestor saying the standard does not apply, and
                         # that a local layer may not decide otherwise. OAR
@@ -404,6 +422,7 @@ class RuleSet:
                 if name in locked_exempt:
                     continue
                 exempted.discard(name)
+                exempt_levers.pop(name, None)
                 if name in locked:
                     # A preempting ancestor has already spoken. Whether that
                     # ends the matter depends on how it preempts.
@@ -520,6 +539,11 @@ class RuleSet:
             untrusted=tuple(sorted(untrusted + unread)),
             missing_required=missing,
             exempted=tuple(sorted(exempted)),
+            exempt_levers=(
+                frozenset().union(*exempt_levers.values())
+                if exempt_levers
+                else frozenset()
+            ),
             chain=chain_ids,
             conditions=held,
             ambiguous=ambiguous,
