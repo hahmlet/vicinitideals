@@ -45,12 +45,12 @@ notes: 'Table 315-2 (R-2.5 through R-30) read against the adopted ZDO on 2026-08
   Nothing in those 41 notes moved a number. The relief in this chapter is for other housing types
   (the lot-of-record exceptions name detached dwellings, duplexes, manufactured homes, prefabricated
   structures and single room occupancies -- a quadplex is none of them), for other application paths
-  (a planned unit development or a zero-lot-line development), or for the split plat. Two notes are
-  worth carrying forward. Table 315-3 note 12 states that the MAXIMUM setback standards do not apply
-  to quadplexes developed under Section 845, so the 18 ft maximum front setback encoded on both
-  village zones does not bind this building at all -- declined rather than taken, because holding a
-  maximum nobody enforces can only ever refuse a lot the county would pass, never pass one it would
-  refuse. And note 15 makes frontage on an accessway a front lot line, which turns a 5 ft side into
+  (a planned unit development or a zero-lot-line development), or for the split plat. One note is
+  worth carrying forward, and one nearly went the other way. Table 315-3 note 12 ends "do not apply
+  to cottage clusters developed pursuant to Section 845, Triplexes, Quadplexes, Townhouses, and
+  Cottage Clusters", which reads as four building types and would lift the 18 ft maximum front
+  setback off this pod. Those four are the TITLE of Section 845, printed that way nine times in this
+  document; the relief runs to cottage clusters alone and the maximum binds. Note 15 makes frontage on an accessway a front lot line, which turns a 5 ft side into
   a 10 ft front on whichever face it lands; an accessway is not a street and no layer here answers
   it, so it is `unmeasured` against the `abuts_accessway` condition and caps the VR zones.'
 ingest:

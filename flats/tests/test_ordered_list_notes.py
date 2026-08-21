@@ -24,11 +24,17 @@ a code, and it matches an ordered list of ordinary provisions even better once
 the extractor above starts numbering them. So the shape earns its reading
 twice, by the run and by the markers.
 
-What it cost to have missed it: 41 notes, 64 values, and one sentence -- Table
-315-3 note 12 -- that lifts the maximum front setback off this building
-entirely. What it did not cost: a single encoded number. Everything the notes
-say is either about another housing type, another application path, a split
-plat, or a relief this layer declines to take.
+What it cost to have missed it: 41 notes over 64 values. What it did not cost:
+a single encoded number. Everything the notes say is about another housing
+type, another application path, a split plat, or a relief this layer declines
+to take.
+
+The one that nearly did move a number is the reason to read notes at all. Table
+315-3 note 12 ends "do not apply to cottage clusters developed pursuant to
+Section 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters" -- four
+building types, one of them ours, and the 18 foot maximum front setback on both
+village zones would have come off. Those four are the TITLE of Section 845. The
+relief runs to cottage clusters and the maximum binds.
 """
 
 from __future__ import annotations
@@ -236,20 +242,51 @@ def test_and_not_one_encoded_number_moved() -> None:
     assert vr["max_coverage_pct"].value == 50
 
 
-def test_the_one_note_that_lifts_a_standard_off_this_building_is_written_down() -> None:
-    """Table 315-3 note 12: the maximum setback standards do not apply to
-    quadplexes developed under Section 845. So the 18 foot maximum front
-    setback on both village zones does not bind this pod. Declined rather than
-    taken -- a maximum nobody enforces can only ever have been met, so holding
-    it can refuse a lot the county would pass and can never pass one it would
-    refuse -- and taking it is a change to a value, tracked as one."""
+def test_the_note_that_reads_as_a_relief_and_is_a_section_title(
+    store: ProvenanceStore,
+) -> None:
+    """Table 315-3 note 12 ends "The maximum setback standards do not apply to
+    cottage clusters developed pursuant to Section 845, Triplexes, Quadplexes,
+    Townhouses, and Cottage Clusters." Read as a list of four building types it
+    lifts the 18 foot maximum front setback off this pod entirely.
+
+    It is not a list. It is the title of Section 845, and the document settles
+    it: nine sentences print the same trailing four, eight of them nowhere near
+    a setback, and two cannot be read any other way -- "subject to Section 845, Triplexes, Quadplexes,
+    Townhouses, and Cottage Clusters", and a townhouse rule whose scope would
+    contradict itself if the four were its scope. The relief runs to cottage
+    clusters, a quadplex is not one, and the maximum binds.
+
+    This is the test for a misreading that costs nothing to make and would have
+    silently deleted a standard: the safe direction on a maximum is to hold it.
+    """
+    lines = store.load(ZDO).text.splitlines()
+    title = "Section 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters"
+    printed = [i + 1 for i, line in enumerate(lines) if title in line]
+    assert printed == [1078, 1080, 1082, 1253, 1255, 1400, 1414, 1420, 1442]
+    # The two that can only be a title: one names the section as a thing you
+    # are subject to, the other states a rule for townhouses alone.
+    assert lines[1077].endswith(f"is subject to {title}.")
+    assert lines[1252].startswith(f"3 For townhouses developed pursuant to {title},")
+
     ruled = {n.line: n for n in dispositions(CLACKAMAS) if n.doc == ZDO}
     note = ruled[1420]
-    assert "maximum setback standards do not apply" in note.text
-    assert "Triplexes, Quadplexes, Townhouses" in note.text
+    assert "maximum setback standards do not apply to cottage clusters" in note.text
     assert note.state == "dismissed"
-    assert "does not bind this pod at all" in note.reason
-    assert "safe direction" in note.reason
+    assert "TITLE of Section 845" in note.reason
+    assert "not a cottage cluster" in note.reason
+
+
+def test_and_the_three_reliefs_that_hang_off_that_maximum_stand_on_their_own() -> None:
+    """Notes 18, 19 and 20 each relax the maximum front setback. While note 12
+    was misread they were dismissed as relaxations of a standard already gone,
+    which is a reason that evaporates with the misreading. Each has to decline
+    on its own merit -- a relief this screen does not take can refuse a lot the
+    county would pass and can never pass one it would refuse."""
+    ruled = {n.line: n for n in dispositions(CLACKAMAS) if n.doc == ZDO}
+    for line in (1432, 1434, 1436):
+        assert ruled[line].state == "dismissed", line
+        assert "relief" in ruled[line].reason.lower(), line
 
 
 def test_and_the_one_that_rests_on_a_lot_fact_nobody_holds_is_not_dismissed() -> None:

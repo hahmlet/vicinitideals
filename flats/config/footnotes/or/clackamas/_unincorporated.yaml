@@ -39,13 +39,23 @@
 # and an accessway is not a street, so no street layer answers it. That one is
 # `unmeasured` against a new condition, `abuts_accessway`.
 #
-# **One relief this building can actually take.** Note 12 states that the
-# maximum setback standards do not apply to quadplexes developed under Section
-# 845, so the 18 foot maximum front setback encoded on both village zones does
-# not bind this pod. It is dismissed rather than encoded here because declining
-# a relief is the safe direction -- a maximum nobody enforces can only ever
-# have been satisfied -- and because taking it changes a value, which is a
-# separate change with its own citation.
+# **The relief that looked like one and is not.** Note 12 ends "The maximum
+# setback standards do not apply to cottage clusters developed pursuant to
+# Section 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters" -- and
+# read as a list of building types that lifts the 18 foot maximum front setback
+# off this pod entirely. It is not a list. It is the TITLE of Section 845, and
+# this document prints it that way nine times, in sentences where it cannot be
+# anything else: "subject to Section 845, Triplexes, Quadplexes, Townhouses,
+# and Cottage Clusters" (L1078), "For townhouses developed pursuant to Section
+# 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters, there is no
+# minimum lot size" (L1253) -- a sentence whose subject is townhouses and which
+# would be self-contradicting if the trailing four were its scope. The relief
+# runs to cottage clusters and to nothing else. A quadplex is not a cottage
+# cluster, and the maximum binds.
+#
+# Which makes notes 18, 19 and 20 live rules rather than dead ones: each
+# relaxes that same maximum, and each is declined here because a relief this
+# screen does not take can only ever refuse a lot the county would pass.
 #
 # Nothing in this file loosens a standard. That is worth saying plainly: the
 # gate went from governing nothing in this layer to governing sixty-four
@@ -264,16 +274,21 @@ notes:
     digest: "82298db45ec0"
     state: dismissed
     reason: >-
-      note 12 does two things and the second one reaches this building: it
-      suspends minimum and maximum setbacks inside a Sunnyside Village
-      Resource Protection Area, and it states that the MAXIMUM setback
-      standards do not apply to triplexes, quadplexes, townhouses or cottage
-      clusters developed under Section 845. So the encoded maximum front
-      setback of 18 feet does not bind this pod at all. Dismissed rather than
-      encoded because declining a relief is the safe direction -- a maximum
-      nobody enforces can only ever have been met, so holding it can refuse a
-      lot the county would pass but can never pass one it would refuse. Taking
-      the relief is a change to the value and is tracked as one
+      note 12 does two things and NEITHER reaches this building. It suspends
+      minimum and maximum setbacks inside a Sunnyside Village Resource
+      Protection Area, which is a mapped overlay no layer here answers and
+      which only ever loosens. Then: "The maximum setback standards do not
+      apply to cottage clusters developed pursuant to Section 845, Triplexes,
+      Quadplexes, Townhouses, and Cottage Clusters." That trailing list is not
+      a list of building types the relief runs to -- it is the TITLE of
+      Section 845, and this document prints it that way nine times, every one
+      of them unambiguous: "subject to Section 845, Triplexes, Quadplexes,
+      Townhouses, and Cottage Clusters" (L1078), "For townhouses developed
+      pursuant to Section 845, Triplexes, Quadplexes, Townhouses, and Cottage
+      Clusters, there is no minimum lot size" (L1253). The subject of the
+      sentence is cottage clusters and nothing else. A quadplex is not a
+      cottage cluster, so the encoded 18 foot maximum front setback binds this
+      pod in full and no value moves
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1422"
     digest: "74d7b505ab19"
@@ -323,22 +338,25 @@ notes:
     state: dismissed
     reason: >-
       note 18 relaxes the MAXIMUM front setback where a public utility
-      easement prevents compliance. The maximum is what note 12 already puts
-      out of reach of this building
+      easement prevents compliance. A relief on a standard that does bind this
+      building (see note 12), turning on an easement no layer here holds, and
+      declining a relief is the safe direction
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1434"
     digest: "bdb1953624c8"
     state: dismissed
     reason: >-
       note 19 exempts dwellings on lots with less than 35 feet of street
-      frontage from the maximum front setback. The maximum again
+      frontage from that same maximum. A relief again, and on a lot too narrow
+      to hold a 56 foot building across its frontage in any case
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1436"
     digest: "44d241bbf4f0"
     state: dismissed
     reason: >-
-      note 20 requires compliance with the maximum front setback from only two
-      intersecting front lot lines. The maximum again
+      note 20 requires compliance with the maximum from only two intersecting
+      front lot lines, which is a corner lot being asked for less. A relief
+      again
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1438"
     digest: "8a24ae670fb1"
