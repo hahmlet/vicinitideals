@@ -79,7 +79,15 @@ NOTES_HEAD = re.compile(
 #: stricter rule declines -- correctly, since outside a block that pattern
 #: matches every numbered paragraph in the code. Being inside a block is what
 #: earns the looser rule.
-BLOCK_NOTE = re.compile(r"^\[?\(?(?P<n>\d{1,2})\)?\]?[.):]?\s+(?P<text>\S.*)$")
+#:
+#: The brackets have to balance. Troutdale wraps a note onto "(20 feet)."
+#: and an unbalanced reading takes that for note 20 -- which is above every
+#: mark the list has reached, so it is accepted as the next note and the two
+#: real notes below it are lost to the restart rule.
+BLOCK_NOTE = re.compile(
+    r"^(?P<open>[\[(])?(?P<n>\d{1,2})(?(open)[\])]|[.):]?)[.):]?"
+    r"\s+(?P<text>\S.*)$"
+)
 
 #: The lettered form, inside a block: Wilsonville's Table 8A runs A through P.
 #: A letter earns far less benefit of the doubt than a digit does, because
@@ -181,6 +189,10 @@ ENDS_BLOCK = re.compile(
 #: reading is not a notes block any more.
 BLOCK_LIMIT = 80
 
+#: How far above a block to look for the table header it is repeating. About a
+#: page of a codifier's PDF.
+REPEAT_WINDOW = 80
+
 #: A marker glued to the unit, which is what a PDF superscript becomes when
 #: extraction loses its baseline: "45 feet2", "35 ft.12", "20,000 sq. ft.1".
 #: Codes write runs of them -- "20 feet7,8,9,10,11" -- and each number in the
@@ -222,6 +234,18 @@ PAREN_CITATION = re.compile(
 
 #: The bracketed form, anywhere on a line: "30 ft. [3]".
 BRACKET_MARKER = re.compile(r"\[(?P<n>\d{1,2})\]")
+
+#: The marker spelled out in words, which needs no bracket and no layout:
+#: Troutdale's dimensional tables print "10 or 20" in the cell and "see note
+#: 2" under it. Read anywhere on a line, like the bracket, because the phrase
+#: identifies itself -- there is no other thing "see note 2" can mean.
+#:
+#: Forty-one of the corpus's forty-two occurrences are Troutdale's, and every
+#: one of its fourteen notes was a body nobody pointed at. Four of them make a
+#: setback depend on where the driveway is: front yard 20 feet instead of 10
+#: if access is taken from the front, rear yard 0 feet with an alley and 10
+#: without. A screen that reads the cell alone takes the looser number.
+SEE_NOTE = re.compile(r"\bsee\s+notes?\s+(?P<n>\d{1,2})\b", re.I)
 
 #: Markers on a row *label* rather than a cell: "Minimum lot area1,2". Only
 #: read on a line that is laid out as a table row, because in prose a trailing
@@ -298,6 +322,32 @@ FURNITURE = re.compile(
     r"|^[A-Z]{1,3}\d+:\d+",
     re.I,
 )
+
+#: The page frame, in the one shape that cannot be case-folded. Troutdale
+#: stamps every page "TDC3-7" and runs a header over it that pairs the section
+#: number with the publication or chapter name in capitals -- "3.130
+#: TROUTDALE DEVELOPMENT CODE" on one side of the spread and "ZONING
+#: DISTRICTS      3.130" on the other. Both land in the middle of a notes list
+#: every time one crosses a page.
+PAGE_STAMP = re.compile(r"^[A-Z]{2,5}\d{1,3}-\s?\d{1,3}$")
+
+#: The title-then-number half, which is unambiguous: no code in this corpus
+#: heads a section with the number last.
+FRAME_HEAD_TRAILING = re.compile(
+    r"^[A-Z][A-Z ]{4,}\s{2,}\d{1,3}\.\d{2,4}(?:\.\d{1,4})?$"
+)
+
+#: The number-then-title half, which is shaped exactly like a Gresham section
+#: heading -- "4.0130      RESIDENTIAL LAND USE DISTRICT STANDARDS" is a real
+#: one, and ending a block there is right. So this half is only believed
+#: directly under the page stamp, which is the rest of the frame it belongs
+#: to. A heading has a blank line over it, not a page number.
+FRAME_HEAD_LEADING = re.compile(
+    r"^\d{1,3}\.\d{2,4}(?:\.\d{1,4})?\s{2,}[A-Z][A-Z ]{4,}$"
+)
+
+#: How close under the stamp the ambiguous half has to sit.
+FRAME_REACH = 3
 
 #: Two or more spaces: the column gap that tells a table row from a sentence.
 GAP = re.compile(r"\s{2,}")
@@ -873,6 +923,11 @@ def _bears_a_marker(raw: str) -> bool:
     return bool(CELL_MARKER.search(stripped) and _cell_row(raw, stripped))
 
 
+def _flat(raw: str) -> str:
+    """A line with its layout taken out, for comparing one to another."""
+    return re.sub(r"\s+", " ", raw.strip())
+
+
 def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
     """The numbered notes beginning at ``start``, and where they stop.
 
@@ -890,6 +945,24 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
     """
     bodies: list[Body] = []
     texts: list[list[str]] = []
+    #: The table's own column header, flattened, from the page this block sits
+    #: at the foot of. A wide table reprints its header on every page it
+    #: crosses -- Troutdale repeats "Dimensional Standard  LDR-1  LDR-2 ..."
+    #: four lines below a note it interrupts -- and read as note text it lands
+    #: in the middle of the sentence.
+    #:
+    #: Two things keep this off real prose. The line has to carry a column
+    #: gap, so a heading that happens to be printed twice (a contents entry
+    #: and the section itself) is not a candidate; and only the page above is
+    #: looked at, because a document's contents list is hundreds of lines up.
+    above = {
+        flat
+        for raw in lines[max(0, start - REPEAT_WINDOW) : start]
+        if GAP.search(raw) and len(flat := _flat(raw)) >= 4
+    }
+    #: Where the last page stamp was seen, so the half of the running header
+    #: that is shaped like a section heading can be told from one.
+    stamped = -FRAME_REACH - 1
     highest = (-1, -1)
     #: Highest mark seen inside the sub-list a note introduced, or 0 when the
     #: reading is at the top level. See the restart branch below.
@@ -897,7 +970,16 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
     i = start
     while i < len(lines) and i - start < BLOCK_LIMIT:
         stripped = lines[i].strip()
-        if not stripped or FURNITURE.search(stripped):
+        if PAGE_STAMP.match(stripped):
+            stamped = i
+            i += 1
+            continue
+        if (
+            not stripped
+            or FURNITURE.search(stripped)
+            or FRAME_HEAD_TRAILING.match(stripped)
+            or (FRAME_HEAD_LEADING.match(stripped) and i - stamped <= FRAME_REACH)
+        ):
             i += 1
             continue
         if ENDS_BLOCK.match(stripped) or (bodies and NOTES_HEAD.match(stripped)):
@@ -993,6 +1075,9 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
             # last note would swallow its markers -- they sit inside a block
             # and blocks are where markers are not counted.
             break
+        if _flat(stripped) in above:
+            i += 1
+            continue
         texts[-1].append(stripped)
         i += 1
     joined = [
@@ -1029,6 +1114,8 @@ def _markers(lines: Sequence[str], inside: Sequence[tuple[int, int]]) -> list[Ma
         # what a cell *ends* with.
         for m in BRACKET_MARKER.finditer(stripped):
             add(m.group("n"), "bracket")
+        for m in SEE_NOTE.finditer(stripped):
+            add(m.group("n"), "phrase")
         marked_cells = list(CELL_MARKER.finditer(stripped))
         lone = LONE_CELL.match(stripped) is not None
         if _cell_row(raw, stripped):

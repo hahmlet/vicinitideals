@@ -242,15 +242,23 @@ def test_the_corner_lot_qualifier_the_stacked_shape_was_hiding(store: list) -> N
 
 
 def test_documents_that_lost_their_markers_are_named(store: list) -> None:
-    """Troutdale's zoning chapter states seventeen notes and not one marker
-    survived extraction -- the superscripts are simply gone. That is the
-    failure the census exists to make visible instead of silent."""
+    """Bodies and no markers at all is the shape the census exists to make
+    visible instead of silent: notes are stated, and nothing on the page says
+    which cell they answer. Gresham Butte's two are the last of them -- its
+    density table lost its superscripts in extraction. Troutdale's zoning
+    chapter used to read the same way and did not deserve to: its markers were
+    never lost, they were spelled out in words (see test_page_frame)."""
+    butte = next(
+        row for row in store if row.doc.endswith("gresham/4.1300.gresham-butte.txt")
+    )
+    assert butte.bodies and not butte.markers
+    assert not butte.reconciled
+    assert len(butte.unmarked) == len(butte.bodies)
+
     troutdale = next(
         row for row in store if row.doc.endswith("troutdale/3.zoning-districts.txt")
     )
-    assert troutdale.bodies and not troutdale.markers
-    assert not troutdale.reconciled
-    assert len(troutdale.unmarked) == len(troutdale.bodies)
+    assert troutdale.reconciled
 
 
 def test_a_lettered_notes_block_is_a_notes_block():

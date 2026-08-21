@@ -25,13 +25,37 @@ notes:
       front yard is a compliance path the code offers outright
 
   - quote: "or/multnomah/troutdale/3.zoning-districts.txt#L307"
-    digest: "bd4fbc6e727c"
+    digest: "58af85c8a9a8"
     state: dismissed
     reason: >-
       note 2 of the duplex table, and it states the side yards for a zero lot
       line dwelling -- an alternative form we do not screen; the pod is
       measured against the building-side and side-yard rows of 3.130.B and C,
       which it can satisfy without this
+
+  # Notes 3, 4 and 5 print below a page break, under the running header and a
+  # reprint of the table's own column header. The block used to end at the
+  # header, so these three were never captured at all -- and notes 3 and 4 are
+  # the only ones of the five that attach to a column this layer encodes.
+
+  - quote: "or/multnomah/troutdale/3.zoning-districts.txt#L315"
+    digest: "8e2179267b47"
+    state: dismissed
+    reason: >-
+      note 3 of the duplex table, and it resolves the "15 or 20" rear yard
+      printed for LDR-1, LDR-2 and MDR: 15 feet for a duplex, 20 where the
+      driveway comes off the rear. It says "for duplexes" in its own words,
+      and the pod is a quadplex -- its rear yard is read from 3.130.B, which
+      prints a bare 10 in those three columns with no marker on it
+
+  - quote: "or/multnomah/troutdale/3.zoning-districts.txt#L317"
+    digest: "b5a4b59afec6"
+    state: dismissed
+    reason: >-
+      note 4 of the duplex table, resolving the same "15 or 20" cell for the
+      MDR (TC) column where the driveway comes off a side yard. Same table and
+      the same scope as note 3, and MDR (TC) is a Town Center district this
+      layer does not encode either way
 
   # --- 3.130.B and C, the tables we read -----------------------------
   #
