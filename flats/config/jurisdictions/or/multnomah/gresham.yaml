@@ -33,7 +33,26 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
   derivation (24.2 u/ac, 4 units) rather than the table''s lot-size row, so the townhouse "None" does
   not displace it — the unit count is what the density counts, and dividing the lot does not change it.
   Footnote 5 on the LDR front setback (a garage or carport entry set at 20 ft.) is carried as
-  setback_garage_entrance_ft rather than folded into the front setback.'
+  setback_garage_entrance_ft rather than folded into the front setback.
+
+
+  READ AND NOT ENCODED: 7.0512, the Rockwood Design District standards. Table 4.0430 sends the RTC,
+  SC and SC-RJ street setbacks there -- "Setbacks at Street: See Section 7.0512.A.2" -- which made it
+  six binding references, the loudest unfetched thing in this jurisdiction. Fetched and read
+  2026-08-21, and it does not reach this building. 7.0502(B): "Section 7.0501-7.0512 do not apply to:
+  Single detached dwellings, duplexes, triplexes, and quadplexes (for these developments, see Section
+  7.0420)." A quadplex is named in the exception list, so the encoded 5 ft minimum and 20 ft maximum
+  from Table 4.0430''s Residential sub-cell stand as this building''s street setbacks in SC and SC-RJ.
+
+
+  It reaches the split plat. 7.0502(A) lists Townhouses among the uses the section applies to, and
+  7.0512(A)(2)(S1) is where the numbers get harder: inside the Rockwood triangle the street setback
+  is set by which street the lot fronts -- 0 to 5 ft on Stark and 181st, 10 to 15 ft on Burnside,
+  Pine, Oak, Ash, 185th, 187th and the two future avenues -- and outside it by district, 5 ft minimum
+  and 20 ft maximum for Multi-Family and Townhouse Style in all three. A unit-lot design would owe a
+  street name and a triangle boundary before any of that can be screened, and neither is measured.
+  Not encoded as a `unit_lots` variant for that reason: an encoded number here would be a guess about
+  which of four bands a lot sits in.'
 ingest:
   geoid: null
   juris_city_codes:
@@ -130,6 +149,9 @@ code:
     extraction: plain
   - id: "7.0400.middle-housing-design"
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+  - id: "7.0500.rockwood-design"
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0500.pdf
+    title: Section 7.0500 Rockwood Design District
     title: "Section 7.0400 - Middle Housing Design Standards"
   # Fetched to settle a doubt three zone notes were carrying rather than to
   # supply a number. 9.0602 excludes middle housing from the whole section,
