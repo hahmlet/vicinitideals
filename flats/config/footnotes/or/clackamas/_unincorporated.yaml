@@ -13,7 +13,18 @@
 # space and no heading, which is the one run shape the census declined. Fixing
 # the extractor and teaching the census that shape is what produced this file.
 #
-# Forty-one notes over four blocks. They fall into five groups.
+# Then a third reader, one level down. Table 315-1's note 1 introduces its
+# own criteria and they restart at 1, so the block headed where the INNER
+# list did and read four sub-criteria as notes 1 to 4 -- stopping before
+# notes 7 and 8, which are the two printed on the Quadplexes cell itself.
+# The whole permission for this building in nine districts was governed by
+# a pair of notes nobody had read. And a fourth: an HTML table puts every
+# cell on its own line, so that cell arrives as the four characters "P7,8"
+# and the marker reader, which asks a line to carry more than one
+# permission code before believing it is a row, declined it.
+#
+# Seventy-seven notes over four blocks, every one of them read. They fall
+# into seven groups.
 #
 # **Other housing types.** Most of the relief in this chapter names detached
 # single-family dwellings, duplexes, manufactured homes, prefabricated
@@ -57,50 +68,261 @@
 # relaxes that same maximum, and each is declined here because a relief this
 # screen does not take can only ever refuse a lot the county would pass.
 #
+# **Another use.** Table 315-1 is a use table for the whole chapter, so most
+# of its twenty-three notes condition uses this screen never places --
+# hotels, towers, swimming pools, recyclable drop-off sites, single room
+# occupancies. Two of them state setbacks large enough to matter if they
+# ever reached a dwelling (45 feet and 30 feet from any other residential
+# lot), and they are written down rather than waved off for that reason.
+# They govern here only because the region rule is deliberately blunt: a
+# note in the region a value's quote falls in governs that value, whether
+# or not the cell carries its marker.
+#
+# **Another district's table.** Table 315-4 covers PMD, MR-1, MR-2, HDR,
+# VA, SHD and RCHDR. This layer holds none of them -- its nine zones are
+# the eight urban low density districts and the two village districts --
+# so its sixteen notes are read and dismissed as a block.
+#
+# **The two on the cell.** Note 7 is the one-primary-building rule: apart
+# from an ADU or a temporary permit, a lot of record may hold only one of
+# nine dwelling types. It bars combining them, and this screen places a
+# single quadplex, which is one of the nine. Note 8 sends a quadplex to
+# Section 845 -- the document this layer already reads its 7,000 square
+# foot minimum lot size and its design standards from, which is the only
+# thing that lets a pointer be called read.
+#
 # Nothing in this file loosens a standard. That is worth saying plainly: the
 # gate went from governing nothing in this layer to governing sixty-four
-# values, and not one encoded number moved as a result.
+# values under seventy-seven notes, and not one encoded number moved.
 notes:
   # --- Table 315-1, limited-use conditions ---------------------------
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1042"
-    digest: "c75ea91036f5"
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1040"
+    digest: "2e0890ab79bf"
     state: dismissed
     reason: >-
-      one of the four conditions on Table 315-1's LIMITED USE column. The
-      Quadplexes row reads "P" in every district this layer holds -- a primary
-      use, not a limited one -- so none of the four reaches this building.
-      They are governed here only because the permission is quoted from lines
-      this block's region covers
+      one of the five sets of criteria on Table 315-1's LIMITED USE
+      column. The Quadplexes row reads "P7,8" in every district this layer
+      holds -- a primary use, not a limited one -- so none of them reaches
+      this building. They are governed here because the permission is
+      quoted from lines this block's region covers, which is the region
+      rule being conservative rather than a claim that the note is about a
+      quadplex
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1044"
-    digest: "962a2294adc9"
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1050"
+    digest: "45714fcf1e08"
     state: dismissed
     reason: >-
-      one of the four conditions on Table 315-1's LIMITED USE column. The
-      Quadplexes row reads "P" in every district this layer holds -- a primary
-      use, not a limited one -- so none of the four reaches this building.
-      They are governed here only because the permission is quoted from lines
-      this block's region covers
+      one of the five sets of criteria on Table 315-1's LIMITED USE
+      column. The Quadplexes row reads "P7,8" in every district this layer
+      holds -- a primary use, not a limited one -- so none of them reaches
+      this building. They are governed here because the permission is
+      quoted from lines this block's region covers, which is the region
+      rule being conservative rather than a claim that the note is about a
+      quadplex
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1046"
-    digest: "b95e0c3e15aa"
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1052"
+    digest: "bb6f17b4ba2e"
     state: dismissed
     reason: >-
-      one of the four conditions on Table 315-1's LIMITED USE column. The
-      Quadplexes row reads "P" in every district this layer holds -- a primary
-      use, not a limited one -- so none of the four reaches this building.
-      They are governed here only because the permission is quoted from lines
-      this block's region covers
+      one of the five sets of criteria on Table 315-1's LIMITED USE
+      column. The Quadplexes row reads "P7,8" in every district this layer
+      holds -- a primary use, not a limited one -- so none of them reaches
+      this building. They are governed here because the permission is
+      quoted from lines this block's region covers, which is the region
+      rule being conservative rather than a claim that the note is about a
+      quadplex
 
-  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1048"
-    digest: "28b15da20621"
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1058"
+    digest: "e7f5b0ecf894"
     state: dismissed
     reason: >-
-      one of the four conditions on Table 315-1's LIMITED USE column. The
-      Quadplexes row reads "P" in every district this layer holds -- a primary
-      use, not a limited one -- so none of the four reaches this building.
-      They are governed here only because the permission is quoted from lines
-      this block's region covers
+      one of the five sets of criteria on Table 315-1's LIMITED USE
+      column. The Quadplexes row reads "P7,8" in every district this layer
+      holds -- a primary use, not a limited one -- so none of them reaches
+      this building. They are governed here because the permission is
+      quoted from lines this block's region covers, which is the region
+      rule being conservative rather than a claim that the note is about a
+      quadplex
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1072"
+    digest: "8e6280905f68"
+    state: dismissed
+    reason: >-
+      one of the five sets of criteria on Table 315-1's LIMITED USE
+      column. The Quadplexes row reads "P7,8" in every district this layer
+      holds -- a primary use, not a limited one -- so none of them reaches
+      this building. They are governed here because the permission is
+      quoted from lines this block's region covers, which is the region
+      rule being conservative rather than a claim that the note is about a
+      quadplex
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1074"
+    digest: "11f6c6281d46"
+    state: dismissed
+    reason: >-
+      note 6 lets a dwelling type the district does NOT permit in anyway,
+      if it is built as affordable housing under Section 846. A door into
+      a zone rather than a condition on one, and a quadplex is already
+      permitted outright in all nine districts, so the door is one this
+      building has no need of. Looser in every direction
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1076"
+    digest: "f2a1c4b237bd"
+    state: dismissed
+    reason: >-
+      note 7 IS on the Quadplexes cell, and it is the one-primary-building
+      rule: apart from an accessory dwelling unit or a temporary permit, a
+      lot of record may hold only ONE of cottage cluster, detached
+      single-family dwelling, duplex, manufactured home, prefabricated
+      structure, quadplex, single room occupancy, townhouse or triplex. It
+      bars combining types, not building one. This screen places a single
+      quadplex as the development of the lot, which is exactly one of the
+      listed types, so the rule is satisfied by the thing being screened.
+      What it would refuse is a quadplex ADDED beside a dwelling that
+      stays -- a redevelopment question about what is already standing,
+      which is not a dimensional standard and is not what this layer
+      decides
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1078"
+    digest: "3a9ebc198e0b"
+    state: dismissed
+    reason: >-
+      note 8 is the other one on the Quadplexes cell, and it is where this
+      layer's whole design regime comes from: a quadplex here is subject
+      to Section 845. Section 845.01 is the source of the encoded 7,000
+      square foot minimum lot size -- not Table 315-2, which sends lot
+      size elsewhere -- and 845.02's window, entry orientation and garage
+      standards are read there. The note is a pointer to a document this
+      layer holds and reads, which is the only reason it can be called
+      read
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1080"
+    digest: "73ab4c9d0d92"
+    state: dismissed
+    reason: >-
+      note 9 makes a manufactured dwelling park a primary use where it
+      also qualifies as a cottage cluster, and a conditional use
+      otherwise. Another use entirely
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1082"
+    digest: "e05111589381"
+    state: dismissed
+    reason: >-
+      note 10 is note 9 with prohibition in place of conditional use in
+      the remaining districts. Another use entirely
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1084"
+    digest: "8c414067f3c7"
+    state: dismissed
+    reason: >-
+      note 11 caps a single room occupancy at six units. a condition on a
+      use this screen does not place. It governs here only because the
+      quadplex permission is quoted from a line in this block's region,
+      and the Quadplexes cell carries notes 7 and 8 and nothing else
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1086"
+    digest: "1e09d8393712"
+    state: dismissed
+    reason: >-
+      note 12 sets a townhouse minimum lot size of 3,630 square feet in
+      MR-1 and 2,420 in MR-2. A different housing type in two districts
+      this layer does not hold
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1088"
+    digest: "b7786b5b8711"
+    state: dismissed
+    reason: >-
+      note 13 permits indoor facilities only. a condition on a use this
+      screen does not place. It governs here only because the quadplex
+      permission is quoted from a line in this block's region, and the
+      Quadplexes cell carries notes 7 and 8 and nothing else
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1090"
+    digest: "2f142aa74ef7"
+    state: dismissed
+    reason: >-
+      note 14 lets the county authorise a similar use under Section 106. A
+      procedure for a use not listed, and a quadplex is listed
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1092"
+    digest: "b6cea6578eb2"
+    state: dismissed
+    reason: >-
+      note 15 allows a use to be run as a home occupation under Section
+      822. An occupancy question about what happens inside a dwelling, not
+      a standard the building is measured against
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1094"
+    digest: "6d042bc9a5a3"
+    state: dismissed
+    reason: >-
+      note 16 caps hotels in the SHD District at 80 units per gross acre.
+      Another use, and a district this layer does not hold
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1096"
+    digest: "580c5d3f9ac5"
+    state: dismissed
+    reason: >-
+      note 17 permits an accessory kitchen only in a townhouse, detached
+      single-family dwelling, manufactured home or prefabricated
+      structure. A quadplex is none of those, so a quadplex may not have
+      one -- a rule about what is inside a dwelling unit, which no
+      dimension this layer encodes can express and no lot can fail
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1098"
+    digest: "63ae7c367462"
+    state: dismissed
+    reason: >-
+      note 18 keeps the base of a tower back from the property line by its
+      own height. A setback, and a real one, but on towers: it marks the
+      communication tower rows, and the Quadplexes cell carries 7 and 8
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1100"
+    digest: "3d5db75d9ccd"
+    state: dismissed
+    reason: >-
+      note 19 lets a use include concessions and restrooms. a condition on
+      a use this screen does not place. It governs here only because the
+      quadplex permission is quoted from a line in this block's region,
+      and the Quadplexes cell carries notes 7 and 8 and nothing else
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1102"
+    digest: "00435788ff87"
+    state: dismissed
+    reason: >-
+      note 20 holds a principal building, swimming pool or use 45 feet off
+      any other lot in a residential district. The largest setback in the
+      chapter and it does not touch this building: it marks the rows for
+      uses this screen does not place, and the Quadplexes cell carries 7
+      and 8. Worth writing down rather than waving off, because a 45 foot
+      standby setback read onto a quadplex would fail nearly every lot in
+      the county
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1104"
+    digest: "86423bc1aca0"
+    state: dismissed
+    reason: >-
+      note 21 is note 20 at 30 feet. Same rows, same reason
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1106"
+    digest: "90110df1ca1a"
+    state: dismissed
+    reason: >-
+      note 22 permits recyclable drop-off sites only as accessory to an
+      institutional use. a condition on a use this screen does not place.
+      It governs here only because the quadplex permission is quoted from
+      a line in this block's region, and the Quadplexes cell carries notes
+      7 and 8 and nothing else
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1108"
+    digest: "976f9f0a4710"
+    state: dismissed
+    reason: >-
+      note 23 conditions a use on sitting inside a planned unit
+      development of at least 100 dwelling units. a condition on a use
+      this screen does not place. It governs here only because the
+      quadplex permission is quoted from a line in this block's region,
+      and the Quadplexes cell carries notes 7 and 8 and nothing else
 
   # --- Table 315-2, the eight low-density districts -------------------
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1249"
@@ -180,7 +402,7 @@ notes:
       this layer screens the parent lot
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1267"
-    digest: "20d8f85e796d"
+    digest: "72f106451675"
     state: dismissed
     reason: >-
       note 10 opens a list of exceptions for a lot of record of 6,000 square
@@ -189,6 +411,19 @@ notes:
       manufactured homes, prefabricated structures and single room
       occupancies; a quadplex is not among them, so it cannot take the relief,
       and the relief is looser than what is encoded
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1273"
+    digest: "0fdd5d1b7a9f"
+    state: dismissed
+    reason: >-
+      note 11 sets an accessory building's minimum rear and side setbacks
+      on a grid of building area against building height, from none at all
+      under 100 square feet and 8 feet tall to 5 feet side and 10 feet
+      rear over 500 square feet. A four-unit attached dwelling is the
+      primary building on the lot and is measured against the district's
+      own setbacks, which are what is encoded. Read, and it stays read:
+      the table is the one this note is attached to, so a future accessory
+      structure on the same lot has somewhere to look
 
   # --- Table 315-3, VR-5/7 and VR-4/5 ---------------------------------
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1398"
@@ -419,3 +654,120 @@ notes:
       note 27 lets a second-storey accessory dwelling unit cantilever four
       feet into the minimum rear setback over an alley. A different building,
       and a projection allowance
+
+  # --- Table 315-4, the districts this layer does not hold ---
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1535"
+    digest: "79986fec9889"
+    state: dismissed
+    reason: >-
+      Table 315-4 governs PMD, MR-1, MR-2, HDR, VA, SHD and RCHDR -- the
+      medium and high density districts. This layer holds none of them:
+      its nine zones are the eight urban low density districts of Table
+      315-2 and the two village districts of Table 315-3. Read in full and
+      dismissed as a block, because a note cannot reach a value in a
+      district the note's own table does not cover. This one:
+      nonconforming detached single-family lot size, 3,630 square feet
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1537"
+    digest: "f241cefcdb55"
+    state: dismissed
+    reason: >-
+      Table 315-4, another district's table: the same at 2,420 square feet
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1539"
+    digest: "809fce9a70b9"
+    state: dismissed
+    reason: >-
+      Table 315-4, another district's table: a swimming pool accessory to
+      a dwelling, front setback 10 feet
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1541"
+    digest: "da23e47852bb"
+    state: dismissed
+    reason: >-
+      Table 315-4, another district's table: a corner lot developed with a
+      townhouse
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1543"
+    digest: "ef7be25e802e"
+    state: dismissed
+    reason: >-
+      Table 315-4, another district's table: sends detached dwellings back
+      to Table 315-2
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1545"
+    digest: "75dd43e1bdcd"
+    state: dismissed
+    reason: >-
+      Table 315-4, another district's table: frontage on Sunnyside Road,
+      measured from the centerline
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1547"
+    digest: "d6d21825d34e"
+    state: dismissed
+    reason: >-
+      Table 315-4, another district's table: awnings, porches and bays
+      projecting six feet
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1549"
+    digest: "0733dad8df78"
+    state: dismissed
+    reason: >-
+      Table 315-4, another district's table: dwellings and their accessory
+      structures, front setback 15 feet
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1551"
+    digest: "692e7300cf2c"
+    state: dismissed
+    reason: >-
+      Table 315-4, another district's table: plazas on the Clackamas
+      Regional Center design plan map
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1553"
+    digest: "2194504c3358"
+    state: dismissed
+    reason: >-
+      Table 315-4, another district's table: a planned unit development's
+      interior setbacks
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1555"
+    digest: "14a01da44c72"
+    state: dismissed
+    reason: >-
+      Table 315-4, another district's table: a swimming pool's side and
+      rear setbacks
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1557"
+    digest: "592c5fe4c648"
+    state: dismissed
+    reason: >-
+      Table 315-4, another district's table: an accessory building's
+      setbacks by area and height
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1564"
+    digest: "e787a80395b8"
+    state: dismissed
+    reason: >-
+      Table 315-4, another district's table: a rear lot line abutting a
+      residential district
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1566"
+    digest: "9e115ceea8df"
+    state: dismissed
+    reason: >-
+      Table 315-4, another district's table: a side lot line abutting a
+      low density or village district
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1568"
+    digest: "8de4641ed247"
+    state: dismissed
+    reason: >-
+      Table 315-4, another district's table: a townhouse's side setback
+      where no common wall is shared
+
+  - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1570"
+    digest: "8a5fef80c712"
+    state: dismissed
+    reason: >-
+      Table 315-4, another district's table: a side lot line abutting a
+      residential district

@@ -189,8 +189,8 @@ def test_the_document_behind_this_whole_layer_had_no_readable_footnotes(
     this holds is the shape of the repair, not the fault. Still unreconciled,
     which is the ledger being honest rather than a claim of completeness."""
     got = census(store.load(ZDO).text, layer=CLACKAMAS, doc=ZDO)
-    assert len(got.markers) > 300
-    assert len(got.bodies) == 57
+    assert len(got.markers) > 400
+    assert len(got.bodies) == 77
     assert len(got.unbodied) < len(got.markers) / 4
     assert not got.reconciled
 

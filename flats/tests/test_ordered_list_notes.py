@@ -197,9 +197,9 @@ def test_the_worst_document_in_the_corpus_now_has_bodies(store: ProvenanceStore)
     every marker in the document to a fraction of them. Still unreconciled, and
     that is the ledger doing its job rather than a claim of completeness."""
     got = census(store.load(ZDO).text, layer=CLACKAMAS, doc=ZDO)
-    assert len(got.markers) > 300
+    assert len(got.markers) > 400
     assert len(got.blocks) == 4
-    assert len(got.bodies) == 57
+    assert len(got.bodies) == 77
     assert len(got.unbodied) < len(got.markers) / 4
 
 
@@ -209,12 +209,12 @@ def test_each_table_answers_its_own_markers(store: ProvenanceStore) -> None:
     Table 315-3's notes reached back over the low-density districts."""
     got = census(store.load(ZDO).text, layer=CLACKAMAS, doc=ZDO)
     heads = [b.head for b in got.blocks]
-    assert heads == [1042, 1249, 1398, 1535]
+    assert heads == [1040, 1249, 1398, 1535]
     # Table 315-2's grid sits inside the second block's region, so the R zones
     # read the ten notes printed under their own table.
     second = got.blocks[1]
     assert second.region[0] < 1169 < second.region[1]
-    assert len(second.bodies) == 10
+    assert len(second.bodies) == 11
 
 
 # --- the gate, awake --------------------------------------------------

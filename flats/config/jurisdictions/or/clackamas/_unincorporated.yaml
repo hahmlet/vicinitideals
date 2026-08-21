@@ -35,14 +35,20 @@ notes: 'Table 315-2 (R-2.5 through R-30) read against the adopted ZDO on 2026-08
   -- so the footnote gate governed nothing in this layer and would have let every value here certify
   under notes nobody had read. It was silent because it was blind, not because the notes were clean.
 
-  FOOTNOTES, read 2026-08-21. Both causes fixed, and all 41 notes ruled in
-  flats/config/footnotes/or/clackamas/_unincorporated.yaml. The county writes each table''s notes as
-  an HTML ordered list, whose numbers the browser draws and the text never carries, so ten bodies
-  were stored stripped of the only thing tying them to a marker; the notes that did keep their
-  numbers arrived as "9 Except for middle housing", one space and no heading, which is the one run
-  shape the census declined. The gate now governs 64 values here and blocks none of them.
+  FOOTNOTES, read 2026-08-21. All 77 notes ruled in
+  flats/config/footnotes/or/clackamas/_unincorporated.yaml. Four readers were blind in series here.
+  The county writes each table''s notes as an HTML ordered list, whose numbers the browser draws and
+  the text never carries, so ten bodies were stored stripped of the only thing tying them to a
+  marker. The notes that did keep their numbers arrived as "9 Except for middle housing", one space
+  and no heading, which is the one run shape the census declined. Table 315-1''s note 1 introduces
+  its own criteria and they restart at 1, so the block headed where the inner list did and read four
+  sub-criteria as notes 1 to 4, stopping short of notes 7 and 8. And those two are the notes printed
+  on the Quadplexes cell itself -- which arrives from an HTML table as the four characters "P7,8",
+  one permission code on a line of its own, below the bar the marker reader sets for believing a
+  line is a table row. The permission for this building in all nine districts was governed by a pair
+  of notes nobody had read. The gate now governs 64 values here and blocks none of them.
 
-  Nothing in those 41 notes moved a number. The relief in this chapter is for other housing types
+  Nothing in those 77 notes moved a number. The relief in this chapter is for other housing types
   (the lot-of-record exceptions name detached dwellings, duplexes, manufactured homes, prefabricated
   structures and single room occupancies -- a quadplex is none of them), for other application paths
   (a planned unit development or a zero-lot-line development), or for the split plat. One note is

@@ -228,7 +228,17 @@ LABEL_MARKER = re.compile(r"(?:(?<=[a-z])|(?<=\)))(?P<n>\d{1,2}(?:,\d{1,2})*)\s*
 #: to fail in.
 CELL_MARKER = re.compile(
     r"(?<![A-Za-z0-9/])(?:P/L|L/SUR|L/P|C/L|NP|SUR|CU|PC|P|C|X|L)"
-    r"(?P<n>\d{1,2})(?![\d])"
+    r"(?P<n>\d{1,2}(?:\s*,\s*\d{1,2})*)(?![\d])"
+)
+
+#: A line that is nothing but one permission code and the notes on it. An HTML
+#: table extraction puts every cell on its own line, so the row that says a
+#: quadplex is permitted subject to notes 7 and 8 arrives as the four
+#: characters "P7,8" -- one code, no column gap, and nothing else to earn its
+#: reading. The pattern is unambiguous where a lone "P1" inside a sentence is
+#: not: prose does not consist of a permission code.
+LONE_CELL = re.compile(
+    r"^(?:P/L|L/SUR|L/P|C/L|NP|SUR|CU|PC|P|C|X|L)\d{1,2}(?:\s*,\s*\d{1,2})*$"
 )
 
 #: A use row states several permissions, so one lonely match on a line of
@@ -497,14 +507,40 @@ def _tight_run(lines: Sequence[str], i: int, since: int) -> bool:
     if TIGHT_NOTE.match(lines[i].strip()) is None:
         return False
     want = 1
+    sub_high = 0
+    lead_in = False
     for raw in lines[i : i + 60]:
         stripped = raw.strip()
         if not stripped:
             continue
         following = TIGHT_NOTE.match(stripped)
-        if following is None or int(following.group("n")) != want:
+        if following is None:
+            return False
+        n = int(following.group("n"))
+        if sub_high:
+            if n == sub_high + 1:  # the sub-list gets first refusal
+                sub_high = n
+                lead_in = stripped.endswith(":")
+                continue
+            if n == want:
+                sub_high = 0  # the outer list picks up where it left off
+            else:
+                sub_high = max(sub_high, n)
+                lead_in = stripped.endswith(":")
+                continue
+        if n != want:
+            if n == 1 and lead_in:
+                # A note that ends in a colon is introducing its own criteria,
+                # and the list of them restarts at 1. Table 315-1's note 1 does
+                # exactly that, which is why the run used to be read from the
+                # sub-list and note 8 -- the one marked on the Quadplexes cell
+                # -- was never reached. See `_bodies` for the same rule.
+                sub_high = 1
+                lead_in = stripped.endswith(":")
+                continue
             return False
         want += 1
+        lead_in = stripped.endswith(":")
         if want > 3:
             break
     else:
@@ -521,6 +557,8 @@ def _cell_row(raw: str, stripped: str) -> bool:
     paragraph, and the pattern cannot tell them apart on its own.
     """
     if GAP.search(raw):
+        return True
+    if LONE_CELL.match(stripped):
         return True
     if SENTENCE.search(stripped):
         return False
@@ -566,6 +604,9 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
     bodies: list[Body] = []
     texts: list[list[str]] = []
     highest = (-1, -1)
+    #: Highest mark seen inside the sub-list a note introduced, or 0 when the
+    #: reading is at the top level. See the restart branch below.
+    sub_high = 0
     i = start
     while i < len(lines) and i - start < BLOCK_LIMIT:
         stripped = lines[i].strip()
@@ -584,6 +625,30 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
         )
         if opening is not None:
             mark = opening.group("n")
+            if sub_high and bodies:
+                # Inside a note's own criteria. Two lists are interleaved and
+                # both are ascending runs of small integers, so the question at
+                # every line is which one this belongs to. The sub-list gets
+                # first refusal: a mark exactly one above the highest sub-item
+                # seen continues it, and that is the only thing separating
+                # sub-item 2 from a note 2 the outer list is equally ready for.
+                # Anything else that IS the number the outer list is waiting
+                # for ends the sub-list -- 1, 2, 3, 4 then 2 is the outer list
+                # picking up, and 1, 2 then 4 is as well.
+                nxt = int(mark) if mark.isdigit() else None
+                if nxt is not None and nxt == sub_high + 1:
+                    sub_high = nxt
+                    texts[-1].append(stripped)
+                    i += 1
+                    continue
+                if nxt is not None and highest[0] == 0 and nxt == highest[1] + 1:
+                    sub_high = 0
+                else:
+                    if nxt is not None:
+                        sub_high = max(sub_high, nxt)
+                    texts[-1].append(stripped)
+                    i += 1
+                    continue
             if bodies and mark.isalpha() != bodies[0].mark.isalpha():
                 if bodies[0].mark.isalpha():
                     # Digits under letters are the lettered note's own
@@ -600,6 +665,18 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
                 # above it short.
                 break
             if bodies and _order(mark) <= highest:
+                if mark == "1" and " ".join(texts[-1]).rstrip().endswith(":"):
+                    # "1 The limited use is permitted subject to the following
+                    # criteria:" and then a list that starts at 1 again. That
+                    # restart is the note's own criteria, not the next table's
+                    # note 1, and the colon is the codifier saying so. Read as
+                    # a new list it cut Table 315-1's notes off after four of
+                    # fifteen, and the two marked on the Quadplexes cell were
+                    # among the eleven lost.
+                    sub_high = 1
+                    texts[-1].append(stripped)
+                    i += 1
+                    continue
                 break
             text = opening.groupdict().get("text") or ""
             bodies.append(Body(doc="", line=i + 1, mark=mark, text=text))
@@ -654,9 +731,23 @@ def _markers(lines: Sequence[str], inside: Sequence[tuple[int, int]]) -> list[Ma
         for m in BRACKET_MARKER.finditer(stripped):
             add(m.group("n"), "bracket")
         marked_cells = list(CELL_MARKER.finditer(stripped))
+        lone = LONE_CELL.match(stripped) is not None
         if _cell_row(raw, stripped):
             for m in marked_cells:
-                add(m.group("n"), "cell")
+                # "P7,8" is one cell carrying two notes, and reading only the
+                # first leaves the second a body nobody points at.
+                parts = [part.strip() for part in m.group("n").split(",")]
+                # A line that is nothing but "P1" is a permission with a note
+                # on it in one table and the identifier of row P1 in another --
+                # Fairview numbers its menu of design options P1 through P8
+                # exactly that way. A comma list settles it, since no row is
+                # called P7,8; a single mark does not, so it is provisional and
+                # `census` keeps it only where a note answers it. Reading those
+                # as certain markers invented 43 orphans in two documents that
+                # have no notes at all.
+                kind = "lone" if lone and len(parts) == 1 else "cell"
+                for part in parts:
+                    add(part, kind)
 
         # A label carries markers too -- "Residential density (maximum)1" --
         # and in an HTML extraction it has no column gap to be found by, since
@@ -704,6 +795,17 @@ def census(text: str, *, layer: str = "", doc: str = "") -> Census:
         )
         for b in blocks
     )
+
+    # Provisional lone cells stand only where a note answers them. Done here
+    # rather than in `_markers` because it is the blocks that decide it.
+    markers = [
+        Marker(doc=m.doc, line=m.line, mark=m.mark, kind="cell", text=m.text)
+        if m.kind == "lone"
+        else m
+        for m in markers
+        if m.kind != "lone"
+        or ((got := _governing(blocks, m.line - 1)) is not None and m.mark in got.marks)
+    ]
 
     unbodied: list[Marker] = []
     unmarked: list[Body] = []
