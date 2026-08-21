@@ -432,6 +432,28 @@ LANDSCAPE_LEVEL = re.compile(
     r"|(?P<m>[LF]\d)(?=\s+(?i:standards?|levels?)\b)"
 )
 
+#: The same landscaping standard repeated across a row's columns, with nothing
+#: in front of the first one. Portland wraps "Landscape Buffer Abutting an RF
+#: - RM4 or RMP Zoned Lot (see 33.130.215.B)" onto a second line and the
+#: columns that did not fit land there on their own -- "L3    L3    L3    L3"
+#: -- where `LANDSCAPE_LEVEL` has no word or "@" to recognise them by, so all
+#: four read as a limited use carrying note 3.
+#:
+#: The repeat alone is not evidence and must not be treated as any: Gresham
+#: writes "L1  L1  L1" across a use table's zone columns and means a limited
+#: use carrying note 1 in each of them, which is exactly what a marker is.
+#: Planting every repeat cost thirteen real markers in five documents and
+#: turned five answered bodies into bodies nobody points at.
+#:
+#: What earns the reading is the line above. This run is stepped over only
+#: where the code was already planted on the previous line with anything on
+#: it, which is what a wrap looks like and what a fresh table row does not.
+#: Corpus-wide that pairing occurs once.
+LANDSCAPE_RUN = re.compile(r"(?P<code>[LF]\d)\b(?:\s+(?P=code)\b)+")
+
+#: The individual codes inside such a run, so each one can be planted.
+_CODE = re.compile(r"[LF]\d")
+
 #: A line that is nothing but one permission code and the notes on it. An HTML
 #: table extraction puts every cell on its own line, so the row that says a
 #: quadplex is permitted subject to notes 7 and 8 arrives as the four
@@ -1354,11 +1376,18 @@ def _markers(lines: Sequence[str], inside: Sequence[tuple[int, int]]) -> list[Ma
     nothing.
     """
     out: list[Marker] = []
+    #: The landscaping codes `LANDSCAPE_LEVEL` recognised on the previous line
+    #: with anything on it, which is what lets the wrap of a planted row be
+    #: told from a use table's repeated permission. See `LANDSCAPE_RUN`.
+    carried: set[str] = set()
     for i, raw in enumerate(lines):
-        if any(low <= i < high for low, high in inside):
-            continue
         stripped = raw.strip()
         if not stripped:
+            continue
+        previous, carried = carried, {
+            (m.group("n") or m.group("m")) for m in LANDSCAPE_LEVEL.finditer(stripped)
+        }
+        if any(low <= i < high for low, high in inside):
             continue
         seen: set[str] = set()
 
@@ -1388,6 +1417,11 @@ def _markers(lines: Sequence[str], inside: Sequence[tuple[int, int]]) -> list[Ma
             (m.start("n") if m.group("n") else m.start("m"))
             for m in LANDSCAPE_LEVEL.finditer(stripped)
         }
+        for run in LANDSCAPE_RUN.finditer(stripped):
+            if run.group("code") in previous:
+                planted.update(
+                    run.start() + m.start() for m in _CODE.finditer(run.group(0))
+                )
         marked_cells = [
             m for m in CELL_MARKER.finditer(stripped) if m.start() not in planted
         ]

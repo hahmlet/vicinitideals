@@ -91,12 +91,11 @@ def test_the_pattern_itself() -> None:
 
 
 def test_the_chapter_that_reported_twenty_orphans(store: ProvenanceStore) -> None:
-    """One left, and it is honest: a table cell that is nothing but "L3",
-    printed under a row labelled Landscape Buffer, with no word in front of it
-    to say so."""
-    got = _chapter(store, "33.130")
-    assert len(got.unbodied) == 1
-    assert got.unbodied[0].line == 662
+    """None left. The last one was a table cell that is nothing but "L3", four
+    times, printed on the wrap of a row labelled Landscape Buffer whose own
+    line reads "10 ft. @ L3" -- so the line above is what says what it is. See
+    `LANDSCAPE_RUN` and test_landscape_run.py."""
+    assert _chapter(store, "33.130").unbodied == ()
 
 
 def test_and_the_single_dwelling_chapter_now_reconciles(store: ProvenanceStore) -> None:
