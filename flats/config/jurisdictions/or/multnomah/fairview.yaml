@@ -240,6 +240,17 @@ zones:
       # printed: R-6, R-7.5, R-10 and RM permit it, MH and TOZ print nothing.
       value: true
       quote: "or/multnomah/fairview/19.30.txt#L55-L63,L108-L112"
+    orientation_constraint:
+      # FMC 19.30.040.B, reached from note (5) on the Quadplex row of Table
+      # 19.30.020.A. At least one main entrance of a quadplex must sit within
+      # eight feet of the longest street-facing wall and must face the street,
+      # be angled up to 45 degrees off it, face a common open space adjacent
+      # to the street, or open onto a porch. That binds the door and not the
+      # building: the four ways of satisfying it include a 45-degree entry and
+      # a porch, so the 56-foot wall is not made to face the street and the
+      # fit stage keeps both orientations.
+      value: entrance_only
+      quote: "or/multnomah/fairview/19.30.txt#L515,L517,L519-L531"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/fairview/19.30.txt#L362"
@@ -404,6 +415,17 @@ zones:
       # printed: R-6, R-7.5, R-10 and RM permit it, MH and TOZ print nothing.
       value: true
       quote: "or/multnomah/fairview/19.30.txt#L55-L63,L108-L112"
+    orientation_constraint:
+      # FMC 19.30.040.B, reached from note (5) on the Quadplex row of Table
+      # 19.30.020.A. At least one main entrance of a quadplex must sit within
+      # eight feet of the longest street-facing wall and must face the street,
+      # be angled up to 45 degrees off it, face a common open space adjacent
+      # to the street, or open onto a porch. That binds the door and not the
+      # building: the four ways of satisfying it include a 45-degree entry and
+      # a porch, so the 56-foot wall is not made to face the street and the
+      # fit stage keeps both orientations.
+      value: entrance_only
+      quote: "or/multnomah/fairview/19.30.txt#L515,L517,L519-L531"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/fairview/19.30.txt#L363"
@@ -564,6 +586,17 @@ zones:
       # printed: R-6, R-7.5, R-10 and RM permit it, MH and TOZ print nothing.
       value: true
       quote: "or/multnomah/fairview/19.30.txt#L55-L63,L108-L112"
+    orientation_constraint:
+      # FMC 19.30.040.B, reached from note (5) on the Quadplex row of Table
+      # 19.30.020.A. At least one main entrance of a quadplex must sit within
+      # eight feet of the longest street-facing wall and must face the street,
+      # be angled up to 45 degrees off it, face a common open space adjacent
+      # to the street, or open onto a porch. That binds the door and not the
+      # building: the four ways of satisfying it include a 45-degree entry and
+      # a porch, so the 56-foot wall is not made to face the street and the
+      # fit stage keeps both orientations.
+      value: entrance_only
+      quote: "or/multnomah/fairview/19.30.txt#L515,L517,L519-L531"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/fairview/19.30.txt#L364"
@@ -704,6 +737,17 @@ zones:
       # printed: R-6, R-7.5, R-10 and RM permit it, MH and TOZ print nothing.
       value: true
       quote: "or/multnomah/fairview/19.30.txt#L55-L63,L108-L112"
+    orientation_constraint:
+      # FMC 19.30.040.B, reached from note (5) on the Quadplex row of Table
+      # 19.30.020.A. At least one main entrance of a quadplex must sit within
+      # eight feet of the longest street-facing wall and must face the street,
+      # be angled up to 45 degrees off it, face a common open space adjacent
+      # to the street, or open onto a porch. That binds the door and not the
+      # building: the four ways of satisfying it include a 45-degree entry and
+      # a porch, so the 56-foot wall is not made to face the street and the
+      # fit stage keeps both orientations.
+      value: entrance_only
+      quote: "or/multnomah/fairview/19.30.txt#L515,L517,L519-L531"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/fairview/19.30.txt#L366"

@@ -136,6 +136,23 @@ GLUED_PAREN_NOTE = re.compile(r"^\((?P<n>\d{1,2})\)(?!\s)(?P<text>\S.*)$")
 #: governs it had nothing to hold, and reported the layer clean.
 TIGHT_NOTE = re.compile(r"^(?P<n>\d{1,2}) (?P<text>\S.*)$")
 
+#: The parenthesised note with a space after the bracket, which is the shape
+#: this module refuses everywhere else: `GLUED_PAREN_NOTE` demands the weld
+#: precisely because "(1) Mixed Use Development Requirement." is how every code
+#: in the corpus writes an ordinary subsection.
+#:
+#: What buys it here is where it sits. `_paren_run` believes the shape only
+#: where the run climbs 1, 2, 3 one note per line, and the last line above it
+#: carries a footnote marker and is not the colon that introduces a list. That
+#: last clause is the whole of it: across the corpus the bare run appears in
+#: fourteen documents and is an ordinary subsection in thirteen of them, every
+#: one introduced by "one or more of the following:" or an equivalent.
+#:
+#: Missing it cost Fairview's use table. Six notes under Table 19.30.030,
+#: including the one that sends a quadplex to the design standards of FMC
+#: 19.30.040, and the census had zero of them.
+PAREN_NOTE = re.compile(r"^\((?P<n>\d{1,2})\)\s+(?P<text>\S.*)$")
+
 #: The number on its own line, with the text beneath it. An HTML table renders
 #: each cell as its own line, so a block that reads "1  Density calculations
 #: shall be..." on the page arrives as "1", newline, "Density calculations
@@ -240,6 +257,21 @@ CELL_MARKER = re.compile(
 LONE_CELL = re.compile(
     r"^(?:P/L|L/SUR|L/P|C/L|NP|SUR|CU|PC|P|C|X|L)\d{1,2}(?:\s*,\s*\d{1,2})*$"
 )
+
+#: The same cell where the codifier parenthesises its notes and leaves a space:
+#: Fairview writes "X(1) (2)" for permitted subject to notes 1 and 2, and
+#: "X(CU) (1)" for a conditional use subject to note 1. `PAREN_LABEL_MARKER`
+#: is welded to the cell's last character on purpose -- one space of slack
+#: there reads "twenty (20)" at the end of a wrapped sentence as a marker, in
+#: eleven documents -- so the slack is bought by the whole line instead.
+#: Prose does not consist of a permission code and a bracket.
+LONE_PAREN_CELL = re.compile(
+    r"^(?:P/L|L/SUR|L/P|C/L|NP|SUR|CU|PC|P|C|X|L)"
+    r"(?:\s*\((?:[A-Z]{1,3}|\d{1,2})\))+$"
+)
+
+#: The digits inside such a cell. "(CU)" is the review type and not a note.
+PAREN_MARK = re.compile(r"\((\d{1,2})\)")
 
 #: A use row states several permissions, so one lonely match on a line of
 #: prose is not a row. Either the line is laid out with column gaps or it
@@ -455,6 +487,7 @@ def _blocks(lines: Sequence[str]) -> list[Block]:
         headless = (
             _headless_run(lines, i)
             or _glued_paren_run(lines, i)
+            or _paren_run(lines, i)
             or _tight_run(lines, i, previous_end)
         )
         if not headed and not bracketed and not headless:
@@ -676,6 +709,37 @@ def _glued_paren_run(lines: Sequence[str], i: int) -> bool:
     return False
 
 
+def _paren_run(lines: Sequence[str], i: int) -> bool:
+    """Whether a spaced parenthesised notes run starts here.
+
+    The shape alone proves nothing -- see `PAREN_NOTE` -- so this asks for
+    three things at once: the run climbs 1, 2, 3 with one note per line; the
+    last line above it carries a footnote marker, which is what a notes block
+    sits under; and that line is not a colon, which is what a list of criteria
+    hangs off. Thirteen of the corpus's fourteen bare runs are subsections
+    introduced by "one or more of the following:", and the colon is how they
+    say so.
+    """
+    first = PAREN_NOTE.match(lines[i].strip())
+    if first is None or first.group("n") != "1":
+        return False
+    above = next((lines[k] for k in range(i - 1, -1, -1) if lines[k].strip()), "")
+    if above.strip().endswith(":") or not _bears_a_marker(above):
+        return False
+    want = 2
+    for raw in lines[i + 1 :]:
+        stripped = raw.strip()
+        if not stripped:
+            continue
+        got = PAREN_NOTE.match(stripped)
+        if got is None or int(got.group("n")) != want:
+            break
+        if want == 3:
+            return True
+        want += 1
+    return False
+
+
 def _tight_run(lines: Sequence[str], i: int, since: int) -> bool:
     """Whether a one-space notes run starts here.
 
@@ -772,6 +836,10 @@ def _bears_a_marker(raw: str) -> bool:
     50.04.001-11[5]" is still the note, and reading its own figure number as a
     marker ends the block on the note that cites a figure.
     """
+    if LONE_PAREN_CELL.match(raw.strip()) and PAREN_MARK.search(raw):
+        # Asked before the citation strip, which eats "(CU)" and "(1)" alike
+        # and leaves a bare "X" that carries nothing.
+        return True
     stripped = PAREN_CITATION.sub("", CROSS_REFERENCE.sub("", raw.strip()))
     cells = [stripped, *(GAP.split(stripped) if GAP.search(stripped) else [])]
     if any(
@@ -865,6 +933,18 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
                 # above it short.
                 break
             if bodies and _order(mark) <= highest:
+                repeat = opening.groupdict().get("text") or ""
+                if repeat and any(
+                    b.mark == mark and b.text == repeat for b in bodies
+                ):
+                    # A caption cell spanning the grid prints its note once per
+                    # column, and an HTML extraction puts each copy on its own
+                    # line. Fairview's density note arrives seven times. Read
+                    # as seven notes it is six bodies nobody points at, and a
+                    # document that reports itself unreconciled for a reason
+                    # that is not a reason.
+                    i += 1
+                    continue
                 if mark == "1" and " ".join(texts[-1]).rstrip().endswith(":"):
                     # "1 The limited use is permitted subject to the following
                     # criteria:" and then a list that starts at 1 again. That
@@ -948,6 +1028,10 @@ def _markers(lines: Sequence[str], inside: Sequence[tuple[int, int]]) -> list[Ma
                 kind = "lone" if lone and len(parts) == 1 else "cell"
                 for part in parts:
                     add(part, kind)
+
+        if LONE_PAREN_CELL.match(stripped):
+            for mark in PAREN_MARK.findall(stripped):
+                add(mark, "cell")
 
         # A label carries markers too -- "Residential density (maximum)1" --
         # and in an HTML extraction it has no column gap to be found by, since

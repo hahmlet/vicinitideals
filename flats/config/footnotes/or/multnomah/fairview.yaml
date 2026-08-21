@@ -1,15 +1,123 @@
 # Fairview -- FMC Chapter 19.30, Residential Districts.
 #
-# One footnote in the chapter, printed once per column of Table 19.30.030.A
-# and so captured seven times. A ruling binds to the words, so one entry
-# settles all seven.
+# Seven footnotes, printed 43 times between them, and until the census learned
+# two more shapes it could read one of the seven.
 #
-# It is not a qualification on a number. It is the sentence that says WHEN the
-# minimum density rows apply at all, and it says they apply to what this
-# screen does: adding new primary dwelling units to a property. Reading it is
-# what made the density floor worth encoding — until it was read, row 3 of the
-# table could have been a standard for subdivisions only.
+# **How the other six hid.** Fairview writes its use-table notes as "(1)
+# Subject to standards in FMC 19.30.080" -- a parenthesised number, a space,
+# a sentence -- which is also the shape of every ordinary subsection in the
+# corpus, so the layout tests refuse it on purpose. And it marks a cell
+# "X(CU) (1)", with a space between the review type and the note, which the
+# marker rule refuses for the same reason: one space of slack reads "twenty
+# (20)" at the end of a wrapped sentence as a footnote in eleven documents.
+# Both are bought here by the whole line rather than by the shape alone.
+#
+# **What they say.** Five of the six route a row of the use table to a design
+# or special-standards section elsewhere in the chapter, and Fairview's
+# definitions settle which rows are the pod's. A quadplex is "four dwelling
+# units on a lot or parcel in any configuration" (FMC 19.13, L465), so the pod
+# is the Quadplex row and note (5). A multi-unit dwelling is "five or more"
+# (L383) and a townhouse is a unit "located on an individual lot" (L573), so
+# notes (2) and (4) are provably somebody else's -- which is worth stating,
+# because both point at sections that carry real numbers: 19.30.090.B puts a
+# 10 percent common open space floor on multi-unit housing and 19.30.050 sets
+# townhouse standards. Reading the definitions is the difference between
+# dismissing those two and encoding an open space requirement the pod does not
+# owe.
+#
+# **What note (5) is worth.** It points at FMC 19.30.040, the design standards
+# for quadplexes, and one of them is a rule this screen has a field for: the
+# main entrance must face the street. Every Clackamas layer carries the line
+# "UNPORTED: orientation_constraint='entrance_only'" because quadfit asserted
+# that constraint with no citation and the port would not copy an uncited
+# number. This is the citation, in one city.
 notes:
+  - quote: "or/multnomah/fairview/19.30.txt#L181"
+    digest: "11b74f37b0e0"
+    state: dismissed
+    reason: >-
+      FMC 19.30.080 "provides standards for the following land uses" and
+      then lists six: accessory dwellings, manufactured homes,
+      residential care homes and facilities, community services and
+      parks, accessory uses and structures, and bed and breakfast inns.
+      A quadplex is none of them. The note marks the multi-unit,
+      manufactured home park and conditional-use rows of Table
+      19.30.020.A, and it blocks the pod's value only because the region
+      rule governs by table rather than by row
+  - quote: "or/multnomah/fairview/19.30.txt#L182"
+    digest: "f04fdc68d02d"
+    state: dismissed
+    reason: >-
+      FMC 19.30.090 is the RM district's own section, and its standards
+      are headed "Multi-Unit Housing Development Standards" and "Design
+      Standards for Muti-Unit Housing, Public and Institutional
+      Buildings, Residential Commercial/Mixed Use Buildings". Fairview
+      defines a multi-unit dwelling as "a building containing five or
+      more dwelling units or five or more dwelling units in two or more
+      buildings" (FMC 19.13, L383) and a quadplex as four on a lot
+      (L465), so the four-unit pod is not multi-unit housing and does
+      not owe 19.30.090.B.1's 10 percent common open space or B.2's per-
+      unit patios and balconies. The note marks the Multi-Unit Dwellings
+      row, which is the row those definitions belong to
+  - quote: "or/multnomah/fairview/19.30.txt#L183"
+    digest: "e99ab2d15fd0"
+    state: dismissed
+    reason: >-
+      Chapter 19.490 FMC is Miscellaneous Permits -- temporary uses,
+      home occupations and the like -- and the note marks the rows for
+      those uses. Placing a permanent four-unit dwelling is not a
+      temporary use or a home occupation, and the chapter is not fetched
+      because nothing in it reaches a value this layer encodes
+  - quote: "or/multnomah/fairview/19.30.txt#L184"
+    digest: "4e2747ea16d4"
+    state: dismissed
+    reason: >-
+      FMC 19.30.050 is the townhouse design standards, and Fairview
+      defines a townhouse as a unit in a row of attached units "where
+      each dwelling unit is located on an individual lot or parcel" (FMC
+      19.13, L573). The pod is four attached units on one lot, which is
+      the definition of a quadplex in the same glossary, so the
+      townhouse row and this note are not its row and not its note. The
+      distinction matters twice over: Fairview also runs a Townhouse
+      Overlay zone off the same word
+  - quote: "or/multnomah/fairview/19.30.txt#L185"
+    digest: "0b55969584ef"
+    state: encoded
+    encoded_as: >-
+      orientation_constraint = entrance_only in R-6, R-7.5, R-10 and RM
+    reason: >-
+      the pod's own note. FMC 19.30.040 applies to new quadplexes in
+      every residential district and carries seven subsections. One is a
+      value this screen holds: 19.30.040.B requires at least one main
+      entrance within eight feet of the longest street-facing wall,
+      facing the street or angled up to 45 degrees off it or facing a
+      street-adjacent common open space or opening onto a porch -- a
+      constraint on the door and not on the long axis, which is exactly
+      what entrance_only means. The rest are read and do not move a
+      number. B through D and the facade, window and detail standards
+      are architectural. E keeps garages and parking out from between
+      the building and the street unless separated by a dwelling, capped
+      at half the front facade, or recessed six feet -- the rear-court
+      typology this catalog places satisfies the first, and there is no
+      street-facing garage to recess. F caps driveway approaches at 32
+      feet per frontage and offers a quadplex on local streets either
+      two approaches totalling 32 feet or one 16-foot approach per
+      frontage, which the single side driveway clears with room; there
+      is no field for approach width and no lot in this corpus is
+      refused for want of one. G asks for a three-foot hard-surfaced
+      path to the door. H is about converting an existing house, which
+      is not what this places
+  - quote: "or/multnomah/fairview/19.30.txt#L186"
+    digest: "f80ef331d91d"
+    state: dismissed
+    reason: >-
+      FMC 19.30.060 is the cottage cluster design standards and the note
+      marks the Cottage Cluster row. A cottage cluster is detached units
+      around a common courtyard; the pod is one attached building of
+      four, and Fairview gives it its own row and its own note
+
+  # --- Table 19.30.030.A, the dimensional table ---
+
   - quote: "or/multnomah/fairview/19.30.txt#L445"
     digest: "4c902831bbc1"
     state: encoded
