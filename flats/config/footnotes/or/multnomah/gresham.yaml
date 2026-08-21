@@ -36,6 +36,16 @@
 # front, and how close the water is. They are ruled `unmeasured` rather than
 # dismissed, which stops them blocking the encoding and keeps them capping the
 # verdict.
+#
+# **Table 4.1120, the Downtown use table.** Its twenty-four notes sit under a
+# heading with one sentence of scope between it and note 1 -- "The following
+# describe limitations on use categories marked as limited or special use
+# review in Table 4.1120" -- and the block reader walked away from the whole
+# list because the first line under a heading was not numbered. Note 1 had
+# been read by hand and encoded anyway; it is re-quoted here at the body's own
+# line now that there is a body to point at. The other twenty-three are
+# commercial, industrial, institutional and renewable-energy rows, plus the
+# multi-family and cottage-cluster rows that the pod is not.
 notes:
   # --- Table 4.0120, the use table -----------------------------------
   #
@@ -456,7 +466,7 @@ notes:
       golf courses; not our use
 
   - quote: "or/multnomah/gresham/4.0400.corridor.txt#L262"
-    digest: "a4160d6e666a"
+    digest: "7bc4d7e36fd6"
     state: dismissed
     reason: >-
       locates schools in the SC district; not our use
@@ -577,7 +587,7 @@ notes:
       defines where the Central Rockwood Plan Area is; a definition pointing at a map, stating no standard
 
   - quote: "or/multnomah/gresham/4.0400.corridor.txt#L465"
-    digest: "53357e30430f"
+    digest: "6740bbae18b7"
     state: dismissed
     reason: >-
       limits buildings in the Rockwood Design District to four or six stories; the pod is two
@@ -773,7 +783,7 @@ notes:
       note 15 encourages townhouses to take access from a rear alley; an encouragement states no standard
 
   - quote: "or/multnomah/gresham/4.1100.downtown.txt#L569"
-    digest: "d5fa250c5f88"
+    digest: "46a5a1fa4d45"
     state: dismissed
     reason: >-
       note 16 releases the maximum front setback once the street type's building frontage requirement is met; it is a relaxation of a maximum, and the orientation constraint encoded for these zones already reads it
@@ -781,8 +791,8 @@ notes:
   # Table 4.1120's own note, which is a use limitation rather than a
   # dimensional one: the Quadplex row reads L1 in DCC and DTM, and this is
   # what the L1 says.
-  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L309-L311"
-    digest: "513c1dd7c6c2"
+  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L309"
+    digest: "ec8356cb36c6"
     state: encoded
     encoded_as: DCC quadplex_allowed variant (lot_sqft at most 7,600, inside_mapped_use_area + narrow_frontage); DTM quadplex_allowed variant (lot_sqft at most 6,500, narrow_frontage)
     reason: >-
@@ -1203,7 +1213,7 @@ notes:
       a note of Section 4.0200, whose use table has one column and reads NP on the Quadplex row with no marker on it; note 1 marks the RESIDENTIAL heading and permits home occupations and a temporary health hardship dwelling alongside a PRE-EXISTING dwelling; it creates no dwelling and reaches nothing new
 
   - quote: "or/multnomah/gresham/4.0200.commercial.txt#L125"
-    digest: "024c2a26f977"
+    digest: "e70c194ccb27"
     state: dismissed
     reason: >-
       a note of Section 4.0200, whose use table has one column and reads NP on the Quadplex row with no marker on it; an affordable housing note; a permission resting on an election nobody has made
@@ -1331,7 +1341,7 @@ notes:
       a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; marks the Solar Energy Systems row
 
   - quote: "or/multnomah/gresham/4.0300.industrial.txt#L172"
-    digest: "7ccd3b5e6889"
+    digest: "bdd5ba2a7d51"
     state: dismissed
     reason: >-
       a note of Section 4.0300, whose use table reads NP down the whole residential block in both columns and puts no marker on the Quadplex row; marks the Wind Energy Systems row
@@ -1411,3 +1421,208 @@ notes:
     state: dismissed
     reason: >-
       Table 9.0825A note 1 sets the minimum aisle width inside a parking lot -- 24 feet for two-way traffic and emergency vehicle operations, 20 feet one-way. It is the only note in the document, and it governs the layer's parking default only because the default's citation and the note share a document. It qualifies how wide an aisle must be in a lot somebody builds, not whether a lot must be built, and no reading of an aisle width can restore a minimum 9.0802(A) waives for every land use type. It does not reach this building twice over: 9.0802(F) states that the parking lot design standards of Sections 9.0822 to 9.0840, which is where this table sits, do not apply to quadplexes on a unit-by-unit basis
+
+  # --- 4.1100, the Downtown use table's other notes -------------------
+
+  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L312"
+    digest: "723f38894463"
+    state: dismissed
+    reason: >-
+      hotel and motel conversion to an emergency shelter or to
+      affordable housing, and the sentence that multi-family is
+      otherwise not permitted in DRL-1. The marker is on the Multi-
+      Family/Shared Housing Facility row. The pod reads the Quadplex
+      row, which carries only the L1 in DCC and DTM, and the Townhouse
+      row, which is a bare P in all six sub-districts, and Gresham's
+      multi-family category is five or more units
+
+  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L314"
+    digest: "b0f045edd978"
+    state: dismissed
+    reason: >-
+      affordable housing development is permitted, marked on the
+      Affordable Housing row. The pod reads the Quadplex row, which
+      carries only the L1 in DCC and DTM, and the Townhouse row, which
+      is a bare P in all six sub-districts. A pod that qualified as
+      affordable housing would gain a permission, never lose one
+
+  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L315"
+    digest: "fca1e7ed1ee4"
+    state: dismissed
+    reason: >-
+      a cross-reference to the auto sales and service limits in the
+      Outdoor Commercial configuration. The pod reads the Quadplex row,
+      which carries only the L1 in DCC and DTM, and the Townhouse row,
+      which is a bare P in all six sub-districts
+
+  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L316"
+    digest: "457b336bc812"
+    state: dismissed
+    reason: >-
+      a 5,000 square foot floor-area cap on Clinics and Business and
+      Retail Service and Trade in DRL-1, with a frontage condition on N
+      Main Avenue or NW Ava Avenue. Commercial rows. The pod reads the
+      Quadplex row, which carries only the L1 in DCC and DTM, and the
+      Townhouse row, which is a bare P in all six sub-districts
+
+  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L319"
+    digest: "8ce40d494278"
+    state: dismissed
+    reason: >-
+      the same cap at 7,500 square feet in DRL-2, on the same two
+      commercial rows. The pod reads the Quadplex row, which carries
+      only the L1 in DCC and DTM, and the Townhouse row, which is a bare
+      P in all six sub-districts
+
+  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L322"
+    digest: "513209f239b7"
+    state: dismissed
+    reason: >-
+      structured parking only, marked on the Commercial Parking row.
+      That row is the parking *use category* -- a lot whose business is
+      parking -- not the accessory stalls a dwelling provides, which
+      Section 9.0800 governs. The pod reads the Quadplex row, which
+      carries only the L1 in DCC and DTM, and the Townhouse row, which
+      is a bare P in all six sub-districts
+
+  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L323"
+    digest: "ebbf06afcf86"
+    state: dismissed
+    reason: >-
+      the frontage and site-coverage conditions on Outdoor Commercial in
+      DCL. The pod reads the Quadplex row, which carries only the L1 in
+      DCC and DTM, and the Townhouse row, which is a bare P in all six
+      sub-districts
+
+  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L337"
+    digest: "1baf40714ccc"
+    state: dismissed
+    reason: >-
+      the conditions on a Manufacturing use: it must accompany an
+      allowed retail use, occupy no more than 10,000 or 20,000 square
+      feet, and emit nothing detectable at the property line. The pod
+      reads the Quadplex row, which carries only the L1 in DCC and DTM,
+      and the Townhouse row, which is a bare P in all six sub-districts
+
+  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L346"
+    digest: "d193a0696c79"
+    state: dismissed
+    reason: >-
+      what the prohibition on warehousing and storage as a stand-alone
+      use does not preclude. Marked on the Warehousing/Storage row. The
+      pod reads the Quadplex row, which carries only the L1 in DCC and
+      DTM, and the Townhouse row, which is a bare P in all six sub-
+      districts
+
+  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L350"
+    digest: "e75e1455635c"
+    state: dismissed
+    reason: >-
+      golf courses are not permitted
+
+  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L351"
+    digest: "17d116396228"
+    state: dismissed
+    reason: >-
+      schools in an existing commercial space against schools in new
+      construction, marked on the Schools row
+
+  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L353"
+    digest: "02ebbf6b70f0"
+    state: dismissed
+    reason: >-
+      electrical generating facilities and sewage treatment plants are
+      not available through Special Use Review. Marked on the Parks,
+      Open Spaces and Trails row
+
+  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L354"
+    digest: "a7436d8e1828"
+    state: dismissed
+    reason: >-
+      permitted as an accessory use to Medical and Civic Uses through
+      Special Use Review, marked on the Helicopter Landing Facilities
+      row
+
+  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L355"
+    digest: "11c7e602ee7a"
+    state: dismissed
+    reason: >-
+      a cross-reference to Section 10.0900 for additional standards,
+      marked on the Renewable Energy Uses category heading
+
+  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L356"
+    digest: "3e4b9a93f19b"
+    state: dismissed
+    reason: >-
+      a cross-reference to the Solar Energy System standards, marked on
+      that row
+
+  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L357"
+    digest: "adb0bed51f46"
+    state: dismissed
+    reason: >-
+      a cross-reference to the Wind Energy System standards, marked on
+      that row
+
+  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L358"
+    digest: "b8680d92b56c"
+    state: dismissed
+    reason: >-
+      a cross-reference to the Biomass Energy System standards, marked
+      on that row
+
+  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L359"
+    digest: "94c4769f0d41"
+    state: dismissed
+    reason: >-
+      a cross-reference to the Geothermal Energy System standards,
+      marked on that row
+
+  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L360"
+    digest: "b3f8c8d0f825"
+    state: dismissed
+    reason: >-
+      a cross-reference to the Micro-Hydro Energy System standards,
+      marked on that row
+
+  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L361"
+    digest: "0c6f5742a9c1"
+    state: dismissed
+    reason: >-
+      transitional housing for individuals leaving incarceration
+      facilities is subject to Special Use Review. Marked on the Multi-
+      Family/Shared Housing Facility row label. The pod reads the
+      Quadplex row, which carries only the L1 in DCC and DTM, and the
+      Townhouse row, which is a bare P in all six sub-districts
+
+  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L362"
+    digest: "52ff8c1f23d9"
+    state: dismissed
+    reason: >-
+      certain locations in DCC require non-residential uses on the
+      ground floor. The marker is in the Multi-Family/Shared Housing
+      Facility row's DCC cell, which reads P/L2, 22. The pod reads the
+      Quadplex row, which carries only the L1 in DCC and DTM, and the
+      Townhouse row, which is a bare P in all six sub-districts, and
+      neither carries this marker -- but the section it cites, 4.1121,
+      is a first-floor requirement that names its locations rather than
+      a use category, so it is worth re-reading if a DCC lot on N Main
+      Avenue or E Powell Boulevard ever screens GREEN
+
+  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L363"
+    digest: "9d04139cdbbb"
+    state: dismissed
+    reason: >-
+      cross-references to the outdoor commercial and drive-through
+      limits, marked on the Business and Retail Service and Trade row
+      label
+
+  - quote: "or/multnomah/gresham/4.1100.downtown.txt#L364"
+    digest: "e5b316f0e3f9"
+    state: dismissed
+    reason: >-
+      no more than one cottage cluster per parent parcel, marked on the
+      Cottage Cluster row. The pod reads the Quadplex row, which carries
+      only the L1 in DCC and DTM, and the Townhouse row, which is a bare
+      P in all six sub-districts. A cottage cluster is detached units
+      around a common court and the pod is one attached building

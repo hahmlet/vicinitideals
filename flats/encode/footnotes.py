@@ -69,6 +69,23 @@ NOTES_HEAD = re.compile(
     re.I,
 )
 
+#: One line of scope between the heading and note 1. Gresham's downtown use
+#: table prints "Table 4.1120 Notes:", then "The following describe limitations
+#: on use categories marked as limited or special use review in Table 4.1120",
+#: and only then note 1 -- and the reader walked away from the whole block
+#: because the first line under a heading was not numbered.
+#:
+#: That rule earns its strictness: a "Notes:" heading in this corpus sits over
+#: a legend far more often than over notes, and Portland's "The use categories
+#: are described in Chapter 33.920" and Milwaukie's "P = Permitted" must both
+#: stay out. So the lead-in has to name the table AND announce a list. One
+#: line, once, and note 1 has to follow it or the block is still refused.
+#:
+#: Exactly one line in the corpus wears this shape, and behind it are
+#: twenty-four notes to a use table -- including the one that lets a plex into
+#: DTM and DMU on a lot of record of 6,500 square feet or smaller.
+NOTES_LEAD = re.compile(r"(?=.*\bthe following\b)(?=.*\btable\s+[\w.-]+)", re.I)
+
 #: One numbered note *inside* a block, in any of the spellings codifiers use:
 #: "1 Density calculations...", "2. Zero lot line dwellings...", "[3] Additional
 #: height...", "(4) Townhomes are exempt...".
@@ -290,7 +307,16 @@ LETTER_GLUED = re.compile(r"^\d[\d,.'’%]*(?P<n>[A-Z])$")
 #: Markers on a row *label* rather than a cell: "Minimum lot area1,2". Only
 #: read on a line that is laid out as a table row, because in prose a trailing
 #: digit is a cross-reference, a year, or the number of the paragraph.
-LABEL_MARKER = re.compile(r"(?:(?<=[a-z])|(?<=\)))(?P<n>\d{1,2}(?:,\d{1,2})*)\s*$")
+#:
+#: Two things the label may still carry behind the marker. Gresham spaces the
+#: list -- "(based)1, 5, 6" -- and it puts the unit last, so the marker sits in
+#: the middle of "Maximum Height1,2,3,4 (feet)". One parenthesised group is
+#: allowed to follow, and it has to balance, which is what keeps the marker
+#: welded to the label it belongs to rather than floating anywhere in the cell.
+LABEL_MARKER = re.compile(
+    r"(?:(?<=[a-z])|(?<=\)))(?P<n>\d{1,2}(?:\s*,\s*\d{1,2})*)"
+    r"\s*(?:\([^()]*\))?\s*$"
+)
 
 #: A marker on a use-table cell: "P3", "L9", "L/SUR11", "P/L2". The letters are
 #: the permission vocabulary and nothing else, because a bare letter-then-digit
@@ -375,7 +401,13 @@ CELL_VOCAB = re.compile(
 FURNITURE = re.compile(
     r"^\[[^\]]+\]-\d+$|Development Code\s+\(\d|^Page \d+$"
     r"|^(?:§|\ufffd)\s*\d{1,3}\.\d{2,4}"
-    r"|^[A-Z]{1,3}\d+:\d+",
+    r"|^[A-Z]{1,3}\d+:\d+"
+    # Extraction also splits a running header across two lines, so the
+    # publisher and the edition date each arrive alone. Both are anchored
+    # whole, because a note that ends "all other applicable requirements of
+    # the Community Development Code" is a sentence, not the head of a page.
+    r"|^City of [A-Z][\w ]{2,20} Development Code$"
+    r"|^\(\d{1,2}/\d{2,4}\)$",
     re.I,
 )
 
@@ -385,7 +417,13 @@ FURNITURE = re.compile(
 #: TROUTDALE DEVELOPMENT CODE" on one side of the spread and "ZONING
 #: DISTRICTS      3.130" on the other. Both land in the middle of a notes list
 #: every time one crosses a page.
-PAGE_STAMP = re.compile(r"^[A-Z]{2,5}\d{1,3}-\s?\d{1,3}$")
+#: Gresham stamps its pages "[4.1100]" and then the page number across the
+#: gutter, "-9". The same thing the first form is, in another city's furniture,
+#: and it carries something the first does not: the chapter the page belongs
+#: to, which is what tells its running header from a real section heading.
+PAGE_STAMP = re.compile(
+    r"^[A-Z]{2,5}\d{1,3}-\s?\d{1,3}$|^\[(?P<ident>[^\]]+)\]\s*-\s?\d{1,3}$"
+)
 
 #: The title-then-number half, which is unambiguous: no code in this corpus
 #: heads a section with the number last.
@@ -398,8 +436,15 @@ FRAME_HEAD_TRAILING = re.compile(
 #: one, and ending a block there is right. So this half is only believed
 #: directly under the page stamp, which is the rest of the frame it belongs
 #: to. A heading has a blank line over it, not a page number.
+#:
+#: And where the stamp names its chapter, the number settles it outright: a
+#: running header repeats the chapter the stamp just gave -- "[4.1100]" then
+#: "4.1100 DOWNTOWN PLAN DESIGN DISTRICT" -- while a real heading three lines
+#: under the same stamp is a *different* number, "[4.1500]" then "4.1508
+#: DEVELOPMENT STANDARDS TABLE". Reading the second as furniture ran
+#: Springwater's last note on into the section below it.
 FRAME_HEAD_LEADING = re.compile(
-    r"^\d{1,3}\.\d{2,4}(?:\.\d{1,4})?\s{2,}[A-Z][A-Z ]{4,}$"
+    r"^(?P<n>\d{1,3}\.\d{2,4}(?:\.\d{1,4})?)\s+[A-Z][A-Z ]{4,}$"
 )
 
 #: How close under the stamp the ambiguous half has to sit.
@@ -1019,6 +1064,10 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
     #: Where the last page stamp was seen, so the half of the running header
     #: that is shaped like a section heading can be told from one.
     stamped = -FRAME_REACH - 1
+    #: The chapter that stamp named, where it named one. See `FRAME_HEAD_LEADING`.
+    chapter = ""
+    #: Whether the one allowed line of scope has been spent. See `NOTES_LEAD`.
+    led = False
     highest = (-1, -1)
     #: Highest mark seen inside the sub-list a note introduced, or 0 when the
     #: reading is at the top level. See the restart branch below.
@@ -1026,15 +1075,21 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
     i = start
     while i < len(lines) and i - start < BLOCK_LIMIT:
         stripped = lines[i].strip()
-        if PAGE_STAMP.match(stripped):
+        if (stamp := PAGE_STAMP.match(stripped)) is not None:
             stamped = i
+            chapter = (stamp.groupdict().get("ident") or "").strip()
             i += 1
             continue
+        lead = FRAME_HEAD_LEADING.match(stripped)
         if (
             not stripped
             or FURNITURE.search(stripped)
             or FRAME_HEAD_TRAILING.match(stripped)
-            or (FRAME_HEAD_LEADING.match(stripped) and i - stamped <= FRAME_REACH)
+            or (
+                lead is not None
+                and i - stamped <= FRAME_REACH
+                and (not chapter or lead.group("n") == chapter)
+            )
         ):
             i += 1
             continue
@@ -1123,6 +1178,12 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
             i += 1
             continue
         if not bodies:
+            if not led and NOTES_LEAD.search(stripped):
+                # One sentence of scope between the heading and note 1. See
+                # `NOTES_LEAD` for why it has to name the table to get this.
+                led = True
+                i += 1
+                continue
             # The first line under the heading is not numbered, so whatever
             # this heading announces, it is not a numbered notes block.
             break
