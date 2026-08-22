@@ -344,6 +344,22 @@ PAREN_CITATION = re.compile(
     r"\d{1,3}\.\d{2,4}(?:\.\d{1,4})?(?:\(\s*[A-Za-z0-9]{1,3}\s*\))+"
 )
 
+#: The same chain with no section number in front of it: "and (B)(1)",
+#: "Subsection (C)(2)". `PAREN_CITATION` cannot see these because it is
+#: anchored to the dotted number, and `PAREN_LABEL_MARKER` reads the last
+#: bracket of one as a marker welded to the bracket before it -- which is how
+#: Gresham's affordable housing chapter and Multnomah's community forest
+#: chapter each reported an orphan for a note nobody wrote.
+#:
+#: The brackets have to touch. Fairview writes "X(CU) (1)" with a space and
+#: means a conditional use subject to note 1, and `LONE_PAREN_CELL` reads it;
+#: a codifier writing a subsection chain does not put a space in the middle
+#: of it. Seven hundred and fifteen chains in the corpus wear this shape and
+#: four of them end a line, which is the only place the marker rules look.
+PAREN_SUBSECTION = re.compile(
+    r"\([A-Za-z]{1,3}\)(?:\(\s*[A-Za-z0-9]{1,3}\s*\))+"
+)
+
 #: The bracketed form, anywhere on a line: "30 ft. [3]".
 BRACKET_MARKER = re.compile(r"\[(?P<n>\d{1,2})\]")
 
@@ -1621,7 +1637,7 @@ def _markers(lines: Sequence[str], inside: Sequence[tuple[int, int]]) -> list[Ma
         # its own narrowness: the digits must follow a lowercase letter or a
         # closing parenthesis with nothing between. "Table 16.22.020-2" and
         # "MUR-M3" end in digits and match neither.
-        cited = PAREN_CITATION.sub("", stripped)
+        cited = PAREN_SUBSECTION.sub("", PAREN_CITATION.sub("", stripped))
         cells = [cited, *(GAP.split(cited) if GAP.search(raw) else [])]
         for cell in cells:
             cell = cell.strip()
