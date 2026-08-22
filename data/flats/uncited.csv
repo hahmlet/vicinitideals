@@ -1,16 +1,16 @@
 layer,bucket,field,path,line,section,repeats,text
-or,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,99,,1,"If NR exceeds 15 percent of the GSA, only 15 percent of the GSA shall be subtracted."
-or,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,105,,1,Slopes greater than 50 percent;
-or,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,119,,1,Slopes equal to or greater than 20 percent and less than or equal to 50 percent; and
-or,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,129,,1,Slopes greater than 25 percent;
+or,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,99,,1,"1 If NR exceeds 15 percent of the GSA, only 15 percent of the GSA shall be subtracted."
+or,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,105,,1,1 Slopes greater than 50 percent;
+or,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,119,,1,1 Slopes equal to or greater than 20 percent and less than or equal to 50 percent; and
+or,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,129,,1,1 Slopes greater than 25 percent;
 or,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,177,,1,10 percent of the base density
 or,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,178,,1,10 percent of the base density1
 or,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,181,,1,25 percent of the base density4
 or,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,183,,1,15 percent of the base density
 or,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,184,,1,60 percent of the base density
-or,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,226,,1,Slopes equal to or greater than 20 percent;
-or,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,246,,1,"By 90 percent in the MR-2, HDR, and SHD Districts; or"
-or,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,248,,1,By 50 percent in the VA District.
+or,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,226,,1,2 Slopes equal to or greater than 20 percent;
+or,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,246,,1,"3 By 90 percent in the MR-2, HDR, and SHD Districts; or"
+or,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,248,,1,4 By 50 percent in the VA District.
 or,unfielded,,or/clackamas/_unincorporated/zdo.315.txt,1152,,1,"2,500/2,000 square feet"
 or,unfielded,,or/clackamas/_unincorporated/zdo.315.txt,1187,,8,"15 feet, except 20 feet to garage and carport motor vehicle entries7"
 or,unfielded,,or/clackamas/_unincorporated/zdo.315.txt,1276,,1,"≤ 100 square feet None 3 feet side and rear 5 feet side and rear 5 feet side, 10 feet rear"
@@ -32,10 +32,10 @@ or,unfielded,,or/clackamas/_unincorporated/zdo.315.txt,1492,,1,15 feet
 or,unfielded,,or/clackamas/_unincorporated/zdo.315.txt,1523,,1,45 feet
 or,unfielded,,or/clackamas/_unincorporated/zdo.315.txt,1527,,1,10 feet
 or,unfielded,,or/clackamas/_unincorporated/zdo.315.txt,1531,,1,20 feet between multifamily dwellings
-or,unfielded,,or/clackamas/_unincorporated/zdo.845.txt,7,,1,"7,000 square feet for a quadplex or a cottage cluster."
-or,unfielded,,or/clackamas/_unincorporated/zdo.845.txt,39,,2,Is a minimum of 25 square feet in area; and
-or,unfielded,,or/clackamas/_unincorporated/zdo.845.txt,147,,1,A minimum of 50 percent of dwellings within a cluster shall:
-or,unfielded,,or/clackamas/_unincorporated/zdo.845.txt,205,,1,The maximum width of each garage door is 20 feet.
+or,unfielded,,or/clackamas/_unincorporated/zdo.845.txt,7,,1,"2 7,000 square feet for a quadplex or a cottage cluster."
+or,unfielded,,or/clackamas/_unincorporated/zdo.845.txt,39,,2,1 Is a minimum of 25 square feet in area; and
+or,unfielded,,or/clackamas/_unincorporated/zdo.845.txt,147,,1,2 A minimum of 50 percent of dwellings within a cluster shall:
+or,unfielded,,or/clackamas/_unincorporated/zdo.845.txt,205,,1,2 The maximum width of each garage door is 20 feet.
 or,unfielded,,or/clackamas/gladstone/17.06.definitions.txt,1013,17.06.358,1,"“Net acre” means an area measuring 43,560 square feet, which excludes:"
 or,unfielded,,or/clackamas/gladstone/17.10.r-7.2.txt,57,17.10.030,1,(a) Front—20 feet.
 or,unfielded,,or/clackamas/gladstone/17.10.r-7.2.txt,59,17.10.030,1,(b) Side—7.5 feet or five feet for irregularly shaped lots.
@@ -3122,7 +3122,7 @@ or,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,120,350.045,
 or,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,124,350.045,1,Medical Center 1 per 300 sq.ft. of floor area or per CU review
 or,unfielded,,or/multnomah/wood-village/350.045.required-spaces.txt,126,350.045,1,Daycare 1 per 300 sq.ft. of GLA
 or,unfielded,,or/oar.660-046-0220.txt,76,,1,"For Lots or Parcels greater than or equal to 5,000 square feet: three spaces in total."
-or,unread,max_units,or/clackamas/_unincorporated/zdo.1012.txt,151,,1,"In the MRR District, dwelling units allowed through the bonus density provisions shall be developed with the same unit size mixture as provided in the BD. For example, if a development is proposed wit"
+or,unread,max_units,or/clackamas/_unincorporated/zdo.1012.txt,151,,1,"3 In the MRR District, dwelling units allowed through the bonus density provisions shall be developed with the same unit size mixture as provided in the BD. For example, if a development is proposed w"
 or,unread,max_units,or/clackamas/_unincorporated/zdo.1012.txt,161,,1,(b) The average of all units on the property is made available to families with incomes of 60 percent or less of AMI; or
 or,unread,max_density_du_per_acre,or/clackamas/_unincorporated/zdo.1012.txt,164,,2,"(A) For property with existing maximum density of 16 or fewer units per acre, up to 100 percent of base density and 12 additional feet in maximum height;"
 or,unread,max_density_du_per_acre,or/clackamas/_unincorporated/zdo.1012.txt,165,,2,"(B) For property with existing maximum density of 17 or more units per acre and 45 or fewer units per acre, up to 50 percent of base density and 24 additional feet in maximum height; or"
@@ -3132,14 +3132,14 @@ or,unread,max_units,or/clackamas/_unincorporated/zdo.1012.txt,171,,1,One dwellin
 or,unread,max_units,or/clackamas/_unincorporated/zdo.1012.txt,172,,1,One dwelling unit per affordable dwelling unit up to 50 percent of the base density1
 or,unread,max_units,or/clackamas/_unincorporated/zdo.1012.txt,173,,1,"Mixed-Use Development2: Multifamily dwelling units developed as part of a mixed-use development, where a minimum of 20 percent of the total floor area on a site is developed for a non-residential use."
 or,unread,max_units,or/clackamas/_unincorporated/zdo.1012.txt,175,,1,One dwelling unit per dwelling unit located in a mixed-use development up to 20 percent of the base density3
-or,unread,min_lot_sqft,or/clackamas/_unincorporated/zdo.1012.txt,210,,1,"Divide GSA by the minimum lot area per dwelling unit of 43,560 square feet. The result is base density."
-or,unread,min_density_du_per_acre,or/clackamas/_unincorporated/zdo.1012.txt,242,,1,"By 80 percent in Urban Low Density Residential Districts. However, partitions in these districts have no minimum density requirement provided that a master plan demonstrates that the minimum density f"
-or,unread,min_lot_sqft,or/clackamas/_unincorporated/zdo.315.txt,1086,,1,"For a townhouse, the minimum lot size is 3,630 square feet in the MR-1 District and 2,420 square feet in the MR-2 District unless, as part of an application filed pursuant to Section 1105, Subdivision"
+or,unread,min_lot_sqft,or/clackamas/_unincorporated/zdo.1012.txt,210,,1,"2 Divide GSA by the minimum lot area per dwelling unit of 43,560 square feet. The result is base density."
+or,unread,min_density_du_per_acre,or/clackamas/_unincorporated/zdo.1012.txt,242,,1,"1 By 80 percent in Urban Low Density Residential Districts. However, partitions in these districts have no minimum density requirement provided that a master plan demonstrates that the minimum density"
+or,unread,min_lot_sqft,or/clackamas/_unincorporated/zdo.315.txt,1086,,1,"12 For a townhouse, the minimum lot size is 3,630 square feet in the MR-1 District and 2,420 square feet in the MR-2 District unless, as part of an application filed pursuant to Section 1105, Subdivis"
 or,unread,max_units,or/clackamas/_unincorporated/zdo.315.txt,1170,,8,"Accessory buildings larger than 500 square feet and accessory to a primary dwelling, except accessory dwelling units: 20 feet or the height of the primary dwelling, whichever is greater"
 or,unread,max_units,or/clackamas/_unincorporated/zdo.315.txt,1171,,8,"All other buildings, including accessory dwelling units: 35 feet"
-or,unread,max_coverage_pct,or/clackamas/_unincorporated/zdo.315.txt,1257,,1,Maximum lot coverage in a planned unit development is 65 percent.
-or,unread,setback_front_ft,or/clackamas/_unincorporated/zdo.315.txt,1261,,1,"For a swimming pool that is accessory to a dwelling, the minimum front setback is 10 feet, and the minimum side and rear setbacks are three feet."
-or,unread,setback_rear_ft,or/clackamas/_unincorporated/zdo.315.txt,1269,,1,"The minimum rear setback for a detached single-family dwelling, duplex, manufactured home, prefabricated structure, or single room occupancy is 10 feet."
+or,unread,max_coverage_pct,or/clackamas/_unincorporated/zdo.315.txt,1257,,1,5 Maximum lot coverage in a planned unit development is 65 percent.
+or,unread,setback_front_ft,or/clackamas/_unincorporated/zdo.315.txt,1261,,1,"7 For a swimming pool that is accessory to a dwelling, the minimum front setback is 10 feet, and the minimum side and rear setbacks are three feet."
+or,unread,setback_rear_ft,or/clackamas/_unincorporated/zdo.315.txt,1269,,1,"1 The minimum rear setback for a detached single-family dwelling, duplex, manufactured home, prefabricated structure, or single room occupancy is 10 feet."
 or,unread,max_height_ft,or/clackamas/_unincorporated/zdo.315.txt,1275,,1,Building Area Building Height ≤ 8 feet Building Height > 8 feet and ≤ 10 feet Building Height > 10 feet and ≤ 15 feet Building Height > 15 feet
 or,unread,setback_garage_entrance_ft,or/clackamas/_unincorporated/zdo.315.txt,1325,,1,"10 feet for a dwelling with a recessed garage/carport or no garage/carport; 19½ feet to the garage door/carport motor vehicle entry for a dwelling with a non-recessed garage/carport9,10,11,12,13,14"
 or,unread,setback_garage_entrance_ft,or/clackamas/_unincorporated/zdo.315.txt,1329,,1,"18 feet for a dwelling with a recessed garage/carport or no garage/carport; 20½ feet to the garage door/carport motor vehicle entry for a dwelling with a non-recessed garage/carport9,10,11,12,13,18, 1"
@@ -3159,11 +3159,11 @@ or,unread,max_height_ft,or/clackamas/_unincorporated/zdo.315.txt,1559,,1,Buildin
 or,unread,setback_rear_ft,or/clackamas/_unincorporated/zdo.315.txt,1564,,1,"13 If the rear lot line abuts a residential zoning district other than HDR, SHD, or RCHDR, the minimum rear setback is 20 feet."
 or,unread,setback_side_ft,or/clackamas/_unincorporated/zdo.315.txt,1566,,1,"14 If the side lot line abuts an Urban Low Density Residential, VR-5/7, or VR-4/5 District, the minimum side setback for a two-story building is 10 feet."
 or,unread,setback_side_ft,or/clackamas/_unincorporated/zdo.315.txt,1570,,1,"16 If the side lot line abuts a residential zoning district other than HDR, SHD, or RCHDR, the minimum side setback is 15 feet."
-or,unread,parking_min_per_unit,or/clackamas/_unincorporated/zdo.845.txt,55,,1,"The combined width of all garages and off-street parking areas located between a building and a public street does not exceed a total of 50 percent of the street frontage (see Figure 845-7, Width of G"
-or,unread,parking_min_per_unit,or/clackamas/_unincorporated/zdo.845.txt,107,,1,Driveways and off-street parking areas shall not exceed 12 feet wide.
-or,unread,setback_garage_entrance_ft,or/clackamas/_unincorporated/zdo.845.txt,109,,1,"The garage width shall not exceed 12 feet, as measured from the inside of the garage door frame."
-or,unread,setback_rear_ft,or/clackamas/_unincorporated/zdo.845.txt,137,,1,Minimum Setbacks: The minimum front and rear setbacks are 10 feet. The minimum side setback is five feet.
-or,unread,parking_min_per_unit,or/clackamas/_unincorporated/zdo.845.txt,199,,1,"Off-street motor vehicle parking spaces shall not be located within 10 feet of rear or side lot lines, except a lot line that separates the lot from an improved alley that complies with Comprehensive "
+or,unread,parking_min_per_unit,or/clackamas/_unincorporated/zdo.845.txt,55,,1,"2 The combined width of all garages and off-street parking areas located between a building and a public street does not exceed a total of 50 percent of the street frontage (see Figure 845-7, Width of"
+or,unread,parking_min_per_unit,or/clackamas/_unincorporated/zdo.845.txt,107,,1,3 Driveways and off-street parking areas shall not exceed 12 feet wide.
+or,unread,setback_garage_entrance_ft,or/clackamas/_unincorporated/zdo.845.txt,109,,1,"4 The garage width shall not exceed 12 feet, as measured from the inside of the garage door frame."
+or,unread,setback_rear_ft,or/clackamas/_unincorporated/zdo.845.txt,137,,1,7 Minimum Setbacks: The minimum front and rear setbacks are 10 feet. The minimum side setback is five feet.
+or,unread,parking_min_per_unit,or/clackamas/_unincorporated/zdo.845.txt,199,,1,"3 Off-street motor vehicle parking spaces shall not be located within 10 feet of rear or side lot lines, except a lot line that separates the lot from an improved alley that complies with Comprehensiv"
 or,unread,max_units,or/clackamas/gladstone/17.06.definitions.txt,607,17.06.148,1,“Cottage cluster” means a grouping of no fewer than four detached dwelling units per acre with a footprint of less than 900 square feet each that includes a common courtyard on a single lot or on indi
 or,unread,max_units,or/clackamas/gladstone/17.06.definitions.txt,1191,17.06.435,1,“Recreation vehicle” means a vacation trailer or self-propelled vehicle or structure equipped with wheels for highway use which is intended for human occupancy and is being used for recreation or vaca
 or,unread,max_units,or/clackamas/gladstone/17.06.definitions.txt,1285,17.06.491,1,“Senior housing center” means a residential facility providing dwelling units without full kitchens (known as residential suites) for those aged 65 and older and dwelling units with full kitchens. Up 
@@ -4374,18 +4374,18 @@ or,unread,max_height_ft,or/oar.660-046-0220.txt,61,,1,"Height: A Large City may 
 or,unread,min_frontage_ft,or/oar.660-046-0220.txt,118,,1,"Minimum Street Frontage: A Large City is not required to apply a minimum street frontage standard to Townhouses, but if it applies those standards, the minimum street frontage standard must not exceed"
 or,unread,max_units,or/oar.660-046-0220.txt,166,,1,"Setbacks: A Large City may not require perimeter setbacks to be greater than those applicable to detached single-family dwellings in the same zone. Additionally, perimeter setbacks applicable to Cotta"
 or,unread,max_units,or/oar.660-046-0220.txt,169,,1,"Dwelling Unit Size: A Large City may limit the minimum or maximum size of dwelling units in a Cottage Cluster, but must apply a maximum building footprint of less than 900 square feet per dwelling uni"
-or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,99,,1,"If NR exceeds 15 percent of the GSA, only 15 percent of the GSA shall be subtracted."
-or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,105,,1,Slopes greater than 50 percent;
-or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,119,,1,Slopes equal to or greater than 20 percent and less than or equal to 50 percent; and
-or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,129,,1,Slopes greater than 25 percent;
+or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,99,,1,"1 If NR exceeds 15 percent of the GSA, only 15 percent of the GSA shall be subtracted."
+or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,105,,1,1 Slopes greater than 50 percent;
+or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,119,,1,1 Slopes equal to or greater than 20 percent and less than or equal to 50 percent; and
+or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,129,,1,1 Slopes greater than 25 percent;
 or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,177,,1,10 percent of the base density
 or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,178,,1,10 percent of the base density1
 or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,181,,1,25 percent of the base density4
 or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,183,,1,15 percent of the base density
 or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,184,,1,60 percent of the base density
-or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,226,,1,Slopes equal to or greater than 20 percent;
-or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,246,,1,"By 90 percent in the MR-2, HDR, and SHD Districts; or"
-or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,248,,1,By 50 percent in the VA District.
+or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,226,,1,2 Slopes equal to or greater than 20 percent;
+or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,246,,1,"3 By 90 percent in the MR-2, HDR, and SHD Districts; or"
+or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.1012.txt,248,,1,4 By 50 percent in the VA District.
 or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.315.txt,1152,,1,"2,500/2,000 square feet"
 or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.315.txt,1276,,1,"≤ 100 square feet None 3 feet side and rear 5 feet side and rear 5 feet side, 10 feet rear"
 or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.315.txt,1308,,2,50 percent of lots with frontage on an alley
@@ -4404,10 +4404,10 @@ or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.315.txt
 or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.315.txt,1523,,1,45 feet
 or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.315.txt,1527,,1,10 feet
 or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.315.txt,1531,,1,20 feet between multifamily dwellings
-or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.845.txt,39,,2,Is a minimum of 25 square feet in area; and
-or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.845.txt,147,,1,A minimum of 50 percent of dwellings within a cluster shall:
-or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.845.txt,205,,1,The maximum width of each garage door is 20 feet.
-or/clackamas/_unincorporated,unread,max_units,or/clackamas/_unincorporated/zdo.1012.txt,151,,1,"In the MRR District, dwelling units allowed through the bonus density provisions shall be developed with the same unit size mixture as provided in the BD. For example, if a development is proposed wit"
+or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.845.txt,39,,2,1 Is a minimum of 25 square feet in area; and
+or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.845.txt,147,,1,2 A minimum of 50 percent of dwellings within a cluster shall:
+or/clackamas/_unincorporated,unfielded,,or/clackamas/_unincorporated/zdo.845.txt,205,,1,2 The maximum width of each garage door is 20 feet.
+or/clackamas/_unincorporated,unread,max_units,or/clackamas/_unincorporated/zdo.1012.txt,151,,1,"3 In the MRR District, dwelling units allowed through the bonus density provisions shall be developed with the same unit size mixture as provided in the BD. For example, if a development is proposed w"
 or/clackamas/_unincorporated,unread,max_units,or/clackamas/_unincorporated/zdo.1012.txt,161,,1,(b) The average of all units on the property is made available to families with incomes of 60 percent or less of AMI; or
 or/clackamas/_unincorporated,unread,max_density_du_per_acre,or/clackamas/_unincorporated/zdo.1012.txt,164,,2,"(A) For property with existing maximum density of 16 or fewer units per acre, up to 100 percent of base density and 12 additional feet in maximum height;"
 or/clackamas/_unincorporated,unread,max_density_du_per_acre,or/clackamas/_unincorporated/zdo.1012.txt,165,,2,"(B) For property with existing maximum density of 17 or more units per acre and 45 or fewer units per acre, up to 50 percent of base density and 24 additional feet in maximum height; or"
@@ -4417,14 +4417,12 @@ or/clackamas/_unincorporated,unread,max_units,or/clackamas/_unincorporated/zdo.1
 or/clackamas/_unincorporated,unread,max_units,or/clackamas/_unincorporated/zdo.1012.txt,172,,1,One dwelling unit per affordable dwelling unit up to 50 percent of the base density1
 or/clackamas/_unincorporated,unread,max_units,or/clackamas/_unincorporated/zdo.1012.txt,173,,1,"Mixed-Use Development2: Multifamily dwelling units developed as part of a mixed-use development, where a minimum of 20 percent of the total floor area on a site is developed for a non-residential use."
 or/clackamas/_unincorporated,unread,max_units,or/clackamas/_unincorporated/zdo.1012.txt,175,,1,One dwelling unit per dwelling unit located in a mixed-use development up to 20 percent of the base density3
-or/clackamas/_unincorporated,unread,min_lot_sqft,or/clackamas/_unincorporated/zdo.1012.txt,210,,1,"Divide GSA by the minimum lot area per dwelling unit of 43,560 square feet. The result is base density."
-or/clackamas/_unincorporated,unread,min_density_du_per_acre,or/clackamas/_unincorporated/zdo.1012.txt,242,,1,"By 80 percent in Urban Low Density Residential Districts. However, partitions in these districts have no minimum density requirement provided that a master plan demonstrates that the minimum density f"
-or/clackamas/_unincorporated,unread,min_lot_sqft,or/clackamas/_unincorporated/zdo.315.txt,1086,,1,"For a townhouse, the minimum lot size is 3,630 square feet in the MR-1 District and 2,420 square feet in the MR-2 District unless, as part of an application filed pursuant to Section 1105, Subdivision"
-or/clackamas/_unincorporated,unread,max_units,or/clackamas/_unincorporated/zdo.315.txt,1170,,8,"Accessory buildings larger than 500 square feet and accessory to a primary dwelling, except accessory dwelling units: 20 feet or the height of the primary dwelling, whichever is greater"
-or/clackamas/_unincorporated,unread,max_units,or/clackamas/_unincorporated/zdo.315.txt,1171,,8,"All other buildings, including accessory dwelling units: 35 feet"
-or/clackamas/_unincorporated,unread,max_coverage_pct,or/clackamas/_unincorporated/zdo.315.txt,1257,,1,Maximum lot coverage in a planned unit development is 65 percent.
-or/clackamas/_unincorporated,unread,setback_front_ft,or/clackamas/_unincorporated/zdo.315.txt,1261,,1,"For a swimming pool that is accessory to a dwelling, the minimum front setback is 10 feet, and the minimum side and rear setbacks are three feet."
-or/clackamas/_unincorporated,unread,setback_rear_ft,or/clackamas/_unincorporated/zdo.315.txt,1269,,1,"The minimum rear setback for a detached single-family dwelling, duplex, manufactured home, prefabricated structure, or single room occupancy is 10 feet."
+or/clackamas/_unincorporated,unread,min_lot_sqft,or/clackamas/_unincorporated/zdo.1012.txt,210,,1,"2 Divide GSA by the minimum lot area per dwelling unit of 43,560 square feet. The result is base density."
+or/clackamas/_unincorporated,unread,min_density_du_per_acre,or/clackamas/_unincorporated/zdo.1012.txt,242,,1,"1 By 80 percent in Urban Low Density Residential Districts. However, partitions in these districts have no minimum density requirement provided that a master plan demonstrates that the minimum density"
+or/clackamas/_unincorporated,unread,min_lot_sqft,or/clackamas/_unincorporated/zdo.315.txt,1086,,1,"12 For a townhouse, the minimum lot size is 3,630 square feet in the MR-1 District and 2,420 square feet in the MR-2 District unless, as part of an application filed pursuant to Section 1105, Subdivis"
+or/clackamas/_unincorporated,unread,max_coverage_pct,or/clackamas/_unincorporated/zdo.315.txt,1257,,1,5 Maximum lot coverage in a planned unit development is 65 percent.
+or/clackamas/_unincorporated,unread,setback_front_ft,or/clackamas/_unincorporated/zdo.315.txt,1261,,1,"7 For a swimming pool that is accessory to a dwelling, the minimum front setback is 10 feet, and the minimum side and rear setbacks are three feet."
+or/clackamas/_unincorporated,unread,setback_rear_ft,or/clackamas/_unincorporated/zdo.315.txt,1269,,1,"1 The minimum rear setback for a detached single-family dwelling, duplex, manufactured home, prefabricated structure, or single room occupancy is 10 feet."
 or/clackamas/_unincorporated,unread,max_height_ft,or/clackamas/_unincorporated/zdo.315.txt,1275,,1,Building Area Building Height ≤ 8 feet Building Height > 8 feet and ≤ 10 feet Building Height > 10 feet and ≤ 15 feet Building Height > 15 feet
 or/clackamas/_unincorporated,unread,max_height_ft,or/clackamas/_unincorporated/zdo.315.txt,1367,,3,"25 feet or the building height of the primary dwelling, whichever is less24"
 or/clackamas/_unincorporated,unread,max_height_ft,or/clackamas/_unincorporated/zdo.315.txt,1386,,1,Building Height ≤ 8 feet
@@ -4442,11 +4440,11 @@ or/clackamas/_unincorporated,unread,max_height_ft,or/clackamas/_unincorporated/z
 or/clackamas/_unincorporated,unread,setback_rear_ft,or/clackamas/_unincorporated/zdo.315.txt,1564,,1,"13 If the rear lot line abuts a residential zoning district other than HDR, SHD, or RCHDR, the minimum rear setback is 20 feet."
 or/clackamas/_unincorporated,unread,setback_side_ft,or/clackamas/_unincorporated/zdo.315.txt,1566,,1,"14 If the side lot line abuts an Urban Low Density Residential, VR-5/7, or VR-4/5 District, the minimum side setback for a two-story building is 10 feet."
 or/clackamas/_unincorporated,unread,setback_side_ft,or/clackamas/_unincorporated/zdo.315.txt,1570,,1,"16 If the side lot line abuts a residential zoning district other than HDR, SHD, or RCHDR, the minimum side setback is 15 feet."
-or/clackamas/_unincorporated,unread,parking_min_per_unit,or/clackamas/_unincorporated/zdo.845.txt,55,,1,"The combined width of all garages and off-street parking areas located between a building and a public street does not exceed a total of 50 percent of the street frontage (see Figure 845-7, Width of G"
-or/clackamas/_unincorporated,unread,parking_min_per_unit,or/clackamas/_unincorporated/zdo.845.txt,107,,1,Driveways and off-street parking areas shall not exceed 12 feet wide.
-or/clackamas/_unincorporated,unread,setback_garage_entrance_ft,or/clackamas/_unincorporated/zdo.845.txt,109,,1,"The garage width shall not exceed 12 feet, as measured from the inside of the garage door frame."
-or/clackamas/_unincorporated,unread,setback_rear_ft,or/clackamas/_unincorporated/zdo.845.txt,137,,1,Minimum Setbacks: The minimum front and rear setbacks are 10 feet. The minimum side setback is five feet.
-or/clackamas/_unincorporated,unread,parking_min_per_unit,or/clackamas/_unincorporated/zdo.845.txt,199,,1,"Off-street motor vehicle parking spaces shall not be located within 10 feet of rear or side lot lines, except a lot line that separates the lot from an improved alley that complies with Comprehensive "
+or/clackamas/_unincorporated,unread,parking_min_per_unit,or/clackamas/_unincorporated/zdo.845.txt,55,,1,"2 The combined width of all garages and off-street parking areas located between a building and a public street does not exceed a total of 50 percent of the street frontage (see Figure 845-7, Width of"
+or/clackamas/_unincorporated,unread,parking_min_per_unit,or/clackamas/_unincorporated/zdo.845.txt,107,,1,3 Driveways and off-street parking areas shall not exceed 12 feet wide.
+or/clackamas/_unincorporated,unread,setback_garage_entrance_ft,or/clackamas/_unincorporated/zdo.845.txt,109,,1,"4 The garage width shall not exceed 12 feet, as measured from the inside of the garage door frame."
+or/clackamas/_unincorporated,unread,setback_rear_ft,or/clackamas/_unincorporated/zdo.845.txt,137,,1,7 Minimum Setbacks: The minimum front and rear setbacks are 10 feet. The minimum side setback is five feet.
+or/clackamas/_unincorporated,unread,parking_min_per_unit,or/clackamas/_unincorporated/zdo.845.txt,199,,1,"3 Off-street motor vehicle parking spaces shall not be located within 10 feet of rear or side lot lines, except a lot line that separates the lot from an improved alley that complies with Comprehensiv"
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.06.definitions.txt,1013,17.06.358,1,"“Net acre” means an area measuring 43,560 square feet, which excludes:"
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.10.r-7.2.txt,57,17.10.030,1,(a) Front—20 feet.
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.10.r-7.2.txt,59,17.10.030,1,(b) Side—7.5 feet or five feet for irregularly shaped lots.
@@ -4499,8 +4497,6 @@ or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential
 or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,113,16.22.010,1,Street side (corner lot) 15 feet
 or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,295,16.22.020,1,"Cottage cluster, rear 10 feet 10 feet 10 feet"
 or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,296,16.22.020,1,"Cottage cluster, interior side 10 feet 10 feet 7 feet"
-or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,297,16.22.020,1,"Cottage cluster, street side 10 feet 10 feet 10 feet"
-or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,487,16.22.030,1,"Cottage clusters, side 7 feet 7 feet 7 feet"
 or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,664,16.22.040,1,"Cottage cluster, rear 10 feet 10 feet"
 or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,665,16.22.040,1,"Cottage cluster, interior side 5 feet 5 feet"
 or/clackamas/happy-valley,unfielded,,or/clackamas/happy-valley/16.22.residential.txt,666,16.22.040,1,"Cottage cluster, street side 8 feet 8 feet"
@@ -4760,7 +4756,6 @@ or/clackamas/milwaukie,unread,min_lot_sqft,or/clackamas/milwaukie/19.300.base-zo
 or/clackamas/milwaukie,unread,min_frontage_ft,or/clackamas/milwaukie/19.300.base-zones.txt,488,19.302.4,1,Minimum street frontage requirements (ft) Subsection 19.504.6 Flag Lots
 or/clackamas/milwaukie,unread,max_units,or/clackamas/milwaukie/19.300.base-zones.txt,505,19.302.4,1,Density requirements (Dwelling units per acre) - Subsection 19.202.4 Density Calculations
 or/clackamas/milwaukie,unread,setback_front_ft,or/clackamas/milwaukie/19.300.base-zones.txt,514,19.302.4,1,"Table 19.302.4 is supplemented by Figure 19.302.4. For those properties identified in Figure 19.302.4, the minimum front yard setback is 5 ft."
-or/clackamas/milwaukie,unread,setback_street_side_ft,or/clackamas/milwaukie/19.300.base-zones.txt,530,19.302.5,1,There is no required side yard for townhouses that share 2 common walls. The required side yard for an exterior townhouse that has only one common wall is zero ft for the common wall and 5 ft for the 
 or/clackamas/milwaukie,unread,max_coverage_pct,or/clackamas/milwaukie/19.300.base-zones.txt,544,19.302.5,1,"The maximum lot coverage percentage in Subsection 19.302.4 is increased by 10 percentage points for development of an addition to an existing single detached dwelling or an accessory structure, provid"
 or/clackamas/milwaukie,unread,max_coverage_pct,or/clackamas/milwaukie/19.300.base-zones.txt,548,19.302.5,1,"The maximum lot coverage percentage in Subsection 19.302.4 is increased by 10 percentage points for development of a middle housing dwelling (except for townhouses and cottage clusters), an addition t"
 or/clackamas/milwaukie,unread,max_coverage_pct,or/clackamas/milwaukie/19.300.base-zones.txt,559,19.302.5,1,The maximum lot coverage percentage in Subsection 19.302.4.B.4 is increased by a total of 5 percentage points for the development of new detached or attached accessory dwelling units. This allowance a
@@ -5159,7 +5154,7 @@ or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/4.planning.txt,4472
 or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/4.planning.txt,4473,4,1,"2. Maximum spacing between streets or private drives for local access: 530 feet, unless"
 or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/4.planning.txt,4477,4,1,"3. Maximum block length without pedestrian and bicycle crossing: 330 feet, unless waived"
 or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/4.planning.txt,4557,4.113,2,1. Size: ADU's shall not exceed 600 square feet of living space.
-or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/4.planning.txt,4706,4.124,3,(feet)
+or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/4.planning.txt,4706,4.124,2,(feet)
 or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/4.planning.txt,4750,4.113,1,"a four-lot subdivision, by up to 20 percent. For example, the potential adjustment, if"
 or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/4.planning.txt,4915,4,1,"1. Maximum Block Perimeter: 1,800 feet, unless the Development Review Board makes a"
 or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/4.planning.txt,4919,4,1,"2. Maximum spacing between streets or private drive for local access: 530 feet, unless the"
@@ -6139,8 +6134,6 @@ or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.140.txt,35,19.140.010,
 or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.140.txt,79,19.140.030,1,B. All alleys shall constitute public streets with a minimum right-of-way of 16 feet.
 or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.150.txt,39,19.150.020,1,2. The maximum width for a driveway shall be 35 feet.
 or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.30.txt,479,19.30.030,1,3. In no case shall the required setback be greater than 40 feet.
-or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.30.txt,523,19.30.040,1,b. Be at an angle of up to 45 degrees from the street (see Figure 2);
-or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.30.txt,529,19.30.040,2,i. Be at least 25 square feet in area; and
 or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.30.txt,591,19.30.040,1,i. Two driveway approaches not exceeding 32 feet in total width on one frontage; or
 or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.30.txt,623,19.30.050,1,b. Be at an angle of up to 45 degrees from the street (see GMC 19.30.040 Figure 2);
 or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.30.txt,663,19.30.050,1,c. Outdoor on-site parking and maneuvering areas do not exceed 12 feet wide on any lot.

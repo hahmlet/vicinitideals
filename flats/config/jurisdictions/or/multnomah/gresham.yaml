@@ -70,10 +70,44 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
   where it would appear.
 
 
-  Bicycle parking is read and not encoded, and the reason is in the crossref ruling for 9.0851. The short
+  Bicycle parking is read and not encoded, and the reason is under READ AND NOT ENCODED: 9.0851 below. The short
   version: in eleven named districts the Quadplexes row states None outright, and everywhere else the
   long-term requirement of one space per dwelling unit is satisfiable inside the dwelling under
-  9.0831(A)(1) and (A)(4)(f), which costs no site area. Nothing here holds a bicycle rack anyway.'
+  9.0831(A)(1) and (A)(4)(f), which costs no site area. Nothing here holds a bicycle rack anyway.
+
+
+  READ AND NOT ENCODED: 10.1700, Affordable Housing with Height and Density Bonuses. It was the loudest
+  unfetched reference in the whole corpus -- thirty-four mentions, eight of them beside a number this
+  screen uses, one sentence repeated in every zone chapter: "Affordable housing development is subject
+  to the provisions in Section 10.1700." Fetched and read 2026-08-20. It is a bonus and nothing else.
+  10.1711(G) and Table 10.1711(B) grant a density bonus of 125 to 200 percent and a height bonus of 12
+  to 36 feet, and 10.1711(B)(2) switches the minimum net density off entirely. Every one of those
+  loosens.
+
+
+  It is also elective, and expensively so: 10.1711(A) requires every unit at 80 percent of area median
+  income or an average of 60 percent, enforced by a recorded covenant for no less than thirty years. A
+  market-rate quadplex does not become subject to this section by being built; an owner opts into it. So
+  it is not encoded, on the two grounds this corpus already uses -- a qualifier that can only loosen is
+  recorded rather than encoded, and an elective standard is not one a lot can fail.
+
+
+  READ AND NOT ENCODED: Table 9.0851, Auto and Bicycle Parking Requirements. Twenty-two mentions, five
+  beside a number the screen uses, and every one of them is a zone table''s parking row pointing here.
+  Fetched and read 2026-08-20, and the answer was not in the table at all -- 9.0802(A) states it in one
+  sentence for the whole city, and this layer carries it as a default. See the PARKING note above.
+
+
+  The bicycle rows are read and not encoded. In the districts 9.0851(A)(1) lists -- LDR-7, LDR-5, LDRGB,
+  LDR-PV, MDR-PV, VLDR-SW, LDR-SW, TR, TLDR, MDR-12, OFR and the Glisan and 162nd stretches of CMF --
+  the Quadplexes row states None in all three columns. Everywhere else a four-unit building falls to
+  (A)(2)(b) and owes one long-term space per dwelling unit and one short-term space per twenty. Neither
+  consumes placeable site area: 9.0831(A)(1) says that where long-term bicycle parking is provided in a
+  dwelling unit neither racks nor lockers are required, (A)(4)(f) names "contained within a dwelling
+  unit" as a compliant security location, and 9.0802(F) exempts quadplexes from the parking-lot design
+  standards on a unit-by-unit basis. The code supplies a compliant path that costs no ground. Four units
+  against one short-term space per twenty is a fifth of a rack, which is not a fitment question at the
+  resolution this screen works at.'
 ingest:
   geoid: null
   juris_city_codes:
@@ -190,39 +224,6 @@ code:
   - id: "10.1700.affordable"
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-10.1700.pdf
     title: "Section 10.1700 - Affordable Housing with Height and Density Bonuses"
-crossrefs:
-  "10.1700": >-
-    Affordable Housing with Height and Density Bonuses, and the loudest unfetched reference in the whole
-    corpus -- thirty-four mentions, eight of them beside a number this screen uses, one sentence repeated
-    in every zone chapter: "Affordable housing development is subject to the provisions in Section
-    10.1700." Fetched and read 2026-08-20. It is a bonus and nothing else. 10.1711(G) and Table 10.1711(B)
-    grant a density bonus of 125 to 200 percent and a height bonus of 12 to 36 feet, and 10.1711(B)(2)
-    switches the minimum net density off entirely. Every one of those loosens.
-
-
-    It is also elective, and expensively so: 10.1711(A) requires every unit at 80 percent of area median
-    income or an average of 60 percent, enforced by a recorded covenant for no less than thirty years. A
-    market-rate quadplex does not become subject to this section by being built; an owner opts into it. So
-    it is not encoded, on the two grounds this corpus already uses -- a qualifier that can only loosen is
-    recorded rather than encoded, and an elective standard is not one a lot can fail.
-  "9.0851": >-
-    Table 9.0851, Auto and Bicycle Parking Requirements. Twenty-two mentions, five beside a number the
-    screen uses, and every one of them is a zone table's parking row pointing here. Fetched and read
-    2026-08-20, and the answer was not in the table at all -- 9.0802(A) states it in one sentence for the
-    whole city, and this layer now carries it as a default. See the PARKING note.
-
-
-    The bicycle rows are read and not encoded. In the districts 9.0851(A)(1) lists -- LDR-7, LDR-5, LDRGB,
-    LDR-PV, MDR-PV, VLDR-SW, LDR-SW, TR, TLDR, MDR-12, OFR and the Glisan and 162nd stretches of CMF --
-    the Quadplexes row states None in all three columns. Everywhere else a four-unit building falls to
-    (A)(2)(b) and owes one long-term space per dwelling unit and one short-term space per twenty. Neither
-    consumes placeable site area: 9.0831(A)(1) says that where long-term bicycle parking is provided in a
-    dwelling unit neither racks nor lockers are required, (A)(4)(f) names "contained within a dwelling
-    unit" as a compliant security location, and 9.0802(F) exempts quadplexes from the parking-lot design
-    standards on a unit-by-unit basis. The code supplies a compliant path that costs no ground. Four units
-    against one short-term space per twenty is a fifth of a rack, which is not a fitment question at the
-    resolution this screen works at.
-
 defaults:
   # The city says it once, in a sentence, for everything: GDC 9.0802(A),
   # "Vehicle parking minimums are not required for any land use type."

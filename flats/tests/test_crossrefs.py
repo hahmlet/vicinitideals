@@ -380,6 +380,22 @@ def test_a_ruling_nobody_can_see_any_more_is_reported(layers: dict[str, Layer]) 
     assert stale_rulings(moved) == ["99.999"]
 
 
+def test_and_no_layer_in_the_corpus_carries_one() -> None:
+    """The check the ledger was already making and nothing was reading.
+
+    Gresham kept rulings on 10.1700 and Table 9.0851 from when neither chapter
+    had been fetched. Both were fetched and read on 2026-08-20, so neither
+    dangled any more and the ledger printed them as stale for a day with
+    nobody watching. The reasoning moved into the layer's notes, under READ AND
+    NOT ENCODED, which is where 7.0512's already was."""
+    stale = {
+        name: refs
+        for name, layer in load_rules().items()
+        if (refs := stale_rulings(layer))
+    }
+    assert stale == {}
+
+
 def _somewhere(root: Path, block: str) -> Path:
     d = root / "or" / "clackamas"
     d.mkdir(parents=True)

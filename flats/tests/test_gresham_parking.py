@@ -191,10 +191,15 @@ def test_and_is_elective_at_a_price_a_market_rate_building_does_not_pay(
 # -- the queue, and the title that was in the wrong block --------------------
 
 
-def test_both_references_are_ruled(gresham: Layer) -> None:
-    for ref in ("10.1700", "9.0851"):
-        assert ref in gresham.crossrefs, ref
-        assert len(gresham.crossrefs[ref]) > 200, ref
+def test_both_readings_are_written_down_where_they_belong(gresham: Layer) -> None:
+    """They were crossref rulings while neither chapter had been fetched. Both
+    were fetched and read, so neither reference dangles any more and a ruling
+    on it is a ruling nobody can see -- `stale_rulings` said so for a day. The
+    reasoning is in the layer's notes now, under READ AND NOT ENCODED, beside
+    7.0512's."""
+    assert not gresham.crossrefs
+    for ref in ("10.1700", "Table 9.0851"):
+        assert f"READ AND NOT ENCODED: {ref}" in gresham.notes, ref
 
 
 def test_the_documents_are_declared_and_fetched(
