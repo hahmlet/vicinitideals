@@ -503,7 +503,28 @@ def _wrap(text: str, width: int = 92, indent: str = "      ") -> list[str]:
 
 
 def layer_path(layer_id: str) -> Path:
-    return CONFIG / f"{layer_id}.yaml"
+    """The jurisdiction file for a layer id, or raise.
+
+    The id arrives from a browser form and everything past this point writes,
+    so it is checked twice rather than sanitised once.
+
+    The real constraint is that the id must name a layer the loader actually
+    holds -- a set of seventeen strings, not a shape. Pattern-matching a path
+    fragment would accept ``or/multnomah/../../../etc/hosts`` on the days the
+    pattern is slightly wrong, and there is no reason to guess when the
+    authoritative list is already in memory.
+
+    The containment check behind it is not redundant. It is what holds if the
+    keyset is ever loosened, or fed from a directory walk instead of a parse,
+    and it costs one resolve.
+    """
+    if layer_id not in load_rules():
+        raise ValueError(f"not a layer we hold: {layer_id!r}")
+    root = CONFIG.resolve()
+    path = (root / f"{layer_id}.yaml").resolve()
+    if not path.is_relative_to(root):
+        raise ValueError(f"outside the rule tree: {layer_id!r}")
+    return path
 
 
 def _entry(ref: str, outcome: str, note: str) -> list[str]:

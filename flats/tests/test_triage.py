@@ -16,6 +16,7 @@ from __future__ import annotations
 import pytest
 
 from flats.encode.triage import (
+    CONFIG,
     Card,
     Mention,
     Neighbour,
@@ -25,6 +26,7 @@ from flats.encode.triage import (
     cards,
     feed,
     fields_in,
+    layer_path,
     rule,
 )
 from flats.rules.loader import load_rules
@@ -224,6 +226,39 @@ class TestRecordingADecision:
         the open row still shows the sentence."""
         with pytest.raises(ValueError, match="at least"):
             rule(GRESHAM, "7.0221", "procedure", "no")
+
+    @pytest.mark.parametrize(
+        "layer_id",
+        [
+            "../../../../etc/passwd",
+            "or/multnomah/../../../../Windows/system",
+            "/etc/hosts",
+            "or/multnomah/gresham/../../../pyproject",
+            "",
+        ],
+    )
+    def test_a_layer_id_that_is_not_a_layer_never_becomes_a_path(
+        self, layer_id: str
+    ) -> None:
+        """The id comes from a browser form and everything past it writes.
+
+        Checked against the loaded keyset rather than a pattern: the
+        authoritative list of seventeen strings is already in memory, and a
+        pattern is a guess about what a path can look like.
+        """
+        with pytest.raises(ValueError, match="not a layer we hold"):
+            layer_path(layer_id)
+
+    def test_a_real_layer_id_resolves_inside_the_rule_tree(self) -> None:
+        path = layer_path(GRESHAM)
+
+        assert path.is_relative_to(CONFIG.resolve())
+        assert path.name == "gresham.yaml"
+        assert path.exists()
+
+    def test_the_write_path_refuses_before_it_touches_disk(self) -> None:
+        with pytest.raises(ValueError, match="not a layer we hold"):
+            rule("../../../../etc/passwd", "1.1", "procedure", "x" * 60)
 
     def test_every_offered_outcome_is_a_real_one(self) -> None:
         from app.api.routers.ui_flats import _TRIAGE_ORDER
