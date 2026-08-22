@@ -563,7 +563,40 @@
   },
   "or/multnomah/gresham": {
     "CC": {
+      "max_density_du_per_acre": [
+        "civic_corridor"
+      ],
+      "max_height_ft": [
+        "civic_corridor"
+      ],
+      "min_density_du_per_acre": [
+        "civic_corridor"
+      ],
+      "min_frontage_ft": [
+        "civic_corridor"
+      ],
+      "min_lot_sqft": [
+        "civic_corridor"
+      ],
+      "parking_min_per_unit": [
+        "civic_corridor"
+      ],
       "quadplex_allowed": [
+        "civic_corridor"
+      ],
+      "setback_front_ft": [
+        "civic_corridor"
+      ],
+      "setback_front_max_ft": [
+        "civic_corridor"
+      ],
+      "setback_rear_ft": [
+        "civic_corridor"
+      ],
+      "setback_side_ft": [
+        "civic_corridor"
+      ],
+      "setback_street_side_ft": [
         "civic_corridor"
       ]
     },
@@ -735,7 +768,40 @@
       ]
     },
     "MC": {
+      "max_density_du_per_acre": [
+        "civic_corridor"
+      ],
+      "max_height_ft": [
+        "civic_corridor"
+      ],
+      "min_density_du_per_acre": [
+        "civic_corridor"
+      ],
+      "min_frontage_ft": [
+        "civic_corridor"
+      ],
+      "min_lot_sqft": [
+        "civic_corridor"
+      ],
+      "parking_min_per_unit": [
+        "civic_corridor"
+      ],
       "quadplex_allowed": [
+        "civic_corridor"
+      ],
+      "setback_front_ft": [
+        "civic_corridor"
+      ],
+      "setback_front_max_ft": [
+        "civic_corridor"
+      ],
+      "setback_rear_ft": [
+        "civic_corridor"
+      ],
+      "setback_side_ft": [
+        "civic_corridor"
+      ],
+      "setback_street_side_ft": [
         "civic_corridor"
       ]
     },
@@ -881,7 +947,40 @@
       ]
     },
     "RTC": {
+      "max_density_du_per_acre": [
+        "civic_corridor"
+      ],
+      "max_height_stories": [
+        "civic_corridor"
+      ],
+      "min_density_du_per_acre": [
+        "civic_corridor"
+      ],
+      "min_frontage_ft": [
+        "civic_corridor"
+      ],
+      "min_lot_sqft": [
+        "civic_corridor"
+      ],
+      "parking_min_per_unit": [
+        "civic_corridor"
+      ],
       "quadplex_allowed": [
+        "civic_corridor"
+      ],
+      "setback_front_ft": [
+        "civic_corridor"
+      ],
+      "setback_front_max_ft": [
+        "civic_corridor"
+      ],
+      "setback_rear_ft": [
+        "civic_corridor"
+      ],
+      "setback_side_ft": [
+        "civic_corridor"
+      ],
+      "setback_street_side_ft": [
         "civic_corridor"
       ]
     },
@@ -1054,7 +1153,31 @@
   },
   "or/multnomah/portland": {
     "CI1": {
+      "max_coverage_pct": [
+        "site_specific_limitation"
+      ],
+      "max_far": [
+        "site_specific_limitation"
+      ],
+      "max_height_ft": [
+        "site_specific_limitation"
+      ],
+      "min_landscaped_pct": [
+        "site_specific_limitation"
+      ],
+      "min_lot_sqft": [
+        "site_specific_limitation"
+      ],
       "quadplex_allowed": [
+        "site_specific_limitation"
+      ],
+      "setback_front_ft": [
+        "site_specific_limitation"
+      ],
+      "setback_rear_ft": [
+        "site_specific_limitation"
+      ],
+      "setback_side_ft": [
         "site_specific_limitation"
       ]
     },

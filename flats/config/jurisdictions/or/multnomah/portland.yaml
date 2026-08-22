@@ -1461,11 +1461,56 @@ zones:
     quadplex_allowed:
       # Table 150-1, "Household Living": N in CI1, Y in CI2 and IR. A bare N
       # with no bracket and no conditional-use column, in the one campus zone
-      # written to sit against single-family neighbourhoods. Nothing
-      # downstream is read, so nothing downstream is encoded.
+      # written to sit against single-family neighbourhoods.
       value: false
       quote: "or/multnomah/portland/33.150.txt#L340,L342"
-    notes: 'Campus Institutional 1. The use gate closes here and the dimensional standards behind it never run. Worth recording anyway: this zone would have been the loosest in the corpus on lot size -- 33.150.200 states there is no required minimum lot size for development or for the creation of new lots -- and the tightest on coverage, at 50 percent.'
+    min_lot_sqft:
+      # 33.150.200: no required minimum lot size for development or for the
+      # creation of new lots anywhere in the campus institutional zones.
+      exempt: true
+      quote: "or/multnomah/portland/33.150.txt#L401-L403"
+    setback_front_ft:
+      # Table 150-2 states the CI1 minimum in three rows by what the lot line
+      # faces: 15 ft against OS or RF-R2.5, 10 ft against RM1-RMP or IR, 0 ft
+      # against a C, CI, E or I lot. There is no residual row, so every line
+      # takes one of the three and which one depends on the neighbour's zoning,
+      # which is not read here. Fifteen is the figure that cannot turn a RED
+      # lot green. The rows are headed "abutting or across the street from",
+      # so the front line owes the same as the others.
+      value: 15
+      quote: "or/multnomah/portland/33.150.txt#L531,L538-L545"
+    setback_side_ft:
+      value: 15
+      quote: "or/multnomah/portland/33.150.txt#L531,L538-L545"
+    setback_rear_ft:
+      value: 15
+      quote: "or/multnomah/portland/33.150.txt#L531,L538-L545"
+    max_height_ft:
+      # Row "Maximum Height", CI1 column: 75 ft, marked [4].
+      value: 75
+      quote: "or/multnomah/portland/33.150.txt#L531,L536-L537"
+    max_far:
+      # 0.5 to 1, the tightest floor-area ratio in the corpus, and in this zone
+      # the standard that supplies the lot minimum 33.150.200 refuses to.
+      value: 0.5
+      quote: "or/multnomah/portland/33.150.txt#L531,L532-L533"
+    max_coverage_pct:
+      value: 50
+      quote: "or/multnomah/portland/33.150.txt#L531,L548-L549"
+    min_landscaped_pct:
+      value: 25
+      quote: "or/multnomah/portland/33.150.txt#L531,L552-L553"
+    notes: 'Campus Institutional 1. Table 150-1 reads N for Household Living, so the use gate closes and nothing behind it is reached.
+
+      Table 150-2 is encoded anyway, on 2026-08-21. Table 150-2 note [3] sits in the region the use cell is quoted from and is ruled unmeasured, so the N is not a settled N, and a gate that might open owes the standards behind it.
+
+      The setback rows are the reading to keep. CI1 states three minimums by what the lot line faces -- 15 ft against OS or RF-R2.5, 10 against RM1-RMP or IR, 0 against a C, CI, E or I lot -- and states no residual, so every line takes one of the three and the answer is the neighbour''s zoning rather than this lot''s. Nothing here reads that, so 15 is taken on all four sides. IR, one column over, escapes this: its column is a single merged cell measured off the building instead.
+
+      The other difference from IR and CI2 is quieter. CI1''s maximum building setback reads None, and note [5] removes the minimum setback only on frontages where a maximum applies -- so in CI1 it never fires, and the transit-street and Pedestrian District relief the other two campus zones get does not exist here.
+
+      0.5 to 1 is the tightest FAR in the corpus and it is what makes this zone bind. There is no minimum lot size at all, but four units of a 56 by 36 ft pod over two floors is roughly 4,000 sq ft of floor area, which at 0.5 asks for roughly 8,000 sq ft of site -- a lot minimum arriving by the back door. Coverage is 50 percent, landscaped area 25 percent.
+
+      NOT ENCODED, on purpose: Maps 150-1 through 150-5 supersede the Table 150-2 setback and height rows where they apply and this screen does not read them; and note [1] treats an entire CI zone as one site for Colleges and Medical Centers, measuring setbacks from the zone perimeter, which is a different applicant than this one.'
   CI2:
     cite_default:
       cite: PCC 33.150 — Table 150-1 (33.150.100 Primary Uses), 33.150.200 Lot Size, Table 150-2 (Summary of Development Standards in Campus Institutional Zones), 33.150.215 Setbacks, 33.150.220 Building Coverage, 33.150.240 Landscaped Areas

@@ -41,13 +41,9 @@ REFUSED = ("NC", "HI", "GI", "CNTH", "CNTM", "CNRM")
 #: RTC, CC and MC read a bare NP on the quadplex row, and a footnote over the
 #: same table region is ruled `unmeasured` against `civic_corridor`. That makes
 #: the prohibition levered rather than settled, so the resolver asks these three
-#: for the dimensions a permitted zone owes. See
+#: for the dimensions a permitted zone owes -- and they now supply them. See
 #: test_a_levered_prohibition_owes_its_dimensions_like_any_other.
 LEVERED = ("RTC", "CC", "MC")
-#: What each of them owes. Table 4.0430 states all five, in columns the
-#: extraction shifts badly enough that reading them would be a guess.
-OWED = ("max_height_ft", "min_lot_sqft", "setback_front_ft", "setback_rear_ft",
-        "setback_side_ft")
 
 ALL_ZONES = (
     "LDR-5", "LDR-7", "TLDR", "TR", "OFR", "MDR-12", "MDR-24",
@@ -189,16 +185,15 @@ def test_the_alley_buys_nothing_here_unless_the_plat_is_split(
 
 
 def test_every_gresham_zone_owes_nothing_more(rules: RuleSet) -> None:
+    """No exceptions any more. LEVERED used to be skipped here."""
     for zone in ALL_ZONES:
-        if zone in LEVERED:
-            continue
         assert rules.resolve(GRESHAM, zone).missing_required == (), zone
 
 
 def test_a_levered_prohibition_owes_its_dimensions_like_any_other(
     rules: RuleSet,
 ) -> None:
-    """Three corridor districts that used to owe nothing now owe five each.
+    """Three corridor districts that used to owe nothing, and now pay.
 
     A zone whose quadplex row reads a bare NP needs no setbacks: there is no
     path to a building, so there is nothing to measure. That shortcut is only
@@ -208,24 +203,26 @@ def test_a_levered_prohibition_owes_its_dimensions_like_any_other(
     prohibition is a prohibition that might not hold. The resolver treats it as
     a lever and asks for the dimensions again, which is right.
 
-    They were exempt until now for the wrong reason. The join that hangs
+    They were exempt before that for the wrong reason. The join that hangs
     footnotes on values read only the first line of a citation and gave up on
     any it could not parse, so these three -- cited to a header line and a cell
     line, comma-separated -- never reached the gate at all. Thirty percent of
     the corpus was in the same position.
 
-    NOT ENCODED, and not because nobody looked. Table 4.0430 states all five
-    standards for all seven corridor districts, but its cells wrap across a
-    dozen lines each and the extraction shifts fragments between columns; the
-    setback rows in particular cannot be assigned to a district by reading the
-    text. Encoding them from this document would be a guess wearing a
-    citation. The table needs a better extraction first.
+    The five standards were then owed and unencoded for a fortnight, on a
+    reading recorded here that Table 4.0430's cells wrap too badly to assign to
+    a column. That reading did not survive: SC, SC-RJ, CMF and CMU were
+    afterwards encoded from the same rows and the same lines, and the setback
+    row in particular resolves cleanly -- RTC, SC and SC-RJ share one
+    "Residential:" sub-cell whose three columns read identically. What was
+    genuinely unreadable was the commercial half of the same cells, which is
+    not this building. Encoded 2026-08-21; see test_unsettled_gates.
     """
     for zone in LEVERED:
         held = rules.resolve(GRESHAM, zone)
         assert held.values["quadplex_allowed"].value is False, zone
         assert held.values["quadplex_allowed"].levers == frozenset({"civic_corridor"}), zone
-        assert held.missing_required == OWED, zone
+        assert held.missing_required == (), zone
 
 
 def test_the_new_citations_all_point_at_their_own_sentence(gresham: Layer) -> None:

@@ -39,10 +39,11 @@ GRESHAM = "or/multnomah/gresham"
 PARKING = f"{GRESHAM}/9.0800.parking.txt"
 BONUS = f"{GRESHAM}/10.1700.affordable.txt"
 
-#: The four that read Table 4.0430 row K for themselves before this. They keep
-#: their own citation, because the same answer from the zone's own table is not
-#: the same sentence.
-CORRIDOR = ("CMF", "SC", "SC-RJ", "CMU")
+#: The Corridor districts that read Table 4.0430 row K for themselves. They
+#: keep their own citation, because the same answer from the zone's own table
+#: is not the same sentence. Four when this was written; row K reads None in
+#: all seven columns and RTC, CC and MC were encoded from it on 2026-08-21.
+CORRIDOR = ("CMF", "SC", "SC-RJ", "CMU", "RTC", "CC", "MC")
 
 
 @pytest.fixture(scope="module")
@@ -116,7 +117,7 @@ def test_the_state_ceiling_is_no_longer_answering_for_the_city(
         assert "9.0802(A)" in cite or "4.0430" in cite or "Table 4.0430" in cite, zone
 
 
-def test_the_four_that_read_their_own_table_keep_their_own_citation(
+def test_the_ones_that_read_their_own_table_keep_their_own_citation(
     rules: RuleSet, gresham: Layer
 ) -> None:
     """A layer default is what a zone falls back to, not what it is overwritten

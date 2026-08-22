@@ -3149,7 +3149,110 @@ zones:
     quadplex_allowed:
       value: false
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L143,L148"
-    notes: 'Table 4.0420 reads NP for Quadplex in the Rockwood Town Center column (L148), so the use is out and none of Table 4.0430''s standards are read for this district. Duplex and Triplex read NP here too, which is unusual -- the other Corridor districts that allow anything allow all three -- and it is the town centre being held for larger buildings rather than an oversight: Multi-Family is L3,4 and Townhouse is L3 in the same column. The Townhouse permission is the one to reread if this is ever revisited, and note 3 is what limits it: inside the Rockwood Town Center Mixed-Use Area, buildings on parcels with at least 100 feet of frontage on Stark within 500 feet of the 181st or 187th intersections must put non-residential uses on the ground floor. RTC also states its height in storeys rather than feet, six or ten by area, which is the same shape SC states and the reason max_height_stories exists.'
+    max_height_stories:
+      # Row I, RTC column. Three figures by area and use: six storeys inside
+      # the Triangle for exclusively commercial/institutional buildings, four
+      # inside it for buildings that include other uses, ten outside it. A
+      # building with dwellings is never the first; the Triangle boundary is a
+      # map this screen does not hold, so the four-storey reading is taken.
+      value: 4
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L359,L373-L384"
+    min_lot_sqft:
+      # Row A: 10,000 sq ft for residential, none for commercial,
+      # institutional and mixed-use. Note 6 removes it entirely for lots
+      # created for Townhouses.
+      value: 10000
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L295-L300"
+      variants:
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0400.corridor.txt#L445"
+    min_frontage_ft:
+      # Row B: 100 ft for residential. Note 11 rewrites it for townhouses --
+      # 16 ft interior, 32 ft on a corner without an alley or shared access,
+      # 25 ft on a corner with one.
+      value: 100
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L295,L301-L305"
+      variants:
+        - value: 16
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0400.corridor.txt#L460-L462"
+        - value: 32
+          when: [unit_lots, corner_lot]
+          quote: "or/multnomah/gresham/4.0400.corridor.txt#L460-L462"
+        - value: 25
+          when: [unit_lots, corner_lot, abuts_alley]
+          quote: "or/multnomah/gresham/4.0400.corridor.txt#L460-L462"
+    min_density_du_per_acre:
+      # Row E, RTC column: "18 units per acre for Townhouses; 20 units per acre
+      # for multi-family", and no third figure. Same shape as SC and SC-RJ. A
+      # quadplex on one lot is neither -- Gresham's Multi-Family Dwelling is
+      # five units or more and expressly not middle housing -- so the floor
+      # does not reach it. Split the plat and the building is a townhouse, and
+      # the same cell states 18.
+      exempt: true
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L295,L316-L321"
+      variants:
+        - value: 18
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0400.corridor.txt#L295,L316-L321"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+    max_density_du_per_acre:
+      # Row F: unlimited inside the Triangle, 40 units per net acre elsewhere.
+      # The Triangle is unmapped here, so the figure that can bind is taken.
+      value: 40
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L325-L331"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+    setback_front_ft:
+      # Row G, RTC column, the Residential paragraph. The Commercial,
+      # Mixed-Use and Institutional paragraph above it reads 0 on every side
+      # and is not this building.
+      value: 5
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L332,L343-L347"
+    setback_side_ft:
+      value: 0
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L332,L343-L347"
+      variants:
+        - value: 5
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0400.corridor.txt#L416,L422"
+        - value: 0
+          when: [unit_lots, attached_wall]
+          quote: "or/multnomah/gresham/4.0400.corridor.txt#L416,L423"
+    setback_rear_ft:
+      value: 15
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L332,L343-L347"
+      variants:
+        - value: 10
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0400.corridor.txt#L416,L428"
+        - value: 5
+          when: [unit_lots, abuts_alley]
+          quote: "or/multnomah/gresham/4.0400.corridor.txt#L416,L428"
+    setback_street_side_ft:
+      value: 5
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L332,L343-L347"
+    setback_front_max_ft:
+      # Row H, RTC column, Residential paragraph: 20 ft front and street-side,
+      # none for interior side and rear. Note 3a would allow 30 on an arterial
+      # or boulevard, which is looser, so the table's own figure binds.
+      value: 20
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L351,L368-L372"
+    parking_min_per_unit:
+      # Row K reads None in every Corridor column.
+      value: 0
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L392-L393"
+    notes: 'Table 4.0420 reads NP for Quadplex in the Rockwood Town Center column (L148), so the use is out. Duplex and Triplex read NP here too, which is unusual -- the other Corridor districts that allow anything allow all three -- and it is the town centre being held for larger buildings rather than an oversight: Multi-Family is L3,4 and Townhouse is L3 in the same column. The Townhouse permission is the one to reread if this is ever revisited, and note 3 is what limits it: inside the Rockwood Town Center Mixed-Use Area, buildings on parcels with at least 100 feet of frontage on Stark within 500 feet of the 181st or 187th intersections must put non-residential uses on the ground floor.
+
+      Table 4.0430 is encoded anyway, on 2026-08-21, and the reason is worth stating: the NP is not a *settled* NP. Table 4.0420 note 2 sits in the region this cell is quoted from and is ruled unmeasured, so nothing here can prove the gate stays shut, and a zone whose gate might open owes the standards behind it. The residential column of the setback row is what is read -- 5 ft front and street-side, 0 interior side, 15 rear -- not the commercial one above it.
+
+      Two readings to keep. RTC states height in storeys, not feet: six inside the Stark/Burnside/181st Triangle for exclusively commercial or institutional buildings, four for buildings that include any other use, ten outside the Triangle. A building with dwellings in it is never the six-storey case, and whether a lot is inside the Triangle is a map nothing here reads, so four storeys is taken. It cannot bind a 26 ft pod either way. And the minimum-density row names Townhouses (18) and multi-family (20) and no third figure, the same shape SC and SC-RJ print, so the floor does not reach a four-unit building on one lot: Gresham''s Multi-Family Dwelling is five units or more and expressly not middle housing. It is encoded exempt with the 18 riding as a unit_lots variant, because split the plat and the building is a townhouse and the same cell states its floor outright -- against a lot size note 6 has already switched off.'
   CC:
     section: ["4.04"]
     cite_default:
@@ -3159,7 +3262,66 @@ zones:
     quadplex_allowed:
       value: false
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L143,L148"
-    notes: 'Table 4.0420 reads NP for Quadplex (L148), and here the rest of the residential block reads NP with it -- Duplex, Triplex, Townhouse and Cottage Cluster all prohibited, and Single Detached too. This is a commercial district that admits housing only as Multi-Family above a ground floor of shops (note 6: on arterials and boulevards, half the street-facing frontage within 40 feet of the street must be commercial or institutional), and Gresham''s Multi-Family Dwelling is five units or more and expressly not middle housing. There is no path for a four-unit pod on one lot and none for the split plat either, so this is a settled RED rather than an unread district.'
+    max_height_ft:
+      # Row I, CC column: a bare 45 feet. The CMF and CMU cells beside it
+      # carry note 18; this one carries no marker.
+      value: 45
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L359,L373"
+    min_lot_sqft:
+      # Row A, CC column: None.
+      exempt: true
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L295-L300"
+    min_frontage_ft:
+      # Row B, CC column: None.
+      exempt: true
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L295,L301-L305"
+    min_density_du_per_acre:
+      # Row E, CC column: a bare 12 units per acre, no housing-type list, so
+      # the floor does reach a four-unit building.
+      value: 12
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L295,L316-L321"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+    max_density_du_per_acre:
+      # Row F, CC column: 40 units per acre.
+      value: 40
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L325-L327"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+    setback_front_ft:
+      # Row G, CC column: "0 feet front and street-side, interior side, and
+      # rear." One cell for all four, and no residential/commercial split.
+      value: 0
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L332-L337"
+    setback_side_ft:
+      value: 0
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L332-L337"
+    setback_rear_ft:
+      value: 0
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L332-L337"
+    setback_street_side_ft:
+      value: 0
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L332-L337"
+    setback_front_max_ft:
+      # Row H reads 10 feet, marked 3b and 3c. Note 3c makes it five feet on a
+      # Collector, Community or Local street, for any building; note 3b keeps
+      # ten on an arterial or boulevard but only for buildings containing
+      # commercial uses. Street class is not read here, so five is taken --
+      # this is a maximum, so the small number is the strict one.
+      value: 5
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L351-L356,L431,L439-L441"
+    parking_min_per_unit:
+      value: 0
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L392-L393"
+    notes: 'Table 4.0420 reads NP for Quadplex (L148), and here the rest of the residential block reads NP with it -- Duplex, Triplex, Townhouse and Cottage Cluster all prohibited, and Single Detached too. This is a commercial district that admits housing only as Multi-Family above a ground floor of shops (note 6: on arterials and boulevards, half the street-facing frontage within 40 feet of the street must be commercial or institutional), and Gresham''s Multi-Family Dwelling is five units or more and expressly not middle housing. There is no path for a four-unit pod on one lot and none for the split plat either.
+
+      Table 4.0430 is encoded anyway, on 2026-08-21. Table 4.0420 note 2 governs the region the use cell is quoted from and is ruled unmeasured, so the NP is not a settled NP, and an unsettled gate owes the standards behind it. The column is the loosest dimensional column in the Corridor table and close to the loosest in the corpus: no minimum lot size, no minimum street frontage, no minimum lot width/depth ratio, zero on all four setbacks, 45 feet of height, no parking required.
+
+      What binds instead is the density pair, and only together. The floor of 12 units per net acre puts four units on no more than about 14,520 sq ft and the ceiling of 40 puts them on no less than about 4,356, so the district is a window rather than a minimum -- and neither row says that on its own. The maximum front setback is the other one to watch: the table cell reads 10 feet, but note 3c drops it to five on a Collector, Community or Local street, and street class is not read here, so five is taken.'
   MC:
     section: ["4.04"]
     cite_default:
@@ -3169,7 +3331,67 @@ zones:
     quadplex_allowed:
       value: false
       quote: "or/multnomah/gresham/4.0400.corridor.txt#L143,L148"
-    notes: 'Table 4.0420 reads NP for Quadplex (L148), and here the rest of the residential block reads NP with it -- Duplex, Triplex, Townhouse and Cottage Cluster all prohibited, and Single Detached too. This is a commercial district that admits housing only as Multi-Family above a ground floor of shops (note 6: on arterials and boulevards, half the street-facing frontage within 40 feet of the street must be commercial or institutional), and Gresham''s Multi-Family Dwelling is five units or more and expressly not middle housing. There is no path for a four-unit pod on one lot and none for the split plat either, so this is a settled RED rather than an unread district.'
+    max_height_ft:
+      # Row I, MC column: a bare 45 feet, the same as CC beside it.
+      value: 45
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L359,L373"
+    min_lot_sqft:
+      # Row A, MC column: None.
+      exempt: true
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L295-L300"
+    min_frontage_ft:
+      # Row B, MC column: None.
+      exempt: true
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L295,L301-L305"
+    min_density_du_per_acre:
+      # Row E, MC column: a bare 12 units per acre, no housing-type list, so
+      # the floor does reach a four-unit building.
+      value: 12
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L295,L316-L321"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L796"
+    max_density_du_per_acre:
+      # Row F, MC column: 40 units per acre.
+      value: 40
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L325-L327"
+      measured_on:
+        fact: net_developable_area
+        cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list
+        quote: "or/multnomah/gresham/3.0100.definitions.txt#L788-L790,L797-L799"
+    setback_front_ft:
+      # Row G, MC column: "0 feet front and street-side, interior side, and
+      # rear." One cell for all four, and no residential/commercial split.
+      value: 0
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L332-L337"
+    setback_side_ft:
+      value: 0
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L332-L337"
+    setback_rear_ft:
+      value: 0
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L332-L337"
+    setback_street_side_ft:
+      value: 0
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L332-L337"
+    setback_front_max_ft:
+      # Row H reads 10 feet, marked 3b and 3c. Note 3c makes it five feet on a
+      # Collector, Community or Local street, for any building; note 3b keeps
+      # ten on an arterial or boulevard but only for buildings containing
+      # commercial uses. Street class is not read here, so five is taken --
+      # this is a maximum, so the small number is the strict one.
+      value: 5
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L351-L356,L360-L361,L431,L439-L441"
+    parking_min_per_unit:
+      value: 0
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L392-L393"
+    notes: 'Table 4.0420 reads NP for Quadplex (L148), and here the rest of the residential block reads NP with it -- Duplex, Triplex, Townhouse and Cottage Cluster all prohibited, and Single Detached too. This is a commercial district that admits housing only as Multi-Family above a ground floor of shops (note 6: on arterials and boulevards, half the street-facing frontage within 40 feet of the street must be commercial or institutional), and Gresham''s Multi-Family Dwelling is five units or more and expressly not middle housing. There is no path for a four-unit pod on one lot and none for the split plat either.
+
+      Table 4.0430 is encoded anyway, on 2026-08-21. Table 4.0420 note 2 governs the region the use cell is quoted from and is ruled unmeasured, so the NP is not a settled NP, and an unsettled gate owes the standards behind it. The column is the loosest dimensional column in the Corridor table and close to the loosest in the corpus: no minimum lot size, no minimum street frontage, no minimum lot width/depth ratio, zero on all four setbacks, 45 feet of height, no parking required.
+
+      What binds instead is the density pair, and only together. The floor of 12 units per net acre puts four units on no more than about 14,520 sq ft and the ceiling of 40 puts them on no less than about 4,356, so the district is a window rather than a minimum -- and neither row says that on its own. The maximum front setback is the other one to watch: the table cell reads 10 feet, but note 3c drops it to five on a Collector, Community or Local street, and street class is not read here, so five is taken.
+
+      MC and CC are the same column twice over: every cell of Table 4.0430 reads alike in both, and the two districts differ only in which Central Rockwood floor-area-ratio note they carry, which is not a standard this screen reads. The maximum-setback cell is the one place the extraction splits them -- MC''s wraps past the page break -- so its quote carries the two continuation lines CC''s does not.'
   LDR/GB:
     section: ["4.13"]
     cite_default:

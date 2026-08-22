@@ -3,8 +3,14 @@
 Six of the seven columns of Table 4.0430 were unencoded -- SC, SC-RJ, CMU,
 RTC, CC and MC -- and only CMF had been read. The use table splits them
 cleanly: a quadplex is a bare P in SC, SC-RJ and CMU and a bare NP in RTC, CC
-and MC, so half the chapter is a settled RED and the other half is the
-loosest use permission left in the city.
+and MC, so half the chapter is a RED and the other half is the loosest use
+permission left in the city.
+
+Not a *settled* RED, which is the correction this file carries. Table 4.0420's
+note 2 governs the region the use cells are quoted from and is ruled
+``unmeasured``, so nothing here can say the NP holds, and RTC, CC and MC carry
+their whole column of Table 4.0430 rather than the use gate alone. See
+``test_unsettled_gates``.
 
 What binds on the permitted half is not the use and not the setbacks. It is
 10,000 square feet of lot and 100 feet of street frontage for anything
@@ -43,8 +49,8 @@ CORRIDOR = ("RTC", "SC", "SC-RJ", "CMF", "CMU", "CC", "MC")
 PERMITTED = ("SC", "SC-RJ", "CMU", "CMF")
 #: And a bare NP in these.
 BARRED = ("RTC", "CC", "MC")
-#: The two that state their ceiling in storeys rather than in feet.
-COUNTED = ("SC", "SC-RJ")
+#: The three that state their ceiling in storeys rather than in feet.
+COUNTED = ("RTC", "SC", "SC-RJ")
 
 
 @pytest.fixture(scope="module")
@@ -71,7 +77,11 @@ def test_the_use_table_splits_the_corridor_in_half(gresham: Layer) -> None:
         held = gresham.zones[zone]
         assert held.values["quadplex_allowed"].value is False, zone
         assert held.values["quadplex_allowed"].variants == (), zone
-        assert set(held.values) == {"quadplex_allowed"}, zone
+        # These three used to carry the use gate and nothing else. They carry
+        # their whole column of Table 4.0430 now, because the NP is not a
+        # settled NP -- an unmeasured footnote levers it. See
+        # test_unsettled_gates, which states the finding.
+        assert set(held.values) > {"quadplex_allowed"}, zone
 
 
 def test_the_lot_standards_are_what_bind_here(gresham: Layer) -> None:
@@ -101,6 +111,8 @@ def test_a_density_floor_that_names_two_uses_reaches_neither_of_ours(
 ) -> None:
     """SC's cell says "18 for Townhouses; 24 for multi-family" and stops.
 
+    RTC prints the same shape with 20 in place of the 24.
+
     A quadplex on one lot is not a townhouse and, in Gresham, not multi-family
     either -- that word is defined as five units or more and expressly not
     middle housing. So the floor is encoded as not applying rather than
@@ -127,8 +139,15 @@ def test_a_bare_density_floor_does_reach_it(gresham: Layer) -> None:
         assert floor.value == 12, zone
         assert not floor.exempt, zone
         assert gresham.zones[zone].values["max_density_du_per_acre"].value == 24, zone
-    for zone in COUNTED:
+    for zone in ("SC", "SC-RJ"):
         assert gresham.zones[zone].values["max_density_du_per_acre"].value == 60, zone
+    # RTC is the one ceiling in the table that is not a number everywhere:
+    # unlimited inside the Triangle, 40 per net acre outside it. The
+    # Triangle is unmapped here, so the half that can bind is what is held.
+    assert gresham.zones["RTC"].values["max_density_du_per_acre"].value == 40
+    for zone in ("CC", "MC"):
+        assert gresham.zones[zone].values["max_density_du_per_acre"].value == 40, zone
+        assert gresham.zones[zone].values["min_density_du_per_acre"].value == 12, zone
 
 
 def test_a_ceiling_counted_in_storeys_is_encoded_as_a_count(gresham: Layer) -> None:
@@ -140,8 +159,15 @@ def test_a_ceiling_counted_in_storeys_is_encoded_as_a_count(gresham: Layer) -> N
     """
     for zone in COUNTED:
         held = gresham.zones[zone].values
-        assert held["max_height_stories"].value == 10, zone
         assert "max_height_ft" not in held, zone
+    assert gresham.zones["SC"].values["max_height_stories"].value == 10
+    assert gresham.zones["SC-RJ"].values["max_height_stories"].value == 10
+    # RTC prints three figures instead of one: six storeys inside the
+    # Stark/Burnside/181st Triangle for exclusively commercial or
+    # institutional buildings, four inside it for buildings that include
+    # any other use, ten outside it. A building with dwellings is never the
+    # six-storey case and the Triangle is a map nothing here reads.
+    assert gresham.zones["RTC"].values["max_height_stories"].value == 4
     assert gresham.zones["CMU"].values["max_height_ft"].value == 45
     assert "max_height_stories" not in gresham.zones["CMU"].values
 
@@ -157,11 +183,11 @@ def test_a_storey_count_answers_the_height_requirement(rules: RuleSet) -> None:
     assert ALTERNATIVES == {"max_height_ft": "max_height_stories"}
     assert "max_height_ft" in REQUIRED_FIELDS
     assert "max_height_stories" in OPTIONAL_FIELDS
-    for zone in PERMITTED:
+    # BARRED is in this loop too now. It was not, for a fortnight, because
+    # an unmeasured footnote levers those three prohibitions and nothing had
+    # encoded the standards behind them -- see test_unsettled_gates.
+    for zone in CORRIDOR:
         assert rules.resolve(GRESHAM, zone).missing_required == (), zone
-    # BARRED is deliberately not in this loop. Those three owe five standards
-    # each, because an unmeasured footnote over the table levers their
-    # prohibition -- see test_gresham_complete, which states the finding.
 
 
 def test_the_residential_setbacks_are_the_same_in_every_permitted_column(

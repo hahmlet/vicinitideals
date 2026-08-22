@@ -300,5 +300,25 @@ def test_the_one_setback_measured_off_the_building_states_its_ratio(
         assert held.value == 13, field
 
 
-def test_a_zone_decided_at_the_use_gate_owes_no_dimensions(portland: Layer) -> None:
-    assert set(portland.zones["CI1"].values) == {"quadplex_allowed"}
+def test_a_zone_decided_at_the_use_gate_still_owes_its_dimensions(
+    portland: Layer,
+) -> None:
+    """This test used to assert the opposite, and the opposite was wrong.
+
+    CI1 reads a bare N for Household Living, so the screen returns RED at the
+    use gate and never reads a setback -- which is why the zone carried the use
+    value alone. But Table 150-2's note [3], the PCC Sylvania FAR boundary on
+    Map 150-5, is ruled `unmeasured` and governs the region that use cell is
+    quoted from. An unmeasured fact over a prohibition is a prohibition nothing
+    here can say holds, so the standards behind it are owed after all.
+
+    Encoded 2026-08-21, one column over from IR. See test_unsettled_gates."""
+    held = portland.zones["CI1"].values
+
+    assert held["quadplex_allowed"].value is False
+    assert set(held) > {"quadplex_allowed"}
+    assert held["max_far"].value == 0.5
+    # Not a lever, an absence: CI1's maximum building setback reads None, so
+    # note [5] -- no minimum setback where a maximum applies -- never fires
+    # here, and the field is not encoded at all.
+    assert "setback_front_max_ft" not in held

@@ -92,8 +92,14 @@ def test_and_the_design_standards_it_is_sent_to_instead_are_held(
 def test_so_the_encoded_street_setbacks_stand(gresham: Layer) -> None:
     """Five feet minimum, twenty maximum, from Table 4.0430's Residential
     sub-cell. If 7.0512 had reached this building these would have been wrong
-    in both directions at once for any lot inside the Rockwood triangle."""
-    for zone in ("SC", "SC-RJ"):
+    in both directions at once for any lot inside the Rockwood triangle.
+
+    RTC is in that loop now. It is the one deferred district that lies
+    wholly inside the design district, so it is the one where 7.0502(B)
+    carries the most weight -- and it was not encoded at all until
+    2026-08-21, because its quadplex row reads NP. See
+    test_unsettled_gates for why an NP is not the end of the reading."""
+    for zone in DEFERRED:
         values = gresham.zones[zone].values
         assert values["setback_front_ft"].value == 5, zone
         assert values["setback_front_max_ft"].value == 20, zone
