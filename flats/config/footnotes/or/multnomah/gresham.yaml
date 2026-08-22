@@ -1961,3 +1961,146 @@ notes:
       remembering if a zone is ever encoded off the Multi-family row:
       the field exists for the front (setback_front_max_ft, as CMF
       carries it) and there is no field yet for a street-side maximum
+
+  # --- Pleasant Valley, Springwater and the parking table's last ten -----
+  #
+  # Read 2026-08-21. Ten notes, and the reason none of them moves a number is
+  # the same in eight cases: the tables they sit on state standards for eight
+  # sub-district columns, and this layer holds four of them (NC-PV, PUB-PV,
+  # RTI-SW, IND-SW) as settled prohibitions with no dimensions owed, while the
+  # other four -- TC-PV, ME-PV, VC-SW and NC-SW -- are districts Gresham wrote
+  # standards for that carry no lot at all in the parcel layer.
+  #
+  # Worth saying because "the zone is not encoded" is usually a gap: here it is
+  # not. TC-PV, ME-PV, VC-SW and NC-SW appear in no zone_missing row, which
+  # means no observed lot claims them. Pleasant Valley and Springwater are
+  # largely unbuilt urban reserve, and their mixed-use and employment columns
+  # are standards waiting for land rather than land waiting for standards.
+  #
+  # The last two are Table 9.0851's, and they are the parking chapter's. One
+  # of them is the only auto-parking MAXIMUM in this layer, which is now a
+  # field -- and it still does not bind. The ruling below says why, at length,
+  # because a reader who finds a ceiling column and no encoded ceiling should
+  # find the reasoning rather than an absence.
+
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L690"
+    digest: "4c323672c6cd"
+    state: dismissed
+    reason: >-
+      note 1 sits on row E of Table 4.1424, the MAXIMUM building setback row,
+      whose columns are TC-PV, NC-PV and ME-PV. It does two things and the
+      second is the interesting one: it lets the maximum be relaxed to 20 feet
+      where enhanced pedestrian spaces and amenities are provided, and then it
+      says the maximum setback requirement "does not apply" to standalone
+      residential buildings at all. The pod is a standalone residential
+      building, so wherever a PV mixed-use district ever admits it the row
+      above is switched off entirely. Nothing to encode today: NC-PV is the
+      only one of the three this layer holds, its quadplex row reads NP with
+      nothing levering it, and TC-PV and ME-PV carry no lot in the parcel
+      layer
+
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L694"
+    digest: "c16169f51e75"
+    state: dismissed
+    reason: >-
+      note 3 sends the 45 ft height in row F of Table 4.1424 to the building
+      height transition standards of Section 4.1416 where the abutting lot is
+      LDR-PV. Same three columns, same answer -- this layer encodes no height
+      for NC-PV because the zone is a settled prohibition, and holds neither
+      TC-PV nor ME-PV. The transition itself is a plane starting at a figure
+      well above the pod's 26 feet wherever this corpus has read one
+
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L695"
+    digest: "a2469fae2a4b"
+    state: dismissed
+    reason: >-
+      note 4 has a use permitted in ME-PV counted as an office use for
+      screening and buffering. No screening field exists in this system, and
+      ME-PV is not a district this layer holds
+
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L877"
+    digest: "e393215663d1"
+    state: dismissed
+    reason: >-
+      note 1 of Table 4.1432 is a height plane on the Public Land
+      sub-district's 45 ft -- 35 feet at the minimum setback from a shared lot
+      line with LDR-PV or MDR-PV, rising a foot for every foot of extra
+      setback. Two reasons it does not reach: the layer holds this district as
+      PUB-PV with the quadplex row NP and nothing levering it, and the plane
+      starts at 35 feet where the pod stands 26, so it would not bind the
+      building even at the minimum setback
+
+  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L668"
+    digest: "a4cf8299005e"
+    state: dismissed
+    reason: >-
+      note 1 of Table 4.1521 gives NC-SW the NC District's development
+      standards from Table 4.0230 -- an incorporation, and the shape this
+      system encodes with a `like:` clause. It is not made because there is
+      nothing to make it for: NC-SW is not a column of this table, is not a
+      zone this layer holds, and appears in no zone_missing row, so no
+      observed lot claims it. NC itself is held, and its quadplex row reads NP
+
+  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L669"
+    digest: "7fb2a479c0d8"
+    state: dismissed
+    reason: >-
+      note 2 lets a parcel over 50 acres be divided under an approved master
+      plan so long as one resulting parcel stays at least 50 acres. A land
+      division standard, on parcels two orders of magnitude larger than the
+      lots this screen places a pod on, and it constrains the size of what the
+      division leaves behind rather than what may be built on it
+
+  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L671"
+    digest: "38dc7fa61620"
+    state: dismissed
+    reason: >-
+      note 3 is Springwater's half of Pleasant Valley's note 1 -- the maximum
+      front or street side setback may be relaxed to 20 feet where enhanced
+      pedestrian spaces and amenities are provided. It carries no
+      standalone-residential exemption, so it is a relief and only a relief.
+      Table 4.1521's columns are VC-SW, RTI-SW and IND-SW; the two this layer
+      holds are settled prohibitions and VC-SW carries no lot
+
+  - quote: "or/multnomah/gresham/4.1500.springwater.txt#L673"
+    digest: "54a3038ad651"
+    state: dismissed
+    reason: >-
+      note 4 exempts a retail store over 20,000 square feet from the
+      two-storey minimum and then makes it build to 20 feet or carry a
+      parapet. Another use, and a floor under a building this screen does not
+      place
+
+  - quote: "or/multnomah/gresham/9.0800.parking.txt#L944"
+    digest: "6fc35e60ebad"
+    state: dismissed
+    reason: >-
+      note 1 of Table 9.0851 resolves a cell that states two methods for the
+      bicycle minimum to whichever yields more spaces. The residential rows
+      state one method rather than two -- None for quadplexes and townhouses
+      in the districts listed at (A)(1), and one long-term space per dwelling
+      unit for a four-or-more-unit development elsewhere -- so there is
+      nothing here for the note to resolve. The long-term space is also
+      satisfiable inside the dwelling, which is the reading this layer already
+      recorded and the reason no ground is owed to it
+
+  - quote: "or/multnomah/gresham/9.0800.parking.txt#L946"
+    digest: "aafdb5923806"
+    state: dismissed
+    reason: >-
+      note 2 removes the auto parking MAXIMUM where the lot has no area within
+      3/4 mile of a MAX station or 1/2 mile of transit arriving four times an
+      hour at peak, under OAR 660-012-0415. It relieves a ceiling, and the
+      ceiling does not reach this building. Table 9.0851 gives quadplexes and
+      townhouses a maximum of None in the eleven districts listed at (A)(1),
+      gives townhouses None everywhere else at (A)(2)(a), and gives a
+      development of four or more dwelling units 2.0 spaces per unit at
+      (A)(2)(b) -- 1.2 only on the studio row, which is not this product. The
+      catalog pod asks 1.5. NOT ENCODED on that basis and not on the basis
+      that Gresham has no maximum: it has one, it is the only auto-parking
+      ceiling in this layer, and the pod is under every row of it. Encoding it
+      would also mean reading five further tables, because Table 9.0851 is
+      expressly displaced in the Downtown, Civic Neighborhood, Corridor and
+      Pleasant Valley districts -- 22 of this layer's 38 zones. Portland's
+      1.35 and 0.5 are the corpus's binding maximums; see
+      test_portland_parking_max
