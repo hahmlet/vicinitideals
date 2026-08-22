@@ -108,12 +108,26 @@ def test_gresham_states_an_auto_parking_maximum_and_none_is_encoded() -> None:
 def test_portland_is_still_the_only_layer_with_a_ceiling() -> None:
     """Not an accident of encoding order -- no other jurisdiction in the corpus
     states a parking maximum that reaches this building. Gresham's is the one
-    that came closest, and it was read and declined above."""
+    that came closest, and it was read and declined above.
+
+    A stated absence is not a ceiling. Portland writes `exempt: true` on the
+    fifteen zones whose cell reads "No maximum" and Wilsonville writes it on
+    the whole layer, because Table 5's middle housing row reads "No Limit" --
+    both are readings, and neither is a number that can refuse a building.
+    This counts only the layers holding a figure.
+    """
+
+    def states_a_figure(value: object) -> bool:
+        return getattr(value, "value", None) is not None
+
     carrying = {
         name
         for name, layer in load_rules().items()
-        if "parking_max_per_unit" in layer.defaults
-        or any("parking_max_per_unit" in z.values for z in layer.zones.values())
+        if states_a_figure(layer.defaults.get("parking_max_per_unit"))
+        or any(
+            states_a_figure(z.values.get("parking_max_per_unit"))
+            for z in layer.zones.values()
+        )
     }
 
     assert carrying == {"or/multnomah/portland"}

@@ -1,8 +1,8 @@
 # Lake Oswego -- LOC 50.03.002 (use table) and LOC 50.04 (dimensions).
 #
-# Sixty notes captured, twenty-eight of them over a value this corpus encodes.
-# They fall into four groups and one of the four is the reason this layer will
-# not go green on any lot.
+# Sixty-four notes captured and all sixty-four ruled, twenty-eight of them
+# over a value this corpus encodes. They fall into five groups and one of the
+# five is the reason this layer will not go green on any lot.
 #
 # **Density.** Every residential table prints the same pair of sentences:
 # middle housing is exempt from maximum density, and a townhouse project gets
@@ -22,6 +22,14 @@
 # dimensional table carries "see LOC 50.02.002.2.c", a list of named
 # properties carrying conditions from past approvals. A parcel on that list
 # can be barred from a use its zone permits, and the list is not held either.
+#
+# **The commercial half.** Thirty-three notes, read 2026-08-22, on the two
+# tables that govern every zone in this city that is not residential. Not one
+# of those sixteen zones is encoded, and three of them carry observed lots:
+# NC/R-0 with 84, PNA with 5, NC with 4. Ninety-three lots reporting
+# zone_missing. The block header further down says what reading them settled,
+# including how the notes themselves resolve a table whose cells do not line
+# up with its columns, and which zone is worth encoding next.
 #
 # **The rest** are other housing types, other zones, height rules for sloping
 # ground, and relaxations -- dismissed, with the reason written down.
@@ -55,7 +63,13 @@ notes:
       e.g., R-0/EC, see LOC 50.02.002.2.e". Each zone then governs the part of
       the lot it covers, so on a split lot the pod is bound by whichever zone
       it stands in and has a fraction of the lot to stand in. Every screen
-      here reads one zone per parcel
+      here reads one zone per parcel.
+
+      The same sentence is printed again as note 8 of Table 50.03.002-2, where
+      it stamps the NC, OC and EC column heads, and one ruling covers both
+      because the text is identical. That second printing is not decorative:
+      the largest zone_missing row in this jurisdiction is NC/R-0, 84 lots
+      over 18.4 acres, which is precisely the split this note is about
 
   - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L492"
     digest: "e8635f7f8c27"
@@ -65,7 +79,10 @@ notes:
       note 4 stamps the R-0 column: "site-specific use limitations, see LOC
       50.02.002.2.c". That section is a list of named properties carrying
       conditions from past approvals, and a parcel on it can be barred from a
-      use the zone permits. The list is not held
+      use the zone permits. The list is not held. Printed again as note 9 of
+      Table 50.03.002-2 over the NC and HC column heads, and again as note 19
+      of the commercial dimensional table over NC, GC and HC -- the same list
+      reaching the same lots from three directions
 
   # --- Table 50.04.001-1/-2, the R-7.5 zone ---------------------------
   - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L235"
@@ -348,3 +365,404 @@ notes:
       zoning, which nothing here reads. The other two subsections loosen or do
       not reach: an 18 ft front setback on steeply sloped lots, and ten ft of
       separation between cottages
+
+  # === The commercial half of Lake Oswego, read 2026-08-22 =============
+  #
+  # Thirty-three notes, and every one of them is a note on the half of this
+  # city this layer does not hold. Ten sit under Table 50.03.002-2, the
+  # commercial, mixed use, industrial and special purpose use table; nineteen
+  # under Table 50.04.001-14, its dimensional twin; two under the EC height
+  # table; two under the general height exceptions.
+  #
+  # THIS IS A GAP, and it has a size. Three of those zones carry observed lots
+  # in the coverage ledger and none of the three is encoded: NC/R-0 with 84
+  # lots over 18.4 acres, PNA with 5 lots over 50.1 acres, and NC with 4 lots
+  # over 13.9 acres. Ninety-three lots, reported zone_missing, contributing
+  # nothing to any verdict. That is different from Gresham's four unbuilt
+  # sub-districts, which no lot claimed, and different again from Wilsonville's
+  # Town Center, which nothing in the corpus could see at all.
+  #
+  # WHAT WAS LEARNED READING THEM, and the reason it is written here rather
+  # than left for the next reader to re-derive. Both tables extract as a
+  # header block followed by a flat run of cells with no column attached, and
+  # a row with fewer cells than columns is a row with invisible blanks in it.
+  # Table 50.04.001-14 has eleven columns -- NC, GC, HC, OC, EC, FMU, WLG,
+  # CR&D, MC, I, IP -- and its height row prints ten cells. The notes are what
+  # resolve it, because four of them name their own zone:
+  #
+  #   [18] is FMU State Street Height, [11] points at 50.04.001.4.c.ii which
+  #   is headed CR&D Zone Height Measurement, [13] points at 4.c.iv which is
+  #   headed MC Zone Height Measurement, and the fifth cell is the bare
+  #   cross-reference "50.04.001.4.c.i", headed EC Zone Height Measurement.
+  #
+  # Line those four up and the row reads NC 35, GC 45, HC 60, OC 45, EC by
+  # cross-reference, FMU 45 near State Street and 90 elsewhere, WLG by
+  # cross-reference to 4.b, CR&D by cross-reference, MC 95, I 60, IP 45 -- one
+  # blank, at WLG, whose header cell already says "See 50.04.001.4.b". The
+  # left edge is anchored independently in the use table, where three
+  # different rows put note [10] -- expressly a GC note -- in the second cell.
+  #
+  # So NC is readable: 35 ft, FAR 0.25:1, lot coverage 100 percent, setbacks
+  # nothing except 25 ft from a structure on a lot zoned R-5 through R-15,
+  # 10 ft from R-0, R-2 or R-3, and zero where the lot is not next to a
+  # residential zone. It is not encoded here because encoding a zone is a
+  # different act from ruling a footnote, and because the use gate needs
+  # LOC 50.03.003.2 read first -- the use-specific standards the residential
+  # cell in NC, GC, EC and CI is subject to, which this corpus has not fetched.
+  # Named as the next piece of work rather than left implicit.
+  #
+  # The tail of both tables stays ambiguous and stays unencoded with it. In
+  # the setback rows the cells run out before the columns do and no note
+  # anchors the last three, so I, IP and MC could each be holding a figure
+  # printed one column over. A number read out of that is a guess wearing a
+  # citation.
+
+  # --- Table 50.03.002-2, the commercial and mixed use use table ------
+  - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L1267"
+    digest: "d524dbd06245"
+    state: dismissed
+    reason: >-
+      note 1 allows residential "at a net site density of 2,500 sq. ft./lot
+      area per unit area" and only "in conjunction with office uses in the
+      same building". It marks a cell in the West Lake Grove run, and it is
+      two gates at once: a density and a mixed-use requirement the pod cannot
+      satisfy, because a four-unit attached townhome building holds no
+      offices. If the WLG zones are ever encoded this is a prohibition on this
+      product and not a dimension
+
+  - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L1269"
+    digest: "54f7e14addca"
+    state: dismissed
+    reason: >-
+      note 2 reads in full "Attached townhomes only", and it is the most
+      directly relevant sentence in either table -- a cell where the ONLY
+      permitted residential use is the building this screen exists to place.
+      By the column anchoring above it marks WLG R-2.5, whose own dimensional
+      section at 50.04.001.4.b.i is headed "WLG Townhome Residential" and
+      whose setback table prints a zero side yard for a common wall. Not
+      encoded because the zone is not encoded. This note is the reason the WLG
+      zones should be
+
+  - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L1271"
+    digest: "7c0577627a7e"
+    state: dismissed
+    reason: >-
+      note 3 stamps the PF column head and requires the use to be wholly
+      conducted within an enclosed structure. A public facility standard, on a
+      column whose residential cell is blank
+
+  - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L1273"
+    digest: "5b51351fe50c"
+    state: dismissed
+    reason: >-
+      note 4 bans drive-through businesses in the West Lake Grove Design
+      District and the FMU zone. A commercial use, and a prohibition on
+      something this building is not
+
+  - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L1275"
+    digest: "0db149d9350c"
+    state: dismissed
+    reason: >-
+      note 5 adds permitted uses in the part of the IP zone drawn on Figure
+      50.03.003-B -- institutional, personal services, small commercial
+      recreation, retail up to 35,000 sq. ft. -- and pet day care as a
+      conditional use. Not one of them is a dwelling, so it does not open the
+      IP column to housing, and IP is not encoded in any case
+
+  - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L1277"
+    digest: "a572d4cde11f"
+    state: dismissed
+    reason: >-
+      note 6 splits a use between outright and conditional at 5,000 sq. ft. of
+      gross floor area and exterior display area. "Exterior display area" puts
+      it on a sales use, and the threshold is a building size this screen does
+      not test a dwelling against
+
+  - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L1279"
+    digest: "c573330c1a2d"
+    state: dismissed
+    reason: >-
+      note 7 allows FMU uses "only if the primary building on site was
+      constructed after January 17, 2013". A condition on what already stands
+      on the lot, which is a fact about the site and not about the zone -- and
+      an empty lot has no primary building at all, which the sentence does not
+      contemplate. Nothing here to encode until FMU is, and if it is, this is
+      a condition needing a fact nobody holds
+
+  - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L1285"
+    digest: "ccc34079dfce"
+    state: dismissed
+    reason: >-
+      note 10 lists the uses NOT permitted in the GC-zoned area near Jean Way
+      and Boones Ferry Road drawn on Figure 50.03.003-C, and residential heads
+      the list -- along with congregate housing, residential care housing and
+      community gardens. It is a prohibition carved out of a permission by a
+      figure, which is the shape that turns a zone-level yes into a lot-level
+      no. It marks the second cell of every residential row in this table,
+      which is what anchors GC as column two and the whole left edge with it.
+      Not encoded because GC is not
+
+  - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L1288"
+    digest: "017f70d9cf8c"
+    state: dismissed
+    reason: >-
+      note 11 limits residential to multifamily "in the vicinity of Boones
+      Ferry Road and West Sunset Drive, as depicted on Figure 50.03.003-A.1".
+      The same figure is named in the WLG Office Commercial height standard at
+      50.04.001.4.b.iii(1)(b)(i), which permits five extra feet "for
+      multifamily development when located in the area of residential use
+      allowance, as depicted in Figure 50.03.003-A.1" -- so this note is WLG
+      OC's, and that identification is one of the four anchors the column
+      mapping above rests on. Whether a four-unit attached townhome counts as
+      a multifamily residence in this code is a question for the day WLG OC is
+      encoded
+
+  - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L1290"
+    digest: "80453330afbe"
+    state: dismissed
+    reason: >-
+      note 12 is an editor's note recording that Ord. 2903 bans psilocybin
+      service centers and production citywide and that the voters continued
+      the ban on 5 November 2024. Not a dwelling standard
+
+  # --- Table 50.04.001-14, commercial, mixed use and industrial -------
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1889"
+    digest: "4f2e8b147d6a"
+    state: dismissed
+    reason: >-
+      note 1 stamps the Standard column head -- every figure in this table --
+      and says the whole of it may be modified by the Lake Grove Village
+      Center Overlay District. An overlay that can move any number in a table
+      is exactly the thing this corpus treats as a live constraint, and this
+      one is not held: no Lake Oswego overlay is encoded, and nothing in the
+      parcel layer says which lots the Village Center covers. Dismissed
+      because the table it modifies is not encoded either; the day any column
+      of it is, this note is unmeasured and not a dismissal
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1892"
+    digest: "3b522f4fa33c"
+    state: dismissed
+    reason: >-
+      note 2 reads "(Reserved)". A number was removed and the marker left
+      behind. Counted so the census is complete and nothing is owed to it
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1895"
+    digest: "6c1b67b1805d"
+    state: dismissed
+    reason: >-
+      note 3 is the height taper on the NC, GC, HC and OC columns: a structure
+      closer than 60 ft to a lot carrying any residential designation is held
+      to 28 ft, or to 40 ft minus one foot for every foot it stands inside 60,
+      whichever is GREATER. The "whichever is greater" is what matters here --
+      it puts a 28 ft floor under the taper, and this building stands 26 ft.
+      Even hard against the property line of a residential neighbour the pod
+      clears it. Worth recording because the same sentence without the floor
+      is note 8, on the I column, where it does bite
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1898"
+    digest: "90e2e6b4cf06"
+    state: dismissed
+    reason: >-
+      note 4 excepts interior lot lines on a unified site from the FMU side
+      and rear setbacks. A relief, on a zone this layer does not hold, turning
+      on whether the site is unified -- which is a fact about ownership rather
+      than about the lot
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1901"
+    digest: "edcd66a4a8d0"
+    state: dismissed
+    reason: >-
+      note 5 does two things to a lot coverage maximum and both bind. The
+      percentage is taken on the NET site area "after any required dedications
+      for roadway purposes", which is a denominator this corpus has learned to
+      distrust -- seven cities, seven different net acres -- and a dedication
+      is not knowable from the plat. Then it adds a floor of its own: at least
+      25 percent of the site must be landscaping, natural area or outdoor
+      recreation, which min_landscaped_pct exists to hold. Not encoded because
+      the column it sits on is not
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1904"
+    digest: "4c0170375d90"
+    state: dismissed
+    reason: >-
+      note 6 requires a structure on a corner lot to observe the minimum
+      setback on both streets. It is the standard corner rule and this system
+      holds it as setback_street_side_ft; it would be an encoding the day the
+      column carrying it is read, and it reaches nothing today
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1907"
+    digest: "72f837130698"
+    state: dismissed
+    reason: >-
+      note 7 turns a zero side or rear yard into 15 ft where it abuts a more
+      restrictive zone, and then adds ten more feet for every ten feet of
+      building height over 35. The first half is the neighbour's-zoning
+      condition this corpus already carries as abuts_lower_density_zone in
+      R-2; the second is a height-driven setback, which is the shape
+      per_height_ft was added for. Both would be encodable. Neither is,
+      because the columns are not
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1910"
+    digest: "972f7a4fefc4"
+    state: dismissed
+    reason: >-
+      note 8 is note 3 with the floor taken out: a structure closer than 60 ft
+      to a residentially zoned lot is held to 40 ft minus one foot for each
+      foot inside 60, and nothing catches it at 28. Run to the property line
+      that is a height of nothing. It marks the I column, where no dwelling is
+      permitted, so it cannot refuse this building -- but it is the sharper of
+      the two tapers and the difference between them is one clause
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1913"
+    digest: "5cb5ac2538cf"
+    state: dismissed
+    reason: >-
+      note 9 reads "Zero for common wall development", on a 10 ft side and
+      rear setback. It is the zero-lot-line allowance the split-plat path
+      needs, and this corpus encodes exactly that shape elsewhere as a
+      when [unit_lots] variant. Dismissed on the column, not on the substance
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1916"
+    digest: "a90ea096ec58"
+    state: dismissed
+    reason: >-
+      note 10 lets the front lot line on a corner lot face either street and
+      hands the choice to the City Manager, who weighs the orientation of
+      nearby structures, whether setbacks can be met without a variance, and
+      solar access. Which line is the front decides which setback each yard
+      owes, so this is a real determination -- and it is a discretionary one,
+      which is a thing this system refuses to encode as a number
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1919"
+    digest: "59b0177c1d77"
+    state: dismissed
+    reason: >-
+      note 11 is the bare cross-reference "See LOC 50.04.001.4.c.ii", which is
+      headed CR&D Zone Height Measurement and states an average height of
+      78 ft across the zone, one structure at 158 ft and none other over 104,
+      with 60 ft the ceiling within 120 ft of R-7.5, R-10 or R-15. A campus
+      research zone, not encoded, and a set of standards written around
+      buildings four times this one. Its value here is as an anchor: it fixes
+      the eighth cell of the height row as CR&D
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1922"
+    digest: "38b1917da956"
+    state: dismissed
+    reason: >-
+      note 12 points at 50.04.001.4.c.iii, CR&D Zone Uses Allowed in Setback,
+      which lists what may stand inside a required yard -- landscaping, paths,
+      access driveways, bus shelters, signs, and next to other site areas
+      joint-use parking and circulation. It permits things in a setback rather
+      than moving one
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1925"
+    digest: "6be57829a205"
+    state: dismissed
+    reason: >-
+      note 13 points at 50.04.001.4.c.iv, MC Zone Height Measurement. Same
+      shape as note 11 and the same use here: it fixes the cell reading 95 as
+      the MC column, which is what makes the row resolvable at all
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1928"
+    digest: "3d34bf01a6b8"
+    state: dismissed
+    reason: >-
+      note 14 is the Oswego Pointe Setback: an FMU structure must stand 85 ft
+      from the habitable structures that existed on 17 January 2013, and ten
+      feet from the nonhabitable ones. A setback measured from another
+      building rather than from a lot line, on a zone this layer does not
+      hold, needing a survey of what stood where thirteen years ago
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1935"
+    digest: "4881ff1595af"
+    state: dismissed
+    reason: >-
+      note 15 limits the FMU minimum floor area ratio to sites abutting a
+      primary street. It scopes a minimum FAR, which is a density floor on a
+      zone this layer does not encode
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1938"
+    digest: "0c42f525f5f5"
+    state: dismissed
+    reason: >-
+      note 16 lets floor area ratio be transferred between FMU sites, averaged
+      to no more than 4.0:1, not below 1.0:1 on a site abutting a primary
+      street, and recorded by covenant. A development right moving between
+      parcels, which is neither a dimension of a lot nor a standard this
+      screen can test
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1947"
+    digest: "bd2f7dd0a6ad"
+    state: dismissed
+    reason: >-
+      note 17 defines "floor area" for the FMU -- above-ground structured
+      parking counts in, floors four feet or more below the adjacent
+      right-of-way count out. A definition attached to a ratio in a zone this
+      layer does not hold
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1950"
+    digest: "1ede4de8ac4f"
+    state: dismissed
+    reason: >-
+      note 18 caps height at 45 ft for any part of a site within 100 ft of the
+      centreline of State Street, against the 90 ft the FMU column otherwise
+      carries. It is the anchor that identifies the sixth cell of the height
+      row as FMU, and a ceiling three times this building's height in a zone
+      that is not encoded
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1953"
+    digest: "0a0466e69c5f"
+    state: dismissed
+    reason: >-
+      note 19 stamps the NC, GC and HC column heads with "site-specific
+      dimensional standards, see LOC 50.02.002.2.c" -- the same list of named
+      properties carrying conditions from past approvals that is already
+      unmeasured on R-0's column in this table and on the use table's R-0 and
+      NC columns. It is dismissed rather than unmeasured for one reason only:
+      it caps three columns this layer does not encode, so there is no value
+      for the cap to sit on. NC is the first of the three to be encoded and
+      this note becomes unmeasured, fact site_specific_limitation, on the day
+      it is
+
+  # --- Table 50.04.001-18, EC maximum height --------------------------
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L2105"
+    digest: "96e754fe4a6f"
+    state: dismissed
+    reason: >-
+      note 1 reads "(Reserved)". Counted, owes nothing
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L2106"
+    digest: "a5701d9c55b7"
+    state: dismissed
+    reason: >-
+      note 2 says the distance measured in the EC height table is exclusive of
+      any intervening public right-of-way. It is a measurement rule on a
+      proximity test -- 120 and 240 feet from a lot zoned R-6 or R-7.5 -- and
+      it makes the test reach FURTHER, since a street between the two no
+      longer counts towards the distance. Real, and on the EC zone, which this
+      layer does not hold. The captured text runs on into the CR&D height
+      measurement printed below it, which is a separate standard and is ruled
+      under note 11 of Table 50.04.001-14
+
+  # --- Table 50.04.003-1, general exceptions to height limitations ----
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L2412"
+    digest: "e9602f5e8324"
+    state: dismissed
+    reason: >-
+      note 1 sends roof-mounted solar energy systems to 50.04.003.4.b.ii for
+      their height exception. Unlike everything else in this block it does
+      reach zones this layer holds, because the table exempts structures in
+      residential zones too -- and it is still nothing to encode: it lets a
+      panel stand above the ceiling, which relieves rather than binds, and the
+      pod's height is the building's
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L2413"
+    digest: "2632aad61b5e"
+    state: dismissed
+    reason: >-
+      note 2 does the same for small wind turbines, and the captured text runs
+      on into 50.04.003.4.b, which lets aerials stand ten feet over the
+      residential ceiling and collocated telecommunication facilities ten feet
+      over an existing structure. Every branch is a permission to exceed a
+      height limit for something mounted on a building. None of it changes
+      what the building may be

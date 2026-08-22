@@ -26,14 +26,20 @@ pytestmark = pytest.mark.unit
 #: are not meant to do is move quietly. A refusal added without a line here is
 #: a reading nobody signed off on; a refusal removed without one is a reading
 #: somebody overturned without saying so.
-EXPECTED = {"notes": 90, "comments": 24, "tests": 14}
-#: Two of the fourteen are this file, which quotes the marker while
+EXPECTED = {"notes": 90, "comments": 24, "tests": 16}
+#: Two of the sixteen are this file, which quotes the marker while
 #: explaining it, and one is a back-reference in test_gresham_rockwood --
 #: prose saying a zone *was* not encoded until it was. Left in rather than
 #: special-cased, both of them: a ledger that skips one file because the file
 #: is inconvenient is a ledger with an exception nobody remembers, and a
 #: ledger that tries to tell a refusal from a reference to one is parsing
 #: prose, which this module states plainly that it does not do.
+#:
+#: The two added on 2026-08-22 are test_lake_oswego_commercial_notes, and they
+#: are the shape this ledger exists for: the NC zone is readable, it carries
+#: 88 of the 93 lots that jurisdiction reports as zone_missing, and it is
+#: deliberately not encoded until LOC 50.03.003.2 is fetched. A decision that
+#: size should cost a line here.
 
 
 def test_the_corpus_declares_more_refusals_than_any_ledger_counts() -> None:
