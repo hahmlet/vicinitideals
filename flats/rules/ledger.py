@@ -11,6 +11,11 @@ Quadfit's failure mode was that an unencoded zone vanished into a
 coverage ledger makes that impossible to miss: the gap is a top row, not an
 absence.
 
+It has a blind spot of its own, and ``unweighed`` is what reports it: the
+ledger ranks only jurisdictions the parcel corpus contains, so a layer the
+corpus has never held a lot for is not a zero on the report -- it is missing
+from the report. See that function.
+
 **Clause ledger** — *within an encoded zone, which sentences of code are
 unaccounted for.* Coverage alone would have caught RM1; it would never catch a
 missed exception clause inside a zone we believed was finished. Every clause of
@@ -165,6 +170,49 @@ def read_coverage(path: Path | None = None) -> list[CoverageRow] | None:
             ]
     except (OSError, KeyError, ValueError):
         return None
+
+
+@dataclass(frozen=True, slots=True)
+class UnweighedLayer:
+    """An encoded jurisdiction the parcel corpus holds no lot for."""
+
+    jurisdiction: str
+    zones: int
+    eligible: bool
+
+
+def unweighed(rows: Sequence[CoverageRow], rules: RuleSet) -> list[UnweighedLayer]:
+    """Encoded jurisdictions that never appear in the coverage ledger at all.
+
+    The coverage ledger answers "which of the zones we can see are missing
+    rules". It cannot answer the mirror question, and the mirror question is
+    the one that hides the larger hole: which of the rules we have written has
+    nothing ever counted lots against?
+
+    A layer with zones and no observed parcel is not a zero on a report. It is
+    absent from the report, and absence reads as done. Every ranking the
+    backlog prints, every "N lots blocked" headline, and every judgement about
+    what to encode next is computed over the jurisdictions the corpus happens
+    to contain — so a layer outside it is not merely unranked, it is silently
+    excluded from the denominator.
+
+    That is not hypothetical. The parcel corpus this ledger is built from is
+    Multnomah County only, and ten encoded Clackamas jurisdictions have never
+    had a lot weighed against them. Lake Oswego looked like the exception and
+    was not: its rows come from the sliver of the city that lies inside
+    Multnomah, 757 lots in the four zones that happened to be encoded, which
+    is exactly why the six zones it was missing could not surface here.
+
+    Reported from the written ledger rather than the parcel corpus on purpose.
+    The corpus is a 62 MB read and a command; the ledger is what shipped, and
+    what shipped is what a reader is entitled to be told the shape of.
+    """
+    seen = {row.jurisdiction for row in rows}
+    return [
+        UnweighedLayer(name, len(layer.zones), bool(layer.eligible))
+        for name, layer in sorted(rules.layers.items())
+        if layer.zones and name not in seen
+    ]
 
 
 def coverage_summary(rows: Sequence[CoverageRow]) -> dict[str, int]:

@@ -32,6 +32,7 @@ from flats.rules.ledger import (
     ObservedZone,
     build_coverage,
     coverage_summary,
+    unweighed,
     write_coverage,
 )
 from flats.rules.loader import load_rules
@@ -51,6 +52,11 @@ _COLUMNS = [
     "inside_ugb",
 ]
 
+#: What a parcel whose zoning join came back blank is called in the ledger.
+#: Deliberately not a zone code: nothing may read it as one, and it has to
+#: sort and print like the gap it is.
+UNZONED = "(unzoned in parcel data)"
+
 
 def observed(corpus: Path = CORPUS, *, drop_condos: bool = True) -> list[ObservedZone]:
     import pandas as pd
@@ -65,8 +71,16 @@ def observed(corpus: Path = CORPUS, *, drop_condos: bool = True) -> list[Observe
     rows: list[ObservedZone] = []
     grouped = df.groupby(["jurisdiction", "zone_raw"], dropna=False)
     for (juris, zone), grp in grouped:
-        if not juris or not isinstance(zone, str) or not zone:
+        if not juris:
             continue
+        if not isinstance(zone, str) or not zone:
+            # A parcel the zoning join left blank used to be dropped here,
+            # silently, which is the exact failure this module was written to
+            # stop: 327 lots -- the whole of Maywood Park -- left the ledger
+            # without leaving a row. Blank is not a zone, so it is named as
+            # what it is rather than guessed at, and it lands as zone_missing
+            # against whatever jurisdiction it sits in.
+            zone = UNZONED
         try:
             layer = layer_id_for(str(juris))
         except KeyError:
@@ -106,6 +120,25 @@ def main() -> int:
         zones, lots = summary.get(f"zones_{status}"), summary.get(f"lots_{status}")
         if zones:
             print(f"  {status:22s} {zones:4d} zones  {lots:>9,} lots")
+
+    blind = unweighed(rows, rules)
+    if blind:
+        # Printed before the queue, not after it. The queue is a ranking, and a
+        # ranking computed over a corpus that does not contain these
+        # jurisdictions is not a ranking of the work -- it is a ranking of the
+        # part of the work somebody has counted.
+        zones = sum(u.zones for u in blind)
+        print(
+            f"\nNOT WEIGHED: {len(blind)} encoded jurisdictions, {zones} zones, "
+            f"no lot in this corpus:\n"
+        )
+        for u in blind:
+            off = "" if u.eligible else "  (eligible: false)"
+            print(f"  {u.jurisdiction:32s} {u.zones:3d} zones{off}")
+        print(
+            "\n  Nothing above is ranked below, counted in the totals, or able "
+            "to appear\n  as a gap. Absence of a row is not a zero."
+        )
 
     print(f"\nTop {args.top} by lots blocked — this is the encoding queue:\n")
     print(f"  {'jurisdiction':28s} {'zone':10s} {'lots':>8s}  status")
