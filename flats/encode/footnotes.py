@@ -479,6 +479,35 @@ LONE_PAREN_CELL = re.compile(
 #: The digits inside such a cell. "(CU)" is the review type and not a note.
 PAREN_MARK = re.compile(r"\((\d{1,2})\)")
 
+#: A row label with its mark welded on and its cells following on the same
+#: line: "Helliports15 NP NP NP", "Multi-Family/Shared Housing Facility2 NP P
+#: P". `LABEL_MARKER` is anchored to the end of a cell and finds these only
+#: where extraction left a column gap to split on; Gresham's Pleasant Valley
+#: and Springwater chapters print the row single-spaced, so the label and the
+#: permissions arrive as one run of words and the mark sits in the middle of
+#: it.
+#:
+#: What buys the reach is the other end of the line. `ROW_LABEL_WELD` still
+#: demands the digits follow a lowercase letter with nothing between -- which
+#: is what keeps "MDR-12" and "Table 16.22.020-2" out -- and every word after
+#: them has to be a permission and nothing else, at least two of them.
+#: Twenty-six lines in the corpus wear the shape and every one is a real row;
+#: eighteen already had their marks by the column-gap path, and the eight this
+#: adds are all in those two chapters.
+ROW_LABEL_WELD = re.compile(r"^(?:.*[a-z])(?P<n>\d{1,2}(?:\s*,\s*\d{1,2})*)$")
+
+#: One permission cell, whole. Spelled out rather than reused from
+#: `CELL_VOCAB` because this one has to match the token entirely: a rule that
+#: merely finds a permission inside the word would read the tail of any
+#: sentence as a row of cells.
+ROW_CELL = re.compile(
+    r"^(?:P/L|L/SUR|L/P|C/L|NP|SUR|CU|PC|P|C|X|L)\d{0,2}(?:,\d{1,2})*$"
+)
+
+#: A row states several permissions. Two is the floor, for the same reason
+#: `CELL_VOCAB` has one.
+ROW_CELL_MIN = 2
+
 #: A use row states several permissions, so one lonely match on a line of
 #: prose is not a row. Either the line is laid out with column gaps or it
 #: carries more than one of these codes.
@@ -1204,6 +1233,29 @@ def _tight_run(lines: Sequence[str], i: int, since: int) -> bool:
     return any(_bears_a_marker(lines[k]) for k in range(since, i))
 
 
+def _row_label_marks(stripped: str) -> list[str]:
+    """The marks welded to a row label whose cells follow it on the same line.
+
+    Split on whitespace rather than matched in one pattern on purpose. The
+    shape wants "a label, then nothing but permissions", and a regex saying so
+    nests a quantifier inside a quantifier -- which on a long line of prose
+    backtracks for minutes rather than failing. Walking the cut point is
+    linear and says the same thing.
+    """
+    parts = stripped.split()
+    if len(parts) < ROW_CELL_MIN + 1:
+        return []
+    for cut in range(1, len(parts) - ROW_CELL_MIN + 1):
+        rest = parts[cut:]
+        if len(rest) < ROW_CELL_MIN or not all(ROW_CELL.match(p) for p in rest):
+            continue
+        weld = ROW_LABEL_WELD.match(" ".join(parts[:cut]))
+        if weld is None:
+            continue
+        return [part.strip() for part in weld.group("n").split(",")]
+    return []
+
+
 def _cell_row(raw: str, stripped: str) -> bool:
     """Whether a line may be read as a row of use-table cells.
 
@@ -1584,6 +1636,12 @@ def _markers(lines: Sequence[str], inside: Sequence[tuple[int, int]]) -> list[Ma
                     continue
                 for part in found.group("n").split(","):
                     add(part.strip(), kind)
+
+        # The same label rule where the row was printed single-spaced, so
+        # there is no column gap to split the label off by. See
+        # `ROW_LABEL_WELD`.
+        for mark in _row_label_marks(stripped):
+            add(mark, "label")
     return out
 
 
