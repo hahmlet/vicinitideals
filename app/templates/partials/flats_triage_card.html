@@ -13,18 +13,28 @@
 <div style="padding:32px 0;text-align:center">
   <div style="font-size:15px">Nothing left in this queue.</div>
   <div class="muted" style="font-size:12px;margin-top:6px">
-    Every reference matching these filters has been ruled. Widen the filters, or
-    tick <em>show ruled</em> to read the decisions back.
+    {% if skipped %}
+      You skipped past {{ skipped }}. <a href="?">Start again from the top</a>, or
+      widen the filters.
+    {% else %}
+      Every reference matching these filters has been ruled. Widen the filters, or
+      tick <em>show ruled</em> to read the decisions back.
+    {% endif %}
   </div>
 </div>
 {% else %}
 
 <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:2px">
   <h3 style="margin:0;font-size:17px">
-    {{ labels.get(card.layer, card.layer) }} &middot; Section {{ card.ref }}
+    {{ labels.get(card.layer, card.layer) }} &middot; Section {{ card.ref }}{% if card.title %}<span style="font-weight:400"> &mdash; {{ card.title }}</span>{% endif %}
   </h3>
-  <span style="margin-left:auto;font-size:13px">
-    <strong>{{ "{:,}".format(card.lots) }}</strong> <span class="muted">lots at stake</span>
+  <span style="margin-left:auto;font-size:13px;text-align:right">
+    <strong>{{ "{:,}".format(card.live_lots) }}</strong> <span class="muted">lots at stake</span>
+    {% if card.lots != card.live_lots %}
+    <div class="muted" style="font-size:11px">
+      near {{ "{:,}".format(card.lots) }} in all, but only these have a standard with room in it
+    </div>
+    {% endif %}
   </span>
 </div>
 <div class="muted" style="font-size:12px;margin-bottom:14px">
@@ -43,11 +53,17 @@
 <table style="width:100%;font-size:12px;border-collapse:collapse">
   {% for n in card.neighbours[:8] %}
   <tr style="border-top:1px solid var(--line,#e5e7eb)">
-    <td style="padding:4px 8px 4px 0;white-space:nowrap"><strong>{{ n.field }}</strong> = {{ n.shown }}</td>
+    <td style="padding:4px 8px 4px 0">
+      <strong>{{ n.title }}</strong> = {{ n.shown }}
+      {%- if not n.has_slack %} <span class="muted" title="A yes/no cannot be made more or less true by reading another chapter">(settled)</span>{% endif %}
+    </td>
     <td style="padding:4px 8px;color:#6b7280">{{ n.zones|join(", ") }}</td>
     <td style="padding:4px 0 4px 8px;text-align:right;white-space:nowrap">
       {{ "{:,}".format(n.lots) }} lots
-      <span class="muted">&middot; {{ n.distance }} line{{ "" if n.distance == 1 else "s" }} away</span>
+      <span class="muted">&middot;
+        {%- if n.distance == 0 %} same line
+        {%- elif n.distance == 1 %} 1 line away
+        {%- else %} {{ n.distance }} lines away{% endif %}</span>
     </td>
   </tr>
   {% endfor %}
@@ -82,13 +98,6 @@
 </div>
 {% endif %}
 
-{% if not authoring %}
-<div style="margin-top:22px;padding:10px;border-left:3px solid #d97706;font-size:12px;max-width:74ch">
-  <strong>Reading only here.</strong> This instance shows and filters the queue but does
-  not record decisions — rule files are rebuilt from the repository on every deploy, so a
-  ruling saved here would be lost. Decisions are authored where the repository lives.
-</div>
-{% else %}
 <form hx-post="/ui/flats/triage/rule"
       hx-target="#triage-card"
       hx-swap="outerHTML"
@@ -99,6 +108,7 @@
   <input type="hidden" name="field" value="{{ sel.field }}">
   <input type="hidden" name="doc" value="{{ sel.doc }}">
   <input type="hidden" name="ruled" value="{{ 'true' if sel.ruled else 'false' }}">
+  <input type="hidden" name="skipped" value="{{ skipped }}">
 
   <div class="muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px">
     Your call
@@ -106,7 +116,7 @@
   <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">
     {% for key, why in outcomes %}
     <label style="font-size:12px;border:1px solid var(--line,#d1d5db);border-radius:4px;padding:5px 9px;cursor:pointer">
-      <input type="radio" name="outcome" value="{{ key }}" required style="margin-right:5px">
+      <input type="radio" name="outcome" value="{{ key }}" style="margin-right:5px">
       {{ why }}
     </label>
     {% endfor %}
@@ -115,18 +125,31 @@
   <label class="muted" style="font-size:11px;display:block;margin-bottom:3px">
     Why — in your own words. Anything the buttons above do not cover goes here.
   </label>
-  <textarea name="note" rows="3" required minlength="40"
+  <textarea name="note" rows="3"
             style="width:100%;font-size:12px;font-family:inherit;padding:6px"
             placeholder="What did you read, and why does it or does it not reach a four-unit townhome?">{{ note }}</textarea>
 
-  <div style="display:flex;align-items:center;gap:10px;margin-top:8px">
-    <button type="submit" style="font-size:12px;padding:6px 14px">Save &amp; next</button>
+  <div style="display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap">
+    <button type="submit" name="action" value="rule"
+            style="font-size:12px;padding:6px 14px">Save &amp; next</button>
+    <button type="submit" name="action" value="skip" formnovalidate
+            style="font-size:12px;padding:6px 12px;background:none;border:1px solid var(--line,#d1d5db)">
+      Skip — can’t tell yet
+    </button>
     <span class="muted" style="font-size:11px">
-      {{ remaining }} left in this queue &middot; {{ "{:,}".format(lots) }} lots behind them
+      {{ remaining }} left{% if skipped %}, {{ skipped }} skipped{% endif %}
+      &middot; {{ "{:,}".format(lots) }} lots behind them
     </span>
   </div>
+
+  {% if pending %}
+  <div class="muted" style="font-size:11px;margin-top:8px">
+    {{ pending }} decision{{ "" if pending == 1 else "s" }} recorded and not yet written
+    into the rule files. Until they are, the screen still reads these chapters as
+    unfetched — decided is not the same as in force.
+  </div>
+  {% endif %}
 </form>
-{% endif %}
 
 {% endif %}
 </div>

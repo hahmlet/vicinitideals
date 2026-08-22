@@ -43,6 +43,80 @@ class FieldDef:
     ozfs: str | None = None
     #: Permitted values for ``enum`` fields.
     choices: tuple[str, ...] = ()
+    #: What to call this standard in front of a person. Field names are built
+    #: for sorting and for the loader -- ``setback_front_ft`` puts the noun
+    #: first so every setback files together -- and a reviewer reading a queue
+    #: should not have to translate. Left blank where the derived form is
+    #: already right.
+    label: str = ""
+
+    @property
+    def shown(self) -> str:
+        """The label, or a readable form derived from the name."""
+        if self.label:
+            return self.label
+        if self.name in _LABELS:
+            return _LABELS[self.name]
+        words = self.name.split("_")
+        words = [w for w in words if w not in _UNITS]
+        if words and words[0] == "setback" and len(words) > 1:
+            words = words[1:] + ["setback"]
+        return " ".join(words).replace("min ", "min. ").replace("max ", "max. ")
+
+    @property
+    def has_slack(self) -> bool:
+        """Whether being wrong about this can change whether a building fits.
+
+        A boolean is settled or it is not: reading a chapter cannot make a
+        prohibited use slightly more prohibited. Every other kind carries a
+        distance between the standard and the building, and that distance is
+        what a missed cross-reference eats into.
+        """
+        return self.kind not in ("bool", "enum")
+
+
+#: Unit suffixes carried by field names for the loader's benefit, not a
+#: reader's. ``du`` and ``per`` go too: "max density du per acre" reads worse
+#: than "max. density".
+_UNITS = frozenset({"ft", "sqft", "pct", "du", "per", "acre"})
+
+#: Where the derived form is wrong rather than merely plain. Everything a
+#: reviewer sees comes through here, so the unit belongs in the label when the
+#: number is meaningless without it -- "min. lot 5,000" is a different claim
+#: from "min. lot area 5,000 sq ft".
+_LABELS: dict[str, str] = {
+    "coverage_curve": "building coverage (by lot size)",
+    "land_division_parent_standards": "parent-lot standards apply",
+    "max_building_width_ft": "max. building width",
+    "max_coverage_pct": "max. lot coverage %",
+    "max_density_du_per_acre": "max. density (units/acre)",
+    "max_far": "max. floor area ratio",
+    "max_height_ft": "max. height",
+    "max_height_stories": "max. height (storeys)",
+    "max_lot_depth_ratio": "max. lot depth ratio",
+    "max_units": "max. units",
+    "min_building_separation_ft": "min. building separation",
+    "min_density_du_per_acre": "min. density (units/acre)",
+    "min_density_trigger_lot_sqft": "lot size that triggers min. density",
+    "min_frontage_ft": "min. frontage",
+    "min_landscaped_pct": "min. landscaping %",
+    "min_lot_depth_ft": "min. lot depth",
+    "min_lot_sqft": "min. lot area",
+    "min_lot_width_ft": "min. lot width",
+    "min_units_at_trigger": "min. units once triggered",
+    "open_space_min_pct": "min. open space %",
+    "orientation_constraint": "building orientation rule",
+    "parking_max_per_unit": "max. parking per unit",
+    "parking_min_per_unit": "min. parking per unit",
+    "quadplex_allowed": "fourplex allowed",
+    "setback_front_ft": "front setback",
+    "setback_front_max_ft": "max. front setback",
+    "setback_garage_entrance_ft": "garage entrance setback",
+    "setback_rear_ft": "rear setback",
+    "setback_side_ft": "side setback",
+    "setback_side_total_ft": "combined side setbacks",
+    "setback_street_side_ft": "street-side setback",
+}
 
 
 _F: tuple[FieldDef, ...] = (

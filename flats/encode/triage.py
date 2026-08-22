@@ -44,11 +44,12 @@ Run it::
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable, Sequence
+from typing import Iterable, Mapping, Sequence
 
 from flats.encode.crossrefs import (
     BINDING_WINDOW,
@@ -58,14 +59,41 @@ from flats.encode.crossrefs import (
     _resolves,
 )
 from flats.provenance.store import ProvenanceStore, parse_quote
+from flats.rules.fields import FIELDS
 from flats.rules.ledger import read_coverage
 from flats.rules.loader import load_rules
 from flats.rules.loader import MIN_RULING
 from flats.rules.model import CROSSREF_OUTCOMES, Layer, Ruling
 
-#: How much of a mention line to keep. Wider than the ledger's 160 because the
-#: clause that settles a reference is routinely in the half that was cut.
-SNIPPET = 400
+#: How much of a mention line to keep, centred on the reference itself. The
+#: ledger kept the first 160 characters of the line, which on an extracted
+#: table is the row's cells and not the sentence -- Portland 33.236 came back
+#: as "(See Chapter 33.236)" followed by six columns of the word "Yes". A
+#: window around the reference is both shorter and more likely to hold the
+#: clause that settles it.
+SNIPPET = 260
+
+#: What a chapter calls itself, taken from the sentence that cites it. Codes
+#: name a chapter when they first point at it -- "Chapter 33.236, Floating
+#: Structures", "Section 7.0420. Residential Design Standards" -- and that
+#: title answers the card's question more often than the rest of the card
+#: does. Three mentions of Portland 33.236 and only the third carries it.
+_TITLE = re.compile(
+    r"(?:Chapter|Section|Title|Article)\s+%s\s*[,.:]?\s+"
+    r"(?P<title>[A-Z][A-Za-z&'/-]*"
+    r"(?:\s+(?:of|the|and|for|in|to|a|an|with|from|on)"
+    r"|\s+[A-Z][A-Za-z&'/-]*){0,7})"
+)
+
+#: Where a title stops: a sentence continues past it, a title does not.
+_TITLE_STOP = re.compile(
+    r"\b(?:shall|is|are|may|must|does|do|which|that|when|except"
+    r"|of\s+the\s+(?:Community|City|Code))\b",
+    re.I,
+)
+
+#: Words a title may contain and may not end on.
+_DANGLING = ("of", "the", "and", "for", "in", "to", "a", "an", "with", "from", "on")
 
 
 @dataclass(frozen=True, slots=True)
@@ -91,11 +119,23 @@ class Neighbour:
     lots: int
 
     @property
+    def title(self) -> str:
+        """What to call this standard in front of a person."""
+        spec = FIELDS.get(self.field)
+        return spec.shown if spec else self.field.replace("_", " ")
+
+    @property
+    def has_slack(self) -> bool:
+        """Whether being wrong here could change whether a building fits."""
+        spec = FIELDS.get(self.field)
+        return spec.has_slack if spec else True
+
+    @property
     def label(self) -> str:
         where = ", ".join(self.zones[:4])
         if len(self.zones) > 4:
             where += f" +{len(self.zones) - 4}"
-        return f"{self.field} = {self.shown}   [{where}]"
+        return f"{self.title} = {self.shown}   [{where}]"
 
 
 @dataclass(frozen=True, slots=True)
@@ -121,6 +161,9 @@ class Card:
     #: figure and one zone appears in several of them -- summing those would
     #: count R5's 73,690 lots once per standard it happens to share.
     zone_lots: tuple[tuple[str, int], ...] = ()
+    #: What the code calls this chapter, where a citing sentence names it.
+    #: Empty when nothing does -- never guessed.
+    title: str = ""
     ruling: Ruling | None = None
 
     @property
@@ -172,13 +215,107 @@ class Card:
         return tuple(sorted({m.doc for m in self.mentions}))
 
     @property
-    def rank(self) -> tuple[int, int, int]:
-        """Worst first: lots at stake, then how often it binds, then how loud.
+    def live_lots(self) -> int:
+        """Lots behind the standards that have slack in them.
 
-        Lots lead because they are the only one of the three that says what
-        changes if the answer is yes.
+        Sorting on total lots put a houseboat chapter at the top of the whole
+        corpus. Portland 33.236 is cross-referenced from the citywide use
+        table, so it stands beside every zone's use gate and inherits all
+        178,237 lots -- and the only standard it touches is a settled yes/no.
+        Reading the chapter cannot make a prohibited use more prohibited.
+
+        What a missed cross-reference actually eats is the distance between a
+        standard and the building: a rear setback with four feet of room, a
+        height limit with one. Those are the kinds with slack, and this counts
+        the lots behind those alone. A reference beside nothing but use gates
+        scores zero here and sinks below every reference that touches a number
+        with room in it, whatever its headline lot count.
         """
-        return (self.lots, self.binding, len(self.mentions))
+        live = {z for n in self.neighbours if n.has_slack for z in n.zones}
+        return sum(lots for zone, lots in self.zone_lots if zone in live)
+
+    @property
+    def rank(self) -> tuple[int, int, int, int]:
+        """Worst first.
+
+        Lots behind standards with slack, then how many distinct standards it
+        touches -- a chapter cited beside four different numbers is a standards
+        chapter, one cited beside the same number everywhere is usually a
+        pointer -- then total lots, then how often it binds.
+        """
+        return (
+            self.live_lots,
+            len(self.fields),
+            self.lots,
+            self.binding,
+        )
+
+
+def _window(line: str, start: int, end: int) -> str:
+    """The reference and the words around it, with the table wreckage gone.
+
+    An extracted table row is one line holding a dozen cells separated by runs
+    of spaces, so the first 160 characters of it are whatever cells happened to
+    come first. Centring on the reference gets the sentence when there is one;
+    collapsing the runs to a marker keeps what is left honest about being cells
+    rather than pretending the words ran together.
+    """
+    half = SNIPPET // 2
+    left = line[max(0, start - half) : start]
+    right = line[end : end + half]
+    body = f"{left}{line[start:end]}{right}"
+    body = re.sub(r"\s{3,}", "  ·  ", body).strip()
+    if start - half > 0:
+        body = "…" + body
+    if end + half < len(line):
+        body = body + "…"
+    return body
+
+
+def _title_in(ref: str, line: str, nxt: str = "") -> str:
+    """What the code calls this chapter, from a sentence that cites it.
+
+    Returns empty rather than guessing. A wrong title is worse than none: it is
+    the first thing on the card, and a reviewer who trusts it stops reading.
+    """
+    pattern = _TITLE.pattern % re.escape(ref)
+    found = re.search(pattern, line)
+    if not found:
+        return ""
+    # A title that runs to the end of its line is a title the extraction broke
+    # in half. Gresham 10.1520 ends its line on "Reduction in" and finishes on
+    # the next -- taken from one line it reads "Reduction", which is a wrong
+    # title rather than a short one.
+    if nxt and found.end() >= len(line.rstrip()) - 1:
+        joined = re.search(pattern, f"{line.rstrip()} {nxt.strip()}")
+        found = joined or found
+    title = " ".join(found.group("title").split())
+    cut = _TITLE_STOP.search(title)
+    if cut:
+        title = title[: cut.start()].strip()
+    title = title.rstrip(",.;:").strip()
+    words = title.split()
+    while words and words[-1].lower() in _DANGLING:
+        words.pop()
+    title = " ".join(words)
+    return title if len(title) > 3 else ""
+
+
+def _below_a_section(ref: str) -> bool:
+    """Whether this "reference" is a number smaller than any section.
+
+    No code in this corpus numbers a section below 1, and every extracted
+    dimensional table is full of ratios that look like one: Portland's floor
+    area ratio column reads "0.7 to 1", and "0.7" led the entire queue at
+    147,192 lots because it sits in the middle of the residential standards
+    table.
+
+    Narrow on purpose. It rejects a shape no section number has rather than
+    guessing at which numbers look untrustworthy -- ``11`` is Portland's Title
+    11, Trees, and is real.
+    """
+    head, _, _ = ref.partition(".")
+    return head.isdigit() and int(head) == 0
 
 
 def _lots_by_zone() -> dict[tuple[str, str], int]:
@@ -257,12 +394,24 @@ def refresh(layer_id: str | None = None) -> None:
         _SCANNED.pop(layer_id, None)
 
 
-def cards(layer: Layer, store: ProvenanceStore | None = None) -> list[Card]:
-    """Every unfetchable city-code reference this layer makes, as a worklist."""
+def cards(
+    layer: Layer,
+    store: ProvenanceStore | None = None,
+    overrides: Mapping[tuple[str, str], Ruling] | None = None,
+) -> list[Card]:
+    """Every unfetchable city-code reference this layer makes, as a worklist.
+
+    ``overrides`` carries rulings that exist outside the rule files — the
+    review inbox, where a decision made in a browser lands before the drain
+    writes it into the repository. They are applied here rather than filtered
+    afterwards, because "hide the rows already ruled" happens downstream and a
+    ruling the feed cannot see is a row the reviewer answers twice.
+    """
     scanned = _SCANNED.get(layer.layer)
     if scanned is None:
         scanned = tuple(_scan(layer, store))
         _SCANNED[layer.layer] = scanned
+    extra = overrides or {}
     return [
         Card(
             layer=c.layer,
@@ -270,7 +419,8 @@ def cards(layer: Layer, store: ProvenanceStore | None = None) -> list[Card]:
             mentions=c.mentions,
             neighbours=c.neighbours,
             zone_lots=c.zone_lots,
-            ruling=layer.crossrefs.get(c.ref),
+            title=c.title,
+            ruling=extra.get((c.layer, c.ref)) or layer.crossrefs.get(c.ref),
         )
         for c in scanned
     ]
@@ -295,11 +445,17 @@ def _scan(layer: Layer, store: ProvenanceStore | None = None) -> list[Card]:
 
     mentions: dict[str, list[Mention]] = defaultdict(list)
     near: dict[str, dict[tuple[str, str], tuple[int, str]]] = defaultdict(dict)
+    #: Titles are read from the whole line. The window shown on the card is
+    #: centred on the reference and routinely cuts a title in half -- Gresham
+    #: 10.1520 came back as "Reduction" when the code calls it "Reduction in
+    #: Minimum Street Frontage". Reading the display text would ship that.
+    titles: dict[str, str] = {}
 
     for path, text in texts.items():
         here = cited.get(path, {})
         name = Path(path).name
-        for n, line in enumerate(text.splitlines(), start=1):
+        body = text.splitlines()
+        for n, line in enumerate(body, start=1):
             hits = list(_REF.finditer(line))
             if not hits:
                 continue
@@ -311,6 +467,14 @@ def _scan(layer: Layer, store: ProvenanceStore | None = None) -> list[Card]:
                     continue
                 if _resolves(ref, ids, headings):
                     continue
+                if _below_a_section(ref):
+                    continue
+                if ref not in titles:
+                    found_title = _title_in(
+                        ref, line, body[n] if n < len(body) else ""
+                    )
+                    if found_title:
+                        titles[ref] = found_title
 
                 found = [
                     (abs(n - at), zone, field, shown)
@@ -322,7 +486,7 @@ def _scan(layer: Layer, store: ProvenanceStore | None = None) -> list[Card]:
                     Mention(
                         doc=name,
                         line=n,
-                        text=line.strip()[:SNIPPET],
+                        text=_window(line, m.start(), m.end()),
                         binding=bool(found),
                     )
                 )
@@ -364,10 +528,11 @@ def _scan(layer: Layer, store: ProvenanceStore | None = None) -> list[Card]:
                 mentions=tuple(seen),
                 neighbours=neighbours,
                 zone_lots=tuple(sorted(zone_lots.items())),
+                title=titles.get(ref, ""),
                 ruling=layer.crossrefs.get(ref),
             )
         )
-    out.sort(key=lambda c: (-c.rank[0], -c.rank[1], -c.rank[2], c.ref))
+    out.sort(key=lambda c: (tuple(-x for x in c.rank), c.ref))
     return out
 
 
@@ -379,6 +544,7 @@ def feed(
     outcome: str | None = None,
     binding_only: bool = False,
     ruled: bool = False,
+    overrides: Mapping[tuple[str, str], Ruling] | None = None,
     store: ProvenanceStore | None = None,
 ) -> list[Card]:
     """The worklist, filtered the four ways a reviewer picks a session.
@@ -399,7 +565,7 @@ def feed(
 
     rows: list[Card] = []
     for lay in chosen:
-        rows.extend(cards(lay, store))
+        rows.extend(cards(lay, store, overrides))
 
     if not ruled:
         rows = [c for c in rows if c.open]
@@ -412,7 +578,7 @@ def feed(
     if doc:
         rows = [c for c in rows if any(doc in d for d in c.docs)]
 
-    rows.sort(key=lambda c: (-c.rank[0], -c.rank[1], -c.rank[2], c.layer, c.ref))
+    rows.sort(key=lambda c: (tuple(-x for x in c.rank), c.layer, c.ref))
     return rows
 
 

@@ -44,30 +44,31 @@ from typing import Any, Sequence
 
 from fastapi import APIRouter, Form, Query, Request
 from fastapi.responses import FileResponse, HTMLResponse
-from sqlalchemy import select
+from sqlalchemy import func, select
 from starlette.concurrency import run_in_threadpool
 
 from app.api.deps import DBSession
 from app.config import settings
 from app.api.routers.ui_helpers import _base_ctx, _get_counts, _get_user, templates
-from app.models.flats import FlatsRuleSignature
+from app.models.flats import FlatsCrossrefRuling, FlatsRuleSignature
 from flats.encode import legible
 from flats.designs.model import Design, DesignStatus, Plat, load_catalog
 from flats.encode.attribution import claimed_sections, section_at
 from flats.encode.find import passages
 from flats.encode.gaps import digest as gaps_digest
 from flats.encode.gaps import read_ledger
-from flats.encode.triage import Card, feed, fields_in, rule as record_ruling
+from flats.encode.triage import Card, feed, fields_in
 from flats.encode.verify import fingerprint
 from flats.provenance import books, pages as page_map
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.fields import FIELDS
 from flats.rules.ledger import CoverageRow, read_coverage
-from flats.rules.loader import load_rules
+from flats.rules.loader import MIN_RULING, load_rules
 from flats.rules.model import (
     CROSSREF_OUTCOMES,
     Incorporation,
     Layer,
+    Ruling,
     Status,
     Value,
 )
@@ -1512,20 +1513,20 @@ _TRIAGE_ORDER = (
 )
 
 
-def _triage_authoring() -> bool:
-    """Whether a decision made here would survive the next deploy.
+async def _inbox_rulings(session: DBSession) -> dict[tuple[str, str], Ruling]:
+    """The latest decision per reference from the review inbox.
 
-    It would not, in production. Rule files are baked into the image, so a
-    ruling spliced into one at runtime is lost the next time the container is
-    rebuilt from git -- and a review tool that silently discards a reviewer's
-    work is worse than one that does not offer the button.
-
-    The durable path is the one the signing workflow already uses: a database
-    inbox drained into the repository for commit, so an undrained decision is
-    visibly pending rather than silently gone. Until triage has that, the
-    production page reads and filters and does not author.
+    Rules load from the repository; this is what has been decided since and not
+    yet drained into it. Applied over the rule files rather than merged with
+    them, because a reviewer who changes their mind writes a new row and the
+    newest is the one that counts.
     """
-    return settings.environment.strip().lower() != "production"
+    rows = (
+        await session.execute(
+            select(FlatsCrossrefRuling).order_by(FlatsCrossrefRuling.decided_at)
+        )
+    ).scalars()
+    return {(r.layer, r.ref): Ruling(r.note, r.outcome) for r in rows}
 
 
 def _triage_ctx(
@@ -1535,15 +1536,24 @@ def _triage_ctx(
     field: str,
     doc: str,
     ruled: bool,
+    skipped: int = 0,
+    pending: int = 0,
     error: str = "",
     note: str = "",
 ) -> dict[str, Any]:
     layers = _layers()
+    # Skipping walks the queue rather than reordering it: the card a reviewer
+    # could not answer stays exactly where it was for whoever comes next, and
+    # the offset lives in the URL so a reload does not silently rewind.
+    ahead = rows[skipped:] if skipped < len(rows) else []
     return {
-        "card": rows[0] if rows else None,
-        "remaining": len(rows),
-        "lots": sum(c.lots for c in rows),
-        "binding": sum(1 for c in rows if c.binding),
+        "card": ahead[0] if ahead else None,
+        "remaining": len(ahead),
+        "lots": sum(c.lots for c in ahead),
+        # Over ``ahead`` and not ``rows``: it is printed directly under the
+        # count of what is left, and two numbers side by side describing
+        # different sets read as one number contradicting the other.
+        "binding": sum(1 for c in ahead if c.binding),
         "outcomes": [(k, CROSSREF_OUTCOMES[k]) for k in _TRIAGE_ORDER],
         "jurisdictions": sorted(layers),
         "labels": {k: (v.label or k.rsplit("/", 1)[-1]) for k, v in layers.items()},
@@ -1551,7 +1561,8 @@ def _triage_ctx(
         "sel": {"layer": layer, "field": field, "doc": doc, "ruled": ruled},
         "error": error,
         "note": note,
-        "authoring": _triage_authoring(),
+        "pending": pending,
+        "skipped": skipped,
     }
 
 
@@ -1563,30 +1574,60 @@ async def flats_triage(
     field: str = Query(""),
     doc: str = Query(""),
     ruled: bool = Query(False),
+    skipped: int = Query(0, ge=0),
 ) -> HTMLResponse:
-    """The fetch-triage queue, worst first by lots at stake.
+    """The fetch-triage queue, worst first.
 
     Filters compose and are the whole point: "Gresham today", "setbacks
     everywhere", "I have this chapter open". A reviewer who cannot choose the
     shape of a session works whatever the queue puts in front of them, which
-    over 1,451 rows means working Portland forever.
+    over fourteen hundred rows means working Portland forever.
     """
     user = await _get_user(session, request)
     dedup_count, conflicts_count = await _get_counts(session)
+    overrides = await _inbox_rulings(session)
     rows = await run_in_threadpool(
         feed,
         layer=layer or None,
         field=field or None,
         doc=doc or None,
         ruled=ruled,
+        overrides=overrides,
     )
+    pending = await _pending_count(session)
     return templates.TemplateResponse(
         request,
         "flats_triage.html",
         {
             **_base_ctx(user, dedup_count, "flats", conflicts_count=conflicts_count),
-            **_triage_ctx(rows, layer=layer, field=field, doc=doc, ruled=ruled),
+            **_triage_ctx(
+                rows,
+                layer=layer,
+                field=field,
+                doc=doc,
+                ruled=ruled,
+                skipped=skipped,
+                pending=pending,
+            ),
         },
+    )
+
+
+async def _pending_count(session: DBSession) -> int:
+    """Decisions recorded and not yet written into the rule files.
+
+    Surfaced rather than hidden. An undrained ruling has not taken effect —
+    the screen still reads the chapter as unfetched — and a reviewer is
+    entitled to know the difference between "decided" and "in force".
+    """
+    return int(
+        (
+            await session.execute(
+                select(func.count())
+                .select_from(FlatsCrossrefRuling)
+                .where(FlatsCrossrefRuling.exported_at.is_(None))
+            )
+        ).scalar_one()
     )
 
 
@@ -1596,28 +1637,37 @@ async def flats_triage_rule(
     session: DBSession,
     layer_id: str = Form(...),
     ref: str = Form(...),
-    outcome: str = Form(...),
+    outcome: str = Form(""),
     note: str = Form(""),
+    action: str = Form("rule"),
     layer: str = Form(""),
     field: str = Form(""),
     doc: str = Form(""),
     ruled: bool = Form(False),
+    skipped: int = Form(0),
 ) -> HTMLResponse:
-    """Record one decision and hand back the next card.
+    """Record one decision, or skip past it, and hand back the next card.
 
-    The note is required and the refusal keeps what was typed. A tagged row
-    with no reasoning is worse than an open one: the open row still shows the
+    Decisions land in the review inbox rather than in the rule files. The
+    container rebuilds those files from git on every deploy, so a ruling
+    spliced into a running container is gone at the next release; a row here
+    survives, and the drain writes it into the repository for commit.
+
+    The note is required and a refusal keeps what was typed. A tagged row with
+    no reasoning is worse than an open one — the open row still shows the
     sentence, and the tagged row shows a word nobody can check.
     """
-    await _get_user(session, request)
+    user = await _get_user(session, request)
 
-    async def render(error: str = "", keep: str = "") -> HTMLResponse:
+    async def render(error: str = "", keep: str = "", at: int = 0) -> HTMLResponse:
+        overrides = await _inbox_rulings(session)
         rows = await run_in_threadpool(
             feed,
             layer=layer or None,
             field=field or None,
             doc=doc or None,
             ruled=ruled,
+            overrides=overrides,
         )
         return templates.TemplateResponse(
             request,
@@ -1628,27 +1678,52 @@ async def flats_triage_rule(
                 field=field,
                 doc=doc,
                 ruled=ruled,
+                skipped=at,
+                pending=await _pending_count(session),
                 error=error,
                 note=keep,
             ),
             status_code=400 if error else 200,
         )
 
-    if not _triage_authoring():
+    # Skipping is a real answer to "I cannot rule on this yet" and needs to
+    # cost nothing. It advances past the card without recording anything,
+    # leaving it in place for whoever comes next.
+    if action == "skip":
+        return await render(at=skipped + 1)
+
+    if outcome not in CROSSREF_OUTCOMES or outcome == "read":
+        return await render("pick one of the outcomes", keep=note, at=skipped)
+    tidy = " ".join(note.split())
+    if len(tidy) < MIN_RULING:
         return await render(
-            "this instance reads the queue but does not record decisions — "
-            "rulings written here would be lost at the next deploy",
+            f"say why, in at least {MIN_RULING} characters — a tag on its own "
+            f"is a row closed rather than answered",
             keep=note,
+            at=skipped,
         )
-    try:
-        await run_in_threadpool(
-            record_ruling, layer_id.strip("/"), ref.strip(), outcome, note
+    if layer_id.strip("/") not in _layers():
+        return await render("not a jurisdiction we hold", keep=note, at=skipped)
+
+    overrides = await _inbox_rulings(session)
+    rows = await run_in_threadpool(
+        feed, layer=layer_id.strip("/"), overrides=overrides, ruled=True
+    )
+    card = next((c for c in rows if c.ref == ref.strip()), None)
+
+    session.add(
+        FlatsCrossrefRuling(
+            layer=layer_id.strip("/"),
+            ref=ref.strip(),
+            outcome=outcome,
+            note=tidy,
+            lots=card.lots if card else None,
+            fields_touched=";".join(card.fields) if card else "",
+            decided_by=getattr(user, "email", "") or "unknown",
         )
-    except ValueError as exc:
-        return await render(str(exc), keep=note)
-    except (FileNotFoundError, OSError) as exc:  # pragma: no cover - disk
-        return await render(f"could not write the ruling: {exc}", keep=note)
-    return await render()
+    )
+    await session.commit()
+    return await render(at=skipped)
 
 
 @router.get("/flats/book/{document:path}", response_model=None)

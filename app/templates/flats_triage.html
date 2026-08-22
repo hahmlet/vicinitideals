@@ -23,8 +23,9 @@
     Our own documents point at chapters the store cannot open — “subject to the standards
     of Section 7.0420”, and Section 7.0420 is not a document we hold. Each one is a
     sentence that can change a number without appearing anywhere near it. One question
-    per card: <strong>can this chapter change a number we screen on?</strong> Sorted by
-    the lots behind the standards it stands beside, worst first.
+    per card: <strong>can this chapter change a number we screen on?</strong>
+    Sorted by the lots behind the standards that have <em>room</em> in them — a setback
+    with four feet of slack, not a yes/no that reading another chapter cannot change.
   </p>
 
   <form method="get" action="/flats/triage"
@@ -61,6 +62,7 @@
       <input type="checkbox" name="ruled" value="true" {% if sel.ruled %}checked{% endif %}>
       show ruled
     </label>
+    <input type="hidden" name="skipped" value="0">
     <button type="submit" style="font-size:12px;padding:5px 12px">Filter</button>
     {% if sel.layer or sel.field or sel.doc or sel.ruled %}
     <a href="/flats/triage" class="muted" style="font-size:11px">clear</a>
@@ -72,6 +74,11 @@
   </div>
 
   <p class="muted" style="font-size:11px;max-width:74ch;margin-top:16px">
+    Decisions are recorded here and written into the rule files by a separate step, so a
+    ruling survives a deploy and it is always visible whether it has taken effect yet.
+  </p>
+
+  <p class="muted" style="font-size:11px;max-width:74ch">
     State law is not in this queue. ORS and OAR references are a different fetch problem
     with a different publisher, and one fetch answers for all seventeen jurisdictions
     rather than one — mixed in here they would bury a city’s own missing chapter under a

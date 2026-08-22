@@ -1512,3 +1512,129 @@ async def test_the_displayed_line_keeps_the_number_its_citation_is_written_again
     from app.api.routers.ui_flats import _line
 
     assert _line(1544, "  some line  ", False)["n"] == 1544
+
+
+# --- fetch triage ----------------------------------------------------------
+#
+# One reference, one question, one decision. What these hold to is that the
+# decision goes somewhere it survives a deploy, that it leaves the queue the
+# moment it is made, and that a reviewer who cannot answer can get past a card
+# without being made to invent one.
+
+
+async def test_the_queue_asks_one_question_about_one_reference(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+
+    response = await client.get("/flats/triage")
+
+    assert response.status_code == 200
+    assert "Does this chapter change a number we screen on?" in response.text
+    # The sort's whole claim, printed where the reviewer can see it.
+    assert "lots at stake" in response.text
+
+
+async def test_a_ruling_lands_in_the_inbox_and_the_row_leaves_the_queue(
+    client: AsyncClient, session: AsyncSession
+):
+    """The rule files are rebuilt from git on every deploy, so a decision
+    spliced into a running container would not survive the next release. It
+    goes to a table, and the queue reads the table over the files."""
+    from sqlalchemy import select
+
+    from app.models.flats import FlatsCrossrefRuling
+
+    await _login(client, session)
+    first = await client.get("/flats/triage?layer=or/multnomah/gresham")
+    assert first.status_code == 200
+    ref = _first_ref(first.text)
+
+    response = await client.post(
+        "/ui/flats/triage/rule",
+        data={
+            "layer_id": "or/multnomah/gresham",
+            "ref": ref,
+            "outcome": "procedure",
+            "note": (
+                "Read it. Design review procedure — approval criteria only, no "
+                "dimensional standard anywhere in the chapter."
+            ),
+            "layer": "or/multnomah/gresham",
+        },
+    )
+
+    assert response.status_code == 200
+    row = (
+        await session.execute(
+            select(FlatsCrossrefRuling).where(FlatsCrossrefRuling.ref == ref)
+        )
+    ).scalar_one()
+    assert row.outcome == "procedure"
+    assert row.decided_by, "a ruling is attributable or it is not a ruling"
+    assert row.exported_at is None, "recorded, not yet in force"
+
+    # And the next card is a different reference — the queue moved on.
+    assert _first_ref(response.text) != ref
+
+
+async def test_a_tag_with_no_reasoning_is_refused_and_the_words_are_kept(
+    client: AsyncClient, session: AsyncSession
+):
+    """A row closed with a word nobody can check is worse than an open one: the
+    open row still shows the sentence it came from."""
+    await _login(client, session)
+    page = await client.get("/flats/triage?layer=or/multnomah/gresham")
+    ref = _first_ref(page.text)
+
+    response = await client.post(
+        "/ui/flats/triage/rule",
+        data={
+            "layer_id": "or/multnomah/gresham",
+            "ref": ref,
+            "outcome": "procedure",
+            "note": "not relevant",
+            "layer": "or/multnomah/gresham",
+        },
+    )
+
+    assert response.status_code == 400
+    assert "say why" in response.text
+    assert "not relevant" in response.text, "the typing is not thrown away"
+    assert _first_ref(response.text) == ref, "and the card is still the one asked about"
+
+
+async def test_skipping_walks_past_a_card_without_answering_it(
+    client: AsyncClient, session: AsyncSession
+):
+    """"I cannot tell yet" is a real answer and has to cost nothing. It must
+    not record an outcome, and it must not reorder the queue — the card stays
+    where it is for whoever comes next."""
+    from sqlalchemy import func, select
+
+    from app.models.flats import FlatsCrossrefRuling
+
+    await _login(client, session)
+    page = await client.get("/flats/triage?layer=or/multnomah/gresham")
+    ref = _first_ref(page.text)
+
+    response = await client.post(
+        "/ui/flats/triage/rule",
+        data={
+            "layer_id": "or/multnomah/gresham",
+            "ref": ref,
+            "action": "skip",
+            "layer": "or/multnomah/gresham",
+        },
+    )
+
+    assert response.status_code == 200
+    assert _first_ref(response.text) != ref
+    written = (
+        await session.execute(select(func.count()).select_from(FlatsCrossrefRuling))
+    ).scalar_one()
+    assert written == 0
+
+    # Unskipped, the queue still leads with the card that was walked past.
+    again = await client.get("/flats/triage?layer=or/multnomah/gresham")
+    assert _first_ref(again.text) == ref

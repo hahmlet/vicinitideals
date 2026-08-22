@@ -488,3 +488,70 @@ class FlatsRuleSignature(Base):
     #: repository, this is a problem leaving the reviewer's desk. A row can
     #: be one, the other, both or neither.
     bundled_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class FlatsCrossrefRuling(Base):
+    """A reviewer's decision about a chapter the store cannot open.
+
+    Fetch triage asks one question — can this chapter change a number we screen
+    on? — and the answer is a tagged outcome plus the reasoning behind it. The
+    outcome is what a ledger can count; the note is what the next reader needs,
+    and neither is worth much alone.
+
+    An inbox, not a source of truth, for the same reason
+    :class:`FlatsRuleSignature` is one. Rules load from the jurisdiction YAML in
+    the repository, and the container rebuilds that YAML from git on every
+    deploy — so a decision recorded only here has not taken effect yet, and a
+    decision spliced only into a running container's YAML is gone at the next
+    release. The drain closes the gap in the safe direction: rows land here
+    immediately, and ``scripts/flats_drain_crossref_rulings.py`` writes them
+    into the rule files for commit and stamps ``exported_at``.
+
+    Append-only. A reviewer who changes their mind writes a second row rather
+    than editing the first, and the latest ``decided_at`` for a
+    ``(layer, ref)`` is the one that counts — the record of who believed what,
+    and when, survives being wrong.
+    """
+
+    __tablename__ = "crossref_rulings"
+    __table_args__ = (
+        Index(
+            "ix_flats_crossref_rulings_pending",
+            "decided_at",
+            postgresql_where=text("exported_at IS NULL"),
+        ),
+        Index("ix_flats_crossref_rulings_ref", "layer", "ref", "decided_at"),
+        {"schema": SCHEMA},
+    )
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+
+    #: Layer id, e.g. ``or/multnomah/gresham``.
+    layer: Mapped[str] = mapped_column(String(120), nullable=False)
+    #: The section number as the ledger prints it, e.g. ``7.0221``.
+    ref: Mapped[str] = mapped_column(String(40), nullable=False)
+
+    #: One of ``flats.rules.model.CROSSREF_OUTCOMES``. Stored as text rather
+    #: than a database enum: the vocabulary was derived from rulings already
+    #: written and grew by one the first day it was used, so it will grow
+    #: again, and a migration per word is a reason not to add the word.
+    outcome: Mapped[str] = mapped_column(String(32), nullable=False)
+    #: Why. Required — a row closed with a word nobody can check is worse than
+    #: an open row, because the open row still shows the sentence.
+    note: Mapped[str] = mapped_column(Text, nullable=False)
+
+    #: What the queue showed when the decision was made, so a ruling can be
+    #: re-read against what it was actually about. The card is rebuilt from
+    #: documents that may since have been re-fetched.
+    lots: Mapped[int | None] = mapped_column(Integer)
+    fields_touched: Mapped[str] = mapped_column(
+        Text, nullable=False, server_default=""
+    )
+
+    decided_by: Mapped[str] = mapped_column(String(200), nullable=False)
+    decided_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+    #: When the drain wrote this into the repository. NULL means pending, and
+    #: pending is visible in the queue rather than silent.
+    exported_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
