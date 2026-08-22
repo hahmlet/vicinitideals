@@ -104,8 +104,8 @@ def _parse_values(
             continue
 
         if isinstance(node, dict) and (
-            {"value", "exempt", "per_dwelling", "sqft_per_unit", "acres",
-             "acres_per_dwelling", "per_height_ft", "floor_ft",
+            {"value", "exempt", "per_dwelling", "sqft_per_unit", "per_units",
+             "acres", "acres_per_dwelling", "per_height_ft", "floor_ft",
              "step_back", "qualified_by"} & set(node)
         ):
             body = dict(node)
@@ -113,6 +113,7 @@ def _parse_values(
             exempt = bool(body.pop("exempt", False))
             per_dwelling = body.pop("per_dwelling", None)
             sqft_per_unit = body.pop("sqft_per_unit", None)
+            per_units = body.pop("per_units", None)
             acres = body.pop("acres", None)
             acres_each = body.pop("acres_per_dwelling", None)
             per_height = body.pop("per_height_ft", None)
@@ -174,6 +175,26 @@ def _parse_values(
                 # "1 unit per 2,500 sq. ft. of site area" is 17.424 units per
                 # acre, and 17.424 is in no ordinance anywhere.
                 value = _as_density(float(sqft_per_unit))
+            if per_units is not None:
+                if value is not None or exempt:
+                    problems.append(
+                        f"{where}.{key}: a value states a rate or the units it "
+                        f"is shared between, not both"
+                    )
+                    continue
+                if not isinstance(per_units, (int, float)) or isinstance(
+                    per_units, bool
+                ):
+                    problems.append(f"{where}.{key}: 'per_units' expects a number")
+                    continue
+                if per_units <= 0:
+                    problems.append(
+                        f"{where}.{key}: per_units {per_units} is not a count of units"
+                    )
+                    continue
+                # "1 per 2 units" is half a space per unit, and 0.5 is in no
+                # ordinance anywhere.
+                value = _per_units(float(per_units))
             if acres is not None:
                 if value is not None or exempt:
                     problems.append(
@@ -289,6 +310,7 @@ def _parse_values(
             before_step_back = None
             per_dwelling = None
             sqft_per_unit = None
+            per_units = None
             acres = None
             acres_each = None
             measured_on = measured_on_cite = measured_on_quote = None
@@ -352,6 +374,7 @@ def _parse_values(
                 exempt=exempt,
                 per_dwelling=None if per_dwelling is None else float(per_dwelling),
                 sqft_per_unit=None if sqft_per_unit is None else float(sqft_per_unit),
+                per_units=None if per_units is None else float(per_units),
                 acres=None if acres is None else float(acres),
                 acres_per_dwelling=(
                     None if acres_each is None else float(acres_each)
@@ -446,6 +469,18 @@ def _stepped_back(setback: float, at_ft: float, rise: float) -> float:
     owed = max(0.0, (DESIGN_HEIGHT_FT - at_ft) / rise)
     total = round(setback + owed, 3)
     return int(total) if float(total).is_integer() else total
+
+
+def _per_units(shared_between: float) -> float:
+    """A rate a table prints as "1 per N units", said per unit.
+
+    Only the numerator 1 is handled, because that is the shape every parking
+    table in this corpus prints -- "1 per 2 units", "1 per 4 bedrooms". A cell
+    reading "2 per 3 units" would need its own carrier rather than a division
+    done here, and it would be better to notice that when it appears than to
+    generalise for it now and get the rounding wrong for the case that exists.
+    """
+    return round(1.0 / shared_between, 3)
 
 
 def _as_density(each: float) -> float:

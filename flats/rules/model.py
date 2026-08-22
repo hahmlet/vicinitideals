@@ -587,6 +587,15 @@ class Value(BaseModel):
     #: of site area" in RM1; `value` carries the density that comes to and this
     #: carries the figure a reader will find. Same bargain as `per_dwelling`.
     sqft_per_unit: float | None = None
+    #: The number of dwelling units a code shares one parking space between,
+    #: where it prints the ratio that way instead of printing the rate.
+    #: Portland's Table 266-2 caps Household Living parking in EX at "1 per 2
+    #: units"; the field means half a space per unit and the table prints 0.5
+    #: nowhere. `value` carries the rate because that is what the field means
+    #: and what a lot is measured against, and this carries the denominator a
+    #: reader will find on the page. Same bargain as `sqft_per_unit`, in the
+    #: unit a parking table answers in.
+    per_units: float | None = None
     #: The acreage the code prints, where it states an area that way. MCC
     #: 39.4245(A) asks 80 acres of a new EFU parcel and prints 3,484,800
     #: square feet nowhere. `value` carries the square footage because that is

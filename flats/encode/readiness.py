@@ -201,6 +201,12 @@ def _quoted_parts(layer: Layer) -> Iterable[tuple[str, str, str | None, object]]
                 if value.per_dwelling is not None
                 else value.sqft_per_unit
                 if value.sqft_per_unit is not None
+                # A rate a table prints as a share -- "1 per 2 units" -- is
+                # checked against the denominator, which is the only figure on
+                # the page. Table 266-2 prints 1 and prints 2 and prints the
+                # 0.5 they come to nowhere.
+                else value.per_units
+                if getattr(value, "per_units", None) is not None
                 else value.acres
                 if getattr(value, "acres", None) is not None
                 else value.acres_per_dwelling

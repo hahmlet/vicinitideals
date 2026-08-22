@@ -87,6 +87,18 @@ defaults:
   # is routinely the difference between fitting and not, which is why it is
   # worth citing an absence carefully rather than leaving the state ceiling to
   # stand in for a rule Portland does not have.
+  # And no maximum either, in most of the city -- but not in all of it, which
+  # is the half that had no field to be written in until now. Table 266-1
+  # sends OS, R, C, CI, EG, I and IR to Standard B; Standard B's Household
+  # Living cell opens "No maximum", and the exception it then states reaches
+  # only commercial/mixed use and multi-dwelling zones. Those twelve zones and
+  # EX carry their own number; this is what the other fifteen inherit.
+  parking_max_per_unit:
+    exempt: true
+    cite: PCC 33.266.115; Tables 266-1 and 266-2
+    url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
+    retrieved: 2026-08-21
+    quote: "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159"
   parking_min_per_unit:
     # Not a minimum of zero -- there is no minimum. The quote is the chapter's
     # own list of its motor vehicle parking sections, which runs General
@@ -428,6 +440,31 @@ zones:
       cite: PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas
       url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
       retrieved: '2026-08-15'
+    # Table 266-1 sends every zone but EX to Standard B, and Standard B states
+    # no maximum for Household Living -- "except 1.35 per unit on sites that
+    # are in a commercial/mixed use or multi-dwelling zone". This zone is one
+    # of the twelve inside that exception: the six multi-dwelling zones listed
+    # at 33.120.020 and the six commercial/mixed use zones listed at
+    # 33.130.020. Everywhere else in the city there is no ceiling at all,
+    # which is what the layer default says.
+    #
+    # A maximum binds the building rather than the lot, and it is the one
+    # direction this screen had no field for. The catalog pod asks 1.5 stalls
+    # per unit; 1.35 of four units is five stalls, not six.
+    parking_max_per_unit:
+      value: 1.35
+      cite: PCC 33.266.115; Tables 266-1 and 266-2
+      url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
+      retrieved: 2026-08-21
+      quote: "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162"
+      variants:
+        # "Houses, attached houses and duplexes are exempt." Four townhouses
+        # on four unit lots are four attached houses. The same building on one
+        # lot is a fourplex, which that sentence does not name, so the plat
+        # decides whether the ceiling exists.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.120.txt#L394-L404"
@@ -473,6 +510,31 @@ zones:
       cite: PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas
       url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
       retrieved: '2026-08-15'
+    # Table 266-1 sends every zone but EX to Standard B, and Standard B states
+    # no maximum for Household Living -- "except 1.35 per unit on sites that
+    # are in a commercial/mixed use or multi-dwelling zone". This zone is one
+    # of the twelve inside that exception: the six multi-dwelling zones listed
+    # at 33.120.020 and the six commercial/mixed use zones listed at
+    # 33.130.020. Everywhere else in the city there is no ceiling at all,
+    # which is what the layer default says.
+    #
+    # A maximum binds the building rather than the lot, and it is the one
+    # direction this screen had no field for. The catalog pod asks 1.5 stalls
+    # per unit; 1.35 of four units is five stalls, not six.
+    parking_max_per_unit:
+      value: 1.35
+      cite: PCC 33.266.115; Tables 266-1 and 266-2
+      url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
+      retrieved: 2026-08-21
+      quote: "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162"
+      variants:
+        # "Houses, attached houses and duplexes are exempt." Four townhouses
+        # on four unit lots are four attached houses. The same building on one
+        # lot is a fourplex, which that sentence does not name, so the plat
+        # decides whether the ceiling exists.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.120.txt#L394-L404"
@@ -522,6 +584,31 @@ zones:
       cite: PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas
       url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
       retrieved: '2026-08-15'
+    # Table 266-1 sends every zone but EX to Standard B, and Standard B states
+    # no maximum for Household Living -- "except 1.35 per unit on sites that
+    # are in a commercial/mixed use or multi-dwelling zone". This zone is one
+    # of the twelve inside that exception: the six multi-dwelling zones listed
+    # at 33.120.020 and the six commercial/mixed use zones listed at
+    # 33.130.020. Everywhere else in the city there is no ceiling at all,
+    # which is what the layer default says.
+    #
+    # A maximum binds the building rather than the lot, and it is the one
+    # direction this screen had no field for. The catalog pod asks 1.5 stalls
+    # per unit; 1.35 of four units is five stalls, not six.
+    parking_max_per_unit:
+      value: 1.35
+      cite: PCC 33.266.115; Tables 266-1 and 266-2
+      url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
+      retrieved: 2026-08-21
+      quote: "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162"
+      variants:
+        # "Houses, attached houses and duplexes are exempt." Four townhouses
+        # on four unit lots are four attached houses. The same building on one
+        # lot is a fourplex, which that sentence does not name, so the plat
+        # decides whether the ceiling exists.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.120.txt#L394-L404"
@@ -578,6 +665,31 @@ zones:
       cite: PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas
       url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
       retrieved: '2026-08-15'
+    # Table 266-1 sends every zone but EX to Standard B, and Standard B states
+    # no maximum for Household Living -- "except 1.35 per unit on sites that
+    # are in a commercial/mixed use or multi-dwelling zone". This zone is one
+    # of the twelve inside that exception: the six multi-dwelling zones listed
+    # at 33.120.020 and the six commercial/mixed use zones listed at
+    # 33.130.020. Everywhere else in the city there is no ceiling at all,
+    # which is what the layer default says.
+    #
+    # A maximum binds the building rather than the lot, and it is the one
+    # direction this screen had no field for. The catalog pod asks 1.5 stalls
+    # per unit; 1.35 of four units is five stalls, not six.
+    parking_max_per_unit:
+      value: 1.35
+      cite: PCC 33.266.115; Tables 266-1 and 266-2
+      url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
+      retrieved: 2026-08-21
+      quote: "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162"
+      variants:
+        # "Houses, attached houses and duplexes are exempt." Four townhouses
+        # on four unit lots are four attached houses. The same building on one
+        # lot is a fourplex, which that sentence does not name, so the plat
+        # decides whether the ceiling exists.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.120.txt#L394-L404"
@@ -634,6 +746,31 @@ zones:
       cite: PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas
       url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
       retrieved: '2026-08-15'
+    # Table 266-1 sends every zone but EX to Standard B, and Standard B states
+    # no maximum for Household Living -- "except 1.35 per unit on sites that
+    # are in a commercial/mixed use or multi-dwelling zone". This zone is one
+    # of the twelve inside that exception: the six multi-dwelling zones listed
+    # at 33.120.020 and the six commercial/mixed use zones listed at
+    # 33.130.020. Everywhere else in the city there is no ceiling at all,
+    # which is what the layer default says.
+    #
+    # A maximum binds the building rather than the lot, and it is the one
+    # direction this screen had no field for. The catalog pod asks 1.5 stalls
+    # per unit; 1.35 of four units is five stalls, not six.
+    parking_max_per_unit:
+      value: 1.35
+      cite: PCC 33.266.115; Tables 266-1 and 266-2
+      url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
+      retrieved: 2026-08-21
+      quote: "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162"
+      variants:
+        # "Houses, attached houses and duplexes are exempt." Four townhouses
+        # on four unit lots are four attached houses. The same building on one
+        # lot is a fourplex, which that sentence does not name, so the plat
+        # decides whether the ceiling exists.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.120.txt#L394-L404"
@@ -682,6 +819,31 @@ zones:
       cite: PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas
       url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
       retrieved: '2026-08-15'
+    # Table 266-1 sends every zone but EX to Standard B, and Standard B states
+    # no maximum for Household Living -- "except 1.35 per unit on sites that
+    # are in a commercial/mixed use or multi-dwelling zone". This zone is one
+    # of the twelve inside that exception: the six multi-dwelling zones listed
+    # at 33.120.020 and the six commercial/mixed use zones listed at
+    # 33.130.020. Everywhere else in the city there is no ceiling at all,
+    # which is what the layer default says.
+    #
+    # A maximum binds the building rather than the lot, and it is the one
+    # direction this screen had no field for. The catalog pod asks 1.5 stalls
+    # per unit; 1.35 of four units is five stalls, not six.
+    parking_max_per_unit:
+      value: 1.35
+      cite: PCC 33.266.115; Tables 266-1 and 266-2
+      url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
+      retrieved: 2026-08-21
+      quote: "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162"
+      variants:
+        # "Houses, attached houses and duplexes are exempt." Four townhouses
+        # on four unit lots are four attached houses. The same building on one
+        # lot is a fourplex, which that sentence does not name, so the plat
+        # decides whether the ceiling exists.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
     quadplex_allowed:
       value: false
       quote: "or/multnomah/portland/33.120.txt#L394-L404"
@@ -724,6 +886,31 @@ zones:
       cite: PCC 33.130 — Table 130-1 (33.130.100 Primary Uses), 33.130.200 Lot Size, Table 130-2 (Summary of Development Standards in Commercial/Mixed Use Zones), 33.130.215 Setbacks, 33.130.220 Building Coverage, 33.130.225 Landscaped Areas, 33.130.250 General Requirements for Small Housing Types
       url: https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf
       retrieved: '2026-08-19'
+    # Table 266-1 sends every zone but EX to Standard B, and Standard B states
+    # no maximum for Household Living -- "except 1.35 per unit on sites that
+    # are in a commercial/mixed use or multi-dwelling zone". This zone is one
+    # of the twelve inside that exception: the six multi-dwelling zones listed
+    # at 33.120.020 and the six commercial/mixed use zones listed at
+    # 33.130.020. Everywhere else in the city there is no ceiling at all,
+    # which is what the layer default says.
+    #
+    # A maximum binds the building rather than the lot, and it is the one
+    # direction this screen had no field for. The catalog pod asks 1.5 stalls
+    # per unit; 1.35 of four units is five stalls, not six.
+    parking_max_per_unit:
+      value: 1.35
+      cite: PCC 33.266.115; Tables 266-1 and 266-2
+      url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
+      retrieved: 2026-08-21
+      quote: "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162"
+      variants:
+        # "Houses, attached houses and duplexes are exempt." Four townhouses
+        # on four unit lots are four attached houses. The same building on one
+        # lot is a fourplex, which that sentence does not name, so the plat
+        # decides whether the ceiling exists.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
     quadplex_allowed:
       # Table 130-1, "Household Living", read across the header row: Y in
       # every commercial/mixed use zone. The housing type is named too --
@@ -832,6 +1019,31 @@ zones:
       cite: PCC 33.130 — Table 130-1 (33.130.100 Primary Uses), 33.130.200 Lot Size, Table 130-2 (Summary of Development Standards in Commercial/Mixed Use Zones), 33.130.215 Setbacks, 33.130.220 Building Coverage, 33.130.225 Landscaped Areas, 33.130.250 General Requirements for Small Housing Types
       url: https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf
       retrieved: '2026-08-19'
+    # Table 266-1 sends every zone but EX to Standard B, and Standard B states
+    # no maximum for Household Living -- "except 1.35 per unit on sites that
+    # are in a commercial/mixed use or multi-dwelling zone". This zone is one
+    # of the twelve inside that exception: the six multi-dwelling zones listed
+    # at 33.120.020 and the six commercial/mixed use zones listed at
+    # 33.130.020. Everywhere else in the city there is no ceiling at all,
+    # which is what the layer default says.
+    #
+    # A maximum binds the building rather than the lot, and it is the one
+    # direction this screen had no field for. The catalog pod asks 1.5 stalls
+    # per unit; 1.35 of four units is five stalls, not six.
+    parking_max_per_unit:
+      value: 1.35
+      cite: PCC 33.266.115; Tables 266-1 and 266-2
+      url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
+      retrieved: 2026-08-21
+      quote: "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162"
+      variants:
+        # "Houses, attached houses and duplexes are exempt." Four townhouses
+        # on four unit lots are four attached houses. The same building on one
+        # lot is a fourplex, which that sentence does not name, so the plat
+        # decides whether the ceiling exists.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
     quadplex_allowed:
       # Table 130-1, "Household Living", read across the header row: Y in
       # every commercial/mixed use zone. The housing type is named too --
@@ -930,6 +1142,31 @@ zones:
       cite: PCC 33.130 — Table 130-1 (33.130.100 Primary Uses), 33.130.200 Lot Size, Table 130-2 (Summary of Development Standards in Commercial/Mixed Use Zones), 33.130.215 Setbacks, 33.130.220 Building Coverage, 33.130.225 Landscaped Areas, 33.130.250 General Requirements for Small Housing Types
       url: https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf
       retrieved: '2026-08-19'
+    # Table 266-1 sends every zone but EX to Standard B, and Standard B states
+    # no maximum for Household Living -- "except 1.35 per unit on sites that
+    # are in a commercial/mixed use or multi-dwelling zone". This zone is one
+    # of the twelve inside that exception: the six multi-dwelling zones listed
+    # at 33.120.020 and the six commercial/mixed use zones listed at
+    # 33.130.020. Everywhere else in the city there is no ceiling at all,
+    # which is what the layer default says.
+    #
+    # A maximum binds the building rather than the lot, and it is the one
+    # direction this screen had no field for. The catalog pod asks 1.5 stalls
+    # per unit; 1.35 of four units is five stalls, not six.
+    parking_max_per_unit:
+      value: 1.35
+      cite: PCC 33.266.115; Tables 266-1 and 266-2
+      url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
+      retrieved: 2026-08-21
+      quote: "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162"
+      variants:
+        # "Houses, attached houses and duplexes are exempt." Four townhouses
+        # on four unit lots are four attached houses. The same building on one
+        # lot is a fourplex, which that sentence does not name, so the plat
+        # decides whether the ceiling exists.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
     quadplex_allowed:
       # Table 130-1, "Household Living", read across the header row: Y in
       # every commercial/mixed use zone. The housing type is named too --
@@ -1037,6 +1274,31 @@ zones:
       cite: PCC 33.130 — Table 130-1 (33.130.100 Primary Uses), 33.130.200 Lot Size, Table 130-2 (Summary of Development Standards in Commercial/Mixed Use Zones), 33.130.215 Setbacks, 33.130.220 Building Coverage, 33.130.225 Landscaped Areas, 33.130.250 General Requirements for Small Housing Types
       url: https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf
       retrieved: '2026-08-19'
+    # Table 266-1 sends every zone but EX to Standard B, and Standard B states
+    # no maximum for Household Living -- "except 1.35 per unit on sites that
+    # are in a commercial/mixed use or multi-dwelling zone". This zone is one
+    # of the twelve inside that exception: the six multi-dwelling zones listed
+    # at 33.120.020 and the six commercial/mixed use zones listed at
+    # 33.130.020. Everywhere else in the city there is no ceiling at all,
+    # which is what the layer default says.
+    #
+    # A maximum binds the building rather than the lot, and it is the one
+    # direction this screen had no field for. The catalog pod asks 1.5 stalls
+    # per unit; 1.35 of four units is five stalls, not six.
+    parking_max_per_unit:
+      value: 1.35
+      cite: PCC 33.266.115; Tables 266-1 and 266-2
+      url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
+      retrieved: 2026-08-21
+      quote: "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162"
+      variants:
+        # "Houses, attached houses and duplexes are exempt." Four townhouses
+        # on four unit lots are four attached houses. The same building on one
+        # lot is a fourplex, which that sentence does not name, so the plat
+        # decides whether the ceiling exists.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
     quadplex_allowed:
       # Table 130-1, "Household Living", read across the header row: Y in
       # every commercial/mixed use zone. The housing type is named too --
@@ -1144,6 +1406,31 @@ zones:
       cite: PCC 33.130 — Table 130-1 (33.130.100 Primary Uses), 33.130.200 Lot Size, Table 130-2 (Summary of Development Standards in Commercial/Mixed Use Zones), 33.130.215 Setbacks, 33.130.220 Building Coverage, 33.130.225 Landscaped Areas, 33.130.250 General Requirements for Small Housing Types
       url: https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf
       retrieved: '2026-08-19'
+    # Table 266-1 sends every zone but EX to Standard B, and Standard B states
+    # no maximum for Household Living -- "except 1.35 per unit on sites that
+    # are in a commercial/mixed use or multi-dwelling zone". This zone is one
+    # of the twelve inside that exception: the six multi-dwelling zones listed
+    # at 33.120.020 and the six commercial/mixed use zones listed at
+    # 33.130.020. Everywhere else in the city there is no ceiling at all,
+    # which is what the layer default says.
+    #
+    # A maximum binds the building rather than the lot, and it is the one
+    # direction this screen had no field for. The catalog pod asks 1.5 stalls
+    # per unit; 1.35 of four units is five stalls, not six.
+    parking_max_per_unit:
+      value: 1.35
+      cite: PCC 33.266.115; Tables 266-1 and 266-2
+      url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
+      retrieved: 2026-08-21
+      quote: "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162"
+      variants:
+        # "Houses, attached houses and duplexes are exempt." Four townhouses
+        # on four unit lots are four attached houses. The same building on one
+        # lot is a fourplex, which that sentence does not name, so the plat
+        # decides whether the ceiling exists.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
     quadplex_allowed:
       # Table 130-1, "Household Living", read across the header row: Y in
       # every commercial/mixed use zone. The housing type is named too --
@@ -1242,6 +1529,31 @@ zones:
       cite: PCC 33.130 — Table 130-1 (33.130.100 Primary Uses), 33.130.200 Lot Size, Table 130-2 (Summary of Development Standards in Commercial/Mixed Use Zones), 33.130.215 Setbacks, 33.130.220 Building Coverage, 33.130.225 Landscaped Areas, 33.130.250 General Requirements for Small Housing Types
       url: https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf
       retrieved: '2026-08-19'
+    # Table 266-1 sends every zone but EX to Standard B, and Standard B states
+    # no maximum for Household Living -- "except 1.35 per unit on sites that
+    # are in a commercial/mixed use or multi-dwelling zone". This zone is one
+    # of the twelve inside that exception: the six multi-dwelling zones listed
+    # at 33.120.020 and the six commercial/mixed use zones listed at
+    # 33.130.020. Everywhere else in the city there is no ceiling at all,
+    # which is what the layer default says.
+    #
+    # A maximum binds the building rather than the lot, and it is the one
+    # direction this screen had no field for. The catalog pod asks 1.5 stalls
+    # per unit; 1.35 of four units is five stalls, not six.
+    parking_max_per_unit:
+      value: 1.35
+      cite: PCC 33.266.115; Tables 266-1 and 266-2
+      url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
+      retrieved: 2026-08-21
+      quote: "or/multnomah/portland/33.266.txt#L139,L153-L155,L157,L159-L162"
+      variants:
+        # "Houses, attached houses and duplexes are exempt." Four townhouses
+        # on four unit lots are four attached houses. The same building on one
+        # lot is a fourplex, which that sentence does not name, so the plat
+        # decides whether the ceiling exists.
+        - exempt: true
+          when: [unit_lots]
+          quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
     quadplex_allowed:
       # Table 130-1, "Household Living", read across the header row: Y in
       # every commercial/mixed use zone. The housing type is named too --
@@ -1340,6 +1652,23 @@ zones:
       cite: PCC 33.140 — Table 140-1 (33.140.100 Primary Uses), 33.140.100.B.1 and .B.2, 33.140.200 Lot Size, Table 140-2 (Development Standards), Table 140-3 (Minimum Building Setbacks From Residential Zone Lot Lines)
       url: https://www.portland.gov/sites/default/files/code/140-ind-zones_1.pdf
       retrieved: '2026-08-19'
+    # EX is the one zone Table 266-1 sends to Standard A, and Standard A's
+    # Household Living cell reads "1 per 2 units" -- two stalls for the pod,
+    # against a catalog target of six. The tightest parking ceiling in the
+    # corpus, and it is stated in a zone that allows the building outright.
+    #
+    # Standard B's attached-house exemption is written into Standard B's cell
+    # and nowhere else, so it does not reach here: splitting the pod onto four
+    # unit lots does not lift this one.
+    parking_max_per_unit:
+      # The table prints "1 per 2 units" and prints 0.5 nowhere. The
+      # denominator is what the file states and the rate is computed from it,
+      # so the citation check reads the figure a reader will find.
+      per_units: 2
+      cite: PCC 33.266.115; Tables 266-1 and 266-2
+      url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
+      retrieved: 2026-08-21
+      quote: "or/multnomah/portland/33.266.txt#L141-L142,L153-L155,L157,L159"
     quadplex_allowed:
       # Table 140-1, "Household Living": Y in EX, with no bracketed
       # limitation, in a chapter whose other five zones either bar it or

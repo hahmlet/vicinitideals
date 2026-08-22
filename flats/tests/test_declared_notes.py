@@ -190,19 +190,24 @@ def test_the_use_table_limitation_that_decides_two_zones(
 
 
 def test_every_portland_use_table_limitation_is_ruled_and_none_blocks() -> None:
-    """A hundred and nineteen notes, a hundred and six ruled, none blocking.
+    """A hundred and nineteen notes, all of them ruled, none blocking.
 
-    One more note than there used to be, and one document fewer left unread.
+    One more note than there used to be, and no document left unread.
     Portland's running footer used to end a block at its page break, so note
     5 of Table 120-3 -- the one sending vehicle areas to Chapter 33.266 --
     was stranded in a block of its own that governed nothing. With the frame
-    recognised it rejoins its list and is ruled, and the thirteen still unread
-    are all Chapter 33.266's parking tables, which govern no value this layer
-    encodes and were unread before any of this."""
+    recognised it rejoins its list and is ruled.
+
+    The last thirteen were Chapter 33.266's, and they were read on 2026-08-21
+    when this layer first encoded a parking maximum and had to go through the
+    chapter properly. None of them reaches a four-unit building. Two of the
+    three reasons are traps: 33.266.130 hands residential vehicle areas back
+    to 33.266.120 in its own applicability sentence, and Table 266-6's
+    Household Living row starts at five units on site. See
+    test_portland_parking_max."""
     ruled = list(dispositions(PORTLAND))
     assert len(ruled) == 119
-    unread = {row.doc.rsplit("/", 1)[-1] for row in ruled if row.state == "unread"}
-    assert unread == {"33.266.txt"}
+    assert [row for row in ruled if row.state == "unread"] == []
     assert not [row for row in qualified() if row.blocking]
 
 

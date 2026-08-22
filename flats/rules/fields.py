@@ -212,6 +212,24 @@ _F: tuple[FieldDef, ...] = (
     ),
     # --- parking and open space ----------------------------------------
     FieldDef("parking_min_per_unit", "ratio", "Required off-street stalls per unit.", False, "parking_min"),
+    FieldDef(
+        "parking_max_per_unit",
+        "ratio",
+        "MAXIMUM off-street stalls per unit the code permits. A ceiling on "
+        "parking, which reads like the opposite of a constraint and is not: "
+        "the design catalog carries a stalls-per-unit target, and a site plan "
+        "that seats more stalls than the zone allows is not a legal placement "
+        "however well it fits. Portland caps a fourplex at 1.35 per unit in "
+        "its multi-dwelling and commercial zones and at one per two units in "
+        "EX, against a catalog target of 1.5 -- so the pod as specified is "
+        "over the cap in thirteen of Portland's twenty-eight zones. Held "
+        "apart from `parking_min_per_unit` because the two bind opposite "
+        "ways and a city can state either without the other: Portland states "
+        "no minimum anywhere and a maximum in half its zones. No National "
+        "Zoning Atlas counterpart -- the checklist records what a code "
+        "requires, not what it forbids.",
+        True,
+    ),
     FieldDef("open_space_min_pct", "percent", "Minimum private open space as a share of lot area.", False),
     FieldDef(
         "min_landscaped_pct",
@@ -423,6 +441,12 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         # Most Oregon codes cap density in the multi-family zones only, and a
         # zone that states no ceiling is not an incomplete zone.
         "max_density_du_per_acre",
+        # A ceiling on parking, which most Oregon codes do not state at all --
+        # Portland states one in thirteen zones and no other jurisdiction in
+        # the corpus states one anywhere. Unlike the minimum beside it, which
+        # every code answers even when the answer is zero, silence here is the
+        # ordinary case and is not an incomplete zone.
+        "parking_max_per_unit",
         "open_space_min_pct",
         "min_landscaped_pct",
         "orientation_constraint",

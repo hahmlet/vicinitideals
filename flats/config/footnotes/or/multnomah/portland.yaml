@@ -1186,3 +1186,148 @@ notes:
       feet -- half an acre. The pod parks four to eight cars in a rear
       court, an order of magnitude under the threshold, so the tree
       canopy and pervious paving options it offers never come into play
+
+  # --- 33.266, the parking chapter's last thirteen ----------------------
+  #
+  # Read 2026-08-21, when the layer first encoded a parking MAXIMUM and had to
+  # go through the chapter properly. Thirteen notes, and the finding is that
+  # not one of them reaches a four-unit building -- but two of the three
+  # reasons are traps, in the sense that the note reads perfectly applicable
+  # until you find the sentence that excludes it.
+  #
+  # **33.266.130 is not the pod's section.** Its own applicability sentence
+  # says the standards "apply to all vehicle areas, except for residential
+  # vehicle areas subject to the standards of 33.266.120", and 33.266.120 is
+  # titled for houses, duplexes, triplexes and fourplexes. Four of these notes
+  # hang off .130's tables. The one worth naming is Table 266-4, whose 90
+  # degree stall is 8 feet 6 inches wide where 33.266.120.D.1 asks 9 by 18:
+  # reading the wrong table gives the pod a stall half a foot too narrow in
+  # every rear court in the city.
+  #
+  # **The bicycle table starts at five units.** Table 266-6's Household Living
+  # row reads "5 or more units on site". A four-unit pod is under it, so the
+  # row does not reach the building and neither do its notes -- including the
+  # two that would otherwise have asked for a long-term space per unit until
+  # 2029. This is a cleaner answer than Gresham's, which needed the sentence
+  # letting a resident keep the bicycle indoors; Portland states that too, at
+  # L1125, and does not need it here.
+
+  - quote: "or/multnomah/portland/33.266.txt#L265"
+    digest: "abfcd5ca687c"
+    state: dismissed
+    reason: >-
+      note 1 on the maximum-parking table lets a use subject to Conditional
+      Use, Impact Mitigation Plan or Transportation Impact review establish
+      its parking requirements through that review. It states no standard --
+      it names a procedure that may state one -- and the building this layer
+      screens is Household Living permitted by right in every zone where the
+      cap it governs is encoded, so none of the three reviews is triggered
+
+  - quote: "or/multnomah/portland/33.266.txt#L469"
+    digest: "45aa949ab301"
+    state: dismissed
+    reason: >-
+      note 1 exempts a driveway that runs straight from the street into a
+      parking area inside a building from the vehicle-area location standards
+      of 33.266.130. Those standards do not reach this building at all:
+      33.266.130.B applies them to all vehicle areas "except for residential
+      vehicle areas subject to the standards of 33.266.120", and 33.266.120.B
+      lists fourplexes and attached houses among the structures it governs
+
+  - quote: "or/multnomah/portland/33.266.txt#L471"
+    digest: "3a4333ea84cc"
+    state: dismissed
+    reason: >-
+      note 2 exempts a vehicle area separated from the street by a building
+      from the same 33.266.130 standards, and for the same reason it does not
+      reach a fourplex: 33.266.130.B hands residential vehicle areas to
+      33.266.120
+
+  - quote: "or/multnomah/portland/33.266.txt#L527"
+    digest: "151190f32738"
+    state: dismissed
+    reason: >-
+      note 1 on Table 266-4 points at Figure 266-4 for how the table's stall
+      and aisle dimensions are measured. Table 266-4 is 33.266.130's stall
+      table and 33.266.130 does not reach this building; the pod's stall is
+      33.266.120.D.1's 9 feet by 18. The distinction is not academic -- Table
+      266-4's 90 degree stall is 8 feet 6 inches wide, so a rear court laid
+      out against this note would be half a foot per stall too narrow
+
+  - quote: "or/multnomah/portland/33.266.txt#L528"
+    digest: "dad3f678cd04"
+    state: dismissed
+    reason: >-
+      note 2 on Table 266-4 sends the reader to 33.266.130.F.3 for accessible
+      parking spaces. Same table, same exclusion: 33.266.130 governs all other
+      development, and a fourplex's parking is 33.266.120's
+
+  - quote: "or/multnomah/portland/33.266.txt#L929"
+    digest: "46edca87ae02"
+    state: dismissed
+    reason: >-
+      note 1 on Table 266-6 resolves the table's two-part cells -- "2, or 1
+      per 3,000 sq. ft." -- to whichever is larger. Table 266-6 is the bicycle
+      parking table and its Household Living row reads "5 or more units on
+      site", so a four-unit pod is below the row and the note has no cell of
+      this building's to resolve
+
+  - quote: "or/multnomah/portland/33.266.txt#L931"
+    digest: "a378f5e47a61"
+    state: dismissed
+    reason: >-
+      note 2 defines the restricted-tenancy Group Living units that get a
+      lighter bicycle parking standard, and sets out the Portland Housing
+      Bureau letter and covenant that prove it. Group Living is not the use
+      this screen places, and the table does not reach a four-unit building
+
+  - quote: "or/multnomah/portland/33.266.txt#L939"
+    digest: "efea4d660e2e"
+    state: dismissed
+    reason: >-
+      note 3 waives long-term bicycle parking for a Commercial Parking
+      facility under ten vehicle spaces. Another use, and one this screen does
+      not place
+
+  - quote: "or/multnomah/portland/33.266.txt#L941"
+    digest: "b5716135a0f9"
+    state: dismissed
+    reason: >-
+      note 4 sets Standard A long-term bicycle parking for development
+      including a Household Living use at 1.0 space per unit until 1 January
+      2029. It is the note in this group that looks like it binds, and it does
+      not: the row it amends applies to "5 or more units on site" and the pod
+      is four. Portland also exempts long-term bicycle parking provided inside
+      a dwelling unit at L1125, so even above the threshold this asks for no
+      ground
+
+  - quote: "or/multnomah/portland/33.266.txt#L943"
+    digest: "1961196e6db7"
+    state: dismissed
+    reason: >-
+      note 5 does the same for Standard B at 0.7 space per unit until 1
+      January 2029, and falls the same way -- the Household Living row starts
+      at five units on site
+
+  - quote: "or/multnomah/portland/33.266.txt#L1001"
+    digest: "7411e1099f71"
+    state: dismissed
+    reason: >-
+      note 1 on the bicycle parking space dimensions table points at Figures
+      266-8 through 266-14. No bicycle parking is required for a four-unit
+      building, so there is no space for the figures to dimension
+
+  - quote: "or/multnomah/portland/33.266.txt#L1002"
+    digest: "c849e5edb9e3"
+    state: dismissed
+    reason: >-
+      note 2 requires an 8 inch vertical stagger between vertical bicycle
+      parking spaces. A standard for a rack this building is not required to
+      have
+
+  - quote: "or/multnomah/portland/33.266.txt#L1004"
+    digest: "cbc945c3bc01"
+    state: dismissed
+    reason: >-
+      note 3 sends stacked bicycle parking staggers to the manufacturer's
+      design. Same rack, same absence
