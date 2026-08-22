@@ -48,6 +48,7 @@ from sqlalchemy import select
 from starlette.concurrency import run_in_threadpool
 
 from app.api.deps import DBSession
+from app.config import settings
 from app.api.routers.ui_helpers import _base_ctx, _get_counts, _get_user, templates
 from app.models.flats import FlatsRuleSignature
 from flats.encode import legible
@@ -56,13 +57,20 @@ from flats.encode.attribution import claimed_sections, section_at
 from flats.encode.find import passages
 from flats.encode.gaps import digest as gaps_digest
 from flats.encode.gaps import read_ledger
+from flats.encode.triage import Card, feed, fields_in, rule as record_ruling
 from flats.encode.verify import fingerprint
 from flats.provenance import books, pages as page_map
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.fields import FIELDS
 from flats.rules.ledger import CoverageRow, read_coverage
 from flats.rules.loader import load_rules
-from flats.rules.model import Incorporation, Layer, Status, Value
+from flats.rules.model import (
+    CROSSREF_OUTCOMES,
+    Incorporation,
+    Layer,
+    Status,
+    Value,
+)
 from flats.rules.resolver import RuleSet
 from flats.score.paper import paper_fit
 
@@ -1475,6 +1483,172 @@ async def flats_sign_passage(
 # answers /flats/book/... itself and tries to load the document path as a
 # jurisdiction, which is what a reviewer sees as the app inside the app.
 # --- the source page itself ----------------------------------------------
+
+
+
+# --------------------------------------------------------------------------
+# Fetch triage
+# --------------------------------------------------------------------------
+#
+# One review vertical, deliberately alone on its own page. The queue it works
+# is references to chapters the store cannot open, and the only question it
+# asks is whether the chapter can change a number this screen uses. Everything
+# a reviewer needs to answer that is on the card; nothing else is.
+
+#: The order the outcome buttons are offered in. Not alphabetical and not the
+#: dict's order: the two that leave the row open lead, because a reviewer
+#: reaching this page is looking for gaps and the rest are ways of saying "not
+#: a gap". ``read`` is absent -- it is the legacy tag for rulings written
+#: before the vocabulary and nothing new should be filed under it.
+_TRIAGE_ORDER = (
+    "fetch",
+    "other_building",
+    "other_path",
+    "narrows_only",
+    "preempted",
+    "procedure",
+    "misread",
+    "later",
+)
+
+
+def _triage_authoring() -> bool:
+    """Whether a decision made here would survive the next deploy.
+
+    It would not, in production. Rule files are baked into the image, so a
+    ruling spliced into one at runtime is lost the next time the container is
+    rebuilt from git -- and a review tool that silently discards a reviewer's
+    work is worse than one that does not offer the button.
+
+    The durable path is the one the signing workflow already uses: a database
+    inbox drained into the repository for commit, so an undrained decision is
+    visibly pending rather than silently gone. Until triage has that, the
+    production page reads and filters and does not author.
+    """
+    return settings.environment.strip().lower() != "production"
+
+
+def _triage_ctx(
+    rows: Sequence[Card],
+    *,
+    layer: str,
+    field: str,
+    doc: str,
+    ruled: bool,
+    error: str = "",
+    note: str = "",
+) -> dict[str, Any]:
+    layers = _layers()
+    return {
+        "card": rows[0] if rows else None,
+        "remaining": len(rows),
+        "lots": sum(c.lots for c in rows),
+        "binding": sum(1 for c in rows if c.binding),
+        "outcomes": [(k, CROSSREF_OUTCOMES[k]) for k in _TRIAGE_ORDER],
+        "jurisdictions": sorted(layers),
+        "labels": {k: (v.label or k.rsplit("/", 1)[-1]) for k, v in layers.items()},
+        "field_menu": fields_in(rows)[:14],
+        "sel": {"layer": layer, "field": field, "doc": doc, "ruled": ruled},
+        "error": error,
+        "note": note,
+        "authoring": _triage_authoring(),
+    }
+
+
+@router.get("/flats/triage", response_class=HTMLResponse)
+async def flats_triage(
+    request: Request,
+    session: DBSession,
+    layer: str = Query(""),
+    field: str = Query(""),
+    doc: str = Query(""),
+    ruled: bool = Query(False),
+) -> HTMLResponse:
+    """The fetch-triage queue, worst first by lots at stake.
+
+    Filters compose and are the whole point: "Gresham today", "setbacks
+    everywhere", "I have this chapter open". A reviewer who cannot choose the
+    shape of a session works whatever the queue puts in front of them, which
+    over 1,451 rows means working Portland forever.
+    """
+    user = await _get_user(session, request)
+    dedup_count, conflicts_count = await _get_counts(session)
+    rows = await run_in_threadpool(
+        feed,
+        layer=layer or None,
+        field=field or None,
+        doc=doc or None,
+        ruled=ruled,
+    )
+    return templates.TemplateResponse(
+        request,
+        "flats_triage.html",
+        {
+            **_base_ctx(user, dedup_count, "flats", conflicts_count=conflicts_count),
+            **_triage_ctx(rows, layer=layer, field=field, doc=doc, ruled=ruled),
+        },
+    )
+
+
+@router.post("/ui/flats/triage/rule", response_class=HTMLResponse)
+async def flats_triage_rule(
+    request: Request,
+    session: DBSession,
+    layer_id: str = Form(...),
+    ref: str = Form(...),
+    outcome: str = Form(...),
+    note: str = Form(""),
+    layer: str = Form(""),
+    field: str = Form(""),
+    doc: str = Form(""),
+    ruled: bool = Form(False),
+) -> HTMLResponse:
+    """Record one decision and hand back the next card.
+
+    The note is required and the refusal keeps what was typed. A tagged row
+    with no reasoning is worse than an open one: the open row still shows the
+    sentence, and the tagged row shows a word nobody can check.
+    """
+    await _get_user(session, request)
+
+    async def render(error: str = "", keep: str = "") -> HTMLResponse:
+        rows = await run_in_threadpool(
+            feed,
+            layer=layer or None,
+            field=field or None,
+            doc=doc or None,
+            ruled=ruled,
+        )
+        return templates.TemplateResponse(
+            request,
+            "partials/flats_triage_card.html",
+            _triage_ctx(
+                rows,
+                layer=layer,
+                field=field,
+                doc=doc,
+                ruled=ruled,
+                error=error,
+                note=keep,
+            ),
+            status_code=400 if error else 200,
+        )
+
+    if not _triage_authoring():
+        return await render(
+            "this instance reads the queue but does not record decisions — "
+            "rulings written here would be lost at the next deploy",
+            keep=note,
+        )
+    try:
+        await run_in_threadpool(
+            record_ruling, layer_id.strip("/"), ref.strip(), outcome, note
+        )
+    except ValueError as exc:
+        return await render(str(exc), keep=note)
+    except (FileNotFoundError, OSError) as exc:  # pragma: no cover - disk
+        return await render(f"could not write the ruling: {exc}", keep=note)
+    return await render()
 
 
 @router.get("/flats/book/{document:path}", response_model=None)

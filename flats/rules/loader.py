@@ -30,6 +30,7 @@ import yaml
 from flats.rules.fields import DESIGN_HEIGHT_FT, DWELLINGS, SQFT_PER_ACRE, field
 from flats.rules.definitions import parse as parse_definitions
 from flats.rules.model import (
+    CROSSREF_OUTCOMES,
     LAYER_META,
     ZONE_META,
     CodeDocument,
@@ -37,6 +38,7 @@ from flats.rules.model import (
     Layer,
     Preempt,
     Provenance,
+    Ruling,
     Status,
     Value,
     Band,
@@ -982,34 +984,71 @@ def _adoptions(raw: object, *, where: str, problems: list[str]) -> list[str]:
 MIN_RULING = 40
 
 
-def _parse_crossrefs(raw: object, *, where: str, problems: list[str]) -> dict[str, str]:
+def _parse_crossrefs(
+    raw: object, *, where: str, problems: list[str]
+) -> dict[str, Ruling]:
     """Sections this layer has read and ruled out of the cross-reference queue.
 
-    Keyed by the number the ledger prints, valued by why the chapter does not
-    reach this building. Both halves are checked: a key nothing points at is a
-    ruling on a reference that does not exist, and a one-word reason is a row
-    closed rather than answered.
+    Keyed by the number the ledger prints. Both halves are checked: a key
+    nothing points at is a ruling on a reference that does not exist, and a
+    one-word reason is a row closed rather than answered.
+
+    Two authoring forms. A bare string is the original one and stays valid --
+    the seventeen rulings written before the vocabulary existed are prose and
+    load as ``read``. A mapping carries the shape of the decision beside the
+    prose::
+
+        crossrefs:
+          "17.62.070": >-
+            Setbacks for manufactured homes in a mobile home park ...
+          "16.44.050":
+            outcome: other_building
+            note: >-
+              Accessory dwelling unit standards ...
+
+    The note is required in both forms and held to the same length, because
+    the outcome is a filter and the note is the argument. A row closed with a
+    tag and no reasoning tells the next reader less than an open row does: the
+    open row at least still shows the sentence.
     """
     if raw is None:
         return {}
     if not isinstance(raw, dict):
         problems.append(f"{where}.crossrefs: expected a mapping of section -> why")
         return {}
-    out: dict[str, str] = {}
+    out: dict[str, Ruling] = {}
     for ref, why in raw.items():
         ref = str(ref).strip()
         if not ref:
             problems.append(f"{where}.crossrefs: a ruling needs a section number")
             continue
+
+        outcome = "read"
+        if isinstance(why, dict):
+            outcome = str(why.get("outcome", "read")).strip()
+            if outcome not in CROSSREF_OUTCOMES:
+                problems.append(
+                    f"{where}.crossrefs.{ref}: unknown outcome {outcome!r}; "
+                    f"one of {', '.join(sorted(CROSSREF_OUTCOMES))}"
+                )
+                continue
+            extra = set(why) - {"outcome", "note"}
+            if extra:
+                problems.append(
+                    f"{where}.crossrefs.{ref}: unexpected "
+                    f"{', '.join(sorted(extra))}; a ruling is an outcome and a note"
+                )
+                continue
+            why = why.get("note")
+
         if not isinstance(why, str) or len(why.strip()) < MIN_RULING:
             problems.append(
                 f"{where}.crossrefs.{ref}: a ruling states why the chapter does "
                 f"not reach this building, in at least {MIN_RULING} characters"
             )
             continue
-        out[ref] = " ".join(why.split())
+        out[ref] = Ruling(" ".join(why.split()), outcome)
     return out
-
 
 def _terse(exc: Exception) -> str:
     """Pydantic errors are verbose; keep the message a reviewer can scan."""

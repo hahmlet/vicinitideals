@@ -1,0 +1,132 @@
+{#
+  One reference, and the decision about it. Swapped in place after every
+  ruling so the queue never reloads the page or loses the filters.
+#}
+<div id="triage-card">
+{% if error %}
+<div style="margin:0 0 12px;padding:8px 10px;border-left:3px solid #dc2626;font-size:12px">
+  {{ error }}
+</div>
+{% endif %}
+
+{% if not card %}
+<div style="padding:32px 0;text-align:center">
+  <div style="font-size:15px">Nothing left in this queue.</div>
+  <div class="muted" style="font-size:12px;margin-top:6px">
+    Every reference matching these filters has been ruled. Widen the filters, or
+    tick <em>show ruled</em> to read the decisions back.
+  </div>
+</div>
+{% else %}
+
+<div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:2px">
+  <h3 style="margin:0;font-size:17px">
+    {{ labels.get(card.layer, card.layer) }} &middot; Section {{ card.ref }}
+  </h3>
+  <span style="margin-left:auto;font-size:13px">
+    <strong>{{ "{:,}".format(card.lots) }}</strong> <span class="muted">lots at stake</span>
+  </span>
+</div>
+<div class="muted" style="font-size:12px;margin-bottom:14px">
+  Written {{ card.mentions|length }}&times;, {{ card.binding }} of them beside a number we use
+  {%- if card.ruling %} &middot; already ruled <strong>{{ card.ruling.outcome }}</strong>{% endif %}
+</div>
+
+<div style="font-size:13px;font-weight:600;margin:0 0 8px">
+  Does this chapter change a number we screen on?
+</div>
+
+{% if card.neighbours %}
+<div class="muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin:14px 0 4px">
+  It stands beside
+</div>
+<table style="width:100%;font-size:12px;border-collapse:collapse">
+  {% for n in card.neighbours[:8] %}
+  <tr style="border-top:1px solid var(--line,#e5e7eb)">
+    <td style="padding:4px 8px 4px 0;white-space:nowrap"><strong>{{ n.field }}</strong> = {{ n.shown }}</td>
+    <td style="padding:4px 8px;color:#6b7280">{{ n.zones|join(", ") }}</td>
+    <td style="padding:4px 0 4px 8px;text-align:right;white-space:nowrap">
+      {{ "{:,}".format(n.lots) }} lots
+      <span class="muted">&middot; {{ n.distance }} line{{ "" if n.distance == 1 else "s" }} away</span>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% if card.neighbours|length > 8 %}
+<div class="muted" style="font-size:11px;margin-top:4px">
+  and {{ card.neighbours|length - 8 }} more standard{{ "" if card.neighbours|length - 8 == 1 else "s" }}
+</div>
+{% endif %}
+{% else %}
+<div class="muted" style="font-size:12px;margin:12px 0">
+  Not beside any number we encoded — it is referenced, but nowhere near a standard
+  this screen reads. That usually means <em>a process, not a standard</em>.
+</div>
+{% endif %}
+
+<div class="muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin:18px 0 4px">
+  Where it is written
+</div>
+{% for m in card.mentions[:4] %}
+<div style="font-size:12px;margin:0 0 6px;padding-left:10px;border-left:2px solid var(--line,#e5e7eb)">
+  <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap">{{ m.text }}</div>
+  <div class="muted" style="font-size:11px;margin-top:2px">
+    <a href="/flats/book/{{ card.layer }}/{{ m.doc }}#L{{ m.line }}" target="_blank">{{ m.doc }}</a>,
+    line {{ m.line }}{% if m.binding %} &middot; beside a number we use{% endif %}
+  </div>
+</div>
+{% endfor %}
+{% if card.mentions|length > 4 %}
+<div class="muted" style="font-size:11px">
+  and {{ card.mentions|length - 4 }} more mention{{ "" if card.mentions|length - 4 == 1 else "s" }}
+</div>
+{% endif %}
+
+{% if not authoring %}
+<div style="margin-top:22px;padding:10px;border-left:3px solid #d97706;font-size:12px;max-width:74ch">
+  <strong>Reading only here.</strong> This instance shows and filters the queue but does
+  not record decisions — rule files are rebuilt from the repository on every deploy, so a
+  ruling saved here would be lost. Decisions are authored where the repository lives.
+</div>
+{% else %}
+<form hx-post="/ui/flats/triage/rule"
+      hx-target="#triage-card"
+      hx-swap="outerHTML"
+      style="margin-top:22px;padding-top:14px;border-top:1px solid var(--line,#e5e7eb)">
+  <input type="hidden" name="layer_id" value="{{ card.layer }}">
+  <input type="hidden" name="ref" value="{{ card.ref }}">
+  <input type="hidden" name="layer" value="{{ sel.layer }}">
+  <input type="hidden" name="field" value="{{ sel.field }}">
+  <input type="hidden" name="doc" value="{{ sel.doc }}">
+  <input type="hidden" name="ruled" value="{{ 'true' if sel.ruled else 'false' }}">
+
+  <div class="muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px">
+    Your call
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">
+    {% for key, why in outcomes %}
+    <label style="font-size:12px;border:1px solid var(--line,#d1d5db);border-radius:4px;padding:5px 9px;cursor:pointer">
+      <input type="radio" name="outcome" value="{{ key }}" required style="margin-right:5px">
+      {{ why }}
+    </label>
+    {% endfor %}
+  </div>
+
+  <label class="muted" style="font-size:11px;display:block;margin-bottom:3px">
+    Why — in your own words. Anything the buttons above do not cover goes here.
+  </label>
+  <textarea name="note" rows="3" required minlength="40"
+            style="width:100%;font-size:12px;font-family:inherit;padding:6px"
+            placeholder="What did you read, and why does it or does it not reach a four-unit townhome?">{{ note }}</textarea>
+
+  <div style="display:flex;align-items:center;gap:10px;margin-top:8px">
+    <button type="submit" style="font-size:12px;padding:6px 14px">Save &amp; next</button>
+    <span class="muted" style="font-size:11px">
+      {{ remaining }} left in this queue &middot; {{ "{:,}".format(lots) }} lots behind them
+    </span>
+  </div>
+</form>
+{% endif %}
+
+{% endif %}
+</div>

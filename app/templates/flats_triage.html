@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}Fetch triage — Viciniti Deals{% endblock %}
+
+{% block content %}
+<div class="topbar"></div>
+
+<div class="content">
+  <div class="toolbar">
+    <div>
+      <h2 style="margin:0">Fetch triage</h2>
+      <div class="muted" style="font-size:12px">
+        <a href="/flats">All jurisdictions</a> ·
+        <a href="/flats/gaps">What is not encoded</a>
+      </div>
+    </div>
+    <div style="margin-left:auto;text-align:right">
+      <div><span class="muted">In this queue</span> <strong>{{ remaining }}</strong></div>
+      <div class="muted" style="font-size:11px">{{ binding }} beside a number we use</div>
+    </div>
+  </div>
+
+  <p class="muted" style="font-size:12px;max-width:74ch">
+    Our own documents point at chapters the store cannot open — “subject to the standards
+    of Section 7.0420”, and Section 7.0420 is not a document we hold. Each one is a
+    sentence that can change a number without appearing anywhere near it. One question
+    per card: <strong>can this chapter change a number we screen on?</strong> Sorted by
+    the lots behind the standards it stands beside, worst first.
+  </p>
+
+  <form method="get" action="/flats/triage"
+        style="display:flex;flex-wrap:wrap;gap:10px;align-items:end;margin:16px 0 18px;
+               padding:10px;border:1px solid var(--line,#e5e7eb);border-radius:4px">
+    <div>
+      <label class="muted" style="font-size:11px;display:block">Jurisdiction</label>
+      <select name="layer" style="font-size:12px;padding:4px">
+        <option value="">Everywhere</option>
+        {% for j in jurisdictions %}
+        <option value="{{ j }}" {% if sel.layer == j %}selected{% endif %}>
+          {{ labels.get(j, j) }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div>
+      <label class="muted" style="font-size:11px;display:block">Standard</label>
+      <select name="field" style="font-size:12px;padding:4px">
+        <option value="">Any</option>
+        {% for name, count in field_menu %}
+        <option value="{{ name }}" {% if sel.field == name %}selected{% endif %}>
+          {{ name }} ({{ count }})
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div>
+      <label class="muted" style="font-size:11px;display:block">Document contains</label>
+      <input type="text" name="doc" value="{{ sel.doc }}" placeholder="e.g. residential"
+             style="font-size:12px;padding:4px;width:150px">
+    </div>
+    <label class="muted" style="font-size:12px">
+      <input type="checkbox" name="ruled" value="true" {% if sel.ruled %}checked{% endif %}>
+      show ruled
+    </label>
+    <button type="submit" style="font-size:12px;padding:5px 12px">Filter</button>
+    {% if sel.layer or sel.field or sel.doc or sel.ruled %}
+    <a href="/flats/triage" class="muted" style="font-size:11px">clear</a>
+    {% endif %}
+  </form>
+
+  <div style="max-width:88ch;padding:16px;border:1px solid var(--line,#e5e7eb);border-radius:4px">
+    {% include "partials/flats_triage_card.html" %}
+  </div>
+
+  <p class="muted" style="font-size:11px;max-width:74ch;margin-top:16px">
+    State law is not in this queue. ORS and OAR references are a different fetch problem
+    with a different publisher, and one fetch answers for all seventeen jurisdictions
+    rather than one — mixed in here they would bury a city’s own missing chapter under a
+    hundred boilerplate statutory pointers.
+  </p>
+</div>
+{% endblock %}

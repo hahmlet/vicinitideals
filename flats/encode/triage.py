@@ -1,0 +1,638 @@
+"""Fetch triage — one question, asked well, about a chapter we cannot open.
+
+:mod:`flats.encode.crossrefs` finds the references: every section our own
+documents point at and the store cannot open. It is a good ledger and a bad
+worklist. It prints ``mentions`` and ``binding`` as counts, one truncated line
+of context, and 1,468 rows sorted by a number that means "how loud", and the
+person working it has to open a document to learn what any row is about.
+
+This module builds the worklist. The question a reviewer answers here is
+exactly one sentence long -- *does this chapter change a number we screen on?*
+-- and everything on a card exists to answer it:
+
+**What it stands beside.** The ledger already knows a reference is *binding*,
+meaning it sits within a few lines of text an encoded value was read from. It
+throws away which value. That is the whole decision. A reference standing
+beside Gresham R-5's rear setback across 21,000 lots and a reference standing
+beside a definition of "story" are the same row in the ledger and are not
+remotely the same job. Cards carry the neighbours by name, with the lots behind
+them.
+
+**Every mention, not a sample.** Ruling a reference means reading the sentences
+that make it. Nine of the seventeen rulings written by hand turn on a clause in
+the second half of a sentence the ledger's 160-character sample cut off.
+
+**Lots, as the sort.** ``binding`` counts how many times a reference is written
+near a number. Lots count what changes if it turns out to matter. Gladstone's
+loudest reference was ten mentions of one settled sentence about mobile home
+parks; the quiet ones are worth more.
+
+State law is deliberately absent. ORS and OAR references are a different fetch
+problem with a different publisher, and one fetch answers for all seventeen
+layers rather than one -- mixing them in would bury a city's own missing
+chapter under a hundred boilerplate statutory pointers, which is the complaint
+that produced this module.
+
+Run it::
+
+    uv run python -m flats.encode.triage
+    uv run python -m flats.encode.triage --layer or/multnomah/gresham
+    uv run python -m flats.encode.triage --field setback_rear_ft
+    uv run python -m flats.encode.triage --ruled
+"""
+
+from __future__ import annotations
+
+import argparse
+import sys
+from collections import defaultdict
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Iterable, Sequence
+
+from flats.encode.crossrefs import (
+    BINDING_WINDOW,
+    _REF,
+    _doc_ids,
+    _headings,
+    _resolves,
+)
+from flats.provenance.store import ProvenanceStore, parse_quote
+from flats.rules.ledger import read_coverage
+from flats.rules.loader import load_rules
+from flats.rules.loader import MIN_RULING
+from flats.rules.model import CROSSREF_OUTCOMES, Layer, Ruling
+
+#: How much of a mention line to keep. Wider than the ledger's 160 because the
+#: clause that settles a reference is routinely in the half that was cut.
+SNIPPET = 400
+
+
+@dataclass(frozen=True, slots=True)
+class Neighbour:
+    """A standard this reference stands beside, across every zone that shares it.
+
+    Grouped by field *and* figure rather than listed per zone, because a
+    reference beside Portland's coverage curve is beside the same eleven-cell
+    curve in R5, R7, R2.5 and R10, and printing it four times is four times the
+    reading for none of the information. What differs between those rows is the
+    zone name and the lot count, and both are carried here.
+
+    ``distance`` is in lines, and small is not the same as important -- a
+    reference in the "Additional Standards" column of a table is printed
+    several lines from the row it qualifies, which is why the binding window is
+    twelve rather than one.
+    """
+
+    field: str
+    shown: str
+    zones: tuple[str, ...]
+    distance: int
+    lots: int
+
+    @property
+    def label(self) -> str:
+        where = ", ".join(self.zones[:4])
+        if len(self.zones) > 4:
+            where += f" +{len(self.zones) - 4}"
+        return f"{self.field} = {self.shown}   [{where}]"
+
+
+@dataclass(frozen=True, slots=True)
+class Mention:
+    """One place the reference is written."""
+
+    doc: str
+    line: int
+    text: str
+    binding: bool
+
+
+@dataclass(frozen=True, slots=True)
+class Card:
+    """One reference, and everything needed to rule on it without opening a file."""
+
+    layer: str
+    ref: str
+    mentions: tuple[Mention, ...]
+    neighbours: tuple[Neighbour, ...]
+    #: Every zone this reference stands beside, with the lots behind it. Held
+    #: flat rather than derived from ``neighbours`` because neighbours group by
+    #: figure and one zone appears in several of them -- summing those would
+    #: count R5's 73,690 lots once per standard it happens to share.
+    zone_lots: tuple[tuple[str, int], ...] = ()
+    ruling: Ruling | None = None
+
+    @property
+    def _zone_lots(self) -> dict[str, int]:
+        return dict(self.zone_lots)
+
+    @property
+    def key(self) -> str:
+        return f"{self.layer}|{self.ref}"
+
+    @property
+    def outcome(self) -> str:
+        return self.ruling.outcome if self.ruling is not None else ""
+
+    @property
+    def open(self) -> bool:
+        """Whether this row still wants a decision.
+
+        A ``fetch`` ruling stays open on purpose: it is work ordered, not work
+        finished, and the row closes when the document lands in the store and
+        the reference resolves. ``later`` stays open for the same reason from
+        the other direction.
+        """
+        return self.ruling is None or not self.ruling.closed
+
+    @property
+    def binding(self) -> int:
+        return sum(1 for m in self.mentions if m.binding)
+
+    @property
+    def lots(self) -> int:
+        """Lots behind the values this reference stands beside.
+
+        Counted per zone rather than per neighbour: a reference beside four of
+        R-5's numbers is one R-5, not four.
+        """
+        return sum(self._zone_lots.values())
+
+    @property
+    def fields(self) -> tuple[str, ...]:
+        return tuple(sorted({n.field for n in self.neighbours}))
+
+    @property
+    def zones(self) -> tuple[str, ...]:
+        return tuple(sorted(self._zone_lots))
+
+    @property
+    def docs(self) -> tuple[str, ...]:
+        return tuple(sorted({m.doc for m in self.mentions}))
+
+    @property
+    def rank(self) -> tuple[int, int, int]:
+        """Worst first: lots at stake, then how often it binds, then how loud.
+
+        Lots lead because they are the only one of the three that says what
+        changes if the answer is yes.
+        """
+        return (self.lots, self.binding, len(self.mentions))
+
+
+def _lots_by_zone() -> dict[tuple[str, str], int]:
+    rows = read_coverage() or []
+    out: dict[tuple[str, str], int] = defaultdict(int)
+    for r in rows:
+        out[(r.jurisdiction, r.zone)] += r.lots
+    return dict(out)
+
+
+def _shown(value: object) -> str:
+    """A value as a reviewer needs to see it, not as it is stored."""
+    v = getattr(value, "value", None)
+    if v is None:
+        return "no figure" if getattr(value, "exempt", False) else "—"
+    if v is True:
+        return "yes"
+    if v is False:
+        return "no"
+    if isinstance(v, float) and v.is_integer():
+        return str(int(v))
+    text = str(v)
+    return text if len(text) <= 44 else text[:41] + "..."
+
+
+def _cited_values(layer: Layer) -> dict[str, dict[int, list[tuple[str, str, str]]]]:
+    """Per document, per line, the encoded values read from that line.
+
+    The counterpart of :func:`flats.encode.crossrefs._cited_lines`, which
+    answers "was anything read here" and discards what. Everything a reviewer
+    needs to judge a reference is in what it discards.
+    """
+    out: dict[str, dict[int, list[tuple[str, str, str]]]] = defaultdict(
+        lambda: defaultdict(list)
+    )
+
+    def take(quote: str | None, zone: str, field: str, value: object) -> None:
+        if not quote:
+            return
+        try:
+            ref = parse_quote(quote)
+        except Exception:
+            return
+        for n in ref.numbers:
+            out[ref.path][n].append((zone, field, _shown(value)))
+
+    for field, value in layer.defaults.items():
+        take(value.prov.quote, "(all zones)", field, value)
+    for zone in layer.zones.values():
+        if zone.like is not None:
+            take(zone.like.prov.quote, zone.zone, "(borrowed from)", zone.like)
+        for field, value in zone.values.items():
+            take(value.prov.quote, zone.zone, field, value)
+            take(value.step_back_quote, zone.zone, field, value)
+            take(value.measured_on_quote, zone.zone, field, value)
+            take(value.qualified_quote, zone.zone, field, value)
+            for variant in value.variants:
+                take(variant.prov.quote, zone.zone, field, value)
+    return out
+
+
+#: Scanned cards per layer, without rulings attached. The scan reads every
+#: stored document and runs the reference regex over every line -- four
+#: seconds for the corpus, which is fine once and not fine per page load. What
+#: changes while somebody works the queue is the *rulings*, and those are read
+#: from the loaded layer on every call rather than cached, so a decision shows
+#: up immediately and a re-scan is never needed to see it.
+_SCANNED: dict[str, tuple[Card, ...]] = {}
+
+
+def refresh(layer_id: str | None = None) -> None:
+    """Drop the scan cache — call after fetching a document into the store."""
+    if layer_id is None:
+        _SCANNED.clear()
+    else:
+        _SCANNED.pop(layer_id, None)
+
+
+def cards(layer: Layer, store: ProvenanceStore | None = None) -> list[Card]:
+    """Every unfetchable city-code reference this layer makes, as a worklist."""
+    scanned = _SCANNED.get(layer.layer)
+    if scanned is None:
+        scanned = tuple(_scan(layer, store))
+        _SCANNED[layer.layer] = scanned
+    return [
+        Card(
+            layer=c.layer,
+            ref=c.ref,
+            mentions=c.mentions,
+            neighbours=c.neighbours,
+            zone_lots=c.zone_lots,
+            ruling=layer.crossrefs.get(c.ref),
+        )
+        for c in scanned
+    ]
+
+
+def _scan(layer: Layer, store: ProvenanceStore | None = None) -> list[Card]:
+    """The document read. Expensive, and independent of any ruling."""
+    store = store or ProvenanceStore()
+    prefix = f"{layer.layer}/"
+    paths = [p for p in store.documents() if p.startswith(prefix)]
+    if not paths:
+        return []
+
+    texts = {p: store.text_path(p).read_text(encoding="utf-8") for p in paths}
+    ids = _doc_ids(paths)
+    headings: set[str] = set()
+    for path, text in texts.items():
+        headings |= _headings(text, {i.partition(".")[0] for i in _doc_ids([path])})
+
+    cited = _cited_values(layer)
+    lots = _lots_by_zone()
+
+    mentions: dict[str, list[Mention]] = defaultdict(list)
+    near: dict[str, dict[tuple[str, str], tuple[int, str]]] = defaultdict(dict)
+
+    for path, text in texts.items():
+        here = cited.get(path, {})
+        name = Path(path).name
+        for n, line in enumerate(text.splitlines(), start=1):
+            hits = list(_REF.finditer(line))
+            if not hits:
+                continue
+            for m in hits:
+                ref = (
+                    m.group("named") or m.group("abbrev") or m.group("dotted")
+                ).rstrip(".")
+                if not ref or (ref.isdigit() and len(ref) < 2):
+                    continue
+                if _resolves(ref, ids, headings):
+                    continue
+
+                found = [
+                    (abs(n - at), zone, field, shown)
+                    for at, rows in here.items()
+                    if abs(n - at) <= BINDING_WINDOW
+                    for zone, field, shown in rows
+                ]
+                mentions[ref].append(
+                    Mention(
+                        doc=name,
+                        line=n,
+                        text=line.strip()[:SNIPPET],
+                        binding=bool(found),
+                    )
+                )
+                for distance, zone, field, shown in found:
+                    slot = near[ref].get((zone, field))
+                    if slot is None or distance < slot[0]:
+                        near[ref][(zone, field)] = (distance, shown)
+
+    out = []
+    for ref, seen in mentions.items():
+        # Collapse to one row per standard-and-figure, carrying the zones that
+        # share it. Nearest mention wins the distance; lots are summed over
+        # distinct zones.
+        grouped: dict[tuple[str, str], list[tuple[str, int]]] = defaultdict(list)
+        zone_lots: dict[str, int] = {}
+        for (zone, field), (distance, shown) in near[ref].items():
+            grouped[(field, shown)].append((zone, distance))
+            zone_lots[zone] = lots.get((layer.layer, zone), 0)
+
+        neighbours = tuple(
+            sorted(
+                (
+                    Neighbour(
+                        field=field,
+                        shown=shown,
+                        zones=tuple(z for z, _ in sorted(zones)),
+                        distance=min(d for _, d in zones),
+                        lots=sum(zone_lots[z] for z, _ in zones),
+                    )
+                    for (field, shown), zones in grouped.items()
+                ),
+                key=lambda n: (-n.lots, n.field, n.shown),
+            )
+        )
+        out.append(
+            Card(
+                layer=layer.layer,
+                ref=ref,
+                mentions=tuple(seen),
+                neighbours=neighbours,
+                zone_lots=tuple(sorted(zone_lots.items())),
+                ruling=layer.crossrefs.get(ref),
+            )
+        )
+    out.sort(key=lambda c: (-c.rank[0], -c.rank[1], -c.rank[2], c.ref))
+    return out
+
+
+def feed(
+    *,
+    layer: str | None = None,
+    field: str | None = None,
+    doc: str | None = None,
+    outcome: str | None = None,
+    binding_only: bool = False,
+    ruled: bool = False,
+    store: ProvenanceStore | None = None,
+) -> list[Card]:
+    """The worklist, filtered the four ways a reviewer picks a session.
+
+    ``layer`` is "Gresham today", ``field`` is "setbacks everywhere", ``doc``
+    is "I have this chapter open", ``outcome`` is "show me what I called a
+    procedure last month". They compose.
+
+    Ruled rows are hidden by default and are never *deleted* from the feed --
+    ``ruled=True`` brings them back, because a decision that cannot be found
+    again is a decision nobody can overturn.
+    """
+    store = store or ProvenanceStore()
+    layers = load_rules()
+    chosen = (
+        [layers[layer]] if layer else [v for k, v in sorted(layers.items())]
+    )
+
+    rows: list[Card] = []
+    for lay in chosen:
+        rows.extend(cards(lay, store))
+
+    if not ruled:
+        rows = [c for c in rows if c.open]
+    if outcome:
+        rows = [c for c in rows if c.outcome == outcome]
+    if binding_only:
+        rows = [c for c in rows if c.binding]
+    if field:
+        rows = [c for c in rows if field in c.fields]
+    if doc:
+        rows = [c for c in rows if any(doc in d for d in c.docs)]
+
+    rows.sort(key=lambda c: (-c.rank[0], -c.rank[1], -c.rank[2], c.layer, c.ref))
+    return rows
+
+
+def fields_in(rows: Iterable[Card]) -> list[tuple[str, int]]:
+    """Which fields the feed touches, commonest first — the filter's own menu."""
+    counts: dict[str, int] = defaultdict(int)
+    for card in rows:
+        for f in card.fields:
+            counts[f] += 1
+    return sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))
+
+
+def render(rows: Sequence[Card], *, limit: int = 20) -> str:
+    """The feed as a person reads it at a terminal."""
+    out: list[str] = []
+    for card in rows[:limit]:
+        head = f"{card.layer}  {card.ref}"
+        if card.ruling is not None:
+            head += f"   [{card.ruling.outcome}]"
+        out.append(head)
+        out.append(
+            f"    {card.lots:,} lots · binds {card.binding}× · "
+            f"{len(card.mentions)} mention(s) · {', '.join(card.docs)}"
+        )
+        for n in card.neighbours[:4]:
+            out.append(f"      beside  {n.label}  ({n.lots:,} lots, {n.distance} lines)")
+        if len(card.neighbours) > 4:
+            out.append(f"      beside  … and {len(card.neighbours) - 4} more")
+        for m in card.mentions[:2]:
+            out.append(f"      “{m.text[:120]}”  — {m.doc}:{m.line}")
+        out.append("")
+
+    shown = min(limit, len(rows))
+    out.append(
+        f"{len(rows)} reference(s) in the feed, {shown} shown · "
+        f"{sum(1 for c in rows if c.binding)} binding · "
+        f"{sum(c.lots for c in rows):,} lots behind them"
+    )
+    return "\n".join(out)
+
+
+# --------------------------------------------------------------------------
+# Recording a decision
+# --------------------------------------------------------------------------
+#
+# Jurisdiction files are hand-written and full of prose: the notes explaining
+# why a zone is encoded the way it is are the most valuable text in this
+# repository. So a ruling is spliced in as text and never round-tripped
+# through a YAML dumper, which would reflow every block scalar and drop every
+# comment in the file. The splice is verified by reloading the layer, and the
+# file is restored if the reload fails.
+
+CONFIG = Path(__file__).resolve().parents[1] / "config" / "jurisdictions"
+
+#: Where the crossrefs block goes when a file has none: before the first of
+#: these top-level keys, so it lands beside the other layer-wide bookkeeping
+#: rather than after two thousand lines of zones.
+_AFTER = ("zones:", "defaults:", "code:", "definitions:")
+
+NEWLINE = chr(10)
+
+
+def _key(line: str) -> str:
+    """The section number a crossrefs entry line names, or empty.
+
+    Entries sit at one indent under the block and may be quoted or bare;
+    anything deeper belongs to the entry above it.
+    """
+    if not line.startswith("  ") or line.startswith("   "):
+        return ""
+    head = line.strip()
+    if not head.endswith(":"):
+        return ""
+    return head[:-1].strip().strip(chr(34)).strip(chr(39))
+
+
+def _wrap(text: str, width: int = 92, indent: str = "      ") -> list[str]:
+    words, lines, row = text.split(), [], ""
+    for word in words:
+        if row and len(row) + 1 + len(word) > width:
+            lines.append(indent + row)
+            row = word
+        else:
+            row = f"{row} {word}".strip()
+    if row:
+        lines.append(indent + row)
+    return lines
+
+
+def layer_path(layer_id: str) -> Path:
+    return CONFIG / f"{layer_id}.yaml"
+
+
+def _entry(ref: str, outcome: str, note: str) -> list[str]:
+    return [
+        f'  "{ref}":',
+        f"    outcome: {outcome}",
+        "    note: >-",
+        *_wrap(" ".join(note.split())),
+    ]
+
+
+def _splice(lines: list[str], ref: str, outcome: str, note: str) -> list[str]:
+    """Put one ruling into the file's lines, replacing any ruling already there."""
+    entry = _entry(ref, outcome, note)
+
+    start = next(
+        (i for i, ln in enumerate(lines) if ln.rstrip() == "crossrefs:"), None
+    )
+    if start is None:
+        at = next(
+            (
+                i
+                for i, ln in enumerate(lines)
+                if any(ln.startswith(k) for k in _AFTER)
+            ),
+            len(lines),
+        )
+        return lines[:at] + ["crossrefs:", *entry, ""] + lines[at:]
+
+    stop = start + 1
+    while stop < len(lines) and (
+        not lines[stop].strip() or lines[stop].startswith((" ", "	", "#"))
+    ):
+        stop += 1
+
+    body = lines[start + 1 : stop]
+    here = next(
+        (
+            i
+            for i, ln in enumerate(body)
+            if _key(ln) == ref
+            and not ln.startswith("   ")
+        ),
+        None,
+    )
+    if here is None:
+        body = body + entry
+    else:
+        end = here + 1
+        while end < len(body) and (
+            not body[end].strip() or body[end].startswith("    ")
+        ):
+            end += 1
+        body = body[:here] + entry + body[end:]
+
+    return lines[: start + 1] + body + lines[stop:]
+
+
+def rule(layer_id: str, ref: str, outcome: str, note: str) -> Path:
+    """Record one triage decision in the jurisdiction file, or raise.
+
+    Raises rather than writing a file the loader will reject, because a rule
+    file that does not load takes every jurisdiction down with it -- the loader
+    accumulates problems across the whole corpus and refuses the set.
+    """
+    if outcome not in CROSSREF_OUTCOMES:
+        raise ValueError(
+            f"unknown outcome {outcome!r}; one of {', '.join(sorted(CROSSREF_OUTCOMES))}"
+        )
+    note = " ".join(note.split())
+    if len(note) < MIN_RULING:
+        raise ValueError(
+            f"a ruling needs at least {MIN_RULING} characters of reasoning; "
+            f"got {len(note)}"
+        )
+
+    path = layer_path(layer_id)
+    if not path.exists():
+        raise FileNotFoundError(path)
+
+    before = path.read_text(encoding="utf-8")
+    lines = before.splitlines()
+    spliced = _splice(lines, ref, outcome, note)
+    path.write_text(NEWLINE.join(spliced) + NEWLINE, encoding="utf-8")
+    try:
+        load_rules.cache_clear()  # type: ignore[attr-defined]
+    except AttributeError:
+        pass
+    try:
+        got = load_rules()[layer_id].crossrefs.get(ref)
+        if got is None or got.outcome != outcome:
+            raise ValueError(f"ruling did not take on {layer_id} {ref}")
+    except Exception:
+        path.write_text(before, encoding="utf-8")
+        try:
+            load_rules.cache_clear()  # type: ignore[attr-defined]
+        except AttributeError:
+            pass
+        raise
+    return path
+
+
+def main(argv: Sequence[str] | None = None) -> int:
+    ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    ap.add_argument("--layer")
+    ap.add_argument("--field")
+    ap.add_argument("--doc")
+    ap.add_argument("--outcome", choices=sorted(CROSSREF_OUTCOMES))
+    ap.add_argument("--binding", action="store_true")
+    ap.add_argument("--ruled", action="store_true")
+    ap.add_argument("--limit", type=int, default=20)
+    ap.add_argument("--fields", action="store_true", help="the field filter's menu")
+    args = ap.parse_args(argv)
+
+    rows = feed(
+        layer=args.layer,
+        field=args.field,
+        doc=args.doc,
+        outcome=args.outcome,
+        binding_only=args.binding,
+        ruled=args.ruled,
+    )
+    if args.fields:
+        for name, count in fields_in(rows):
+            print(f"{name:34s} {count:5d}")
+        return 0
+    print(render(rows, limit=args.limit))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

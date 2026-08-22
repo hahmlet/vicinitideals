@@ -37,6 +37,8 @@ from datetime import date
 from typing import Any, Collection, Mapping
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from pydantic import GetCoreSchemaHandler
+from pydantic_core import core_schema
 
 from flats.rules.conditions import condition
 from flats.rules.fields import (
@@ -67,6 +69,72 @@ class Status(str, enum.Enum):
     @property
     def trusted(self) -> bool:
         return self is Status.verified
+
+
+
+#: What a reviewer decided about a cross-reference, as a word rather than an
+#: essay.
+#:
+#: The vocabulary is not invented. Seventeen references had been read and ruled
+#: by hand before this existed, in prose, and every one of them turns out to be
+#: one of these seven shapes -- manufactured homes in a mobile home park, a
+#: conditional-use path a permitted-outright use never takes, an exemption list
+#: that can only narrow, a chapter the state already caps below what we screen.
+#: Writing the shape down is what lets the queue be counted, filtered and
+#: revisited; the prose beside it is what lets it be understood.
+#:
+#: ``read`` is the untagged legacy state, and it is deliberately in the list
+#: rather than silently allowed: a ruling that predates the vocabulary is a
+#: ruling nobody has classified, and that is a fact about the queue worth being
+#: able to see.
+CROSSREF_OUTCOMES: dict[str, str] = {
+    "fetch": "Fetch it -- this chapter can change a number we screen on",
+    "other_building": "About a different building",
+    "other_path": "A branch this project never takes",
+    "narrows_only": "Can only narrow, never add a standard",
+    "preempted": "State law already caps it at or below what we screen",
+    "procedure": "A process, not a standard -- there is no number in it",
+    "later": "Does not bind today; would if the catalog changed",
+    "misread": "Not a reference at all -- extraction read a table cell as one",
+    "read": "Read and ruled before the outcomes existed",
+}
+
+#: The outcomes that close a row. ``fetch`` and ``later`` do not: one is work
+#: ordered and the other is work deferred, and a queue that hid either would be
+#: reporting a decision as a disposal.
+CROSSREF_CLOSED = frozenset(CROSSREF_OUTCOMES) - {"fetch", "later"}
+
+
+class Ruling(str):
+    """Why a cross-reference does not need fetching, and which shape of why.
+
+    A ``str`` subclass rather than a model, because the note is the thing
+    everybody already reads: ledgers print it, tests assert substrings of it,
+    and the loader has always handed back a string. Attaching the outcome to
+    that string keeps every one of those callers working while making the
+    decision countable -- ``len(ruling)``, ``"mobile home" in ruling`` and
+    ``ruling.outcome`` are all true of the same object.
+    """
+
+    __slots__ = ("outcome",)
+
+    def __new__(cls, note: str, outcome: str = "read") -> "Ruling":
+        obj = super().__new__(cls, note)
+        obj.outcome = outcome if outcome in CROSSREF_OUTCOMES else "read"
+        return obj
+
+    @property
+    def closed(self) -> bool:
+        """Whether this ruling takes the row out of the queue."""
+        return self.outcome in CROSSREF_CLOSED
+
+    @classmethod
+    def __get_pydantic_core_schema__(
+        cls, source: Any, handler: GetCoreSchemaHandler
+    ) -> core_schema.CoreSchema:
+        return core_schema.no_info_plain_validator_function(
+            lambda v: v if isinstance(v, cls) else cls(str(v))
+        )
 
 
 #: A Census GEOID prefix on a directory name, e.g. '4159000-portland'.
@@ -1498,7 +1566,7 @@ class Layer(BaseModel):
     #:
     #: Not a substitute for fetching. What it records is the one outcome a
     #: fetch cannot produce: the chapter is about somebody else's building.
-    crossrefs: dict[str, str] = Field(default_factory=dict)
+    crossrefs: dict[str, Ruling] = Field(default_factory=dict)
     #: How this jurisdiction decides a term the rules hang variants on. Held
     #: per layer because four codes define "corner lot" four incompatible ways
     #: and a borrowed default is a wrong answer rather than a safe one. See
