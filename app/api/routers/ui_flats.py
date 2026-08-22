@@ -1549,7 +1549,10 @@ def _triage_ctx(
     return {
         "card": ahead[0] if ahead else None,
         "remaining": len(ahead),
-        "lots": sum(c.lots for c in ahead),
+        # Live lots, to agree with the headline figure on the card and with
+        # what the queue is sorted on. Totalling the raw count here put a
+        # number on screen that no card in the queue was showing.
+        "lots": sum(c.live_lots for c in ahead),
         # Over ``ahead`` and not ``rows``: it is printed directly under the
         # count of what is left, and two numbers side by side describing
         # different sets read as one number contradicting the other.

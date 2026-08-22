@@ -79,7 +79,7 @@ SNIPPET = 260
 #: title answers the card's question more often than the rest of the card
 #: does. Three mentions of Portland 33.236 and only the third carries it.
 _TITLE = re.compile(
-    r"(?:Chapter|Section|Title|Article)\s+%s\s*[,.:]?\s+"
+    r"(?P<kind>Chapter|Section|Title|Article)\s+%s\s*[,.:]?\s+"
     r"(?P<title>[A-Z][A-Za-z&'/-]*"
     r"(?:\s+(?:of|the|and|for|in|to|a|an|with|from|on)"
     r"|\s+[A-Z][A-Za-z&'/-]*){0,7})"
@@ -164,6 +164,10 @@ class Card:
     #: What the code calls this chapter, where a citing sentence names it.
     #: Empty when nothing does -- never guessed.
     title: str = ""
+    #: The noun the code uses for it: Title, Chapter, Section or Article.
+    #: Defaults to the commonest rather than the truest, because most of these
+    #: are sections and every card that finds a citing sentence overrides it.
+    kind: str = "Section"
     ruling: Ruling | None = None
 
     @property
@@ -265,6 +269,9 @@ def _window(line: str, start: int, end: int) -> str:
     right = line[end : end + half]
     body = f"{left}{line[start:end]}{right}"
     body = re.sub(r"\s{3,}", "  ·  ", body).strip()
+    # A marker at either end has nothing on one side of it to separate, and
+    # reads as a bullet rather than as the cut it is.
+    body = body.strip("· ").strip()
     if start - half > 0:
         body = "…" + body
     if end + half < len(line):
@@ -272,8 +279,13 @@ def _window(line: str, start: int, end: int) -> str:
     return body
 
 
-def _title_in(ref: str, line: str, nxt: str = "") -> str:
-    """What the code calls this chapter, from a sentence that cites it.
+def _named_in(ref: str, line: str, nxt: str = "") -> tuple[str, str]:
+    """What the code calls this reference, from a sentence that cites it.
+
+    Both halves of the name. Portland's tree rules are Title 11, not Section
+    11, and a card that prints the wrong noun is telling a reviewer the
+    document is something other than what it is -- a title is a whole body of
+    code and a section is a paragraph of one.
 
     Returns empty rather than guessing. A wrong title is worse than none: it is
     the first thing on the card, and a reviewer who trusts it stops reading.
@@ -281,7 +293,7 @@ def _title_in(ref: str, line: str, nxt: str = "") -> str:
     pattern = _TITLE.pattern % re.escape(ref)
     found = re.search(pattern, line)
     if not found:
-        return ""
+        return "", ""
     # A title that runs to the end of its line is a title the extraction broke
     # in half. Gresham 10.1520 ends its line on "Reduction in" and finishes on
     # the next -- taken from one line it reads "Reduction", which is a wrong
@@ -298,7 +310,13 @@ def _title_in(ref: str, line: str, nxt: str = "") -> str:
     while words and words[-1].lower() in _DANGLING:
         words.pop()
     title = " ".join(words)
-    return title if len(title) > 3 else ""
+    kind = found.group("kind").title()
+    return (kind, title) if len(title) > 3 else (kind, "")
+
+
+def _title_in(ref: str, line: str, nxt: str = "") -> str:
+    """Just the title. The noun is :func:`_named_in`."""
+    return _named_in(ref, line, nxt)[1]
 
 
 def _below_a_section(ref: str) -> bool:
@@ -326,6 +344,33 @@ def _lots_by_zone() -> dict[tuple[str, str], int]:
     return dict(out)
 
 
+def _num(x: object) -> str:
+    """A figure with thousands separators and no trailing ``.0``."""
+    if isinstance(x, bool) or not isinstance(x, (int, float)):
+        return str(x)
+    return f"{int(x):,}" if float(x).is_integer() else f"{x:,}"
+
+
+def _curve(rows: Sequence[Sequence[float]]) -> str:
+    """A tiered coverage table, said out loud.
+
+    Stored as ``[floor, base, pct]`` triples and read by
+    ``flats.score.screen._coverage_allowed_sqft`` as: on a lot at or above
+    ``floor``, the footprint may be ``base`` square feet plus ``pct`` of
+    everything above ``floor``. Printed as the raw list it is four nested
+    brackets that a reviewer has to decode before they can answer the card's
+    question, and truncated at forty-four characters it is three of them.
+    """
+    parts = []
+    for row in rows:
+        if len(row) != 3:
+            return str(list(rows))
+        floor, base, pct = row
+        head = "any lot" if not floor else f"from {_num(floor)} sqft"
+        parts.append(f"{head}: {_num(base)} sqft + {_num(pct)}% of the excess")
+    return "; ".join(parts)
+
+
 def _shown(value: object) -> str:
     """A value as a reviewer needs to see it, not as it is stored."""
     v = getattr(value, "value", None)
@@ -335,8 +380,12 @@ def _shown(value: object) -> str:
         return "yes"
     if v is False:
         return "no"
-    if isinstance(v, float) and v.is_integer():
-        return str(int(v))
+    if isinstance(v, (int, float)):
+        return _num(v)
+    if isinstance(v, (list, tuple)) and v:
+        if all(isinstance(r, (list, tuple)) for r in v):
+            return _curve(v)
+        return ", ".join(_num(x) for x in v)
     text = str(v)
     return text if len(text) <= 44 else text[:41] + "..."
 
@@ -420,6 +469,7 @@ def cards(
             neighbours=c.neighbours,
             zone_lots=c.zone_lots,
             title=c.title,
+            kind=c.kind,
             ruling=extra.get((c.layer, c.ref)) or layer.crossrefs.get(c.ref),
         )
         for c in scanned
@@ -450,6 +500,7 @@ def _scan(layer: Layer, store: ProvenanceStore | None = None) -> list[Card]:
     #: 10.1520 came back as "Reduction" when the code calls it "Reduction in
     #: Minimum Street Frontage". Reading the display text would ship that.
     titles: dict[str, str] = {}
+    kinds: dict[str, str] = {}
 
     for path, text in texts.items():
         here = cited.get(path, {})
@@ -470,9 +521,11 @@ def _scan(layer: Layer, store: ProvenanceStore | None = None) -> list[Card]:
                 if _below_a_section(ref):
                     continue
                 if ref not in titles:
-                    found_title = _title_in(
+                    found_kind, found_title = _named_in(
                         ref, line, body[n] if n < len(body) else ""
                     )
+                    if found_kind:
+                        kinds.setdefault(ref, found_kind)
                     if found_title:
                         titles[ref] = found_title
 
@@ -529,6 +582,7 @@ def _scan(layer: Layer, store: ProvenanceStore | None = None) -> list[Card]:
                 neighbours=neighbours,
                 zone_lots=tuple(sorted(zone_lots.items())),
                 title=titles.get(ref, ""),
+                kind=kinds.get(ref, "Section"),
                 ruling=layer.crossrefs.get(ref),
             )
         )

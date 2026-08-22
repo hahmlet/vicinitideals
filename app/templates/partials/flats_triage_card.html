@@ -26,7 +26,7 @@
 
 <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:2px">
   <h3 style="margin:0;font-size:17px">
-    {{ labels.get(card.layer, card.layer) }} &middot; Section {{ card.ref }}{% if card.title %}<span style="font-weight:400"> &mdash; {{ card.title }}</span>{% endif %}
+    {{ labels.get(card.layer, card.layer) }} &middot; {{ card.kind }} {{ card.ref }}{% if card.title %}<span style="font-weight:400"> &mdash; {{ card.title }}</span>{% endif %}
   </h3>
   <span style="margin-left:auto;font-size:13px;text-align:right">
     <strong>{{ "{:,}".format(card.live_lots) }}</strong> <span class="muted">lots at stake</span>
@@ -87,9 +87,20 @@
 <div style="font-size:12px;margin:0 0 6px;padding-left:10px;border-left:2px solid var(--line,#e5e7eb)">
   <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap">{{ m.text }}</div>
   <div class="muted" style="font-size:11px;margin-top:2px">
-    <a href="/flats/book/{{ card.layer }}/{{ m.doc }}#L{{ m.line }}" target="_blank">{{ m.doc }}</a>,
+    {#
+      The stored text, not the book. Two thirds of these documents have no page
+      map, and the PDF route refuses outright without one -- and a "#L229"
+      fragment means nothing to a PDF viewer even where it does open. The
+      stored lines are what the citation actually addresses and they resolve
+      for every document in the corpus.
+    #}
+    <a href="#" role="button"
+       hx-get="/ui/flats/quote?ref={{ (card.layer ~ '/' ~ m.doc ~ '#L' ~ m.line) | urlencode }}"
+       hx-target="#seen-{{ loop.index }}"
+       hx-swap="innerHTML">{{ m.doc }}</a>,
     line {{ m.line }}{% if m.binding %} &middot; beside a number we use{% endif %}
   </div>
+  <div id="seen-{{ loop.index }}"></div>
 </div>
 {% endfor %}
 {% if card.mentions|length > 4 %}
@@ -138,7 +149,7 @@
     </button>
     <span class="muted" style="font-size:11px">
       {{ remaining }} left{% if skipped %}, {{ skipped }} skipped{% endif %}
-      &middot; {{ "{:,}".format(lots) }} lots behind them
+      &middot; {{ "{:,}".format(lots) }} lots that can still move
     </span>
   </div>
 

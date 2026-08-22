@@ -88,14 +88,14 @@ class Status(str, enum.Enum):
 #: ruling nobody has classified, and that is a fact about the queue worth being
 #: able to see.
 CROSSREF_OUTCOMES: dict[str, str] = {
-    "fetch": "Fetch it -- this chapter can change a number we screen on",
+    "fetch": "Fetch it — this chapter can change a number we screen on",
     "other_building": "About a different building",
     "other_path": "A branch this project never takes",
     "narrows_only": "Can only narrow, never add a standard",
     "preempted": "State law already caps it at or below what we screen",
-    "procedure": "A process, not a standard -- there is no number in it",
+    "procedure": "A process, not a standard — there is no number in it",
     "later": "Does not bind today; would if the catalog changed",
-    "misread": "Not a reference at all -- extraction read a table cell as one",
+    "misread": "Not a reference at all — extraction read a table cell as one",
     "read": "Read and ruled before the outcomes existed",
 }
 

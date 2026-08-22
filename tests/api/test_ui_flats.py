@@ -12,6 +12,7 @@ import pytest
 from httpx import AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.api.routers.ui_flats import _cited_lines
 from tests.conftest import seed_org, set_client_auth
 
 pytestmark = pytest.mark.asyncio
@@ -1638,3 +1639,57 @@ async def test_skipping_walks_past_a_card_without_answering_it(
     # Unskipped, the queue still leads with the card that was walked past.
     again = await client.get("/flats/triage?layer=or/multnomah/gresham")
     assert _first_ref(again.text) == ref
+
+
+async def test_a_triage_mention_links_to_text_that_resolves(
+    client: AsyncClient, session: AsyncSession
+):
+    """The card linked at the PDF route with a "#L229" fragment on the end.
+
+    Three things wrong at once: the route serves a book and refuses outright
+    for the two thirds of this corpus that have no page map, a "#L" fragment
+    means nothing to a PDF viewer even where one opens, and the reviewer lands
+    on a bare error instead of the sentence the card was asking about.
+
+    The stored text is what a citation addresses and it resolves for every
+    document we hold.
+    """
+    await _login(client, session)
+    page = await client.get("/flats/triage?layer=or/multnomah/portland")
+    assert page.status_code == 200
+    assert "/flats/book/" not in page.text, "the book route cannot answer a #L"
+    assert "/ui/flats/quote?ref=" in page.text
+
+    # Portland 33.100 has no page map — the document that produced the bare
+    # error page — and its stored lines come back regardless.
+    lines, error = _cited_lines("or/multnomah/portland/33.100.txt#L229")
+    assert not error
+    assert lines
+
+
+async def test_a_tiered_standard_is_not_shown_to_a_reviewer_as_a_python_list(
+    client: AsyncClient, session: AsyncSession
+):
+    """Portland's top card stands beside exactly one standard, and it rendered
+    as ``[[0, 0, 50], [3000, 1500, 37.5], [5000, 2...`` — nested brackets, cut
+    mid-number. A card whose only evidence is unreadable asks a question it
+    has not supplied the means to answer."""
+    await _login(client, session)
+
+    response = await client.get("/flats/triage?layer=or/multnomah/portland")
+
+    assert response.status_code == 200
+    assert "of the excess" in response.text
+    assert "[[0, 0, 50]" not in response.text
+
+
+async def test_the_card_calls_a_title_a_title(
+    client: AsyncClient, session: AsyncSession
+):
+    """Portland's tree rules head the queue and they are Title 11."""
+    await _login(client, session)
+
+    response = await client.get("/flats/triage?layer=or/multnomah/portland")
+
+    assert "Title 11" in response.text
+    assert "Section 11 " not in response.text

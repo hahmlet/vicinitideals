@@ -22,7 +22,10 @@ from flats.encode.triage import (
     Mention,
     Neighbour,
     _below_a_section,
+    _curve,
     _key,
+    _named_in,
+    _num,
     _splice,
     _title_in,
     _window,
@@ -555,3 +558,82 @@ def test_slack_is_a_property_of_the_standard_not_of_the_lot() -> None:
 
     for name, spec in FIELDS.items():
         assert spec.has_slack == (spec.kind not in ("bool", "enum")), name
+
+
+# --- saying what the reference is, and what stands beside it ----------------
+
+
+def test_a_title_is_not_a_section() -> None:
+    """Portland's tree rules are Title 11. The card said "Section 11", which
+    describes a paragraph rather than a whole body of code -- and a reviewer
+    deciding whether something can reach their lot is being told the wrong
+    scale of thing.
+
+    The noun is read from the citing sentence, exactly like the title.
+    """
+    assert _named_in("11", "requirements of Title 11, Trees. See Chapter") == (
+        "Title",
+        "Trees",
+    )
+    assert _named_in("33.236", "See Chapter 33.236, Floating Structures.") == (
+        "Chapter",
+        "Floating Structures",
+    )
+    assert _named_in("7.0420", "under Section 7.0420, Parking Standards apply")[0] == (
+        "Section"
+    )
+
+
+def test_the_noun_defaults_to_the_commonest_rather_than_the_truest() -> None:
+    """Most of these are sections, and a card with no citing sentence to read
+    has to call it something."""
+    bare = Card(layer="or/x", ref="1.1", mentions=(), neighbours=())
+    assert bare.kind == "Section"
+    assert bare.title == ""
+
+
+def test_portland_title_11_is_read_off_the_corpus_as_a_title() -> None:
+    rows = {c.ref: c for c in feed(layer="or/multnomah/portland")}
+    if "11" not in rows:
+        pytest.skip("Title 11 not in the current Portland feed")
+
+    assert rows["11"].kind == "Title"
+    assert rows["11"].title == "Trees"
+
+
+def test_a_tiered_coverage_table_is_said_out_loud() -> None:
+    """It was printed as ``[[0, 0, 50], [3000, 1500, 37.5], [5000, 2...`` --
+    nested brackets, truncated mid-number, and the only standard on the card.
+
+    The tiers mean: on a lot at or above the floor, the footprint may be the
+    base plus that percentage of everything above the floor. That is what
+    ``flats.score.screen._coverage_allowed_sqft`` computes, and a reviewer
+    cannot judge whether a tree chapter eats into it while reading a list.
+    """
+    got = _curve([[0, 0, 50], [3000, 1500, 37.5], [20000, 4500, 7.5]])
+
+    assert got.startswith("any lot: 0 sqft + 50% of the excess")
+    assert "from 3,000 sqft: 1,500 sqft + 37.5% of the excess" in got
+    assert "from 20,000 sqft: 4,500 sqft + 7.5% of the excess" in got
+    assert "[" not in got and "]" not in got
+
+
+def test_a_curve_of_an_unexpected_shape_is_not_dressed_up() -> None:
+    """Better a raw list than a confident sentence about a table we did not
+    understand."""
+    assert _curve([[0, 50]]) == "[[0, 50]]"
+
+
+def test_figures_carry_thousands_separators() -> None:
+    """"12000" and "12,000" are the same number and not the same reading."""
+    assert _num(12000) == "12,000"
+    assert _num(37.5) == "37.5"
+    assert _num(35.0) == "35", "a whole number does not need its .0"
+
+
+def test_no_standard_reaches_the_card_as_a_python_repr() -> None:
+    """The guard for the whole class of bug the coverage curve was one of."""
+    for card in feed():
+        for n in card.neighbours:
+            assert "[" not in n.shown, f"{card.layer} {card.ref} {n.field}: {n.shown}"
+            assert not n.shown.endswith("..."), f"{card.layer} {card.ref}: {n.shown}"
