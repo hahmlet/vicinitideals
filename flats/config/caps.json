@@ -79,6 +79,99 @@
         "site_specific_limitation"
       ]
     },
+    "R-10": {
+      "max_coverage_pct": [
+        "net_developable_area"
+      ],
+      "max_height_ft": [
+        "net_developable_area"
+      ],
+      "min_lot_sqft": [
+        "net_developable_area"
+      ],
+      "min_lot_width_ft": [
+        "net_developable_area"
+      ],
+      "quadplex_allowed": [
+        "site_specific_limitation",
+        "split_zone"
+      ],
+      "setback_front_ft": [
+        "net_developable_area"
+      ],
+      "setback_rear_ft": [
+        "net_developable_area"
+      ],
+      "setback_side_ft": [
+        "net_developable_area"
+      ],
+      "setback_street_side_ft": [
+        "net_developable_area"
+      ]
+    },
+    "R-15": {
+      "max_coverage_pct": [
+        "net_developable_area"
+      ],
+      "max_height_ft": [
+        "net_developable_area"
+      ],
+      "min_lot_sqft": [
+        "net_developable_area"
+      ],
+      "min_lot_width_ft": [
+        "net_developable_area"
+      ],
+      "quadplex_allowed": [
+        "site_specific_limitation",
+        "split_zone"
+      ],
+      "setback_front_ft": [
+        "net_developable_area"
+      ],
+      "setback_rear_ft": [
+        "net_developable_area"
+      ],
+      "setback_side_ft": [
+        "net_developable_area"
+      ],
+      "setback_street_side_ft": [
+        "net_developable_area"
+      ]
+    },
+    "R-2": {
+      "max_coverage_pct": [
+        "abuts_lower_density_zone"
+      ],
+      "max_density_du_per_acre": [
+        "net_developable_area",
+        "site_specific_limitation"
+      ],
+      "max_height_ft": [
+        "net_developable_area",
+        "site_specific_limitation"
+      ],
+      "min_lot_sqft": [
+        "net_developable_area",
+        "site_specific_limitation"
+      ],
+      "quadplex_allowed": [
+        "site_specific_limitation",
+        "split_zone"
+      ],
+      "setback_front_ft": [
+        "abuts_lower_density_zone"
+      ],
+      "setback_rear_ft": [
+        "abuts_lower_density_zone"
+      ],
+      "setback_side_ft": [
+        "abuts_lower_density_zone"
+      ],
+      "setback_street_side_ft": [
+        "abuts_lower_density_zone"
+      ]
+    },
     "R-3": {
       "max_coverage_pct": [
         "net_developable_area",
@@ -93,6 +186,7 @@
         "site_specific_limitation"
       ],
       "quadplex_allowed": [
+        "net_developable_area",
         "site_specific_limitation",
         "split_zone"
       ],
@@ -129,6 +223,29 @@
         "split_zone"
       ]
     },
+    "R-6": {
+      "max_coverage_pct": [
+        "net_developable_area",
+        "site_specific_limitation"
+      ],
+      "max_density_du_per_acre": [
+        "net_developable_area"
+      ],
+      "max_height_ft": [
+        "net_developable_area"
+      ],
+      "min_lot_sqft": [
+        "net_developable_area"
+      ],
+      "min_lot_width_ft": [
+        "net_developable_area"
+      ],
+      "quadplex_allowed": [
+        "net_developable_area",
+        "site_specific_limitation",
+        "split_zone"
+      ]
+    },
     "R-7.5": {
       "max_coverage_pct": [
         "net_developable_area"
@@ -160,6 +277,72 @@
       ],
       "setback_street_side_ft": [
         "net_developable_area"
+      ]
+    },
+    "R-DD": {
+      "max_coverage_pct": [
+        "net_developable_area",
+        "site_specific_limitation"
+      ],
+      "max_height_ft": [
+        "net_developable_area"
+      ],
+      "min_lot_sqft": [
+        "net_developable_area"
+      ],
+      "quadplex_allowed": [
+        "site_specific_limitation",
+        "split_zone"
+      ],
+      "setback_front_ft": [
+        "net_developable_area",
+        "site_specific_limitation"
+      ],
+      "setback_rear_ft": [
+        "net_developable_area",
+        "site_specific_limitation"
+      ],
+      "setback_side_ft": [
+        "net_developable_area",
+        "site_specific_limitation"
+      ],
+      "setback_street_side_ft": [
+        "net_developable_area",
+        "site_specific_limitation"
+      ]
+    },
+    "R-W": {
+      "max_coverage_pct": [
+        "net_developable_area",
+        "site_specific_limitation"
+      ],
+      "max_height_ft": [
+        "net_developable_area",
+        "site_specific_limitation"
+      ],
+      "min_lot_sqft": [
+        "net_developable_area",
+        "site_specific_limitation"
+      ],
+      "quadplex_allowed": [
+        "site_specific_limitation",
+        "split_zone"
+      ],
+      "setback_front_ft": [
+        "net_developable_area",
+        "site_specific_limitation"
+      ],
+      "setback_rear_ft": [
+        "net_developable_area",
+        "site_specific_limitation"
+      ],
+      "setback_side_ft": [
+        "net_developable_area",
+        "site_specific_limitation"
+      ],
+      "setback_street_side_ft": [
+        "net_developable_area",
+        "site_specific_limitation"
       ]
     }
   },

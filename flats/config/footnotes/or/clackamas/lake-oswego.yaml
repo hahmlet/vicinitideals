@@ -33,7 +33,10 @@ notes:
     reason: >-
       note 1 sits on the R-W column's single-family cell and permits that
       dwelling "erected on pilings over the water of Oswego Lake". A different
-      building on ground this screen does not measure, and R-W is not encoded
+      building, on ground this screen does not measure. R-W is encoded now
+      (2026-08-21) and the note still does not reach the pod: it permits one
+      dwelling type in one place, and the quadplex row's P in that column
+      stands on its own
 
   - quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L490"
     digest: "fbdef142ff47"
@@ -170,7 +173,11 @@ notes:
     digest: "37137f670abc"
     state: dismissed
     reason: >-
-      the R-DD zone's density arithmetic. R-DD is not encoded in this layer
+      the R-DD zone's density arithmetic -- one dwelling per 2,000 sq ft of
+      net developable area. R-DD is encoded now (2026-08-21) and the note is
+      still dismissed, on the ground the table itself gives: note 2, one cell
+      to the left in the same row, exempts quadplexes from maximum density
+      outright. A ceiling the pod is exempt from is not a ceiling
 
   - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L610"
     digest: "92ec8a7651ff"
@@ -205,27 +212,39 @@ notes:
     digest: "ac62e8e05c25"
     state: dismissed
     reason: >-
-      a note on Table 50.04.001-5, which is the R-6 zone's setback table. It
-      qualifies that table's accessory structure column -- under 600 sq ft,
-      walls under 10 ft -- and reaches an R-5 setback only through the width
-      of the block's region
+      a note on Table 50.04.001-5, the R-6 setback table. It was dismissed for
+      reaching an R-5 setback only through the width of the block's region;
+      R-6 is encoded now (2026-08-21) and it reaches this layer directly. Still
+      dismissed, and for the reason that was always the real one: it qualifies
+      the table's Accessory Structures column -- under 600 sq ft, walls under
+      10 ft below the eave -- and the pod is encoded off the Primary
+      Structures column beside it
 
   - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L789"
     digest: "294e6c28c1c5"
     state: dismissed
     reason: >-
-      a note on Table 50.04.001-5, which is the R-6 zone's setback table. It
-      qualifies that table's garage-opening column, and reaches an R-5 setback
-      only through the width of the block's region
+      a note on Table 50.04.001-5, the R-6 setback table: "behind the front
+      building line of the house (excluding a porch)". R-6 is encoded now
+      (2026-08-21), so it reaches this layer directly rather than through the
+      width of the block's region. Still dismissed: the marker is on the
+      accessory-structure setbacks, and it places an accessory building
+      relative to the house rather than changing any figure in the Primary
+      Structures column
 
   - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L790"
     digest: "3e870ea34bd1"
     state: dismissed
     reason: >-
-      a note on Table 50.04.001-5, which is the R-6 zone's setback table. It
-      measures the front setback of a corner lot on the narrow frontage, in
-      R-6, and reaches an R-5 setback only through the width of the block's
-      region
+      a note on Table 50.04.001-5, the R-6 setback table, and the one of the
+      three that now sits directly on an encoded number: it marks the front
+      setback cell this layer reads 20 ft off. R-6 is encoded as of
+      2026-08-21. Still dismissed, because it does not change the figure --
+      "on corner lots, the front setback shall be measured on the narrow
+      street frontage" says which frontage the 20 ft is taken off, not how
+      much. It decides where the pod sits on a corner lot rather than whether
+      it fits, and `corner_lot` is a registered fact the screen assumes false
+      rather than one it leaves open
 
   # --- Table 50.04.001-11, the R-W, R-3, R-2 and R-0 zones -----------
   - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1450"
@@ -251,14 +270,18 @@ notes:
   - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1454"
     digest: "b8a6bd4094fe"
     state: encoded
-    encoded_as: "R-3 and R-0 max_density_du_per_acre exempt"
+    encoded_as: "R-W, R-3, R-2 and R-0 max_density_du_per_acre exempt; R-W and R-3 quadplex_allowed unit_lots band"
     reason: >-
       the same exemption a third time: duplexes, triplexes, quadplexes and
       cottage clusters are exempt from maximum density. The townhouse half is
-      not encoded for these two zones -- the row it points at extracts as five
-      cells across four columns ("3,375", "3,375", "No min.", "No min.", "No
-      min. for PD") and which belongs to R-3 cannot be told from the stored
-      text. R-0's Maximum density cell is an em dash regardless
+      now encoded too, CORRECTED 2026-08-21. It had been declined because the
+      row it points at looked like five cells across four columns ("3,375",
+      "3,375", "No min.", "No min.", "No min. for PD"). It is four zone cells
+      and a comment cell -- the shape every other row in this table has, and
+      the shape the two tables above it have, where the comment cell reads
+      "Except PD" in the same position. So R-W and R-3 are 3,375 and carry a
+      band; R-2 and R-0 are "No min." and carry none. R-2's and R-0's Maximum
+      density cells are em dashes regardless
 
   - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1456"
     digest: "6db2c0b7f5ee"
@@ -272,10 +295,19 @@ notes:
 
   - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1458"
     digest: "3d8294473e1c"
-    state: dismissed
+    state: encoded
+    encoded_as: "R-W max_height_ft 25"
     reason: >-
-      building height above and below the Oswego Lake surface elevation. The
-      table's R-W column, and a height standard at that
+      building height above and below the Oswego Lake surface elevation. It was
+      dismissed for being the R-W column of a zone nobody had encoded; R-W is
+      encoded now, and this note is the whole of its height standard -- the
+      Flat Lot, sloping-topography and sloped-footprint rows are em dashes in
+      that column and the only figure the table prints is "25/27 [5]". 25 ft
+      above the lake surface elevation is what is encoded. The 27 is the taller
+      half, for any portion of the lot at or below the lake surface, and it
+      needs the lake's surface elevation cut against the parcel -- which
+      nothing here measures, and which is the difference between RED and GREEN
+      for a 26 ft pod
 
   - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1460"
     digest: "cd7aed242922"
@@ -293,3 +325,26 @@ notes:
     reason: >-
       cottage cluster floor area. A different housing type, and a floor-area
       standard this layer does not encode
+
+  # --- Table 50.04.001-13, R-2 Yard Setbacks ---
+  # Live from 2026-08-21, when R-2 was encoded. Nothing quoted this region
+  # before, because the zone the table is written for was not in the funnel.
+
+  - quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1597"
+    digest: "b3ea94a3b22d"
+    state: unmeasured
+    fact: abuts_lower_density_zone
+    reason: >-
+      the note itself is a relief for a building this is not -- a multi-story
+      DETACHED dwelling may reduce its cumulative side yard by stepping the
+      upper floor back. The marker sits in the Detached Dwelling row; the
+      Quadplex row states 7 ft with no marker on it. But the body runs past
+      the note and takes the three subsections printed under the table with
+      it, and one of them binds: "Abutting Low Density Residential" requires a
+      lot zoned R-0, R-2 or R-3 that abuts R-6, R-7.5, R-10 or R-15 to set the
+      building back from the common line by the greater of the table setback
+      or the HEIGHT of the building. On a 26 ft pod against a 7 ft side yard
+      that is nearly four times the standard, and it turns on the neighbour's
+      zoning, which nothing here reads. The other two subsections loosen or do
+      not reach: an 18 ft front setback on steeply sloped lots, and ten ft of
+      separation between cottages

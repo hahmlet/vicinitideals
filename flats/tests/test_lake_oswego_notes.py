@@ -67,10 +67,22 @@ def test_every_governing_note_is_ruled_on() -> None:
 
 
 def test_the_uncomputed_facts_are_named_rather_than_assumed() -> None:
-    """Three lot facts Lake Oswego's notes turn on and nothing measures. Each
-    caps the verdict; none of them is a footnote somebody still has to read."""
+    """Four lot facts Lake Oswego's notes turn on and nothing measures. Each
+    caps the verdict; none of them is a footnote somebody still has to read.
+
+    `abuts_lower_density_zone` arrived on 2026-08-21 with R-2. The note under
+    Table 50.04.001-13 takes the three subsections printed below the table into
+    its body, and one of them requires a lot zoned R-0, R-2 or R-3 abutting
+    R-6, 7.5, 10 or 15 to stand back from the common line by the greater of the
+    table setback or the HEIGHT of the building -- 26 ft against a 7 ft side
+    yard, decided by the neighbour's zoning."""
     capping = {
         n.fact for n in notes() if n.layer == LAYER and n.state == "unmeasured"
     }
 
-    assert capping == {"split_zone", "site_specific_limitation", "net_developable_area"}
+    assert capping == {
+        "split_zone",
+        "site_specific_limitation",
+        "net_developable_area",
+        "abuts_lower_density_zone",
+    }

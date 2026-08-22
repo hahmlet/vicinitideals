@@ -121,7 +121,9 @@ def test_written_config_loads_through_the_real_loader() -> None:
     rules = RuleSet(load_rules())
 
     assert len(rules.layers) == 19  # 18 jurisdictions + the state layer
-    assert sum(len(l.zones) for l in rules.layers.values()) == 187
+    # 193 as of 2026-08-21: Lake Oswego gained the six residential zones
+    # its use table permits a quadplex in and the port had never carried.
+    assert sum(len(l.zones) for l in rules.layers.values()) == 193
 
 
 def test_state_parking_preemption_reaches_a_city_zone() -> None:

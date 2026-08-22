@@ -4,7 +4,36 @@ eligible: false
 notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s verification was against a
   coarser standard (one citation per row) and does not carry over. UNPORTED: orientation_constraint=''entrance_only''.
   quadfit justified this in a YAML comment with no citation; it needs its own encoding rather than invented
-  provenance.'
+  provenance.
+
+
+  SIX ZONES ADDED 2026-08-21. The port brought over four residential zones — R-0, R-3, R-5 and
+  R-7.5 — and the citywide use table permits a quadplex by right in ten. R-15, R-10, R-6, R-DD,
+  R-W and R-2 were not in the funnel at all. Nothing reported it: the coverage ledger finds zones
+  that are missing a required field, and a zone nobody encoded has no fields to be missing, so a
+  gap in the LIST of zones is a shape no ledger here was looking for. It surfaced sideways —
+  every one of this layer''s unread notes turned out to govern a region no encoded value quoted,
+  which is what a layer looks like when the tables it is missing are the tables the notes belong
+  to.
+
+
+  The six were read off the same four tables the ported four came from, one column over:
+  50.04.001-1 and -2 for R-15 and R-10, -3, -5 and -8 for R-6, -3 and -9 for R-DD, -11 for R-W,
+  and -11, -12 and -13 for R-2. R-W is the one that changes an answer rather than adding one: its
+  height is not measured from the ground at all but from the Oswego Lake surface elevation, and
+  the 25 ft it allows is under the 26 ft the pod stands, so a lot there is RED on height while
+  clearing every other standard in the zone. `flats/tests/test_lake_oswego_zones.py` now reads
+  the use table and requires a zone for each column the pod is permitted in, which is the check
+  that would have caught this.
+
+
+  STILL MISSING, and recorded here so it is not found sideways a second time: the same use table
+  has a second half, sixteen commercial, mixed use and industrial columns beginning at L557, and
+  its first residential row — "Residential use at R-5 density or greater", L617 — is P in eleven
+  of them. None of those zones are encoded. That is a bigger read than this one (Table
+  50.04.001-14 alone carries nineteen notes, and WLG and EC have tables of their own), and it is
+  the reason every one of this layer''s thirty-three remaining unread notes governs a region
+  nothing quotes.'
 ingest:
   geoid: null
   juris_city_codes:
@@ -87,6 +116,87 @@ zones:
       value: 55
       quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1306"
     notes: "Read against LOC Table 50.04.001-11 on 2026-08-14: the quadplex minimum lot area (7,000, L1253, the \"Cottage Clusters and Quadplexes\" row), lot coverage (55, L1306) and the front (10, L1344) and rear (10, L1357) setbacks under the table's \"Primary Dwelling (Attached)\" block, which is the pod's block — the \"(Detached)\" block above it states 20/5/20 and is not this building. Note [6] on the R-0 column reads \"Site-specific dimensional standards, see LOC 50.02.002.2.c\", so every standard here is subject to a per-parcel check. Side and street side read 2026-08-15. The R-0 column of the attached block's Side row states one number, 10 (L1351) — the two-number exterior/attached-wall form appears only in the R-3 column beside it, so R-0 has no variant to lose. The attached block prints no street-side row at all, so the side standard governs it; the detached block above states 10 for the same zone (L1324), so the number is 10 under either reading and the citation is the side cell that actually governs. quadfit confidence: verified | Attached-dwelling setbacks (detached SFD is 20/5/20). Quadplex min lot 7,000 sf. R-0 carries site-specific limitations per LOC 50.02.002.2.c — per-parcel check flagged."
+  R-2:
+    section: ["50.04.", "50.03.002"]
+    cite_default:
+      cite: LOC 50.04.001.3 Table 50.04.001-11; LOC 50.03.002 Table 50.03.002-1
+      url: https://ecode360.com/43076426
+      retrieved: '2026-08-13'
+    quadplex_allowed:
+      # Table 50.03.002-1, "Dwelling, quadplex". The row is P in all ten
+      # residential columns; R-2 is the ninth, counting the header line at
+      # L131. No unit-lot band: R-2's townhouse-project minimum lot area is
+      # "No min." (L1235) and its maximum density cell is an em dash, so
+      # neither half of Table 50.04.001-11 note 3 reaches this zone.
+      value: true
+      quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L193,L202"
+    max_height_ft:
+      # Table 50.04.001-11, "MAX. BASE HEIGHT (FT.)", the R-2 column of the
+      # Flat Lot row: 28 ft. Same reading as R-3 and R-0 beside it -- the
+      # sloping-topography and sloped-footprint rows under it are different
+      # measures on a topography nothing here reads, and both only ever raise
+      # the building. LOC 50.04.001.3.f.ii(1) states the same 28 in prose for
+      # the R-0, R-2 and R-3 zones together (L1645, L1649).
+      value: 28
+      cite: LOC 50.04.001.3 Table 50.04.001-11; 50.04.001.3.f.ii
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1418,L1422"
+    max_density_du_per_acre:
+      # The table's Maximum (units/acre) row is an em dash in the R-2 column
+      # -- no ceiling printed, the same as R-0. Note 3, which exempts
+      # quadplexes where a ceiling is printed, hangs off the R-W and R-3
+      # cells and does not have to be reached for this zone.
+      exempt: true
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1220,L1224"
+    setback_front_ft:
+      value: 10
+      cite: LOC 50.04.001.3.e.ii Table 50.04.001-13
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1585,L1590"
+    setback_side_ft:
+      # Table 50.04.001-13 splits Side into two columns, Exterior and
+      # Attached. The Quadplex row states 7 exterior and an em dash attached
+      # -- the Duplex row above it is the only one that prints a 0 there --
+      # so there is no attached-wall relief to encode for this building.
+      value: 7
+      cite: LOC 50.04.001.3.e.ii Table 50.04.001-13
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1586,L1590"
+    setback_rear_ft:
+      value: 10
+      cite: LOC 50.04.001.3.e.ii Table 50.04.001-13
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1585,L1590"
+    setback_street_side_ft:
+      # Table 50.04.001-13 prints no street-side column at all, and every
+      # setback cell in Table 50.04.001-11's R-2 column points here, so the
+      # side standard is what governs a street-facing side yard. Same reading
+      # as R-0 and R-3, where the attached block prints no street-side row.
+      value: 7
+      cite: LOC 50.04.001.3.e.ii Table 50.04.001-13
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1586,L1590"
+    min_lot_sqft:
+      value: 7000
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1246,L1252"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1254,L1260"
+    max_coverage_pct:
+      # Table 50.04.001-12 is R-2's own coverage table, four rows of one
+      # column, and the pod's row names the building: "Duplex, Triplex, and
+      # Quadplex", 55 percent. Not banded by height the way R-7.5 and R-5
+      # are -- this table states one figure per structure type.
+      value: 55
+      cite: LOC 50.04.001.3.d.i Table 50.04.001-12
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1512,L1515"
+    notes: 'Encoded 2026-08-21, from the gap the use table exposed: the citywide table permits a
+      quadplex by right in ten residential zones and this layer carried four. Read against LOC
+      Tables 50.04.001-11, -12 and -13. The setbacks are the Quadplex row of Table 50.04.001-13
+      (front 10, exterior side 7, rear 10, L1590), which the R-2 column of Table 50.04.001-11
+      defers to in every cell. Coverage is Table 50.04.001-12''s "Duplex, Triplex, and Quadplex"
+      row, 55 percent. Height is the flat-lot 28 the R-2 column states and LOC 50.04.001.3.f.ii
+      repeats in prose. READ AND NOT ENCODED: 50.04.001.3.f.i(2) raises the ceiling to 35 ft for
+      a project of half an acre or more, which only ever loosens; 50.04.001.3.e.iii sets a
+      height-based buffer where an R-2 lot abuts R-6, 7.5, 10 or 15, which needs the neighbour''s
+      zoning; 50.04.001.3.e.iv sets an 18 ft front setback on steeply sloped lots, which needs a
+      slope nothing reads.'
   R-3:
     section: ["50.04.", "50.03.002"]
     cite_default:
@@ -95,7 +205,19 @@ zones:
       retrieved: '2026-07-28'
     quadplex_allowed:
       value: true
-      quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L193"
+      quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L193,L201"
+      variants:
+        # Table 50.04.001-11 note 3, the townhouse half, ADDED
+        # 2026-08-21. The ruling on that note declined this because the
+        # row it points at looked like five cells across four columns.
+        # It is four zone cells and a comment cell -- the shape every
+        # other row in the table has, and the shape the tables above it
+        # have -- so the R-3 cell is the second, 3,375, and the fifth
+        # ("No min. for PD") is the Comments column.
+        - value: false
+          when: [unit_lots]
+          band: {measure: lot_sqft, less_than: 3375}
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1229,L1234"
     max_height_ft:
       # Table 50.04.001-11, "MAX. BASE HEIGHT (FT.)", the R-3 column of the Flat Lot
       # row: 28 ft. The table prints one cell per line, so the row label is
@@ -247,6 +369,128 @@ zones:
       quadfit confidence: verified |
       Coverage is height-tiered (45% at <=22 ft — applies to a 2-story quadplex). Floor-area
       formula cap noted, never binds ~1,000 sf building."
+  R-6:
+    section: ["50.04.", "50.03.002"]
+    cite_default:
+      cite: LOC 50.04.001.2 Table 50.04.001-3; LOC 50.03.002 Table 50.03.002-1
+      url: https://ecode360.com/43076426
+      retrieved: '2026-08-13'
+    quadplex_allowed:
+      value: true
+      quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L193,L197"
+      variants:
+        # Table 50.04.001-3's "Single-Family, Duplex and Triplex Dwellings;
+        # Townhouse Projects" row states 6,000 sq ft in the R-6 column, and a
+        # townhouse project is what four unit lots are. Four 1,500 sq ft
+        # townhouse lots come to 6,000 exactly, so the pod is allowed at
+        # 6,000 and not below -- the band is `less_than`, which leaves no
+        # hole at the boundary. Cited to the row rather than to note 2: R-6's
+        # Maximum density cell is an em dash, so the note that carries the
+        # townhouse density rule for R-5 and R-DD does not reach this zone,
+        # and the project minimum stands on its own.
+        - value: false
+          when: [unit_lots]
+          band: {measure: lot_sqft, less_than: 6000}
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L523,L525"
+    max_height_ft:
+      # Table 50.04.001-3, "MAX. BASE HEIGHT (FT.)", the R-6 column of the
+      # Flat Lot row: 28 ft. Same reading as R-5 beside it.
+      value: 28
+      cite: LOC 50.04.001.2 Table 50.04.001-3; 50.04.001.2.g
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L585,L586"
+    max_density_du_per_acre:
+      # The table's Maximum (units/acre) row is an em dash in the R-6 column.
+      # No ceiling is printed for this zone, so there is none to encode --
+      # and note 2, which exempts quadplexes where one is printed, hangs off
+      # the R-5 and R-DD cells rather than this one.
+      exempt: true
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L517,L518"
+    setback_front_ft:
+      value: 20
+      cite: LOC 50.04.001.2.e.ii Table 50.04.001-5
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L781,L782"
+    setback_side_ft:
+      # "7.5 - Exterior Wall 0 - Attached Wall", the same two-number cell R-5
+      # and R-3 print. 7.5 is the base and 0 the relief; nothing sets
+      # `attached_wall`, so screening uses the conservative half.
+      value: 7.5
+      cite: LOC 50.04.001.2.e.ii Table 50.04.001-5
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L781,L784"
+      variants:
+        - value: 0
+          when: [attached_wall]
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L781,L784"
+    setback_rear_ft:
+      value: 15
+      cite: LOC 50.04.001.2.e.ii Table 50.04.001-5
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L781,L785"
+    setback_street_side_ft:
+      # "Arterial/Collector: 20; Local: 7.5" -- a variant, and the right way
+      # round is arterial as the base: nothing sets `local_street`, and a
+      # screen that guessed 7.5 would call a lot GREEN that an arterial
+      # frontage makes RED.
+      value: 20
+      cite: LOC 50.04.001.2.e.ii Table 50.04.001-5
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L781,L783"
+      variants:
+        - value: 7.5
+          when: [local_street]
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L781,L783"
+    min_lot_sqft:
+      value: 7000
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L533,L535"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L542,L544"
+    min_lot_width_ft:
+      value: 50
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L538,L539"
+      variants:
+        - value: 15
+          when: [unit_lots]
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L547,L548"
+    max_coverage_pct:
+      # Table 50.04.001-8 is the only two-axis coverage table in this corpus:
+      # five lot-size rows against nine height columns, 45 percent at the top
+      # left down to 25 at the bottom right. The lot-size axis is a lot
+      # measurement, so it is banded; the height axis is collapsed to the
+      # ">27'" column, which is the one figure in each row that holds however
+      # tall the building turns out to be. That is stricter than the 26 ft
+      # pod is entitled to in three of the five rows, and stricter is the
+      # direction this file errs in -- the lower columns are relief that
+      # would have to assert a built height, and `low_rise` cannot: this
+      # table steps at 20 ft, which a 26 ft building does not clear.
+      #
+      # The base is the residual row, ">11,500", because a banded standard's
+      # base is the table's last column rather than a safe default.
+      value: 25
+      cite: LOC 50.04.001.2.f.ii Table 50.04.001-8
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L981,L1022,L1031"
+      variants:
+        - value: 35
+          band: {measure: lot_sqft, at_most: 7000}
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L981,L982,L991"
+        - value: 33
+          band: {measure: lot_sqft, more_than: 7000, at_most: 8500}
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L981,L992,L1001"
+        - value: 30
+          band: {measure: lot_sqft, more_than: 8500, at_most: 10000}
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L981,L1002,L1011"
+        - value: 27
+          band: {measure: lot_sqft, more_than: 10000, at_most: 11500}
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L981,L1012,L1021"
+    notes: 'Encoded 2026-08-21, from the gap the use table exposed. Read against LOC Tables
+      50.04.001-3, -5 and -8. Setbacks are Table 50.04.001-5''s Primary Structures column; the
+      Cottage Clusters and Accessory Structures columns beside it are different buildings. The
+      table''s note 3 says the front setback on a corner lot is measured on the narrow street
+      frontage, which changes which frontage the 20 ft is taken off rather than the number.
+      Coverage is banded on lot size and collapsed to the tightest height column - see the
+      comment on the field. READ AND NOT ENCODED: 50.04.001.2.c.i(2) allows reduced lot sizes
+      in a planned development and a 25 percent reduction to relocate a historic landmark, both
+      elective and both loosening; Table 50.04.001-6 sets side yards for additions to
+      structures built before July 1, 2010, which is not new construction; 50.04.001.2.g.iii
+      raises height on sloping topography, which needs a topography nothing reads.'
   R-7.5:
     section: ["50.04.", "50.03.002"]
     cite_default:
@@ -366,3 +610,318 @@ zones:
       holds at any height, and 35 behind `low_rise`, which asserts the pod clears the 22 ft
       the table names. Nothing sets `low_rise` yet, so screening uses 25. Steep-slope front is
       18 ft (LOC 50.04.001.1.e). quadfit confidence: verified.'
+  R-10:
+    section: ["50.04.", "50.03.002"]
+    cite_default:
+      cite: LOC 50.04.001.1 Tables 50.04.001-1/-2; LOC 50.03.002 Table 50.03.002-1
+      url: https://ecode360.com/43076426
+      retrieved: '2026-08-13'
+    quadplex_allowed:
+      value: true
+      quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L193,L195"
+      variants:
+        # Table 50.04.001-1 note 2, the townhouse half: four dwelling units
+        # per the minimum lot area one single-family dwelling would need. In
+        # R-10 that area is 10,000 (L60), so four townhouses need 10,000 sq
+        # ft of land however it is divided -- against 4 x 1,500 for the lots
+        # themselves.
+        - value: false
+          when: [unit_lots]
+          band: {measure: lot_sqft, less_than: 10000}
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L237"
+    max_height_ft:
+      # Table 50.04.001-1, "MAX. BASE HEIGHT (FT.)", the R-10 column of the
+      # Flat Lot row: 30 ft. Four feet of margin on a 26 ft pod.
+      value: 30
+      cite: LOC 50.04.001.1 Table 50.04.001-1; 50.04.001.1.g
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L205,L208"
+    max_density_du_per_acre:
+      exempt: true
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L237"
+    setback_front_ft:
+      value: 25
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L114,L117"
+    setback_side_ft:
+      # R-10 and R-15 state a single number where R-7.5 states "Total 15, 5
+      # min." -- 10 ft on each interior side, with no cumulative figure to
+      # carry, so this zone has no setback_side_total_ft.
+      value: 10
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L131,L134"
+    setback_rear_ft:
+      value: 30
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L136,L139"
+    setback_street_side_ft:
+      value: 20
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L121,L124"
+      variants:
+        - value: 15
+          when: [local_street]
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L126,L129"
+    min_lot_sqft:
+      value: 10000
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L57,L60"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L77,L80"
+    min_lot_width_ft:
+      value: 65
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L63,L66"
+      variants:
+        - value: 15
+          when: [unit_lots]
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L82,L85"
+    max_coverage_pct:
+      # Table 50.04.001-2, the R-10 column: 35 percent at 22 ft or less,
+      # stepping down to 25 above 27. Base is the figure that holds at any
+      # height; 35 sits behind `low_rise`, which asserts the pod clears the
+      # 22 ft the table names. Nothing sets `low_rise`, so screening uses 25.
+      value: 25
+      cite: LOC 50.04.001.1.f Table 50.04.001-2
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L392-L408"
+      variants:
+        - value: 35
+          when: [low_rise]
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L392-L408"
+    notes: 'Encoded 2026-08-21, from the gap the use table exposed. Read against LOC Tables
+      50.04.001-1 and -2, one column over from R-7.5. Every setback is quoted to its own cell
+      under the table''s Primary Structure block; the Accessory Structure block below it states
+      a different envelope and is not this building. Coverage is the height band Table
+      50.04.001-2 prints, encoded the way R-7.5''s is. READ AND NOT ENCODED: note 3 allows a 25
+      percent lot-area reduction to relocate a designated historic landmark, which loosens and
+      is elective; note 4 and 50.04.001.1.g raise height by one ft for every five ft of extra
+      setback on all sides, which also loosens; note 5 sets the sloping-topography measure,
+      which needs a topography nothing reads; 50.04.001.1.e sets an 18 ft front setback on
+      steeply sloped lots.'
+  R-15:
+    section: ["50.04.", "50.03.002"]
+    cite_default:
+      cite: LOC 50.04.001.1 Tables 50.04.001-1/-2; LOC 50.03.002 Table 50.03.002-1
+      url: https://ecode360.com/43076426
+      retrieved: '2026-08-13'
+    quadplex_allowed:
+      value: true
+      quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L193,L194"
+      variants:
+        - value: false
+          when: [unit_lots]
+          band: {measure: lot_sqft, less_than: 15000}
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L237"
+    max_height_ft:
+      # Table 50.04.001-1, "MAX. BASE HEIGHT (FT.)", the R-15 column of the
+      # Flat Lot row: 35 ft. The loosest height standard of the three low
+      # density zones, and the only one whose sloping-topography row states
+      # the same figure as its flat-lot row.
+      value: 35
+      cite: LOC 50.04.001.1 Table 50.04.001-1; 50.04.001.1.g
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L205,L209"
+    max_density_du_per_acre:
+      exempt: true
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L237"
+    setback_front_ft:
+      value: 25
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L114,L118"
+    setback_side_ft:
+      value: 10
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L131,L135"
+    setback_rear_ft:
+      value: 30
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L136,L140"
+    setback_street_side_ft:
+      value: 20
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L121,L125"
+      variants:
+        - value: 15
+          when: [local_street]
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L126,L130"
+    min_lot_sqft:
+      value: 15000
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L57,L61"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L77,L81"
+    min_lot_width_ft:
+      value: 80
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L63,L67"
+      variants:
+        - value: 15
+          when: [unit_lots]
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L82,L86"
+    max_coverage_pct:
+      value: 25
+      cite: LOC 50.04.001.1.f Table 50.04.001-2
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L392-L408"
+      variants:
+        - value: 35
+          when: [low_rise]
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L392-L408"
+    notes: 'Encoded 2026-08-21, from the gap the use table exposed. Read against LOC Tables
+      50.04.001-1 and -2, the third column. The binding standard here is land, not envelope:
+      15,000 sq ft of lot and 80 ft of width for anything but a townhouse project, against a
+      35 ft height ceiling that is the loosest in the city. The same READ AND NOT ENCODED items
+      as R-10 apply -- notes 3, 4 and 5 of Table 50.04.001-1, and the 18 ft steep-slope front
+      setback at 50.04.001.1.e.'
+  R-DD:
+    section: ["50.04.", "50.03.002"]
+    cite_default:
+      cite: LOC 50.04.001.2 Table 50.04.001-3; LOC 50.03.002 Table 50.03.002-1
+      url: https://ecode360.com/43076426
+      retrieved: '2026-08-13'
+    quadplex_allowed:
+      value: true
+      quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L193,L199"
+      variants:
+        # Table 50.04.001-3 note 2, the townhouse half, the same rule R-5
+        # carries. R-DD's "Single-Family, Duplex and Triplex Dwellings;
+        # Townhouse Projects" cell is 5,000 (L527), so four townhouses need
+        # 5,000 sq ft of land.
+        - value: false
+          when: [unit_lots]
+          band: {measure: lot_sqft, less_than: 5000}
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L606"
+    max_height_ft:
+      # Table 50.04.001-3, "MAX. BASE HEIGHT (FT.)". R-DD is the only column
+      # of the three that states one figure for the primary structure rather
+      # than splitting it across Flat Lot, sloping topography and sloped
+      # footprint -- its cells in those three rows are em dashes. So the
+      # number is quoted to the Primary Structure row, which is where the
+      # R-DD column prints it.
+      value: 28
+      cite: LOC 50.04.001.2 Table 50.04.001-3; 50.04.001.2.g.iv
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L579,L581,L584"
+    max_density_du_per_acre:
+      # Table 50.04.001-3 note 2: duplexes, triplexes, quadplexes and cottage
+      # clusters are exempt from maximum density. R-DD's Maximum cell reads
+      # "[2],[3]", so the exemption is stated for this zone directly.
+      exempt: true
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L606"
+    setback_front_ft:
+      # R-DD has no setback table. LOC 50.04.001.2.e.iii(1)(a) states one
+      # figure for the whole zone: "Except as otherwise provided in this
+      # section, the required setback in the R-DD zone is ten ft."
+      value: 10
+      cite: LOC 50.04.001.2.e.iii(1)(a)
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L818"
+    setback_side_ft:
+      value: 10
+      cite: LOC 50.04.001.2.e.iii(1)(a)
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L818"
+    setback_rear_ft:
+      value: 10
+      cite: LOC 50.04.001.2.e.iii(1)(a)
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L818"
+    setback_street_side_ft:
+      # LOC 50.04.001.2.e.iii(1)(b): ten ft from a street right-of-way line,
+      # "or such greater distance required to accommodate off-street
+      # parking". The second half is a condition nobody has encoded -- how
+      # much more is not stated, and it depends on where the parking lands --
+      # so 10 is a floor here rather than a ceiling. Recorded in the notes.
+      value: 10
+      cite: LOC 50.04.001.2.e.iii(1)(b)
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L822"
+    min_lot_sqft:
+      value: 7000
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L533,L537"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L542,L546"
+    max_coverage_pct:
+      # Table 50.04.001-9, three rows of one column, and the pod's row is
+      # "Middle Housing" -- 45 percent. Oregon defines middle housing to
+      # include a quadplex (ORS 197.758), and the table's other two rows are
+      # single-family detached and multi-family, neither of which this is.
+      value: 45
+      cite: LOC 50.04.001.2.f.iii Table 50.04.001-9
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1066,L1068"
+    notes: 'Encoded 2026-08-21, from the gap the use table exposed. R-DD is the downtown design
+      district and the only residential zone in the city with no setback table of its own: LOC
+      50.04.001.2.e.iii states one ten-foot setback for the whole zone, which is what all four
+      setback fields carry. The street-side figure is a floor, not a ceiling - the code adds
+      "or such greater distance required to accommodate off-street parking" without stating how
+      much more, so a lot that clears 10 ft here has not necessarily cleared the standard. That
+      is an unencoded condition and it is recorded rather than guessed at. Table 50.04.001-3
+      prints R-DD''s primary structure height as one figure, 28 ft, with em dashes in the three
+      rows the other two columns split it across. READ AND NOT ENCODED: 50.04.001.2.b allows a
+      25 percent density bonus for public agency rental housing, elective and loosening;
+      50.04.001.2.g.iv(1) raises average height to 40 ft on half-acre constrained sites, which
+      loosens; 50.04.001.2.e.iii(2) requires a five-foot landscaped buffer where R-DD abuts EC
+      or R-0/EC, which needs the neighbour''s zoning; the Durham Street exception at
+      50.04.001.2.e.iii(1)(b)(i) reduces the front setback to three ft on a named street.'
+  R-W:
+    section: ["50.04.", "50.03.002"]
+    cite_default:
+      cite: LOC 50.04.001.3 Table 50.04.001-11; LOC 50.03.002 Table 50.03.002-1
+      url: https://ecode360.com/43076426
+      retrieved: '2026-08-13'
+    quadplex_allowed:
+      value: true
+      quote: "or/clackamas/lake-oswego/50.03.002.use-table.txt#L193,L200"
+      variants:
+        # Table 50.04.001-11 note 3, the townhouse half. R-W's
+        # "Single-Family and Duplex Dwellings; Townhouse Projects" cell is
+        # 3,375 (L1233), so four townhouses need 3,375 sq ft of land.
+        - value: false
+          when: [unit_lots]
+          band: {measure: lot_sqft, less_than: 3375}
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1455"
+    max_height_ft:
+      # R-W is the waterway zone and its height is not measured from the
+      # ground. The Flat Lot, sloping-topography and sloped-footprint rows
+      # are all em dashes in this column; the only height the table states is
+      # in the row "From Oswego Lake Surface Elevation", and the cell reads
+      # "25/27 [5]". Note 5 splits it: 25 ft for any portion of the lot above
+      # the lake surface elevation, 27 ft above the lake surface for any
+      # portion at or below it.
+      #
+      # 25 is encoded, not 27. The 27 is the taller half of a split that
+      # needs the lake's surface elevation cut against the lot, which nothing
+      # here measures, and a pod is 26 ft: the difference between the two
+      # halves is the difference between RED and GREEN. This is the only zone
+      # in the corpus whose height standard the design cannot meet outright.
+      value: 25
+      cite: LOC 50.04.001.3 Table 50.04.001-11 note 5
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1436,L1438"
+    max_density_du_per_acre:
+      exempt: true
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1455"
+    setback_front_ft:
+      # Every setback cell in the R-W column is 0, in all four blocks of the
+      # table -- detached, attached, other primary structures and cottage
+      # clusters. The quoted cell is the attached block, which is the pod's.
+      value: 0
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1339,L1341"
+    setback_side_ft:
+      value: 0
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1345,L1347"
+    setback_rear_ft:
+      value: 0
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1352,L1354"
+    setback_street_side_ft:
+      # The attached block prints no street-side row; the detached block
+      # above states 0 for this column, so the number is 0 under either
+      # reading.
+      value: 0
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1319,L1321"
+    min_lot_sqft:
+      value: 7000
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1246,L1250"
+      variants:
+        - value: 1500
+          when: [unit_lots]
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1254,L1258"
+    max_coverage_pct:
+      # 100 percent. The R-W column states no lot coverage limit at all in
+      # the sense the other zones do.
+      value: 100
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1301,L1303"
+    notes: 'Encoded 2026-08-21, from the gap the use table exposed. R-W is the residential
+      waterway zone and it is the loosest zone in the corpus on every standard but one: no
+      setbacks, no coverage limit, 7,000 sq ft of lot. The exception is height, and it is the
+      one that binds - 25 ft measured from the Oswego Lake surface elevation, against a 26 ft
+      pod. A lot in this zone screens RED on height while clearing everything else, which is
+      the right answer and would have been invisible while the zone was missing. Note 5 also
+      states 27 ft for any portion of the lot at or below the lake surface; that half is not
+      encoded, because it needs the lake surface elevation cut against the parcel and the
+      difference between the two halves is the difference between RED and GREEN.'
