@@ -1,11 +1,12 @@
 # Wilsonville -- Development Code Chapter 4 footnotes.
 #
-# Fifty-one notes are captured here and twenty-seven of them sit over a value
-# this corpus encodes. The other twenty-four belong to Table 8B and Table 8C
-# (the Frog Pond East and South neighborhoods), to the Town Center
-# sub-districts MSD, N-MU, MU and C-MU, and to the parking maximums in
-# Section 4.155. None of them reaches a value here, and they stay unread
-# rather than being waved through.
+# Fifty-two notes are captured here and all fifty-two are now ruled. Twenty-
+# eight sit over a value this corpus encodes. The other twenty-four -- read
+# 2026-08-22 -- belong to Table 8B and Table 8C (the Frog Pond East and South
+# neighborhoods), to the Town Center sub-districts MSD, N-MU, MU and C-MU, and
+# to the parking maximums in Section 4.155. Each of the three groups has its
+# own header below saying why it reaches nothing, because the three reasons
+# are different and only one of them is comfortable.
 #
 # Nearly all of what follows is Table 8A, the Frog Pond West lot standards,
 # whose notes run A through P and were invisible to this system until the
@@ -29,12 +30,13 @@
 # gave each unit its own apron would fail this note, and this file would be
 # the wrong place to notice.
 #
-# The parking table's note is the one dismissal that is purely about scope.
-# Section 4.125 Table V-2 sits between the setback provisions of 4.113 and the
-# zone tables that cite them, so the block's region reaches 137 values printed
-# pages earlier under different tables. Wilsonville encodes no parking
-# standard at all; if one is ever read off Table V-2, this ruling has to be
-# revisited rather than inherited.
+# The Table V-2 notes are the one dismissal that is purely about scope.
+# Section 4.125 is the V Village Zone, which this layer does not hold; its
+# table sits between the setback provisions of 4.113 and the zone tables that
+# cite them, so the block's region reaches 137 values printed pages earlier
+# under different tables. Its middle housing row reads NR, no requirement,
+# which is the same answer Section 4.155 Table 5 gives citywide and the reason
+# nothing changes if the Village Zone is ever encoded.
 notes:
   # --- Section 4.125 Table V-2, off-street parking -------------------
   # Note 2 is welded to its own first word -- "2No additional off-street
@@ -44,10 +46,11 @@ notes:
     digest: "e947bb3a9564"
     state: dismissed
     reason: >-
-      a higher off-street parking minimum for court facilities. This layer
-      encodes no parking standard, and the values the block's region reaches
-      are setbacks and lot dimensions read from Sections 4.113, 4.122 and
-      4.123, printed pages earlier under different tables
+      a higher off-street parking minimum for court facilities, in the Village
+      Zone's Table V-2. Not a use this screen places, not a zone this layer
+      holds, and the values the block's region reaches are setbacks and lot
+      dimensions read from Sections 4.113, 4.122 and 4.123, printed pages
+      earlier under different tables
   - quote: "or/clackamas/wilsonville/4.planning.txt#L5291"
     digest: "5631c7a4ff61"
     state: dismissed
@@ -56,8 +59,10 @@ notes:
       converting or adding to an existing single-family dwelling. It is a
       parking standard, which the screen does read -- but it relieves a
       conversion, and the pod is new construction on a lot, so the relief
-      never reaches it. Same region as note 1 and the same reason it governs
-      nothing here: the values it covers are setbacks and lot dimensions
+      never reaches it. Nothing left to relieve either: the row it sits on
+      reads NR for middle housing, and Section 4.155 Table 5 states the same
+      absence citywide, which this layer now carries as an exempt
+      parking_min_per_unit rather than as silence
 
   # --- Section 4.127 Table 6B, the middle-housing unit mix -----------
   #
@@ -303,3 +308,351 @@ notes:
       the street. Where such an easement exists the garage setback is measured
       from a line inside the lot rather than from the frontage, and no layer
       here holds recorded easements
+
+  # --- Section 4.127 Tables 8B and 8C, Frog Pond East and South -------
+  #
+  # Read 2026-08-22. Fourteen notes on two tables that govern land inside a
+  # zone this layer holds, which is what makes them different from Gresham's
+  # standards-waiting-for-land and worth stating carefully.
+  #
+  # 4.127(.08)C splits the RN zone in two: Frog Pond West is governed by Table
+  # 8A and "lot and development standards for the Frog Pond East and South
+  # Neighborhoods are established by Table 8B". This layer encodes RN entirely
+  # off Table 8A, R-10 Large Lot column, because nothing published says which
+  # neighborhood -- let alone which sub-district -- a lot is in. Tables 8B and
+  # 8C are the other two thirds of the same zone.
+  #
+  # Nothing is encoded from them, on three grounds stated in order of weight:
+  #
+  # 1. RN's use gate is a settled prohibition. 4.127(.02)B.1.a.ii shuts
+  #    quadplexes out of Frog Pond West during initial development, the zone
+  #    carries that false with nothing levering it, and a settled false ends
+  #    the reading before any dimension is reached.
+  #
+  # 2. Table 8B's rows are Urban Form Types 1, 2 and 3, whose boundaries are
+  #    described in prose at 4.127(.07)B and drawn in Figure A-7. Same problem
+  #    as Table 8A's three sub-districts and one step worse: the type is a
+  #    designation applied to parts of a subdistrict, and no published layer
+  #    carries it.
+  #
+  # 3. The stored extraction of Table 8B is positionally ambiguous. Type 1's
+  #    row reads "10 50, 4 story See Table 8C. None 10 E 5F"; Type 3's reads
+  #    "15 100 15 H", with no height cell where Types 1 and 2 have one. Eleven
+  #    columns, three rows and at least one that does not line up. A number
+  #    read out of that is a guess wearing a citation.
+  #
+  # WHAT WOULD CHANGE IF THE USE GATE OPENED. Worth writing down rather than
+  # discovering later. 4.127(.02)B.2 does NOT prohibit quadplexes in East and
+  # South -- it says the mix of unit types there is "limited and controlled by
+  # the variety standards in Subsection (.06)C.-E." So the settled false this
+  # zone carries is a Frog Pond West sentence applied to all three
+  # neighborhoods because a lot cannot be placed in one of them. It is the
+  # conservative direction (a lot that might be buildable is called RED, never
+  # the reverse), and it costs this layer whatever quadplex capacity East and
+  # South hold.
+  #
+  # And if it opened, Table 8A's R-10 column would not be strict enough. On
+  # every field the two tables share, 8A R-10 is the binding one -- lot size
+  # 8,000 against "sized to accommodate", width 40 against 10 or 15, rear 20
+  # against 10 or 15, coverage 40 against 80. With one exception: Table 8B
+  # gives Urban Form Type 3 a side setback of "5 for structures up to 25 feet
+  # in height, 10 for structures over 25 feet in height", and the pod stands
+  # 26. The encoded 5 ft would be half the required yard on an ordinary Type 3
+  # lot. Table 8C's note E is the same shape on the front and lands in the
+  # same place the encoding already sits, at 20 ft.
+  #
+  # THE OTHER HALF OF THE ZONE, unencodable for a second reason: Tables 8B and
+  # 8C both state MAXIMUM setbacks -- front and street side -- and this layer
+  # holds no maximum for RN at all. setback_front_max_ft exists in the
+  # registry and is unused here. That is not an oversight to fix in this file;
+  # it is the same Urban Form Type question, because the maximum is 10 ft in
+  # Type 1, 25 ft in Type 2 and none at all in Type 3.
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7425"
+    digest: "e189e647d3f2"
+    state: dismissed
+    reason: >-
+      note A sets the corner-lot street side minimum equal to the front
+      minimum and applies the front MAXIMUM to it as well. The minimum half
+      would be an encoding if this table were reachable -- RN's street side is
+      10 ft from Table 8A note M and the front is 20 ft, so on an East or
+      South corner lot the street side would double. The maximum half has no
+      field here at all. Neither is made, because the zone's quadplex row is a
+      settled false and the Urban Form Type is not a thing this system can
+      look up
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7427"
+    digest: "46324fcfec77"
+    state: dismissed
+    reason: >-
+      note B waives the side setback at a shared wall between townhouse units,
+      which is the zero-lot-line allowance the split-plat path needs and the
+      one thing in Table 8B that would loosen rather than tighten. Table 8A
+      grants no such waiver -- its townhouse notes give a lot size and a width
+      and stop -- so the two thirds of RN this note covers are screened
+      against a side yard the code does not ask for there. Declining it costs
+      a lot called too narrow, never a lot called buildable that is not
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7428"
+    digest: "202389e0afee"
+    state: dismissed
+    reason: >-
+      note C exempts cottage clusters and accessory dwelling units from the
+      maximum lot coverage standard. Neither is the housing type this screen
+      places, and an exemption is a relief besides
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7429"
+    digest: "6896378388dc"
+    state: dismissed
+    reason: >-
+      note D computes townhouse lot coverage across the combined lots a single
+      building sits on rather than lot by lot. It is a measurement rule for
+      the split-plat path and it loosens the ceiling -- a 2,000 sq ft building
+      on four 1,500 sq ft unit lots is over 100 percent on any one of them and
+      33 percent across the four. The unit-lot geometry this screen models
+      already tests the parent footprint, so the note describes what is
+      already done rather than changing it
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7431"
+    digest: "630c2a9fdd6c"
+    state: dismissed
+    reason: >-
+      note E is Table 8B's garage setback rule and it is stricter than the one
+      encoded from Table 8A note G: 20 ft for a street-loaded garage, 18 ft
+      alley-loaded with an exterior driveway, and 3 to 5 ft alley-loaded
+      without one. RN carries 20 ft with an 18 ft variant when the lot abuts
+      an alley, which is the same pair of numbers. The third branch -- a
+      3-to-5 ft setback where there is no exterior driveway, which is to say
+      no apron to stand a car on -- is a shape setback_garage_entrance_ft
+      cannot hold, since it is a maximum and a minimum at once and it depends
+      on a site plan rather than on the lot
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7436"
+    digest: "f4708818c45c"
+    state: dismissed
+    reason: >-
+      note F lets the side setback in Urban Form Types 1 and 2 drop to 3.5 ft
+      for a building under 70 ft wide, or to five percent of the building
+      width at the front building line for one between 70 and 100 ft. Both
+      loosen a standard this screen enforces, and the second is a function of
+      the building rather than of the lot. The pod is 56 ft or 80 ft wide
+      depending on the catalog entry, so it would land in either branch
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7439"
+    digest: "e1c3133f21f9"
+    state: dismissed
+    reason: >-
+      note G is an alternative compliance path for Urban Form Type 2's maximum
+      building width -- articulate the facade and roof with a 2 ft wall
+      setback and a break in the roof plane instead of meeting the width.
+      max_building_width_ft is not encoded for RN, so there is no standard
+      here for the alternative to be an alternative to, and the note is a
+      relief in any case
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7450"
+    digest: "fed2bdf91340"
+    state: dismissed
+    reason: >-
+      note H sets a 10 ft minimum rear setback for cottage clusters and
+      accessory dwelling units, neither of which is the housing type this
+      screen places
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7451"
+    digest: "d7759dc62c12"
+    state: dismissed
+    reason: >-
+      note I sends lots of 4,000 sq ft or more carrying only "Other Detached
+      Units" back to Table 8A's lot coverage standards, banded by lot size --
+      R-5 Small Lot from 4,000, R-7 Medium from 6,000, R-10 Large from 8,000.
+      It is a cross-reference from Table 8B to the table this zone is already
+      encoded from, and it reaches only detached units. A quadplex is four
+      attached dwelling units on a single lot by 4.001(251), so the row it
+      names is not this one
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7490"
+    digest: "0d79d69dbc77"
+    state: dismissed
+    reason: >-
+      note A of Table 8C gives Table 8B's garage minimum precedence over the
+      front minimums in Table 8C wherever a street-loaded garage exists. It
+      resolves two standards against each other and the winner is the 20 ft
+      already carried on setback_garage_entrance_ft. Nothing here to encode,
+      and nothing lost
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7492"
+    digest: "63d7765cfe13"
+    state: dismissed
+    reason: >-
+      note B explains that the 6 ft front minimum in Urban Form Type 1 exists
+      to hold a public utility easement, raises it if the City wants a wider
+      PUE, and drops it to nothing if no PUE is needed and the stairs or ramps
+      fit without crossing into the right of way. Two of the three branches
+      are relief and the third turns on what the City requires of a particular
+      application. The 6 ft it modifies is not encoded either, being a Type 1
+      figure
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7496"
+    digest: "b8e593b3ad0f"
+    state: dismissed
+    reason: >-
+      note C lets a maximum setback be met at a single point along a
+      curvilinear or non-perpendicular property line instead of along the
+      whole of it. It relieves a maximum, and this layer holds no maximum
+      setback for RN to relieve
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7499"
+    digest: "3472b812871b"
+    state: dismissed
+    reason: >-
+      note D says the Urban Form Type 1 front maximum of 10 ft assumes no
+      street-loaded garage, and may be exceeded to fit the 20 ft garage
+      setback from Table 8B where one is proposed. It is the resolution of a
+      maximum against a minimum that would otherwise be unsatisfiable, and it
+      relieves the maximum. Neither figure is encoded for RN
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L7502"
+    digest: "e7443396d4ac"
+    state: dismissed
+    reason: >-
+      note E raises the minimum front setback to 20 ft in Urban Form 3 for
+      buildings over two storeys or 25 feet, and the pod is 26 feet and two
+      storeys. This is the one note in either table that both reaches this
+      building and tightens a standard, and it does not change the encoding
+      because Table 8A's R-10 front is already 20 ft. Recorded rather than
+      waved through: if RN's front setback is ever re-read off a looser
+      column, this note has to be re-read with it
+
+  # --- Section 4.132 Table 1 and Table 2, the Town Center Zone --------
+  #
+  # Eight notes on a zone this layer does not hold, and this is a gap rather
+  # than a curiosity. The Town Center Zone is 4.132; it is one of Wilsonville's
+  # ten zones and it permits housing -- Table 2 sets a MINIMUM residential
+  # density of 40 units per acre in MSD, MU and C-MU and 16 in N-MU, a minimum
+  # of two storeys everywhere, and a maximum front setback of 10 or 20 feet.
+  # Every one of those is a field this registry has.
+  #
+  # Nothing in this corpus can see the omission. Wilsonville contributes no
+  # observed lots to the coverage ledger at all, so there is no zone_missing
+  # row for TC the way there was none for Lake Oswego's six residential zones
+  # -- a missing zone is invisible to a ledger that counts fields. Gresham's
+  # unheld districts were safe because no lot claimed them; that check cannot
+  # be run here, and the honest statement is that TC is unencoded, not that it
+  # is empty. The V Village Zone at 4.125 is the same story: Villebois is a
+  # built master-planned neighborhood, its Table V-2 is in this document, and
+  # no zone in this file corresponds to it.
+  #
+  # These eight are dismissed on that ground alone. If TC is encoded, all
+  # eight are reopened -- notes 2, 4 and 6 in particular, which move a
+  # setback maximum, a storey count and a density floor.
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L8677"
+    digest: "9ab685488fe9"
+    state: dismissed
+    reason: >-
+      note 1 of Table 1 counts the landscaping area inside the sidewalk width
+      and requires root barriers or structural soils in tree wells. A public
+      realm standard about what goes in the right of way, not a standard on
+      the lot, and Table 1 belongs to a zone this layer does not hold
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L8680"
+    digest: "335b4fab39a2"
+    state: dismissed
+    reason: >-
+      note 2 permits at most two parklets per block per side of street. A
+      parklet occupies on-street parking spaces, which are not the off-street
+      stalls this screen fits, and Table 1 belongs to the Town Center Zone
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L8740"
+    digest: "6e789cafee3d"
+    state: dismissed
+    reason: >-
+      note 1 of Table 2 exempts existing development and binds all new
+      buildings in the district. It is an applicability sentence, and it says
+      the standards apply in full to exactly what this screen places -- which
+      is the reason the zone being unencoded is a gap rather than a
+      non-question
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L8742"
+    digest: "01cdc76bc62e"
+    state: dismissed
+    reason: >-
+      note 2 splits the maximum front and street side setback by use -- 10 ft
+      for commercial, 20 ft front for mixed-use and residential-only -- and
+      then permits front setbacks used for seating or other active frontage.
+      A maximum setback is a real constraint on a building placed by fixed
+      dimensions, and setback_front_max_ft exists to hold one. Not encoded
+      because the zone is not
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L8747"
+    digest: "4c5ef80a9aad"
+    state: dismissed
+    reason: >-
+      note 3 requires second and higher storeys to be useable and forbids
+      false fronts. It polices a design dodge around the two-storey minimum
+      rather than stating a dimension, and the minimum it protects belongs to
+      a zone this layer does not hold
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L8749"
+    digest: "3119d5e4524b"
+    state: dismissed
+    reason: >-
+      note 4 grants one extra storey in MSD, MU and C-MU where a quarter of
+      the bonus floor area is affordable for ten years at 80 percent of median
+      family income. A height bonus is relief, and this two-storey building
+      does not need it -- but max_height_stories is a field, and the note is
+      the sort that has to be read again the day TC is encoded
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L8754"
+    digest: "a1c54d894de5"
+    state: dismissed
+    reason: >-
+      note 5 exempts residential-only buildings from the 12 or 15 foot ground
+      floor height minimum. That exemption is what makes a residential
+      building possible in the district at all, since a 15 ft ground floor
+      under a two-storey minimum would put the roof above this pod's 26 feet.
+      It relieves rather than binds, and the zone is unencoded
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L8755"
+    digest: "8bc467ec570b"
+    state: dismissed
+    reason: >-
+      note 6 applies the minimum residential density to residential-only
+      development and waives it for mixed-use. The floor it governs is 40
+      units per acre in three of the four sub-districts, which is the
+      standard in this table most likely to refuse a four-unit building: four
+      units at 40 per acre needs a lot no larger than 4,356 sq ft.
+      min_density_du_per_acre and min_units_at_trigger both exist. Not encoded
+      because the Town Center Zone is not encoded
+
+  # --- Section 4.155 Table 5, the parking maximums --------------------
+  #
+  # Two notes, and reading them is what put Wilsonville's first parking values
+  # on the page. Before today this layer held no parking field of any kind, so
+  # the screen placed a four-unit building here against neither a stall demand
+  # nor a stall ceiling and recorded neither absence. Both are now cited
+  # exemptions on the layer defaults; see the jurisdiction file.
+  #
+  # Table 5's residential row a.1 is "Single-family dwelling units, middle
+  # housing" and its maximum reads "No Limit". 4.001(181) makes middle housing
+  # the class containing quadplexes and townhouses. The table has no
+  # auto-minimum column at all -- its two columns are PARKING MAXIMUMS and
+  # BICYCLE MINIMUMS -- and 4.154(F) refers to minimum parking requirements
+  # only in the past tense.
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L13562"
+    digest: "7676a5b173e7"
+    state: dismissed
+    reason: >-
+      note 1 caps surface parking at the building's own floor area for land
+      uses over 65,000 square feet. The pod's footprint is roughly 2,000
+      square feet, two orders of magnitude under the trigger, and the standard
+      is a ratio between two areas rather than a stall count
+
+  - quote: "or/clackamas/wilsonville/4.planning.txt#L13564"
+    digest: "3424da09f59e"
+    state: dismissed
+    reason: >-
+      note 2 exempts tuck-under, underground and structured parking from the
+      maximums. It relieves a ceiling that reads "No Limit" for this housing
+      type, so there is nothing for the relief to act on, and the pod parks at
+      grade in any case

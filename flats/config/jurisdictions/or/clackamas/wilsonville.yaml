@@ -76,7 +76,26 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
   4.123(.06)A hands height to the Old Town Residential Design Standards Book by name. There is no
   citywide fallback to borrow -- 4.113(.03) "Height Guidelines" is discretionary, a list of things the
   Development Review Board MAY regulate, and states no number. A zone that reports no height is the
-  ledger working.'
+  ledger working.
+
+
+  TWO ZONES ARE MISSING, named here because nothing else in this system can see them. Wilsonville
+  contributes no observed lots to the coverage ledger, so there is no zone_missing row to raise a
+  hand -- a missing zone is invisible to a ledger that counts fields, which is how Lake Oswego went
+  six residential zones short. This layer holds R, OTR, PDR-1 through PDR-6 and RN. Section 4.125,
+  the V Village Zone, is Villebois: a built master-planned neighborhood with its own use and parking
+  tables in this same document. Section 4.132, the Town Center Zone, permits housing and sets a
+  MINIMUM residential density of 40 units per acre in three of its four sub-districts, a two-storey
+  minimum, and a maximum front setback -- three standards this registry has fields for and any one of
+  which could refuse this building. Neither zone is encoded. That is a gap, not a decision, and
+  fourteen of the footnotes ruled on 2026-08-22 are dismissed on it.
+
+
+  PARKING, read 2026-08-22 and now on the defaults block above: no minimum and no maximum, both
+  cited, both exempt rather than absent. Section 4.155 Table 5 is a maximums-and-bicycles table with
+  no auto-minimum column, its middle housing row reads "No Limit", and 4.154(F) speaks of minimum
+  parking requirements only in the past tense. The Village Zone''s Table V-2 says NR on the same row,
+  so the two tables agree.'
 ingest:
   geoid: null
   juris_city_codes:
@@ -131,6 +150,53 @@ code:
     # 4.002. The chapter is named for planning rather than for words, so
     # the glossary inside it was invisible.
     definitions_at: L232-L1674
+defaults:
+  # PARKING, read 2026-08-22 off Table 5 and the two notes under it, which were
+  # the last unread footnotes in this layer. Wilsonville held no parking field
+  # at all before today, so the screen was placing a four-unit building against
+  # no stall demand and no stall ceiling and recording neither fact. Both
+  # answers below are "the code asks nothing here", and both are cited, because
+  # an absence nobody has read is not the same object as an absence somebody
+  # has.
+  #
+  # Table 5 is citywide: it sits in Section 4.155, General Regulations, and
+  # every zone chapter in this code sends its parking question there in one
+  # sentence -- "Off-Street Parking Requirements: As provided in Section 4.155."
+  # So these are layer defaults rather than per-zone values.
+  parking_max_per_unit:
+    # Row a.1 of Table 5 is "Single-family dwelling units, middle housing" and
+    # its maximum reads "No Limit". 4.001(181) defines Middle Housing as the
+    # class containing quadplexes and townhouses, and 4.001(251) defines a
+    # quadplex as four attached dwelling units on a single lot, which is this
+    # product exactly.
+    #
+    # The quote carries row a.3 as well -- "Multiple-family dwelling units",
+    # 1.2 spaces per studio and 2 per non-studio -- because that is the row a
+    # reader might otherwise reach for, and the choice between them should be
+    # visible rather than asserted. It does not change the answer: the catalog
+    # pod asks 1.5 stalls per unit and 2.0 is above it either way.
+    exempt: true
+    cite: Wilsonville Development Code 4.155(.04) Table 5, row a.1 + 4.001(181), (251)
+    url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.155GERE
+    retrieved: '2026-08-22'
+    quote: "or/clackamas/wilsonville/4.planning.txt#L13405-L13414,L13416-L13420"
+  parking_min_per_unit:
+    # Not a minimum of zero -- there is no minimum, and Table 5's own shape is
+    # the evidence. Its two columns are PARKING MAXIMUMS and BICYCLE MINIMUMS;
+    # there is no auto-minimum column for any of the thirty-odd uses it lists.
+    # 4.154(C) names what the table produces and names only two things, "vehicle
+    # parking maximums or bicycle parking requirements".
+    #
+    # 4.154(F) is the sentence that dates it: the Board may not deny a
+    # redevelopment based on the area's "previous designation to meet minimum
+    # vehicle parking requirements", or because a use "previously approved
+    # subject to minimum parking requirements" would fall below them. A code
+    # that still had minimums would not talk about them in the past tense.
+    exempt: true
+    cite: Wilsonville Development Code 4.155(.04) Table 5 (columns) + 4.154(C), (F)
+    url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.155GERE
+    retrieved: '2026-08-22'
+    quote: "or/clackamas/wilsonville/4.planning.txt#L13093-L13095,L13102-L13107,L13405-L13410"
 zones:
   R:
     section: ["4.122", "4.113", "4.001"]
