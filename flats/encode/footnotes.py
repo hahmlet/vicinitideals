@@ -838,6 +838,7 @@ def _blocks(lines: Sequence[str]) -> list[Block]:
         bracketed = BRACKET_NOTE.match(stripped) is not None
         headless = (
             _headless_run(lines, i)
+            or _glued_run(lines, i)
             or _glued_paren_run(lines, i)
             or _paren_run(lines, i)
             or _tight_run(lines, i, previous_end)
@@ -1044,6 +1045,35 @@ def _headless_run(lines: Sequence[str], i: int) -> bool:
         if following is not None:
             return following.group("n") == "2"
     return False
+
+
+def _glued_run(lines: Sequence[str], i: int) -> bool:
+    """Whether a welded notes run starts here with nothing announcing it.
+
+    `GLUED_NOTE` -- the superscript that lost its raised baseline in extraction
+    and welded itself to the first word of its own note -- was only ever read
+    inside a block somebody else had opened. Clackamas prints its density
+    bonus notes with no heading at all::
+
+        1Does not apply in the VA, VR-4/5, VR-5/7, or VTH Districts
+        2For the purposes of this provision, mixed-use development means ...
+        3May only be applied in the C-3, CC, OC, and RTL Districts
+
+    so ZDO 1012 carried four markers, no block, and no body to answer them.
+
+    Stricter than `_headless_run`, which lets prose come between the first note
+    and the second. A column gap says "table" on its own; a weld says nothing,
+    and the only thing keeping "1Does" apart from an OCR seam is that a second
+    one follows it *immediately*. Eight lines in the corpus wear this shape,
+    across three documents, and every one is a real note -- but only this run
+    opens a block: Lake Oswego's pair sits under a "Notes:" heading that has
+    already opened one, and Wilsonville's is a note 2 inside an open block.
+    """
+    first = GLUED_NOTE.match(lines[i].strip())
+    if first is None or first.group("n") != "1":
+        return False
+    following = GLUED_NOTE.match(_next_content(lines, i + 1))
+    return following is not None and following.group("n") == "2"
 
 
 def _glued_paren_run(lines: Sequence[str], i: int) -> bool:

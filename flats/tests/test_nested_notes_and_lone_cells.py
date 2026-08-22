@@ -237,15 +237,16 @@ def test_and_the_cell_that_points_at_them_is_read_as_a_row(store: ProvenanceStor
 
 
 def test_every_note_in_this_layer_is_ruled_and_none_of_them_blocks() -> None:
-    """Eighty-four, from four blocks, none left unread. The count is the
+    """Eighty-nine, from five blocks, none left unread. The count is the
     point: the layer reported clean at zero, at fifty-seven, at
-    seventy-seven and now at eighty-four, and only the last of those is
-    because it is."""
+    seventy-seven, at eighty-four and now at eighty-nine, and only the last of
+    those is because it is. The fifth block is Table 1012-1, Bonus Density,
+    which announces itself with nothing but a weld."""
     ruled = list(dispositions(CLACKAMAS))
-    assert len(ruled) == 84
+    assert len(ruled) == 89
     assert not [n for n in ruled if n.state == "unread"]
     rows = [r for r in qualified() if r.layer == CLACKAMAS]
-    assert len(rows) == 64
+    assert len(rows) == 73
     assert not any(r.blocking for r in rows)
 
 

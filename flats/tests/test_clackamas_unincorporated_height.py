@@ -200,10 +200,16 @@ def test_and_the_gate_that_governed_nothing_here_now_governs_all_of_it(
 ) -> None:
     """The fault this pins is not a wrong number, it is a check that could not
     run. Every other layer's values are held back when a note above them is
-    unread; this layer's would have certified under all 305. Sixty-four are
-    governed now, and none of them blocked -- every note was read and ruled."""
+    unread; this layer's would have certified under all 305. Seventy-three are
+    governed now, and none of them blocked -- every note was read and ruled.
+
+    Nine of the seventy-three arrived later than the rest. ZDO 1012 prints the
+    notes under Table 1012-1, Bonus Density, with no heading and the mark
+    welded to the first word, so the reader saw four markers and no block at
+    all; with the welded run allowed to open one, its region reaches back over
+    the general density paragraph that every maximum density quotes."""
     rows = [r for r in qualified() if r.layer == CLACKAMAS]
-    assert len(rows) == 64
+    assert len(rows) == 73
     assert not any(r.blocking for r in rows)
 
 

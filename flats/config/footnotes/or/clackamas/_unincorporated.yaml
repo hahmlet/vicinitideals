@@ -830,3 +830,72 @@ notes:
     reason: >-
       note 30 makes gas and electric transmission lines a conditional use.
       Not the use being placed
+
+  # --- Table 1012-1, Bonus Density -------------------------------------
+  # Five notes with no heading over them, the superscript welded to the first
+  # word of each. They are the document's first block, so their region reaches
+  # back over the general density paragraph every max-density value quotes.
+
+  - quote: "or/clackamas/_unincorporated/zdo.1012.txt#L186"
+    digest: "3999f97b14a1"
+    state: dismissed
+    reason: >-
+      Table 1012-1 is Bonus Density -- an election an applicant makes to
+      exceed base density, priced in affordability covenants, mixed use,
+      park dedication or habitat protection. This layer's
+      max_density_du_per_acre is base density, and a bonus can only add
+      to it, so a pod that fits without one still fits. Note 1 withholds
+      the affordable housing and park dedication bonuses in the VA,
+      VR-4/5, VR-5/7 and VTH Districts, which is a bonus not offered
+      rather than a base density reduced
+
+  - quote: "or/clackamas/_unincorporated/zdo.1012.txt#L187"
+    digest: "07b4ddd3a717"
+    state: dismissed
+    reason: >-
+      Table 1012-1 is Bonus Density -- an election an applicant makes to
+      exceed base density, priced in affordability covenants, mixed use,
+      park dedication or habitat protection. This layer's
+      max_density_du_per_acre is base density, and a bonus can only add
+      to it, so a pod that fits without one still fits. Note 2 defines
+      mixed-use development for the bonus as a mix of uses in one
+      building or on one site. It defines a term inside an election
+      nobody has made
+
+  - quote: "or/clackamas/_unincorporated/zdo.1012.txt#L188"
+    digest: "f4ced53156ca"
+    state: dismissed
+    reason: >-
+      Table 1012-1 is Bonus Density -- an election an applicant makes to
+      exceed base density, priced in affordability covenants, mixed use,
+      park dedication or habitat protection. This layer's
+      max_density_du_per_acre is base density, and a bonus can only add
+      to it, so a pod that fits without one still fits. Note 3 confines
+      the mixed-use bonus to the C-3, CC, OC and RTL Districts, none of
+      which this layer encodes a density for
+
+  - quote: "or/clackamas/_unincorporated/zdo.1012.txt#L189"
+    digest: "5852edb1fce7"
+    state: dismissed
+    reason: >-
+      Table 1012-1 is Bonus Density -- an election an applicant makes to
+      exceed base density, priced in affordability covenants, mixed use,
+      park dedication or habitat protection. This layer's
+      max_density_du_per_acre is base density, and a bonus can only add
+      to it, so a pod that fits without one still fits. Note 4 withholds
+      the habitat conservation area bonus in the VR-4/5, VR-5/7 and VTH
+      Districts. A bonus not offered
+
+  - quote: "or/clackamas/_unincorporated/zdo.1012.txt#L190"
+    digest: "8f253fdd74ca"
+    state: dismissed
+    reason: >-
+      Table 1012-1 is Bonus Density -- an election an applicant makes to
+      exceed base density, priced in affordability covenants, mixed use,
+      park dedication or habitat protection. This layer's
+      max_density_du_per_acre is base density, and a bonus can only add
+      to it, so a pod that fits without one still fits. Note 5 caps the
+      total: a development using the affordable housing bonus under
+      option 1 may not stack the mixed-use, park dedication or habitat
+      bonuses on top of it. A ceiling on an election, above a base this
+      layer already holds
