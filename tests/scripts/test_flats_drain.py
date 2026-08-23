@@ -144,6 +144,38 @@ async def test_a_rejection_goes_to_its_own_file_not_the_verification_log(
     assert "the table says 15, not 10" in rejections.read_text()
 
 
+async def test_a_drained_rejection_actually_stops_the_screen_trusting_it(
+    session: AsyncSession, tmp_path
+):
+    """The half of a review that used to go nowhere.
+
+    Rejections landed in a file of their own shape that nothing read, so a
+    reviewer could refuse a number and the screen would go on using it -- the
+    verdict was recorded and inert. A drained rejection is a dispute now: same
+    fingerprint a signature uses, read by the same load pipeline, and it
+    demotes the value it is about.
+    """
+    from flats.encode.dispute import DisputeLog, apply_disputes
+    from flats.rules.model import Status
+
+    log = tmp_path / "verifications.jsonl"
+    disputes = tmp_path / "disputes.jsonl"
+    layer, zone, field, _, _, _ = _a_real_encoded_value()
+    session.add(_row(verdict="rejected", note="the table row is the corner-lot column"))
+    await session.commit()
+
+    await drain(session, write=True, log_path=log, rejections_path=disputes)
+
+    layers = load_rules(strict=False)
+    assert layers[layer].zones[zone].values[field].status is not Status.disputed
+
+    out, answered = apply_disputes(layers, DisputeLog.load(disputes))
+
+    assert not answered, "the value has not changed, so nothing is answered yet"
+    assert out[layer].zones[zone].values[field].status is Status.disputed
+    assert not out[layer].zones[zone].values[field].status.trusted
+
+
 async def test_nothing_is_stamped_when_the_lines_do_not_land(
     session: AsyncSession, tmp_path
 ):

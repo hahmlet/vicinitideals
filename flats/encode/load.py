@@ -26,6 +26,7 @@ from dataclasses import dataclass, field as _dc_field
 from pathlib import Path
 from typing import Iterable
 
+from flats.encode.dispute import Answered, DisputeLog, apply_disputes
 from flats.encode.verify import Orphan, VerificationLog, apply_verifications
 from flats.provenance.staleness import Staleness, apply_staleness
 from flats.provenance.store import ProvenanceStore
@@ -43,6 +44,9 @@ class Trusted:
     orphans: tuple[Orphan, ...] = ()
     #: Values demoted because their evidence moved. Work queue.
     stale: tuple[Staleness, ...] = ()
+    #: Disputes whose value has since changed -- somebody acted on the
+    #: rejection. Work queue, and the only place a lifted dispute is visible.
+    answered: tuple[Answered, ...] = ()
     #: Stored documents whose local bytes no longer match their hash.
     tampered: tuple[str, ...] = ()
     #: Rule-file problems, populated only when loaded non-strict.
@@ -56,7 +60,9 @@ class Trusted:
     @property
     def clean(self) -> bool:
         """Nothing to hand a reviewer. Not the same as everything verified."""
-        return not (self.orphans or self.stale or self.tampered or self.problems)
+        return not (
+            self.orphans or self.stale or self.tampered or self.problems or self.answered
+        )
 
     def summary(self) -> list[str]:
         """Lines fit for a terminal or the top of a coverage report."""
@@ -73,6 +79,11 @@ class Trusted:
             out.append(f"  orphaned verifications: {len(self.orphans)}")
         if self.stale:
             out.append(f"  stale values: {len(self.stale)}")
+        disputed = self.counts.get(Status.disputed.value, 0)
+        if disputed:
+            out.append(f"  disputed values: {disputed}")
+        if self.answered:
+            out.append(f"  disputes answered by an edit: {len(self.answered)}")
         if self.problems:
             out.append(f"  rule-file problems: {len(self.problems)}")
         return out
@@ -93,6 +104,7 @@ def load_trusted(
     root: Path | None = None,
     *,
     log: VerificationLog | None = None,
+    disputes: DisputeLog | None = None,
     store: ProvenanceStore | None = None,
     invalidated: Iterable[str] | None = None,
     strict: bool = True,
@@ -114,12 +126,18 @@ def load_trusted(
     bad = set(invalidated or ()) | set(tampered)
 
     layers, orphans = apply_verifications(layers, log if log is not None else VerificationLog.load())
+    # Between promotion and staleness. A rejection recorded after a signature
+    # is somebody disagreeing with the signature and has to outrank it; and
+    # staleness only demotes `verified`, so a disputed value is not told it is
+    # also stale -- one reason a number is untrusted is enough to act on.
+    layers, disputed = apply_disputes(layers, disputes if disputes is not None else DisputeLog.load())
     layers, stale = apply_staleness(layers, bad, store=store, require_quote=require_quote)
 
     return Trusted(
         rules=RuleSet(layers),
         orphans=tuple(orphans),
         stale=tuple(stale),
+        answered=tuple(disputed),
         tampered=tampered,
         problems=problems,
         counts=tally(layers),

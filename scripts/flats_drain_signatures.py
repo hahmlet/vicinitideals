@@ -14,8 +14,10 @@ the queue and reported: the reviewer confirmed a number that no longer exists,
 and the right answer is another look, not a signature.
 
 Rejections are the other half of a review — the number does not match the line
-it cites — and they go to ``flats/config/review_rejections.jsonl`` so the
-encoder has a work list and the record survives outside the database.
+it cites — and they go to ``flats/config/disputes.jsonl``, which the load
+pipeline reads. A rejection is not just a work list entry: it demotes the value
+to ``disputed`` so nothing screens on a number somebody has already refused,
+and it lifts by itself when the number changes.
 
 There is one hazard worth naming, because it destroys work silently. Stamping a
 row ``exported`` and writing its line are two writes, and in production they land
@@ -36,7 +38,7 @@ Usage:
     # are on the bind mount, so what lands there survives the next deploy:
     python scripts/flats_drain_signatures.py --write
         --log /app/data/flats/verifications.new.jsonl
-        --rejections /app/data/flats/rejections.new.jsonl
+        --rejections /app/data/flats/disputes.new.jsonl
 """
 
 from __future__ import annotations
@@ -57,9 +59,12 @@ if str(REPO_ROOT) not in sys.path:
 
 from app.config import settings  # noqa: E402
 from app.models.flats import FlatsRuleSignature  # noqa: E402
+from flats.encode.dispute import Dispute  # noqa: E402
+from flats.encode.dispute import LOG_PATH as DISPUTE_PATH  # noqa: E402
 from flats.encode.verify import (  # noqa: E402
     LOG_PATH,
     VerificationLog,
+    fingerprint,
     sign,
     variant_for,
 )
@@ -67,7 +72,13 @@ from flats.rules.loader import load_rules  # noqa: E402
 
 #: Where a rejected value goes. Not the verification log: nothing was verified,
 #: and an entry there would have to lie about what happened.
-REJECTIONS = LOG_PATH.parent / "review_rejections.jsonl"
+#:
+#: It is the dispute log, and that is load-bearing rather than tidy. Rejections
+#: used to land in a file of their own shape that nothing read, so a reviewer
+#: could reject a number and the screen would go on trusting it. A dispute is
+#: hashed the same way a signature is, so the load pipeline demotes the value
+#: and the demotion lifts by itself once somebody fixes the number.
+REJECTIONS = DISPUTE_PATH
 
 
 def _current(layers, row: FlatsRuleSignature):
@@ -112,7 +123,7 @@ def _matches(row: FlatsRuleSignature, number) -> bool:
 
 
 def _land(
-    entries: list, rejections: list[dict], log_path: Path, rejections_path: Path
+    entries: list, rejections: list[Dispute], log_path: Path, rejections_path: Path
 ) -> None:
     """Write both files and prove the lines are in them.
 
@@ -123,7 +134,7 @@ def _land(
     """
     for path, lines in (
         (log_path, [e.to_json() for e in entries]),
-        (rejections_path, [json.dumps(r) for r in rejections]),
+        (rejections_path, [d.to_json() for d in rejections]),
     ):
         if not lines:
             continue
@@ -165,7 +176,9 @@ async def drain(
     # Collected rather than written as we go: a row is stamped only after its
     # line is on disk, so a failure halfway through leaves the whole batch in
     # the queue instead of half of it in limbo.
-    entries, rejections, drained = [], [], []
+    entries: list = []
+    rejections: list[Dispute] = []
+    drained = []
     stale = 0
     for row in rows:
         value, number = _current(layers, row)
@@ -195,18 +208,31 @@ async def drain(
             )
             print(f"SIGN    {where} = {row.value} ({row.reviewer})")
         else:
+            when = tuple(row.when_key.split("+")) if row.when_key else ()
             rejections.append(
-                {
-                    "layer": row.layer,
-                    "zone": row.zone,
-                    "field": row.field,
-                    "when": row.when_key,
-                    "value": row.value,
-                    "quote": row.quote,
-                    "reviewer": row.reviewer,
-                    "decided": row.decided_at.isoformat() if row.decided_at else "",
-                    "note": row.note,
-                }
+                Dispute(
+                    layer=row.layer,
+                    zone=row.zone,
+                    field=row.field,
+                    # Recomputed rather than copied off the row. The row's own
+                    # fingerprint was taken when the reviewer looked; this one
+                    # is over what the file says now, and the two agree because
+                    # _matches() above already refused the row otherwise.
+                    fingerprint=fingerprint(
+                        row.layer,
+                        row.zone,
+                        row.field,
+                        number.value,
+                        cite=number.prov.cite,
+                        quote=number.prov.quote,
+                        when=when,
+                    ),
+                    reviewer=row.reviewer,
+                    raised=row.decided_at.date() if row.decided_at else date.today(),
+                    verdict=row.verdict,
+                    when=when,
+                    note=row.note,
+                )
             )
             print(f"REJECT  {where} = {row.value} ({row.reviewer}) {row.note}")
         drained.append(row)
@@ -221,12 +247,12 @@ async def drain(
             print()
             print(f"{len(entries)} signature(s) -> {log}")
         if rejections:
-            print(f"{len(rejections)} rejection(s) -> {rejects}")
+            print(f"{len(rejections)} dispute(s) -> {rejects}")
         print("commit those file(s): the rows are stamped and will not be offered again")
 
     print()
     print(
-        f"{len(entries)} signature(s), {len(rejections)} rejection(s), {stale} stale"
+        f"{len(entries)} signature(s), {len(rejections)} dispute(s), {stale} stale"
         + ("" if write else " — dry run, nothing written")
     )
     return 0

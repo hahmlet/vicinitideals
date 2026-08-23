@@ -331,14 +331,14 @@ def _parse_values(
             continue
 
         declared = str(body.get("status", "draft"))
-        if declared in (Status.verified.value, Status.stale.value):
+        if declared in (Status.verified.value, Status.stale.value, Status.disputed.value):
             # Trust is not typeable. `verified` is a signature over the value,
             # its cite and its quote (flats/config/verifications.jsonl), and
             # `stale` is derived at load. Accepting either here would let an
             # edit to a YAML file certify a number nobody read.
             problems.append(
                 f"{where}.{key}: a file may not declare status {declared!r} — "
-                f"verify it with a signature, and leave stale to be derived"
+                f"verify or dispute it with a signature, and leave stale to be derived"
             )
             continue
 
@@ -659,13 +659,13 @@ def _parse_variants(
             problems.append(f"{at}: unknown key(s) {sorted(unknown)}")
 
         declared = str(body.get("status", "draft"))
-        if declared in (Status.verified.value, Status.stale.value):
+        if declared in (Status.verified.value, Status.stale.value, Status.disputed.value):
             # Same rule as a base value: trust is a signature, not a keyword.
             # A variant is if anything easier to wave through, because it looks
             # like a detail of a value somebody already checked.
             problems.append(
                 f"{at}: a file may not declare status {declared!r} — "
-                f"verify it with a signature, and leave stale to be derived"
+                f"verify or dispute it with a signature, and leave stale to be derived"
             )
             continue
 
@@ -903,10 +903,10 @@ def _parse_like(
         return None
 
     declared = str(body.get("status", "draft"))
-    if declared in (Status.verified.value, Status.stale.value):
+    if declared in (Status.verified.value, Status.stale.value, Status.disputed.value):
         problems.append(
             f"{where}.like: a file may not declare status {declared!r} — "
-            f"verify it with a signature, and leave stale to be derived"
+            f"verify or dispute it with a signature, and leave stale to be derived"
         )
         return None
 

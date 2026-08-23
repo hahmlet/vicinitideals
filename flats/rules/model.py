@@ -65,6 +65,11 @@ class Status(str, enum.Enum):
     verified = "verified"
     #: Was verified; the source text hash has since changed.
     stale = "stale"
+    #: A human read it against its quote and said no. Not `draft`: draft is
+    #: nobody has looked, and this is somebody looked and disagreed, which is
+    #: a different queue and strictly more information. Lifts on its own when
+    #: the value changes -- see flats/encode/dispute.py.
+    disputed = "disputed"
 
     @property
     def trusted(self) -> bool:
