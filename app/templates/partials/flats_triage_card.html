@@ -39,7 +39,8 @@
 </div>
 <div class="muted" style="font-size:12px;margin-bottom:14px">
   Written {{ card.mentions|length }}&times; in {{ card.docs|length }} document{{ "" if card.docs|length == 1 else "s" }},
-  saying {{ card.distinct|length }} different thing{{ "" if card.distinct|length == 1 else "s" }}
+  {% if card.distinct|length == 1 %}saying the same thing every time
+  {%- else %}saying {{ card.distinct|length }} different things{% endif %}
   &middot; {{ card.binding }} beside a number we use
   {%- if card.ruling %} &middot; already ruled <strong>{{ card.ruling.outcome }}</strong>{% endif %}
 </div>

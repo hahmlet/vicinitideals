@@ -243,7 +243,7 @@ class Card:
         order: list[str] = []
         seen: dict[str, tuple[Mention, int]] = {}
         for m in self.mentions:
-            key = " ".join(m.text.split())
+            key = _same(m.text)
             if key in seen:
                 first, count = seen[key]
                 # A binding instance outranks a non-binding one written first:
@@ -366,6 +366,14 @@ def _named_in(ref: str, line: str, nxt: str = "") -> tuple[str, str]:
 #: is how a quote comes to end on the number it was shown for.
 _SENTENCE = re.compile(r"(?<=[.;:])\s+(?=[A-Z(]|\d+\.\d)")
 
+#: A section heading on a line of its own: the number, then a short title, no
+#: full stop. Portland prints "33.110.227 Trees" above the paragraph it names,
+#: and joining that to the sentence under it produces "Trees Requirements for
+#: street trees" -- a heading read as the first two words of a sentence, and
+#: three chapters saying the same thing under three different numbers reading
+#: as three different things.
+_HEADING = re.compile(r"^\d+\.\d[\d.]*\s+[A-Z][^.]{0,70}$")
+
 #: How far either side of a mention to look for the rest of its sentence. An
 #: extractor wraps at the page width, so a sentence is rarely more than two or
 #: three lines, and reaching further starts joining unrelated paragraphs.
@@ -390,16 +398,22 @@ def _passage(body: Sequence[str], n: int, start: int, end: int, ref: str) -> str
     if is_grid(line):
         return _window(line, start, end)
 
+    def stop(text: str) -> bool:
+        """Whether a neighbouring line belongs to a different passage."""
+        return (
+            not text.strip()
+            or is_grid(text)
+            or bool(_HEADING.match(text.strip()))
+        )
+
     lo = n - 1
     while lo > 0 and n - lo <= _REACH:
-        prev = body[lo - 1]
-        if not prev.strip() or is_grid(prev):
+        if stop(body[lo - 1]):
             break
         lo -= 1
     hi = n
     while hi < len(body) and hi - n < _REACH:
-        nxt = body[hi]
-        if not nxt.strip() or is_grid(nxt):
+        if stop(body[hi]):
             break
         hi += 1
 
@@ -425,6 +439,20 @@ def _passage(body: Sequence[str], n: int, start: int, end: int, ref: str) -> str
     lead = "…" if body_text[:1].islower() else ""
     tail = "" if body_text.endswith((".", ";", ":", "!", "?")) else "…"
     return f"{lead}{body_text}{tail}"
+
+
+def _same(text: str) -> str:
+    """A key on which two renderings of one sentence are one sentence.
+
+    Portland states its tree requirement identically in three chapters and the
+    card called it three different things: the extractor had written "on -site"
+    in one of them, and each carried its own section number. Neither is a
+    difference in what the code says, and a card that reports nine different
+    statements where there are five is inflating its own evidence.
+
+    Punctuation and case go too. What is left is the words.
+    """
+    return re.sub(r"[^a-z0-9]+", "", text.casefold())
 
 
 def _title_in(ref: str, line: str, nxt: str = "") -> str:

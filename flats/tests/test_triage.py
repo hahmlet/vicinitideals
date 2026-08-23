@@ -18,6 +18,7 @@ import pytest
 from flats.encode.triage import (
     CONFIG,
     SNIPPET,
+    _HEADING,
     Card,
     Mention,
     Neighbour,
@@ -28,6 +29,7 @@ from flats.encode.triage import (
     _nesting,
     _num,
     _passage,
+    _same,
     _splice,
     _title_in,
     _window,
@@ -840,3 +842,53 @@ def test_no_quote_on_any_card_ends_mid_word() -> None:
             # do is stop with no sign that it stopped.
             if not text.endswith((".", ";", ":", "!", "?", "·")):
                 assert m.text.endswith("…"), f"{card.key} {m.doc}L{m.line}: {m.text!r}"
+
+
+def test_a_section_heading_is_not_the_first_two_words_of_a_sentence() -> None:
+    """Codes print "33.110.227 Trees" on a line above the paragraph it names.
+    Joined to the sentence under it that reads "Trees Requirements for street
+    trees", which is a heading being read as prose -- and it made three
+    chapters saying one thing look like three different things, because each
+    carried its own section number into the quote."""
+    body = [
+        "33.110.227 Trees",
+        "Requirements for street trees and for on-site tree preservation",
+        "are specified in Title 11, Trees.",
+    ]
+    at = body[2].index("11")
+    got = _passage(body, 3, at, at + 2, "11")
+
+    assert got.startswith("Requirements for street trees")
+    assert "33.110.227" not in got
+
+
+def test_a_heading_boundary_does_not_swallow_ordinary_numbered_prose() -> None:
+    """A paragraph that opens with a figure is not a heading. The test is a
+    section-shaped number and a short unpunctuated title, not any digit."""
+    assert _HEADING.match("33.110.227 Trees")
+    assert _HEADING.match("10.1520 Reduction in Minimum Street Frontage")
+    assert not _HEADING.match("20,000 sq. ft. or more")
+    assert not _HEADING.match("5 feet is required where the lot abuts an alley.")
+    assert not _HEADING.match("A. Purpose. These standards apply to all lots.")
+
+
+def test_one_sentence_written_twice_is_counted_once() -> None:
+    """Portland states its tree requirement identically in several chapters and
+    the extractor wrote "on -site" in one of them. That is not a difference in
+    what the code says, and a card reporting nine statements where there are
+    six is inflating its own evidence."""
+    assert _same("on-site trees") == _same("on -site  trees")
+    assert _same("Title 11, Trees.") == _same("title 11 trees")
+    assert _same("are specified in Title 11") != _same("are in Title 11")
+
+
+def test_the_same_sentence_under_different_section_numbers_collapses() -> None:
+    rows = {c.ref: c for c in feed(layer="or/multnomah/portland")}
+    if "11" not in rows:
+        pytest.skip("Title 11 not in the current Portland feed")
+    card = rows["11"]
+
+    texts = [m.text for m, _ in card.distinct]
+    assert len(texts) == len(set(texts))
+    for text in texts:
+        assert not _HEADING.match(text.lstrip("…")), text
