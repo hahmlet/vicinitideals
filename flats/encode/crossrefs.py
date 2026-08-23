@@ -141,6 +141,25 @@ _HEADING = re.compile(
     r"(?P<num>\d[\d.\-]*\d(?:[A-Z](?![A-Za-z]))?|\d(?:[A-Z](?![A-Za-z]))?)\b"
 )
 
+#: A line that begins with a number is not a heading when the line before
+#: it ended in the middle of a reference. Extraction wraps a citation across
+#: the column edge -- "...standards of Chapter" / "33.248, Landscaping and
+#: Screening" -- and the second line looks exactly like a heading: a section
+#: number, a comma, a title. Read as one it says the store holds 33.248, and
+#: the chapter drops out of this queue without anybody ruling on it.
+#:
+#: Portland is why. Its whole code is Title 33, so the ownership test below
+#: (first dotted component) admits every 33.x number in every one of its
+#: files, and twenty references -- Conditional Uses, Measurements,
+#: Landscaping and Screening among them -- answered for themselves off a
+#: wrapped line. Ownership separates chapters from each other; it cannot
+#: separate a chapter from its own siblings, and this is what does.
+_WRAPPED = re.compile(
+    r"\b(?:Chapters?|Sections?|Subsections?|Titles?|Articles?|Divisions?"
+    r"|of|in|by|to|under|with|see|per|and|through)\s*[,;]?$",
+    re.I,
+)
+
 
 @dataclass(frozen=True, slots=True)
 class Dangling:
@@ -226,7 +245,9 @@ def _spanned(head: str) -> set[str]:
     return {head}
 
 
-def _headings(text: str, owns: set[str]) -> set[str]:
+def _headings(
+    text: str, owns: set[str], own_ids: Iterable[str] = ()
+) -> set[str]:
     """Section numbers this document prints at the start of a line and owns.
 
     The ownership test is what keeps a cross-reference from being read as a
@@ -241,14 +262,23 @@ def _headings(text: str, owns: set[str]) -> set[str]:
     is what makes a whole-title fetch work, and answers for nothing outside it,
     which is what makes this check work at all.
     """
+    mine = tuple(own_ids)
     found: set[str] = set()
+    prev = ""
     for line in text.splitlines():
         m = _HEADING.match(line)
-        if not m:
-            continue
-        num = m.group("num").rstrip(".")
-        if num.partition(".")[0] in owns:
-            found.add(num)
+        if m:
+            num = m.group("num").rstrip(".")
+            if num.partition(".")[0] in owns and (
+                # A number under this document's own id is a heading whatever
+                # precedes it: 33.110.250 in 33.110.txt is not a wrap, and the
+                # sections of a held chapter resolve on nothing else.
+                any(num == own or num.startswith(f"{own}.") for own in mine)
+                or not (prev and _WRAPPED.search(prev.rstrip()))
+            ):
+                found.add(num)
+        if line.strip():
+            prev = line
     return found
 
 
@@ -312,9 +342,8 @@ def dangling(layer: Layer, store: ProvenanceStore | None = None) -> list[Danglin
     ids = _doc_ids(paths)
     headings: set[str] = set()
     for path, text in texts.items():
-        headings |= _headings(
-            text, {i.partition(".")[0] for i in _doc_ids([path])}
-        )
+        own = _doc_ids([path])
+        headings |= _headings(text, {i.partition(".")[0] for i in own}, own)
     cited = _cited_lines(layer)
 
     mentions: dict[str, int] = defaultdict(int)

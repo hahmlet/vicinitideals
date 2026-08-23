@@ -193,6 +193,44 @@ def test_a_wrapped_reference_does_not_answer_for_itself() -> None:
     assert _headings(wrapped, {"40", "41"}) == {"40.300"}
 
 
+def test_a_reference_that_wrapped_across_a_column_is_not_a_heading() -> None:
+    """The ownership rule cannot separate a chapter from its own siblings.
+
+    Portland's whole code is Title 33, so every 33.x number that opens a line
+    in any of its files passes the ownership test. Extraction wraps a citation
+    at the column edge and drops the number onto the next line, where it is
+    indistinguishable from a heading -- number, comma, title. Twenty chapters
+    answered for themselves that way, Conditional Uses and Measurements among
+    them, and none of them was ever in the store.
+
+    What separates the two is the line before: a heading does not continue a
+    sentence that stopped at the word "Chapter".
+    """
+    wrapped = (
+        "         Screening must comply with the L3 or F2 standards of Chapter\n"
+        "                    33.248, Landscaping and Screening.\n"
+        "\n"
+        "33.110.250 Additional Development Standards for Garages\n"
+    )
+
+    assert _headings(wrapped, {"33"}, {"33.110"}) == {"33.110.250"}
+
+
+def test_a_held_chapter_still_answers_for_its_own_sections() -> None:
+    """The guard above must not cost a real heading.
+
+    A section of the chapter this document holds resolves on its heading and
+    nothing else -- the filename claims 33.110, not 33.110.250 -- so a wrapped
+    line ending in "Section" immediately before one would, unguarded, delete a
+    section we hold from the store's answer.
+    """
+    text = (
+        "     the requirements are stated in Section\n"
+        "33.110.250 Additional Development Standards for Garages\n"
+    )
+
+    assert _headings(text, {"33"}, {"33.110"}) == {"33.110.250"}
+
 def test_a_whole_title_answers_for_every_section_inside_it(
     layers: dict[str, Layer]
 ) -> None:

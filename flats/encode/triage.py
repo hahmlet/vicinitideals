@@ -704,7 +704,8 @@ def _scan(layer: Layer, store: ProvenanceStore | None = None) -> list[Card]:
     ids = _doc_ids(paths)
     headings: set[str] = set()
     for path, text in texts.items():
-        headings |= _headings(text, {i.partition(".")[0] for i in _doc_ids([path])})
+        own = _doc_ids([path])
+        headings |= _headings(text, {i.partition(".")[0] for i in own}, own)
 
     cited = _cited_values(layer)
     lots = _lots_by_zone()
