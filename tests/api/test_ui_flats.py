@@ -1531,7 +1531,10 @@ async def test_the_queue_asks_one_question_about_one_reference(
     response = await client.get("/flats/triage")
 
     assert response.status_code == 200
-    assert "Does this chapter change a number we screen on?" in response.text
+    # The ask sits with the buttons, not above a screenful of evidence, and it
+    # names the two things a reviewer can do rather than posing a question.
+    assert "Order this chapter, or say why we can leave it." in response.text
+    assert "Leave it, because:" in response.text
     # The lot counts are gone from the page on purpose -- a reviewer deciding
     # whether a chapter can change a number could do nothing with a six-figure
     # total, and it was on every card twice. The queue is still ranked on it.

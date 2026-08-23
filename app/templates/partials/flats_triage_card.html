@@ -42,10 +42,6 @@
 </div>
 {% endif %}
 
-<div style="font-size:13px;font-weight:600;margin:0 0 8px">
-  Does this chapter change a number we screen on?
-</div>
-
 {% if card.neighbours %}
 <div class="muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin:14px 0 4px">
   Standards written near it
@@ -122,11 +118,25 @@
   <input type="hidden" name="ruled" value="{{ 'true' if sel.ruled else 'false' }}">
   <input type="hidden" name="skipped" value="{{ skipped }}">
 
-  <div class="muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px">
-    Your call
+  {#
+    The ask, at the point of acting. It used to be a question floating above a
+    screenful of evidence, which left the buttons looking like a vocabulary
+    rather than the two things a reviewer can do: order the chapter, or say
+    why it can be left. ``fetch`` leads ``_TRIAGE_ORDER``, so it is the one
+    split out here.
+  #}
+  <div style="font-size:13px;font-weight:600;margin:0 0 8px">
+    Order this chapter, or say why we can leave it.
   </div>
+  {% set order, leave = outcomes[0], outcomes[1:] %}
+  <label style="font-size:12px;display:inline-block;border:1px solid var(--line,#d1d5db);
+                border-radius:4px;padding:6px 10px;cursor:pointer;margin-bottom:10px">
+    <input type="radio" name="outcome" value="{{ order[0] }}" style="margin-right:5px">
+    <strong>{{ order[1] }}</strong>
+  </label>
+  <div class="muted" style="font-size:11px;margin-bottom:4px">Leave it, because:</div>
   <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">
-    {% for key, why in outcomes %}
+    {% for key, why in leave %}
     <label style="font-size:12px;border:1px solid var(--line,#d1d5db);border-radius:4px;padding:5px 9px;cursor:pointer">
       <input type="radio" name="outcome" value="{{ key }}" style="margin-right:5px">
       {{ why }}
@@ -134,19 +144,16 @@
     {% endfor %}
   </div>
 
-  <label class="muted" style="font-size:11px;display:block;margin-bottom:3px">
-    Why? Required, {{ min_note }} characters or more.
-  </label>
   <textarea name="note" rows="3"
             style="width:100%;font-size:12px;font-family:inherit;padding:6px"
-            placeholder="What did you read, and why does it or does it not reach a four-unit townhome?">{{ note }}</textarea>
+            placeholder="Why. What you read, and whether it reaches a four-unit townhome. {{ min_note }} characters or more.">{{ note }}</textarea>
 
   <div style="display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap">
     <button type="submit" name="action" value="rule"
             style="font-size:12px;padding:6px 14px">Save &amp; next</button>
     <button type="submit" name="action" value="skip" formnovalidate
             style="font-size:12px;padding:6px 12px;background:none;border:1px solid var(--line,#d1d5db)">
-      Skip — can’t tell yet
+      Can’t tell yet — next one
     </button>
     <span class="muted" style="font-size:11px">
       {{ remaining }} left{% if skipped %}, {{ skipped }} skipped{% endif %}
