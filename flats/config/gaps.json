@@ -1,5 +1,5 @@
 {
-  "digest": "5cfde4a19a54ad82c05a758f3d29938858b5793a5b5b0b27ef72e4a4a2db9b27",
+  "digest": "8ca47f4481ab2a7bd1df673f25eea2560a9d2b8e7ab6d62e6fc55a022bf8e635",
   "layers": {
     "or": {
       "misattributed": [],
@@ -22,25 +22,25 @@
     "or/clackamas/happy-valley": {
       "misattributed": [],
       "label": "Happy Valley",
-      "counts": {},
-      "gaps": []
+      "counts": {
+        "unmapped": 1
+      },
+      "gaps": [
+        {
+          "zone": "R20CC",
+          "field": "like",
+          "cause": "unmapped",
+          "detail": "R20",
+          "believed": "R20",
+          "action": "ask the city, or read the zoning layer's own documentation \u2014 this zone code is not in the ordinance and the base zone under it is an inference. No document in the store will ever state it"
+        }
+      ]
     },
     "or/clackamas/johnson-city": {
       "misattributed": [],
       "label": "Johnson City",
-      "counts": {
-        "uncheckable": 1
-      },
-      "gaps": [
-        {
-          "zone": "MR1",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "False",
-          "action": "python -m flats.encode.review show or/clackamas/johnson-city \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        }
-      ]
+      "counts": {},
+      "gaps": []
     },
     "or/clackamas/lake-oswego": {
       "misattributed": [],
@@ -55,7 +55,43 @@
       "gaps": []
     },
     "or/clackamas/oregon-city": {
-      "misattributed": [],
+      "misattributed": [
+        {
+          "zone": "R-10",
+          "field": "min_density_du_per_acre",
+          "claimed": "17.08.020 17.08.040 17.16.060 17.16.070",
+          "found": "17.08.050",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L4184-L4186"
+        },
+        {
+          "zone": "R-3.5",
+          "field": "min_density_du_per_acre",
+          "claimed": "17.10.020 17.10.040 17.16.060 17.16.070",
+          "found": "17.10.050",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L4376-L4378"
+        },
+        {
+          "zone": "R-5",
+          "field": "min_density_du_per_acre",
+          "claimed": "17.10.020 17.10.040 17.16.060 17.16.070",
+          "found": "17.10.050",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L4376-L4378"
+        },
+        {
+          "zone": "R-6",
+          "field": "min_density_du_per_acre",
+          "claimed": "17.08.020 17.08.040 17.16.060 17.16.070",
+          "found": "17.08.050",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L4184-L4186"
+        },
+        {
+          "zone": "R-8",
+          "field": "min_density_du_per_acre",
+          "claimed": "17.08.020 17.08.040 17.16.060 17.16.070",
+          "found": "17.08.050",
+          "quote": "or/clackamas/oregon-city/17.zoning.txt#L4184-L4186"
+        }
+      ],
       "label": "Oregon City",
       "counts": {},
       "gaps": []
@@ -63,44 +99,8 @@
     "or/clackamas/rivergrove": {
       "misattributed": [],
       "label": "Rivergrove",
-      "counts": {
-        "multi": 3,
-        "uncheckable": 1
-      },
-      "gaps": [
-        {
-          "zone": "R10",
-          "field": "setback_front_ft",
-          "cause": "multi",
-          "detail": "3, 10, 25, 30",
-          "believed": "25",
-          "action": "encode as variants \u2014 the document states more than one number"
-        },
-        {
-          "zone": "R10",
-          "field": "setback_rear_ft",
-          "cause": "multi",
-          "detail": "3, 25",
-          "believed": "25",
-          "action": "encode as variants \u2014 the document states more than one number"
-        },
-        {
-          "zone": "R10",
-          "field": "setback_side_ft",
-          "cause": "multi",
-          "detail": "10, 19",
-          "believed": "10",
-          "action": "encode as variants \u2014 the document states more than one number"
-        },
-        {
-          "zone": "R10",
-          "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "False",
-          "action": "python -m flats.encode.review show or/clackamas/rivergrove \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
-        }
-      ]
+      "counts": {},
+      "gaps": []
     },
     "or/clackamas/tualatin": {
       "misattributed": [],
@@ -109,7 +109,64 @@
       "gaps": []
     },
     "or/clackamas/west-linn": {
-      "misattributed": [],
+      "misattributed": [
+        {
+          "zone": "R-10",
+          "field": "max_far",
+          "claimed": "11.030 11.070",
+          "found": "11.070 0.45",
+          "quote": "or/clackamas/west-linn/11.r-10.txt#L170,L173-L174"
+        },
+        {
+          "zone": "R-2.1",
+          "field": "max_far",
+          "claimed": "16.030 16.070",
+          "found": "16.070 0.45",
+          "quote": "or/clackamas/west-linn/16.r-2.1.txt#L226,L228"
+        },
+        {
+          "zone": "R-20",
+          "field": "max_far",
+          "claimed": "09.030 09.070",
+          "found": "09.070 0.45",
+          "quote": "or/clackamas/west-linn/09.r-20.txt#L177,L178"
+        },
+        {
+          "zone": "R-3",
+          "field": "max_far",
+          "claimed": "15.030 15.070",
+          "found": "15.070 0.45",
+          "quote": "or/clackamas/west-linn/15.r-3.txt#L205,L207"
+        },
+        {
+          "zone": "R-4.5",
+          "field": "max_far",
+          "claimed": "14.030 14.070",
+          "found": "14.070 0.45",
+          "quote": "or/clackamas/west-linn/14.r-4.5.txt#L211,L213"
+        },
+        {
+          "zone": "R-40",
+          "field": "max_far",
+          "claimed": "08.030 08.070",
+          "found": "08.070 0.45",
+          "quote": "or/clackamas/west-linn/08.r-40.txt#L175,L176"
+        },
+        {
+          "zone": "R-5",
+          "field": "max_far",
+          "claimed": "13.030 13.070",
+          "found": "13.070 0.45",
+          "quote": "or/clackamas/west-linn/13.r-5.txt#L186,L188"
+        },
+        {
+          "zone": "R-7",
+          "field": "max_far",
+          "claimed": "12.030 12.070",
+          "found": "12.070 0.45",
+          "quote": "or/clackamas/west-linn/12.r-7.txt#L172,L175-L176"
+        }
+      ],
       "label": "West Linn",
       "counts": {},
       "gaps": []
@@ -121,30 +178,174 @@
       "gaps": []
     },
     "or/multnomah/_unincorporated": {
-      "misattributed": [],
-      "label": "Multnomah Unincorporated",
-      "counts": {
-        "uncheckable": 1
-      },
-      "gaps": [
+      "misattributed": [
         {
-          "zone": "RR",
+          "zone": "CFU",
           "field": "quadplex_allowed",
-          "cause": "uncheckable",
-          "detail": "bool",
-          "believed": "False",
-          "action": "python -m flats.encode.review show or/multnomah/_unincorporated \u2014 a boolean or an enum, which no reader can corroborate: quote it by hand"
+          "claimed": "39.4065 39.4060 39.4070",
+          "found": "39.4060 39.4065 39.4075",
+          "quote": "or/multnomah/_unincorporated/39.cfu.txt#L85-L86,L92-L93,L115-L116,L130-L137,L386"
         }
-      ]
-    },
-    "or/multnomah/fairview": {
-      "misattributed": [],
-      "label": "Fairview",
+      ],
+      "label": "Multnomah Unincorporated",
       "counts": {},
       "gaps": []
     },
+    "or/multnomah/fairview": {
+      "misattributed": [
+        {
+          "zone": "R-10",
+          "field": "orientation_constraint",
+          "claimed": "19.30.020 19.30.030",
+          "found": "19.30.040",
+          "quote": "or/multnomah/fairview/19.30.txt#L515,L517,L519-L531"
+        },
+        {
+          "zone": "R-6",
+          "field": "orientation_constraint",
+          "claimed": "19.30.020 19.30.030",
+          "found": "19.30.040",
+          "quote": "or/multnomah/fairview/19.30.txt#L515,L517,L519-L531"
+        },
+        {
+          "zone": "R-7.5",
+          "field": "orientation_constraint",
+          "claimed": "19.30.020 19.30.030",
+          "found": "19.30.040",
+          "quote": "or/multnomah/fairview/19.30.txt#L515,L517,L519-L531"
+        },
+        {
+          "zone": "RM",
+          "field": "orientation_constraint",
+          "claimed": "19.30.010 19.30.020 19.30.030",
+          "found": "19.30.040",
+          "quote": "or/multnomah/fairview/19.30.txt#L515,L517,L519-L531"
+        },
+        {
+          "zone": "TCC",
+          "field": "min_lot_sqft",
+          "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
+          "found": "19.65.100",
+          "quote": "or/multnomah/fairview/19.65.txt#L699,L701"
+        },
+        {
+          "zone": "TCC",
+          "field": "setback_front_ft",
+          "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
+          "found": "19.65.040",
+          "quote": "or/multnomah/fairview/19.65.txt#L155,L161,L163"
+        },
+        {
+          "zone": "TCC",
+          "field": "setback_front_max_ft",
+          "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
+          "found": "19.65.040",
+          "quote": "or/multnomah/fairview/19.65.txt#L155,L165,L177,L179"
+        },
+        {
+          "zone": "TCC",
+          "field": "setback_rear_ft",
+          "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
+          "found": "19.65.040",
+          "quote": "or/multnomah/fairview/19.65.txt#L155,L201,L203"
+        },
+        {
+          "zone": "TCC",
+          "field": "setback_rear_ft [abuts_nonresidential_zone]",
+          "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
+          "found": "19.65.040",
+          "quote": "or/multnomah/fairview/19.65.txt#L155,L201,L203"
+        },
+        {
+          "zone": "TCC",
+          "field": "setback_rear_ft [abuts_alley+abuts_nonresidential_zone]",
+          "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
+          "found": "19.65.040",
+          "quote": "or/multnomah/fairview/19.65.txt#L155,L201,L203"
+        },
+        {
+          "zone": "TCC",
+          "field": "setback_side_ft",
+          "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
+          "found": "19.65.040",
+          "quote": "or/multnomah/fairview/19.65.txt#L155,L207"
+        },
+        {
+          "zone": "TCC",
+          "field": "setback_side_ft [abuts_nonresidential_zone]",
+          "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
+          "found": "19.65.040",
+          "quote": "or/multnomah/fairview/19.65.txt#L155,L207"
+        },
+        {
+          "zone": "VA",
+          "field": "min_landscaped_pct",
+          "claimed": "19.125.020 19.125.030 19.125.040",
+          "found": "19.145.070",
+          "quote": "or/multnomah/fairview/19.145.txt#L55,L57"
+        }
+      ],
+      "label": "Fairview",
+      "counts": {
+        "unmapped": 2
+      },
+      "gaps": [
+        {
+          "zone": "R/SFLD",
+          "field": "like",
+          "cause": "unmapped",
+          "detail": "R-10",
+          "believed": "R-10",
+          "action": "ask the city, or read the zoning layer's own documentation \u2014 this zone code is not in the ordinance and the base zone under it is an inference. No document in the store will ever state it"
+        },
+        {
+          "zone": "RM/TOZ",
+          "field": "like",
+          "cause": "unmapped",
+          "detail": "RM",
+          "believed": "RM",
+          "action": "ask the city, or read the zoning layer's own documentation \u2014 this zone code is not in the ordinance and the base zone under it is an inference. No document in the store will ever state it"
+        }
+      ]
+    },
     "or/multnomah/gresham": {
-      "misattributed": [],
+      "misattributed": [
+        {
+          "zone": "CNRM",
+          "field": "quadplex_allowed",
+          "claimed": "4.1220",
+          "found": "4.1200",
+          "quote": "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L195-L196,L200"
+        },
+        {
+          "zone": "CNTH",
+          "field": "quadplex_allowed",
+          "claimed": "4.1220",
+          "found": "4.1200",
+          "quote": "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L195-L196,L200"
+        },
+        {
+          "zone": "CNTM",
+          "field": "quadplex_allowed",
+          "claimed": "4.1220",
+          "found": "4.1200",
+          "quote": "or/multnomah/gresham/4.1200.civic-neighborhood.txt#L195-L196,L200"
+        },
+        {
+          "zone": "NC-PV",
+          "field": "quadplex_allowed",
+          "claimed": "4.1413 4.1415 4.1415 7.0420",
+          "found": "4.1423",
+          "quote": "or/multnomah/gresham/4.1400.pleasant-valley.txt#L506-L507,L512"
+        },
+        {
+          "zone": "PUB-PV",
+          "field": "quadplex_allowed",
+          "claimed": "4.1431",
+          "found": "4.1425",
+          "quote": "or/multnomah/gresham/4.1400.pleasant-valley.txt#L775-L776,L781"
+        }
+      ],
       "label": "Gresham",
       "counts": {},
       "gaps": []
@@ -162,13 +363,134 @@
       "gaps": []
     },
     "or/multnomah/troutdale": {
-      "misattributed": [],
+      "misattributed": [
+        {
+          "zone": "HDR",
+          "field": "max_density_du_per_acre",
+          "claimed": "3.120 3.130",
+          "found": "3.140",
+          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522"
+        },
+        {
+          "zone": "HDR",
+          "field": "max_density_du_per_acre [unit_lots]",
+          "claimed": "3.120 3.130",
+          "found": "3.140",
+          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L506,L517-L518"
+        },
+        {
+          "zone": "LDR-1",
+          "field": "max_density_du_per_acre",
+          "claimed": "3.120 3.130 3.130 8.120",
+          "found": "3.140",
+          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522"
+        },
+        {
+          "zone": "LDR-2",
+          "field": "max_density_du_per_acre",
+          "claimed": "3.120 3.130 3.130 8.120",
+          "found": "3.140",
+          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522"
+        },
+        {
+          "zone": "MDR",
+          "field": "max_density_du_per_acre",
+          "claimed": "3.120 3.130 3.130 8.120",
+          "found": "3.140",
+          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522"
+        },
+        {
+          "zone": "MU-2",
+          "field": "max_density_du_per_acre",
+          "claimed": "3.220 3.230 3.235",
+          "found": "3.140 3.230",
+          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522,L710"
+        },
+        {
+          "zone": "MU-3",
+          "field": "max_density_du_per_acre",
+          "claimed": "3.220 3.230 3.230 3.235",
+          "found": "3.140 3.230",
+          "quote": "or/multnomah/troutdale/3.zoning-districts.txt#L506,L519-L522,L710"
+        }
+      ],
       "label": "Troutdale",
       "counts": {},
       "gaps": []
     },
     "or/multnomah/wood-village": {
-      "misattributed": [],
+      "misattributed": [
+        {
+          "zone": "NC",
+          "field": "max_height_ft",
+          "claimed": "230.200 710.100",
+          "found": "230.310",
+          "quote": "or/multnomah/wood-village/230.310.txt#L64-L65,L70,L86"
+        },
+        {
+          "zone": "NC",
+          "field": "min_landscaped_pct",
+          "claimed": "230.200 710.100",
+          "found": "230.310",
+          "quote": "or/multnomah/wood-village/230.310.txt#L64-L65,L78,L88"
+        },
+        {
+          "zone": "NC",
+          "field": "min_lot_depth_ft",
+          "claimed": "230.200 710.100",
+          "found": "230.310",
+          "quote": "or/multnomah/wood-village/230.310.txt#L60,L64-L65,L69,L84"
+        },
+        {
+          "zone": "NC",
+          "field": "min_lot_sqft",
+          "claimed": "230.200 710.100",
+          "found": "230.310",
+          "quote": "or/multnomah/wood-village/230.310.txt#L60,L64-L67,L84"
+        },
+        {
+          "zone": "NC",
+          "field": "min_lot_width_ft",
+          "claimed": "230.200 710.100",
+          "found": "230.310",
+          "quote": "or/multnomah/wood-village/230.310.txt#L60,L64-L65,L68,L84"
+        },
+        {
+          "zone": "NC",
+          "field": "setback_front_ft",
+          "claimed": "230.200 710.100",
+          "found": "230.310",
+          "quote": "or/multnomah/wood-village/230.310.txt#L64-L65,L73"
+        },
+        {
+          "zone": "NC",
+          "field": "setback_front_max_ft",
+          "claimed": "230.200 710.100",
+          "found": "230.310",
+          "quote": "or/multnomah/wood-village/230.310.txt#L64-L65,L73"
+        },
+        {
+          "zone": "NC",
+          "field": "setback_rear_ft",
+          "claimed": "230.200 710.100",
+          "found": "230.310",
+          "quote": "or/multnomah/wood-village/230.310.txt#L64-L65,L75"
+        },
+        {
+          "zone": "NC",
+          "field": "setback_side_ft",
+          "claimed": "230.200 710.100",
+          "found": "230.310",
+          "quote": "or/multnomah/wood-village/230.310.txt#L64-L65,L74"
+        },
+        {
+          "zone": "TC",
+          "field": "open_space_min_pct",
+          "claimed": "235.200 235.300",
+          "found": "235.465",
+          "quote": "or/multnomah/wood-village/235.465.txt#L56,L60"
+        }
+      ],
       "label": "Wood Village",
       "counts": {},
       "gaps": []

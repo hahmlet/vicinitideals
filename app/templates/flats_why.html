@@ -32,6 +32,13 @@
     <div style="margin-top:6px">
       {% if chain.answer.status == "verified" %}
         <span class="badge badge-green">confirmed against the source</span>
+      {% elif chain.answer.status == "disputed" %}
+        {#
+          Not the same as unread, and it must not be shown as though it were.
+          Somebody read this number against its quote and said it is wrong. It
+          lifts by itself once the number, the citation or the quote changes.
+        #}
+        <span class="badge badge-yellow">a reviewer read this and rejected it</span>
       {% else %}
         <span class="badge">{{ chain.answer.status }} — read off the source, not yet confirmed by a person</span>
       {% endif %}
@@ -143,6 +150,14 @@
         <div class="muted" style="font-size:11px;margin-top:6px">
           {% if item.status == "verified" %}
             Confirmed by {{ item.reviewer or "a reviewer" }}{% if item.reviewed %} on {{ item.reviewed }}{% endif %}.
+          {% elif item.status == "disputed" %}
+            {#
+              ``reviewer`` names whoever confirmed a value, and a dispute
+              deliberately does not write itself there -- so this line says what
+              happened without claiming to say who, which the log holds.
+            #}
+            Read against this quote and rejected. Not a number to screen on
+            until it is fixed or the rejection is withdrawn.
           {% else %}
             {{ item.status }} — read off the source, not yet confirmed by a person.
           {% endif %}

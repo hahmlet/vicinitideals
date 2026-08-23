@@ -57,13 +57,14 @@ from flats.encode.attribution import claimed_sections, section_at
 from flats.encode.find import passages
 from flats.encode.gaps import digest as gaps_digest
 from flats.encode.gaps import read_ledger
+from flats.encode.load import load_trusted
 from flats.encode.triage import Card, feed, fields_in
 from flats.encode.verify import fingerprint
 from flats.provenance import books, pages as page_map
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.fields import FIELDS
 from flats.rules.ledger import CoverageRow, read_coverage
-from flats.rules.loader import MIN_RULING, load_rules
+from flats.rules.loader import MIN_RULING
 from flats.rules.model import (
     CROSSREF_OUTCOMES,
     Incorporation,
@@ -121,6 +122,7 @@ _CAUSE_WORDS = {
     "unread": "a document we hold prints it — nobody has read the line",
     "unsourced": "no document we hold states it — the chapter is still to find",
     "uncheckable": "a yes/no or a category, which only a person can cite",
+    "unmapped": "a zone code the ordinance never uses — no document will state it",
 }
 
 #: The layer-wide block's zone label. Not a zone code, so it cannot collide.
@@ -129,12 +131,19 @@ _DEFAULTS = "(layer defaults)"
 
 @lru_cache(maxsize=1)
 def _layers() -> dict[str, Layer]:
-    """The whole rule hierarchy, parsed once.
+    """The whole rule hierarchy, with trust applied, parsed once.
 
-    Cached for the life of the process because the YAML is baked into the image:
-    it changes on deploy, and a deploy restarts the process.
+    Cached for the life of the process because everything it reads is baked
+    into the image -- the YAML, the verification log, the dispute log -- and a
+    deploy restarts the process.
+
+    ``load_trusted`` rather than ``load_rules``: parsing alone leaves every
+    value ``draft``, because trust may not be typed into a rule file. The
+    signature logs are what promote and demote, so a screen reading the parse
+    output would report a corpus nobody had ever confirmed or rejected, however
+    many signatures had been drained into the repository.
     """
-    return load_rules(strict=False)
+    return load_trusted(strict=False).layers
 
 
 @lru_cache(maxsize=1)
@@ -245,6 +254,10 @@ def _layer_summary(layer: Layer) -> dict[str, Any]:
         # as "<built-in method values of dict object at 0x...>" once per row.
         "standards": len(rows),
         "verified": sum(1 for row in rows if row["trusted"]),
+        # Read and refused. Counted separately from both, because a rejected
+        # number is neither confirmed nor merely unread, and a jurisdiction
+        # carrying open rejections must not read as one nobody has looked at.
+        "disputed": sum(1 for row in rows if row["status"] == Status.disputed.value),
         "quoted": sum(1 for row in rows if row["quote"]),
         # Standards this jurisdiction claims and cannot show. They are not in
         # `standards` — they are not rules — and a page that omitted them would
@@ -265,6 +278,7 @@ async def flats_index(request: Request, session: DBSession) -> HTMLResponse:
         "zones": sum(s["zones"] for s in summaries),
         "standards": sum(s["standards"] for s in summaries),
         "verified": sum(s["verified"] for s in summaries),
+        "disputed": sum(s["disputed"] for s in summaries),
         "quoted": sum(s["quoted"] for s in summaries),
         "unread": sum(s["unread"] for s in summaries),
     }
@@ -658,25 +672,38 @@ def _span(ref: str) -> tuple[int, int] | None:
     cited values -- 45 percent of the corpus -- could not be signed at all,
     and nothing said so.
     """
-    _, _, fragment = ref.partition("#L")
-    if not fragment:
+    ranges = _ranges(ref)
+    if not ranges:
         return None
-    lines: list[int] = []
+    return min(a for a, _ in ranges), max(b for _, b in ranges)
+
+
+def _ranges(ref: str) -> list[tuple[int, int]]:
+    """Every line range a citation names, in the order it names them.
+
+    The hull is what a signature is addressed to; these are what a reader is
+    shown. Keeping them apart is not a nicety: the two stretches of
+    ``#L874-L875,L4408-L4410`` are a table row and the footnote qualifying it,
+    and a window drawn from the hull is three and a half thousand lines of
+    unrelated code with two of them marked.
+    """
+    _, _, fragment = ref.partition("#L")
+    out: list[tuple[int, int]] = []
     for part in fragment.replace("L", "").split(","):
+        edges: list[int] = []
         for edge in part.split("-"):
             edge = edge.strip()
             if not edge:
                 continue
             try:
-                lines.append(int(edge))
+                edges.append(int(edge))
             except ValueError:
                 # One unreadable edge is not a reason to discard the ranges
-                # that did parse. Everything unreadable still lands on the
-                # empty check below.
+                # that did parse.
                 continue
-    if not lines:
-        return None
-    return min(lines), max(lines)
+        if edges:
+            out.append((edges[0], edges[-1]))
+    return out
 
 
 #: How far apart two citations may sit and still be one reading. A zone's
@@ -751,7 +778,12 @@ def _passages(layer: Layer, decided: dict) -> list[dict[str, Any]]:
         row["was"] = seen
         span = _span(row["quote"])
         row["line"] = span[0] if span else 0
-        if span is None:
+        # A citation naming two stretches pages apart -- a table row and the
+        # footnote qualifying it -- gets a card of its own rather than joining
+        # a cluster. ``_span`` answers with the range covering both, and a
+        # cluster keyed on that would draw a window three thousand lines deep
+        # and claim every unrelated standard printed in between.
+        if span is None or "," in row["quote"].partition("#L")[2]:
             loose.append(row)
         else:
             quoted.setdefault(row["quote"].partition("#L")[0], []).append(row)
@@ -780,18 +812,25 @@ def _passages(layer: Layer, decided: dict) -> list[dict[str, Any]]:
                     "gridded": _from_a_table(lines),
                 }
             )
+    # Grouped by citation, not one card per value: two standards read off the
+    # same table row and its footnote are one passage, and shown as two cards
+    # they are the same lines opened twice with no sign they are the same
+    # reading.
+    together: dict[str, list[dict[str, Any]]] = {}
     for row in loose:
-        lines, error = _cited_lines(row["quote"])
+        together.setdefault(row["quote"], []).append(row)
+    for quote, here in together.items():
+        lines, error = _cited_lines(quote)
         cards.append(
             {
-                "ref": row["quote"],
-                "refs": [row["quote"]],
-                "document": row["quote"].partition("#L")[0],
-                "cite": row["cite"],
-                "url": row["url"],
+                "ref": quote,
+                "refs": [quote],
+                "document": quote.partition("#L")[0],
+                "cite": here[0]["cite"],
+                "url": here[0]["url"],
                 "lines": lines,
                 "error": error,
-                "rows": [row],
+                "rows": sorted(here, key=lambda r: (r["line"], r["zone"], r["field"])),
             }
         )
     return sorted(cards, key=lambda c: (c["document"], _span(c["ref"]) or (0, 0)))
@@ -1467,14 +1506,27 @@ async def flats_sign_passage(
         )
 
     decided = await _decisions(session, layer.layer)
-    document, span = ref.partition("#L")[0], _span(ref)
+    # The card, rebuilt the way the page built it, and signed over exactly the
+    # rows it listed. Deciding membership by containment in the card's line
+    # range is not the same thing and was not safe: a citation may name two
+    # stretches pages apart, the range covering both swallows every standard
+    # printed in between, and "Confirm all" on a card showing one number came
+    # to sign a hundred more that were never on screen.
+    cards = [card for card in _passages(layer, decided) if card["ref"] == ref]
+    if not cards:
+        return templates.TemplateResponse(
+            request,
+            "partials/flats_passage_done.html",
+            {
+                "signed": 0,
+                "verdict": "",
+                "error": "that passage is not in the queue any more — reload the page",
+            },
+            status_code=409,
+        )
     shown = _shown(ref)
     signed = 0
-    for row in _value_rows(layer):
-        if not _within(row["quote"], document, span):
-            continue
-        if _stands(decided.get((row["zone"], row["field"], row["when"])), row["mark"]):
-            continue
+    for row in [row for card in cards for row in card["rows"]]:
         number = _number(layer, row["zone"], row["field"], row["when"])
         if number is None:
             continue
@@ -1981,22 +2033,6 @@ async def flats_sign(
     )
 
 
-def _within(quote: str, document: str, span: tuple[int, int] | None) -> bool:
-    """Whether a value's citation falls inside the card's window.
-
-    The card addresses a stretch of one document, and this is what decides
-    which numbers that stretch covers. It is deliberately containment rather
-    than string equality: the window was widened to hold them, and a value
-    whose lines sit outside it was not on screen.
-    """
-    if not quote or quote.partition("#L")[0] != document:
-        return False
-    if span is None:
-        return quote == document
-    here = _span(quote)
-    return here is not None and span[0] <= here[0] and here[1] <= span[1]
-
-
 def _cited_lines(ref: str) -> tuple[list[dict[str, Any]], str]:
     """The stored text a citation points at, with a few lines either side.
 
@@ -2007,18 +2043,18 @@ def _cited_lines(ref: str) -> tuple[list[dict[str, Any]], str]:
     Returns the lines and an error message; never both.
     """
     store = _store()
-    path, _, fragment = ref.partition("#L")
+    path = ref.partition("#L")[0]
     if path not in _known_documents():
         return [], "no such stored document"
 
-    first = last = 0
+    # Every range the citation names, each with its own context, rather than
+    # one window covering the lot. Parsed on "," first: splitting only on "-"
+    # raised on int("875,4408") and reported the citation as unresolvable,
+    # which is what a reviewer saw on every citation naming three stretches.
+    spans = _ranges(ref)
     try:
-        if fragment:
-            parts = fragment.replace("L", "").split("-")
-            first = int(parts[0])
-            last = int(parts[-1]) if len(parts) > 1 else first
         whole = store.load(path).text.splitlines()
-        quoted = store.quote(ref)
+        quoted = "" if spans else store.quote(ref)
     except (ProvenanceError, ValueError, OSError):
         # The reason is not shown: the reference is user-supplied, and an
         # error carrying a filesystem path back to the browser answers
@@ -2026,13 +2062,17 @@ def _cited_lines(ref: str) -> tuple[list[dict[str, Any]], str]:
         # answering.
         return [], "this citation does not resolve to stored text"
 
-    if not first:
+    if not spans:
         return [_line(0, quoted, True)], ""
 
-    start = max(first - _CONTEXT, 1)
-    end = min(last + _CONTEXT, len(whole))
+    wanted: set[int] = set()
+    for first, last in spans:
+        wanted.update(range(max(first - _CONTEXT, 1), min(last + _CONTEXT, len(whole)) + 1))
+    # The line numbers jump where a stretch was skipped, which is the honest
+    # rendering: the reader can see that what is between them was not cited.
     return [
-        _line(n, whole[n - 1], first <= n <= last) for n in range(start, end + 1)
+        _line(n, whole[n - 1], any(a <= n <= b for a, b in spans))
+        for n in sorted(wanted)
     ], ""
 
 

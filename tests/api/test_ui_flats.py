@@ -25,6 +25,42 @@ async def _login(client: AsyncClient, session: AsyncSession):
     return user
 
 
+def _hunt(
+    layer_id: str,
+    zone: str,
+    field: str,
+    believed: object,
+    documents: list[str] | None = None,
+) -> dict:
+    """One row of the held-out-standards queue, built by hand.
+
+    Every address in the real queue is an encoding gap, which means filling the
+    gap deletes the row. Tests that reached into ``_queue()`` for a live
+    address therefore went red on the day a jurisdiction was finished, and
+    reported it as a broken search page. What they are actually about is how
+    candidate lines are ranked and shown -- ``_candidates`` -- and that takes a
+    row, not a queue.
+
+    ``documents`` narrows the search to one chapter. Candidates come back
+    grouped by document in the order the layer declares them, so a claim about
+    ranking is a claim about ranking *within* a document; spread across fifteen
+    it is a claim about which chapter happens to be declared first.
+    """
+    from app.api.routers import ui_flats as ui
+
+    layer = ui._layers()[layer_id]
+    return {
+        "layer": layer_id,
+        "label": layer.label,
+        "zone": zone,
+        "field": field,
+        "believed": believed,
+        "cite": "",
+        "url": "",
+        "documents": documents or [layer.document_path(doc.id) for doc in layer.code],
+    }
+
+
 async def test_the_index_lists_every_jurisdiction(client: AsyncClient, session: AsyncSession):
     await _login(client, session)
 
@@ -374,22 +410,71 @@ async def test_review_is_not_swallowed_by_the_layer_route(
 async def test_signing_a_passage_signs_every_number_it_displayed(
     client: AsyncClient, session: AsyncSession
 ):
+    """A card of many numbers, signed once.
+
+    The card is chosen for having more than one row rather than taken off the
+    top of the page: the first card in a queue can be a single value citing
+    two stretches of its own, and signing that proves nothing about whether
+    the whole passage travels together.
+    """
+    from app.api.routers import ui_flats as ui
+
     await _login(client, session)
-    page = await client.get("/flats/review/or/clackamas/wilsonville")
-    ref = _first_ref(page.text)
+    layer_id = "or/clackamas/wilsonville"
+    card = next(c for c in ui._passages(ui._layers()[layer_id], {}) if len(c["rows"]) > 1)
 
     response = await client.post(
         "/ui/flats/sign-passage",
-        data={"layer_id": "or/clackamas/wilsonville", "ref": ref, "verdict": "verified"},
+        data={"layer_id": layer_id, "ref": card["ref"], "verdict": "verified"},
         headers={"hx-request": "true"},
     )
 
     assert response.status_code == 200
     rows = (await session.execute(text_query())).all()
-    assert len(rows) > 1, "a code passage states more than one standard"
-    # Every one of them cites the passage that was on screen, and the numbers
-    # come from the rule files rather than from the form.
+    assert len(rows) == len(card["rows"]), "every number the card listed, and no other"
+    # The numbers come from the rule files rather than from the form.
     assert {r[5] for r in rows} == {"verified"}
+    assert {(r[1], r[2], r[3]) for r in rows} == {
+        (one["zone"], one["field"], one["when"]) for one in card["rows"]
+    }
+
+
+async def test_a_passage_that_names_two_stretches_does_not_sign_what_lies_between(
+    client: AsyncClient, session: AsyncSession
+):
+    """The card that certified a hundred and seventeen numbers off one click.
+
+    A value read off a table row and the footnote printed pages under it cites
+    both. Membership used to be containment in the range covering the two, so
+    the card claimed every standard printed in between — a hundred and four of
+    them in one Wilsonville table — and "Confirm all" signed the lot without
+    any of it having been on screen.
+    """
+    from app.api.routers import ui_flats as ui
+
+    await _login(client, session)
+    layer_id = "or/clackamas/wilsonville"
+    cards = ui._passages(ui._layers()[layer_id], {})
+    split = next(c for c in cards if "," in c["ref"].partition("#L")[2])
+    assert len(split["rows"]) == 1, "fixture assumption: one value cites both stretches"
+    hull = ui._span(split["ref"])
+    swallowed = [
+        c for c in cards if c is not split and (ui._span(c["ref"]) or (0, 0))[0] > hull[0]
+        and (ui._span(c["ref"]) or (0, 0))[1] < hull[1]
+    ]
+    assert swallowed, "fixture assumption: whole cards sit between the two stretches"
+
+    await client.post(
+        "/ui/flats/sign-passage",
+        data={"layer_id": layer_id, "ref": split["ref"], "verdict": "verified"},
+        headers={"hx-request": "true"},
+    )
+
+    signed = {(r[1], r[2], r[3]) for r in (await session.execute(text_query())).all()}
+
+    assert signed == {
+        (one["zone"], one["field"], one["when"]) for one in split["rows"]
+    }, "a verdict reached a number the card never printed"
 
 
 async def test_a_passage_verdict_never_reaches_a_number_it_did_not_show(
@@ -501,15 +586,28 @@ async def test_a_chain_stops_before_it_becomes_a_chapter():
 
 
 async def test_a_card_covers_only_the_lines_it_showed():
-    from app.api.routers.ui_flats import _within
+    """Stated over every card in the corpus, because it is what a signature means.
 
-    window = (138, 161)
+    "Confirm all" signs the whole card, so a number listed on a card whose
+    lines were never printed on it is a signature certifying text nobody read.
+    That happened: a citation naming a table row and a footnote pages under it
+    produced a card addressed to the range covering both, and every unrelated
+    standard printed in between was listed on it.
+    """
+    from app.api.routers.ui_flats import _layers, _passages, _ranges
 
-    assert _within("doc.txt#L142", "doc.txt", window)
-    assert _within("doc.txt#L138-L140", "doc.txt", window)
-    assert not _within("doc.txt#L63", "doc.txt", window), "outside the window"
-    assert not _within("doc.txt#L155-L170", "doc.txt", window), "runs past the end"
-    assert not _within("other.txt#L142", "doc.txt", window), "another document"
+    off = []
+    for layer in _layers().values():
+        for card in _passages(layer, {}):
+            shown = {one["n"] for one in card["lines"]}
+            if not shown:
+                continue
+            for row in card["rows"]:
+                named = {n for a, b in _ranges(row["quote"]) for n in range(a, b + 1)}
+                if named - shown:
+                    off.append(f"{layer.layer} {row['zone']} {row['field']} on {card['ref']}")
+
+    assert not off, off[:5]
 
 
 async def test_a_citation_naming_two_ranges_is_still_one_reading():
@@ -524,7 +622,7 @@ async def test_a_citation_naming_two_ranges_is_still_one_reading():
     962 of 2,150 cited values -- 45 percent, worst in Gresham and Portland --
     could not be signed by anybody, and no error was ever shown.
     """
-    from app.api.routers.ui_flats import _span, _within
+    from app.api.routers.ui_flats import _ranges, _span
 
     assert _span("4.planning.txt#L13405-L13414,L13416-L13420") == (13405, 13420)
     # The forms that already worked keep working.
@@ -535,12 +633,19 @@ async def test_a_citation_naming_two_ranges_is_still_one_reading():
     assert _span("doc.txt") is None
     assert _span("doc.txt#Lnonsense") is None
 
-    # And the value now falls inside a window that covers both ranges.
-    window = (13400, 13425)
-    assert _within("4.planning.txt#L13405-L13414,L13416-L13420",
-                   "4.planning.txt", window)
-    assert not _within("4.planning.txt#L13405-L13414,L13416-L13999",
-                       "4.planning.txt", window), "runs past the end"
+    # And the ranges stay separate for anything that has to show them. The
+    # hull is 13405-13420; what a reader is shown is the two stretches.
+    assert _ranges("4.planning.txt#L13405-L13414,L13416-L13420") == [
+        (13405, 13414),
+        (13416, 13420),
+    ]
+    # Three stretches used to raise on int("4690,4710") and come back as a
+    # citation that does not resolve, which is what the reviewer was told.
+    assert _ranges("4.planning.txt#L4690,L4710-L4712,L4717") == [
+        (4690, 4690),
+        (4710, 4712),
+        (4717, 4717),
+    ]
 
 
 async def test_every_cited_value_in_the_corpus_names_readable_lines():
@@ -1055,17 +1160,36 @@ async def test_a_field_nobody_registered_is_refused(
 
 
 async def test_a_card_says_when_the_citation_points_at_another_section(
-    client: AsyncClient, session: AsyncSession
+    client: AsyncClient,
+    session: AsyncSession,
+    monkeypatch: pytest.MonkeyPatch,
 ):
     """The failure no other check can see.
 
     The quote resolves and the text states the number, so nothing upstream
     objects — but the citation names a section where none of it is printed.
-    Wilsonville's Old Town setbacks say 4.123 and quote 4.113, the citywide
+    Wilsonville's R setbacks said 4.122 and quoted 4.113, the citywide
     provisions that apply only where a master plan does not provide otherwise.
+
+    That citation now names both sections and the corpus holds no misattributed
+    value at all, so the detection is exercised on a citation this test writes.
+    Asserting against the live corpus made a fixed encoding look like a broken
+    page — and would have gone quiet on the day somebody deleted the check.
     """
+    from app.api.routers import ui_flats as ui
+
     await _login(client, session)
 
+    # A real passage, under a section this citation does not name.
+    quote = "or/clackamas/wilsonville/4.planning.txt#L3035-L3036"
+    assert ui._misattributed("Wilsonville Development Code 4.113", quote) is None
+
+    found = ui._misattributed("Wilsonville Development Code 4.123", quote)
+
+    assert found == {"claimed": "4.123", "found": "4.113"}
+
+    # And the page says so where it finds one.
+    monkeypatch.setattr(ui, "_misattributed", lambda cite, quote: found)
     page = await client.get("/flats/review/or/clackamas/wilsonville")
 
     assert "The citation and the text disagree" in page.text
@@ -1102,15 +1226,53 @@ async def test_the_holes_have_a_page_of_their_own(
 
 
 async def test_a_gap_is_named_by_what_would_unstick_it(
-    client: AsyncClient, session: AsyncSession
+    client: AsyncClient, session: AsyncSession, monkeypatch: pytest.MonkeyPatch
 ):
     """"unquoted" is eight states that need opposite things.
 
     A boolean nothing can corroborate and a chapter nobody has found are both
     unquoted, and telling a reviewer to run the same command against each is
     how the readiness ladder came to point at work that could not be done.
+
+    The ledger is supplied. Read from the corpus this asserted that two named
+    causes were currently occurring, so closing the last unsourced gap in
+    Oregon turned it red — reporting a page that no longer explains itself
+    when what had happened was a hole being filled.
     """
+    from app.api.routers import ui_flats as ui
+
     await _login(client, session)
+
+    monkeypatch.setattr(
+        ui,
+        "_gaps",
+        lambda: {
+            "current": True,
+            "layers": {
+                "or/multnomah/gresham": {
+                    "label": "Gresham",
+                    "counts": {"uncheckable": 1, "unsourced": 1},
+                    "misattributed": [],
+                    "gaps": [
+                        {
+                            "zone": "LDR-5",
+                            "field": "quadplex_allowed",
+                            "cause": "uncheckable",
+                            "detail": "bool",
+                            "believed": "False",
+                        },
+                        {
+                            "zone": "LDR-5",
+                            "field": "min_lot_sqft",
+                            "cause": "unsourced",
+                            "detail": "",
+                            "believed": "5000",
+                        },
+                    ],
+                }
+            },
+        },
+    )
 
     page = await client.get("/flats/gaps")
 
@@ -1149,58 +1311,167 @@ async def test_the_written_ledger_matches_the_corpus_it_was_measured_from():
 
 
 async def test_the_holes_are_ranked_by_what_they_cost(
-    client: AsyncClient, session: AsyncSession
+    client: AsyncClient, session: AsyncSession, monkeypatch: pytest.MonkeyPatch
 ):
     """A gap count and a lot count rank differently, and the difference is the point.
 
-    Four gaps over eleven lots is a finished jurisdiction; one unencoded zone can
-    be sitting on fourteen thousand. Portland RM1 is the row that cost quadfit
-    40,500 lots by being an absence rather than a top line.
+    Four gaps over eleven lots is a finished jurisdiction; one unencoded zone
+    can be sitting on fourteen thousand. Portland RM1 was the row that cost
+    quadfit 40,500 lots by being an absence rather than a top line — and it is
+    encoded now, which is why the coverage rows here are supplied instead of
+    read. Encoding a zone must not be able to delete the check that the page
+    would show the next one.
+
+    ``_blocker`` runs for real on them, so the sentence a reviewer reads is the
+    one under test rather than a string this test wrote.
     """
+    from app.api.routers import ui_flats as ui
+    from flats.rules.ledger import CoverageRow
+
     await _login(client, session)
 
-    page = await client.get("/flats/gaps")
+    rows = [
+        CoverageRow(
+            jurisdiction="or/multnomah/portland",
+            zone="RM1",
+            lots=40_500,
+            acres=0.0,
+            status="zone_missing",
+            verified_fields=0,
+            total_fields=0,
+            missing_required="",
+            untrusted_fields="",
+            blocking=40_500,
+        ),
+        CoverageRow(
+            jurisdiction="or/multnomah/gresham",
+            zone="LDR-5",
+            lots=11,
+            acres=0.0,
+            status="encoded",
+            verified_fields=3,
+            total_fields=4,
+            missing_required="",
+            untrusted_fields="setback_front_ft",
+            blocking=11,
+        ),
+    ]
+    ui._coverage.cache_clear()
+    monkeypatch.setattr(ui, "read_coverage", lambda: rows)
+    try:
+        page = await client.get("/flats/gaps")
 
-    assert "What the holes cost, in lots" in page.text
-    assert "RM1" in page.text
-    assert "this zone has no encoding" in page.text
+        assert "What the holes cost, in lots" in page.text
+        assert "RM1" in page.text
+        assert "this zone has no encoding" in page.text
+        # The zone nothing has encoded costs 40,500 lots and the one missing a
+        # confirmation costs 11. Ranked by gap count they are one apiece.
+        assert page.text.index("RM1") < page.text.index("LDR-5")
+    finally:
+        ui._coverage.cache_clear()
 
 
 async def test_a_jurisdiction_nobody_counted_is_not_a_jurisdiction_with_no_lots(
-    client: AsyncClient, session: AsyncSession
+    client: AsyncClient, session: AsyncSession, monkeypatch: pytest.MonkeyPatch
 ):
-    """The parcel corpus covers two counties; the rules cover more than that.
+    """The parcel corpus reaches fewer jurisdictions than the rules do.
 
-    Leaving the other eighteen out of a page headed "what the holes cost" would
-    report them as costing nothing, which is the exact mistake — an unencoded
-    zone vanishing into an absence — that the coverage ledger exists to prevent.
+    Leaving the rest out of a page headed "what the holes cost" would report
+    them as costing nothing, which is the exact mistake — an unencoded zone
+    vanishing into an absence — that the coverage ledger exists to prevent.
+
+    One counted jurisdiction is supplied and every other encoded city has to
+    turn up in the uncounted list. Naming a particular city here made the test
+    a record of which cities the parcel corpus had reached that month.
     """
+    from app.api.routers import ui_flats as ui
+    from flats.rules.ledger import CoverageRow
+
     await _login(client, session)
 
-    page = await client.get("/flats/gaps")
+    counted = "or/multnomah/gresham"
+    ui._coverage.cache_clear()
+    monkeypatch.setattr(
+        ui,
+        "read_coverage",
+        lambda: [
+            CoverageRow(
+                jurisdiction=counted,
+                zone="LDR-5",
+                lots=11,
+                acres=0.0,
+                status="encoded",
+                verified_fields=3,
+                total_fields=4,
+                missing_required="",
+                untrusted_fields="setback_front_ft",
+                blocking=11,
+            )
+        ],
+    )
+    try:
+        page = await client.get("/flats/gaps")
 
-    assert "appear nowhere above" in page.text
-    # Encoded, and outside the counties the parcel corpus reaches.
-    assert "or/clackamas/lake-oswego" in page.text
-    # The state layer holds no lots and is nobody's uncounted jurisdiction.
-    assert ">or</a>" not in page.text
+        assert "appear nowhere above" in page.text
+        elsewhere = [
+            layer_id
+            for layer_id, layer in ui._layers().items()
+            if layer.kind in ("city", "unincorporated") and layer_id != counted
+        ]
+        assert elsewhere, "fixture assumption: the corpus holds more than one city"
+        missing = [one for one in elsewhere if one not in page.text]
+        assert not missing, missing
+        # The state layer holds no lots and is nobody's uncounted jurisdiction.
+        assert ">or</a>" not in page.text
+    finally:
+        ui._coverage.cache_clear()
 
 
 async def test_the_wrong_section_citations_are_a_list_not_only_a_banner(
-    client: AsyncClient, session: AsyncSession
+    client: AsyncClient, session: AsyncSession, monkeypatch: pytest.MonkeyPatch
 ):
     """A warning on a card is only seen by whoever happens to open that card.
 
-    126 of them is an afternoon's work, and an afternoon's work needs a list —
-    otherwise the only way to find the next one is to page through a review
-    queue looking for red.
+    An afternoon's work needs a list — otherwise the only way to find the next
+    one is to page through a review queue looking for red.
+
+    Supplied rather than measured. The corpus had 126 of these when this was
+    written and has none now, and a test that reads the live count asserts the
+    mistakes are still being made rather than that the page would show them.
     """
+    from app.api.routers import ui_flats as ui
+
     await _login(client, session)
+
+    monkeypatch.setattr(
+        ui,
+        "_gaps",
+        lambda: {
+            "current": True,
+            "layers": {
+                "or/clackamas/wilsonville": {
+                    "label": "Wilsonville",
+                    "counts": {},
+                    "gaps": [],
+                    "misattributed": [
+                        {
+                            "zone": "OTR",
+                            "field": "setback_front_ft",
+                            "claimed": "4.123",
+                            "found": "4.113",
+                        }
+                    ],
+                }
+            },
+        },
+    )
 
     page = await client.get("/flats/gaps")
 
     assert "Citations that name the wrong section" in page.text
     assert "Text is in" in page.text
+    assert "4.123" in page.text
+    assert "4.113" in page.text
 
 
 async def test_a_card_offers_the_page_itself(client: AsyncClient, session: AsyncSession):
@@ -1291,16 +1562,24 @@ async def test_the_queue_keeps_the_number_somebody_believed(
 
 
 async def test_the_queue_sends_a_searcher_to_the_lines_that_could_be_it(
-    client: AsyncClient, session: AsyncSession
+    client: AsyncClient, session: AsyncSession, monkeypatch: pytest.MonkeyPatch
 ):
     """A held-out standard is a hunt, and the hunt is mostly reading.
 
-    Portland R5's front setback is believed to be 20 feet. Whether that is the
-    code's answer is settled by looking at the lines in Portland's own chapter
-    that print a 20 — which is a search anybody can run and nobody should have
-    to run at a terminal.
+    Somebody believes Fairview's RM minimum lot is 10,000 square feet. Whether
+    that is the code's answer is settled by looking at the lines in Fairview's
+    own chapters that print a 10000 — a search anybody can run and nobody
+    should have to run at a terminal.
+
+    The queue is supplied rather than read, because reading it makes this a
+    test of whether that particular gap is still open.
     """
+    from app.api.routers import ui_flats as ui
+
     await _login(client, session)
+
+    address = ("or/multnomah/fairview", "RM", "min_lot_sqft")
+    monkeypatch.setattr(ui, "_queue", lambda: {address: _hunt(*address, 10000)})
 
     page = await client.get(
         "/flats/find/or/multnomah/fairview", params={"zone": "RM", "field": "min_lot_sqft"}
@@ -1312,15 +1591,24 @@ async def test_the_queue_sends_a_searcher_to_the_lines_that_could_be_it(
 
 
 async def test_a_standard_that_is_not_in_the_queue_has_no_hunt(
-    client: AsyncClient, session: AsyncSession
+    client: AsyncClient, session: AsyncSession, monkeypatch: pytest.MonkeyPatch
 ):
     """The address comes from a link, which means it comes from a URL bar too.
 
     A value that is encoded and quoted is not work; offering a search page for
     it would invite somebody to re-cite a standard that already has a citation,
     against a line they picked out of a list.
+
+    The queue holds one address here so the refusal is a refusal. Asserted
+    against the real queue this passed for the wrong reason the moment the
+    corpus had no gaps left in it — an empty queue refuses everything.
     """
+    from app.api.routers import ui_flats as ui
+
     await _login(client, session)
+
+    address = ("or/multnomah/fairview", "RM", "min_lot_sqft")
+    monkeypatch.setattr(ui, "_queue", lambda: {address: _hunt(*address, 10000)})
 
     page = await client.get(
         "/flats/find/or/multnomah/portland", params={"zone": "R5", "field": "setback_front_ft"}
@@ -1330,22 +1618,32 @@ async def test_a_standard_that_is_not_in_the_queue_has_no_hunt(
 
 
 async def test_the_hunt_says_so_when_the_chapter_was_never_fetched(
-    client: AsyncClient, session: AsyncSession
+    client: AsyncClient, session: AsyncSession, monkeypatch: pytest.MonkeyPatch
 ):
     """No line stating it is not a dead end — it is the finding.
 
     Either the chapter that states this standard has never been fetched, or the
     number was never in this code at all, and both are worth more to a reviewer
     than another afternoon reading the documents that are there.
+
+    The believed number is one no Fairview chapter prints, which is what makes
+    the search come back empty. The old assertion allowed the word "line"
+    anywhere on the page as a pass, and the page says "line" in its own
+    furniture — it would have gone green on a page full of candidates.
     """
+    from app.api.routers import ui_flats as ui
+
     await _login(client, session)
+
+    address = ("or/multnomah/fairview", "R/SFLD", "min_lot_sqft")
+    monkeypatch.setattr(ui, "_queue", lambda: {address: _hunt(*address, 987654)})
 
     page = await client.get(
         "/flats/find/or/multnomah/fairview", params={"zone": "R/SFLD", "field": "min_lot_sqft"}
     )
 
     assert page.status_code == 200
-    assert "never been fetched" in page.text or "line" in page.text
+    assert "No line in this jurisdiction's fetched code states it." in page.text
 
 
 async def test_the_table_row_is_offered_before_the_prose_that_mentions_it(
@@ -1360,7 +1658,13 @@ async def test_the_table_row_is_offered_before_the_prose_that_mentions_it(
     """
     from app.api.routers import ui_flats as ui
 
-    item = ui._queue()[("or/multnomah/gresham", "LDR-PV", "quadplex_allowed")]
+    item = _hunt(
+        "or/multnomah/gresham",
+        "LDR-PV",
+        "quadplex_allowed",
+        True,
+        ["or/multnomah/gresham/4.0100.residential.txt"],
+    )
 
     candidates, _ = ui._candidates(item)
 
@@ -1376,7 +1680,7 @@ async def test_a_cut_list_says_how_much_it_cut(client: AsyncClient, session: Asy
     """
     from app.api.routers import ui_flats as ui
 
-    item = ui._queue()[("or/multnomah/gresham", "LDR-PV", "quadplex_allowed")]
+    item = _hunt("or/multnomah/gresham", "LDR-PV", "quadplex_allowed", True)
 
     candidates, dropped = ui._candidates(item, limit=3)
 
@@ -1396,7 +1700,13 @@ async def test_a_flattened_row_is_shown_with_the_cells_under_it(
     """
     from app.api.routers import ui_flats as ui
 
-    item = ui._queue()[("or/clackamas/_unincorporated", "R5", "quadplex_allowed")]
+    item = _hunt(
+        "or/clackamas/_unincorporated",
+        "R5",
+        "quadplex_allowed",
+        True,
+        ["or/clackamas/_unincorporated/zdo.315.txt"],
+    )
 
     candidates, _ = ui._candidates(item)
 
@@ -1749,3 +2059,80 @@ async def test_the_card_calls_a_title_a_title(
 
     assert "Title 11" in response.text
     assert "Section 11 " not in response.text
+
+
+async def test_a_rejected_number_reads_as_rejected_on_the_screen(
+    client: AsyncClient, session: AsyncSession, monkeypatch: pytest.MonkeyPatch
+):
+    """Trust is applied at load, and the screen has to be reading that load.
+
+    A rule file may not say ``verified`` or ``disputed`` -- the loader refuses
+    both -- so the signature logs are the only thing that ever moves a value
+    off ``draft``. A page built from the parse output alone would report every
+    number in the corpus as unread however many verdicts had been drained into
+    the repository, and a reviewer would go on being shown a number somebody
+    had already rejected with nothing on the screen to say so.
+    """
+    from datetime import date
+
+    from app.api.routers import ui_flats as ui
+    from flats.encode.dispute import Dispute, DisputeLog
+    from flats.encode.verify import fingerprint
+    from flats.rules.model import Status
+
+    await _login(client, session)
+
+    layer_id, zone, field = "or/multnomah/gresham", "LDR-5", "setback_front_ft"
+    number = ui._layers()[layer_id].zones[zone].values[field]
+    assert number.status is Status.draft, "nothing in the corpus is signed yet"
+
+    rejected = DisputeLog(
+        [
+            Dispute(
+                layer=layer_id,
+                zone=zone,
+                field=field,
+                fingerprint=fingerprint(
+                    layer_id,
+                    zone,
+                    field,
+                    number.value,
+                    cite=number.prov.cite,
+                    quote=number.prov.quote,
+                ),
+                reviewer="sjk",
+                raised=date(2026, 8, 23),
+                note="the row read is the corner-lot column, not the interior one",
+            )
+        ]
+    )
+    monkeypatch.setattr(
+        DisputeLog, "load", classmethod(lambda cls, path=None: rejected)
+    )
+    ui._layers.cache_clear()
+    try:
+        assert ui._layers()[layer_id].zones[zone].values[field].status is Status.disputed
+
+        response = await client.get("/flats/" + layer_id)
+
+        assert response.status_code == 200
+        assert "rejected" in response.text
+    finally:
+        # The cache outlives monkeypatch's undo, so a stale entry here would
+        # leak a disputed corpus into every test that ran after this one.
+        ui._layers.cache_clear()
+
+
+async def test_every_gap_cause_is_said_in_words_a_reviewer_can_act_on():
+    """A cause with no sentence renders as its own slug and says nothing.
+
+    The gaps page exists to tell somebody what would unstick a standard, and
+    the encoder's vocabulary does not do that: "unmapped" on a page is a word,
+    not a next step. Adding a cause to the ledger and not to the page is a
+    silent way of shipping one — which is how ``unmapped`` reached production
+    as a bare word in a table cell.
+    """
+    from app.api.routers.ui_flats import _CAUSE_WORDS
+    from flats.encode.gaps import CAUSES
+
+    assert not [cause for cause in CAUSES if cause not in _CAUSE_WORDS]

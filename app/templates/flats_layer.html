@@ -82,6 +82,9 @@
             {% if row.trusted %}
               <span class="badge badge-green">verified</span>
               {% if row.reviewer %}<span class="muted" style="font-size:11px">{{ row.reviewer }}</span>{% endif %}
+            {% elif row.status == "disputed" %}
+              {# Somebody looked and said no. A plain badge would read as unread. #}
+              <span class="badge badge-yellow">rejected</span>
             {% else %}
               <span class="badge">{{ row.status }}</span>
             {% endif %}
