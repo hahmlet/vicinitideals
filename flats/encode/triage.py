@@ -168,6 +168,12 @@ class Card:
     #: Defaults to the commonest rather than the truest, because most of these
     #: are sections and every card that finds a citing sentence overrides it.
     kind: str = "Section"
+    #: The reference this one sits inside, where that is also in the queue.
+    #: Portland's Title 11 and its Chapter 11.50 are one fetch and were two
+    #: cards in a row, showing the same lots and the same sentences.
+    inside: str = ""
+    #: References inside this one that are also in the queue.
+    contains: tuple[str, ...] = ()
     ruling: Ruling | None = None
 
     @property
@@ -217,6 +223,39 @@ class Card:
     @property
     def docs(self) -> tuple[str, ...]:
         return tuple(sorted({m.doc for m in self.mentions}))
+
+    @property
+    def distinct(self) -> tuple[tuple[Mention, int], ...]:
+        """The mentions worth reading, each with how many places repeat it.
+
+        A code says the same sentence in every zone's chapter. Portland's tree
+        reference is written fourteen times and says eight different things,
+        and the four the card showed were the four that repeat -- the two that
+        carry anything ("a Title 11 tree permit must be obtained", "Large
+        canopy trees are defined in") were behind "and 10 more mentions".
+
+        Binding first, because the mention standing next to a number we use is
+        the one the question is about. Repeats are counted rather than dropped:
+        a sentence written in every chapter of the code is a different kind of
+        fact from one written once.
+        """
+        order: list[str] = []
+        seen: dict[str, tuple[Mention, int]] = {}
+        for m in self.mentions:
+            key = " ".join(m.text.split())
+            if key in seen:
+                first, count = seen[key]
+                # A binding instance outranks a non-binding one written first:
+                # it is the same sentence, but only one of them is next to the
+                # number, and that is the copy worth citing.
+                keep = m if (m.binding and not first.binding) else first
+                seen[key] = (keep, count + 1)
+                continue
+            order.append(key)
+            seen[key] = (m, 1)
+        rows = [seen[k] for k in order]
+        rows.sort(key=lambda r: (not r[0].binding, -r[1]))
+        return tuple(rows)
 
     @property
     def live_lots(self) -> int:
@@ -461,6 +500,7 @@ def cards(
         scanned = tuple(_scan(layer, store))
         _SCANNED[layer.layer] = scanned
     extra = overrides or {}
+    family = _nesting(tuple(c.ref for c in scanned))
     return [
         Card(
             layer=c.layer,
@@ -470,10 +510,37 @@ def cards(
             zone_lots=c.zone_lots,
             title=c.title,
             kind=c.kind,
+            inside=family[c.ref][0],
+            contains=family[c.ref][1],
             ruling=extra.get((c.layer, c.ref)) or layer.crossrefs.get(c.ref),
         )
         for c in scanned
     ]
+
+
+def _nesting(refs: Sequence[str]) -> dict[str, tuple[str, tuple[str, ...]]]:
+    """Which references in this queue sit inside which others.
+
+    Codes number by containment -- Portland's Chapter 11.50 is inside its
+    Title 11, and 195 of 1,446 cards have a parent somewhere in the same
+    queue. Ruling the parent answers the child, and the two arrived back to
+    back showing identical lots and identical sentences, so a reviewer
+    answered the same question twice without being told it was the same
+    question.
+
+    Not merged. Fetching a title and fetching one chapter of it are different
+    fetches, and a code can publish a chapter separately. Named, so the
+    decision is made once knowingly rather than twice unknowingly.
+    """
+    out: dict[str, tuple[str, tuple[str, ...]]] = {}
+    for ref in refs:
+        parents = [p for p in refs if p != ref and ref.startswith(p + ".")]
+        # The nearest one. A section inside a chapter inside a title has two,
+        # and the useful one is the smallest thing that already covers it.
+        parent = max(parents, key=len) if parents else ""
+        kids = tuple(sorted(k for k in refs if k != ref and k.startswith(ref + ".")))
+        out[ref] = (parent, kids)
+    return out
 
 
 def _scan(layer: Layer, store: ProvenanceStore | None = None) -> list[Card]:

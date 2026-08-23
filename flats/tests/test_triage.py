@@ -25,6 +25,7 @@ from flats.encode.triage import (
     _curve,
     _key,
     _named_in,
+    _nesting,
     _num,
     _splice,
     _title_in,
@@ -637,3 +638,107 @@ def test_no_standard_reaches_the_card_as_a_python_repr() -> None:
         for n in card.neighbours:
             assert "[" not in n.shown, f"{card.layer} {card.ref} {n.field}: {n.shown}"
             assert not n.shown.endswith("..."), f"{card.layer} {card.ref}: {n.shown}"
+
+
+# --- which of fourteen mentions is worth reading ----------------------------
+
+
+def test_the_card_shows_what_the_reference_says_not_how_often_it_says_it() -> None:
+    """Portland's tree reference is written fourteen times and says eight
+    different things. The card showed the first four in document order, which
+    were four copies of the same boilerplate sentence -- and put the two that
+    carried anything ("a Title 11 tree permit must be obtained", "Large canopy
+    trees are defined in") behind "and 10 more mentions".
+    """
+    rows = {c.ref: c for c in feed(layer="or/multnomah/portland")}
+    if "11" not in rows:
+        pytest.skip("Title 11 not in the current Portland feed")
+    card = rows["11"]
+
+    assert len(card.mentions) > len(card.distinct), "boilerplate was repeated"
+    texts = [" ".join(m.text.split()) for m, _ in card.distinct]
+    assert len(texts) == len(set(texts)), "and it is not repeated on the card"
+    assert sum(n for _, n in card.distinct) == len(card.mentions), "none dropped"
+
+
+def test_the_mention_beside_a_number_leads() -> None:
+    """The card asks whether this chapter can change a number we screen on.
+    The mention standing next to that number is the evidence for the question
+    being asked, and it was third on the list."""
+    card = Card(
+        layer="or/x",
+        ref="1.1",
+        mentions=(
+            Mention(doc="a.txt", line=1, text="somewhere else entirely", binding=False),
+            Mention(doc="a.txt", line=2, text="also elsewhere", binding=False),
+            Mention(doc="b.txt", line=9, text="right by the setback", binding=True),
+        ),
+        neighbours=(),
+    )
+
+    assert card.distinct[0][0].binding
+    assert card.distinct[0][0].line == 9
+
+
+def test_a_repeated_sentence_is_counted_at_the_binding_copy() -> None:
+    """Same sentence in two places, one of them next to a number. The card
+    should cite the copy that is next to the number and say the other exists,
+    not cite the first one it happened to read."""
+    card = Card(
+        layer="or/x",
+        ref="1.1",
+        mentions=(
+            Mention(doc="a.txt", line=3, text="see Section 1.1", binding=False),
+            Mention(doc="b.txt", line=7, text="see  Section 1.1", binding=True),
+        ),
+        neighbours=(),
+    )
+
+    assert len(card.distinct) == 1
+    shown, repeats = card.distinct[0]
+    assert repeats == 2
+    assert shown.line == 7 and shown.binding
+
+
+def test_every_mention_is_accounted_for_on_every_card() -> None:
+    """Deduplication that loses one is a card quietly showing less evidence
+    than the corpus holds."""
+    for card in feed():
+        assert sum(n for _, n in card.distinct) == len(card.mentions), card.key
+
+
+def test_a_reference_says_when_a_bigger_one_in_the_queue_already_covers_it() -> None:
+    """Portland's Title 11 and its Chapter 11.50 came up back to back with the
+    same lots and the same sentences, and nothing said they were one fetch.
+
+    Not merged -- fetching a title and fetching one chapter of it are
+    different fetches and a code can publish a chapter on its own. Named, so
+    the decision is made once knowingly instead of twice unknowingly.
+    """
+    rows = {c.ref: c for c in feed(layer="or/multnomah/portland")}
+    if "11" not in rows or "11.50" not in rows:
+        pytest.skip("Title 11 and Chapter 11.50 not both in the current feed")
+
+    assert rows["11"].inside == ""
+    assert "11.50" in rows["11"].contains
+    assert rows["11.50"].inside == "11"
+
+
+def test_nesting_names_the_nearest_container_not_the_largest() -> None:
+    """A section inside a chapter inside a title has two ancestors, and the
+    useful one is the smallest thing that already covers it."""
+    got = _nesting(("11", "11.50", "11.50.030", "33.100"))
+
+    assert got["11.50.030"][0] == "11.50"
+    assert got["11.50"][0] == "11"
+    assert got["33.100"][0] == ""
+    assert got["11"][1] == ("11.50", "11.50.030")
+
+
+def test_a_sibling_is_not_a_parent() -> None:
+    """33.100 and 33.110 are two chapters of one title, not one inside the
+    other, and a prefix test that ignored the dot would call them nested."""
+    got = _nesting(("33.100", "33.110", "33.1"))
+
+    assert got["33.110"][0] == ""
+    assert got["33.100"][0] == ""

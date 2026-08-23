@@ -38,9 +38,23 @@
   </span>
 </div>
 <div class="muted" style="font-size:12px;margin-bottom:14px">
-  Written {{ card.mentions|length }}&times;, {{ card.binding }} of them beside a number we use
+  Written {{ card.mentions|length }}&times; in {{ card.docs|length }} document{{ "" if card.docs|length == 1 else "s" }},
+  saying {{ card.distinct|length }} different thing{{ "" if card.distinct|length == 1 else "s" }}
+  &middot; {{ card.binding }} beside a number we use
   {%- if card.ruling %} &middot; already ruled <strong>{{ card.ruling.outcome }}</strong>{% endif %}
 </div>
+
+{% if card.inside or card.contains %}
+<div class="muted" style="font-size:11px;margin:0 0 12px;padding:6px 8px;border-left:2px solid var(--line,#e5e7eb)">
+  {% if card.inside %}
+    Sits inside <strong>{{ card.inside }}</strong>, which is also in this queue &mdash;
+    fetching that one would cover this one.
+  {% else %}
+    Contains {% for k in card.contains %}<strong>{{ k }}</strong>{{ ", " if not loop.last }}{% endfor %},
+    also in this queue &mdash; fetching this one would cover {{ "them" if card.contains|length > 1 else "it" }}.
+  {% endif %}
+</div>
+{% endif %}
 
 <div style="font-size:13px;font-weight:600;margin:0 0 8px">
   Does this chapter change a number we screen on?
@@ -83,29 +97,31 @@
 <div class="muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin:18px 0 4px">
   Where it is written
 </div>
-{% for m in card.mentions[:4] %}
-<div style="font-size:12px;margin:0 0 6px;padding-left:10px;border-left:2px solid var(--line,#e5e7eb)">
+{% for m, repeats in card.distinct[:5] %}
+<div style="font-size:12px;margin:0 0 6px;padding-left:10px;border-left:2px solid {% if m.binding %}#9ca3af{% else %}var(--line,#e5e7eb){% endif %}">
   <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap">{{ m.text }}</div>
   <div class="muted" style="font-size:11px;margin-top:2px">
     {#
-      The stored text, not the book. Two thirds of these documents have no page
-      map, and the PDF route refuses outright without one -- and a "#L229"
-      fragment means nothing to a PDF viewer even where it does open. The
-      stored lines are what the citation actually addresses and they resolve
-      for every document in the corpus.
+      The stored text, not the book. Most of these documents have no page map,
+      and the PDF route refuses outright without one -- and a "#L229" fragment
+      means nothing to a PDF viewer even where it does open. The stored lines
+      are what the citation actually addresses and they resolve for every
+      document in the corpus.
     #}
     <a href="#" role="button"
        hx-get="/ui/flats/quote?ref={{ (card.layer ~ '/' ~ m.doc ~ '#L' ~ m.line) | urlencode }}"
        hx-target="#seen-{{ loop.index }}"
        hx-swap="innerHTML">{{ m.doc }}</a>,
-    line {{ m.line }}{% if m.binding %} &middot; beside a number we use{% endif %}
+    line {{ m.line }}
+    {%- if repeats > 1 %} &middot; and {{ repeats - 1 }} more place{{ "" if repeats == 2 else "s" }} saying this{% endif %}
+    {%- if m.binding %} &middot; <strong>beside a number we use</strong>{% endif %}
   </div>
   <div id="seen-{{ loop.index }}"></div>
 </div>
 {% endfor %}
-{% if card.mentions|length > 4 %}
+{% if card.distinct|length > 5 %}
 <div class="muted" style="font-size:11px">
-  and {{ card.mentions|length - 4 }} more mention{{ "" if card.mentions|length - 4 == 1 else "s" }}
+  and {{ card.distinct|length - 5 }} more that say something different
 </div>
 {% endif %}
 
