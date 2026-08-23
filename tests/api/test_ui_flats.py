@@ -1532,8 +1532,11 @@ async def test_the_queue_asks_one_question_about_one_reference(
 
     assert response.status_code == 200
     assert "Does this chapter change a number we screen on?" in response.text
-    # The sort's whole claim, printed where the reviewer can see it.
-    assert "lots at stake" in response.text
+    # The lot counts are gone from the page on purpose -- a reviewer deciding
+    # whether a chapter can change a number could do nothing with a six-figure
+    # total, and it was on every card twice. The queue is still ranked on it.
+    assert "lots at stake" not in response.text
+    assert "Standards written near it" in response.text
 
 
 async def test_a_ruling_lands_in_the_inbox_and_the_row_leaves_the_queue(

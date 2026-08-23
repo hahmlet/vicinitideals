@@ -14,11 +14,9 @@
   <div style="font-size:15px">Nothing left in this queue.</div>
   <div class="muted" style="font-size:12px;margin-top:6px">
     {% if skipped %}
-      You skipped past {{ skipped }}. <a href="?">Start again from the top</a>, or
-      widen the filters.
+      Skipped past {{ skipped }}. <a href="?">Start from the top</a>, or widen the filters.
     {% else %}
-      Every reference matching these filters has been ruled. Widen the filters, or
-      tick <em>show ruled</em> to read the decisions back.
+      All ruled. Widen the filters, or tick <em>show ruled</em> to read them back.
     {% endif %}
   </div>
 </div>
@@ -28,32 +26,19 @@
   <h3 style="margin:0;font-size:17px">
     {{ labels.get(card.layer, card.layer) }} &middot; {{ card.kind }} {{ card.ref }}{% if card.title %}<span style="font-weight:400"> &mdash; {{ card.title }}</span>{% endif %}
   </h3>
-  <span style="margin-left:auto;font-size:13px;text-align:right">
-    <strong>{{ "{:,}".format(card.live_lots) }}</strong> <span class="muted">lots at stake</span>
-    {% if card.lots != card.live_lots %}
-    <div class="muted" style="font-size:11px">
-      near {{ "{:,}".format(card.lots) }} in all, but only these have a standard with room in it
-    </div>
-    {% endif %}
-  </span>
 </div>
 <div class="muted" style="font-size:12px;margin-bottom:14px">
-  Written {{ card.mentions|length }}&times; in {{ card.docs|length }} document{{ "" if card.docs|length == 1 else "s" }},
-  {% if card.distinct|length == 1 %}saying the same thing every time
-  {%- else %}saying {{ card.distinct|length }} different things{% endif %}
-  &middot; {{ card.binding }} beside a number we use
-  {%- if card.ruling %} &middot; already ruled <strong>{{ card.ruling.outcome }}</strong>{% endif %}
+  {{ card.mentions|length }} mention{{ "" if card.mentions|length == 1 else "s" }}
+  &middot; {{ card.docs|length }} document{{ "" if card.docs|length == 1 else "s" }}
+  &middot; {{ card.distinct|length }} distinct
+  &middot; {{ card.binding }} next to a standard
+  {%- if card.ruling %} &middot; ruled <strong>{{ card.ruling.outcome }}</strong>{% endif %}
 </div>
 
 {% if card.inside or card.contains %}
 <div class="muted" style="font-size:11px;margin:0 0 12px;padding:6px 8px;border-left:2px solid var(--line,#e5e7eb)">
-  {% if card.inside %}
-    Sits inside <strong>{{ card.inside }}</strong>, which is also in this queue &mdash;
-    fetching that one would cover this one.
-  {% else %}
-    Contains {% for k in card.contains %}<strong>{{ k }}</strong>{{ ", " if not loop.last }}{% endfor %},
-    also in this queue &mdash; fetching this one would cover {{ "them" if card.contains|length > 1 else "it" }}.
-  {% endif %}
+  {% if card.inside %}Inside <strong>{{ card.inside }}</strong>, also queued &mdash; fetch that instead.
+  {%- else %}Covers {% for k in card.contains %}<strong>{{ k }}</strong>{{ ", " if not loop.last }}{% endfor %}, also queued.{% endif %}
 </div>
 {% endif %}
 
@@ -63,7 +48,7 @@
 
 {% if card.neighbours %}
 <div class="muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin:14px 0 4px">
-  It stands beside
+  Standards written near it
 </div>
 <table style="width:100%;font-size:12px;border-collapse:collapse">
   {% for n in card.neighbours[:8] %}
@@ -74,8 +59,7 @@
     </td>
     <td style="padding:4px 8px;color:#6b7280">{{ n.zones|join(", ") }}</td>
     <td style="padding:4px 0 4px 8px;text-align:right;white-space:nowrap">
-      {{ "{:,}".format(n.lots) }} lots
-      <span class="muted">&middot;
+      <span class="muted">
         {%- if n.distance == 0 %} same line
         {%- elif n.distance == 1 %} 1 line away
         {%- else %} {{ n.distance }} lines away{% endif %}</span>
@@ -90,8 +74,7 @@
 {% endif %}
 {% else %}
 <div class="muted" style="font-size:12px;margin:12px 0">
-  Not beside any number we encoded — it is referenced, but nowhere near a standard
-  this screen reads. That usually means <em>a process, not a standard</em>.
+  No standards written near it. Usually a process, not a standard.
 </div>
 {% endif %}
 
@@ -152,7 +135,7 @@
   </div>
 
   <label class="muted" style="font-size:11px;display:block;margin-bottom:3px">
-    Why — in your own words. Anything the buttons above do not cover goes here.
+    Why? Required, {{ min_note }} characters or more.
   </label>
   <textarea name="note" rows="3"
             style="width:100%;font-size:12px;font-family:inherit;padding:6px"
@@ -167,15 +150,13 @@
     </button>
     <span class="muted" style="font-size:11px">
       {{ remaining }} left{% if skipped %}, {{ skipped }} skipped{% endif %}
-      &middot; {{ "{:,}".format(lots) }} lots that can still move
     </span>
   </div>
 
   {% if pending %}
   <div class="muted" style="font-size:11px;margin-top:8px">
-    {{ pending }} decision{{ "" if pending == 1 else "s" }} recorded and not yet written
-    into the rule files. Until they are, the screen still reads these chapters as
-    unfetched — decided is not the same as in force.
+    {{ pending }} decision{{ "" if pending == 1 else "s" }} not yet written into the
+    rule files. Decided is not in force.
   </div>
   {% endif %}
 </form>
