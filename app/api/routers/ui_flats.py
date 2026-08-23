@@ -642,15 +642,41 @@ def _misattributed(cite: str, quote: str) -> dict[str, str] | None:
 
 
 def _span(ref: str) -> tuple[int, int] | None:
-    """The line range a citation names, or None if it names no lines."""
+    """The line range a citation names, or None if it names no lines.
+
+    A citation may name several disjoint ranges -- a table row and the
+    footnote printed pages under it -- and they arrive comma separated::
+
+        4.planning.txt#L13405-L13414,L13416-L13420
+
+    What comes back is the hull covering all of them, which is what every
+    caller wants: the stretch of document a reading was taken from.
+
+    Splitting only on ``-`` raised on ``int("13414,13416")`` and returned
+    None. None means "names no lines", so :func:`_within` matched nothing,
+    the signing route wrote zero rows, and it reported success. 962 of 2,150
+    cited values -- 45 percent of the corpus -- could not be signed at all,
+    and nothing said so.
+    """
     _, _, fragment = ref.partition("#L")
     if not fragment:
         return None
-    try:
-        parts = [int(x) for x in fragment.replace("L", "").split("-")]
-    except ValueError:
+    lines: list[int] = []
+    for part in fragment.replace("L", "").split(","):
+        for edge in part.split("-"):
+            edge = edge.strip()
+            if not edge:
+                continue
+            try:
+                lines.append(int(edge))
+            except ValueError:
+                # One unreadable edge is not a reason to discard the ranges
+                # that did parse. Everything unreadable still lands on the
+                # empty check below.
+                continue
+    if not lines:
         return None
-    return parts[0], parts[-1]
+    return min(lines), max(lines)
 
 
 #: How far apart two citations may sit and still be one reading. A zone's

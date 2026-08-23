@@ -512,6 +512,56 @@ async def test_a_card_covers_only_the_lines_it_showed():
     assert not _within("other.txt#L142", "doc.txt", window), "another document"
 
 
+async def test_a_citation_naming_two_ranges_is_still_one_reading():
+    """The bug that made signing silently do nothing for half the corpus.
+
+    A value read off a table row and the footnote printed pages under it
+    cites both, comma separated. The parser split the fragment on "-" alone,
+    so int("13414,13416") raised and the whole citation came back as naming
+    no lines. _within then said the value was not on screen, the signing
+    route matched nothing, wrote nothing, and reported success.
+
+    962 of 2,150 cited values -- 45 percent, worst in Gresham and Portland --
+    could not be signed by anybody, and no error was ever shown.
+    """
+    from app.api.routers.ui_flats import _span, _within
+
+    assert _span("4.planning.txt#L13405-L13414,L13416-L13420") == (13405, 13420)
+    # The forms that already worked keep working.
+    assert _span("doc.txt#L10-L20") == (10, 20)
+    assert _span("doc.txt#L229") == (229, 229)
+    assert _span("doc.txt#L10-L20,L25") == (10, 25)
+    # Naming no lines is still naming no lines.
+    assert _span("doc.txt") is None
+    assert _span("doc.txt#Lnonsense") is None
+
+    # And the value now falls inside a window that covers both ranges.
+    window = (13400, 13425)
+    assert _within("4.planning.txt#L13405-L13414,L13416-L13420",
+                   "4.planning.txt", window)
+    assert not _within("4.planning.txt#L13405-L13414,L13416-L13999",
+                       "4.planning.txt", window), "runs past the end"
+
+
+async def test_every_cited_value_in_the_corpus_names_readable_lines():
+    """Stated against the corpus, because the parser is only as good as the
+    citation shapes it actually meets. A shape nobody anticipated returns
+    None, and None is indistinguishable from "cites no lines" -- which is how
+    45 percent of the corpus went unsignable without a single error.
+    """
+    from app.api.routers.ui_flats import _span, _value_rows
+    from flats.rules.loader import load_rules
+
+    unreadable = [
+        (key, row["zone"], row["field"], row["quote"])
+        for key, layer in load_rules().items()
+        for row in _value_rows(layer)
+        if row.get("quote") and _span(row["quote"]) is None
+    ]
+
+    assert not unreadable, f"{len(unreadable)} citations name no readable lines"
+
+
 # --- feedback, and the bundle it becomes -------------------------------
 #
 # A bare "wrong" is not actionable, and a note that outlives the page it was
