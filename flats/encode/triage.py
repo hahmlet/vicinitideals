@@ -254,7 +254,35 @@ class Card:
                 continue
             order.append(key)
             seen[key] = (m, 1)
-        rows = [seen[k] for k in order]
+        # One quote that is the opening of another is the same statement read
+        # off a narrower column. "...are specified in Title 11." and "...are
+        # specified in Title 11, Trees." are one sentence and the longer one
+        # contains the shorter whole, so folding them loses nothing.
+        #
+        # Only prefixes. Merging on a similarity score was measured against
+        # the corpus and collapses "P P P Accessory dwelling units complying
+        # with Section 16.44.050" into "X X X Accessory dwelling units..." at
+        # 0.945 -- permitted and prohibited, told apart by one letter -- and
+        # "the minimum lot size standards apply" into "the minimum and maximum
+        # lot size standards apply". A queue that shows one sentence twice
+        # wastes a reader's time; one that silently merges two rules is wrong.
+        merged: list[tuple[str, Mention, int]] = []
+        for key in order:
+            mention, count = seen[key]
+            for i, (other, kept, tally) in enumerate(merged):
+                if not (key.startswith(other) or other.startswith(key)):
+                    continue
+                keep = mention if (mention.binding and not kept.binding) else kept
+                if keep is kept and mention.binding == kept.binding:
+                    # Neither is more binding than the other, so show whichever
+                    # says more. Never a text from one document under another
+                    # document's line number.
+                    keep = max((kept, mention), key=lambda m: len(m.text))
+                merged[i] = (max(other, key, key=len), keep, tally + count)
+                break
+            else:
+                merged.append((key, mention, count))
+        rows = [(m, n) for _, m, n in merged]
         rows.sort(key=lambda r: (not r[0].binding, -r[1]))
         return tuple(rows)
 

@@ -122,7 +122,8 @@
 {% endfor %}
 {% if card.distinct|length > 5 %}
 <div class="muted" style="font-size:11px">
-  and {{ card.distinct|length - 5 }} more that say something different
+  and {{ card.distinct|length - 5 }} more that
+  say{{ "s" if card.distinct|length - 5 == 1 else "" }} something different
 </div>
 {% endif %}
 

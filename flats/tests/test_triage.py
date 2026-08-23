@@ -892,3 +892,74 @@ def test_the_same_sentence_under_different_section_numbers_collapses() -> None:
     assert len(texts) == len(set(texts))
     for text in texts:
         assert not _HEADING.match(text.lstrip("…")), text
+
+
+def test_a_quote_that_is_the_opening_of_another_is_the_same_quote() -> None:
+    """One column is narrower than another and the sentence stops earlier.
+    "...are specified in Title 11." and "...are specified in Title 11, Trees."
+    are one statement, and the longer one contains the shorter whole, so
+    folding them loses nothing."""
+    card = Card(
+        layer="or/x",
+        ref="11",
+        mentions=(
+            Mention(doc="a.txt", line=1, text="Trees are specified in Title 11.", binding=False),
+            Mention(doc="b.txt", line=2, text="Trees are specified in Title 11, Trees.", binding=False),
+        ),
+        neighbours=(),
+    )
+
+    assert len(card.distinct) == 1
+    shown, repeats = card.distinct[0]
+    assert repeats == 2
+    assert shown.text.endswith("Title 11, Trees."), "the one that says more"
+
+
+def test_two_quotes_that_merely_resemble_each_other_are_left_alone() -> None:
+    """Measured against the corpus, a 0.92 similarity merge collapses "P P P
+    Accessory dwelling units complying with Section 16.44.050" into "X X X
+    Accessory dwelling units complying with Section 16.44.050" -- permitted
+    and prohibited, told apart by one letter -- and "the minimum lot size
+    standards apply" into "the minimum and maximum lot size standards apply".
+
+    A queue that shows one sentence twice wastes a reader's time. One that
+    silently merges two rules is wrong. Only containment folds.
+    """
+    card = Card(
+        layer="or/x",
+        ref="16.44.050",
+        mentions=(
+            Mention(doc="a.txt", line=1, binding=False,
+                    text="P P P Accessory dwelling units complying with Section 16.44.050"),
+            Mention(doc="a.txt", line=2, binding=False,
+                    text="X X X Accessory dwelling units complying with Section 16.44.050"),
+            Mention(doc="a.txt", line=3, binding=False,
+                    text="The minimum lot size standards apply as established here."),
+            Mention(doc="a.txt", line=4, binding=False,
+                    text="The minimum and maximum lot size standards apply as established here."),
+        ),
+        neighbours=(),
+    )
+
+    assert len(card.distinct) == 4
+
+
+def test_a_fold_never_shows_one_document_s_words_under_another_s_line() -> None:
+    """The longer text wins only when nothing else distinguishes them. Where
+    one is beside a number we use, that one is the citation -- showing its
+    line number over the other document's sentence would be a fabricated
+    quote."""
+    card = Card(
+        layer="or/x",
+        ref="11",
+        mentions=(
+            Mention(doc="long.txt", line=1, text="Trees are in Title 11, Trees.", binding=False),
+            Mention(doc="short.txt", line=9, text="Trees are in Title 11.", binding=True),
+        ),
+        neighbours=(),
+    )
+
+    shown, repeats = card.distinct[0]
+    assert repeats == 2
+    assert shown.doc == "short.txt" and shown.line == 9
+    assert shown.text == "Trees are in Title 11.", "its own words, not the other's"
