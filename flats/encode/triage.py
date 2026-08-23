@@ -58,6 +58,7 @@ from flats.encode.crossrefs import (
     _headings,
     _resolves,
 )
+from flats.encode.legible import is_grid, legible
 from flats.provenance.store import ProvenanceStore, parse_quote
 from flats.rules.fields import FIELDS
 from flats.rules.ledger import read_coverage
@@ -315,6 +316,12 @@ def _window(line: str, start: int, end: int) -> str:
         body = "…" + body
     if end + half < len(line):
         body = body + "…"
+    # A line the extractor wrapped ends mid-clause even when nothing was cut
+    # here: "...standards in Section 7.0112 shall apply to new" is the whole
+    # line, and the rest of the sentence is on the next one. Unmarked it reads
+    # as a sentence the code left unfinished.
+    if not body.endswith(("…", ".", ";", ":", "!", "?", "·")):
+        body += "…"
     return body
 
 
@@ -353,6 +360,73 @@ def _named_in(ref: str, line: str, nxt: str = "") -> tuple[str, str]:
     return (kind, title) if len(title) > 3 else (kind, "")
 
 
+#: Where one sentence ends and the next begins. A full stop, then space, then
+#: something that starts a sentence. Written to miss "33.236" and "Section
+#: 7.0420." followed by a lower-case word, because splitting inside a citation
+#: is how a quote comes to end on the number it was shown for.
+_SENTENCE = re.compile(r"(?<=[.;:])\s+(?=[A-Z(]|\d+\.\d)")
+
+#: How far either side of a mention to look for the rest of its sentence. An
+#: extractor wraps at the page width, so a sentence is rarely more than two or
+#: three lines, and reaching further starts joining unrelated paragraphs.
+_REACH = 3
+
+
+def _passage(body: Sequence[str], n: int, start: int, end: int, ref: str) -> str:
+    """A mention as a sentence, not as the slice of a line it landed on.
+
+    An extractor breaks lines at the page width, not at the full stop, so the
+    line a reference sits on routinely begins and ends mid-clause: "dangerous
+    by an arborist, and a Title 11 tree permit must be obtained.  If a". Shown
+    like that a card reads as broken English and a reviewer cannot tell
+    whether the sentence was cut by us or by the code.
+
+    So prose is rejoined across the wrap and cut back to the sentence holding
+    the reference. Grid rows are left alone -- a table row's horizontal spacing
+    is the only record of which column a number belonged to, and joining one to
+    its neighbours makes three rows look like one.
+    """
+    line = body[n - 1]
+    if is_grid(line):
+        return _window(line, start, end)
+
+    lo = n - 1
+    while lo > 0 and n - lo <= _REACH:
+        prev = body[lo - 1]
+        if not prev.strip() or is_grid(prev):
+            break
+        lo -= 1
+    hi = n
+    while hi < len(body) and hi - n < _REACH:
+        nxt = body[hi]
+        if not nxt.strip() or is_grid(nxt):
+            break
+        hi += 1
+
+    # Where the mention lands once the window is one string.
+    head = " ".join(legible(x) for x in body[lo : n - 1] if x.strip())
+    joined = " ".join(legible(x) for x in body[lo:hi] if x.strip())
+    at = joined.find(ref, max(0, len(head) - 1))
+    if at < 0:
+        at = joined.find(ref)
+    if at < 0:
+        return _window(line, start, end)
+
+    cuts = [0] + [m.end() for m in _SENTENCE.finditer(joined)] + [len(joined)]
+    left = max((c for c in cuts if c <= at), default=0)
+    right = min((c for c in cuts if c >= at + len(ref)), default=len(joined))
+    body_text = joined[left:right].strip()
+    if len(body_text) > SNIPPET:
+        return _window(joined, at, at + len(ref))
+    # The ellipsis means "this is a fragment", not "there was other text
+    # nearby". Marking on position put one in front of a sentence that began
+    # exactly where it should, and left one off a fragment that began mid-word
+    # because the line above it was a table.
+    lead = "…" if body_text[:1].islower() else ""
+    tail = "" if body_text.endswith((".", ";", ":", "!", "?")) else "…"
+    return f"{lead}{body_text}{tail}"
+
+
 def _title_in(ref: str, line: str, nxt: str = "") -> str:
     """Just the title. The noun is :func:`_named_in`."""
     return _named_in(ref, line, nxt)[1]
@@ -373,6 +447,25 @@ def _below_a_section(ref: str) -> bool:
     """
     head, _, _ = ref.partition(".")
     return head.isdigit() and int(head) == 0
+
+
+def _zone_key(zone: str) -> tuple[object, ...]:
+    """Sort a zone name the way a planner reads it.
+
+    Zone names are a letter and a number and the number is a density, so plain
+    string order prints Portland's residential zones "R10, R2.5, R20, R5, R7"
+    -- which looks like a list nobody checked, and buries the fact that they
+    run smallest lot to largest.
+    """
+    out: list[object] = []
+    for part in re.split(r"(\d+(?:\.\d+)?)", zone):
+        if not part:
+            continue
+        try:
+            out.append((1, float(part), ""))
+        except ValueError:
+            out.append((0, 0.0, part.upper()))
+    return tuple(out)
 
 
 def _lots_by_zone() -> dict[tuple[str, str], int]:
@@ -606,7 +699,7 @@ def _scan(layer: Layer, store: ProvenanceStore | None = None) -> list[Card]:
                     Mention(
                         doc=name,
                         line=n,
-                        text=_window(line, m.start(), m.end()),
+                        text=_passage(body, n, m.start(), m.end(), ref),
                         binding=bool(found),
                     )
                 )
@@ -632,7 +725,9 @@ def _scan(layer: Layer, store: ProvenanceStore | None = None) -> list[Card]:
                     Neighbour(
                         field=field,
                         shown=shown,
-                        zones=tuple(z for z, _ in sorted(zones)),
+                        zones=tuple(
+                            z for z, _ in sorted(zones, key=lambda x: _zone_key(x[0]))
+                        ),
                         distance=min(d for _, d in zones),
                         lots=sum(zone_lots[z] for z, _ in zones),
                     )

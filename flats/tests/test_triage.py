@@ -27,10 +27,12 @@ from flats.encode.triage import (
     _named_in,
     _nesting,
     _num,
+    _passage,
     _splice,
     _title_in,
     _window,
     _wrap,
+    _zone_key,
     cards,
     feed,
     fields_in,
@@ -742,3 +744,99 @@ def test_a_sibling_is_not_a_parent() -> None:
 
     assert got["33.110"][0] == ""
     assert got["33.100"][0] == ""
+
+
+# --- a quote that reads as a sentence ---------------------------------------
+
+
+def test_a_wrapped_sentence_is_rejoined_across_the_extractor_s_line_break() -> None:
+    """An extractor breaks at the page width, not at the full stop, so the line
+    a reference lands on routinely starts and ends mid-clause. Shown that way a
+    card reads as broken English and the reviewer cannot tell whether the
+    sentence was cut by us or by the code."""
+    body = [
+        "The trees must be determined to be dead, dying, or",
+        "dangerous by an arborist, and a Title 11 tree permit must be",
+        "obtained. If a tree is removed, two must be planted.",
+    ]
+    at = body[1].index("11")
+    got = _passage(body, 2, at, at + 2, "11")
+
+    assert got == (
+        "The trees must be determined to be dead, dying, or dangerous by an "
+        "arborist, and a Title 11 tree permit must be obtained."
+    )
+
+
+def test_a_table_row_is_never_rejoined_with_its_neighbours() -> None:
+    """A row's horizontal spacing is the only record of which column a number
+    belonged to. Three rows glued together look like one row and read like
+    nonsense, so grid lines keep the window treatment."""
+    body = [
+        "R5      5,000      20      See Chapter 33.236",
+        "R7      7,000      25      See Chapter 33.236",
+    ]
+    at = body[0].index("33.236")
+    got = _passage(body, 1, at, at + 6, "33.236")
+
+    assert "R7" not in got, "the row below was not dragged in"
+    assert "·" in got, "and the cut columns are still marked as columns"
+
+
+def test_the_ellipsis_means_fragment_not_neighbourhood() -> None:
+    """Marking on position put an ellipsis in front of a sentence that began
+    exactly where it should, and left one off a fragment that began mid-word
+    because the line above it was a table."""
+    whole = [
+        "Some earlier sentence entirely about something else.",
+        "The permit is issued under Section 7.0420 and expires.",
+    ]
+    at = whole[1].index("7.0420")
+    got = _passage(whole, 2, at, at + 6, "7.0420")
+    assert not got.startswith("…"), "it starts where a sentence starts"
+    assert not got.endswith("…"), "and ends where one ends"
+
+    cut = [
+        "R5      5,000      20",
+        "preservation requirements of Section 7.0420, Trees.",
+    ]
+    at = cut[1].index("7.0420")
+    got = _passage(cut, 2, at, at + 6, "7.0420")
+    assert got.startswith("…"), "this one really does begin mid-sentence"
+
+
+def test_a_section_number_starts_a_new_sentence() -> None:
+    """"...Signs and Related Regulations. 33.100.230 Trees Requirements for..."
+    is two sentences and a heading. Splitting only on a capital letter pulled
+    an unrelated sentence about signs onto a card about trees."""
+    body = [
+        "The sign regulations are stated in Title 32, Signs and Related "
+        "Regulations. 33.100.230 Trees Requirements are in Title 11, Trees."
+    ]
+    at = body[0].rindex("11")
+    got = _passage(body, 1, at, at + 2, "11")
+
+    assert "sign regulations" not in got
+    assert got.startswith("33.100.230")
+
+
+def test_zones_sort_the_way_a_planner_reads_them() -> None:
+    """Portland's residential zones printed "R10, R2.5, R20, R5, R7" -- which
+    looks like a list nobody checked, and hides that they run smallest lot to
+    largest."""
+    got = sorted(["R10", "R2.5", "R20", "R5", "R7"], key=_zone_key)
+
+    assert got == ["R2.5", "R5", "R7", "R10", "R20"]
+    assert sorted(["RM2", "RM1", "C", "EX"], key=_zone_key) == ["C", "EX", "RM1", "RM2"]
+
+
+def test_no_quote_on_any_card_ends_mid_word() -> None:
+    """The guard for the class of bug this was one of."""
+    for card in feed():
+        for m, _ in card.distinct:
+            text = m.text.rstrip("…").rstrip()
+            assert text, card.key
+            # A quote may end on a cut, but the cut is marked; what it may not
+            # do is stop with no sign that it stopped.
+            if not text.endswith((".", ";", ":", "!", "?", "·")):
+                assert m.text.endswith("…"), f"{card.key} {m.doc}L{m.line}: {m.text!r}"
