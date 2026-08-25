@@ -100,11 +100,32 @@ siteplan:
   parking_per_unit_preferred: 2.0  # 8/pod  (preferred; legal — no LDR-5 ceiling)
   units_per_pod: 4
   layout_methods: [townhome_rear_court]
-  stall_width_ft: 8.5              # §7.0431(B)(5)(b): 8.5 x 18 (90°)
-  stall_depth_ft: 18.0
-  parallel_stall_ft: [8, 24]       # §7.0431(B)(5)(b) parallel option
-  aisle_width_two_way_ft: 24       # double-loaded court aisle / OFC emergency access
-  aisle_width_one_way_ft: 20       # single-loaded court aisle
+  # Stall + aisle, per city, mirroring the FLATS corpus defaults for each
+  # (flats/config/jurisdictions/or/multnomah/*.yaml). A drift test asserts they
+  # still match, so change the corpus and re-run it — not this file alone.
+  #
+  # The one-way aisle is 23 ft, NOT the 20 that used to sit here: Table 9.0825A
+  # gives 23 at 90° with a standard stall; the 20 is note 1's emergency-vehicle
+  # access figure, which answers a different question. Reading it as the aisle
+  # made a 38 ft court look deep enough when a stall row and its drive need 41.
+  geometry:
+    gresham:
+      stall_width_ft: 8.5          # §7.0431(B)(5)(b): 8.5 x 18 (90°)
+      stall_depth_ft: 18.0
+      parallel_stall_ft: [8, 24]   # §7.0431(B)(5)(b) parallel option
+      aisle_one_way_ft: 23         # Table 9.0825A, 90°, standard stall
+      aisle_two_way_ft: 24         # Table 9.0825A / OFC emergency access
+      cite: GDC 7.0431(B)(5)(b) (stall); Table 9.0825A, 90 degrees standard (aisles)
+    # Portland is here to be refused, not laid out. 33.266.120.D.1 states a 9 x
+    # 18 stall — half a foot wider than Gresham's — and states no aisle at all.
+    # The aisle table in 33.266.130 is not Portland's answer for this product:
+    # that section hands residential vehicle areas back to .120. With no aisle
+    # width there is nothing to dimension a court against, so s6s writes
+    # passthrough columns for Portland instead of inventing one.
+    portland:
+      stall_width_ft: 9            # PCC 33.266.120.D.1: 9 x 18
+      stall_depth_ft: 18.0
+      cite: PCC 33.266.120.D.1 (stall); no aisle width stated in 33.266.120
   driveway_approach_min_ft: 18     # §7.0431(B)(2)(b): combined curb cut =
   driveway_approach_frontage_pct: 34  #   max(18 ft, 34% of frontage) — see note
   driveway_min_travel_ft: 12       # single side travel lane width to the rear

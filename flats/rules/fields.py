@@ -304,6 +304,62 @@ _F: tuple[FieldDef, ...] = (
         "requires, not what it forbids.",
         True,
     ),
+    # --- how big a stall is, which decides how many fit ------------------
+    #
+    # A stall count is a rule about arithmetic; these are rules about a
+    # rectangle. The site plan has to seat real stalls on a real lot, and it
+    # was doing that against one jurisdiction's numbers typed into a constant:
+    # Gresham's 8.5 x 18 applied everywhere, and a one-way aisle of 20 feet
+    # that is not Gresham's parking aisle at all -- Table 9.0825A asks 23 at
+    # 90 degrees, and the 20 is note 1's emergency-vehicle access figure. A
+    # narrow aisle and a narrow stall both err the same way: they seat stalls
+    # a court could not really hold, which is a GREEN nobody can build.
+    FieldDef(
+        "parking_stall_width_ft",
+        "length_ft",
+        "Minimum width of one off-street parking stall. Cities differ by half "
+        "a foot and half a foot per stall is a stall every eighteen: Gresham "
+        "asks 8.5 for townhouses (7.0431(B)(5)(b)), Portland 9 for anything "
+        "up to a fourplex (33.266.120.D.1). Read off the standard that governs "
+        "THIS product -- Portland's 33.266.130 prints an 8 ft 6 in stall in "
+        "Table 266-4 and hands residential vehicle areas straight back to "
+        ".120, so reading .130 is how the half-foot error gets made.",
+        False,
+    ),
+    FieldDef(
+        "parking_stall_depth_ft",
+        "length_ft",
+        "Minimum depth of one off-street parking stall, measured from the "
+        "aisle. Held apart from the width because a code can state either "
+        "without the other and because a bumper overhang is subtracted from "
+        "the depth alone -- Gresham's Table 9.0825A allows 3 feet of it at 90 "
+        "degrees, which is only available where an extruded curb is built. "
+        "Encode the figure with no overhang; the allowance is a design choice "
+        "the screen has no way to know was taken.",
+        False,
+    ),
+    FieldDef(
+        "parking_aisle_one_way_ft",
+        "length_ft",
+        "Minimum drive-aisle width where traffic runs one way, at 90 degrees "
+        "to the stalls. The aisle is usually the largest single piece of a "
+        "rear court after the stalls themselves, so three feet of it is most "
+        "of a stall. Beware the emergency-access figure printed beside it: "
+        "Gresham's Table 9.0825A note 1 gives 20 feet for one-way emergency "
+        "vehicle access, which is a different standard from the 23 the table "
+        "itself asks, and the smaller number is the one that reads like the "
+        "answer.",
+        False,
+    ),
+    FieldDef(
+        "parking_aisle_two_way_ft",
+        "length_ft",
+        "Minimum drive-aisle width where traffic runs both ways, at 90 "
+        "degrees to the stalls. Stated separately because a court reached by "
+        "a single side driveway may be laid out either way, and the two "
+        "figures are far enough apart to decide whether a row of stalls fits.",
+        False,
+    ),
     FieldDef("open_space_min_pct", "percent", "Minimum private open space as a share of lot area.", False),
     FieldDef(
         "min_landscaped_pct",
@@ -521,6 +577,16 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         # every code answers even when the answer is zero, silence here is the
         # ordinary case and is not an incomplete zone.
         "parking_max_per_unit",
+        # Stall and aisle geometry. Every code in the corpus states a stall
+        # size somewhere, but not in the zone's own table -- it is a citywide
+        # sentence in the parking chapter, so it belongs to `defaults` and a
+        # zone that does not repeat it is not an incomplete zone. The aisle
+        # figures are rarer still: a code can state a stall and leave the
+        # aisle to a figure or a public-works standard.
+        "parking_stall_width_ft",
+        "parking_stall_depth_ft",
+        "parking_aisle_one_way_ft",
+        "parking_aisle_two_way_ft",
         "open_space_min_pct",
         "min_landscaped_pct",
         "orientation_constraint",

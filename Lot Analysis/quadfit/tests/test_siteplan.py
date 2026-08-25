@@ -28,12 +28,18 @@ FRONT_S, SIDE_S, REAR_S = 10.0, 5.0, 15.0
 
 def _sp_setup(res: float = 0.5):
     import s6s_siteplan
+    from common import StallGeometry, _GRESHAM_GEOMETRY
 
+    # Gresham's own stall and aisle, taken from the one place they are written
+    # rather than retyped here. Retyping them is how the 20 ft aisle survived:
+    # a test that carries its own copy of a number agrees with itself forever.
+    geom = StallGeometry(**_GRESHAM_GEOMETRY)
     cfg = {
         "res": res, "gap": 5.0, "drive_travel": 12.0,
         "pods": [("pod56x36", 56.0, 36.0), ("pod80x25", 80.0, 25.0)],
         "open_space_pct": 15.0, "min_stalls": 4, "preferred_stalls": 8,
-        "stall_w": 8.5, "stall_d": 18.0, "aisle_two": 24.0, "aisle_one": 20.0,
+        "stall_w": geom.stall_width_ft, "stall_d": geom.stall_depth_ft,
+        "aisle_two": geom.aisle_two_way_ft, "aisle_one": geom.aisle_one_way_ft,
         "methods": ["townhome_rear_court"],
     }
     s6s_siteplan._init_worker(cfg)

@@ -343,13 +343,27 @@ def main() -> None:
     front_setback = float(zrule.setback_front_ft) if zrule and zrule.setback_front_ft \
         else 10.0
 
+    # The pilot city's own stall and aisle, never a global constant. A city with
+    # no entry, or one whose code states a stall and no aisle, is a city this
+    # stage declines rather than lays out to somebody else's numbers -- the
+    # stall count is the whole output, and a borrowed dimension is a made-up one.
+    geom = sp.geometry_for(sp.pilot_jurisdiction)
+    if geom is None or not geom.lays_out():
+        missing = "no parking geometry is encoded" if geom is None \
+            else "its code states a stall size but no aisle width"
+        print(f"s6s: {sp.pilot_jurisdiction} — {missing}; writing passthrough "
+              f"columns rather than laying out to another city's dimensions")
+        _finalize(lots, site_ok, tier, stalls, method, bname, drive_len,
+                  park_area, open_sqft, open_ok, sp_json)
+        return
+
     cfg = {
         "res": res, "gap": sp.building_parking_gap_ft,
         "drive_travel": sp.driveway_min_travel_ft, "pods": pod_list,
         "open_space_pct": sp.private_open_space_pct, "min_stalls": sp.min_stalls(),
         "preferred_stalls": sp.preferred_stalls(),
-        "stall_w": sp.stall_width_ft, "stall_d": sp.stall_depth_ft,
-        "aisle_two": sp.aisle_width_two_way_ft, "aisle_one": sp.aisle_width_one_way_ft,
+        "stall_w": geom.stall_width_ft, "stall_d": geom.stall_depth_ft,
+        "aisle_two": geom.aisle_two_way_ft, "aisle_one": geom.aisle_one_way_ft,
         "methods": list(sp.layout_methods),
     }
 

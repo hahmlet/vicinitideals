@@ -246,6 +246,49 @@ defaults:
     retrieved: '2026-08-20'
     quote: "or/multnomah/gresham/9.0800.parking.txt#L53"
 
+  # How big a stall is. The product is attached townhouses on fee-simple lots,
+  # so the stall comes from the townhouse standard rather than the parking
+  # chapter's general matrix: 7.0431(B)(5)(b) states it in a sentence and it is
+  # the more specific rule.
+  parking_stall_width_ft:
+    value: 8.5
+    cite: GDC 7.0431(B)(5)(b), Residential District Townhouse Design Standards
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+    retrieved: '2026-08-24'
+    quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L500-L501"
+  parking_stall_depth_ft:
+    value: 18
+    cite: GDC 7.0431(B)(5)(b), Residential District Townhouse Design Standards
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+    retrieved: '2026-08-24'
+    quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L500-L501"
+
+  # 7.0431 states a stall and says nothing about the aisle it is reached from,
+  # so the aisle falls to the parking chapter's surface matrix. At 90 degrees
+  # Table 9.0825A asks 23 feet one-way and 24 two-way.
+  #
+  # NOT the 20 feet in note 1. That note is about emergency vehicle access --
+  # "the minimum aisle width may vary to accommodate emergency vehicle access
+  # ... for one-way traffic and for emergency vehicle access is 20 feet" -- a
+  # different standard reached for a different reason, and three feet narrower
+  # than the aisle the table itself requires. Reading it as the parking aisle
+  # is what the site plan was doing.
+  #
+  # NOT Table 9.0861 either. That is the parking STRUCTURE matrix (9.0861,
+  # aisle 25 at 90 degrees, stall depth 19), and a rear court is not a garage.
+  parking_aisle_one_way_ft:
+    value: 23
+    cite: GDC Table 9.0825A, Off-Street Surface Parking Matrix (90 degrees, standard stall)
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-9.0800.pdf
+    retrieved: '2026-08-24'
+    quote: "or/multnomah/gresham/9.0800.parking.txt#L340-L343"
+  parking_aisle_two_way_ft:
+    value: 24
+    cite: GDC Table 9.0825A, Off-Street Surface Parking Matrix (90 degrees, standard stall)
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-9.0800.pdf
+    retrieved: '2026-08-24'
+    quote: "or/multnomah/gresham/9.0800.parking.txt#L340-L343"
+
 zones:
   LDR-5:
     section: ["4.01", "7.042"]

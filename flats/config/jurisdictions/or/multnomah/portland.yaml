@@ -112,6 +112,36 @@ defaults:
     retrieved: 2026-08-15
     status: draft
     quote: "or/multnomah/portland/33.266.txt#L10-L17"
+
+  # How big a stall is. 33.266.120 is the section that governs the pod -- its
+  # title is "Development Standards for Houses, Duplexes, Triplexes, and
+  # Fourplexes" -- and D.1 states the stall in one sentence.
+  #
+  # NOT 33.266.130's Table 266-4, which prints an 8 ft 6 in stall. That section
+  # looks like the parking chapter and is not this product's: its applicability
+  # sentence hands "residential vehicle areas subject to the standards of
+  # 33.266.120" straight back to .120. Reading .130 is half a foot per stall
+  # too narrow, which is a stall in every eighteen.
+  parking_stall_width_ft:
+    value: 9
+    cite: PCC 33.266.120.D.1, Parking space sizes
+    url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
+    retrieved: 2026-08-24
+    quote: "or/multnomah/portland/33.266.txt#L317-L318"
+  parking_stall_depth_ft:
+    value: 18
+    cite: PCC 33.266.120.D.1, Parking space sizes
+    url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
+    retrieved: 2026-08-24
+    quote: "or/multnomah/portland/33.266.txt#L317-L318"
+
+  # NOT ENCODED: aisle width. 33.266.120 states a stall size and a minimum
+  # private driveway width and says nothing about an aisle. The aisle
+  # dimensions in Table 266-4 belong to 33.266.130, which this product does not
+  # reach, so there is no Portland aisle standard to encode and inventing one
+  # from the section next door is the same mistake as the stall. A Portland
+  # court is laid out against the stall and the driveway; the aisle is a
+  # question this corpus cannot answer.
 zones:
   RF:
     cite_default:

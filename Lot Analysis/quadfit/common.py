@@ -299,6 +299,51 @@ class ScreenSpec(BaseModel):
     max_land_cost_per_unit: float = 45000.0
 
 
+class StallGeometry(BaseModel):
+    """One jurisdiction's parking dimensions, as that jurisdiction states them.
+
+    Per jurisdiction rather than one constant because the numbers differ and the
+    difference decides lots: Gresham's townhouse stall is 8.5 ft wide
+    (§7.0431(B)(5)(b)), Portland's fourplex stall is 9 (PCC 33.266.120.D.1).
+    Half a foot is one stall in every eighteen across a court, and a court that
+    seats a stall it could not really hold is a GREEN nobody can build.
+
+    The aisle widths are optional, and None is a fact rather than a missing
+    value: it means the code states a stall and no aisle. Portland's 33.266.120
+    does exactly that — the aisle table one section over belongs to 33.266.130,
+    whose own applicability sentence hands residential vehicle areas back to
+    .120. A cell with no aisle standard is a cell s6s declines to lay out, not
+    one that quietly borrows a neighbour's number.
+    """
+
+    stall_width_ft: float
+    stall_depth_ft: float
+    aisle_one_way_ft: float | None = None
+    aisle_two_way_ft: float | None = None
+    parallel_stall_ft: list[float] | None = None
+    cite: str = ""
+
+    def lays_out(self) -> bool:
+        """Whether a rear court can be dimensioned from what this code states."""
+        return self.aisle_one_way_ft is not None and self.aisle_two_way_ft is not None
+
+
+# Gresham, the pilot cell. The one-way aisle is 23 ft, not 20: Table 9.0825A
+# gives 23 at 90° with a standard stall, and the 20 that used to sit here is
+# note 1's emergency-vehicle access figure — a different standard answering a
+# different question. Table 9.0861's 8'6" is the parking STRUCTURE matrix and
+# does not reach a surface rear court either. Both readings err the same way,
+# seating stalls the court cannot hold.
+_GRESHAM_GEOMETRY = {
+    "stall_width_ft": 8.5,
+    "stall_depth_ft": 18.0,
+    "aisle_one_way_ft": 23.0,
+    "aisle_two_way_ft": 24.0,
+    "parallel_stall_ft": [8.0, 24.0],
+    "cite": "GDC 7.0431(B)(5)(b) (stall); Table 9.0825A, 90 degrees standard (aisles)",
+}
+
+
 class SiteplanSpec(BaseModel):
     """Procedural site-plan generator knobs (s6s stage — Gresham LDR-5 pilot).
 
@@ -340,12 +385,12 @@ class SiteplanSpec(BaseModel):
         default_factory=lambda: ["townhome_rear_court"]
     )
 
-    # Stall + drive geometry (Gresham CDC 06/2026; see footprints.yaml notes).
-    stall_width_ft: float = 8.5
-    stall_depth_ft: float = 18.0             # §7.0431(B)(5)(b): 8.5 x 18 (90°)
-    parallel_stall_ft: list[float] = Field(default_factory=lambda: [8.0, 24.0])
-    aisle_width_two_way_ft: float = 24.0
-    aisle_width_one_way_ft: float = 20.0
+    # Stall + drive geometry, per jurisdiction — never one global number. See
+    # StallGeometry. The pilot cell's entry must exist or s6s refuses the cell.
+    geometry: dict[str, StallGeometry] = Field(
+        default_factory=lambda: {"gresham": StallGeometry(**_GRESHAM_GEOMETRY)}
+    )
+
     # Townhouse combined driveway approach (curb cut): max(18 ft, 34% frontage)
     # per §7.0431(B)(2)(b). A single side lane is well under this, so it does not
     # bind — retained for the report + future multi-cut layouts.
@@ -357,6 +402,16 @@ class SiteplanSpec(BaseModel):
     # §7.0431(D)(1): private open space, share of gross parent lot (a fourth
     # claimant on the lot alongside building + parking + driveway).
     private_open_space_pct: float = 15.0
+
+    def geometry_for(self, jurisdiction: str) -> StallGeometry | None:
+        """The stall geometry a jurisdiction publishes, or None if it has none.
+
+        None is the answer for a jurisdiction nobody has read yet. It is not an
+        invitation to substitute the pilot's numbers: a court laid out to
+        Gresham's stall in a city that writes a wider one is a stall count that
+        no reviewer could defend.
+        """
+        return self.geometry.get(jurisdiction)
 
     def min_stalls(self) -> int:
         return math.ceil(self.units_per_pod * self.parking_per_unit_min)

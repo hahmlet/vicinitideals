@@ -26,7 +26,7 @@ pytestmark = pytest.mark.unit
 #: are not meant to do is move quietly. A refusal added without a line here is
 #: a reading nobody signed off on; a refusal removed without one is a reading
 #: somebody overturned without saying so.
-EXPECTED = {"notes": 90, "comments": 24, "tests": 16}
+EXPECTED = {"notes": 90, "comments": 25, "tests": 16}
 #: Two of the sixteen are this file, which quotes the marker while
 #: explaining it, and one is a back-reference in test_gresham_rockwood --
 #: prose saying a zone *was* not encoded until it was. Left in rather than
@@ -40,6 +40,12 @@ EXPECTED = {"notes": 90, "comments": 24, "tests": 16}
 #: 88 of the 93 lots that jurisdiction reports as zone_missing, and it is
 #: deliberately not encoded until LOC 50.03.003.2 is fetched. A decision that
 #: size should cost a line here.
+#:
+#: The one added on 2026-08-24 is Portland's parking aisle. 33.266.120 states a
+#: stall and a driveway width and no aisle; the aisle table one section over
+#: belongs to 33.266.130, whose applicability sentence hands residential vehicle
+#: areas back to .120. Borrowing it would have been a dimension Portland never
+#: wrote, so the site plan declines to lay out Portland instead.
 
 
 def test_the_corpus_declares_more_refusals_than_any_ledger_counts() -> None:

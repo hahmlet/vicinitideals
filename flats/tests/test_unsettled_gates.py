@@ -80,12 +80,22 @@ def test_gresham_cc_and_mc_are_one_column_printed_twice(rules: RuleSet) -> None:
     mc = rules.resolve("or/multnomah/gresham", "MC").values
 
     assert {k: v.value for k, v in cc.items()} == {k: v.value for k, v in mc.items()}
-    assert {k: v.value for k, v in cc.items()} == {
-        "land_division_parent_standards": True,
+
+    # Only what the zone rows themselves carry. A citywide standard reaches
+    # every Gresham zone identically by construction, so it can say nothing
+    # about whether two table columns were transcribed alike -- and pinning it
+    # here means the next citywide standard anyone encodes fails this test
+    # while the columns it guards are still perfectly in agreement. That is the
+    # shape of a test that goes red for doing the work right.
+    citywide = {k for layer in rules.chain_for("or/multnomah/gresham")
+                for k in layer.defaults}
+    assert {"parking_min_per_unit", "land_division_parent_standards"} <= citywide
+    assert cc["parking_min_per_unit"].value == 0
+    assert cc["land_division_parent_standards"].value is True
+    assert {k: v.value for k, v in cc.items() if k not in citywide} == {
         "quadplex_allowed": False,
         "max_height_ft": 45,
         "min_density_du_per_acre": 12,
-        "parking_min_per_unit": 0,
         "setback_front_ft": 0,
         "setback_side_ft": 0,
         "setback_rear_ft": 0,
