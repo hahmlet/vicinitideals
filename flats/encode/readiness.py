@@ -443,6 +443,36 @@ def _decimalise(text: str) -> str:
     return _FRACTION.sub(sub, text)
 
 
+#: A dimension written in two units. Portland's Table 266-4 states its stall
+#: width as "8 ft. 6 in." and its curb lengths as "22 ft. 6 in." and "9 ft.
+#: 9 in.", which are 8.5, 22.5 and 9.75 and appear as none of those. The
+#: corpus stores feet, so the reader has to be able to read feet-and-inches or
+#: it reports a correctly cited table row as a misquote -- the check
+#: disagreeing with the drafting convention rather than with the encoding.
+#:
+#: The inches half is capped at eleven. Twelve or more is not a dimension
+#: written this way, it is two numbers that happen to be adjacent.
+_INCHES = re.compile(
+    r"(\d+)\s*(?:ft\.?|feet|foot|')\s*(\d+)\s*(?:in\.?|inches|inch|\")",
+    re.I,
+)
+
+
+def _in_feet(text: str) -> str:
+    """The same text with "8 ft. 6 in." also stated as 8.5.
+
+    Added rather than substituted. The feet and the inches are each a number
+    the page really prints, and a row elsewhere may be cited for one of them;
+    rewriting the phrase away would turn one blind spot into another.
+    """
+    extra = [
+        f"{int(m.group(1)) + int(m.group(2)) / 12:g}"
+        for m in _INCHES.finditer(text)
+        if int(m.group(2)) < 12
+    ]
+    return f"{text} {' '.join(extra)}" if extra else text
+
+
 #: A number with a footnote marker stuck to it, in a document that says it
 #: does that: "154" for fifteen with note 4, and "8.71" for eight point seven
 #: with note 1. Only a single trailing digit is tried, and only on a token
@@ -552,7 +582,7 @@ def quotes_the_number(
     """
     if isinstance(value, bool) or not isinstance(value, (int, float)):
         return True
-    hay = _decimalise(repair_text(text) if spaced else text)
+    hay = _in_feet(_decimalise(repair_text(text) if spaced else text))
     if _states(hay, float(value)) or _says(hay, float(value)):
         return True
     if glued and _states(_unmarked(hay), float(value)):

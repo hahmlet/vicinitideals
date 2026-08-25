@@ -100,19 +100,43 @@ def test_greshams_one_way_aisle_is_the_parking_aisle_not_the_fire_lane():
     assert geom.aisle_two_way_ft == 24.0
 
 
-def test_portland_is_refused_rather_than_given_greshams_stall():
-    """Portland's stall is 9 ft and its code states no aisle. Both must hold.
+def test_portland_takes_the_branch_a_parking_tract_reaches():
+    """Table 266-4's 90° row, not 33.266.120.D.1's 9 x 18.
 
-    The trap is 33.266.130's Table 266-4, which prints an 8 ft 6 in stall and an
-    aisle to go with it. That section's own applicability sentence hands
-    residential vehicle areas back to 33.266.120, so borrowing from it is half a
-    foot per stall too narrow — and an aisle Portland never wrote.
+    Portland states both and routes between them in one sentence: 33.266.120
+    governs this building type, but 120.B.1 sends parking that is in a parking
+    TRACT to 33.266.130 instead, and 130.B agrees from the other side. A shared
+    rear court serving four attached houses on fee-simple lots is a tract, so
+    the table applies — 8'6" x 16 with a 20 ft aisle, where D.1 alone would have
+    said 9 x 18 and no aisle at all.
+
+    Pinned because the section titled for the building is the one you find
+    first, and reading only that far is a court 9 ft deep instead of 36.
     """
     from common import load_footprints
 
     geom = load_footprints().siteplan.geometry["portland"]
-    assert geom.stall_width_ft == 9.0
-    assert geom.stall_depth_ft == 18.0
-    assert geom.aisle_one_way_ft is None
-    assert geom.aisle_two_way_ft is None
-    assert not geom.lays_out()
+    assert (geom.stall_width_ft, geom.stall_depth_ft) == (8.5, 16.0)
+    # Both columns print 20. Every other city in the corpus widens the two-way,
+    # so an assertion that they differ would look right and be wrong.
+    assert geom.aisle_one_way_ft == 20.0
+    assert geom.aisle_two_way_ft == 20.0
+    assert geom.lays_out()
+
+
+def test_a_city_that_states_no_aisle_is_declined_rather_than_borrowed_from():
+    """The refusal path, exercised on a city rather than pinned to Portland.
+
+    Portland used to be this test's example, on a reading that stopped at
+    33.266.120. The machinery is still needed — a code really may state a stall
+    and no aisle — but a live jurisdiction is the wrong way to hold it, because
+    the test then goes green on a misreading and red when the misreading is
+    corrected.
+    """
+    from common import StallGeometry
+
+    stall_only = StallGeometry(stall_width_ft=9.0, stall_depth_ft=18.0)
+    assert not stall_only.lays_out()
+    assert StallGeometry(
+        stall_width_ft=9.0, stall_depth_ft=18.0, aisle_one_way_ft=20.0
+    ).lays_out() is False

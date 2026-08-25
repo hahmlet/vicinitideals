@@ -457,6 +457,30 @@ def test_a_number_printed_as_a_fraction_still_counts() -> None:
     assert not quotes_the_number("19½ feet to the garage door", 19.25)
 
 
+def test_a_dimension_printed_in_feet_and_inches_still_counts() -> None:
+    """Portland's Table 266-4 prints its stall width as "8 ft. 6 in.".
+
+    The corpus stores feet, so 8.5 is the encoding, and neither an 8.5 nor a
+    spelling of it appears on the line. Every row of that table is written this
+    way -- 22 ft. 6 in., 9 ft. 9 in. -- so a reader that cannot add the inches
+    calls a correctly cited table row a misquote, and the encoder's way out is
+    to cite a line that does not say it.
+
+    Both halves still count on their own: the feet and the inches are numbers
+    the page really prints, and a row elsewhere may be cited for one of them.
+    """
+    from flats.encode.readiness import quotes_the_number
+
+    assert quotes_the_number("90 8 ft. 6 in. 8 ft. 6 in. 20 ft. 16 ft.", 8.5)
+    assert quotes_the_number("Curb length 22 ft. 6 in.", 22.5)
+    assert quotes_the_number("9 feet 9 inches", 9.75)
+    assert quotes_the_number("8'6\"", 8.5)
+    assert quotes_the_number("90 8 ft. 6 in. 20 ft. 16 ft.", 16)
+    assert not quotes_the_number("Curb length 22 ft. 6 in.", 22.75)
+    # Twelve or more inches is two adjacent numbers, not one dimension.
+    assert not quotes_the_number("aisle 20 ft. 20 in. clear", 21.667)
+
+
 def test_a_spelled_number_restated_in_brackets_still_finds_its_unit() -> None:
     """Troutdale writes "Minimum of seven and one-half (7" and breaks the line
     before the fraction, so the digits land too far apart for the fraction
