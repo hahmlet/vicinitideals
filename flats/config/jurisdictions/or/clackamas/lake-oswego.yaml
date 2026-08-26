@@ -92,7 +92,7 @@ zones:
       # density. The table's Maximum row reads [3] for R-3 and an em dash for
       # R-0, so there is no ceiling printed for either.
       exempt: true
-      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1454"
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1454-L1455"
     setback_front_ft:
       value: 10
       quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1344"
@@ -243,7 +243,7 @@ zones:
       # density. The table's Maximum row reads [3] for R-3 and an em dash for
       # R-0, so there is no ceiling printed for either.
       exempt: true
-      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1454"
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1454-L1455"
     setback_front_ft:
       value: 10
       quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L1342"
@@ -288,7 +288,7 @@ zones:
         - value: false
           when: [unit_lots]
           band: {measure: lot_sqft, less_than: 5000}
-          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L606"
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L606-L607"
     max_height_ft:
       # Table 50.04.001-3, "MAX. BASE HEIGHT (FT.)", the R-5 column of the Flat Lot
       # row: 28 ft. The table prints one cell per line, so the row label is
@@ -311,7 +311,7 @@ zones:
       quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L585,L587"
     max_density_du_per_acre:
       exempt: true
-      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L606"
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L606-L607"
     setback_front_ft:
       value: 10
       quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L753"
@@ -512,7 +512,7 @@ zones:
         - value: false
           when: [unit_lots]
           band: {measure: lot_sqft, less_than: 7500}
-          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L237"
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L237-L238"
     max_height_ft:
       # Table 50.04.001-1, "MAX. BASE HEIGHT (FT.)", the R-7.5 column of the Flat Lot
       # row: 28 ft. The table prints one cell per line, so the row label is
@@ -539,7 +539,7 @@ zones:
       # own Maximum row is the marker [2] and nothing else -- there is no
       # ceiling printed for this zone to encode.
       exempt: true
-      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L237"
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L237-L238"
     setback_front_ft:
       value: 25
       quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L116"
@@ -628,7 +628,7 @@ zones:
         - value: false
           when: [unit_lots]
           band: {measure: lot_sqft, less_than: 10000}
-          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L237"
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L237-L238"
     max_height_ft:
       # Table 50.04.001-1, "MAX. BASE HEIGHT (FT.)", the R-10 column of the
       # Flat Lot row: 30 ft. Four feet of margin on a 26 ft pod.
@@ -637,7 +637,7 @@ zones:
       quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L205,L208"
     max_density_du_per_acre:
       exempt: true
-      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L237"
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L237-L238"
     setback_front_ft:
       value: 25
       quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L114,L117"
@@ -706,7 +706,7 @@ zones:
         - value: false
           when: [unit_lots]
           band: {measure: lot_sqft, less_than: 15000}
-          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L237"
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L237-L238"
     max_height_ft:
       # Table 50.04.001-1, "MAX. BASE HEIGHT (FT.)", the R-15 column of the
       # Flat Lot row: 35 ft. The loosest height standard of the three low
@@ -717,7 +717,7 @@ zones:
       quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L205,L209"
     max_density_du_per_acre:
       exempt: true
-      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L237"
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L237-L238"
     setback_front_ft:
       value: 25
       quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L114,L118"
@@ -779,7 +779,7 @@ zones:
         - value: false
           when: [unit_lots]
           band: {measure: lot_sqft, less_than: 5000}
-          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L606"
+          quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L606-L609"
     max_height_ft:
       # Table 50.04.001-3, "MAX. BASE HEIGHT (FT.)". R-DD is the only column
       # of the three that states one figure for the primary structure rather
@@ -795,7 +795,7 @@ zones:
       # clusters are exempt from maximum density. R-DD's Maximum cell reads
       # "[2],[3]", so the exemption is stated for this zone directly.
       exempt: true
-      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L606"
+      quote: "or/clackamas/lake-oswego/50.04.dimensional.txt#L606-L609"
     setback_front_ft:
       # R-DD has no setback table. LOC 50.04.001.2.e.iii(1)(a) states one
       # figure for the whole zone: "Except as otherwise provided in this

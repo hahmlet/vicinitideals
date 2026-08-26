@@ -47,13 +47,14 @@ import enum
 from dataclasses import dataclass, field as _dc_field
 from typing import Any, Sequence
 
-from flats.designs.model import Design
+from flats.designs.model import Design, Plat
 from flats.fit.rectangle import Fit
 from flats.geom.edges import Tier as GeometryTier
 from flats.rules.conditions import Tier
 from flats.rules.fields import REQUIRED_FIELDS
 from flats.rules.resolver import Verdict as RuleVerdict, ZoneResolution
 from flats.score.configure import Configuration
+from flats.score.paper import lot_standard
 from flats.score.relief import (
     RELIEF_UNCONFIRMED,
     ReliefOutcome,
@@ -276,7 +277,23 @@ def _checks(
         )
     )
 
-    check("min_lot_area_sqft", lot.lot_sqft, rules.get("min_lot_sqft"), is_maximum=False)
+    # Lot area and lot width are the two standards the plat path changes, and
+    # they are read through the same helper the paper fit uses. A rule file
+    # that carries a townhouse lot standard on a `unit_lots` variant states it
+    # per child lot, so four of them side by side is what the parent has to
+    # hold; comparing the parent against one of them is the false GREEN that
+    # asks a 1,500 sq ft floor of a four-unit project. Nothing in the shipped
+    # catalog takes the split path today, so this moves no verdict -- it stops
+    # the screen and the paper fit from answering the question differently the
+    # day something does.
+    per_unit = design.plat is Plat.unit_lots
+    min_lot, lot_answered = lot_standard(
+        rules, "min_lot_sqft", per_unit=per_unit, lots=design.units
+    )
+    if lot_answered:
+        check("min_lot_area_sqft", lot.lot_sqft, min_lot, is_maximum=False)
+    else:
+        unchecked.append("min_lot_area_sqft")
     if lot.landlocked:
         # No street was found, so the frontage measurement is zero by default
         # rather than by observation. Failing the lot on a number nobody
@@ -284,8 +301,11 @@ def _checks(
         unchecked.append("min_frontage_ft")
     else:
         check("min_frontage_ft", lot.frontage_ft, rules.get("min_frontage_ft"), is_maximum=False)
-    if lot.lot_width_ft is not None:
-        check("min_lot_width_ft", lot.lot_width_ft, rules.get("min_lot_width_ft"), is_maximum=False)
+    min_width, width_answered = lot_standard(
+        rules, "min_lot_width_ft", per_unit=per_unit, lots=design.units
+    )
+    if lot.lot_width_ft is not None and width_answered:
+        check("min_lot_width_ft", lot.lot_width_ft, min_width, is_maximum=False)
     else:
         unchecked.append("min_lot_width_ft")
 

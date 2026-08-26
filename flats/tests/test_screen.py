@@ -21,7 +21,7 @@ import pytest
 
 pytest.importorskip("shapely")
 
-from flats.designs.model import load_catalog  # noqa: E402
+from flats.designs.model import Plat, load_catalog  # noqa: E402
 from flats.fit.rectangle import Fit  # noqa: E402
 from flats.geom.edges import Tier as GeometryTier  # noqa: E402
 from flats.rules.conditions import Tier  # noqa: E402
@@ -836,3 +836,85 @@ def test_portland_states_its_floor_per_lot_and_it_runs() -> None:
 
     floor = next(c for c in result.checks if c.check == "min_density_du_per_acre")
     assert floor.verdict is Verdict.fails
+
+
+# --- the split path ---------------------------------------------------
+
+
+#: The same catalog entry costed for the split path. Pydantic, so a copy
+#: rather than a dataclass replace.
+SPLIT = DESIGN.model_copy(update={"plat": Plat.unit_lots})
+
+
+def _split(**overrides) -> ZoneResolution:
+    """A resolution whose lot standards came from a ``unit_lots`` variant.
+
+    Which is how a rule file states a townhouse lot standard for a
+    conventional subdivision, and those numbers are per child lot.
+    """
+    base = rules(**overrides)
+    for name in ("min_lot_sqft", "min_lot_width_ft"):
+        base.values[name] = replace(base.values[name], when=("unit_lots",))
+    return base
+
+
+def test_a_per_lot_standard_is_asked_of_the_parcel_four_times_over() -> None:
+    """A 1,500 sq ft floor carried on a ``unit_lots`` variant is one child
+    lot's, and four of them sit side by side on the parent. The paper fit has
+    always read it that way; the screen was comparing the parent against a
+    single child's number, which passes any lot big enough for one townhouse
+    and calls a four-unit project GREEN on it."""
+    small = LotFacts(lot_sqft=5_000, frontage_ft=60, lot_width_ft=60)
+
+    result = screen(
+        _split(min_lot_sqft=1_500), small, SPLIT, fit(), policy=POLICY
+    )
+
+    area = next(c for c in result.checks if c.check == "min_lot_area_sqft")
+    assert area.threshold == 6_000
+    assert area.verdict is Verdict.fails
+
+
+def test_the_same_lot_on_one_lot_is_measured_against_the_number_as_written() -> None:
+    """The other half of the same rule, and the reason nothing in production
+    moves: a design that does not split the plat reads the base standard
+    exactly as the table prints it."""
+    small = LotFacts(lot_sqft=5_000, frontage_ft=60, lot_width_ft=60)
+
+    result = screen(rules(min_lot_sqft=1_500), small, DESIGN, fit(), policy=POLICY)
+
+    area = next(c for c in result.checks if c.check == "min_lot_area_sqft")
+    assert area.threshold == 1_500
+    assert area.verdict is Verdict.passes
+
+
+def test_a_split_plat_with_nothing_stating_a_townhouse_lot_standard_is_unchecked() -> None:
+    """Neither a ``unit_lots`` variant nor ORS 92.031's parent-standards flag,
+    so nothing in the encoding says what the parent has to be. Reporting the
+    standard as one we do not hold is the honest answer, and the one that
+    blocks GREEN rather than assuming it."""
+
+    result = screen(rules(), LOT, SPLIT, fit(), policy=POLICY)
+
+    assert "min_lot_area_sqft" in result.unchecked
+    assert "min_lot_width_ft" in result.unchecked
+    assert result.triage is Triage.unknown
+
+
+def test_the_statute_lets_the_parent_read_its_own_zone_unchanged() -> None:
+    """ORS 92.031(2)(b) judges a middle housing land division against the
+    regulations applicable to the original lot, and a layer that has read that
+    says so with ``land_division_parent_standards``. Then the split path asks
+    the parent for exactly what the one-lot path asks."""
+
+    result = screen(
+        rules(land_division_parent_standards=True, min_lot_sqft=3_000),
+        LOT,
+        SPLIT,
+        fit(),
+        policy=POLICY,
+    )
+
+    area = next(c for c in result.checks if c.check == "min_lot_area_sqft")
+    assert area.threshold == 3_000
+    assert area.verdict is Verdict.passes

@@ -207,9 +207,26 @@ encoded and shipped. The cross-reference ledger was silent because the section w
 document already fetched; the readiness ladder was silent because the citation rendered;
 the refusal ledger was silent because the refusal was counted.
 
+**Exemption ledger** (`flats/encode/exemptions.py` → `exemptions.csv`) — *which
+exemptions cite a page that does not state one.* `exempt: true` is the only value that
+removes a test rather than narrowing it, so it is the only one that can turn a lot GREEN
+with no margin to soften the error. One row per exempt value and variant, classified by
+what a reviewer opening its citation would actually find: **stated** (exemption language
+is there), **numeric** (the page prints a figure and no exemption), **marker** (the
+citation resolves to `[2]` and nothing else — a pointer to a pointer), **dash** (an
+em-dash cell, which is how these tables print "no standard here"), **silent**.
+
+The failure it exists for: all seven of Lake Oswego's density exemptions cited the
+footnote marker rather than the note one line below it, which says "Duplexes, triplexes,
+quadplexes, and cottage clusters are exempt from maximum density standards" in as many
+words. The readings were right and no reviewer signing those cards could have seen why.
+`marker` is now a hard zero; the other counts are pinned and move deliberately.
+
 Coverage ledger catches "we never looked at this zone." Clause ledger catches "we looked
 but missed the exception." Redirect ledger catches "we read the section that says this
-section does not apply." All three are needed; none substitutes for another.
+section does not apply." Exemption ledger catches "we wrote down that there is no
+standard and cited a page that never says so." All four are needed; none substitutes for
+another.
 
 **Footnote scope, and the one way to narrow it.** A footnote governs every value quoted
 from its *region* — the run of lines between the previous notes block and this one's

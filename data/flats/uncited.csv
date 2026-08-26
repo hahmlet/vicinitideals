@@ -4650,7 +4650,6 @@ or/clackamas/lake-oswego,unread,setback_front_ft,or/clackamas/lake-oswego/50.04.
 or/clackamas/lake-oswego,unread,min_lot_sqft,or/clackamas/lake-oswego/50.04.dimensional.txt,553,50.04.001.2,4,"2,750 sq. ft. + [(actual lot size – 6,000 sq. ft.) x 0.19]"
 or/clackamas/lake-oswego,unread,min_lot_sqft,or/clackamas/lake-oswego/50.04.dimensional.txt,558,50.04.001.2,1,"2,850 sq. ft. + [(actual lot size – 5,000 sq. ft.) x 0.28]"
 or/clackamas/lake-oswego,unread,min_lot_sqft,or/clackamas/lake-oswego/50.04.dimensional.txt,566,50.04.001.2,1,"2,850 sq. ft. + [(actual lot size – 5,000 sq. ft.) x 0.48]"
-or/clackamas/lake-oswego,unread,max_density_du_per_acre,or/clackamas/lake-oswego/50.04.dimensional.txt,609,50.04.001.2,1,"R-DD zone maximum density expressed in number of dwelling units per net developable area is computed by dividing the net developable area by 2,000 sq. ft. and rounding down to the nearest whole number"
 or/clackamas/lake-oswego,unread,max_height_ft,or/clackamas/lake-oswego/50.04.dimensional.txt,613,50.04.001.2,1,Lots with sloping topography – Maximum base height across the site shall be established by a flat plane measured at 28 ft. above the highest point of the natural ground surface within the building env
 or/clackamas/lake-oswego,unread,max_height_ft,or/clackamas/lake-oswego/50.04.dimensional.txt,617,50.04.001.2,1,"[Cross-Reference: Height Limitation: see Charter Section 46A for 50 ft. Maximum Height of Structures in Residential Areas; LOC § 50.04.003.4, General Exception to Structure Height Limitations; LOC § 5"
 or/clackamas/lake-oswego,unread,max_height_ft,or/clackamas/lake-oswego/50.04.dimensional.txt,727,50.04.001.2,1,"An accessory structure ≤ 18 ft. in height shall not exceed a total of 800 sq. ft. in size or the square footage of the footprint of the primary structure, whichever is less. An accessory structure > 1"
@@ -7940,11 +7939,8 @@ or/multnomah/portland,unfielded,,or/multnomah/portland/33.266.txt,464,33.266,1,"
 or/multnomah/portland,unfielded,,or/multnomah/portland/33.266.txt,486,33.266,1,"However, there must be a maneuvering area of at least 20 feet between the"
 or/multnomah/portland,unfielded,,or/multnomah/portland/33.266.txt,488,33.266,1,"less than 20 feet wide, some of this maneuvering area will be on-site."
 or/multnomah/portland,unfielded,,or/multnomah/portland/33.266.txt,507,33.266.140,1,"a. As shown in Figure 266-3, up to 2 feet of the front of the space as measured from"
-or/multnomah/portland,unfielded,,or/multnomah/portland/33.266.txt,521,33.266.140,1,0° (Parallel) 8 ft. 22 ft. 6 in. 12 ft. 20 ft. 8 ft.
 or/multnomah/portland,unfielded,,or/multnomah/portland/33.266.txt,522,33.266.140,1,30° 8 ft. 6 in. 17 ft. 12 ft. 20 ft. 15 ft.
 or/multnomah/portland,unfielded,,or/multnomah/portland/33.266.txt,523,33.266.140,1,45° 8 ft. 6 in. 12 ft. 12 ft. 20 ft. 17 ft.
-or/multnomah/portland,unfielded,,or/multnomah/portland/33.266.txt,524,33.266.140,1,60° 8 ft. 6 in. 9 ft. 9 in. 16 ft. 20 ft. 17 ft. 6 in.
-or/multnomah/portland,unfielded,,or/multnomah/portland/33.266.txt,525,33.266.140,1,90° 8 ft. 6 in. 8 ft. 6 in. 20 ft. 20 ft. 16 ft.
 or/multnomah/portland,unfielded,,or/multnomah/portland/33.266.txt,542,33.266,1,"21,780 square feet in total area. Structured parking is not included in the total."
 or/multnomah/portland,unfielded,,or/multnomah/portland/33.266.txt,544,33.266,1,(1) Tree canopy. Tree canopy must shade at least 4 0 percent of the parking
 or/multnomah/portland,unfielded,,or/multnomah/portland/33.266.txt,560,33.266,1,"following. Parking areas greater than 125,000 square feet on sites in R, C, E, IR,"

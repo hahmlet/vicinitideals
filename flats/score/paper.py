@@ -125,7 +125,7 @@ def _pair(side: float | None, total: float | None) -> float | None:
     return total if doubled is None else max(total, doubled)
 
 
-def _lot_standard(
+def lot_standard(
     rules: "ZoneResolution", name: str, *, per_unit: bool, lots: int
 ) -> tuple[float | None, bool]:
     """A lot standard for this plat path, and whether the encoding answers.
@@ -185,8 +185,8 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
     rear = _number(rules, "setback_rear_ft")
     side = _number(rules, "setback_side_ft")
     side_total = _number(rules, "setback_side_total_ft")
-    min_lot, lot_answered = _lot_standard(rules, "min_lot_sqft", per_unit=per_unit, lots=lots)
-    min_width, width_answered = _lot_standard(
+    min_lot, lot_answered = lot_standard(rules, "min_lot_sqft", per_unit=per_unit, lots=lots)
+    min_width, width_answered = lot_standard(
         rules, "min_lot_width_ft", per_unit=per_unit, lots=lots
     )
     coverage = _number(rules, "max_coverage_pct")
