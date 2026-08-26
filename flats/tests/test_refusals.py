@@ -26,7 +26,7 @@ pytestmark = pytest.mark.unit
 #: are not meant to do is move quietly. A refusal added without a line here is
 #: a reading nobody signed off on; a refusal removed without one is a reading
 #: somebody overturned without saying so.
-EXPECTED = {"notes": 89, "comments": 25, "tests": 16}
+EXPECTED = {"notes": 90, "comments": 25, "tests": 16}
 #: Two of the sixteen are this file, which quotes the marker while
 #: explaining it, and one is a back-reference in test_gresham_rockwood --
 #: prose saying a zone *was* not encoded until it was. Left in rather than
@@ -67,6 +67,18 @@ EXPECTED = {"notes": 89, "comments": 25, "tests": 16}
 #: seven prohibiting the pod outright -- because a refusal about scope is
 #: worth exactly as much as its evidence that the scope does not currently
 #: bite.
+#:
+#: Notes went 89 -> 90 on 2026-08-26, for Gresham's Clear Vision Area, and it
+#: is a refusal of a kind this corpus has not had before. 9.0200 was fetched
+#: because eleven district-chapter sentences say "Comply with Section 9.0200",
+#: and the section turned out to be two paragraphs that both end "The
+#: dimensions of the clear vision area and exceptions are described in the
+#: Public Works Standards (6.04)." The constraint is real and corner-specific
+#: and there is no number in the land use code to encode. The refusal is not
+#: "we read this and it does not bite" but "we read this and the number lives
+#: in an engineering manual no jurisdiction file declares" -- a document class
+#: the corpus has never taken in. That distinction is why it is recorded
+#: rather than quietly dropped.
 
 
 def test_the_corpus_declares_more_refusals_than_any_ledger_counts() -> None:
