@@ -40,6 +40,18 @@ definitions:
     cite: "MCC 39.2000, Lot (Corner)"
 
 crossrefs:
+  "0.7":
+    outcome: misread
+    note: >-
+      A figure, not a section: "0.7 to 1" from the Maximum FAR row of Table 110-4. This layer
+      holds Portland's Chapter 33.110 -- the file's own metadata records it came from portland.gov
+      -- so Portland's table cells arrive here too.
+  "004":
+    outcome: misread
+    note: >-
+      "OAR 660, Division 004" broken across the extraction, leaving the division number to match
+      the abbreviation branch as a county section. State law is counted separately by state_law()
+      and is not a dangling city chapter.
   "39.3140":
     outcome: narrows_only
     note: >-

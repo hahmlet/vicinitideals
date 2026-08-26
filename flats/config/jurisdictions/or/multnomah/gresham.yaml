@@ -137,6 +137,31 @@ definitions:
     cite: "Gresham Development Code 3.0100, Lot, Corner Lot"
 
 crossrefs:
+  "7.05":
+    outcome: misread
+    note: >-
+      Section 7.0510 with a line break inside the number -- the sample reads "as described in
+      Section 7.05 10". Gresham's Rockwood Design District chapter is held as
+      7.0500.rockwood-design.txt, so the whole 7.05xx range is in the store.
+  "9.08514":
+    outcome: misread
+    note: >-
+      A parking table cell, not a section. Table 9.0851 prints footnote markers directly against
+      the row labels -- "residential4, 5" -- and the extraction runs the table number into the
+      marker.
+  "10.0420":
+    outcome: other_building
+    note: >-
+      "Conversion of a hotel or motel to an emergency shelter or affordable housing under Section
+      10.0420." Every mention is that conversion, and Gresham's affordable housing chapter 10.1700
+      is already held. A hotel converted is not a new four-unit building on a vacant lot.
+  "9.0200":
+    outcome: fetch
+    note: >-
+      Clear Vision Area, cited eleven times and never fetched. A clear vision triangle keeps
+      structures out of a corner at the intersection, which is buildable area this screen
+      currently counts. Corner is a site fact the parcel layer can supply, so this is a rule that
+      can move a verdict rather than one waiting on data.
   "7.0100":
     outcome: other_building
     note: >-

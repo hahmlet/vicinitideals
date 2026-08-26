@@ -12,6 +12,14 @@ ingest:
   zoning_layer: zoning_tualatin
   zone_field: PLANDIST.CZONE
   strip_lowercase_suffix: false
+crossrefs:
+  "35":
+    outcome: other_path
+    note: >-
+      Nonconforming Situations. Every mention routes an existing situation that already fails the
+      code into the chapter governing how it may continue. This screen places a new building on a
+      lot that has to pass the standards as written.
+
 definitions:
   # "Corner Lot. A lot abutting two intersecting streets other than an alley."
   #

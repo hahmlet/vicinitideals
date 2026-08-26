@@ -67,6 +67,23 @@ ingest:
   zoning_layer: zoning_metro
   zone_field: ZONE
   strip_lowercase_suffix: false
+crossrefs:
+  "1105":
+    outcome: later
+    note: >-
+      "Subdivisions, Partitions, Replats, Middle Housing Land Divisions." Both mentions are ZDO
+      Table 1012 footnotes permitting a middle housing land division as an exception to a lot
+      standard, and the parent-lot standards this layer already encodes are the ones that govern
+      while the pod sits on one lot. Parked rather than closed: no pod in flats/config/pods
+      declares plat: unit_lots, so this screen never creates a lot. The day one does, this is a
+      fetch.
+  "1204":
+    outcome: other_path
+    note: >-
+      Temporary Permits, cited by ZDO 315's one-dwelling-per-lot rule as an exception alongside
+      Section 839, Accessory Dwelling Units. A temporary permit is not a path to a permanent
+      four-unit building.
+
 definitions:
   # "LOT, CORNER: A lot with street frontage on two streets intersecting at a
   # corner of the lot. A lot within the radius curve of a single street is not

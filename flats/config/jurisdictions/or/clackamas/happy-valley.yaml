@@ -73,6 +73,40 @@ ingest:
   zone_field: ZONE
   strip_lowercase_suffix: false
 crossrefs:
+  "16.69.010":
+    outcome: other_building
+    note: >-
+      "Temporary buildings for uses incidental to construction work ... Such buildings shall be
+      removed upon completion." A construction trailer.
+  "16.65":
+    outcome: narrows_only
+    note: >-
+      Lot Size Averaging -- "single-family residential lot size may be averaged to allow lots less
+      than the minimum lot size in residential districts." It lowers a minimum inside a
+      subdivision, so reading it could only admit lots this screen rejects on size.
+  "16.50.080":
+    outcome: procedure
+    note: >-
+      Landscaping bond and timing: "final public infrastructure inspection and authorization to
+      submit building permits may occur prior to the landscaping requirements having been met",
+      subject to security. It sets when the landscaping has to be in the ground, not how much of
+      the lot it takes.
+  "16.32":
+    outcome: fetch
+    note: >-
+      Steep Slopes Development Overlay. The sentence citing it is a hard density rule -- "No
+      density is allowed within constrained land except for the reduced rate within the Steep
+      Slopes Development Overlay Zone and the Natural Resources Overlay Zone per LDC Section
+      16.32.090 and/or Section 16.34.050" -- and a second sentence makes the chapter the
+      definition of slope itself: "The slope of a lot is calculated pursuant to Chapter 16.32."
+      Clackamas slope data exists from the quadfit run, so this is readable now and it can take a
+      lot to zero.
+  "16.34":
+    outcome: fetch
+    note: >-
+      Natural Resources Overlay, the other half of the constrained-land rule above. Eight
+      mentions, and the one this ledger caught defines what counts as a stream corridor or wetland
+      for the purpose of removing density from it.
   "16.61":
     outcome: other_path
     note: >-

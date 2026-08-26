@@ -31,6 +31,24 @@ definitions:
     cite: "PCC 33.910, Lot-Related Definitions, Corner Lot"
 
 crossrefs:
+  "3.75":
+    outcome: misread
+    note: >-
+      Not a reference. Table 150-1 in 33.150 prints "3.75 to 1" in the CI2 column of the Maximum
+      FAR with Inclusionary Housing Bonus row; the dotted-number branch reads the figure as a
+      section.
+  "0.7":
+    outcome: misread
+    note: >-
+      Same shape one chapter over. Table 110-4 prints "0.7 to 1" in the R20 and R10 columns of the
+      four-or-more-dwelling-units Maximum FAR row.
+  "33.270":
+    outcome: other_path
+    note: >-
+      Planned Developments. Both mentions are Table 110-2 rows -- "Attached Duplex" and
+      "Multi-dwelling Development" -- reading "Only in Planned Developments, See Chapter 33.270."
+      Neither row is the pod's. The Fourplex row on the same table says Yes in R20 and R10 with no
+      planned development, and that is the row this screen reads.
   "33.251":
     outcome: other_building
     note: >-

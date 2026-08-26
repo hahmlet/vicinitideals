@@ -41,6 +41,43 @@ ingest:
   zoning_layer: zoning_lake_oswego
   zone_field: LAYER
   strip_lowercase_suffix: false
+crossrefs:
+  "46A":
+    outcome: read
+    note: >-
+      The citing line states what the section holds: "Height Limitation: see Charter Section 46A
+      for 50 ft. Maximum Height of Structures in Residential Areas." A city charter ceiling of 50
+      ft, quoted in four of the dimensional table's cross-reference blocks. The pod is 26 ft, and
+      every Lake Oswego height standard already encoded caps lower than the charter does.
+  "50.04.003.4":
+    outcome: narrows_only
+    note: >-
+      "General Exception to Structure Height Limitations", cited in the same blocks as the charter
+      reference and again in two table footnotes that call it "maximum height exception". A
+      section granting exceptions to a height limit can only let a building stand taller than the
+      table allows, so reading it could only admit lots this screen already rejects on height.
+  "50.04.003.10":
+    outcome: narrows_only
+    note: >-
+      "Exceptions to the Minimum Density Requirement for All Zones", cited by the minimum-density
+      sentence in the R-2/R-0 and R-5/R-6 blocks. It relieves a floor, and a floor relieved can
+      only admit.
+  "50.03.003.2":
+    outcome: other_building
+    note: >-
+      "Conditional Use Standards for Residential Uses - Group and Institutional Housing." Both
+      mentions are conditional-use cross-references printed under the R-2/R-6 dimensional block.
+      Group and institutional housing is not a four-unit attached dwelling, and the companion
+      reference beside it, 50.03.003.1.b, is the conditional list for those same zones.
+  "50.06.001.5":
+    outcome: fetch
+    note: >-
+      LOC 50.06.001.5.b is cited as a Height Limitation "for non-single-family dwellings" in five
+      of the dimensional table's cross-reference blocks, including the WLG and EC zones. The pod
+      is a non-single-family dwelling and the encoded Lake Oswego heights leave two to four feet
+      of slack over 26 ft, so a design-chapter qualifier on height is exactly the Gresham 7.0420
+      shape. Chapter 50.06 is not held.
+
 code:
   # The city left Code Publishing for General Code's eCode360 (code LA4508);
   # the old codepublishing.com index is a 272-character redirect notice. The
