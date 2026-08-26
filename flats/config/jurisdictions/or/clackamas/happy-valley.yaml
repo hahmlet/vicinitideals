@@ -65,6 +65,50 @@ notes: >-
   this layer lived in an unfetched chapter. Now cited directly. (F)(3) also lets dedicated right-of-way
   count toward minimum lot size, but only "in the case of a partition, where the City is requiring the
   dedication", which is a land-division proceeding rather than a lot fact and is not encoded.
+
+
+  READ AND NOT ENCODED: 16.32, Steep Slopes Development Overlay, and 16.34, Natural Resources
+  Overlay. The pair the density rows point at -- "No density is allowed within constrained land
+  except for the reduced rate within the Steep Slopes Development Overlay Zone and the Natural
+  Resources Overlay Zone per LDC Section 16.32.090 and/or Section 16.34.050" -- fetched and read
+  2026-08-26. Both bite hard, and neither is encodable with the fields this engine has.
+
+  16.32 is a slope threshold, not a map lookup. 16.32.010(B) sets the classes: a CONSERVATION
+  slope area is slopes of 25% or more in a contiguous extent of at least 1,000 square feet, plus
+  land within 25 feet of the top or toe of such a slope where a geotechnical engineer identifies
+  it, plus DOGAMI potentially rapidly moving landslide areas -- and "development activities on
+  conservation slope areas are prohibited". A TRANSITION slope area is 15 to 24.99 percent on the
+  same 1,000 square foot test. 16.32.020 applies the overlay to any existing lot of record meeting
+  those tests, and says it "will take precedence in density calculations over the base zoning
+  district". 16.32.090 then caps density at one dwelling unit per acre on conservation slope and
+  DOGAMI land and two per acre on transition slope, one in the very low density zones, most
+  restrictive winning. Four units at two per acre is two acres. That is not a trim, it is a kill.
+
+  16.32.040(C) is a second constraint on top: within a transition slope area only a sliding
+  fraction is buildable at all -- 50% of it if half or more of the parcel is sloped, 40% at 20 to
+  49.99 percent, 30% below that.
+
+  16.34.050(B) does the same for the resource overlay by a different route: inside a high value
+  habitat conservation area or a water quality resource, only 10% of the area counts toward
+  density and the cap is one unit per acre; inside a moderate HCA, 20% and the same cap. Read
+  with 16.34.050(A)(1), which lets the base zone setback drop to anywhere between the minimum and
+  zero to avoid a resource -- the only part of either chapter that loosens.
+
+  Not encoded because the binding form is a buildable-area mask, not a number. 16.32.045(A)
+  excepts outright "an activity that avoids conservation slope areas and transition slope areas",
+  so the real question for this pod is whether 56 by 36 feet plus its parking and access fits on
+  the part of the lot under 15%, not what the density cap says. No field in the registry can
+  express "the building must avoid ground steeper than X", and this layer has no overlay
+  mechanism -- the Clackamas quadfit run carried slope data but no overlay geometry. Writing
+  `max_density_du_per_acre: 2` here would be wrong in both directions: wrong on a lot whose slope
+  sits in a corner the pod misses, and far too generous on one where it does not.
+
+  Two smaller readings kept for whoever encodes it. 16.32.020 carves out lots created between
+  April 21, 1999 and April 21, 2009 entirely, per ORS 92.040. And the same subsection ends
+  "actual site specific conditions shall take precedence over any aerial topography mapping or
+  other non-survey specific datum" -- which is the code saying in advance that a DEM-derived
+  slope is not the last word, and is the reason a lot this rule touches belongs in REVIEW rather
+  than RED even once it is encoded.
 ingest:
   geoid: null
   juris_city_codes:
@@ -82,8 +126,9 @@ crossrefs:
     outcome: narrows_only
     note: >-
       Lot Size Averaging -- "single-family residential lot size may be averaged to allow lots less
-      than the minimum lot size in residential districts." It lowers a minimum inside a
-      subdivision, so reading it could only admit lots this screen rejects on size.
+      than the minimum lot size in residential districts." It lowers a minimum, so reading it
+      could only admit lots this screen rejects on size. Chapter 16.65 is Master Planned
+      Developments, which is also a discretionary path this screen does not take.
   "16.50.080":
     outcome: procedure
     note: >-
@@ -91,22 +136,6 @@ crossrefs:
       submit building permits may occur prior to the landscaping requirements having been met",
       subject to security. It sets when the landscaping has to be in the ground, not how much of
       the lot it takes.
-  "16.32":
-    outcome: fetch
-    note: >-
-      Steep Slopes Development Overlay. The sentence citing it is a hard density rule -- "No
-      density is allowed within constrained land except for the reduced rate within the Steep
-      Slopes Development Overlay Zone and the Natural Resources Overlay Zone per LDC Section
-      16.32.090 and/or Section 16.34.050" -- and a second sentence makes the chapter the
-      definition of slope itself: "The slope of a lot is calculated pursuant to Chapter 16.32."
-      Clackamas slope data exists from the quadfit run, so this is readable now and it can take a
-      lot to zero.
-  "16.34":
-    outcome: fetch
-    note: >-
-      Natural Resources Overlay, the other half of the constrained-land rule above. Eight
-      mentions, and the one this ledger caught defines what counts as a stream corridor or wetland
-      for the purpose of removing density from it.
   "16.61":
     outcome: other_path
     note: >-
@@ -162,6 +191,25 @@ code:
 - id: 16.22.residential
   url: https://ecode360.com/print/HA4934?guid=43529907
   title: HV LDC Chapter 16.22 - Residential Land Use Districts
+# The constrained-land pair. Table 16.22's density rows carry the sentence "No
+# density is allowed within constrained land except for the reduced rate within
+# the Steep Slopes Development Overlay Zone and the Natural Resources Overlay
+# Zone per LDC Section 16.32.090 and/or Section 16.34.050" -- a rule that can
+# take a lot to zero rather than trim it -- and 16.32 is also where the code
+# says what the slope of a lot is: "The 'slope' of a lot is calculated pursuant
+# to Chapter 16.32." Clackamas slope data already exists from the quadfit run,
+# so these are readable now rather than waiting on data.
+#
+# eCode360 hides its table of contents behind JavaScript, so a chapter's guid
+# looks unreachable. The print view of the whole title returns every chapter
+# with its id embedded: ecode360.com/print/HA4934?guid=43523935 is Title 16 and
+# names all forty. Cheaper than guessing, and it is one request.
+- id: 16.32.steep-slopes
+  url: https://ecode360.com/print/HA4934?guid=43529950
+  title: HV LDC Chapter 16.32 - Steep Slopes Development Overlay Zone
+- id: 16.34.natural-resources
+  url: https://ecode360.com/print/HA4934?guid=43529952
+  title: HV LDC Chapter 16.34 - Natural Resources Overlay Zone
 - id: 16.42.landscaping
   url: https://ecode360.com/print/HA4934?guid=43529965
   title: HV LDC Chapter 16.42 - Landscaping, Fences and Walls, Recreation Areas

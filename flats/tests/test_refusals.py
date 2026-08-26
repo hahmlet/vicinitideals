@@ -26,7 +26,7 @@ pytestmark = pytest.mark.unit
 #: are not meant to do is move quietly. A refusal added without a line here is
 #: a reading nobody signed off on; a refusal removed without one is a reading
 #: somebody overturned without saying so.
-EXPECTED = {"notes": 90, "comments": 25, "tests": 16}
+EXPECTED = {"notes": 92, "comments": 25, "tests": 16}
 #: Two of the sixteen are this file, which quotes the marker while
 #: explaining it, and one is a back-reference in test_gresham_rockwood --
 #: prose saying a zone *was* not encoded until it was. Left in rather than
@@ -79,6 +79,20 @@ EXPECTED = {"notes": 90, "comments": 25, "tests": 16}
 #: in an engineering manual no jurisdiction file declares" -- a document class
 #: the corpus has never taken in. That distinction is why it is recorded
 #: rather than quietly dropped.
+#:
+#: Notes went 90 -> 92 the same day for Happy Valley's 16.32 and 16.34, and
+#: those two are the heaviest refusals in the corpus. Both cap density on
+#: slope-constrained and resource-constrained land at one or two dwelling
+#: units per acre, and development on a conservation slope area -- 25% or
+#: steeper over 1,000 contiguous square feet -- is prohibited outright. Four
+#: units at two per acre is two acres, so where either overlay reaches, this
+#: building is dead. They are refused because the form that binds is a
+#: buildable-area mask and not a number: 16.32.045(A) excepts "an activity
+#: that avoids conservation slope areas and transition slope areas", so the
+#: question is whether the pod fits on the part of the lot under 15%, and no
+#: field can say that. Encoding the density figure instead would be wrong in
+#: both directions at once. This is the clearest case in the corpus of a
+#: refusal that is a work order rather than a dismissal.
 
 
 def test_the_corpus_declares_more_refusals_than_any_ledger_counts() -> None:

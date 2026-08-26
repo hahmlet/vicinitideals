@@ -1,0 +1,459 @@
+Close
+Print
+Resize:
+
+City of Happy Valley, OR
+
+[print date]
+
+Title 16. Land Development Code
+
+ARTICLE 16.3. SPECIFIC AREA PLAN DISTRICTS AND OVERLAY ZONES
+
+Chapter 16.32. STEEP SLOPES DEVELOPMENT OVERLAY ZONE
+
+§ 16.32.010. Purpose.
+
+Slope constrained lands are regulated by the steep slopes development overlay (SSDO). The purpose of the SSDO is to:
+
+A.
+
+Contribute to compliance with Statewide Planning Goal 7 (Areas Subject to Natural Disasters and Hazards). For Goal 7, with exceptions, the SSDO specifically minimizes seismic and landslide hazards and soil erosion associated with development on steep or unstable slopes.
+
+B.
+
+Regulate development and provide special protection on lands within "conservation slope areas" and "transition slope areas" as follows:
+
+1.
+
+Except as exempted pursuant to Section 16.32.045, development activities on conservation slope areas are prohibited. Except as allowed by Section 16.32.040(D)(1), conservation slope areas include:
+
+a.
+
+Slopes 25% and greater (for designation as conservation slope area, the minimum contiguous extent for slopes 25% and greater shall be 1,000 square feet);
+
+b.
+
+Potentially Hazardous Analysis Areas (lands within 25 feet of the top or toe of slopes 25% and greater) identified by a certified geotechnical engineer;
+
+c.
+
+Areas containing potentially rapidly moving landslide hazard areas mapped by the Oregon Department of Geology and Mineral Industries (DOGAMI).
+
+2.
+
+Within transition slope areas, conservation and development are balanced. Except as allowed by Section 16.32.040(D)(2), transition slope areas include:
+
+a.
+
+Slopes 15 to 24.99 percent (for designation as transition slope area, the minimum contiguous extent for slopes 15 to 24.99 percent shall be 1,000 square feet and the land must not be otherwise designated as a conservation slope area).
+
+C.
+
+Limit the potential residential density and facilitate transfer of development away from slope constrained lands.
+
+D.
+
+Slope constrained lands in Happy Valley require special protection because they:
+
+1.
+
+Are generally more difficult and expensive to serve with urban infrastructure as compared to less steep lands;
+
+2.
+
+Provide wildlife habitat, tree canopy, and other environmental benefits;
+
+3.
+
+Are located at the headwaters of watersheds that provide clean drinking water to downstream users, including Happy Valley residents;
+
+4.
+
+Contribute to the scenic landscape of Happy Valley which is a strong part of the City's identity and livability;
+
+5.
+
+Are often adjacent to regulated natural resource areas and/or public green spaces; and
+
+6.
+
+Can, if developed, cause harm to persons and/or structures via stormwater runoff, landslide, mudslide, tree windthrow and other natural actions that may pose a hazard to the public health, safety and welfare.
+
+(Ord. 389 § 1(Exh. A), 2009; Ord. 474 § 1, 2015; Ord. 501 § 1, 2016; Ord. 566 § 1, 2022)
+
+§ 16.32.020. Applicability.
+
+Unless excepted by the provisions of Section 16.32.045 of this title, the regulations of the steep slopes development overlay shall apply to any existing lot of record with slopes greater than 15% (with a minimum contiguous extent greater than 1,000 square feet), potentially hazardous analysis areas identified by a certified geotechnical engineer, and/or DOGAMI landslide hazard areas except as allowed by Section 16.32.040(D). This section shall apply only to activities and uses that require a building, grading, tree removal and/or land use permit and per ORS 92.040, shall not apply to parcels or lots created between April 21, 1999 and April 21, 2009. The steep slopes development overlay will be overlaid on any and all applicable parcels within the City limits at the time of development application and, upon being overlaid, will take precedence in density calculations over the base zoning district illustrated on the City's Comprehensive Plan map/zoning map, and actual site specific conditions shall take precedence over any aerial topography mapping or other non-survey specific datum.
+
+(Ord. 389 § 1(Exh. A), 2009; Ord. 427 § 1, 2012; Ord. 474 § 1, 2015; Ord. 501 § 1, 2016; Ord. 539 § 1, 2018)
+
+§ 16.32.030. General provisions.
+
+No person shall develop property in areas within the steep slopes development overlay without first demonstrating compliance with this section.
+
+A.
+
+As a condition of permit issuance or land use approval, the applicant shall agree to implement the recommendations of approved studies and to allow all inspections to be conducted.
+
+B.
+
+Where a bond, letter of credit, or other guarantee is required, the permit shall not be issued until the bond or guarantee has been obtained and approved.
+
+(Ord. 389 § 1(Exh. A), 2009)
+
+§ 16.32.040. Designation of buildable lands.
+
+A.
+
+For the purposes of the SSDO, buildable lands include:
+
+1.
+
+Lands not designated conservation slope area or transition slope area;
+
+2.
+
+Buildable portions of transition slope areas according to the sliding scale as described in Section 16.32.040(C);
+
+3.
+
+Isolated conservation slope or transition slope areas as described in Section 16.32.040(D), below.
+
+B.
+
+In addition to the Happy Valley Steep Slopes and Natural Resources Overlay Zone Map, the text provisions of this section shall be used to determine whether applications may be approved within the SSDO. The following maps and documents may also be used as references for identifying areas subject to the requirements of this section:
+
+1.
+
+Locally adopted studies or maps;
+
+2.
+
+City of Happy Valley slope analysis maps;
+
+3.
+
+Mapped DOGAMI potentially rapidly moving landslide hazard areas.
+
+C.
+
+Sliding Scale. Transition slope areas are intended to provide for limited development in balance with slope protection measures, therefore, the amount of development within transition slope areas shall be based on a sliding scale of impact intended to allow limited development within those parcels that are more encumbered with sloped lands. The sliding scale determines the amount of buildable and unbuildable transition slope area for a given site as follows:
+
+1.
+
+If a parcel has 50% or more of its total site area in transition slope area and conservation slope area, a maximum of 50% of the transition slope area is designated buildable and may be developed;
+
+2.
+
+If a parcel has 20—49.99 percent of its total site area in transition slope area and conservation slope area, a maximum of 40% of the transition slope area is designated buildable and may be developed;
+
+3.
+
+If a parcel has 0—19.99 percent of its total site area in transition slope area and conservation slope area, a maximum of 30% of the transition slope area is designated buildable and may be developed.
+
+D.
+
+Designation of Isolated Conservation Slope or Transition Slope Areas as Buildable. Through a Type II Environmental Review, an isolated pocket of conservation slope or transition slope Area on a property may be designated as buildable land. The applicant must demonstrate the following:
+
+1.
+
+For conservation slope areas:
+
+a.
+
+The contiguous extent of the area is 3,000 square feet or less;
+
+b.
+
+There are no other conservation slope areas or transition slope areas within 50 feet; and
+
+c.
+
+The required special studies and reports have been prepared in accordance with Section 16.32.080, evaluating the site conditions and determining that the conservation slope area can be safely developed.
+
+2.
+
+For transition slope areas or for areas with a combination of conservation slope area and transition slope area:
+
+a.
+
+The contiguous extent of the area is 6,000 square feet or less and less than 50% of the area is within a conservation slope area;
+
+b.
+
+There are no other conservation slope areas or transition slope areas within 50 feet; and
+
+c.
+
+The required special studies and reports have been prepared in accordance with Section 16.32.080, evaluating the site conditions and determining that the transition slope area can be safely developed.
+
+(Ord. 389 § 1(Exh. A), 2009; Ord. 474 § 1, 2015)
+
+§ 16.32.045. Exceptions.
+
+A.
+
+An activity that avoids conservation slope areas and transition slope areas.
+
+B.
+
+The following activities, regardless of location:
+
+1.
+
+An excavation that is less than three feet in depth, or which involves the removal of a total of less than 50 cubic yards of volume;
+
+2.
+
+A fill that does not exceed three feet in depth or a total of 50 cubic yards of fill material;
+
+3.
+
+New construction or expansion of a structure resulting in a net increase in ground floor area of less than 1,000 square feet that does not involve grading;
+
+4.
+
+Emergency actions required to prevent an imminent threat to public health or safety, or prevent imminent danger to public or private property, as determined by the public works director; or
+
+5.
+
+Any land use or activity that does not require a building permit or grading permit, or land use approval.
+
+C.
+
+Development of employment, industrial or commercial uses on Employment, Industrial or Commercial designated lands that are not otherwise encumbered by the City's Natural Resource Overlay Zone (NROZ) and that abut an existing or planned Collector or Arterial roadway as illustrated within the City's Transportation System Plan (TSP).
+
+D.
+
+Development of lands within the Aldridge Road Subarea Comprehensive Plan that are not otherwise encumbered by the City's Natural Resource Overlay Zone (NROZ) to the envisioned density and approximate development pattern illustrated within Exhibit C of the Aldridge Road Subarea Comprehensive Plan.
+
+E.
+
+Transition or conservation slope areas that are "man-made" or caused by past soil fill/removal and grading activities so long as required special studies and reports have been prepared in accordance with Section 16.32.070, evaluating the site conditions and determining that the slope area can be safely developed.
+
+F.
+
+A building, grading, or tree removal permit on a lot or parcel created after April 21, 2009 which received approval of an environmental review permit pursuant to Section 16.32.080 or a proposed building permit on a lot in an existing subdivision or parcel in an existing partition that was finalized prior to City of Happy Valley record-keeping processes.
+
+G.
+
+An activity that is determined by the planning official to be reasonably similar to the exceptions listed in this section.
+
+(Ord. 389 § 1(Exh. A), 2009; Ord. 474 § 1, 2015; Ord. 521 § 3, 2017; Ord. 539 § 1, 2018; Ord. 545 § 1, 2019; Ord. 582, 3/19/2024)
+
+§ 16.32.050. Permitted uses.
+
+A.
+
+Unless excepted or exempt, permitted uses within unbuildable slope areas are limited to the following:
+
+1.
+
+Open space and trails constructed consistent with the provisions of Title 16 of the Engineering Design and Standard Details Manual;
+
+2.
+
+Removal of refuse and permitted fill;
+
+3.
+
+Planting of native vegetation and removal of non-native/invasive species, dead or dying trees or vegetation that is hazardous to the public;
+
+4.
+
+Construction, re-construction or expansion of public utilities and infrastructure (including both public roads and private streets) that is necessary to support permitted development;
+
+5.
+
+Construction, re-construction or expansion of a single-family residence on a legal lot of record under the following prescribed conditions:
+
+a.
+
+The applicant must demonstrate that the lot has received prior planning approval from either the City of Happy Valley, or if annexed, from Clackamas County, and that there is insufficient buildable land on the same lot to allow the proposed construction or expansion;
+
+b.
+
+The engineering, building permit, erosion control, water quality, and re-vegetation standards of this title have been fully satisfied;
+
+c.
+
+The residence or addition has been sited so as to minimize excavation and disturbance to native vegetation within the steep slopes development overlay area;
+
+d.
+
+The maximum impervious surface coverage from development shall be 3,500 square feet. This standard may be exceeded to allow a private driveway design and location that reduces adverse impacts to protected areas if the applicant demonstrates that a longer driveway will facilitate driveway construction that will either more closely follow hillside contours, and thereby reduce overall cut and fill area by at least 20%; or avoid tree clusters and thereby reduce by at least 20% the number of trees (six-inch caliper at breast height or greater) that must be removed; and
+
+6.
+
+Development shall not result in cuts or fills in excess of three feet except for basement construction unless specifically approved by the Building Official and City Engineer;
+
+7.
+
+Repair or stabilization of unstable slopes.
+
+B.
+
+Permitted uses within the buildable lands, as defined by this title are limited to the following:
+
+1.
+
+All uses listed in subsection A above; and
+
+2.
+
+Uses permitted in the base zone in approved buildable areas.
+
+(Ord. 389 § 1(Exh. A), 2009; Ord. 474 § 1, 2015)
+
+§ 16.32.060. Platting of new parcels or lots.
+
+Unless exempted in Section 16.32.045, no new parcel or lot shall be platted or approved for development exclusively within conservation slope areas.
+
+(Ord. 389 § 1(Exh. A), 2009; Ord. 474 § 1, 2015)
+
+§ 16.32.070. Required maps, studies, and reports.
+
+A.
+
+Maps. To determine the location of potentially slope constrained areas, the applicant shall submit a scaled topographic map at two-foot contour intervals for the subject property (site) for lands less than 15% in slope, and at five-foot contours for lands 15% and greater in slope and for land within 150 feet of the site perimeter. This map shall be prepared by a licensed, professional engineer or land surveyor and shall show:
+
+1.
+
+Slopes of 25% and greater;
+
+2.
+
+Potentially hazardous analysis areas identified by a certified geotechnical engineer, including the analysis area parallel to and within 25 feet of the top of the 25% slope break and the analysis area parallel to and within 25 feet of the toe of the slope;
+
+3.
+
+Mapped DOGAMI potentially rapidly moving landslide hazard areas;
+
+4.
+
+Transition slope areas; and
+
+5.
+
+The area (in square feet) for each category listed above for the subject property.
+
+B.
+
+Studies and Special Reports. The City Engineer may require, when known or perceived site or area circumstances indicate such particular need, the submittal of one or more of the following studies and/or special reports for any permit or development located within the SSDO. The requirement for such studies will be in writing and will be tied to specific code standards, criteria and/or requirements:
+
+1.
+
+Studies.
+
+a.
+
+Geological Assessments. Geological assessments are prepared and stamped by a Certified Engineering Geologist and describe the surface and subsurface conditions of a site, delineate areas of a property that may be subject to specific geologic hazards, and assess the suitability of the site for development. Geological assessments shall be conducted and prepared according to the requirements and recommendations of the Oregon State Board of Geologist Examiners, and shall make recommendations as to whether further studies are required, and may be incorporated into or included as an appendix to the geotechnical report;
+
+b.
+
+Engineering Geology Reports. Engineering geology reports are prepared and stamped by a Certified Engineering Geologist and provide detailed descriptions of the geology of the site, professional conclusions and recommendations regarding the effect of geological conditions on the proposed development, and opinions and recommendations covering the adequacy of the site to be developed. Engineering geology reports shall be prepared in accordance with the requirements of the Guidelines for Preparing Engineering Geology Reports in Oregon adopted by the Oregon State Board of Geologist Examiners and may be incorporated into or included as an appendix to the geotechnical report; and
+
+c.
+
+Geotechnical Reports. Geotechnical reports are prepared and stamped by a Geotechnical Engineer, evaluate site conditions, and recommend design measures necessary to reduce the development risks and facilitate safe and stable development. Geotechnical reports shall be conducted and prepared according to the requirements and recommendations of the Oregon State Board of Geologist Examiners, and may be incorporated into or included as an appendix to the Engineering Geology Report.
+
+2.
+
+Special Reports.
+
+a.
+
+Hydrology and Soils Report. This report shall include information on the hydrological conditions on the site, the effect of hydrologic conditions on the proposed development, the proposed development's impact on surface and groundwater flows to wetlands and streams, and any hydrological or erosion hazards. This report shall also include soils characteristics of the site, their suitability for development, carrying capacity, and erosion or slumping characteristics that might present a hazard to life and property, or adversely affect the use or stability of a public facility or utility. Finally, this report shall include information on the nature, distribution and strength of existing soils; the adequacy of the site for development purposes; and an assessment of grading procedures required to impose the minimum disturbance to the natural state. A licensed, professional engineer registered in Oregon shall prepare the hydrology and soils report;
+
+b.
+
+Grading Plan. The grading plan shall be specific to a proposed physical structure or use and shall include information on terrain (two-foot intervals of property), drainage, direction of drainage flow, location of proposed structures and existing structures which may be affected by the proposed grading operations, water quality facilities, finished contours or elevations, including all cut and fill slopes and proposed drainage channels. Project designs, including but not limited to, locations of surface and subsurface devices, walls, dams, sediment basins, storage reservoirs, and other protective devices, shall form part of the submission. The grading plan shall also include: (i) construction phase erosion control plan consistent with the provisions of Title 15 of the City's Municipal Code; and (ii) schedule of operations. A licensed, professional engineer registered in Oregon shall prepare the grading and erosion control plan; and
+
+c.
+
+Native Vegetation Report. This report shall consist of a survey of existing vegetative cover, whether it is native or introduced, and how it will be altered by the proposed development. Measures for re-vegetation with native plant species will be clearly stated, as well as methods for immediate and long-term stabilization of slopes and control of soil erosion. A landscape architect, landscape designer, botanist or arborist with specific knowledge of native plant species, planting and maintenance methods, survival rates, and their ability to control erosion and sedimentation shall prepare the vegetation report. The applicant shall be responsible for replacing any native plant species that do not survive the first two years after planting, and for ensuring the survival of any replacement plants for an additional two years after their replacement.
+
+C.
+
+Compliance with Study Conclusions and Recommendations.
+
+1.
+
+Professional Standards. The City Engineer shall determine whether Geological Assessments, Engineering Geology Reports, or Geotechnical Reports have been prepared in accordance with this title. The City Engineer may require additional information or analysis necessary to meet study requirements.
+
+2.
+
+Peer Review. The City Engineer may require peer review of any required report, in which case regulated activities and uses shall be reviewed and accepted through the peer review process before any regulated activity will be allowed. The cost of such peer review shall be borne by the applicant. If peer review is required, the City Engineer shall provide the applicant, in writing, the reasons for the peer review.
+
+a.
+
+A professional or professional firm of the City's choice that meets the qualifications listed in this chapter shall perform the review.
+
+b.
+
+The review shall be at the applicant's expense.
+
+c.
+
+Review of report submittals shall determine whether required elements are completed, geologic report procedures and assumptions are accepted, and all conclusions and recommendations are supported and reasonable.
+
+3.
+
+Review Criteria. The approval authority shall rely on the conclusions and recommendations of the required reports, as modified by peer review, as well as any rebuttal material supplied by the applicant, to determine compliance with this section.
+
+4.
+
+Conditions of Approval. After review of the peer review report(s) and any rebuttal materials submitted by the applicant, conclusions and recommendations stated in approved reports shall be directly incorporated as permit conditions or provide the basis for conditions of approval for the regulated activity or use.
+
+5.
+
+Expiration. Where an approved assessment or report as defined by this chapter has been prepared within the last five years for a specific site, and where the proposed land use activity and surrounding site conditions are unchanged, that report may be utilized and a new report is not required. Should environmental conditions associated with the site or surrounding the site change, or if the proposed land use activity or development has materially changed, the applicant shall submit an amendment to the required assessment or report, which may be reviewed and approved through the peer review process.
+
+(Ord. 389 § 1(Exh. A), 2009; Ord. 474 § 1, 2015; Ord. 501 § 1, 2016)
+
+§ 16.32.080. Environmental review permit.
+
+Development proposals that are subject to the provisions of Chapter 16.32 require an environmental review permit application. Environmental review permits will be reviewed through a Type II procedure, pursuant to Section 16.61.030.
+
+(Ord. 389 § 1(Exh. A), 2009; Ord. 474 § 1, 2015)
+
+§ 16.32.090. Density and density transfers.
+
+Within conservation slope areas and DOGAMI potentially rapidly moving landslide hazard areas, a maximum density of one dwelling unit per acre applies. Within transition slope areas, a maximum density of two dwelling units per acre applies for all zones except for the very low density residential zones in Section 16.22.020 in which a maximum density of one dwelling unit per acre applies. The aggregate density will be rounded down. Density calculations shall be made and may be transferred within the site pursuant to Section 16.63.020(F). Where there are multiple density limitations based on the environmental overlay, the most restrictive applies.
+
+(Ord. 389 § 1(Exh. A), 2009; Ord. 474 § 1, 2015; Ord. 566 § 1, 2022)
+
+§ 16.32.100. Site design criteria.
+
+Development within the SSDO shall comply with the following site design criteria:
+
+A.
+
+Development is sited on lands less than 15% slope lands within the same parcel or on other parcels which are a part of the application, to the greatest degree practicable;
+
+B.
+
+Significant trees and other resources are protected and/or incorporated into the site design;
+
+C.
+
+Lands that remain undeveloped are coordinated with open space in adjacent parcels and natural resource areas, so that such areas, in combination, form as continuous an open space system as is practicable;
+
+D.
+
+Opportunities for linking wildlife corridors and pedestrian trails are implemented;
+
+E.
+
+Provision of access and internal circulation routes are as short as possible and designed to work with the natural topography, maintain minimum grades and require minimum cut and fill;
+
+F.
+
+Creation of open space tracts between proposed developments and existing developed parcels or open space tracts shall be coordinated so that such areas, in combination, will form as continuous an open space system as is practicable; and
+
+G.
+
+Opportunities for shared access are utilized wherever practicable, and if possible may be required by the City Engineer pursuant to Section 16.41.030, Vehicular access and circulation. A variance to vehicular access and circulation standards may be granted pursuant to Section 16.71.040, Class B variances.
+
+(Ord. 389 § 1(Exh. A), 2009; Ord. 474 § 1, 2015)
