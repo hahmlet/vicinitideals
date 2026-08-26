@@ -246,22 +246,39 @@ defaults:
     retrieved: '2026-08-20'
     quote: "or/multnomah/gresham/9.0800.parking.txt#L53"
 
-  # How big a stall is. The product is attached townhouses on fee-simple lots,
-  # so the stall comes from the townhouse standard rather than the parking
-  # chapter's general matrix: 7.0431(B)(5)(b) states it in a sentence and it is
-  # the more specific rule.
+  # How big a stall is, and it comes from the same row as the aisle below --
+  # Table 9.0825A, 90 degrees, standard column: 8.5 wide by 18.5 deep.
+  #
+  # It used to be 8.5 by 18 from GDC 7.0431(B)(5)(b), the townhouse sentence,
+  # while the aisle came from Table 9.0825A. That was one rectangle assembled
+  # from two rules, which is the mistake this corpus keeps writing paragraphs
+  # against and had just written another one about: 8.5 by 18 with a 23-foot
+  # aisle is a stall neither section states. Whichever branch of 9.0802(F) the
+  # parking takes (argued below), it takes whole. The shared branch reaches
+  # Table 9.0825A and the row says 18.5.
+  #
+  # The half foot is also the conservative direction if both rules are read as
+  # applying at once, which is the other honest reading: 7.0431(B)(5)(b) is a
+  # minimum ("at least 8.5 feet wide by 18 feet deep"), so a deeper stall
+  # satisfies it and a shallower one fails the table.
+  #
+  # NOT 15.5. The Figure 9.0825A notes allow overhang (O, three feet at 90
+  # degrees) to be subtracted from depth "where appropriate bumper overhang
+  # area (extruded curbs) is provided" -- a curb detail no parcel record
+  # states, so taking it would be crediting the site with construction nobody
+  # has built.
   parking_stall_width_ft:
     value: 8.5
-    cite: GDC 7.0431(B)(5)(b), Residential District Townhouse Design Standards
-    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
-    retrieved: '2026-08-24'
-    quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L500-L501"
+    cite: GDC Table 9.0825A, Off-Street Surface Parking Matrix (90 degrees, standard stall), reached via 9.0802(F) shared parking area
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-9.0800.pdf
+    retrieved: '2026-08-26'
+    quote: "or/multnomah/gresham/9.0800.parking.txt#L66-L70,L302,L319-L327,L340-L343"
   parking_stall_depth_ft:
-    value: 18
-    cite: GDC 7.0431(B)(5)(b), Residential District Townhouse Design Standards
-    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
-    retrieved: '2026-08-24'
-    quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L500-L501"
+    value: 18.5
+    cite: GDC Table 9.0825A, Off-Street Surface Parking Matrix (90 degrees, standard stall), reached via 9.0802(F) shared parking area
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-9.0800.pdf
+    retrieved: '2026-08-26'
+    quote: "or/multnomah/gresham/9.0800.parking.txt#L66-L70,L302,L319-L327,L340-L343"
 
   # 7.0431 states a stall and says nothing about the aisle it is reached from.
   # That is not a gap the parking chapter quietly fills, and reading it as one
@@ -287,6 +304,30 @@ defaults:
   # all, and screening against no aisle is screening against nothing. At 90
   # degrees Table 9.0825A asks 23 feet one-way and 24 two-way.
   #
+  # WHICH BRANCH IS NOT SETTLED, and the choice is recorded rather than
+  # hidden. 9.0802(F) illustrates a shared separate parking area as "visitor
+  # or overflow parking lot" -- parking additional to what the units have --
+  # and a rear court holding the four residents' own stalls is not obviously
+  # that. It is just as readable as the 7.0431(B)(5)(a) option, "a shared
+  # parking area on a common tract", which is a sentence inside the chapter
+  # 9.0802(F) sends this building to and would keep it there, with no aisle
+  # standard at all. Both readings are live. The stricter is encoded because
+  # a screen that dimensions a court against nothing is not screening, and
+  # because being wrong this way costs lots that would have passed rather
+  # than passing lots that cannot be built.
+  #
+  # 23 IS THE 90-DEGREE NUMBER, not the city's aisle. The one-way column runs
+  # 11 to 13 feet at 45 degrees, 14 to 18 at 60, 19 at 75 and 23 at 90 -- the
+  # aisle is a function of the parking angle and this field carries no angle.
+  # 90 degrees is what the site plan lays out, and it is also the widest of
+  # the four, so the number is right for the design and conservative for any
+  # other. A shallower angle would buy a narrower aisle at the price of a
+  # deeper stall, and nothing here has ever traded that.
+  #
+  # The two-way figure is different in kind: 24.00 is printed in every row of
+  # the matrix, compact and standard, 45 through 90. That one really is the
+  # city's aisle and carries no angle with it.
+  #
   # NOT the 20 feet in note 1. That note is about emergency vehicle access --
   # "the minimum aisle width may vary to accommodate emergency vehicle access
   # ... for one-way traffic and for emergency vehicle access is 20 feet" -- a
@@ -301,13 +342,13 @@ defaults:
     cite: GDC Table 9.0825A, Off-Street Surface Parking Matrix (90 degrees, standard stall), reached via 9.0802(F) shared parking area
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-9.0800.pdf
     retrieved: '2026-08-24'
-    quote: "or/multnomah/gresham/9.0800.parking.txt#L66-L70,L340-L343"
+    quote: "or/multnomah/gresham/9.0800.parking.txt#L66-L70,L302,L319-L327,L340-L343"
   parking_aisle_two_way_ft:
     value: 24
     cite: GDC Table 9.0825A, Off-Street Surface Parking Matrix (90 degrees, standard stall), reached via 9.0802(F) shared parking area
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-9.0800.pdf
     retrieved: '2026-08-24'
-    quote: "or/multnomah/gresham/9.0800.parking.txt#L66-L70,L340-L343"
+    quote: "or/multnomah/gresham/9.0800.parking.txt#L66-L70,L302,L319-L327,L340-L343"
 
 zones:
   LDR-5:

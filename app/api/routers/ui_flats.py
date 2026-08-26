@@ -1934,6 +1934,7 @@ async def flats_sign(
     note: str = Form(""),
     ref: str = Form(""),
     shape: str = Form(""),
+    anchor: str = Form(""),
 ) -> HTMLResponse:
     """Record what a reviewer decided about one number, and why.
 
@@ -1959,6 +1960,28 @@ async def flats_sign(
                 {
                     "chain": {"layer_id": layer_id.strip("/"), "zone": zone, "field": field},
                     "decision": {"verdict": "", "by": "", "pending": False, "restated": False},
+                    "error": why,
+                    "note": keep,
+                    "note_open": verdict in _NEEDS_NOTE,
+                },
+                status_code=400,
+            )
+        if shape == "row":
+            # The row hands back the whole control, not a verdict badge. A
+            # refusal that swapped in a one-line message would take the note
+            # box away at the moment the reviewer is being told to write one.
+            return templates.TemplateResponse(
+                request,
+                "partials/flats_row_verdict.html",
+                {
+                    "chain": {
+                        "layer_id": layer_id.strip("/"),
+                        "zone": zone,
+                        "field": field,
+                        "when": when,
+                        "anchor": anchor,
+                    },
+                    "row": {"decision": "", "pending": False},
                     "error": why,
                     "note": keep,
                     "note_open": verdict in _NEEDS_NOTE,
@@ -2010,6 +2033,24 @@ async def flats_sign(
                     "pending": verdict in _NEEDS_NOTE,
                     "restated": False,
                 },
+                "error": "",
+                "note": "",
+                "said": _SAID.get(verdict, ""),
+            },
+        )
+    if shape == "row":
+        return templates.TemplateResponse(
+            request,
+            "partials/flats_row_verdict.html",
+            {
+                "chain": {
+                    "layer_id": layer.layer,
+                    "zone": zone,
+                    "field": field,
+                    "when": when,
+                    "anchor": anchor,
+                },
+                "row": {"decision": verdict, "pending": True},
                 "error": "",
                 "note": "",
                 "said": _SAID.get(verdict, ""),

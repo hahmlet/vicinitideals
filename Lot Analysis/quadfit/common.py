@@ -336,11 +336,11 @@ class StallGeometry(BaseModel):
 # seating stalls the court cannot hold.
 _GRESHAM_GEOMETRY = {
     "stall_width_ft": 8.5,
-    "stall_depth_ft": 18.0,
+    "stall_depth_ft": 18.5,
     "aisle_one_way_ft": 23.0,
     "aisle_two_way_ft": 24.0,
     "parallel_stall_ft": [8.0, 24.0],
-    "cite": "GDC 7.0431(B)(5)(b) (stall); Table 9.0825A, 90 degrees standard (aisles)",
+    "cite": "GDC Table 9.0825A, 90 degrees standard, reached via 9.0802(F)",
 }
 
 

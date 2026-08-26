@@ -109,13 +109,20 @@ siteplan:
   # access figure, which answers a different question. Reading it as the aisle
   # made a 38 ft court look deep enough when a stall row and its drive need 41.
   geometry:
+    # 9.0802(F) excludes quadplexes and townhouses parked unit-by-unit from
+    # the parking-lot design standards and sends them to 7.0400, which states
+    # a stall and no aisle. The same sentence sends a SHARED parking area back
+    # to 9.0822-9.0827, where Table 9.0825A is. The pod parks in a shared rear
+    # court, so it takes that branch -- and takes the 90-degree standard row
+    # whole rather than pairing 7.0431's 18 ft stall with the table's aisle,
+    # which is a rectangle neither section states.
     gresham:
-      stall_width_ft: 8.5          # §7.0431(B)(5)(b): 8.5 x 18 (90°)
-      stall_depth_ft: 18.0
-      parallel_stall_ft: [8, 24]   # §7.0431(B)(5)(b) parallel option
-      aisle_one_way_ft: 23         # Table 9.0825A, 90°, standard stall
-      aisle_two_way_ft: 24         # Table 9.0825A / OFC emergency access
-      cite: GDC 7.0431(B)(5)(b) (stall); Table 9.0825A, 90 degrees standard (aisles)
+      stall_width_ft: 8.5          # Table 9.0825A, 90°, standard column
+      stall_depth_ft: 18.5         # the table's own depth, not 7.0431's 18
+      parallel_stall_ft: [8, 24]   # 9.0825(D); 7.0431(B)(5)(b) says the same
+      aisle_one_way_ft: 23         # 90° only: 19 at 75°, 14-18 at 60°
+      aisle_two_way_ft: 24         # printed in every row, at every angle
+      cite: GDC Table 9.0825A, 90 degrees standard, reached via 9.0802(F)
     # Portland prints two stalls and one sentence deciding between them.
     # 33.266.120.D.1 says 9 x 18 with a 9 ft driveway and states no aisle;
     # 33.266.120.B.1 then sends parking that is in a parking TRACT to

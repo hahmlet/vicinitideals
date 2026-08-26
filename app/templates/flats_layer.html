@@ -47,6 +47,11 @@
   <p class="muted" style="font-size:12px;margin:4px 0 12px">
     Every encoded number in this jurisdiction, whether reviewed or not. Read the
     number, press <strong>Show source</strong>, and compare it to the highlighted line.
+    Three answers, not two: <strong>Confirm</strong> if the page says it,
+    <strong>Wrong</strong> if the page says otherwise, and <strong>Unsure</strong> if
+    the page does not settle it — a highlight that stops short of the rule it depends
+    on, a number that turns out to hold only in a case nobody named. Unsure and Wrong
+    both take a note, and the note is the whole point of them.
     Decisions are collected here and applied in the next release — nothing changes on
     the spot. To work through what is left, <a href="/flats/review/{{ layer.id }}">review
     by passage</a> instead: same reading, one card per table row rather than one per
@@ -105,19 +110,18 @@
             {% endif %}
           </td>
           <td>
-            <div id="decision-{{ loop.index }}">
-              {% include "partials/flats_decision.html" %}
-            </div>
             {% if row.quote %}
-            <form hx-post="/ui/flats/sign" hx-target="#decision-{{ loop.index }}" hx-swap="innerHTML"
-                  style="display:flex;gap:4px;margin-top:4px">
-              <input type="hidden" name="layer_id" value="{{ layer.id }}">
-              <input type="hidden" name="zone" value="{{ row.zone }}">
-              <input type="hidden" name="field" value="{{ row.field }}">
-              <input type="hidden" name="when" value="{{ row.when }}">
-              <button class="btn btn-sm" name="verdict" value="verified">Confirm</button>
-              <button class="btn btn-secondary btn-sm" name="verdict" value="rejected">Wrong</button>
-            </form>
+              {% with chain = {
+                   "layer_id": layer.id,
+                   "zone": row.zone,
+                   "field": row.field,
+                   "when": row.when,
+                   "anchor": loop.index,
+                 } %}
+                {% include "partials/flats_row_verdict.html" %}
+              {% endwith %}
+            {% else %}
+              {% include "partials/flats_decision.html" %}
             {% endif %}
           </td>
         </tr>

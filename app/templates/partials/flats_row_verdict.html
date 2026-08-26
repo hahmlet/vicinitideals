@@ -1,0 +1,54 @@
+{#
+  One number's verdict, with the third answer on it.
+
+  This table used to offer Confirm and Wrong. A reviewer who has read the page
+  and come away unsure has neither of those things to say, and a queue whose
+  only outcomes are agreement and accusation collects agreement: the uncertain
+  reader picks Confirm or closes the tab, and either way the doubt is the one
+  thing the queue was built to capture and the one thing it loses.
+
+  The verdict "unclear" and its required note have existed on the server since
+  the queue was written, and on the per-field page's sticky bar. Only this
+  table never rendered them, so the readers working the list a number at a
+  time were the readers who could not raise a doubt.
+
+  No JavaScript: the note is a <details>, and a verdict that needs one and did
+  not get one comes back from the server with it open and the text kept.
+#}
+<div id="verdict-{{ chain.anchor }}">
+  {% include "partials/flats_decision.html" %}
+  <form hx-post="/ui/flats/sign"
+        hx-target="#verdict-{{ chain.anchor }}"
+        hx-swap="outerHTML"
+        style="margin-top:4px">
+    <input type="hidden" name="layer_id" value="{{ chain.layer_id }}">
+    <input type="hidden" name="zone" value="{{ chain.zone }}">
+    <input type="hidden" name="field" value="{{ chain.field }}">
+    <input type="hidden" name="when" value="{{ chain.when }}">
+    <input type="hidden" name="shape" value="row">
+    <input type="hidden" name="anchor" value="{{ chain.anchor }}">
+
+    <div style="display:flex;gap:4px;flex-wrap:wrap">
+      <button class="btn btn-sm" name="verdict" value="verified">Confirm</button>
+      <button class="btn btn-secondary btn-sm" name="verdict" value="unclear">Unsure</button>
+      <button class="btn btn-secondary btn-sm" name="verdict" value="rejected">Wrong</button>
+    </div>
+
+    <details style="margin-top:4px" {% if note_open %}open{% endif %}>
+      <summary class="muted" style="font-size:11px;cursor:pointer">
+        note — required for Unsure and Wrong
+      </summary>
+      <textarea name="note" rows="3"
+                placeholder="what the page does not settle, or what it says that the encoding does not"
+                style="width:100%;min-width:220px;margin-top:4px;font-size:12px;padding:6px"
+                >{{ note or "" }}</textarea>
+    </details>
+
+    {% if error %}
+      <div style="color:#b91c1c;font-size:11px;margin-top:4px">{{ error }}</div>
+    {% endif %}
+    {% if said %}
+      <div class="muted" style="font-size:11px;margin-top:4px">{{ said }}</div>
+    {% endif %}
+  </form>
+</div>

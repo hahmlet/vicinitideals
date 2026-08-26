@@ -1845,6 +1845,88 @@ async def test_a_query_with_a_note_joins_the_batch(client: AsyncClient, session:
     assert "10 percent cut" in bundle.text
 
 
+# --- the third answer, in the queue that never offered it -----------------
+#
+# The verdict bar has carried Confirm / Query / Problem since it was written.
+# The review-queue table -- the page a reader actually works a jurisdiction
+# from, one number at a time -- rendered Confirm and Wrong and nothing else,
+# and had no note field at all. A reviewer who read the page and came away
+# unsure had no button for that, and a queue whose only outcomes are agreement
+# and accusation collects agreement.
+
+
+async def _row(client: AsyncClient, **over):
+    body = {
+        "layer_id": "or/multnomah/portland",
+        "zone": "R10",
+        "field": "min_lot_sqft",
+        "when": "",
+        "verdict": "verified",
+        "shape": "row",
+        "anchor": "7",
+    }
+    body.update(over)
+    return await client.post("/ui/flats/sign", data=body, headers={"hx-request": "true"})
+
+
+async def test_the_review_queue_offers_the_third_answer(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+
+    response = await client.get("/flats/or/multnomah/portland")
+
+    assert response.status_code == 200
+    for word in ("Confirm", "Unsure", "Wrong"):
+        assert f">{word}<" in response.text, word
+    # And somewhere to say why, which is the half that makes the button mean
+    # anything: a doubt with no sentence attached is not a finding.
+    assert 'name="note"' in response.text
+
+
+async def test_an_unsure_row_without_a_note_keeps_what_was_typed(
+    client: AsyncClient, session: AsyncSession
+):
+    """The refusal hands back the control, not a one-line message.
+
+    Swapping the row for "say what is wrong with it" would take the note box
+    away at the moment the reviewer is being told to write in it.
+    """
+    await _login(client, session)
+
+    response = await _row(client, verdict="unclear", note="  ")
+
+    assert response.status_code == 400
+    assert "a bare rejection is not actionable" in response.text
+    assert 'name="note"' in response.text
+    assert "<details" in response.text and "open" in response.text
+    # Still addressed to the row it came from, or the swap lands nowhere.
+    assert 'id="verdict-7"' in response.text
+
+
+async def test_an_unsure_row_with_a_note_joins_the_batch(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+
+    response = await _row(
+        client,
+        verdict="unclear",
+        note="the highlight stops before the section that says this table applies",
+    )
+
+    from sqlalchemy import select
+
+    from app.models.flats import FlatsRuleSignature as S
+
+    assert response.status_code == 200
+    assert 'id="verdict-7"' in response.text
+    assert (await session.execute(select(S.verdict))).scalars().one() == "unclear"
+
+    bundle = await client.get("/flats/feedback")
+    assert "the highlight stops before" in bundle.text
+
+
 # --- reading the code without rewriting it --------------------------------
 
 
