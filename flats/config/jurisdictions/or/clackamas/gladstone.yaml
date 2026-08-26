@@ -43,6 +43,14 @@ definitions:
     cite: "Gladstone Municipal Code 17.06.270, Lot, corner"
 
 crossrefs:
+  "17.70":
+    outcome: other_path
+    note: >-
+      Conditional Uses. Every mention is the header of a zone's conditional list — "the following
+      uses and their accessory uses are allowed subject to GMC Chapter 17.70" — and a fourplex is
+      not on any of them. What is on the R-7.2 list is a "multi-household dwelling, five- to
+      eight-unit building on a collector or minor arterial", beside churches, fire stations and
+      nursing homes. Four units is one below the bottom of that range.
   "17.62.070": >-
     Setbacks for manufactured homes in a mobile home park. One sentence, printed once in each
     dimensional table and spanned by rowspan over every setback row, which is why it counts ten

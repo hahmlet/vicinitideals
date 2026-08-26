@@ -72,6 +72,23 @@ ingest:
   zoning_layer: zoning_happy_valley
   zone_field: ZONE
   strip_lowercase_suffix: false
+crossrefs:
+  "16.61":
+    outcome: other_path
+    note: >-
+      Middle housing land divisions, and the sentence citing it is the parent-lot rule restated:
+      "If a duplex, triplex, fourplex, or cottage cluster has been divided by a middle housing
+      land division, per LDC 16.61, the development standards that are applicable to the lot shall
+      apply to the middle housing parent lot, not to the middle housing child lot." That is what
+      this layer already encodes as land_division_parent_standards, from these same table notes.
+      The chapter behind it governs how the split is approved, which is a path no pod declares.
+  "16.44.080":
+    outcome: other_path
+    note: >-
+      Neighborhood commercial uses. All three mentions are the same table note attached to a
+      neighborhood commercial row of a residential zone's use table, which is why they land beside
+      the dimensional standards printed above. This screen places a dwelling.
+
 definitions:
   # "Corner lot. A lot bounded entirely by streets, or a lot which adjoins the
   # point of intersection of two or more streets and which the interior angle

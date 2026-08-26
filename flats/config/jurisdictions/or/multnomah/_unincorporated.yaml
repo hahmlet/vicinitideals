@@ -39,6 +39,34 @@ definitions:
     quote: "or/multnomah/_unincorporated/39.2000.definitions.txt#L836-L839"
     cite: "MCC 39.2000, Lot (Corner)"
 
+crossrefs:
+  "39.3140":
+    outcome: narrows_only
+    note: >-
+      "Except as provided in MCC 39.3140(B) and 39.4782(A) and (B), the minimum lot size of a
+      single family detached dwelling shall be 10,000 square feet." 39.3140(B) is the Lots of
+      Record definition -- an exception letting an undersized existing lot be built on. It can
+      only lower the minimum this screen already applies, so leaving it unread keeps the stricter
+      test.
+  "39.3120":
+    outcome: narrows_only
+    note: >-
+      The same Lots of Record exception in the OCI zone: "Except as provided in MCC 39.3120,
+      39.4682, and 39.4685, the minimum lot size shall be one acre." An exception that lets a
+      smaller existing lot qualify cannot make the one-acre figure larger.
+  "39.3090":
+    outcome: narrows_only
+    note: >-
+      The same Lots of Record exception in the rural residential zones, against a five-acre
+      minimum. Reading it could only admit lots this screen already rejects, never reject one it
+      admits.
+  "39.9610":
+    outcome: other_building
+    note: >-
+      "The minimum yard and other setbacks for a mobile home park shall be as required under MCC
+      39.9610." One sentence under the MR-4 yard table, which is why it stands beside four
+      encoded standards. A mobile home park is not the building this screen places.
+
 code:
 # R10/R20/RF/R7 are Portland-administered pockets: the standards live in
 # PCC 33.110, the same chapter PDF the Portland layer declares. LR7 (MCC

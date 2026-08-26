@@ -24,7 +24,7 @@ Title 17 is one file, Wilsonville's Chapter 4 is another) answers for every
 section inside it. What survives is a reference to text that is genuinely not
 in the store.
 
-Two rankings, and the second is the one to work from:
+Three rankings, and the last is the one to work from:
 
 ``mentions``
     How many times the corpus points at it. A chapter referenced twenty times
@@ -34,6 +34,20 @@ Two rankings, and the second is the one to work from:
     from. That is the Gresham shape exactly -- a standard and, beside it, a
     pointer to the rule that qualifies it. These are not "chapters we might
     want"; they are chapters that qualify numbers this screen is using now.
+``fields``
+    *Which* numbers, named. Proximity alone cannot tell a design chapter that
+    moves a setback from a use table's "Signs -- see Chapter 19.170", and
+    those two are the same row under ``binding``: both stand a line from an
+    encoded value. Fairview's queue opened on five references to home
+    occupations, wireless towers, signs and day care providers, every one of
+    them flagged binding, and the ledger had no way to say why they were not
+    worth a fetch.
+
+    A reference standing beside a standard that carries a *distance* -- a
+    setback, a height, a lot area, anything the fit has slack against -- ranks
+    above one standing beside a use permission, because that is what a missed
+    chapter eats into. ``FieldDef.has_slack`` already draws that line for the
+    scoring code and it is the same line here.
 
 State law (ORS, OAR) is counted separately. It is a different fetch problem
 with a different source, and mixing it in would bury a city's own missing
@@ -52,9 +66,15 @@ could ever see that. So a jurisdiction file may record a ruling::
         Setbacks for manufactured homes in a mobile home park — neither the
         building nor the tenure this screen places.
 
-Ruled rows sort to the bottom, are printed under their own heading rather than
-hidden, and are checked the other way too: a ruling on a reference the corpus
-no longer makes is reported as stale, because the chapter was fetched or the
+A ruling may also carry the *shape* of the decision -- ``other_building``,
+``narrows_only``, ``procedure``, ``preempted``, and two that do not close the
+row: ``fetch`` is work ordered and ``later`` is work deferred. Closed rows sort
+to the bottom and are printed under their own heading rather than hidden; an
+ordered one stays in the queue with its note attached, because a decision to
+go and read something is not a disposal of it.
+
+Rulings are checked the other way too: a ruling on a reference the corpus no
+longer makes is reported as stale, because the chapter was fetched or the
 sentence was amended away and either way the note has moved.
 
 Run it::
@@ -62,6 +82,7 @@ Run it::
     uv run python -m flats.encode.crossrefs
     uv run python -m flats.encode.crossrefs or/clackamas/tualatin
     uv run python -m flats.encode.crossrefs --binding
+    uv run python -m flats.encode.crossrefs --slack
 """
 
 from __future__ import annotations
@@ -75,6 +96,7 @@ from pathlib import Path
 from typing import Iterable, Iterator, Sequence
 
 from flats.provenance.store import ProvenanceStore, parse_quote
+from flats.rules.fields import FIELDS
 from flats.rules.loader import load_rules
 from flats.rules.model import Layer
 
@@ -176,13 +198,42 @@ class Dangling:
     #: Why this reference was read and does not reach this building, where the
     #: jurisdiction file records a ruling on it. Empty means nobody has looked.
     ruling: str = ""
+    #: The encoded standards this reference stands beside, most-often first.
+    #: ``like`` where the nearby citation is a zone borrowing another's rules
+    #: rather than a field of its own.
+    fields: tuple[str, ...] = ()
+
+    @property
+    def outcome(self) -> str:
+        """The shape of the decision, where one was recorded."""
+        return getattr(self.ruling, "outcome", "read") if self.ruling else ""
 
     @property
     def ruled(self) -> bool:
-        return bool(self.ruling)
+        """Whether the row is closed, which is not the same as ruled on.
+
+        ``fetch`` is work ordered and ``later`` is work deferred, and the
+        vocabulary has said so since it was written -- ``CROSSREF_CLOSED``
+        excludes both, and the review queue honours it. This ledger did not,
+        so the first ordered fetch anybody recorded sorted to the bottom under
+        a heading reading "read, and about somebody else's building". A
+        decision is not a disposal.
+        """
+        return bool(self.ruling) and getattr(self.ruling, "closed", True)
 
     @property
-    def rank(self) -> tuple[int, int]:
+    def slack_fields(self) -> tuple[str, ...]:
+        """Of those standards, the ones a missed chapter could move.
+
+        A boolean is settled or it is not -- reading a chapter cannot make a
+        prohibited use slightly more prohibited -- so a reference sitting in a
+        use table is a different kind of finding from one sitting beside a
+        setback, however adjacent both are.
+        """
+        return tuple(f for f in self.fields if f in FIELDS and FIELDS[f].has_slack)
+
+    @property
+    def rank(self) -> tuple[int, int, int]:
         """How far up the queue this sits.
 
         A ruled reference ranks at the bottom whatever its counts, which is
@@ -191,8 +242,15 @@ class Dangling:
         top it is the first thing anybody working this queue sees.
         """
         if self.ruled:
-            return (0, 0)
-        return (self.binding, self.mentions)
+            return (0, 0, 0)
+        return (len(self.slack_fields), self.binding, self.mentions)
+
+
+#: A code's own abbreviation, where the filename opens with one. Clackamas
+#: County's zoning ordinance is ``zdo.1012.txt`` and Rivergrove's is
+#: ``rldo.composite.txt``; lowercase and short, which is what separates them
+#: from ``residential`` or ``definitions`` further along the stem.
+_ABBREV = re.compile(r"[a-z]{2,5}")
 
 
 def _doc_ids(paths: Iterable[str]) -> set[str]:
@@ -202,12 +260,23 @@ def _doc_ids(paths: Iterable[str]) -> set[str]:
     holds one, and ``4.planning`` holds all of Chapter 4. Read off the leading
     numeric part of the stem, because that is the convention every document in
     the store was named under.
+
+    The abbreviation may come first, and stopping at it is expensive. Four
+    Clackamas County documents are named for their ordinance rather than their
+    chapter, and reading only line-initial digits gave them no sections at all
+    — so the county's own Section 1012, fifteen mentions and the loudest
+    reference in that layer, led this queue while sitting in the store. A
+    document that claims nothing also proves nothing, which is why
+    :func:`dangling` has to treat that case separately rather than trusting it.
     """
     ids: set[str] = set()
     for path in paths:
         stem = Path(path).stem
+        parts = stem.split(".")
+        if parts and _ABBREV.fullmatch(parts[0]):
+            parts = parts[1:]
         lead = []
-        for part in stem.split("."):
+        for part in parts:
             # A trailing letter belongs to the chapter: Tualatin's design
             # standards are Chapter 73A and its condominium rules are 73C, and
             # a reader that stopped at the first non-digit gave that document
@@ -246,7 +315,7 @@ def _spanned(head: str) -> set[str]:
 
 
 def _headings(
-    text: str, owns: set[str], own_ids: Iterable[str] = ()
+    text: str, owns: set[str] | None, own_ids: Iterable[str] = ()
 ) -> set[str]:
     """Section numbers this document prints at the start of a line and owns.
 
@@ -261,6 +330,14 @@ def _headings(
     document's own. A chapter file answers for every section inside it, which
     is what makes a whole-title fetch work, and answers for nothing outside it,
     which is what makes this check work at all.
+
+    ``owns=None`` is the one document that cannot be asked: a whole code in a
+    single file, named for the ordinance and not for any chapter of it.
+    Rivergrove's is 3.x, 5.x and 6.x together and there is no chapter it does
+    not hold, so refusing it ownership reported its own sections as unfetched.
+    It keeps the wrapped-line guard, which is the part that was actually doing
+    the work — ownership only ever short-circuited that guard for a document's
+    own children.
     """
     mine = tuple(own_ids)
     found: set[str] = set()
@@ -269,7 +346,7 @@ def _headings(
         m = _HEADING.match(line)
         if m:
             num = m.group("num").rstrip(".")
-            if num.partition(".")[0] in owns and (
+            if (owns is None or num.partition(".")[0] in owns) and (
                 # A number under this document's own id is a heading whatever
                 # precedes it: 33.110.250 in 33.110.txt is not a wrap, and the
                 # sections of a held chapter resolve on nothing else.
@@ -298,36 +375,54 @@ def _resolves(ref: str, ids: set[str], headings: set[str]) -> bool:
     )
 
 
-def _cited_lines(layer: Layer) -> dict[str, set[int]]:
-    """Per document, every line an encoded value in this layer was read from."""
-    lines: dict[str, set[int]] = defaultdict(set)
+#: Stands in for a field name where the nearby citation is a zone that borrows
+#: another zone's rules. It is a real citation and it belongs in the window,
+#: but it names no standard, so it can never make a reference rank as though a
+#: dimension were at stake.
+LIKE = "like"
 
-    def take(quote: str | None) -> None:
+
+def _cited_lines(layer: Layer) -> dict[str, dict[int, set[str]]]:
+    """Per document, every line an encoded value was read from, and which one.
+
+    The field name is the whole point. A reference twelve lines from *some*
+    citation is a coincidence waiting to be judged; a reference twelve lines
+    from ``setback_rear_ft`` is the Gresham sentence.
+    """
+    lines: dict[str, dict[int, set[str]]] = defaultdict(lambda: defaultdict(set))
+
+    def take(quote: str | None, name: str) -> None:
         if not quote:
             return
         try:
             ref = parse_quote(quote)
         except Exception:
             return
-        lines[ref.path].update(ref.numbers)
+        for n in ref.numbers:
+            lines[ref.path][n].add(name)
 
-    for value in layer.defaults.values():
-        take(value.prov.quote)
+    for name, value in layer.defaults.items():
+        take(value.prov.quote, name)
     for zone in layer.zones.values():
         if zone.like is not None:
-            take(zone.like.prov.quote)
-        for value in zone.values.items and zone.values.values():
-            take(value.prov.quote)
-            take(value.step_back_quote)
-            take(value.measured_on_quote)
-            take(value.qualified_quote)
+            take(zone.like.prov.quote, LIKE)
+        for name, value in zone.values.items():
+            take(value.prov.quote, name)
+            take(value.step_back_quote, name)
+            take(value.measured_on_quote, name)
+            take(value.qualified_quote, name)
             for variant in value.variants:
-                take(variant.prov.quote)
+                take(variant.prov.quote, name)
     return lines
 
 
-def _near(line: int, cited: set[int]) -> bool:
-    return any(abs(line - c) <= BINDING_WINDOW for c in cited)
+def _near(line: int, cited: dict[int, set[str]]) -> set[str]:
+    """The encoded standards whose citations this line stands within reach of."""
+    found: set[str] = set()
+    for cite, names in cited.items():
+        if abs(line - cite) <= BINDING_WINDOW:
+            found |= names
+    return found
 
 
 def dangling(layer: Layer, store: ProvenanceStore | None = None) -> list[Dangling]:
@@ -343,16 +438,18 @@ def dangling(layer: Layer, store: ProvenanceStore | None = None) -> list[Danglin
     headings: set[str] = set()
     for path, text in texts.items():
         own = _doc_ids([path])
-        headings |= _headings(text, {i.partition(".")[0] for i in own}, own)
+        owns = {i.partition(".")[0] for i in own} if own else None
+        headings |= _headings(text, owns, own)
     cited = _cited_lines(layer)
 
     mentions: dict[str, int] = defaultdict(int)
     binding: dict[str, int] = defaultdict(int)
+    beside: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
     sources: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
     sample: dict[str, str] = {}
 
     for path, text in texts.items():
-        here = cited.get(path, set())
+        here = cited.get(path, {})
         for n, line in enumerate(text.splitlines(), start=1):
             for m in _REF.finditer(line):
                 ref = (
@@ -364,8 +461,11 @@ def dangling(layer: Layer, store: ProvenanceStore | None = None) -> list[Danglin
                     continue
                 mentions[ref] += 1
                 sources[ref][Path(path).name] += 1
-                if _near(n, here):
+                near = _near(n, here)
+                if near:
                     binding[ref] += 1
+                    for name in near:
+                        beside[ref][name] += 1
                 sample.setdefault(ref, line.strip()[:160])
 
     out = [
@@ -382,10 +482,16 @@ def dangling(layer: Layer, store: ProvenanceStore | None = None) -> list[Danglin
             ),
             sample=sample[ref],
             ruling=layer.crossrefs.get(ref, ""),
+            fields=tuple(
+                name
+                for name, _ in sorted(
+                    beside[ref].items(), key=lambda kv: (-kv[1], kv[0])
+                )
+            ),
         )
         for ref, count in mentions.items()
     ]
-    out.sort(key=lambda d: (-d.rank[0], -d.rank[1], d.ref))
+    out.sort(key=lambda d: (tuple(-n for n in d.rank), d.ref))
     return out
 
 
@@ -429,7 +535,7 @@ def survey(
     rows: list[Dangling] = []
     for layer in chosen:
         rows.extend(dangling(layer, store))
-    rows.sort(key=lambda d: (-d.rank[0], -d.rank[1], d.layer, d.ref))
+    rows.sort(key=lambda d: (tuple(-n for n in d.rank), d.layer, d.ref))
     return rows
 
 
@@ -439,7 +545,18 @@ def write(rows: Sequence[Dangling], path: Path | None = None) -> Path:
     with file.open("w", encoding="utf-8", newline="") as fh:
         out = csv.writer(fh)
         out.writerow(
-            ["layer", "ref", "mentions", "binding", "sources", "sample", "ruling"]
+            [
+                "layer",
+                "ref",
+                "mentions",
+                "binding",
+                "outcome",
+                "fields",
+                "slack_fields",
+                "sources",
+                "sample",
+                "ruling",
+            ]
         )
         for row in rows:
             out.writerow(
@@ -448,6 +565,9 @@ def write(rows: Sequence[Dangling], path: Path | None = None) -> Path:
                     row.ref,
                     row.mentions,
                     row.binding,
+                    row.outcome,
+                    " ".join(row.fields),
+                    " ".join(row.slack_fields),
                     " ".join(row.sources),
                     row.sample,
                     row.ruling,
@@ -456,10 +576,35 @@ def write(rows: Sequence[Dangling], path: Path | None = None) -> Path:
     return file
 
 
-def render(rows: Sequence[Dangling], *, binding_only: bool = False) -> Iterator[str]:
+def _beside(row: Dangling) -> str:
+    """The standards a reference stands beside, named for a reader.
+
+    Slack-carrying ones first and marked, because the order of this line is
+    the finding: "beside front setback, max. height" is a chapter to fetch,
+    and "beside fourplex allowed" is a use table pointing at its own footnote.
+    """
+    if not row.fields:
+        return ""
+    slack = set(row.slack_fields)
+    ordered = [f for f in row.fields if f in slack] + [
+        f for f in row.fields if f not in slack
+    ]
+    named = [FIELDS[f].shown if f in FIELDS else f for f in ordered[:3]]
+    more = f" +{len(ordered) - 3}" if len(ordered) > 3 else ""
+    mark = "!" if slack else "-"
+    return f"  {mark} beside: {', '.join(named)}{more}"
+
+
+def render(
+    rows: Sequence[Dangling], *, binding_only: bool = False, slack_only: bool = False
+) -> Iterator[str]:
     ruled = [r for r in rows if r.ruled]
     open_rows = [r for r in rows if not r.ruled]
-    shown = [r for r in open_rows if r.binding] if binding_only else open_rows
+    shown = open_rows
+    if slack_only:
+        shown = [r for r in shown if r.slack_fields]
+    elif binding_only:
+        shown = [r for r in shown if r.binding]
     if not shown:
         yield "no unfetched references — every section this corpus points at is in the store"
         return
@@ -469,9 +614,11 @@ def render(rows: Sequence[Dangling], *, binding_only: bool = False) -> Iterator[
         by_layer[row.layer].append(row)
 
     total_binding = sum(1 for r in shown if r.binding)
+    total_slack = sum(1 for r in shown if r.slack_fields)
     yield (
         f"{len(shown)} unfetched reference(s) across {len(by_layer)} jurisdiction(s)"
-        f" — {total_binding} standing beside a number this screen uses"
+        f" — {total_binding} standing beside a number this screen uses,"
+        f" {total_slack} of them beside one that carries a distance"
     )
     yield ""
     for layer in sorted(by_layer, key=lambda l: (-max(r.rank for r in by_layer[l])[0], l)):
@@ -479,7 +626,9 @@ def render(rows: Sequence[Dangling], *, binding_only: bool = False) -> Iterator[
         yield f"  {layer}   ({sum(r.mentions for r in group)} mention(s))"
         for row in group[:12]:
             mark = f"BINDING x{row.binding}" if row.binding else ""
-            yield f"    {row.ref:<14} {row.mentions:>3} mention(s)  {mark}"
+            yield f"    {row.ref:<14} {row.mentions:>3} mention(s)  {mark}{_beside(row)}"
+            if row.outcome:
+                yield f"       {row.outcome.upper()}: {row.ruling[:120]}"
             yield f"       in {row.sources[0]}: {row.sample}"
         if len(group) > 12:
             yield f"    ... and {len(group) - 12} more"
@@ -489,9 +638,9 @@ def render(rows: Sequence[Dangling], *, binding_only: bool = False) -> Iterator[
         # Kept in the output rather than filtered away. A queue that silently
         # dropped rows would be as untrustworthy as one that never dropped
         # any: the reader has to be able to see what was ruled and disagree.
-        yield f"  ruled — read, and about somebody else's building ({len(ruled)})"
+        yield f"  closed — read, and about somebody else's building ({len(ruled)})"
         for row in sorted(ruled, key=lambda r: (r.layer, r.ref)):
-            yield f"    {row.layer} {row.ref:<14} x{row.mentions}  {row.ruling[:96]}"
+            yield f"    {row.layer} {row.ref:<14} x{row.mentions}  [{row.outcome}] {row.ruling[:88]}"
         yield ""
 
 
@@ -503,12 +652,13 @@ def main(argv: Sequence[str] | None = None) -> int:
         sys.stdout.reconfigure(errors="replace")
     args = list(sys.argv[1:] if argv is None else argv)
     binding_only = "--binding" in args
+    slack_only = "--slack" in args
     args = [a for a in args if not a.startswith("--")]
 
     layers = load_rules()
     chosen = [layers[a.strip("/")] for a in args] if args else list(layers.values())
     rows = survey(chosen)
-    for line in render(rows, binding_only=binding_only):
+    for line in render(rows, binding_only=binding_only, slack_only=slack_only):
         print(line)
 
     for layer in chosen:

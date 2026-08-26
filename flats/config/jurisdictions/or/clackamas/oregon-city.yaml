@@ -25,6 +25,20 @@ ingest:
   zoning_layer: zoning_oregon_city
   zone_field: ZONE
   strip_lowercase_suffix: false
+crossrefs:
+  "16.08.065":
+    outcome: narrows_only
+    note: >-
+      "For land divisions, lot sizes may be reduced pursuant to OCMC 16.08.065", note 1 under two
+      dimensional tables. It lowers a minimum and only in a land division, so reading it could
+      only admit lots this screen already rejects.
+  "16.08":
+    outcome: misread
+    note: >-
+      The same citation, read twice. Extraction spaces one of the two occurrences into "OCMC 16.08
+      . 065", which breaks the dotted form and leaves the abbreviation branch matching the chapter
+      alone. Ruled with 16.08.065, which is where it points.
+
 definitions:
   # "Corner lot" means a lot abutting upon two or more streets at their
   # intersection."

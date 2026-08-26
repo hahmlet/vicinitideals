@@ -229,13 +229,36 @@ def test_the_container_and_seven_other_references_are_ruled(
     for ref in ("300", "640", "220.400", "340.010", "340.020", "395", "330", "660"):
         assert ref in wood_village.crossrefs, ref
 
-    # Two are deliberately NOT ruled. 450, Subdivisions and Partitions, is
-    # reached by "Creation of new lots is subject to the regulations of Section
-    # 450" and that is the split-plat path, which this screen does place. 230.350
-    # is the commercial zones' own landscaping section. Both are unread, and an
+    # 230.350, the commercial zones' own landscaping section, is unread, and an
     # unread reference stays in the queue.
-    assert "450" not in wood_village.crossrefs
     assert "230.350" not in wood_village.crossrefs
+
+    # 450, Subdivisions and Partitions, was reserved here for a while on the
+    # grounds that "Creation of new lots is subject to the regulations of
+    # Section 450" is the split-plat path and this screen places it. It has
+    # since been read and parked instead of closed, which says the same thing
+    # in the vocabulary the ledger has: `later` means only a change to the
+    # building brings it back, and the plat is part of the building.
+    assert wood_village.crossrefs["450"].outcome == "later"
+    assert not wood_village.crossrefs["450"].closed
+
+
+def test_the_parked_plat_rulings_hold_only_while_no_pod_splits_a_lot(
+    wood_village: Layer,
+) -> None:
+    """The guard the reservation above was really asking for.
+
+    Three references across two cities -- WVDC 450, PCC 33.613 and 33.614 --
+    are parked on one fact about the catalog rather than on anything in the
+    codes: every pod sits on one lot, so no land division ever happens and a
+    land-division chapter cannot reach it. Declare a pod with `plat:
+    unit_lots` and all three become fetches on the same day. This fails then,
+    which is the point of writing it down here rather than in a note.
+    """
+    from flats.designs.model import Plat, load_catalog
+
+    assert all(d.plat is Plat.one_lot for d in load_catalog())
+    assert "plat: unit_lots" in wood_village.crossrefs["450"]
 
 
 def test_the_ruling_records_the_pointer_the_renumbering_broke(

@@ -66,10 +66,28 @@ def rows() -> list[Routing]:
 #: apply to lot lines that abut lots in the RX zone", in the employment and
 #: industrial chapter.
 #:
+#: *A rule with no field to hold it.* Clackamas County's ZDO 845.01 states the
+#: quadplex minimum lot size this layer reads, and two lines under it hands
+#: the rest of middle housing to 845.02 through 845.04. 845.02, Triplexes And
+#: Quadplexes, is this building exactly, and it is not somebody else's and it
+#: does not only loosen: street-facing windows at 15 percent, entry
+#: orientation, driveway entries capped at 32 feet total, and garages and
+#: off-street parking barred from between a building and a public street
+#: unless a dwelling screens them or they stay under half the frontage. The
+#: last two are geometry this screen places. Nothing in the field registry can
+#: say where parking sits relative to the street -- Gresham's equivalent rule
+#: lives in the site-plan generator as a hard-coded rear-court typology, not
+#: as a standard -- so the row stays open on a modelling gap rather than a
+#: reading. This one appeared the day `_doc_ids` learned to read a filename
+#: that opens with the code's own abbreviation: `zdo.845.txt` claimed no
+#: chapter before that, so its own sections read as unfetched and the redirect
+#: could not be scored.
+#:
 #: A row that is not on this list is the thing to look at. It means a number
 #: in use sits beside a sentence handing its standard to a section nobody
 #: opened.
 OPEN = {
+    "or/clackamas/_unincorporated 845.01 -> 845.02",
     "or/clackamas/lake-oswego 50.04.001.3 -> 50.04.003",
     "or/clackamas/west-linn 25.070 -> 25.020",
     "or/clackamas/wilsonville 4.001 -> 4.140",
@@ -86,9 +104,17 @@ OPEN = {
 }
 
 #: The redirects the corpus can show somebody followed. Small, and worth
-#: reading as a list: four sentences in the whole store hand a standard to a
+#: reading as a list: six sentences in the whole store hand a standard to a
 #: section this corpus then went and read.
+#:
+#: The Clackamas County row is the pair of the open one above. ZDO 315.04
+#: reads "The development of a triplex, quadplex, townhouse, or cottage
+#: cluster is subject to Section 845", and the layer's quadplex minimum lot
+#: size is cited to 845.01 -- so the pointer out of the district chapter was
+#: followed and the pointer inside 845 was not. Both rows arrived together
+#: when `_doc_ids` learned to read `zdo.845.txt`.
 FOLLOWED = {
+    "or/clackamas/_unincorporated 315.04 -> 845",
     "or/multnomah/_unincorporated 39.4245 -> 39.3070",
     "or/multnomah/fairview 19.115.020 -> 19.30",
     "or/multnomah/fairview 19.115.040 -> 19.30.030",

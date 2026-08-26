@@ -208,6 +208,16 @@ code:
     title: "WVDC 230.335 - Height"
     allow_thin: true
 crossrefs:
+  "450":
+    outcome: later
+    note: >-
+      Subdivisions and Partitions. Both mentions sit in the sentence after the one this screen
+      reads: "There is no minimum lot size or dimension for development of land or creation of new
+      lots in commercial zones. Creation of new lots is subject to the regulations of Section
+      450." Same split as Portland 33.613 — the development half is the test an existing lot has
+      to pass, and the creation half is a plat that produces the lot in the first place. Parked
+      rather than closed: no pod in flats/config/pods declares plat: unit_lots, so this screen
+      never creates a lot. The day one does, this is a fetch.
   "300": >-
     Additional Use and Development Regulations, and the fourteen mentions are one sentence repeated in
     every use table in the city: "Additional regulations are listed in Section 300." It is a container

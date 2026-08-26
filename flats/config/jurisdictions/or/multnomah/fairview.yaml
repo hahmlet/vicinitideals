@@ -12,6 +12,71 @@ ingest:
   zoning_layer: zoning_metro
   zone_field: ZONE
   strip_lowercase_suffix: false
+crossrefs:
+  "19.170":
+    outcome: other_path
+    note: >-
+      Signs, and both mentions are the same list entry in a use chapter: "H. Signs - see Chapter
+      19.170 FMC." It counts as binding because that list is printed a few lines under the
+      dimensional table its zone was read from. This screen places no sign.
+  "19.480":
+    outcome: procedure
+    note: >-
+      Reached only from the last row of Fairview's use tables -- "Uses similar to those listed
+      above ... Determination made following procedures in Chapter 19.480 FMC." It is the
+      similar-use determination process, and a process states no dimension. Whether a quadplex is
+      a listed use in a given zone is read from the table itself and recorded per zone.
+  "19.245":
+    outcome: other_path
+    note: >-
+      Wireless communication equipment -- antennas and monopoles, two rows of the use tables and
+      one paragraph of 19.65 permitting them. Eleven mentions, none of them about a dwelling.
+  "19.490.200":
+    outcome: other_building
+    note: >-
+      Home occupation permits, reached from the permitted-use list for a manufactured home park:
+      "Home occupations shall comply with FMC 19.490.200." The pod is not a manufactured home
+      park and nobody is running a business out of it.
+  "19.520":
+    outcome: procedure
+    note: >-
+      Variances. Both mentions are the same sentence offering a Class B or C variance where
+      topography or another physical constraint makes a standard hard to meet. A route to being
+      let off a standard is not a standard, and a screen that assumed the variance would be
+      granted would be guessing at a decision nobody has made.
+  "19.530":
+    outcome: other_path
+    note: >-
+      Nonconforming uses and development, cited once from the definition of the term. This screen
+      asks whether a new building conforms, so the chapter governing ones that already do not is
+      a branch it never takes.
+  "19.162":
+    outcome: fetch
+    note: >-
+      Access and Circulation, and it is doing more work than a title suggests. FMC 19.70.020.A.3
+      makes a side setback exempt "except that buildings shall conform to the vision clearance
+      standards in Chapter 19.162" -- an exemption qualified by a chapter nobody holds -- and
+      19.65 requires an alley for a subdivision of four or more townhome lots, which is vehicle
+      access, which this screen measures. CC is dead on the use table so nothing moves today.
+      Ordered for the alley rule and for the vision clearance triangle on corner lots.
+  "19.163":
+    outcome: fetch
+    note: >-
+      Landscaping, Street Trees, Fences and Walls. Cited beside setbacks in three chapters, and
+      the citywide counterpart of a standard this screen already reads per zone -- VA takes its
+      25 percent from 19.145, so a zone whose own chapter is silent may be silent only because
+      the number is here. 19.163.030 also governs the ground between a building and a street lot
+      line, which is where the front setback the pod is screened against sits.
+  "19.164":
+    outcome: fetch
+    note: >-
+      Off-Street Parking. The minimum is already answered without it: every Fairview zone resolves
+      parking_min_per_unit to 1.0 from OAR 660-046-0220, which caps what any Oregon city may
+      require of middle housing, so a city minimum can only bind at or below the figure screened
+      against. The *maximum* is not answered. 19.65 points at FMC 19.164.030(D) for a cap on
+      spaces in transit/pedestrian areas, this layer encodes no parking_max_per_unit, and a cap
+      below four would stop a pod that needs four. Ordered rather than closed for that reason.
+
 code:
   # Code Publishing refuses a plain request and accepts curl-cffi impersonating
   # chrome124 — measured, not reasoned about. See flats/provenance/sources.py.

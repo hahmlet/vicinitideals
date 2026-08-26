@@ -136,6 +136,84 @@ definitions:
     quote: "or/multnomah/gresham/3.0100.definitions.txt#L1304-L1305"
     cite: "Gresham Development Code 3.0100, Lot, Corner Lot"
 
+crossrefs:
+  "7.0100":
+    outcome: other_building
+    note: >-
+      Corridor Design District standards, and the corridor chapter splits the work itself, twice:
+      "Design standards in Section 7.0400 for duplexes, triplexes, quadplexes, and townhouses,
+      and in Section 7.0100 for new construction and remodels which meet the thresholds described
+      in Section 7.0003." 7.0400 is fetched and is where this pod's design standards were read.
+      7.0100 takes the commercial and mixed-use buildings on the same street.
+  "7.0112":
+    outcome: other_building
+    note: >-
+      The same split stated a third time, in Pleasant Valley. Table 4.1415A routes "Single
+      Detached, Duplex, Triplex, Quadplex, Townhouse, Cottage Cluster" to 7.0400 and gives
+      7.0112 to "All Other Uses", and note 7 spells out which: "new multi-family, elderly
+      housing, residential facilities, mixed-use, and non-residential development". A quadplex is
+      on the first list and multi-family here means five or more.
+  "7.01":
+    outcome: misread
+    note: >-
+      Not a section. "per Section 7.01 12.A.5.S1 and S2" is 7.0112 with a space dropped into it
+      by extraction, and Gresham writes four digits after the point everywhere else in the code.
+      Ruled with 7.0112, which is where it points.
+  "7.000":
+    outcome: misread
+    note: >-
+      The same shape, losing a digit instead of gaining a space. Pleasant Valley's height
+      modifications row reads "Section 7.000 Rear Roof Height Limit Reductions", and the Rear
+      Roof Height Limit is 7.0420(G) in the middle housing design chapter this corpus holds and
+      reads: 21 feet at the rear setback line, rising a foot per foot of distance from the rear
+      property line. Three-digit section numbers do not exist in this code.
+  "6.0001":
+    outcome: other_path
+    note: >-
+      "All developments that include townhouses shall receive both land division approval to
+      create lots for the townhouses as required in Section 6.0001, and design review approval as
+      required in Section 7.0001." Article 6 is land division, and creating a lot per townhouse
+      is the split plat -- a path no pod in the catalog declares. Fetch it the day one does, with
+      6.0500.
+  "7.0001":
+    outcome: procedure
+    note: >-
+      The design review requirement from the same sentence. It is the applicability section for
+      Article 7 -- which development needs review -- and the standards that review applies to
+      this building are in 7.0400, fetched and encoded. A requirement to be reviewed states no
+      dimension.
+  "7.0221":
+    outcome: other_building
+    note: >-
+      "See Section 7.0221 - 7.0223 for additional requirements", the last line of 7.0400's
+      manufactured dwelling park subsection. The six numbered standards above it are skirting,
+      wheels and hitch mechanisms, and fire hydrants inside the park. This pod is factory-built
+      and is not a manufactured dwelling sited on a rented space, so the whole subsection is
+      about somebody else's building and the sections it points at are too.
+  "9.0901":
+    outcome: narrows_only
+    note: >-
+      Reached from one sentence in the rear roof height limit: "Solar energy collection equipment
+      may project beyond maximum rear roof height no greater than 18 inches. See Section
+      9.0901(B)." A list of what may stand above a height limit can only let a building be
+      taller, never shorter, so not reading it screens the pod against the stricter number.
+  "10.1520":
+    outcome: narrows_only
+    note: >-
+      Reduction in Minimum Street Frontage, and both mentions ask for one: a Type II Adjustment
+      in the flag lot standards, and a note letting LDR-7, LDR-5, TR and TLDR approve less
+      frontage than the table states. It is a discretionary route to a smaller number than the
+      one already screened against, and a screen that assumed the reduction would be granted
+      would be guessing at a decision nobody has made.
+  "6.0500":
+    outcome: other_path
+    note: >-
+      Middle housing land division. Both mentions treat it as the procedure that turns one parent
+      lot into child lots -- a flag lot driveway may serve two lots, "the parent lot or parcel of
+      a middle housing land division (per Section 6.0500) shall be considered one lot". This
+      screen places the pod on the lot as it stands; the split plat is a path no pod in the
+      catalog declares. Fetch it the day one does.
+
 code:
   # The city hosts the Development Code as one PDF per section series,
   # served plain (no impersonation). Layout extraction is clean (no

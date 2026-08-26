@@ -30,6 +30,34 @@ definitions:
     quote: "or/multnomah/portland/33.910.definitions.txt#L701-L705"
     cite: "PCC 33.910, Lot-Related Definitions, Corner Lot"
 
+crossrefs:
+  "33.251":
+    outcome: other_building
+    note: >-
+      Manufactured Dwellings and Manufactured Dwelling Parks. All four mentions are the "(See
+      Chapter 33.251)" line printed under those two rows of the 33.120 use tables, which is why
+      they land beside the parking geometry read from the same page. The pod is factory-built and
+      is neither a manufactured dwelling nor sited in a park.
+  "33.613":
+    outcome: later
+    note: >-
+      Lots in Commercial/Mixed Use Zones. The sentence this screen reads -- "There is no required
+      minimum lot size for development of land in commercial/mixed use zones" -- is followed by
+      one sending lot *creation* to this chapter. Creating a lot is not a test an existing lot has
+      to pass to be built on, and CR, CM1, CM2, CM3, CE and CX are encoded on the development
+      half of that pair. The campus institutional zones state both halves outright, which is what
+      shows the split is the code's and not a reading of it. Parked rather than closed: no pod in
+      flats/config/pods declares plat: unit_lots, so this screen never creates a lot. The day one
+      does, this is a fetch.
+  "33.614":
+    outcome: later
+    note: >-
+      "Lot size regulations are in Chapters 33.614 and 33.615", the whole of what 33.140 says
+      about lot size in the employment and industrial zones. Land-division chapters, same shape
+      as 33.613 in the commercial chapter: how a lot may be created, not a minimum a built lot
+      has to meet. EX is encoded exempt on that sentence. Parked with 33.613 for the same reason:
+      no pod declares plat: unit_lots today.
+
 code:
   # Portland's HTML route for a chapter serves navigation furniture; the PDF is
   # the artifact. Whole-chapter, unsliced: this one is already the chapter.

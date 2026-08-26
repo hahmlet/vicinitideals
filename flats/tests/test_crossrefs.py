@@ -46,6 +46,7 @@ from flats.encode.crossrefs import (
     survey,
     write,
 )
+from flats.provenance.store import ProvenanceStore
 from flats.rules.loader import RuleLoadError, load_rules
 from flats.rules.model import Layer
 
@@ -380,7 +381,7 @@ def test_a_ruled_reference_stops_leading_the_queue(layers: dict[str, Layer]) -> 
     rows = dangling(layers[GLADSTONE])
 
     assert rows[0].ref != "17.62.070"
-    assert dangling(layers[GLADSTONE])[-1].rank == (0, 0)
+    assert dangling(layers[GLADSTONE])[-1].rank == (0, 0, 0)
 
 
 def test_and_it_is_still_printed(layers: dict[str, Layer]) -> None:
@@ -392,7 +393,7 @@ def test_and_it_is_still_printed(layers: dict[str, Layer]) -> None:
     assert "17.62.070" in printed
     assert "mobile home park" in printed
     # And it is out of the count that says how much work is left.
-    assert "17.62.070" not in printed.split("ruled")[0]
+    assert "17.62.070" not in printed.split("closed —")[0]
 
 
 def test_the_ruling_is_carried_into_the_ledger(
@@ -403,7 +404,16 @@ def test_the_ruling_is_carried_into_the_ledger(
 
     ruled = next(r for r in back if r["ref"] == "17.62.070")
     assert "mobile home park" in ruled["ruling"]
-    assert not next(r for r in back if r["ref"] == "17.70")["ruling"]
+
+    # And a row with no ruling carries an empty cell rather than something.
+    # Chosen by asking the layer which references it has not ruled on, not by
+    # naming one: a named unruled reference is an emptiness that goes red the
+    # first time somebody does the work of ruling on it.
+    unruled = next(
+        r for r in back if r["ref"] not in layers[GLADSTONE].crossrefs
+    )
+    assert not unruled["ruling"]
+    assert not unruled["outcome"]
 
 
 def test_a_ruling_nobody_can_see_any_more_is_reported(layers: dict[str, Layer]) -> None:
@@ -454,3 +464,170 @@ def test_a_ruling_has_to_say_something(tmp_path: Path) -> None:
     sentence."""
     with pytest.raises(RuleLoadError, match="at least"):
         load_rules(_somewhere(tmp_path, 'crossrefs:\n  "17.62.070": n/a\n'), strict=True)
+
+
+# -- which number it stands beside ------------------------------------------
+
+
+CLACKAMAS = "or/clackamas/_unincorporated"
+RIVERGROVE = "or/clackamas/rivergrove"
+FAIRVIEW = "or/multnomah/fairview"
+
+
+def test_a_reference_says_which_standard_it_is_standing_beside(
+    layers: dict[str, Layer],
+) -> None:
+    """Binding says a reference is beside *something*. That is not enough to
+    judge it on.
+
+    Fairview's queue opened on signs, wireless towers, home occupations and
+    day care providers, every one of them flagged binding, because a use table
+    is printed a few lines under the dimensional table of the same zone. The
+    counts could not tell those from a design chapter that moves a setback,
+    and the ledger had no way to say why they were not worth a fetch.
+    """
+    rows = {d.ref: d for d in dangling(layers[GRESHAM])}
+
+    beside = rows["7.0221"]
+    assert beside.fields == ("setback_rear_ft",)
+    assert beside.slack_fields == ("setback_rear_ft",)
+
+
+def test_a_use_permission_is_not_a_distance(layers: dict[str, Layer]) -> None:
+    """The line the ranking is drawn on, and the registry already drew it.
+    Reading a chapter cannot make a prohibited use slightly more prohibited,
+    so a reference sitting in a use table is a different finding from one
+    sitting beside a setback however adjacent both are."""
+    both = Dangling(
+        "l", "1.010", mentions=1, binding=1, sources=("a",), sample="",
+        fields=("quadplex_allowed", "setback_rear_ft"),
+    )
+    use_only = Dangling(
+        "l", "2.020", mentions=40, binding=9, sources=("a",), sample="",
+        fields=("quadplex_allowed",),
+    )
+
+    assert both.slack_fields == ("setback_rear_ft",)
+    assert use_only.slack_fields == ()
+    assert both.rank > use_only.rank
+
+
+def test_a_zone_borrowing_another_s_rules_names_no_standard() -> None:
+    """``like`` is a real citation and belongs in the window -- it is the line
+    a reviewer would open. It just cannot make a reference rank as though a
+    dimension were at stake, because it names none."""
+    borrowed = Dangling(
+        "l", "1.010", mentions=1, binding=1, sources=("a",), sample="",
+        fields=("like",),
+    )
+
+    assert borrowed.fields == ("like",)
+    assert borrowed.slack_fields == ()
+    assert borrowed.rank[0] == 0
+
+
+def test_the_fields_are_carried_into_the_ledger(
+    tmp_path: Path, layers: dict[str, Layer]
+) -> None:
+    rows = dangling(layers[GRESHAM])
+    back = list(csv.DictReader(write(rows, tmp_path / "crossrefs.csv").open(encoding="utf-8")))
+
+    row = next(r for r in back if r["ref"] == "7.0221")
+    assert row["fields"] == "setback_rear_ft"
+    assert row["slack_fields"] == "setback_rear_ft"
+    assert row["outcome"] == "other_building"
+
+
+# -- documents that claim nothing -------------------------------------------
+
+
+def test_a_filename_may_open_with_the_code_s_own_abbreviation() -> None:
+    """Clackamas County names its documents for the ordinance, not the
+    chapter. Reading only the leading digits gave four of them no sections at
+    all, so every reference to a section they hold reported as unfetched --
+    and the county's own Section 1012, fifteen mentions and the loudest
+    reference in that layer, led this queue while sitting in the store."""
+    assert _doc_ids(["or/clackamas/_unincorporated/zdo.1012.txt"]) == {"1012"}
+    assert _doc_ids(["or/clackamas/_unincorporated/zdo.202.definitions.txt"]) == {"202"}
+    # And the abbreviation is not eaten out of a name that never had one.
+    assert _doc_ids(["or/clackamas/tualatin/40-41.residential.txt"]) == {"40", "41"}
+
+
+def test_the_chapter_it_was_hiding_is_answered_for(layers: dict[str, Layer]) -> None:
+    refs = {d.ref for d in dangling(layers[CLACKAMAS])}
+
+    assert "1012" not in refs
+    assert "1012.03" not in refs
+    assert "845.02" not in refs
+
+
+def test_a_whole_code_in_one_file_owns_what_it_prints() -> None:
+    """Rivergrove's land development ordinance is 3.x, 5.x and 6.x in a single
+    document named for the ordinance. There is no chapter it does not hold, so
+    refusing it ownership reported its own sections as unfetched.
+
+    It keeps the wrapped-line guard, which is the part that was doing the work
+    -- ownership only ever short-circuited that guard for a document's own
+    children, and a file that claims no children has none to short-circuit
+    for."""
+    text = "5.010 Land Use.\nAll land is zoned residential, per Chapter\n7.020, Parking.\n"
+
+    assert _headings(text, None) == {"5.010"}
+
+
+def test_and_rivergrove_stops_reporting_its_own_code_as_missing(
+    layers: dict[str, Layer],
+) -> None:
+    refs = {d.ref for d in dangling(layers[RIVERGROVE])}
+
+    assert "5.010" not in refs
+    assert "5.080" not in refs
+
+
+def test_every_document_either_claims_a_chapter_or_is_a_whole_code() -> None:
+    """The two that claim nothing are named for an ordinance with no number in
+    it at all, and both are the whole of what their jurisdiction publishes. A
+    third would more likely be a filename that broke the convention, and the
+    fallback would then be answering for a chapter nobody holds."""
+    store = ProvenanceStore()
+    silent = {d for d in store.documents() if not _doc_ids([d])}
+
+    assert silent == {
+        "or/clackamas/johnson-city/ors.197a.420.txt",
+        "or/clackamas/rivergrove/rldo.composite.txt",
+    }
+
+
+# -- a decision is not a disposal -------------------------------------------
+
+
+def test_work_ordered_stays_in_the_queue(layers: dict[str, Layer]) -> None:
+    """``CROSSREF_CLOSED`` has excluded ``fetch`` and ``later`` since the
+    vocabulary was written, and the review queue honours it. This ledger did
+    not, so the first ordered fetch anybody recorded sorted to the bottom
+    under a heading reading "read, and about somebody else's building"."""
+    rows = {d.ref: d for d in dangling(layers[FAIRVIEW])}
+
+    ordered = rows["19.164"]
+    assert ordered.outcome == "fetch"
+    assert ordered.ruling
+    assert not ordered.ruled
+    assert ordered.rank[1] == ordered.binding
+
+
+def test_and_the_queue_prints_why_it_is_still_there(layers: dict[str, Layer]) -> None:
+    printed = "\n".join(render(dangling(layers[FAIRVIEW]), slack_only=True))
+    head = printed.split("closed —")[0]
+
+    assert "FETCH:" in head
+    assert "19.164" in head
+    # The closed ones are out of the working queue and under their own heading.
+    assert "19.245" not in head
+
+
+def test_a_row_closed_by_reading_leaves(layers: dict[str, Layer]) -> None:
+    rows = {d.ref: d for d in dangling(layers[FAIRVIEW])}
+
+    assert rows["19.245"].outcome == "other_path"
+    assert rows["19.245"].ruled
+    assert rows["19.245"].rank == (0, 0, 0)

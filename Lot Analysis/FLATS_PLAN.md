@@ -193,6 +193,41 @@ One row per code clause: source ref, RASE tag, the value or predicate it produce
 whether it is resolved. Unresolved clauses block the zone from `verified`. This is the
 RASE completeness check from §1.
 
+**Cross-reference ledger** (`flats/encode/crossrefs.py` → `crossrefs.csv`) — *which
+sections our own documents point at that we cannot open.* Every other check starts from a
+document in the store; this one starts from the documents they reference. One row per
+unresolved reference, ranked three ways: `mentions` (how loud), `binding` (it stands
+within twelve lines of a citation an encoded value was read from), and **the standards it
+stands beside, named**. Proximity alone cannot tell a design chapter that moves a setback
+from a use table's "Signs — see Chapter 19.170", so a reference beside a standard that
+carries a *distance* (`FieldDef.has_slack`) outranks one beside a use permission.
+
+A row leaves the queue by being read, not only by being fetched. A jurisdiction file
+records a `crossrefs:` ruling — an outcome (`other_building`, `narrows_only`, `procedure`,
+`preempted`, `other_path`, `misread`) and the argument for it. Two outcomes do **not**
+close a row: `fetch` is work ordered and `later` is work deferred, and a queue that hid
+either would report a decision as a disposal. Rulings are checked the other way too: one
+on a reference the corpus no longer makes is reported as stale.
+
+`later` earns its place on the land-division chapters. Portland's 33.613 and 33.614 and
+Wood Village's 450 are each reached by the same pair of sentences — no minimum lot size
+for *development*, and lot *creation* goes to the land-division chapter — so they cannot
+touch a pod that sits on the lot it was handed. That is true only while no pod declares
+`plat: unit_lots`, which is a fact about `flats/config/pods/` and not about any code, so
+a test asserts it rather than a note claiming it. Declare a splitting pod and all three
+become fetches the same day.
+
+The failure it exists for: Gresham's rear setbacks were read from Table 4.0130, and the
+sentence that makes a 26 ft building stand five feet further back lives in 7.0420, a
+design-standards chapter nothing in the encoding cited. It was found by reading, a year
+late, across roughly 21,000 lots.
+
+The failure *it* had: a document is matched to the chapters it holds by the leading number
+in its filename, and four Clackamas County files are named for the ordinance instead
+(`zdo.1012.txt`). They claimed no chapter, so every reference to a section they hold read
+as unfetched — the county's own Section 1012, the loudest reference in that layer, led the
+queue while sitting in the store. 252 rows were the store failing to recognise itself.
+
 **Redirect ledger** (`flats/encode/routing.py` → `routing.csv`) — *which sentences hand a
 standard to a section nobody opened.* One row per sentence that replaces a standard
 ("is subject to the standards of Section X instead", "does not apply", "supersede")
@@ -206,6 +241,20 @@ parking tract to 33.266.130, which states one. "Portland states no aisle width" 
 encoded and shipped. The cross-reference ledger was silent because the section was in a
 document already fetched; the readiness ladder was silent because the citation rendered;
 the refusal ledger was silent because the refusal was counted.
+
+An open row here has, until now, always been somebody else's building or a rule that can
+only loosen. Clackamas County's ZDO 315.04 → 845 → 845.02 broke that: the pointer out of
+the district chapter was followed, and the one inside Section 845 was not. 845.02,
+*Triplexes And Quadplexes*, is this building exactly — street-facing windows at 15
+percent, entry orientation, driveway entries capped at 32 feet total, and garages and
+off-street parking barred from between a building and a public street. The last two are
+geometry this screen places, and the field registry has no way to say where parking sits
+relative to the street: Gresham's equivalent rule lives in the site-plan generator as a
+hard-coded rear-court typology rather than as a standard. So it is a **modelling gap, not
+a reading gap**, and the row stays open until a field can hold it. Both Clackamas rows
+appeared the day `_doc_ids` learned to read a filename that opens with the code's own
+abbreviation — before that `zdo.845.txt` claimed no chapter, so its own sections read as
+unfetched and neither redirect could be scored.
 
 **Exemption ledger** (`flats/encode/exemptions.py` → `exemptions.csv`) — *which
 exemptions cite a page that does not state one.* `exempt: true` is the only value that
@@ -223,10 +272,11 @@ words. The readings were right and no reviewer signing those cards could have se
 `marker` is now a hard zero; the other counts are pinned and move deliberately.
 
 Coverage ledger catches "we never looked at this zone." Clause ledger catches "we looked
-but missed the exception." Redirect ledger catches "we read the section that says this
-section does not apply." Exemption ledger catches "we wrote down that there is no
-standard and cited a page that never says so." All four are needed; none substitutes for
-another.
+but missed the exception." Cross-reference ledger catches "the sentence that changes this
+number is in a chapter nobody fetched." Redirect ledger catches "we read the section that
+says this section does not apply." Exemption ledger catches "we wrote down that there is
+no standard and cited a page that never says so." All five are needed; none substitutes
+for another.
 
 **Footnote scope, and the one way to narrow it.** A footnote governs every value quoted
 from its *region* — the run of lines between the previous notes block and this one's

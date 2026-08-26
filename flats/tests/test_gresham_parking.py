@@ -197,10 +197,17 @@ def test_both_readings_are_written_down_where_they_belong(gresham: Layer) -> Non
     were fetched and read, so neither reference dangles any more and a ruling
     on it is a ruling nobody can see -- `stale_rulings` said so for a day. The
     reasoning is in the layer's notes now, under READ AND NOT ENCODED, beside
-    7.0512's."""
-    assert not gresham.crossrefs
-    for ref in ("10.1700", "Table 9.0851"):
-        assert f"READ AND NOT ENCODED: {ref}" in gresham.notes, ref
+    7.0512's.
+
+    Named rather than counted. This asserted the whole block was empty, which
+    was true of the day it was written and not the thing being tested: the
+    invariant is that a fetched chapter carries no ruling, and Gresham has
+    since ruled on six references to chapters nobody holds. An emptiness that
+    is incidental to the claim goes red the first time the corpus moves for a
+    reason the test never meant to catch."""
+    for ref in ("10.1700", "Table 9.0851", "9.0851"):
+        assert ref not in gresham.crossrefs, ref
+        assert f"READ AND NOT ENCODED: {ref}" in gresham.notes or ref == "9.0851", ref
 
 
 def test_the_documents_are_declared_and_fetched(
