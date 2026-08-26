@@ -26,7 +26,7 @@ pytestmark = pytest.mark.unit
 #: are not meant to do is move quietly. A refusal added without a line here is
 #: a reading nobody signed off on; a refusal removed without one is a reading
 #: somebody overturned without saying so.
-EXPECTED = {"notes": 90, "comments": 24, "tests": 16}
+EXPECTED = {"notes": 89, "comments": 24, "tests": 16}
 #: Two of the sixteen are this file, which quotes the marker while
 #: explaining it, and one is a back-reference in test_gresham_rockwood --
 #: prose saying a zone *was* not encoded until it was. Left in rather than
@@ -47,6 +47,15 @@ EXPECTED = {"notes": 90, "comments": 24, "tests": 16}
 #: to 33.266.130, whose Table 266-4 states one, and the product reaches it. A
 #: refusal is a reading, and a reading that turns out to have stopped a section
 #: early comes back out.
+#:
+#: Notes fell 90 -> 89 on 2026-08-25 for the same reason and the worse case.
+#: Fairview R-6 refused a maximum FAR because the registry had no floor-area
+#: field; ``max_far`` was added afterwards and encoded on that zone and four of
+#: its siblings, and the refusal sat on top of the encoded value for weeks
+#: reading like a live constraint. This ledger counted it the whole time --
+#: counting is not checking, and nothing here can tell a refusal that is still
+#: true from one that has been overtaken. What a count buys is that the
+#: withdrawal has to be deliberate.
 
 
 def test_the_corpus_declares_more_refusals_than_any_ledger_counts() -> None:

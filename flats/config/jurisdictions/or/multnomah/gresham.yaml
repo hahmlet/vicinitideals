@@ -263,9 +263,29 @@ defaults:
     retrieved: '2026-08-24'
     quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L500-L501"
 
-  # 7.0431 states a stall and says nothing about the aisle it is reached from,
-  # so the aisle falls to the parking chapter's surface matrix. At 90 degrees
-  # Table 9.0825A asks 23 feet one-way and 24 two-way.
+  # 7.0431 states a stall and says nothing about the aisle it is reached from.
+  # That is not a gap the parking chapter quietly fills, and reading it as one
+  # was the first version of this entry: 9.0802(F) says the parking lot design
+  # standards of 9.0822 through 9.0840 "by definition ... do not apply to
+  # single detached dwellings, duplexes, triplexes, quadplexes, cottage
+  # clusters, or townhouses on a unit-by-unit basis (see Section 7.0400 for
+  # applicable standards)". Taken alone that sentence says this building has
+  # no aisle standard at all.
+  #
+  # The same sentence supplies the other branch. "However, shared separate
+  # parking areas ... must comply with the applicable standards of Sections
+  # 9.0822 to 9.0827", and 7.0431(B)(5)(a) states the choice from the other
+  # side: off-street parking "may be provided on individual lots or in a
+  # shared parking area on a common tract". So which standard applies is
+  # decided by how the parking is arranged, not by which chapter is opened
+  # first. Four units on their own driveways is the unit-by-unit branch and
+  # 7.0400 governs; one shared rear court on a common tract is the shared
+  # branch and Table 9.0825A governs.
+  #
+  # The pod is drawn with a shared rear court, so the shared branch is the one
+  # it takes, and it is also the binding one -- the other states no aisle at
+  # all, and screening against no aisle is screening against nothing. At 90
+  # degrees Table 9.0825A asks 23 feet one-way and 24 two-way.
   #
   # NOT the 20 feet in note 1. That note is about emergency vehicle access --
   # "the minimum aisle width may vary to accommodate emergency vehicle access
@@ -278,16 +298,16 @@ defaults:
   # aisle 25 at 90 degrees, stall depth 19), and a rear court is not a garage.
   parking_aisle_one_way_ft:
     value: 23
-    cite: GDC Table 9.0825A, Off-Street Surface Parking Matrix (90 degrees, standard stall)
+    cite: GDC Table 9.0825A, Off-Street Surface Parking Matrix (90 degrees, standard stall), reached via 9.0802(F) shared parking area
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-9.0800.pdf
     retrieved: '2026-08-24'
-    quote: "or/multnomah/gresham/9.0800.parking.txt#L340-L343"
+    quote: "or/multnomah/gresham/9.0800.parking.txt#L66-L70,L340-L343"
   parking_aisle_two_way_ft:
     value: 24
-    cite: GDC Table 9.0825A, Off-Street Surface Parking Matrix (90 degrees, standard stall)
+    cite: GDC Table 9.0825A, Off-Street Surface Parking Matrix (90 degrees, standard stall), reached via 9.0802(F) shared parking area
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-9.0800.pdf
     retrieved: '2026-08-24'
-    quote: "or/multnomah/gresham/9.0800.parking.txt#L340-L343"
+    quote: "or/multnomah/gresham/9.0800.parking.txt#L66-L70,L340-L343"
 
 zones:
   LDR-5:

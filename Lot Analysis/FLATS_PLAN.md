@@ -171,7 +171,7 @@ A zone simply *missing* from config is `ZONE_NOT_ENCODED` → REVIEW → and app
 coverage backlog. Never silently dropped, never treated as prohibited. This one rule would
 have surfaced the 40,500 RM lots on day one.
 
-### Two ledgers
+### The ledgers
 
 **Coverage ledger** — *which zones are missing.* Every run enumerates every
 `(state, county, jurisdiction, zone)` pair **present in the GIS data**, joins against
@@ -193,8 +193,23 @@ One row per code clause: source ref, RASE tag, the value or predicate it produce
 whether it is resolved. Unresolved clauses block the zone from `verified`. This is the
 RASE completeness check from §1.
 
+**Redirect ledger** (`flats/encode/routing.py` → `routing.csv`) — *which sentences hand a
+standard to a section nobody opened.* One row per sentence that replaces a standard
+("is subject to the standards of Section X instead", "does not apply", "supersede")
+where the sentence sits in a section an encoded value was read from and points at a
+section held in the store. A row closes on evidence, not on a note: it is `followed`
+when some value in that layer was read from inside the section pointed at.
+
+The failure it exists for: Portland's 33.266.120 states a stall and no aisle, and
+33.266.120.B.1 — four lines above the sentence that was quoted — sends parking in a
+parking tract to 33.266.130, which states one. "Portland states no aisle width" was
+encoded and shipped. The cross-reference ledger was silent because the section was in a
+document already fetched; the readiness ladder was silent because the citation rendered;
+the refusal ledger was silent because the refusal was counted.
+
 Coverage ledger catches "we never looked at this zone." Clause ledger catches "we looked
-but missed the exception." Both are needed; neither substitutes for the other.
+but missed the exception." Redirect ledger catches "we read the section that says this
+section does not apply." All three are needed; none substitutes for another.
 
 ### Drift watch
 

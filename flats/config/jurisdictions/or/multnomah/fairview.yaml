@@ -274,10 +274,18 @@ zones:
       quote: "or/multnomah/fairview/19.30.txt#L428"
     notes: >-
       Quadplex outright, and the minimum lot is the detached-dwelling minimum:
-      6,000 sq ft buys four units here. Maximum FAR 0.7 is read and not
-      encoded — there is no floor-area field, and the pod's 4,032 sq ft of
-      floor over a 6,000 sq ft lot is 0.67, which passes on the smallest lot
-      the zone allows and by too little to ignore if a lot is ever smaller.
+      6,000 sq ft buys four units here. Maximum FAR is 0.7, and it is close:
+      the pod's 4,032 sq ft of floor over a 6,000 sq ft lot is 0.67, which
+      passes on the smallest lot the zone allows and by too little to ignore
+      if a lot is ever smaller.
+
+
+      This paragraph used to refuse that FAR, on the grounds that the registry
+      had no floor-area field to put it in. Both halves were true when it was
+      written and neither is now: `max_far` was added and encoded here and on
+      four sibling zones, and nobody went back to the sentence saying it could
+      not be. A refusal is a claim about the present tense, and this one
+      outlived its subject by weeks while reading like a live constraint.
 
 
       BUILDING HEIGHT TRANSITION, READ WIDE. Row 17 of Table 19.30.030.A gives
