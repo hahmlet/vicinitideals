@@ -43,6 +43,8 @@ REFUSED = ("NC", "HI", "GI", "CNTH", "CNTM", "CNRM")
 #: the prohibition levered rather than settled, so the resolver asks these three
 #: for the dimensions a permitted zone owes -- and they now supply them. See
 #: test_a_levered_prohibition_owes_its_dimensions_like_any_other.
+#: Shut gates. Levered by an over-scoped footnote until 2026-08-26, hence the
+#: name, kept because what these three carry is still worth pinning.
 LEVERED = ("RTC", "CC", "MC")
 
 ALL_ZONES = (
@@ -190,39 +192,34 @@ def test_every_gresham_zone_owes_nothing_more(rules: RuleSet) -> None:
         assert rules.resolve(GRESHAM, zone).missing_required == (), zone
 
 
-def test_a_levered_prohibition_owes_its_dimensions_like_any_other(
-    rules: RuleSet,
-) -> None:
-    """Three corridor districts that used to owe nothing, and now pay.
+def test_the_three_shut_gates_are_shut_and_settled(rules: RuleSet) -> None:
+    """Three corridor districts that owed nothing, then paid, then stopped.
 
     A zone whose quadplex row reads a bare NP needs no setbacks: there is no
     path to a building, so there is nothing to measure. That shortcut is only
-    sound while the NP is *settled*. RTC, CC and MC sit in the region of a
-    footnote ruled `unmeasured` against `civic_corridor` -- read, understood,
-    waiting on a corridor map nobody holds -- and an unmeasured fact over a
-    prohibition is a prohibition that might not hold. The resolver treats it as
-    a lever and asks for the dimensions again, which is right.
+    sound while the NP is *settled*, and for a fortnight these three were not.
+    They sit in the region of Table 4.0420 note 2, ruled `unmeasured` against
+    `civic_corridor`, and an unmeasured fact over a prohibition is a
+    prohibition that might not hold -- so the resolver levered it and asked for
+    the whole column back.
 
-    They were exempt before that for the wrong reason. The join that hangs
-    footnotes on values read only the first line of a citation and gave up on
-    any it could not parse, so these three -- cited to a header line and a cell
-    line, comma-separated -- never reached the gate at all. Thirty percent of
-    the corpus was in the same position.
+    The note was somebody else's. Both its sentences name CMF, and it reached
+    these columns only because footnote scope is a whole notes block. Narrowed
+    on 2026-08-26; see test_unsettled_gates for the finding and the mechanism.
 
-    The five standards were then owed and unencoded for a fortnight, on a
-    reading recorded here that Table 4.0430's cells wrap too badly to assign to
-    a column. That reading did not survive: SC, SC-RJ, CMF and CMU were
-    afterwards encoded from the same rows and the same lines, and the setback
-    row in particular resolves cleanly -- RTC, SC and SC-RJ share one
-    "Residential:" sub-cell whose three columns read identically. What was
-    genuinely unreadable was the commercial half of the same cells, which is
-    not this building. Encoded 2026-08-21; see test_unsettled_gates.
+    The column of Table 4.0430 encoded for them on 2026-08-21 is kept. It was
+    read correctly -- RTC, SC and SC-RJ share one "Residential:" sub-cell whose
+    three columns are identical, and what was genuinely unreadable was the
+    commercial half of the same cells, which is not this building -- and a
+    correct reading is not deleted because nothing now obliges it.
     """
     for zone in LEVERED:
         held = rules.resolve(GRESHAM, zone)
         assert held.values["quadplex_allowed"].value is False, zone
-        assert held.values["quadplex_allowed"].levers == frozenset({"civic_corridor"}), zone
+        assert held.values["quadplex_allowed"].levers == frozenset(), zone
         assert held.missing_required == (), zone
+        # Kept, not owed. The whole column is still here.
+        assert set(held.values) > {"quadplex_allowed"}, zone
 
 
 def test_the_new_citations_all_point_at_their_own_sentence(gresham: Layer) -> None:

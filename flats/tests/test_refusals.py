@@ -26,7 +26,7 @@ pytestmark = pytest.mark.unit
 #: are not meant to do is move quietly. A refusal added without a line here is
 #: a reading nobody signed off on; a refusal removed without one is a reading
 #: somebody overturned without saying so.
-EXPECTED = {"notes": 89, "comments": 24, "tests": 16}
+EXPECTED = {"notes": 89, "comments": 25, "tests": 16}
 #: Two of the sixteen are this file, which quotes the marker while
 #: explaining it, and one is a back-reference in test_gresham_rockwood --
 #: prose saying a zone *was* not encoded until it was. Left in rather than
@@ -56,6 +56,17 @@ EXPECTED = {"notes": 89, "comments": 24, "tests": 16}
 #: counting is not checking, and nothing here can tell a refusal that is still
 #: true from one that has been overtaken. What a count buys is that the
 #: withdrawal has to be deliberate.
+#:
+#: Comments went 24 -> 25 on 2026-08-26, in the state layer, and it is the
+#: widest refusal in the corpus: OAR 660-046-0010(2)(a) takes lots not zoned
+#: for residential use out of Division 46 entirely, and this preemption layer
+#: applies its defaults to every zone below it without asking which kind of
+#: zone it is. The refusal carries the measurement -- 88 zones where the
+#: density exemption cancels something, 26 where the ceiling was a real
+#: number, seven of those in zones the rule arguably never reached and all
+#: seven prohibiting the pod outright -- because a refusal about scope is
+#: worth exactly as much as its evidence that the scope does not currently
+#: bite.
 
 
 def test_the_corpus_declares_more_refusals_than_any_ledger_counts() -> None:

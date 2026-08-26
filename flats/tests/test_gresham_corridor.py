@@ -6,10 +6,13 @@ cleanly: a quadplex is a bare P in SC, SC-RJ and CMU and a bare NP in RTC, CC
 and MC, so half the chapter is a RED and the other half is the loosest use
 permission left in the city.
 
-Not a *settled* RED, which is the correction this file carries. Table 4.0420's
-note 2 governs the region the use cells are quoted from and is ruled
-``unmeasured``, so nothing here can say the NP holds, and RTC, CC and MC carry
-their whole column of Table 4.0430 rather than the use gate alone. See
+For a fortnight it was not a *settled* RED, and this file carried the
+correction. Table 4.0420's note 2 governs the region the use cells are quoted
+from and is ruled ``unmeasured``, so nothing here could say the NP held, and
+RTC, CC and MC were made to carry their whole column of Table 4.0430 rather
+than the use gate alone. The note turned out to be CMF's -- both its sentences
+name that district -- and it was narrowed on 2026-08-26. The three gates are
+settled now and the columns are kept anyway, correct and no longer owed. See
 ``test_unsettled_gates``.
 
 What binds on the permitted half is not the use and not the setbacks. It is
@@ -77,10 +80,10 @@ def test_the_use_table_splits_the_corridor_in_half(gresham: Layer) -> None:
         held = gresham.zones[zone]
         assert held.values["quadplex_allowed"].value is False, zone
         assert held.values["quadplex_allowed"].variants == (), zone
-        # These three used to carry the use gate and nothing else. They carry
-        # their whole column of Table 4.0430 now, because the NP is not a
-        # settled NP -- an unmeasured footnote levers it. See
-        # test_unsettled_gates, which states the finding.
+        # These three used to carry the use gate and nothing else, then a
+        # footnote that turned out to be CMF's made them owe the whole column
+        # of Table 4.0430. The note is narrowed and the gates are settled; the
+        # column stays, because it was read correctly. See test_unsettled_gates.
         assert set(held.values) > {"quadplex_allowed"}, zone
 
 
@@ -183,8 +186,8 @@ def test_a_storey_count_answers_the_height_requirement(rules: RuleSet) -> None:
     assert ALTERNATIVES == {"max_height_ft": "max_height_stories"}
     assert "max_height_ft" in REQUIRED_FIELDS
     assert "max_height_stories" in OPTIONAL_FIELDS
-    # BARRED is in this loop too now. It was not, for a fortnight, because
-    # an unmeasured footnote levers those three prohibitions and nothing had
+    # BARRED is in this loop too. It was not, for a fortnight, because an
+    # over-scoped footnote levered those three prohibitions and nothing had
     # encoded the standards behind them -- see test_unsettled_gates.
     for zone in CORRIDOR:
         assert rules.resolve(GRESHAM, zone).missing_required == (), zone

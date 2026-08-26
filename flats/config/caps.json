@@ -581,9 +581,6 @@
       "parking_min_per_unit": [
         "civic_corridor"
       ],
-      "quadplex_allowed": [
-        "civic_corridor"
-      ],
       "setback_front_ft": [
         "civic_corridor"
       ],
@@ -656,9 +653,6 @@
         "civic_corridor"
       ],
       "parking_min_per_unit": [
-        "civic_corridor"
-      ],
-      "quadplex_allowed": [
         "civic_corridor"
       ],
       "setback_front_ft": [
@@ -784,9 +778,6 @@
         "civic_corridor"
       ],
       "parking_min_per_unit": [
-        "civic_corridor"
-      ],
-      "quadplex_allowed": [
         "civic_corridor"
       ],
       "setback_front_ft": [
@@ -965,9 +956,6 @@
       "parking_min_per_unit": [
         "civic_corridor"
       ],
-      "quadplex_allowed": [
-        "civic_corridor"
-      ],
       "setback_front_ft": [
         "civic_corridor"
       ],
@@ -1003,9 +991,6 @@
       "parking_min_per_unit": [
         "civic_corridor"
       ],
-      "quadplex_allowed": [
-        "civic_corridor"
-      ],
       "setback_front_ft": [
         "civic_corridor"
       ],
@@ -1039,9 +1024,6 @@
         "civic_corridor"
       ],
       "parking_min_per_unit": [
-        "civic_corridor"
-      ],
-      "quadplex_allowed": [
         "civic_corridor"
       ],
       "setback_front_ft": [

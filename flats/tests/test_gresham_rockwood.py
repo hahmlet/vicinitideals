@@ -97,8 +97,10 @@ def test_so_the_encoded_street_setbacks_stand(gresham: Layer) -> None:
     RTC is in that loop now. It is the one deferred district that lies
     wholly inside the design district, so it is the one where 7.0502(B)
     carries the most weight -- and it was not encoded at all until
-    2026-08-21, because its quadplex row reads NP. See
-    test_unsettled_gates for why an NP is not the end of the reading."""
+    2026-08-21, because its quadplex row reads NP. The footnote that made
+    that NP look unsettled turned out to be CMF's and was narrowed on
+    2026-08-26, so the gate is settled and this column is kept rather than
+    owed. See test_unsettled_gates."""
     for zone in DEFERRED:
         values = gresham.zones[zone].values
         assert values["setback_front_ft"].value == 5, zone

@@ -14,6 +14,11 @@ over-scoped footnote costs a review. An under-scoped one costs a false GREEN,
 which is the failure the whole subsystem exists to prevent, so the wider
 reading is the one taken and the narrowing is a decision somebody records.
 
+``zones:`` on a disposition is where they record it. Until one is written the
+region governs, which is the conservative answer; once one is written it is
+checked against the layer, because a narrowing naming a zone nobody has would
+be a cap cancelled by a typo.
+
 What this produces is a queue: values whose evidence is qualified by text
 nobody has read yet. It is not a claim that the value is wrong. It is a claim
 that we do not yet know, which is a different thing and the only honest one
@@ -35,7 +40,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, Sequence
 
-from flats.encode.dispositions import Note, notes
+from flats.encode.dispositions import DispositionError, Note, notes
 from flats.encode.footnotes import Census, survey
 from flats.provenance.store import ProvenanceError, parse_quote
 from flats.rules.caps import LEDGER as CAPS
@@ -63,8 +68,18 @@ class Qualified:
 
     @property
     def capping(self) -> tuple[Note, ...]:
-        """Notes somebody read and could not answer -- see `caps`."""
-        return tuple(note for note in self.governing if note.state == "unmeasured")
+        """Notes somebody read and could not answer -- see `caps`.
+
+        A note narrowed to other zones is skipped here and nowhere else. It
+        still counts as governing, because it is still in the region this
+        value was read from and a reviewer should see it; what the narrowing
+        says is that it does not reach this column.
+        """
+        return tuple(
+            note
+            for note in self.governing
+            if note.state == "unmeasured" and note.governs(self.zone)
+        )
 
     @property
     def standard(self) -> str:
@@ -133,6 +148,29 @@ def _governing(
     return tuple(note for note in per_doc.get(census.doc, []) if note.line in bodies)
 
 
+def _check_narrowings(per_doc: dict[str, list[Note]], layers: dict[str, Layer]) -> None:
+    """Refuse a narrowing that names a zone its jurisdiction does not have.
+
+    A misspelled zone code would narrow the note to nothing, which reads in
+    the ledger exactly like a note that was never over this value -- a cap
+    cancelled by a typo, silently, in the loosening direction. Checked against
+    the layer whose file carries the ruling rather than the one the note was
+    captured in, so a layer that adopts another's rulings is not asked to hold
+    the other's zone codes.
+    """
+    for rows in per_doc.values():
+        for note in rows:
+            owner = layers.get(note.ruled_in)
+            if not note.zones or owner is None:
+                continue
+            unknown = sorted(set(note.zones) - set(owner.zones))
+            if unknown:
+                raise DispositionError(
+                    f"{note.quote}: narrowed to {', '.join(unknown)}, which "
+                    f"{note.ruled_in} does not have"
+                )
+
+
 def qualified(layer_id: str | None = None) -> list[Qualified]:
     """Every quoted value in the corpus, with the footnotes over it."""
     censuses = {c.doc: c for c in survey(layer_id)}
@@ -140,8 +178,10 @@ def qualified(layer_id: str | None = None) -> list[Qualified]:
     for note in notes(layer_id):
         per_doc.setdefault(note.doc, []).append(note)
 
+    layers = load_rules()
+    _check_narrowings(per_doc, layers)
     out: list[Qualified] = []
-    for identifier, layer in sorted(load_rules().items()):
+    for identifier, layer in sorted(layers.items()):
         if layer_id and identifier != layer_id:
             continue
         for zone, field, quote in _quoted(layer):

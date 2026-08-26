@@ -402,7 +402,11 @@ notes:
     digest: "a61758839a3b"
     state: dismissed
     reason: >-
-      requires commercial ground floors in the CC and MC districts, neither of which is encoded here
+      requires commercial ground floors on arterials and boulevards in the CC and MC districts,
+      and it marks the Multi-family and Residential Facility cells in those two columns -- neither
+      of which is the use this screens. Both districts read NP for Quadplex regardless. This used
+      to be dismissed on the grounds that CC and MC were not encoded here, which stopped being
+      true when both were encoded on 2026-08-21 and nobody came back to the sentence.
 
   - quote: "or/multnomah/gresham/4.0400.corridor.txt#L236"
     digest: "bd92b88e9375"
@@ -663,10 +667,21 @@ notes:
     digest: "35d4271b8f7f"
     state: unmeasured
     fact: civic_corridor
+    zones: [CMF]
     reason: >-
       middle housing land divisions are not permitted in CMF outside the NE
       Glisan and NE 162nd Avenue corridors, so whether the unit-lots path
-      exists at all depends on a mapped corridor nothing locates
+      exists at all depends on a mapped corridor nothing locates.
+
+      Narrowed to CMF, which is what the note says twice: the first sentence
+      is the L2 marker on the CMF column's own cells, and the second names the
+      district outright. It shares a notes block with all seven Corridor
+      columns, so the region scope handed it to every one of them -- including
+      CC and MC, whose Quadplex cells read a bare unfootnoted NP. There it did
+      real damage: an unanswered note over the use gate is what stops a
+      prohibition counting as settled, so two districts that forbid the pod
+      outright were carrying twelve encoded standards each and reading as
+      zones whose gate might still open.
 
   - quote: "or/multnomah/gresham/4.0400.corridor.txt#L480"
     digest: "cbf12e6d1150"

@@ -182,6 +182,71 @@ def test_a_quote_that_straddles_a_notes_block_takes_both_regions(
     assert straddling.governing
 
 
+# --- the narrowing, where the region was wider than the subject ---------
+
+
+def test_a_narrowed_note_still_governs_but_stops_capping(
+    rows: list[Qualified],
+) -> None:
+    """Both halves matter, and they say different things.
+
+    It goes on *governing*, because it is still a sentence in the region this
+    number was read from and a reviewer working the card should see it. It
+    stops *capping*, because somebody read it and wrote down that it speaks
+    about another column. Collapsing the two would either hide the note or
+    keep the cap, and the point of a recorded narrowing is neither.
+    """
+    use = next(
+        r
+        for r in rows
+        if (r.layer, r.zone, r.field) == (GRESHAM, "CC", "quadplex_allowed")
+    )
+    narrowed = [n for n in use.governing if n.zones]
+    assert narrowed, "Table 4.0420 note 2 is no longer over the CC use cell"
+    assert all(not n.governs("CC") for n in narrowed)
+    assert not use.capping, "a note about CMF is capping a CC standard"
+
+
+def test_and_it_goes_on_capping_the_column_it_was_written_about(
+    rows: list[Qualified],
+) -> None:
+    """The other side of the same edit. Narrowing is not deleting: CMF's own
+    use permission still turns on a corridor nothing maps."""
+    use = next(
+        r
+        for r in rows
+        if (r.layer, r.zone, r.field) == (GRESHAM, "CMF", "quadplex_allowed")
+    )
+    assert [n.fact for n in use.capping] == ["civic_corridor"]
+
+
+def test_a_narrowing_naming_a_zone_the_layer_lacks_is_refused(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """The failure this guard exists for is silent and points the wrong way.
+
+    A misspelled zone code narrows the note to nothing, and a note that reaches
+    no value looks in every report exactly like a note that never qualified
+    one -- a cap cancelled by a typo, in the loosening direction.
+    """
+    root = tmp_path / "footnotes"
+    path = root / f"{GRESHAM}.yaml"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    governed = next(r for r in qualified(GRESHAM) if r.governing)
+    path.write_text(
+        "notes:" + chr(10)
+        + f"  - digest: {digest(governed.governing[0].text)}" + chr(10)
+        + "    state: unmeasured" + chr(10)
+        + "    fact: civic_corridor" + chr(10)
+        + "    reason: written against a zone code that does not exist" + chr(10)
+        + "    zones: [CMFF]" + chr(10),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(dispositions, "CONFIG_ROOT", root)
+    with pytest.raises(dispositions.DispositionError, match="CMFF"):
+        qualified(GRESHAM)
+
+
 def test_the_report_counts_what_is_blocked(rows: list[Qualified]) -> None:
     text = render(rows, blocking_only=True)
     assert "qualified_values=" in text

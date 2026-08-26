@@ -1,21 +1,30 @@
 """A `false` a footnote might lift is not a `false` you can stop reading at.
 
-Four zones say the quadplex is not permitted and four zones still owe every
-dimensional standard behind that answer. Gresham RTC, MC and CC read NP in
-Table 4.0420; Portland CI1 reads N for Household Living in Table 150-1. None of
-the four cells carries a marker of its own -- but each sits inside a region a
-footnote block governs, and in each case one of that block's notes is ruled
-``unmeasured``: read, understood, waiting on data nobody holds. Gresham's is
-note 2, middle housing land divisions along the NE Glisan and NE 162nd corridors.
-Portland's is note [3], the PCC Sylvania FAR boundary on Map 150-5.
+A zone whose ``quadplex_allowed`` is false and *uncapped* owes nothing: the
+screen returns RED at the use gate and never reads a setback. A zone whose
+false is capped owes everything, because the cap is the admission that we
+cannot say the gate stays shut. This file is about the second kind -- and,
+since 2026-08-26, about how a zone stops being one.
 
-Neither note can plausibly turn a Quadplex NP into a P. That is not the point.
-The census scopes a footnote to its whole region on purpose, because telling a
-cell marker from a row marker from a column marker in extracted text is exactly
-the judgement that gets made wrong silently, and an over-scoped footnote costs
-a review while an under-scoped one costs a false GREEN. So the `false` is not
-*settled*, the resolver keeps asking for the standards behind it, and the
-recorded way out is to encode them rather than to narrow the note.
+Portland CI1 is the live case. Table 150-1 reads N for Household Living, the
+cell carries no marker of its own, and it sits in a region note [3] governs --
+the PCC Sylvania FAR boundary on Map 150-5 -- which is ruled ``unmeasured``:
+read, understood, waiting on a map nobody holds. Note [3] cannot plausibly turn
+an N into a Y. That is not the point. The census scopes a footnote to its whole
+region on purpose, because telling a cell marker from a row marker from a
+column marker in extracted text is exactly the judgement that gets made wrong
+silently, and an over-scoped footnote costs a review while an under-scoped one
+costs a false GREEN.
+
+Gresham RTC, MC and CC were here too and are not any more, and the difference
+is that somebody read the note. Table 4.0420 note 2 names CMF twice -- its
+first sentence is the L2 marker on that column's own cells, its second limits
+middle housing land divisions in that district -- and it reached six other
+columns only because it shares a notes block with them. It is narrowed to CMF
+now, by ``zones:`` on the ruling; the three NPs are settled; and the column of
+Table 4.0430 encoded for them on 2026-08-21 stays encoded, correct, and no
+longer owed. That is the balance the scoping rule is meant to strike: the wide
+reading by default, the narrowing written down when the reading is done.
 
 809 lots, and they were invisible for a fortnight because the shipped coverage
 ledger was stale. The last test here is the guard against that recurring.
@@ -32,13 +41,18 @@ from flats.rules.resolver import RuleSet
 
 pytestmark = pytest.mark.unit
 
-#: The four, and the unmeasured fact whose footnote keeps each gate unsettled.
+#: Shut, and not settled: the unmeasured fact whose footnote levers each gate.
 UNSETTLED = {
-    ("or/multnomah/gresham", "RTC"): "civic_corridor",
-    ("or/multnomah/gresham", "MC"): "civic_corridor",
-    ("or/multnomah/gresham", "CC"): "civic_corridor",
     ("or/multnomah/portland", "CI1"): "site_specific_limitation",
 }
+
+#: Shut and settled, after the narrowing. These three carried `civic_corridor`
+#: on every field until 2026-08-26.
+SETTLED = (
+    ("or/multnomah/gresham", "RTC"),
+    ("or/multnomah/gresham", "MC"),
+    ("or/multnomah/gresham", "CC"),
+)
 
 
 @pytest.fixture(scope="module")
@@ -63,13 +77,46 @@ def test_the_use_gate_is_shut_but_not_settled(
     assert caps_for(layer, zone)["quadplex_allowed"] == (fact,)
 
 
-@pytest.mark.parametrize("key", sorted(UNSETTLED))
+@pytest.mark.parametrize("key", sorted(UNSETTLED) + list(SETTLED))
 def test_and_so_it_owes_the_standards_behind_it(
     rules: RuleSet, key: tuple[str, str]
 ) -> None:
     layer, zone = key
 
     assert rules.resolve(layer, zone).missing_required == ()
+
+
+@pytest.mark.parametrize("key", SETTLED)
+def test_a_narrowed_note_settles_the_gate_it_never_spoke_to(
+    rules: RuleSet, key: tuple[str, str]
+) -> None:
+    """The other direction, and the one that was wrong for a fortnight.
+
+    Nothing about these three columns changed in the code; what changed is that
+    the note over them was read and found to be somebody else's. A settled NP
+    is RED at the use gate and owes nothing, which is the whole point of the
+    resolver's shortcut -- reporting a missing setback for a building the code
+    forbids is how an encoding queue fills with work that cannot move a
+    verdict.
+    """
+    layer, zone = key
+    resolved = rules.resolve(layer, zone)
+
+    assert resolved.values["quadplex_allowed"].value is False
+    assert resolved.values["quadplex_allowed"].levers == frozenset()
+    assert "quadplex_allowed" not in caps_for(layer, zone)
+
+
+def test_but_the_district_the_note_was_written_about_still_carries_it(
+    rules: RuleSet,
+) -> None:
+    """Narrowing is not deleting. CMF permits the quadplex outright, and
+    whether the split-plat path exists there turns on a corridor nothing maps.
+    """
+    use = rules.resolve("or/multnomah/gresham", "CMF").values["quadplex_allowed"]
+
+    assert use.value is True
+    assert "civic_corridor" in use.levers
 
 
 def test_gresham_cc_and_mc_are_one_column_printed_twice(rules: RuleSet) -> None:

@@ -19,6 +19,19 @@ code:
 - id: oar.660-046-0220
   url: https://oregon.public.law/rules/oar_660-046-0220
   title: OAR 660-046-0220 Middle Housing Siting Standards in Large Cities
+# The Applicability rule for Division 46, and the one that says where none of
+# this reaches. -0010(2) lists what the division does not apply to, and (a) is
+# lots and parcels "not zoned for residential use, including but not limited
+# to" ones zoned primarily for commercial, industrial, agricultural or public
+# use. Stored so the limit is quotable; see the refusal beside
+# `max_density_du_per_acre` below for why nothing yet enforces it.
+#
+# Applicability is prose about scope rather than a table of dimensions, so it
+# reads thin to the plausibility guard the same way -0020 does.
+- id: oar.660-046-0010
+  url: https://oregon.public.law/rules/oar_660-046-0010
+  title: OAR 660-046-0010 Purpose and Applicability
+  allow_thin: true
 # The middle housing land division statute, from the Legislature's own ORS
 # chapter page rather than a restatement — oregon.public.law is an unknown
 # authority, and nothing citing it may ever be signed. Sliced from the section
@@ -131,6 +144,36 @@ defaults:
   #
   # Minimum density is untouched. (2)(b) is about maximums, and no part of
   # -0220 relieves a quadplex of a floor.
+  #
+  # NOT ENCODED, and it is the boundary around everything in this file: OAR
+  # 660-046-0010(2) says a Large City "need not comply with this division" for
+  # (a) "Lots or Parcels that are not zoned for residential use, including but
+  # not limited to Lots or Parcels zoned primarily for commercial, industrial,
+  # agricultural, or public uses", and (b) lots zoned for residential use that
+  # do not allow a detached single-family dwelling. This layer applies its
+  # defaults to every zone below it without asking which kind it is, so the
+  # exemption reaches commercial columns the rule never entered. The rule is
+  # stored (oar.660-046-0010.txt#L30-L31, L33-L34) so the limit is quotable;
+  # nothing enforces it.
+  #
+  # Measured on 2026-08-26 rather than guessed at. The exemption cancels a
+  # density maximum in 88 zones. In 62 the city stated no number of its own,
+  # so it cancels nothing. Of the 26 where a real ceiling is struck out, seven
+  # sit in zones this rule arguably never reached -- Gresham CC, MC and RTC,
+  # Fairview VA, VC and VMU, Portland RMP -- and all seven prohibit the
+  # quadplex outright, so the use gate answers RED before any density row is
+  # read. The other nineteen permit the quadplex outright, which is what being
+  # zoned for residential use looks like from inside a use table. So the gap
+  # moves no verdict as the corpus stands. That is a fact about the corpus,
+  # not about the rule, and it is written here so the next commercial zone
+  # somebody encodes does not quietly inherit a preemption.
+  #
+  # Closing it needs something this model does not have: a per-zone answer to
+  # "is this zone residential", which is a judgement about a column of a use
+  # table rather than a number in one. `quadplex_allowed: false` is not that
+  # answer and must not be pressed into service as one -- a residential zone
+  # that prohibits quadplexes is a city out of compliance, and overturning
+  # exactly that is what the preemption is for.
   max_density_du_per_acre:
     exempt: true
     preempts: always

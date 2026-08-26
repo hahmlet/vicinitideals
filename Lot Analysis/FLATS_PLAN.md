@@ -211,6 +211,27 @@ Coverage ledger catches "we never looked at this zone." Clause ledger catches "w
 but missed the exception." Redirect ledger catches "we read the section that says this
 section does not apply." All three are needed; none substitutes for another.
 
+**Footnote scope, and the one way to narrow it.** A footnote governs every value quoted
+from its *region* — the run of lines between the previous notes block and this one's
+heading — not the cell its marker sits on. That is wider than the truth on purpose:
+telling a marker on a cell from a marker on a row from a marker on a column head, out of
+extracted PDF text, is exactly the judgement that gets made wrong silently, and an
+under-scoped footnote is a false GREEN.
+
+The cost is real and it points the other way. Gresham's Table 4.0420 note 2 is one
+sentence about the CMF district; it shares a notes block with all seven Corridor
+columns, so it sat over every one of them. Two of those columns prohibit the pod
+outright with no marker of any kind on the cell — and an unanswered note over a use row
+is precisely what stops the resolver treating a prohibition as *settled*, so both read
+as districts whose gate might open and both were owed twelve standards behind a gate
+that is shut.
+
+So `zones:` on an `unmeasured` disposition records the narrowing, written against the
+note's own words and checked against the layer — a narrowing naming a zone the
+jurisdiction does not have is refused, because a cap cancelled by a typo is
+indistinguishable in every report from a note that never qualified anything. No
+narrowing is the default and it stays the safe one.
+
 ### Drift watch
 
 Nightly Celery beat job re-fetches each distinct `url:`, hashes the extracted text,

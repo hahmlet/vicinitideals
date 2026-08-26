@@ -294,6 +294,81 @@ def test_every_unmeasured_fact_is_one_nothing_assumes() -> None:
             assert condition(row.fact).assume is None, row.fact
 
 
+# --- a note wider than its subject -------------------------------------
+
+
+def narrowed(state: str, zones: str, fact: str = "utility_easement") -> str:
+    return (
+        "notes:\n"
+        "  - digest: abc123abc123\n"
+        f"    state: {state}\n"
+        f"    fact: {fact}\n"
+        "    reason: no easement layer is held\n"
+        f"    zones: {zones}\n"
+    )
+
+
+def test_a_narrowing_is_carried_onto_the_note(config: Path) -> None:
+    write(config, "or/x", narrowed("unmeasured", "[CMF, SC]"))
+    (ruling,) = rulings()["or/x"]
+    assert ruling.zones == ("CMF", "SC")
+
+
+def test_a_narrowing_only_goes_on_the_state_that_caps(config: Path) -> None:
+    # `dismissed` never reaches the caps ledger, so `zones` there would read
+    # as scope and do nothing at all -- which is worse than not offering it.
+    write(
+        config,
+        "or/x",
+        "notes:\n"
+        "  - digest: abc123abc123\n"
+        "    state: dismissed\n"
+        "    reason: detached dwellings only\n"
+        "    zones: [CMF]\n",
+    )
+    with pytest.raises(DispositionError, match="caps nothing"):
+        rulings()
+
+
+def test_a_narrowing_has_to_be_a_list_of_codes(config: Path) -> None:
+    write(config, "or/x", narrowed("unmeasured", "CMF"))
+    with pytest.raises(DispositionError, match="list of zone codes"):
+        rulings()
+
+
+def test_no_narrowing_is_the_default(config: Path) -> None:
+    """The whole design rests on this. A note governs its region until
+    somebody writes down that it does not."""
+    write(config, "or/x", unmeasured("utility_easement"))
+    (ruling,) = rulings()["or/x"]
+    assert ruling.zones == ()
+
+
+def test_the_shipped_narrowing_is_the_one_that_was_read() -> None:
+    """Gresham Table 4.0420 note 2, the only narrowing in the corpus.
+
+    Both its sentences name CMF -- the first is the L2 marker on that column's
+    own cells, the second limits middle housing land divisions in that
+    district -- and it sits in a notes block shared by all seven Corridor
+    columns, so region scope handed it to every one of them. Two of those
+    columns prohibit the pod outright, and an unanswered note over the use row
+    is exactly what stops a prohibition counting as settled.
+    """
+    ruled = [
+        row
+        for row in notes("or/multnomah/gresham")
+        if row.state == "unmeasured" and row.zones
+    ]
+    assert len(ruled) == 1, "the narrowings in Gresham moved"
+    (note,) = ruled
+    assert note.zones == ("CMF",)
+    assert note.governs("CMF")
+    assert not note.governs("CC")
+    assert not note.governs("MC")
+    # And it goes on capping the district it was actually written about.
+    assert note.caps_green
+
+
 # --- one chapter, stored twice -----------------------------------------
 
 

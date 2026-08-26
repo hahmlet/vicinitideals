@@ -110,3 +110,32 @@ def test_the_lever_is_one_nothing_measures() -> None:
                     defn = condition(fact)
                     assert defn.kind == "site_fact", f"{layer}/{zone}/{field}: {fact}"
                     assert defn.assume is None, f"{layer}/{zone}/{field}: {fact}"
+
+
+# --- a narrowing, and the prohibition it lets settle --------------------
+
+
+def test_a_narrowed_note_leaves_the_columns_it_never_spoke_to() -> None:
+    """Gresham Table 4.0420 note 2 is CMF's, and it sat over all seven Corridor
+    columns because footnote scope is a whole notes block.
+
+    Where it landed on a use row it did real harm: the resolver only treats a
+    prohibition as settled when nothing can turn it, so an unanswered note over
+    `quadplex_allowed` made three districts that forbid the pod outright read
+    as districts whose gate might still open -- and each of them was then owed
+    every required standard behind a gate that is shut.
+    """
+    rules = RuleSet(load_rules())
+    for zone in ("CC", "MC", "RTC"):
+        use = rules.resolve("or/multnomah/gresham", zone).values["quadplex_allowed"]
+        assert use.value is False
+        assert use.levers == frozenset(), f"{zone} still turns on {sorted(use.levers)}"
+
+
+def test_but_the_district_the_note_was_written_about_keeps_its_lever() -> None:
+    # Narrowing is not deleting. CMF permits the quadplex, and whether the
+    # split-plat path exists there turns on a corridor nothing maps.
+    rules = RuleSet(load_rules())
+    use = rules.resolve("or/multnomah/gresham", "CMF").values["quadplex_allowed"]
+    assert use.value is True
+    assert "civic_corridor" in use.levers

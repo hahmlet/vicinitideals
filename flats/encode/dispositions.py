@@ -36,6 +36,22 @@ Three states, and only one of them is silent by omission:
     to read this" to "somebody has to buy this data", which is a different
     queue and a truer one.
 
+A footnote governs every value quoted from its region, which is wider than
+the cell its marker sits on and wide on purpose -- see
+:mod:`flats.encode.qualified` for why. Wider than the note's own subject, too,
+and that part is a cost: Gresham's Table 4.0420 note 2 is one sentence about
+the CMF district, and it sat over all seven Corridor columns because it shares
+a notes block with them. Two of those columns prohibit the building outright,
+and the note made their prohibition look unsettled -- which put twelve
+standards each into an encoding queue for a zone that forbids the pod.
+
+So ``zones:`` on an ``unmeasured`` ruling records the narrowing the region
+scope cannot see. It is written against the note's own words, it names the
+zones the note reaches, and it is checked against the layer: a narrowing that
+names a zone the jurisdiction does not have is a typo that would silently
+cancel a cap, which is the direction this register must never fail in. No
+narrowing is the default, and it is the safe one.
+
 Dispositions bind to the footnote's *text*, not to its line number. A stored
 document that gets re-fetched moves its lines, and a codifier who amends a
 note changes what we ruled on. So each entry carries a digest of the text it
@@ -107,6 +123,10 @@ class Ruling:
     #: For ``unmeasured``: the registered site fact this note turns on.
     fact: str = ""
     quote: str = ""
+    #: The zones the note actually reaches, when somebody read it and found
+    #: its region wider than its subject. Empty is the default and the safe
+    #: one: the note governs everything quoted from its region.
+    zones: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)
@@ -127,6 +147,22 @@ class Note:
     #: Set when a ruling was found for this note's line but not its words --
     #: the codifier amended it, so the ruling no longer applies.
     amended: bool = False
+    #: A recorded narrowing: the zones this note reaches. Empty means its
+    #: whole region, which is what a note governs until somebody says less.
+    zones: tuple[str, ...] = ()
+    #: The layer whose file carries the ruling. Not always the layer the note
+    #: was captured in, because a layer may adopt another's rulings.
+    ruled_in: str = ""
+
+    def governs(self, zone: str) -> bool:
+        """Whether this note reaches a value encoded in ``zone``.
+
+        Region scope is the default and deliberately wide -- see
+        :mod:`flats.encode.qualified`. A narrowing is the only thing that
+        makes this False, and a narrowing is a sentence somebody wrote against
+        the note's own words.
+        """
+        return not self.zones or zone in self.zones
 
     @property
     def quote(self) -> str:
@@ -238,6 +274,19 @@ def _read(path: Path) -> list[Ruling]:
                     f"{where}: {fact!r} is assumed {registered.assume} across a batch, "
                     "so this note is encodable rather than unmeasured"
                 )
+        raw_zones = entry.get("zones") or []
+        if not isinstance(raw_zones, list) or not all(
+            isinstance(z, str) and z.strip() for z in raw_zones
+        ):
+            raise DispositionError(f"{where}: 'zones' must be a list of zone codes")
+        narrowed = tuple(z.strip() for z in raw_zones)
+        if narrowed and state != "unmeasured":
+            # Only `unmeasured` reaches the caps ledger, so a narrowing written
+            # on any other state would read as scope and do nothing whatever.
+            raise DispositionError(
+                f"{where}: 'zones' narrows what an unmeasured note caps; "
+                f"state is {state!r}, which caps nothing"
+            )
         out.append(
             Ruling(
                 layer=layer,
@@ -247,6 +296,7 @@ def _read(path: Path) -> list[Ruling]:
                 encoded_as=str(entry.get("encoded_as", "")).strip(),
                 fact=fact,
                 quote=str(entry.get("quote", "")).strip(),
+                zones=narrowed,
             )
         )
     return out
@@ -318,6 +368,8 @@ def _note(
             reason=ruling.reason,
             encoded_as=ruling.encoded_as,
             fact=ruling.fact,
+            zones=ruling.zones,
+            ruled_in=ruling.layer,
         )
     # A ruling written against this line whose words no longer match it. The
     # note was amended, so the decision is void and this is a fresh footnote.
