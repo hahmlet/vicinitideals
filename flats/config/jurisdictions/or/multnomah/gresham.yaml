@@ -468,6 +468,124 @@ defaults:
     retrieved: '2026-08-24'
     quote: "or/multnomah/gresham/9.0800.parking.txt#L66-L70,L302,L319-L327,L340-L343"
 
+  # DRIVEWAY, APPROACH AND OPEN SPACE, read 2026-08-27. These are the numbers
+  # the site plan generator has been applying to every city in the corpus
+  # since it was written, out of a constant with a Gresham section number in
+  # the comment beside it. They are encoded here so that Gresham is cited for
+  # Gresham and nowhere else -- and reading them properly moved two of them.
+  #
+  # THE APPROACH IS NOT 18 FEET ON ONE LOT. The 18 the generator carried is
+  # 7.0431(B)(2)(b), which is the TOWNHOUSE chapter: "For each set of attached
+  # townhouse units, the total width of all driveway approaches on one street
+  # frontage may occupy no more than 18 feet or 34 percent of that frontage,
+  # whichever is greater." A quadplex on one lot is not a set of townhouses --
+  # townhouses are attached units each on their own lot -- so on the plat this
+  # screen actually draws, the rule is 7.0420(B)(2)(b): the combined width of
+  # all approaches on a parent lot is "the lesser of: i. 30 feet per parent
+  # lot, or ii. a maximum of 10 feet of driveway approach width for each
+  # parking space located within a garage ... When the building does not
+  # contain a garage, a maximum of 10 feet of driveway approach width for each
+  # building containing residential unit(s)". The pod is one building with no
+  # garage, so its allowance is ten feet, and the lesser of thirty and ten is
+  # ten. Nearly half what the generator was drawing, in the strict direction.
+  #
+  # THE 34 PERCENT LIMB IS NOT ENCODED. "18 feet or 34 percent of that
+  # frontage, whichever is greater" is a two-limb allowance and the value
+  # model has one number. Eighteen is the printed figure and the conservative
+  # limb -- 34 percent only exceeds it above 53 feet of frontage -- so 18 is
+  # what the unit-lots variant carries, and a lot wide enough for the other
+  # limb is screened tighter than the code requires rather than looser.
+  driveway_approach_max_width_ft:
+    value: 10
+    cite: GDC 7.0420(B)(2)(b)(ii), maximum combined driveway approach width, parent lot, building with no garage
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L198-L206"
+    variants:
+      - value: 18
+        when: [unit_lots]
+        cite: GDC 7.0431(B)(2)(b), total driveway approach width per street frontage for a set of attached townhouses
+        quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L461-L466"
+  # 7.0431(B)(3)(a)(iv), and it is the state model code's townhouse branch:
+  # front-facade garages, front-yard parking and driveways in front of a
+  # townhouse are allowed only where "outdoor off-street parking and
+  # maneuvering areas do not exceed 12 feet wide on any lot" and the garage is
+  # no wider than 12 feet. Twelve feet around an 8.5-foot stall is a driveway,
+  # not a court, which is why the fallback at (b) sends parking to the rear
+  # yard or the back facade instead. On one lot Gresham states no equivalent
+  # cap at all: 7.0420(B)(3) limits GARAGES and carports facing the street to
+  # half the frontage they face, and this pod has neither, so nothing in
+  # 7.0420 caps the width of a surface court. Exempt on the parent lot, 12 on
+  # unit lots.
+  parking_maneuvering_max_width_ft:
+    exempt: true
+    cite: GDC 7.0420(B), which caps garages and carports facing the street and states no width limit on outdoor parking or maneuvering area
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L229-L232,L243-L247"
+    variants:
+      - value: 12
+        when: [unit_lots]
+        cite: GDC 7.0431(B)(3)(a)(iv), outdoor off-street parking and maneuvering areas on a townhouse lot
+        quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L473-L482"
+  # 7.0420(B)(5)(c) is the reason this is exempt rather than true: "Two
+  # parking spaces per unit may be located in a driveway, in the front or
+  # street side yard setback, or in the rear yard setback when there is an
+  # alley." Gresham affirmatively allows front-yard parking for middle
+  # housing on a parent lot, so there is no prohibition to encode. It appears
+  # only on the townhouse fallback path -- 7.0431(B)(3)(b)(i), "No off-street
+  # parking shall be allowed in the front yard or side yard of a townhouse" --
+  # and that path is reached only by a project that fails the five standards
+  # at (a), which is a condition about a project rather than a lot and is not
+  # encoded.
+  parking_front_prohibited:
+    exempt: true
+    cite: GDC 7.0420(B)(5)(c), two spaces per unit allowed in a driveway in the front or street side yard setback
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L243-L247"
+  # 7.0420(D)(1): "A minimum of 15 percent of the gross area of the parent lot
+  # shall be included as private outdoor open space." The townhouse chapter
+  # states the same number against a different denominator -- 7.0431(D)(1),
+  # "15 percent of the gross lot area of the townhouse project" -- so the
+  # figure does not move with the plat and no variant is needed. Both cap
+  # hardscape at half the required area and both count porches, balconies,
+  # landscaped yard and preserved natural areas toward it; a rear court is not
+  # among them, which is why this is subtracted from the lot before a plan is
+  # laid out rather than shared with the parking.
+  #
+  # 7.0420(D)(1)(c) adds one tree per 3,000 sq ft of gross lot area inside the
+  # open space. A tree is not a dimension this screen holds and it is not
+  # encoded; it does not change the area.
+  open_space_min_pct:
+    value: 15
+    cite: GDC 7.0420(D)(1), private open space, and 7.0431(D)(1) for townhouse projects
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-7.0400.pdf
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L262-L266,L519-L521"
+  #
+  # NOT ENCODED: a general minimum driveway width. Gresham prints two and
+  # neither is one. 7.0420(B)(2)(c)(vi), "The minimum driveway width is 9
+  # feet", is the sixth condition of the paragraph allowing a COMPACTED GRAVEL
+  # driveway, and reads as a floor on that concession rather than on driveways
+  # at large. 7.0420(B)(2)(d)(iii), "Shared driveways shall not be less than
+  # 15 feet wide", is inside the Hillside and Geologic Risk Overlay. Encoding
+  # either as the city's driveway minimum would be citing a sentence for a
+  # rule it does not state. (or/multnomah/gresham/7.0400.middle-housing-design.txt#L207-L227)
+  #
+  # NOT ENCODED: 7.0420(B)(3), garages and carports facing the street may not
+  # exceed 50 percent of the frontage they face. It is the same 50 percent
+  # four other cities in this corpus state, but Gresham states it of GARAGES
+  # alone where they state it of garages, parking and maneuvering area
+  # together. `parking_area_max_frontage_pct` is defined as the combined
+  # figure, and a pod with no garage would read as unconstrained under
+  # Gresham's version and constrained under everyone else's. Left out rather
+  # than blurred. (or/multnomah/gresham/7.0400.middle-housing-design.txt#L229-L232)
+  #
+  # NOT ENCODED: 7.0420(B)(1) and 7.0431(B)(1), access shall be taken from an
+  # alley where the lot abuts one. Every city in this corpus states it and no
+  # parcel record here knows where the alleys are. (or/multnomah/gresham/7.0400.middle-housing-design.txt#L190-L191,L460)
+
 zones:
   LDR-5:
     section: ["4.01", "7.042"]

@@ -155,6 +155,82 @@ code:
   title: Clackamas County ZDO Section 845 - Triplexes, Quadplexes, Townhouses, and Cottage Clusters
   start: "845.01"
   end: "Return to the Zoning and Development Ordinance main page"
+defaults:
+  # DRIVEWAY AND PARKING PLACEMENT, read 2026-08-27 out of Section 845, which
+  # is the section Table 315-1's note 8 sends this building to for everything.
+  # Unincorporated Clackamas is Fairview's shape almost word for word, because
+  # both are the state middle-housing model code, and it is the layer that
+  # first showed this corpus the gap -- ZDO 845.02 was transcribed as an
+  # unencodable rule before any of the six cities were.
+  #
+  # 845.02, Driveway Entries: "The total width of all driveway entries shall
+  # not exceed 32 feet." The same 32 feet as Fairview FMC 19.30.040(F)(1) and
+  # Wilsonville 4.113(.14)D.4. Entries may be separated on a local street
+  # subject to the Roadway Standards' spacing, and a lot of record with more
+  # than one street frontage takes access from the lowest-classified street --
+  # street class again, and unmeasured.
+  driveway_approach_max_width_ft:
+    value: 32
+    cite: Clackamas ZDO 845.02, Driveway Entries, total width of all driveway entries
+    url: https://www.clackamas.us/planning/zdo845
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/_unincorporated/zdo.845.txt#L19,L43-L49"
+  # 845.02, Garages and Off-Street Parking Areas: they "shall not be located
+  # between a building and a public street (other than an improved alley...),
+  # except in compliance with Subsections 845.02(1) and (2)", and (2) is "the
+  # combined width of all garages and off-street parking areas located between
+  # a building and a public street does not exceed a total of 50 percent of
+  # the street frontage".
+  parking_area_max_frontage_pct:
+    value: 50
+    cite: Clackamas ZDO 845.02, combined width of garages and off-street parking areas between a building and a public street
+    url: https://www.clackamas.us/planning/zdo845
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/_unincorporated/zdo.845.txt#L19,L51-L55"
+  # Exempt rather than true, and READ THE APPLICABILITY BEFORE COPYING THIS.
+  # Section 845 states a flat prohibition -- "Off-street motor vehicle parking
+  # spaces and motor vehicle maneuvering areas, except driveways, shall not be
+  # located ... between a front lot line and the front facade of the
+  # dwelling(s)" -- and it is in 845.04, Cottage Clusters. What 845.02 gives a
+  # quadplex is the conditional allowance above: parking between the building
+  # and the street is permitted where a dwelling screens it or where it stays
+  # inside half the frontage. Encoding the cottage cluster ban here would have
+  # been a number this county does not apply to this building, out of the same
+  # document, four subsections down.
+  parking_front_prohibited:
+    exempt: true
+    cite: Clackamas ZDO 845.02, which permits parking between a building and a public street subject to two conditions; the flat prohibition at 845.04 governs cottage clusters
+    url: https://www.clackamas.us/planning/zdo845
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/_unincorporated/zdo.845.txt#L19,L51-L55,L121,L193-L197"
+  # 845.03(E)(1)(c), on unit lots: "Driveways and off-street parking areas
+  # shall not exceed 12 feet wide." Twelve again -- Gresham, Fairview,
+  # Wilsonville and Oregon City all say twelve and Milwaukie says ten. Fail
+  # any of the four standards at 845.03(E)(1) and (E)(2) sends parking out of
+  # the strip between the townhouse and the street and consolidates every lot
+  # onto a single driveway. On one lot 845.02 caps a share of the frontage and
+  # states no width.
+  parking_maneuvering_max_width_ft:
+    exempt: true
+    cite: Clackamas ZDO 845.02, which caps a share of the street frontage and states no maneuvering-area width
+    url: https://www.clackamas.us/planning/zdo845
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/_unincorporated/zdo.845.txt#L19,L51-L55"
+    variants:
+      - value: 12
+        when: [unit_lots]
+        cite: Clackamas ZDO 845.03(E)(1)(c), driveways and off-street parking areas on a townhouse lot
+        quote: "or/clackamas/_unincorporated/zdo.845.txt#L57,L99-L109"
+  #
+  # NOT ENCODED: 845.04's ten-foot setbacks -- parking and maneuvering out of
+  # the first ten feet from a front lot line, and parking spaces (though not
+  # maneuvering) out of ten feet from rear or side lot lines. A ten-foot rear
+  # and side standoff would reshape a rear court, and it is the only place in
+  # this corpus a lot-line setback is stated of a STALL rather than a
+  # building. It is not encoded because it is stated of cottage clusters, in
+  # the subsection this file's `parking_front_prohibited` note is about, and
+  # 845.02 states no equivalent for a quadplex. (or/clackamas/_unincorporated/zdo.845.txt#L121,L193-L199)
+
 zones:
   R5:
     cite_default:

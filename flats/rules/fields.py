@@ -86,6 +86,10 @@ _UNITS = frozenset({"ft", "sqft", "pct", "du", "per", "acre"})
 #: from "min. lot area 5,000 sq ft".
 _LABELS: dict[str, str] = {
     "coverage_curve": "building coverage (by lot size)",
+    "driveway_approach_max_width_ft": "max. driveway approach width",
+    "driveway_approach_min_width_ft": "min. driveway approach width",
+    "driveway_min_width_one_way_ft": "min. driveway width (one-way)",
+    "driveway_min_width_two_way_ft": "min. driveway width (two-way)",
     "land_division_parent_standards": "parent-lot standards apply",
     "max_building_width_ft": "max. building width",
     "max_coverage_pct": "max. lot coverage %",
@@ -105,9 +109,17 @@ _LABELS: dict[str, str] = {
     "min_lot_width_ft": "min. lot width",
     "min_units_at_trigger": "min. units once triggered",
     "open_space_min_pct": "min. open space %",
+    "open_space_min_sqft": "min. open space area",
     "orientation_constraint": "building orientation rule",
+    "parking_area_max_frontage_pct": "max. parking share of frontage",
+    "parking_area_max_width_ft": "max. parking area width",
+    "parking_building_buffer_ft": "min. parking-to-building buffer",
+    "parking_front_prohibited": "parking banned in front of building",
+    "parking_front_yard_max_pct": "max. vehicle share of front yard",
+    "parking_maneuvering_max_width_ft": "max. maneuvering-area width",
     "parking_max_per_unit": "max. parking per unit",
     "parking_min_per_unit": "min. parking per unit",
+    "parking_street_setback_ft": "min. parking setback from street",
     "quadplex_allowed": "fourplex allowed",
     "setback_front_ft": "front setback",
     "setback_front_max_ft": "max. front setback",
@@ -360,7 +372,162 @@ _F: tuple[FieldDef, ...] = (
         "figures are far enough apart to decide whether a row of stalls fits.",
         False,
     ),
+    # --- how the car gets in, and where it may sit once it is in --------
+    #
+    # Six jurisdictions were transcribed rather than encoded against this gap
+    # -- Fairview, Wilsonville, Milwaukie, Oregon City, Happy Valley and
+    # unincorporated Clackamas all print the state middle-housing model code
+    # in local words, and none of it had anywhere to go. What they regulate is
+    # not the stall, which the fields above hold; it is the curb cut, the
+    # travel lane behind it, and the ground between the building and the
+    # street. A site plan that seats four stalls in a rear court and then
+    # crosses the front yard to reach them is answering all three, and until
+    # now it answered them with Gresham's numbers everywhere.
+    #
+    # These are city-wide sentences out of a parking or access chapter, not
+    # rows of a zone table, so they are optional: a layer that states none of
+    # them is not thereby incomplete.
+    FieldDef(
+        "driveway_approach_min_width_ft",
+        "length_ft",
+        "Narrowest driveway approach -- the curb cut at the property line -- "
+        "the code will accept. Held apart from the driveway itself because "
+        "the approach is a public-works dimension and the driveway is a "
+        "private one, and a city can state either without the other: Oregon "
+        "City's Table 16.12.035.D asks 10 feet of approach and lets the drive "
+        "widen behind the property line, which is the shape most of them "
+        "take.",
+        False,
+    ),
+    FieldDef(
+        "driveway_approach_max_width_ft",
+        "length_ft",
+        "Widest driveway approach the code allows, counting every approach on "
+        "one frontage together where the code counts them together. This is "
+        "the field that decides whether a rear court is reachable at all: "
+        "Gresham allows a fourplex with no garage 10 feet of it "
+        "(7.0420(B)(2)(b)(ii)) and a townhouse project 18 (7.0431(B)(2)(b)), "
+        "Oregon City allows a quadplex 36 and a townhouse 24, and the same "
+        "building gets a different number depending on how the land is "
+        "divided.",
+        True,
+    ),
+    FieldDef(
+        "driveway_min_width_one_way_ft",
+        "length_ft",
+        "Narrowest one-way driveway on private property. Stated separately "
+        "from the two-way figure because the gap between them is most of a "
+        "stall and decides the layout: Happy Valley asks 12 one-way and 20 "
+        "two-way in the same sentence (16.41.030.B.1), and a court reached by "
+        "a single drive is two-way unless a loop is drawn.",
+        False,
+    ),
+    FieldDef(
+        "driveway_min_width_two_way_ft",
+        "length_ft",
+        "Narrowest two-way driveway on private property -- the figure that "
+        "binds a rear court served by one entrance. Portland states one "
+        "number for both directions (33.266.120.D.2, 9 feet); Happy Valley "
+        "states 20, which is wider than the pod's whole side yard on a narrow "
+        "lot and is the difference between a plan and no plan.",
+        False,
+    ),
+    FieldDef(
+        "parking_maneuvering_max_width_ft",
+        "length_ft",
+        "Widest strip of outdoor parking and maneuvering area the code allows "
+        "on a lot, where the code caps the strip rather than its share of the "
+        "frontage. This is the state model code's townhouse branch and it is "
+        "brutal: Gresham, Fairview, Wilsonville and Oregon City all say 12 "
+        "feet and Milwaukie says 10, which is a driveway and not a court. It "
+        "is normally reached only on unit lots -- the same rule usually "
+        "states a 50-percent-of-frontage allowance for the one-lot case.",
+        True,
+    ),
+    FieldDef(
+        "parking_area_max_frontage_pct",
+        "percent",
+        "Most of the street frontage that garages, parking and maneuvering "
+        "area together may occupy. Fifty percent is the model-code figure and "
+        "four cities in this corpus print it. Distinct from "
+        "`parking_front_yard_max_pct`: this is measured along the lot line, "
+        "that one across the ground behind it, and a plan can pass either "
+        "while failing the other.",
+        True,
+    ),
+    FieldDef(
+        "parking_area_max_width_ft",
+        "length_ft",
+        "A flat ceiling in feet on the width of outdoor parking and "
+        "maneuvering area, stated alongside a share-of-frontage cap and "
+        "binding whichever is less. Oregon City is the only city here that "
+        "states one (17.16.060.D.1, forty feet), and on a wide lot it is the "
+        "limb that binds.",
+        True,
+    ),
+    FieldDef(
+        "parking_front_yard_max_pct",
+        "percent",
+        "Most of the ground between the front lot line and the front building "
+        "line that may be paved or used as vehicle area. Portland asks 40 "
+        "percent (33.266.120.C.1.b) and Milwaukie 50 of the front yard area "
+        "(19.607.1.D). An area share, not a frontage share -- a 12-foot drive "
+        "down one side of a deep front yard passes this and can still fail "
+        "`parking_area_max_frontage_pct` on a narrow lot.",
+        True,
+    ),
+    FieldDef(
+        "parking_front_prohibited",
+        "bool",
+        "True where the code bans PARKING between the primary building and "
+        "the street outright rather than capping it. Portland "
+        "(33.266.120.C.1.a) and Milwaukie (19.505.3.D.4.a) both do. Read the "
+        "applicability first: unincorporated Clackamas states the same ban "
+        "in ZDO 845.04 and it is a COTTAGE CLUSTER rule -- what 845.02 "
+        "gives a quadplex is the 50-percent cap instead. Both carve the "
+        "driveway out -- Portland in the same sentence, allowing drives to "
+        "parking behind the building line -- so this bans a front-yard "
+        "court and not the drive that reaches a rear one. A ban and a "
+        "50-percent cap are not the same rule and cannot share a field: "
+        "one of them a front-yard court can satisfy.",
+        None,
+    ),
+    FieldDef(
+        "parking_street_setback_ft",
+        "length_ft",
+        "How far a parking area must sit back from a street lot line. Happy "
+        "Valley sets it to the building setback with a ten-foot floor "
+        "(16.43.030.E.4), which in its residential zones is twenty feet and "
+        "removes front-yard parking rather than trimming it; Portland keeps "
+        "stalls out of the first ten feet (33.266.120.C.2.a). The driveway "
+        "reaching a rear court is not a parking area and is not caught by "
+        "this.",
+        False,
+    ),
+    FieldDef(
+        "parking_building_buffer_ft",
+        "length_ft",
+        "Width of the pathway, plaza or landscape strip a code requires "
+        "between a parking or maneuvering area and the wall of the building "
+        "it serves. Fairview asks four feet and makes it a landscape buffer "
+        "where the wall is ground-floor living space (19.163.030(E)(3)(b)). "
+        "Real ground, subtracted from the court before any stall is seated.",
+        False,
+    ),
     FieldDef("open_space_min_pct", "percent", "Minimum private open space as a share of lot area.", False),
+    FieldDef(
+        "open_space_min_sqft",
+        "area_sqft",
+        "Minimum private open space stated as an area rather than a share. "
+        "Held apart from `open_space_min_pct` because the two behave "
+        "differently as the lot grows: Portland's Table 110-4 asks 250 square "
+        "feet whatever the lot is, Milwaukie 96 per ground-floor dwelling "
+        "(Table 19.505.3.D.1), and Gresham 15 percent -- which on a big lot "
+        "is an order of magnitude more. A city that states both means both. "
+        "The minimum DIMENSION some of them state alongside it (Portland's 12 "
+        "by 12) is a shape test no field here holds.",
+        False,
+    ),
     FieldDef(
         "min_landscaped_pct",
         "percent",
@@ -441,7 +608,9 @@ MEASURED_ON_FIELDS: frozenset[str] = frozenset(
 #: does not. MCC 39.4862(C) asks "5,000 square feet for each dwelling unit"
 #: and a fourplex needs four of them; four times a minimum lot WIDTH would be
 #: a requirement no code anywhere states.
-PER_DWELLING_FIELDS: frozenset[str] = frozenset({"min_lot_sqft"})
+PER_DWELLING_FIELDS: frozenset[str] = frozenset(
+    {"min_lot_sqft", "open_space_min_sqft"}
+)
 
 #: Fields a rule file may state in ACRES rather than in square feet. Rural
 #: Oregon is written this way and only this way -- MCC 39.4245(A) asks 80 acres
@@ -603,7 +772,26 @@ OPTIONAL_FIELDS: frozenset[str] = frozenset(
         "parking_stall_depth_ft",
         "parking_aisle_one_way_ft",
         "parking_aisle_two_way_ft",
+        # Driveway, approach and parking placement. Same argument one step
+        # further out: these are sentences in an access or parking chapter
+        # that name a housing type, not rows of a zone table, so a zone that
+        # does not repeat them is not an incomplete zone. They are also the
+        # newest family here, and listing them as required would put every
+        # zone in nineteen jurisdictions into the gap ledger overnight for a
+        # question no reader has been asked yet.
+        "driveway_approach_min_width_ft",
+        "driveway_approach_max_width_ft",
+        "driveway_min_width_one_way_ft",
+        "driveway_min_width_two_way_ft",
+        "parking_maneuvering_max_width_ft",
+        "parking_area_max_frontage_pct",
+        "parking_area_max_width_ft",
+        "parking_front_yard_max_pct",
+        "parking_front_prohibited",
+        "parking_street_setback_ft",
+        "parking_building_buffer_ft",
         "open_space_min_pct",
+        "open_space_min_sqft",
         "min_landscaped_pct",
         "orientation_constraint",
     }

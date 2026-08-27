@@ -210,6 +210,107 @@ defaults:
     url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
     retrieved: 2026-08-25
     quote: "or/multnomah/portland/33.266.txt#L275-L276,L517-L520,L525"
+  # DRIVEWAY AND PARKING PLACEMENT, read 2026-08-27. All of it is Section
+  # 33.266.120, and 33.266.120.B is why it is in `defaults` rather than in the
+  # zones: "The regulations of this section apply to houses, attached houses,
+  # duplexes, attached duplexes, triplexes, fourplexes, manufactured homes,
+  # and houseboats." That is a test on the STRUCTURE, not on the zone, so it
+  # reaches this pod in every zone that allows it -- the six single-dwelling
+  # zones, the four multi-dwelling ones and the commercial ones alike.
+  #
+  # The carve-out at B.1 is already ruled in this file and is the reason the
+  # stall geometry above is .120's and not Table 266-4's: parking in a parking
+  # TRACT goes to 33.266.130 instead. A rear court on the same lot as the
+  # building is not a tract.
+  #
+  # 33.266.120.D.2: "The minimum driveway width on private property is 9
+  # feet." One figure for both directions -- Portland does not distinguish --
+  # so both fields carry it, and it is the narrowest driveway minimum in the
+  # corpus. Happy Valley asks 20 for the same two-way drive.
+  driveway_min_width_one_way_ft:
+    value: 9
+    cite: PCC 33.266.120.D.2, minimum driveway width on private property
+    url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/portland/33.266.txt#L268,L271-L274,L317-L319"
+  driveway_min_width_two_way_ft:
+    value: 9
+    cite: PCC 33.266.120.D.2, minimum driveway width on private property
+    url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/portland/33.266.txt#L268,L271-L274,L317-L319"
+  # 33.266.120.C.1.a: "Vehicle area is prohibited between the primary
+  # structure and the street except as follows. This standard does not apply
+  # to houses on lots that are at least 32 feet wide: (1) Parking spaces
+  # located entirely behind the front and side street building lines of a
+  # primary structure are allowed; and (2) Driveways to parking spaces located
+  # entirely behind the front and side street building lines of a primary
+  # structure are allowed."
+  #
+  # The 32-foot escape is for HOUSES. A fourplex does not get it however wide
+  # the lot, so the prohibition binds on every lot this screen looks at in
+  # Portland. What survives it is exactly the arrangement the site plan draws:
+  # stalls behind the front building line, reached by a driveway that is
+  # allowed to cross the front yard to get to them. A front-yard court is not
+  # available here at any width, which is a harder rule than the 50-percent
+  # caps Fairview, Wilsonville, Milwaukie and Oregon City state.
+  parking_front_prohibited:
+    value: true
+    cite: PCC 33.266.120.C.1.a, vehicle area prohibited between the primary structure and the street
+    url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/portland/33.266.txt#L280-L284,L290-L293"
+  # 33.266.120.C.1.b: "No more than 40 percent of the land area between the
+  # front lot line and the front building line may be paved or used for
+  # vehicle areas." The driveway allowed through by C.1.a is what this
+  # measures, so the two rules work as a pair: the court goes behind the
+  # building and the drive that reaches it may pave up to two fifths of the
+  # ground in front of it.
+  #
+  # NOT ENCODED, in the same sentence: 20 percent between a side street lot
+  # line and the side street building line on a corner lot, which is a corner
+  # standard this screen holds no field for; and the flag-lot exception
+  # allowing "at least a 12-foot wide vehicle area", which is a lot shape
+  # nothing measures.
+  parking_front_yard_max_pct:
+    value: 40
+    cite: PCC 33.266.120.C.1.b, share of the land between front lot line and front building line usable as vehicle area
+    url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/portland/33.266.txt#L294-L301"
+  # 33.266.120.C.2.a: "Generally, parking spaces are not allowed within the
+  # first 10 feet from a front lot line, and on corner lots, parking spaces
+  # are not allowed within the side street setback." Stated of SPACES, where
+  # C.1 is stated of vehicle area, so a driveway may run through the first ten
+  # feet and a stall may not stand in it.
+  #
+  # The two exceptions at C.2.b are not encoded and neither could help: a
+  # space in a driveway BEHIND a conforming space is tandem parking, which
+  # this design does not use, and the common-green case is a plat condition
+  # nothing measures.
+  parking_street_setback_ft:
+    value: 10
+    cite: PCC 33.266.120.C.2.a, parking spaces not allowed within the first 10 feet from a front lot line
+    url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/portland/33.266.txt#L302-L305"
+  #
+  # NOT ENCODED: 33.266.120.C.3, "If the lot abuts an alley, all parking and
+  # vehicle access to the site must be from the alley." Every city in this
+  # corpus states it and no parcel record here knows where the alleys are.
+  # (or/multnomah/portland/33.266.txt#L313-L314)
+  #
+  # NOT ENCODED: 33.266.120.C.4, parking in garages takes the garage setback
+  # of the base zone. `setback_garage_entrance_ft` already carries that figure
+  # per zone; this design has no garage.
+  #
+  # NOT ENCODED: Portland states no maximum driveway approach width and no
+  # share-of-frontage cap for this building. 33.266.120 caps the vehicle AREA
+  # in front of the building and says nothing about the curb cut, and Title 17
+  # -- the public works title, where an approach standard would live -- is not
+  # in this corpus. Left absent rather than exempt: this is a document that
+  # has not been read, not a code that has been read and states nothing.
+
 zones:
   RF:
     cite_default:
@@ -217,6 +318,23 @@ zones:
         only); dimensional standards PCC 33.110.205
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-07-24'
+    # Table 110-4, "Required Outdoor Area -- Minimum area": 250 sq. ft. in RF,
+    # R20, R10, R7 and R5, and 200 sq. ft. in R2.5. Per LOT, not per unit, and
+    # the same figure whether one dwelling stands on it or four. 33.110.240.C
+    # is what makes it real ground rather than a number: the area must be
+    # contiguous, "may not be used as vehicle area", and "may not be located
+    # in the front building setback".
+    #
+    # NOT ENCODED, in the row below it: the minimum DIMENSION, 12 ft. by 12
+    # ft. here and 10 by 10 in R2.5 -- "the shape of the outdoor area must be
+    # such that a square of the stated dimension will fit entirely in the
+    # outdoor area". That is a shape test and this registry holds an area.
+    open_space_min_sqft:
+      value: 250
+      cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum area); 33.110.240
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/portland/33.110.txt#L432-L435,L470-L474,L895-L916"
     quadplex_allowed:
       value: false
       quote: "or/multnomah/portland/33.110.txt#L302-L313"
@@ -241,6 +359,12 @@ zones:
       cite: PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-07-24'
+    open_space_min_sqft:
+      value: 250
+      cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum area); 33.110.240
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/portland/33.110.txt#L432-L435,L470-L474,L895-L916"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.110.txt#L313"
@@ -288,6 +412,12 @@ zones:
       cite: PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-07-24'
+    open_space_min_sqft:
+      value: 250
+      cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum area); 33.110.240
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/portland/33.110.txt#L432-L435,L470-L474,L895-L916"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.110.txt#L313"
@@ -335,6 +465,12 @@ zones:
       cite: PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-07-24'
+    open_space_min_sqft:
+      value: 250
+      cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum area); 33.110.240
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/portland/33.110.txt#L432-L435,L470-L474,L895-L916"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.110.txt#L313"
@@ -405,6 +541,12 @@ zones:
       cite: PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-07-24'
+    open_space_min_sqft:
+      value: 250
+      cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum area); 33.110.240
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/portland/33.110.txt#L432-L435,L470-L474,L895-L916"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.110.txt#L313"
@@ -475,6 +617,14 @@ zones:
       cite: PCC 33.110 Tables 110-2/110-4/110-5/110-7; 33.110.265.E
       url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
       retrieved: '2026-07-24'
+    # The narrow column of Table 110-4: 200 sq. ft. rather than 250, and a 10
+    # by 10 square rather than 12 by 12. Same section, same requirements.
+    open_space_min_sqft:
+      value: 200
+      cite: PCC 33.110 Table 110-4, Required Outdoor Area (minimum area), R2.5 column; 33.110.240
+      url: https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/portland/33.110.txt#L432-L435,L470-L474,L895-L916"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.110.txt#L313"
@@ -563,6 +713,25 @@ zones:
         - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
+    # 33.120.240.B.1 states the multi-dwelling zones' outdoor area per DWELLING
+    # UNIT rather than per lot, so a fourplex owes four of them. RM1 and RM2
+    # ask 48 sq ft each. RM3 and RM4 ask 36 on sites of 20,000 sq ft or less
+    # and 48 above, and this file carries 48 in all four zones: the two
+    # figures differ by 12 sq ft a unit, 48 across the pod, and encoding the
+    # larger screens a small site about a rounding error tighter rather than
+    # letting a large one through unmeasured.
+    #
+    # NOT ENCODED: the required COMMON area at 33.120.240.B.2 -- 10 percent of
+    # total site area, but only "on sites that are more than 20,000 square
+    # feet in total site area", and exempt anyway where every unit has its own
+    # entrance within 20 feet of a street lot line. A four-unit pod on a
+    # typical lot is outside the trigger and inside the exemption.
+    open_space_min_sqft:
+      per_dwelling: 48
+      cite: PCC 33.120.240.B.1.a, required outdoor area per dwelling unit
+      url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/portland/33.120.txt#L1487-L1491,L1497-L1508"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.120.txt#L394-L404"
@@ -633,6 +802,12 @@ zones:
         - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
+    open_space_min_sqft:
+      per_dwelling: 48
+      cite: PCC 33.120.240.B.1.a, required outdoor area per dwelling unit
+      url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/portland/33.120.txt#L1487-L1491,L1497-L1508"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.120.txt#L394-L404"
@@ -707,6 +882,12 @@ zones:
         - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
+    open_space_min_sqft:
+      per_dwelling: 48
+      cite: PCC 33.120.240.B.1.b, required outdoor area per dwelling unit, sites over 20,000 sq ft
+      url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/portland/33.120.txt#L1487-L1491,L1497-L1508"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.120.txt#L394-L404"
@@ -788,6 +969,12 @@ zones:
         - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
+    open_space_min_sqft:
+      per_dwelling: 48
+      cite: PCC 33.120.240.B.1.b, required outdoor area per dwelling unit, sites over 20,000 sq ft
+      url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/portland/33.120.txt#L1487-L1491,L1497-L1508"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.120.txt#L394-L404"
@@ -869,6 +1056,14 @@ zones:
         - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
+    # 33.120.240.B, last sentence: "The standards of this section do not apply
+    # in the RX and RMP zones." Read, and states none.
+    open_space_min_sqft:
+      exempt: true
+      cite: PCC 33.120.240.B, outdoor and common area requirements do not apply in the RX and RMP zones
+      url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/portland/33.120.txt#L1487-L1491"
     quadplex_allowed:
       value: true
       quote: "or/multnomah/portland/33.120.txt#L394-L404"
@@ -942,6 +1137,14 @@ zones:
         - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
+    # 33.120.240.B, last sentence: "The standards of this section do not apply
+    # in the RX and RMP zones." Read, and states none.
+    open_space_min_sqft:
+      exempt: true
+      cite: PCC 33.120.240.B, outdoor and common area requirements do not apply in the RX and RMP zones
+      url: https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/portland/33.120.txt#L1487-L1491"
     quadplex_allowed:
       value: false
       quote: "or/multnomah/portland/33.120.txt#L394-L404"
@@ -1009,6 +1212,18 @@ zones:
         - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
+    # Table 130-2 carries a row "Required Residential Outdoor Area (see
+    # 33.130.228)" reading Yes for CR, CM1, CM2, CM3 and CE, and No for CX.
+    # Where it is Yes, 33.130.228.B.1 states the amount the same way the
+    # multi-dwelling chapter does -- 36 sq ft per dwelling unit on sites up to
+    # 20,000 sq ft, 48 above -- and this file carries 48 for the reason it
+    # carries 48 in the RM zones.
+    open_space_min_sqft:
+      per_dwelling: 48
+      cite: PCC 33.130 Table 130-2, Required Residential Outdoor Area; 33.130.228.B.1
+      url: https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/portland/33.130.txt#L618,L663-L664,L1263-L1269"
     quadplex_allowed:
       # Table 130-1, "Household Living", read across the header row: Y in
       # every commercial/mixed use zone. The housing type is named too --
@@ -1142,6 +1357,12 @@ zones:
         - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
+    open_space_min_sqft:
+      per_dwelling: 48
+      cite: PCC 33.130 Table 130-2, Required Residential Outdoor Area; 33.130.228.B.1
+      url: https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/portland/33.130.txt#L618,L663-L664,L1263-L1269"
     quadplex_allowed:
       # Table 130-1, "Household Living", read across the header row: Y in
       # every commercial/mixed use zone. The housing type is named too --
@@ -1265,6 +1486,12 @@ zones:
         - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
+    open_space_min_sqft:
+      per_dwelling: 48
+      cite: PCC 33.130 Table 130-2, Required Residential Outdoor Area; 33.130.228.B.1
+      url: https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/portland/33.130.txt#L618,L663-L664,L1263-L1269"
     quadplex_allowed:
       # Table 130-1, "Household Living", read across the header row: Y in
       # every commercial/mixed use zone. The housing type is named too --
@@ -1397,6 +1624,12 @@ zones:
         - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
+    open_space_min_sqft:
+      per_dwelling: 48
+      cite: PCC 33.130 Table 130-2, Required Residential Outdoor Area; 33.130.228.B.1
+      url: https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/portland/33.130.txt#L618,L663-L664,L1263-L1269"
     quadplex_allowed:
       # Table 130-1, "Household Living", read across the header row: Y in
       # every commercial/mixed use zone. The housing type is named too --
@@ -1529,6 +1762,12 @@ zones:
         - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
+    open_space_min_sqft:
+      per_dwelling: 48
+      cite: PCC 33.130 Table 130-2, Required Residential Outdoor Area; 33.130.228.B.1
+      url: https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/portland/33.130.txt#L618,L663-L664,L1263-L1269"
     quadplex_allowed:
       # Table 130-1, "Household Living", read across the header row: Y in
       # every commercial/mixed use zone. The housing type is named too --
@@ -1652,6 +1891,13 @@ zones:
         - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/portland/33.266.txt#L159,L163-L164"
+    # The one No in the Table 130-2 row. Read, and states none.
+    open_space_min_sqft:
+      exempt: true
+      cite: PCC 33.130 Table 130-2, Required Residential Outdoor Area, CX column
+      url: https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf
+      retrieved: '2026-08-27'
+      quote: "or/multnomah/portland/33.130.txt#L618,L663-L664"
     quadplex_allowed:
       # Table 130-1, "Household Living", read across the header row: Y in
       # every commercial/mixed use zone. The housing type is named too --

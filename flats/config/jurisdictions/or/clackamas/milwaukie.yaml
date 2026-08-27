@@ -163,54 +163,124 @@ defaults:
   # a court in Milwaukie is drawing it against a number Milwaukie has not
   # published. (19.600.parking.txt#L1001)
   #
-  # NOT ENCODED: where the parking may sit, which is where the real constraint
-  # is and where the field registry runs out. Two sets of rules, and which one
-  # applies is the `unit_lots` lever.
+  # WHERE THE PARKING MAY SIT, transcribed 2026-08-27 as the sixth
+  # jurisdiction with nowhere to put it and encoded the same day once the
+  # registry grew the field family. Two sets of rules, and which one applies
+  # is the `unit_lots` lever.
   #
-  # On one lot, 19.607.1.D, Parking Area Limitations: uncovered spaces and
-  # maneuvering areas may not exceed 50% of the front yard area nor 30% of the
-  # required street side yard area, and "No more than 3 residential parking
-  # spaces are allowed within the required front yard... Quadplexes are
-  # permitted a fourth parking space within the required front yard." The code
-  # counts front-yard spaces by fitting non-overlapping 9 x 18 rectangles
-  # inside the required front yard, which is a measurement no field holds.
-  # 19.607.1.B forbids any part of a space in a right-of-way, access easement
-  # or over a public sidewalk. 19.607.1.C requires a durable, dust-free,
-  # all-weather surface for spaces and maneuvering areas in a required front,
-  # street-side or side yard, and allows gravel outside those. 19.607.1.E.1
-  # holds the driveway to the width of the approved approach within 5 ft of
-  # the right-of-way, or a 1:1 widening to the 10-ft point starting 2 ft
-  # behind it. (19.600.parking.txt#L931-L999)
+  # 19.607.1.D, Parking Area Limitations: "Uncovered parking spaces and
+  # maneuvering areas cannot exceed 50% of the front yard area." An AREA
+  # share, which is Portland's shape and not the share-of-frontage every other
+  # city in this corpus states, and it is the reason those are two fields.
+  # The same subsection caps the street side yard at 30 percent -- a
+  # street-side standard this screen holds no field for.
+  parking_front_yard_max_pct:
+    value: 50
+    cite: MMC 19.607.1.D, uncovered parking spaces and maneuvering areas as a share of the front yard area
+    url: https://ecode360.com/print/MI4969?guid=43862935
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/milwaukie/19.600.parking.txt#L931,L975"
+  # 19.505.3.D.4.a, and it is a flat prohibition rather than a cap:
+  # "On-site surface parking areas, garages, and vehicle maneuvering areas
+  # shall not be located directly between the facade of a primary building(s)
+  # and an abutting street right-of-way." It reaches this pod because
+  # 19.505.3.B applies Table 19.505.3.D "to all multi-unit developments and
+  # residential care facilities with 3 or more dwelling units on a single
+  # lot", and it stops reaching it on unit lots because the same sentence
+  # continues "Cottage cluster housing and rowhouses on their own lots are
+  # subject to separate standards and are therefore exempt from Subsection
+  # 19.505.3."
   #
-  # Also on one lot, and separately: 19.505.3.D.4 governs any development of 3
-  # or more dwelling units on a single lot, which is this pod. Parking,
-  # garages and maneuvering areas may not sit directly between a building
-  # facade and an abutting street; parking to the side is capped at 50% of
-  # that side's linear frontage; garages in the same structure as the
-  # dwellings must be at least 4 ft behind the front facade.
-  # (19.500.supplementary.txt#L1379,L1484-L1487)
-  #
-  # On four unit lots, 19.505.5.F, and it is tighter than any of the above.
+  # Milwaukie therefore says both things at once and they do not contradict:
+  # 19.607.1.D allows uncovered parking across half the front yard, and
+  # 19.505.3.D.4.a keeps it out of the strip directly in front of the
+  # building. A drive down one side to a rear court satisfies both. A
+  # front-yard court in line with the facade satisfies neither.
+  parking_front_prohibited:
+    value: true
+    unless: [unit_lots]
+    cite: MMC 19.505.3.D.4.a, surface parking, garages and maneuvering areas not directly between a primary building facade and an abutting street; applicability at 19.505.3.B
+    url: https://ecode360.com/print/MI4969?guid=43861924
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L1379,L1485"
+  # 19.505.5.F, on four unit lots, and it is tighter than anything above.
   # Front-facade garages, front-yard parking and driveways in front of a
   # townhouse are prohibited outright UNLESS all four of: "development of 4
   # townhouses has 2 shared accesses"; outdoor on-site parking and maneuvering
   # areas no wider than 10 ft on any lot; garage width no more than 12 ft; and
   # shared accesses at least 24 ft apart. Ten feet around a nine-foot stall is
-  # a single-file driveway. Fail any of them and 19.505.5.F.2 applies instead:
-  # parking accessed on the back facade or in the rear yard, a corner-lot
-  # development taking a single driveway on the side street, a non-corner one
-  # consolidating into one driveway that may not run between any townhouse's
-  # front facade and its front lot line.
-  # (19.500.supplementary.txt#L2288-L2330)
+  # a single-file driveway, and it is the tightest figure in the corpus --
+  # Gresham, Fairview, Wilsonville and Oregon City all say twelve. Fail any of
+  # them and 19.505.5.F.2 applies instead: parking accessed on the back facade
+  # or in the rear yard, a corner-lot development taking a single driveway on
+  # the side street, a non-corner one consolidating into one driveway that may
+  # not run between any townhouse's front facade and its front lot line.
   #
-  # This is the same rule Wilsonville prints at 4.113(.14)E.5 with a 12 ft cap
-  # instead of 10, and the same rule Fairview, Gresham and Clackamas County
-  # each print in their own words -- all of it descended from the state middle
-  # housing model code. Sixth jurisdiction into the same wall: the registry
-  # has no field for driveway approach width, share-of-frontage, parking
-  # placement relative to a facade or a street, or maneuvering-area width.
-  # Transcribed rather than summarised so that building those fields is a copy
-  # job and not a re-read.
+  # On one lot 19.607.1.D caps a share of an area and states no width, so
+  # there is nothing for this field to hold there.
+  parking_maneuvering_max_width_ft:
+    exempt: true
+    cite: MMC 19.607.1.D, which caps a share of the front yard area and states no maneuvering-area width
+    url: https://ecode360.com/print/MI4969?guid=43862935
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/milwaukie/19.600.parking.txt#L931,L975"
+    variants:
+      - value: 10
+        when: [unit_lots]
+        cite: MMC 19.505.5.F.1, outdoor on-site parking and maneuvering areas on a townhouse lot
+        quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L2288-L2330"
+  # Table 19.505.3.D.1, Private Open Space, objective standard: "For each
+  # dwelling unit located on the ground floor, or within 5 ft of finished
+  # grade, a minimum of 96 sq ft of private open space, with a minimum
+  # dimension of 5 ft." Every unit of a two-storey attached fourplex is a
+  # ground-floor unit, so the pod owes four of them -- 384 square feet, the
+  # largest open space requirement in this corpus after Gresham's percentage.
+  # The upper-floor figure of 48 sq ft is not used because no unit here is
+  # more than five feet above grade.
+  #
+  # Applicability and the exemption on unit lots are 19.505.3.B, quoted with
+  # the standard above.
+  #
+  # NOT ENCODED, from the row below it: the common open space of Table
+  # 19.505.3.D.2, "For buildings with more than 5 dwelling units, a minimum of
+  # 10% of the gross site area, or 750 sq ft, whichever is greater". Four
+  # units is not more than five.
+  open_space_min_sqft:
+    per_dwelling: 96
+    unless: [unit_lots]
+    cite: MMC Table 19.505.3.D.1, private open space per ground-floor dwelling unit; applicability at 19.505.3.B
+    url: https://ecode360.com/print/MI4969?guid=43861924
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/milwaukie/19.500.supplementary.txt#L1379,L1458-L1462"
+  #
+  # NOT ENCODED: 19.505.3.D.4.b, "Parking located to the side of a dwelling
+  # structure shall be limited to 50% of the linear frontage of that side."
+  # The 50 percent every other city in this corpus states is measured along
+  # the STREET frontage; this one is measured along the side of the building,
+  # which is a different denominator and would be a different rule in the same
+  # field. D.4.c, garages in the same structure as the dwellings set at least
+  # 4 ft behind the front facade, needs a garage this design does not have.
+  # (or/clackamas/milwaukie/19.500.supplementary.txt#L1486-L1487)
+  #
+  # NOT ENCODED: 19.607.1.E.1, which holds the driveway to the width of the
+  # approved approach within 5 ft of the right-of-way, or a 1:1 widening to
+  # the 10-ft point starting 2 ft behind it. It is a rule about the SHAPE of a
+  # driveway whose width is fixed somewhere else, and Milwaukie states that
+  # width nowhere in this chapter -- "the approved approach" is a public works
+  # decision, not a code dimension. So Milwaukie has no encodable driveway
+  # approach width, which is why the field is absent rather than exempt.
+  # 19.607.1.B forbids any part of a space in a right-of-way, access easement
+  # or over a public sidewalk; 19.607.1.C requires a durable, dust-free,
+  # all-weather surface in a required front, street-side or side yard.
+  # (or/clackamas/milwaukie/19.600.parking.txt#L931-L999)
+  #
+  # NOT ENCODED: the front-yard SPACE COUNT of 19.607.1.D -- "No more than 3
+  # residential parking spaces are allowed within the required front yard...
+  # Quadplexes are permitted a fourth parking space within the required front
+  # yard." The code counts them by fitting non-overlapping 9 x 18 rectangles
+  # inside the required front yard, which is a measurement no field holds, and
+  # it is moot anyway wherever 19.505.3.D.4.a keeps parking out of the strip
+  # in front of the building. (or/clackamas/milwaukie/19.600.parking.txt#L931-L999)
 
 zones:
   R-MD:

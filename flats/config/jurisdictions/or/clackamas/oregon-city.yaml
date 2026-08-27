@@ -55,6 +55,18 @@ code:
   # Municode client 3708, publication 1377 (updated 2026-06-16). One product:
   # zoning is Title 17 inside the Municipal Code. The library renders in
   # JavaScript; this endpoint returns the adopted PDF.
+  # Fetched 2026-08-27. OCMC 17.16.040 sends every townhouse driveway to
+  # "OCMC 16.12.035", which is in Title 16 and so outside the 17.zoning slice
+  # -- the same publication, a different part of it. It turned out to hold
+  # what Title 17 does not: the approach width table this building is
+  # dimensioned by.
+  - id: "16.12.streets"
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    title: "Title 16, Chapter 16.12 - Streets, Sidewalks and Public Places"
+    start: "16.12.030"
+    end: "16.16"
+    extraction: plain
+    spaced: true
   - id: "17.zoning"
     url: https://api.municode.com/PublicationPdfDownload/1377
     title: "Title 17 - Zoning"
@@ -190,10 +202,43 @@ defaults:
   # 17.52 in its entirety, and Ord. No. 22-1001 is what added middle housing
   # to it. (or/clackamas/oregon-city/17.zoning.txt#L14887-L14896)
   #
-  # NOT ENCODED: where the parking may sit, which is the sixth jurisdiction
-  # to hit a registry with no field for it, and here it is stated twice for
-  # the two halves of the same seam.
+  # WHERE THE PARKING MAY SIT AND HOW WIDE THE DRIVEWAY IS, transcribed
+  # 2026-08-27 and encoded the same day. Stated twice over, for the two halves
+  # of the `unit_lots` seam this file already runs on.
   #
+  # Table 16.12.035.D, "Driveway Approach Size Standards", is the piece that
+  # was missing until Title 16 was fetched. Its rows:
+  #
+  #     Property Use                          Min. Approach   Max. Approach
+  #     Single-Family Detached and Duplexes   10 feet         24 feet
+  #     Townhouses                            10 feet         24 feet
+  #     Triplexes, quadplexes and cottage     10 feet         36 feet
+  #     Multi-Family                          18 feet         30 feet
+  #
+  # Thirty-six feet is the widest approach any city in this corpus allows this
+  # building, and it is a third wider than a townhouse gets on the row above
+  # -- the same split, in the same direction, as the stall dimensions in this
+  # file. 16.12.035.J adds that "driveway widths shall match the width of the
+  # driveway approach where the driveway meets sidewalk or property line but
+  # may be widened onsite", so the approach figure is a floor on nothing and a
+  # ceiling on the curb cut only.
+  driveway_approach_min_width_ft:
+    value: 10
+    cite: OCMC Table 16.12.035.D, minimum driveway approach width, triplexes/quadplexes/cottage clusters row
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/oregon-city/16.12.streets.txt#L1092-L1104"
+  driveway_approach_max_width_ft:
+    value: 36
+    cite: OCMC Table 16.12.035.D, maximum driveway approach width, triplexes/quadplexes/cottage clusters row
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/oregon-city/16.12.streets.txt#L1092-L1104"
+    variants:
+      - value: 24
+        when: [unit_lots]
+        cite: OCMC Table 16.12.035.D, maximum driveway approach width, Townhouses row
+        quote: "or/clackamas/oregon-city/16.12.streets.txt#L1092-L1104"
   # On one lot, OCMC 17.16.060.D, Triplex and quadplex development
   # requirements: "In residential zones, garages on the front facade and
   # off-street parking areas in the front yard, are permitted in compliance
@@ -203,23 +248,86 @@ defaults:
   # shall not exceed forty feet or fifty percent of the lot frontage,
   # whichever is less." Fifty percent of the frontage is Wilsonville's number
   # and Milwaukie's number; the forty-foot ceiling on top of it is Oregon
-  # City's own. 17.16.060.E puts parking behind the facade in mixed-use and
-  # commercial zones unless the site is on a local street, is not a corner
-  # lot, and has a topographic constraint -- three site facts, two of them
-  # registered and none of them measured. (or/clackamas/oregon-city/17.zoning.txt#L5417-L5432)
-  #
+  # City's own, and on a frontage wider than eighty feet it is the limb that
+  # binds. Both limbs are encoded, in the two fields that hold them, and the
+  # screen takes the lesser -- which is what "whichever is less" says.
+  parking_area_max_width_ft:
+    value: 40
+    cite: OCMC 17.16.060.D.1, outdoor on-site parking and maneuvering areas, width limb
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L5417-L5432"
+  parking_area_max_frontage_pct:
+    value: 50
+    cite: OCMC 17.16.060.D.1, outdoor on-site parking and maneuvering areas, share-of-frontage limb
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L5417-L5432"
+  # Exempt rather than true: 17.16.060.D opens "garages on the front facade
+  # and off-street parking areas in the front yard, are permitted in
+  # compliance with the following standards". Oregon City permits front-yard
+  # parking on a quadplex lot and caps it; it does not ban it. The ban is
+  # 17.16.040.B on the townhouse path, reached by a project that fails the
+  # four standards at 17.16.040.A.
+  parking_front_prohibited:
+    exempt: true
+    cite: OCMC 17.16.060.D, which permits front-facade garages and front-yard parking subject to two width standards
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L5417-L5432"
   # On four lots, OCMC 17.16.040, Townhouse driveway access and parking, and
-  # it is the state model code again: front-facade garages, front-yard
-  # parking and driveways in front of a townhouse are permitted only where
-  # outdoor on-site parking and maneuvering areas are no wider than twelve
-  # feet on any lot, the garage is no wider than twelve feet, every lot
-  # fronts a local street, and all driveways meet OCMC 16.12.035 -- a
-  # standard in Title 16, which is not this document. Twelve feet around a
-  # nine-foot stall is a driveway, not a court, the same finding as
-  # Wilsonville's twelve and Milwaukie's ten. Fail those and 17.16.040.B
-  # sends parking to the rear yard or the back facade, a corner-lot project
-  # to a single side-street driveway, and any other project to one
-  # consolidated driveway. (or/clackamas/oregon-city/17.zoning.txt#L5323-L5345)
+  # it is the state model code again: front-facade garages, front-yard parking
+  # and driveways in front of a townhouse are permitted only where outdoor
+  # on-site parking and maneuvering areas are no wider than twelve feet on any
+  # lot, the garage is no wider than twelve feet, every lot fronts a local
+  # street, and all driveways meet OCMC 16.12.035 -- which is now fetched and
+  # is the table above. Twelve feet around a nine-foot stall is a driveway,
+  # not a court, the same finding as Wilsonville's twelve and Milwaukie's ten.
+  # Fail those and 17.16.040.B sends parking to the rear yard or the back
+  # facade, a corner-lot project to a single side-street driveway, and any
+  # other project to one consolidated driveway.
+  #
+  # On one lot the cap is the pair of figures above, stated as a width and a
+  # share and not as a maneuvering-area width, so there is nothing here for
+  # this field to hold.
+  parking_maneuvering_max_width_ft:
+    exempt: true
+    cite: OCMC 17.16.060.D.1, which states the limit as a total width and a share of frontage rather than a maneuvering-area width
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L5417-L5432"
+    variants:
+      - value: 12
+        when: [unit_lots]
+        cite: OCMC 17.16.040.A, outdoor on-site parking and maneuvering areas on a townhouse lot
+        quote: "or/clackamas/oregon-city/17.zoning.txt#L5323-L5345"
+  #
+  # NOT ENCODED: 17.16.060.E, which puts parking behind the facade in
+  # mixed-use and commercial zones unless the site is on a local street, is
+  # not a corner lot, and has a topographic constraint -- three site facts,
+  # two of them registered and none of them measured. (or/clackamas/oregon-city/17.zoning.txt#L5417-L5432)
+  #
+  # NOT ENCODED: driveway spacing. Table 16.12.035.A asks 175 feet from a
+  # street corner and between driveways on an arterial, 100 on a collector and
+  # 25 on a local street "for all uses other than detached single-family
+  # dwellings, duplexes, triplexes, quadplexes and townhouses" -- so the table
+  # excludes this building, and 16.12.035.B puts it back under the
+  # corner-distance standard alone "except when the lot size is smaller than
+  # the minimum distance required". A distance from an intersection, on a
+  # street whose classification is unmeasured, with an escape keyed to lot
+  # size. 16.12.035.D allows one driveway per local-street frontage and never
+  # more than two; 16.12.035.E.1 allows a middle housing property with one
+  # building "one driveway for every two units", which is two for this pod and
+  # more than it draws. (or/clackamas/oregon-city/16.12.streets.txt#L978-L1091)
+  #
+  # NOT ENCODED: any private open space standard, and this is a positive
+  # finding rather than a gap. The notes at the head of this file record why
+  # the 75 percent that quadfit carried was dropped: it quoted a cottage
+  # cluster courtyard rule about IMPERVIOUS cover. Chapter 17.16's triplex and
+  # quadplex requirements state none, and neither does Table 17.08.040 or
+  # 17.10.040. An Oregon City site plan reserves no open space, which is why
+  # the field is absent here -- and it was the single largest thing Gresham's
+  # 15 percent was being applied to that Oregon City never asked for.
 
 zones:
   R-10:

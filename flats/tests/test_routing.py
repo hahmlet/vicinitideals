@@ -101,14 +101,23 @@ def rows() -> list[Routing]:
 #: A row that is not on this list is the thing to look at. It means a number
 #: in use sits beside a sentence handing its standard to a section nobody
 #: opened.
+#: The Fairview row arrived on 2026-08-27 with the driveway reading, and it is
+#: the ledger being literal rather than the ledger finding something. FMC
+#: 19.162.020 is a long section and this corpus now cites subsection L of it
+#: for the driveway approach; forty lines above, subsection K excepts block
+#: length "in the town center commercial district" to FMC 19.65.050, Block
+#: layout. A block-perimeter standard in a commercial district is not a
+#: standard for this building and never will be, but the pointer sits in a
+#: section a value cites and so it counts. Closing it would mean fetching a
+#: chapter to prove it is irrelevant.
 OPEN = {
-    "or/clackamas/_unincorporated 845.01 -> 845.02",
     "or/clackamas/milwaukie 19.607.1 -> 19.505.4",
     "or/clackamas/milwaukie 19.607.1 -> 19.505.5",
     "or/clackamas/lake-oswego 50.04.001.3 -> 50.04.003",
     "or/clackamas/west-linn 25.070 -> 25.020",
     "or/clackamas/wilsonville 4.001 -> 4.140",
     "or/multnomah/_unincorporated 39.4751 -> 39.4753",
+    "or/multnomah/fairview 19.162.020 -> 19.65.050",
     "or/multnomah/gresham 4.0120 -> 10.1700",
     "or/multnomah/gresham 4.0130 -> 10.1700",
     "or/multnomah/gresham 4.0420 -> 4.0330",
@@ -121,16 +130,20 @@ OPEN = {
 }
 
 #: The redirects the corpus can show somebody followed. Small, and worth
-#: reading as a list: six sentences in the whole store hand a standard to a
+#: reading as a list: seven sentences in the whole store hand a standard to a
 #: section this corpus then went and read.
 #:
-#: The Clackamas County row is the pair of the open one above. ZDO 315.04
-#: reads "The development of a triplex, quadplex, townhouse, or cottage
-#: cluster is subject to Section 845", and the layer's quadplex minimum lot
-#: size is cited to 845.01 -- so the pointer out of the district chapter was
-#: followed and the pointer inside 845 was not. Both rows arrived together
-#: when `_doc_ids` learned to read `zdo.845.txt`.
+#: The two Clackamas County rows were a pair, and on 2026-08-27 the second one
+#: closed. ZDO 315.04 reads "The development of a triplex, quadplex, townhouse,
+#: or cottage cluster is subject to Section 845", and the layer's quadplex
+#: minimum lot size was cited to 845.01 -- so the pointer out of the district
+#: chapter had been followed and the pointer 845.01 makes into 845.02 had not.
+#: Both rows arrived together when `_doc_ids` learned to read `zdo.845.txt`.
+#: 845.02 is where the driveway entries and the parking-placement standards
+#: are, and encoding them is what closed it: a redirect closes by a citation
+#: landing inside the target, which is the only answer this ledger takes.
 FOLLOWED = {
+    "or/clackamas/_unincorporated 845.01 -> 845.02",
     "or/clackamas/_unincorporated 315.04 -> 845",
     "or/multnomah/_unincorporated 39.4245 -> 39.3070",
     "or/multnomah/fairview 19.115.020 -> 19.30",

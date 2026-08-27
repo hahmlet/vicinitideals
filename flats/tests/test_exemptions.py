@@ -57,7 +57,22 @@ pytestmark = pytest.mark.unit
 #: units in town centers, regional centers, and the transit areas in LDC
 #: Section 16.43.030.B.12.a through b." A quadplex is none of those, so the
 #: empty cell is the rule and not a hole in the table.
-EXPECTED = {"stated": 168, "numeric": 25, "marker": 0, "dash": 2, "silent": 0}
+#: numeric 25 -> 37 on 2026-08-27, twelve of them, and eleven are one shape
+#: repeated. Six cities cap a townhouse's maneuvering area on unit lots and
+#: state no width at all for a quadplex on one lot; five state their
+#: front-parking rule as a CAP -- half the street frontage -- rather than as
+#: the ban Portland and Milwaukie write. Both fields therefore carry
+#: `exempt: true` on the one-lot branch, and the quote that proves the
+#: exemption is the sentence stating the cap, which is a number. The header
+#: came along with the cell, again: showing a reader what the city says
+#: INSTEAD is the whole job of the quote, and here what it says instead is 50
+#: percent. The twelfth is Portland CX, whose Table 130-2 row prints a figure
+#: for the zones around it.
+#:
+#: stated 168 -> 170 the same day, both Portland: 33.120.240.B ends by naming
+#: the RX and RMP zones as having no outdoor area requirement, which is an
+#: exemption written down rather than inferred from an empty cell.
+EXPECTED = {"stated": 170, "numeric": 37, "marker": 0, "dash": 2, "silent": 0}
 
 LAKE_OSWEGO = "or/clackamas/lake-oswego"
 

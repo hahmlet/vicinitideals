@@ -216,6 +216,13 @@ code:
 - id: 16.63.land-divisions
   url: https://ecode360.com/print/HA4934?guid=43529977
   title: HV LDC Chapter 16.63 - Land Divisions and Property Line Adjustments
+- id: 16.41.access
+  url: https://ecode360.com/print/HA4934?guid=43529957
+  title: HV LDC Chapter 16.41 - Access and Circulation
+  # Fetched 2026-08-27, ordered the day before by 16.43's own silence: every
+  # other city in this corpus keeps its driveway widths in the chapter of this
+  # name, and 16.43 states none. It holds a driveway minimum and no approach
+  # maximum, which is the reverse of every other layer here.
 - id: 16.43.parking
   url: https://ecode360.com/print/HA4934?guid=43529966
   title: HV LDC Chapter 16.43 - Parking and Loading
@@ -328,10 +335,82 @@ defaults:
   # construction. Encoding any of them would forgive a requirement that
   # really applies. (or/clackamas/happy-valley/16.43.parking.txt#L155-L181,L454-L459)
   #
-  # NOT FETCHED: Chapter 16.41, Access and Circulation (guid 43529957). Every
-  # other city in this corpus keeps its driveway approach widths and access
-  # spacing in the chapter of that name, and 16.43 states none, so the
-  # driveway half of this question is still open here.
+  # DRIVEWAY, read 2026-08-27 out of Chapter 16.41 once it was fetched.
+  # 16.41.030.B.1: "A driveway to an off-street parking area shall be improved
+  # from the public roadway to the parking area a minimum width of 20 feet for
+  # a two-way drive or 12 feet for a one-way drive but in either case not less
+  # than the full width of the standard approach for the first 20 feet of the
+  # driveway."
+  #
+  # Twenty feet is the hardest number this family has found. Every other city
+  # here either states nine feet (Portland) or states nothing, and Happy
+  # Valley asks a rear court reached by a single drive to give up twenty feet
+  # of side yard for the length of the building -- which on a lot narrow
+  # enough is the whole difference between a site plan and none. It is a
+  # MINIMUM, so it cannot be traded down the way a maximum can be traded up.
+  #
+  # The one-way figure is real and is not this design's: a one-way drive means
+  # a loop, which means two curb cuts, and 16.41.030.A.3 allows a site abutting
+  # an arterial or collector only one access point. Both figures are encoded
+  # because the layout is a design choice and the screen should hold the right
+  # number when it changes.
+  driveway_min_width_two_way_ft:
+    value: 20
+    cite: HV LDC 16.41.030.B.1, minimum improved driveway width, two-way drive
+    url: https://ecode360.com/print/HA4934?guid=43529957
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/happy-valley/16.41.access.txt#L27,L53-L59"
+  driveway_min_width_one_way_ft:
+    value: 12
+    cite: HV LDC 16.41.030.B.1, minimum improved driveway width, one-way drive
+    url: https://ecode360.com/print/HA4934?guid=43529957
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/happy-valley/16.41.access.txt#L27,L53-L59"
+  #
+  # NOT ENCODED: a driveway approach width, because Happy Valley states none.
+  # The sentence above ends "not less than the full width of the standard
+  # approach for the first 20 feet of the driveway", and the standard approach
+  # is a public works drawing, not a code dimension -- 16.41.030.B.3 says the
+  # same of the residential cases it does dimension ("Driveway approaches and
+  # vehicular maneuvering areas must be constructed in accordance with
+  # applicable City standards"). So this is a document read and a rule the
+  # city keeps elsewhere, not a gap in the reading. The rest of 16.41.030.B is
+  # site facts nothing measures: 12 feet of vertical clearance, a 12 percent
+  # slope ceiling for a driveway (15 with a design exception), vision
+  # clearance, and shared driveways where the City Engineer requires them.
+  # (or/clackamas/happy-valley/16.41.access.txt#L60-L105)
+  #
+  # NOT ENCODED: LDC 16.43.030.E.4, Parking Location, and it is the one that
+  # would change a site plan. "Parking areas shall be set back from a lot line
+  # adjoining a street the same distance as the required building setbacks.
+  # Regardless of other provisions, a minimum setback of ten feet shall be
+  # provided along the property fronting on a public street." The rule states
+  # no number of its own -- it borrows the zone's building setback, which in
+  # Happy Valley's residential zones is twenty feet, so the effect is that no
+  # stall may sit in the front yard at all, banned rather than capped the way
+  # Milwaukie and Wilsonville cap it. Ten feet is the only figure printed and
+  # it is the LOOSE limb; encoding it would put a number in this file that is
+  # half the real standard and wrong in the permissive direction, which is the
+  # one direction this corpus does not go. A field that carried "the same as
+  # another field" would hold it and none does. E.1 adds "No off-street
+  # parking shall be allowed in the landscaped yard areas of any lot", and E.3
+  # sends a parking area abutting a residential district to that district's
+  # setback, which is a neighbour's standard applying to our lot.
+  # (or/clackamas/happy-valley/16.43.parking.txt#L515,L523,L527)
+  #
+  # NOT ENCODED: any private open space standard, and the trail runs cold in a
+  # way worth writing down. Two of the zone tables in Chapter 16.22 carry a
+  # footnote reading "Pursuant to Section 16.42.030, 20% of the net developable
+  # area must be usable open space" -- but it hangs on the building-height row
+  # of the higher-density tables, the phrase "usable open space" appears
+  # nowhere in Chapter 16.42 as fetched, and 16.42.010 excepts "single-family
+  # detached, single-family attached dwellings, duplexes, triplexes,
+  # quadplexes, or cottage clusters" from Section 16.42.030(D), (F), (G), (H),
+  # (J) and (K) by name. A footnote pointing at a section that does not
+  # contain it, in a table this building is not on, under a chapter that
+  # excludes this building from most of the section: three reasons not to
+  # encode twenty percent, and no reason to. (or/clackamas/happy-valley/16.22.residential.txt#L679,L1320 and
+  # or/clackamas/happy-valley/16.42.landscaping.txt#L25)
 
 zones:
   R40:

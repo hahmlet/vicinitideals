@@ -202,21 +202,9 @@ defaults:
   # bites corner lots only and it takes buildable area this screen counts in
   # full, so it is a known under-count, deliberately taken.
   #
-  # 19.162.020(L), Driveway Openings, is NOT ENCODED because no field in the
-  # registry can hold it. L.1 gives "single-unit dwelling, duplex, triplex,
-  # quadplex, and townhouse uses" a minimum driveway width of 10 feet and a
-  # maximum of 24; L.2 gives "multiple-unit uses and cottage clusters with
-  # between four and seven dwelling units" a minimum of 20 and a maximum of 24.
-  # Both rows reach this building on their face, and this layer has already
-  # established that Fairview's "multi-unit dwelling" means five or more, which
-  # argues L.1 -- but a 10-foot drive and a 20-foot drive are ten feet of lot
-  # apart and the screen has nowhere to put either. It is the third jurisdiction
-  # where vehicle-access geometry has no home: Clackamas ZDO 845.02 bars parking
-  # between a building and the street, Gresham's rear-court typology is
-  # hard-coded in the site-plan generator, and now a driveway width that varies
-  # by ten feet depending on which row of a list a quadplex lands on, and a
-  # fourth piece below out of the landscaping chapter. One modelling gap,
-  # recorded rather than fixed.
+  # 19.162.020(L), Driveway Openings, was transcribed here as an unencodable
+  # rule until 2026-08-27 and is now in `defaults` below. The reading that
+  # took the ten-foot doubt out of it is written up there rather than here.
   #
   # Chapter 19.163, Landscaping, read the same day and mostly encoded.
   # 19.163.030(C) states a landscape minimum for six named district types and
@@ -230,68 +218,151 @@ defaults:
   # true. The village zones take their percentages from their own article
   # instead; see the comments on VSF and VMU for the two that take none.
   #
-  # NOT ENCODED from the same chapter: 19.163.030(E)(3)(b), which is a fourth
-  # piece of access geometry with nowhere to live. "Where a parking or
-  # maneuvering area, or driveway, is adjacent to a building, the area shall be
-  # separated from the building by a raised pathway, plaza, or landscaped
-  # buffer no less than four feet in width", and the sentence after it closes
-  # the cheap option for this product: "When parking areas are located adjacent
-  # to residential ground-floor living space, a landscape buffer is required to
-  # fulfill this requirement." A rear court here is four feet deeper than its
-  # stalls and aisle, on top of an aisle already the widest in the corpus.
-  # min_building_separation_ft is building-to-building and cannot hold it.
+  # 19.163.030(E)(3)(b), the four-foot separation between a parking or
+  # maneuvering area and the building it serves, was transcribed here as
+  # unencodable and is now `parking_building_buffer_ft` in `defaults` below.
   #
   # ------------------------------------------------------------------------
-  # NOT ENCODED, and the largest single hole this city has: the standards that
-  # govern the parking itself. This screen's product will be built with
+  # DRIVEWAY, APPROACH AND PARKING PLACEMENT, transcribed 2026-08-26 as the
+  # largest single hole this city had, encoded 2026-08-27 once the registry
+  # grew a field family for it. This screen's product will be built with
   # parking whether or not the code asks for it, and Fairview regulates
-  # parking fully while requiring none of it. The rules below sit in 19.30, a
-  # chapter this file already reads four values out of, and were never written
-  # down because no field could hold them. Transcribed here so that whoever
-  # adds the field family is copying rather than re-reading.
+  # parking fully while requiring none of it -- the pairing that made this
+  # gap invisible to every ledger that counts fields.
   #
   # The pod takes one of two branches, the same split this layer already
   # records for the use question: on one lot it is a quadplex and reaches
   # 19.30.040; on four it is townhouses and reaches 19.30.050.
   #
-  # Quadplex branch, 19.30.040:
-  #   (E) Garages and off-street parking areas shall not be located between a
-  #       building and a public street other than an alley, unless (1) they are
-  #       separated from the street property line by a dwelling, or (2) garages
-  #       are no more than 50 percent of the front facade AND garages plus all
-  #       outdoor parking and maneuvering are no more than 50 percent of the
-  #       property street frontage.
-  #   (F)(1) Total width of all driveway approaches: 32 ft per frontage,
-  #       measured at the property line. Same figure as Clackamas ZDO 845.02 --
-  #       both are the state middle-housing model code.
-  #   (F)(3)(c) A quadplex fronting only local streets may instead take two
-  #       approaches totalling 32 ft on one frontage, or one 16 ft approach per
-  #       frontage.
-  #   (F)(3)(a) Where a lot abuts an improved alley, access must be from the
-  #       alley; otherwise from the street with the lowest classification.
+  # WHICH ROW OF 19.162.020(L) THIS BUILDING IS ON, settled. L.1 gives
+  # "single-unit dwelling, duplex, triplex, quadplex, and townhouse uses" a
+  # minimum driveway width of 10 feet and a maximum of 24. L.2 gives
+  # "multiple-unit uses and cottage clusters with between four and seven
+  # dwelling units" a minimum of 20 and a maximum of 24. Both reach a
+  # four-unit building on their face and they are ten feet apart at the
+  # minimum. L.1 is the one encoded, because it names the quadplex and because
+  # this layer has already established, for the use question, that Fairview's
+  # "multi-unit dwelling" means five dwellings or more -- which puts the
+  # four-to-seven row of L.2 at odds with the definition and L.1 squarely on
+  # this building. The maximum is 24 either way, so only the floor is at
+  # stake, and the floor is not what a site plan is screened against.
+  driveway_approach_min_width_ft:
+    value: 10
+    cite: FMC 19.162.020(L)(1), driveway openings, single-unit/duplex/triplex/quadplex/townhouse uses
+    url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19162.html
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/fairview/19.162.txt#L103-L107"
+  # The 24-foot ceiling of the same row. Fairview states a second approach
+  # figure in a different chapter -- 19.30.040(F)(1), "The total width of all
+  # driveway approaches must not exceed 32 feet per frontage, as measured at
+  # the property line", the state model code's number and the same one
+  # Wilsonville and unincorporated Clackamas print -- and the two do not
+  # conflict: 32 feet is the budget for every approach on a frontage together,
+  # 24 is the ceiling on any single opening. This design draws one approach,
+  # so 24 is the figure that binds it and 32 is slack it cannot use.
   #
-  # Townhouse branch, 19.30.050(D):
-  #   (D)(1) Front-yard parking, front-facade garages and driveways in front
-  #       are allowed only if every lot has at least 15 ft of local-street
-  #       frontage, there is at most one approach per townhouse, outdoor
-  #       on-site parking and maneuvering is at most 12 ft wide on any lot, and
-  #       no garage is wider than 12 ft.
-  #   (D)(2) Otherwise parking must be reached from the back facade or sit in
-  #       the rear yard -- none in a front or side yard -- and a project that
-  #       includes a corner lot takes a single approach on the side of it.
+  # NOT ENCODED, from the rest of (F): (F)(3)(c) allows a quadplex fronting
+  # only local streets to take two approaches totalling 32 feet on one
+  # frontage, or one 16-foot approach per frontage -- a second-frontage
+  # allowance no lot record here can be tested against; and (F)(3)(a) requires
+  # access from an improved alley where one abuts, otherwise from the street
+  # of lowest classification, which is street class and alley presence, two
+  # site facts nothing measures.
+  driveway_approach_max_width_ft:
+    value: 24
+    cite: FMC 19.162.020(L)(1), maximum driveway width; FMC 19.30.040(F)(1) caps all approaches on a frontage at 32 ft
+    url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19162.html
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/fairview/19.162.txt#L103-L107"
+  # 19.30.040(E)(2). Garages and off-street parking areas may not sit between
+  # a building and a public street other than an alley, "except in compliance
+  # with" three subsections, of which (2) is the one a pod with no garage can
+  # reach: "Garages do not exceed a total of 50 percent of the front facade of
+  # the building and the total garage and outdoor on-site parking and
+  # maneuvering areas do not exceed 50 percent of the property street
+  # frontage." Fifty percent of the frontage, counting the drive and the
+  # manoeuvring with the stalls -- the model-code figure, and the same
+  # sentence Wilsonville, Milwaukie and Oregon City print.
+  parking_area_max_frontage_pct:
+    value: 50
+    cite: FMC 19.30.040(E)(2), total garage and outdoor on-site parking and maneuvering areas as a share of property street frontage
+    url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/fairview/19.30.txt#L567-L571"
+  # The other limb of the same sentence, (E)(1), is why this is exempt rather
+  # than true: a garage or parking area IS allowed between the building and
+  # the street where it "is separated from the street property line by a
+  # dwelling". Fairview caps front-yard parking; it does not ban it. The ban
+  # exists only on the townhouse fallback path at 19.30.050(D)(2)(a) -- "No
+  # off-street parking shall be allowed in the front yard or side yard of a
+  # townhouse" -- reached only by a project that fails all four standards at
+  # (D)(1), which is a condition about a project rather than a lot.
+  parking_front_prohibited:
+    exempt: true
+    cite: FMC 19.30.040(E)(1) and (E)(2), which permit parking between a building and the street subject to two conditions
+    url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/fairview/19.30.txt#L567-L571"
+  # 19.30.050(D)(1)(c), on unit lots only: front-facade garages, front-yard
+  # parking and front driveways are allowed for townhouses only where every
+  # lot has 15 feet of local-street frontage, there is at most one approach
+  # per townhouse, "outdoor on-site parking and maneuvering areas do not
+  # exceed 12 feet wide on any lot", and no garage is wider than 12 feet.
+  # Twelve feet is a driveway and not a court, which is the same finding as
+  # Gresham's twelve, Wilsonville's twelve, Oregon City's twelve and
+  # Milwaukie's ten. On one lot 19.30.040 caps the share of the frontage and
+  # not the width, so there is nothing here to hold.
+  parking_maneuvering_max_width_ft:
+    exempt: true
+    cite: FMC 19.30.040(E), which caps outdoor parking and maneuvering as a share of street frontage and states no width
+    url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/fairview/19.30.txt#L567-L571"
+    variants:
+      - value: 12
+        when: [unit_lots]
+        cite: FMC 19.30.050(D)(1)(c), outdoor on-site parking and maneuvering areas on a townhouse lot
+        quote: "or/multnomah/fairview/19.30.txt#L655-L665"
+  # 19.163.030(E)(3)(b): "Where a parking or maneuvering area, or driveway, is
+  # adjacent to a building, the area shall be separated from the building by a
+  # raised pathway, plaza, or landscaped buffer no less than four feet in
+  # width." The sentence after it closes the cheap option for this product --
+  # "When parking areas are located adjacent to residential ground-floor
+  # living space, a landscape buffer is required to fulfill this requirement"
+  # -- so the four feet cannot be paved and counted with the court. A rear
+  # court here is four feet deeper than its stalls and aisle, on top of an
+  # aisle already the widest in the corpus.
+  parking_building_buffer_ft:
+    value: 4
+    cite: FMC 19.163.030(E)(3)(b), separation between a parking or maneuvering area and an adjacent building
+    url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19163.html
+    retrieved: '2026-08-27'
+    quote: "or/multnomah/fairview/19.163.txt#L175"
   #
-  # And from the two chapters fetched today, the rest of what applies once a
-  # stall exists: 5 percent of the combined parking area landscaped with at
-  # least one tree per five spaces (19.163.030(E)(2)(a)); a wall, arcade,
-  # trellis or evergreen hedge where a parking or maneuvering area runs
-  # adjacent and parallel to a street or driveway (19.163.030(E)(3)(a)); 13 ft
-  # 6 in of vertical clearance over every drive, aisle and turnaround
-  # (19.162.020(N)); 50 ft of separation between a driveway and the next
-  # driveway or intersection on a local street (19.162.020(G)(1)); and compact
-  # stalls capped at 40 percent of the spaces provided (19.164.030(D)).
-  # Nothing here needs an EV conduit or a bicycle space -- both thresholds
-  # start at five units and this building has four (19.164.030(H),
-  # 19.164.040(B)).
+  # NOT ENCODED: any private open space standard. Fairview states one --
+  # 19.30.090(B)(2), ground-floor units get patios or decks of at least 48
+  # square feet -- and it is inside 19.30.090, "Residential medium density (RM)
+  # district", under the heading "Multi-Unit Housing Development Standards",
+  # opening "New multi-unit developments shall comply with all of the
+  # following standards". Two things put this building outside it: the
+  # standard is a district standard for RM and not a citywide one, and this
+  # layer has already settled that a Fairview multi-unit dwelling is five
+  # dwellings or more. Neither the 10 percent common open space of
+  # 19.30.090(B)(1) nor the 48 square feet of (B)(2) is encoded, which means
+  # a Fairview site plan reserves no open space at all -- and that is the code
+  # as read, not an omission. (or/multnomah/fairview/19.30.txt#L923-L933)
+  #
+  # NOT ENCODED, the rest of what applies once a stall exists: 5 percent of
+  # the combined parking area landscaped with at least one tree per five
+  # spaces (19.163.030(E)(2)(a)); a wall, arcade, trellis or evergreen hedge
+  # where a parking or maneuvering area runs adjacent and parallel to a street
+  # or driveway (19.163.030(E)(3)(a)); 13 ft 6 in of vertical clearance over
+  # every drive, aisle and turnaround (19.162.020(N)); 50 ft of separation
+  # between a driveway and the next driveway or intersection on a local street
+  # (19.162.020(G)(1)); and compact stalls capped at 40 percent of the spaces
+  # provided (19.164.030(D)). Nothing here needs an EV conduit or a bicycle
+  # space -- both thresholds start at five units and this building has four
+  # (19.164.030(H), 19.164.040(B)).
 
 zones:
   LI:

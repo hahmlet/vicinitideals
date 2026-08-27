@@ -234,28 +234,51 @@ defaults:
   # the Gresham 9.0200 shape -- a dimension in an engineering manual no
   # jurisdiction file in this corpus declares.
   #
-  # NOT ENCODED, and the reason the chapter was opened at all: Section
-  # 4.113(.14) is where Wilsonville says what a quadplex's parking may look
-  # like, and subsection D is titled "Standards applicable to Triplexes and
-  # Quadplexes" -- this building, named. None of it fits a field.
+  # DRIVEWAY, APPROACH AND PARKING PLACEMENT. Section 4.113(.14) is where
+  # Wilsonville says what a quadplex's parking may look like, and subsection D
+  # is titled "Standards applicable to Triplexes and Quadplexes" -- this
+  # building, named. Transcribed here on 2026-08-26 as the fifth jurisdiction
+  # with nowhere to put it; encoded 2026-08-27.
   #
+  # D.4, Driveway Approach: "The total width of all driveway approaches must
+  # not exceed 32 feet per frontage, as measured at the property line" -- the
+  # same 32 feet as Fairview FMC 19.30.040(F)(1) and Clackamas ZDO 845.02,
+  # because all three are the state middle-housing model code. Wilsonville
+  # states no ceiling on a single opening the way Fairview does, so the
+  # frontage total is the only limit and it is the one encoded.
+  #
+  # NOT ENCODED from the rest of D.4: on a lot with more than one frontage
+  # access must be taken from the street with the lowest transportation
+  # classification, and from the alley instead if a paved alley abuts; a lot
+  # fronting only local streets may have either two approaches totalling 32
+  # feet on one frontage or one 16-foot approach per frontage. Street class,
+  # alley presence and frontage count are three site facts nothing measures.
+  driveway_approach_max_width_ft:
+    value: 32
+    cite: Wilsonville Development Code 4.113(.14)D.4, total width of all driveway approaches per frontage
+    url: https://api.municode.com/PublicationPdfDownload/1951
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/wilsonville/4.planning.txt#L3545-L3567"
   # D.3, Garages and Off-Street Parking Areas: "The combined width of all
   # garages (measured from the interior of the garage door frame) and outdoor
   # on-site parking and maneuvering areas shall not exceed a total of 50
-  # percent of any street frontage (other than an alley)."
-  # (4.planning.txt#L3538-L3541)
-  #
-  # D.4, Driveway Approach: "The total width of all driveway approaches must
-  # not exceed 32 feet per frontage, as measured at the property line" --
-  # the same 32 feet as Fairview FMC 19.30.040(F)(1) and Clackamas ZDO
-  # 845.02, because all three are the state middle-housing model code. On a
-  # lot with more than one frontage, access must be taken from the street
-  # with the lowest transportation classification, and from the alley instead
-  # if a paved alley abuts; a lot fronting only local streets may have either
-  # two approaches totalling 32 feet on one frontage or one 16-foot approach
-  # per frontage. (4.planning.txt#L3545-L3567)
-  #
-  # E.5 is the split-plat half of the same question and it is much tighter.
+  # percent of any street frontage (other than an alley)." The model-code
+  # figure, and note "any street frontage" -- on a corner lot it binds twice.
+  parking_area_max_frontage_pct:
+    value: 50
+    cite: Wilsonville Development Code 4.113(.14)D.3, combined width of garages and outdoor parking and maneuvering areas as a share of any street frontage
+    url: https://api.municode.com/PublicationPdfDownload/1951
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/wilsonville/4.planning.txt#L3538-L3541"
+  # Exempt rather than true: D.3 caps front-yard parking at half the frontage
+  # and does not ban it. The ban is E.5.c, on the townhouse path, and reached
+  # only by a project that fails the four standards at E.5.b.
+  parking_front_prohibited:
+    exempt: true
+    cite: Wilsonville Development Code 4.113(.14)D.3, which caps outdoor parking and maneuvering at half of any street frontage rather than prohibiting it
+    url: https://api.municode.com/PublicationPdfDownload/1951
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/wilsonville/4.planning.txt#L3538-L3541"
   # Subsection E is "Standards applicable to Townhouses", which under state
   # law is this building on four unit lots rather than one -- the `unit_lots`
   # lever, said in Wilsonville's words. E.5.a requires access from a paved
@@ -267,23 +290,35 @@ defaults:
   # or in the rear yard, none in the front or side yard, a corner-lot project
   # taking a single approach on the side street, and a non-corner project
   # consolidating access into one driveway that may not run between any
-  # townhouse's front facade and its front lot line. (4.planning.txt#L3622-L3658)
+  # townhouse's front facade and its front lot line.
   #
   # Twelve feet is the number that decides this. A 9-foot stall inside a
   # 12-foot cap leaves three feet of manoeuvring, which is a single-file
   # driveway and not a court -- so on the split plat Wilsonville does not
-  # permit the parking arrangement the site-plan generator draws, and on the
-  # whole-lot plat D.3's 50-percent frontage cap and D.4's 32-foot approach
-  # are what it has to be drawn against instead. The generator currently
-  # applies Gresham's constants to every city.
+  # permit the parking arrangement the site-plan generator draws. On the whole
+  # lot D.3 caps a share of the frontage and states no width, so there is
+  # nothing for this field to hold there.
+  parking_maneuvering_max_width_ft:
+    exempt: true
+    cite: Wilsonville Development Code 4.113(.14)D.3, which caps a share of the frontage and states no maneuvering-area width
+    url: https://api.municode.com/PublicationPdfDownload/1951
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/wilsonville/4.planning.txt#L3538-L3541"
+    variants:
+      - value: 12
+        when: [unit_lots]
+        cite: Wilsonville Development Code 4.113(.14)E.5.b, outdoor on-site parking and maneuvering areas on a townhouse lot
+        quote: "or/clackamas/wilsonville/4.planning.txt#L3622-L3658"
   #
-  # Not encoded because the registry has no field for any of it: no driveway
-  # approach width, no share-of-frontage, no parking placement relative to
-  # street or facade, no maneuvering-area width. This is the fifth
-  # jurisdiction to hit the same wall -- Clackamas ZDO 845.02, Gresham's
-  # hard-coded rear court, Fairview 19.162.020(L) and 19.30, now Wilsonville
-  # -- and it is transcribed rather than summarised so that the field family,
-  # when it is built, is a copy job and not a re-read.
+  # NOT ENCODED: any private open space standard. Wilsonville states one and
+  # it is not this building's. Section 4.125(.08), Open Space, sits inside
+  # Section 4.125, "V -- Village Zone", and the Village is Villebois; the
+  # definitions chapter routes the term there and only there ("Open Space
+  # Area: A specific measurement. See Section 4.125(.08), Open Space").
+  # Nothing in 4.113 or in the R, RA-H or PDR zones states a private open
+  # space minimum, so a Wilsonville site plan outside the Village reserves
+  # none -- the code as read, not an omission. (or/clackamas/wilsonville/4.planning.txt#L997-L1002)
+
 zones:
   R:
     section: ["4.122", "4.113", "4.001"]

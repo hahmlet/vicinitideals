@@ -371,6 +371,99 @@ _GRESHAM_GEOMETRY = {
 }
 
 
+class DrivewayRules(BaseModel):
+    """One jurisdiction's driveway, parking-placement and open-space rules.
+
+    The sibling of StallGeometry, and it exists for the same reason. Until this
+    block landed, s6s drew every city's driveway to five numbers lifted from
+    Gresham GDC 7.0431 and applied nationwide -- an 18 ft approach, a 12 ft
+    side lane, a 5 ft gap, and a 15 percent open-space reserve taken off every
+    lot in every city. Two of those were wrong even in Gresham (7.0431 is the
+    TOWNHOUSE chapter; on the one-lot plat this stage actually draws, 7.0420
+    caps the approach at TEN feet) and the other three were nobody's law
+    outside it.
+
+    Every value here mirrors a FLATS corpus field, which is where it carries a
+    citation. `None` is a fact, not a blank: the drift test reads an omitted
+    field as "this city was read and its code states no such rule" and a city
+    missing from the map entirely as "nobody has read this city". Where the
+    corpus holds `exempt: true` -- read, and no such standard -- the mirror
+    holds None, because for a rule about where pavement may sit an exemption
+    and a silence constrain the drawing identically.
+
+    THESE ARE THE ONE-LOT VALUES. Four units on one lot is a quadplex and four
+    units on four lots is townhouses, and every city in this corpus states a
+    different approach width, a different maneuvering cap and sometimes a
+    different open-space rule for the two. SiteplanSpec refuses to load the
+    unit-lot plat while this map is populated, rather than draw a townhouse to
+    a quadplex's numbers.
+    """
+
+    #: `driveway_approach_min_width_ft` -- the narrowest curb cut the city will
+    #: accept. Oregon City and Fairview both say ten feet; most say nothing.
+    approach_min_ft: float | None = None
+    #: `driveway_approach_max_width_ft` -- the widest curb cut, measured at the
+    #: property line. This is the number the old global had backwards: it is a
+    #: CEILING, and Gresham's is 10 ft on this plat, not the 18 that was
+    #: shipped. A lane wider than the cut is legal (the drive may widen behind
+    #: the property line) so this narrows the opening, it does not fail a lot.
+    approach_max_ft: float | None = None
+    #: `driveway_min_width_one_way_ft` / `driveway_min_width_two_way_ft`. The
+    #: side lane carries cars in and out, so the two-way figure is the one that
+    #: binds. Happy Valley's 20 ft is the hardest number in this family and the
+    #: only one that takes lots away: a minimum cannot be traded down.
+    drive_min_one_way_ft: float | None = None
+    drive_min_two_way_ft: float | None = None
+    #: `parking_maneuvering_max_width_ft` -- a CEILING on the same lane. It is
+    #: None on every one-lot row here because the model code states it of
+    #: townhouse lots only; it is carried so the unit-lot branch has somewhere
+    #: to land, and because a 10 ft cap under a 12 ft lane is a city that
+    #: cannot be drawn rather than a city drawn narrow.
+    maneuvering_max_ft: float | None = None
+    #: `parking_area_max_frontage_pct` / `parking_area_max_width_ft` -- how much
+    #: of the street frontage garages and parking may occupy. Satisfied by
+    #: construction in this typology (every stall is behind the building) and
+    #: mirrored so the day a front-court typology is added it is already here.
+    parking_max_frontage_pct: float | None = None
+    parking_max_width_ft: float | None = None
+    #: `parking_front_yard_max_pct` -- Portland's and Milwaukie's shape, a share
+    #: of the front yard AREA rather than of the frontage. The side lane
+    #: crossing the front setback is the only pavement this typology puts
+    #: there.
+    parking_front_yard_max_pct: float | None = None
+    #: `parking_front_prohibited` -- True where the city bans parking between
+    #: the building and the street outright. It is the reason the rear court is
+    #: the only typology in this stage, and every city that states it is
+    #: satisfied by that arrangement. Both Portland and Milwaukie carve the
+    #: driveway out of the ban in the same sentence.
+    parking_front_prohibited: bool | None = None
+    #: `parking_street_setback_ft` -- how far a stall must stand off a street
+    #: lot line. A rear court clears it everywhere it is stated.
+    parking_street_setback_ft: float | None = None
+    #: `parking_building_buffer_ft` -- the city's own minimum between the
+    #: building and the parking area. Raises the design gap where it exceeds
+    #: it; Fairview's 4 ft does not.
+    building_buffer_ft: float | None = None
+
+    #: `open_space_min_pct` -- private open space as a share of the gross lot.
+    #: Gresham states 15 percent and is now the only city that gets it, where
+    #: it used to be charged to all seven.
+    open_space_pct: float | None = None
+    #: `open_space_min_sqft` -- the same claim as a flat area for the whole pod.
+    #: Milwaukie's 384 is four ground-floor units at 96 sq ft each; the corpus
+    #: resolves the per-dwelling carrier against the four-unit design, so this
+    #: mirror holds the POD total and not the per-unit figure.
+    open_space_sqft: float | None = None
+    #: Per-zone override of `open_space_sqft`, for the one city that states it
+    #: by zone rather than citywide: Portland's Table 110-4 asks 250 sq ft of
+    #: outdoor area in most residential zones and 200 in R2.5. A zone present
+    #: with a null reserves nothing (the corpus says exempt); a zone absent
+    #: falls through to the citywide figures above.
+    open_space_sqft_by_zone: dict[str, float | None] = Field(default_factory=dict)
+
+    cite: str = ""
+
+
 class SiteplanSpec(BaseModel):
     """Procedural site-plan generator knobs (s6s stage).
 
@@ -388,18 +481,19 @@ class SiteplanSpec(BaseModel):
     ceiling lives on StallGeometry beside the stall it belongs to, because it
     is the same reading of the same table.
 
-    The layout itself follows the townhouse standard rather than the quadplex
-    one, because the product is attached townhomes: off-street parking in the
-    REAR yard, reached by a single consolidated driveway down one SIDE (never
-    across the front — Gresham §7.0431(B)(3)(b)(iii)); the combined curb cut
-    capped at 18 ft or 34% of frontage, whichever is greater (§7.0431(B)(2)(b));
-    cars entering and leaving forward, so nothing backs onto the street, which
-    the code only prohibits for arterials anyway (Appendix A5.404). Those are
-    Gresham's words for an arrangement every city in this corpus asks for in
-    its own — Milwaukie 19.607.1.E.2, Happy Valley 16.43.030.F.5 — which is why
-    one typology travels: `townhome_rear_court`.
+    The ARRANGEMENT travels: off-street parking in the REAR yard, reached by a
+    single consolidated driveway down one SIDE, cars entering and leaving
+    forward so nothing backs onto the street. Every city in this corpus asks
+    for it in its own words — Gresham §7.0431(B)(3)(b)(iii), Milwaukie
+    19.607.1.E.2, Happy Valley 16.43.030.F.5 — which is why there is one
+    typology: `townhome_rear_court`.
 
-    What does NOT travel is the stall: see StallGeometry.
+    What does NOT travel is any DIMENSION. The stall is StallGeometry; the
+    driveway, the curb cut, the building-to-parking gap and the open-space
+    reserve are DrivewayRules. Both are per-city and neither has a default,
+    because the alternative is what this stage used to do: draw Gresham's
+    townhouse chapter in seven cities, including the two figures that were not
+    even Gresham's on the plat being drawn.
     """
 
     enabled: bool = True
@@ -454,17 +548,118 @@ class SiteplanSpec(BaseModel):
         default_factory=lambda: {"gresham": StallGeometry(**_GRESHAM_GEOMETRY)}
     )
 
-    # Townhouse combined driveway approach (curb cut): max(18 ft, 34% frontage)
-    # per §7.0431(B)(2)(b). A single side lane is well under this, so it does not
-    # bind — retained for the report + future multi-cut layouts.
-    driveway_approach_min_ft: float = 18.0
-    driveway_approach_frontage_pct: float = 34.0
-    driveway_min_travel_ft: float = 12.0     # single side travel lane to the rear
+    # Driveway, parking placement and open space, per jurisdiction — never one
+    # global number. See DrivewayRules. A city with no entry here is a city
+    # whose access chapter nobody has read; it is laid out to the design
+    # constants below and constrained by nothing, which the report says out
+    # loud rather than passing off as compliance.
+    driveway: dict[str, DrivewayRules] = Field(default_factory=dict)
+
+    # THE THREE ENGINEERING CONSTANTS. What is left after the law was taken
+    # out of this block: not one of them is a citation, and none may grow one.
+    #
+    # A car needs about twelve feet of lane and a wall needs about five feet of
+    # standoff whatever the code says, so these are the floor the drawing works
+    # to when a city asks for less or asks for nothing. Where a city asks for
+    # MORE — Happy Valley's twenty-foot two-way drive — the city's number wins,
+    # because a minimum is not a preference. The old 12 and 5 sat here wearing
+    # Gresham's section numbers; they are the same figures, saying what they
+    # actually are.
+    driveway_lane_design_ft: float = 12.0
+    driveway_cut_min_design_ft: float = 9.0   # one car through the curb cut
     building_parking_gap_ft: float = 5.0
 
-    # §7.0431(D)(1): private open space, share of gross parent lot (a fourth
-    # claimant on the lot alongside building + parking + driveway).
-    private_open_space_pct: float = 15.0
+    @model_validator(mode="after")
+    def _the_mirror_is_the_one_lot_branch(self) -> SiteplanSpec:
+        if self.plat != "one_lot" and self.driveway:
+            raise ValueError(
+                "siteplan.driveway mirrors the ONE-LOT branch of each city's "
+                "code; every city here states a different approach width and "
+                "maneuvering cap for townhouses on their own lots. Mirror the "
+                "unit-lot branch before flipping `plat`, rather than drawing "
+                "a townhouse to a quadplex's numbers."
+            )
+        return self
+
+    def driveway_for(self, jurisdiction: str) -> DrivewayRules | None:
+        """The driveway rules a jurisdiction publishes, or None if unread."""
+        return self.driveway.get(jurisdiction)
+
+    def lane_ft_for(self, jurisdiction: str) -> float | None:
+        """Width of the side lane in this city, or None if it cannot be drawn.
+
+        The design lane, widened to any minimum the city states. None where the
+        city caps a maneuvering area BELOW what a car needs — Milwaukie's ten
+        feet on the townhouse path is the live case — because a lane drawn
+        narrower than a car is a site plan nobody can build, and a lane drawn
+        wider than the cap is one nobody can permit.
+        """
+        lane = self.driveway_lane_design_ft
+        dw = self.driveway_for(jurisdiction)
+        if dw is None:
+            return lane
+        if dw.drive_min_two_way_ft is not None:
+            lane = max(lane, dw.drive_min_two_way_ft)
+        if dw.maneuvering_max_ft is not None and dw.maneuvering_max_ft < lane:
+            return None
+        return lane
+
+    def curb_cut_ft_for(self, jurisdiction: str) -> float | None:
+        """Width of the opening at the property line, or None if it cannot be.
+
+        The lane, narrowed to the city's approach ceiling. Gresham is the case
+        the old constants got backwards: a 12 ft lane meets the street through
+        a 10 ft cut and widens behind the property line, which GDC 7.0420
+        permits and 7.0431's 18 ft never described. None where the ceiling
+        falls below the city's own floor or below one car's width.
+        """
+        lane = self.lane_ft_for(jurisdiction)
+        if lane is None:
+            return None
+        dw = self.driveway_for(jurisdiction)
+        cut = lane if dw is None or dw.approach_max_ft is None else min(
+            lane, dw.approach_max_ft
+        )
+        floor = self.driveway_cut_min_design_ft
+        if dw is not None and dw.approach_min_ft is not None:
+            floor = max(floor, dw.approach_min_ft)
+        return None if cut < floor else cut
+
+    def gap_ft_for(self, jurisdiction: str) -> float:
+        """Clear distance between the building and the parking court."""
+        dw = self.driveway_for(jurisdiction)
+        if dw is None or dw.building_buffer_ft is None:
+            return self.building_parking_gap_ft
+        return max(self.building_parking_gap_ft, dw.building_buffer_ft)
+
+    def open_space_required_sqft(
+        self, jurisdiction: str, zone: str, lot_area_sqft: float
+    ) -> float:
+        """Private open space this lot must reserve, in square feet.
+
+        Zero for four of the seven cities that can be dimensioned. Fairview,
+        Wilsonville, Oregon City and Happy Valley state no private open space
+        standard for this building at all — read, and absent, each for its own
+        reason recorded in its layer — so the 15 percent they were being
+        charged was Gresham's rule collected in cities that never wrote it.
+
+        Where a city states more than one form, the largest binds: they are
+        concurrent claims on the same lot, not alternatives.
+        """
+        dw = self.driveway_for(jurisdiction)
+        if dw is None:
+            return 0.0
+        need = 0.0
+        if dw.open_space_pct is not None:
+            need = max(need, dw.open_space_pct / 100.0 * lot_area_sqft)
+        by_zone = dw.open_space_sqft_by_zone
+        if zone and zone in by_zone:
+            flat = by_zone[zone]
+        else:
+            flat = dw.open_space_sqft
+        if flat is not None:
+            need = max(need, float(flat))
+        return need
 
     def geometry_for(self, jurisdiction: str) -> StallGeometry | None:
         """The stall geometry a jurisdiction publishes, or None if it has none.
@@ -495,7 +690,8 @@ class SiteplanSpec(BaseModel):
         else:
             names = sorted(self.geometry)
         return [n for n in names
-                if (g := self.geometry_for(n)) is not None and g.lays_out()]
+                if (g := self.geometry_for(n)) is not None and g.lays_out()
+                and self.curb_cut_ft_for(n) is not None]
 
     def stall_cap_for(self, jurisdiction: str) -> int:
         """Most stalls s6s will seat here: the marketability ceiling or the law.

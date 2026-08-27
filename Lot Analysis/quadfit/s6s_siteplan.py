@@ -119,17 +119,23 @@ def _largest_rect(ok):
 
 def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[float]],
                area_sqft: float, front_setback_ft: float,
-               jurisdiction: str = "") -> dict:
+               jurisdiction: str = "", zone: str = "") -> dict:
     """Lay out one lot's site plan. Runs in worker processes.
 
     Returns a dict of scalar results + `geoms` (role -> shapely geometry in the
     working CRS). `main()` turns geoms into WKB-hex and derives parking_tier /
     site_plan_ok from the scalars + config.
 
-    `jurisdiction` selects the stall, the aisle and the stall ceiling, which
-    are the only per-city numbers in the layout — the arrangement itself is the
-    same everywhere. It defaults to "" so a caller with a single-city config
-    (the tests) can leave it off; the lookup falls back to the lone entry.
+    `jurisdiction` selects every DIMENSION in the layout — the stall, the
+    aisle, the stall ceiling, the width of the side lane, the gap behind the
+    building and the open space that must be left over. The arrangement is the
+    same everywhere; not one measurement is. It defaults to "" so a caller with
+    a single-city config (the tests) can leave it off; the lookup falls back to
+    the lone entry.
+
+    `zone` is only consulted for open space, and only in Portland, which is the
+    one city in this corpus that states the reserve by zone rather than
+    citywide.
     """
     import numpy as np
     import shapely
@@ -137,17 +143,26 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
     from shapely.geometry import MultiPoint, box
 
     res: float = _CFG["res"]
-    gap: float = _CFG["gap"]
-    drive_w: float = _CFG["drive_travel"]
     pods: list[tuple[str, float, float]] = _CFG["pods"]
-    open_pct: float = _CFG["open_space_pct"]
     cells: dict = _CFG["cells"]
     cell = cells.get(jurisdiction) or next(iter(cells.values()))
+    # Every one of these used to be a module-level constant carrying a Gresham
+    # section number. They are per-city now, resolved in main() from the FLATS
+    # corpus mirror, and the spread is not cosmetic: Happy Valley's side lane
+    # is twenty feet where everyone else's is twelve, and the open-space
+    # reserve is fifteen percent of the lot in Gresham, a flat 384 sq ft in
+    # Milwaukie, 250 or 200 in Portland depending on the zone, and NOTHING in
+    # the four cities that state no such standard for this building.
+    gap: float = cell["gap"]
+    drive_w: float = cell["lane"]
+    open_pct: float = cell["open_pct"]
+    open_flat: float = cell["open_by_zone"].get(zone, cell["open_sqft"]) or 0.0
 
     fail = {
         "site_plan_ok": False, "stalls_provided": 0, "layout_method": "none",
         "building_name": None, "driveway_len_ft": 0.0, "parking_area_sqft": 0.0,
-        "open_space_sqft": 0.0, "open_space_ok": False, "geoms": {},
+        "open_space_sqft": 0.0, "open_space_req_sqft": 0.0,
+        "open_space_ok": False, "driveway_width_ft": 0.0, "geoms": {},
     }
 
     env = shapely.from_wkb(env_wkb)
@@ -201,9 +216,14 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
     # not allowed in the general townhouse case, so the court must sit BEHIND the
     # building. Cars enter and leave forward — nothing backs onto the street (the
     # code bans that only on arterials, Appendix A5.404) — so the plan is legal
-    # on any street class. A single ~12 ft side lane is well under the combined
-    # curb-cut cap (18 ft or 34% of frontage, §7.0431(B)(2)(b)), so it never
-    # binds and no per-lot frontage check is needed here.
+    # on any street class.
+    #
+    # The lane is `drive_w`, which is the city's own two-way driveway minimum
+    # where it states one and the design lane otherwise. Where the city caps
+    # the curb CUT below the lane — Gresham does, at ten feet — the opening
+    # narrows at the property line and the drive widens behind it, which is
+    # what the approach standard governs and all it governs; main() has already
+    # declined any city whose cap falls below one car's width.
     #
     # Try each pod size × orientation: place the pod frontmost, carve a rear
     # court, and require a side lane that reaches it. A builder orients the pod
@@ -275,7 +295,12 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
     # parking_area), so the two do not double-count.
     driveway_area = plan["driveway"][2] * res * drive_w if plan["driveway"] else 0.0
     open_space = max(0.0, area_sqft - building_area - parking_area - driveway_area)
-    open_space_ok = open_space >= (open_pct / 100.0) * area_sqft
+    # Concurrent claims, not alternatives: a city stating both a share and a
+    # flat area asks for the larger. A city stating neither asks for nothing,
+    # and four of the five cities laid out here are in that position — the 15
+    # percent they used to be charged was Gresham's rule, collected citywide.
+    open_req = max((open_pct / 100.0) * area_sqft, open_flat)
+    open_space_ok = open_space >= open_req
 
     def emit(name: str, g):
         geoms[name] = affinity.rotate(g, rot, origin=origin)
@@ -307,7 +332,9 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
         "driveway_len_ft": float(round(driveway_len, 3)),
         "parking_area_sqft": float(round(parking_area, 2)),
         "open_space_sqft": float(round(open_space, 2)),
+        "open_space_req_sqft": float(round(open_req, 2)),
         "open_space_ok": bool(open_space_ok),
+        "driveway_width_ft": float(cell["cut"]),
         "geoms": geoms,
     }
 
@@ -316,8 +343,8 @@ def _work_chunk(chunk):
     import shapely
 
     out = []
-    for idx, env_wkb, bearings, fedges, area, fsb, jur in chunk:
-        r = layout_lot(env_wkb, bearings, fedges, area, fsb, jur)
+    for idx, env_wkb, bearings, fedges, area, fsb, jur, zone in chunk:
+        r = layout_lot(env_wkb, bearings, fedges, area, fsb, jur, zone)
         r["geoms_hex"] = {role: shapely.to_wkb(g).hex() for role, g in r.pop("geoms").items()}
         out.append((idx, r))
     return out
@@ -351,13 +378,15 @@ def main() -> None:
     drive_len = np.full(n, np.nan)
     park_area = np.full(n, np.nan)
     open_sqft = np.full(n, np.nan)
+    open_req = np.full(n, np.nan)
     open_ok = np.zeros(n, dtype=bool)
+    drive_w = np.full(n, np.nan)
     sp_json = np.array([""] * n, dtype=object)
 
     if sp is None or not sp.enabled:
         print("s6s: siteplan disabled in footprints.yaml — writing passthrough columns")
         _finalize(lots, site_ok, tier, stalls, method, bname, drive_len,
-                  park_area, open_sqft, open_ok, sp_json)
+                  drive_w, park_area, open_sqft, open_req, open_ok, sp_json)
         return
 
     pod_list = [(f.name, f.width_ft, f.depth_ft) for f in fps.footprints]
@@ -379,7 +408,7 @@ def main() -> None:
         print("s6s: no city in footprints.yaml states both a stall and an aisle; "
               "writing passthrough columns")
         _finalize(lots, site_ok, tier, stalls, method, bname, drive_len,
-                  park_area, open_sqft, open_ok, sp_json)
+                  drive_w, park_area, open_sqft, open_req, open_ok, sp_json)
         return
     for j in declined:
         why = ("its code states a stall size but no aisle width"
@@ -406,23 +435,38 @@ def main() -> None:
                              if zr and zr.setback_front_ft else 10.0)
         return setbacks[key]
 
-    # Each city's own stall, aisle and stall ceiling, keyed by name and handed
-    # to the workers whole. Nothing else in the layout is per-city: the
-    # arrangement -- pod at the front, one side driveway, a rear court, cars out
-    # forward -- is what every code in this corpus asks for in its own words.
+    # Each city's own numbers, keyed by name and handed to the workers whole.
+    # The ARRANGEMENT is per-corpus -- pod at the front, one side driveway, a
+    # rear court, cars out forward, which every code here asks for in its own
+    # words -- and every DIMENSION in it is per-city. Stall, aisle and ceiling
+    # come from the city's parking chapter; lane, curb cut, building gap and
+    # open space from its access chapter, both mirrored from FLATS.
     cells = {}
     for j in cities:
         g = sp.geometry_for(j)
+        dw = sp.driveway_for(j)
         cells[j] = {
             "stall_w": g.stall_width_ft, "stall_d": g.stall_depth_ft,
             "aisle_one": g.aisle_one_way_ft, "aisle_two": g.aisle_two_way_ft,
             "cap": sp.stall_cap_for(j),
+            "lane": sp.lane_ft_for(j), "cut": sp.curb_cut_ft_for(j),
+            "gap": sp.gap_ft_for(j),
+            "open_pct": (dw.open_space_pct or 0.0) if dw else 0.0,
+            "open_sqft": (dw.open_space_sqft or 0.0) if dw else 0.0,
+            "open_by_zone": dict(dw.open_space_sqft_by_zone) if dw else {},
         }
 
+    # A city nobody has read its access chapter for is laid out to the design
+    # lane and reserves no open space. That is a real gap and not a verdict, so
+    # it is said out loud rather than left to the reader of a CSV.
+    unread = [j for j in cities if sp.driveway_for(j) is None]
+    if unread:
+        print(f"s6s: no driveway rules read for {', '.join(unread)} -- laid out "
+              f"to the {sp.driveway_lane_design_ft:g} ft design lane, with no "
+              f"open-space reserve and no approach cap")
+
     cfg = {
-        "res": res, "gap": sp.building_parking_gap_ft,
-        "drive_travel": sp.driveway_min_travel_ft, "pods": pod_list,
-        "open_space_pct": sp.private_open_space_pct, "min_stalls": sp.min_stalls(),
+        "res": res, "pods": pod_list, "min_stalls": sp.min_stalls(),
         "preferred_stalls": sp.preferred_stalls(),
         "cells": cells,
         "methods": list(sp.layout_methods),
@@ -449,7 +493,7 @@ def main() -> None:
         tasks.append((
             int(i), shapely.to_wkb(row["env_geom"]),
             json.loads(row["front_bearings_json"]), fedges,
-            float(row["area_sqft"]), _front_setback(jur, zone), jur,
+            float(row["area_sqft"]), _front_setback(jur, zone), jur, zone,
         ))
 
     chunk_size = 500
@@ -480,11 +524,13 @@ def main() -> None:
         drive_len[idx] = r["driveway_len_ft"]
         park_area[idx] = r["parking_area_sqft"]
         open_sqft[idx] = r["open_space_sqft"]
+        open_req[idx] = r["open_space_req_sqft"]
         open_ok[idx] = r["open_space_ok"]
+        drive_w[idx] = r["driveway_width_ft"]
         sp_json[idx] = json.dumps(r["geoms_hex"])
 
     _finalize(lots, site_ok, tier, stalls, method, bname, drive_len,
-              park_area, open_sqft, open_ok, sp_json)
+              drive_w, park_area, open_sqft, open_req, open_ok, sp_json)
 
     ev = stalls >= 0
     print(f"s6s: evaluated {int(ev.sum()):,} lots; "
@@ -502,16 +548,26 @@ def main() -> None:
             continue
         c = cells[j]
         aisle = f"{c['aisle_one']}/{c['aisle_two']}"
+        if c["open_by_zone"]:
+            osp = "by zone"
+        elif c["open_pct"]:
+            osp = f"{c['open_pct']:g}%"
+        elif c["open_sqft"]:
+            osp = f"{c['open_sqft']:g}sf"
+        else:
+            osp = "none"
         print(f"  {j:16s} {int(m.sum()):>7,} evaluated  "
               f"site_plan_ok {int((site_ok & m).sum()):>6,}  "
               f"stall {c['stall_w']}x{c['stall_d']} aisle {aisle} cap {c['cap']}  "
+              f"lane {c['lane']:g} cut {c['cut']:g} open {osp}  "
               + ", ".join(f"{t}={int(((tier == t) & m).sum()):,}"
                           for t in ("preferred", "target", "minimum", "fail")))
     print("s6s done.")
 
 
 def _finalize(lots, site_ok, tier, stalls, method, bname, drive_len,
-              park_area, open_sqft, open_ok, sp_json) -> None:
+              drive_w, park_area, open_sqft, open_req, open_ok,
+              sp_json) -> None:
     import numpy as np
 
     if "env_geom" in lots.columns:
@@ -522,8 +578,13 @@ def _finalize(lots, site_ok, tier, stalls, method, bname, drive_len,
     lots["layout_method"] = method
     lots["building_name"] = bname
     lots["driveway_len_ft"] = drive_len
+    # The width of the opening at the property line: the lane, narrowed to the
+    # city's approach ceiling. Reported because it is the number that moved
+    # most in this change and the one a reviewer will check first.
+    lots["driveway_width_ft"] = drive_w
     lots["parking_area_sqft"] = park_area
     lots["open_space_sqft"] = open_sqft
+    lots["open_space_req_sqft"] = open_req
     lots["open_space_ok"] = open_ok
     # utility_run_ft: phase-1 reuses the s5o sewer-main distance where present.
     if "sewer_main_dist_ft" in lots.columns:

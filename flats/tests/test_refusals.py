@@ -26,7 +26,22 @@ pytestmark = pytest.mark.unit
 #: are not meant to do is move quietly. A refusal added without a line here is
 #: a reading nobody signed off on; a refusal removed without one is a reading
 #: somebody overturned without saying so.
-EXPECTED = {"notes": 92, "comments": 45, "tests": 16}
+#: Comments went 45 -> 68 on 2026-08-27, twenty-three in one reading, and it
+#: is the largest single move this ledger has recorded. The driveway family
+#: was encoded across eight layers and every one of them came with sentences
+#: that could not be: alley-first access rules in Gresham, driveway spacing
+#: off a street classification nothing measures in Oregon City, a ten-foot
+#: stall setback in Clackamas that turns out to govern cottage clusters, and
+#: -- the one worth reading -- Happy Valley LDC 16.43.030.E.4, which sets
+#: parking back from a street by "the same distance as the required building
+#: setbacks" and prints only the loose ten-foot floor. Encoding ten would have
+#: put half the real standard in the file in the permissive direction, so the
+#: number went in the prose instead and this ledger counts it.
+#:
+#: A jump this size is the thing to be suspicious of. What makes it honest is
+#: that the values landed in the same commit: 23 refusals against 21 encoded
+#: values across the same eight files, which is a reading, not a retreat.
+EXPECTED = {"notes": 92, "comments": 68, "tests": 16}
 #: Two of the sixteen are this file, which quotes the marker while
 #: explaining it, and one is a back-reference in test_gresham_rockwood --
 #: prose saying a zone *was* not encoded until it was. Left in rather than

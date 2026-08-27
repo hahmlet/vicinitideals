@@ -809,15 +809,18 @@ def main() -> None:
             L.append(
                 "A bare pod rectangle fitting the envelope (s6) is necessary but "
                 "not sufficient. This stage lays out a full plan — pod + driveway "
-                "+ 90° parking + a 15% private open-space reservation — and counts "
-                "a lot as buildable only if the plan resolves. Parking tiers are "
+                "+ 90° parking + whatever private open space the city requires — "
+                "and counts a lot as buildable only if the plan resolves. "
+                "Parking tiers are "
                 "the marketability target "
                 f"({sp.min_stalls()}/{sp.target_stalls()}/{sp.preferred_stalls()} "
                 "stalls = 1 / 1.5 / 2 per unit).\n")
             L.append(
                 "Every lot below sits in a city whose own code states both a stall "
                 "size and a drive-aisle width, and is laid out to that city's "
-                "numbers — never to another's. Cities laid out: "
+                "numbers — never to another's. That now covers the driveway too: "
+                "the approach width, the lane, the building gap and the "
+                "open-space reserve are each city's own. Cities laid out: "
                 + ", ".join(f"**{c}**" for c in cities) + ".")
             if declined:
                 L.append(
@@ -866,19 +869,38 @@ def main() -> None:
                      f"Open-space reservation satisfied on {ok_os:,} of {len(pil):,} "
                      "evaluated lots. Sampled site-plan drawings are in "
                      "`siteplans.geojson`; per-lot `parking_tier`, `stalls_provided`, "
-                     "`layout_method`, `driveway_len_ft`, and `open_space_ok` are in "
+                     "`layout_method`, `driveway_len_ft`, `driveway_width_ft`, "
+                     "`open_space_req_sqft` and `open_space_ok` are in "
                      "`conversion_candidates.csv`.")
+            L.append("\nDriveway, curb cut and open space, per city:\n")
+            L.append("| city | side lane | curb cut | private open space |")
+            L.append("|---|---|---|---|")
+            for c in cities:
+                dw = sp.driveway_for(c)
+                if dw is None:
+                    osp = "*not read*"
+                elif dw.open_space_sqft_by_zone:
+                    osp = "by zone (250 / 200 sq ft)"
+                elif dw.open_space_pct:
+                    osp = f"{dw.open_space_pct:g}% of lot"
+                elif dw.open_space_sqft:
+                    osp = f"{dw.open_space_sqft:g} sq ft"
+                else:
+                    osp = "**none stated**"
+                L.append(f"| {c} | {sp.lane_ft_for(c):g} ft "
+                         f"| {sp.curb_cut_ft_for(c):g} ft | {osp} |")
             L.append(
-                "\nWhat this does NOT check: where a code says parking may not "
-                "SIT. Happy Valley sets a parking area back from a street lot "
-                "line by the building setback (LDC 16.43.030.E.4 — twenty feet "
-                "in its residential zones); Oregon City caps outdoor parking and "
-                "manoeuvring at forty feet or half the frontage (OCMC "
-                "17.16.060.D). A rear court survives both, and the side driveway "
-                "drawn here is not obviously exempt from either. No field in the "
-                "rule corpus holds these yet, so every city outside Gresham is "
-                "drawn to its own stall and aisle and to Gresham's driveway "
-                "rules.")
+                "\nWhat this does NOT check: the placement rules the rear court "
+                "satisfies by construction rather than by measurement — the "
+                "share-of-frontage caps, the front-yard area shares, the "
+                "façade-relative bans. Every stall drawn here is behind the "
+                "building, which is what each of those asks for, so they are "
+                "mirrored and not tested; a front-court typology would have to "
+                "test them. The genuinely open case is Happy Valley LDC "
+                "16.43.030.E.4, which sets a parking area back from a street by "
+                "the ZONE'S building setback — twenty feet — and prints only a "
+                "ten-foot floor of its own, so no field can hold it. A rear "
+                "court clears it; the side driveway is not obviously exempt.")
 
     # --- Phase 2 sections: overlays / slope / sewer / data coverage --------
     flag_specs = [s for s in ocfg.overlays
@@ -976,7 +998,8 @@ def main() -> None:
     L.append("- Existing structures assumed demolished; building value & year built "
              "are carried per-lot for later filtering.")
     L.append("- Conversion lots in a city whose code states a stall AND an aisle: "
-             "a full plan — building + driveway + 90° parking + 15% open space — "
+             "a full plan — building + driveway + 90° parking + that city's own "
+             "open-space reserve, where it states one — "
              "is laid out to that city's own dimensions and tightens the verdict "
              "(see Site-plan tightening). Everywhere else on-lot parking is out "
              "of scope (bare-rectangle fit only), either because the city "

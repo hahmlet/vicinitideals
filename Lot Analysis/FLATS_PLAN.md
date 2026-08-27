@@ -374,6 +374,54 @@ manoeuvring-area width, parking setback. Six jurisdictions have now been transcr
 rather than encoded against that gap, all of them printing the state middle-housing model
 code in local words, so that building the fields is a copy job and not a re-read.
 
+**That family was built on 2026-08-27**, and the copy job was the copy job it looked
+like. Twelve fields — `driveway_approach_min_width_ft`, `driveway_approach_max_width_ft`,
+`driveway_min_width_one_way_ft`, `driveway_min_width_two_way_ft`,
+`parking_maneuvering_max_width_ft`, `parking_area_max_frontage_pct`,
+`parking_area_max_width_ft`, `parking_front_yard_max_pct`, `parking_front_prohibited`,
+`parking_street_setback_ft`, `parking_building_buffer_ft`, `open_space_min_sqft` — all
+optional, because they are sentences in an access chapter that name a housing type rather
+than rows of a zone table. Eight layers encoded against them, twenty-one values, and
+twenty-three refusals recorded alongside.
+
+Three things came out of the reading that were not the reason for it.
+
+*The six cities really are one code.* Fairview, Wilsonville, Oregon City, Milwaukie and
+unincorporated Clackamas each cap outdoor parking and manoeuvring at **twelve feet** on a
+townhouse lot — ten in Milwaukie — and at **fifty percent of the street frontage** on one
+lot, in near-identical sentences, because all of them are printing OAR 660-046. Twelve
+feet around a nine-foot stall is a single-file driveway, not a court: on the split plat,
+the parking arrangement this product draws is not permitted in any of them. The one-lot
+path is the one that works, which is the path the design catalog already defaults to.
+
+*A ban and a cap are not the same rule.* Portland and Milwaukie forbid parking between
+the building and the street outright; the other five permit it and cap it at half the
+frontage. Both carve the driveway out in the same sentence, so what is banned is a
+front-yard **court**, not the drive that reaches a rear one — which is why one bool could
+not carry both and `parking_front_prohibited` is three-valued.
+
+*Happy Valley's driveway is twenty feet.* LDC 16.41.030.B.1, in a chapter that had to be
+fetched because 16.43 states no width at all: a two-way drive is improved a minimum of 20
+feet. Every other city here states nine or states nothing. It is a **minimum**, so unlike
+an approach ceiling it cannot be traded down, and on a narrow lot it is the difference
+between a site plan and none. 16.43.030.E.4 stayed refused: it sets parking back from a
+street by "the same distance as the required building setbacks" and prints only a
+ten-foot floor, so the only number on the page is half the real standard and wrong in the
+permissive direction. A field that could hold "the same as another field" would hold it;
+none does, and `qualified_by` cannot, because it names a site fact rather than a field.
+
+What the family was built **for** was the site-plan generator, which had been drawing
+every city's driveway to five constants taken out of Gresham's townhouse chapter. Two of
+the five were not Gresham's law either: on the one-lot plat s6s draws, GDC
+7.0420(B)(2)(b)(ii) caps a garage-less fourplex's approach at **ten feet**, not the
+eighteen of 7.0431(B)(2)(b); and the fifteen percent open-space reserve charged against
+every lot in seven cities is 7.0420(D)(1), which **four of the seven never wrote**.
+Fairview's open space is an RM-district multi-unit standard, Wilsonville's is the
+Villebois village zone, Oregon City's was a cottage-cluster rule about impervious cover,
+and Happy Valley's footnote points at a section that does not contain it. Portland states
+it by zone — 250 square feet, 200 in R2.5 — and is the only city in the corpus that does,
+which is why the quadfit mirror carries a per-zone map for it alone.
+
 The same chapter carries the corpus’s second refusal of the Gresham 9.0200 shape, and a
 worse one. 19.162.020(O) is the qualifier on an exemption this layer *encodes* — FMC
 19.70.020.A.3 waives the side setback “except that buildings shall conform to the vision

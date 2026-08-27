@@ -28,24 +28,72 @@ FRONT_S, SIDE_S, REAR_S = 10.0, 5.0, 15.0
 
 def _sp_setup(res: float = 0.5):
     import s6s_siteplan
-    from common import StallGeometry, _GRESHAM_GEOMETRY
+    from common import StallGeometry, _GRESHAM_GEOMETRY, load_footprints
 
     # Gresham's own stall and aisle, taken from the one place they are written
     # rather than retyped here. Retyping them is how the 20 ft aisle survived:
     # a test that carries its own copy of a number agrees with itself forever.
     geom = StallGeometry(**_GRESHAM_GEOMETRY)
+    # The same argument now covers the lane, the curb cut, the building gap and
+    # the open-space reserve, which stopped being global constants and became
+    # Gresham's own numbers -- so they are read out of the shipped config the
+    # way s6s reads them rather than copied in here. The cut is 10 ft, from
+    # GDC 7.0420: narrower than the lane, which is legal and is the whole
+    # correction (the 18 ft that used to sit here was the townhouse chapter's).
+    sp = load_footprints().siteplan
+    dw = sp.driveway_for("gresham")
     cfg = {
-        "res": res, "gap": 5.0, "drive_travel": 12.0,
+        "res": res,
         "pods": [("pod56x36", 56.0, 36.0), ("pod80x25", 80.0, 25.0)],
-        "open_space_pct": 15.0, "min_stalls": 4, "preferred_stalls": 8,
+        "min_stalls": 4, "preferred_stalls": 8,
         "cells": {"gresham": {
             "stall_w": geom.stall_width_ft, "stall_d": geom.stall_depth_ft,
             "aisle_two": geom.aisle_two_way_ft, "aisle_one": geom.aisle_one_way_ft,
             "cap": 8,
+            "lane": sp.lane_ft_for("gresham"), "cut": sp.curb_cut_ft_for("gresham"),
+            "gap": sp.gap_ft_for("gresham"),
+            "open_pct": dw.open_space_pct or 0.0,
+            "open_sqft": dw.open_space_sqft or 0.0,
+            "open_by_zone": dict(dw.open_space_sqft_by_zone),
         }},
         "methods": ["townhome_rear_court"],
     }
     s6s_siteplan._init_worker(cfg)
+    return s6s_siteplan
+
+
+def _sp_setup_cities(res: float = 0.5):
+    """The same worker, wired for every city s6s can actually dimension.
+
+    `_sp_setup` above is Gresham alone, which is what most of this file wants.
+    This one exists for the tests that compare cities, because the point of
+    per-city numbers is only visible with two of them side by side.
+    """
+    import s6s_siteplan
+    from common import load_footprints
+
+    sp = load_footprints().siteplan
+
+    def cell(j):
+        g, dw = sp.geometry_for(j), sp.driveway_for(j)
+        return {
+            "stall_w": g.stall_width_ft, "stall_d": g.stall_depth_ft,
+            "aisle_one": g.aisle_one_way_ft, "aisle_two": g.aisle_two_way_ft,
+            "cap": sp.stall_cap_for(j),
+            "lane": sp.lane_ft_for(j), "cut": sp.curb_cut_ft_for(j),
+            "gap": sp.gap_ft_for(j),
+            "open_pct": (dw.open_space_pct or 0.0) if dw else 0.0,
+            "open_sqft": (dw.open_space_sqft or 0.0) if dw else 0.0,
+            "open_by_zone": dict(dw.open_space_sqft_by_zone) if dw else {},
+        }
+
+    s6s_siteplan._init_worker({
+        "res": res,
+        "pods": [("pod56x36", 56.0, 36.0), ("pod80x25", 80.0, 25.0)],
+        "min_stalls": 4, "preferred_stalls": 8,
+        "cells": {j: cell(j) for j in sp.cities_it_can_dimension()},
+        "methods": ["townhome_rear_court"],
+    })
     return s6s_siteplan
 
 
@@ -329,3 +377,69 @@ def test_oregon_city_stands_down_on_the_other_plat_path():
     on_unit_lots = sp.model_copy(update={"plat": "unit_lots"})
     assert on_unit_lots.geometry_for("oregon_city") is None
     assert "oregon_city" not in on_unit_lots.cities_it_can_dimension()
+
+
+# ---------------------------------------------------------------------------
+# per-city driveway and open space
+# ---------------------------------------------------------------------------
+
+
+def test_happy_valleys_twenty_foot_driveway_costs_it_lots_gresham_keeps():
+    """The one number in the driveway family that takes lots away.
+
+    HV LDC 16.41.030.B.1 improves a two-way drive to twenty feet where every
+    other city here says twelve or says nothing, and the lane this typology
+    draws is two-way. Eight extra feet of side yard, for the depth of the
+    building, is the whole difference on a lot this width.
+
+    Both cities are given the SAME envelope on purpose. Their setbacks differ
+    and that is not what is being measured: hold the buildable rectangle still
+    and the only thing left moving is the lane.
+    """
+    s6s = _sp_setup_cities()
+    env, fe, area, _ = _rect_lot(85.0, 120.0)
+
+    assert _run(s6s, env, fe, area, jurisdiction="gresham")["site_plan_ok"]
+    assert not _run(s6s, env, fe, area,
+                    jurisdiction="happy_valley")["site_plan_ok"]
+
+    # Ten feet wider and Happy Valley resolves too -- the refusal above is the
+    # lane and not something structural about the city.
+    env, fe, area, _ = _rect_lot(95.0, 120.0)
+    assert _run(s6s, env, fe, area, jurisdiction="happy_valley")["site_plan_ok"]
+
+
+def test_the_open_space_charged_is_the_citys_own_and_greshams_is_greshams():
+    """Fifteen percent used to come off every lot in every city.
+
+    It is GDC 7.0420(D)(1), and Happy Valley states no private open space
+    standard for this building at all -- its only candidate is a footnote
+    hanging on the wrong table, pointing at a section that does not contain
+    the phrase. A reserve charged to a city that never asked for one is a lot
+    refused for nothing, so what is asserted here is the zero.
+    """
+    s6s = _sp_setup_cities()
+    env, fe, area, _ = _rect_lot(95.0, 120.0)
+
+    gresham = _run(s6s, env, fe, area, jurisdiction="gresham")
+    hv = _run(s6s, env, fe, area, jurisdiction="happy_valley")
+
+    assert gresham["open_space_req_sqft"] == pytest.approx(0.15 * area)
+    assert hv["open_space_req_sqft"] == 0.0
+
+
+def test_greshams_curb_cut_is_narrower_than_the_lane_and_that_is_legal():
+    """Ten feet at the property line, twelve behind it.
+
+    GDC 7.0420(B)(2)(b)(ii) caps the APPROACH of a garage-less fourplex at ten
+    feet, and 7.0431's eighteen -- which is what this stage used to draw
+    everywhere -- is the townhouse chapter's combined figure on four lots. The
+    approach standard governs the opening where it meets the street and
+    nothing behind it, so the cut narrows and the drive stays a drive.
+    """
+    s6s = _sp_setup_cities()
+    env, fe, area, _ = _rect_lot(95.0, 120.0)
+    r = _run(s6s, env, fe, area, jurisdiction="gresham")
+
+    assert r["site_plan_ok"]
+    assert r["driveway_width_ft"] == 10.0

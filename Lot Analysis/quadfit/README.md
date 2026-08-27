@@ -13,8 +13,9 @@ On-lot parking is a crude area budget in the base pipeline: out of scope for
 1-for-1 conversion lots (street parking assumed); split candidates budget a
 per-quad parking buffer (stalls only, no travel lanes) via the `split:` block
 in `config/footprints.yaml`. **Stage s6s (site-plan generator)** replaces that
-crude budget with a real per-lot layout — building + driveway + 90° stalls + a
-15% private open-space reservation — and tightens the conversion verdict to
+crude budget with a real per-lot layout — building + driveway + 90° stalls +
+whatever private open space that city requires — and tightens the conversion
+verdict to
 "a full site plan resolves", not just "a bare rectangle fits".
 
 Scoped by what has been READ: every lot in every city whose own code states a
@@ -41,7 +42,7 @@ Stages cache intermediates in `data/quadfit/*.parquet` (WKB geometry columns);
 |---|---|
 | Jurisdiction on/off (`eligible:`), min lot area, min frontage, orientation constraint, coverage cap, parking buffer / split thresholds, overlay kill↔flag reclassification, slope tier cutlines, sewer cutoff (`SEWER_REVIEW_FT`) / district gate | `python "Lot Analysis/quadfit/s7_report.py"` only (**seconds**) |
 | Sampled site-plan drawings only (no counts change) | `python "Lot Analysis/quadfit/s7_report.py"` only (**seconds**) |
-| `siteplan:` block values (per-city stall/aisle/max, driveway dims, parking tiers, open-space %, scope, plat) | s6s–s7 (~30 min) |
+| `siteplan:` block values (per-city stall/aisle/max, per-city driveway/approach/gap/open-space, parking tiers, scope, plat) | s6s–s7 (~30 min) |
 | New footprint rectangle or sweep | s6–s7 (minutes) |
 | Overlay carve buffer_ft, new carve overlay layer | s5o–s7 (~40 min) |
 | Setback values, new zone rows | s5–s7 (run_all handles cascade) |
@@ -67,7 +68,7 @@ policy-only edits invoke s7 directly as above.
 | s5 | `s5_envelope.py` | Setback envelope: lot − per-edge buffers (conservative) |
 | s5o | `s5o_overlays.py` | Phase 2: per-overlay any-touch flags + intersection sqft, CARVE overlays subtracted from the envelope, per-lot slope stats (USGS 3DEP 1 m DEM), sewer-main distance, sanitary sewer-district membership (`in_sewer_district`, Clackamas `Sewer_Districts` polygons). Driven by `config/overlays.yaml`; missing layers degrade to caveats, never crashes |
 | s6 | `s6_fit.py` | Rotate→rasterize→integral-image rectangle fit against the CARVED envelope, BOTH orientations raw; max-depth-per-width frontier |
-| s6s | `s6s_siteplan.py` | Procedural site-plan generator, run for every city whose code states a stall AND an aisle (Fairview, Gresham, Happy Valley, Oregon City, Portland today; Milwaukie and Wilsonville declined for want of an aisle). Re-reads the carved envelope from s5o and lays out an attached-townhome site plan per lot (Gresham §7.0431): pod at the front, one consolidated driveway down a SIDE to a REAR 90° parking court, forward access (nothing backs onto the street), plus a 15% private open-space reservation; reports best parking tier + `site_plan_ok`. One typology (`townhome_rear_court`); the layout tries every pod size × orientation and keeps the most stalls, capped at the preferred tier (8/pod) or at the city's own stated MAXIMUM where it states one (Milwaukie: 1/unit = 4). Lots in unread or declined cities pass through as `not_evaluated`. Draws the ONE-LOT plat path (`siteplan.plat`), which decides whether a city's parking chapter reaches the building at all — Oregon City's does on one lot and excludes townhouses on four |
+| s6s | `s6s_siteplan.py` | Procedural site-plan generator, run for every city whose code states a stall AND an aisle (Fairview, Gresham, Happy Valley, Oregon City, Portland today; Milwaukie and Wilsonville declined for want of an aisle). Re-reads the carved envelope from s5o and lays out an attached-townhome site plan per lot (Gresham §7.0431): pod at the front, one consolidated driveway down a SIDE to a REAR 90° parking court, forward access (nothing backs onto the street), plus whatever private open space that city requires — 15% of the lot in Gresham, 384 sq ft in Milwaukie, 250 or 200 sq ft by zone in Portland, and NOTHING in Fairview, Wilsonville, Oregon City or Happy Valley, none of which state one for this building; reports best parking tier + `site_plan_ok`. One typology (`townhome_rear_court`); the layout tries every pod size × orientation and keeps the most stalls, capped at the preferred tier (8/pod) or at the city's own stated MAXIMUM where it states one (Milwaukie: 1/unit = 4). Lots in unread or declined cities pass through as `not_evaluated`. Draws the ONE-LOT plat path (`siteplan.plat`), which decides whether a city's parking chapter reaches the building at all — Oregon City's does on one lot and excludes townhouses on four |
 | s7 | `s7_report.py` | POLICY gates (eligibility, z overlay, min lot/frontage, orientation, coverage) + split screen + site-plan tightening of the conversion verdict + **per-lot binding-constraint attribution and green/review/red triage** + `summary.md`, `lots_results.csv`, `conversion_candidates.csv`, `split_candidates.csv`, `binding_constraints.csv`, `review_candidates.csv`, `spot_check.geojson`, `siteplans.geojson` |
 
 ## Config
@@ -93,10 +94,15 @@ policy-only edits invoke s7 directly as above.
   (non-split) lots carry NO parking requirement in the base pipeline by design.
   Also the `siteplan:` block (stage s6s): parking tiers
   (min/target/preferred = 1 / 1.5 / 2 stalls per townhome unit — a
-  marketability target, NOT the legal floor, which is zero here), stall/aisle/
-  driveway dimensions, and the 15% private open-space reservation, all with
-  Gresham CDC citations. `enabled: false` turns the stage off (lots pass
-  through as `not_evaluated`). Value edits are s6s+s7 re-runs.
+  marketability target, NOT the legal floor, which is zero here), plus two
+  per-city mirrors of the FLATS corpus: `geometry:` (stall, aisle, stall
+  ceiling) and `driveway:` (approach min/max, driveway minimum, manoeuvring
+  cap, frontage share, front-yard placement, building buffer, open space).
+  Only three numbers in the block are not law — a 12 ft design lane, a 9 ft
+  minimum curb cut and a 5 ft building gap — and they are the floor a drawing
+  works to, raised wherever a city asks for more. `enabled: false` turns the
+  stage off (lots pass through as `not_evaluated`). Value edits are s6s+s7
+  re-runs.
 
 ## Outputs
 
@@ -113,7 +119,8 @@ list) · `spot_check.geojson` (eyeball in geojson.io) · `siteplans.geojson`
 
 Pilot (Gresham LDR-5) conversion candidates additionally carry `site_plan_ok`,
 `parking_tier`, `stalls_provided`, `layout_method`, `driveway_len_ft`,
-`open_space_sqft`, and `open_space_ok` from s6s.
+`driveway_width_ft`, `open_space_sqft`, `open_space_req_sqft`, and
+`open_space_ok` from s6s.
 
 Every candidate CSV carries the acquisition economics: `acq_estimate`
 (post-COVID arm's-length sale where recorded, else county Real Market Value),
@@ -171,8 +178,8 @@ proxy), Wood Village local environmental mapping (none exists — regional layer
 only), existing structures assumed demolished (building
 value + year built carried in output for later filtering). Per-jurisdiction
 quirks not modeled: maximum front setbacks (Gresham DRL, Fairview base zones)
-which force the building toward the street; Gresham 15% private-open-space
-minimum; Wood Village 5/12 roof-pitch minimum; Lake Oswego front-porch
+which force the building toward the street; Wood Village 5/12 roof-pitch
+minimum; Lake Oswego front-porch
 requirement and Mountain Park HOA CC&Rs (pre-HB-2001 private covenants);
 Portland maintained-street-frontage + visitability gates; alley setback
 reductions. Substandard lots of record below a zone's quadplex minimum may
@@ -186,13 +193,25 @@ per lot in every city whose code states a stall and an aisle. Cities with no
 encoded parking geometry retain the blind spots above; closing them is a
 reading job, not an engineering one.
 
-**Still not modelled anywhere:** where a code says parking may not SIT. Happy
-Valley LDC 16.43.030.E.4 sets a parking area back from a street lot line by the
-building setback (twenty feet in its residential zones); Oregon City OCMC
-17.16.060.D caps outdoor parking and manoeuvring at forty feet or half the
-frontage; Milwaukie 19.607.1.D allows a quadplex a fourth front-yard space and
-no more. A rear court survives all of them, which is the arrangement s6s draws
-— but the side driveway is not obviously exempt from any, and the rule corpus
-has no field for driveway approach width, share-of-frontage, façade-relative
-placement or manoeuvring-area width. Every city outside Gresham is drawn to its
-own stall and aisle and to Gresham's driveway rules.
+**Closed 2026-08-27:** the driveway. Twelve fields for approach width,
+driveway minimum, manoeuvring cap, share-of-frontage, front-yard placement,
+stall street setback, building buffer and private open space now exist in the
+rule corpus, and eight layers are encoded against them. Every city s6s lays out
+is drawn to its own driveway as well as its own stall. Two of the numbers this
+replaced were wrong rather than merely borrowed: Gresham's own approach cap on
+the plat this stage draws is TEN feet (GDC 7.0420(B)(2)(b)(ii)), not the
+eighteen of the townhouse chapter that shipped; and the 15% open-space reserve
+was Gresham's alone, charged for a year against four cities that state no such
+standard for this building at all.
+
+**Still not modelled:** the placement rules the drawn arrangement satisfies by
+construction rather than by check — share-of-frontage, front-yard area share,
+façade-relative placement. Every stall this stage draws is behind the building
+and every city that states one of these is satisfied there, so the mirror
+carries them and the geometry does not test them; a front-court typology would
+have to. Happy Valley LDC 16.43.030.E.4 is the one genuinely open case: it sets
+a parking area back from a street by the ZONE'S BUILDING SETBACK, twenty feet,
+and states no number of its own, so no field can hold it. The rear court clears
+it; the side driveway's status is unresolved. Also still outside the corpus:
+curb-cut throat length and spacing, which live in public works standards rather
+than in a development code.
