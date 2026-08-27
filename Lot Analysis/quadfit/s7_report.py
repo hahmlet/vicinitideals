@@ -517,10 +517,11 @@ def main() -> None:
         q = quads_if_split(elig, gates.loc[elig.index], rules, split)
         q = np.where(elig_any, q, 0)  # parent must host at least one quad shape
         split_candidate = q >= split.min_quads
-        # Site-plan tightening (pilot cell only): a 1-lot conversion counts only
-        # if a real plan lays out (building + parking + driveway + open space).
-        # Non-evaluated lots keep the bare-rectangle behavior. Split (multi-pod
-        # carve) geometric validation is deferred to phase 2, so it's untouched.
+        # Site-plan tightening: a 1-lot conversion counts only if a real plan
+        # lays out (building + parking + driveway + open space), in every city
+        # s6s could dimension. Non-evaluated lots keep the bare-rectangle
+        # behavior. Split (multi-pod carve) geometric validation is deferred to
+        # phase 2, so it's untouched.
         if has_siteplan:
             evaluated_e = elig["parking_tier"].to_numpy() != "not_evaluated"
             site_ok_e = np.where(evaluated_e, elig["site_plan_ok"].to_numpy(), True)
@@ -793,7 +794,7 @@ def main() -> None:
                  "`viable_candidates.csv` is the union that clears the ceiling, "
                  "cheapest first.")
 
-    # --- Site-plan tightening (pilot cell) ---------------------------------
+    # --- Site-plan tightening ---------------------------------------------
     if has_siteplan and fps.siteplan is not None:
         sp = fps.siteplan
         pil = elig[elig["parking_tier"] != "not_evaluated"]
@@ -802,19 +803,40 @@ def main() -> None:
                 [pil[f"fits_{n}"].to_numpy() for n in fp_names])
             n_geom = int(geom_fit.sum())
             n_site = int(pil["site_plan_ok"].to_numpy().sum())
-            L.append(f"\n## Site-plan tightening — {sp.pilot_jurisdiction} "
-                     f"{sp.pilot_zone} pilot\n")
+            cities = sp.cities_it_can_dimension()
+            declined = sorted(set(sp.geometry) - set(cities))
+            L.append("\n## Site-plan tightening\n")
             L.append(
                 "A bare pod rectangle fitting the envelope (s6) is necessary but "
-                "not sufficient. This pilot lays out a full plan — pod + driveway "
-                "+ 90° parking + a 15% private open-space reservation (Gresham "
-                "§7.0420(D)) — and counts a lot as buildable only if the plan "
-                f"resolves. Parking tiers are the marketability target "
+                "not sufficient. This stage lays out a full plan — pod + driveway "
+                "+ 90° parking + a 15% private open-space reservation — and counts "
+                "a lot as buildable only if the plan resolves. Parking tiers are "
+                "the marketability target "
                 f"({sp.min_stalls()}/{sp.target_stalls()}/{sp.preferred_stalls()} "
-                "stalls = 1 / 1.5 / 2 per unit); Gresham LDR-5 legally requires "
-                "zero and caps at none, so every tier is legal.\n")
-            L.append(f"- Eligible {sp.pilot_jurisdiction}/{sp.pilot_zone} lots that "
-                     f"fit a bare pod: **{n_geom:,}**")
+                "stalls = 1 / 1.5 / 2 per unit).\n")
+            L.append(
+                "Every lot below sits in a city whose own code states both a stall "
+                "size and a drive-aisle width, and is laid out to that city's "
+                "numbers — never to another's. Cities laid out: "
+                + ", ".join(f"**{c}**" for c in cities) + ".")
+            if declined:
+                L.append(
+                    "Read and declined for want of an aisle width (their codes "
+                    "dimension a space and never the drive that reaches it): "
+                    + ", ".join(f"**{c}**" for c in declined)
+                    + ". Every other city is unread and passes through as "
+                      "`not_evaluated`.\n")
+            else:
+                L.append("")
+            capped = [(c, sp.stall_cap_for(c)) for c in cities
+                      if sp.stall_cap_for(c) < sp.preferred_stalls()]
+            if capped:
+                L.append(
+                    "A stated MAXIMUM binds in "
+                    + ", ".join(f"**{c}** ({n} stalls)" for c, n in capped)
+                    + " — the higher tiers are not on offer there at any lot "
+                      "size.\n")
+            L.append(f"- Eligible lots in scope that fit a bare pod: **{n_geom:,}**")
             L.append(f"- …that also lay out a full site plan: **{n_site:,}** "
                      f"({_pct(n_site, n_geom)}) — the rest fail on parking, "
                      "driveway, or open space\n")
@@ -823,6 +845,19 @@ def main() -> None:
             for t in ("preferred", "target", "minimum", "fail"):
                 m = int((pil["parking_tier"] == t).to_numpy().sum())
                 L.append(f"| {t} | {m:,} | {_pct(m, n_geom)} |")
+            if len(cities) > 1:
+                L.append("\n| city | stall | aisle | cap | evaluated | "
+                         "site plan resolves |")
+                L.append("|---|---|---|---:|---:|---:|")
+                for c in cities:
+                    g = sp.geometry_for(c)
+                    m = (pil["jurisdiction"] == c).to_numpy()
+                    ok_c = int((pil["site_plan_ok"].to_numpy() & m).sum())
+                    L.append(
+                        f"| {c} | {g.stall_width_ft} × {g.stall_depth_ft} ft "
+                        f"| {g.aisle_one_way_ft} / {g.aisle_two_way_ft} ft "
+                        f"| {sp.stall_cap_for(c)} | {int(m.sum()):,} "
+                        f"| {ok_c:,} ({_pct(ok_c, int(m.sum()))}) |")
             methods = [(meth, int((pil["layout_method"] == meth).to_numpy().sum()))
                        for meth in ("townhome_rear_court",)]
             method_str = ", ".join(f"{meth} {n:,}" for meth, n in methods if n)
@@ -833,6 +868,17 @@ def main() -> None:
                      "`siteplans.geojson`; per-lot `parking_tier`, `stalls_provided`, "
                      "`layout_method`, `driveway_len_ft`, and `open_space_ok` are in "
                      "`conversion_candidates.csv`.")
+            L.append(
+                "\nWhat this does NOT check: where a code says parking may not "
+                "SIT. Happy Valley sets a parking area back from a street lot "
+                "line by the building setback (LDC 16.43.030.E.4 — twenty feet "
+                "in its residential zones); Oregon City caps outdoor parking and "
+                "manoeuvring at forty feet or half the frontage (OCMC "
+                "17.16.060.D). A rear court survives both, and the side driveway "
+                "drawn here is not obviously exempt from either. No field in the "
+                "rule corpus holds these yet, so every city outside Gresham is "
+                "drawn to its own stall and aisle and to Gresham's driveway "
+                "rules.")
 
     # --- Phase 2 sections: overlays / slope / sewer / data coverage --------
     flag_specs = [s for s in ocfg.overlays
@@ -929,11 +975,13 @@ def main() -> None:
              "slope 'unknown' lots have no DEM tile).")
     L.append("- Existing structures assumed demolished; building value & year built "
              "are carried per-lot for later filtering.")
-    L.append("- Conversion lots OUTSIDE the site-plan pilot cell: on-lot parking "
-             "out of scope (bare-rectangle fit only). Inside the pilot "
-             "(Gresham LDR-5): a full plan — building + driveway + 90° parking + "
-             "15% open space — is laid out and tightens the verdict (see Site-plan "
-             "tightening). Split lots: parking buffer is stalls-only (area "
+    L.append("- Conversion lots in a city whose code states a stall AND an aisle: "
+             "a full plan — building + driveway + 90° parking + 15% open space — "
+             "is laid out to that city's own dimensions and tightens the verdict "
+             "(see Site-plan tightening). Everywhere else on-lot parking is out "
+             "of scope (bare-rectangle fit only), either because the city "
+             "dimensions a space and never the drive that reaches it, or because "
+             "nobody has read it. Split lots: parking buffer is stalls-only (area "
              "allowance, no geometry check) everywhere — deferred to phase 2.")
     L.append("- Split screen ignores subdivision road/utility/frontage requirements "
              "and new interior-lot-line setbacks — treat as a lead list, not a yield.")
@@ -1019,7 +1067,9 @@ def main() -> None:
 def _write_siteplans(lots, n_sample: int) -> None:
     """Sampled per-lot site-plan drawings (building/driveway/stalls/utility)
     from the s6s `siteplan_json` WKB-hex geometry, with lot + envelope context.
-    Reprojected to WGS84 for geojson.io. Pilot-cell, `site_plan_ok` lots only."""
+    Reprojected to WGS84 for geojson.io. Evaluated, `site_plan_ok` lots only,
+    sampled ROUND-ROBIN across the cities laid out — `head()` would have handed
+    back one city's drawings once this stage stopped being one city."""
     import shapely
     from pyproj import Transformer
 
@@ -1030,9 +1080,11 @@ def _write_siteplans(lots, n_sample: int) -> None:
     pil = lots[(lots["parking_tier"] != "not_evaluated")
                & lots["site_plan_ok"].astype(bool)]
     if not len(pil):
-        print("no site_plan_ok pilot lots — skipping siteplans.geojson")
+        print("no site_plan_ok lots — skipping siteplans.geojson")
         return
-    sample = pil.head(n_sample)
+    per_city = pil.groupby("jurisdiction", sort=True, group_keys=False)
+    take = max(1, n_sample // max(1, pil["jurisdiction"].nunique()))
+    sample = per_city.head(take).head(n_sample)
     s3 = read_stage("s3_lots")[["TLID", "geom"]].rename(columns={"geom": "lot_geom"})
     s5 = read_stage("s5o_lots")[["TLID", "geom"]].rename(columns={"geom": "env_geom"})
     sample = sample.merge(s3, on="TLID").merge(s5, on="TLID")

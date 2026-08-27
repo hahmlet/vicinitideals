@@ -38,8 +38,11 @@ def _sp_setup(res: float = 0.5):
         "res": res, "gap": 5.0, "drive_travel": 12.0,
         "pods": [("pod56x36", 56.0, 36.0), ("pod80x25", 80.0, 25.0)],
         "open_space_pct": 15.0, "min_stalls": 4, "preferred_stalls": 8,
-        "stall_w": geom.stall_width_ft, "stall_d": geom.stall_depth_ft,
-        "aisle_two": geom.aisle_two_way_ft, "aisle_one": geom.aisle_one_way_ft,
+        "cells": {"gresham": {
+            "stall_w": geom.stall_width_ft, "stall_d": geom.stall_depth_ft,
+            "aisle_two": geom.aisle_two_way_ft, "aisle_one": geom.aisle_one_way_ft,
+            "cap": 8,
+        }},
         "methods": ["townhome_rear_court"],
     }
     s6s_siteplan._init_worker(cfg)
@@ -57,8 +60,9 @@ def _rect_lot(W: float, D: float):
     return env, front_edges, W * D, lot
 
 
-def _run(s6s, env, front_edges, area, bearing=0.0):
-    return s6s.layout_lot(shapely.to_wkb(env), [bearing], front_edges, area, FRONT_S)
+def _run(s6s, env, front_edges, area, bearing=0.0, jurisdiction="gresham"):
+    return s6s.layout_lot(shapely.to_wkb(env), [bearing], front_edges, area,
+                          FRONT_S, jurisdiction)
 
 
 # ---------------------------------------------------------------------------
@@ -74,6 +78,8 @@ def test_footprints_yaml_has_siteplan_block():
     sp = fps.siteplan
     assert sp.pilot_jurisdiction == "gresham"
     assert sp.pilot_zone == "LDR-5"
+    assert sp.scope == "every_city_it_can_dimension"
+    assert sp.plat == "one_lot"
     assert sp.layout_methods == ["townhome_rear_court"]
     assert (sp.min_stalls(), sp.target_stalls(), sp.preferred_stalls()) == (4, 6, 8)
     assert sp.tier_for(3) == "fail"
@@ -233,3 +239,93 @@ def test_d_geometry_invariants_and_rotation_invariance():
     assert r_rot["stalls_provided"] == r["stalls_provided"]
     assert r_rot["site_plan_ok"] == r["site_plan_ok"]
     assert r_rot["layout_method"] == r["layout_method"]
+
+
+# ---------------------------------------------------------------------------
+# scope — which cities get laid out, and what stops one
+# ---------------------------------------------------------------------------
+
+
+def test_the_cities_laid_out_are_the_ones_that_state_an_aisle():
+    """Scope is a consequence of reading, not a cell somebody chose.
+
+    This stage was one cell for as long as one city's stall had been read. Now
+    that seven have, the list has to be derived rather than typed — otherwise
+    the next city read changes nothing and nobody notices for a month.
+    """
+    from common import load_footprints
+
+    sp = load_footprints().siteplan
+    laid_out = sp.cities_it_can_dimension()
+
+    assert laid_out == sorted(laid_out), "order has to be stable across runs"
+    for j in laid_out:
+        assert sp.geometry_for(j).lays_out()
+    for j in set(sp.geometry) - set(laid_out):
+        geom = sp.geometry_for(j)
+        assert geom is None or not geom.lays_out(), (
+            f"{j} can be dimensioned and is not being laid out"
+        )
+    # Both halves of the refusal are live in the shipped config, and a config
+    # where neither is would mean the machinery is untested in production.
+    assert "milwaukie" in sp.geometry and not sp.geometry["milwaukie"].lays_out()
+
+
+def test_a_stated_maximum_beats_the_marketability_target():
+    """Milwaukie caps a quadplex at one space per unit — four, not eight.
+
+    The three tiers are Steph's marketability targets and the law is only ever
+    consulted for the floor. It has an opinion about the ceiling too, and where
+    it does, the preferred tier is not something that city will permit however
+    much room the lot has.
+    """
+    from common import SiteplanSpec, StallGeometry
+
+    sp = SiteplanSpec(geometry={
+        "milwaukie": StallGeometry(stall_width_ft=9.0, stall_depth_ft=18.0,
+                                   aisle_one_way_ft=24.0, aisle_two_way_ft=24.0,
+                                   max_per_unit=1.0),
+        "gresham": StallGeometry(stall_width_ft=8.5, stall_depth_ft=18.5,
+                                 aisle_one_way_ft=23.0, aisle_two_way_ft=24.0),
+    })
+    assert sp.stall_cap_for("milwaukie") == 4   # 1/unit x 4 units
+    assert sp.stall_cap_for("gresham") == 8     # no ceiling: the target stands
+    assert sp.geometry["milwaukie"].stall_ceiling(4) == 4
+    assert sp.geometry["gresham"].stall_ceiling(4) is None
+    # 1.35/unit (Portland's multi-dwelling zones) is 5.4 spaces, and a fifth of
+    # a stall is not a stall.
+    assert StallGeometry(stall_width_ft=9.0, stall_depth_ft=18.0,
+                         max_per_unit=1.35).stall_ceiling(4) == 5
+
+
+def test_the_ceiling_binds_the_layout_and_not_just_the_arithmetic():
+    """A lot with room for eight seats four where the city permits four."""
+    s6s = _sp_setup()
+    s6s._CFG["cells"]["milwaukie_like"] = dict(s6s._CFG["cells"]["gresham"], cap=4)
+    env, fe, area, lot = _rect_lot(160.0, 220.0)
+    assert _run(s6s, env, fe, area)["stalls_provided"] == 8
+    capped = _run(s6s, env, fe, area, jurisdiction="milwaukie_like")
+    assert capped["stalls_provided"] == 4
+    assert capped["site_plan_ok"] is True  # four stalls is still the floor
+
+
+def test_oregon_city_stands_down_on_the_other_plat_path():
+    """Its parking chapter reaches a quadplex and excludes townhouses.
+
+    OCMC 17.52.010 lists what Chapter 17.52 does not apply to and townhouses
+    are on the list; triplexes and quadplexes are not. So the same four units
+    are dimensioned on one lot and undimensioned on four, and which one the
+    pipeline draws is a decision it has to state rather than inherit.
+    """
+    from common import load_footprints
+
+    fps = load_footprints()
+    sp = fps.siteplan
+    assert sp.plat == "one_lot"
+    assert sp.geometry["oregon_city"].stands_down_on == ["unit_lots"]
+    assert sp.geometry_for("oregon_city") is not None
+    assert "oregon_city" in sp.cities_it_can_dimension()
+
+    on_unit_lots = sp.model_copy(update={"plat": "unit_lots"})
+    assert on_unit_lots.geometry_for("oregon_city") is None
+    assert "oregon_city" not in on_unit_lots.cities_it_can_dimension()

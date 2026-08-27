@@ -1,4 +1,4 @@
-"""s6s — procedural site-plan generator (Gresham LDR-5 pilot).
+"""s6s — procedural site-plan generator.
 
 s6 answers "does a bare pod RECTANGLE fit in the setback envelope?". That is a
 necessary but not sufficient test: a lot can seat the building yet have no room
@@ -8,15 +8,28 @@ left for parking or a driveway. This stage lays out an actual site plan per lot
 best parking tier each lot achieves. s7 then TIGHTENS the 1-lot conversion
 verdict with `site_plan_ok` in place of the bare-rectangle test.
 
-Scoped to a single pilot cell (`siteplan.pilot_jurisdiction` / `pilot_zone` in
-footprints.yaml — Gresham LDR-5). Every other lot passes through untouched with
-`parking_tier = "not_evaluated"`, so the stage is cheap and s7 sees the full
-table. Generalizing to more cells is a post-pilot step (needs their utility
-data + slope DEM).
+Scoped by what has been READ, not by a cell somebody picked: every lot in every
+city whose own code states a stall AND an aisle, in every zone. A city that
+states a stall and no aisle is declined by name — Milwaukie and Wilsonville
+both do, and a court laid out to a borrowed aisle is a stall count no reviewer
+could defend. A city nobody has read passes through untouched with
+`parking_tier = "not_evaluated"`, so s7 still sees the full table.
 
-Product = attached townhomes (fee-simple lots) → Gresham §7.0431 governs, one
-honest typology `townhome_rear_court`. Phase-1 layout is greedy + approximate
-(documented seams toward realism):
+Each city contributes exactly three numbers: its stall width, its stall depth,
+its aisle — plus a stall CEILING where it states one, because a maximum makes
+the higher marketability tiers unreachable however much room a lot has. The
+arrangement itself does not vary: pod across the front, one consolidated
+driveway down a side, a rear court, cars leaving forward. That is Gresham
+§7.0431's shape and also Milwaukie 19.607.1.E.2's and Happy Valley
+16.43.030.F.5's, which is why one typology travels.
+
+Product = attached townhomes on ONE lot (the plat path s7's conversion verdict
+reports and the FLATS design catalog defaults to). It is a real fork rather
+than a formality: Oregon City's parking chapter reaches a quadplex and excludes
+townhouses, so its dimensions stand on one lot and evaporate on four.
+
+One honest typology `townhome_rear_court`. Phase-1 layout is greedy +
+approximate (documented seams toward realism):
   - building: frontmost fitting pod placement (reuses s6's raster placement)
   - driveway: a single consolidated lane down one SIDE of the pod (never across
     the front, §7.0431(B)(3)(b)(iii)); its width is far under the combined curb-
@@ -29,6 +42,16 @@ honest typology `townhome_rear_court`. Phase-1 layout is greedy + approximate
     residual area reservation competing with building + pavement
   - utility run: phase-1 reuses `sewer_main_dist_ft` (s5o); a routed connector
     polyline is a phase-2 seam
+
+NOT modelled, and the largest known gap in this stage: where a code says
+parking may not SIT. Happy Valley 16.43.030.E.4 sets a parking area back from a
+street lot line by the building setback (twenty feet in its residential zones);
+Oregon City 17.16.060.D caps outdoor parking and manoeuvring at forty feet or
+half the frontage; Milwaukie 19.607.1.D allows a quadplex a fourth front-yard
+space and no more. A rear court is the arrangement that survives all of them,
+which is the one drawn here — but the side driveway is not obviously exempt
+from any of them, and no field in the corpus holds them yet. Every city outside
+Gresham is drawn to its stall and its aisle, and to Gresham's driveway rules.
 
 Geometry works in the front-aligned rotated frame (front lot line along the
 grid, building/stalls axis-aligned), then rotates back to EPSG:2913 for output.
@@ -95,12 +118,18 @@ def _largest_rect(ok):
 
 
 def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[float]],
-               area_sqft: float, front_setback_ft: float) -> dict:
+               area_sqft: float, front_setback_ft: float,
+               jurisdiction: str = "") -> dict:
     """Lay out one lot's site plan. Runs in worker processes.
 
     Returns a dict of scalar results + `geoms` (role -> shapely geometry in the
     working CRS). `main()` turns geoms into WKB-hex and derives parking_tier /
     site_plan_ok from the scalars + config.
+
+    `jurisdiction` selects the stall, the aisle and the stall ceiling, which
+    are the only per-city numbers in the layout — the arrangement itself is the
+    same everywhere. It defaults to "" so a caller with a single-city config
+    (the tests) can leave it off; the lookup falls back to the lone entry.
     """
     import numpy as np
     import shapely
@@ -112,6 +141,8 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
     drive_w: float = _CFG["drive_travel"]
     pods: list[tuple[str, float, float]] = _CFG["pods"]
     open_pct: float = _CFG["open_space_pct"]
+    cells: dict = _CFG["cells"]
+    cell = cells.get(jurisdiction) or next(iter(cells.values()))
 
     fail = {
         "site_plan_ok": False, "stalls_provided": 0, "layout_method": "none",
@@ -152,13 +183,16 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
                    minx + (c0 + w) * res, miny + (r0 + h) * res)
 
     # Fixed-element cell dimensions.
-    stall_w, stall_d = _CFG["stall_w"], _CFG["stall_d"]
-    aisle_two, aisle_one = _CFG["aisle_two"], _CFG["aisle_one"]
+    stall_w, stall_d = cell["stall_w"], cell["stall_d"]
+    aisle_two, aisle_one = cell["aisle_two"], cell["aisle_one"]
     sw_c = max(1, math.ceil(stall_w / res))
     sd_c = max(1, math.ceil(stall_d / res))
     drive_c = max(1, round(drive_w / res))
     gap_c = max(0, round(gap / res))
-    cap = _CFG["preferred_stalls"]  # a 4-plex never needs more than 2/unit
+    # A 4-plex never needs more than 2/unit — unless the city says fewer, in
+    # which case the city's number is the cap and the higher tiers are simply
+    # not reachable here. Milwaukie's one-per-unit is the live case.
+    cap = cell["cap"]
     geoms: dict = {}
 
     # Attached-townhome layout (Gresham §7.0431): the pod sits across the front;
@@ -282,8 +316,8 @@ def _work_chunk(chunk):
     import shapely
 
     out = []
-    for idx, env_wkb, bearings, fedges, area, fsb in chunk:
-        r = layout_lot(env_wkb, bearings, fedges, area, fsb)
+    for idx, env_wkb, bearings, fedges, area, fsb, jur in chunk:
+        r = layout_lot(env_wkb, bearings, fedges, area, fsb, jur)
         r["geoms_hex"] = {role: shapely.to_wkb(g).hex() for role, g in r.pop("geoms").items()}
         out.append((idx, r))
     return out
@@ -292,7 +326,7 @@ def _work_chunk(chunk):
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--processes", type=int, default=max(1, cpu_count() - 2))
-    ap.add_argument("--limit", type=int, help="only first N pilot lots (debug)")
+    ap.add_argument("--limit", type=int, help="only first N in-scope lots (debug)")
     args = ap.parse_args()
 
     import numpy as np
@@ -329,49 +363,81 @@ def main() -> None:
     pod_list = [(f.name, f.width_ft, f.depth_ft) for f in fps.footprints]
     fp_names = [f.name for f in fps.footprints]
 
-    # Pilot cell: right jurisdiction + zone AND a pod geometrically fits.
+    # Which lots: every city whose own code states a stall AND an aisle, on
+    # every zone, wherever a pod geometrically fits. A city that states a stall
+    # and no aisle is declined rather than laid out to somebody else's numbers
+    # -- the stall count is the whole output of this stage, and a borrowed
+    # dimension is a made-up one. A city nobody has read is passed through.
     fits_any = np.zeros(n, dtype=bool)
     for name in fp_names:
         fits_any |= (lots[f"fits_{name}_wf"].to_numpy()
                      | lots[f"fits_{name}_df"].to_numpy())
-    pilot = ((lots["jurisdiction"] == sp.pilot_jurisdiction)
-             & (lots["zone"] == sp.pilot_zone) & fits_any).to_numpy()
 
-    # Per-cell front setback from the verified zone rule (fallback 10 ft).
-    jrules = rules.jurisdictions.get(sp.pilot_jurisdiction)
-    zrule = jrules.rule_for(sp.pilot_zone) if jrules else None
-    front_setback = float(zrule.setback_front_ft) if zrule and zrule.setback_front_ft \
-        else 10.0
-
-    # The pilot city's own stall and aisle, never a global constant. A city with
-    # no entry, or one whose code states a stall and no aisle, is a city this
-    # stage declines rather than lays out to somebody else's numbers -- the
-    # stall count is the whole output, and a borrowed dimension is a made-up one.
-    geom = sp.geometry_for(sp.pilot_jurisdiction)
-    if geom is None or not geom.lays_out():
-        missing = "no parking geometry is encoded" if geom is None \
-            else "its code states a stall size but no aisle width"
-        print(f"s6s: {sp.pilot_jurisdiction} — {missing}; writing passthrough "
-              f"columns rather than laying out to another city's dimensions")
+    cities = sp.cities_it_can_dimension()
+    declined = sorted(set(sp.geometry) - set(cities))
+    if not cities:
+        print("s6s: no city in footprints.yaml states both a stall and an aisle; "
+              "writing passthrough columns")
         _finalize(lots, site_ok, tier, stalls, method, bname, drive_len,
                   park_area, open_sqft, open_ok, sp_json)
         return
+    for j in declined:
+        why = ("its code states a stall size but no aisle width"
+               if sp.geometry_for(j) is not None
+               else f"its parking chapter does not reach this building on the "
+                    f"{sp.plat} plat path")
+        print(f"s6s: declining {j} -- {why}")
+
+    in_scope = (lots["jurisdiction"].isin(cities) & fits_any).to_numpy()
+    if sp.scope == "pilot_cell":
+        in_scope &= (lots["zone"] == sp.pilot_zone).to_numpy()
+
+    # Per-CELL front setback from the verified zone rule (fallback 10 ft). One
+    # lookup per (jurisdiction, zone) rather than per lot: there are a few dozen
+    # cells and a quarter of a million lots.
+    setbacks: dict[tuple[str, str], float] = {}
+
+    def _front_setback(jur: str, zone: str) -> float:
+        key = (jur, zone)
+        if key not in setbacks:
+            jr = rules.jurisdictions.get(jur)
+            zr = jr.rule_for(zone) if jr else None
+            setbacks[key] = (float(zr.setback_front_ft)
+                             if zr and zr.setback_front_ft else 10.0)
+        return setbacks[key]
+
+    # Each city's own stall, aisle and stall ceiling, keyed by name and handed
+    # to the workers whole. Nothing else in the layout is per-city: the
+    # arrangement -- pod at the front, one side driveway, a rear court, cars out
+    # forward -- is what every code in this corpus asks for in its own words.
+    cells = {}
+    for j in cities:
+        g = sp.geometry_for(j)
+        cells[j] = {
+            "stall_w": g.stall_width_ft, "stall_d": g.stall_depth_ft,
+            "aisle_one": g.aisle_one_way_ft, "aisle_two": g.aisle_two_way_ft,
+            "cap": sp.stall_cap_for(j),
+        }
 
     cfg = {
         "res": res, "gap": sp.building_parking_gap_ft,
         "drive_travel": sp.driveway_min_travel_ft, "pods": pod_list,
         "open_space_pct": sp.private_open_space_pct, "min_stalls": sp.min_stalls(),
         "preferred_stalls": sp.preferred_stalls(),
-        "stall_w": geom.stall_width_ft, "stall_d": geom.stall_depth_ft,
-        "aisle_two": geom.aisle_two_way_ft, "aisle_one": geom.aisle_one_way_ft,
+        "cells": cells,
         "methods": list(sp.layout_methods),
     }
 
-    idxs = np.nonzero(pilot)[0]
+    idxs = np.nonzero(in_scope)[0]
     if args.limit:
         idxs = idxs[: args.limit]
-    print(f"s6s: {len(idxs):,} pilot lots ({sp.pilot_jurisdiction}/{sp.pilot_zone}, "
-          f"pod fits) of {n:,} total; {args.processes} processes")
+    capped = [f"{j} (max {cells[j]['cap']})" for j in cities
+              if cells[j]["cap"] < sp.preferred_stalls()]
+    scope_note = (f"{sp.pilot_zone} only" if sp.scope == "pilot_cell"
+                  else "all zones")
+    print(f"s6s: {len(idxs):,} lots in scope of {n:,} total, {scope_note}, across "
+          f"{len(cities)} cities ({', '.join(cities)}); {args.processes} processes"
+          + (f"; stall ceiling binds in {', '.join(capped)}" if capped else ""))
 
     tasks = []
     for i in idxs:
@@ -379,10 +445,11 @@ def main() -> None:
         if row["env_geom"] is None:
             continue
         fedges = [e[:4] for e in json.loads(row["edges_json"]) if e[4] == "F"]
+        jur, zone = str(row["jurisdiction"]), str(row["zone"])
         tasks.append((
             int(i), shapely.to_wkb(row["env_geom"]),
             json.loads(row["front_bearings_json"]), fedges,
-            float(row["area_sqft"]), front_setback,
+            float(row["area_sqft"]), _front_setback(jur, zone), jur,
         ))
 
     chunk_size = 500
@@ -424,6 +491,22 @@ def main() -> None:
           f"site_plan_ok {int(site_ok.sum()):,}; tiers "
           + ", ".join(f"{t}={int((tier == t).sum()):,}"
                       for t in ("preferred", "target", "minimum", "fail")))
+    # Per city, because that is the whole reason this stage stopped being one
+    # cell: a city's stall and aisle are what decide its lots, and a total hides
+    # which city paid for which number.
+    jur = lots["jurisdiction"].to_numpy()
+    for j in cities:
+        m = ev & (jur == j)
+        if not m.any():
+            print(f"  {j:16s} no lots in scope")
+            continue
+        c = cells[j]
+        aisle = f"{c['aisle_one']}/{c['aisle_two']}"
+        print(f"  {j:16s} {int(m.sum()):>7,} evaluated  "
+              f"site_plan_ok {int((site_ok & m).sum()):>6,}  "
+              f"stall {c['stall_w']}x{c['stall_d']} aisle {aisle} cap {c['cap']}  "
+              + ", ".join(f"{t}={int(((tier == t) & m).sum()):,}"
+                          for t in ("preferred", "target", "minimum", "fail")))
     print("s6s done.")
 
 

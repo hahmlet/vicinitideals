@@ -92,8 +92,17 @@ screen:
 # row (front 10 / side 5 / rear 15 / street-side 10, min lot 5,000, FAR 1.0).
 siteplan:
   enabled: true
+  # Every city whose own code states a stall AND an aisle gets laid out. Five
+  # do; two more state a stall and no aisle and are declined by name below;
+  # the rest have not been read and pass through as `not_evaluated`. Narrow to
+  # `pilot_cell` to re-run Gresham LDR-5 alone after a layout change.
+  scope: every_city_it_can_dimension
   pilot_jurisdiction: gresham
   pilot_zone: LDR-5
+  # Four units on ONE lot — the verdict s7 reports and the path the FLATS
+  # design catalog defaults to. It decides which chapter reaches the building
+  # in Oregon City; see its entry.
+  plat: one_lot
   # Marketability tiers — spaces per townhome unit (pod = 4 units).
   parking_per_unit_min: 1.0        # 4/pod  (tight-lot floor)
   parking_per_unit_target: 1.5     # 6/pod  (design target)
@@ -137,6 +146,83 @@ siteplan:
       aisle_one_way_ft: 20         # the table prints 20 in BOTH aisle columns
       aisle_two_way_ft: 20
       cite: PCC Table 266-4 (90 degrees), reached via 33.266.120.B.1 parking tract
+      # PCC 33.266.115 exempts this building from the maximum tables. The 1.35
+      # per unit in Tables 266-1/266-2 is real and belongs to RM1-RM4, RX,
+      # RMP and the commercial zones — none of which is in this inventory,
+      # which carries RF, R20, R10, R7, R5 and R2.5 only. Read, not omitted.
+      max_per_unit: null
+    # Fairview requires ZERO stalls and caps none, and still dimensions them
+    # completely — the whole point of the "required vs regulated" split. 24 ft
+    # is the widest aisle anybody in this corpus asks for, which makes Fairview
+    # the deepest court and the hardest city to seat two rows in.
+    fairview:
+      stall_width_ft: 9
+      stall_depth_ft: 19
+      aisle_one_way_ft: 24         # one figure, printed for both directions
+      aisle_two_way_ft: 24
+      cite: FMC 19.164.030, off-street parking dimensions, 90 degrees standard
+      max_per_unit: null
+    # Happy Valley answers every part of the question in one chapter: one
+    # space per dwelling required, no maximum, 9 x 18.5 off a 24 ft aisle. The
+    # module figure in its table is the check on the reading — 18.5 + 24 + 18.5
+    # is the 61 ft the table prints.
+    #
+    # NOT MODELLED HERE, and it is the rule that would change these drawings:
+    # LDC 16.43.030.E.4 sets parking back from a street lot line by the
+    # BUILDING setback, twenty feet in its residential zones. A rear court is
+    # the arrangement that survives that, which is the one this stage draws —
+    # but the side driveway running from the street is not obviously exempt,
+    # and nothing here checks it. Happy Valley's numbers are therefore the
+    # loose end of this run rather than a verdict.
+    happy_valley:
+      stall_width_ft: 9
+      stall_depth_ft: 18.5
+      aisle_one_way_ft: 24
+      aisle_two_way_ft: 24
+      cite: HV LDC 16.43.030.F.2, Table 16.43.030-2, standard vehicle at 90 degrees
+      max_per_unit: null
+    # Oregon City states this geometry for a QUADPLEX and states none at all
+    # for townhouses: OCMC 17.52.010 excludes "single-family detached
+    # residential dwellings, duplexes, townhouses, and cottage clusters" from
+    # the whole parking chapter and leaves triplexes and quadplexes in it. So
+    # these dimensions govern four units on one lot and evaporate the moment
+    # the same building is platted onto four. `plat: one_lot` above is what
+    # keeps them in play; flip it and s6s declines this city instead.
+    oregon_city:
+      stall_width_ft: 9
+      stall_depth_ft: 19           # the table's "Stall to Curb" column
+      aisle_one_way_ft: 24
+      aisle_two_way_ft: 24
+      cite: OCMC 17.52.030.D.1, Parking Angle Space Dimensions, 90 degrees standard
+      stands_down_on: [unit_lots]
+      # How MANY spaces is refused in the corpus: Table 17.52.020 asks a
+      # triplex/quadplex for "2.00" and "4" and states no unit for either.
+      max_per_unit: null
+    # --- states a stall and no aisle: declined, not borrowed from -----------
+    # Both of these dimension a space and never dimension the drive that
+    # reaches it, so a court laid out here would be laid out to somebody
+    # else's number. They are listed rather than omitted because the drift
+    # test reads an omission as "nobody read this city", and both were read.
+    milwaukie:
+      stall_width_ft: 9
+      stall_depth_ft: 18
+      cite: MMC 19.607.1.A (Residential Driveways and Vehicle Parking Areas)
+      # The tightest ceiling in this corpus: Table 19.605.1 caps a quadplex at
+      # one space per unit, which is four — the same as the marketability
+      # FLOOR. Every legal Milwaukie plan is a minimum-tier plan, and the 1.5
+      # and 2.0 tiers are not on offer in this city at any lot size. Carried
+      # even though Milwaukie is declined for want of an aisle, because the
+      # day an aisle turns up this is the number that decides its lots.
+      max_per_unit: 1
+    # Section 19.606's aisle table (22 ft at 90 degrees) is NOT Milwaukie's
+    # answer here: that section's purpose paragraph excepts middle housing
+    # from everything in it bar the quarter-acre parking-lot rules, and
+    # Table 19.605.1 files quadplexes under Middle Housing.
+    wilsonville:
+      stall_width_ft: 9
+      stall_depth_ft: 18
+      cite: WC 4.113(.14)D, off-street parking, stall dimensions in the definitions
+      max_per_unit: null
   driveway_approach_min_ft: 18     # §7.0431(B)(2)(b): combined curb cut =
   driveway_approach_frontage_pct: 34  #   max(18 ft, 34% of frontage) — see note
   driveway_min_travel_ft: 12       # single side travel lane width to the rear

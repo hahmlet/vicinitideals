@@ -321,11 +321,38 @@ class StallGeometry(BaseModel):
     aisle_one_way_ft: float | None = None
     aisle_two_way_ft: float | None = None
     parallel_stall_ft: list[float] | None = None
+
+    #: Spaces per unit the city will not let this building exceed, or None
+    #: where it states no ceiling. Mirrors the corpus `parking_max_per_unit`,
+    #: and None is what an `exempt: true` there means: read, and no maximum.
+    #:
+    #: A ceiling is not a detail. Milwaukie caps a quadplex at one space per
+    #: unit, which is four for this pod — the same number as the marketability
+    #: floor, so every Milwaukie plan is a minimum-tier plan by law and the
+    #: 1.5 and 2.0 tiers are not offers that city will accept. A generator
+    #: that seats eight stalls there is drawing an illegal site plan and
+    #: calling it preferred.
+    max_per_unit: float | None = None
+
+    #: Plat paths on which these dimensions stand down entirely, mirroring the
+    #: corpus `unless:`. Oregon City is the case: OCMC 17.52.010 excludes
+    #: townhouses from the whole parking chapter and leaves quadplexes in it,
+    #: so 9 x 19 off a 24 ft aisle is what governs four units on ONE lot and
+    #: nothing governs the same building on four. Which is a fact about how
+    #: the product is brought to market, not about the parcel.
+    stands_down_on: list[str] = Field(default_factory=list)
+
     cite: str = ""
 
     def lays_out(self) -> bool:
         """Whether a rear court can be dimensioned from what this code states."""
         return self.aisle_one_way_ft is not None and self.aisle_two_way_ft is not None
+
+    def stall_ceiling(self, units: int) -> int | None:
+        """Most stalls this city permits the pod, or None where it caps none."""
+        if self.max_per_unit is None:
+            return None
+        return int(math.floor(self.max_per_unit * units))
 
 
 # Gresham, the pilot cell. The one-way aisle is 23 ft, not 20: Table 9.0825A
@@ -345,7 +372,7 @@ _GRESHAM_GEOMETRY = {
 
 
 class SiteplanSpec(BaseModel):
-    """Procedural site-plan generator knobs (s6s stage — Gresham LDR-5 pilot).
+    """Procedural site-plan generator knobs (s6s stage).
 
     Unlike SplitSpec (parking as a flat area allowance), this drives an actual
     per-lot geometric layout: building placed at the front, a driveway to a
@@ -353,30 +380,66 @@ class SiteplanSpec(BaseModel):
     open-space reservation. All lengths in feet (CRS EPSG:2913). Every knob is
     an s6s+s7 re-run; drawings alone are an s7 re-run.
 
-    Parking counts are Steph's marketability target, NOT a legal floor: Gresham
-    LDR-5 requires ZERO parking (CFEC citywide elimination, §9.0802(A)) and sets
-    NO maximum (Table 9.0851A), so all three tiers are legal.
+    The three parking counts are Steph's marketability target and not a legal
+    floor — Gresham requires ZERO parking (CFEC citywide elimination,
+    §9.0802(A)) and Fairview and Portland require none either. What the law
+    contributes is the other end: a city may state a MAXIMUM, and where it does
+    the higher tiers are not on offer there however much room a lot has. That
+    ceiling lives on StallGeometry beside the stall it belongs to, because it
+    is the same reading of the same table.
 
-    Product = attached townhomes (fee-simple lots, §7.0431), so parking follows
-    the townhouse standard, not the quadplex one: off-street parking is in the
+    The layout itself follows the townhouse standard rather than the quadplex
+    one, because the product is attached townhomes: off-street parking in the
     REAR yard, reached by a single consolidated driveway down one SIDE (never
-    across the front — §7.0431(B)(3)(b)(iii)); the combined curb cut is capped at
-    18 ft or 34% of frontage, whichever is greater (§7.0431(B)(2)(b)). Cars enter
-    and leave forward, so nothing backs onto the street — which the code only
-    prohibits for arterials anyway (Appendix A5.404). One honest typology:
-    `townhome_rear_court`.
+    across the front — Gresham §7.0431(B)(3)(b)(iii)); the combined curb cut
+    capped at 18 ft or 34% of frontage, whichever is greater (§7.0431(B)(2)(b));
+    cars entering and leaving forward, so nothing backs onto the street, which
+    the code only prohibits for arterials anyway (Appendix A5.404). Those are
+    Gresham's words for an arrangement every city in this corpus asks for in
+    its own — Milwaukie 19.607.1.E.2, Happy Valley 16.43.030.F.5 — which is why
+    one typology travels: `townhome_rear_court`.
+
+    What does NOT travel is the stall: see StallGeometry.
     """
 
     enabled: bool = True
-    # Scope: which single (jurisdiction, zone) cell the pilot lays out. Other
-    # lots pass through s6s untouched (parking_tier = "not_evaluated").
+
+    # WHICH LOTS GET LAID OUT.
+    #
+    # This began as one cell — Gresham LDR-5 — because Gresham was the only
+    # city whose stall and aisle had been read. That is no longer the reason
+    # it is one cell; it is now just the shape the code was left in, and a
+    # stage scoped to a city nobody chose is a stage answering a question
+    # nobody asked. `every_city_it_can_dimension` lays out every lot in every
+    # city whose own code states a stall AND an aisle. A city that states a
+    # stall and no aisle is still declined — the point of per-city geometry is
+    # that a borrowed dimension is a made-up one — and a city nobody has read
+    # is still passed through as `not_evaluated`.
+    #
+    # `pilot_cell` is kept because it is the cheap way to re-run one city
+    # after a layout change, and because the drawings in siteplans.geojson
+    # were sampled from it.
+    scope: Literal["every_city_it_can_dimension", "pilot_cell"] = (
+        "every_city_it_can_dimension"
+    )
     pilot_jurisdiction: str = "gresham"
     pilot_zone: str = "LDR-5"
+
+    # WHICH BUILDING IS BEING LAID OUT, on paper.
+    #
+    # Four units on one lot is a quadplex; four units on four lots is
+    # townhouses, and cities state different standards for the two. The
+    # pipeline's verdict is the ONE-LOT conversion (s7 `conversion_*`), and
+    # the FLATS design catalog defaults to the same path, so that is what this
+    # stage draws. It is stated here rather than assumed because it decides
+    # whether a city's parking chapter reaches this building at all: Oregon
+    # City's does on one lot and does not on four.
+    plat: Literal["one_lot", "unit_lots"] = "one_lot"
 
     # Marketability tiers — spaces per townhome unit.
     parking_per_unit_min: float = 1.0        # 4 / pod (tight-lot floor)
     parking_per_unit_target: float = 1.5     # 6 / pod (design target)
-    parking_per_unit_preferred: float = 2.0  # 8 / pod (legal — no LDR-5 ceiling)
+    parking_per_unit_preferred: float = 2.0  # 8 / pod (where the city caps none)
     units_per_pod: int = 4
 
     # Single honest typology (see class docstring). Kept as a list so a future
@@ -386,7 +449,7 @@ class SiteplanSpec(BaseModel):
     )
 
     # Stall + drive geometry, per jurisdiction — never one global number. See
-    # StallGeometry. The pilot cell's entry must exist or s6s refuses the cell.
+    # StallGeometry. A city with no entry here is a city s6s passes through.
     geometry: dict[str, StallGeometry] = Field(
         default_factory=lambda: {"gresham": StallGeometry(**_GRESHAM_GEOMETRY)}
     )
@@ -410,8 +473,43 @@ class SiteplanSpec(BaseModel):
         invitation to substitute the pilot's numbers: a court laid out to
         Gresham's stall in a city that writes a wider one is a stall count that
         no reviewer could defend.
+
+        It is also the answer where a city states dimensions that do not reach
+        the building on the plat path being drawn — Oregon City on unit lots —
+        which is the same refusal for the same reason.
         """
-        return self.geometry.get(jurisdiction)
+        geom = self.geometry.get(jurisdiction)
+        if geom is None or self.plat in geom.stands_down_on:
+            return None
+        return geom
+
+    def cities_it_can_dimension(self) -> list[str]:
+        """Every jurisdiction this stage will lay out, in scope order.
+
+        Sorted so a run's console output and the report read the same way twice
+        running; `pilot_cell` scope narrows to the pilot city alone, and even
+        then only if that city can actually be dimensioned.
+        """
+        if self.scope == "pilot_cell":
+            names = [self.pilot_jurisdiction]
+        else:
+            names = sorted(self.geometry)
+        return [n for n in names
+                if (g := self.geometry_for(n)) is not None and g.lays_out()]
+
+    def stall_cap_for(self, jurisdiction: str) -> int:
+        """Most stalls s6s will seat here: the marketability ceiling or the law.
+
+        A four-plex has no use for more than 2/unit, so the preferred tier is
+        the standing cap. Where a city states a maximum below that, the city's
+        number is the one that binds, and the pod simply cannot reach the
+        higher tiers there — which is a fact about the market in that city and
+        belongs in the output rather than in a footnote.
+        """
+        cap = self.preferred_stalls()
+        geom = self.geometry_for(jurisdiction)
+        legal = geom.stall_ceiling(self.units_per_pod) if geom else None
+        return cap if legal is None else min(cap, legal)
 
     def min_stalls(self) -> int:
         return math.ceil(self.units_per_pod * self.parking_per_unit_min)

@@ -28,6 +28,27 @@ MIRRORED = {
 }
 
 
+def _corpus_value(layer_id: str, field: str):
+    """The innermost layer's Value for one field, exempt ones included.
+
+    Separate from _corpus_defaults because `exempt: true` means two different
+    things depending on the field. For a dimension it means nobody stated one,
+    which is the same as absent. For a maximum it is a READING — the city looked
+    at its own ceiling table and this building is not on it — and it has to beat
+    a broader layer's number rather than fall through to it.
+    """
+    from flats.encode.load import load_trusted
+    from flats.rules.resolver import RuleSet
+
+    rules = RuleSet(load_trusted(strict=False).layers)
+    found = None
+    for layer in rules.chain_for(layer_id):  # broadest first, so the city wins
+        value = layer.defaults.get(field)
+        if value is not None:
+            found = value
+    return found
+
+
 def _corpus_defaults(layer_id: str) -> dict:
     """The parking geometry a layer resolves to, city over county over state."""
     from flats.encode.load import load_trusted
@@ -74,16 +95,75 @@ def test_every_shipped_dimension_is_the_one_the_corpus_holds():
             )
 
 
-def test_the_pilot_city_is_one_the_site_plan_can_actually_dimension():
+def test_every_shipped_ceiling_is_the_one_the_corpus_holds():
+    """The maximum mirrors too, and `null` here has to mean `exempt` there.
+
+    A ceiling is the one parking number that can make a lot LOOK worse than it
+    is — eight stalls of room and a city that permits four — so a stale copy of
+    one is a site plan drawn to a rule that was repealed, or to none where one
+    exists. Milwaukie is the live case at one space per unit.
+    """
+    from common import load_footprints
+    from flats.encode.port_quadfit import layer_id_for
+
+    for jurisdiction, geom in load_footprints().siteplan.geometry.items():
+        read = _corpus_value(layer_id_for(jurisdiction), "parking_max_per_unit")
+        stated = None if read is None or read.exempt else float(read.value)
+        assert geom.max_per_unit == stated, (
+            f"{jurisdiction}: footprints.yaml ships max_per_unit="
+            f"{geom.max_per_unit} where the corpus reads {stated}"
+            + (f" ({read.prov.cite})" if read is not None else " (nothing)")
+        )
+
+
+def test_a_dimension_that_stands_down_stands_down_for_the_same_reason():
+    """`stands_down_on` mirrors the corpus `unless:`, not a local judgement.
+
+    Oregon City is the only entry that carries one, because OCMC 17.52.010
+    excludes townhouses from the parking chapter and leaves quadplexes in it.
+    If the corpus ever drops that condition — or another city gains one — the
+    mirror has to move with it, or s6s lays out a city on a plat path whose
+    code never reached the building.
+    """
+    from common import load_footprints
+    from flats.encode.port_quadfit import layer_id_for
+
+    for jurisdiction, geom in load_footprints().siteplan.geometry.items():
+        corpus = _corpus_defaults(layer_id_for(jurisdiction))
+        for theirs in MIRRORED.values():
+            read = corpus.get(theirs)
+            if read is None:
+                continue
+            unless = sorted(getattr(read, "unless", ()) or ())
+            assert sorted(geom.stands_down_on) == unless, (
+                f"{jurisdiction}: {theirs} stands down on {unless} in the corpus "
+                f"and on {sorted(geom.stands_down_on)} here"
+            )
+
+
+def test_the_cities_laid_out_are_exactly_the_ones_that_can_be():
+    """Scope follows the reading. A city read is a city laid out, or a refusal.
+
+    The pilot city used to be the only thing this asserted, back when it was
+    the only city with geometry. What matters now is that no city is quietly
+    dropped: every entry either lays out or fails `lays_out()` for a stated
+    reason, and the pilot — still the cell the drawings were sampled from —
+    is among the ones that lay out.
+    """
     from common import load_footprints
 
     sp = load_footprints().siteplan
-    geom = sp.geometry_for(sp.pilot_jurisdiction)
-    assert geom is not None, f"{sp.pilot_jurisdiction} has no stall geometry"
-    assert geom.lays_out(), (
-        f"{sp.pilot_jurisdiction} states no aisle width, so a rear court cannot "
-        "be dimensioned from its code — s6s would write passthrough columns"
-    )
+    laid_out = set(sp.cities_it_can_dimension())
+    assert laid_out, "nothing in the corpus can be dimensioned"
+    assert sp.pilot_jurisdiction in laid_out
+
+    for jurisdiction, geom in sp.geometry.items():
+        if jurisdiction in laid_out:
+            continue
+        assert not geom.lays_out() or sp.plat in geom.stands_down_on, (
+            f"{jurisdiction} states both a stall and an aisle and is still not "
+            "being laid out"
+        )
 
 
 def test_greshams_one_way_aisle_is_the_parking_aisle_not_the_fire_lane():
