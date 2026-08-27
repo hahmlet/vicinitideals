@@ -12,11 +12,17 @@ code, utilities, driveway access, and overlay zones (phase 2) are not modeled.
 On-lot parking is a crude area budget in the base pipeline: out of scope for
 1-for-1 conversion lots (street parking assumed); split candidates budget a
 per-quad parking buffer (stalls only, no travel lanes) via the `split:` block
-in `config/footprints.yaml`. **Stage s6s (site-plan generator, Gresham LDR-5
-pilot)** replaces that crude budget with a real per-lot layout — building +
-driveway + 90° stalls + a 15% private open-space reservation — and tightens the
-conversion verdict to "a full site plan resolves", not just "a bare rectangle
-fits". Pilot-scoped; every other cell passes through untightened.
+in `config/footprints.yaml`. **Stage s6s (site-plan generator)** replaces that
+crude budget with a real per-lot layout — building + driveway + 90° stalls + a
+15% private open-space reservation — and tightens the conversion verdict to
+"a full site plan resolves", not just "a bare rectangle fits".
+
+Scoped by what has been READ: every lot in every city whose own code states a
+stall AND a drive aisle, in every zone. Five qualify today (Fairview, Gresham,
+Happy Valley, Oregon City, Portland). Milwaukie and Wilsonville dimension a
+space and never the drive that reaches it, so they are declined by name — a
+court laid out to a borrowed aisle is a stall count no reviewer could defend.
+Unread cities pass through untightened.
 
 ## Run
 
@@ -35,7 +41,7 @@ Stages cache intermediates in `data/quadfit/*.parquet` (WKB geometry columns);
 |---|---|
 | Jurisdiction on/off (`eligible:`), min lot area, min frontage, orientation constraint, coverage cap, parking buffer / split thresholds, overlay kill↔flag reclassification, slope tier cutlines, sewer cutoff (`SEWER_REVIEW_FT`) / district gate | `python "Lot Analysis/quadfit/s7_report.py"` only (**seconds**) |
 | Sampled site-plan drawings only (no counts change) | `python "Lot Analysis/quadfit/s7_report.py"` only (**seconds**) |
-| `siteplan:` block values (stall/aisle/driveway dims, parking tiers, open-space %, pilot cell) | s6s–s7 (minutes) |
+| `siteplan:` block values (per-city stall/aisle/max, driveway dims, parking tiers, open-space %, scope, plat) | s6s–s7 (~30 min) |
 | New footprint rectangle or sweep | s6–s7 (minutes) |
 | Overlay carve buffer_ft, new carve overlay layer | s5o–s7 (~40 min) |
 | Setback values, new zone rows | s5–s7 (run_all handles cascade) |
@@ -61,8 +67,8 @@ policy-only edits invoke s7 directly as above.
 | s5 | `s5_envelope.py` | Setback envelope: lot − per-edge buffers (conservative) |
 | s5o | `s5o_overlays.py` | Phase 2: per-overlay any-touch flags + intersection sqft, CARVE overlays subtracted from the envelope, per-lot slope stats (USGS 3DEP 1 m DEM), sewer-main distance, sanitary sewer-district membership (`in_sewer_district`, Clackamas `Sewer_Districts` polygons). Driven by `config/overlays.yaml`; missing layers degrade to caveats, never crashes |
 | s6 | `s6_fit.py` | Rotate→rasterize→integral-image rectangle fit against the CARVED envelope, BOTH orientations raw; max-depth-per-width frontier |
-| s6s | `s6s_siteplan.py` | Procedural site-plan generator (Gresham LDR-5 pilot). Re-reads the carved envelope from s5o and lays out an attached-townhome site plan per lot (Gresham §7.0431): pod at the front, one consolidated driveway down a SIDE to a REAR 90° parking court, forward access (nothing backs onto the street), plus a 15% private open-space reservation; reports best parking tier + `site_plan_ok`. One typology (`townhome_rear_court`); the layout tries every pod size × orientation and keeps the most stalls, capped at the preferred tier (8/pod). Non-pilot lots pass through as `not_evaluated` |
-| s7 | `s7_report.py` | POLICY gates (eligibility, z overlay, min lot/frontage, orientation, coverage) + split screen + site-plan tightening of the pilot's conversion verdict + **per-lot binding-constraint attribution and green/review/red triage** + `summary.md`, `lots_results.csv`, `conversion_candidates.csv`, `split_candidates.csv`, `binding_constraints.csv`, `review_candidates.csv`, `spot_check.geojson`, `siteplans.geojson` |
+| s6s | `s6s_siteplan.py` | Procedural site-plan generator, run for every city whose code states a stall AND an aisle (Fairview, Gresham, Happy Valley, Oregon City, Portland today; Milwaukie and Wilsonville declined for want of an aisle). Re-reads the carved envelope from s5o and lays out an attached-townhome site plan per lot (Gresham §7.0431): pod at the front, one consolidated driveway down a SIDE to a REAR 90° parking court, forward access (nothing backs onto the street), plus a 15% private open-space reservation; reports best parking tier + `site_plan_ok`. One typology (`townhome_rear_court`); the layout tries every pod size × orientation and keeps the most stalls, capped at the preferred tier (8/pod) or at the city's own stated MAXIMUM where it states one (Milwaukie: 1/unit = 4). Lots in unread or declined cities pass through as `not_evaluated`. Draws the ONE-LOT plat path (`siteplan.plat`), which decides whether a city's parking chapter reaches the building at all — Oregon City's does on one lot and excludes townhouses on four |
+| s7 | `s7_report.py` | POLICY gates (eligibility, z overlay, min lot/frontage, orientation, coverage) + split screen + site-plan tightening of the conversion verdict + **per-lot binding-constraint attribution and green/review/red triage** + `summary.md`, `lots_results.csv`, `conversion_candidates.csv`, `split_candidates.csv`, `binding_constraints.csv`, `review_candidates.csv`, `spot_check.geojson`, `siteplans.geojson` |
 
 ## Config
 
@@ -85,7 +91,7 @@ policy-only edits invoke s7 directly as above.
   minimum lot area; `min_quads` sets the split-candidate bar). Split math is
   pure attribute arithmetic — any knob change is an s7-only re-run. Conversion
   (non-split) lots carry NO parking requirement in the base pipeline by design.
-  Also the `siteplan:` block (stage s6s, Gresham LDR-5 pilot): parking tiers
+  Also the `siteplan:` block (stage s6s): parking tiers
   (min/target/preferred = 1 / 1.5 / 2 stalls per townhome unit — a
   marketability target, NOT the legal floor, which is zero here), stall/aisle/
   driveway dimensions, and the 15% private open-space reservation, all with
@@ -173,9 +179,20 @@ reductions. Substandard lots of record below a zone's quadplex minimum may
 still carry quadplex rights under OAR 660-046 — the funnel counts that drop
 separately (`lot_below_zone_min_area`).
 
-**Retired for the Gresham LDR-5 pilot (stage s6s):** on-lot parking geometry,
-driveway layout (curb-cut *throat length/spacing* still a documented gap — lives
-in Gresham PWS A5.000, not the CDC), and the Gresham 15% private-open-space
-minimum are now modeled per lot. Still pilot-scoped; the rest of the market
-retains the blind spots above until the engine is generalized (needs each
-cell's utility data + a slope DEM).
+**Retired wherever s6s runs:** on-lot parking geometry, driveway layout
+(curb-cut *throat length/spacing* still a documented gap — lives in Gresham PWS
+A5.000, not the CDC), and the 15% private-open-space minimum are now modeled
+per lot in every city whose code states a stall and an aisle. Cities with no
+encoded parking geometry retain the blind spots above; closing them is a
+reading job, not an engineering one.
+
+**Still not modelled anywhere:** where a code says parking may not SIT. Happy
+Valley LDC 16.43.030.E.4 sets a parking area back from a street lot line by the
+building setback (twenty feet in its residential zones); Oregon City OCMC
+17.16.060.D caps outdoor parking and manoeuvring at forty feet or half the
+frontage; Milwaukie 19.607.1.D allows a quadplex a fourth front-yard space and
+no more. A rear court survives all of them, which is the arrangement s6s draws
+— but the side driveway is not obviously exempt from any, and the rule corpus
+has no field for driveway approach width, share-of-frontage, façade-relative
+placement or manoeuvring-area width. Every city outside Gresham is drawn to its
+own stall and aisle and to Gresham's driveway rules.

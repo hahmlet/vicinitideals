@@ -32,7 +32,7 @@ STAGES: list[tuple[str, list[Path], list[Path]]] = [
     # s5o+s6+s7; kill/flag/slope-tier changes need only s7.
     ("s5o_overlays.py", [stage_path("s5_lots"), OVERLAYS], [stage_path("s5o_lots")]),
     ("s6_fit.py", [stage_path("s5o_lots"), RULES, FOOTPRINTS], [stage_path("s6_lots")]),
-    # s6s: procedural site-plan generator (Gresham LDR-5 pilot). Reads s6_lots +
+    # s6s: procedural site-plan generator, every city it can dimension. Reads s6_lots +
     # re-reads the carved envelope from s5o_lots; adds site_plan_ok / parking_tier
     # etc. `siteplan:` config edits need s6s+s7; drawings alone need only s7.
     ("s6s_siteplan.py", [stage_path("s6_lots"), stage_path("s5o_lots"), FOOTPRINTS, RULES],
