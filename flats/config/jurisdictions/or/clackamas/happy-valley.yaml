@@ -380,23 +380,47 @@ defaults:
   # clearance, and shared driveways where the City Engineer requires them.
   # (or/clackamas/happy-valley/16.41.access.txt#L60-L105)
   #
-  # NOT ENCODED: LDC 16.43.030.E.4, Parking Location, and it is the one that
-  # would change a site plan. "Parking areas shall be set back from a lot line
-  # adjoining a street the same distance as the required building setbacks.
-  # Regardless of other provisions, a minimum setback of ten feet shall be
-  # provided along the property fronting on a public street." The rule states
-  # no number of its own -- it borrows the zone's building setback, which in
-  # Happy Valley's residential zones is twenty feet, so the effect is that no
-  # stall may sit in the front yard at all, banned rather than capped the way
-  # Milwaukie and Wilsonville cap it. Ten feet is the only figure printed and
-  # it is the LOOSE limb; encoding it would put a number in this file that is
-  # half the real standard and wrong in the permissive direction, which is the
-  # one direction this corpus does not go. A field that carried "the same as
-  # another field" would hold it and none does. E.1 adds "No off-street
-  # parking shall be allowed in the landscaped yard areas of any lot", and E.3
-  # sends a parking area abutting a residential district to that district's
-  # setback, which is a neighbour's standard applying to our lot.
-  # (or/clackamas/happy-valley/16.43.parking.txt#L515,L523,L527)
+  # ENCODED PER ZONE, not here: LDC 16.43.030.E.4, Parking Location. "Parking
+  # areas shall be set back from a lot line adjoining a street the same
+  # distance as the required building setbacks. Regardless of other
+  # provisions, a minimum setback of ten feet shall be provided along the
+  # property fronting on a public street."
+  #
+  # The sentence states no number of its own. It points at a number, and the
+  # number it points at is different in every district -- twenty-two in the
+  # six lower-density zones, twenty in R-5 and MUR-S, ten in the three
+  # attached ones. Ten is the only figure on the page and it is the LOOSE
+  # limb, so a file holding the ten alone would be half the standard and wrong
+  # in the permissive direction, which is the one direction this corpus does
+  # not go. This was refused for exactly that reason until `same_as` existed
+  # to carry it; the whole of what changed is that a value may now name the
+  # standard it equals, and the loader resolves the pair against the setback
+  # row sitting three lines above it in the same zone with its own citation.
+  # Nobody types twenty-two.
+  #
+  # It lives on the zones rather than here because the answer is per zone. The
+  # two districts with no setbacks to lend -- MUR-M and MUR-X, whose Table
+  # 16.22.060-2 dimensions read "Variable ... determined through the master
+  # plan process" -- state no answer and get none. R20CC gets it through
+  # `like: R20`, which is what adoption by reference is for.
+  #
+  # What the rule comes to for this building: nothing. Every district that
+  # permits a quadplex sets a building back at least twenty feet from a
+  # street, the site plan is drawn inside that envelope, and a court twenty
+  # feet back from the frontage clears a parking setback of twenty. It is
+  # encoded because it is the law and because the next city may print a bigger
+  # number, not because it moves a lot here.
+  #
+  # Two neighbours in the same subsection stay refused, and for the old
+  # reason. E.1, "No off-street parking shall be allowed in the landscaped
+  # yard areas of any lot" -- a landscaped yard AREA is not a yard, no field
+  # holds where a lot's landscaping is, and min_landscaped_pct is a share of
+  # the lot rather than a place on it. E.3 sends a parking area abutting a
+  # residential district to "the setback of the most restrictive adjoining
+  # residential zoning district", which is the NEIGHBOUR'S standard applying
+  # to our lot: `same_as` reaches another field in this zone, not another
+  # zone's field, and what would answer it is the zoning of the parcel next
+  # door. (or/clackamas/happy-valley/16.43.parking.txt#L515,L523)
   #
   # NOT ENCODED: any private open space standard, and the trail runs cold in a
   # way worth writing down. Two of the zone tables in Chapter 16.22 carry a
@@ -518,6 +542,17 @@ zones:
     setback_street_side_ft:
       value: 15
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L293"
+    # 16.43.030.E.4, stated as equal to the building setback -- see the note
+    # in `defaults:`. `same_as` resolves against the row above, the printed
+    # ten-foot floor is the only figure the sentence carries, and neither
+    # number is typed here.
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      floor_ft: 10
+      cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
+      url: https://ecode360.com/print/HA4934?guid=43529966
+      retrieved: '2026-08-27'
+      quote: "or/clackamas/happy-valley/16.43.parking.txt#L511,L527"
     min_lot_sqft:
       value: 40000
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L279"
@@ -703,6 +738,17 @@ zones:
     setback_street_side_ft:
       value: 15
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L293"
+    # 16.43.030.E.4, stated as equal to the building setback -- see the note
+    # in `defaults:`. `same_as` resolves against the row above, the printed
+    # ten-foot floor is the only figure the sentence carries, and neither
+    # number is typed here.
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      floor_ft: 10
+      cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
+      url: https://ecode360.com/print/HA4934?guid=43529966
+      retrieved: '2026-08-27'
+      quote: "or/clackamas/happy-valley/16.43.parking.txt#L511,L527"
     min_lot_sqft:
       value: 20000
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L279"
@@ -886,6 +932,17 @@ zones:
     setback_street_side_ft:
       value: 15
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L293"
+    # 16.43.030.E.4, stated as equal to the building setback -- see the note
+    # in `defaults:`. `same_as` resolves against the row above, the printed
+    # ten-foot floor is the only figure the sentence carries, and neither
+    # number is typed here.
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      floor_ft: 10
+      cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
+      url: https://ecode360.com/print/HA4934?guid=43529966
+      retrieved: '2026-08-27'
+      quote: "or/clackamas/happy-valley/16.43.parking.txt#L511,L527"
     min_lot_sqft:
       value: 15000
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L279"
@@ -1059,6 +1116,17 @@ zones:
     setback_street_side_ft:
       value: 15
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L485"
+    # 16.43.030.E.4, stated as equal to the building setback -- see the note
+    # in `defaults:`. `same_as` resolves against the row above, the printed
+    # ten-foot floor is the only figure the sentence carries, and neither
+    # number is typed here.
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      floor_ft: 10
+      cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
+      url: https://ecode360.com/print/HA4934?guid=43529966
+      retrieved: '2026-08-27'
+      quote: "or/clackamas/happy-valley/16.43.parking.txt#L511,L527"
     min_lot_sqft:
       value: 10000
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L469"
@@ -1235,6 +1303,17 @@ zones:
     setback_street_side_ft:
       value: 15
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L485"
+    # 16.43.030.E.4, stated as equal to the building setback -- see the note
+    # in `defaults:`. `same_as` resolves against the row above, the printed
+    # ten-foot floor is the only figure the sentence carries, and neither
+    # number is typed here.
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      floor_ft: 10
+      cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
+      url: https://ecode360.com/print/HA4934?guid=43529966
+      retrieved: '2026-08-27'
+      quote: "or/clackamas/happy-valley/16.43.parking.txt#L511,L527"
     min_lot_sqft:
       value: 8500
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L469"
@@ -1411,6 +1490,17 @@ zones:
     setback_street_side_ft:
       value: 15
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L485"
+    # 16.43.030.E.4, stated as equal to the building setback -- see the note
+    # in `defaults:`. `same_as` resolves against the row above, the printed
+    # ten-foot floor is the only figure the sentence carries, and neither
+    # number is typed here.
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      floor_ft: 10
+      cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
+      url: https://ecode360.com/print/HA4934?guid=43529966
+      retrieved: '2026-08-27'
+      quote: "or/clackamas/happy-valley/16.43.parking.txt#L511,L527"
     min_lot_sqft:
       value: 7000
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L469"
@@ -1618,6 +1708,17 @@ zones:
     setback_street_side_ft:
       value: 8
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L662"
+    # 16.43.030.E.4, stated as equal to the building setback -- see the note
+    # in `defaults:`. `same_as` resolves against the row above, the printed
+    # ten-foot floor is the only figure the sentence carries, and neither
+    # number is typed here.
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      floor_ft: 10
+      cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
+      url: https://ecode360.com/print/HA4934?guid=43529966
+      retrieved: '2026-08-27'
+      quote: "or/clackamas/happy-valley/16.43.parking.txt#L511,L527"
     min_lot_sqft:
       value: 7000
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L644"
@@ -1830,6 +1931,17 @@ zones:
     setback_street_side_ft:
       value: 8
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L662"
+    # 16.43.030.E.4, stated as equal to the building setback -- see the note
+    # in `defaults:`. `same_as` resolves against the row above, the printed
+    # ten-foot floor is the only figure the sentence carries, and neither
+    # number is typed here.
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      floor_ft: 10
+      cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
+      url: https://ecode360.com/print/HA4934?guid=43529966
+      retrieved: '2026-08-27'
+      quote: "or/clackamas/happy-valley/16.43.parking.txt#L511,L527"
     min_landscaped_pct:
       # LDC 16.42.030(B) states the landscaping requirement by housing type,
       # and (B)(1) names this building: "Single-family detached, single-family
@@ -1914,6 +2026,17 @@ zones:
     setback_street_side_ft:
       value: 8
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L979,L980"
+    # 16.43.030.E.4, stated as equal to the building setback -- see the note
+    # in `defaults:`. `same_as` resolves against the row above, the printed
+    # ten-foot floor is the only figure the sentence carries, and neither
+    # number is typed here.
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      floor_ft: 10
+      cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
+      url: https://ecode360.com/print/HA4934?guid=43529966
+      retrieved: '2026-08-27'
+      quote: "or/clackamas/happy-valley/16.43.parking.txt#L511,L527"
     setback_garage_entrance_ft:
       # "Garage and carport entrances -- entrances not facing an alley: 22
       # feet." The alley row is a two-part standard (22 feet to the base
@@ -2053,6 +2176,17 @@ zones:
     setback_street_side_ft:
       value: 8
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L979,L981"
+    # 16.43.030.E.4, stated as equal to the building setback -- see the note
+    # in `defaults:`. `same_as` resolves against the row above, the printed
+    # ten-foot floor is the only figure the sentence carries, and neither
+    # number is typed here.
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      floor_ft: 10
+      cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
+      url: https://ecode360.com/print/HA4934?guid=43529966
+      retrieved: '2026-08-27'
+      quote: "or/clackamas/happy-valley/16.43.parking.txt#L511,L527"
     setback_garage_entrance_ft:
       # "Garage and carport entrances -- entrances not facing an alley: 22
       # feet." The alley row is a two-part standard (22 feet to the base
@@ -2177,6 +2311,17 @@ zones:
     setback_street_side_ft:
       value: 5
       quote: "or/clackamas/happy-valley/16.22.residential.txt#L979,L982"
+    # 16.43.030.E.4, stated as equal to the building setback -- see the note
+    # in `defaults:`. `same_as` resolves against the row above, the printed
+    # ten-foot floor is the only figure the sentence carries, and neither
+    # number is typed here.
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      floor_ft: 10
+      cite: HV LDC 16.43.030.E.4, parking set back from a street lot line by the required building setback
+      url: https://ecode360.com/print/HA4934?guid=43529966
+      retrieved: '2026-08-27'
+      quote: "or/clackamas/happy-valley/16.43.parking.txt#L511,L527"
     setback_front_max_ft:
       # A maximum, not a minimum: "Setback (maximum from street
       # right-of-way or designated accessway) -- 18 feet". SFA and MUR-A

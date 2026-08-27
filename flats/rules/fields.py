@@ -495,13 +495,16 @@ _F: tuple[FieldDef, ...] = (
     FieldDef(
         "parking_street_setback_ft",
         "length_ft",
-        "How far a parking area must sit back from a street lot line. Happy "
-        "Valley sets it to the building setback with a ten-foot floor "
-        "(16.43.030.E.4), which in its residential zones is twenty feet and "
-        "removes front-yard parking rather than trimming it; Portland keeps "
-        "stalls out of the first ten feet (33.266.120.C.2.a). The driveway "
-        "reaching a rear court is not a parking area and is not caught by "
-        "this.",
+        "How far a parking area must sit back from a street lot line. "
+        "Portland keeps stalls out of the first ten feet and prints the ten "
+        "(33.266.120.C.2.a). Happy Valley prints a ten too and does not mean "
+        "it: 16.43.030.E.4 sets the standard to \"the same distance as the "
+        "required building setbacks\" and floors it at ten, which comes to "
+        "twenty-two feet in six of its districts and removes front-yard "
+        "parking rather than trimming it. That is the field carried with "
+        "`same_as` rather than a typed number -- see Value.same_as. The "
+        "driveway reaching a rear court is not a parking area and is not "
+        "caught by this.",
         False,
     ),
     FieldDef(

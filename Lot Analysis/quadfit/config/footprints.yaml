@@ -314,7 +314,25 @@ siteplan:
     happy_valley:
       drive_min_one_way_ft: 12
       drive_min_two_way_ft: 20
-      cite: HV LDC 16.41.030.B.1, minimum improved driveway width
+      # 16.43.030.E.4, now encoded and no longer refused. It states no number
+      # of its own -- parking sets back from a street lot line by "the same
+      # distance as the required building setbacks", floored at ten feet -- so
+      # there is no citywide figure to mirror and this carries what the corpus
+      # resolved zone by zone. Every one of them is at least twenty, the
+      # envelope this stage lays out in is already inset by that same building
+      # setback, and so a rear court clears it on every lot in the city. It is
+      # here because it is the law and because the check it feeds is general.
+      parking_street_setback_by_zone:
+        R40: 22
+        R20: 22
+        R15: 22
+        R10: 22
+        R8.5: 22
+        R7: 22
+        R5: 20
+        MURS: 20
+        R20CC: 22
+      cite: HV LDC 16.41.030.B.1, minimum improved driveway width; 16.43.030.E.4, parking setback
     # Table 16.12.035.D, the widest approach any city here allows this
     # building: 10 ft minimum, 36 ft maximum on the triplex/quadplex row (a
     # townhouse gets 24). 17.16.060.D.1 caps outdoor parking and maneuvering at

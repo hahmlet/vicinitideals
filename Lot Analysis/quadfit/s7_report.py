@@ -896,11 +896,15 @@ def main() -> None:
                 "façade-relative bans. Every stall drawn here is behind the "
                 "building, which is what each of those asks for, so they are "
                 "mirrored and not tested; a front-court typology would have to "
-                "test them. The genuinely open case is Happy Valley LDC "
-                "16.43.030.E.4, which sets a parking area back from a street by "
-                "the ZONE'S building setback — twenty feet — and prints only a "
-                "ten-foot floor of its own, so no field can hold it. A rear "
-                "court clears it; the side driveway is not obviously exempt.")
+                "test them. What IS checked is the street setback: Happy "
+                "Valley LDC 16.43.030.E.4 sets a parking area back from a "
+                "street by the ZONE'S building setback, printing only a "
+                "ten-foot floor of its own, and the corpus now carries a "
+                "standard stated as equal to another one. The envelope this "
+                "stage lays out in is already cut back by that same "
+                "setback, so the rule binds on no lot in the city — checked "
+                "on every one of them, and satisfied by the sentence that "
+                "made it.")
 
     # --- Phase 2 sections: overlays / slope / sewer / data coverage --------
     flag_specs = [s for s in ocfg.overlays

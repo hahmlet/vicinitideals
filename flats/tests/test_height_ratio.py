@@ -217,12 +217,17 @@ def test_a_value_states_a_distance_or_a_ratio_and_not_both(tmp_path: Path) -> No
 
 
 def test_a_floor_with_no_ratio_under_it_is_refused(tmp_path: Path) -> None:
-    """`floor_ft` is the least a height-proportional standard may come to.
+    """`floor_ft` is the least a DERIVED standard may come to.
 
     On its own it is a plain minimum written in the wrong key, and a file that
-    accepted it would read as encoding a rule while stating half of one.
+    accepted it would read as encoding a rule while stating half of one. The
+    key is shared with `same_as` -- "the same distance as the required building
+    setbacks... not less than ten feet" is one sentence with a ratio's shape
+    and a field where the ratio would be -- so a floor is refused only when
+    there is neither of the two under it.
     """
-    with pytest.raises(RuleLoadError, match="no 'per_height_ft' here for it to floor"):
+    with pytest.raises(RuleLoadError,
+                       match="no 'per_height_ft' and no 'same_as' here"):
         load_rules(
             _somewhere(
                 tmp_path,

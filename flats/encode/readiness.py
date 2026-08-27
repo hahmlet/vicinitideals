@@ -209,6 +209,16 @@ def _printed(value: object) -> object:
         # and prints 10 and prints 13 nowhere.
         else value.per_height_ft
         if getattr(value, "per_height_ft", None) is not None
+        # A standard stated as EQUAL TO another is checked against the floor,
+        # which is the only figure its own sentence carries. HV 16.43.030.E.4
+        # prints ten and comes to twenty-two, and the twenty-two is printed in
+        # the district table, where the setback it borrows is checked against
+        # its own quote. A borrowing with no floor prints no figure at all and
+        # falls through to the resolved number, which is the honest outcome:
+        # there is nothing on that page for a reader to find.
+        else value.floor_ft
+        if getattr(value, "same_as", None) is not None
+        and getattr(value, "floor_ft", None) is not None
         # A step-back ADDS to the district's own setback rather than replacing
         # it, so the district table is checked against the figure the district
         # table prints. The other half gets its own row.

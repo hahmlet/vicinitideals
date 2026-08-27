@@ -440,6 +440,13 @@ class DrivewayRules(BaseModel):
     #: `parking_street_setback_ft` -- how far a stall must stand off a street
     #: lot line. A rear court clears it everywhere it is stated.
     parking_street_setback_ft: float | None = None
+    #: Per-zone override of the same, for the city that states the standard by
+    #: reference rather than by number. Happy Valley LDC 16.43.030.E.4 sets it
+    #: to "the same distance as the required building setbacks" with a ten-foot
+    #: floor, which is 22 ft in six districts, 20 in two and 10 in three -- one
+    #: sentence, three answers, and no citywide number to mirror. The corpus
+    #: resolves it per zone through `same_as`; this carries what it resolved to.
+    parking_street_setback_by_zone: dict[str, float | None] = Field(default_factory=dict)
     #: `parking_building_buffer_ft` -- the city's own minimum between the
     #: building and the parking area. Raises the design gap where it exceeds
     #: it; Fairview's 4 ft does not.
@@ -660,6 +667,20 @@ class SiteplanSpec(BaseModel):
         if flat is not None:
             need = max(need, float(flat))
         return need
+
+    def parking_street_setback_for(self, jurisdiction: str, zone: str) -> float | None:
+        """How far this cell's code makes a stall stand off a street lot line.
+
+        None where the city states no such standard — which is most of them,
+        and is not the same as zero. A zone named in the per-zone map wins over
+        the citywide figure; a zone absent from it falls through.
+        """
+        dw = self.driveway_for(jurisdiction)
+        if dw is None:
+            return None
+        if zone and zone in dw.parking_street_setback_by_zone:
+            return dw.parking_street_setback_by_zone[zone]
+        return dw.parking_street_setback_ft
 
     def geometry_for(self, jurisdiction: str) -> StallGeometry | None:
         """The stall geometry a jurisdiction publishes, or None if it has none.

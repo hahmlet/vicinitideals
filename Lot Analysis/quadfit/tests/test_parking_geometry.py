@@ -373,6 +373,84 @@ def test_a_city_that_states_open_space_by_zone_is_mirrored_for_every_zone():
             )
 
 
+def test_the_parking_street_setback_is_mirrored_for_every_zone_it_binds_in():
+    """Happy Valley states it by pointing at a number that differs by zone.
+
+    LDC 16.43.030.E.4 sets parking back from a street lot line by "the same
+    distance as the required building setbacks", floored at ten feet, which is
+    22 ft in six districts, 20 in two and 10 in three. There is no citywide
+    figure to put in `parking_street_setback_ft`, so the mirror carries a map
+    and this checks it zone by zone against what the corpus resolved -- through
+    `like:`, because R20CC adopts R-20 rather than stating anything.
+
+    Every quadplex-allowed zone in rules.yaml has to be in the map. A zone
+    missing from it falls through to the citywide field, which is empty here,
+    and a lot in that zone would be laid out with no street setback at all.
+    """
+    from common import load_footprints, load_rules
+    from flats.encode.load import load_trusted
+    from flats.encode.port_quadfit import layer_id_for
+    from flats.rules.resolver import RuleSet
+
+    rules = load_rules()
+    corpus = RuleSet(load_trusted(strict=False).layers)
+
+    for jurisdiction, dw in load_footprints().siteplan.driveway.items():
+        if not dw.parking_street_setback_by_zone:
+            continue
+        assert dw.parking_street_setback_ft is None, (
+            f"{jurisdiction}: a citywide parking street setback AND a per-zone "
+            f"map, and the map wins silently in the zones it names"
+        )
+        jr = rules.jurisdictions.get(jurisdiction)
+        assert jr is not None, f"{jurisdiction} has no rules.yaml block"
+        layer = layer_id_for(jurisdiction)
+        for zr in jr.zones:
+            if not zr.quadplex_allowed:
+                continue
+            assert zr.zone in dw.parking_street_setback_by_zone, (
+                f"{jurisdiction} {zr.zone}: laid out by s6s and missing from "
+                f"parking_street_setback_by_zone, so a stall may sit anywhere"
+            )
+            shipped = dw.parking_street_setback_by_zone[zr.zone]
+            read = corpus.resolve(layer, zr.zone).get("parking_street_setback_ft")
+            assert shipped == read, (
+                f"{jurisdiction} {zr.zone}: mirror says {shipped} ft and the "
+                f"corpus says {read}"
+            )
+
+
+def test_a_borrowed_setback_is_never_looser_than_the_building_setback():
+    """The whole reason this rule was refused before `same_as` existed.
+
+    16.43.030.E.4 prints one figure, ten feet, and it is the LOOSE limb -- the
+    standard is the zone's building setback wherever that is larger. A mirror
+    holding the printed ten would let a stall stand twelve feet inside the line
+    a building may not cross, in six districts at once. So the guard is stated
+    the way the sentence is: not less than the setback, and not less than ten.
+    """
+    from common import load_footprints, load_rules
+
+    rules = load_rules()
+    for jurisdiction, dw in load_footprints().siteplan.driveway.items():
+        by_zone = dw.parking_street_setback_by_zone
+        if not by_zone:
+            continue
+        jr = rules.jurisdictions[jurisdiction]
+        for zr in jr.zones:
+            shipped = by_zone.get(zr.zone)
+            if shipped is None or zr.setback_front_ft is None:
+                continue
+            assert shipped >= zr.setback_front_ft, (
+                f"{jurisdiction} {zr.zone}: parking may stand {shipped} ft off "
+                f"a street where a building owes {zr.setback_front_ft} ft"
+            )
+            assert shipped >= 10, (
+                f"{jurisdiction} {zr.zone}: {shipped} ft is under the ten-foot "
+                f"floor the sentence prints"
+            )
+
+
 def test_the_open_space_reserve_is_each_citys_own_and_not_greshams():
     """The single largest thing this change moved, pinned by name.
 

@@ -119,7 +119,8 @@ def _largest_rect(ok):
 
 def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[float]],
                area_sqft: float, front_setback_ft: float,
-               jurisdiction: str = "", zone: str = "") -> dict:
+               jurisdiction: str = "", zone: str = "",
+               parking_setback_ft: float | None = None) -> dict:
     """Lay out one lot's site plan. Runs in worker processes.
 
     Returns a dict of scalar results + `geoms` (role -> shapely geometry in the
@@ -133,9 +134,14 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
     a single-city config (the tests) can leave it off; the lookup falls back to
     the lone entry.
 
-    `zone` is only consulted for open space, and only in Portland, which is the
-    one city in this corpus that states the reserve by zone rather than
-    citywide.
+    `zone` is consulted for open space -- Portland is the one city that states
+    the reserve by zone rather than citywide -- and, through
+    `parking_setback_ft`, for how far a stall must stand off a street.
+
+    `parking_setback_ft` is measured from the STREET LOT LINE, and the envelope
+    handed in is already inset from it by the building setback, so what it can
+    ask for here is the difference. None where the city states no such
+    standard, which is not the same as zero.
     """
     import numpy as np
     import shapely
@@ -208,6 +214,19 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
     # which case the city's number is the cap and the higher tiers are simply
     # not reachable here. Milwaukie's one-per-unit is the live case.
     cap = cell["cap"]
+    # No stall within `parking_setback_ft` of the street lot line. The envelope
+    # already stands the whole buildable area back by the BUILDING setback, so
+    # only the excess is left to enforce here -- and in Happy Valley, the one
+    # city whose code states the standard by pointing at that same building
+    # setback (LDC 16.43.030.E.4), the excess is zero by construction. Kept as
+    # arithmetic rather than an assertion because the next city to print one
+    # may print a bigger number, and on a corner lot the envelope is inset by
+    # more than `front_setback_ft`, never less, so measuring off the front is
+    # the conservative end.
+    park_c = 0
+    if parking_setback_ft is not None:
+        park_c = max(0, math.ceil(
+            max(0.0, parking_setback_ft - front_setback_ft) / res))
     geoms: dict = {}
 
     # Attached-townhome layout (Gresham §7.0431): the pod sits across the front;
@@ -239,7 +258,7 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
             if hit is None:
                 continue
             br, bc = hit
-            court_r0 = br + bh + gap_c             # rear yard: behind pod + gap
+            court_r0 = max(br + bh + gap_c, park_c)  # behind pod + gap, off the street
             if court_r0 >= R:
                 continue
             rect = _largest_rect(ok[court_r0:, :])
@@ -343,8 +362,8 @@ def _work_chunk(chunk):
     import shapely
 
     out = []
-    for idx, env_wkb, bearings, fedges, area, fsb, jur, zone in chunk:
-        r = layout_lot(env_wkb, bearings, fedges, area, fsb, jur, zone)
+    for idx, env_wkb, bearings, fedges, area, fsb, jur, zone, psb in chunk:
+        r = layout_lot(env_wkb, bearings, fedges, area, fsb, jur, zone, psb)
         r["geoms_hex"] = {role: shapely.to_wkb(g).hex() for role, g in r.pop("geoms").items()}
         out.append((idx, r))
     return out
@@ -456,6 +475,27 @@ def main() -> None:
             "open_by_zone": dict(dw.open_space_sqft_by_zone) if dw else {},
         }
 
+    # Where a city keeps stalls off the street, say what it asks and whether
+    # the envelope already answers it. Happy Valley states the standard by
+    # pointing at the building setback the envelope is cut to, so the honest
+    # report is that it binds nowhere -- which is worth printing, because a
+    # rule encoded and never mentioned again is indistinguishable from one
+    # nobody wired up.
+    for j in cities:
+        asks = {z: sp.parking_street_setback_for(j, z)
+                for z in {str(z) for z in lots.loc[lots["jurisdiction"] == j, "zone"]}}
+        asks = {z: v for z, v in asks.items() if v}
+        if not asks:
+            continue
+        over = {z: (v, _front_setback(j, z)) for z, v in asks.items()
+                if v > _front_setback(j, z)}
+        lo, hi = min(asks.values()), max(asks.values())
+        span = f"{lo:g} ft" if lo == hi else f"{lo:g}-{hi:g} ft"
+        print(f"s6s: {j} keeps parking {span} off a street lot line; "
+              + (f"beyond the envelope in {len(over)} zone(s): "
+                 + ", ".join(f"{z} {v:g} vs {f:g}" for z, (v, f) in sorted(over.items()))
+                 if over else "the building setback already covers it in every zone"))
+
     # A city nobody has read its access chapter for is laid out to the design
     # lane and reserves no open space. That is a real gap and not a verdict, so
     # it is said out loud rather than left to the reader of a CSV.
@@ -494,6 +534,7 @@ def main() -> None:
             int(i), shapely.to_wkb(row["env_geom"]),
             json.loads(row["front_bearings_json"]), fedges,
             float(row["area_sqft"]), _front_setback(jur, zone), jur, zone,
+            sp.parking_street_setback_for(jur, zone),
         ))
 
     chunk_size = 500

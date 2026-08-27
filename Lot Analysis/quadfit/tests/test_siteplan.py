@@ -108,9 +108,12 @@ def _rect_lot(W: float, D: float):
     return env, front_edges, W * D, lot
 
 
-def _run(s6s, env, front_edges, area, bearing=0.0, jurisdiction="gresham"):
-    return s6s.layout_lot(shapely.to_wkb(env), [bearing], front_edges, area,
-                          FRONT_S, jurisdiction)
+def _run(s6s, env, front_edges, area, bearing=0.0, jurisdiction="gresham",
+         zone="", parking_setback_ft=None, front_setback_ft=None):
+    return s6s.layout_lot(
+        shapely.to_wkb(env), [bearing], front_edges, area,
+        FRONT_S if front_setback_ft is None else front_setback_ft,
+        jurisdiction, zone, parking_setback_ft)
 
 
 # ---------------------------------------------------------------------------
@@ -443,3 +446,60 @@ def test_greshams_curb_cut_is_narrower_than_the_lane_and_that_is_legal():
 
     assert r["site_plan_ok"]
     assert r["driveway_width_ft"] == 10.0
+
+
+
+def test_a_street_setback_pushes_the_court_back_and_only_the_excess_counts():
+    """Happy Valley LDC 16.43.030.E.4, and the arithmetic that makes it free.
+
+    The rule measures from the STREET LOT LINE. The envelope handed to this
+    stage is already inset from that line by the building setback, so what is
+    left to enforce is the difference -- and Happy Valley sets the parking
+    setback TO the building setback, which makes the difference zero in every
+    district it permits a quadplex in.
+
+    Asserted from both ends. A setback equal to the front yard moves nothing;
+    one far beyond it eats the lot from the street inwards, which is the
+    behaviour a city printing a bigger number would get.
+    """
+    s6s = _sp_setup()
+    env, fe, area, _ = _rect_lot(95.0, 120.0)
+
+    free = _run(s6s, env, fe, area, parking_setback_ft=FRONT_S)
+    none = _run(s6s, env, fe, area)
+    assert free["site_plan_ok"] and none["site_plan_ok"]
+    assert free["stalls_provided"] == none["stalls_provided"]
+
+    # 80 ft of street setback on a 120 ft lot leaves no room behind the pod.
+    assert not _run(s6s, env, fe, area, parking_setback_ft=80.0)["site_plan_ok"]
+
+
+def test_happy_valleys_own_numbers_cost_it_nothing():
+    """Every district Happy Valley permits a quadplex in sets a building back
+    at least twenty feet, so a court that clears the building setback clears
+    the parking setback by the same sentence that created it.
+
+    This is the claim the encoding makes, checked against the shipped mirror
+    rather than against a number typed here: the rule is real, it is wired up,
+    and it takes no lot away.
+    """
+    from common import load_footprints
+
+    sp = load_footprints().siteplan
+    s6s = _sp_setup_cities()
+    env, fe, area, _ = _rect_lot(95.0, 120.0)
+
+    for zone in ("R40", "R5", "R20CC"):
+        asks = sp.parking_street_setback_for("happy_valley", zone)
+        assert asks is not None and asks >= 20
+        # The envelope this stage is handed was cut to that same setback, so
+        # `front_setback_ft` is the parking setback -- that identity IS the
+        # rule, and passing FRONT_S here would be testing a lot Happy Valley
+        # does not have.
+        with_rule = _run(s6s, env, fe, area, jurisdiction="happy_valley",
+                         zone=zone, parking_setback_ft=asks,
+                         front_setback_ft=asks)
+        without = _run(s6s, env, fe, area, jurisdiction="happy_valley",
+                       zone=zone, front_setback_ft=asks)
+        assert with_rule["site_plan_ok"] == without["site_plan_ok"]
+        assert with_rule["stalls_provided"] == without["stalls_provided"]

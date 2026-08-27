@@ -98,7 +98,15 @@ def _parse_values(
     goes to ``wanted`` instead, and becomes work rather than an answer.
     """
     out: dict[str, Value] = {}
-    for key, node in raw.items():
+
+    def _borrows(node: Any) -> bool:
+        return isinstance(node, dict) and node.get("same_as") is not None
+
+    # A value stated as equal to another resolves against the block it sits
+    # in, so it is parsed after everything that block might lend it. Sorting on
+    # a bool is stable, which leaves the file's own order intact otherwise --
+    # and the file's order is what a reviewer reads.
+    for key, node in sorted(raw.items(), key=lambda kv: _borrows(kv[1])):
         try:
             field(key)
         except KeyError as exc:
@@ -108,7 +116,7 @@ def _parse_values(
         if isinstance(node, dict) and (
             {"value", "exempt", "per_dwelling", "sqft_per_unit", "per_units",
              "spaces_total", "acres", "acres_per_dwelling", "per_height_ft",
-             "floor_ft", "step_back", "qualified_by"} & set(node)
+             "floor_ft", "same_as", "step_back", "qualified_by"} & set(node)
         ):
             body = dict(node)
             value = body.pop("value", None)
@@ -121,6 +129,7 @@ def _parse_values(
             acres_each = body.pop("acres_per_dwelling", None)
             per_height = body.pop("per_height_ft", None)
             floor_ft = body.pop("floor_ft", None)
+            same_as = body.pop("same_as", None)
             step_back = _parse_step_back(
                 body.pop("step_back", None), f"{where}.{key}", problems
             )
@@ -273,11 +282,20 @@ def _parse_values(
                 # is five acres. Four dwellings therefore need twenty, and
                 # twenty is a figure the code prints nowhere.
                 value = _per_dwelling(_in_acres(float(acres_each)))
-            if floor_ft is not None and per_height is None:
+            if floor_ft is not None and per_height is None and same_as is None:
                 problems.append(
                     f"{where}.{key}: 'floor_ft' is the least a height-"
-                    f"proportional standard may come to, and there is no "
-                    f"'per_height_ft' here for it to floor"
+                    f"proportional or borrowed standard may come to, and there "
+                    f"is no 'per_height_ft' and no 'same_as' here for it to floor"
+                )
+                continue
+            if floor_ft is not None and (
+                not isinstance(floor_ft, (int, float))
+                or isinstance(floor_ft, bool)
+                or floor_ft < 0
+            ):
+                problems.append(
+                    f"{where}.{key}: floor_ft {floor_ft!r} is not a distance"
                 )
                 continue
             if per_height is not None:
@@ -297,20 +315,36 @@ def _parse_values(
                         f"{where}.{key}: per_height_ft {per_height} is not a ratio"
                     )
                     continue
-                if floor_ft is not None and (
-                    not isinstance(floor_ft, (int, float))
-                    or isinstance(floor_ft, bool)
-                    or floor_ft < 0
-                ):
-                    problems.append(
-                        f"{where}.{key}: floor_ft {floor_ft!r} is not a distance"
-                    )
-                    continue
                 # "1 ft. for every 2 ft. of building height but not less than
                 # 10 ft." is 13 ft for a 26 ft pod, and 13 is printed nowhere.
                 value = _off_the_building(
                     float(per_height), None if floor_ft is None else float(floor_ft)
                 )
+            if same_as is not None:
+                if value is not None or exempt:
+                    problems.append(
+                        f"{where}.{key}: a value states a standard of its own or "
+                        f"states that it equals another, not both"
+                    )
+                    continue
+                lent = out.get(str(same_as))
+                if lent is None or not isinstance(lent.value, (int, float)) or (
+                    isinstance(lent.value, bool)
+                ):
+                    problems.append(
+                        f"{where}.{key}: 'same_as' borrows {same_as!r}, and "
+                        f"there is no number for it here. The lender lives in "
+                        f"the same block on purpose -- a borrowed standard is "
+                        f"only as readable as the row it borrows from"
+                    )
+                    continue
+                # "the same distance as the required building setbacks...
+                # Regardless of other provisions, a minimum setback of ten
+                # feet". Twenty-two is the answer in six Happy Valley
+                # districts, and the sentence prints ten.
+                value = float(lent.value)
+                if floor_ft is not None:
+                    value = max(value, float(floor_ft))
             if not exempt and value is None:
                 problems.append(f"{where}.{key}: expected a 'value' or 'exempt: true'")
                 continue
@@ -343,6 +377,7 @@ def _parse_values(
             exempt = False
             per_height = None
             floor_ft = None
+            same_as = None
             step_back = None
             before_step_back = None
             per_dwelling = None
@@ -422,6 +457,7 @@ def _parse_values(
                 ),
                 per_height_ft=None if per_height is None else float(per_height),
                 floor_ft=None if floor_ft is None else float(floor_ft),
+                same_as=None if same_as is None else str(same_as),
                 step_back_at_ft=None if step_back is None else step_back.at_ft,
                 step_back_rise=None if step_back is None else step_back.rise,
                 step_back_degrees=None if step_back is None else step_back.degrees,

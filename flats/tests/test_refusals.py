@@ -41,7 +41,15 @@ pytestmark = pytest.mark.unit
 #: A jump this size is the thing to be suspicious of. What makes it honest is
 #: that the values landed in the same commit: 23 refusals against 21 encoded
 #: values across the same eight files, which is a reading, not a retreat.
-EXPECTED = {"notes": 92, "comments": 68, "tests": 16}
+#:
+#: 68 -> 67 on 2026-08-27, and it is the first time this count has gone DOWN
+#: for the right reason. Happy Valley 16.43.030.E.4 was refused because it
+#: states its standard by pointing at another one -- "the same distance as the
+#: required building setbacks" -- and no carrier could say that. `same_as` now
+#: can, so the comment came out and eleven values went in. A refusal ledger
+#: whose number only ever rises is measuring reading; one that can fall is
+#: measuring what the model cannot yet hold, which is what this is for.
+EXPECTED = {"notes": 92, "comments": 67, "tests": 16}
 #: Two of the sixteen are this file, which quotes the marker while
 #: explaining it, and one is a back-reference in test_gresham_rockwood --
 #: prose saying a zone *was* not encoded until it was. Left in rather than
@@ -228,7 +236,10 @@ EXPECTED = {"notes": 92, "comments": 68, "tests": 16}
 #: jurisdiction, and no longer a gap so much as a missing field family. Happy
 #: Valley 16.43.030.E.4 sets parking back from a street lot line by the
 #: building setback, which in its residential zones bans front-yard parking
-#: outright rather than capping it; Oregon City 17.16.060.D caps outdoor
+#: outright rather than capping it -- LIFTED 2026-08-27, see `same_as` and
+#: flats/tests/test_same_as.py; the field family it was waiting on was built,
+#: and then the carrier for a standard stated by reference; Oregon City
+#: 17.16.060.D caps outdoor
 #: parking and manoeuvring at forty feet or half the frontage, whichever is
 #: less, and 17.16.040 drops that to twelve feet on townhouse lots; Milwaukie
 #: 19.607.1.D allows a quadplex a fourth front-yard space and no more, and

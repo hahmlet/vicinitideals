@@ -365,7 +365,8 @@ line adjoining a street the same distance as the required building setbacks." In
 whose residential front setback is twenty feet, that does not cap front-yard parking the
 way Milwaukie and Wilsonville cap it; it removes it. 16.43.030.F.5 requires forward entry
 to the right-of-way for any group of more than three spaces, which is every arrangement
-this pod has. Both are refusals for want of a field.
+this pod has. Both were refusals for want of a field; the first is now encoded — see
+**A standard stated as equal to another** below — and the second still is one.
 
 Seven layers of nineteen now hold stall geometry. What the three have in common is that
 none of the missing pieces is a missing *number* — they are a missing field family:
@@ -404,11 +405,55 @@ not carry both and `parking_front_prohibited` is three-valued.
 fetched because 16.43 states no width at all: a two-way drive is improved a minimum of 20
 feet. Every other city here states nine or states nothing. It is a **minimum**, so unlike
 an approach ceiling it cannot be traded down, and on a narrow lot it is the difference
-between a site plan and none. 16.43.030.E.4 stayed refused: it sets parking back from a
-street by "the same distance as the required building setbacks" and prints only a
-ten-foot floor, so the only number on the page is half the real standard and wrong in the
-permissive direction. A field that could hold "the same as another field" would hold it;
-none does, and `qualified_by` cannot, because it names a site fact rather than a field.
+between a site plan and none. 16.43.030.E.4 stayed refused in that pass: it sets parking
+back from a street by "the same distance as the required building setbacks" and prints
+only a ten-foot floor, so the only number on the page is half the real standard and wrong
+in the permissive direction. A field that could hold "the same as another field" would
+hold it; none did, and `qualified_by` could not, because it names a site fact rather than
+a field.
+
+### A standard stated as equal to another
+
+**Built 2026-08-27**, and it is one carrier, `Value.same_as`, plus the `floor_ft` the
+height ratio already had. A value names the field its sentence points at; the loader
+resolves the pair against the number the SAME block holds with its own citation. Nobody
+types the answer. It is the `per_height_ft` bargain with a different second operand: a
+height ratio multiplies by a property of the *building*, and this one reads another
+standard in the same zone.
+
+Two conditions make a borrowing sound, and both are checked rather than listed: the two
+standards answer in the same **unit**, and they bind in the same **direction**. There is
+deliberately no allowlist of fields that may borrow — an allowlist would be a guess about
+which sentences codes write, and these two are the actual invariant. The lender must sit
+in the same zone block rather than be inherited from a parent layer, which is also not an
+implementation limit: a borrowed standard is only as readable as the row it borrows from,
+and a reviewer holding one screen should see both numbers and both citations.
+
+Happy Valley's is the first, on eleven zones. One sentence, three answers — 22 ft in the
+six lower-density districts, 20 in R-5 and MUR-S, 10 in the three attached ones — and the
+printed ten is the standard in three of them and twelve feet loose in six. MUR-M and
+MUR-X state "Variable ... determined through the master plan process" and so lend nothing
+and get nothing; R20CC gets it through `like: R20`, which is what adoption by reference
+is for.
+
+**What it comes to for this building is nothing, and that is the finding.** Every Happy
+Valley district that permits a quadplex sets a building back at least twenty feet from a
+street; the site-plan generator lays out inside an envelope already cut to that setback;
+so a court that clears the building setback clears the parking setback, by the same
+sentence that created it. s6s enforces the rule as arithmetic on the excess over that
+inset rather than as an assertion, because the next city to print one may print a bigger
+number, and it now says out loud, per city, what is asked and whether the envelope
+already answers it. A rule encoded and never mentioned again is indistinguishable from
+one nobody wired up.
+
+Two neighbours in the same subsection stayed refused, and for the old reason rather than
+this one. E.1 bans off-street parking "in the landscaped yard areas of any lot" — a
+landscaped yard *area* is not a yard, and `min_landscaped_pct` is a share of the lot
+rather than a place on it. E.3 sends a parking area abutting a residential district to
+"the setback of the most restrictive adjoining residential zoning district", which is the
+**neighbour's** standard applying to our lot: `same_as` reaches another field in this
+zone, not another zone's field, and what would answer it is the zoning of the parcel next
+door.
 
 What the family was built **for** was the site-plan generator, which had been drawing
 every city's driveway to five constants taken out of Gresham's townhouse chapter. Two of

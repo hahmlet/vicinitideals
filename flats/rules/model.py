@@ -725,6 +725,32 @@ class Value(BaseModel):
     #: it the floor does, and which of the two binds for this building is
     #: arithmetic the file should not have to do.
     floor_ft: float | None = None
+    #: Another standard this one is stated as EQUAL TO, where the code defines
+    #: it by reference instead of by number. Happy Valley LDC 16.43.030.E.4:
+    #: "Parking areas shall be set back from a lot line adjoining a street the
+    #: same distance as the required building setbacks. Regardless of other
+    #: provisions, a minimum setback of ten feet shall be provided along the
+    #: property fronting on a public street." Ten is the only figure on the
+    #: page and it is the LOOSE limb -- the standard is twenty-two feet in six
+    #: of that city's districts, and a file holding the ten alone would be
+    #: wrong in the permissive direction, which is the one direction this
+    #: corpus does not go.
+    #:
+    #: So this carries the field the sentence points at, `floor_ft` carries the
+    #: printed floor, and the loader resolves the pair against the number the
+    #: SAME block already holds with its own citation. Same bargain as
+    #: `per_height_ft`: the file states only what the code prints, and `value`
+    #: carries what that comes to, because a lot is checked against a distance.
+    #:
+    #: The operand must be stated in the same zone (or the same `defaults:`),
+    #: not inherited from a parent layer, and that is deliberate rather than an
+    #: implementation limit. A borrowed standard is only as readable as the row
+    #: it borrows from: a reviewer holding one screen should see both numbers
+    #: and both citations without walking the hierarchy. There is no allowlist
+    #: of fields that may use it -- what makes a borrowing sound is that the
+    #: two standards are measured in the same unit and bind in the same
+    #: direction, and both are checked.
+    same_as: str | None = None
     #: The height a second rule allows AT the setback line, where one limits
     #: how tall a building may be near the lot line. Gresham 7.0420(G)(1)
     #: states 21 feet at the rear setback line in six of its residential
@@ -945,12 +971,16 @@ class Value(BaseModel):
     @model_validator(mode="after")
     def _a_height_ratio_is_a_positive_divisor(self) -> Value:
         if self.per_height_ft is None:
-            if self.floor_ft is None:
+            if self.floor_ft is None or self.same_as is not None:
+                # A borrowing floors the same way and shares the field: "the
+                # same distance as the required building setbacks... not less
+                # than ten feet" is one sentence with a ratio's shape and a
+                # field where the ratio would be.
                 return self
             raise ValueError(
                 f"{self.name}: 'floor_ft' is the least a height-proportional "
-                f"standard may come to, and there is no ratio here for it to "
-                f"floor"
+                f"or borrowed standard may come to, and there is neither a "
+                f"ratio nor a 'same_as' here for it to floor"
             )
         if self.name not in HEIGHT_RATIO_FIELDS:
             raise ValueError(
@@ -1001,6 +1031,46 @@ class Value(BaseModel):
                 f"{self.name}: a step-back is a second rule in a second "
                 f"section — cite and quote where it is printed, or half the "
                 f"number has no provenance"
+            )
+        return self
+
+    @model_validator(mode="after")
+    def _a_borrowed_standard_is_measured_and_bound_the_same_way(self) -> Value:
+        """What keeps `same_as` from becoming a pointer to anything.
+
+        A standard stated by reference is still a standard, and the reference
+        is sound only if the thing pointed at answers the same question. Two
+        conditions do that work: the same unit, so the number means the same
+        thing, and the same direction, so a floor floors it rather than
+        capping it. A minimum parking setback borrowing a minimum building
+        setback passes both; borrowing a maximum lot coverage passes neither,
+        and would resolve to a percentage a lot is compared against in feet.
+        """
+        if self.same_as is None:
+            return self
+        if self.exempt or self.value is None:
+            raise ValueError(
+                f"{self.name}: 'same_as' states what this standard comes to, "
+                f"and there is nothing here for it to have come to"
+            )
+        if self.same_as == self.name:
+            raise ValueError(f"{self.name}: 'same_as' points at itself")
+        try:
+            lent = field(self.same_as)
+        except KeyError as exc:
+            raise ValueError(f"{self.name}: {exc.args[0]}") from exc
+        mine = self.definition
+        if lent.kind != mine.kind:
+            raise ValueError(
+                f"{self.name}: 'same_as' borrows {self.same_as}, which is a "
+                f"{lent.kind} where this is a {mine.kind} -- a standard "
+                f"stated as equal to another is measured in its unit"
+            )
+        if lent.is_maximum != mine.is_maximum:
+            raise ValueError(
+                f"{self.name}: 'same_as' borrows {self.same_as}, which binds "
+                f"in the other direction -- a minimum equal to a maximum is "
+                f"two rules, not one"
             )
         return self
 

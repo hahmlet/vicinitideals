@@ -209,9 +209,15 @@ construction rather than by check — share-of-frontage, front-yard area share,
 façade-relative placement. Every stall this stage draws is behind the building
 and every city that states one of these is satisfied there, so the mirror
 carries them and the geometry does not test them; a front-court typology would
-have to. Happy Valley LDC 16.43.030.E.4 is the one genuinely open case: it sets
-a parking area back from a street by the ZONE'S BUILDING SETBACK, twenty feet,
-and states no number of its own, so no field can hold it. The rear court clears
-it; the side driveway's status is unresolved. Also still outside the corpus:
+have to. Happy Valley LDC 16.43.030.E.4 used to be the one genuinely open
+case: it sets a parking area back from a street by the ZONE'S BUILDING SETBACK
+and states no number of its own but a ten-foot floor. It is now encoded per
+zone -- the FLATS corpus can carry a standard stated as equal to another one --
+and this stage enforces it, measuring the excess over the envelope's own inset
+because the envelope is already cut back from the street by the building
+setback. In Happy Valley that excess is zero in every district by construction,
+so the rule is checked on every lot and binds on none, which is the answer and
+not a dodge. A driveway is not a parking area and is not caught by it. Also
+still outside the corpus:
 curb-cut throat length and spacing, which live in public works standards rather
 than in a development code.
