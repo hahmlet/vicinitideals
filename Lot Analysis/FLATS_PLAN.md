@@ -143,6 +143,17 @@ Verbosity is the point. Mitigated by inheritance — a zone declares a `cite_def
 covering the common case, and individual fields override only when they come from a
 different table. Cuts roughly 80% of the repetition without losing per-value traceability.
 
+**A file states the figure a reader will find, never the one arithmetic makes of it.** A
+value therefore has carriers for each shape a code states a standard in, and the loader
+does the conversion where it can be read: `per_dwelling` and `acres_per_dwelling` for a
+lot area stated per unit, `sqft_per_unit` for a density stated as area, `per_units` for a
+parking rate stated as a share, `per_height_ft` for a setback stated off the building.
+`spaces_total` is the same bargain for parking a code counts rather than rates — Oregon's
+middle-housing rule caps a quadplex at “one space in total”, “two spaces in total” and so
+on, and prints 0.25 and 0.5 nowhere; the denominator is the word *Quadplex*, which is the
+`DWELLINGS` constant said in English. Each carrier is what the citation check looks for,
+so an encoding that invented nothing is never reported as a misquote.
+
 **Status lifecycle, enforced by the loader:**
 
 ```
@@ -286,6 +297,33 @@ maneuvering per lot, or sends the parking to the rear yard outright. None of tha
 recorded until somebody asked what applies *if we build parking anyway* — which this
 product will, regardless of what a code requires. **"Required" and "regulated" are
 different questions, and only the first one has a field.**
+
+Run over a city already finished, the question keeps producing. Wilsonville requires no
+parking and caps none — both fields have read `exempt` since 2026-08-22 — and Section
+4.113(.14) subsection D is titled *Standards applicable to Triplexes and Quadplexes* and
+regulates the parking anyway. D.3 holds all garages plus outdoor parking and maneuvering
+to half of any street frontage. D.4 caps driveway approaches at 32 feet per frontage —
+the same 32 feet again, from the same model code — and forces access to the lowest-
+classification street, or to the alley where a paved one abuts. Subsection E is the same
+building on unit lots, and it is far tighter: **12 feet of outdoor parking and
+maneuvering per lot**, around a stall Wilsonville defines at nine feet wide. Three feet
+of maneuvering is a single-file driveway, not a court. What the city *does* dimension it
+dimensions in its definitions rather than its parking chapter — 4.001(220) makes a
+parking space “not less than nine feet wide and 18 feet long” — and what it never
+dimensions anywhere in Chapter 4 is the drive aisle. Holding a stall and no aisle is not
+the same object as an aisle of zero, and 4.113(.14)D.4.c.ii sends the question to the
+Public Works Standards, which is the Gresham 9.0200 shape a third time.
+
+And the state says the whole family may be the wrong family. OAR 660-046-0220(2)(e)(E):
+a Large City “must apply the same off-street parking surfacing, dimensional, landscaping,
+access, and circulation standards that apply to single-family detached dwellings in the
+same zone.” Every stall width, stall depth and aisle width in this corpus was read from a
+general parking table; this sentence says the ones that bind a quadplex are whichever
+ones bind a house on the same ground. It is a rule whose entire content is a pointer, and
+unlike the other three it puts a live question over geometry **already encoded**, in
+every Large City at once. Nothing can follow it today: no zone here records what its
+single-family parking standards are, because until now nothing asked. Recorded in the
+state layer as a refusal so the next reader meets it before a site plan does.
 
 The same chapter carries the corpus’s second refusal of the Gresham 9.0200 shape, and a
 worse one. 19.162.020(O) is the qualifier on an exemption this layer *encodes* — FMC

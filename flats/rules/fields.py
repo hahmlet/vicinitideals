@@ -474,6 +474,22 @@ ACRE_STATED_FIELDS: frozenset[str] = frozenset({"min_lot_sqft"})
 #: the file states the acreage.
 ACRE_PER_DWELLING_FIELDS: frozenset[str] = frozenset({"min_lot_sqft"})
 
+#: Fields a rule file may state as a count of spaces FOR THE WHOLE BUILDING
+#: rather than as a rate per unit. Oregon's middle-housing rule is written this
+#: way and the cities that adopted its model code copied the wording: OAR
+#: 660-046-0220(2)(e)(B) caps what a large city may require of a quadplex at
+#: "one space in total" under 3,000 square feet, rising a space a band to "four
+#: spaces in total" at 7,000 -- and prints 0.25, 0.5 and 0.75 nowhere. The word
+#: doing the dividing is "Quadplexes" in the stem of the sentence, which is
+#: :data:`DWELLINGS` by another name.
+#:
+#: Restricted to the two parking fields because a total is only a total where
+#: the standard counts things the building has. A lot WIDTH stated as a total
+#: for four dwellings is not a rule any code writes.
+PARKING_TOTAL_FIELDS: frozenset[str] = frozenset(
+    {"parking_min_per_unit", "parking_max_per_unit"}
+)
+
 #: The height, in feet, of the building this screen answers for. A design
 #: constant in the rules registry for the same reason :data:`DWELLINGS` is one:
 #: some codes state a standard as a function of the building rather than of the

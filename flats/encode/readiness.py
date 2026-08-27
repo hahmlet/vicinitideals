@@ -173,113 +173,124 @@ class Readiness:
         )
 
 
+def _printed(value: object) -> object:
+    """The figure a reader will find in the text, for one value.
+
+    A derived standard is checked against the figure the code prints rather
+    than the one arithmetic made of it. MCC 39.4862(C) states 5,000 square
+    feet for each dwelling unit and prints 20,000 nowhere; Portland's Table
+    120-4 asks one unit per 2,500 sq ft of site area and prints 17.424 units
+    per acre nowhere; MCC 39.4245(A) asks 80 acres and prints 3,484,800
+    nowhere. Each carrier holds the operand the sentence contains, and this
+    picks whichever one is set.
+    """
+    return (
+        value.per_dwelling
+        if value.per_dwelling is not None
+        else value.sqft_per_unit
+        if value.sqft_per_unit is not None
+        # A rate a table prints as a share -- "1 per 2 units" -- is checked
+        # against the denominator, which is the only figure on the page.
+        # Table 266-2 prints 1 and prints 2 and prints the 0.5 they come to
+        # nowhere.
+        else value.per_units
+        if getattr(value, "per_units", None) is not None
+        # A rule that counts spaces for the whole building -- "two spaces in
+        # total" -- is checked against the count. OAR 660-046-0220 prints
+        # one, two, three and four and prints the rates they come to nowhere.
+        else value.spaces_total
+        if getattr(value, "spaces_total", None) is not None
+        else value.acres
+        if getattr(value, "acres", None) is not None
+        else value.acres_per_dwelling
+        if getattr(value, "acres_per_dwelling", None) is not None
+        # A standard measured off the building is checked against the ratio
+        # the code prints, not against what it comes to. Table 150-2 prints 2
+        # and prints 10 and prints 13 nowhere.
+        else value.per_height_ft
+        if getattr(value, "per_height_ft", None) is not None
+        # A step-back ADDS to the district's own setback rather than replacing
+        # it, so the district table is checked against the figure the district
+        # table prints. The other half gets its own row.
+        else value.before_step_back
+        if getattr(value, "before_step_back", None) is not None
+        else getattr(value, "value", None)
+    )
+
+
+def _printed_variant(variant: object) -> object:
+    """The same question for an exception.
+
+    A reduction is checked against the percentage the code states, not against
+    the product. Portland's 33.110 prints 12,000 and prints 10 and prints
+    10,800 nowhere, so looking for the result would flag the one encoding that
+    did not invent it.
+    """
+    return (
+        variant.before_step_back
+        if getattr(variant, "before_step_back", None) is not None
+        else variant.acres
+        if getattr(variant, "acres", None) is not None
+        else variant.per_dwelling
+        if getattr(variant, "per_dwelling", None) is not None
+        else variant.acres_per_dwelling
+        if getattr(variant, "acres_per_dwelling", None) is not None
+        else variant.spaces_total
+        if getattr(variant, "spaces_total", None) is not None
+        else variant.reduce_pct
+        if variant.reduce_pct is not None
+        else getattr(variant, "value", None)
+    )
+
+
+def _rows(where: str, name: str, value: object) -> Iterable[tuple[str, str, str | None, object]]:
+    """Every citation one value asks a reader to open, and what to look for."""
+    yield where, name, value.prov.quote, _printed(value)
+    if value.step_back_quote:
+        # The half of the number that lives in another chapter. Unlike a
+        # denominator there IS a figure to corroborate -- Gresham prints 21
+        # and prints the 20 it comes to nowhere -- so this row is checked
+        # like any other.
+        yield where, f"{name} [step-back]", value.step_back_quote, value.step_back_at_ft
+    if value.measured_on_quote:
+        # The denominator's definition is a rule somebody read, and a citation
+        # nothing checks is the provenance hole this field was added to close.
+        # No number to corroborate -- what is being verified is that the
+        # sentence is still where the file says it is.
+        yield where, f"{name} <{value.measured_on}>", value.measured_on_quote, None
+    if value.qualified_quote:
+        # The rule that says this standard is not the whole rule. No figure
+        # either -- what it states is a condition, and the citation exists so
+        # a reader can see the sentence rather than take "there is more to
+        # this" on trust.
+        yield where, f"{name} ?{value.qualified_by}", value.qualified_quote, None
+    for variant in value.variants:
+        yield (
+            where,
+            f"{name} [{'+'.join(sorted(variant.when))}]",
+            variant.prov.quote,
+            _printed_variant(variant),
+        )
+
+
 def _quoted_parts(layer: Layer) -> Iterable[tuple[str, str, str | None, object]]:
     """Every (zone, field, quote, number) in a layer, exceptions included.
 
     A variant citing a different chapter and an incorporation clause are both
     values somebody has to read, so both are counted here. Leaving either out
     would report a jurisdiction as finished with unread rules in it.
+
+    A layer-level default is read exactly like a zone value. It used to be
+    read as its bare `value`, which meant a derived default was checked
+    against the arithmetic instead of against the page, and a default's
+    exceptions were not checked at all -- the state parking cap is banded
+    four ways and only the widest band was ever looked for.
     """
-    yield from (
-        ("defaults", name, v.prov.quote, getattr(v, "value", None))
-        for name, v in layer.defaults.items()
-    )
+    for name, value in layer.defaults.items():
+        yield from _rows("defaults", name, value)
     for zone_code, zone in layer.zones.items():
         for name, value in zone.values.items():
-            # A derived standard is checked against the figure the code prints
-            # rather than the one arithmetic made of it. MCC 39.4862(C) states
-            # 5,000 square feet for each dwelling unit and prints 20,000
-            # nowhere; Portland's Table 120-4 asks one unit per 2,500 sq ft of
-            # site area and prints 17.424 units per acre nowhere; MCC
-            # 39.4245(A) asks 80 acres and prints 3,484,800 square feet
-            # nowhere.
-            yield (
-                zone_code,
-                name,
-                value.prov.quote,
-                value.per_dwelling
-                if value.per_dwelling is not None
-                else value.sqft_per_unit
-                if value.sqft_per_unit is not None
-                # A rate a table prints as a share -- "1 per 2 units" -- is
-                # checked against the denominator, which is the only figure on
-                # the page. Table 266-2 prints 1 and prints 2 and prints the
-                # 0.5 they come to nowhere.
-                else value.per_units
-                if getattr(value, "per_units", None) is not None
-                else value.acres
-                if getattr(value, "acres", None) is not None
-                else value.acres_per_dwelling
-                if getattr(value, "acres_per_dwelling", None) is not None
-                # A standard measured off the building is checked against the
-                # ratio the code prints, not against what it comes to. Table
-                # 150-2 prints 2 and prints 10 and prints 13 nowhere.
-                else value.per_height_ft
-                if getattr(value, "per_height_ft", None) is not None
-                # A step-back ADDS to the district's own setback rather than
-                # replacing it, so the district table is checked against the
-                # figure the district table prints. The other half gets its own
-                # row below.
-                else value.before_step_back
-                if getattr(value, "before_step_back", None) is not None
-                else getattr(value, "value", None),
-            )
-            if value.step_back_quote:
-                # The half of the number that lives in another chapter. Unlike
-                # a denominator there IS a figure to corroborate -- Gresham
-                # prints 21 and prints the 20 it comes to nowhere -- so this
-                # row is checked like any other.
-                yield (
-                    zone_code,
-                    f"{name} [step-back]",
-                    value.step_back_quote,
-                    value.step_back_at_ft,
-                )
-            if value.measured_on_quote:
-                # The denominator's definition is a rule somebody read, and a
-                # citation nothing checks is the provenance hole this field
-                # was added to close. No number to corroborate -- what is
-                # being verified is that the sentence is still where the file
-                # says it is.
-                yield (
-                    zone_code,
-                    f"{name} <{value.measured_on}>",
-                    value.measured_on_quote,
-                    None,
-                )
-            if value.qualified_quote:
-                # The rule that says this standard is not the whole rule. No
-                # figure either -- what it states is a condition, and the
-                # citation exists so a reader can see the sentence rather than
-                # take "there is more to this" on trust.
-                yield (
-                    zone_code,
-                    f"{name} ?{value.qualified_by}",
-                    value.qualified_quote,
-                    None,
-                )
-            for variant in value.variants:
-                yield (
-                    zone_code,
-                    f"{name} [{'+'.join(sorted(variant.when))}]",
-                    variant.prov.quote,
-                    # A reduction is checked against the percentage the code
-                    # states, not against the product. Portland's 33.110 prints
-                    # 12,000 and prints 10 and prints 10,800 nowhere, so
-                    # looking for the result would flag the one encoding that
-                    # did not invent it.
-                    variant.before_step_back
-                    if getattr(variant, "before_step_back", None) is not None
-                    else variant.acres
-                    if getattr(variant, "acres", None) is not None
-                    else variant.per_dwelling
-                    if getattr(variant, "per_dwelling", None) is not None
-                    else variant.acres_per_dwelling
-                    if getattr(variant, "acres_per_dwelling", None) is not None
-                    else variant.reduce_pct
-                    if variant.reduce_pct is not None
-                    else getattr(variant, "value", None),
-                )
+            yield from _rows(zone_code, name, value)
         if zone.like is not None:
             yield zone_code, LIKE, zone.like.prov.quote, None
     for w in layer.wanted:

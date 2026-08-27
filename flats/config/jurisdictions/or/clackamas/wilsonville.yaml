@@ -197,6 +197,93 @@ defaults:
     url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.155GERE
     retrieved: '2026-08-22'
     quote: "or/clackamas/wilsonville/4.planning.txt#L13093-L13095,L13102-L13107,L13405-L13410"
+  # STALL GEOMETRY, read 2026-08-26 after Steph pointed out that "no minimum"
+  # answers the wrong question: this product gets built with parking whatever
+  # a city requires, so what matters here is what a stall has to measure once
+  # we put one in. Wilsonville requires none and caps none -- both values
+  # above are `exempt` -- and it still dimensions every space in the city.
+  #
+  # The dimensions are in the definitions, not in the parking chapter.
+  # 4.001(220) defines a Parking Space as "a permanently surfaced and marked
+  # area not less than nine feet wide and 18 feet long, excluding paved area
+  # necessary for access". A definition is a citywide standard by another
+  # name, which is why these are layer defaults: Table 5 in 4.155 counts
+  # spaces and never measures one.
+  parking_stall_width_ft:
+    value: 9
+    cite: Wilsonville Development Code 4.001(220), Parking Space
+    url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.001DE
+    retrieved: '2026-08-26'
+    quote: "or/clackamas/wilsonville/4.planning.txt#L1019-L1020"
+  parking_stall_depth_ft:
+    value: 18
+    cite: Wilsonville Development Code 4.001(220), Parking Space
+    url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.001DE
+    retrieved: '2026-08-26'
+    quote: "or/clackamas/wilsonville/4.planning.txt#L1019-L1020"
+  #
+  # NOT ENCODED: the aisle. Chapter 4 dimensions a standard space, a compact
+  # space (7 ft 6 in by 15 ft, 4.001(222)) and a motorcycle space, and states
+  # no drive-aisle width anywhere -- the only aisle sentences in the chapter
+  # say where an aisle may go, never how wide it is. So this layer holds a
+  # stall and no aisle, which is not the same as an aisle of zero, and the
+  # screen should be read as having no Wilsonville answer for that dimension
+  # rather than a permissive one. Where the number lives is a live question:
+  # 4.113(.14)D.4.c.ii sends access on collector and arterial frontages to
+  # "the access standards in the Wilsonville Public Works Standards", which is
+  # the Gresham 9.0200 shape -- a dimension in an engineering manual no
+  # jurisdiction file in this corpus declares.
+  #
+  # NOT ENCODED, and the reason the chapter was opened at all: Section
+  # 4.113(.14) is where Wilsonville says what a quadplex's parking may look
+  # like, and subsection D is titled "Standards applicable to Triplexes and
+  # Quadplexes" -- this building, named. None of it fits a field.
+  #
+  # D.3, Garages and Off-Street Parking Areas: "The combined width of all
+  # garages (measured from the interior of the garage door frame) and outdoor
+  # on-site parking and maneuvering areas shall not exceed a total of 50
+  # percent of any street frontage (other than an alley)."
+  # (4.planning.txt#L3538-L3541)
+  #
+  # D.4, Driveway Approach: "The total width of all driveway approaches must
+  # not exceed 32 feet per frontage, as measured at the property line" --
+  # the same 32 feet as Fairview FMC 19.30.040(F)(1) and Clackamas ZDO
+  # 845.02, because all three are the state middle-housing model code. On a
+  # lot with more than one frontage, access must be taken from the street
+  # with the lowest transportation classification, and from the alley instead
+  # if a paved alley abuts; a lot fronting only local streets may have either
+  # two approaches totalling 32 feet on one frontage or one 16-foot approach
+  # per frontage. (4.planning.txt#L3545-L3567)
+  #
+  # E.5 is the split-plat half of the same question and it is much tighter.
+  # Subsection E is "Standards applicable to Townhouses", which under state
+  # law is this building on four unit lots rather than one -- the `unit_lots`
+  # lever, said in Wilsonville's words. E.5.a requires access from a paved
+  # abutting alley. E.5.b lets parking sit in the front yard only if each lot
+  # has 20 feet of local-street frontage, takes at most one driveway approach
+  # per townhouse, keeps outdoor on-site parking and maneuvering areas to 12
+  # feet wide on any lot, and keeps the garage to 12 feet. E.5.c is what
+  # applies when b is not met: off-street parking accessed on the back facade
+  # or in the rear yard, none in the front or side yard, a corner-lot project
+  # taking a single approach on the side street, and a non-corner project
+  # consolidating access into one driveway that may not run between any
+  # townhouse's front facade and its front lot line. (4.planning.txt#L3622-L3658)
+  #
+  # Twelve feet is the number that decides this. A 9-foot stall inside a
+  # 12-foot cap leaves three feet of manoeuvring, which is a single-file
+  # driveway and not a court -- so on the split plat Wilsonville does not
+  # permit the parking arrangement the site-plan generator draws, and on the
+  # whole-lot plat D.3's 50-percent frontage cap and D.4's 32-foot approach
+  # are what it has to be drawn against instead. The generator currently
+  # applies Gresham's constants to every city.
+  #
+  # Not encoded because the registry has no field for any of it: no driveway
+  # approach width, no share-of-frontage, no parking placement relative to
+  # street or facade, no maneuvering-area width. This is the fifth
+  # jurisdiction to hit the same wall -- Clackamas ZDO 845.02, Gresham's
+  # hard-coded rear court, Fairview 19.162.020(L) and 19.30, now Wilsonville
+  # -- and it is transcribed rather than summarised so that the field family,
+  # when it is built, is a copy job and not a re-read.
 zones:
   R:
     section: ["4.122", "4.113", "4.001"]

@@ -14,8 +14,8 @@ notes: >-
 code:
 # oregon.public.law serves each OAR rule as one page. 660-046-0220 is the
 # Large City siting standard: its (2)(e)(B) parking tier caps what any Large
-# City may require for a quadplex at 1/2/3/4 total spaces by lot size, which
-# is at most one space per unit — the preempting ceiling encoded below.
+# City may require for a quadplex at 1/2/3/4 total spaces by lot size — the
+# preempting ceiling encoded below, banded the way the rule bands it.
 - id: oar.660-046-0220
   url: https://oregon.public.law/rules/oar_660-046-0220
   title: OAR 660-046-0220 Middle Housing Siting Standards in Large Cities
@@ -184,10 +184,70 @@ defaults:
     status: draft
     quote: "or/oar.660-046-0220.txt#L55"
   parking_min_per_unit:
-    value: 1.0
+    # (2)(e)(B) is a ceiling on what a city may ASK, not a thing the state
+    # asks -- hence `preempts: cap` -- and it is BANDED by lot size, which the
+    # first encoding of it flattened. A quadplex on a 4,000 sq ft lot may be
+    # asked for two spaces in total, not four: the cap a small lot carries is
+    # half the one a large lot carries, and reading the flat figure onto a
+    # small lot overstates by two stalls what any Oregon city is allowed to
+    # demand.
+    #
+    # The base is the widest band because it is the band a lot of unknown size
+    # has to be assumed into: the loosest cap is the most a city could ask, and
+    # this field feeds a screen that may not clear a lot it cannot measure.
+    # The four bands together cover every lot size, so any lot whose area IS
+    # known lands on a variant and the base never fires for it.
+    spaces_total: 4
     preempts: cap
     cite: "OAR 660-046-0220(2)(e)(B)(iv)"
     url: "https://oregon.public.law/rules/oar_660-046-0220"
     retrieved: 2026-08-12
     status: draft
-    quote: "or/oar.660-046-0220.txt#L79-L91"
+    quote: "or/oar.660-046-0220.txt#L79,L90-L91"
+    variants:
+      - spaces_total: 1
+        band: {measure: lot_sqft, less_than: 3000}
+        cite: "OAR 660-046-0220(2)(e)(B)(i)"
+        quote: "or/oar.660-046-0220.txt#L79,L81-L82"
+      - spaces_total: 2
+        band: {measure: lot_sqft, at_least: 3000, less_than: 5000}
+        cite: "OAR 660-046-0220(2)(e)(B)(ii)"
+        quote: "or/oar.660-046-0220.txt#L79,L84-L85"
+      - spaces_total: 3
+        band: {measure: lot_sqft, at_least: 5000, less_than: 7000}
+        cite: "OAR 660-046-0220(2)(e)(B)(iii)"
+        quote: "or/oar.660-046-0220.txt#L79,L87-L88"
+
+  # NOT ENCODED: OAR 660-046-0220(2)(e)(E), which says a Large City "must apply
+  # the same off-street parking surfacing, dimensional, landscaping, access,
+  # and circulation standards that apply to single-family detached dwellings in
+  # the same zone." That is a redirect, and it points AWAY from every parking
+  # dimension this corpus holds: the stall widths, stall depths and aisle
+  # widths encoded from each city's general parking table are the standards
+  # that apply to parking lots, and this sentence says the ones that bind a
+  # quadplex are whatever binds a house on the same ground. Where a city's
+  # single-family standards are looser -- and they usually are, a driveway
+  # beside a house being neither a lot nor an aisle -- our geometry is
+  # over-strict, and where they are tighter it is wrong the other way.
+  #
+  # Not encodable as a value: there is no field for "read a different chapter",
+  # and no zone in this corpus records what its single-family parking standards
+  # are, because until now nothing asked. Same shape as Gresham 9.0802(F) and
+  # the Portland aisle -- a rule whose content is a pointer -- and the fourth
+  # instance of it. Recorded so the next reader knows the encoded stall
+  # geometry has a live question over it in every Large City, rather than
+  # finding out from a site plan.
+  #
+  # NOT ENCODED: OAR 660-046-0220(2)(e)(D), "A Large City may allow, but may
+  # not require, off-street parking to be provided as a garage or carport."
+  # This one binds nothing we screen -- the pod is a factory-built box with
+  # surface parking beside it and no city may force a structure over the
+  # stalls -- but it is the sentence that guarantees that, so it is written
+  # down rather than passed over as irrelevant. Quote:
+  # or/oar.660-046-0220.txt#L96-L97, and (E) at
+  # or/oar.660-046-0220.txt#L99-L100.
+  #
+  # NOT ENCODED: OAR 660-046-0220(2)(e)(C), on-street parking credits. A city
+  # MAY let a space at the kerb count against the requirement, which can only
+  # ever help a lot and never hurt it, so leaving it out is the conservative
+  # direction. Quote: or/oar.660-046-0220.txt#L93-L94.

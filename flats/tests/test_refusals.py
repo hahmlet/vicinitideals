@@ -26,7 +26,7 @@ pytestmark = pytest.mark.unit
 #: are not meant to do is move quietly. A refusal added without a line here is
 #: a reading nobody signed off on; a refusal removed without one is a reading
 #: somebody overturned without saying so.
-EXPECTED = {"notes": 92, "comments": 31, "tests": 16}
+EXPECTED = {"notes": 92, "comments": 37, "tests": 16}
 #: Two of the sixteen are this file, which quotes the marker while
 #: explaining it, and one is a back-reference in test_gresham_rockwood --
 #: prose saying a zone *was* not encoded until it was. Left in rather than
@@ -138,6 +138,51 @@ EXPECTED = {"notes": 92, "comments": 31, "tests": 16}
 #: VC. VSF is tempting because its name ends in Residential; VMU is tempting
 #: because Chapter 19.150 is *titled* for it and its landscaping sentence is
 #: not. Both are the shape that produces an invented standard.
+#:
+#: Comments went 31 -> 34 on 2026-08-26, in the state layer, and all three are
+#: the tail of OAR 660-046-0220(2)(e) -- the subsection whose (B) this corpus
+#: has encoded since Phase 0 and whose (C), (D) and (E) nobody had read. Same
+#: lesson as Fairview, one level up: the parking clause was opened for the
+#: number it caps and closed again before the sentences that say what a city
+#: may do about parking it does not require.
+#:
+#: (E) is the one that matters and it is a redirect: a Large City "must apply
+#: the same off-street parking surfacing, dimensional, landscaping, access,
+#: and circulation standards that apply to single-family detached dwellings in
+#: the same zone." Every stall width, stall depth and aisle width in this
+#: corpus was read from a general parking table, and this sentence says the
+#: standards that bind a quadplex are whichever ones bind a house on the same
+#: ground. It is the fourth rule in the corpus whose content is a pointer --
+#: after Gresham 9.0802(F), Clackamas ZDO 845.02 and the Portland aisle -- and
+#: the first that puts a live question over geometry already encoded, in every
+#: Large City at once. Refused rather than encoded because no zone here
+#: records what its single-family parking standards are; until now nothing
+#: asked.
+#:
+#: (D) and (C) are recorded for the opposite reason: neither binds. (D) says a
+#: city may allow but not require a garage or carport, which is the sentence
+#: that guarantees the pod's surface stalls are legal, and a guarantee is
+#: worth a line. (C) lets a city credit on-street spaces against a
+#: requirement, which can only ever help a lot, so leaving it out is the
+#: conservative direction and saying so is cheaper than re-deciding it later.
+#:
+#: Comments went 34 -> 37 the same day for Wilsonville, and they are the first
+#: fruit of running the required-versus-regulated question over a city that
+#: was already finished. Wilsonville requires no parking and caps none -- both
+#: fields read `exempt` since 2026-08-22 -- and Section 4.113(.14) subsection
+#: D is titled "Standards applicable to Triplexes and Quadplexes" and regulates
+#: the parking anyway: half the street frontage for garages and manoeuvring
+#: areas, 32 feet of driveway approach per frontage, and on the townhouse
+#: branch a 12-foot cap on outdoor parking and manoeuvring per lot. Twelve feet
+#: around a nine-foot stall is a single-file driveway, so on unit lots the
+#: court the site-plan generator draws is not a thing Wilsonville permits.
+#:
+#: The third is an absence rather than a refusal, and it is recorded because
+#: absences of this kind are invisible: Chapter 4 dimensions a standard space,
+#: a compact space and a motorcycle space, and states no drive-aisle width at
+#: all. Holding a stall and no aisle is not the same object as an aisle of
+#: zero, and 4.113(.14)D.4.c.ii points at the Public Works Standards, which is
+#: the Gresham 9.0200 shape again.
 #:
 #: Worth knowing about this ledger, learned writing those two: the window runs
 #: FORWARD from the marker, and rows are deduplicated on the window text. A

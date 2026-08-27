@@ -107,8 +107,8 @@ def _parse_values(
 
         if isinstance(node, dict) and (
             {"value", "exempt", "per_dwelling", "sqft_per_unit", "per_units",
-             "acres", "acres_per_dwelling", "per_height_ft", "floor_ft",
-             "step_back", "qualified_by"} & set(node)
+             "spaces_total", "acres", "acres_per_dwelling", "per_height_ft",
+             "floor_ft", "step_back", "qualified_by"} & set(node)
         ):
             body = dict(node)
             value = body.pop("value", None)
@@ -116,6 +116,7 @@ def _parse_values(
             per_dwelling = body.pop("per_dwelling", None)
             sqft_per_unit = body.pop("sqft_per_unit", None)
             per_units = body.pop("per_units", None)
+            spaces_total = body.pop("spaces_total", None)
             acres = body.pop("acres", None)
             acres_each = body.pop("acres_per_dwelling", None)
             per_height = body.pop("per_height_ft", None)
@@ -197,6 +198,40 @@ def _parse_values(
                 # "1 per 2 units" is half a space per unit, and 0.5 is in no
                 # ordinance anywhere.
                 value = _per_units(float(per_units))
+            if spaces_total is not None:
+                # Ahead of the value check, because `per_units` above has
+                # already put its quotient in `value` and the conflict a
+                # reader needs told about is the two carriers, not the
+                # arithmetic one of them just did.
+                if per_units is not None:
+                    problems.append(
+                        f"{where}.{key}: a table states parking per unit or in "
+                        f"total, not both"
+                    )
+                    continue
+                if value is not None or exempt:
+                    problems.append(
+                        f"{where}.{key}: a value states a rate or a count of "
+                        f"spaces for the whole building, not both"
+                    )
+                    continue
+                if not isinstance(spaces_total, (int, float)) or isinstance(
+                    spaces_total, bool
+                ):
+                    problems.append(
+                        f"{where}.{key}: 'spaces_total' expects a number"
+                    )
+                    continue
+                if spaces_total <= 0:
+                    problems.append(
+                        f"{where}.{key}: spaces_total {spaces_total} is not a "
+                        f"count of spaces — a code that asks for none states "
+                        f"'exempt: true'"
+                    )
+                    continue
+                # "two spaces in total" for a Quadplex is half a space per
+                # unit, and OAR 660-046-0220 prints 0.5 nowhere.
+                value = _in_total(float(spaces_total))
             if acres is not None:
                 if value is not None or exempt:
                     problems.append(
@@ -313,6 +348,7 @@ def _parse_values(
             per_dwelling = None
             sqft_per_unit = None
             per_units = None
+            spaces_total = None
             acres = None
             acres_each = None
             measured_on = measured_on_cite = measured_on_quote = None
@@ -377,6 +413,9 @@ def _parse_values(
                 per_dwelling=None if per_dwelling is None else float(per_dwelling),
                 sqft_per_unit=None if sqft_per_unit is None else float(sqft_per_unit),
                 per_units=None if per_units is None else float(per_units),
+                spaces_total=(
+                    None if spaces_total is None else float(spaces_total)
+                ),
                 acres=None if acres is None else float(acres),
                 acres_per_dwelling=(
                     None if acres_each is None else float(acres_each)
@@ -473,6 +512,17 @@ def _stepped_back(setback: float, at_ft: float, rise: float) -> float:
     return int(total) if float(total).is_integer() else total
 
 
+def _in_total(spaces: float) -> float:
+    """A count of spaces a rule states for the whole building, said per unit.
+
+    The denominator is not in the sentence as a digit; it is in the sentence as
+    a word. OAR 660-046-0220(2)(e)(B) opens "For Quadplexes", and a quadplex is
+    four dwellings -- :data:`DWELLINGS`, the same constant the per-dwelling
+    conversions multiply by, used here the other way round.
+    """
+    return round(spaces / DWELLINGS, 3)
+
+
 def _per_units(shared_between: float) -> float:
     """A rate a table prints as "1 per N units", said per unit.
 
@@ -540,13 +590,14 @@ def _parse_variants(
                 "acres",
                 "per_dwelling",
                 "acres_per_dwelling",
+                "spaces_total",
             }
             & set(node)
         ):
             problems.append(
                 f"{at}: expected a mapping with a 'value', a 'reduce_pct', an "
-                f"'acres', a 'per_dwelling', an 'acres_per_dwelling', or "
-                f"'exempt: true'"
+                f"'acres', a 'per_dwelling', an 'acres_per_dwelling', a "
+                f"'spaces_total', or 'exempt: true'"
             )
             continue
         body = dict(node)
@@ -606,6 +657,29 @@ def _parse_variants(
             # minimum lot area per dwelling unit. One acre in OR, four
             # dwellings, four acres -- a figure neither article prints.
             value = _per_dwelling(_in_acres(float(acres_each)))
+        spaces_total = body.pop("spaces_total", None)
+        if spaces_total is not None:
+            if value is not None:
+                problems.append(
+                    f"{at}: a variant states a number or a count of spaces for "
+                    f"the whole building, not both"
+                )
+                continue
+            if not isinstance(spaces_total, (int, float)) or isinstance(
+                spaces_total, bool
+            ):
+                problems.append(f"{at}: 'spaces_total' expects a number")
+                continue
+            if spaces_total <= 0:
+                problems.append(
+                    f"{at}: spaces_total {spaces_total} is not a count of "
+                    f"spaces — a band that allows none states 'exempt: true'"
+                )
+                continue
+            # OAR 660-046-0220(2)(e)(B) bands a quadplex's parking ceiling by
+            # lot size: one space in total under 3,000 sq ft, four at 7,000.
+            # A quarter of a space per unit is a figure the rule never prints.
+            value = _in_total(float(spaces_total))
         reduce_pct = body.pop("reduce_pct", None)
         if reduce_pct is not None:
             if value is not None:
@@ -681,6 +755,9 @@ def _parse_variants(
                     per_dwelling=None if each is None else float(each),
                     acres_per_dwelling=(
                         None if acres_each is None else float(acres_each)
+                    ),
+                    spaces_total=(
+                        None if spaces_total is None else float(spaces_total)
                     ),
                     when=tuple(str(c) for c in when),
                     band=band,

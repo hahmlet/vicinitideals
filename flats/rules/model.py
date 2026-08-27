@@ -46,6 +46,7 @@ from flats.rules.fields import (
     ACRE_STATED_FIELDS,
     HEIGHT_RATIO_FIELDS,
     MEASURED_ON_FIELDS,
+    PARKING_TOTAL_FIELDS,
     PER_DWELLING_FIELDS,
     PER_UNIT_AREA_FIELDS,
     STEP_BACK_FIELDS,
@@ -407,6 +408,13 @@ class Variant(BaseModel):
     #: within a mile of the Urban Growth Boundary and five of one beyond it,
     #: in one sentence, and prints no square footage at all.
     acres: float | None = None
+    #: The count of off-street spaces a code states for the whole building,
+    #: where a condition -- or, as the state rule writes it, a lot-size band --
+    #: decides which count applies. OAR 660-046-0220(2)(e)(B) states four of
+    #: them, one per band, and states a rate in none of them. Same bargain as
+    #: `acres_per_dwelling`: the file states the figure a reader will find and
+    #: the arithmetic runs through :data:`DWELLINGS` where it can be checked.
+    spaces_total: float | None = None
     #: This exception's own printed figure, before the standard's step-back was
     #: added to it. Gresham's LDR-PV rear yard is 10 ft, or 8 with an alley,
     #: and 7.0420(G)(1) pushes a 26 ft box five feet off whichever of the two
@@ -669,6 +677,18 @@ class Value(BaseModel):
     #: reader will find on the page. Same bargain as `sqft_per_unit`, in the
     #: unit a parking table answers in.
     per_units: float | None = None
+    #: The number of off-street spaces a code states FOR THE WHOLE BUILDING,
+    #: where it counts spaces instead of stating a rate. OAR
+    #: 660-046-0220(2)(e)(B) caps a quadplex at "two spaces in total" on a lot
+    #: between 3,000 and 5,000 square feet; the field means half a space per
+    #: unit and the rule prints 0.5 nowhere. `value` carries the rate because
+    #: that is what the field means and what a lot is measured against, and
+    #: this carries the count a reader will find. The denominator is not typed
+    #: either -- it is :data:`DWELLINGS`, which the sentence names by calling
+    #: the building a Quadplex. The inverse of `per_units`, and it exists
+    #: because the state rule and every city that copied its model code state
+    #: parking this way round.
+    spaces_total: float | None = None
     #: The acreage the code prints, where it states an area that way. MCC
     #: 39.4245(A) asks 80 acres of a new EFU parcel and prints 3,484,800
     #: square feet nowhere. `value` carries the square footage because that is
@@ -868,6 +888,23 @@ class Value(BaseModel):
             )
         if self.sqft_per_unit <= 0:
             raise ValueError(f"{self.name}: sqft_per_unit {self.sqft_per_unit} is not an area")
+        return self
+
+    @model_validator(mode="after")
+    def _spaces_total_is_a_count_of_spaces(self) -> Value:
+        if self.spaces_total is None:
+            return self
+        if self.name not in PARKING_TOTAL_FIELDS:
+            raise ValueError(
+                f"{self.name}: 'spaces_total' states parking as a count for the "
+                f"whole building, and applies to "
+                f"{', '.join(sorted(PARKING_TOTAL_FIELDS))}"
+            )
+        if self.spaces_total <= 0:
+            raise ValueError(
+                f"{self.name}: spaces_total {self.spaces_total} is not a count "
+                f"of spaces — a code that asks for none states 'exempt: true'"
+            )
         return self
 
     @model_validator(mode="after")
