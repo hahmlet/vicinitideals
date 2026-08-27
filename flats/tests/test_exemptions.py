@@ -43,7 +43,13 @@ pytestmark = pytest.mark.unit
 #: and next time one of them will not be innocent.
 #:
 #: ``marker`` fell 7 -> 0 the same day. See the test below.
-EXPECTED = {"stated": 166, "numeric": 25, "marker": 0, "dash": 2, "silent": 0}
+#:
+#: ``stated`` went 166 -> 167 on 2026-08-26 for Fairview's parking maximum,
+#: and it is the plainest exemption in the corpus: every residential row of
+#: Table 19.164.030(A) prints None in both maximum columns, and the same table
+#: gives banks 5.4 and fast food with a drive-through 12.4, so the column is a
+#: ceiling and None means there is not one.
+EXPECTED = {"stated": 167, "numeric": 25, "marker": 0, "dash": 2, "silent": 0}
 
 LAKE_OSWEGO = "or/clackamas/lake-oswego"
 

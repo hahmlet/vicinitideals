@@ -127,12 +127,32 @@ def test_written_config_loads_through_the_real_loader() -> None:
 
 
 def test_state_parking_preemption_reaches_a_city_zone() -> None:
-    """The state cap reaches a city that has not spoken for itself."""
-    res = RuleSet(load_rules()).resolve("or/multnomah/fairview", "R-6")
+    """The state cap reaches a city that has not spoken for itself.
 
-    parking = res.values["parking_min_per_unit"]
-    assert parking.value == 1.0
-    assert parking.layer == "or", "state cap must reach a city with no rule of its own"
+    Asked of whichever city that is, rather than of a named one. This opened on
+    Fairview R-6 until 2026-08-26, when FMC 19.164.030(A) was read -- "There is
+    no minimum off-street parking requirements for new developments" -- and
+    Fairview stopped being a city with no rule of its own. A test that names its
+    example goes red the day somebody does the reading, and what it is about is
+    that the cap reaches down at all.
+    """
+    rules = RuleSet(load_rules())
+    reached = [
+        (layer_id, zone)
+        for layer_id, layer in rules.layers.items()
+        if layer.kind == "city"
+        for zone in layer.zones
+        if (
+            (v := rules.resolve(layer_id, zone).values.get("parking_min_per_unit"))
+            is not None
+            and v.layer == "or"
+        )
+    ]
+
+    assert reached, "no city zone inherits the state parking cap any more"
+    for layer_id, zone in reached:
+        parking = rules.resolve(layer_id, zone).values["parking_min_per_unit"]
+        assert parking.value == 1.0, (layer_id, zone)
 
 
 def test_a_city_below_the_state_cap_keeps_its_own_number() -> None:

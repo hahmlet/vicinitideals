@@ -601,28 +601,54 @@ def test_every_document_either_claims_a_chapter_or_is_a_whole_code() -> None:
 # -- a decision is not a disposal -------------------------------------------
 
 
+def _ordered(layers: dict[str, Layer]) -> list[tuple[str, Dangling]]:
+    """Every fetch the corpus is currently carrying, found by asking.
+
+    Named examples do not survive here. This pair of tests used to open on
+    Fairview 19.164, which was ordered on 2026-08-26 and fetched the same
+    afternoon; the ruling then came out, because a ruling on a reference the
+    store can resolve reports as stale, and both tests went red for having
+    named a row rather than a condition. What they are about is the rule --
+    ``fetch`` and ``later`` are decisions and a decision is not a disposal --
+    so the rule is what they ask for.
+    """
+    return [
+        (layer_id, row)
+        for layer_id, layer in layers.items()
+        for row in dangling(layer)
+        if row.outcome == "fetch"
+    ]
+
+
 def test_work_ordered_stays_in_the_queue(layers: dict[str, Layer]) -> None:
     """``CROSSREF_CLOSED`` has excluded ``fetch`` and ``later`` since the
     vocabulary was written, and the review queue honours it. This ledger did
     not, so the first ordered fetch anybody recorded sorted to the bottom
     under a heading reading "read, and about somebody else's building"."""
-    rows = {d.ref: d for d in dangling(layers[FAIRVIEW])}
+    ordered = _ordered(layers)
 
-    ordered = rows["19.164"]
-    assert ordered.outcome == "fetch"
-    assert ordered.ruling
-    assert not ordered.ruled
-    assert ordered.rank[1] == ordered.binding
+    assert ordered, "no fetch is ordered anywhere in the corpus"
+    for layer_id, row in ordered:
+        assert row.ruling, (layer_id, row.ref)
+        assert not row.ruled, (layer_id, row.ref)
+        assert row.rank[1] == row.binding, (layer_id, row.ref)
 
 
 def test_and_the_queue_prints_why_it_is_still_there(layers: dict[str, Layer]) -> None:
-    printed = "\n".join(render(dangling(layers[FAIRVIEW]), slack_only=True))
+    layer_id, row = _ordered(layers)[0]
+    printed = "\n".join(render(dangling(layers[layer_id])))
     head = printed.split("closed —")[0]
 
     assert "FETCH:" in head
-    assert "19.164" in head
+    assert row.ref in head
     # The closed ones are out of the working queue and under their own heading.
-    assert "19.245" not in head
+    # Asked as "they are below the line" rather than "they are not above it":
+    # a section number is a substring of other section numbers and of the
+    # sample text quoted beside them, so absence is the wrong question.
+    tail = printed.split("closed —", 1)[1]
+    closed = [d.ref for d in dangling(layers[layer_id]) if d.ruled]
+    assert closed, layer_id
+    assert all(ref in tail for ref in closed), (layer_id, closed)
 
 
 def test_a_row_closed_by_reading_leaves(layers: dict[str, Layer]) -> None:

@@ -1,5 +1,5 @@
 {
-  "digest": "865ebb81d79b5d820b90197e3988d42d0d506806da24bdabbca22719df708771",
+  "digest": "b42e809defd91caffc5bc06c2dee0ecc695211c8fae2dfca078d14fc6c6c7683",
   "layers": {
     "or": {
       "misattributed": [],
@@ -276,13 +276,6 @@
           "claimed": "19.65.020 19.65.020 19.65.030 19.65.060",
           "found": "19.65.040",
           "quote": "or/multnomah/fairview/19.65.txt#L155,L207"
-        },
-        {
-          "zone": "VA",
-          "field": "min_landscaped_pct",
-          "claimed": "19.125.020 19.125.030 19.125.040",
-          "found": "19.145.070",
-          "quote": "or/multnomah/fairview/19.145.txt#L55,L57"
         }
       ],
       "label": "Fairview",

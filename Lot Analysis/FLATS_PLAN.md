@@ -256,6 +256,47 @@ appeared the day `_doc_ids` learned to read a filename that opens with the code'
 abbreviation — before that `zdo.845.txt` claimed no chapter, so its own sections read as
 unfetched and neither redirect could be scored.
 
+Fairview made it three, from the other direction. FMC 19.162.020(L), *Driveway Openings*,
+states two numbers and the registry has nowhere to put either: L.1 gives “single-unit
+dwelling, duplex, triplex, quadplex, and townhouse uses” a minimum driveway width of 10
+feet and a maximum of 24, and L.2 gives “multiple-unit uses and cottage clusters with
+between four and seven dwelling units” a minimum of 20 and the same maximum. Both rows
+reach this building on their face — this layer has already established that Fairview’s
+“multi-unit dwelling” means five or more, which argues L.1 — and a 10-foot drive and a
+20-foot drive are ten feet of lot apart. **Access geometry is the one thing this screen
+places that no field can express**: where parking sits relative to the street (Clackamas
+ZDO 845.02), how a court is reached (Gresham, hard-coded), and now how wide the drive to
+it has to be. Fairview alone adds a fourth: 19.163.030(E)(3)(b) requires at least four
+feet between a building and any parking, maneuvering area or driveway beside it, and
+where the building is residential ground-floor living space that four feet must be
+landscaped rather than a raised pathway — so a rear court here is four feet deeper than
+its stalls and its 24 ft aisle. Three jurisdictions, one missing field family, recorded
+rather than fixed.
+
+The gap is wider than the ledgers can see, and Fairview is where that became obvious.
+**A city can require no parking and still regulate parking completely**, and the rules
+that do the regulating never surface in a cross-reference queue, because they are not
+references — they sit in a chapter already fetched, already read for other values, in
+sections no field exists for. FMC 19.30.040(E) bars parking between a building and a
+public street unless a dwelling screens it or the garages and paving stay under half the
+frontage. 19.30.040(F)(1) caps every driveway approach on a frontage at 32 feet, the same
+number as Clackamas ZDO 845.02 because both are the state middle-housing model code.
+19.30.050(D) gives the townhouse branch a 12-foot ceiling on outdoor parking and
+maneuvering per lot, or sends the parking to the rear yard outright. None of that was
+recorded until somebody asked what applies *if we build parking anyway* — which this
+product will, regardless of what a code requires. **"Required" and "regulated" are
+different questions, and only the first one has a field.**
+
+The same chapter carries the corpus’s second refusal of the Gresham 9.0200 shape, and a
+worse one. 19.162.020(O) is the qualifier on an exemption this layer *encodes* — FMC
+19.70.020.A.3 waives the side setback “except that buildings shall conform to the vision
+clearance standards in Chapter 19.162 FMC” — and it states a height and no extent:
+nothing over three feet in a “vision clearance area, as shown above”. FMC 19.13 closes
+the loop by defining the term as “the shaded area as shown on the following figure”. Two
+documents, no number, because the number is a drawing. Gresham’s equivalent at least
+named the manual it deferred to; this one defers to a picture, which is a document class
+no extractor in this system can read at all.
+
 **Exemption ledger** (`flats/encode/exemptions.py` → `exemptions.csv`) — *which
 exemptions cite a page that does not state one.* `exempt: true` is the only value that
 removes a test rather than narrowing it, so it is the only one that can turn a lot GREEN

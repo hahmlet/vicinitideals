@@ -26,7 +26,7 @@ pytestmark = pytest.mark.unit
 #: are not meant to do is move quietly. A refusal added without a line here is
 #: a reading nobody signed off on; a refusal removed without one is a reading
 #: somebody overturned without saying so.
-EXPECTED = {"notes": 92, "comments": 25, "tests": 16}
+EXPECTED = {"notes": 92, "comments": 31, "tests": 16}
 #: Two of the sixteen are this file, which quotes the marker while
 #: explaining it, and one is a back-reference in test_gresham_rockwood --
 #: prose saying a zone *was* not encoded until it was. Left in rather than
@@ -93,6 +93,59 @@ EXPECTED = {"notes": 92, "comments": 25, "tests": 16}
 #: field can say that. Encoding the density figure instead would be wrong in
 #: both directions at once. This is the clearest case in the corpus of a
 #: refusal that is a work order rather than a dismissal.
+#:
+#: Comments went 25 -> 31 on 2026-08-26 for Fairview, from the three chapters
+#: the cross-reference ledger ordered. Four are in the layer defaults and two
+#: are zone-level, and each group is a different kind of decline.
+#:
+#: 19.162.020(O), Vision Clearance, is the Gresham 9.0200 shape one step
+#: worse. It is the qualifier on an exemption this layer encodes -- FMC
+#: 19.70.020.A.3 waives the side setback "except that buildings shall conform
+#: to the vision clearance standards in Chapter 19.162 FMC" -- and it states a
+#: height and no extent: structures over three feet are barred from "'vision
+#: clearance areas,' as shown above". 19.13's definition closes the loop by
+#: saying the area "means the shaded area as shown on the following figure".
+#: Two documents, no number, because the number is a drawing. 19.162.020(L),
+#: Driveway Openings, is refused for the opposite reason -- it states two
+#: numbers and the registry has nowhere to put either. L.1 gives a quadplex a
+#: 10-foot minimum driveway and L.2 gives a four-to-seven-unit development 20.
+#: 19.163.030(E)(3)(b) is the same shape once more and the one that costs the
+#: most: a parking or maneuvering area adjacent to a building must be separated
+#: from it by at least four feet, and where the building is residential
+#: ground-floor living space the four feet must be landscaped rather than a
+#: raised pathway. A rear court in Fairview is four feet deeper than its stalls
+#: and its aisle, and ``min_building_separation_ft`` is building-to-building.
+#:
+#: The fourth is the largest, and it was added after Steph pointed out that
+#: "no minimum" is not the same question as "what applies if we build it" --
+#: which this product will. Fairview requires no parking and regulates parking
+#: fully, and the rules that do the regulating sit in FMC 19.30, a chapter this
+#: file already reads four values out of. 19.30.040(E) bars parking between a
+#: building and a public street unless a dwelling screens it or the garages and
+#: paving stay under half the frontage; 19.30.040(F)(1) caps all driveway
+#: approaches at 32 feet per frontage, the same figure as Clackamas ZDO 845.02
+#: because both are the state middle-housing model code; 19.30.050(D) gives the
+#: townhouse branch a 12-foot cap on outdoor parking and maneuvering per lot,
+#: or sends parking to the rear yard entirely. None of it was written down,
+#: because no field could hold it and nothing counts a standard nobody has a
+#: field for. It is transcribed into the layer now so the field family, when it
+#: is built, is a copy job rather than a re-read.
+#:
+#: The zone pair, VSF and VMU, are refusals to copy a number sideways.
+#: 19.163.030(C) states landscape minimums for six named district types and no
+#: village district is among them, because the village article answers
+#: landscaping itself: 19.145.070 covers VTH and VA, 19.150.070 covers VO and
+#: VC. VSF is tempting because its name ends in Residential; VMU is tempting
+#: because Chapter 19.150 is *titled* for it and its landscaping sentence is
+#: not. Both are the shape that produces an invented standard.
+#:
+#: Worth knowing about this ledger, learned writing those two: the window runs
+#: FORWARD from the marker, and rows are deduplicated on the window text. A
+#: refusal that puts "NOT ENCODED" at the end of its paragraph renders as a
+#: stub, and two stubs in one layer collapse into one row. Both zone refusals
+#: were written that way first and the count moved by one instead of two. The
+#: cure is prose, not code -- lead with the marker -- but a reviewer who
+#: expects a count to move and watches it not move should suspect this first.
 
 
 def test_the_corpus_declares_more_refusals_than_any_ledger_counts() -> None:
