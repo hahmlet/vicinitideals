@@ -325,6 +325,55 @@ every Large City at once. Nothing can follow it today: no zone here records what
 single-family parking standards are, because until now nothing asked. Recorded in the
 state layer as a refusal so the next reader meets it before a site plan does.
 
+Three more cities read on 2026-08-27 — Milwaukie, Oregon City, Happy Valley — took the
+corpus from four layers holding stall geometry to seven, and each one failed in a
+different way, which is more useful than the numbers.
+
+**Milwaukie states an aisle this building may not use.** Table 19.606.1 gives a 22-foot
+aisle at 90 degrees and it is not Milwaukie's answer for a quadplex: the purpose
+paragraph of Section 19.606 applies the section "to all types of development where
+parking is provided, except for middle housing, single detached dwellings, and adult
+foster/care homes", and Table 19.605.1 files quadplexes under Middle Housing. What
+survives is Section 19.607, which names the building — "single detached dwellings,
+duplexes, triplexes, quadplexes, townhouses, cottage clusters" — and dimensions the space
+at 9 by 18 and no aisle at all. So Milwaukie is Wilsonville's shape a second time, a stall
+with no aisle, and the number that looked like an aisle was a trap two lines above the
+table. It also caps a quadplex at **one space per unit**, the tightest cap in the corpus
+outside Portland, off the same Table 19.605.1 that states no minimum for anybody: the only
+vehicle minimum in the chapter is footnote 1, half a space per unit where the frontage is
+an arterial or collector, which is the number this file carries because street
+classification is unmeasured.
+
+**Oregon City states a number whose unit is missing.** Table 17.52.020 asks a triplex or
+quadplex for a minimum of "2.00" and a maximum of "4", under a header declaring the
+table's figures to be per 1,000 square feet of net leasable area unless otherwise stated,
+one row below "Multi-family residential — 1.00 per unit". Per 1,000 square feet, per unit
+and in total are three different buildings, and only the last is lawful, because OAR
+660-046-0220(2)(e)(B) caps a Large City at four spaces in total. Choosing the reading that
+survives preemption is an argument, not a citation, so both cells are refused and the
+state cap governs. The geometry beside them is unambiguous and encoded — 9 by 19 off a
+24-foot aisle — but it stands down under `unit_lots`, because OCMC 17.52.010 excludes
+"single-family detached residential dwellings, duplexes, townhouses, and cottage clusters"
+from the whole chapter and leaves triplexes and quadplexes in it. That is the first time
+in this corpus a city's **stall dimensions depend on how the land is divided** rather than
+on what is built.
+
+**Happy Valley answers everything and bans the site plan.** One chapter, LDC 16.43.030,
+requires one space per dwelling, states no maximum, dimensions the stall at 9 by 18.5 off
+a 24-foot aisle — and then 16.43.030.E.4 says "Parking areas shall be set back from a lot
+line adjoining a street the same distance as the required building setbacks." In a city
+whose residential front setback is twenty feet, that does not cap front-yard parking the
+way Milwaukie and Wilsonville cap it; it removes it. 16.43.030.F.5 requires forward entry
+to the right-of-way for any group of more than three spaces, which is every arrangement
+this pod has. Both are refusals for want of a field.
+
+Seven layers of nineteen now hold stall geometry. What the three have in common is that
+none of the missing pieces is a missing *number* — they are a missing field family:
+driveway approach width, share-of-frontage, placement relative to a façade or a street,
+manoeuvring-area width, parking setback. Six jurisdictions have now been transcribed
+rather than encoded against that gap, all of them printing the state middle-housing model
+code in local words, so that building the fields is a copy job and not a re-read.
+
 The same chapter carries the corpus’s second refusal of the Gresham 9.0200 shape, and a
 worse one. 19.162.020(O) is the qualifier on an exemption this layer *encodes* — FMC
 19.70.020.A.3 waives the side setback “except that buildings shall conform to the vision

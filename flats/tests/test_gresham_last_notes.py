@@ -105,16 +105,27 @@ def test_gresham_states_an_auto_parking_maximum_and_none_is_encoded() -> None:
         assert design.parking.stalls_per_unit <= 2.0, design.id
 
 
-def test_portland_is_still_the_only_layer_with_a_ceiling() -> None:
-    """Not an accident of encoding order -- no other jurisdiction in the corpus
-    states a parking maximum that reaches this building. Gresham's is the one
-    that came closest, and it was read and declined above.
+def test_the_layers_that_state_a_parking_ceiling_are_the_two_that_state_one() -> None:
+    """Portland was the only one until 2026-08-27, and Milwaukie is the second.
+
+    Milwaukie's is the tighter of the two and it is aimed at this housing type
+    by name: Table 19.605.1 is headed "Maximum Allowed", row A.3.c reads
+    "Quadplexes -- 1 space per dwelling unit", and the row above gives
+    Multi-Unit Dwellings two per unit while single detached dwellings get "No
+    maximum." Four stalls for the whole building, citywide, in a code that
+    requires none of them.
+
+    That matters to the site-plan generator rather than to the screen: a rear
+    court drawn at more stalls than the cap allows is not a lot that fails, it
+    is a drawing that is not permitted. Gresham's ceiling is the one that came
+    closest to a third and it was read and declined above.
 
     A stated absence is not a ceiling. Portland writes `exempt: true` on the
-    fifteen zones whose cell reads "No maximum" and Wilsonville writes it on
-    the whole layer, because Table 5's middle housing row reads "No Limit" --
-    both are readings, and neither is a number that can refuse a building.
-    This counts only the layers holding a figure.
+    fifteen zones whose cell reads "No maximum", Wilsonville writes it on the
+    whole layer because Table 5's middle housing row reads "No Limit", and
+    Fairview and Happy Valley write it because their tables print None -- all
+    four are readings, and none is a number that can refuse a building. This
+    counts only the layers holding a figure.
     """
 
     def states_a_figure(value: object) -> bool:
@@ -130,4 +141,4 @@ def test_portland_is_still_the_only_layer_with_a_ceiling() -> None:
         )
     }
 
-    assert carrying == {"or/multnomah/portland"}
+    assert carrying == {"or/multnomah/portland", "or/clackamas/milwaukie"}

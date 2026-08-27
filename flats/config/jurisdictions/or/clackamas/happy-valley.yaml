@@ -216,6 +216,123 @@ code:
 - id: 16.63.land-divisions
   url: https://ecode360.com/print/HA4934?guid=43529977
   title: HV LDC Chapter 16.63 - Land Divisions and Property Line Adjustments
+- id: 16.43.parking
+  url: https://ecode360.com/print/HA4934?guid=43529966
+  title: HV LDC Chapter 16.43 - Parking and Loading
+  # Fetched 2026-08-27. Chapter 16.22 never points here -- the residential
+  # chapter mentions parking twice, once inside a traffic study and once for
+  # garages in the VTH district -- so nothing in this corpus would have found
+  # it. The guid came from the Title 16 print view, the same route 16.32 and
+  # 16.34 came in on.
+
+defaults:
+  # PARKING, read 2026-08-27. Happy Valley is the first city in this corpus to
+  # answer the whole question in one chapter: it requires parking, dimensions
+  # it, and says where it may not go, all in LDC 16.43.030.
+  #
+  # Table 16.43.030-1 puts this building on the row "Single-family attached
+  # (townhome), duplex, triplex, quadplex, cottage cluster" and asks 1 space
+  # per dwelling -- four for the pod -- against a maximum column reading "None
+  # required". The row is the same whether the pod sits on one lot or four, so
+  # nothing here turns on `unit_lots`, which makes Happy Valley the opposite
+  # of Oregon City two files over.
+  parking_min_per_unit:
+    value: 1
+    cite: HV LDC 16.43.030.B.12, Table 16.43.030-1, Residential row (townhome/duplex/triplex/quadplex/cottage cluster)
+    url: https://ecode360.com/print/HA4934?guid=43529966
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/happy-valley/16.43.parking.txt#L215-L216"
+  # The maximum column of the same row. Its header says so twice over --
+  # "Maximum Parking Spaces (if nothing is noted, there is no maximum)" -- and
+  # footnote 4 confirms it from the other side: maximums "apply only to
+  # multifamily units in town centers, regional centers, and the transit
+  # areas", which is a different row of this table and a place this building
+  # is not.
+  parking_max_per_unit:
+    exempt: true
+    cite: HV LDC Table 16.43.030-1, Maximum Parking Spaces column, and footnote 4
+    url: https://ecode360.com/print/HA4934?guid=43529966
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/happy-valley/16.43.parking.txt#L192-L196,L215-L217,L456-L457"
+  # Table 16.43.030-2, "Off-Street Parking Matrix Required Space and Aisle
+  # Dimensions in Feet", standard-size vehicles at 90 degrees: stall width
+  # 9.0, stall depth 18.5, aisle width 24.0, module width 61.0, bumper
+  # overhang 2.5. The module figure is the check on the reading -- 18.5 plus
+  # 24 plus 18.5 is 61 -- which matters because the extraction publishes this
+  # table one cell per line with no row structure left in it. Twenty-four feet
+  # is Fairview's aisle and Oregon City's, and the widest anyone asks.
+  # Compact stalls (8.0 by 16.0, aisle 20.0) are capped at 35 percent of the
+  # stalls Table 16.43.030-1 requires, so the standard row is what a placement
+  # is screened against. One aisle figure, not two.
+  parking_stall_width_ft:
+    value: 9
+    cite: HV LDC 16.43.030.F.2, Table 16.43.030-2, standard vehicle at 90 degrees
+    url: https://ecode360.com/print/HA4934?guid=43529966
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/happy-valley/16.43.parking.txt#L563-L568,L618-L623"
+  parking_stall_depth_ft:
+    value: 18.5
+    cite: HV LDC 16.43.030.F.2, Table 16.43.030-2, standard vehicle at 90 degrees
+    url: https://ecode360.com/print/HA4934?guid=43529966
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/happy-valley/16.43.parking.txt#L563-L568,L618-L623"
+  parking_aisle_one_way_ft:
+    value: 24
+    cite: HV LDC 16.43.030.F.2, Table 16.43.030-2, standard vehicle at 90 degrees
+    url: https://ecode360.com/print/HA4934?guid=43529966
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/happy-valley/16.43.parking.txt#L563-L568,L618-L623"
+  parking_aisle_two_way_ft:
+    value: 24
+    cite: HV LDC 16.43.030.F.2, Table 16.43.030-2, standard vehicle at 90 degrees
+    url: https://ecode360.com/print/HA4934?guid=43529966
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/happy-valley/16.43.parking.txt#L563-L568,L618-L623"
+  #
+  # NOT ENCODED, and this is the one that would change a site plan: LDC
+  # 16.43.030.E.4, Parking Location. "Parking areas shall be set back from a
+  # lot line adjoining a street the same distance as the required building
+  # setbacks. Regardless of other provisions, a minimum setback of ten feet
+  # shall be provided along the property fronting on a public street." A
+  # parking setback equal to the building setback is not a placement rule this
+  # screen has a field for, and in Happy Valley's residential zones the front
+  # setback is twenty feet, so the effect is that no stall may sit in the
+  # front yard at all -- not capped at half of it the way Milwaukie and
+  # Wilsonville cap it, banned. E.1 adds "No off-street parking shall be
+  # allowed in the landscaped yard areas of any lot", and E.3 sends a parking
+  # area abutting a residential district to that district's setback, which is
+  # a neighbour's standard applying to our lot. (or/clackamas/happy-valley/16.43.parking.txt#L515,L523,L527)
+  #
+  # NOT ENCODED: LDC 16.43.030.F.5, Backing and Maneuvering. "Except for a
+  # single-family dwelling or two-family dwelling, groups of more than three
+  # parking spaces shall be provided with adequate aisles or turnaround areas
+  # so that all vehicles enter the right-of-way (except for alleys) in a
+  # forward manner." Four stalls is more than three and a quadplex is neither
+  # exception, so forward entry is required on every Happy Valley lot without
+  # an alley -- the third city to state it (Milwaukie 19.607.1.E.2, Gresham's
+  # hard-coded rear court) and the first to state it as a flat rule rather
+  # than one conditioned on street class. F.3 adds that no vehicle may project
+  # over a property line or right-of-way, and allows a five-foot-clear
+  # overhang across an internal sidewalk. (or/clackamas/happy-valley/16.43.parking.txt#L632,L640)
+  #
+  # NOT ENCODED: three ways the minimum above can fall to zero, all of them
+  # site facts nothing measures. 16.43.030.B.12 exempts a lot within
+  # three-quarters of a mile of a rail transit stop, within half a mile of a
+  # frequent transit corridor as defined by OAR 660-012-0710, or within a
+  # quarter mile of the Clackamas Regional Center or Happy Valley Town Center.
+  # Footnote 5 exempts "residential units smaller than 750 square feet",
+  # affordable housing under OAR 660-039-0010 and publicly supported housing
+  # under ORS 456.250 -- this pod's units are about a thousand square feet
+  # each, so the size limb does not reach it, and affordability is elective.
+  # Footnote 3 exempts housing-type conversions, which is not new
+  # construction. Encoding any of them would forgive a requirement that
+  # really applies. (or/clackamas/happy-valley/16.43.parking.txt#L155-L181,L454-L459)
+  #
+  # NOT FETCHED: Chapter 16.41, Access and Circulation (guid 43529957). Every
+  # other city in this corpus keeps its driveway approach widths and access
+  # spacing in the chapter of that name, and 16.43 states none, so the
+  # driveway half of this question is still open here.
+
 zones:
   R40:
     section:

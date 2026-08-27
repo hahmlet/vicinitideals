@@ -26,7 +26,7 @@ pytestmark = pytest.mark.unit
 #: are not meant to do is move quietly. A refusal added without a line here is
 #: a reading nobody signed off on; a refusal removed without one is a reading
 #: somebody overturned without saying so.
-EXPECTED = {"notes": 92, "comments": 37, "tests": 16}
+EXPECTED = {"notes": 92, "comments": 45, "tests": 16}
 #: Two of the sixteen are this file, which quotes the marker while
 #: explaining it, and one is a back-reference in test_gresham_rockwood --
 #: prose saying a zone *was* not encoded until it was. Left in rather than
@@ -183,6 +183,44 @@ EXPECTED = {"notes": 92, "comments": 37, "tests": 16}
 #: all. Holding a stall and no aisle is not the same object as an aisle of
 #: zero, and 4.113(.14)D.4.c.ii points at the Public Works Standards, which is
 #: the Gresham 9.0200 shape again.
+#:
+#: Comments went 37 -> 45 on 2026-08-27, and all eight came out of one sweep:
+#: reading three cities' parking chapters to answer what parking has to LOOK
+#: like, given that we build it whatever a code requires. Milwaukie three,
+#: Oregon City two, Happy Valley three. They divide into three shapes, and
+#: the shapes are the finding rather than the count.
+#:
+#: A rule that excludes this building from the standard everyone assumes
+#: applies. Milwaukie's aisle table is real, is 22 feet at 90 degrees, and
+#: does not reach a quadplex: the purpose paragraph of Section 19.606 excepts
+#: middle housing from everything in the section except the quarter-acre
+#: parking lot rules. Reading the table without reading the paragraph above it
+#: would have put a number in this corpus that Milwaukie does not apply. That
+#: is the whole-document-grep rule with a jurisdiction attached.
+#:
+#: A row whose number is legible and whose UNIT is not. Oregon City's Table
+#: 17.52.020 asks a triplex or quadplex for a minimum of "2.00" and a maximum
+#: of "4" under a header that says the table's figures are per 1,000 square
+#: feet of net leasable area unless otherwise stated -- and the row above it
+#: says "per unit" and this one says nothing. Per 1,000 square feet, per unit,
+#: or in total are three different buildings, and only the third is lawful
+#: under the state cap. Deducing the unit from which reading would survive
+#: preemption is an argument, not a citation, so both cells are refused and
+#: the state cap governs. This is the first refusal in the corpus about a
+#: denominator rather than a number.
+#:
+#: A placement rule with no field to hold it -- now in its sixth and seventh
+#: jurisdiction, and no longer a gap so much as a missing field family. Happy
+#: Valley 16.43.030.E.4 sets parking back from a street lot line by the
+#: building setback, which in its residential zones bans front-yard parking
+#: outright rather than capping it; Oregon City 17.16.060.D caps outdoor
+#: parking and manoeuvring at forty feet or half the frontage, whichever is
+#: less, and 17.16.040 drops that to twelve feet on townhouse lots; Milwaukie
+#: 19.607.1.D allows a quadplex a fourth front-yard space and no more, and
+#: 19.505.5.F drops to ten feet on townhouse lots. Every one of them is the
+#: state middle housing model code in local words, and the registry has no
+#: driveway approach width, share-of-frontage, facade-relative placement or
+#: manoeuvring-area width to put any of it in.
 #:
 #: Worth knowing about this ledger, learned writing those two: the window runs
 #: FORWARD from the marker, and rows are deduplicated on the window text. A

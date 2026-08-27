@@ -451,3 +451,66 @@ notes:
       and rear elevations." Scoped to Table 16.22.060-2. The measurement
       pointer is not a standard, and the rest loosens a limit for a building
       type the pod is not.
+
+# --- Table 16.43.030-1, Automobile Parking Standards -------------------
+#
+# Chapter 16.43 was fetched 2026-08-27, and its five notes arrived with it.
+# Happy Valley is the first city in this corpus to answer the whole parking
+# question in one chapter -- a minimum, a stall, an aisle and a placement rule
+# -- so these five sit over the two quantity values rather than over a
+# dimensional table, and four of the five are about who the maximum column
+# reaches. Only note 4 changes anything this layer carries.
+  - quote: "or/clackamas/happy-valley/16.43.parking.txt#L450"
+    digest: "6ee22a1d3b4e"
+    state: dismissed
+    reason: >-
+      note 1 explains the Zone A and Zone B columns of the maximum: they come
+      from Metro's Regional Transportation Functional Plan Title 2 and its
+      Regional Parking Ratio Table, and the zones are drawn by transit access.
+      The row this building sits on prints "None required" across both zone
+      columns, so the note explains a pair of cells that are empty for us.
+      Nothing to encode and nothing to lose by declining it
+
+  - quote: "or/clackamas/happy-valley/16.43.parking.txt#L452"
+    digest: "fdff5f9d8c60"
+    state: dismissed
+    reason: >-
+      note 2 counts enclosed outdoor seating as floor area for restaurants,
+      coffee shops and food-beverage carts without a drive-through. A
+      different row of the same table and a use this screen does not place
+
+  - quote: "or/clackamas/happy-valley/16.43.parking.txt#L454"
+    digest: "9184593ae379"
+    state: dismissed
+    reason: >-
+      note 3 waives additional parking for housing type CONVERSIONS -- its own
+      example is a single detached dwelling becoming a triplex. This pod is
+      new construction on a lot, not a conversion of a building already there,
+      so the waiver does not reach it. Declining it is also the conservative
+      direction: it can only ever reduce a requirement
+
+  - quote: "or/clackamas/happy-valley/16.43.parking.txt#L456"
+    digest: "e2a12de95a10"
+    state: encoded
+    encoded_as: "parking_max_per_unit exempt in the layer's defaults"
+    reason: >-
+      note 4 is what makes the maximum an absence rather than an omission:
+      "Parking maximums apply only to multifamily units in town centers,
+      regional centers, and the transit areas in LDC Section 16.43.030.B.12.a
+      through b." A quadplex is not a multifamily unit in this table -- the
+      table gives multifamily its own row, for buildings of five or more units
+      -- and the three named places are geographic. So the "None required" in
+      the maximum column of our row is the rule and not a gap in the table
+
+  - quote: "or/clackamas/happy-valley/16.43.parking.txt#L458"
+    digest: "7aab09608faa"
+    state: dismissed
+    reason: >-
+      note 5 exempts single-room occupancy housing, "residential units smaller
+      than 750 square feet", affordable housing under OAR 660-039-0010 and
+      publicly supported housing under ORS 456.250 from the minimum. Three of
+      the four limbs are elections or programmes rather than facts about the
+      lot, and the fourth is a fact about the design: this pod is 56 by 36
+      feet over two storeys, about a thousand square feet a unit, so the size
+      limb does not reach it. Encoding the affordable limb would forgive a
+      requirement that applies to the building we are actually screening

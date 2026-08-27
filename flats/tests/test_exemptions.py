@@ -49,7 +49,15 @@ pytestmark = pytest.mark.unit
 #: Table 19.164.030(A) prints None in both maximum columns, and the same table
 #: gives banks 5.4 and fast food with a drive-through 12.4, so the column is a
 #: ceiling and None means there is not one.
-EXPECTED = {"stated": 167, "numeric": 25, "marker": 0, "dash": 2, "silent": 0}
+#:
+#: 167 -> 168 on 2026-08-27 for Happy Valley's, which is the same shape read
+#: from the other end. Table 16.43.030-1 prints "None required" in both maximum
+#: columns of the row this building sits on, and footnote 4 says why rather
+#: than leaving it to inference: "Parking maximums apply only to multifamily
+#: units in town centers, regional centers, and the transit areas in LDC
+#: Section 16.43.030.B.12.a through b." A quadplex is none of those, so the
+#: empty cell is the rule and not a hole in the table.
+EXPECTED = {"stated": 168, "numeric": 25, "marker": 0, "dash": 2, "silent": 0}
 
 LAKE_OSWEGO = "or/clackamas/lake-oswego"
 

@@ -224,3 +224,39 @@ notes:
       note 4 grandfathers waste management uses in existence before 31
       December 2017 and makes later ones conditional. Not the use being
       placed, and no NMIA zone is encoded
+
+  # --- Table 19.605.1, Off-Street Parking Requirements ----------------
+  #
+  # Two notes under a table with one column. 19.605.1 is titled "Parking
+  # Maximums" and Table 19.605.1 prints "Maximum Allowed" and nothing else, so
+  # these two footnotes are between them the whole of Milwaukie's vehicle
+  # parking MINIMUM for middle housing -- which is why one of them is encoded
+  # and why the pair had to be ruled before the cap above them could be.
+  - quote: "or/clackamas/milwaukie/19.600.parking.txt#L292"
+    digest: "72796b908751"
+    state: encoded
+    encoded_as: "parking_min_per_unit = 0.5 at the base of the layer's defaults"
+    reason: >-
+      note 1, on the Middle Housing row: middle housing on a street classified
+      as an Arterial or Collector in the Transportation System Plan requires
+      0.5 off-street spaces per dwelling unit. This is the only vehicle
+      minimum in Chapter 19.600 and it is conditional on a street class
+      nothing measures, so it is carried as the base rather than a variant --
+      the same way Lake Oswego's arterial street-side setback is the base and
+      its local-street figure is the exception. A local frontage removes the
+      requirement entirely, which is a real relief and is refused in the
+      layer file: Milwaukie prints no "None" and no "no minimum", it simply
+      publishes a table with no minimum column, and a quotable zero cannot be
+      made out of a missing column
+
+  - quote: "or/clackamas/milwaukie/19.600.parking.txt#L293"
+    digest: "775e266e954e"
+    state: dismissed
+    reason: >-
+      note 2 asks 0.5 spaces per unit of "townhouse developments of 8 or more
+      townhouses", and adds that successive or phased developments to avoid
+      the requirement are not permitted. This building is four units on one
+      lot or four townhouses on four, and four is not eight either way. The
+      anti-phasing sentence bites a developer assembling a larger project out
+      of small ones, which is a pattern this screen does not model and would
+      have to be told about rather than infer from a single lot

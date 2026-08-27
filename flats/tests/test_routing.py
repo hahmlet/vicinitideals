@@ -83,11 +83,28 @@ def rows() -> list[Routing]:
 #: chapter before that, so its own sections read as unfetched and the redirect
 #: could not be scored.
 #:
+#: *A rule read but never cited.* Milwaukie's two arrived 2026-08-27 with
+#: Chapter 19.600, and they are the first rows here whose target this corpus
+#: HAS opened. MMC 19.607.1 -- the section that dimensions a quadplex's stall
+#: at 9 by 18 -- excepts cottage clusters to 19.505.4 and townhouses to
+#: 19.505.5, both inside `19.500.supplementary.txt`, which has been in the
+#: store since 2026-08-20. 19.505.4 is somebody else's building. 19.505.5 is
+#: this building on four unit lots, it was read the same day, and every word
+#: of it is transcribed in the layer file: ten feet of outdoor parking and
+#: manoeuvring per lot, a twelve-foot garage, two shared accesses for four
+#: townhouses, twenty-four feet between them. None of that could be encoded,
+#: because the registry holds no manoeuvring-area width and no driveway
+#: approach, so no value cites the section and the ledger cannot tell reading
+#: from neglect. That is the honest limit of a ledger built on citations, and
+#: the row should close by a field appearing rather than by a re-read.
+#:
 #: A row that is not on this list is the thing to look at. It means a number
 #: in use sits beside a sentence handing its standard to a section nobody
 #: opened.
 OPEN = {
     "or/clackamas/_unincorporated 845.01 -> 845.02",
+    "or/clackamas/milwaukie 19.607.1 -> 19.505.4",
+    "or/clackamas/milwaukie 19.607.1 -> 19.505.5",
     "or/clackamas/lake-oswego 50.04.001.3 -> 50.04.003",
     "or/clackamas/west-linn 25.070 -> 25.020",
     "or/clackamas/wilsonville 4.001 -> 4.140",

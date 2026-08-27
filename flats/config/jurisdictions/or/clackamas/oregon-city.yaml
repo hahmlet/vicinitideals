@@ -79,6 +79,148 @@ code:
     # as glossary its section list and its zoning-map paragraph came back as
     # four defined terms this city never defined.
     definitions_at: L834-L3883
+defaults:
+  # PARKING, read 2026-08-27 -- the whole of Chapter 17.52 plus the middle
+  # housing chapter that overrides parts of it. What Oregon City has to say
+  # about this building's parking splits cleanly in two, and the seam is
+  # OCMC 17.52.010, Applicability:
+  #
+  #   "The construction of a new structure or parking lot, or alterations to
+  #    the size or use of an existing structure, parking lot or property use
+  #    shall require site plan review approval and compliance with this
+  #    chapter. This chapter does not apply to single-family detached
+  #    residential dwellings, duplexes, townhouses, and cottage clusters."
+  #
+  # Triplexes and quadplexes are the two middle-housing types NOT on that
+  # list. So on one lot the pod is a quadplex and the parking chapter binds
+  # it in full; split onto four lots it is townhouses and Chapter 17.52 does
+  # not reach it at all. Every value below therefore stands down under
+  # `unit_lots`, which is the first time in this corpus that a city's stall
+  # dimensions depend on how the land is divided rather than what is built.
+  # (or/clackamas/oregon-city/17.zoning.txt#L14791-L14797)
+  #
+  # The stall and the aisle are the 90-degree standard row of the unnumbered
+  # "Parking Standard / Parking Angle Space Dimensions" table in OCMC
+  # 17.52.030.D.1. Its columns are A Parking Angle, B Stall Width, C Stall to
+  # Curb, D Aisle Width, E Curb Length, F Overhang, and the row reads
+  # "90 degrees Standard 9' 19.0' 24' 9' 1.5" -- so a 9 by 19 stall off a 24
+  # ft aisle, which is Fairview's geometry exactly and the widest aisle in
+  # this corpus. This publication is a scan, and the zero in 19.0 was OCR'd
+  # as a letter o; the figure is legible from the column and from the 45- and
+  # 60-degree rows around it, and a reader opening the line sees the same
+  # thing. Compact stalls are allowed for up to 35 percent of the MINIMUM
+  # required parking, so the standard row is what a placement is screened
+  # against. One aisle figure, not two -- the table does not distinguish
+  # one-way from two-way -- so both fields carry it.
+  #
+  # The quote is the whole of 17.52.030 A through D rather than the two lines
+  # that hold the figures, and that is forced rather than lazy. The attribution
+  # check reads a section back off the page furniture, and the running header
+  # on this page is OCR'd as "17.5 2 .030", which matches nothing; the only
+  # section-shaped string above the table is the page number, 402.123. Quoting
+  # from the section heading down through the table gives the check a real
+  # marker to find. A reader opening it lands on "17.52.030 Standards for
+  # automobile parking" and reads to the table, which is the right place to be.
+  parking_stall_width_ft:
+    value: 9
+    unless: [unit_lots]
+    cite: OCMC 17.52.030.D.1, Parking Angle Space Dimensions, 90 degrees standard
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L15070-L15131"
+  parking_stall_depth_ft:
+    value: 19
+    unless: [unit_lots]
+    cite: OCMC 17.52.030.D.1, Parking Angle Space Dimensions, 90 degrees standard (Stall to Curb)
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L15070-L15131"
+  parking_aisle_one_way_ft:
+    value: 24
+    unless: [unit_lots]
+    cite: OCMC 17.52.030.D.1, Parking Angle Space Dimensions, 90 degrees standard
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L15070-L15131"
+  parking_aisle_two_way_ft:
+    value: 24
+    unless: [unit_lots]
+    cite: OCMC 17.52.030.D.1, Parking Angle Space Dimensions, 90 degrees standard
+    url: https://api.municode.com/PublicationPdfDownload/1377
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/oregon-city/17.zoning.txt#L15070-L15131"
+  #
+  # NOT ENCODED: how many spaces. This is a refusal about a unit, not about a
+  # number, and it is the sharpest one in the corpus so far. Table 17.52.020
+  # is introduced by "The parking requirements are based on spaces per one
+  # thousand square feet net leasable area unless otherwise stated", and its
+  # residential rows read:
+  #
+  #     Land Use                     Minimum          Maximum
+  #     Multi-family residential     1.00 per unit    2.5 per unit
+  #     Triplex and quadplex         2.00             4
+  #
+  # The row above ours states its unit. Ours does not, and three readings
+  # follow from that, each giving a different building:
+  #
+  #   (a) the table's own default -- per 1,000 sq ft of net leasable area --
+  #       which is what the header literally directs, and which asks about
+  #       ten spaces of a four-unit building while using a commercial term of
+  #       art no dwelling has;
+  #   (b) per unit, by proximity to the line above it, which is eight spaces
+  #       minimum and sixteen maximum;
+  #   (c) spaces in total, which is two and four -- and which is the only one
+  #       of the three that Oregon City is allowed to enforce, because OAR
+  #       660-046-0220(2)(e)(B) caps what a Large City may require of a
+  #       quadplex at four spaces IN TOTAL and Oregon City is a Large City.
+  #
+  # Reading (c) is almost certainly what the drafters meant. It is not what
+  # they printed, and a reading arrived at by working out which of three
+  # meanings would be lawful is an argument, not a citation. Encoding it
+  # would put 0.5 and 1.0 into this file with a quote that says neither.
+  #
+  # Left out, `parking_min_per_unit` inherits the state cap, which is the
+  # conservative direction: on a lot of 7,000 sq ft or more the screen holds
+  # this building to four stalls, which is at least as many as any of the
+  # three readings survives preemption with. `parking_max_per_unit` is left
+  # out too, and THAT is the exposure a reviewer needs to see: if the row
+  # means totals, Oregon City caps this building at four spaces and this
+  # screen does not know it. Resolving it needs the adopted ordinance text
+  # rather than the scanned publication -- Ord. No. 18-1009 rewrote Chapter
+  # 17.52 in its entirety, and Ord. No. 22-1001 is what added middle housing
+  # to it. (or/clackamas/oregon-city/17.zoning.txt#L14887-L14896)
+  #
+  # NOT ENCODED: where the parking may sit, which is the sixth jurisdiction
+  # to hit a registry with no field for it, and here it is stated twice for
+  # the two halves of the same seam.
+  #
+  # On one lot, OCMC 17.16.060.D, Triplex and quadplex development
+  # requirements: "In residential zones, garages on the front facade and
+  # off-street parking areas in the front yard, are permitted in compliance
+  # with the following standards: 1. Outdoor on-site parking and maneuvering
+  # areas shall not exceed a total of forty feet wide or fifty percent of the
+  # lot frontage, whichever is less; and 2. The combined width of all garages
+  # shall not exceed forty feet or fifty percent of the lot frontage,
+  # whichever is less." Fifty percent of the frontage is Wilsonville's number
+  # and Milwaukie's number; the forty-foot ceiling on top of it is Oregon
+  # City's own. 17.16.060.E puts parking behind the facade in mixed-use and
+  # commercial zones unless the site is on a local street, is not a corner
+  # lot, and has a topographic constraint -- three site facts, two of them
+  # registered and none of them measured. (or/clackamas/oregon-city/17.zoning.txt#L5417-L5432)
+  #
+  # On four lots, OCMC 17.16.040, Townhouse driveway access and parking, and
+  # it is the state model code again: front-facade garages, front-yard
+  # parking and driveways in front of a townhouse are permitted only where
+  # outdoor on-site parking and maneuvering areas are no wider than twelve
+  # feet on any lot, the garage is no wider than twelve feet, every lot
+  # fronts a local street, and all driveways meet OCMC 16.12.035 -- a
+  # standard in Title 16, which is not this document. Twelve feet around a
+  # nine-foot stall is a driveway, not a court, the same finding as
+  # Wilsonville's twelve and Milwaukie's ten. Fail those and 17.16.040.B
+  # sends parking to the rear yard or the back facade, a corner-lot project
+  # to a single side-street driveway, and any other project to one
+  # consolidated driveway. (or/clackamas/oregon-city/17.zoning.txt#L5323-L5345)
+
 zones:
   R-10:
     section: ["17.08.", "17.16."]

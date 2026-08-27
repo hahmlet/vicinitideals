@@ -1,0 +1,911 @@
+Close
+Print
+Resize:
+
+City of Happy Valley, OR
+
+[print date]
+
+Title 16. Land Development Code
+
+ARTICLE 16.4. COMMUNITY DESIGN STANDARDS
+
+Chapter 16.43. PARKING AND LOADING
+
+§ 16.43.010. Purpose.
+
+The intent of these regulations is to provide adequate capacity and appropriate location and design of on-site parking and loading areas as well as adequate access to such areas. The parking requirements are intended to provide sufficient parking in close proximity for residents, customers, and/or employees of various land uses. These regulations apply to both motorized vehicles (hereinafter referred to as vehicles) and bicycles.
+
+(Ord. 389 § 1(Exh. A), 2009)
+
+§ 16.43.020. Applicability.
+
+All developments involving land division or subject to site design review, including development of parking facilities, shall comply with the standards in this chapter.
+
+(Ord. 389 § 1(Exh. A), 2009)
+
+§ 16.43.030. Automobile parking standards.
+
+A.
+
+General Requirements for Off-Street Parking and Loading.
+
+1.
+
+Provision and Maintenance. The provision of required off-street parking for motor vehicles and bicycles, and loading facilities for motor vehicles, is a continuing obligation of the property owners. Building permits or other permits will only be issued after review and approval of site plans showing location of permanent access, parking and loading facilities.
+
+2.
+
+An area shall not be considered a parking space unless it can be shown that the area is accessible and usable for that purpose, and has maneuvering area for the vehicles, as determined by the Engineering Manager or designee based on the City's Engineering and Design Standards Manual. Parking and maneuvering areas, including drive-through aisles, will be reviewed to ensure the design provides for the safe and adequate movement of all vehicles, pedestrians and service providers per the Engineering and Design Standards Manual.
+
+3.
+
+New Structure or Use. When a structure is constructed or a new use of land is commenced, on-site vehicle and bicycle parking and loading spaces shall be provided in accordance with subsection B of this section or as otherwise modified through a planned development or specific area plan.
+
+4.
+
+Alteration of Existing Structures. When an existing structure is altered to the extent that the existing use is intensified, on-site vehicle and bicycle parking shall be provided in the amount required for such intensification.
+
+5.
+
+Increased Intensity. When increased intensity requires no more than two vehicle spaces, no additional parking facilities shall be required. However, the effects of changes, additions, or enlargements shall be cumulative. When the net effect of one or more changes generates a need for more than two spaces, the additional required spaces shall be provided. Additional spaces shall be required for the intensification but not for the original use.
+
+6.
+
+Change in Use. When an existing structure or use of land is changed in use from one use to another use as listed in subsection B of this section, and the vehicle and bicycle parking requirements for each use type are the same, no additional parking shall be required. However, where a change in use results in an intensification of use in terms of number of vehicle and bicycle parking spaces required, additional parking space shall be provided in an amount equal to the difference between the number of spaces required for the existing use and number of spaces required for more intensive use.
+
+7.
+
+Time of Completion. Required parking spaces and loading areas shall be improved and available for use prior to issuance of a temporary occupancy and/or final building inspection.
+
+8.
+
+Inoperative Motor Vehicles. In any residential district, all motor vehicles incapable of movement under their own power or lacking legal registration shall be stored in a completely screened space, garage, or carport.
+
+9.
+
+Truck Parking. In residential zoning districts, no overnight parking of commercial vehicles shall be permitted except as allowed through the provisions of a home occupation permit. Vehicles and equipment necessary for farming and truck gardening on the premises where such use is conducted are exempt from the restrictions of this subsection.
+
+10.
+
+Availability of Parking Spaces. Required vehicle and bicycle parking spaces shall be unobstructed and available for the parking of vehicles and bicycles of residents, customers, patrons, and employees only. Parking spaces shall not be used for the storage of vehicles or materials or for parking of vehicles and bicycles used in conducting the business or use, and shall not be used for sale, repair, or servicing of any vehicle or bicycle.
+
+11.
+
+Shared Bicycle Parking. Multifamily dwelling units with more than 10 required bicycle parking spaces may provide shared outdoor bicycle parking. The shared bicycle parking shall consist of at least 15% of the total required parking spaces and be located such that they are available for shared use by all occupants and guests of the development.
+
+12.
+
+All dwellings shall have direct, unimpeded access from the required off-street parking spaces to the nearest public street, road or accessway.
+
+B.
+
+Minimum Off-Street Parking Space Requirements and Calculations.
+
+1.
+
+Unspecified Requirements. Vehicle and bicycle parking requirements for uses not specified in this chapter may be determined by the Planning Official based upon the requirements for similar specified uses.
+
+2.
+
+Tandem parking (where two spaces are directly behind one another) may be counted as two parking spaces.
+
+3.
+
+On-street parking within 300 feet of a use along its property frontage may be counted as part of the minimum spaces required. Required parking spaces may also be provided off site in off-street locations, within 2,000 feet of pedestrian travel of a site.
+
+a.
+
+If any non-loading parking is provided on site, all required parking for people with disabilities shall be on site.
+
+b.
+
+If all parking is off site, parking for people with disabilities must be located within the shortest possible distance of an accessible entrance via an accessible path and no greater than 200 feet from that entrance.
+
+4.
+
+Structured parking, fleet parking, spaces that are user paid (at a market rate approved by the City), on-street parking spaces and market rate surface parking lots are exempt from the maximum parking ratios.
+
+5.
+
+If the applicant demonstrates that too many or too few parking spaces are required, applicant may seek a variance from the minimum or maximum by providing evidence that the particular use needs more or less than the amount specified in this Code. A variance to the maximum is not allowed if the use is located within the "No Minimum Parking Requirements" overlay zone, if it is a use subject to Footnote 4 in the City's Parking Table (Table 16.43.030-1), or if it is a use subject to maximum surface parking area requirements (Section 16.43.030.F.7). Conversions of existing underused on-street and off-street parking areas to uses not identified in the Transportation System Plan are allowed through submission of a Type-II land use process.
+
+6.
+
+Mixed Uses. In the case of mixed uses, shared parking between uses is encouraged. Where shared parking is not an option, the total required vehicle and bicycle parking shall be the sum of requirements of individual uses computed separately.
+
+7.
+
+Transit. Existing development shall be allowed to redevelop a portion of their existing parking area for transit-oriented uses, including bus stops and pullouts, bus shelters, park and ride stations, and similar facilities, where appropriate. The redevelopment shall not result in greater than 10% reduction in the number of required on-site vehicle parking spaces.
+
+8.
+
+Where uses are mixed in a single building, parking shall be a blend of the ratio required less 10% for the minimum number of spaces. The maximum number of spaces shall be 10% less than the total permitted maximum for each use.
+
+9.
+
+Parking minimums shall be reduced by the following:
+
+a.
+
+Reduction of one off-street parking space for each three kilowatts of capacity in solar panels or wind power provided in a development.
+
+b.
+
+Reduction of two off-street parking space for each dedicated car-sharing parking space in a development.
+
+c.
+
+Reduction of one off-street parking space for every two units in a development above minimum that are fully accessible to people with mobility disabilities.
+
+d.
+
+Reduction of two off-street parking spaces for every electric vehicle charging station provided in a development.
+
+10.
+
+Fractions. When the sum of the required vehicle or bicycle parking spaces is a fraction of a space less than one-half, the fraction shall be rounded down to the nearest whole number. When the fraction of the space is greater than one-half, the fraction shall be rounded up to the nearest whole number.
+
+11.
+
+Maximum Parking Allowed. A maximum number of vehicular parking spaces allowed exists if provided for in Table 16.43.030-1 (including footnotes 1 and 4) and a maximum surface parking area allowed exists if identified in Section 16.43.030.F.7. Further, parking maximums, including visitor parking, apply in Climate-Friendly Areas (CFA) and within one-half mile walking distance of priority transit corridors. Land uses within the Happy Valley Downtown District, Clackamas Regional Center and Happy Valley Town Center shall have a maximum of 23.0 parking spaces per 1,000 square feet of gross floor area. Non-surface parking, such as tuck-under parking, underground and subsurface parking, and parking structures are exempt from maximum parking calculations.
+
+12.
+
+Parking Table. Development shall comply with Table 16.43.030-1. The following is exempt from minimum automobile parking:
+
+a.
+
+Development on a lot or parcel within three-quarters mile of rail transit stops.
+
+b.
+
+Development on a lot or parcel within one-half mile of frequent transit corridors, including any of the following:
+
+i.
+
+Priority transit corridors designated under OAR 660-012-0710.
+
+ii.
+
+Corridors with bus service arriving with a scheduled frequency of at least four times an hour during peak service.
+
+iii.
+
+Corridors with the most frequent transit route or routes in the community if the scheduled frequency is at least once per hour during peak service.
+
+c.
+
+Development on a lot or parcel containing land within the Clackamas Regional Center or Happy Valley Town Center, or within one-quarter mile outside of either boundary.
+
+d.
+
+Redevelopment of existing off-street parking areas for bicycle-oriented and transit-oriented facilities, including bicycle parking, bus stops and pullouts, bus shelters, park and ride stations, and similar facilities, so long as access for emergency vehicles is retained and adequate parking for truck loading is considered.
+
+The following parking table shall be interpreted with the following notation: All square footage measurements are gross square feet of total floor area. 18 lineal inches of bench shall be considered one seat.
+
+Table 16.43.030-1 Automobile Parking Standards
+Table 16.43.030-1 Automobile Parking Standards
+Table 16.43.030-1 Automobile Parking Standards
+Table 16.43.030-1 Automobile Parking Standards
+Table 16.43.030-1 Automobile Parking Standards
+Table 16.43.030-1 Automobile Parking Standards
+Proposed Use
+Minimum Parking Spaces
+Maximum Parking Spaces (if nothing is noted, there is no maximum)1
+Maximum Parking Spaces (if nothing is noted, there is no maximum)1
+Bicycle Spaces
+Percentage of Bicycle Spaces to be Long-Term Bicycle Parking
+Proposed Use
+Minimum Parking Spaces
+Zone A
+Zone B
+Bicycle Spaces
+Percentage of Bicycle Spaces to be Long-Term Bicycle Parking
+Residential
+Residential
+Residential
+Residential
+Residential
+Residential
+Single-family detached
+2 per dwelling
+None required
+N/A
+Single-family attached (townhome), duplex, triplex, quadplex, cottage cluster
+1 per dwelling3, 5
+None required
+N/A
+Manufactured home park
+1 per dwelling5
+None required
+N/A
+Multifamily dwellings containing five or more units4
+1 per dwelling5
+1 space per unit
+Studio units
+1 per dwelling5
+1.24
+1.24
+1 space per unit
+75
+Non-studio units
+1 per dwelling5
+2.04
+2.04
+1 space per unit
+75
+Congregate housing, retirement homes, intermediate care facilities, facilities and homes designed to serve people with psychosocial, physical, intellectual or developmental disabilities, emergency or transitional shelters for people experiencing homelessness, and domestic violence shelters
+0
+1 per 5 beds
+50
+Residential care facilities
+0
+1 per 5 beds
+50
+Community Services, Institutional and Semipublic Uses
+Community Services, Institutional and Semipublic Uses
+Community Services, Institutional and Semipublic Uses
+Community Services, Institutional and Semipublic Uses
+Community Services, Institutional and Semipublic Uses
+Community Services, Institutional and Semipublic Uses
+General office, government office
+3 per 1,000 sq. ft. gross floor area
+3.4 per 1,000 sq. ft.
+4.1 per 1,000 sq. ft.
+2 or 1 per 20 auto spaces whichever is greater
+35
+Community recreation buildings/covered picnic areas
+1 per 250 sq. ft., or 1 space per four patrons to the maximum capacity, plus one space per employee on the largest shift
+0.3 spaces per 1,000 sq. ft. of floor area
+35
+Place of worship
+0.5 per seat or 6 linear feet of bench seating
+0.6 per seat or 6 linear feet of bench seating
+0.8 per seat or 6 linear feet of bench seating
+1 space per 40 seats
+35
+Library or museums
+2 per 1,000 sq. ft. gross floor area
+2 or 1.5 spaces per 1,000 gross sq. ft., which is greater with 10 percent required to be long-term bicycle parking
+35
+Lodge, fraternal and civic assembly with/or without eating and drinking facilities
+1 per 4 fixed seats or 1 for each 50 sq. ft. of public assembly area where there are no fixed seats
+2 or 1 per 20 vehicle spaces
+35
+Hospitals and medical centers
+1 per 500
+0.2 spaces per 1,000 gross sq. ft.
+35
+Medical and dental offices and clinics
+4 per 1,000 sq. ft. of gross floor area
+4.9 per 1,000 sq. ft.
+5.0 per 1,000 sq. ft.
+0.4 spaces per 1,000 sq. ft. of floor area
+35
+Schools
+Schools
+Schools
+Schools
+Schools
+Schools
+Day care/small school
+0
+1.5 spaces per classroom
+35
+Preschool/kindergarten
+2.5 per 1,000 sq. ft. gross floor area
+1.5 spaces per classroom
+35
+School—Elementary
+2 per classroom, plus recreation facilities, if applicable
+2 spaces per classroom
+35
+School—Middle school/junior high
+2 per classroom, plus recreation facilities, if applicable
+4 spaces per classroom
+35
+School—Senior high
+0.2 per 1,000 sq. ft. gross floor area, plus recreation facilities, if applicable
+0.3 per 1,000 sq. ft.
+0.3 per 1,000 sq. ft.
+4 spaces per classroom
+35
+School—Vocational or college
+0.2 per 1,000 sq. ft. of gross floor area, plus recreation facilities, if applicable
+0.3 per 1,000 sq. ft.
+0.3 per 1,000 sq. ft.
+0.3 spaces per 1,000 sq. ft. of floor area (excluding dorms, for which residential facility standards apply)
+35
+Commercial Uses
+Commercial Uses
+Commercial Uses
+Commercial Uses
+Commercial Uses
+Commercial Uses
+Retail sales, general and personal services
+4.5 per 1,000 sq. ft. of gross floor area
+5.0 per 1,000 sq. ft.
+5.0 per 1,000 sq. ft.
+0.3 per 1,000 sq. ft. of gross floor area
+50
+Shopping centers
+4 per 1,000 sq. ft. of gross floor area
+5.0 per 1,000 sq. ft.
+5.0 per 1,000 sq. ft.
+0.3 per 1,000 sq. ft. of gross floor area
+50
+Retail sales, bulky merchandise (not to include motor vehicles)
+1 per 800 sq. ft. of gross floor area
+5.0 per 1,000 sq. ft.
+5.0 per 1,000 sq. ft.
+0.3 per 1,000 sq. ft. of gross floor area
+50
+Retail sales of motor vehicles
+1 per 800 sq. ft. of gross floor area
+0.3 per 1,000 sq. ft. of gross floor area
+50
+Grocery stores
+2.9 per 1000 sq. ft. of gross floor area
+5.0 per 1,000 sq. ft.
+5.0 per 1,000 sq. ft.
+0.33 spaces per 1,000 sq. ft. of gross floor area
+50
+Convenience market
+2.3 per 1,000 sq. ft. of gross floor area
+5.0 per 1,000 sq. ft.
+5.0 per 1,000 sq. ft.
+2 spaces per 1,000 sq. ft. of gross floor area
+50
+Restaurant/coffee shop/food-beverage carts (with drive-through)
+11.4 spaces per 1,000 sq. ft. of gross floor area
+12.4 per 1,000 sq. ft.
+14.9 per 1,000 sq. ft.
+1 space per 1,000 sq. ft. of gross floor area
+25
+Restaurant/coffee shop/food-beverage carts without drive-through
+11.5 spaces per 1,000 sq. ft. of gross floor area2
+19.1 per 1,000 sq. ft.
+23.0 per 1,000 sq. ft.
+1 space per 1,000 sq. ft. of gross floor area
+25
+Sports club/health spas/ recreation facilities
+4.3 spaces per 1,000 sq. ft. of gross floor area or field area (see Section 16.43.030(H))
+5.4 per 1,000 sq. ft.
+6.5 per 1,000 sq. ft.
+0.4 spaces per 1,000 sq. ft. of gross floor area
+50
+Basketball, tennis and racquetball clubs and courts
+1 spaces per 1,000 sq. ft. of floor area; square footage of outdoor courts shall include the area of sport activity only (i.e., not including any sidelines, etc.)
+1.3 per 1,000 sq. ft.
+1.5 per 1,000 sq. ft.
+0.4 spaces per 1,000 sq. ft. of gross floor area
+50
+Theaters/sports arenas/stadiums
+0.3 spaces per seat or 6 linear feet of bench seating
+0.4 per seat
+0.5 per seat
+0.04 spaces per seat or 60 linear feet of bench seating
+10
+Service station
+3 spaces plus 2 spaces per service bay, if any
+2 spaces or 0.2 per 1,000 sq. ft. of gross floor area whichever is greater
+50
+Service station with convenience market with gas pumps
+2.3 spaces per 1,000 sq. ft. of gross floor area
+5.0 per 1,000 sq. ft.
+5.0 per 1,000 sq. ft.
+2 spaces or 0.2 spaces per 1,000 sq. ft. of gross floor area, whichever is greater
+0
+Parks and open spaces
+None required, except that parking for sport courts, recreation facilities, community recreation buildings and covered picnic areas shall be computed separately
+4 spaces or 1 space per 20 vehicle parking spaces, whichever is greater
+50
+Bank (with drive-through)
+4.3 per 1,000 sq. ft. of gross floor area
+5.0 per 1,000 sq. ft.
+5.0 per 1,000 sq. ft.
+0.5 space per 1,000 sq. ft. of gross floor area
+10
+Bank without drive-through
+4.5 per 1,000 sq. ft. of gross floor area
+5.0 per 1,000 sq. ft.
+5.0 per 1,000 sq. ft.
+0.5 space per 1,000 sq. ft. of gross floor area
+10
+Industrial Uses
+Industrial Uses
+Industrial Uses
+Industrial Uses
+Industrial Uses
+Industrial Uses
+Manufacturing, processing, packing, assembly, and fabrication
+1.6 per 1,000 sq. ft. of gross floor area
+0.1 space per 1,000 sq. ft. of gross floor area
+10
+Warehousing, freight movement distribution, and storage
+0.5 space per 1,000 sq. ft. of gross floor area (if less than 150,000 sq. ft. of floor area)
+0.3 space per 1,000 sq. ft. of floor area (if equal to or greater than 150,000 sq. ft. of floor area)
+0.4 per 1,000 sq. ft. (no maximum applies if less than 150,000 sq. ft. of floor area)
+0.5 per 1,000 sq. ft. (no maximum applies if less than 150,000 sq. ft. of floor area)
+0.1 space per 1,000 sq. ft. of gross floor area
+10
+Wholesale, retail sales
+0.8 space per 1,000 sq. ft. of gross floor area
+0.1 space per 1,000 sq. ft. of gross floor area
+30
+Industrial, commercial services
+0.8 space per 1,000 sq. ft. of gross floor area
+0.1 space per 1,000 sq. ft. of gross floor area
+30
+Office (relating to industrial uses)
+2.7 spaces per 1,000 sq. ft. of gross floor area
+3.4 per 1,000 sq. ft.
+4.1 per 1,000 sq. ft.
+0.5 space per 1,000 sq. ft. of gross floor area
+30
+
+NOTES:
+NOTES:
+1
+Parking maximums are based on A and B Zone designations, pursuant to Metro Regional Transportation Functional Plan Title 2, Regional Parking Management, and as listed in Table 3.08-3 - Regional Parking Ratio Table and illustrated in the Regional Parking Maximum Map. The zones are based on access to transit. Areas with 20 minute peak hour transit service available within a one-quarter mile walking distance for bus transit or one-half mile walking distance for light rail transit shall be within Zone A. Cities and counties should designate Zone A parking ratios in areas with good pedestrian access to commercial or employment areas (within one-third mile walk from adjacent residential areas).
+2
+Enclosed outdoor seating area shall count as floor area in determining parking requirement for restaurants/coffee shop/food-beverage carts without drive-through.
+3
+The provision of additional parking spaces is not required for housing type conversions (e.g., conversion of a single-family detached dwelling to triplex), per LDC 16.62.020-1
+4
+Parking maximums apply only to multifamily units in town centers, regional centers, and the transit areas in LDC Section 16.43.030.B.12.a through b. These maximums include visitor parking.
+5
+Single-room occupancy housing, residential units smaller than 750 square feet, affordable housing as defined in OAR 660-039-0010, and publicly supported housing as defined in ORS 456.250 are exempt from minimum automobile parking requirements.
+
+C.
+
+Shared Use of Parking Facilities.
+
+1.
+
+Required parking facilities may be located off-site in off-street locations, within 2,000 feet of pedestrian travel of a site.
+
+a.
+
+If any non-loading parking is provided on site, all required parking for people with disabilities shall be on site.
+
+b.
+
+If all parking is off site, parking for people with disabilities must be located within the shortest possible distance of an accessible entrance via an accessible path and no greater than 200 feet from that entrance.
+
+2.
+
+The right to use the off-site parking must be evidenced by a recorded deed, lease, easement or similar written instrument.
+
+3.
+
+Required parking facilities for two or more uses, structures, or parcels of land may be satisfied by the same parking facility used jointly, to the extent that it can be shown by the owners or operators that the needs of the facilities do not materially overlap (e.g., uses primarily of day time versus night time uses) or typically provide services to many of the same patrons within the same development, and provided that such right of joint use is evidenced by a deed, lease, contract or similar written instrument establishing such joint use.
+
+4.
+
+Any change in use which would produce a need for additional parking in a shared situation shall require additional review pursuant to Section 16.62.040.
+
+D.
+
+Carpool, Hybrid/Electric Car and Vanpool Parking. New industrial, commercial, and institutional uses with more than 20 employee parking spaces on site shall meet the following minimum requirements for carpool, hybrid/electric car and vanpool parking.
+
+1.
+
+For this section, a hybrid car is defined as an automobile that is powered by two fuel sources (i.e., gas and electricity) and achieves a combined EPA gas mileage of 45 miles per gallon or more.
+
+2.
+
+Five spaces or five percent of the parking spaces on site, whichever is less, must be reserved for carpool/hybrid/electric car use during normal working hours. More spaces may be reserved, but they are not required.
+
+3.
+
+The spaces will be those closest to the building entrance or elevator, but not closer than the spaces for disabled parking and those signed for exclusive customer use.
+
+4.
+
+Signs must be posted indicating these spaces are reserved for carpool/hybrid/electric car use during normal working hours and those hours must be included on the sign.
+
+E.
+
+Parking Location.
+
+1.
+
+No off-street parking shall be allowed in the landscaped yard areas of any lot.
+
+2.
+
+Bicycle parking required for all uses in all districts shall be provided on the development site in accordance with Table 16.43.030-1 of this section.
+
+3.
+
+Parking areas, which abut a residential zoning district, shall meet the setback of the most restrictive adjoining residential zoning district.
+
+4.
+
+Parking areas shall be set back from a lot line adjoining a street the same distance as the required building setbacks. Regardless of other provisions, a minimum setback of ten feet shall be provided along the property fronting on a public street. The setback area shall be landscaped as provided in this code.
+
+F.
+
+Parking Area Design, Size, Layout and Access. All off-street parking facilities, vehicular maneuvering areas, driveways, loading facilities, accessways, and private streets shall conform to the standards set forth in this section.
+
+1.
+
+All areas used for parking and maneuvering of vehicles shall be surfaced with asphalt, concrete or other approved impervious, permeable, or semi-permeable surface, and shall provide for suitable drainage.
+
+2.
+
+The following table states the minimums for parking space size:
+
+Table 16.43.030-2 Off-Street Parking Matrix Required Space and Aisle Dimensions in Feet
+Table 16.43.030-2 Off-Street Parking Matrix Required Space and Aisle Dimensions in Feet
+Table 16.43.030-2 Off-Street Parking Matrix Required Space and Aisle Dimensions in Feet
+Table 16.43.030-2 Off-Street Parking Matrix Required Space and Aisle Dimensions in Feet
+Table 16.43.030-2 Off-Street Parking Matrix Required Space and Aisle Dimensions in Feet
+Table 16.43.030-2 Off-Street Parking Matrix Required Space and Aisle Dimensions in Feet
+Table 16.43.030-2 Off-Street Parking Matrix Required Space and Aisle Dimensions in Feet
+Table 16.43.030-2 Off-Street Parking Matrix Required Space and Aisle Dimensions in Feet
+Table 16.43.030-2 Off-Street Parking Matrix Required Space and Aisle Dimensions in Feet
+Table 16.43.030-2 Off-Street Parking Matrix Required Space and Aisle Dimensions in Feet
+Table 16.43.030-2 Off-Street Parking Matrix Required Space and Aisle Dimensions in Feet
+Standard Size Vehicles
+Standard Size Vehicles
+Standard Size Vehicles
+Standard Size Vehicles
+Standard Size Vehicles
+Standard Size Vehicles
+Compact Size Vehicle
+Compact Size Vehicle
+Compact Size Vehicle
+Compact Size Vehicle
+Compact Size Vehicle
+Angle
+Stall Width
+Stall Depth
+Aisle Width
+Module Width
+Bumper Overhang
+Stall Width
+Stall Depth
+Aisle Width
+Module Width
+Bumper Overhang
+0 (parallel)
+8.0
+24.0
+N/A
+N/A
+N/A
+8.0
+20.0
+N/A
+N/A
+N/A
+45
+9.0
+17.5
+12.0
+47.0
+2.0
+8.0
+15.5
+11.0
+42.0
+2.0
+60
+9.0
+19.0
+16.0
+54.0
+2.5
+8.0
+17.0
+14.0
+48.0
+2.5
+75
+9.0
+19.5
+23.0
+62.0
+2.5
+8.0
+17.5
+21.0
+56.0
+2.5
+90
+9.0
+18.5
+24.0
+61.0
+2.5
+8.0
+16.0
+20.0
+52.0
+1.5
+
+3.
+
+Parking Lot Layout. Parking area setbacks shall be landscaped with major trees, shrubs, and groundcover as specified in Section 16.42. Wheel stops, bumper guards, or other method to protect landscaped areas shall be provided. No vehicle may project over a property line or a public right-of-way. Parking may project over an internal sidewalk, but a minimum clearance of five feet for safe pedestrian circulation is required. Parking areas, driveways, aisles and turnarounds shall be paved with concrete, asphalt or comparable surfacing, constructed to City standards for off-street vehicle areas.
+
+4.
+
+Groups of more than three parking spaces shall be permanently marked.
+
+5.
+
+Backing and Maneuvering. Except for a single-family dwelling or two-family dwelling, groups of more than three parking spaces shall be provided with adequate aisles or turnaround areas so that all vehicles enter the right-of-way (except for alleys) in a forward manner. Parking spaces shall not have backing or maneuvering movements for any of the parking spaces occurring across public sidewalks or within any public street, except as approved by the Public Works Director. Evaluations of requests for exceptions shall consider constraints due to lot patterns and impacts to the safety and capacity of the adjacent public street, bicycle and pedestrian facilities.
+
+6.
+
+Parking stalls for compact vehicles shall not exceed 35% of the total parking stalls required by Table 16.43.030-1. Stalls in excess of the number required by Table 16.43.030-1 can be compact stalls.
+
+7.
+
+For land uses with more than 65,000 square feet of floor area on a given property, surface parking may not consist of more area than the floor area of the building.
+
+G.
+
+Accessible/Handicapped Parking Facilities. Disabled person accessible parking shall be provided for all uses consistent with the requirements of the Oregon State Structural Specialty Code and/or Federal requirements, whichever is more restrictive.
+
+H.
+
+Recreation facilities are public or private facilities used for active recreation activities. They may be indoor or outdoor and include facilities such as athletic fields, swimming pools, miniature golf, and skateboard parks.
+
+1.
+
+Parking requirements for athletic fields shall be computed based on the square footage of the area of sport activity (i.e., the field of play not including any sidelines, etc.).
+
+2.
+
+In no case shall the number of parking spaces required for an athletic field exceed 30 spaces per field except where the field is part of a stadium or sports arena.
+
+3.
+
+Parking requirements recreation facilities other than athletic fields shall be computed based on gross square footage of the building and/or improved or fenced area.
+
+I.
+
+Single-family detached, attached, duplexes, triplexes, quadplexes, cottage clusters, and accessory dwelling units are exempt from subsections C through F, except Section 16.43.030.F.1.
+
+J.
+
+Climate Mitigation.
+
+1.
+
+Development that includes more than one-half acre of new off-street surface parking which is not required to comply with green energy technology requirements in OAR 330-135-0010 shall perform a climate mitigation action. The new surface parking area shall be measured based on the perimeter of all new off-street parking spaces, maneuvering lanes, and maneuvering areas, including driveways and drive aisles. The climate mitigation action shall include at least one of the following options:
+
+a.
+
+Installation of solar panels with a generation capacity of at least 0.5 kilowatt per new off-street parking space. Panels may be located anywhere on the property;
+
+b.
+
+Payment of at least $1,500 per new off-street parking space into an Oregon Department of Energy fund dedicated to equitable solar or wind energy development;
+
+c.
+
+Tree canopy covering at least 40% of the new parking lot area at no more than 15 years after planting.
+
+i.
+
+A tree canopy plan shall be submitted in coordination with the local electric utility, including pre-design, design, building and maintenance phases,
+
+ii.
+
+A certified arborist must review the proposed parking lot landscape plan to ensure that the location of the proposed tree plantings maximizes their root health and chances for survival, including having ample high-quality soil, space for root growth, and reliable irrigation according to the needs of the species. Trees should be planted in continuous trenches where possible,
+
+iii.
+
+Tree plantings shall meet the minimum standards as outlined in the 2021 American National Standards Institute A300 standards; or
+
+d.
+
+Alternatively a comparable mixture of actions under Subsections J.1.a through c may be submitted to the City in a Type II process.
+
+(Ord. 389 § 1, 2009; Ord. 406 § 1, 2010; Ord. 411 § 1, 2011; Ord. 427 § 1, 2012; Ord. 443 § 1, 2013; Ord. 501 § 1, 2016; Ord. 507 § 1, 2016; Ord. 539 § 1, 2018; Ord. 550 § 1, 2020; Ord. 556 § 1, 2021; Ord. 561 § 1, 2022; Ord. 582, 3/19/2024; Ord. 592, 6/3/2025; Ord. 593, 6/17/2025)
+
+§ 16.43.040. Bicycle parking standards.
+
+A.
+
+Required Number and Type.
+
+1.
+
+Bicycle parking requirements are provided in the parking Table 16.43.030-1.
+
+2.
+
+For specific uses listed in Table 16.43.030-1 under the following categories a portion of the required bicycle parking shall be provided as long-term bicycle parking spaces: Multi-family Dwellings; Schools; Community Services, Institutional and Semipublic Uses; Commercial Uses; and Industrial Uses.
+
+a.
+
+Long-term bicycle parking is defined as parking that is secure for longer stays (more than four hours). Long-term bicycle parking may be provided through lockable enclosures, a designated bicycle storage area inside a building on-site, a covered rack, or another form of sheltered parking where the bicycle can be stored.
+
+b.
+
+For major transit stops and park-and-ride lots that are proposed for commuter use only, at least four bicycle parking spaces shall be required; 100% of all required bicycle parking spaces shall be long-term spaces.
+
+B.
+
+Location and Design.
+
+1.
+
+Bicycle parking shall be located on-site, convenient to building entrances, and have direct access to both the public right-of-way and to the main entrance of the principal structure.
+
+2.
+
+Bicycle parking should be no further from the main building entrance than the distance to the closest vehicle space, or 50 feet, whichever is less. Long-term bicycle parking should be incorporated whenever possible into building design. Short-term bicycle parking, when allowed within a public right-of-way, should be coordinated with the design of street furniture, as applicable.
+
+3.
+
+For facilities with multiple buildings or parking lots, bicycle parking shall be located in areas of greatest use and convenience to bicyclists.
+
+4.
+
+Bicycle parking shall not impede or create a hazard to pedestrians. The location of bicycle parking facilities shall not conflict with vision clearance standards.
+
+5.
+
+Bicycle parking may be provided within the public right-of-way in areas without building setbacks, subject to the approval of the appropriate governing official and provided it meets the other bicycle parking requirements.
+
+6.
+
+If the bicycle parking area is located within the vehicle parking area, the bicycle facilities shall be separated from vehicular maneuvering areas by curbing or other barrier to prevent damage to parked bicycles.
+
+7.
+
+Curb cuts shall be installed to provide safe, convenient access to bicycle parking areas.
+
+C.
+
+Bicycle Parking Space Dimensions.
+
+1.
+
+Each required bicycle parking space shall be at least two and one-half feet by six feet. If covered, vertical clearance of seven feet must be provided.
+
+2.
+
+An access aisle of at least five feet wide shall be provided and maintained beside or between each row of bicycle parking. Vertical or upright bicycle storage structures are exempted from the parking space length.
+
+D.
+
+Security.
+
+1.
+
+Bicycle parking facilities shall offer security in the form of either a lockable enclosure in which the bicycle can be stored or a stationary object (i.e., a "rack") upon which the bicycle can be located.
+
+2.
+
+Racks requiring user-supplied locks shall accommodate both cable and U-shaped locks. Racks shall be designed and installed to permit the frame and both wheels to be secured, with removal of the front wheel, or the frame and one wheel to be secured, if both wheels remain on the bicycle.
+
+3.
+
+Bicycle racks shall be securely anchored to the ground or a structure and shall be designed to hold bicycles securely by means of the bicycle frame.
+
+4.
+
+Required bicycle parking inside a building shall be provided in a well illuminated, secure location within 50 feet of a building entrance.
+
+5.
+
+Outdoor bicycle parking spaces shall be clearly visible from the building entrance or the public right-of-way and shall be located within 50 feet of the public entrance to the building unless clustered pursuant to Section 16.31.030, in which case the parking spaces shall be no more than 100 feet from a public entrance.
+
+6.
+
+If the outdoor vehicle parking area for a use has lighting, then the bicycle parking areas associated with that same use are required to be lit to the same extent.
+
+E.
+
+Signing. Where bicycle facilities are not directly visible and obvious from the public right-of-way, entry or directional signs shall be provided to direct bicyclists from the public right-of-way to the bicycle parking facility.
+
+F.
+
+Exemptions. Temporary street-side sales and temporary uses such as fireworks stands, Christmas tree sales lots, single-family and are exempt from the standards.
+
+(Ord. 389 § 1(Exh. A), 2009; Ord. 507 § 1, 2016)
+
+§ 16.43.050. Off-street loading facilities.
+
+A.
+
+The minimum area required for commercial and industrial loading spaces is as follows:
+
+Table 16.43.050-1 Commercial and Industrial Loading Space Requirements                                                        Table 16.43.050-1 Commercial and Industrial Loading Space Requirements  Table 16.43.050-1 Commercial and Industrial Loading Space Requirements  Table 16.43.050-1 Commercial and Industrial Loading Space Requirements
+Use                                                                                                                           Aggregate Floor Area (sq. ft.)                                          Berths Required                                                         Type
+Freight terminals, industrial plants, manufacturing or wholesale establishments, warehouses                                   12,000—36,000                                                           1                                                                       A
+Freight terminals, industrial plants, manufacturing or wholesale establishments, warehouses                                   36,001—60,000                                                           2                                                                       A
+Freight terminals, industrial plants, manufacturing or wholesale establishments, warehouses                                   60,001—100,000                                                          3                                                                       A
+Freight terminals, industrial plants, manufacturing or wholesale establishments, warehouses                                   Each additional 50,000 or fraction thereof                              1 additional                                                            A
+Hospitals, convalescent homes and similar institutions                                                                        10,000—100,000                                                          1                                                                       B
+Hospitals, convalescent homes and similar institutions                                                                        over 100,000                                                            2                                                                       B
+Department stores, retail establishments, restaurants, grocery stores, and commercial establishments not otherwise mentioned  7,000—24,000                                                            1                                                                       B
+Department stores, retail establishments, restaurants, grocery stores, and commercial establishments not otherwise mentioned  24,001—50,000                                                           2                                                                       B
+Department stores, retail establishments, restaurants, grocery stores, and commercial establishments not otherwise mentioned  50,001—100,000                                                          3                                                                       B
+Department stores, retail establishments, restaurants, grocery stores, and commercial establishments not otherwise mentioned  Over 100,000—each additional 50,000 or major fraction thereof           1 additional                                                            B
+Hotels or office buildings                                                                                                    25,000—40,000                                                           1                                                                       B
+Hotels or office buildings                                                                                                    40,001—100,000                                                          2                                                                       B
+Hotels or office buildings                                                                                                    Each additional 10,000 or major fraction thereof                        1 additional                                                            B
+Schools                                                                                                                       Over 10,000                                                             1                                                                       B
+
+B.
+
+Uses Not Specifically Mentioned. In the case of a use not specifically mentioned, the requirements for off-street loading facilities shall be the same as the above-mentioned use which, as determined by the Planning Official or designee, is most similar to the use not specifically mentioned.
+
+C.
+
+Concurrent Different Uses. When any proposed structure will be used concurrently for different purposes, final determination of loading requirements will be made by the Planning Official or designee but in no event shall the loading requirements be less than the total requirement for each use based upon its aggregate floor area.
+
+D.
+
+Loading berths shall conform to the following minimum size specifications:
+
+1.
+
+Type "A" berths shall be at least 60 feet long by 12 feet wide by 15 feet high, inside dimensions, with a 60 foot maneuvering apron.
+
+2.
+
+Type "B" berths shall be at least 30 feet long by 12 feet wide by 14 feet six inches high, inside dimensions, with a 30 foot maneuvering apron.
+
+E.
+
+Loading areas shall be screened from public view from public streets and adjacent properties except in industrial districts and shall require the same screening as parking lots. Screening may be waived in commercial districts if the applicant can demonstrate the type and size of loading vehicles will not detract from the project's aesthetic appearance and the timing of loading will not conflict with the hours and operation of the surrounding uses.
+
+F.
+
+Sufficient space for turning and maneuvering of vehicles shall be provided on the site in accordance with the standard specifications established by the Public Works Director.
+
+G.
+
+Entrances and exits shall be provided at locations approved in accordance with applicable ordinances and statutes.
+
+H.
+
+No off-street loading facilities shall be required where buildings abut a public alley in such a manner that loading operations can be conducted from said alley in accordance with applicable traffic and parking ordinances.
+
+I.
+
+The off-street loading facilities shall in all cases be on the same lot or parcel as the structure they are intended to serve. In no case shall the required off-street loading spaces be part of the area used to satisfy the off-street parking requirements.
+
+J.
+
+School Loading Requirements. A driveway designed for continuous forward flow of passenger vehicles for the purpose of loading and unloading children shall be located on the site of a school (other than a pre-school) having a capacity greater than 25 students.
+
+K.
+
+Exceptions and Adjustments. Loading areas within a street right-of-way in areas zoned mixed-use commercial in the Regional Center or Town Center may be approved when all of the following conditions are met:
+
+1.
+
+Loading areas must be signed to limit the duration of the activity, which may not exceed one hour for each loading operation.
+
+2.
+
+Proposed loading areas must support a use that requires infrequent loading activity. Infrequent loading activity is defined as less than three operations that occur daily between 5:00 a.m. and 12:00 a.m., or all operations that occur between 12:00 a.m. and 5:00 a.m. at a location that is not adjacent to a residential zone.
+
+3.
+
+The proposed loading area:
+
+a.
+
+Does not unreasonably obstruct traffic;
+
+b.
+
+Does not obstruct a primary emergency response route; and
+
+c.
+
+Is acceptable to the applicable roadway authority.
+
+(Ord. 389 § 1(Exh. A), 2009; Ord. 507 § 1, 2016)

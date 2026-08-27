@@ -58,6 +58,160 @@ code:
     #
     # 19.501.3, "Building Height and Side Yard Height Plane Exceptions", is
     # the Gresham shape exactly and the reason this is first in the queue.
+  - id: "19.600.parking"
+    url: https://ecode360.com/print/MI4969?guid=43862935
+    title: "MMC Chapter 19.600 - Off-Street Parking and Loading"
+    # Fetched 2026-08-27 to answer what parking has to look like if we build
+    # it, which is the question the "no minimum" reading of a code does not
+    # answer. Nothing in this corpus pointed here: 19.301.4 and 19.302.4 do
+    # not cross-reference parking, and the chapter is not in the eCode360
+    # table of contents this fetcher can see -- its guid was recovered from a
+    # cross-reference link inside 19.500.
+
+defaults:
+  # PARKING, read 2026-08-27. Milwaukie states no vehicle-parking minimum for
+  # a quadplex, caps one at four spaces, dimensions the space, and dimensions
+  # no aisle it is allowed to use. Every part of that is in Chapter 19.600
+  # and none of it was in this file until today.
+  #
+  # Section 19.605 is titled "Vehicle Parking Quantity Requirements" and its
+  # only quantity subsection is 19.605.1, "Parking Maximums". Table 19.605.1
+  # is headed "Minimum To Maximum Off-Street Parking Requirements" and prints
+  # exactly one column, "Maximum Allowed". The minimum is not zero by
+  # omission -- footnote 1 states the only vehicle minimum in the chapter, and
+  # states it as a condition on the street:
+  #
+  #   "For middle housing developments located on streets classified as
+  #    Arterials or Collectors in the Transportation System Plan, 0.5
+  #    off-street parking spaces per dwelling unit are required."
+  #
+  # So the requirement is half a space per unit -- two for this pod -- unless
+  # the frontage is a local street, and nothing measures street classification
+  # yet. Arterial is therefore the base, the same way Lake Oswego's 20 ft
+  # street side yard is the base and its 7.5 ft local-street figure is the
+  # variant: it is the half that cannot turn a RED lot green by mistake.
+  #
+  # NOT ENCODED: the local-street relief. It is a real exception and it has no
+  # citable figure. A zero is encodable where a code prints "None" or says "no
+  # minimum"; Milwaukie says neither, it simply publishes a table with no
+  # minimum column, and inventing a quotable zero out of a missing column is
+  # the kind of thing this system exists to refuse. It costs nothing today --
+  # `local_street` is assumed unknown, so a variant would never fire -- and it
+  # is what a reader has to be told before anyone wires the street layer up.
+  parking_min_per_unit:
+    value: 0.5
+    cite: MMC 19.605.1, Table 19.605.1 footnote 1 (Middle Housing)
+    url: https://ecode360.com/print/MI4969?guid=43862935
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/milwaukie/19.600.parking.txt#L292"
+  # And a ceiling of one space per unit, which is four for this building and
+  # the tightest cap in the corpus outside Portland. Row A.3.c of Table
+  # 19.605.1 is "Quadplexes -- 1 space per dwelling unit", under the heading
+  # "Maximum Allowed", and the row above it gives Multi-Unit Dwellings two per
+  # unit while single detached dwellings get "No maximum." The cap is real and
+  # it is aimed at exactly this housing type. A rear court drawn at the
+  # generator's stall count would not be permitted here.
+  parking_max_per_unit:
+    value: 1
+    cite: MMC 19.605.1, Table 19.605.1, row A.3.c Quadplexes
+    url: https://ecode360.com/print/MI4969?guid=43862935
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/milwaukie/19.600.parking.txt#L245-L246,L253"
+  # The stall, from Section 19.607, "Off-Street Parking Standards for
+  # Residential Areas". 19.607.1 names the building: "The provisions of
+  # Subsection 19.607.1 apply to passenger vehicles and off-street parking
+  # areas for single detached dwellings, duplexes, triplexes, quadplexes,
+  # townhouses, cottage clusters, and residential homes in all zones." Its
+  # subsection A is one sentence long -- "Off-street parking space dimensions
+  # for parking spaces are 9 ft wide x 18 ft deep" -- and that is the whole of
+  # what Milwaukie dimensions for a quadplex.
+  parking_stall_width_ft:
+    value: 9
+    cite: MMC 19.607.1.A (Residential Driveways and Vehicle Parking Areas)
+    url: https://ecode360.com/print/MI4969?guid=43862935
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/milwaukie/19.600.parking.txt#L919,L925"
+  parking_stall_depth_ft:
+    value: 18
+    cite: MMC 19.607.1.A (Residential Driveways and Vehicle Parking Areas)
+    url: https://ecode360.com/print/MI4969?guid=43862935
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/milwaukie/19.600.parking.txt#L919,L925"
+  #
+  # NOT ENCODED: the drive aisle, and the reason is a sentence that has to be
+  # read before Table 19.606.1 is believed. Table 19.606.1 does state aisles
+  # -- at 90 degrees, a 9 ft space 18 ft deep with a 22 ft aisle one-way or
+  # two -- and it does not apply to this building. The purpose paragraph of
+  # Section 19.606 carries the exclusion: "The requirements in Subsection
+  # 19.606.4 apply to all types of development where a new quarter-acre
+  # parking lot or larger is provided. All other standards apply to all types
+  # of development where parking is provided, EXCEPT FOR MIDDLE HOUSING,
+  # single detached dwellings, and adult foster/care homes." Table 19.605.1
+  # files quadplexes under Middle Housing, so the whole of 19.606 -- the
+  # dimensions table, the landscaping, the wheel stops, the paving, the
+  # 19.606.1.D rule that a parking area over 5 spaces must have an aisle --
+  # is off this building, and 19.607 is the entire standard.
+  # (19.600.parking.txt#L459, L469-L475, L489)
+  #
+  # 19.607 dimensions no aisle. Its nearest sentence is 19.607.1.E.2:
+  # "Properties that take access from streets other than local streets and
+  # neighborhood routes shall provide a turnaround area on site that allows
+  # vehicles to enter the right-of-Way in a forward motion." A turnaround with
+  # no width, on the same unmeasured street classification as the parking
+  # minimum above. So this layer holds a stall and no aisle -- Wilsonville's
+  # shape a second time -- and that is not an aisle of zero. Anything drawing
+  # a court in Milwaukie is drawing it against a number Milwaukie has not
+  # published. (19.600.parking.txt#L1001)
+  #
+  # NOT ENCODED: where the parking may sit, which is where the real constraint
+  # is and where the field registry runs out. Two sets of rules, and which one
+  # applies is the `unit_lots` lever.
+  #
+  # On one lot, 19.607.1.D, Parking Area Limitations: uncovered spaces and
+  # maneuvering areas may not exceed 50% of the front yard area nor 30% of the
+  # required street side yard area, and "No more than 3 residential parking
+  # spaces are allowed within the required front yard... Quadplexes are
+  # permitted a fourth parking space within the required front yard." The code
+  # counts front-yard spaces by fitting non-overlapping 9 x 18 rectangles
+  # inside the required front yard, which is a measurement no field holds.
+  # 19.607.1.B forbids any part of a space in a right-of-way, access easement
+  # or over a public sidewalk. 19.607.1.C requires a durable, dust-free,
+  # all-weather surface for spaces and maneuvering areas in a required front,
+  # street-side or side yard, and allows gravel outside those. 19.607.1.E.1
+  # holds the driveway to the width of the approved approach within 5 ft of
+  # the right-of-way, or a 1:1 widening to the 10-ft point starting 2 ft
+  # behind it. (19.600.parking.txt#L931-L999)
+  #
+  # Also on one lot, and separately: 19.505.3.D.4 governs any development of 3
+  # or more dwelling units on a single lot, which is this pod. Parking,
+  # garages and maneuvering areas may not sit directly between a building
+  # facade and an abutting street; parking to the side is capped at 50% of
+  # that side's linear frontage; garages in the same structure as the
+  # dwellings must be at least 4 ft behind the front facade.
+  # (19.500.supplementary.txt#L1379,L1484-L1487)
+  #
+  # On four unit lots, 19.505.5.F, and it is tighter than any of the above.
+  # Front-facade garages, front-yard parking and driveways in front of a
+  # townhouse are prohibited outright UNLESS all four of: "development of 4
+  # townhouses has 2 shared accesses"; outdoor on-site parking and maneuvering
+  # areas no wider than 10 ft on any lot; garage width no more than 12 ft; and
+  # shared accesses at least 24 ft apart. Ten feet around a nine-foot stall is
+  # a single-file driveway. Fail any of them and 19.505.5.F.2 applies instead:
+  # parking accessed on the back facade or in the rear yard, a corner-lot
+  # development taking a single driveway on the side street, a non-corner one
+  # consolidating into one driveway that may not run between any townhouse's
+  # front facade and its front lot line.
+  # (19.500.supplementary.txt#L2288-L2330)
+  #
+  # This is the same rule Wilsonville prints at 4.113(.14)E.5 with a 12 ft cap
+  # instead of 10, and the same rule Fairview, Gresham and Clackamas County
+  # each print in their own words -- all of it descended from the state middle
+  # housing model code. Sixth jurisdiction into the same wall: the registry
+  # has no field for driveway approach width, share-of-frontage, parking
+  # placement relative to a facade or a street, or maneuvering-area width.
+  # Transcribed rather than summarised so that building those fields is a copy
+  # job and not a re-read.
+
 zones:
   R-MD:
     section: ["19.301"]
