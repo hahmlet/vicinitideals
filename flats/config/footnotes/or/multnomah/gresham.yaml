@@ -1014,97 +1014,97 @@ notes:
       a note of Table 4.1520, the use table for the Village Center, Regional Transit Industrial, Industrial and Neighbourhood Commercial districts; the Quadplex and Townhouse rows read NP in every column of that table, so no note of it can reach the use this layer screens in RTI-SW or IND-SW, and the other two columns are not encoded
 
   # --- 4.1400, Pleasant Valley ----------------------------------------
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L208"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L210"
     digest: "ec4153a3879c"
     state: dismissed
     reason: >-
       Table 4.1413 marks the cells it limits and note 1 marks the Single Detached Dwelling cell in HDR-PV; the Quadplex and Townhouse rows are a bare P in LDR-PV
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L210"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L212"
     digest: "6b0e1b8f842c"
     state: dismissed
     reason: >-
       Table 4.1413 marks the cells it limits and note 2 marks the Multi-Family/Shared Housing Facility row; the Quadplex and Townhouse rows are a bare P in LDR-PV
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L215"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L217"
     digest: "e70c194ccb27"
     state: dismissed
     reason: >-
       Table 4.1413 marks the cells it limits and an affordable housing note; a permission resting on an election nobody has made; the Quadplex and Townhouse rows are a bare P in LDR-PV
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L216"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L218"
     digest: "ffa5a848125d"
     state: dismissed
     reason: >-
       Table 4.1413 marks the cells it limits and sends commercial uses to the limitations in Section 4.1414; not our use; the Quadplex and Townhouse rows are a bare P in LDR-PV
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L217"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L219"
     digest: "4ecf3e561702"
     state: dismissed
     reason: >-
       Table 4.1413 marks the cells it limits and governs the commercial half of a live-work unit; not our use; the Quadplex and Townhouse rows are a bare P in LDR-PV
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L220"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L222"
     digest: "59bc74339a73"
     state: dismissed
     reason: >-
       Table 4.1413 marks the cells it limits and limits religious assembly seating; not our use; the Quadplex and Townhouse rows are a bare P in LDR-PV
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L223"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L225"
     digest: "ff2282b7a564"
     state: dismissed
     reason: >-
       Table 4.1413 marks the cells it limits and marks the Solar Energy Systems row; the Quadplex and Townhouse rows are a bare P in LDR-PV
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L224"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L226"
     digest: "70f6e27e10d0"
     state: dismissed
     reason: >-
       Table 4.1413 marks the cells it limits and marks the Wind Energy Systems row; the Quadplex and Townhouse rows are a bare P in LDR-PV
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L225"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L227"
     digest: "4198f58b5d5d"
     state: dismissed
     reason: >-
       Table 4.1413 marks the cells it limits and marks the Biomass Energy Systems row; the Quadplex and Townhouse rows are a bare P in LDR-PV
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L226"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L228"
     digest: "61315d7fbf7a"
     state: dismissed
     reason: >-
       Table 4.1413 marks the cells it limits and marks the Geothermal Energy Systems row; the Quadplex and Townhouse rows are a bare P in LDR-PV
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L227"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L229"
     digest: "89d10af9ac58"
     state: dismissed
     reason: >-
       Table 4.1413 marks the cells it limits and marks the Micro-Hydro Energy Systems row; the Quadplex and Townhouse rows are a bare P in LDR-PV
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L228"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L230"
     digest: "fc534ae8e97c"
     state: dismissed
     reason: >-
       Table 4.1413 marks the cells it limits and prohibits electrical generating facilities and wastewater treatment plants; not our use; the Quadplex and Townhouse rows are a bare P in LDR-PV
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L229"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L231"
     digest: "8fd7257d18fc"
     state: dismissed
     reason: >-
       Table 4.1413 marks the cells it limits and marks the Heliports row; the Quadplex and Townhouse rows are a bare P in LDR-PV
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L230"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L232"
     digest: "e5b316f0e3f9"
     state: dismissed
     reason: >-
       Table 4.1413 marks the cells it limits and marks the Cottage Cluster row; the Quadplex and Townhouse rows are a bare P in LDR-PV
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L350"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L352"
     digest: "5495e9a14edb"
     state: dismissed
     reason: >-
       Table 4.1415A note 1 switches off the minimum net density for affordable housing; a relaxation resting on an election nobody has made
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L352"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L354"
     digest: "2226719577db"
     state: dismissed
     reason: >-
@@ -1116,13 +1116,13 @@ notes:
       was read as the start of a new section, which is also what cost notes 4
       through 7
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L416"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L418"
     digest: "85e42eca5b42"
     state: dismissed
     reason: >-
       Table 4.1415B note 1 lets the garage setback drop to 5 feet where the garage is flush with the front wall or the design standards of Section 7.0400 are met; a relaxation, and 20 feet is the number that binds without it
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L421"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L423"
     digest: "5e5e5ec3e079"
     state: dismissed
     reason: >-
@@ -1130,98 +1130,116 @@ notes:
 
 
   # --- 4.1423, the Pleasant Valley mixed-use and employment use table ---
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L582"
-    digest: "da9218c12b29"
+  # Re-ruled 2026-08-27: Gresham amended this note, and it is the one real
+  # amendment in a republished chapter that otherwise only renumbered. The old
+  # text stated the frontage rule twice and the two halves disagreed -- ground
+  # floor commercial "except for lobbies (unless required by the building
+  # code)", then the same sentence again "except that a portion of the facade
+  # area may be occupied by a residential lobby". The first version is gone and
+  # the looser one stands alone. The dismissal is unchanged and so is its
+  # ground: this note is a standard for the commercial use that has to occupy
+  # the frontage, and the Quadplex row is NP in all three columns before the
+  # note is reached.
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L585"
+    digest: "09d46bd89b63"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; note 1 governs the ground-floor street-facing facade on three named streets, which is a standard for the commercial or institutional use that has to occupy it
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L587"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L589"
     digest: "7f0480d87a35"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; note 2 permits residential use as part of a MIXED-USE building above the ground floor -- it is the content of the L2 on Multi-Family and Residential Facility in ME-PV, and a four-unit attached townhome on its own lot is neither mixed-use nor above a ground floor
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L590"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L592"
     digest: "234b816515a9"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; note 5 caps the footprint of a building occupied ENTIRELY by commercial use at 15,000 sq ft; not our building
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L592"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L594"
     digest: "ddb44d45575f"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; note 6 caps retail gross leasable area at 60,000 sq ft; not our use
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L598"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L600"
     digest: "352f41f0598a"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; note 7 governs the commercial half of a live-work unit; not our use
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L602"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L604"
     digest: "913a0093256f"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; note 9 limits a cell to mixed-use buildings and caps retail at half the floor area; it is a limitation ON a commercial permission, not a residential one, and the Quadplex cell it would have to reach is NP
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L604"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L606"
     digest: "ab56fce81826"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; note 10 caps an Outdoor Commercial Use site at two acres; not our use
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L605"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L607"
     digest: "dc773b55822f"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; note 11 requires industrial activity and storage to be indoors or screened; not our use
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L607"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L609"
     digest: "6738bbb71346"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; note 12 lists which industrial functions the table permits; not our use
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L609"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L611"
     digest: "e28821a7b13e"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; note 13 governs golf courses, plazas and public parks in ME-PV; not our use
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L621"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L623"
     digest: "79faa8be2837"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; marks the Solar Energy Systems row
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L622"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L624"
     digest: "1c1bc72a9581"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; marks the Wind Energy Systems row
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L623"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L625"
     digest: "d8bbe8257d22"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; marks the Biomass Energy Systems row
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L624"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L626"
     digest: "1c8163cbd845"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; marks the Geothermal Energy Systems row
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L625"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L627"
     digest: "1db949d67c3b"
     state: dismissed
     reason: >-
       Table 4.1423 marks the cells it limits and the Quadplex row is a bare NP in all three columns, carrying no marker; marks the Micro-Hydro Energy Systems row
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L852"
-    digest: "5d74dc3a6ea1"
+  # Re-digested 2026-08-27, with no word of the note changed. Its body got
+  # SHORTER because the heading beneath it did: Gresham used to print the next
+  # section as "4.14 32 DEVELOPMENT STANADARDS TABLE", a section number broken
+  # by a space, which `ENDS_BLOCK` could not recognise as a heading -- so the
+  # note ran on past the end of its own list. The republished PDF prints
+  # "4.1432" and the block now stops where it always should have. Worth
+  # recording because it is the shape a digest cannot tell apart from an
+  # amendment: same words, different extent, and only reading it says which.
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L853"
+    digest: "b6d3a93639a8"
     state: dismissed
     reason: >-
       Table 4.1431 note 8 prohibits electrical generating facilities in the
@@ -1658,7 +1676,7 @@ notes:
   # affordable housing height bonus and is already ruled by its digest in
   # Chapter 4.0100. These are the other three.
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L355"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L357"
     digest: "ad36aeea6ced"
     state: dismissed
     reason: >-
@@ -1672,7 +1690,7 @@ notes:
       rather than using Section 9.0600, which 9.0602 excludes this plan
       district from by name
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L356"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L358"
     digest: "0fd57b8b26e8"
     state: dismissed
     reason: >-
@@ -1684,7 +1702,7 @@ notes:
       qualifies does not reach it. Row K itself is unencoded and has no
       field
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L358"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L360"
     digest: "2637ff346ac4"
     state: dismissed
     reason: >-
@@ -1998,7 +2016,7 @@ notes:
   # because a reader who finds a ceiling column and no encoded ceiling should
   # find the reasoning rather than an absence.
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L690"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L691"
     digest: "4c323672c6cd"
     state: dismissed
     reason: >-
@@ -2014,7 +2032,7 @@ notes:
       nothing levering it, and TC-PV and ME-PV carry no lot in the parcel
       layer
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L694"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L695"
     digest: "c16169f51e75"
     state: dismissed
     reason: >-
@@ -2025,7 +2043,7 @@ notes:
       TC-PV nor ME-PV. The transition itself is a plane starting at a figure
       well above the pod's 26 feet wherever this corpus has read one
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L695"
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L696"
     digest: "a2469fae2a4b"
     state: dismissed
     reason: >-
@@ -2033,8 +2051,14 @@ notes:
       screening and buffering. No screening field exists in this system, and
       ME-PV is not a district this layer holds
 
-  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L877"
-    digest: "e393215663d1"
+  # Re-digested 2026-08-27 for a double space. The republished PDF sets the
+  # closing clause as "building height of 45 feet." where it used to read
+  # "building height  of 45 feet."; not a word of the note is different. A
+  # digest is over the note's exact text and cannot rank a typographic fix
+  # below an amendment, which is correct -- it is why a stale digest sends a
+  # human to read the sentence rather than deciding for them.
+  - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L878"
+    digest: "2a2577784209"
     state: dismissed
     reason: >-
       note 1 of Table 4.1432 is a height plane on the Public Land

@@ -52,6 +52,14 @@ from flats.provenance.sources import (
     authority_for,
     fetch as fetch_source,
 )
+from flats.provenance.repoint import (
+    config_files,
+    line_map,
+    mentions,
+    readdress,
+    repoint_files,
+    survivors,
+)
 from flats.provenance.store import Document, ProvenanceError, ProvenanceStore, sha256
 from flats.rules.loader import CONFIG_ROOT, load_rules
 from flats.rules.model import CodeDocument, Layer
@@ -65,6 +73,11 @@ EXTRACTOR = "flats-html-text/7"
 #: A slice shorter than this is reported. Legitimate one-line sections exist;
 #: a marker that hit the table of contents is far more common.
 SHORT_SLICE = 3
+
+#: Test files pin quotes into stored documents on purpose. A re-point reports
+#: them and goes no further: a tool that edits an assertion so it passes has
+#: removed the only thing the assertion was for.
+TESTS_ROOT = Path(__file__).resolve().parent.parent / "tests"
 
 #: A floor for truncated and error responses only. Deliberately low: single
 #: sections are genuinely short — Fairview's whole VSF chapter is about 4 KB —
@@ -647,7 +660,12 @@ def citing(layers: dict[str, Layer], doc_path: str) -> list[VerKey]:
 
 
 def withdraw_reviews(
-    doc_path: str, *, layers: dict[str, Layer], log_path: Path, note: str
+    doc_path: str,
+    *,
+    layers: dict[str, Layer],
+    log_path: Path,
+    note: str,
+    spare: frozenset[VerKey] = frozenset(),
 ) -> list[Verification]:
     """Withdraw every verification standing on this document's old text.
 
@@ -655,11 +673,21 @@ def withdraw_reviews(
     which would otherwise leave signatures in place over sentences that have
     since been amended — the exact silent-false-certification this system is
     built to make impossible.
+
+    ``spare`` is the answer to the opposite failure. A signature is given over
+    words, and a chapter that gains one sentence at line 612 has not amended the
+    six hundred citations below it — it has renumbered them. Withdrawing those
+    would make every republished PDF cost a re-read of the whole chapter, which
+    is how a corpus watch turns into a ritual. `repoint.survivors` decides
+    membership, and only for values whose every cited line still reads exactly
+    as it did.
     """
     log = VerificationLog.load(log_path)
     active = log.active()
     withdrawn: list[Verification] = []
     for key in citing(layers, doc_path):
+        if key in spare:
+            continue
         prior = active.get(key)
         if prior is None:
             continue
@@ -702,6 +730,7 @@ def fetch_one(
     nth: int = 1,
     extraction: str = "layout",
     refresh: bool = False,
+    repoint: bool = False,
     check: bool = False,
     allow_thin: bool = False,
     retrieved: date | None = None,
@@ -818,17 +847,57 @@ def fetch_one(
         print(
             f"CHANGED {path} — the source no longer matches what is stored ({moved}).\n"
             f"  Re-run with --refresh to accept it. Doing so withdraws the reviews\n"
-            f"  that were made against the old text.",
+            f"  that were made against the old text.\n"
+            f"  Add --repoint to move every citation to where its own words went,\n"
+            f"  keeping the reviews whose evidence only changed line number.",
             file=sys.stderr,
         )
         return 1
 
     layers = load_rules(rules or CONFIG_ROOT, strict=False)
+    spare: frozenset[VerKey] = frozenset()
+    moved_on: list[Verification] = []
+    if repoint:
+        # Aligned against the text still in the store and applied before it is
+        # overwritten. Once the new bytes are written there is nothing left to
+        # align the old line numbers against, and the citations are simply wrong.
+        mapping = line_map(stored.text.splitlines(), text.splitlines())
+        spare = survivors(layers, path, mapping)
+        # Before the quotes are rewritten: a signature hashes the quote string,
+        # so a spared review needs its address moved too or it orphans itself.
+        moved_on = readdress(
+            layers,
+            path,
+            mapping,
+            log_path=log or LOG_PATH,
+            note=f"citation repointed after {path} was renumbered "
+            f"{retrieved.isoformat()}; cited text unchanged",
+        )
+        moves, stranded = repoint_files(
+            path, mapping, config_files(rules or CONFIG_ROOT), write=True
+        )
+        for move in moves:
+            _, _, was = move.before.partition("#")
+            _, _, now = move.after.partition("#")
+            print(f"  repointed {was} -> {now}  ({move.file.name}:{move.line})")
+        if moves:
+            print(f"  {len(moves)} citation(s) followed their own words")
+        for strand in stranded:
+            numbers = ", ".join(str(n) for n in strand.lines)
+            print(
+                f"  STRANDED {strand.quote} ({strand.file.name}:{strand.line}) — "
+                f"line {numbers} no longer reads as it did, so nothing was moved. "
+                f"Read the new text and re-cite by hand.",
+                file=sys.stderr,
+            )
+        for pin, at in mentions(path, TESTS_ROOT):
+            print(f"  pinned by {pin.name}:{at} — test quotes are never rewritten", file=sys.stderr)
     withdrawn = withdraw_reviews(
         path,
         layers=layers,
         log_path=log or LOG_PATH,
         note=f"source text refreshed {retrieved.isoformat()}",
+        spare=spare,
     )
     store_document(store, path, url, text, retrieved=retrieved)
     print(f"refreshed {path} ({lines} lines)")
@@ -836,6 +905,10 @@ def fetch_one(
         print(f"  withdrew {entry.layer} {entry.zone} {entry.label} (was {entry.reviewer})")
     if withdrawn:
         print(f"  {len(withdrawn)} value(s) need re-reading against the new text")
+    if repoint and moved_on:
+        print(f"  {len(moved_on)} review(s) followed their citation — same words, new lines")
+    elif spare and repoint:
+        print(f"  {len(spare)} value(s) would keep their review; none were signed")
     return 0
 
 
@@ -1040,6 +1113,12 @@ def main(argv: Sequence[str] | None = None, *, get: Callable[[str], bytes | str]
         action="store_true",
         help="accept changed text, withdrawing the reviews that relied on the old words",
     )
+    parser.add_argument(
+        "--repoint",
+        action="store_true",
+        help="with --refresh, move every citation to where its own words went; "
+        "a quote whose words changed is reported and left alone",
+    )
     parser.add_argument("--retrieved", default="", help="ISO date, defaults to today")
     parser.add_argument(
         "--allow-thin",
@@ -1073,6 +1152,7 @@ def main(argv: Sequence[str] | None = None, *, get: Callable[[str], bytes | str]
         nth=args.nth,
         extraction=args.extraction,
         refresh=args.refresh,
+        repoint=args.repoint,
         check=args.check,
         allow_thin=args.allow_thin,
         retrieved=retrieved,
@@ -1107,6 +1187,7 @@ def _fetch_declared(args, *, store: ProvenanceStore, retrieved: date, get) -> in
             nth=doc.nth,
             extraction=doc.extraction,
             refresh=args.refresh,
+            repoint=args.repoint,
             check=args.check,
             allow_thin=doc.allow_thin or args.allow_thin,
             retrieved=retrieved,

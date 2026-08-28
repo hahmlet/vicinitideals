@@ -77,7 +77,10 @@ def test_the_five_single_spaced_rows_in_pleasant_valley(
 ) -> None:
     got = _chapter(store, "4.1400.pleasant-valley")
     found = {(m.line, m.mark) for m in got.markers}
-    assert {(140, "16"), (145, "2"), (157, "6"), (203, "15"), (531, "7")} <= found
+    # 203 and 531 were 201 and 529 until Gresham republished the PDF on
+    # 2026-08-27 and its own extraction put two footnote markers on their own
+    # lines. Moved by hand: a re-point migrates citations, never assertions.
+    assert {(140, "16"), (145, "2"), (157, "6"), (205, "15"), (533, "7")} <= found
 
 
 def test_and_the_three_in_springwater(store: ProvenanceStore) -> None:
@@ -118,15 +121,15 @@ def test_what_is_left_unmarked_and_why(store: ProvenanceStore) -> None:
     codes wear it too."""
     pv = _chapter(store, "4.1400.pleasant-valley")
     assert [(b.line, b.mark) for b in pv.unmarked] == [
-        (416, "1"),
-        (690, "1"),
-        (695, "4"),
-        (845, "1"),
-        (847, "3"),
-        (848, "4"),
-        (849, "5"),
-        (850, "6"),
-        (851, "7"),
+        (418, "1"),
+        (691, "1"),
+        (696, "4"),
+        (846, "1"),
+        (848, "3"),
+        (849, "4"),
+        (850, "5"),
+        (851, "6"),
+        (852, "7"),
     ]
     sw = _chapter(store, "4.1500.springwater")
     assert len(sw.unmarked) == 9

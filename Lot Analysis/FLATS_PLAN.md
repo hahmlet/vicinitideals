@@ -1485,11 +1485,54 @@ without anybody coordinating.
 python -m flats.provenance.fetch --layer or/multnomah          # a county brings its cities
 python -m flats.provenance.fetch --all --check                 # the corpus watch: report drift, store nothing
 python -m flats.provenance.fetch --audit                       # reconcile without fetching
+python -m flats.provenance.fetch <path> <url> --refresh --repoint   # accept a shift, move the citations
 ```
 
 A sweep does not stop on a bad document. The point of a corpus watch is the report at
 the end, and a run that halts on the first 403 tells you about one city instead of
 eighty.
+
+### When a document is renumbered rather than amended
+
+A citation here is a line number, which is what makes provenance checkable and also
+what makes it brittle. Gresham republished Section 4.1400 with one sentence inserted at
+line 612. Every quote below it still *resolved* — to the wrong words. Nothing crashed
+and nothing went red; the store's hash said the document changed, and the only two
+choices were to refuse the refresh forever or accept it and re-read a hundred citations.
+
+`--repoint` (2026-08-27, `flats/provenance/repoint.py`) is the third choice, and it
+turns on one distinction: **a line number is a pointer; the evidence is the words.**
+
+- Aligns old text against new with `difflib`, keeping only the lines that survive
+  **byte for byte**.
+- Rewrites every citation into that document across `config/jurisdictions/` and
+  `config/footnotes/` — as a substring swap on the raw file, never a YAML round-trip,
+  so the comments those files are mostly made of survive intact.
+- A quote naming even one line whose words changed is **stranded whole** and reported.
+  A half-migrated citation is worse than a stale one, because it looks migrated.
+- A span with a line inserted inside it **widens** to cover it. The reviewer sees the
+  new sentence; a citation may show more than it did and never less.
+- Verifications follow. A signature's fingerprint hashes the quote string, so a
+  re-point would orphan every review on the document — making a renumbering
+  indistinguishable from an amendment. `readdress()` re-issues the spared ones with the
+  same reviewer and date and a note saying what moved, appended to the append-only log
+  so both entries stay on disk. Only where every cited line survived verbatim, and only
+  where the standing signature still matched before the move: a review already orphaned
+  for another reason stays orphaned, because repairing it as a side effect of an
+  unrelated refresh is the one thing this whole apparatus exists to prevent.
+- Test files that pin quotes are **reported, never rewritten**. A tool that edits an
+  assertion so it passes has deleted the assertion.
+
+On the run that motivated it: 100 citations moved, 0 stranded, 62 values would have kept
+their review.
+
+**Two ways the watch cries wolf, both fixed the same day.** A declaration without an
+`end:` marker swallowed the page furniture below the code — Clackamas ZDO 202 carried an
+upcoming-meetings panel, so it "changed" every week with no amendment behind it. And
+`--allow-thin` typed at the keyboard and not written into the `code:` entry left Gresham
+9.0200 refusing on every sweep for a document nobody was going to change their mind
+about. **A flag used once at a prompt is a flag somebody has to remember forever.** Put
+it in the declaration.
 
 ### Three sets that ought to agree
 

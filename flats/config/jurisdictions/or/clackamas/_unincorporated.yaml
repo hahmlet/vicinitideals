@@ -154,11 +154,19 @@ code:
 - id: "zdo.202.definitions"
   url: https://www.clackamas.us/planning/zdo202
   title: ZDO Section 202 Definitions
-  # Prose about words: 740 lines, almost none of them dimensioned, which
-  # the thinness guard reads as a landing page. Read 2026-08-18 -- it is
-  # the definitions section itself, LOT CORNER through LOT THROUGH and the
-  # front/side/rear lot line rules that hang off them.
+  # Prose about words: almost none of it dimensioned, which the thinness
+  # guard reads as a landing page. Read 2026-08-18 -- it is the definitions
+  # section itself, LOT CORNER through LOT THROUGH and the front/side/rear
+  # lot line rules that hang off them.
   allow_thin: true
+  # The one document in this layer that was declared without an `end`, and
+  # the only one that drifted every week. Below the definitions the county
+  # prints an upcoming-meetings panel: "Planning Commission - Aug. 24,
+  # 2026" ages out, a hearing three weeks away takes its place, and the
+  # stored text changes with no amendment behind it. A watch that fires on
+  # a calendar is a watch nobody reads, and this one had been crying wolf
+  # since 2026-08-18. Its five siblings already cut here.
+  end: Return to the Zoning and Development Ordinance main page
 - id: zdo.315
   url: https://www.clackamas.us/planning/zdo315
   title: Clackamas County ZDO Section 315 - Low Density Residential Districts (Tables 315-1/2/3)

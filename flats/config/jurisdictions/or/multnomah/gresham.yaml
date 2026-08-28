@@ -330,6 +330,16 @@ code:
   - id: "9.0200.clear-vision"
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-9.0200.pdf
     title: "Section 9.0200 - Clear Vision Areas"
+    # Genuinely two paragraphs, and every dimension in them is deferred to
+    # the Public Works Standards -- see this layer's reading note on 9.0200,
+    # which is where the refusal itself is recorded and counted.
+    # So it trips the thinness guard, correctly, every single sweep. It was
+    # stored once with --allow-thin on the command line and the declaration
+    # never recorded that, which left the corpus watch reporting a refusal
+    # for a document nobody was going to change their mind about. A flag
+    # used at the keyboard and not written down is a flag that has to be
+    # remembered forever by whoever runs the sweep next.
+    allow_thin: true
   - id: "9.0600.height-transition"
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-9.0600.pdf
     title: "Section 9.0600 - Height Transition"
@@ -1175,23 +1185,23 @@ zones:
       quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L132-L133,L138"
     setback_front_ft:
       value: 10
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L386-L392"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L388-L394"
     setback_side_ft:
       value: 5
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L386-L392"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L388-L394"
       variants:
         # Common Wall column: 0 where the wall is shared.
         - value: 0
           when: [attached_wall]
-          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385-L392"
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L387-L394"
     setback_rear_ft:
       value: 10
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L386-L392"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L388-L394"
       variants:
         # Rear No Alley 10, Rear With Alley 8 -- the last two columns.
         - value: 8
           when: [abuts_alley]
-          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385-L392"
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L387-L394"
       step_back:
         height_ft: 21
         rise_per_ft: 1
@@ -1199,44 +1209,44 @@ zones:
         quote: "or/multnomah/gresham/7.0400.middle-housing-design.txt#L167-L169,L358-L362"
     setback_street_side_ft:
       value: 10
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L386-L392"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L388-L394"
       variants:
         - value: 8
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L395"
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L397"
     min_lot_sqft:
       value: 5000
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L261"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L263"
       variants:
         - value: 1500
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L262"
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L264"
     setback_garage_entrance_ft:
       # The Garage column, and it is twice the facade setback: 20 feet, which
       # is the standard a rear-court pod with a street-facing garage door
       # fails on first. It was not encoded, so it never ran.
       value: 20
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385-L392"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L387-L394"
     min_frontage_ft:
       # E, and it was not encoded at all.
       value: 35
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L293"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L295"
       variants:
         - value: 40
           when: [corner_lot]
-          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L302"
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L304"
         - value: 18
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L294"
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L296"
         - value: 20
           when: [unit_lots, corner_lot]
-          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L303"
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L305"
     min_density_du_per_acre:
       # Row B, first column. Four units meet 5.3 to the acre up to roughly
       # 32,890 sq ft of net area, so this is a maximum lot size wearing the
       # other name -- and the row was not encoded when the district was.
       value: 5.3
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L265-L266"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L257,L267-L268"
       measured_on:
         fact: net_developable_area
         cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list for the LDR group
@@ -1247,13 +1257,13 @@ zones:
       # middle housing counts toward minimum but not maximum density in
       # LDR-PV.
       exempt: true
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L267,L269-L271"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L257,L269,L271-L273"
       variants:
         # Split the plat and the building is townhouses, which row C holds
         # separately and caps at 25.
         - value: 25
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L267,L272"
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L257,L269,L274"
       measured_on:
         fact: net_developable_area
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list for the LDR group
@@ -1282,14 +1292,14 @@ zones:
       nobody can answer.
     max_height_ft:
       value: 35
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L307"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L309"
     max_far:
       value: 1.0
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L313-L317"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L315-L319"
       variants:
         - exempt: true
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L318"
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L320"
   MDR-PV:
     section: ["4.14", "7.042"]
     cite_default:
@@ -1306,18 +1316,18 @@ zones:
       # ft, which is 2,000 less than LDR-PV asks and the smallest buildable lot
       # the chapter states for a pod on one lot.
       value: 3000
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L258-L261"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L257,L260-L263"
       variants:
         - value: 1500
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L262"
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L257,L264"
     min_density_du_per_acre:
       # Row B: 12 units to the acre, and this is the standard that decides the
       # district. Four units reach 12 to the acre only up to about 14,520 sq
       # ft of net area, so MDR-PV is a WINDOW between 3,000 and roughly 14,520
       # -- and row A alone reads as though anything above 3,000 would do.
       value: 12
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L265-L266"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L257,L267-L268"
       measured_on:
         fact: net_developable_area
         cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list for districts outside the LDR group
@@ -1328,11 +1338,11 @@ zones:
       # but not maximum density in MDR-PV, which is one of the districts it
       # names.
       exempt: true
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L267,L269-L271"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L257,L269,L271-L273"
       variants:
         - value: 25
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L267,L272"
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L257,L269,L274"
       measured_on:
         fact: net_developable_area
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list for districts outside the LDR group
@@ -1342,57 +1352,57 @@ zones:
       # LARGER, which is the opposite of the corridor's note 11 and worth not
       # copying across chapters.
       value: 35
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L287-L293"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L257,L289-L295"
       variants:
         - value: 40
           when: [corner_lot]
-          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L297-L302"
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L257,L299-L304"
         - value: 18
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L294"
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L257,L296"
         - value: 20
           when: [unit_lots, corner_lot]
-          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L303"
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L257,L305"
     max_height_ft:
       value: 35
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L306-L307"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L257,L308-L309"
     max_far:
       # Row H states 1.0 for LDR-PV and N/A for this column. Read, and it does
       # not apply.
       exempt: true
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L313-L318"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L257,L315-L320"
     setback_front_ft:
       value: 10
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385-L387,L392"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L387-L389,L394"
     setback_side_ft:
       value: 5
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385-L387,L392"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L387-L389,L394"
       variants:
         - value: 0
           when: [attached_wall]
-          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385-L387,L392"
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L387-L389,L394"
     setback_rear_ft:
       value: 10
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385-L387,L392"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L387-L389,L394"
       variants:
         - value: 8
           when: [abuts_alley]
-          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385-L387,L392"
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L387-L389,L394"
     setback_street_side_ft:
       value: 10
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385-L387,L392"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L387-L389,L394"
       variants:
         # The Townhouse row of the same table drops it to 5 for this district
         # while leaving LDR-PV's at 8 -- two districts on one row moving by
         # different amounts.
         - value: 5
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L394,L396"
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L396,L398"
     setback_garage_entrance_ft:
       # The Garage column: 20 feet, twice the facade setback, and the standard
       # a street-facing garage door fails on first.
       value: 20
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385-L387,L392"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L387-L389,L394"
     notes: >-
       Pleasant Valley medium-density sub-district; shares one setback row with
       LDR-PV and takes its own column everywhere else. Off-street parking is
@@ -1419,13 +1429,13 @@ zones:
       # buildable lot size at all -- the density floor is what limits the lot,
       # from the other end.
       exempt: true
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L258-L261"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L257,L260-L263"
     min_density_du_per_acre:
       # Row B: 25 units to the acre, the highest floor in the city, and the
       # binding standard here by a wide margin. Four units reach 25 to the acre
       # only up to about 6,970 sq ft of net area.
       value: 25
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L265-L266"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L257,L267-L268"
       measured_on:
         fact: net_developable_area
         cite: GDC 3.0100 "Density, Net"; the minimum-density subtraction list for districts outside the LDR group
@@ -1438,7 +1448,7 @@ zones:
       # a window roughly 4,356 to 6,970 sq ft wide, and no row of the table
       # states a lot size at all.
       value: 40
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L267,L269-L271"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L257,L269,L271-L273"
       measured_on:
         fact: net_developable_area
         cite: GDC 3.0100 "Density, Net"; the maximum-density subtraction list for districts outside the LDR group
@@ -1447,58 +1457,58 @@ zones:
       # Row E: None on an interior lot, 20 feet on a corner. A minimum that
       # exists only on corners.
       exempt: true
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L287-L293"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L257,L289-L295"
       variants:
         - value: 20
           when: [corner_lot]
-          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L297-L302"
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L257,L299-L304"
         - value: 18
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L294"
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L257,L296"
         - value: 32
           when: [unit_lots, corner_lot]
-          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L303"
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L257,L305"
     max_height_ft:
       # 45 feet, and note 5 attaches height TRANSITION standards to it where an
       # abutting lot is LDR-PV. Those live in Section 4.1416 and are not
       # encoded; the ceiling here is the flat one.
       value: 45
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L306-L307"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L257,L308-L309"
     max_far:
       exempt: true
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L255,L313-L318"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L257,L315-L320"
     setback_front_ft:
       value: 5
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385,L393"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L387,L395"
     setback_side_ft:
       value: 5
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385,L393"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L387,L395"
       variants:
         - value: 0
           when: [attached_wall]
-          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385,L393"
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L387,L395"
     setback_rear_ft:
       # 15 feet without an alley and 5 with one -- the only district in the
       # chapter where the alley column is the LOOSER of the two by ten feet,
       # and the only rear setback here bigger than LDR-PV's.
       value: 15
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385,L393"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L387,L395"
       variants:
         - value: 5
           when: [abuts_alley]
-          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385,L393"
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L387,L395"
         - value: 10
           when: [unit_lots]
-          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L394,L397"
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L396,L399"
         - value: 5
           when: [unit_lots, abuts_alley]
-          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L394,L397"
+          quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L396,L399"
     setback_street_side_ft:
       value: 5
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385,L393"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L387,L395"
     setback_garage_entrance_ft:
       value: 20
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L385,L393"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L387,L395"
     notes: >-
       Pleasant Valley high-density sub-district. Off-street parking is row J,
       "As provided in Section 9.0851", a cross-reference to a chapter not in
@@ -1526,7 +1536,7 @@ zones:
       # and multi-family under limitations and refuses a quadplex outright, so
       # nothing else in the chapter is read for it.
       value: false
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L506-L507,L512"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L508-L509,L514"
     notes: >-
       Settled RED on the use table rather than unread. Table 4.1423 marks
       Townhouse L1 in this column, and the split-plat path is refused for the
@@ -1546,7 +1556,7 @@ zones:
       # sub-district is reserved for land owned by a government agency for
       # public use.
       value: false
-      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L775-L776,L781"
+      quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L776-L777,L782"
     notes: >-
       The zoning layer labels this district PUB-PV and the code calls it PL-PV,
       Public Land - Pleasant Valley, the same way the layer writes LDR/GB for

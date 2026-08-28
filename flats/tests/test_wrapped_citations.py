@@ -78,7 +78,9 @@ def test_the_note_that_wraps_keeps_its_second_line() -> None:
 
 
 def test_the_plan_district_table_answers_all_seven(pleasant_valley) -> None:
-    block = next(b for b in pleasant_valley.blocks if b.head == 349)
+    # 349 until the 2026-08-27 republication put two footnote markers on lines
+    # of their own above this table and pushed everything below down two.
+    block = next(b for b in pleasant_valley.blocks if b.head == 351)
     assert [b.mark for b in block.bodies] == ["1", "2", "3", "4", "5", "6", "7"]
     assert pleasant_valley.unbodied == ()
 
@@ -89,15 +91,19 @@ def test_the_height_transition_note_is_readable_at_last(pleasant_valley) -> None
     still cannot bind -- 4.1416(B) allows 35 feet at the minimum setback and a
     foot of height per additional foot, and the pod is 26 -- but the ruling now
     points at the sentence instead of at a line the census could not see."""
-    fifth = next(b for b in pleasant_valley.bodies if b.line == 355)
+    # 353 until Gresham republished the PDF on 2026-08-27; two markers landed on
+    # their own lines above this one and pushed it down two. Moved by hand --
+    # `--repoint` migrates citations, and an assertion is not a citation.
+    fifth = next(b for b in pleasant_valley.bodies if b.line == 357)
     assert "Building height transition standards apply" in fifth.text
     assert "LDR -PV sub-district" in fifth.text
     ruled = {row.quote: row for row in dispositions(GRESHAM)}
-    assert ruled[f"{DOC}#L355"].state == "dismissed"
+    assert ruled[f"{DOC}#L357"].state == "dismissed"
 
 
 def test_every_new_note_is_ruled_and_none_blocks() -> None:
     ruled = {row.quote: row for row in dispositions(GRESHAM)}
-    for line in (352, 355, 356, 358):
+    # 350, 353, 354 and 356 until the 2026-08-27 republication moved them.
+    for line in (354, 357, 358, 360):
         assert ruled[f"{DOC}#L{line}"].state == "dismissed"
     assert not [row for row in qualified() if row.blocking]

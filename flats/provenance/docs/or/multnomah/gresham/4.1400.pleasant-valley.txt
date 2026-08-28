@@ -108,13 +108,13 @@ Development in this sub-district shall be arranged to form part of an individual
 gathering places, services and conveniences, and a neighborhood park. It shall connect to the larger
 community by a pattern of streets, blocks, paths and trails, walkways, and linkages to the Natural Resource
 Overlay.
-4.1411  MEDIUM -DENSITY RESIDENTIAL – PLEASANT VALLEY (MDR -PV)
+4.1411  MEDIUM -DENSITY RESIDENTIAL – PLEASANT VALLEY (MDR- PV)
 The Medium-Density Residential (MDR-PV) sub-district provides a range of detached and attached dwelling
 units. Development in this sub-district shall be arranged to form part of an individual neighborhood, as well as
 serve as a transition between the low density residential sub-district and the employment or high-density
 subdistricts. A mix of housing types, forms, and designs in the MDR-PV sub-district and in individual
 neighborhoods is intended.
-4.1412  HIGH- DENSITY RESIDENTIAL –  PLEASANT VALLEY (HDR -PV)
+4.1412  HIGH- DENSITY RESIDENTIAL – PLEASANT VALLEY (HDR- PV)
 The High Density Residential (HDR-PV) sub-district is intended to accommodate the highest density housing in
 Pleasant Valley. As with the LDR-PV and MDR-PV sub-districts, HDR-PV contributes to completing a variety of
 housing within, and as part of, individual neighborhoods. The HDR-PV sub-district allows higher development
@@ -196,10 +196,12 @@ P
 L/SUR14
 
 P
-L/SUR14
+L/SUR
+14
 
 P
-L/SUR14
+L/SUR
+14
 Helliports15 NP NP NP
 Wireless Communication Facilities  SUR SUR SUR
 Temporary, Intermittent & Interim Uses P P P
@@ -480,7 +482,7 @@ along streets, provision of pedestrian amenities, and design of a pedestrian-fri
 
 [4.1400]-13
 City of Gresham Development Code  (06/26)
-4.1422  MIXED EMPLOYMENT –  PLEASANT VALLEY (ME -PV)
+4.1422  MIXED EMPLOYMENT – PLEASANT VALLEY (ME -PV)
 The Mixed Employment (ME-PV) sub-district is primarily intended to provide a range of employment
 opportunities as well as commercial uses that meet local needs for goods and services. Primary uses shall
 include offices, services, retail, knowledge-based industries (graphic communications, creative services, etc.),
@@ -570,7 +572,8 @@ P
 L/SUR14
 
 P
-L/SUR14
+L/SUR
+14
 
 P
 SUR
@@ -580,10 +583,9 @@ Temporary, Intermittent & Interim Uses P P P
 Marijuana Businesses NP L22 L22
 Table 4.1423 Notes
 1. In TC-PV and NC-PV on SE Giese Road, SE 172nd Avenue, or SE 190th Avenue, 100 percent of ground floor, street-facing
-facades within 40 feet of the street shall be occupied by commercial or institutional uses, except for lobbies (unless
-required by the building code). 100 percent of ground floor, street-facing facades within 40 feet of the street shall be
-occupied by commercial or institutional uses, except that a portion of the façade area may be occupied by a
-residential lobby. Further reductions to meet building code requirements shall be permitted.
+facades within 40 feet of the street shall be occupied by commercial or institutional uses, except that a portion of the
+façade area may be occupied by a residential lobby. Further reductions to meet building code requirements shall be
+permitted.
 2. Residential uses shall be permitted as part of a mixed-use building when they are not located on the ground floor.
 3. Conversion of a hotel or motel to an emergency shelter or to affordable housing is permitted. See Section 10.0420.
 4. Affordable housing development is permitted. See Section 10.1700.
@@ -609,10 +611,10 @@ development, production, assembly, and testing functions.
 13. Golf courses are not permitted. The following additional parks, open spaces, paths, and trails are not permitted in the
 ME-PV district: public urban plazas, public neighborhood parks, and public community parks. However, public urban
 plazas, public neighborhood parks, and public community parks are permitted in the ME -PV district when an
+applicant demonstrates that title for the parcel(s) where the facility is to be developed was held by the governing
 
 [4.1400]-16
 City of Gresham Development Code  (06/26)
-applicant demonstrates that title for the parcel(s) where the facility is to be developed was held by the governing
 body for the applicant as of April 2, 2009.
 14. Electrical generating facilities are not permitted.
 15. Schools are permitted without a Special Use Review if they are occupying an existing commercial space. Schools must
@@ -640,8 +642,7 @@ E. Maximum Building Setbacks
 (Section 4.1425) 5 ft. front and street
 side; none for
 interior side and
-rear.
-1
+rear.1
 10 ft. front and street
 side; none for interior
 side and rear.1
@@ -708,7 +709,7 @@ achieved with the maximum setback distance for at least one building. When phase
 proposed, buildings constructed during the initial phase(s) are exempt from this standard, provided the
 applicant demonstrates that buildings proposed for a later phase(s) will fulfill the maximum setback
 requirement.
-4.142 6 DESIGN CRITERIA AND STANDARDS
+4.1426 DESIGN CRITERIA AND STANDARDS
 The mixed-use and employment sub-districts of Pleasant Valley are pedestrian districts. As such, new
 development must have a strong orientation to the street, be transit-supportive, and enhance the appearance
 and functioning of these sub-districts.
@@ -754,7 +755,7 @@ ft. shall meet the Rockwood Design District standards for publicly accessible op
 City of Gresham Development Code  (06/26)
 Pleasant Valley Public Land Sub-Districts
 PURPOSE AND CHARACTERISTICS
-4.14 30 PUBLIC LAND – PLEASANT VALLEY (PL- PV)
+4.1430 PUBLIC LAND – PLEASANT VALLEY (PL- PV)
 The Public Land sub-district of Pleasant Valley is intended to provide public awareness of the possible uses of
 public land, to accommodate community-serving uses, and to provide minimum standards for the
 development of parks and schools. The PL-PV sub-district includes land that serves the cultural, educational,
@@ -764,7 +765,7 @@ for public use or benefit.
 Other publicly owned lands not included within the PL-PV sub-district shall be subject to the development
 standards of the sub-district in which they are located.
 PERMITTED USES
-4.14 31 PERMITTED USES
+4.1431 PERMITTED USES
 Table 4.1431 lists the types of land uses that are permitted in the Public Land sub-district of Pleasant Valley.
 • P = Permitted Use
 • L = Use is permitted, but is limited in the extent to which it may be permitted
@@ -851,7 +852,7 @@ Table 4.1431 Notes
 7. For limitations, see Section 4.1438 Micro-Hydro Energy System Standards for Pleasant Valley Districts.
 8. Electrical generating facilities are not permitted.
 STANDARDS
-4.14 32 DEVELOPMENT STANADARDS TABLE
+4.1432 DEVELOPMENT STANADARDS TABLE
 Table 4.1432 summarizes development standards, which apply within the Pleasant Valley Public Land
 subdistrict. The standards contained in this table are supplemented by the referenced subsections, which
 provide additional clarification and guidance.
@@ -876,8 +877,8 @@ Park Use: No
 Table 4.1432 Notes
 1. When the abutting lot is zoned LDR-PV or MDR-PV, the maximum building height shall be 35 feet at the minimum
 building setback from the shared lot line. For every one foot of additio nal building setback beyond the minimum
-setback, the maximum building height shall increase by one foot, up to a maximum total building height  of 45 feet.
-4.14 33 SETBACKS
+setback, the maximum building height shall increase by one foot, up to a maximum total building height of 45 feet.
+4.1433 SETBACKS
 Required minimum setbacks are as specified below.
 A. Building setbacks. Buildings must be set back from all property lines a minimum of 20 feet.
 B. Outdoor activity facility setbacks. Outdoor activity facilities, such as swimming pools, basketball courts,
