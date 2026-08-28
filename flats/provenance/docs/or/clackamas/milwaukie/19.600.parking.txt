@@ -247,11 +247,11 @@ Use                                                                             
 A. Residential Uses                                                                                                A. Residential Uses
 1. Single detached dwellings, including manufactured homes.                                                        No maximum.
 2. Multi-Unit Dwellings                                                                                            2 spaces per dwelling unit.
-3. Middle Housing1
+3. Middle Housing[1]
 a. Duplexes                                                                                                        1 space per dwelling unit
 b. Triplexes                                                                                                       1 space per dwelling unit
 c. Quadplexes                                                                                                      1 space per dwelling unit
-d. Townhouses2                                                                                                     1 space per dwelling unit
+d. Townhouses[2]                                                                                                   1 space per dwelling unit
 e. Cottage Clusters                                                                                                1 space per dwelling unit
 4. Adult foster/care homes and similar facilities allowed by right in residential zones.                           Minimum required parking plus 1 space per bedroom.
 5. Accessory dwelling units (ADU).                                                                                 No maximum.

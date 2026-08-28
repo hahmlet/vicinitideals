@@ -1624,7 +1624,7 @@ E. Impervious Area, Vegetated Area                                 E. Impervious
 1. Impervious area (maximum)                                       60%                                                                                                    65%
 2. Vegetated site area (minimum)                                   35%                                                                                                    35%
 F. Community and Common Space                                      F. Community and Common Space                                                                          F. Community and Common Space
-1. Community building footprint (maximum)1                         1,000 sf                                                                                               1,000 sf
+1. Community building footprint (maximum)[1]                       1,000 sf                                                                                               1,000 sf
 2. Common Space                                                    19.505.4.E.2                                                                                           19.505.4.E.2
 G. Parking (see also 19.505.4.E.4)                                 G. Parking (see also 19.505.4.E.4)                                                                     G. Parking (see also 19.505.4.E.4)
 1. Automobile parking spaces per dwelling unit (maximum)           See MMC Section 19.605                                                                                 See MMC Section 19.605
@@ -3040,7 +3040,7 @@ Minimum frontage occupancy requirements are established for block faces identifi
 Figure 19.508.4.A.2.a.(1) Minimum Frontage Occupancy
 
 Table 19.508.4.A.2.a.(1) Minimum Frontage Occupancy Requirements                                      Table 19.508.4.A.2.a.(1) Minimum Frontage Occupancy Requirements  Table 19.508.4.A.2.a.(1) Minimum Frontage Occupancy Requirements
-Block Faces1                                                                                          Minimum Frontage Occupancy Requirement                            Notes
+Block Faces[1]                                                                                        Minimum Frontage Occupancy Requirement                            Notes
 Main Street                                                                                           90%                                                               If the development site has frontage on Main Street and another street, the frontage occupancy requirement must be met on Main Street only.
 Secondary Streets (Harrison Street, Monroe Street, Washington Street, Adams Street, and 21st Avenue)  75%                                                               If the development site has frontage on one of the streets listed here and another street where neither frontage is on Main Street, the frontage occupancy requirement must be met on the streets listed here only.
 Tertiary Streets (All others)                                                                         50%

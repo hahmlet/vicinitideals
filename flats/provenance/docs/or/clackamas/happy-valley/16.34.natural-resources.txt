@@ -657,10 +657,10 @@ Table 16.34.060-2 Method for Locating Boundaries of Class I and II Riparian Area
 Table 16.34.060-2 Method for Locating Boundaries of Class I and II Riparian Areas
 Table 16.34.060-2 Method for Locating Boundaries of Class I and II Riparian Areas
 Distance from Water Feature
-Development/Vegetation Status1
-Development/Vegetation Status1
-Development/Vegetation Status1
-Development/Vegetation Status1
+Development/Vegetation Status[1]
+Development/Vegetation Status[1]
+Development/Vegetation Status[1]
+Development/Vegetation Status[1]
 Distance from Water Feature
 Developed areas not providing vegetative cover
 Low structure vegetation or open soils
@@ -673,32 +673,32 @@ Surface Streams
 Surface Streams
 0—50′
 Class II
-Class I2
+Class I[2]
 Class I
 Class I
 50′—100′
-Class II3
+Class II[3]
 Class I
 Class I
 100′—150′
-Class II3 if slope>25%
-Class II3 if slope>25%
-Class II3
+Class II[3] if slope>25%
+Class II[3] if slope>25%
+Class II[3]
 150′—200′
-Class II3 if slope>25%
-Class II3 if slope>25%
-Class II3 if slope>25%
+Class II[3] if slope>25%
+Class II[3] if slope>25%
+Class II[3] if slope>25%
 Wetlands (Wetland Feature Itself is a Class I Riparian Area)
 Wetlands (Wetland Feature Itself is a Class I Riparian Area)
 Wetlands (Wetland Feature Itself is a Class I Riparian Area)
 Wetlands (Wetland Feature Itself is a Class I Riparian Area)
 Wetlands (Wetland Feature Itself is a Class I Riparian Area)
 0—100′
-Class II3
+Class II[3]
 Class I
 Class I
 100′—150′
-Class II2
+Class II[2]
 Flood Areas
 Flood Areas
 Flood Areas
@@ -710,19 +710,19 @@ Class I
 Class I
 More than 300′ from river or surface stream
 4
-Class II3
-Class II3
+Class II[3]
+Class II[3]
 Class I
 0—100′ from edge of flood area
-Class II3, 5
-Class II3
+Class II3, [5]
+Class II[3]
 
 Notes:
-1 The vegetative cover type assigned to any particular area was based on two factors: the type of vegetation observed in aerial photographs and the size of the overall contiguous area of vegetative cover to which a particular piece of vegetation belonged. As an example of how the categories were assigned, in order to qualify as "forest canopy," the forested area had to be part of a larger patch of forest of at least one acre in size.
-2 Except that areas within 50 feet of surface streams shall be Class II riparian areas if their vegetation status is "Low structure vegetation or open soils," and if they are high gradient streams. High gradient streams are identified on the Metro Vegetative Cover Map. If a property owner believes the gradient of a stream was incorrectly identified, then the property owner may demonstrate the correct classification by identifying the channel type using the methodology described in the Oregon Watershed Assessment Manual, published by the Oregon Watershed Enhancement Board, and appended to the Metro's Riparian Corridor and Wildlife Habitat Inventories Report, Attachment 1 to Exhibit F to Metro Ordinance No. 05-1077C.
-3 Areas that have been identified as habitats of concern, as designated on the Metro Habitats of Concern Map (on file in the Metro Council office), shall be treated as Class I riparian habitat areas in all cases, subject to the provision of additional information that establishes that they do not meet the criteria used to identify habitats of concern as described in Metro's Technical Report for Fish and Wildlife. Examples of habitats of concern include: Oregon white oak woodlands, bottomland hardwood forests, wetlands, native grasslands, riverine islands or deltas, and important wildlife migration corridors.
-4 If development prior to the effective date of Metro Ordinance No. 05-1077C within a contiguous, undeveloped flood area (to include contiguous flood areas on adjacent properties) that was not mapped as having any vegetative cover has reduced the size of that contiguous flood area to less than one half of an acre in size, then the remaining flood area shall also be considered a developed flood area and shall not be identified as habitat.
-5 Only if within 300 feet of a river or surface stream.
+[1] The vegetative cover type assigned to any particular area was based on two factors: the type of vegetation observed in aerial photographs and the size of the overall contiguous area of vegetative cover to which a particular piece of vegetation belonged. As an example of how the categories were assigned, in order to qualify as "forest canopy," the forested area had to be part of a larger patch of forest of at least one acre in size.
+[2] Except that areas within 50 feet of surface streams shall be Class II riparian areas if their vegetation status is "Low structure vegetation or open soils," and if they are high gradient streams. High gradient streams are identified on the Metro Vegetative Cover Map. If a property owner believes the gradient of a stream was incorrectly identified, then the property owner may demonstrate the correct classification by identifying the channel type using the methodology described in the Oregon Watershed Assessment Manual, published by the Oregon Watershed Enhancement Board, and appended to the Metro's Riparian Corridor and Wildlife Habitat Inventories Report, Attachment 1 to Exhibit F to Metro Ordinance No. 05-1077C.
+[3] Areas that have been identified as habitats of concern, as designated on the Metro Habitats of Concern Map (on file in the Metro Council office), shall be treated as Class I riparian habitat areas in all cases, subject to the provision of additional information that establishes that they do not meet the criteria used to identify habitats of concern as described in Metro's Technical Report for Fish and Wildlife. Examples of habitats of concern include: Oregon white oak woodlands, bottomland hardwood forests, wetlands, native grasslands, riverine islands or deltas, and important wildlife migration corridors.
+[4] If development prior to the effective date of Metro Ordinance No. 05-1077C within a contiguous, undeveloped flood area (to include contiguous flood areas on adjacent properties) that was not mapped as having any vegetative cover has reduced the size of that contiguous flood area to less than one half of an acre in size, then the remaining flood area shall also be considered a developed flood area and shall not be identified as habitat.
+[5] Only if within 300 feet of a river or surface stream.
 
 b.
 
@@ -745,18 +745,18 @@ c.
 Step 3—Cross-Reference Habitat Class With Urban Development Value. City and County verification of the locations of High, Moderate, and Low Habitat Conservation Areas shall be consistent with Table 16.34.060-3.
 
 Table 16.34.060-3 Method for Identifying Habitat Conservation Areas (HCA)  Table 16.34.060-3 Method for Identifying Habitat Conservation Areas (HCA)  Table 16.34.060-3 Method for Identifying Habitat Conservation Areas (HCA)  Table 16.34.060-3 Method for Identifying Habitat Conservation Areas (HCA)  Table 16.34.060-3 Method for Identifying Habitat Conservation Areas (HCA)
-Fish and Wildlife Habitat Classification                                   High Urban Development Value1                                              Medium Urban development Value2                                            Low Urban development Value3                                               Other Areas: Parks and Open Spaces, No Design Types Outside UGB
-Class I riparian                                                           Moderate HCA                                                               High HCA                                                                   High HCA                                                                   High HCA / High HCA+4
-Class II riparian                                                          Low HCA                                                                    Low HCA                                                                    Moderate HCA                                                               Moderate HCA / High HCA+4
-Class A upland wildlife                                                    No HCA                                                                     No HCA                                                                     No HCA                                                                     No HCA / High HCA5 / High HCA+4
-Class B upland wildlife                                                    No HCA                                                                     No HCA                                                                     No HCA                                                                     No HCA / High HCA5/ High HCA+4
+Fish and Wildlife Habitat Classification                                   High Urban Development Value[1]                                            Medium Urban development Value[2]                                          Low Urban development Value[3]                                             Other Areas: Parks and Open Spaces, No Design Types Outside UGB
+Class I riparian                                                           Moderate HCA                                                               High HCA                                                                   High HCA                                                                   High HCA / High HCA+[4]
+Class II riparian                                                          Low HCA                                                                    Low HCA                                                                    Moderate HCA                                                               Moderate HCA / High HCA+[4]
+Class A upland wildlife                                                    No HCA                                                                     No HCA                                                                     No HCA                                                                     No HCA / High HCA[5] / High HCA+[4]
+Class B upland wildlife                                                    No HCA                                                                     No HCA                                                                     No HCA                                                                     No HCA / High HCA[5]/ High HCA+[4]
 
 NOTE: The default urban development value of property is as depicted on the Metro Habitat Urban Development Value Map. The Metro 2040 Design Type designations provided in the following footnotes are only for use when a City or County is determining whether to make an HCA adjustment.
-1 Primary 2040 design type: regional centers, central City, town centers, and regionally significant industrial areas
-2 Secondary 2040 design type: main streets, station communities, other industrial areas, and employment centers
-3 Tertiary 2040 design type: Inner and outer neighborhoods, corridors
-4 Cities and counties shall give Class I and II riparian habitat and Class A and B upland wildlife habitat in parks designated as natural areas even greater protection than that afforded to High Habitat Conservation Areas.
-5 All Class A and B upland wildlife habitat in publicly-owned parks and open spaces, except for parks and open spaces where the acquiring agency clearly identified that it was acquiring the property to develop it for active recreational uses, shall be considered High HCAs.
+[1] Primary 2040 design type: regional centers, central City, town centers, and regionally significant industrial areas
+[2] Secondary 2040 design type: main streets, station communities, other industrial areas, and employment centers
+[3] Tertiary 2040 design type: Inner and outer neighborhoods, corridors
+[4] Cities and counties shall give Class I and II riparian habitat and Class A and B upland wildlife habitat in parks designated as natural areas even greater protection than that afforded to High Habitat Conservation Areas.
+[5] All Class A and B upland wildlife habitat in publicly-owned parks and open spaces, except for parks and open spaces where the acquiring agency clearly identified that it was acquiring the property to develop it for active recreational uses, shall be considered High HCAs.
 
 § 16.34.070. Development standards.
 
@@ -1400,8 +1400,8 @@ Determination of the alternative that best meets the applicable approval criteri
 
 Table 16.34.075-1 Ecological Functional Values of Riparian Corridors  Table 16.34.075-1 Ecological Functional Values of Riparian Corridors
 Ecological Function                                                   Landscape Features Providing Functional Values
-Microclimate and shade                                                Forest canopy or woody vegetation within 100 feet of a stream; a wetland1; or a flood area2.
-Streamflow moderation and water storage                               A wetland or other water body3 with a hydrologic connection to a stream; or a flood area2.
+Microclimate and shade                                                Forest canopy or woody vegetation within 100 feet of a stream; a wetland[1]; or a flood area[2].
+Streamflow moderation and water storage                               A wetland or other water body[3] with a hydrologic connection to a stream; or a flood area[2].
 Bank stabilization, sediment and pollution control                    All sites within 50 feet of a surface stream;
 Bank stabilization, sediment and pollution control                    Forest canopy, woody vegetation, or low structure vegetation/open soils within 100 feet of a stream or a wetland; or forest canopy, woody vegetation, or low structure vegetation/open soils within a flood area; and
 Bank stabilization, sediment and pollution control                    Forest canopy, woody vegetation, or low structure vegetation/open soils within 100—200 feet of a stream if the slope is greater than 25 percent.
@@ -1410,9 +1410,9 @@ Large wood and channel dynamics                                       The channe
 Organic material sources                                              Forest canopy or woody vegetation within 100 feet of a stream or wetland; or within a flood area.
 
 NOTES:
-1 Refers to "hydrologically-connected wetlands," which are located partially or wholly within one-quarter mile of a surface stream or flood area.
-2 Developed floodplains are not identified as HCAs because they do not provide primary ecological functional value.
-3 "Other water body" could include lakes, ponds, reservoirs, or manmade water feature that is not a water quality facility or farm pond.
+[1] Refers to "hydrologically-connected wetlands," which are located partially or wholly within one-quarter mile of a surface stream or flood area.
+[2] Developed floodplains are not identified as HCAs because they do not provide primary ecological functional value.
+[3] "Other water body" could include lakes, ponds, reservoirs, or manmade water feature that is not a water quality facility or farm pond.
 
 f.
 

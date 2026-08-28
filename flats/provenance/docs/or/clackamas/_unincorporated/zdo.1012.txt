@@ -169,25 +169,25 @@ Affordable Housing: One of the following two options:
 (C) For property with existing maximum density of 46 or more units per acre, up to 25 percent of base density and 36 additional feet in maximum height.
 (2): In any development, for dwelling units affordable to households with incomes of 80 percent or less of the area median income (AMI) as defined by the U.S. Department of Housing and Urban Development, adjusted for household size, and whose affordability, including affordability under a covenant as described in ORS 456.270 to 456.295, is enforceable for a duration of no less than 30 years.
 One dwelling unit per affordable dwelling unit up to 5 percent of the base density
-One dwelling unit per affordable dwelling unit up to 50 percent of the base density1
-Mixed-Use Development2: Multifamily dwelling units developed as part of a mixed-use development, where a minimum of 20 percent of the total floor area on a site is developed for a non-residential use.
+One dwelling unit per affordable dwelling unit up to 50 percent of the base density[1]
+Mixed-Use Development[2]: Multifamily dwelling units developed as part of a mixed-use development, where a minimum of 20 percent of the total floor area on a site is developed for a non-residential use.
 Not applicable
-One dwelling unit per dwelling unit located in a mixed-use development up to 20 percent of the base density3
+One dwelling unit per dwelling unit located in a mixed-use development up to 20 percent of the base density[3]
 Park Dedication: Land will be dedicated as a park and accepted by a government agency pursuant to Subsection 1011.04.
 10 percent of the base density
-10 percent of the base density1
+10 percent of the base density[1]
 Habitat Conservation Area: At least 75 percent of the HCA on the subject property will be protected from development by a restrictive covenant or a public dedication.
 Not applicable
-25 percent of the base density4
+25 percent of the base density[4]
 MAXIMUM TOTAL INCREASE5
 15 percent of the base density
 60 percent of the base density
 
-1Does not apply in the VA, VR-4/5, VR-5/7, or VTH Districts
-2For the purposes of this provision, mixed-use development means a mix of uses located within a single building or a mix of uses located on a single site.
-3May only be applied in the C-3, CC, OC, and RTL Districts
-4Does not apply in the VR-4/5, VR-5/7, or VTH Districts
-5For affordable housing developed using the bonus in option 1, the maximum is that allowed under option 1; it may not be combined with a mixed-use development, park dedication, or Habitat Conservation Area bonus.
+[1]Does not apply in the VA, VR-4/5, VR-5/7, or VTH Districts
+[2]For the purposes of this provision, mixed-use development means a mix of uses located within a single building or a mix of uses located on a single site.
+[3]May only be applied in the C-3, CC, OC, and RTL Districts
+[4]Does not apply in the VR-4/5, VR-5/7, or VTH Districts
+[5]For affordable housing developed using the bonus in option 1, the maximum is that allowed under option 1; it may not be combined with a mixed-use development, park dedication, or Habitat Conservation Area bonus.
 
 1 Any partial figure of one-half or greater shall be rounded up to the next whole number, except partial figures shall be rounded down for a subdivision, partition, or replat of 10 lots or fewer in the Urban Low Density Residential, VR-4/5, or VR-5/7 District.
 

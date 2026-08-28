@@ -219,11 +219,18 @@ def test_the_lettered_subsections_are_not_blocks(base_zones) -> None:
 
 def test_the_orphans_the_blocks_were_hiding(base_zones) -> None:
     """Twenty-nine markers on two use tables had no body in their region --
-    Commercial3, 4 and Vehicle sales and rentals5 on the first, Residential1
-    and Waste management4 on the second. Two are left, and they are honest:
-    they belong to a development standards table whose notes are printed in
-    the one shape this reader still refuses. See the subsection test above."""
-    assert [m.line for m in base_zones.unbodied] == [3927, 3928]
+    Commercial[3,4] and Vehicle sales and rentals[5] on the first,
+    Residential[1] and Waste management[4] on the second. Four are left, and
+    they are honest: all four sit in one development standards table whose
+    notes are printed in the shape this reader still refuses. See the
+    subsection test above.
+
+    Two of the four arrived with `flats-html-text/7`, which stopped welding a
+    superscript to the number under it. "10-30[1]" is a maximum front yard
+    setback of ten to thirty feet under note 1; the store used to hold
+    "10-301", where the marker was invisible and the range was wrong.
+    """
+    assert [m.line for m in base_zones.unbodied] == [3924, 3925, 3927, 3928]
 
 
 def test_the_four_consecutive_townhouse_limit(base_zones) -> None:

@@ -126,12 +126,12 @@ def test_three_tables_mark_their_height_row_with_their_own_height_note(
 
     for row, marker in ((114, "2"), (298, "5"), (488, "5")):
         assert "Building height (maximum)" in lines[row - 1]
-        assert f"45 feet{marker}" in lines[row - 1]
+        assert f"45 feet[{marker}]" in lines[row - 1]
 
     # And in each of those tables the note that marker names is about height.
     for note_line, marker in ((118, "2"), (306, "5"), (496, "5")):
         text = lines[note_line - 1]
-        assert text.lstrip().startswith(marker)
+        assert text.lstrip().startswith(f"[{marker}]")
         assert "building height maximum is 45 feet at the front elevation" in text
 
 
@@ -142,13 +142,13 @@ def test_but_the_fourth_marks_it_with_the_open_space_note(
     usable open space; the height note is 7, printed on the next line."""
     lines = store.load(CHAPTER).text.splitlines()
     assert "Building height (maximum)" in lines[669]
-    assert "45 feet6" in lines[669] and "65 feet6" in lines[669]
+    assert "45 feet[6]" in lines[669] and "65 feet[6]" in lines[669]
 
     note_6 = lines[678]
     note_7 = lines[679]
-    assert note_6.lstrip().startswith("6")
+    assert note_6.lstrip().startswith("[6]")
     assert "20% of the net developable area must be usable open space" in note_6
-    assert note_7.lstrip().startswith("7")
+    assert note_7.lstrip().startswith("[7]")
     assert "building height maximum is 45 feet at the front elevation" in note_7
 
 

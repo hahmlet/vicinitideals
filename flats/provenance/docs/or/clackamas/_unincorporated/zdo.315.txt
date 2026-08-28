@@ -74,8 +74,8 @@ P
 P
 P
 X
-L1,C2
-L3
+L[1],C[2]
+L[3]
 Bed and Breakfast Residences, subject to Section 832
 C
 X
@@ -120,10 +120,10 @@ C
 C
 C
 C
-L4,C
+L[4],C
 C
-L1,C2
-L3
+L[1],C[2]
+L[3]
 Civic and Cultural Facilities, including art galleries, museums, and visitor centers
 X
 X
@@ -132,10 +132,10 @@ X
 X
 X
 X
-L4,C5
+L[4],C[5]
 X
-L1,C2
-L3
+L[1],C[2]
+L[3]
 Community Halls
 CPUD
 CPUD
@@ -168,22 +168,22 @@ C
 C
 C
 C
-L4,C
+L[4],C
 C
-L1,C2
-L3
-Dwellings6, including:
-Dwellings6, including:
-Dwellings6, including:
-Dwellings6, including:
-Dwellings6, including:
-Dwellings6, including:
-Dwellings6, including:
-Dwellings6, including:
-Dwellings6, including:
-Dwellings6, including:
-Dwellings6, including:
-Dwellings6, including:
+L[1],C[2]
+L[3]
+Dwellings[6], including:
+Dwellings[6], including:
+Dwellings[6], including:
+Dwellings[6], including:
+Dwellings[6], including:
+Dwellings[6], including:
+Dwellings[6], including:
+Dwellings[6], including:
+Dwellings[6], including:
+Dwellings[6], including:
+Dwellings[6], including:
+Dwellings[6], including:
 Accessory Dwelling Units, subject to Section 839
 A
 A
@@ -209,8 +209,8 @@ P
 P
 P
 Cottage Clusters
-P7,8
-P7,8
+P[7,8]
+P[7,8]
 X
 X
 P
@@ -221,8 +221,8 @@ X
 X
 X
 Detached Single-Family Dwellings
-P7
-P7
+P[7]
+P[7]
 X
 X
 X
@@ -233,8 +233,8 @@ X
 X
 X
 Duplexes
-P7
-P7
+P[7]
+P[7]
 X
 P
 P
@@ -245,8 +245,8 @@ P
 X
 X
 Manufactured Dwelling Parks, subject to Section 825
-P9,C
-P10
+P[9],C
+P[10]
 C
 X
 C
@@ -257,8 +257,8 @@ X
 X
 X
 Manufactured Homes
-P7
-P7
+P[7]
+P[7]
 X
 X
 X
@@ -281,8 +281,8 @@ P
 P
 P
 Prefabricated Structures
-P7
-P7
+P[7]
+P[7]
 X
 X
 X
@@ -293,8 +293,8 @@ X
 X
 X
 Quadplexes
-P7,8
-P7,8
+P[7,8]
+P[7,8]
 X
 P
 P
@@ -317,8 +317,8 @@ X
 X
 X
 Single Room Occupancies
-P7, 11
-P7, 11
+P[7,11]
+P[7,11]
 X
 X
 P
@@ -329,20 +329,20 @@ P
 P
 P
 Townhouses
-P7,8
-P7,8
+P[7,8]
+P[7,8]
 P
 P
 X
-P12
-P12
+P[12]
+P[12]
 X
 X
 X
 X
 Triplexes
-P7,8
-P7,8
+P[7,8]
+P[7,8]
 X
 P
 P
@@ -362,7 +362,7 @@ X
 X
 X
 X
-C2
+C[2]
 X
 Farmers' Markets, subject to Section 840
 A
@@ -396,10 +396,10 @@ X
 X
 X
 X
-L4,C5
+L[4],C[5]
 X
-L1,C2
-L3
+L[1],C[2]
+L[3]
 Fitness Facilities, including athletic clubs, exercise studios, gymnasiums, and health clubs
 X
 X
@@ -408,34 +408,34 @@ X
 X
 X
 X
-L4,C
+L[4],C
 X
-L1,13,C
-L3,C
+L[1,13],C
+L[3],C
 Fraternal Organization Lodges
-C14
+C[14]
 X
-C14
+C[14]
 X
-C14
-C14
-C14
-C14
+C[14]
+C[14]
+C[14]
+C[14]
 X
-C14
-C14
+C[14]
+C[14]
 Government Uses, unless such a use is specifically listed as a primary, accessory, limited, conditional, or prohibited use in the applicable zoning district
-C14
+C[14]
 X
-C14
+C[14]
 X
-C14
-C14
-C14
-C14
+C[14]
+C[14]
+C[14]
+C[14]
 X
-C14
-C14
+C[14]
+C[14]
 Guest Houses, subject to Section 833
 A
 X
@@ -448,7 +448,7 @@ X
 X
 X
 X
-Home Occupations, including bed and breakfast homestays, subject to Section 82215
+Home Occupations, including bed and breakfast homestays, subject to Section 822[15]
 A
 A
 A
@@ -494,16 +494,16 @@ X
 X
 X
 X
-C16
-L3,C
+C[16]
+L[3],C
 Kitchens, Accessory
-A17
-A17
-A17
-A17
+A[17]
+A[17]
+A[17]
+A[17]
 X
-A17
-A17
+A[17]
+A[17]
 X
 X
 X
@@ -516,10 +516,10 @@ CPUD
 CPUD
 CPUD
 CPUD
-L4,C5, CPUD
+L[4],C[5], CPUD
 CPUD
-L1,C2, CPUD
-L3, CPUD
+L[1],C[2], CPUD
+L[3], CPUD
 Livestock, subject to Section 821
 A
 A
@@ -612,10 +612,10 @@ X
 X
 X
 X
-L4,C5
+L[4],C[5]
 X
-L1,C2
-L3
+L[1],C[2]
+L[3]
 Offices and Outpatient Clinics—both of which may include associated pharmacies and laboratories—for healthcare services, such as acupuncture, chiropractic, counseling, dental, massage therapy, medical, naturopathic, optometric, physical therapy, psychiatric, occupational therapy, and speech therapy
 X
 X
@@ -624,10 +624,10 @@ X
 X
 X
 X
-L4,C5
+L[4],C[5]
 X
-L1,C2
-L3
+L[1],C[2]
+L[3]
 Parking Structures
 X
 X
@@ -686,92 +686,92 @@ X
 X
 X
 X
-L1,C2
+L[1],C[2]
 X
-Radio and Television Transmission and Receiving Towers and Earth Stations18
-C14
+Radio and Television Transmission and Receiving Towers and Earth Stations[18]
+C[14]
 X
-C14
+C[14]
 X
 X
-C14
-C14
-C14
+C[14]
+C[14]
+C[14]
 X
-C14
-C14
+C[14]
+C[14]
 Recreational Vehicle Camping Facilities, subject to Section 813
 X
 X
 X
 X
 X
-C14
-C14
-C14
+C[14]
+C[14]
+C[14]
 X
 X
 X
-Recreational Uses, Government-Owned, including parks, amphitheaters; arboreta; arbors, decorative ponds, fountains, gazebos, pergolas, and trellises; ball fields; bicycle and walking trails; bicycle parks and skate parks; boat moorages and ramps; community buildings and grounds; community and ornamental gardens; courtyards and plazas; equine facilities; fitness and recreational facilities, such as exercise equipment, gymnasiums, and swimming pools; miniature golf, putting greens, and sports courts; picnic areas and structures; play equipment and playgrounds; nature preserves and wildlife sanctuaries; tables and seating; and similar recreational uses19
-P20
-P20
-P20
-P21
-P21
-P21
-P21
-P21
-P21
-P21
-P21
-Recreational Uses, Government-Owned Golf Courses19
-P20
+Recreational Uses, Government-Owned, including parks, amphitheaters; arboreta; arbors, decorative ponds, fountains, gazebos, pergolas, and trellises; ball fields; bicycle and walking trails; bicycle parks and skate parks; boat moorages and ramps; community buildings and grounds; community and ornamental gardens; courtyards and plazas; equine facilities; fitness and recreational facilities, such as exercise equipment, gymnasiums, and swimming pools; miniature golf, putting greens, and sports courts; picnic areas and structures; play equipment and playgrounds; nature preserves and wildlife sanctuaries; tables and seating; and similar recreational uses[19]
+P[20]
+P[20]
+P[20]
+P[21]
+P[21]
+P[21]
+P[21]
+P[21]
+P[21]
+P[21]
+P[21]
+Recreational Uses, Government-Owned Golf Courses[19]
+P[20]
 X
-P20
+P[20]
 X
-C14
-P21
-P21
-C14
+C[14]
+P[21]
+P[21]
+C[14]
 X
-C14
-C14
-Recreational Uses, including boat moorages, country clubs, equine facilities, gymnastics facilities, golf courses, parks, and swimming pools19
-C14
+C[14]
+C[14]
+Recreational Uses, including boat moorages, country clubs, equine facilities, gymnastics facilities, golf courses, parks, and swimming pools[19]
+C[14]
 X
-C14
+C[14]
 X
-C14
-C14
-C14
-C14
+C[14]
+C[14]
+C[14]
+C[14]
 X
-C14
-C14
+C[14]
+C[14]
 Recyclable Drop-Off Sites, subject to Section 819
-A22
-A22
-A22
-A22
-A22
-A22
-A22
-A22
-A22
-A22
-A22
+A[22]
+A[22]
+A[22]
+A[22]
+A[22]
+A[22]
+A[22]
+A[22]
+A[22]
+A[22]
+A[22]
 Retailing—whether by sale, lease, or rent—of any of the following new or used products: apparel, appliances, art, art supplies, beverages, bicycle supplies, bicycles, books, cameras, computers, computer supplies, cookware, cosmetics, dry goods, electrical supplies, electronic equipment, firewood, flowers, food, furniture, garden supplies, gun supplies, guns, hardware, hides, interior decorating materials, jewelry, leather, linens, medications, music (whether recorded or printed), musical instruments, nutritional supplements, office supplies, optical goods, paper goods, periodicals, pet supplies, pets, plumbing supplies, photographic supplies, signs, small power equipment, sporting goods, stationery, tableware, tobacco, toiletries, tools, toys, vehicle supplies, and videos
-CPUD23
-CPUD23
-CPUD23
-CPUD23
-CPUD23
-CPUD23
-CPUD23
-L4,C5, CPUD23
-CPUD23
-L1,C2, CPUD23
-L3, CPUD23
+CPUD[23]
+CPUD[23]
+CPUD[23]
+CPUD[23]
+CPUD[23]
+CPUD[23]
+CPUD[23]
+L[4],C[5], CPUD[23]
+CPUD[23]
+L[1],C[2], CPUD[23]
+L[3], CPUD[23]
 Roads
 P
 P
@@ -792,10 +792,10 @@ CPUD
 CPUD
 C
 C
-L4,24,C5,24,CPUD
+L[4,24],C[5,24],CPUD
 CPUD
-L1,24,C2,24, CPUD
-L3,24, CPUD
+L[1,24],C[2,24], CPUD
+L[3,24], CPUD
 Services, Business, including computer rental workstations; leasing, maintenance, repair, and sale of communications and office equipment; mailing; notary public; photocopying; and printing
 X
 X
@@ -804,10 +804,10 @@ X
 X
 X
 X
-L4,C5
+L[4],C[5]
 X
-L2,C3
-L1
+L[2],C[3]
+L[1]
 Services, Commercial—Construction and Maintenance, including contractors engaged in construction and maintenance of electrical and plumbing systems
 X
 X
@@ -818,20 +818,20 @@ X
 X
 X
 X
-C2
+C[2]
 X
 Services, Commercial—Food and Beverage, including catering and eating and drinking establishments
-CPUD23
-CPUD23
-CPUD23
-CPUD23
-CPUD23
-CPUD23
-CPUD23
-L4,C5, CPUD23
-CPUD23
-L1,C2, CPUD23
-L3, CPUD23
+CPUD[23]
+CPUD[23]
+CPUD[23]
+CPUD[23]
+CPUD[23]
+CPUD[23]
+CPUD[23]
+L[4],C[5], CPUD[23]
+CPUD[23]
+L[1],C[2], CPUD[23]
+L[3], CPUD[23]
 Services, Commercial—Maintenance and Repair of any of the following: appliances, bicycles, electronic equipment, guns, housewares, musical instruments, optical goods, signs, small power equipment, sporting goods, and tools
 X
 X
@@ -840,10 +840,10 @@ X
 X
 X
 X
-L4,C5
+L[4],C[5]
 X
-L1,C2
-L3
+L[1],C[2]
+L[3]
 Services, Commercial—Maintenance and Repair of any of the following: all-terrain vehicles, automobiles, light trucks, motorcycles, and snowmobiles
 X
 X
@@ -854,7 +854,7 @@ X
 X
 X
 X
-C2
+C[2]
 X
 Services, Commercial—Miscellaneous, including food lockers, interior decorating, locksmith, upholstering, and veterinary
 X
@@ -864,37 +864,37 @@ X
 X
 X
 X
-L4,C5
+L[4],C[5]
 X
-L1,C2
-L3
+L[1],C[2]
+L[3]
 Services, Commercial—Personal and Convenience, including barbershops, beauty salons, dry cleaners, laundries, photo processing, seamstresses, shoe repair, tailors, and tanning salons. Also permitted are incidental retail sales of products related to the service provided.
-CPUD23
-CPUD23
-CPUD23
-CPUD23
-CPUD23
-CPUD23
-CPUD23
-L4,C5, CPUD23
-CPUD23
-L1,C2, CPUD23
-L3, CPUD23
+CPUD[23]
+CPUD[23]
+CPUD[23]
+CPUD[23]
+CPUD[23]
+CPUD[23]
+CPUD[23]
+L[4],C[5], CPUD[23]
+CPUD[23]
+L[1],C[2], CPUD[23]
+L[3], CPUD[23]
 Services, Commercial—Studios of the following types: art, craft, dance, music, and photography
-CPUD23
-CPUD23
-CPUD23
-CPUD23
-CPUD23
-CPUD23
-CPUD23
-L4,C5, CPUD23
-CPUD23
-L1,C2, CPUD23
-L3, CPUD23
+CPUD[23]
+CPUD[23]
+CPUD[23]
+CPUD[23]
+CPUD[23]
+CPUD[23]
+CPUD[23]
+L[4],C[5], CPUD[23]
+CPUD[23]
+L[1],C[2], CPUD[23]
+L[3], CPUD[23]
 Short-Term Rental in a dwelling unit or guest house permitted by this table
-P25
-P25
+P[25]
+P[25]
 P
 P
 P
@@ -905,17 +905,17 @@ P
 P
 P
 Signs, subject to Section 1010
-A26
-A26
-A26
-A26
-A26
-A26
-A26
-A26
-A26
-A26
-A26
+A[26]
+A[26]
+A[26]
+A[26]
+A[26]
+A[26]
+A[26]
+A[26]
+A[26]
+A[26]
+A[26]
 Temporary Buildings for Uses Incidental to Construction Work. Such buildings shall be removed upon completion or abandonment of the construction work.
 A
 A
@@ -965,29 +965,29 @@ Utility Facilities, including:
 Utility Facilities, including:
 Utility Facilities, including:
 Stormwater Management Facilities
-P,C27
-P,C27
-P,C27
-P,C27
-P,C27
-P,C27
-P,C27
-P,C27
-P,C27
-P,C27
-P,C27
+P,C[27]
+P,C[27]
+P,C[27]
+P,C[27]
+P,C[27]
+P,C[27]
+P,C[27]
+P,C[27]
+P,C[27]
+P,C[27]
+P,C[27]
 Utility Cabinets
-P,C28
-P,C28
-P,C28
-P,C28
-P,C28
-P,C28
-P,C28
-P,C28
-P,C28
-P,C28
-P,C28
+P,C[28]
+P,C[28]
+P,C[28]
+P,C[28]
+P,C[28]
+P,C[28]
+P,C[28]
+P,C[28]
+P,C[28]
+P,C[28]
+P,C[28]
 Utility Facilities, except Utility Lines, in Road Rights-of-Way
 P
 P
@@ -1001,29 +1001,29 @@ P
 P
 P
 Utility Facilities Not Otherwise Listed in Table 315-1
-C13,29
-C13,29
-C13,29
+C[13,29]
+C[13,29]
+C[13,29]
 X
-C13,29
-C13,29
-C13,29
-C13,29
+C[13,29]
+C[13,29]
+C[13,29]
+C[13,29]
 X
-C13,29
-C13,29
+C[13,29]
+C[13,29]
 Utility Lines
-P,C30
-P,C30
-P,C30
-P,C30
-P,C30
-P,C30
-P,C30
-P,C30
-P,C30
-P,C30
-P,C30
+P,C[30]
+P,C[30]
+P,C[30]
+P,C[30]
+P,C[30]
+P,C[30]
+P,C[30]
+P,C[30]
+P,C[30]
+P,C[30]
+P,C[30]
 Wireless Telecommunication Facilities, subject to Section 835
 See Table 835-1
 See Table 835-1
@@ -1148,24 +1148,24 @@ R-10
 R-15
 R-20
 R-30
-District Land Area (DLA) for Calculating Density Pursuant to Section 1012/Minimum Lot Size1,2
+District Land Area (DLA) for Calculating Density Pursuant to Section 1012/Minimum Lot Size[1,2]
 2,500/2,000 square feet
-5,000/4,000square feet3
-7,000/5,600 square feet4
-8,500/6,800 square feet4
-10,000/8,000 square feet4
-15,000/12,000 square feet4
-20,000/16,000 square feet4
-30,000/24,000 square feet4
+5,000/4,000square feet[3]
+7,000/5,600 square feet[4]
+8,500/6,800 square feet[4]
+10,000/8,000 square feet[4]
+15,000/12,000 square feet[4]
+20,000/16,000 square feet[4]
+30,000/24,000 square feet[4]
 Maximum Lot Coverage
-50 percent5,6
-50 percent5,6
-50 percent5,6
-50 percent5,6
-50 percent5,6
-50 percent5,6
-50 percent5,6
-50 percent5,6
+50 percent[5,6]
+50 percent[5,6]
+50 percent[5,6]
+50 percent[5,6]
+50 percent[5,6]
+50 percent[5,6]
+50 percent[5,6]
+50 percent[5,6]
 Maximum Building Height
 Accessory buildings larger than 500 square feet and accessory to a primary dwelling, except accessory dwelling units: 20 feet or the height of the primary dwelling, whichever is greater
 All other buildings, including accessory dwelling units: 35 feet
@@ -1184,32 +1184,32 @@ All other buildings, including accessory dwelling units: 35 feet
 Accessory buildings larger than 500 square feet and accessory to a primary dwelling, except accessory dwelling units: 20 feet or the height of the primary dwelling, whichever is greater
 All other buildings, including accessory dwelling units: 35 feet
 Minimum Front Setback
-15 feet, except 20 feet to garage and carport motor vehicle entries7
-15 feet, except 20 feet to garage and carport motor vehicle entries7
-15 feet, except 20 feet to garage and carport motor vehicle entries7
-15 feet, except 20 feet to garage and carport motor vehicle entries7
-15 feet, except 20 feet to garage and carport motor vehicle entries7
-15 feet, except 20 feet to garage and carport motor vehicle entries7
-15 feet, except 20 feet to garage and carport motor vehicle entries7
-15 feet, except 20 feet to garage and carport motor vehicle entries7
+15 feet, except 20 feet to garage and carport motor vehicle entries[7]
+15 feet, except 20 feet to garage and carport motor vehicle entries[7]
+15 feet, except 20 feet to garage and carport motor vehicle entries[7]
+15 feet, except 20 feet to garage and carport motor vehicle entries[7]
+15 feet, except 20 feet to garage and carport motor vehicle entries[7]
+15 feet, except 20 feet to garage and carport motor vehicle entries[7]
+15 feet, except 20 feet to garage and carport motor vehicle entries[7]
+15 feet, except 20 feet to garage and carport motor vehicle entries[7]
 Minimum Rear Setback
-20 feet7,8,9,10,11
-20 feet7,8,9,10,11
-20 feet7,8,9,10,11
-20 feet7,8,9,10,11
-20 feet7,8,9,10,11
-20 feet7,8,9,10,11
-20 feet7,8,9,10,11
-20 feet7,8,9,10,11
+20 feet[7,8,9,10,11]
+20 feet[7,8,9,10,11]
+20 feet[7,8,9,10,11]
+20 feet[7,8,9,10,11]
+20 feet[7,8,9,10,11]
+20 feet[7,8,9,10,11]
+20 feet[7,8,9,10,11]
+20 feet[7,8,9,10,11]
 Minimum Side Setback
-5 feet7,8,9,10,11
-5 feet7,8,9,10,11
-5 feet7,8,9,10,11
-5 feet7,8,9,10,11
-5 feet7,8,9,10,11
-5 feet7,8,9,10,11
-5 feet7,8,9,10,11
-5 feet7,8,9,10,11
+5 feet[7,8,9,10,11]
+5 feet[7,8,9,10,11]
+5 feet[7,8,9,10,11]
+5 feet[7,8,9,10,11]
+5 feet[7,8,9,10,11]
+5 feet[7,8,9,10,11]
+5 feet[7,8,9,10,11]
+5 feet[7,8,9,10,11]
 Maximum Building Floor Space for an Accessory Building Larger than 500 Square Feet and Accessory to a Primary Dwelling
 Equal to the ground floor area of the primary dwelling and the ground floor area of any non-residential space that shares a common wall with the primary dwelling (e.g., an attached garage). This provision does not apply to accessory dwelling units.
 Equal to the ground floor area of the primary dwelling and the ground floor area of any non-residential space that shares a common wall with the primary dwelling (e.g., an attached garage). This provision does not apply to accessory dwelling units.
@@ -1219,7 +1219,7 @@ Equal to the ground floor area of the primary dwelling and the ground floor area
 Equal to the ground floor area of the primary dwelling and the ground floor area of any non-residential space that shares a common wall with the primary dwelling (e.g., an attached garage). This provision does not apply to accessory dwelling units.
 Equal to the ground floor area of the primary dwelling and the ground floor area of any non-residential space that shares a common wall with the primary dwelling (e.g., an attached garage). This provision does not apply to accessory dwelling units.
 Equal to the ground floor area of the primary dwelling and the ground floor area of any non-residential space that shares a common wall with the primary dwelling (e.g., an attached garage). This provision does not apply to accessory dwelling units.
-Building Design Standards for Detached Single-Family Dwellings, Duplexes, Manufactured Homes, Prefabricated Structures, and Single Room Occupancies12
+Building Design Standards for Detached Single-Family Dwellings, Duplexes, Manufactured Homes, Prefabricated Structures, and Single Room Occupancies[12]
 A minimum of three of the following features are required: a covered porch at least two feet deep; an entry area recessed at least two feet from the exterior wall to the door; a bay or bow window (not flush with the siding); an offset on the building face of at least 16 inches from one exterior wall surface to the other; a dormer; a gable; roof eaves with a minimum projection of 12 inches from the intersection of the roof and the exterior walls; a roofline offset of at least 16 inches from the top surface of one roof to the top surface of the other; an attached garage; orientation of the long axis and front door to a street; a cupola; a tile, shake, or composition roof; and horizontal lap siding. The required features must be on the same facade as a front door unless the feature is unrelated to a facade (e.g., roofing material).
 A minimum of three of the following features are required: a covered porch at least two feet deep; an entry area recessed at least two feet from the exterior wall to the door; a bay or bow window (not flush with the siding); an offset on the building face of at least 16 inches from one exterior wall surface to the other; a dormer; a gable; roof eaves with a minimum projection of 12 inches from the intersection of the roof and the exterior walls; a roofline offset of at least 16 inches from the top surface of one roof to the top surface of the other; an attached garage; orientation of the long axis and front door to a street; a cupola; a tile, shake, or composition roof; and horizontal lap siding. The required features must be on the same facade as a front door unless the feature is unrelated to a facade (e.g., roofing material).
 A minimum of three of the following features are required: a covered porch at least two feet deep; an entry area recessed at least two feet from the exterior wall to the door; a bay or bow window (not flush with the siding); an offset on the building face of at least 16 inches from one exterior wall surface to the other; a dormer; a gable; roof eaves with a minimum projection of 12 inches from the intersection of the roof and the exterior walls; a roofline offset of at least 16 inches from the top surface of one roof to the top surface of the other; an attached garage; orientation of the long axis and front door to a street; a cupola; a tile, shake, or composition roof; and horizontal lap siding. The required features must be on the same facade as a front door unless the feature is unrelated to a facade (e.g., roofing material).
@@ -1288,28 +1288,28 @@ Standard
 VR-5/7
 VR-4/5
 VTH
-District Land Area for Calculating Density Pursuant to Section 1012/Minimum Lot Size1
-5,000/4,000 square feet2
-4,000/2,000 square feet2
-Maximum Lot Size1
-7,000 square feet4,5
-5,000 square feet4,6
+District Land Area for Calculating Density Pursuant to Section 1012/Minimum Lot Size[1]
+5,000/4,000 square feet[2]
+4,000/2,000 square feet[2]
+Maximum Lot Size[1]
+7,000 square feet[4,5]
+5,000 square feet[4,6]
 Maximum Lot Coverage
-50 percent8
-50 percent8
+50 percent[8]
+50 percent[8]
 Maximum Height for Fences and Sight-Obscuring Plantings
 6 feet at or behind the building line of the dwelling closest to front lot line(s) or, in the case of non-residential development, of the main building or 4 feet forward of the building line of the dwelling closest to front lot line(s) or, in the case of non-residential development, of the main building.
 6 feet at or behind the building line of the dwelling closest to front lot line(s) or, in the case of non-residential development, of the main building or 4 feet forward of the building line of the dwelling closest to front lot line(s) or, in the case of non-residential development, of the main building.
 6 feet at or behind the building line of the dwelling closest to front lot line(s) or, in the case of non-residential development, of the main building or 4 feet forward of the building line of the dwelling closest to front lot line(s) or, in the case of non-residential development, of the main building.
 Maximum Driveway Width
-16 feet at the front lot line, unless the subject property is developed with a garage that has at least three side-by-side (as opposed to tandem) garage bays, in which case the maximum driveway width shall be 24 feet at the front lot line9
-16 feet at the front lot line, unless the subject property is developed with a garage that has at least three side-by-side (as opposed to tandem) garage bays, in which case the maximum driveway width shall be 24 feet at the front lot line9
+16 feet at the front lot line, unless the subject property is developed with a garage that has at least three side-by-side (as opposed to tandem) garage bays, in which case the maximum driveway width shall be 24 feet at the front lot line[9]
+16 feet at the front lot line, unless the subject property is developed with a garage that has at least three side-by-side (as opposed to tandem) garage bays, in which case the maximum driveway width shall be 24 feet at the front lot line[9]
 Minimum Percentage of Lots in a Subdivision that Shall have Alley Motor Vehicle Access Only
 50 percent of lots with frontage on an alley
 50 percent of lots with frontage on an alley
 Garage/Carport Design for Primary Dwellings
-A minimum of 50 percent of the primary dwellings in a development shall have a recessed garage/carport or no garage/carport. The remaining 50 percent may have a non-recessed garage/carport.9,10,11
-All garages and carports shall be recessed.10
+A minimum of 50 percent of the primary dwellings in a development shall have a recessed garage/carport or no garage/carport. The remaining 50 percent may have a non-recessed garage/carport.[9,10,11]
+All garages and carports shall be recessed.[10]
 
 Standards for Primary Dwellings
 
@@ -1318,25 +1318,25 @@ VR-5/7
 VR-4/5
 VTH
 Maximum Building Height
-35 feet9
-35 feet9
-35 feet9
+35 feet[9]
+35 feet[9]
+35 feet[9]
 Minimum Front Setback
-10 feet for a dwelling with a recessed garage/carport or no garage/carport; 19½ feet to the garage door/carport motor vehicle entry for a dwelling with a non-recessed garage/carport9,10,11,12,13,14
-10 feet 12,13,14
-10 feet15,16,17
+10 feet for a dwelling with a recessed garage/carport or no garage/carport; 19½ feet to the garage door/carport motor vehicle entry for a dwelling with a non-recessed garage/carport[9,10,11,12,13,14]
+10 feet[12,13,14]
+10 feet[15,16,17]
 Maximum Front Setback
-18 feet for a dwelling with a recessed garage/carport or no garage/carport; 20½ feet to the garage door/carport motor vehicle entry for a dwelling with a non-recessed garage/carport9,10,11,12,13,18, 19,20
-18 feet12,13,18,19,20
-18 feet15
+18 feet for a dwelling with a recessed garage/carport or no garage/carport; 20½ feet to the garage door/carport motor vehicle entry for a dwelling with a non-recessed garage/carport[9,10,11,12,13,18,19,20]
+18 feet[12,13,18,19,20]
+18 feet[15]
 Minimum Rear Setback
-15 feet9,12,13,21
-15 feet21
+15 feet[9,12,13,21]
+15 feet[21]
 Minimum Side Setback
-0 on one side; 5 feet on all other sides9,12,21
-0 on one side; 5 feet on all other sides9,12,21
-5 feet21,22
-Building Design Standards9,23
+0 on one side; 5 feet on all other sides[9,12,21]
+0 on one side; 5 feet on all other sides[9,12,21]
+5 feet[21,22]
+Building Design Standards[9,23]
 Front facades shall be designed with balconies and/or bays. Facades facing a street shall not consist of a blank wall.
 Window trim shall not be flush with exterior wall treatment. Windows shall be provided with an architectural surround at the jamb, head, and sill.
 Hipped, gambrel, or gabled roofs are required. Flat roofs are prohibited.
@@ -1364,23 +1364,23 @@ Minimum Separation Distance Between an Accessory Building and any other Building
 3 feet
 3 feet
 Maximum Building Height
-25 feet or the building height of the primary dwelling, whichever is less24
-25 feet or the building height of the primary dwelling, whichever is less24
-25 feet or the building height of the primary dwelling, whichever is less24
+25 feet or the building height of the primary dwelling, whichever is less[24]
+25 feet or the building height of the primary dwelling, whichever is less[24]
+25 feet or the building height of the primary dwelling, whichever is less[24]
 Maximum Building Area
 Only one accessory building may exceed 100 square feet, and it shall have a maximum ground floor area of 600 square feet, or the square footage of the ground floor of the primary dwelling, whichever is less.
 Only one accessory building may exceed 100 square feet, and it shall have a maximum ground floor area of 600 square feet, or the square footage of the ground floor of the primary dwelling, whichever is less.
 Only one accessory building may exceed 100 square feet, and it shall have a maximum ground floor area of 600 square feet, or the square footage of the ground floor of the primary dwelling, whichever is less.
 Minimum Front Setback
-Greater than or equal to the front setback of the facade of the primary dwelling (not including porches, patios, bays, garages, and architectural features)9,25
-Greater than or equal to the front setback of the facade of the primary dwelling (not including porches, patios, bays, garages, and architectural features)9,25
-Greater than or equal to the front setback of the facade of the primary dwelling (not including porches, patios, bays, garages, and architectural features)9,25
+Greater than or equal to the front setback of the facade of the primary dwelling (not including porches, patios, bays, garages, and architectural features)[9,25]
+Greater than or equal to the front setback of the facade of the primary dwelling (not including porches, patios, bays, garages, and architectural features)[9,25]
+Greater than or equal to the front setback of the facade of the primary dwelling (not including porches, patios, bays, garages, and architectural features)[9,25]
 Exterior Building Materials
-Buildings greater than 100 square feet in area shall be constructed with similar exterior building materials to those of the primary dwelling.9
-Buildings greater than 100 square feet in area shall be constructed with similar exterior building materials to those of the primary dwelling.9
-Buildings greater than 100 square feet in area shall be constructed with similar exterior building materials to those of the primary dwelling.9
+Buildings greater than 100 square feet in area shall be constructed with similar exterior building materials to those of the primary dwelling.[9]
+Buildings greater than 100 square feet in area shall be constructed with similar exterior building materials to those of the primary dwelling.[9]
+Buildings greater than 100 square feet in area shall be constructed with similar exterior building materials to those of the primary dwelling.[9]
 
-Minimum Rear and Side Setback Standards for Buildings Accessory to a Primary Dwelling in the VR-5/7, VR-4/5, and VTH Districts10,20
+Minimum Rear and Side Setback Standards for Buildings Accessory to a Primary Dwelling in the VR-5/7, VR-4/5, and VTH Districts[10,20]
 
 Building Area
 Building Height ≤ 8 feet
@@ -1388,66 +1388,66 @@ Building Height > 8 feet and ≤ 20 feet
 Building Height > 20 feet
 ≤ 100 square feet
 None
-No minimum on one side, 3 feet on all other sides; 3 feet rear if rear lot line does not abut an alley, 6 feet rear if rear lot line does abut an alley26
-No minimum on one side, 3 feet on all other sides; 3 feet rear if rear lot line does not abut an alley, 6 feet rear if rear lot line does abut an alley26
+No minimum on one side, 3 feet on all other sides; 3 feet rear if rear lot line does not abut an alley, 6 feet rear if rear lot line does abut an alley[26]
+No minimum on one side, 3 feet on all other sides; 3 feet rear if rear lot line does not abut an alley, 6 feet rear if rear lot line does abut an alley[26]
 > 100 square feet
-No minimum on one side, 3 feet on all other sides; 3 feet rear if rear lot line does not abut an alley, 6 feet rear if rear lot line does abut an alley26
-No minimum on one side, 3 feet on all other sides; 3 feet rear if rear lot line does not abut an alley, 6 feet rear if rear lot line does abut an alley26
-No minimum on one side, 5 feet on all other sides; 5 feet rear if rear lot line does not abut an alley, 6 feet rear if rear lot line does abut an alley26,27
+No minimum on one side, 3 feet on all other sides; 3 feet rear if rear lot line does not abut an alley, 6 feet rear if rear lot line does abut an alley[26]
+No minimum on one side, 3 feet on all other sides; 3 feet rear if rear lot line does not abut an alley, 6 feet rear if rear lot line does abut an alley[26]
+No minimum on one side, 5 feet on all other sides; 5 feet rear if rear lot line does not abut an alley, 6 feet rear if rear lot line does abut an alley[26,27]
 
-1 The minimum and maximum lot size standards apply as established by Sections 1012 and 1107. Notwithstanding the minimum and maximum lot size standards, a lot of record may be developed subject to other applicable standards of this Ordinance, except minimum lot size standards of Section 800 apply.
+[1]The minimum and maximum lot size standards apply as established by Sections 1012 and 1107. Notwithstanding the minimum and maximum lot size standards, a lot of record may be developed subject to other applicable standards of this Ordinance, except minimum lot size standards of Section 800 apply.
 
-2 For townhouses developed pursuant to Section 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters, there is no minimum lot size and the DLA shall be one-third of the DLA.
+[2] For townhouses developed pursuant to Section 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters, there is no minimum lot size and the DLA shall be one-third of the DLA.
 
-3 The minimum and maximum lot size standards apply only to lots or parcels for townhouses.
+[3] The minimum and maximum lot size standards apply only to lots or parcels for townhouses.
 
-4 The maximum lot size standard applies only to lots or parcels for detached single-family dwellings, manufactured homes, prefabricated structures, single room occupancies, or middle housing, except the maximum lot size standard does not apply to a middle housing land division.
+[4] The maximum lot size standard applies only to lots or parcels for detached single-family dwellings, manufactured homes, prefabricated structures, single room occupancies, or middle housing, except the maximum lot size standard does not apply to a middle housing land division.
 
-5 Alternatively, the average size of all lots in a subdivision, partition, or replat shall not exceed 6,500 square feet.
+[5] Alternatively, the average size of all lots in a subdivision, partition, or replat shall not exceed 6,500 square feet.
 
-6 Alternatively, the average size of all lots in a subdivision, partition, or replat shall not exceed 5,000 square feet.
+[6] Alternatively, the average size of all lots in a subdivision, partition, or replat shall not exceed 5,000 square feet.
 
-7 Alternatively, the average size of all lots in a subdivision, partition, or replat shall not exceed 2,500 square feet.
+[7] Alternatively, the average size of all lots in a subdivision, partition, or replat shall not exceed 2,500 square feet.
 
-8 For development on a middle housing lot, the lot coverage is calculated on the entire parent lot that was divided through a middle housing land division.
+[8]For development on a middle housing lot, the lot coverage is calculated on the entire parent lot that was divided through a middle housing land division.
 
-9 Except for middle housing developed pursuant to Section 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters, development on lots in the plat of Sieben Creek Estates (plat no. 3039) is not required to comply with this standard.
+[9] Except for middle housing developed pursuant to Section 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters, development on lots in the plat of Sieben Creek Estates (plat no. 3039) is not required to comply with this standard.
 
-10 A recessed garage or carport is a garage or carport with a front setback to the garage door or carport motor vehicle entry that is a minimum of five feet greater (i.e., farther from the front lot line) than the front setback to the facade of the primary dwelling living area (not including porches, patios, bays, and architectural features).
+[10] A recessed garage or carport is a garage or carport with a front setback to the garage door or carport motor vehicle entry that is a minimum of five feet greater (i.e., farther from the front lot line) than the front setback to the facade of the primary dwelling living area (not including porches, patios, bays, and architectural features).
 
-11 A non-recessed garage or carport shall have a front setback to the garage door or carport motor vehicle entry that is a maximum of five feet less (i.e., closer to the front lot line) than the front setback to the facade of the primary dwelling living area (not including porches, patios, bays, and architectural features).
+[11] A non-recessed garage or carport shall have a front setback to the garage door or carport motor vehicle entry that is a maximum of five feet less (i.e., closer to the front lot line) than the front setback to the facade of the primary dwelling living area (not including porches, patios, bays, and architectural features).
 
-12 The minimum and maximum setback standards do not apply in a Resource Protection Area shown on Comprehensive Plan Map X-SV-1, Sunnyside Village Plan Land Use Plan Map. The maximum setback standards do not apply to cottage clusters developed pursuant to Section 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters.
+[12] The minimum and maximum setback standards do not apply in a Resource Protection Area shown on Comprehensive Plan Map X-SV-1, Sunnyside Village Plan Land Use Plan Map. The maximum setback standards do not apply to cottage clusters developed pursuant to Section 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters.
 
-13 On a middle housing lot, there are no minimum setbacks, except from lot lines on the perimeter of the final plat or lot lines abutting a road or access drive.
+[13]On a middle housing lot, there are no minimum setbacks, except from lot lines on the perimeter of the final plat or lot lines abutting a road or access drive.
 
-14 A porch or patio, whether covered or not, may extend a maximum of four feet into the minimum front yard depth.
+[14] A porch or patio, whether covered or not, may extend a maximum of four feet into the minimum front yard depth.
 
-15 Frontage on an accessway shall be considered a front lot line.
+[15] Frontage on an accessway shall be considered a front lot line.
 
-16 On a corner lot, the minimum setback from one front lot line is eight feet, provided that the lot line abuts a road with a functional classification of local or connector.
+[16] On a corner lot, the minimum setback from one front lot line is eight feet, provided that the lot line abuts a road with a functional classification of local or connector.
 
-17 Awnings, porches, bays, and overhangs may extend a maximum of four feet into the minimum front setback.
+[17] Awnings, porches, bays, and overhangs may extend a maximum of four feet into the minimum front setback.
 
-18 If a public utility easement precludes compliance with the maximum front setback standard, the maximum shall be as close to the front lot line as possible.
+[18] If a public utility easement precludes compliance with the maximum front setback standard, the maximum shall be as close to the front lot line as possible.
 
-19 Dwellings located on lots with less than 35 feet of street frontage shall be exempt from the maximum front setback standard.
+[19] Dwellings located on lots with less than 35 feet of street frontage shall be exempt from the maximum front setback standard.
 
-20 If a lot has more than one front lot line, compliance with the maximum front setback standard is required from only two intersecting front lot lines.
+[20] If a lot has more than one front lot line, compliance with the maximum front setback standard is required from only two intersecting front lot lines.
 
-21 In a planned unit development, there are no minimum rear and side setbacks except from rear and side lot lines on the perimeter of the final plat. Where this standard applies, it supersedes any other rear or side setback standard in Table 315-3.
+[21] In a planned unit development, there are no minimum rear and side setbacks except from rear and side lot lines on the perimeter of the final plat. Where this standard applies, it supersedes any other rear or side setback standard in Table 315-3.
 
-22 Frontage on a pedestrian connection shall be considered a side lot line.
+[22] Frontage on a pedestrian connection shall be considered a side lot line.
 
-23 For triplexes, quadplexes, and townhouses developed pursuant to Section 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters, design standards in Section 845 shall apply in addition to standards in Table 315-3.
+[23]For triplexes, quadplexes, and townhouses developed pursuant to Section 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters, design standards in Section 845 shall apply in addition to standards in Table 315-3.
 
-24 The maximum building height standard applies only to accessory buildings larger than 100 square feet.
+[24] The maximum building height standard applies only to accessory buildings larger than 100 square feet.
 
-25 A garage may be required to be recessed, as defined by Note 11, in order to comply with the standard for garage/carport design for primary dwellings.
+[25] A garage may be required to be recessed, as defined by Note 11, in order to comply with the standard for garage/carport design for primary dwellings.
 
-26 Frontage on a pedestrian connection shall be considered a side lot line, and the minimum setback is five feet.
+[26]Frontage on a pedestrian connection shall be considered a side lot line, and the minimum setback is five feet.
 
-27 If the rear lot line abuts an alley, a second-story accessory dwelling unit may cantilever a maximum of four feet into the minimum rear setback.
+[27] If the rear lot line abuts an alley, a second-story accessory dwelling unit may cantilever a maximum of four feet into the minimum rear setback.
 
 Table 315-4: Dimensional Standards in the PMD, MR-1, MR-2, HDR, VA, SHD, and RCHDR Districts
 
@@ -1477,44 +1477,44 @@ See Section 1012
 See Section 1012
 Minimum Lot Size
 None
-None1
-None2
+None[1]
+None[2]
 None
 None
 None
 None
 Minimum Front Setback
 15 feet, except 20 feet to garage and carport motor vehicle entries
-15 feet, except 20 feet to garage and carport motor vehicle entries3,4
-15 feet, except 20 feet to garage and carport motor vehicle entries4
-15 feet5
-10 feet6,7
+15 feet, except 20 feet to garage and carport motor vehicle entries[3,4]
+15 feet, except 20 feet to garage and carport motor vehicle entries[4]
+15 feet[5]
+10 feet[6,7]
 15 feet
-5 feet8
+5 feet[8]
 Maximum Front Setback
 See Subsections 1005.02(E) and (H).
 See Subsections 1005.02(E) and (H).
 See Subsections 1005.02(E) and (H).
 See Subsections 1005.02(E) and (H).
-18 feet6
+18 feet[6]
 See Subsections 1005.02(E) and (H).
-20 feet8,9
+20 feet[8,9]
 Minimum Rear Setback
-30 feet10
-20 feet5,10,11,12
-20 feet5,10
-See Subsection 1005.02(L)5
-None6,7
+30 feet[10]
+20 feet[5,10,11,12]
+20 feet[5,10]
+See Subsection 1005.02(L)[5]
+None[6,7]
 See Subsection 1005.02(L)
-See Subsection 1005.02(L)13
+See Subsection 1005.02(L)[13]
 Minimum Side Setback
-30 feet10
-One story: five feet; two stories: seven feet; three stories: 15 feet. For each story higher than three, an additional five feet of yard depth shall be required.5,10,11,12,14,15
-One story: five feet; two stories: seven feet; three stories: 15 feet. For each story higher than three, an additional five feet of yard depth shall be required.5,10,14,15
-See Subsection 1005.02(L)5
+30 feet[10]
+One story: five feet; two stories: seven feet; three stories: 15 feet. For each story higher than three, an additional five feet of yard depth shall be required.[5,10,11,12,14,15]
+One story: five feet; two stories: seven feet; three stories: 15 feet. For each story higher than three, an additional five feet of yard depth shall be required.[5,10,14,15]
+See Subsection 1005.02(L)[5]
 None
 See Subsection 1005.02(L)
-See Subsection 1005.02(L)16
+See Subsection 1005.02(L)[16]
 Maximum Building Height
 None
 None
@@ -1532,41 +1532,41 @@ See Subsection 1005.02(L)
 See Subsection 1005.02(L)
 See Subsection 1005.02(L)
 
-1 The minimum lot size for a lot developed with a detached single-family dwelling classified as a nonconforming use is 3,630 square feet.
+[1] The minimum lot size for a lot developed with a detached single-family dwelling classified as a nonconforming use is 3,630 square feet.
 
-2 The minimum lot size for a lot developed with a detached single-family dwelling classified as a nonconforming use is 2,420 square feet.
+[2] The minimum lot size for a lot developed with a detached single-family dwelling classified as a nonconforming use is 2,420 square feet.
 
-3 For a swimming pool that is accessory to a dwelling, the minimum front setback is 10 feet.
+[3]For a swimming pool that is accessory to a dwelling, the minimum front setback is 10 feet.
 
-4 On a corner lot developed with a townhouse, the minimum front setback from one front lot line is 10 feet, except that the minimum shall be 20 feet to garage and carport motor vehicle entries.
+[4]On a corner lot developed with a townhouse, the minimum front setback from one front lot line is 10 feet, except that the minimum shall be 20 feet to garage and carport motor vehicle entries.
 
-5 The minimum setback standards of Table 315-2, Dimensional and Building Design Standards in the Urban Low Density Residential Districts, apply to detached single-family dwellings that are nonconforming uses, as well as to structures that are accessory to such dwellings.
+[5] The minimum setback standards of Table 315-2, Dimensional and Building Design Standards in the Urban Low Density Residential Districts, apply to detached single-family dwellings that are nonconforming uses, as well as to structures that are accessory to such dwellings.
 
-6 If the front or rear lot line abuts Sunnyside Road, the minimum setback shall be 65 feet from the centerline of Sunnyside Road, and the maximum setback shall be 75 feet from the centerline of Sunnyside Road.
+[6] If the front or rear lot line abuts Sunnyside Road, the minimum setback shall be 65 feet from the centerline of Sunnyside Road, and the maximum setback shall be 75 feet from the centerline of Sunnyside Road.
 
-7 Awnings, porches, and bays may extend a maximum of six feet into the minimum setback.
+[7] Awnings, porches, and bays may extend a maximum of six feet into the minimum setback.
 
-8 For dwellings and structures accessory to dwellings, the minimum front setback shall be 15 feet, and there shall be no maximum setback. However, Note 8 does not apply to mixed-use buildings that include dwellings or to structures accessory to such mixed-use buildings.
+[8] For dwellings and structures accessory to dwellings, the minimum front setback shall be 15 feet, and there shall be no maximum setback. However, Note 8 does not apply to mixed-use buildings that include dwellings or to structures accessory to such mixed-use buildings.
 
-9 The maximum setback may be exceeded to accommodate plazas identified on Comprehensive Plan Map X-CRC-3, Clackamas Regional Center Area Design Plan Urban Design Elements.
+[9] The maximum setback may be exceeded to accommodate plazas identified on Comprehensive Plan Map X-CRC-3, Clackamas Regional Center Area Design Plan Urban Design Elements.
 
-10 In a planned unit development, there are no minimum rear and side setbacks except from rear and side lot lines on the perimeter of the final plat. Where this standard applies, it supersedes any other rear or side setback standard in Table 315-4.
+[10] In a planned unit development, there are no minimum rear and side setbacks except from rear and side lot lines on the perimeter of the final plat. Where this standard applies, it supersedes any other rear or side setback standard in Table 315-4.
 
-11 For a swimming pool that is accessory to a dwelling, the minimum side and rear setbacks are five feet, unless the side or rear lot line abuts an Urban Low Density Residential, VR-4/5, or VR-5/7 District, in which case the minimum setback shall be 15 feet from the abutting lot line.
+[11] For a swimming pool that is accessory to a dwelling, the minimum side and rear setbacks are five feet, unless the side or rear lot line abuts an Urban Low Density Residential, VR-4/5, or VR-5/7 District, in which case the minimum setback shall be 15 feet from the abutting lot line.
 
-12 The minimum rear and side setback standards for an accessory building are based on the building area and height, as follows:
+[12]The minimum rear and side setback standards for an accessory building are based on the building area and height, as follows:
 
 Building Area                            Building Height ≤ 8 feet                                                                                                   Building Height > 8 feet and ≤ 10 feet     Building Height > 10 feet
 ≤ 100 square feet                        None, if the accessory building is located behind the building line of the main building; otherwise, 3 feet side and rear  3 feet side and rear                       Same as primary building minimum setbacks
 > 100 square feet and ≤ 200 square feet  3 feet side and rear                                                                                                       3 feet side and rear                       Same as primary building minimum setbacks
 > 200 square feet                        Same as primary building minimum setbacks                                                                                  Same as primary building minimum setbacks  Same as primary building minimum setbacks
 
-13 If the rear lot line abuts a residential zoning district other than HDR, SHD, or RCHDR, the minimum rear setback is 20 feet.
+[13] If the rear lot line abuts a residential zoning district other than HDR, SHD, or RCHDR, the minimum rear setback is 20 feet.
 
-14 If the side lot line abuts an Urban Low Density Residential, VR-5/7, or VR-4/5 District, the minimum side setback for a two-story building is 10 feet.
+[14] If the side lot line abuts an Urban Low Density Residential, VR-5/7, or VR-4/5 District, the minimum side setback for a two-story building is 10 feet.
 
-15 The minimum side setback for a townhouse is five feet from any side lot line where two townhouses do not share a common wall.
+[15] The minimum side setback for a townhouse is five feet from any side lot line where two townhouses do not share a common wall.
 
-16 If the side lot line abuts a residential zoning district other than HDR, SHD, or RCHDR, the minimum side setback is 15 feet.
+[16] If the side lot line abuts a residential zoning district other than HDR, SHD, or RCHDR, the minimum side setback is 15 feet.
 
 [Added by Ord. ZDO-249, 10/13/2014; Amended by Ord. ZDO-250, 10/13/2014; Amended by Ord. ZDO-252, 6/1/2015; Amended by Ord. ZDO-253, 6/1/2015; Amended by Ord. ZDO-254, 1/4/2016; Amended by Ord. ZDO-266, 5/23/2018; Amended by Ord. ZDO-268, 10/2/2018; Amended by Ord. ZDO-280, 10/23/2021; Amended by Ord. ZDO-282, 7/1/2022; Amended by Ord. ZDO-273, on remand, 5/30/2023; Amended by Ord. ZDO-287, 8/3/2023; Amended by Ord. ZDO-283, 9/5/2023; Amended by Ord. ZDO-285, 9/3/2024; Amended by Ord. ZDO-288, 9/9/2024]

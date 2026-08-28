@@ -899,3 +899,87 @@ notes:
       option 1 may not stack the mixed-use, park dedication or habitat
       bonuses on top of it. A ceiling on an election, above a base this
       layer already holds
+
+  # --- Table 1015-2, Minimum Automobile Parking Space Requirements for Dwellings ---
+  - quote: "or/clackamas/_unincorporated/zdo.1015.txt#L356"
+    digest: "33f4c3b9a582"
+    state: encoded
+    encoded_as: parking_min_per_unit
+    reason: >-
+      the note that supplies the unit. Table 1015-2's Quadplex cell prints the
+      bare figure "1" and note 1 says what it counts: "minimum parking
+      requirement is expressed as number of spaces per dwelling unit, unless
+      otherwise stated." Four units, four spaces. It also says what an empty
+      cell means -- "N/A means the dwelling type is not allowed in the
+      applicable zoning district" -- which is not reached here, because both
+      columns this layer reads state a number
+
+  - quote: "or/clackamas/_unincorporated/zdo.1015.txt#L358"
+    digest: "57a21ed791b4"
+    state: dismissed
+    reason: >-
+      the one note here that states a requirement this building could actually
+      meet, and it is about roofing the stalls rather than counting them: above
+      3,500 feet in elevation, a structure of three or more dwelling units must
+      provide COVERED parking. It cannot move `parking_min_per_unit`, which is
+      a count. No field in this screen holds whether a stall has a roof, and no
+      layer holds a lot's elevation, so it is carried as a refusal in this
+      layer's notes rather than registered as a site fact nobody would buy data
+      for. Unincorporated Clackamas runs from the Willamette to Mount Hood, so
+      unlike most of this corpus the condition is genuinely reachable
+
+  - quote: "or/clackamas/_unincorporated/zdo.1015.txt#L360"
+    digest: "172f87e2d38c"
+    state: dismissed
+    reason: >-
+      relief for a conversion: "no additional parking spaces shall be required
+      for conversion of a detached single-family dwelling to middle housing."
+      The pod is new construction on a lot, not a house being cut into four, so
+      the relief is not available and the one space per dwelling unit stands.
+      This is the note the marker on the cell points at, and until the
+      extractor learned to hold a superscript apart from the value under it,
+      the cell read "13" and this note was invisible
+
+  - quote: "or/clackamas/_unincorporated/zdo.1015.txt#L362"
+    digest: "dc36ebf6028e"
+    state: dismissed
+    reason: >-
+      a townhouse standard twice over -- it withholds the 1015.02(D)(3)(b)
+      parking exception from townhouses and caps townhouse parking in Urban
+      Zone A at two spaces each. A quadplex is a different row of the same
+      table. It is also the note the maximum-parking chain ends in: 1015.02(C)
+      sends maximums to Table 1015-1 and "Note 4 of Table 1015-2", and this is
+      that note. So the county caps a townhouse and caps no quadplex
+
+  - quote: "or/clackamas/_unincorporated/zdo.1015.txt#L364"
+    digest: "6b3f5f57a96d"
+    state: dismissed
+    reason: >-
+      "In the R-2.5 District, the required parking shall be located behind the
+      front setback line." A real placement standard, and it names one district
+      this layer does not hold: the nine zones here are R-5, R-7, R-8.5, R-10,
+      R-15, R-20, R-30, VR-4/5 and VR-5/7. R-2.5 is the one district in Table
+      315-2 that was never encoded
+
+  # --- ZDO 1015's other two note blocks -------------------------------
+  - quote: "or/clackamas/_unincorporated/zdo.1015.txt#L216"
+    digest: "11dedcc1b473"
+    state: dismissed
+    reason: >-
+      Table 1015-1's unit, and it is the reason the dwelling number is not
+      taken from that table: "parking requirements are expressed as number of
+      spaces per 1,000 square feet of gross leasable area, unless otherwise
+      stated." A dwelling has no leasable area in that sense, which is why
+      1015-1's Dwellings row states no figure and says "see Table 1015-2"
+      instead. This note governs the shops and the bowling alleys
+
+  - quote: "or/clackamas/_unincorporated/zdo.1015.txt#L468"
+    digest: "4d0cc33649f8"
+    state: dismissed
+    reason: >-
+      Table 1015-3 is bicycle parking, and this note discounts it to a fifth
+      outside the urban growth boundary. Bicycle spaces do not compete with the
+      pod for ground the way a car stall does, no field in this screen holds
+      them, and a rule that makes a requirement smaller could not shrink a lot
+      out of fitting in any case
+

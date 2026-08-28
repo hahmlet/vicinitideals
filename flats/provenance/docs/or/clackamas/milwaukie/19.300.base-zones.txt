@@ -118,7 +118,7 @@ Standards/ Additional Provisions
 Standard
 1,500 – 2,999
 3,000–4,999
-5,000-6,9992
+5,000-6,999[2]
 7,000 and up
 Standards/ Additional Provisions
 A. Permitted Dwelling Type
@@ -127,7 +127,7 @@ A. Permitted Dwelling Type
 A. Permitted Dwelling Type
 A. Permitted Dwelling Type
 A. Permitted Dwelling Type
-Townhouse1
+Townhouse[1]
 Duplex, Triplex, Quadplex
 Single Detached Dwelling, Single Detached Dwelling, with up to 2 ADUs, Duplex, Triplex, Quadplex
 Single Detached Dwelling, Single Detached Dwelling, with 2 ADUs, Duplex, Triplex, Quadplex, Cottage Cluster
@@ -157,13 +157,13 @@ b. Standard lot
 35
 35
 c. Flag lot
-NA3
+NA[3]
 25
 25
 25
 Subsection 19.504.6 Flag Lot and Back Lot Design and Development Standards
 d. Double flag lot
-NA3
+NA[3]
 25
 25
 25
@@ -268,7 +268,7 @@ a. Minimum
 5.0
 Subsection 19.301.5.D Residential Densities
 Subsection 19.501.4 Density Exceptions For Cottage Clusters and Townhouse Density Exceptions, see 19.501.4
-b. Maximum4
+b. Maximum[4]
 25
 8.7
 8.7
@@ -474,7 +474,7 @@ In the high density residential zone the following housing types are permitted o
 
 Between 1,500 to 2,999 sq ft: Townhouse; a townhouse is permitted on a corner lot up to 3,500 sq ft in area.
 Between 3,000 to 4,999 sq ft: Duplex, Triplex, and Quadplex.
-Between 5,000 to 6,999 sq ft: Single Detached Dwelling, Single Detached Dwelling with up to 2 ADUs, Duplex, Triplex, and Quadplex.1
+Between 5,000 to 6,999 sq ft: Single Detached Dwelling, Single Detached Dwelling with up to 2 ADUs, Duplex, Triplex, and Quadplex.[1]
 7,000 sq ft and up: Single Detached Dwelling, Single Detached Dwelling with up to 2 ADUs, Duplex, Triplex, Quadplex, Cottage Cluster, Multi-Unit Housing
 
 All other uses require a minimum lot size of 5,000 sq ft.
@@ -494,7 +494,7 @@ B. Development Standards
 Minimum yard requirements for primary structures (ft)          -                                                              Subsection 19.504.5 Transition Area Measures
 Front yard                                                     20                                                             Subsection 19.504.5 Transition Area Measures
 Side yard                                                      See Subsection 19.302.5.A                                      Subsection 19.504.5 Transition Area Measures
-Street side yard                                               154                                                            Subsection 19.504.5 Transition Area Measures
+Street side yard                                               15[4]                                                          Subsection 19.504.5 Transition Area Measures
 Rear yard                                                      15                                                             Subsection 19.504.5 Transition Area Measures
 Maximum building height for primary structures                 45 ft                                                          Subsection 19.302.5.E Height Exceptions Subsection 19.501.3 Building Height and Side Yard Height Plane Exceptions Subsection 19.505.7 Nonresidential Development
 Side yard height plane limit                                                                                                  Subsection 19.501.3 Building Height and Side Yard Height Plane Exceptions
@@ -504,7 +504,7 @@ Maximum lot coverage (percent of total lot area)               50%              
 Minimum vegetation (percent of total lot area)                 15%                                                            Subsection 19.504.5 Minimum Vegetation Subsection 19.302.5.C Minimum Vegetation Subsection 19.302.5.D Front Yard Minimum Vegetation
 Density requirements (Dwelling units per acre)                 -                                                              Subsection 19.202.4 Density Calculations
 Minimum                                                        25.0                                                           Subsection 19.302.5.F Residential Densities
-Maximum2, 3                                                    32.0                                                           Subsection 19.501.4 Density Exceptions
+Maximum[2,3]                                                   32.0                                                           Subsection 19.501.4 Density Exceptions
 
 1  Minimum lot size for single detached dwelling applies to lots created on or after June 3, 2022, the effective date of Ordinance #2218.
 2  Townhouses are allowed at 4 times the maximum density allowed for single detached dwellings in the same zone or 25 dwelling units per acre, whichever is less. Duplexes, triplexes, quadplexes, and cottage clusters are exempt from density maximums.
@@ -734,7 +734,7 @@ CU
 CU
 Subsection 19.505.1 One- to Four-Unit Residential Development
 Section 19.905 Conditional Uses
-Townhouses1
+Townhouses[1]
 P
 CU
 CU
@@ -754,7 +754,7 @@ P
 CU
 CU
 Subsection 19.505.4 Cottage Cluster Housing
-Mixed use2
+Mixed use[2]
 P
 P
 P
@@ -775,11 +775,11 @@ CU
 CU
 CU
 Section 19.905 Conditional Uses
-Commercial3, 4
-Commercial3, 4
-Commercial3, 4
-Commercial3, 4
-Commercial3, 4
+Commercial[3,4]
+Commercial[3,4]
+Commercial[3,4]
+Commercial[3,4]
+Commercial[3,4]
 Production-related office
 Professional and administrative office
 P
@@ -821,7 +821,7 @@ P
 P
 N
 Subsection 19.303.6.A Marijuana retailers
-Vehicle sales and rentals5
+Vehicle sales and rentals[5]
 Vehicle sales and rentals means a business that sells or leases consumer vehicles, including passenger vehicles, motorcycles, light and medium trucks, boats, and other recreational vehicles.
 P
 N
@@ -838,14 +838,14 @@ Examples include repair of televisions and radios, bicycles, clocks, jewelry, gu
 P
 P
 P
-Vehicle repair and service6
+Vehicle repair and service[6]
 Firms servicing passenger vehicles; light and medium trucks; and other consumer motor vehicles such as motorcycles, boats and recreational vehicles. Also includes quick-servicing activities, where the driver generally waits in the car before and while the service is performed.
 Examples include gas stations, quick oil change shops, car washes, vehicle repair, transmission or muffler shops, auto body shops, alignment shops, auto upholstery shop, auto detailing, and tire sales and mounting.
 P
 CU
 N
 Section 19.905 Conditional Uses
-Day care7
+Day care[7]
 Day care is the provision of regular child care, with or without compensation, to 4 or more children by a person or person(s) who are not the child's parent, guardian, or person acting in place of the parent, in a facility meeting all State requirements.
 Examples include nursery schools, before- and after-school care facilities, and child development centers.
 P
@@ -869,7 +869,7 @@ Manufacturing and Production
 Manufacturing and Production
 Manufacturing and Production
 Manufacturing and Production
-Manufacturing and production8
+Manufacturing and production[8]
 Manufacturing and production uses are involved in the manufacturing, processing, fabrication, packaging, or assembly of goods. Natural, man-made, raw, secondary, or partially completed materials may be used.
 Examples include processing of food and related products; catering establishments; breweries, distilleries, and wineries; marijuana processors; weaving or production of textiles or apparel; wood/working, including cabinet makers; manufacture or assembly of machinery, equipment, instruments, including musical instruments, vehicles, appliances, precision items, and other electrical items; and production of artwork and toys. Marijuana production is prohibited.
 Within the SMU, the following manufacturing and production uses are also prohibited: marijuana processing, automotive manufacture and assembly, and auto-repair shops.
@@ -994,11 +994,11 @@ Subsection 19.911.7 Building Height Variance in the General Mixed Use Zone
 3. Street setbacks (ft)
 Subsection 19.303.4.C Street Setbacks
 a. Minimum street setback
-0—151
+0—15[1]
 None
 10
 b. Maximum street setback
-10—202
+10—20[2]
 10
 15
 Section 19.501.2 Yard Exceptions
@@ -3536,11 +3536,11 @@ Uses and Use Categories
 NME
 MUTSA
 Standards/Additional provisions
-Residential1
-Residential1
-Residential1
-Residential1
-Residential1
+Residential[1]
+Residential[1]
+Residential[1]
+Residential[1]
+Residential[1]
 Multifamily
 Multifamily
 N
@@ -3703,9 +3703,9 @@ Industrial/manufacturing space specifically for artist-type uses.
 Examples include: artist manufacturing studios (welding, pottery, ceramics, painting, glass, etc.); sound stage and/or film production; set design and production; music studio/production.
 P
 P
-Waste management4
+Waste management[4]
 This category comprises businesses that provide garbage and recycling hauling, including fleet parking and maintenance. Storage of waste or recycling materials collected by a waste management business for any period of time is not permitted.
-Waste management4
+Waste management[4]
 This category comprises businesses that provide garbage and recycling hauling, including fleet parking and maintenance. Storage of waste or recycling materials collected by a waste management business for any period of time is not permitted.
 CUP
 P
@@ -3921,11 +3921,11 @@ a. Minimum front yard setback
 None
 None
 b. Maximum front yard setback
-10-301
-10-301
+10-30[1]
+10-30[1]
 c. Side and rear setbacks
-None2
-None2
+None[2]
+None[2]
 4. Maximum lot coverage
 85%
 85%

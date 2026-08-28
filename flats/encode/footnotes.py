@@ -182,6 +182,23 @@ HEADLESS_NOTE = re.compile(r"^(?P<n>\d{1,2})\s{2,}(?P<text>\S.*)$")
 #: minimum depth -- and it was invisible while this shape was.
 GLUED_PAREN_NOTE = re.compile(r"^\((?P<n>\d{1,2})\)(?!\s)(?P<text>\S.*)$")
 
+#: The same weld with square brackets: "[1]The minimum and maximum lot size
+#: standards apply as established by Sections 1012 and 1107."
+#:
+#: This one needs no run guard, where `GLUED_PAREN_NOTE` does. A codifier
+#: writes ordinary subsections as "(1)" and never as "[1]", so the square
+#: bracket alone says footnote -- which is the same argument `BRACKET_NOTE`
+#: is built on, one shape further in. Clackamas County welds five of Table
+#: 315-3's twenty-seven notes and spaces the other twenty-two, and reading
+#: only the spaced ones breaks the list into five blocks and loses the five.
+#:
+#: A capital and a lowercase after the bracket, which is `GLUED_NOTE`'s
+#: discriminator and is here for a sharper reason: Portland's PDF prints
+#: "[2]. Retail plant nurseries are a conditional use", and a rule that took
+#: everything after the bracket would steal that line from `BLOCK_NOTE` and
+#: store a note body that begins with a full stop.
+GLUED_BRACKET_NOTE = re.compile(r"^\[(?P<n>\d{1,2})\](?P<text>[A-Z][a-z].*)$")
+
 #: The same run with no gap, no bracket and no weld: the number, one space, the
 #: text. Clackamas County prints every table's notes this way -- "9 Except for
 #: middle housing developed pursuant to Section 845" -- and nothing announces
@@ -361,7 +378,10 @@ PAREN_SUBSECTION = re.compile(
 )
 
 #: The bracketed form, anywhere on a line: "30 ft. [3]".
-BRACKET_MARKER = re.compile(r"\[(?P<n>\d{1,2})\]")
+#: A run is one bracket, not several: the extractor writes `<sup>4,7</sup>`
+#: as `[4,7]` because that is how the codifier printed it, and every other
+#: reader here splits a run on the comma too.
+BRACKET_MARKER = re.compile(r"\[(?P<n>\d{1,2}(?:\s*,\s*\d{1,2})*)\]")
 
 #: The marker spelled out in words, which needs no bracket and no layout:
 #: Troutdale's dimensional tables print "10 or 20" in the cell and "see note
@@ -880,7 +900,10 @@ def _blocks(lines: Sequence[str]) -> list[Block]:
     while i < len(lines):
         stripped = lines[i].strip()
         headed = bool(stripped) and NOTES_HEAD.match(stripped) is not None
-        bracketed = BRACKET_NOTE.match(stripped) is not None
+        bracketed = (
+            BRACKET_NOTE.match(stripped) is not None
+            or GLUED_BRACKET_NOTE.match(stripped) is not None
+        )
         headless = (
             _headless_run(lines, i)
             or _glued_run(lines, i)
@@ -1410,6 +1433,7 @@ def _bodies(lines: Sequence[str], start: int) -> tuple[list[Body], int]:
             STACKED_NOTE.match(stripped)
             or HEADLESS_NOTE.match(stripped)
             or GLUED_PAREN_NOTE.match(stripped)
+            or GLUED_BRACKET_NOTE.match(stripped)
             or GLUED_NOTE.match(stripped)
             or BLOCK_NOTE.match(stripped)
             or STACKED_LETTER.match(stripped)
@@ -1584,7 +1608,8 @@ def _markers(lines: Sequence[str], inside: Sequence[tuple[int, int]]) -> list[Ma
         # rest are read per cell, because every one of them is a rule about
         # what a cell *ends* with.
         for m in BRACKET_MARKER.finditer(stripped):
-            add(m.group("n"), "bracket")
+            for part in m.group("n").split(","):
+                add(part.strip(), "bracket")
         for m in SEE_NOTE.finditer(stripped):
             add(m.group("n"), "phrase")
 

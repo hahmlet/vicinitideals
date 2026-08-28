@@ -49,7 +49,7 @@ pytestmark = pytest.mark.unit
 #: can, so the comment came out and eleven values went in. A refusal ledger
 #: whose number only ever rises is measuring reading; one that can fall is
 #: measuring what the model cannot yet hold, which is what this is for.
-EXPECTED = {"notes": 92, "comments": 67, "tests": 16}
+EXPECTED = {"notes": 92, "comments": 70, "tests": 16}
 #: Two of the sixteen are this file, which quotes the marker while
 #: explaining it, and one is a back-reference in test_gresham_rockwood --
 #: prose saying a zone *was* not encoded until it was. Left in rather than
@@ -247,6 +247,38 @@ EXPECTED = {"notes": 92, "comments": 67, "tests": 16}
 #: state middle housing model code in local words, and the registry has no
 #: driveway approach width, share-of-frontage, facade-relative placement or
 #: manoeuvring-area width to put any of it in.
+#:
+#: Comments went 67 -> 70 on 2026-08-27, all three in unincorporated Clackamas
+#: and all three from the same read: what parking has to look like on the third
+#: largest block of pod-fitting lots in the corpus, 18,662 of them, which lays
+#: out nothing today because its aisle is unknown.
+#:
+#: The aisle refusal is a shape the corpus has not had. It is not that the
+#: county is silent -- ZDO 1015.02(A)(4) hands curb length, stall depth and
+#: aisle width to the Roadway Standards, whose 320.3(a) hands them on to
+#: Standard Drawings P100 and P200. Both sheets are now declared and stored,
+#: and each stores three lines, because a CAD sheet's only extractable text is
+#: its title block. The chain is complete and it terminates in a picture. The
+#: nearest relative is Gresham's Clear Vision Area, where the number lives in
+#: an engineering manual nobody declared; here the manual was declared, fetched
+#: and read, and the number is still drawn rather than written. The title block
+#: is not a total loss -- it names the stall, "(9' x 18')" and "(8.5' x 16')",
+#: and that is where this layer's stall geometry now comes from.
+#:
+#: The second is Table 1015-2 note 2: above 3,500 feet in elevation, covered
+#: parking for three or more dwelling units. A roof over four stalls is a
+#: second structure competing for the same ground, so it is a fitment standard,
+#: and there is no field for whether a stall has a roof and no layer holding a
+#: lot's elevation. Recorded because unlike almost everything this corpus
+#: refuses on a site fact, the condition is reachable: this jurisdiction runs
+#: from the Willamette to Mount Hood.
+#:
+#: The third is a refusal to write `exempt`. The county caps nothing on a
+#: quadplex -- Table 1015-1's Dwellings row defers to 1015-2, and 1015-2 states
+#: a maximum only in the note about townhouses -- but `parking_max_per_unit` is
+#: left absent rather than exempt, because exempt resolves over the state layer
+#: and OAR 660-046-0220's cap is real. Absence inherits; exempt overrides. That
+#: distinction has cost this corpus a wrong number before and is worth a line.
 #:
 #: Worth knowing about this ledger, learned writing those two: the window runs
 #: FORWARD from the marker, and rows are deduplicated on the window text. A

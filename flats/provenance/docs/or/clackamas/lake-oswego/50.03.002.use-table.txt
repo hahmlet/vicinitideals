@@ -930,7 +930,7 @@ P
 P
 § 50.03.003.6.p
 Business or Professional Services
-Psilocybin Service Center12
+Psilocybin Service Center[12]
 C
 P
 P
@@ -943,7 +943,7 @@ C
 P
 P
 P
-§ 50.03.003.6.t12
+§ 50.03.003.6.t[12]
 Business or Professional Services
 Research and development laboratories
 P
@@ -1190,10 +1190,10 @@ Heavy manufacturing
 P
 § 50.03.003.7.a
 Manufacturing
-Psilocybin production12
+Psilocybin production[12]
 P
 P
-§ 50.03.003.7.c12
+§ 50.03.003.7.c[12]
 Storage
 Self-storage facility
 P

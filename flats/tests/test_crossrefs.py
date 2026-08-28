@@ -585,17 +585,29 @@ def test_and_rivergrove_stops_reporting_its_own_code_as_missing(
 
 
 def test_every_document_either_claims_a_chapter_or_is_a_whole_code() -> None:
-    """The two that claim nothing are named for an ordinance with no number in
-    it at all, and both are the whole of what their jurisdiction publishes. A
-    third would more likely be a filename that broke the convention, and the
-    fallback would then be answering for a chapter nobody holds."""
+    """Two are named for an ordinance with no number in it at all, and both are
+    the whole of what their jurisdiction publishes. Two more are engineering
+    drawings, which have a sheet number and no chapter -- P100 and P200 are
+    where Clackamas County publishes its parking geometry, and a sheet answers
+    for no section of anything. Any other silent document would more likely be
+    a filename that broke the convention, and the fallback would then be
+    answering for a chapter nobody holds.
+
+    ``roadway.320`` is deliberately NOT in this set. It was, until `_ABBREV`
+    was widened to seven letters: at five, the leading word was neither an
+    abbreviation to skip nor a number to read, and the Roadway Standards
+    claimed nothing while holding the section every parking dimension in that
+    county comes from."""
     store = ProvenanceStore()
     silent = {d for d in store.documents() if not _doc_ids([d])}
 
     assert silent == {
         "or/clackamas/johnson-city/ors.197a.420.txt",
         "or/clackamas/rivergrove/rldo.composite.txt",
+        "or/clackamas/_unincorporated/roadway.p100.txt",
+        "or/clackamas/_unincorporated/roadway.p200.txt",
     }
+    assert _doc_ids(["or/clackamas/_unincorporated/roadway.320.txt"]) == {"320"}
 
 
 # -- a decision is not a disposal -------------------------------------------

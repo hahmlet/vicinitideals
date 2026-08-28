@@ -2393,7 +2393,7 @@ Zone
 Structures or Structural Parts Exempt from Height Limitations
 Residential Zones – Residential Uses
 a. Chimneys, flagpoles, radio and television antennas, ham radio aerials, and other structures.
-b. Roof-mounted solar energy system1.
+b. Roof-mounted solar energy system[1].
 Residential Zones – Nonresidential Uses
 a. Chimneys, church spires, belfries, domes, monuments, radio and television antennas, fire and hose towers, flagpoles, and other similar structures.
 b. Roof-mounted solar energy system1.

@@ -130,9 +130,9 @@ def test_the_eight_districts_print_the_same_sentence_so_position_names_the_colum
 def test_the_low_density_height_row_carries_no_footnote_marker(lines: list[str]) -> None:
     """Unlike the coverage row directly above it, which is marked 5,6. Worth
     asserting because the gate cannot check it here -- see below."""
-    assert lines[1167] == "50 percent5,6"
+    assert lines[1167] == "50 percent[5,6]"
     for line in LOW_DENSITY.values():
-        assert not lines[line - 1].rstrip().endswith(tuple("0123456789"))
+        assert not lines[line - 1].rstrip().endswith("]")
 
 
 # -- Table 315-3: three values, three headers, and note 9 --------------------
@@ -146,13 +146,13 @@ def test_the_village_zones_read_a_three_value_row_positionally(
     Here the three agree anyway, so the merge question cannot change it."""
     assert lines[1315:1319] == ["Standard", "VR-5/7", "VR-4/5", "VTH"]
     assert lines[1319] == "Maximum Building Height"
-    assert lines[1320:1323] == ["35 feet9"] * 3
+    assert lines[1320:1323] == ["35 feet[9]"] * 3
 
     for zone in VILLAGE:
         held = clackamas.zones[zone].values["max_height_ft"]
         assert held.value == 35, zone
         assert held.prov.quote == f"{ZDO}#L1320-L1323", zone
-        assert store.quote(held.prov.quote).count("35 feet9") == 3, zone
+        assert store.quote(held.prov.quote).count("35 feet[9]") == 3, zone
 
 
 def test_note_nine_cannot_loosen_this_ceiling_because_it_excludes_middle_housing(
@@ -164,7 +164,7 @@ def test_note_nine_cannot_loosen_this_ceiling_because_it_excludes_middle_housing
     for this building -- the note reads in the direction that keeps the
     ceiling, not the one that lifts it."""
     note = lines[1413]
-    assert note.startswith("9 Except for middle housing developed pursuant to Section 845")
+    assert note.startswith("[9] Except for middle housing developed pursuant to Section 845")
     assert "Triplexes, Quadplexes, Townhouses, and Cottage Clusters" in note
     assert "Sieben Creek Estates" in note
     assert "is not required to comply with this standard" in note
@@ -203,34 +203,58 @@ def test_and_the_gate_that_governed_nothing_here_now_governs_all_of_it(
     unread; this layer's would have certified under all 305. Seventy-three are
     governed now, and none of them blocked -- every note was read and ruled.
 
-    Nine of the seventy-three arrived later than the rest. ZDO 1012 prints the
-    notes under Table 1012-1, Bonus Density, with no heading and the mark
-    welded to the first word, so the reader saw four markers and no block at
-    all; with the welded run allowed to open one, its region reaches back over
-    the general density paragraph that every maximum density quotes."""
+    Nine of them arrived later than the rest. ZDO 1012 prints the notes under
+    Table 1012-1, Bonus Density, with no heading and the mark welded to the
+    first word, so the reader saw four markers and no block at all; with the
+    welded run allowed to open one, its region reaches back over the general
+    density paragraph that every maximum density quotes.
+
+    The seventy-fourth is the quadplex parking minimum, read out of ZDO 1015 on
+    2026-08-27, and it is governed by all five notes of Table 1015-2 -- only
+    two of which are about a quadplex at all. That is the region rule being
+    conservative, and it is the same rule that made this test worth writing."""
     rows = [r for r in qualified() if r.layer == CLACKAMAS]
-    assert len(rows) == 73
+    assert len(rows) == 74
     assert not any(r.blocking for r in rows)
 
 
 def test_and_the_cause_was_the_spelling_not_the_absence_of_notes(
     lines: list[str],
 ) -> None:
-    """The notes were always there and always numbered. This code writes them
-    as "1 The minimum and maximum lot size standards" -- one space, no heading
-    -- and the gapped-run reader demands a column gap, because at one space
-    that pattern also matches every numbered paragraph in a code. Declining it
-    there is still right; the run had to earn its reading another way."""
-    from flats.encode.footnotes import HEADLESS_NOTE, NOTES_HEAD, _tight_run
+    """The notes were always there and always numbered, and the work was
+    working out how.
+
+    The county prints each one as `<p><sup>1 </sup>The minimum and maximum lot
+    size standards`, and until the extractor learned to hold a superscript
+    apart from the text it sits on -- `flats-html-text/7` -- the digit and the
+    space inside that tag arrived welded to the sentence as "1 The minimum and
+    maximum lot size standards". That read as a tight run: correctly, and by
+    accident, because the space the run rule was measuring belonged to the
+    marker rather than to the layout. It cost nothing here. One document over
+    the same tag welds a footnote number onto a parking count and turns one
+    space per dwelling into thirteen.
+
+    Now the marker says what it is, and a square bracket earns its reading
+    with no run behind it: no code in this corpus numbers an ordinary
+    subsection "[1]"."""
+    from flats.encode.footnotes import (
+        BRACKET_NOTE,
+        GLUED_BRACKET_NOTE,
+        HEADLESS_NOTE,
+        NOTES_HEAD,
+    )
 
     first = lines[1397]
-    assert first.startswith("1 The minimum and maximum lot size standards apply")
-    assert HEADLESS_NOTE.match(first) is None  # one space, so the gapped rule declines
-    assert HEADLESS_NOTE.match(first.replace("1 ", "1   ")) is not None  # a gap would not
+    assert first.startswith("[1]The minimum and maximum lot size standards apply")
     assert not any(NOTES_HEAD.match(line.strip()) for line in lines)
-    # What reads it instead: the run proves itself 1, 2, 3, and something above
-    # it in the region actually bears a marker.
-    assert _tight_run(lines, 1397, 0)
+    assert HEADLESS_NOTE.match(first) is None  # no column gap, and none needed now
+    # The weld is the county's own and it is not consistent: five of the
+    # twenty-seven notes run straight into the first word and twenty-two
+    # leave a space, so both shapes have to open a block or the list breaks
+    # into five and loses the five.
+    assert BRACKET_NOTE.match(first) is None
+    assert GLUED_BRACKET_NOTE.match(first) is not None
+    assert BRACKET_NOTE.match(lines[1399]) is not None
 
 
 def test_which_is_why_the_reading_is_written_into_the_layer_rather_than_left_to_it() -> None:

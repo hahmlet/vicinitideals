@@ -224,7 +224,9 @@ def test_the_gate_governs_this_layer_and_holds_nothing_back() -> None:
     rows = [r for r in qualified() if r.layer == CLACKAMAS]
     # Sixty-four until Table 1012-1's welded notes block was found, which put
     # the layer's nine maximum densities under a note for the first time.
-    assert len(rows) == 73
+    # Seventy-four since ZDO 1015 was read for parking, which brought a
+    # quadplex parking minimum and the five notes of Table 1015-2 with it.
+    assert len(rows) == 74
     assert not any(r.blocking for r in rows)
     assert not any(n.state == "unread" for r in rows for n in r.governing)
 

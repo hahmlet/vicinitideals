@@ -237,16 +237,24 @@ def test_and_the_cell_that_points_at_them_is_read_as_a_row(store: ProvenanceStor
 
 
 def test_every_note_in_this_layer_is_ruled_and_none_of_them_blocks() -> None:
-    """Eighty-nine, from five blocks, none left unread. The count is the
+    """Ninety-six, from eight blocks, none left unread. The count is the
     point: the layer reported clean at zero, at fifty-seven, at
-    seventy-seven, at eighty-four and now at eighty-nine, and only the last of
-    those is because it is. The fifth block is Table 1012-1, Bonus Density,
-    which announces itself with nothing but a weld."""
+    seventy-seven, at eighty-four, at eighty-nine and now at ninety-six, and
+    only the last of those is because it is. The fifth block is Table 1012-1,
+    Bonus Density, which announces itself with nothing but a weld.
+
+    The last three blocks arrived with ZDO 1015 on 2026-08-27, when this layer
+    was read for parking. Five of the seven govern the encoded number, because
+    the whole notes block under a table governs and not the cell -- only two
+    are about a quadplex at all. The other two blocks are Table 1015-1's unit
+    and the rural bicycle discount, and they are ruled for the reason every
+    note here is ruled: a layer that reports clean because nobody looked reads
+    exactly like a layer that is clean."""
     ruled = list(dispositions(CLACKAMAS))
-    assert len(ruled) == 89
+    assert len(ruled) == 96
     assert not [n for n in ruled if n.state == "unread"]
     rows = [r for r in qualified() if r.layer == CLACKAMAS]
-    assert len(rows) == 73
+    assert len(rows) == 74
     assert not any(r.blocking for r in rows)
 
 

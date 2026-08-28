@@ -106,17 +106,23 @@ def test_the_bonus_density_table_has_its_notes(store: ProvenanceStore) -> None:
 def test_but_two_of_them_are_marked_in_capitals_and_stay_unmarked(
     store: ProvenanceStore,
 ) -> None:
-    """"Mixed-Use Development2" and "MAXIMUM TOTAL INCREASE5" carry their marks
-    welded to a capital, and `LABEL_MARKER` wants a lowercase letter or a
-    bracket in front of the digit. Widening it to accept capitals reads 138
-    lines across 21 documents, almost all of them permission codes -- ZDO 315
-    alone prints "CPUD23" forty-four times, which is a use code and two
-    markers, not a marker numbered twenty-three. So the two bodies are left
-    reported as unmarked, which is the honest direction to fail: the census
-    says a note exists that nothing was seen to point at."""
+    """One of them, now. "MAXIMUM TOTAL INCREASE5" carries its mark welded to
+    a capital, and `LABEL_MARKER` wants a lowercase letter or a bracket in
+    front of the digit. Widening it to accept capitals reads 138 lines across
+    21 documents, almost all of them permission codes -- ZDO 315 alone prints
+    "CPUD23" forty-four times, which is a use code and two markers, not a
+    marker numbered twenty-three. So that body is left reported as unmarked,
+    which is the honest direction to fail: the census says a note exists that
+    nothing was seen to point at.
+
+    "Mixed-Use Development2" was the other, and it was never welded by the
+    county -- the weld was the extractor's, closing up a `<sup>` it had no
+    rule for. Since `flats-html-text/7` the line reads "Mixed-Use
+    Development[2]" and the bracket is read anywhere, so the body is pointed
+    at and this ledger is one shorter."""
     doc = f"{CLACKAMAS}/zdo.1012.txt"
     got = census(store.load(doc).text, layer=CLACKAMAS, doc=doc)
-    assert [(b.line, b.mark) for b in got.unmarked] == [(187, "2"), (190, "5")]
+    assert [(b.line, b.mark) for b in got.unmarked] == [(190, "5")]
 
 
 def test_every_bonus_note_is_ruled_and_nine_densities_come_unblocked() -> None:

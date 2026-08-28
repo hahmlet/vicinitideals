@@ -58,7 +58,10 @@ from flats.rules.model import CodeDocument, Layer
 
 #: Bumped when the extraction algorithm changes. A hash that moves because the
 #: extractor changed is not an amendment, and the two must be tellable apart.
-EXTRACTOR = "flats-html-text/6"
+#:
+#: /7 separates a superscript footnote marker from the value it sits on. See
+#: `_SUP_RUN`.
+EXTRACTOR = "flats-html-text/7"
 #: A slice shorter than this is reported. Legitimate one-line sections exist;
 #: a marker that hit the table of contents is far more common.
 SHORT_SLICE = 3
@@ -141,6 +144,25 @@ PRINT_DATE_MARK = "[print date]"
 #: this module writes into the stream are its own — a page that shipped either
 #: one as content would rewrite the geometry it claims to describe.
 _CONTROL = re.compile(r"[\r\n\x00\x01]")
+
+#: What a superscript footnote marker holds: one number, or a run of them.
+#:
+#: `<sup>` is inline, so until /7 its digits were concatenated straight onto
+#: the text in front of them and the boundary the codifier drew was gone.
+#: Clackamas County's Table 1015-2 requires `1` parking space per quadplex
+#: dwelling under footnote 3, and the store held `13`. Happy Valley's parking
+#: maximums, `1.2` and `2.0` under footnote 4, were held as `1.24` and `2.04`.
+#: A reader cannot recover the boundary from those, and nothing downstream
+#: knew it was missing: the marker readers in `flats/encode/footnotes.py` are
+#: anchored to a unit ("45 feet2") or to a permission code ("P7,8"), so a bare
+#: numeric cell lost its value AND its marker in one move.
+#:
+#: Brackets, because `BRACKET_MARKER` already reads them, they are inline so
+#: no citation's line number moves, and `1[3]` cannot be read as thirteen.
+#: Only a bare run of digits is bracketed -- Wood Village writes its markers
+#: as `<sup>(2)</sup>` and those already survive as `(2)`. Nothing in this
+#: corpus uses a superscript for an exponent; 624 of them are footnotes.
+_SUP_RUN = re.compile(r"\s*\d{1,2}(?:\s*,\s*\d{1,2})*\s*")
 
 #: A block boundary *inside* a table cell — Gladstone's requirement cells hold
 #: two paragraphs, "20 ft" and "10 ft within Gladstone Town Center". Joined
@@ -274,8 +296,45 @@ class _Extractor(html.parser.HTMLParser):
         #: Depth of open <nav> elements. A breadcrumb is an <ol> and reads
         #: exactly like one; what tells them apart is where it sits.
         self._nav = 0
+        #: Text collected inside an open <sup>, held back until the tag
+        #: closes because whether it is a footnote marker or ordinary
+        #: superscript text is not knowable until it has all arrived.
+        self._sup: list[str] | None = None
 
     def handle_starttag(self, tag: str, attrs) -> None:
+        if tag == "sup":
+            if not self._skip and self._sup is None:
+                self._sup = []
+            return
+        if self._sup is not None and (tag in _BLOCK or tag in _DROP):
+            # A <sup> that never closed. Give back what it collected rather
+            # than swallowing the rest of the document into a marker.
+            self._end_sup(marker=False)
+        self._open(tag, attrs)
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag == "sup":
+            if self._sup is not None:
+                self._end_sup(marker=True)
+            return
+        if self._sup is not None and (tag in _BLOCK or tag in _DROP):
+            self._end_sup(marker=False)
+        self._close(tag)
+
+    def _end_sup(self, *, marker: bool) -> None:
+        text = "".join(self._sup or ())
+        self._sup = None
+        if marker and _SUP_RUN.fullmatch(text):
+            text = "[" + ",".join(p.strip() for p in text.split(",") if p.strip()) + "]"
+        self._emit(text)
+
+    def _emit(self, text: str) -> None:
+        if self._tables:
+            self._tables[-1].data(text)
+        else:
+            self.parts.append(text)
+
+    def _open(self, tag: str, attrs) -> None:
         if tag in _DROP:
             self._skip += 1
         elif tag == "table":
@@ -324,7 +383,7 @@ class _Extractor(html.parser.HTMLParser):
         elif tag in _BLOCK:
             self.parts.append("\n")
 
-    def handle_endtag(self, tag: str) -> None:
+    def _close(self, tag: str) -> None:
         if tag in _DROP:
             self._skip = max(0, self._skip - 1)
         elif tag == "table" and self._tables:
@@ -364,10 +423,10 @@ class _Extractor(html.parser.HTMLParser):
         # them would let a reflow of the markup renumber every quote line
         # in the document without a word of the law changing.
         clean = _CONTROL.sub(" ", data)
-        if self._tables:
-            self._tables[-1].data(clean)
-        else:
-            self.parts.append(clean)
+        if self._sup is not None:
+            self._sup.append(clean)
+            return
+        self._emit(clean)
 
 
 def html_to_text(source: str) -> str:

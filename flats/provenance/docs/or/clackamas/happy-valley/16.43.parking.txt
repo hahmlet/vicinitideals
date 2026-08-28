@@ -192,8 +192,8 @@ Table 16.43.030-1 Automobile Parking Standards
 Table 16.43.030-1 Automobile Parking Standards
 Proposed Use
 Minimum Parking Spaces
-Maximum Parking Spaces (if nothing is noted, there is no maximum)1
-Maximum Parking Spaces (if nothing is noted, there is no maximum)1
+Maximum Parking Spaces (if nothing is noted, there is no maximum)[1]
+Maximum Parking Spaces (if nothing is noted, there is no maximum)[1]
 Bicycle Spaces
 Percentage of Bicycle Spaces to be Long-Term Bicycle Parking
 Proposed Use
@@ -213,26 +213,26 @@ Single-family detached
 None required
 N/A
 Single-family attached (townhome), duplex, triplex, quadplex, cottage cluster
-1 per dwelling3, 5
+1 per dwelling[3,5]
 None required
 N/A
 Manufactured home park
-1 per dwelling5
+1 per dwelling[5]
 None required
 N/A
-Multifamily dwellings containing five or more units4
-1 per dwelling5
+Multifamily dwellings containing five or more units[4]
+1 per dwelling[5]
 1 space per unit
 Studio units
-1 per dwelling5
-1.24
-1.24
+1 per dwelling[5]
+1.2[4]
+1.2[4]
 1 space per unit
 75
 Non-studio units
-1 per dwelling5
-2.04
-2.04
+1 per dwelling[5]
+2.0[4]
+2.0[4]
 1 space per unit
 75
 Congregate housing, retirement homes, intermediate care facilities, facilities and homes designed to serve people with psychosocial, physical, intellectual or developmental disabilities, emergency or transitional shelters for people experiencing homelessness, and domestic violence shelters
@@ -364,7 +364,7 @@ Restaurant/coffee shop/food-beverage carts (with drive-through)
 1 space per 1,000 sq. ft. of gross floor area
 25
 Restaurant/coffee shop/food-beverage carts without drive-through
-11.5 spaces per 1,000 sq. ft. of gross floor area2
+11.5 spaces per 1,000 sq. ft. of gross floor area[2]
 19.1 per 1,000 sq. ft.
 23.0 per 1,000 sq. ft.
 1 space per 1,000 sq. ft. of gross floor area

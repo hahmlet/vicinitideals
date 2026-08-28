@@ -250,7 +250,14 @@ class Dangling:
 #: County's zoning ordinance is ``zdo.1012.txt`` and Rivergrove's is
 #: ``rldo.composite.txt``; lowercase and short, which is what separates them
 #: from ``residential`` or ``definitions`` further along the stem.
-_ABBREV = re.compile(r"[a-z]{2,5}")
+#: The abbreviation a filename may lead with before its chapter number --
+#: "zdo.1012", "ors.197a.420", "rldo.composite". Seven letters rather than
+#: five since 2026-08-27, for "roadway.320": Clackamas County's parking
+#: geometry is in the Roadway Standards and not the ZDO, and at five that
+#: document claimed no section at all. Widening it moves exactly one
+#: document in the store, which is the check worth running before touching
+#: this -- a pattern here decides what every reference resolves against.
+_ABBREV = re.compile(r"[a-z]{2,7}")
 
 
 def _doc_ids(paths: Iterable[str]) -> set[str]:

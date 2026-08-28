@@ -58,7 +58,45 @@ notes: 'Table 315-2 (R-2.5 through R-30) read against the adopted ZDO on 2026-08
   setback off this pod. Those four are the TITLE of Section 845, printed that way nine times in this
   document; the relief runs to cottage clusters alone and the maximum binds. Note 15 makes frontage on an accessway a front lot line, which turns a 5 ft side into
   a 10 ft front on whichever face it lands; an accessway is not a street and no layer here answers
-  it, so it is `unmeasured` against the `abuts_accessway` condition and caps the VR zones.'
+  it, so it is `unmeasured` against the `abuts_accessway` condition and caps the VR zones.
+
+
+  PARKING, read 2026-08-27, and the reason it was read first: 18,662 lots here fit the pod, the
+  third largest count in the corpus, and the site-plan generator lays out none of them, because a
+  city that has not stated a stall and an aisle cannot be drawn on. Four of the five numbers are
+  now in. The fifth is not gettable.
+
+  Table 1015-2 asks a quadplex for one space per dwelling unit in both of the columns this layer
+  reads -- "R-5 through R-30" and "VR-4/5 & VR-5/7" -- and the Quadplex row fills all nine of its
+  columns, so it is positional and nothing is merged. Section 845, which Table 315-1''s note 8 sends
+  this building to for everything, states no parking quantity and no stall of its own; the general
+  chapter governs, and the county shows it knows how to say otherwise, because the bicycle table
+  three subsections down excepts "quadplexes not developed pursuant to Section 845" by name.
+
+  That cell is why the extractor is at flats-html-text/7. The county marks it `1<sup>3</sup>`, and
+  until the extractor learned to hold a superscript apart from the text beneath it, the store held
+  "13" -- thirteen spaces per dwelling unit. The marker that would have shown the join was the thing
+  that got eaten, so nothing downstream could have caught it. Six hundred and twenty-four numeric
+  superscripts across the corpus, every one a footnote marker and not one an exponent.
+
+  The stall is 9 by 18 and the ZDO says 8.5 by 16, and both are true. 1015.02(A)(2) states a floor;
+  (A)(4) immediately hands curb length, stall depth and aisle width to the Roadway Standards, whose
+  320.5(a) requires dimensions to "meet the ZDO and Roadway Standard Drawing P100 or P200". P100 is
+  titled "(9'' x 18'')" and P200 "(8.5'' x 16'')", so the county publishes two stalls and the ZDO''s
+  floor is the smaller. (A)(3) settles which is which by requiring at least a quarter of the spaces
+  to be no larger than 8.5 by 16 -- a compact rule. Four spaces, at least one compact, and no rule
+  choosing the size of the other three, so the larger is encoded: a lot holding four 9-by-18 stalls
+  holds any lawful mix, and the error runs toward calling a lot too tight rather than calling one
+  buildable that is not.
+
+  The aisle is the one that cannot be had, and it is a refusal shape this corpus has not carried.
+  The chain is complete and it terminates in a picture: the ZDO points at the Roadway Standards, the
+  Roadway Standards point at Standard Drawings P100 and P200, and both sheets are now declared,
+  fetched and stored -- three lines each, because a CAD sheet''s only extractable text is its title
+  block. The stall survives in that title. Every other dimension on those sheets, the drive aisle
+  above all, is drawn. Somebody with the sheet open closes this in five seconds; nothing here can.
+  Until then unincorporated Clackamas produces no site plan, which is the honest outcome rather than
+  a failure.'
 ingest:
   geoid: null
   juris_city_codes:
@@ -155,6 +193,53 @@ code:
   title: Clackamas County ZDO Section 845 - Triplexes, Quadplexes, Townhouses, and Cottage Clusters
   start: "845.01"
   end: "Return to the Zoning and Development Ordinance main page"
+# Where the parking number is. Section 845 governs how this building is
+# designed and states no parking quantity and no stall of its own, so the
+# quadplex falls to the general chapter, and Table 1015-2 names it in a row of
+# its own. It is named a second time three subsections down -- "quadplexes not
+# developed pursuant to Section 845" have to designate short- and long-term
+# bicycle parking -- so the county knows how to hold an 845 quadplex out of a
+# parking standard, and did not do it in the table that counts spaces.
+- id: zdo.1015
+  url: https://www.clackamas.us/planning/zdo1015
+  title: Clackamas County ZDO Section 1015 - Parking and Loading
+  start: "1015.01"
+  end: "Return to the Zoning and Development Ordinance main page"
+# 1015.02(A)(4) hands curb length, stall depth and aisle width to the Roadway
+# Standards, so the chain leaves the ZDO here. Section 320 is the parking
+# section of the June 2020 edition. The February 2013 edition it replaced
+# stated "24 feet of back up maneuvering room" for 90-degree spaces and pointed
+# back at "ZDO Section 1007.07", which today is Transportation Facilities
+# Concurrency; both the number and the pointer were dropped, and a superseded
+# standard is not this county's standard.
+- id: roadway.320
+  url: https://dochub.clackamas.us/documents/drupal/fc5951b3-7eab-424c-a4d2-b484220a3ffb
+  title: Clackamas County Roadway Standards Section 320 - Parking Areas
+  start: "320.1 Maximum Slopes and Grades"
+  # The chapter prints its own section headings in the contents first.
+  nth: 2
+  end: "SECTION 330 - COMMERCIAL, INDUSTRIAL AND MULTIFAMILY DRIVEWAYS"
+  # 71 lines: one section of a 300-page manual, sliced to the parking part.
+  allow_thin: true
+# And Section 320 hands them on again, to two CAD sheets. Both are stored and
+# both store three lines, because a drawing's only extractable text is its
+# title block. That title block is not nothing -- it carries the stall size,
+# and it is the only place either number is written rather than drawn -- but
+# the aisle the sheets are named for is geometry. See `parking_stall_width_ft`
+# below, and the aisle refusal beside it.
+#
+# Not recorded in `crossrefs:`, which would be the obvious place: that ledger
+# keys on section numbers it finds in stored text, and "Standard Drawing P100"
+# is not one. A redirect into a drawing is a shape it cannot see, so a row for
+# it would point at nothing and read as stale. The refusal carries it instead.
+- id: roadway.p100
+  url: https://dochub.clackamas.us/documents/drupal/6dab9eb0-a4d6-44bc-8246-bc4465676fbd
+  title: Clackamas County Roadway Standard Drawing P100 - Parking and Aisle Layout Details (9' x 18')
+  allow_thin: true
+- id: roadway.p200
+  url: https://dochub.clackamas.us/documents/drupal/2d34b4ce-c522-41a2-96a1-e194fde00d58
+  title: Clackamas County Roadway Standard Drawing P200 - Parking and Aisle Layout Details (8.5' x 16')
+  allow_thin: true
 defaults:
   # DRIVEWAY AND PARKING PLACEMENT, read 2026-08-27 out of Section 845, which
   # is the section Table 315-1's note 8 sends this building to for everything.
@@ -221,6 +306,110 @@ defaults:
         when: [unit_lots]
         cite: Clackamas ZDO 845.03(E)(1)(c), driveways and off-street parking areas on a townhouse lot
         quote: "or/clackamas/_unincorporated/zdo.845.txt#L57,L99-L109"
+  #
+  # PARKING, read 2026-08-27. Four spaces, nine by eighteen feet each, and no
+  # aisle -- which is the whole of why this layer still does not lay out.
+  #
+  # Table 1015-2, Minimum Automobile Parking Space Requirements for Dwellings,
+  # prints a Quadplex row against nine district columns and fills all nine, so
+  # the row is positional and nothing is merged. The first two columns are
+  # "R-5 - R-30" and "VR-4/5 & VR-5/7", which between them are all nine zones
+  # in this layer -- R-8.5 is not named because it sits inside the range -- and
+  # both cells read "1" under note 3. Note 3 is about
+  # converting a detached dwelling to middle housing and adds nothing to a new
+  # build. Note 1 supplies the unit: "expressed as number of spaces per
+  # dwelling unit, unless otherwise stated."
+  #
+  # That cell is the reason this file's extractor is at flats-html-text/7. The
+  # county marks it `1<sup>3</sup>`, and until the extractor learned to hold a
+  # superscript apart from the text under it, the store held "13" -- thirteen
+  # spaces per dwelling unit, in a corpus where nothing would have questioned
+  # it, because the marker that would have shown the join was the thing that
+  # got eaten.
+  parking_min_per_unit:
+    value: 1
+    cite: Clackamas ZDO Table 1015-2, Quadplex row, R-5 through R-30 and VR-4/5 & VR-5/7 columns
+    url: https://www.clackamas.us/planning/zdo1015
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/_unincorporated/zdo.1015.txt#L218,L220-L222,L334-L336,L356,L360"
+  # Worth knowing what this changes today, which is nothing, and why it is
+  # still worth having. The state layer caps a quadplex at four spaces in
+  # total under OAR 660-046-0220(2)(e)(B), `preempts: cap`, so on a large lot
+  # the ceiling and the county's four land on the same number and the resolved
+  # value cites the state. On a small lot the state's band drops to two or one
+  # and the cap binds below the county. Either way the screen counted the right
+  # number before this was encoded -- because the cap was standing in for a
+  # requirement nobody had read. Now the requirement is read, and if Oregon
+  # ever loosens the cap the county's own figure is here to take over.
+  # NINE BY EIGHTEEN, AND THE ZDO SAYS 8.5 BY 16. Both are true and the larger
+  # is the one to screen on.
+  #
+  # 1015.02(A)(2) states a floor -- "Automobile parking spaces shall be a
+  # minimum of 8.5 feet wide and 16 feet long" -- and (A)(4) immediately hands
+  # curb length, stall depth and aisle width to the Roadway Standards, whose
+  # 320.5(a) requires that dimensions "meet the ZDO and Roadway Standard
+  # Drawing P100 or P200". P100 is titled "(9' x 18')" and P200 "(8.5' x 16')",
+  # so the county publishes two stalls and the ZDO's floor is the smaller of
+  # them. (A)(3) settles which is which: "a minimum of 25 percent of required
+  # parking spaces shall be no larger than 8.5 feet wide and 16 feet long" is a
+  # rule requiring compact spaces, which only makes sense if 8.5 by 16 is the
+  # compact one.
+  #
+  # Four spaces, at least one of them compact, and the code names no rule
+  # choosing the size of the other three. A lot that holds four 9 by 18 stalls
+  # holds any lawful mix of the two; a lot sized to 8.5 by 16 throughout may
+  # hold none. So the larger is encoded, and the direction of the error is a
+  # lot called too tight rather than a lot called buildable that is not.
+  parking_stall_width_ft:
+    value: 9
+    cite: Clackamas County Roadway Standard Drawing P100, Parking and Aisle Layout Details (9' x 18'), required by Roadway Standards 320.5(a) and ZDO 1015.02(A)(4)
+    url: https://dochub.clackamas.us/documents/drupal/6dab9eb0-a4d6-44bc-8246-bc4465676fbd
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/_unincorporated/roadway.p100.txt#L2"
+  parking_stall_depth_ft:
+    value: 18
+    cite: Clackamas County Roadway Standard Drawing P100, Parking and Aisle Layout Details (9' x 18'), required by Roadway Standards 320.5(a) and ZDO 1015.02(A)(4)
+    url: https://dochub.clackamas.us/documents/drupal/6dab9eb0-a4d6-44bc-8246-bc4465676fbd
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/_unincorporated/roadway.p100.txt#L2"
+  #
+  # NOT ENCODED: the drive aisle, and this is a new shape of refusal. It is not
+  # that the county states no aisle -- ZDO 1015.02(A)(4) says parking areas
+  # "shall comply with minimum dimensions for curb length, stall depth, and
+  # aisle width established by the Clackamas County Roadway Standards", and
+  # Roadway Standards 320.3(a) says "for dimensions of parking spaces and drive
+  # aisles refer to Standard Drawings P100 and P200". The chain is complete and
+  # it terminates in a picture. Both sheets were fetched and both extract three
+  # lines of title block; every dimension on them is drawn. The aisle is the
+  # one number in this layer that a person with the sheet open could read in
+  # five seconds and no reader here can reach, and it is why unincorporated
+  # Clackamas -- 18,662 lots the pod fits, the third largest count in the
+  # corpus -- still produces no site plan. `exempt: true` would be a lie: the
+  # standard exists.
+  # (or/clackamas/_unincorporated/zdo.1015.txt#L29,
+  #  or/clackamas/_unincorporated/roadway.320.txt#L18,L23,L40,L42-L43)
+  #
+  # NOT ENCODED: covered parking above 3,500 feet. Table 1015-2 note 2 requires
+  # that "on land above 3,500 feet in elevation, covered parking shall be
+  # provided for structures containing three or more dwelling units", which the
+  # pod is. A roof over four stalls is a second structure on the lot and it
+  # would compete with the pod for the same ground, so this is a fitment
+  # standard and not a paperwork one. It is refused rather than carried as
+  # `unmeasured` because there is nothing to cap: no field here holds whether a
+  # stall is covered, so the note has no encoded value to attach to. Worth
+  # writing down because unlike most conditions this corpus refuses, it is
+  # genuinely reachable -- unincorporated Clackamas runs from the Willamette up
+  # to Mount Hood, and the county has residential districts above the line.
+  # (or/clackamas/_unincorporated/zdo.1015.txt#L358)
+  #
+  # NOT ENCODED: parking maximums, and deliberately left to inherit rather than
+  # marked exempt. Table 1015-1's Dwellings row states no number and defers to
+  # Table 1015-2, and 1015-2 is titled "Minimum" and states a maximum only in
+  # its note 4, which is about townhouses. So the county caps nothing on a
+  # quadplex -- but the state does, under OAR 660-046-0220, and writing
+  # `exempt: true` here would resolve over the state layer and delete a cap
+  # that binds. Absence inherits; exempt overrides.
+  # (or/clackamas/_unincorporated/zdo.1015.txt#L71,L73-L76,L98,L218,L362)
   #
   # NOT ENCODED: 845.04's ten-foot setbacks -- parking and maneuvering out of
   # the first ten feet from a front lot line, and parking spaces (though not
