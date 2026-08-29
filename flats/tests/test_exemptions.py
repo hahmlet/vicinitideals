@@ -72,7 +72,14 @@ pytestmark = pytest.mark.unit
 #: stated 168 -> 170 the same day, both Portland: 33.120.240.B ends by naming
 #: the RX and RMP zones as having no outdoor area requirement, which is an
 #: exemption written down rather than inferred from an empty cell.
-EXPECTED = {"stated": 170, "numeric": 37, "marker": 0, "dash": 2, "silent": 0}
+#:
+#: 170 -> 171 on 2026-08-29 for Troutdale's parking maximum, the third city to
+#: state one this way and the clearest of the three. Every band of the Triplex
+#: and Quadplex row of Table 1 in TDC 9.010 prints "No maximum" in the
+#: right-hand column -- words, not an empty cell -- and the same column caps
+#: general retail at 6.2 spaces per 1,000 sq ft and a restaurant at 19.1, so
+#: it is a ceiling that has been read and found not to contain this building.
+EXPECTED = {"stated": 171, "numeric": 37, "marker": 0, "dash": 2, "silent": 0}
 
 LAKE_OSWEGO = "or/clackamas/lake-oswego"
 

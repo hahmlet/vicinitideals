@@ -61,7 +61,18 @@ pytestmark = pytest.mark.unit
 #: Ten encoded against four refused is the ratio to watch; it is the same
 #: shape as the driveway reading that moved this number to 68, and the same
 #: reason. The detailed codes are the ones that refuse the most.
-EXPECTED = {"notes": 92, "comments": 74, "tests": 16}
+#: 74 -> 81 on 2026-08-29, seven of them Troutdale and the same ratio again:
+#: ten encoded values against seven refusals, from a code that regulates
+#: parking in two chapters at once. The biggest is the CFEC waiver -- a lot
+#: within half a mile of a frequent transit corridor, or in the Town Center
+#: Overlay and a quarter mile beyond it, owes ZERO stalls, and both are read
+#: off a delineation map no parcel record carries. The rest are the familiar
+#: shapes: a second banding of the same requirement keyed on the zone's
+#: minimum lot size rather than the lot's; driveway spacing and street
+#: classification; the neighbour's setback; compact stalls; on-street credits;
+#: and a sentence tying the driveway's width to the approach's, which is a
+#: relation between two fields rather than a value in either.
+EXPECTED = {"notes": 92, "comments": 81, "tests": 16}
 #: Two of the sixteen are this file, which quotes the marker while
 #: explaining it, and one is a back-reference in test_gresham_rockwood --
 #: prose saying a zone *was* not encoded until it was. Left in rather than

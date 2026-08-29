@@ -92,8 +92,8 @@ screen:
 # row (front 10 / side 5 / rear 15 / street-side 10, min lot 5,000, FAR 1.0).
 siteplan:
   enabled: true
-  # Every city whose own code states a stall AND an aisle gets laid out. Six
-  # do as of 2026-08-27, West Linn being the newest and the biggest; two more
+  # Every city whose own code states a stall AND an aisle gets laid out. Seven
+  # do as of 2026-08-29, Troutdale being the newest and the strictest; two more
   # state a stall and no aisle and are declined by name below; the rest have
   # not been read and pass through as `not_evaluated`. Narrow to `pilot_cell`
   # to re-run Gresham LDR-5 alone after a layout change.
@@ -224,6 +224,34 @@ siteplan:
       aisle_two_way_ft: 23         # the chapter states no two-way figure
       cite: West Linn CDC 46.150(A)(1) stall; 46.150(E) Figure 2, 90 degrees drive-in
       max_per_unit: 2
+    # The seventh city, read 2026-08-29, and the strictest geometry in the
+    # file. TDC 9.115 answers both halves in one section and answers them for
+    # everybody -- "The following off-street parking development and
+    # maintenance shall apply in all cases" -- so the middle-housing
+    # invalidation in 8.120.C.1.b.ii, which voids standards applying ONLY to
+    # triplexes, quadplexes and multifamily, never reaches it.
+    #
+    # TWENTY-FIVE FEET IS THE WIDEST AISLE IN THIS CORPUS: Fairview asks 24,
+    # Gresham and West Linn 23, Portland 20. One figure, not split by
+    # direction, so a one-way court is dimensioned off it too. A stall row,
+    # its aisle and a second stall row come to 61 feet of depth before any
+    # driveway reaches them.
+    #
+    # And the pod is NOT multifamily here, which is why the Triplex and
+    # Quadplex row is the one that binds and why `max_per_unit` is null: TDC
+    # 1.020 defines a multi-family dwelling as "a building with five (5) or
+    # more dwelling units" and a quadplex as four on a lot. Troutdale is the
+    # only city in this corpus that settles the question by counting.
+    troutdale:
+      stall_width_ft: 9
+      stall_depth_ft: 18            # 9.115(A)(1) prints 162 sq ft beside it
+      aisle_one_way_ft: 25          # 9.115(B)(1), 90 degrees; no one-way row
+      aisle_two_way_ft: 25
+      cite: TDC 9.115(A)(1) stall size; 9.115(B)(1) aisles at ninety degrees
+      # Table 1 of 9.010 prints "No maximum" against every band of the
+      # Triplex and Quadplex row, in a column that caps general retail at 6.2
+      # and a restaurant at 19.1. A read ceiling that is not there.
+      max_per_unit: null
     # --- states a stall and no aisle: declined, not borrowed from -----------
     # Both of these dimension a space and never dimension the drive that
     # reaches it, so a court laid out here would be laid out to somebody
@@ -434,6 +462,48 @@ siteplan:
       drive_min_one_way_ft: 15
       drive_min_two_way_ft: 24
       cite: West Linn CDC 48.030(E) service drive widths; 48.060(A) and (B) curb cut
+    # Read with the geometry above, out of two chapters. TDC 9.080(A): a
+    # driveway to an off-street parking area is improved at 20 feet two-way
+    # and 12 one-way. (B) drops it to 10 for "a single-family or two-family
+    # dwelling" and a quadplex is neither, so the pod takes (A) -- level with
+    # Happy Valley, four short of West Linn's 24, and eight more than the
+    # 12-foot design lane an unread city falls back to.
+    #
+    # The curb cut is the state model code's 32 feet per frontage, word for
+    # word what Wilsonville and unincorporated Clackamas carry. Troutdale
+    # states NO minimum approach width -- read and absent -- so unlike West
+    # Linn a pod here may shrink its opening to whatever the lane needs.
+    #
+    # 8.120.C.4 bans parking between a building and a public street and then
+    # excepts a parking area at half the street frontage or less, so the ban
+    # is a CAP here and `parking_front_prohibited` stays empty. (The
+    # cross-reference in the ban points at itself: Troutdale re-lettered the
+    # model code's a/b pair to c/d and left the pointer behind. Fairview,
+    # Wilsonville and Clackamas carry the same two sentences numbered right.)
+    #
+    # No private open space, and not by omission: 8.120.B.1.b invalidates
+    # maximum lot coverage, minimum landscape area and minimum open space for
+    # a quadplex by name. Fifth city of seven to reserve none.
+    troutdale:
+      drive_min_one_way_ft: 12
+      drive_min_two_way_ft: 20
+      approach_max_ft: 32
+      parking_max_frontage_pct: 50
+      # 9.095(D), the same shape as Happy Valley's: parking sets back from a
+      # street lot line "the same distance as required building setbacks".
+      # No citywide figure to mirror -- the ten feet printed in the sentence
+      # is an industrial-district floor -- so this carries what the corpus
+      # resolved zone by zone, and every one of them equals its own building
+      # setback. The rear court is drawn inside that envelope already, so it
+      # costs nothing and it is still the law.
+      parking_street_setback_by_zone:
+        LDR-1: 10
+        LDR-2: 10
+        MDR: 10
+        HDR: 20
+        MU-2: 15
+        MU-3: 20
+      cite: TDC 9.080(A) driveway widths; 8.120.C.5.a approach; 8.120.C.4.d frontage; 9.095(D) setback
   # The three engineering constants left after the law came out of this block.
   # Not one is a citation. A car needs a lane and a wall needs a standoff
   # whatever the code says; where a city asks for more, the city wins.

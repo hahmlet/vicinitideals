@@ -390,6 +390,46 @@ def test_a_code_that_waives_a_standard_in_prose_states_zero() -> None:
     assert quotes_the_number("Off-street parking is not required.", 0)
 
 
+def test_a_borrowing_with_no_floor_is_checked_for_words_and_not_for_a_figure() -> None:
+    """`same_as` where the sentence carries no number at all.
+
+    Happy Valley 16.43.030.E.4 prints a ten-foot floor beside its borrowing, so
+    there is one figure on the page and `_printed` looks for it. Troutdale
+    9.095(D) prints none for this building: "Parking areas shall be set back
+    from a lot line adjoining a street the same distance as required building
+    setbacks", and the ten feet in the next sentence is an industrial-district
+    standard that reaches no zone permitting a quadplex.
+
+    Falling through to the RESOLVED number -- 15 in MU-2, 10 in the low-density
+    districts -- would ask a reader to find a figure the cited sentence does
+    not contain, which is the thing this check exists to stop. So a floorless
+    borrowing prints nothing, its citation is opened and staleness-checked like
+    `measured_on` and `qualified_by`, and the number is verified on the
+    lender's own row where it is printed.
+    """
+    from flats.encode.readiness import _printed
+    from flats.rules.model import Provenance, Value
+
+    def borrowed(**extra: object) -> Value:
+        return Value(
+            name="parking_street_setback_ft",
+            value=15,
+            same_as="setback_front_ft",
+            prov=Provenance(
+                cite="TDC 9.095(D)",
+                url="https://api.municode.com/PublicationPdfDownload/1813",
+                retrieved="2026-08-29",
+                quote="or/multnomah/troutdale/9.parking.txt#L540",
+            ),
+            **extra,
+        )
+
+    assert _printed(borrowed()) is None
+    # And the floored form is unchanged: Happy Valley's ten is still the figure
+    # its own sentence carries, and still the one checked.
+    assert _printed(borrowed(floor_ft=10)) == 10
+
+
 def test_a_standard_a_city_repealed_states_zero_without_printing_one() -> None:
     """The strongest way to impose nothing, and the only one that is invisible.
 

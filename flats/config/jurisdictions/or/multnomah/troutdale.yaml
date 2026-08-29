@@ -32,6 +32,26 @@ crossrefs:
       "Exceptions to the building height limit are listed in Section 5.030 of this Code", printed
       under a zone's height standard. Exceptions to a height limit can only permit a taller
       building.
+  "11":
+    outcome: narrows_only
+    note: >-
+      Landscaping and Screening, reached from 9.055(C): "Parking area setbacks shall be
+      landscaped with major trees, shrubs, and groundcover as specified in Chapter 11." The
+      reference is about what GROWS in the band, not how wide the band is -- 9.095(D) sets the
+      width, by borrowing the building setback, and it is encoded. The one landscape standard
+      that could have taken area away from this building is void by name: 8.120.B.1.b makes
+      "maximum lot coverage, minimum landscape area, or minimum open space standards" invalid
+      for triplexes and quadplexes. So the chapter can only govern planting inside ground the
+      pod already gives up, and reading it could not move a lot.
+  "46":
+    outcome: preempted
+    note: >-
+      Not a Troutdale chapter. The mention is the preamble to Table 1 -- "ADU standards are per
+      OAR Division 46" -- pointing at the state middle-housing rule, which this corpus already
+      holds at `or/oar.660-046-0010.txt`, `-0020` and `-0220` in the state layer. Two reasons
+      it closes: the sentence is about accessory dwelling units, and the division it names is
+      the same one whose parking bands Table 1 copies and whose cap already sits over this
+      layer as `preempts: cap`.
 
 definitions:
   # "Lot, Corner. A lot at least two (2) adjacent sides of which abut streets
@@ -80,6 +100,290 @@ code:
     title: "Chapter 8 - Development and Design Standards"
     start: "DEVELOPMENT AND DESIGN STANDARDS"
     end: "CHAPTER 9"
+  # The chapter Chapter 8 ends at, and the one both other slices point into.
+  # 3.235(C): "Off-street parking spaces shall be provided in accordance with
+  # the requirements of Chapter 9, Off-Street Parking and Loading, of this
+  # Code." 8.320(A)(5): "In addition to the standards of Chapter 9, Off-Street
+  # Parking and Loading, off-street parking for attached dwellings on a single
+  # lot ...". Chapter 8 states the QUANTITY for a quadplex and its placement
+  # and never states a stall or an aisle; this is where those live, if they
+  # live anywhere. 3,431 lots here fit the pod and none is drawn on.
+  - id: "9.parking"
+    url: https://api.municode.com/PublicationPdfDownload/1813
+    title: "Chapter 9 - Off-Street Parking and Loading"
+    start: "OFF-STREET PARKING AND LOADING"
+    end: "CHAPTER 10"
+defaults:
+  # PARKING AND VEHICLE ACCESS, read 2026-08-29 out of TDC Chapter 9,
+  # Off-Street Parking and Loading, and the off-street parking subsections of
+  # 8.120, Triplex and Quadplex Dwellings. Chapter 3 sends every zone here --
+  # 3.235(C), "Off-street parking spaces shall be provided in accordance with
+  # the requirements of Chapter 9" -- and 8.320(A)(5) adds its own standards
+  # "in addition to" them. Both chapters were re-adopted whole by the same
+  # ordinance, Ord. No. 899 of 6-24-2025, so neither is the later enactment
+  # and neither yields to the other on that ground.
+  #
+  # WHAT THE POD IS HERE, and Troutdale is the one city in this corpus that
+  # answers the question with a count instead of leaving it to be argued.
+  # 1.020: "Dwelling, Quadplex. A building with four (4) dwelling units on a
+  # lot or parcel in any configuration." Two lines above it: "Dwelling,
+  # Multi-Family. A building with five (5) or more dwelling units." A
+  # quadplex is NOT multifamily in Troutdale. So every multi-family row and
+  # section in Chapter 9 belongs to somebody else -- Table 1's multi-family
+  # minimum, 9.090's bicycle standards, 9.050's EV conduit -- and the pod
+  # takes the Triplex and Quadplex row. Compare West Linn, where the same
+  # word is undefined and a quadplex becomes multifamily by elimination: the
+  # two cities read opposite ways off the same term.
+  # (or/multnomah/troutdale/1.020.definitions.txt#L292,L294)
+  #
+  # Which also disposes of the one orphan in the new document. Table 1's
+  # Multi-Family row prints "1 space per dwelling unit1" -- a footnote marker
+  # whose body is nowhere in the slice, so the footnote census reports
+  # 9.parking.txt UNRECONCILED with one unbodied marker. It hangs on the row
+  # this building is not on, and it is the only marker in the chapter.
+  #
+  # AND THE MIDDLE-HOUSING INVALIDATION DOES NOT REACH THE GEOMETRY.
+  # 8.120.C.1.b.ii voids "the jurisdiction's design standards other than
+  # those in this Subsection C. that apply only to triplexes, quadplexes, or
+  # multifamily development". 9.115 opens "The following off-street parking
+  # development and maintenance shall apply in all cases", and 9.080 governs
+  # every driveway to an off-street parking area, carving out single- and
+  # two-family dwellings rather than middle housing. Neither applies ONLY to
+  # this building, so neither is voided. This is not Milwaukie 19.606, which
+  # excepts middle housing from its own aisle table by name.
+  # (or/multnomah/troutdale/8.development-standards.txt#L566-L570)
+
+  # HOW MANY. Table 1 of 9.010, Triplex and Quadplex row: the state model
+  # bands copied whole, and banded on the LOT's own size the way OAR
+  # 660-046-0220(2)(e)(B) bands them. Four bullets, four counts, and the
+  # bands meet exactly where the state's do -- the table prints "less than
+  # 3,000" and then "less than 5,000" for the second, which is the ordered
+  # -bullet way of writing 3,000 to 4,999.
+  #
+  # NOT ENCODED: the SAME requirement, stated a second time and banded on a
+  # different measure. 8.120.B.3.a asks for two spaces "in zones with a
+  # minimum lot size of less than five thousand (5,000) square feet", three
+  # between 5,000 and 6,999, four per quadplex at 7,000 or greater -- the
+  # ZONE's minimum lot size, not the lot's area. No band measure can hold
+  # that: LOT_MEASURES is lot_sqft, lot_width_ft and lot_depth_ft, and the
+  # zone minimum is a property of the district. It is left out rather than
+  # synthesised, and the reason it can be is that the two only disagree on a
+  # lot SMALLER than its own zone's minimum -- where 8.120 asks for more
+  # than Table 1, it is asking for more than OAR 660-046-0220(2)(e)(B) lets
+  # any Large City ask, and the state cap in `or/_state.yaml` already
+  # preempts it. Where the zone minimum is the lower of the two, Table 1 is
+  # the stricter city standard and is the one encoded.
+  # (or/multnomah/troutdale/8.development-standards.txt#L529-L533,L539-L542)
+  parking_min_per_unit:
+    spaces_total: 4
+    cite: TDC 9.010, Table 1, Triplex and Quadplex row, lot of 7,000 sq. ft. or greater
+    url: https://api.municode.com/PublicationPdfDownload/1813
+    retrieved: '2026-08-29'
+    quote: "or/multnomah/troutdale/9.parking.txt#L82,L87,L92-L93"
+    variants:
+      - spaces_total: 1
+        band: {measure: lot_sqft, less_than: 3000}
+        cite: TDC 9.010, Table 1, Triplex and Quadplex, lot size of less than 3,000 sq. ft.
+        url: https://api.municode.com/PublicationPdfDownload/1813
+        retrieved: '2026-08-29'
+        quote: "or/multnomah/troutdale/9.parking.txt#L87,L88"
+      - spaces_total: 2
+        band: {measure: lot_sqft, at_least: 3000, less_than: 5000}
+        cite: TDC 9.010, Table 1, Triplex and Quadplex, lot size of less than 5,000 sq. ft.
+        url: https://api.municode.com/PublicationPdfDownload/1813
+        retrieved: '2026-08-29'
+        quote: "or/multnomah/troutdale/9.parking.txt#L87,L89"
+      - spaces_total: 3
+        band: {measure: lot_sqft, at_least: 5000, less_than: 7000}
+        cite: TDC 9.010, Table 1, Triplex and Quadplex, lot size between 5,000 and 6,999 sq. ft.
+        url: https://api.municode.com/PublicationPdfDownload/1813
+        retrieved: '2026-08-29'
+        quote: "or/multnomah/troutdale/9.parking.txt#L87,L90-L91"
+  # And no ceiling. Every bullet of the Triplex and Quadplex row prints "No
+  # maximum" in the right-hand column, and the column is a real ceiling
+  # elsewhere in the same table -- 6.2 spaces per 1,000 sq ft for general
+  # retail, 19.1 for a restaurant -- so the words are a reading of an
+  # occupied column, not an empty cell. `exempt` rather than absence because
+  # a maximum has to beat the broader layers rather than fall through them.
+  parking_max_per_unit:
+    exempt: true
+    cite: TDC 9.010, Table 1, Triplex and Quadplex row, Maximum column
+    url: https://api.municode.com/PublicationPdfDownload/1813
+    retrieved: '2026-08-29'
+    quote: "or/multnomah/troutdale/9.parking.txt#L82,L87,L92"
+  # HOW BIG. 9.115 states both halves in one section and states them for
+  # everybody: "The following off-street parking development and maintenance
+  # shall apply in all cases". A. Size: nine by eighteen, with the area
+  # printed beside it as its own check -- 162 square feet is 9 x 18 and
+  # nothing else. B. Aisles: twenty-five feet at ninety degrees.
+  #
+  # TWENTY-FIVE IS THE WIDEST AISLE IN THIS CORPUS. Fairview asks 24, West
+  # Linn and Gresham 23, Portland 20. Troutdale asks one figure and does not
+  # split it by direction, so a one-way rear court here is dimensioned off
+  # the two-way number the way Fairview's and West Linn's are -- 18 + 25 +
+  # 18 is a 61-foot court before any driveway reaches it.
+  #
+  # NOT ENCODED: 9.115(A)(2), compact spaces of eight by sixteen for up to
+  # thirty-five percent of the required spaces. A loosening, and one that
+  # would have to be elected on a plan rather than read off a parcel. The
+  # standard row is what a placement is screened against, which is the same
+  # cut Fairview and Gresham take.
+  parking_stall_width_ft:
+    value: 9
+    cite: TDC 9.115(A)(1), Design Requirements for Off-Street Parking, standard size
+    url: https://api.municode.com/PublicationPdfDownload/1813
+    retrieved: '2026-08-29'
+    quote: "or/multnomah/troutdale/9.parking.txt#L574,L576,L578,L580-L581"
+  parking_stall_depth_ft:
+    value: 18
+    cite: TDC 9.115(A)(1), Design Requirements for Off-Street Parking, standard size
+    url: https://api.municode.com/PublicationPdfDownload/1813
+    retrieved: '2026-08-29'
+    quote: "or/multnomah/troutdale/9.parking.txt#L574,L576,L578,L580-L581"
+  parking_aisle_one_way_ft:
+    value: 25
+    cite: TDC 9.115(B)(1), aisles, ninety degree parking
+    url: https://api.municode.com/PublicationPdfDownload/1813
+    retrieved: '2026-08-29'
+    quote: "or/multnomah/troutdale/9.parking.txt#L574,L576,L592,L594"
+  parking_aisle_two_way_ft:
+    value: 25
+    cite: TDC 9.115(B)(1), aisles, ninety degree parking
+    url: https://api.municode.com/PublicationPdfDownload/1813
+    retrieved: '2026-08-29'
+    quote: "or/multnomah/troutdale/9.parking.txt#L574,L576,L592,L594"
+  # HOW THE CARS GET THERE. 9.080(A): a driveway to an off-street parking
+  # area is improved from the public roadway at 20 feet for a two-way drive
+  # and 12 for a one-way. (B) drops it to 10 for "a single-family or
+  # two-family dwelling" -- a quadplex is neither, so the pod takes (A). That
+  # ties Happy Valley for the second-widest side lane in this corpus, four
+  # short of West Linn's 24 and eight more than the 12-foot design lane an
+  # unread city falls back to.
+  #
+  # NOT ENCODED: the second half of the same sentence, "but in either case
+  # not less than the full width of the approach for the first twenty (20)
+  # feet of the driveway". That is a relation between two fields rather than
+  # a value in either -- it says the drive must widen to meet whatever
+  # approach is built, up to the 32 feet 8.120.C.5.a allows. The site plan
+  # draws the approach and the lane at one width, which satisfies it, but
+  # nothing in the model checks that they agree.
+  driveway_min_width_two_way_ft:
+    value: 20
+    cite: TDC 9.080(A), driveway to an off-street parking area, two-way drive
+    url: https://api.municode.com/PublicationPdfDownload/1813
+    retrieved: '2026-08-29'
+    quote: "or/multnomah/troutdale/9.parking.txt#L436,L438-L439"
+  driveway_min_width_one_way_ft:
+    value: 12
+    cite: TDC 9.080(A), driveway to an off-street parking area, one-way drive
+    url: https://api.municode.com/PublicationPdfDownload/1813
+    retrieved: '2026-08-29'
+    quote: "or/multnomah/troutdale/9.parking.txt#L436,L438-L440"
+  # The curb cut, and it is the state model code's number: all approaches
+  # together, thirty-two feet per frontage, measured at the property line.
+  # Word for word what Wilsonville 4.113(.14)D.4 and Clackamas ZDO 845.02
+  # state, because all three adopted the same model.
+  #
+  # Troutdale states NO minimum approach width. Read and absent, not skipped:
+  # 9.080 dimensions the driveway and 8.120.C.5 dimensions only the ceiling,
+  # so unlike West Linn a pod here may shrink its opening to whatever the
+  # lane needs.
+  #
+  # NOT ENCODED: 8.120.C.5.b and .c, which decide how many approaches and
+  # where. Separated approaches "must meet the jurisdiction's driveway
+  # spacing standards applicable to local streets"; a lot with more than one
+  # frontage "must access the street with the lowest transportation
+  # classification", takes access from an improved alley if it abuts one, and
+  # on collectors or arterials meets a different standard again. Street
+  # classification, alley presence and frontage count are none of them
+  # measured for any parcel in this corpus -- the same three site facts that
+  # refused West Linn 48.025(B)(3)(a) and Gresham's alley branch.
+  driveway_approach_max_width_ft:
+    value: 32
+    cite: TDC 8.120.C.5.a, total width of all driveway approaches per frontage
+    url: https://api.municode.com/PublicationPdfDownload/1813
+    retrieved: '2026-08-29'
+    quote: "or/multnomah/troutdale/8.development-standards.txt#L501,L606-L608"
+  # WHERE THE PARKING MAY SIT. 8.120.C.4.b bans garages and off-street
+  # parking between a building and a public street, then excepts a parking
+  # area "separated from the street property line by a dwelling" or one whose
+  # combined width with all garages and maneuvering areas is at most half the
+  # street frontage. The ban is therefore NOT absolute the way Portland's
+  # 33.266.120.C.1.a and Milwaukie's 19.505.3.D.4.a are, and encoding it as
+  # one would invent a red on a lot the code lets through -- so the fifty
+  # percent is what this file carries and `parking_front_prohibited` stays
+  # empty.
+  #
+  # The cross-reference in (b) is broken: it excepts compliance with
+  # "Subsections a. and b. of this Subsection C.4.", where a. is "garages and
+  # carports are not required" and b. is the ban itself. The exceptions are
+  # plainly c. and d. -- Troutdale re-lettered the state model code's a/b
+  # pair to c/d and did not update the pointer. Fairview, Wilsonville and
+  # unincorporated Clackamas carry the same two sentences correctly
+  # numbered, which is how the reading is certain rather than charitable.
+  parking_area_max_frontage_pct:
+    value: 50
+    cite: TDC 8.120.C.4.d, combined width of garages, parking and maneuvering areas
+    url: https://api.municode.com/PublicationPdfDownload/1813
+    retrieved: '2026-08-29'
+    quote: "or/multnomah/troutdale/8.development-standards.txt#L501,L596,L598,L603-L604"
+  # AND HOW FAR BACK. 9.095(D): "Parking areas shall be set back from a lot
+  # line adjoining a street the same distance as required building setbacks."
+  # No number of its own -- the ten feet printed in the same sentence is an
+  # industrial-district floor and reaches none of the zones that permit this
+  # building -- so it is carried with `same_as` and lives on the zones, where
+  # the setback it borrows lives. (B) says the same thing the other way
+  # round: required parking may not sit in a required front or street-side
+  # setback, "except in industrial districts". Nobody types a number.
+  #
+  # What it comes to for this building: nothing, the same as Happy Valley.
+  # The envelope the site plan lays out in is already inset by the front
+  # setback, so a rear court clears it on every lot in the city. It is here
+  # because it is the law and because the check it feeds is general.
+  #
+  # NOT ENCODED: 9.095(A), "Parking areas which abut a residential zoning
+  # district shall meet the building setback of the most restrictive
+  # adjoining residential zoning district." That is the NEIGHBOUR's standard
+  # applying to our lot; `same_as` reaches another field in the same zone,
+  # not another zone's field, and what would answer it is the zoning of the
+  # parcel next door. Third instance of this exact shape -- Happy Valley
+  # 16.43.030.E.3 and Portland's commercial front setback are the others.
+  # (or/multnomah/troutdale/9.parking.txt#L524,L526)
+  #
+  # NOT ENCODED: the CFEC waiver, and it is the largest thing in this chapter
+  # left on the table. 9.005 and 9.035 both say it: "no off-street parking is
+  # required for developments on a lot or parcel that includes lands within
+  # one-half (1/2) mile of a frequent transit corridor", nor within the Town
+  # Center Overlay District or a quarter mile of its boundary. A lot inside
+  # either owes ZERO stalls and Table 1 does not reach it. Both are read off
+  # a map -- the City of Troutdale CFEC Parking Delineated Area Map -- that
+  # no parcel record in this corpus carries, so every Troutdale lot is
+  # screened against the non-CFEC table. That is the conservative direction
+  # and it is also, on the lots it is wrong about, four stalls of site the
+  # pod does not owe.
+  # (or/multnomah/troutdale/9.parking.txt#L45-L51,L186,L188-L192)
+  #
+  # NOT ENCODED: 9.040's reductions and 8.120.B.3.b's on-street credit. Ten
+  # percent off within 400 feet of a transit route with a stop built; one
+  # space per hundred square feet of transit amenity; one space for each
+  # abutting on-street parallel space at least 22 feet long. All three loosen
+  # and all three turn on facts about the street rather than the lot.
+  # (or/multnomah/troutdale/9.parking.txt#L195-L219,
+  #  or/multnomah/troutdale/8.development-standards.txt#L547-L558)
+  #
+  # READ AND NOT A CONSTRAINT ON THIS BUILDING. 9.055(A) landscaping and (B)
+  # bay planters both start at twenty spaces and the pod parks eight.
+  # 9.060(C) and (D) -- solar panels or forty percent tree canopy -- start at
+  # half an acre of new surface parking. 9.090 bicycle parking and 9.050 EV
+  # conduit are written for multi-family developments, which by 1.020 means
+  # five units or more. 9.120 loading is commercial and industrial. 9.085(B)
+  # requires that a group of more than three spaces be served by aisles or
+  # turnarounds "so that all vehicles may enter the street in a forward
+  # manner" -- which is what the rear-court layout draws, and the reason it
+  # draws it. And 8.120.B.1.b invalidates maximum lot coverage, minimum
+  # landscape area and minimum open space for a quadplex outright, which is
+  # why this layer reserves no open space: read, and voided by name.
+
 zones:
   MU-1:
     section: ["3.210", "3.220"]
@@ -241,6 +545,16 @@ zones:
         - value: 10
           when: [abuts_alley]
           quote: "or/multnomah/troutdale/3.zoning-districts.txt#L684,L689-L690,L696-L697"
+    # 9.095(D), stated as equal to the building setback -- see the note in
+    # `defaults:`. `same_as` resolves against the front setback above it, and
+    # the only figure the sentence carries is an industrial floor that does
+    # not reach this zone, so nothing is typed here.
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: TDC 9.095(D), parking set back from a street lot line by the required building setback
+      url: https://api.municode.com/PublicationPdfDownload/1813
+      retrieved: '2026-08-29'
+      quote: "or/multnomah/troutdale/9.parking.txt#L524,L529,L540"
     setback_garage_entrance_ft:
       # 20 feet "to the garage door of units with a driveway", stated only on
       # the without-alley-access line. The with-alley block prints a façade and
@@ -416,6 +730,16 @@ zones:
         - value: 0
           when: [abuts_nonresidential_zone]
           quote: "or/multnomah/troutdale/3.zoning-districts.txt#L668,L671,L673,L684,L689"
+    # 9.095(D), stated as equal to the building setback -- see the note in
+    # `defaults:`. `same_as` resolves against the front setback above it, and
+    # the only figure the sentence carries is an industrial floor that does
+    # not reach this zone, so nothing is typed here.
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: TDC 9.095(D), parking set back from a street lot line by the required building setback
+      url: https://api.municode.com/PublicationPdfDownload/1813
+      retrieved: '2026-08-29'
+      quote: "or/multnomah/troutdale/9.parking.txt#L524,L529,L540"
     setback_side_ft:
       value: 20
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L668,L671-L674,L684,L689"
@@ -560,6 +884,16 @@ zones:
       # bare 10. The quote opens on the header row so the count is checkable.
       value: 10
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L328-L329"
+    # 9.095(D), stated as equal to the building setback -- see the note in
+    # `defaults:`. `same_as` resolves against the front setback above it, and
+    # the only figure the sentence carries is an industrial floor that does
+    # not reach this zone, so nothing is typed here.
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: TDC 9.095(D), parking set back from a street lot line by the required building setback
+      url: https://api.municode.com/PublicationPdfDownload/1813
+      retrieved: '2026-08-29'
+      quote: "or/multnomah/troutdale/9.parking.txt#L524,L529,L540"
     setback_side_ft:
       value: 10
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L330"
@@ -691,6 +1025,16 @@ zones:
       # bare 10. The quote opens on the header row so the count is checkable.
       value: 10
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L328-L329"
+    # 9.095(D), stated as equal to the building setback -- see the note in
+    # `defaults:`. `same_as` resolves against the front setback above it, and
+    # the only figure the sentence carries is an industrial floor that does
+    # not reach this zone, so nothing is typed here.
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: TDC 9.095(D), parking set back from a street lot line by the required building setback
+      url: https://api.municode.com/PublicationPdfDownload/1813
+      retrieved: '2026-08-29'
+      quote: "or/multnomah/troutdale/9.parking.txt#L524,L529,L540"
     setback_side_ft:
       value: 7.5
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L330"
@@ -822,6 +1166,16 @@ zones:
       # bare 10. The quote opens on the header row so the count is checkable.
       value: 10
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L328-L329"
+    # 9.095(D), stated as equal to the building setback -- see the note in
+    # `defaults:`. `same_as` resolves against the front setback above it, and
+    # the only figure the sentence carries is an industrial floor that does
+    # not reach this zone, so nothing is typed here.
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: TDC 9.095(D), parking set back from a street lot line by the required building setback
+      url: https://api.municode.com/PublicationPdfDownload/1813
+      retrieved: '2026-08-29'
+      quote: "or/multnomah/troutdale/9.parking.txt#L524,L529,L540"
     setback_side_ft:
       value: 5
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L321-L322,L330"
@@ -927,6 +1281,16 @@ zones:
     setback_front_ft:
       value: 20
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L427"
+    # 9.095(D), stated as equal to the building setback -- see the note in
+    # `defaults:`. `same_as` resolves against the front setback above it, and
+    # the only figure the sentence carries is an industrial floor that does
+    # not reach this zone, so nothing is typed here.
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: TDC 9.095(D), parking set back from a street lot line by the required building setback
+      url: https://api.municode.com/PublicationPdfDownload/1813
+      retrieved: '2026-08-29'
+      quote: "or/multnomah/troutdale/9.parking.txt#L524,L529,L540"
     setback_side_ft:
       value: 5
       quote: "or/multnomah/troutdale/3.zoning-districts.txt#L352"

@@ -213,12 +213,22 @@ def _printed(value: object) -> object:
         # which is the only figure its own sentence carries. HV 16.43.030.E.4
         # prints ten and comes to twenty-two, and the twenty-two is printed in
         # the district table, where the setback it borrows is checked against
-        # its own quote. A borrowing with no floor prints no figure at all and
-        # falls through to the resolved number, which is the honest outcome:
-        # there is nothing on that page for a reader to find.
+        # its own quote.
+        #
+        # A borrowing with NO floor carries no figure at all, and `None` is
+        # the right answer rather than a fallthrough to the resolved number.
+        # Troutdale 9.095(D) is the whole sentence -- "Parking areas shall be
+        # set back from a lot line adjoining a street the same distance as
+        # required building setbacks" -- and the ten feet printed beside it
+        # belongs to industrial districts. Asking a reader to find the 15 that
+        # sentence comes to in MU-2 is asking them to find a number it does
+        # not contain, which is the thing this check exists to stop. The
+        # citation is still opened and still staleness-checked; what is
+        # verified is that the sentence is where the file says it is, exactly
+        # as for `measured_on` and `qualified_by` below. The figure is checked
+        # on the lender's own row, in the same zone, where it is printed.
         else value.floor_ft
         if getattr(value, "same_as", None) is not None
-        and getattr(value, "floor_ft", None) is not None
         # A step-back ADDS to the district's own setback rather than replacing
         # it, so the district table is checked against the figure the district
         # table prints. The other half gets its own row.

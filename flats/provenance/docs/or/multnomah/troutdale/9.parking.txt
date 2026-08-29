@@ -1,0 +1,682 @@
+OFF-STREET PARKING AND LOADING*
+
+9.005                Off-Street Parking Required.
+9.010                Off-Street Parking Space Requirements.
+9.030                Other Developments Not Listed.
+9.035                Off-Street Parking Near Frequent Transit Corridor and Town Center Overlay Dis-
+                     trict.
+9.040                Reduction of Required Parking Spaces.
+9.045                Parking Regulations for Carpool/Vanpool.
+9.050                Electrical Vehicle Conduit.
+9.055                Landscaping and Screening.
+9.060                Vehicle Parking Access.
+9.065                Drainage.
+9.070                Lighting.
+9.075                Shared Use of Parking Facilities.
+9.080                Driveways.
+9.085                On-Site Circulation.
+9.090                Bicycle Parking Facilities.
+9.095                Setbacks.
+9.100                Truck Parking.
+9.105                Accessible Parking Facilities.
+9.110                 Off-Street Parking Restrictions.
+9.115                 Design Requirements for Off-Street Parking.
+9.120                Loading Facilities.
+9.125                Off-Street Parking Plan.
+9.130                Off-Street Parking Construction.
+
+*Editor’s note—Ord. No. 899, § 2(Att. A), adopted June 24, 2025, amended Ch. 9 in its entirety to
+read as herein set out. Former Ch. 9, §§ 9.005—9.125, pertained to similar subject matter, and
+derived from Ord. No. 894, § 5, adopted Dec. 10, 2024.
+
+Supp. No. 1                                                TDC9-1
+
+                                   OFF-STREET PARKING AND LOADING                                                   9.010
+
+9.005  Off-Street Parking Required.
+
+Where square feet are specified, the area measured shall be the gross leasable building floor area
+that is primary to the function of the proposed use. Where employees are specified, persons counted
+shall be those working on the premises, including proprietors, during the largest shift at peak season.
+
+For purposes of this Chapter, in computing the total number of required off-street parking spaces, if
+the total contains a fraction, then the number shall be rounded up to the next higher whole number.
+
+Off-street parking and loading space shall be provided for all developments on lots or parcels, not
+within the CFEC Parking Delineated Area. Per OAR 660-012-0440 Parking Reform Near Transit
+Corridors, no off-street parking is required for developments on a lot or parcel that includes lands
+within one-half (½) mile of a frequent transit corridor. Climate Friendly Areas, no off-street parking is
+required for developments on a lot or parcel within the Town Center Overlay District, including lands
+within one-quarter (¼) mile from the district boundary line (See City of Troutdale CFEC Parking
+Delineated Area Map).
+
+The provision for, and maintenance of, off-street parking and loading facilities shall be a continuing
+obligation of the property owner. No building permit, or any other required permit for a structure or
+use under this or any other applicable rule, ordinance, or regulation, shall be issued with respect to
+off-street parking and loading, or land served by such facilities, until satisfactory evidence is
+presented that the property is, and will remain, available for the designated use as a parking or
+loading facility.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+9.010  Off-Street Parking Space Requirements.
+
+The City of Troutdale has been required to reduce parking regulations for certain areas of the city to
+comply with the State of Oregon's Climate Friendly and Equitable Communities (CFEC) regulations.
+For areas of the city with reduced parking regulations due to CFEC, the Planning Department can
+provide off-street parking standards that are recommended but not required per this Subsection.
+      A.     Required parking spaces may be provided off-site, within two thousand (2,000) feet of
+             pedestrian travel of a site. If any non-loading parking is provided on site, all required
+             parking for people with disabilities shall be on site. If all parking is off-site, parking for
+             people with disabilities must be located within the shortest possible distance of an
+             accessible entrance via an accessible path and no greater than two hundred (200) feet
+             from that entrance.
+
+Table 1: Parking standards for lots or parcels not within the CFEC Delineated Area (see CFEC
+Parking Delineated Area Map). Parking spaces are based on one (1) per one thousand (1,000) sq.
+ft. of gross leasable area primary to the functional use, per Metro Title 3; ADU standards are per OAR
+Division 46.
+
+Supp. No. 1                                             TDC9-3
+9.010                                      TROUTDALE DEVELOPMENT CODE
+
+Residential Land Use                      Minimum                                  Maximum
+Accessory Dwelling Unit (ADU)      None                                        None
+Single-family detached and                      1 space per dwelling unit         No maximum
+manufactured home on lot
+Duplex                                             2 spaces total                           No maximum
+Triplex and Quadplex
+• Lot size of less than 3,000 sq. ft.  1 space total                             No maximum
+• Lot size of less than 5,000 sq. ft.  2 spaces total                           No maximum
+• Lot size between 5,000 sq. ft.                3 spaces total                           No maximum
+and 6,999 sq. feet
+• Lot size of 7,000 sq. ft. or                  3 spaces total per triplex                 No maximum
+greater                                         4 spaces total per quadplex
+Townhome                                      1 space per dwelling unit
+Cottage Cluster                               0 space per unit if the floor                No maximum
+                                                area is less than 1,000 sq. ft.
+                                                1 space per unit if the floor
+                                                area is over 1,000 sq. ft.
+Multi-family dwelling                        1 space per dwelling unit1        No maximum
+Affordable units, as defined in                 None                                        No maximum
+OAR 660-039-0010
+Residential units smaller than 750              None                                        No maximum
+sq. ft.
+Single room occupancy housing     None                                        No maximum
+Shared dwelling                              None                                        No maximum
+Public supported housing as                     None                                        No maximum
+defined in ORS 456.250
+Manufactured home park                1 space per dwelling unit         No maximum
+Facilities for people with                      None                                        No maximum
+disabilities as defined in ORS
+443.400
+Domestic violence, emergency,                   None                                        No maximum
+and transitional shelters
+ Commercial Land Use                    Minimum                                  Maximum
+General retail or personal service,             4.1 spaces per 1,000 sq. ft. of            6.2 spaces per 1,000 sq. ft. of
+including shopping centers and                  gross floor area                           gross floor area
+grocery stores
+General retail with bulky                       2 spaces per 1,000 sq. ft. of              3 spaces per 1,000 sq. ft. of
+merchandise, such as a furniture                gross floor area                           gross floor area
+or appliance store
+Eating and drinking establishment               10 spaces per 1,000 sq. ft. of             19.1 spaces per 1,000 sq. ft.
+without a drive-thru                            gross floor area                           of gross floor area
+
+Supp. No. 1                                                  TDC9-4
+                                     OFF-STREET PARKING AND LOADING                                                       9.010
+
+Commercial Land Use                    Minimum                                  Maximum
+Eating and drinking establishment              8 spaces per 1,000 sq. ft of             12.4 spaces per 1,000 sq. ft.
+with a drive-thru                              gross floor area                         of gross floor area
+Mobile food vendor                         See Section 5.100                    Food stands/food carts: N/A
+                                                                                        Food trucks: 1 per truck
+                                                                                        Kiosks: 12.4 spaces per
+                                                                                        1,000 sq. ft. of gross floor
+                                                                                        area
+Medical/dental office or clinic          3.9 spaces per 1,000 sq. ft. of                5.9 spaces per 1,000 sq. ft. of
+                                               gross floor area                         gross floor area
+General professional office or                 2.7 spaces per 1,000 sq. ft. of          4.1 spaces per 1,000 sq. ft. of
+financial institution                          gross floor area                         gross floor area
+Financial institution with a drive-            4.3 spaces per 1,000 sq. ft. of          6.5 spaces per 1,000 sq. ft. of
+thru                                           gross floor area                         gross floor area
+Personal services or minor                     4.3 spaces per 1,000 sq. ft. of          6.5 spaces per 1,000 sq. ft. of
+entertainment facility                         gross floor area                         gross floor area
+Auto, boat, or trailer sales, or               1 space per 1,000 sq. ft. of             2 spaces per 1,000 sq. ft. of
+nursery                                        gross floor area                         gross floor area
+Lodging facility or bed and                    1 space per guestroom/suite    2 spaces per guestroom/suite
+breakfast
+Service station                                0.5 space per 1,000 sq. ft. of           1 space per 1,000 sq. ft. of
+                                               gross lot area                           gross lot area
+Bowling alley                                   2 spaces per lane                     3 spaces per lane
+Major entertainment facility                   1 space per 4 seats or 1                 1.5 spaces per 4 seats or 1
+(theater, racetrack, stadium, or               space per 8-foot bench length            space per 8-foot bench length
+similar use)
+Major entertainment facility                   1 spaces per 100 sq. ft. of              1.5 spaces per 100 sq. ft. of
+(amusement park)                               recreation area                          recreation area
+ Institutional and Community
+Service Land Use                           Minimum                                  Maximum
+Child care facility as defined in              None                                        No maximum
+ORS 329A.250
+School (elementary or middle)        2 spaces per teacher               3 spaces per teacher
+School (high school, college, or               0.2 spaces per number of                 0.3 spaces per number of
+trade school)                                  students and staff                       students and staff
+Library or museum                          2.5 spaces per 1,000 sq. ft. of              3 spaces per 1,000 sq. ft. of
+                                               gross floor area, plus 1 space           gross floor area, plus 1.25
+                                               per 2 employees                          spaces per 2 employees
+Religious facility or mortuary           1 space per 4 seats or 1                       2 spaces per 4 seats or 2
+                                               space for 7 feet of bench                spaces for 7 feet of bench
+                                               length                                   length
+Hospital                                           1.5 spaces per bed                  2 spaces per bed
+
+Supp. No. 1                                                TDC9-5
+9.010                                      TROUTDALE DEVELOPMENT CODE
+
+Industrial Land Use                         Minimum                                  Maximum
+Storage, warehouse, or                      1 space per employee on the            1.5 spaces per employee on
+manufacturing establishment; air,           largest shift                          the largest shift
+rail, or trucking freight terminal
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+9.030  Other Developments Not Listed.
+
+Requirements for a building or development use not specified herein shall be determined based
+upon the requirements of comparable uses listed. The Director may refer any question of interpre-
+tation to the Planning Commission for determination.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+9.035  Off-Street Parking Near Frequent Transit Corridor and Town Center Overlay District.
+
+Per OAR 660-012-0440 Parking Reform Near Transit Corridors, no off-street parking is required for
+developments on a lot or parcel, including land within one-half (½) mile of a frequent transit corridor.
+Per OAR 660-012-0435 Climate Friendly Areas, no off-street parking is required for developments
+on a lot or parcel within the Town Center Overlay District, including lands within one-quarter (¼) mile
+from the district boundary line (See City of Troutdale CFEC Parking Delineated Area Map).
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+9.040  Reduction of Required Parking Spaces.
+
+A.     Any existing or proposed use subject to minimum off-street parking requirements and located
+      within four hundred (400) feet of an existing transit route may reduce the number of required
+      parking spaces by up to ten percent (10%) by providing a transit stop and related amenities,
+      including a public plaza, pedestrian sitting areas, or additional landscaping, provided such
+      landscaping does not exceed twenty-five percent (25%) of the total area dedicated for
+      transit-oriented uses.
+
+B.     Required parking spaces may be reduced at a ratio of one (1) parking space for each one
+      hundred (100) square feet of transit amenity space provided above and beyond the minimum
+      required by this Code.
+
+C.     Required off-street parking spaces may be reduced by one (1) parking space for every
+      on-street parallel parking space located adjacent to the subject site. For purposes of calculat-
+      ing the amount of adjacent onstreet parking spaces, the following applies:
+
+      1.     Adjacent shall mean on the same side and within the same block as the use.
+
+      2.     The minimum length of each on-street, parallel parking space shall be twenty-two (22)
+             feet.
+
+      3.     If a continuous section being measured contains a fractional portion of twenty-two (22)
+             feet, then the number of on-street spaces for that continuous section shall be rounded
+             down to the next lower whole number.
+
+Supp. No. 1                                             TDC9-6
+                                   OFF-STREET PARKING AND LOADING                                                9.050
+
+      4.     Breaks in the on-street parking for driveways or similar parking restrictions, such as fire
+             hydrants, shall not be counted.
+
+D.     Solar Panels or Wind Power. Development utilizing solar panels or wind power may reduce the
+      number of required parking spaces by one (1) parking space when three (3) kilowatts of
+      capacity in solar panels or wind power is proposed to be provided in a development.
+
+E.     Car Sharing. Development utilizing car-sharing parking may reduce the number of required
+      parking spaces by one (1) off-street parking space for each dedicated car-sharing space.
+      Dedicated car-sharing parking spaces shall count toward the minimum number of off-street
+      parking spaces required by the development.
+
+F.     Electric Vehicle Charging Station. A development that provides an electric vehicle charging
+      station may reduce the amount of required parking spaces by two (2) off-street parking spaces
+      for every electric vehicle charging station provided in a development. Parking spaces that
+      include electric vehicle charging while an automobile is parked shall count towards the
+      minimum number of off-street parking spaces required by the development.
+
+G.    Fully Accessible Parking. The amount of parking required shall be reduced by one (1) off-street
+      parking space for every two (2) units in a development that are fully accessible to people with
+      mobility disabilities.
+
+H.     Any reduction under Section 9.040.A—G above shall be cumulative and not capped.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+9.045  Parking Regulations for Carpool/Vanpool.
+
+A.     Designated employee parking areas in new developments with more than fifty (50) parking
+      spaces shall provide preferential parking for carpools and vanpools;
+
+      1.     Number/Marking. The greater of one (1) space or five percent (5%) of required employee
+             parking spaces shall be marked and signed for use as a carpool/vanpool space. The
+             carpool/vanpool spaces shall be clearly marked "Reserved—Carpool/Vanpool Only".
+
+      2.     Location. Designated carpool/vanpool spaces shall be the closest employee parking
+             spaces to the building entrance, normally used by employees, except for any accessible
+             spaces provided.
+
+B.     In applying Subsections A.1—2 above, access for emergency vehicles must be retained and
+      adequate parking for truck loading should be considered.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+9.050  Electrical Vehicle Conduit.
+
+A.     Electrical vehicle conduits for proposed multi-family residential or mixed use developments—
+      Proposed multi-family residential buildings with five (5) or more residential units and proposed
+      mixed use buildings consisting of privately owned commercial space and five (5) or more
+      residential dwelling units, shall provide sufficient electrical service capacity, as defined in ORS
+
+Supp. No. 1                                            TDC9-7
+9.050                                      TROUTDALE DEVELOPMENT CODE
+
+      455.417, to accommodate no less than forty percent (40%) of all vehicle parking spaces.
+      Dwelling units in townhouses are not included for purposes of determining the applicability of
+      this regulation.
+
+B.     For proposed Non-Residential Development under private ownership—Each building for a
+      proposed non-residential development, under private ownership, shall provide electrical
+      service capacity at no less than twenty percent (20%) of the vehicle parking spaces in the
+      garage or parking area for the building. Fractional numbers derived from a calculation of the
+      vehicle parking spaces must be rounded up to the nearest whole number.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+9.055  Landscaping and Screening.
+
+A.     Except for a residential development which has landscaped yards, parking areas containing
+      more than twenty (20) vehicle spaces shall include landscaping to cover not less than ten
+      percent (10%) of the area devoted to parking facilities. The landscaping shall be uniformly
+      distributed throughout the parking area and may consist of trees, shrubs, or groundcover.
+
+B.     Parking areas shall be divided into bays of not more than twenty (20) parking spaces in parking
+      areas with twenty (20) or more spaces. Between, and at the end of each parking bay, there
+      shall be planters which have a minimum width of five (5) feet and be at least seventeen (17) feet
+      in length. Each planter shall contain one (1) major structural tree and groundcover which has
+      been deemed appropriate by the Director. Truck parking and loading areas are exempt from
+      this requirement.
+
+C.     Parking area setbacks shall be landscaped with major trees, shrubs, and groundcover as
+      specified in Chapter 11, Landscaping and Screening, of this Code.
+
+D.     Wheel stops, bumper guards, or other methods to protect landscaped areas shall be utilized.
+      No vehicles may project over a property line. No vehicle shall overhang a public right-of-way,
+      sidewalk, or landscaped area unless adequate area is provided for safe pedestrian circulation.
+
+E.     Fences, walls, or hedges shall not be placed within front or street side setback areas except at
+      the street side edge of parking lots when allowed within setbacks.
+
+F.     Where parking adjoins a residential zoning district, there shall be a sight-obscuring screen
+      which is at least eighty percent (80%) opaque when viewed horizontally from between two (2)
+      and eight (8) feet above average ground level. The screening shall be composed of materials
+      which are an adequate size so as to achieve the required degree of screening within three (3)
+      years after installation.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+9.060  Vehicle Parking Access.
+
+A.     Parking areas, driveways, aisles, and turnarounds shall be paved with concrete, asphalt, or
+      comparable impervious surfacing. Porous concrete, grasscrete, or comparable porous paving
+      surfacing may be used in place of impervious surfacing to reduce stormwater runoff, when
+
+Supp. No. 1                                            TDC9-8
+                                   OFF-STREET PARKING AND LOADING                                                 9.060
+
+      approved by the Director. Gravel and similar erodible surfaces are not acceptable. Specific
+      locations and types of vehicle parking spaces (carpool, compact, etc.) shall be indicated on
+      submitted plans and located to the side or rear of buildings where feasible.
+
+B.     Existing development may redevelop portions of designated parking areas for multi-modal
+      facilities (transit shelters, park and ride, bicycle parking, etc.), subject to meeting all other
+      applicable standards. Access for emergency vehicles must be retained and adequate parking
+      for truck loading shall be considered.
+
+C.     Any new development that includes more than one-half (½) acre of new off-street surface
+      parking on a lot or parcel shall provide one of the provisions below. The new surface parking
+      area shall be measured based on the perimeter of all new off-street spaces, maneuvering
+      lanes, and maneuvering areas, including driveways and drive aisles.
+      1.     Installation of solar panels with a generation capacity of at least one-half (½) kilowatt per
+             parking space. Panels may be located anywhere on the development site. In lieu of
+             installing solar panels on the property, the developer may pay $1,500 per new parking
+             space (per OAR 660-12-0405(1).(B)) located on the site into a city fund dedicated to
+             equitable solar or wind energy development or a fund at the Oregon Department of
+             Energy designated for such purpose; or
+      2.     Take action to comply with Green Energy Technology per OAR 330-135-0010; or
+
+      3.     Provide tree canopy covering at least forty percent (40%) of the new parking lot area at
+             maturity, but no more than fifteen (15) years after planting.
+
+D.     New development that includes more than one-half (½) acre of new surface parking shall
+      provide either trees along driveways or a minimum of forty percent (40%) tree canopy coverage
+      over parking areas. Developments are not required to provide trees along drive aisles. The tree
+      spacing and species planted must be designed to maintain continuous canopy, except when
+      interrupted by driveways, drive aisles, and other site design considerations; and
+
+E.     In applying Subsections C. and D. above, the following shall apply:
+
+      1.     A tree canopy plan shall be developed in coordination with the local electric utility,
+             including pre-design, design, building, and future maintenance phases.
+      2.     Trees must be planted and maintained to maximize their root health and chances for
+             survival. This includes having ample high-quality soil, space for root growth, and reliable
+             irrigation according to the needs of the species. Trees should be planted in continuous
+             trenches where possible. The minimum standards for planting and tree care should be no
+             lower than the current American National Standards Institute A300 standards.
+
+F.     Conversion and redevelopment of underutilized parking areas for other uses is allowed. The
+      City may allow the development of underutilized parking areas for permitted uses in the
+      applicable zone and the conversion of on-street parking for green infrastructure or bike corrals.
+      Underutilized shall mean any portion of the parking area that remains mostly vacant throughout
+      most of the year (excluding special events or peak periods). A study shall accompany any
+      request for parking conversion and parking area redevelopment that demonstrates, to the
+
+Supp. No. 1                                            TDC9-9
+9.060                                      TROUTDALE DEVELOPMENT CODE
+
+      satisfaction of the City, that the elimination of the existing parking will have no detrimental
+      effects that cannot be mitigated by the applicant on the property or surrounding properties. This
+      includes, but is not limited to, the possibility that the elimination of parking areas may shift the
+      need for parking onto neighboring properties or cause any other negative impacts to surround-
+      ing properties.
+
+G.    Parking lots more than three (3) acres in size intended for use by the general public shall
+      provide street-like features along driveways, including curbs, pedestrian and bicycle facilities,
+      street trees or planting strips.
+
+H.     Temporary overflow parking in conjunction with community events, special events, events of
+      citywide interest, or sporting events, is allowed on an unpaved parking area on a parcel of at
+      least one-half (½) acre in size, provided such parking does not occur within the Vegetation
+      Corridor and Slope District. If a fee is charged for parking, it shall not be considered a
+      commercial parking lot for purposes of zoning compliance.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+9.065  Drainage.
+
+Parking areas, aisles, and turnarounds shall have provisions made for the on-site collection of
+drainage waters to eliminate sheet flow of such waters onto sidewalks, public rights-of-way, and
+abutting private property.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+9.070  Lighting.
+
+Artificial lighting shall be provided in all required off-street parking areas. Lighting shall be deflected
+so as not to shine directly into adjoining dwellings or other types of living units and so as not to create
+a hazard to the public use of a street. Lighting shall be provided in a bicycle parking area so that all
+facilities are thoroughly illuminated and visible from adjacent sidewalks or motor vehicle parking lots
+during all hours of use. Lighting fixtures shall also comply with the requirements of Troutdale
+Municipal Code, Chapter 8.26.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+9.075  Shared Use of Parking Facilities.
+
+A.     Shared parking shall meet the minimum parking requirements per Table 1 in Section 9.010.
+      Two (2) or more uses or, structures on multiple parcels of land may utilize jointly the same
+      parking and loading spaces when the peak hours of operation do not substantially overlap,
+      provided that satisfactory evidence is presented to the City, in the form of deeds, leases, or
+      contracts, clearly establishing the joint use.
+
+B.     Shared parking is allowed if the application can show that the combined peak use is available
+      by a parking study that demonstrates:
+
+      1.     There is a sufficient number of parking spaces to accommodate the requirements of the
+             individual businesses; or
+
+Supp. No. 1                                             TDC9-10
+                                   OFF-STREET PARKING AND LOADING                                                  9.090
+
+      2.     That the peak hours of operation of such establishments do not overlap, and
+      3.     The applicants shall record a shared parking use agreement establishing the shared
+             parking use. The applicant shall provide the city with a copy of the recorded shared
+             parking use agreement. The shared parking use agreement can be terminated if all
+             parties demonstrate to the city that the parking is no longer needed to meet minimum
+             parking requirements.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+9.080  Driveways.
+
+A.     A driveway to an off-street parking area shall be improved from the public roadway to the
+      parking area a minimum width of twenty (20) feet for a two-way drive or twelve (12) feet for a
+      one-way drive, but in either case not less than the full width of the approach for the first twenty
+      (20) feet of the driveway. The improvement shall be constructed to the standards for private
+      drives.
+B.     A driveway for a single-family or two-family dwelling shall have a minimum width of ten (10)
+      feet.
+
+C.     Driveways, aisles, turnaround areas, and ramps shall have a minimum vertical clearance of
+      twelve (12) feet for their entire length and width, but such clearance may be reduced in parking
+      structures.
+D.     Driveway approaches shall be paved with concrete surfacing constructed to City standards. If
+      a street is not paved, the approach may be maintained to the same standard as the street until
+      the street is paved.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+9.085  On-Site Circulation.
+A.     Groups of more than three (3) parking spaces shall be permanently marked.
+
+B.     Except for a single-family or two-family dwelling, groups of more than three (3) parking spaces
+      shall be provided with adequate aisles or turnaround areas so that all vehicles may enter the
+      street in a forward manner. No backing movements or other maneuvering shall be permitted
+      within a street right-of-way other than an alley.
+C.     Pedestrian walkways, separation, and differentiation of materials in parking lots three (3) acres
+      or larger intended for public use shall be provided pursuant to Section 8.030 of this Code.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+9.090  Bicycle Parking Facilities.
+Multi-family developments; industrial, commercial and community service uses; transit transfer
+stations; and park and ride lots, shall meet the following standards for bicycle parking facilities:
+      A.     Number/Type.
+             1.     The required minimum number of short-term bicycle parking spaces (stays of less
+                    than four (4) hours) shall be five percent (5%) of the total number of automobile
+
+Supp. No. 1                                            TDC9-11
+9.090                                      TROUTDALE DEVELOPMENT CODE
+
+                    parking spaces provided for the use. In no case shall less than one (1) bicycle
+                    parking space be provided even when no automobile parking spaces are being
+                    provided.
+             2.     The required number of long-term bicycle parking spaces (stays of more than four
+                    (4) hours and all-day/monthly) shall be three percent (3%) of the total number of
+                    vehicle parking spaces provided for the use and fractions rounded down.
+             3.     For transit centers, high capacity transit stations, inter-city bus and rail stations, and
+                    park-and-ride lots, at least eight (8) long-term and at least two (2) short-term bicycle
+                    parking spaces are required. For other major transit stops (frequent-service bus
+                    stops) at least two (2) short-term spaces are required.
+
+      B.     Location.
+             1.     Bicycle parking shall be located on-site, convenient to building entrances, and have
+                    direct access to both the public right-of-way and to the main entrance of the
+                    principal use.
+
+             2.     For facilities with multiple buildings or parking lots, bicycle parking shall be located
+                    in areas of greatest use and convenience to bicyclists.
+             3.     Bicycle parking may be provided within the public right-of-way in areas without
+                    building setbacks, subject to approval of the appropriate governing official and
+                    provided it meets the other bicycle parking requirements.
+
+      C.     Parking Space Dimensions. Each required bicycle parking space shall be at least two and
+             one-half (2 ½) feet by six (6) feet, and when covered, provide vertical clearance of at least
+             seven (7) feet. An access aisle of at least five (5) feet wide shall be provided and
+             maintained beside or between each row of bicycle parking. Vertical or upright bicycle
+             storage structures are exempted from the parking space length standard.
+
+      D.     Parking Facilities. Bicycle parking facilities shall offer security. Long-term bicycle parking
+             shall be in the form of a lockable enclosure, a designated bicycle storage area inside a
+             building on-site, a covered rack, or another form of secure parking where the bicycle can
+             be stored, as approved by the Director. Short-term bicycle parking shall be in the form of
+             a stationary object (i.e., a "rack") or other approved structure, covered or uncovered, to
+             which the bicycle can be locked. Bicycle racks shall be securely anchored to the ground
+             or to a structure and shall be designed to hold bicycles securely by means of the frame.
+             Bicycle parking facilities shall be constructed so as to not obstruct walkways.
+
+      E.     Signing. Where bicycle parking facilities are not directly visible and obvious from the
+             public right-of-way, entry and directional signs shall be provided to direct bicyclists from
+             the public right-of-way to the bicycle parking facility.
+
+      F.     Exemptions. Temporary street-side sales and temporary uses, such as fireworks stands
+             and Christmas tree sales, and single-family and two-family residences, are exempt from
+             these standards.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+Supp. No. 1                                             TDC9-12
+                                    OFF-STREET PARKING AND LOADING                                                    9.110
+
+9.095  Setbacks.
+
+A.     Parking areas which abut a residential zoning district shall meet the building setback of the
+      most restrictive adjoining residential zoning district.
+
+B.     Required parking shall not be located in a required front or side yard setback area abutting a
+      public street except in industrial districts.
+
+C.     In industrial districts, when greater setbacks are required for structures, parking lots may be
+      within twenty (20) feet of any front, side street, or rear property line and within five (5) feet of any
+      side property line. There shall be a sight-obscuring screen which is at least eighty percent
+      (80%) opaque when viewed horizontally from between two (2) and eight (8) feet above eighty
+      percent (80%) average ground level. The screening shall be composed of materials which are
+      an adequate size so as to achieve the required degree of screening within three (3) years after
+      installation.
+
+D.     Parking areas shall be set back from a lot line adjoining a street the same distance as required
+      building setbacks. Regardless of other provisions, a minimum setback of ten (10) feet shall be
+      provided along the property fronting on a public street in an industrial district. The setback area
+      shall be landscaped as provided in this Code.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+9.100  Truck Parking.
+
+In residential zoning districts, no overnight parking of trucks or other equipment on wheels or tracks
+exceeding one (1) ton capacity used in the conduct of a business activity shall be permitted, except
+vehicles and equipment necessary for farming and truck gardening on the premises where such use
+is permitted.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+9.105  Accessible Parking Facilities.
+
+The required number of accessible parking spaces shall be in conformance with the applicable
+provisions of the State of Oregon Structural Specialty Code. If all proposed parking is off-site, the
+off-site parking for people with disabilities must be located within the shortest possible distance to an
+entrance via an accessible path.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+9.110  Off-Street Parking Restrictions.
+
+A.     Parking spaces in a public street, including an alley, shall not be considered required parking.
+
+B.     Required parking shall be available for parking of operable passenger vehicles of residents,
+      customers, and employees only, and shall not be used for the storage or display of vehicles or
+      materials.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+Supp. No. 1                                             TDC9-13
+9.115                                      TROUTDALE DEVELOPMENT CODE
+
+9.115  Design Requirements for Off-Street Parking.
+
+The following off-street parking development and maintenance shall apply in all cases:
+
+      A.     Size.
+
+             1.     The standard size of a parking space shall be nine (9) feet by eighteen (18) feet (one
+                    hundred sixty-two (162) square feet).
+
+             2.     The compact size of a parking space shall be eight (8) feet by sixteen (16) feet (one
+                    hundred twenty-eight (128) square feet). Up to thirty-five percent (35%) of required
+                    parking spaces may be compact spaces.
+             3.     Accessible parking spaces shall be in conformance with the State of Oregon
+                    Structural Specialty Code, Chapter 11 Accessibility.
+
+             4.     For parallel parking, the length of the parking space shall be increased to twenty-
+                    two (22) feet.
+
+      B.     Aisles shall not be less than:
+
+             1.     Twenty-five (25) feet in width for ninety degree (90°) parking.
+             2.     Twenty (20) feet in width for sixty degree (60°) parking.
+
+             3.     Twenty (20) feet in width for forty-five degree (45°) parking.
+
+             4.     Twelve (12) feet in width for parallel parking on one (1) side.
+
+             5.     Sixteen (16) feet in width for parallel parking on both sides.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+9.120  Loading Facilities.
+
+A.     The minimum area required for commercial and industrial loading spaces is as follows:
+
+      1.     Two hundred fifty (250) square feet for buildings of five thousand (5,000) to nineteen
+             thousand nine hundred ninety-nine (19,999) square feet of gross floor area.
+
+      2.     Five hundred (500) square feet for buildings of twenty thousand (20,000) to forty-nine
+             thousand nine hundred ninety-nine (49,999) square feet of gross floor area.
+
+      3.     Seven hundred fifty (750) square feet for buildings in excess of fifty thousand (50,000)
+             square feet of gross floor area.
+
+B.     The required loading area shall not be less than ten (10) feet in width by twenty-five (25) feet
+      in length and shall have an unobstructed height of fourteen (14) feet.
+
+C.     Loading areas shall be screened from public view, public streets, and adjacent properties in
+      compliance with applicable provisions of Chapter 11 of this Code.
+
+D.     Required loading facilities shall be installed prior to final building inspection and shall be
+      permanently maintained as a condition of use.
+
+Supp. No. 1                                             TDC9-14
+                                   OFF-STREET PARKING AND LOADING                                                   9.130
+
+E.     A driveway designed for continuous forward flow of passenger vehicles for the purpose of
+      loading and unloading children shall be located on the site of a school having a capacity greater
+      than twenty-five (25) students.
+
+F.     Exceptions and Adjustments. Loading areas within a street right-of-way in the Central Busi-
+      ness District may be approved when all of the following conditions are met:
+
+      1.     Short in duration (i.e., less than one (1) hour).
+
+      2.     Infrequent (less than three (3) operations occur daily between 5:00 a.m. and 12:00 a.m.
+             or all operations occur between 12:00 a.m. and 5:00 a.m. at a location that is not adjacent
+             to a residential zone).
+
+      3.     Does not unreasonably obstruct traffic.
+
+      4.     Does not obstruct a primary emergency response route.
+
+      5.     Is acceptable to the applicable roadway authority.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+9.125  Off-Street Parking Plan.
+
+A plan drawn to scale, indicating how the off-street parking and loading requirement is to be
+provided, shall accompany the application for a development permit. The plan shall show all those
+elements necessary to indicate that these requirements are being fulfilled, and shall include, but not
+be limited to:
+
+      A.     Delineation of individual parking spaces.
+
+      B.     Circulation area necessary to serve spaces.
+
+      C.     Access to streets, alleys, and properties to be served.
+
+      D.     Curb cuts.
+
+      E.     Dimensions, continuity, and substance of screening.
+
+      F.     Grading, drainage, surfacing, and subgrading details.
+
+      G.    Delineations of all structures or other obstacles to parking and circulation on the site.
+
+      H.     Specifications as to signs and bumper guards.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+9.130  Off-Street Parking Construction.
+
+Required parking spaces shall be improved and available for use at the time of final building
+inspection.
+(Ord. No. 899, § 2(Att. A), 6-24-2025)
+
+Supp. No. 1                                             TDC9-15
+9.130                                      TROUTDALE DEVELOPMENT CODE
+
+Supp. No. 1                                            TDC9-16
