@@ -64,7 +64,7 @@
       <tr onclick="openEditLine('unit_mix', '{{ u.id }}', '{{ model.id }}')">
         <td style="font-weight:500">{{ u.label }}</td>
         <td class="col-right">{{ u.unit_count }}</td>
-        <td class="col-right">{{ u.avg_sqft | round(0) | int if u.avg_sqft else '—' }}</td>
+        <td class="col-right">{{ (u.avg_sqft | float) | round(0) | int if u.avg_sqft else '—' }}</td>
         <td class="col-right">{{ _ip | currency if _ip else '—' }}</td>
         <td class="col-right">{{ _mkt | currency if _mkt else '—' }}</td>
         <td class="col-right">{{ u.post_reno_rent_per_unit | currency if u.post_reno_rent_per_unit else '—' }}</td>
