@@ -72,7 +72,17 @@ pytestmark = pytest.mark.unit
 #: classification; the neighbour's setback; compact stalls; on-street credits;
 #: and a sentence tying the driveway's width to the approach's, which is a
 #: relation between two fields rather than a value in either.
-EXPECTED = {"notes": 92, "comments": 81, "tests": 16}
+#: 81 -> 88 on 2026-08-29, all seven of them Gladstone, against seven values
+#: encoded out of the same chapter -- one refusal per number kept. The largest is the
+#: parking mandate exception -- no parking required inside the Town Center
+#: boundary, a quarter mile of it, or half a mile of McLoughlin Boulevard, all
+#: three read off a map no parcel record carries. Then the side and rear halves
+#: of a parking setback whose street half is encoded; the compact-stall table;
+#: three loosenings that all subtract from a requirement already met on site;
+#: a forward-access rule that stops one stall short of this building; a
+#: screening standard the building itself can satisfy; and bicycle parking,
+#: which reaches the pod by a parenthetical that overrides a definition.
+EXPECTED = {"notes": 92, "comments": 88, "tests": 16}
 #: Two of the sixteen are this file, which quotes the marker while
 #: explaining it, and one is a back-reference in test_gresham_rockwood --
 #: prose saying a zone *was* not encoded until it was. Left in rather than

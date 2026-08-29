@@ -16,11 +16,14 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
   chapter is not fetched.
 
 
-  (2) GMC Chapter 17.48, Off-Street Parking and Loading, which both dimensional tables point at
-  without stating a number. Nothing is lost by not holding it: OAR 660-046-0220(2)(e)(B)(iv) caps
-  what any Oregon city may require of middle housing at one space per unit and the state layer
-  carries that as `preempts: cap`, so 17.48 can only bind at or below the figure already screened
-  against. Worth fetching the day this corpus screens a use the middle-housing rules do not reach.'
+  (2) SUPERSEDED, and worth leaving legible. This slot used to hold a reason for not fetching GMC
+  Chapter 17.48: the state caps middle-housing parking at one space per unit, so the chapter "can
+  only bind at or below the figure already screened against". Every word of that is about HOW MANY.
+  A parking chapter also says how big a stall is, how wide the drive between two rows of them has to
+  be, and how far back from the property line the first one may sit, and none of those is capped by
+  anything. The chapter was fetched and read on 2026-08-29 and it is now the source of seven values in
+  `defaults`, including the widest stall in this corpus. The refusals it produced are recorded there
+  rather than here, beside the numbers they sit next to.'
 ingest:
   geoid: null
   juris_city_codes:
@@ -56,12 +59,66 @@ crossrefs:
     dimensional table and spanned by rowspan over every setback row, which is why it counts ten
     times. The pod is factory-built and is neither a manufactured dwelling nor sited on a rented
     space in a park, so the standard is about somebody else's building and 17.62 is not fetched.
-  "17.48": >-
-    Off-street Parking and Loading, pointed at by both dimensional tables without a number beside
-    it. OAR 660-046-0220(2)(e)(B)(iv) caps what any Oregon city may require of middle housing at one
-    space per unit and the state layer carries that as `preempts: cap`, so this chapter can only
-    bind at or below the figure already screened against. Worth fetching the day this corpus screens
-    a use the middle-housing rules do not reach.
+  # A ruling on "17.48" used to stand here and the ledger now calls it stale, which is the right
+  # answer: the chapter is fetched, so nothing points at an unfetched 17.48 any more. What it said
+  # -- that the state cap on middle-housing parking disposed of the reference -- is an argument
+  # about how many spaces and it answered nothing the geometry asks. The reading that replaced it
+  # is in `defaults`, beside the numbers it produced.
+  "17.80":
+    outcome: procedure
+    note: >-
+      Design Review, named in the opening sentence of both 17.48.030 and 17.48.040. It is the
+      process a development goes through, not a dimension it has to meet, and the reading of which
+      developments those sections reach is recorded in `defaults` rather than settled by fetching a
+      procedure chapter. Nothing in 17.80 could add a number to a stall.
+  "17.80.090":
+    outcome: procedure
+    note: >-
+      Minor exception, the other half of 17.48.030(2)(e) and the only binding reference the parking
+      chapter opened: an exception to a minimum or maximum parking ratio of 25 percent or less is
+      granted through it, anything larger through the variance chapter. It stands beside the
+      parking minimum and maximum because it can move both, and it moves them for an applicant who
+      asks -- which is a thing a person does at a counter, not a thing a parcel is. A screen that
+      granted itself exceptions would be reporting what could be argued for rather than what the
+      code says.
+  "17.52.060":
+    outcome: procedure
+    note: >-
+      On-site traffic control sign standards, reached from 17.48.050(2)(c): a bicycle parking area
+      not visible from the street needs a sign conforming to them. A specification for a sign, and
+      the bicycle standards it hangs off are themselves refused in `defaults` for want of a field.
+  "17.72":
+    outcome: procedure
+    note: >-
+      Variances, reached from 17.48.030(2)(e): an exception to a minimum or maximum parking ratio
+      above 25 percent goes through this chapter, below it through the minor exception at
+      17.80.090. Both are ways of asking to be let off a standard this screen holds the applicant
+      to, so neither can make a lot fit that does not.
+  "17.54":
+    outcome: narrows_only
+    note: >-
+      Clear Vision, reached from 17.48.040(1)(b): screening between a parking area and an abutting
+      residential property "shall not conflict with GMC Chapter 17.54". A ceiling on how tall a
+      hedge may be near a corner, which cannot take ground from a rear court -- the screen it
+      qualifies is itself a fence or a hedge and this model gives it no width.
+  "17.50.020":
+    outcome: other_building
+    note: >-
+      Pedestrian circulation, reached from 17.48.030(1)(i): a development with more than half an
+      acre of new off-street surface parking must file a circulation plan, a tree canopy plan and a
+      climate mitigation action. The pod's whole court is four stalls and their aisle, around two
+      thousand square feet, so the threshold is an order of magnitude away from this building.
+  "3.14":
+    outcome: other_building
+    note: >-
+      Commercial parking lots, reached from 17.48.030(1)(m). A lot operated as a parking business,
+      which is a use, not a residential court serving the dwellings on its own lot.
+  "17.94.060":
+    outcome: other_path
+    note: >-
+      Reached from 17.48.030(1)(j), the review path for converting an existing underused parking
+      area to another use. It runs the other way from this screen, which places new buildings on
+      lots rather than repurposing parking already built.
 
 code:
   # Code Publishing serves each chapter as its own server-rendered HTML page;
@@ -81,6 +138,201 @@ code:
   - id: "17.12.r-5"
     url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1712.html
     title: "Chapter 17.12 - Medium Density Residential District (R-5)"
+  # The chapter both dimensional tables point at and nothing else in this
+  # layer states: "Off-Street Parking -- See GMC Chapter 17.48, Off-Street
+  # Parking and Loading", printed twice in each table with no figure beside
+  # it. 2,371 lots here fit the pod and none is drawn on.
+  - id: "17.48.parking"
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1748.html
+    title: "Chapter 17.48 - Off-Street Parking and Loading"
+defaults:
+  # ---- GMC Chapter 17.48, Off-Street Parking and Loading, read 2026-08-29 ----
+  #
+  # A city that requires almost no parking and regulates all of it. 17.48.010 is
+  # headed Applicability and opens "Off-street parking and loading standards
+  # shall apply to all development permits, except:", and the exception is not
+  # to the standards but to the mandate: parking "is not required within" the
+  # Town Center boundary, a quarter mile of it, or half a mile of McLoughlin
+  # Boulevard. Then (3) states the split in the code's own words -- "Parking may
+  # be provided at the discretion of the property owner within the mandate
+  # exception areas ... Any off-street parking provided within these and other
+  # areas within the city must meet the standards of this chapter."
+  # (or/clackamas/gladstone/17.48.parking.txt#L19,L21,L23-L29,L33)
+  #
+  # WHICH SECTION REACHES THIS BUILDING is the question that decides the city,
+  # the way 8.120.C.1.b.ii decided Troutdale. 17.48.030 is headed "Standards for
+  # developments subject to design review" and 17.48.040 opens "All structures
+  # and developments subject to design review shall provide required permanent
+  # off-street parking and loading as follows". Between them sits 17.48.020,
+  # headed "Single-household and middle housing residential standards", a
+  # one-sentence bridge sending middle housing to 17.48.030 by name for the
+  # QUANTITY -- with no matching sentence for 17.48.040's dimensions.
+  #
+  # The chapter's own applicability section is broader than either, and it is
+  # the encoding: the standards apply to all development permits, and anything
+  # built anywhere in the city must meet the standards of this chapter. It is
+  # also the safe reading in both directions. A stall drawn to 17.48.040 is the
+  # largest rectangle in this corpus, so a lot that fits one could not fail a
+  # looser rule; and the alternative is no geometry at all, which leaves 2,371
+  # pod-fitting lots undrawable and stuck at REVIEW.
+  # (or/clackamas/gladstone/17.48.parking.txt#L39,L41,L47,L49,L444,L446)
+  #
+  # The pod is middle housing here without argument. 17.06.149: "'Middle
+  # housing' means duplex, triplex, quadplex, cottage cluster, or townhouse in
+  # the R-5 or R-7.2 zone", and 17.06.145 defines a quadplex as "four attached
+  # or detached dwelling units on a single lot in any configuration". Both zones
+  # this layer holds are named in the definition, so the bridge in 17.48.020
+  # reaches this building and Table 1 names it again in its own row.
+  # (or/clackamas/gladstone/17.06.definitions.txt#L587,L589,L611,L613)
+  #
+  # NOT ENCODED: the parking mandate exception. 17.48.010(1) waives the
+  # requirement entirely inside the Town Center boundary, within a quarter mile
+  # of it, and within half a mile of McLoughlin Boulevard, "measured using a
+  # straight line" off the Gladstone Parking Mandate Exception Map. Table 1's
+  # own Zone A column agrees -- "Min: None / Max: None" against the row this
+  # building takes. No parcel record here carries a distance to a boundary or a
+  # corridor, so every Gladstone lot is screened against the outside-Zone-A
+  # figure. Conservative, and on the lots it is wrong about it charges the pod
+  # four stalls it does not owe. Same shape as Troutdale's CFEC waiver.
+  # (or/clackamas/gladstone/17.48.parking.txt#L23-L31,L159,L171,L174-L175)
+  parking_min_per_unit:
+    value: 1
+    cite: GMC 17.48.030 Table 1(1)(b), Duplex, Triplex, Quadplex, Townhouse, Cottage
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1748.html
+    retrieved: '2026-08-29'
+    quote: "or/clackamas/gladstone/17.48.parking.txt#L141,L156,L158,L171-L173"
+  # And no ceiling. The maximum machinery in this chapter is fully built --
+  # 17.48.030(2)(b) splits the city into Zone A and Zone B for the purpose,
+  # (2)(c) lists five kinds of space exempt from the maxima, (2)(d) governs what
+  # happens when an existing development already exceeds one, and (2)(e) gives a
+  # variance path out of one -- and then Table 1 prints "Max: None" for this row
+  # in Zone A and "Not Applicable" for it in Zone B. A column that was read and
+  # left empty on purpose, so `exempt` rather than absence: a maximum has to
+  # beat the broader layers rather than fall through them.
+  # (or/clackamas/gladstone/17.48.parking.txt#L119,L121-L131,L133-L139)
+  parking_max_per_unit:
+    exempt: true
+    cite: GMC 17.48.030 Table 1(1)(b), Zone A and Zone B maximum columns
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1748.html
+    retrieved: '2026-08-29'
+    quote: "or/clackamas/gladstone/17.48.parking.txt#L141,L156,L159-L160,L171-L172,L174-L176"
+  # HOW BIG. 17.48.040(2)(f) sends every parking space and access aisle to the
+  # chapter's dimension tables, and the 90-degree row of the standard table
+  # reads 9.5 by 18.0 with a 24.0 aisle.
+  #
+  # NINE AND A HALF FEET IS THE WIDEST STALL IN THIS CORPUS. Fairview, Happy
+  # Valley, Oregon City, West Linn and Troutdale all ask 9; Gresham and Portland
+  # ask 8.5. Four of them across a rear court is two feet of lot width nobody
+  # else charges. The aisle ties Fairview at 24 -- one figure, not split by
+  # direction, so a one-way court is dimensioned off it too, and 18 + 24 + 18 is
+  # a 60-foot court before a driveway reaches it.
+  #
+  # The table has no number of its own: both tables are captioned "17.48.040
+  # Table" with the name on the next line, while (2)(f) calls them "Tables 2 and
+  # 3". Standard is 2 and compact is 3 in the only order they appear, and the
+  # chapter has exactly one other table, Table 1, which is numbered.
+  #
+  # NOT ENCODED: 17.48.040(2)(g), "up to 50 percent of required parking spaces
+  # may be provided for compact cars", and the compact table's 8.5 by 16 that
+  # goes with it. A loosening elected on a plan rather than read off a parcel,
+  # and the same cut Fairview, Gresham and Troutdale take.
+  parking_stall_width_ft:
+    value: 9.5
+    cite: GMC 17.48.040, Standard Parking Dimensions in Feet, 90 degrees
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1748.html
+    retrieved: '2026-08-29'
+    quote: "or/clackamas/gladstone/17.48.parking.txt#L444,L446,L468,L484-L485,L488"
+  parking_stall_depth_ft:
+    value: 18
+    cite: GMC 17.48.040, Standard Parking Dimensions in Feet, 90 degrees
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1748.html
+    retrieved: '2026-08-29'
+    quote: "or/clackamas/gladstone/17.48.parking.txt#L444,L446,L468,L484-L485,L488"
+  parking_aisle_one_way_ft:
+    value: 24
+    cite: GMC 17.48.040, Standard Parking Dimensions in Feet, 90 degrees, aisle width
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1748.html
+    retrieved: '2026-08-29'
+    quote: "or/clackamas/gladstone/17.48.parking.txt#L444,L446,L468,L484-L485,L488"
+  parking_aisle_two_way_ft:
+    value: 24
+    cite: GMC 17.48.040, Standard Parking Dimensions in Feet, 90 degrees, aisle width
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1748.html
+    retrieved: '2026-08-29'
+    quote: "or/clackamas/gladstone/17.48.parking.txt#L444,L446,L468,L484-L485,L488"
+  # WHERE IT MAY SIT. 17.48.040(2)(e): "Parking spaces along the outer
+  # boundaries of a parking lot shall be contained by a curb at least four
+  # inches high and set back a minimum of five feet from the property line."
+  # Five feet of real ground off the line, and unlike Happy Valley's or
+  # Portland's it is not a street-only rule -- it says property line and means
+  # every one of them.
+  #
+  # NOT ENCODED: the side and rear halves of that same sentence. This model has
+  # one parking setback field and it is measured from a street lot line; nothing
+  # holds a parking setback from an interior or rear line. Inert here, and
+  # stated so it stays inert on purpose: R-7.2 asks 7.5 feet of side yard and 15
+  # of rear, R-5 asks 5 and 15, and every one of those is already larger than
+  # the five feet the curb owes. If a Gladstone zone ever carries a side setback
+  # under five, this refusal starts costing something.
+  # (or/clackamas/gladstone/17.48.parking.txt#L456,L466)
+  parking_street_setback_ft:
+    value: 5
+    cite: GMC 17.48.040(2)(e), parking spaces set back five feet from the property line
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1748.html
+    retrieved: '2026-08-29'
+    quote: "or/clackamas/gladstone/17.48.parking.txt#L444,L446,L456,L466"
+  # NO DRIVEWAY WIDTH, and read rather than unlooked-for. Chapter 17.48 states
+  # every dimension of a parking space and none of a driveway: the word appears
+  # five times in the chapter and each is about something else -- a half-acre
+  # tree canopy plan, a school's passenger loading lane, or the sentence below.
+  # Neither dimensional chapter states one either. So a pod here is drawn with
+  # the design lane, and no curb-cut ceiling narrows it.
+  #
+  # NOT ENCODED: 17.48.040(2)(d), "groups of more than four parking spaces shall
+  # be ... served by driveways that their use will require no backing movements
+  # or other maneuvering within a street right-of-way other than an alley". The
+  # forward-access rule Gresham writes for everybody, and it stops one stall
+  # short of this building: the pod owes exactly four spaces and four is not
+  # more than four. It binds the moment a plan seats a fifth, which the
+  # marketability tiers reach at 1.5 per unit -- so the site plan draws a rear
+  # court with forward egress here anyway, and the standard is satisfied by a
+  # layout chosen for other reasons rather than by a rule this layer holds.
+  #
+  # NOT ENCODED, three loosenings that all move the same way: 17.48.030(1)(f)
+  # credits on-street parking against the requirement where 22 feet of
+  # uninterrupted curb fronts the site; (1)(o) reduces the mandate by a space
+  # per three kilowatts of solar, per car-share stall, per two EV chargers and
+  # per two accessible units, "cumulative and not capped"; and (1)(h) allows the
+  # required spaces to sit on another parcel within 2,000 feet walking distance.
+  # Each subtracts from a requirement this screen already satisfies on site, and
+  # none can make a lot that does not fit fit.
+  #
+  # NOT ENCODED: 17.48.050, bicycle parking, and it does reach this building --
+  # by a parenthetical that overrides a definition. The standards apply to
+  # "multi-household residential (four units and larger)", and 17.06.141 defines
+  # a multi-household dwelling as "a building, designed for occupancy by five or
+  # more households". Four is not five or more, so the noun excludes the pod and
+  # the parenthetical after it puts the pod back; 17.48.050(1)(c)(C) says "four
+  # units and more" a second time, so the four is meant. Two long-term spaces,
+  # each six feet by two, with a five-foot maneuvering aisle. No field in this
+  # model holds a bicycle space, and the code lets every one of them sit inside
+  # the building, under an overhang or in a locker, so nothing is subtracted
+  # from the court by refusing it.
+  #
+  # That same definition is why the pod takes Table 1 row (b) and not row (c):
+  # "Duplex, Triplex, Quadplex, Townhouse, Cottage" names it, and
+  # "Multi-Household Dwelling" starts one unit above it. Troutdale settled the
+  # same word the same way two days ago, off a definition worded almost
+  # identically. Both rows ask one space per unit here, so nothing turns on it
+  # for the count -- but the bicycle section is the place where it would have.
+  # (or/clackamas/gladstone/17.06.definitions.txt#L557,L559)
+  #
+  # NOT ENCODED: 17.48.040(1)(b), screening between the court and an abutting
+  # residential property -- six feet of "building placement, a landscaped earth
+  # berm or a sight-obscuring fence or hedge". A performance standard with three
+  # alternatives, one of which is the building itself, and the model gives a
+  # fence no width.
+  # (or/clackamas/gladstone/17.48.parking.txt#L452,L464,L63,L67,L105-L113)
 zones:
   R7.2:
     max_density_du_per_acre:

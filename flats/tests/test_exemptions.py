@@ -79,7 +79,12 @@ pytestmark = pytest.mark.unit
 #: right-hand column -- words, not an empty cell -- and the same column caps
 #: general retail at 6.2 spaces per 1,000 sq ft and a restaurant at 19.1, so
 #: it is a ceiling that has been read and found not to contain this building.
-EXPECTED = {"stated": 171, "numeric": 37, "marker": 0, "dash": 2, "silent": 0}
+#: 172 as of 2026-08-29: Gladstone's Table 1 prints "Max: None" against the
+#: Duplex/Triplex/Quadplex/Townhouse/Cottage row in Zone A and "Not Applicable"
+#: in Zone B, in a chapter that splits the city in two for the purpose of the
+#: maxima, exempts five kinds of space from them and gives a variance path out
+#: of one. The apparatus is built and none of it points at this building.
+EXPECTED = {"stated": 172, "numeric": 37, "marker": 0, "dash": 2, "silent": 0}
 
 LAKE_OSWEGO = "or/clackamas/lake-oswego"
 

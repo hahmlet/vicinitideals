@@ -257,11 +257,34 @@ def test_the_reference_at_the_top_of_the_queue_was_a_use_we_do_not_place(
     assert "17.62.070" in {d.ref for d in dangling(gladstone)}
 
 
-def test_the_parking_chapter_it_points_at_cannot_bind_tighter_than_the_state(
+def test_the_parking_chapter_was_read_and_the_reason_for_not_reading_it_is_gone(
     gladstone: Layer,
 ) -> None:
-    """The other Gladstone reference worth ranking. Both tables send the reader
-    to GMC 17.48 without stating a number, and OAR 660-046-0220 caps what any
-    city may ask of middle housing at one space per unit."""
+    """This test used to assert the opposite, and the opposite was wrong.
+
+    Both dimensional tables send the reader to GMC 17.48 without stating a
+    number, and the layer used to answer that with the state cap: OAR
+    660-046-0220 lets no city ask more than one space per unit of middle
+    housing, so the chapter "can only bind at or below the figure already
+    screened against". True, and beside the point -- it settles how many
+    spaces and says nothing about how big one is. The chapter was fetched on
+    2026-08-29 and turned out to hold the widest stall in the corpus.
+
+    Kept rather than deleted, and inverted: what it now pins is that the
+    superseded reasoning stays legible in the notes and that the numbers it
+    used to stand in for are really in the layer. A test that pins a corpus
+    condition should go red when the condition is fixed, and then say so.
+    """
     assert "17.48" in (gladstone.notes or "")
-    assert "660-046-0220" in (gladstone.notes or "")
+    assert "SUPERSEDED" in (gladstone.notes or "")
+
+    for field in (
+        "parking_min_per_unit",
+        "parking_max_per_unit",
+        "parking_stall_width_ft",
+        "parking_stall_depth_ft",
+        "parking_aisle_one_way_ft",
+        "parking_aisle_two_way_ft",
+        "parking_street_setback_ft",
+    ):
+        assert field in gladstone.defaults

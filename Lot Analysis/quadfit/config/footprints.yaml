@@ -92,8 +92,8 @@ screen:
 # row (front 10 / side 5 / rear 15 / street-side 10, min lot 5,000, FAR 1.0).
 siteplan:
   enabled: true
-  # Every city whose own code states a stall AND an aisle gets laid out. Seven
-  # do as of 2026-08-29, Troutdale being the newest and the strictest; two more
+  # Every city whose own code states a stall AND an aisle gets laid out. Eight
+  # do as of 2026-08-29, Gladstone being the newest and the widest; two more
   # state a stall and no aisle and are declined by name below; the rest have
   # not been read and pass through as `not_evaluated`. Narrow to `pilot_cell`
   # to re-run Gresham LDR-5 alone after a layout change.
@@ -251,6 +251,36 @@ siteplan:
       # Table 1 of 9.010 prints "No maximum" against every band of the
       # Triplex and Quadplex row, in a column that caps general retail at 6.2
       # and a restaurant at 19.1. A read ceiling that is not there.
+      max_per_unit: null
+    # The eighth city, read 2026-08-29, and the widest stall in the file.
+    # GMC 17.48.040(2)(f) sends every parking space and access aisle to the
+    # chapter's dimension tables and the 90-degree row of the standard table
+    # reads 9.5 by 18.0 with a 24.0 aisle. Nine and a half feet is half a foot
+    # more than any other city here asks and a full foot more than Gresham or
+    # Portland: four stalls across a rear court is two feet of lot width
+    # Gladstone charges and nobody else does.
+    #
+    # The section that states it opens "All structures and developments subject
+    # to design review", and 17.48.020 bridges middle housing to 17.48.030 for
+    # the QUANTITY without a matching sentence for these dimensions. The
+    # chapter's own applicability section is broader than both -- the standards
+    # "shall apply to all development permits", and any parking built anywhere
+    # in the city "must meet the standards of this chapter" -- and that is the
+    # encoding. It is also the safe half of the doubt: this is the largest
+    # rectangle in the corpus, so a lot that fits it could not fail a looser
+    # rule, and the alternative was 2,371 lots nobody can draw on.
+    #
+    # `max_per_unit` is null on a read ceiling, not an unread one. Table 1
+    # prints "Max: None" against this row in Zone A and "Not Applicable" in
+    # Zone B, in a chapter that splits the city in two for the purpose, lists
+    # five kinds of space exempt from the maxima and gives a variance path out
+    # of one. Gladstone built the whole apparatus and pointed none of it here.
+    gladstone:
+      stall_width_ft: 9.5           # Table 2, 90 degrees, standard column
+      stall_depth_ft: 18
+      aisle_one_way_ft: 24          # one figure, not split by direction
+      aisle_two_way_ft: 24
+      cite: GMC 17.48.040, Standard Parking Dimensions in Feet, 90 degrees
       max_per_unit: null
     # --- states a stall and no aisle: declined, not borrowed from -----------
     # Both of these dimension a space and never dimension the drive that
@@ -504,6 +534,27 @@ siteplan:
         MU-2: 15
         MU-3: 20
       cite: TDC 9.080(A) driveway widths; 8.120.C.5.a approach; 8.120.C.4.d frontage; 9.095(D) setback
+    # One rule, and the interesting part is everything absent around it. GMC
+    # 17.48.040(2)(e): parking spaces along the outer boundaries of a parking
+    # lot are "contained by a curb at least four inches high and set back a
+    # minimum of five feet from the property line". Five feet of real ground,
+    # and unlike Portland's or Happy Valley's it is not a street-only rule --
+    # it says property line. Only the street half is mirrored because only the
+    # street half has a field; the side and rear halves are refused in the
+    # corpus, where R-7.2's 7.5 ft side yard and both zones' 15 ft rear already
+    # swallow the five.
+    #
+    # NO DRIVEWAY WIDTH AND NO CURB-CUT CEILING, read rather than unlooked-for.
+    # "Driveway" appears five times in Chapter 17.48 and every one is about
+    # something else -- a half-acre tree canopy plan, a school's passenger lane,
+    # the no-backing rule -- and neither dimensional chapter states one. So the
+    # pod is drawn with the design lane and nothing narrows it at the street.
+    #
+    # No private open space either: Gladstone's residential chapters state none
+    # for this building. Fifth city of eight to reserve nothing.
+    gladstone:
+      parking_street_setback_ft: 5
+      cite: GMC 17.48.040(2)(e), parking spaces set back five feet from the property line
   # The three engineering constants left after the law came out of this block.
   # Not one is a citation. A car needs a lane and a wall needs a standoff
   # whatever the code says; where a city asks for more, the city wins.
