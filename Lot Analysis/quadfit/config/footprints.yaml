@@ -92,10 +92,11 @@ screen:
 # row (front 10 / side 5 / rear 15 / street-side 10, min lot 5,000, FAR 1.0).
 siteplan:
   enabled: true
-  # Every city whose own code states a stall AND an aisle gets laid out. Five
-  # do; two more state a stall and no aisle and are declined by name below;
-  # the rest have not been read and pass through as `not_evaluated`. Narrow to
-  # `pilot_cell` to re-run Gresham LDR-5 alone after a layout change.
+  # Every city whose own code states a stall AND an aisle gets laid out. Six
+  # do as of 2026-08-27, West Linn being the newest and the biggest; two more
+  # state a stall and no aisle and are declined by name below; the rest have
+  # not been read and pass through as `not_evaluated`. Narrow to `pilot_cell`
+  # to re-run Gresham LDR-5 alone after a layout change.
   scope: every_city_it_can_dimension
   pilot_jurisdiction: gresham
   pilot_zone: LDR-5
@@ -198,6 +199,31 @@ siteplan:
       # How MANY spaces is refused in the corpus: Table 17.52.020 asks a
       # triplex/quadplex for "2.00" and "4" and states no unit for either.
       max_per_unit: null
+    # The sixth city, read 2026-08-27, and the largest one this stage has
+    # gained: 6,791 West Linn lots fit the pod and none of them has ever been
+    # drawn on. CDC 46.150(A)(1) states three stall sizes and 46.150(E)'s
+    # Figure 2 states the aisle by angle -- 23 ft at 90 degrees drive-in, in
+    # both stall-width columns, and no one-way row anywhere in the chapter, so
+    # one figure answers both questions the way Fairview's does.
+    #
+    # Nine by eighteen and not nine by twenty. The third size in that sentence
+    # -- "when multifamily parking stalls back onto a driveway, as opposed to
+    # a drive aisle within a parking lot" -- is the layout this stage does NOT
+    # draw: the side lane and the court aisle are separate pavement here, and
+    # the stalls back onto the aisle. If the catalog ever gains a plan whose
+    # stalls open straight onto the entry drive, West Linn's depth is 20.
+    #
+    # The ceiling is a real number rather than a null, which makes West Linn
+    # the third city carrying one: 46.090(A) allows multifamily non-studio
+    # units 2.0 spaces each. Eight stalls for the pod -- the preferred
+    # marketability tier exactly, so it costs nothing and it is still the law.
+    west_linn:
+      stall_width_ft: 9
+      stall_depth_ft: 18
+      aisle_one_way_ft: 23         # Figure 2, 90 degrees, DRIVE-IN (back-in is 22)
+      aisle_two_way_ft: 23         # the chapter states no two-way figure
+      cite: West Linn CDC 46.150(A)(1) stall; 46.150(E) Figure 2, 90 degrees drive-in
+      max_per_unit: 2
     # --- states a stall and no aisle: declined, not borrowed from -----------
     # Both of these dimension a space and never dimension the drive that
     # reaches it, so a court laid out here would be laid out to somebody
@@ -384,6 +410,30 @@ siteplan:
       approach_max_ft: 32
       parking_max_frontage_pct: 50
       cite: Clackamas ZDO 845.02, driveway entries and parking between building and street
+    # Chapter 48, fetched with 46 because 46 dimensions a court and never the
+    # drive into it. 48.030(E): a multifamily access or service drive is 24 ft
+    # two-way, 15 ft one-way. The lane this stage draws is two-way, so West
+    # Linn's side lane is 24 ft -- four wider than Happy Valley's 20, which
+    # was the hardest number in this family until now, and twice the 12 ft
+    # design lane every unread city falls back to. That is a real cost in side
+    # yard for the depth of the lot, and it is the code as written.
+    #
+    # 48.060 states BOTH ends of the curb cut, 16 ft to 36 ft, and the floor is
+    # the unusual half: most cities here cap an approach and let it shrink to
+    # nothing, so West Linn is the only one where a pod cannot economise its
+    # opening down to a single-car width. The Highway 43 exception raises the
+    # ceiling to 40 on one highway and is left out as a looser number nothing
+    # could select.
+    #
+    # No private open space, no front-parking ban, no frontage share and no
+    # maneuvering cap: read and absent, which is the fourth city of six to
+    # state no open-space reserve for this building.
+    west_linn:
+      approach_min_ft: 16
+      approach_max_ft: 36
+      drive_min_one_way_ft: 15
+      drive_min_two_way_ft: 24
+      cite: West Linn CDC 48.030(E) service drive widths; 48.060(A) and (B) curb cut
   # The three engineering constants left after the law came out of this block.
   # Not one is a citation. A car needs a lane and a wall needs a standoff
   # whatever the code says; where a city asks for more, the city wins.

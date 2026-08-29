@@ -1,0 +1,223 @@
+Chapter 48
+
+ACCESS, EGRESS AND CIRCULATION
+
+Sections:
+
+48.010 PURPOSE
+
+48.020 APPLICABILITY AND GENERAL PROVISIONS
+
+48.025 ACCESS CONTROL
+
+48.030 MINIMUM VEHICULAR REQUIREMENTS FOR RESIDENTIAL USES
+
+48.040 MINIMUM VEHICLE REQUIREMENTS FOR NON-RESIDENTIAL USES
+
+48.050 ONE-WAY VEHICULAR ACCESS POINTS
+
+48.060 WIDTH AND LOCATION OF CURB CUTS AND ACCESS SEPARATION REQUIREMENTS
+
+48.070 PLANNING DIRECTOR’S AUTHORITY TO RESTRICT ACCESS APPEAL PROVISIONS
+
+48.080 BICYCLE AND PEDESTRIAN CIRCULATION
+
+48.010 PURPOSE
+
+The purpose of this chapter is to ensure that efficient, safe, and well-directed vehicular, bicycle, and pedestrian access, circulation, and egress are designed into development proposals. Access management seeks to balance mobility, the need to provide efficient, safe and timely travel with the ability to allow access to individual properties. Proper implementation of access management techniques should guarantee reduced congestion, reduced accident rates, less need for roadway widening, conservation of energy, and reduced air pollution. (Ord. 1584, 2008; Ord. 1745 § 1 (Exh. A), 2023)
+
+48.020 APPLICABILITY AND GENERAL PROVISIONS
+
+A. The provisions of this chapter do not apply where the provisions of the Transportation System Plan or land division chapter are applicable and set forth differing standards.
+
+B. All lots shall have access from a public street or from a platted private street approved under the land division chapter.
+
+C. No building or other permit shall be issued until scaled plans are presented to the City and approved by the City as provided by this chapter, and show how the access, egress, and circulation requirements are to be fulfilled. Access to State or County roads may require review, approval, and permits from the appropriate authority.
+
+D. Should the owner or occupant of a lot, parcel or building enlarge or change the use to which the lot, parcel or building is put, resulting in increasing any of the requirements of this chapter, it shall be unlawful and a violation of this code to begin or maintain such altered use until the provisions of this chapter have been met, and, if required, until the appropriate approval authority under Chapter 99 CDC has approved the change.
+
+E. Owners of two or more uses, structures, lots, parcels, or units of land may agree to utilize jointly the same access and egress when the combined access and egress of both uses, structures, or parcels of land satisfies the requirements as designated in this code; provided, that satisfactory legal evidence is presented to the City Attorney in the form of deeds, easements, leases, or contracts to establish joint use. Copies of said instrument shall be placed on permanent file with the City Recorder.
+
+F. Property owners with access to their property via platted stems of flag lots may request alternate access as part of a discretionary review if other driveways and easements are available and approved by the City Engineer. (Ord. 1584, 2008; Ord. 1636 § 32, 2014; Ord. 1745 § 1 (Exh. A), 2023)
+
+48.025 ACCESS CONTROL
+
+A. Purpose. The following access control standards apply to public, industrial, commercial and residential developments including land divisions. Access shall be managed to maintain an adequate level of service and to maintain the functional classification of roadways as required by the West Linn Transportation System Plan.
+
+B. Access control standards.
+
+1. Traffic impact analysis requirements. A traffic analysis prepared by a qualified professional may be required to determine access, circulation and other transportation requirements. The purpose, applicability and standards of this analysis are found in CDC 85.170(B)(2).
+
+2. In order to comply with the access standards in this chapter, the City or other agency with access permit jurisdiction may require the closing or consolidation of existing curb cuts or other vehicle access points, recording of reciprocal access easements (i.e., for shared driveways), development of a frontage street, installation of traffic control devices, and/or other mitigation as a condition of granting an access permit. Access to and from off-street parking areas shall not permit backing onto a public street.
+
+3. Access options. When vehicle access is required for development (i.e., for off-street parking, delivery, service, drive-through facilities, etc.), access shall be provided from a public street adjacent to the development lot or parcel. Street accesses shall comply with access spacing standards in subsection (B)(6) of this section, the West Linn Public Works Design Standards, and TSP. As an alternative, the applicant may request alternative access provisions listed below as Option 1 and Option 2, subject to approval by the City Engineer through a discretionary process.
+
+a) Option 1. Access is from an existing or proposed alley or mid-block lane. If a property has access to an alley or lane, direct access to a public street is not permitted. For the purpose of this subsection, a mid-block lane is a narrow private drive providing lot frontage and access for rear lot development.
+
+b) Option 2. Access is from a private street or driveway connected to an adjoining property that has direct access to a public street (i.e., “shared driveway”). A public access easement covering the driveway shall be recorded in this case to ensure access to the closest public street for all users of the private street/drive.
+
+4. Subdivisions fronting onto an arterial street. New residential land divisions fronting onto an arterial street shall be required to provide alleys or secondary (local or collector) streets for access to individual lots. When alleys or secondary streets cannot be constructed due to topographic or other physical constraints, access may be provided by consolidating driveways for clusters of two or more lots.
+
+5. Double-frontage lots. When a lot or parcel has frontage onto two or more streets, access shall be provided first from the street with the lowest classification. For example, access shall be provided from a local street before a collector or arterial street.
+
+6. Access spacing.
+
+a. The access spacing standards found in Tables 14 and 15 of the TSP and in CDC 48.060 shall be applicable to all newly established public street intersections, non-traversable medians, and curb cuts. Deviation from the access spacing standards may be granted by the City Engineer as part of a discretionary review if the applicant demonstrates that the deviation will not compromise the safe and efficient operation of the street and highway system.
+
+b. Private drives and other access ways are subject to the requirements of CDC 48.060.
+
+7. Number of access points. For single-family (detached and attached) housing types, one street access point is permitted per lot or parcel when alley access cannot otherwise be provided; except that two access points may be permitted corner lots (i.e., no more than one access per street), subject to the access spacing standards in CDC 48.060. The number of street access points for multiple family development is subject to the access spacing standards in CDC 48.060. The number of street access points for commercial, industrial, and public/institutional developments shall be minimized to protect the function, safety and operation of the street(s) and sidewalk(s) for all users. Shared access may be required, in conformance with subsection (C)(8) of this section, in order to maintain the required access spacing, and minimize the number of access points.
+
+8. Shared driveways. For residential development, shared driveways may be required in order to meet the access spacing standards in subsection (C)(6) of this section. For non-residential development, the number of driveway and private street intersections with public streets shall be minimized by the use of shared driveways with adjoining lots where feasible. The City shall require shared driveways as a condition of land division or site design review, as applicable, for traffic safety and access management purposes in accordance with the following standards:
+
+a. When necessary pursuant to this subsection (C)(8), shared driveways and/or frontage streets shall be required to consolidate access onto a collector or arterial street. When shared driveways or frontage streets are required, they shall be stubbed to adjacent developable parcels to indicate future extension. “Stub” means that a driveway or street temporarily ends at the property line, but may be extended in the future as the adjacent lot or parcel develops. “Developable” means that a lot or parcel is either vacant or it is likely to receive additional development (i.e., due to infill or redevelopment potential).
+
+b. Access easements (i.e., for the benefit of affected properties) shall be recorded for all shared driveways, including pathways, at the time of final plat approval or as a condition of site development approval.
+
+c. Exception. Exceptions to the shared driveway or frontage street requirements may be granted as part of a discretionary review if the City determines that existing development patterns or physical constraints (e.g., topography, lot or parcel configuration, and similar conditions) prevent extending the street/driveway in the future.
+
+C. Street connectivity and formation of blocks required. In order to promote efficient vehicular and pedestrian circulation throughout the City, land divisions and site developments shall produce complete blocks bounded by a connecting network of public and/or private streets, in accordance with the following standards:
+
+1. Block length and perimeter. The maximum block length shall not exceed 800 feet along a collector, neighborhood route, or local street, or 1,800 feet along an arterial, unless a smaller block length is required pursuant to CDC 85.200(B)(2).
+
+2. Street standards. Public and private streets shall also conform to Chapter 92 CDC, Required Improvements, and to any other applicable sections of the West Linn Community Development Code and approved TSP.
+
+3. Exception. Exceptions to the above standards may be granted as part of a discretionary review when blocks are divided by one or more pathway(s), in conformance with the provisions of CDC 85.200(C), Pedestrian and bicycle trails, or cases where extreme topographic (e.g., slope, creek, wetlands, etc.) conditions or compelling functional limitations preclude implementation, not just inconveniences or design challenges. (Ord. 1635 § 25, 2014; Ord. 1636 § 33, 2014; Ord. 1650 § 1 (Exh. A), 2016; Ord. 1675 § 40, 2018; Ord. 1745 § 1 (Exh. A), 2023)
+
+48.030 MINIMUM VEHICULAR REQUIREMENTS FOR RESIDENTIAL USES
+
+A. Direct individual access from single-family dwellings and duplex lots to an arterial street, as designated in the TSP, is prohibited for lots or parcels created after the effective date of this code where an alternate access is either available or is proposed as part of a submitted development application. Evidence of alternate or future access may include temporary cul-de-sacs, dedications or stubouts on adjacent lots or parcels, or tentative street layout plans submitted by an adjacent property owner/developer or by the owner/developer, or previous owner/developer, of the property in question.
+
+In the event that alternate access is not available, the applicant may request access onto an arterial street as part of a discretionary review, and approval may be granted by the Planning Director and City Engineer after review of the following criteria:
+
+1. Topography.
+
+2. Traffic volume to be generated by development (i.e., trips per day).
+
+3. Traffic volume presently carried by the street to be accessed.
+
+4. Projected traffic volumes.
+
+5. Safety considerations such as line of sight, number of accidents at that location, emergency vehicle access, and ability of vehicles to exit the site without backing into traffic.
+
+6. The ability to consolidate access through the use of a joint driveway.
+
+7. Additional review and access permits may be required by State or County agencies.
+
+B. Driveway standards. When any portion of any house is less than 150 feet from the adjacent right-of-way, driveway access to the home shall meet the following standards:
+
+1. One single-family residence, including residences with an accessory dwelling unit as defined in CDC 02.030, shall provide a driveway with 10 feet of unobstructed horizontal clearance. Dual-track or other driveway designs that minimize the total area of impervious driveway surface are encouraged but not required.
+
+2. Two to four single-family residential homes shall provide a driveway with 14- to 20-foot-wide paved or all-weather surface.
+
+3. Maximum driveway grade shall be 15 percent. The 15 percent shall be measured along the centerline of the driveway only. Variations require approval of a Class II variance by the Planning Commission pursuant to Chapter 75 CDC. However, in no case shall the last 18 feet in front of the garage exceed 12 percent grade as measured along the centerline of the driveway only. Grades elsewhere along the driveway shall not apply.
+
+4. The driveway shall include a minimum of 20 feet in length between the garage door and the back of sidewalk, or, if no sidewalk is proposed, to the paved portion of the right-of-way.
+
+C. When any portion of one or more homes is more than 150 feet from the adjacent right-of-way, the provisions of subsection B of this section shall apply in addition to the following provisions.
+
+1. A turnaround shall be provided if required by Tualatin Valley Fire and Rescue (TVF&R) in order to receive a service provider permit.
+
+2. Minimum vertical clearance for the driveway shall be 13 feet, six inches.
+
+3. A minimum centerline turning radius of 45 feet is required unless waived by TVF&R.
+
+4. There shall be sufficient horizontal clearance on either side of the driveway so that the total horizontal clearance is 20 feet.
+
+D. Access to five or more single-family homes shall be by a street built to City of West Linn standards, consistent with the TSP (Tables 26 through 30 and Exhibits 6 through 9) and the Public Works Design Standards. All streets shall be public. This full street provision may only be waived by variance.
+
+E. Access and/or service drives for multifamily dwellings shall be fully improved with hard surface pavement:
+
+1. With a minimum of 24-foot width when accommodating two-way traffic; or
+
+2. With a minimum of 15-foot width when accommodating one-way traffic. Horizontal clearance shall be two and one-half feet wide on either side of the driveway.
+
+3. Minimum vertical clearance of 13 feet, six inches.
+
+4. Turnaround facilities as required by TVF&R standards for emergency vehicles when the drive is over 150 feet long. Fire Department turnaround areas shall not exceed seven percent grade unless waived by TVF&R.
+
+5. The grade shall not exceed 10 percent on average, with a maximum of 15 percent.
+
+6. A minimum centerline turning radius of 45 feet for the curve.
+
+F. Where on-site maneuvering and/or access drives are necessary to accommodate parking, in no case shall said maneuvering and/or access drives be less than that required in Chapters 46 and 48 CDC.
+
+G. In order to facilitate through traffic and improve neighborhood connections, the developer shall make all local street connections identified in the Transportation System Plan, Table 17 and Figure 12, that are within the boundaries of the project, which may necessitate construction of a public street through a multifamily site.
+
+H. Gated accessways to residential development other than a single-family home are prohibited. (Ord. 1408, 1998; Ord. 1463, 2000; Ord. 1513, 2005; Ord. 1584, 2008; Ord. 1590 § 1, 2009; Ord. 1636 § 34, 2014; Ord. 1745 § 1 (Exh. A), 2023; Ord. 1754 § 1 (Exh. A), 2024)
+
+48.040 MINIMUM VEHICLE REQUIREMENTS FOR NON-RESIDENTIAL USES
+
+Access, egress, and circulation system for all non-residential uses shall not be less than the following:
+
+A. Service drives for non-residential uses shall be fully improved with hard surface pavement:
+
+1. With a minimum of 24-foot width when accommodating two-way traffic; or
+
+2. With a minimum of 15-foot width when accommodating one-way traffic. Horizontal clearance shall be two and one-half feet wide on either side of the driveway.
+
+3. Meet the requirements of CDC 48.030(E)(3) through (6).
+
+4. Pickup window driveways may be 12 feet wide unless the Fire Chief determines additional width is required.
+
+B. All non-residential uses shall be served by one or more service drives as determined necessary to provide convenient and safe access to the property and designed according to CDC 48.030(A). In no case shall the design of the service drive or drives require or facilitate the backward movement or other maneuvering of a vehicle within a street, other than an alley.
+
+C. All on-site maneuvering and/or access drives shall be maintained pursuant to CDC 46.130.
+
+D. Gated accessways to non-residential uses are prohibited unless required for public safety or security. (Ord. 1408, 1998, Ord. 1463, 2000; Ord. 1745 § 1 (Exh. A), 2023)
+
+48.050 ONE-WAY VEHICULAR ACCESS POINTS
+
+Where a proposed parking facility plan indicates only one-way traffic flow on the site, it shall be accommodated by a specific driveway serving the facility, and the entrance drive shall be situated closest to oncoming traffic, and the exit drive shall be situated farthest from oncoming traffic. (Ord. 1745 § 1 (Exh. A), 2023)
+
+48.060 WIDTH AND LOCATION OF CURB CUTS AND ACCESS SEPARATION REQUIREMENTS
+
+A. Minimum curb cut width shall be 16 feet.
+
+B. Maximum curb cut width shall be 36 feet, except along Highway 43 in which case the maximum curb cut shall be 40 feet. For emergency service providers, including fire stations, the maximum shall be 50 feet.
+
+C. No curb cuts shall be allowed any closer to an intersecting street right-of-way line than the following:
+
+1. On an arterial when intersected by another arterial, 150 feet.
+
+2. On an arterial when intersected by a collector, 100 feet.
+
+3. On an arterial when intersected by a local street, 100 feet.
+
+4. On a collector when intersecting an arterial street, 100 feet.
+
+5. On a collector when intersected by another collector or local street, 35 feet.
+
+6. On a local street when intersecting any other street, 35 feet.
+
+D. There shall be a minimum distance between any two adjacent curb cuts on the same side of a public street, except for one-way entrances and exits, as follows:
+
+1. On an arterial street, 150 feet.
+
+2. On a collector street, 75 feet.
+
+3. Between any two curb cuts on the same lot or parcel on a local street, 30 feet.
+
+E. A rolled curb may be installed in lieu of curb cuts and access separation requirements.
+
+F. For non-residential development, curb cuts shall be kept to the minimum, particularly on Highway 43. Consolidation of driveways is preferred. The standard on Highway 43 is one curb cut per business if consolidation of driveways is not possible.
+
+G. Clear vision areas shall be maintained, pursuant to Chapter 42 CDC, and required line of sight shall be provided at each driveway or accessway, pursuant to the West Linn Public Works Design Standards. (Ord. 1270, 1990; Ord. 1584, 2008; Ord. 1636 § 35, 2014; Ord. 1745 § 1 (Exh. A), 2023)
+
+48.070 PLANNING DIRECTOR’S AUTHORITY TO RESTRICT ACCESS APPEAL PROVISIONS
+
+A. For non-residential applications, or residential applications subject to discretionary review, in order to provide for increased traffic movement on congested streets and eliminate turning movement problems, the Planning Director and the City Engineer, or their designee, may restrict the location of driveways on said street and require the location of driveways on adjacent streets upon the finding that the proposed access would:
+
+1. Provide inadequate access for emergency vehicles; or
+
+2. Cause or increase hazardous conditions to exist which would constitute a clear and present danger to the public health safety and general welfare.
+
+B. A decision by the Planning Director may be appealed to the Planning Commission as provided by CDC 99.240(B). (Ord. 1745 § 1 (Exh. A), 2023)
+
+48.080 BICYCLE AND PEDESTRIAN CIRCULATION
+
+A. Within all multifamily developments, each residential dwelling shall be connected to vehicular parking stalls, common open space, and recreation facilities by a pedestrian pathway system having a minimum width of six feet and constructed of concrete, asphalt, brick or masonry pavers, or other hard surface. The pathway material shall be of a different color or composition from the driveway. (Bicycle routes adjacent to the travel lanes do not have to be of different color or composition.)
+
+B. Bicycle and pedestrian ways within a subdivision shall be constructed according to the provisions in CDC 85.200(C).
+
+C. Bicycle and pedestrian ways at commercial or industrial sites shall be provided according to the provisions of Chapter 55 CDC, Design Review. (Ord. 1745 § 1 (Exh. A), 2023)

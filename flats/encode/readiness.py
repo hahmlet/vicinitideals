@@ -437,6 +437,22 @@ _NO_STANDARD = tuple(
         # the one spelled number `_says` cannot see, because it is not
         # followed by a unit the way "five feet" is.
         r"\bzero\b",
+        # A standard a city REPEALED rather than zeroed, which is the strongest
+        # way to state none and the only one that leaves nothing on the page to
+        # read. West Linn deleted CDC 46.080, Computation of Required Parking
+        # Spaces, and CDC 46.100, Parking Requirements for Unlisted Uses, by
+        # Ord. 1754 in 2024, and left the heading OFF-STREET PARKING SPACE
+        # REQUIREMENTS standing over a subsection that states only a maximum.
+        # The sentence that used to require parking is gone, and no sentence
+        # arrived saying so -- which is why Fairview's "there is no minimum"
+        # corroborates its zero and West Linn's cannot.
+        #
+        # Safe because this whole branch is unreachable for any value but zero
+        # -- see the `value != 0` guard above -- so the most it can corroborate
+        # is "this code no longer imposes the standard", which is what the word
+        # means. What it cannot check is WHICH standard was repealed, so a
+        # citation using it has to quote the heading the repeal sits under.
+        r"\brepealed\b",
     )
 )
 

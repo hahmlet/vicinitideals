@@ -390,6 +390,34 @@ def test_a_code_that_waives_a_standard_in_prose_states_zero() -> None:
     assert quotes_the_number("Off-street parking is not required.", 0)
 
 
+def test_a_standard_a_city_repealed_states_zero_without_printing_one() -> None:
+    """The strongest way to impose nothing, and the only one that is invisible.
+
+    Every other spelling this check knows is something a reader can find: an em
+    dash, the word "None", "there is no minimum". A repeal leaves none of them.
+    West Linn deleted CDC 46.080, Computation of Required Parking Spaces, and
+    CDC 46.100, Parking Requirements for Unlisted Uses, by Ord. 1754 in 2024,
+    and what stands under OFF-STREET PARKING SPACE REQUIREMENTS now is a
+    subsection headed "Maximum parking". The city requires no off-street
+    parking at all and nowhere says so; the sentence that used to require it is
+    simply gone.
+
+    Encoding that as zero is not optional -- leaving the field out inherits
+    whatever a broader layer states, which is the one outcome that would put a
+    parking requirement on 6,791 lots that carry none.
+    """
+    from flats.encode.readiness import quotes_the_number
+
+    assert quotes_the_number(
+        "46.080 COMPUTATION OF REQUIRED PARKING SPACES AND LOADING AREA "
+        "Repealed by Ord. 1754.",
+        0,
+    )
+    # And held to zero like every other waiver: a repealed section is not
+    # evidence for a number, only for the absence of one.
+    assert not quotes_the_number("Repealed by Ord. 1754.", 2)
+
+
 def test_waiving_language_does_not_excuse_a_number_that_is_absent() -> None:
     """The rule runs in the permissive direction, so it is held to zero only.
     A passage that waives one standard is not evidence for a different one it

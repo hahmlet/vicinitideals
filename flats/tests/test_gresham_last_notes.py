@@ -105,7 +105,7 @@ def test_gresham_states_an_auto_parking_maximum_and_none_is_encoded() -> None:
         assert design.parking.stalls_per_unit <= 2.0, design.id
 
 
-def test_the_layers_that_state_a_parking_ceiling_are_the_two_that_state_one() -> None:
+def test_the_layers_that_state_a_parking_ceiling_are_the_three_that_state_one() -> None:
     """Portland was the only one until 2026-08-27, and Milwaukie is the second.
 
     Milwaukie's is the tighter of the two and it is aimed at this housing type
@@ -119,6 +119,13 @@ def test_the_layers_that_state_a_parking_ceiling_are_the_two_that_state_one() ->
     court drawn at more stalls than the cap allows is not a lot that fails, it
     is a drawing that is not permitted. Gresham's ceiling is the one that came
     closest to a third and it was read and declined above.
+
+    West Linn is the third, from 2026-08-27, and it is the loosest: CDC
+    46.090(A) caps multifamily non-studio units at 2.0 spaces per unit, which
+    is eight stalls for this building and above anything a rear court would
+    draw. It is here because the city states a figure, not because the figure
+    binds. Recording it is the point -- `exempt: true` would say West Linn has
+    no ceiling, and it has one; the row simply sits above the design.
 
     A stated absence is not a ceiling. Portland writes `exempt: true` on the
     fifteen zones whose cell reads "No maximum", Wilsonville writes it on the
@@ -141,4 +148,8 @@ def test_the_layers_that_state_a_parking_ceiling_are_the_two_that_state_one() ->
         )
     }
 
-    assert carrying == {"or/multnomah/portland", "or/clackamas/milwaukie"}
+    assert carrying == {
+        "or/multnomah/portland",
+        "or/clackamas/milwaukie",
+        "or/clackamas/west-linn",
+    }

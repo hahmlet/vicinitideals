@@ -49,7 +49,19 @@ pytestmark = pytest.mark.unit
 #: can, so the comment came out and eleven values went in. A refusal ledger
 #: whose number only ever rises is measuring reading; one that can fall is
 #: measuring what the model cannot yet hold, which is what this is for.
-EXPECTED = {"notes": 92, "comments": 70, "tests": 16}
+#: 70 -> 74 on 2026-08-27, all four in one layer, and they are what a city
+#: with GOOD vehicle standards costs. West Linn states a stall, an aisle, a
+#: service drive and both ends of a curb cut -- ten values, more geometry than
+#: any layer in this corpus outside Gresham -- and states four more standards
+#: in shapes nothing here can hold: curb-cut spacing selected by a street
+#: classification no parcel carries, an alley-first access rule that moves the
+#: driveway rather than sizing it, grade limits on a driveway centerline and a
+#: court floor that do not exist until a plan is drawn, and a clearance
+#: envelope beside a one-way drive that is not the pavement the field carries.
+#: Ten encoded against four refused is the ratio to watch; it is the same
+#: shape as the driveway reading that moved this number to 68, and the same
+#: reason. The detailed codes are the ones that refuse the most.
+EXPECTED = {"notes": 92, "comments": 74, "tests": 16}
 #: Two of the sixteen are this file, which quotes the marker while
 #: explaining it, and one is a back-reference in test_gresham_rockwood --
 #: prose saying a zone *was* not encoded until it was. Left in rather than

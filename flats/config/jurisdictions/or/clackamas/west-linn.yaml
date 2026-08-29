@@ -243,6 +243,259 @@ code:
   - id: "16.r-2.1"
     url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC16.html
     title: "CDC Chapter 16 - Medium High Density Residential R-2.1"
+  # Every one of the nine zone chapters ends with the same list under "OTHER
+  # APPLICABLE DEVELOPMENT STANDARDS": "The following standards apply to all
+  # development including permitted uses", and item 7 is "Chapter 46 CDC,
+  # Off-Street Parking, Loading and Reservoir Areas." Nine mentions, no
+  # exceptions, no conditions. 6,791 lots here fit the pod -- the largest count
+  # in the corpus behind Portland, Gresham and unincorporated Clackamas -- and
+  # the site-plan generator lays out none of them, because a city that has not
+  # stated a stall cannot be drawn on.
+  - id: "46.parking"
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC46.html
+    title: "CDC Chapter 46 - Off-Street Parking, Loading and Reservoir Areas"
+  # Item 8 of the same unconditional list, fetched in the same pass as item 7
+  # and for the same reason. Chapter 46 states the stall and the aisle and says
+  # nothing at all about how wide the drive reaching them may be; 48 is titled
+  # Access, Egress and Circulation and is the only place left for it. Fetching
+  # one without the other would encode a court nothing can be driven into.
+  - id: "48.access"
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC48.html
+    title: "CDC Chapter 48 - Access, Egress and Circulation"
+defaults:
+  # PARKING AND VEHICLE ACCESS, read 2026-08-27 out of Chapters 46 and 48,
+  # which every one of the nine zone chapters lists under "OTHER APPLICABLE
+  # DEVELOPMENT STANDARDS -- The following standards apply to all development
+  # including permitted uses" as items 7 and 8. No conditions on either.
+  #
+  # One question decides most of this file, and West Linn never answers it:
+  # IS A QUADPLEX ON ONE LOT "MULTIFAMILY" HERE? The word carries the stall
+  # size, the parking ceiling and the driveway width, and it appears nowhere
+  # in Chapter 2. What Chapter 2 does define is three neighbouring categories:
+  # "Quadplex residential units. Four attached or detached dwelling units on a
+  # lot or parcel in any configuration"; "Single-family attached residential
+  # units ... attached side by side ... at a common property line ON SEPARATE
+  # LOTS OR PARCELS. This may be further defined as a duplex, triplex, or
+  # quadplex"; and single-family detached, one freestanding unit. A pod on one
+  # undivided lot is the first and is neither of the others -- single-family
+  # attached is defined by the property line running between the units, which
+  # is the plat path, not this one.
+  #
+  # So it is multifamily by elimination, and two things confirm it rather than
+  # leaving it an inference. Chapter 46 sets the two categories against each
+  # other twice -- "Except for single-family attached and detached residences"
+  # in (A)(6), and (A)(8) requiring a paved surface for single-family attached
+  # and detached and then, separately, "All parking for multifamily
+  # residential development shall be paved" -- so multifamily is the residual
+  # residential category, not a fifth-and-up-unit one. And the maximum table
+  # in 46.090(A) prints exactly two residential rows, multifamily studio and
+  # multifamily non-studio; a reading that put quadplexes outside it would
+  # leave the most ordinary housing in the city with no row at all.
+  #
+  # The reading fails the pod OUT wherever the two branches differ: it takes
+  # the 24-foot multifamily service drive over the 14-foot one for "two to
+  # four single-family residential homes". If the land is ever divided first,
+  # the pod becomes single-family attached and the looser branch is the one
+  # that applies -- worth knowing, because the plat path is already modelled.
+  # (or/clackamas/west-linn/02.definitions.txt#L800,L947,L949,
+  #  or/clackamas/west-linn/46.parking.txt#L241,L245)
+
+  # NO MINIMUM. Not stated as an exemption anywhere -- West Linn simply
+  # deleted the machinery. CDC 46.080, Computation of Required Parking Spaces
+  # and Loading Area: "Repealed by Ord. 1754." CDC 46.100, Parking
+  # Requirements for Unlisted Uses: "Repealed by Ord. 1754." What is left
+  # under the heading OFF-STREET PARKING SPACE REQUIREMENTS is subsection A,
+  # "Maximum parking", and two subsections about carpool striping and transit
+  # redevelopment. Every remaining "minimum" in the chapter belongs to
+  # something else: bicycle spaces, accessible-space ratios, reservoir depth
+  # for drive-in service, the stall itself. No zone chapter states a parking
+  # quantity either -- the whole-corpus grep returns nothing.
+  #
+  # This is Fairview's shape and Wilsonville's: a city that requires zero
+  # stalls and still regulates every one you build. Encoding the zero is what
+  # keeps the screen from inventing a requirement out of the fact that a
+  # parking chapter exists.
+  parking_min_per_unit:
+    value: 0
+    cite: West Linn CDC 46.080 (repealed), 46.090 (maximum only) and 46.100 (repealed)
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC46.html
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/west-linn/46.parking.txt#L127,L129,L131,L133,L162,L164"
+  # And a real maximum, which is the unusual half. 46.090(A): "Parking spaces
+  # shall not exceed the following amounts", Multifamily non-studio, 2.0
+  # spaces per unit. Eight stalls for this building, which is far above
+  # anything a rear court would draw, so it never binds -- but it is a stated
+  # ceiling and `exempt: true` would say the city has none.
+  parking_max_per_unit:
+    value: 2
+    cite: West Linn CDC 46.090(A), Maximum parking, Multifamily non-studio row
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC46.html
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/west-linn/46.parking.txt#L133,L135,L137"
+  # THE STALL, from 46.150(A)(1), which packs three sizes into four sentences.
+  # Eight by 16 is named "compact"; "to accommodate larger cars, 50 percent of
+  # the parking spaces shall have a minimum dimension of nine feet in width
+  # and 18 feet in length". Half the stalls must be the larger size, so the
+  # larger size is what a court is dimensioned to -- a lot that seats four
+  # 9 by 18 stalls seats any lawful mix, a lot sized to 8 by 16 throughout
+  # seats none. Same direction of error as unincorporated Clackamas, and for
+  # the same reason.
+  #
+  # The third size is the one that had to be argued. "When multifamily parking
+  # stalls back onto a driveway, as opposed to a drive aisle within a parking
+  # lot, the stalls shall be nine feet by 20 feet." Multifamily is settled
+  # above, so the whole clause turns on which side of that contrast the pod's
+  # court sits, and the answer is not a guess: the site-plan generator draws a
+  # side driveway and, separately, a rear court of 90-degree stalls served by
+  # its own aisle, and counts the two as separate pavement. Stalls there back
+  # onto a drive aisle within a parking lot, which is the branch the sentence
+  # excludes. West Linn's own text expects that court to exist -- (A)(6) makes
+  # a multifamily development stripe its spaces and sign "all interior drives
+  # and access aisles", and (A)(11) speaks of "the boundaries of a parking
+  # lot". If the catalog ever draws a plan whose stalls back straight onto the
+  # entry drive, the depth here is 20 and the citation is the same line.
+  #
+  # Figure 2 checks the reading from the other side: at 90 degrees drive-in
+  # with a 9.0' stall width it prints dimension 'A' -- the stall depth -- as
+  # 18.0', and dimension 'B' as 9.0'. The table and the sentence agree.
+  parking_stall_width_ft:
+    value: 9
+    cite: West Linn CDC 46.150(A)(1), and Figure 2 (90 degrees, drive-in, 9.0' stall)
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC46.html
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/west-linn/46.parking.txt#L231,L376-L378,L383"
+  parking_stall_depth_ft:
+    value: 18
+    cite: West Linn CDC 46.150(A)(1), and Figure 2 dimension 'A' (90 degrees, drive-in, 9.0' stall)
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC46.html
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/west-linn/46.parking.txt#L231,L376-L378,L383"
+  # THE AISLE, from the same figure, and West Linn states it by angle and by
+  # how the car enters rather than by which way traffic runs: 90 degrees
+  # drive-in, 23.0'; 90 degrees back-in, 22.0'. Both columns of stall width
+  # give 23.0 at drive-in, so the figure does not move with the stall. There
+  # is no one-way and no two-way row anywhere in the chapter, so one number
+  # answers for both -- Fairview's shape, where 24 is the answer to both
+  # questions because only one was asked. Twenty-three is Gresham's aisle.
+  #
+  # Drive-in rather than back-in because a car that drives in leaves in
+  # reverse and needs the wider aisle to do it, and nothing in the catalog
+  # obliges a resident to back into a stall. The larger of the two, either
+  # way.
+  parking_aisle_one_way_ft:
+    value: 23
+    cite: West Linn CDC 46.150(E), Figure 2, Minimum Distance for Parking Stalls (90 degrees, drive-in)
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC46.html
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/west-linn/46.parking.txt#L370,L374,L376-L378,L383"
+  parking_aisle_two_way_ft:
+    value: 23
+    cite: West Linn CDC 46.150(E), Figure 2, Minimum Distance for Parking Stalls (90 degrees, drive-in)
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC46.html
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/west-linn/46.parking.txt#L370,L374,L376-L378,L383"
+  # THE DRIVE THAT REACHES IT, from Chapter 48, which Chapter 46 never
+  # mentions and every zone chapter requires. 48.030(E): "Access and/or
+  # service drives for multifamily dwellings shall be fully improved with hard
+  # surface pavement: 1. With a minimum of 24-foot width when accommodating
+  # two-way traffic; or 2. With a minimum of 15-foot width when accommodating
+  # one-way traffic."
+  #
+  # Twenty-four is the figure that binds, because a single side lane into a
+  # rear court carries traffic both ways unless a loop is drawn, and no loop
+  # fits beside a 56-foot pod. It is Happy Valley's 20 plus four, and it is
+  # wider than the side yard on a great many of these lots -- which is the
+  # honest answer, not a discouraging one. The alternative branch for "two to
+  # four single-family residential homes" asks 14 to 20 feet, and the
+  # definitions above are why this file does not take it.
+  driveway_min_width_two_way_ft:
+    value: 24
+    cite: West Linn CDC 48.030(E)(1) (access and service drives for multifamily dwellings)
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC48.html
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/west-linn/48.access.txt#L129,L131"
+  driveway_min_width_one_way_ft:
+    value: 15
+    cite: West Linn CDC 48.030(E)(2) (access and service drives for multifamily dwellings)
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC48.html
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/west-linn/48.access.txt#L129,L133"
+  # THE CURB CUT, from 48.060, and it is the rare pair stated flatly with no
+  # use, no zone and no street attached: "A. Minimum curb cut width shall be
+  # 16 feet. B. Maximum curb cut width shall be 36 feet." The floor is the
+  # interesting one -- most cities in this corpus state only a ceiling, and a
+  # 16-foot minimum means a pod cannot economise its approach down to a
+  # single-car width to save a side yard.
+  #
+  # The Highway 43 exception raises the ceiling to 40 and applies to one
+  # highway; a looser number on one frontage cannot fail a lot the 36 passes,
+  # so it is left out rather than carried as a variant nothing could select.
+  driveway_approach_min_width_ft:
+    value: 16
+    cite: West Linn CDC 48.060(A)
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC48.html
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/west-linn/48.access.txt#L173,L175"
+  driveway_approach_max_width_ft:
+    value: 36
+    cite: West Linn CDC 48.060(B)
+    url: https://www.codepublishing.com/OR/WestLinn/html/WestLinnCDC/WestLinnCDC48.html
+    retrieved: '2026-08-27'
+    quote: "or/clackamas/west-linn/48.access.txt#L173,L177"
+  #
+  # NOT ENCODED: curb cut spacing, 48.060(C) and (D). Eleven numbers between
+  # them and every one is selected by a street classification -- 150 feet from
+  # an intersecting arterial, 100 from a collector, 35 on a local street, 30
+  # between two cuts on the same lot. This corpus holds no street
+  # classification for any parcel, and the local-street figures are the small
+  # ones, so guessing "local" would be the permissive guess on exactly the
+  # lots where it is wrong. The same shape as Oregon City's refused driveway
+  # spacing, in a city that states it in more detail.
+  # (or/clackamas/west-linn/48.access.txt#L179,L193)
+  #
+  # NOT ENCODED: the alley-first rule, 48.025(B)(3)(a). "Option 1. Access is
+  # from an existing or proposed alley or mid-block lane. If a property has
+  # access to an alley or lane, direct access to a public street is not
+  # permitted." Not a width and not a setback -- it moves the driveway to the
+  # other side of the lot, which changes the whole plan. Gresham's is refused
+  # for the same reason and it is the same missing fact: nothing here knows
+  # whether a parcel abuts an alley.
+  # (or/clackamas/west-linn/48.access.txt#L55)
+  #
+  # NOT ENCODED: grade limits on the vehicle areas, of which West Linn states
+  # three. The driveway centerline is held to 15 percent, stated twice -- CDC
+  # 46.150(A)(15) and 48.030(B)(3) -- with the last 18 feet before a garage
+  # held to 12; and 46.150(A)(17) holds the stalls themselves to "less than a
+  # five percent grade". Slope is measured per parcel by the pipeline that
+  # consumes this file, so this is not a missing measurement so much as a
+  # missing carrier: no field holds a grade limit, and the two that matter
+  # apply to shapes that do not exist until a plan is drawn -- a driveway
+  # centerline and a court floor, not the lot. The five percent is the
+  # sharper of the two. A rear court is a single graded plane roughly 40 by
+  # 60 feet, and five percent across it is a fall of three feet; a hillside
+  # lot in West Linn can pass every dimension in this file and still need the
+  # court benched into the slope before a stall can sit on it.
+  # (or/clackamas/west-linn/46.parking.txt#L261,L265, or/clackamas/west-linn/48.access.txt#L113)
+  #
+  # NOT ENCODED: the horizontal clearance beside a one-way drive, 48.030(E)(2)
+  # -- "two and one-half feet wide on either side of the driveway", which
+  # makes a 15-foot one-way drive a 20-foot corridor. The field carries
+  # pavement width and adding five feet to it would misstate the pavement for
+  # anything that sums area. It does not bind the layout drawn here, whose
+  # side lane is two-way, and it would bind a one-way loop.
+  # (or/clackamas/west-linn/48.access.txt#L133)
+  #
+  # Read and NOT a constraint, recorded so the next reader does not re-open
+  # them: 46.150(A)(8) requires 20 feet of driveway between the back of
+  # sidewalk and the garage or the end of the parking pad, which a rear court
+  # clears by the depth of the building; 46.150(B) applies the accessible
+  # parking table only "if any parking is provided for the public or
+  # visitors", and four residents' stalls are neither; 46.150(F) applies tree
+  # canopy and landscaping to "more than one-half acre of new off-street
+  # surface parking", roughly twenty times this court; and 48.020(A) stands
+  # the whole chapter down where the Transportation System Plan or the land
+  # division chapter "set forth different standards", which is a door this
+  # screen cannot see through and which can only be opened by an application.
 zones:
   R-40:
     section: ["08."]

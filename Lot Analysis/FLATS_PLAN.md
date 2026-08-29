@@ -182,6 +182,21 @@ A zone simply *missing* from config is `ZONE_NOT_ENCODED` → REVIEW → and app
 coverage backlog. Never silently dropped, never treated as prohibited. This one rule would
 have surfaced the 40,500 RM lots on day one.
 
+**The same rule runs the other way, and it is how the corpus says a city imposes
+nothing.** A standard a city does not have is encoded as `value: 0`, cited, rather than
+omitted — because omitting it inherits whatever a broader layer states, and a state or
+county figure charged to a city that repealed its own is a requirement invented out of
+silence. The readiness check has to be able to *see* the zero in the cited text, and codes
+spell it four ways: a table cell reading `None`, `N/A` or an em dash; a sentence like
+Fairview's "There is no minimum off-street parking requirements"; the word "zero"; and —
+added 2026-08-27 for West Linn — a **repeal**. Ord. 1754 deleted CDC 46.080 and 46.100 and
+left the heading `OFF-STREET PARKING SPACE REQUIREMENTS` standing over a subsection that
+states only a maximum. That is the strongest way a city can impose nothing and the only
+one that leaves nothing on the page to read: the sentence that used to require parking is
+gone, and no sentence arrived saying so. A citation resting on a repeal has to quote the
+repealed section's **heading** as well as the repeal, because the check can confirm that
+something was repealed and never which thing.
+
 ### The ledgers
 
 **Coverage ledger** — *which zones are missing.* Every run enumerates every
