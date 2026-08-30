@@ -21,6 +21,8 @@ has to be one the code genuinely never states rather than one nobody typed in.
 
 from __future__ import annotations
 
+import pathlib
+
 import pytest
 
 pytest.importorskip("yaml")
@@ -553,3 +555,35 @@ def test_the_unit_lot_plat_is_refused_while_the_mirror_is_the_one_lot_branch():
         sp.model_copy(update={"plat": "unit_lots"}).model_validate(
             sp.model_dump() | {"plat": "unit_lots"}
         )
+
+def test_the_open_space_column_prints_each_citys_own_figures():
+    """A summary row may not name another jurisdiction's numbers.
+
+    For as long as Portland held the only per-zone open-space reserve in the
+    file, s7 printed the literal string "by zone (250 / 200 sq ft)" for any
+    city with a per-zone map. Unincorporated Multnomah arrived with a map of
+    its own -- 1,200 square feet on LR-7 and nothing anywhere else -- and the
+    published summary told a reader the county reserves 250. The reserve is
+    law; a report that states it wrong is worse than one that omits it.
+
+    The third case is the one the old string could not express at all: a map
+    that is present and null throughout is a city that was read and reserves
+    nothing, which is the same sentence as a city with no map.
+    """
+    import sys
+
+    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
+    from common import DrivewayRules, load_footprints
+    from s7_report import open_space_label
+
+    sp = load_footprints().siteplan
+    assert open_space_label(sp.driveway_for("portland")) == (
+        "by zone (250 / 200 sq ft)")
+    assert open_space_label(sp.driveway_for("multnomah_unincorporated")) == (
+        "by zone (1200 sq ft)")
+    assert open_space_label(sp.driveway_for("gresham")) == "15% of lot"
+    assert open_space_label(sp.driveway_for("troutdale")) == "**none stated**"
+    assert open_space_label(None) == "*not read*"
+    assert open_space_label(
+        DrivewayRules(open_space_sqft_by_zone={"A": None, "B": None})
+    ) == "**none stated**"

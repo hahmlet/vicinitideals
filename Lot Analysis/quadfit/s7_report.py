@@ -47,6 +47,34 @@ def _pct(n: int, d: int) -> str:
     return f"{100.0 * n / d:.1f}%" if d else "n/a"
 
 
+def open_space_label(dw) -> str:
+    """How one city's open-space reserve reads in the per-city table.
+
+    This was a literal string, "by zone (250 / 200 sq ft)", for as long as
+    Portland held the only per-zone reserve in the file. The second one to
+    arrive -- unincorporated Multnomah's single 1,200 sq ft on LR-7, which the
+    county reaches only through design review of a conditional use -- printed
+    Portland's two numbers under the county's name, which is a report stating
+    a false fact about a jurisdiction. The figures now come out of the map.
+
+    A map whose values are every one of them null is a city that was read and
+    reserves nothing, and it says so in the same words as a city with no map.
+    """
+    if dw is None:
+        return "*not read*"
+    if dw.open_space_sqft_by_zone:
+        figs = sorted({v for v in dw.open_space_sqft_by_zone.values() if v},
+                      reverse=True)
+        if figs:
+            return "by zone (" + " / ".join(f"{v:g}" for v in figs) + " sq ft)"
+        return "**none stated**"
+    if dw.open_space_pct:
+        return f"{dw.open_space_pct:g}% of lot"
+    if dw.open_space_sqft:
+        return f"{dw.open_space_sqft:g} sq ft"
+    return "**none stated**"
+
+
 # Oregon assessor property-class first digit -> broad current use. 4xx tract
 # land is residential in practice; 3xx industrial folded into commercial
 # (both are "valuable existing use we won't replace").
@@ -877,16 +905,7 @@ def main() -> None:
             L.append("|---|---|---|---|")
             for c in cities:
                 dw = sp.driveway_for(c)
-                if dw is None:
-                    osp = "*not read*"
-                elif dw.open_space_sqft_by_zone:
-                    osp = "by zone (250 / 200 sq ft)"
-                elif dw.open_space_pct:
-                    osp = f"{dw.open_space_pct:g}% of lot"
-                elif dw.open_space_sqft:
-                    osp = f"{dw.open_space_sqft:g} sq ft"
-                else:
-                    osp = "**none stated**"
+                osp = open_space_label(dw)
                 L.append(f"| {c} | {sp.lane_ft_for(c):g} ft "
                          f"| {sp.curb_cut_ft_for(c):g} ft | {osp} |")
             L.append(
