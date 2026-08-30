@@ -92,8 +92,8 @@ screen:
 # row (front 10 / side 5 / rear 15 / street-side 10, min lot 5,000, FAR 1.0).
 siteplan:
   enabled: true
-  # Every city whose own code states a stall AND an aisle gets laid out. Eight
-  # do as of 2026-08-29, Gladstone being the newest and the widest; two more
+  # Every city whose own code states a stall AND an aisle gets laid out. Nine
+  # do as of 2026-08-30, unincorporated Multnomah being the newest; two more
   # state a stall and no aisle and are declined by name below; the rest have
   # not been read and pass through as `not_evaluated`. Narrow to `pilot_cell`
   # to re-run Gresham LDR-5 alone after a layout change.
@@ -281,6 +281,39 @@ siteplan:
       aisle_one_way_ft: 24          # one figure, not split by direction
       aisle_two_way_ft: 24
       cite: GMC 17.48.040, Standard Parking Dimensions in Feet, 90 degrees
+      max_per_unit: null
+    # The ninth entry and the first that is not a city. MCC 39.6565(A)(1) and
+    # (B)(1): nine by eighteen, with 25 feet of aisle at ninety degrees --
+    # tying Troutdale for the widest aisle in this file and making a court
+    # sixty-one feet deep before a drive reaches it.
+    #
+    # Scope needed no argument here, which is the exception in this file.
+    # 39.6555(A) applies the design standards to every parking area "except
+    # those serving a single family dwelling on an individual lot in a rural
+    # base zone and except those serving a single family or a two-family
+    # dwelling in an urban base zone". A quadplex is neither, in neither kind
+    # of zone, and no design-review gate stands in front of the sentence.
+    #
+    # THESE ARE THE COUNTY'S NUMBERS AND FOUR OF THE SIX ZONES BELOW THEM ARE
+    # PORTLAND'S. R20, R10, R7, R5 and RF are Portland-administered pockets
+    # inside the county, and 1,489 of this jurisdiction's 1,578 pod-fitting
+    # lots are in them. PCC 33.266 has not been read into that layer yet, so
+    # every lot here is laid out on MCC: 9 x 18 with a 25 ft aisle is stricter
+    # than 33.266's 8.5 x 16 with 20, so a pocket lot that fits on these could
+    # not fail on Portland's own. It costs plans rather than inventing them,
+    # and it is the whole of what reading 33.266 into the pockets would buy.
+    #
+    # `max_per_unit` is null on an absence, not on a read ceiling. The word
+    # "maximum" occurs nowhere in MCC 39.6500 through 39.6600, and the chapter
+    # builds no apparatus for one -- no table, no exempt space types, no zone
+    # split. Gladstone above prints "Max: None" and is a reading; this is a
+    # code that never had the thought.
+    multnomah_unincorporated:
+      stall_width_ft: 9
+      stall_depth_ft: 18
+      aisle_one_way_ft: 25          # one figure, not split by direction
+      aisle_two_way_ft: 25
+      cite: MCC 39.6565(A)(1) stall size; 39.6565(B)(1) aisle at ninety degrees
       max_per_unit: null
     # --- states a stall and no aisle: declined, not borrowed from -----------
     # Both of these dimension a space and never dimension the drive that
@@ -555,6 +588,49 @@ siteplan:
     gladstone:
       parking_street_setback_ft: 5
       cite: GMC 17.48.040(2)(e), parking spaces set back five feet from the property line
+    # MCC 39.6560(A), and it is written for exactly the plat this stage draws:
+    # "where a parking or loading area does not abut directly on a public
+    # street... there shall be provided an unobstructed driveway not less than
+    # 20 feet in width for two-way traffic". A rear court does not abut the
+    # street, so the side lane is twenty feet -- eight more than the design
+    # lane, matching Happy Valley and four short of West Linn. No one-way
+    # figure anywhere in the chapter, so that field stays empty rather than
+    # borrowing the two-way number.
+    #
+    # 39.6580(A) sets parking back from a street by the ZONE'S required yard,
+    # so it is a map rather than a number, the third city in this file to
+    # state it that way. The redirect at 39.6585(A) prints a ten-foot floor for
+    # the same rule -- 39.8045(C)(3)(b)'s landscaped strip -- and every zone in
+    # the map is at or above it.
+    #
+    # THE OPEN SPACE IS ONE ZONE'S ONLY, and it is the first entry in this file
+    # where a reserve turns on how a use is APPROVED rather than on what it is.
+    # A multiplex is a conditional use in LR-7 (MCC 39.4856(C)), design review
+    # applies to conditional uses (39.8020(A)), and design review carries
+    # 39.8045(A)(2): 300 square feet per unit of shared outdoor recreation for
+    # an apartment development of three-bedroom units, which is 1,200 for this
+    # pod. MR-4 permits the pod outright so review never starts, and the four
+    # Portland pockets are governed by PCC, where Table 110-4 asks 250 -- not
+    # mirrored here, because the corpus reads that number into the Portland
+    # layer and not into this one.
+    #
+    # No approach ceiling, no frontage share, no maneuvering cap and no front
+    # parking ban: read and absent. 39.6580(C) comes closest -- "not more than
+    # two driveways which do not exceed the width of their curb cuts for each
+    # 150 feet of street frontage" -- and states a count, never a width.
+    multnomah_unincorporated:
+      drive_min_two_way_ft: 20
+      parking_street_setback_by_zone:
+        R20: 20
+        R10: 20
+        R7: 15
+        LR7: 20
+      open_space_sqft_by_zone:
+        R20: null
+        R10: null
+        R7: null
+        LR7: 1200
+      cite: MCC 39.6560(A) driveway width; 39.6580(A) street setback; 39.8045(A)(2) shared outdoor recreation
   # The three engineering constants left after the law came out of this block.
   # Not one is a citation. A car needs a lane and a wall needs a standoff
   # whatever the code says; where a city asks for more, the city wins.

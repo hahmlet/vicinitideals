@@ -82,7 +82,21 @@ pytestmark = pytest.mark.unit
 #: a forward-access rule that stops one stall short of this building; a
 #: screening standard the building itself can satisfy; and bicycle parking,
 #: which reaches the pod by a parenthetical that overrides a definition.
-EXPECTED = {"notes": 92, "comments": 88, "tests": 16}
+#: 88 -> 99 on 2026-08-30, all eleven unincorporated Multnomah, against six
+#: encoded values -- the first layer in this corpus to refuse nearly twice what
+#: it kept out of one reading. Two of them are the side-and-rear halves of two
+#: different parking setbacks stated one section apart (a four-inch curb three
+#: feet off any lot line, and a five-foot landscaped strip along the same line),
+#: and the five-foot one is exactly equal to the smallest side yard in the
+#: layer, which is the narrowest margin any refusal here rests on. Then a
+#: forward-access rule with no threshold at all; the compact and parallel stall
+#: geometries; a rule about what may be paved in a street yard; a setback taken
+#: from the NEIGHBOUR's zoning; five reliefs granted at a counter; a fifteen
+#: percent landscape share of an undefined "development area"; enclosed storage
+#: with no dimension in it; and 48 sq ft of private outdoor space per ground
+#: floor unit, which this model cannot hold beside the shared reserve that IS
+#: encoded on LR7.
+EXPECTED = {"notes": 92, "comments": 99, "tests": 16}
 #: Two of the sixteen are this file, which quotes the marker while
 #: explaining it, and one is a back-reference in test_gresham_rockwood --
 #: prose saying a zone *was* not encoded until it was. Left in rather than

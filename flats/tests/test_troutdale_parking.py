@@ -125,13 +125,19 @@ def test_the_stall_is_nine_by_eighteen_and_the_table_checks_its_own_arithmetic(
 
 
 def test_twenty_five_feet_is_the_widest_aisle_in_the_corpus() -> None:
-    """One figure, no direction split, and nobody else asks for more.
+    """One figure, no direction split, and nobody asks for more than this.
 
     Fairview asks 24, Gresham and West Linn 23, Portland 20. Troutdale's 25 is
     the number that decides how many of its 3,431 pod-fitting lots can seat two
     rows of stalls, so it is pinned against the field rather than on its own: a
-    later reading that quietly makes some other city wider should have to come
-    here and say so.
+    later reading that quietly makes some other city wider has to come here and
+    say so.
+
+    One did, the next day but one. MCC 39.6565(B)(1) asks 25 feet at ninety
+    degrees for unincorporated Multnomah County, and the assertion is now a tie
+    rather than a superlative -- which is the check working, not failing. Both
+    are one figure stated once and not split by direction, and both make a rear
+    court sixty-one feet deep before a driveway reaches it.
     """
     layers = load_rules()
     widest: dict[str, float] = {}
@@ -143,7 +149,10 @@ def test_twenty_five_feet_is_the_widest_aisle_in_the_corpus() -> None:
 
     assert widest[TROUTDALE] == 25
     assert max(widest.values()) == 25
-    assert [k for k, v in widest.items() if v == 25] == [TROUTDALE]
+    assert sorted(k for k, v in widest.items() if v == 25) == [
+        "or/multnomah/_unincorporated",
+        TROUTDALE,
+    ]
 
 
 def test_the_driveway_is_the_general_figure_not_the_single_family_one(

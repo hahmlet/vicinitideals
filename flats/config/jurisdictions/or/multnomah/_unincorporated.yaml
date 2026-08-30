@@ -1,10 +1,33 @@
 label: Multnomah Unincorporated
 kind: unincorporated
 eligible: true
-notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s verification was against a
-  coarser standard (one citation per row) and does not carry over. UNPORTED: orientation_constraint=''entrance_only''.
-  quadfit justified this in a YAML comment with no citation; it needs its own encoding rather than invented
-  provenance.'
+notes: >-
+  Ported from quadfit rules.yaml. Every value is `draft` -- quadfit's verification was against a
+  coarser standard (one citation per row) and does not carry over. UNPORTED:
+  orientation_constraint='entrance_only'. quadfit justified this in a YAML comment with no
+  citation; it needs its own encoding rather than invented provenance.
+
+
+  PARKING IS HALF READ, ON PURPOSE, AND THIS IS THE OTHER HALF. On 2026-08-30 MCC 39.6500 through
+  39.6600 was read into `defaults` -- stall, aisle, driveway, street setback, the Apartment row --
+  and it is the COUNTY's chapter. But R20, R10, R7, R5 and RF in this layer are
+  Portland-administered pockets whose dimensions already come from PCC 33.110, and 1,489 of this
+  layer's 1,578 pod-fitting lots are in them. Their parking chapter is PCC 33.266 and it has not
+  been fetched.
+
+
+  So every pocket lot is currently screened on the county's numbers, which are stricter than
+  Portland's in every dimension: 9 by 18 with a 25 ft aisle against 8.5 by 16 with 20, and a
+  20 ft drive against Portland's 9. That direction is safe -- a pocket lot that passes on these
+  could not fail on Portland's own -- and it is still wrong. Reading 33.266 into R20/R10/R7/R5/RF
+  as zone values is the next work here, and it can only add GREENs. Note that the quadfit mirror
+  holds ONE geometry per jurisdiction, so that reading cannot reach the site plan generator
+  without a per-zone geometry map beside the per-zone setback map already there.
+
+
+  What the county's own zones get out of the reading now: LR-7 (89 pod-fitting lots), LR-5,
+  LR-10, MR-4 and the rural articles, all of which point at 39.6500 and none of which state a
+  dimension.
 ingest:
   geoid: null
   juris_city_codes:
@@ -72,6 +95,29 @@ crossrefs:
       The same Lots of Record exception in the rural residential zones, against a five-acre
       minimum. Reading it could only admit lots this screen already rejects, never reject one it
       admits.
+  # Rulings on "39.8045", "39.8040" and "39.8050" stood here for the length of one edit and the
+  # ledger now calls all three stale, which is the right answer: MCC 39.8000 through 39.8050 is
+  # fetched, so nothing points at an unfetched 39.80-anything any more. Worth saying what they
+  # said, because the first of them is why the document is here. MCC 39.6585(A) redirects "the
+  # landscaped areas requirements of MCC 39.8045 (C) (3) to (7)" onto every parking area inside
+  # 39.6555(A)'s scope -- which is every parking area except one serving a single-family or
+  # two-family dwelling. So a section headed "for developments subject to design review plan
+  # approval" reaches a building design review may never see. 39.8040 is narrative approval
+  # criteria and 39.8050 sells 25 percent off the parking dimensions at a counter; both are
+  # refused in `defaults`, beside the numbers 39.8045 produced.
+  "29.014":
+    outcome: procedure
+    note: >-
+      Certificate of Occupancy, from 39.6530(A): the parking has to be built before one issues,
+      or a performance bond filed instead. A sequencing rule for a permit, not a standard the
+      ground has to meet.
+  "39.6780":
+    outcome: other_path
+    note: >-
+      Signs. 39.6575 is one sentence long -- "Signs, pursuant to the provisions of this subpart
+      shall also meet MCC 39.6780" -- and a sign is not a thing this pod places. It is here
+      because the sentence stands inside the parking chapter and would otherwise read as an
+      unfetched qualifier on a parking standard.
   "39.9610":
     outcome: other_building
     note: >-
@@ -221,6 +267,38 @@ code:
   start: "39.4200- PURPOSE"
   end: "39.4300- PURPOSE"
   extraction: plain
+# The chapter every base zone in Part 4 points at and none of them states:
+# "Off-street parking and loading shall be provided as required by MCC 39.6500
+# through 39.6600", printed once in each zone's own parking section. It holds a
+# stall, an aisle, a driveway width and a rule about which yard a car may stand
+# in, and until 2026-08-30 none of it was read. Markers are the body's uppercase
+# headings; the contents page prints the same numbers in title case and is
+# therefore not matched.
+- id: "39.parking"
+  url: https://multco.us/file/chapter_39_-_zoning_code/download
+  title: MCC 39.6500-39.6600 Off-Street Parking, Loading and Access
+  start: "39.6500- PURPOSE"
+  end: "39.6700- PURPOSE"
+  extraction: plain
+# Reached by a redirect out of the parking chapter, and the redirect is the
+# whole reason it is here. MCC 39.6585(A): "The landscaped areas requirements
+# of MCC 39.8045 (C) (3) to (7) shall apply to all parking, loading or
+# maneuvering areas which are within the scope of design standards stated in
+# MCC 39.6555 (A)" -- and 39.6555(A)'s scope is every parking area except one
+# serving a single-family or two-family dwelling. So a landscape section
+# headed "for developments subject to design review plan approval" reaches a
+# building that design review never touches, and it states a ten-foot strip
+# between parking and a street and a five-foot strip along every other lot
+# line. The applicability half (39.8015, 39.8020) is fetched with it because
+# the refusal of 39.8045(A)'s 200 sq ft per unit of shared outdoor recreation
+# rests on it: design review applies to conditional and community service
+# uses, and (A) carries no redirect of its own.
+- id: "39.design-review"
+  url: https://multco.us/file/chapter_39_-_zoning_code/download
+  title: MCC 39.8000-39.8050 Design Review, incl. 39.8045 Required Minimum Standards
+  start: "39.8000- PURPOSES"
+  end: "39.8200-  ADJUSTMENTS"
+  extraction: plain
 # The MUF heading is the one in this chapter the table of contents misprints:
 # the body sets it "39.4700  PURPOSES." with two spaces and no dash, while
 # the contents page reads "39.4700- PURPOSES". A start marker taken from the
@@ -231,6 +309,231 @@ code:
   start: "39.4700  PURPOSES"
   end: "39.4735 USES"
   extraction: plain
+defaults:
+  # MCC 39.6500 through 39.6600, the chapter every base zone in Part 4 points at
+  # and none of them states. Read 2026-08-30, and it is the first parking
+  # geometry this layer has ever held.
+  #
+  # WHICH BUILDING IT REACHES, which is the question that decided Gladstone
+  # yesterday and Troutdale the day before, is answered here without argument.
+  # 39.6555(A): the design standards "shall apply to all parking, loading, and
+  # maneuvering areas except those serving a single family dwelling on an
+  # individual lot in a rural base zone and except those serving a single family
+  # or a two-family dwelling in an urban base zone". A quadplex is neither, in
+  # neither kind of zone, so the whole subpart applies and no design-review gate
+  # stands in front of it.
+  #
+  # WHICH ROW IT TAKES is answered by counting, and it comes out the opposite way
+  # from the last two cities. 39.6590(A) lists Single Family, Two Family and
+  # Apartment, and 39.2000 defines an Apartment as "any building or portion
+  # thereof used for or containing three or more dwelling units". Three or more,
+  # not five or more: where Troutdale and Gladstone both put their multi-unit
+  # noun one unit above this building, Multnomah County puts it one unit below.
+  # The pod is an Apartment. (39.2000.definitions.txt#L188-L190)
+  #
+  # THE COUNTY HAS NOT WRITTEN HB 2001 INTO ITS ZONING CODE. The words "middle
+  # housing", "quadplex", "triplex" and "fourplex" appear nowhere in Chapter 39 --
+  # zero occurrences in the whole 39,456-line document. That is consistent with
+  # OAR 660-046-0020(8), which reaches unincorporated county land only where it
+  # is "provided with sufficient urban services" inside "an urban service
+  # district boundary", a line no parcel record here carries. It is also why the
+  # Apartment row is the only row there is.
+  #
+  # THE PORTLAND POCKETS. R20, R10, R7, R5 and RF in this layer are
+  # Portland-administered and their dimensions are already read from PCC 33.110.
+  # These defaults are the COUNTY's chapter, and they sit under those zones until
+  # PCC 33.266 is read into them, which is the next thing to do here. Standing on
+  # the county's numbers in the meantime is the safe direction and not the right
+  # one: 9 by 18 with a 25 ft aisle is stricter than 33.266 in every dimension,
+  # so a pocket lot that passes on these could not fail on Portland's, and 1,489
+  # of this layer's 1,578 pod-fitting lots are pocket lots waiting for that read.
+  parking_min_per_unit:
+    # 39.6590(A)(3), "Apartment - One and one-half spaces for each dwelling
+    # unit". Six spaces for this building, and the state cuts it to four:
+    # OAR 660-046-0220(2)(e)(B) is carried in `or/_state.yaml` as `preempts:
+    # cap`, so the resolver clips six back to the loosest band's four and to
+    # less than that on a lot under 7,000 sq ft.
+    #
+    # Which is worth stating plainly, because the cap only reaches this land
+    # conditionally. If the urban-service-district test in OAR 660-046-0020(8)
+    # fails, the true requirement is six and the screen is using four. Encoding
+    # the row anyway is still strictly better than leaving it out -- with the
+    # field absent the cap resolves alone and the answer is four regardless --
+    # and this is the note that says which way the remaining error runs.
+    value: 1.5
+    cite: MCC 39.6590(A)(3), Apartment
+    url: https://multco.us/file/chapter_39_-_zoning_code/download
+    retrieved: '2026-08-30'
+    quote: "or/multnomah/_unincorporated/39.parking.txt#L474-L478,L483-L484"
+  # 39.6565(A)(1): "At least 70% of the required off-street parking spaces shall
+  # have a minimum width of nine feet, a minimum length of 18 feet". The 70
+  # percent is the other end of the compact allowance below it, not a
+  # qualification on the rectangle: seven of ten spaces are this size and the
+  # rest may be smaller, so a court drawn entirely at nine by eighteen satisfies
+  # the section whatever the ratio.
+  parking_stall_width_ft:
+    value: 9
+    cite: MCC 39.6565(A)(1), minimum width of nine feet
+    url: https://multco.us/file/chapter_39_-_zoning_code/download
+    retrieved: '2026-08-30'
+    quote: "or/multnomah/_unincorporated/39.parking.txt#L240-L247"
+  parking_stall_depth_ft:
+    value: 18
+    cite: MCC 39.6565(A)(1), minimum length of 18 feet
+    url: https://multco.us/file/chapter_39_-_zoning_code/download
+    retrieved: '2026-08-30'
+    quote: "or/multnomah/_unincorporated/39.parking.txt#L240-L247"
+  # 39.6565(B)(1), "25 feet for 90 degree parking". One figure, not split by
+  # direction, so a one-way rear court is dimensioned off it exactly as
+  # Troutdale's and Gladstone's are -- and it TIES Troutdale for the widest
+  # aisle in this corpus. Twenty-five feet between two rows of eighteen makes a
+  # court sixty-one feet deep before a driveway reaches it.
+  parking_aisle_one_way_ft:
+    value: 25
+    cite: MCC 39.6565(B)(1), aisle width at ninety degrees
+    url: https://multco.us/file/chapter_39_-_zoning_code/download
+    retrieved: '2026-08-30'
+    quote: "or/multnomah/_unincorporated/39.parking.txt#L240,L260-L261"
+  parking_aisle_two_way_ft:
+    value: 25
+    cite: MCC 39.6565(B)(1), aisle width at ninety degrees
+    url: https://multco.us/file/chapter_39_-_zoning_code/download
+    retrieved: '2026-08-30'
+    quote: "or/multnomah/_unincorporated/39.parking.txt#L240,L260-L261"
+  # 39.6560(A), and it is written for exactly the case this pod is: "Where a
+  # parking or loading area does not abut directly on a public street or private
+  # street approved under Part 9 of this Chapter, there shall be provided an
+  # unobstructed driveway not less than 20 feet in width for two-way traffic".
+  # A rear court behind a building does not abut the street, so the drive that
+  # reaches it is twenty feet wide -- eight more than the design lane, and the
+  # same number Happy Valley asks, which is the one driveway figure in this
+  # corpus that takes lots away.
+  #
+  # No one-way figure anywhere in the chapter, so the field stays out rather
+  # than borrowing the two-way number: the sentence conditions the twenty on
+  # two-way traffic and says nothing about a single lane.
+  driveway_min_width_two_way_ft:
+    value: 20
+    cite: MCC 39.6560(A), unobstructed driveway not less than 20 feet for two-way traffic
+    url: https://multco.us/file/chapter_39_-_zoning_code/download
+    retrieved: '2026-08-30'
+    quote: "or/multnomah/_unincorporated/39.parking.txt#L191-L199"
+  # NO MAXIMUM, and this one is absence rather than `exempt: true`. The word
+  # "maximum" does not occur once in 39.6500 through 39.6600, and the chapter
+  # builds no apparatus for one: no ceiling table, no exempt space types, no
+  # zone split for the purpose. Gladstone's Table 1 prints "Max: None" against
+  # the row and is therefore a reading; Multnomah County simply never had the
+  # thought. `or/_state.yaml` holds no `parking_max_per_unit` either, so absence
+  # resolves to no ceiling, which is what the code says.
+  #
+  # PARKING SETS BACK FROM A STREET BY THE BUILDING SETBACK. 39.6580(A): "Any
+  # required yard which abuts upon a street lot line shall not be used for a
+  # parking or loading space, vehicle maneuvering area or access drive other
+  # than a drive connecting directly to a street perpendicularly." No number of
+  # its own, so it is carried with `same_as` on the zones, where the setback it
+  # borrows lives -- the third city in this corpus to state it this way, after
+  # Happy Valley and Troutdale, and the third time it costs nothing because the
+  # envelope the site plan lays out in is already inset by the front setback.
+  #
+  # The redirect out of 39.6585(A) prints a floor for the same rule and it is
+  # inert: 39.8045(C)(3)(b) asks a ten-foot landscaped strip between parking and
+  # a street lot line, and the smallest front setback in this layer is R5's ten.
+  # Equal, not larger, in the one zone where it is closest -- so a `floor_ft` of
+  # ten would change no zone's answer, and the test that pins it is the place
+  # this stops being true.
+  #
+  # NOT ENCODED: 39.6570(B)(2), the other setback, and it is measured from every
+  # line rather than the street one. "The outer boundary of a parking or loading
+  # area shall be provided with a bumper rail or curbing at least four inches in
+  # height and at least three feet from the lot line or any required fence." The
+  # street half is swallowed whole by 39.6580(A) above. The side and rear halves
+  # have no field -- this model holds one parking setback and it is measured from
+  # a street -- and they are inert as the layer stands: the smallest side yard
+  # here is five feet and the smallest rear yard five. The exception at (3),
+  # which lets a five-foot planted strip stand in for the curb, applies only to
+  # an area "with fewer than four required parking spaces" and this building owes
+  # at least four however the state cap lands.
+  #
+  # NOT ENCODED: 39.8045(C)(3)(b) via the 39.6585(A) redirect, the same shape one
+  # section over: "a parking or loading area shall be separated from any lot line
+  # adjacent to a street by a landscaped strip at least 10 feet in width, and any
+  # other lot line by a landscaped strip at least 5 feet in width". The street
+  # half is the inert floor described above; the other-lot-line half is five feet
+  # of planted ground along a side or rear line and there is no field for it. It
+  # is exactly equal to the smallest side and rear yards in this layer, which is
+  # the narrowest margin any refusal in this corpus rests on.
+  #
+  # NOT ENCODED: 39.6555(B), forward access, and it binds on every space rather
+  # than on a group of five. "After July 26, 1979 it shall be unlawful to locate
+  # or construct any parking or loading space so that use of the space requires a
+  # vehicle to back into the right-of-way of a public street." Gladstone's version
+  # stops one stall short of this building and Gresham's asks it of everyone;
+  # this one has no threshold at all. Nothing holds it as a field, and the
+  # typology the site plan draws -- a rear court reached by a side drive, cars
+  # turning on the lot -- satisfies it by construction rather than by luck.
+  #
+  # NOT ENCODED: 39.6565(A)(2), compact spaces. Up to 30 percent of the required
+  # spaces may be eight-and-a-half by sixteen. A smaller rectangle for some of
+  # the stalls can only make a court fit where the full-size one already did.
+  #
+  # NOT ENCODED: 39.6565(A)(3), "for parallel parking, the length of the parking
+  # space shall be 23 feet". A stall at a different angle is a different geometry
+  # and this model holds one rectangle. The 90-degree row is the one the site
+  # plan draws with and the one encoded.
+  #
+  # NOT ENCODED: 39.6580(C), what may cross the street yard. "A required yard
+  # which abuts a street lot line shall not be paved, except for walkways which
+  # do not exceed 12 feet in total width and not more than two driveways which do
+  # not exceed the width of their curb cuts for each 150 feet of street frontage
+  # of the lot." Two driveways per 150 feet is a count, and this pod draws one.
+  # It is the nearest thing in the chapter to a curb-cut ceiling and it is not
+  # one: no width is stated, only that the pavement may not exceed the cut.
+  #
+  # NOT ENCODED: 39.6580(D), the neighbour's standard applying to our lot. In the
+  # C-3, LM and MR-4 base zones, parking on a parcel adjoining another base zone
+  # along the same street "shall not be located closer to the street property
+  # line than the required setback of the adjoining base zone for a distance of
+  # 50 feet". MR-4 is in this layer and is the one zone here that permits the pod
+  # outright. What the rule needs is the zoning of the lot next door, which is
+  # not a fact about this lot -- the same refusal as Troutdale 9.095(A).
+  #
+  # NOT ENCODED: the five reliefs. 39.6525(B) puts required parking on another
+  # site within 350 feet; 39.6560(B) deviates from the driveway width on fire and
+  # engineering findings; 39.6570(A)(2) deviates from the paving standard;
+  # 39.6600 grants up to 30 percent off the required number of spaces; and
+  # 39.8050 grants up to 25 percent off the dimensions. Every one loosens a
+  # standard this screen applies, and every one is a thing an applicant asks for
+  # at a counter rather than a thing that is true of the ground.
+  #
+  # NOT ENCODED: 39.8045(C)(1), "a minimum of 15% of the development area shall
+  # be landscaped", which arrives with the same redirect as the strips above --
+  # except that it does NOT, and that is why it is refused rather than encoded.
+  # 39.6585(A) redirects (C)(3) to (7); (C)(1) is outside the redirect and reaches
+  # a building only through design review itself. It also states its share of a
+  # denominator the code never defines: "development area" appears seven times in
+  # Chapter 39 and is defined nowhere, and this corpus has already learned what
+  # seven undefined net-acre denominators cost.
+  #
+  # NOT ENCODED: 39.8045(B), enclosed storage. "Convenient areas shall be
+  # provided in residential developments for the storage of articles such as
+  # bicycles, barbecues, luggage, outdoor furniture, etc. These areas shall be
+  # entirely enclosed." A real standard with no number in it at all, and the
+  # enclosure may be inside the building, so nothing is subtracted from the lot
+  # by refusing it. Design-review-only, like (A) below.
+  #
+  # NOT ENCODED: 39.8045(A)(1), 48 square feet of private outdoor space for each
+  # ground level living unit. Four ground-level units is 192 square feet on top
+  # of the shared reserve encoded on LR7, and this model holds one open-space
+  # figure per zone rather than a private one and a shared one. The shared
+  # standard is the larger of the two and it is the one carried.
+  #
+  # READ AND DOES NOT REACH: 39.8045(C)(3)(a) asks 25 square feet of landscaping
+  # per space of "a parking or loading area providing ten or more spaces". This
+  # court seats at most eight. 39.6595(D) asks Apartment uses for "one loading
+  # space for each 50 dwelling units", which is 0.08 of a space for four units,
+  # and 39.6550(B) disregards "any fraction up to and including one-half" -- so
+  # the pod owes no loading space at all, and the 12 by 25 foot rectangle in
+  # 39.6565(C)(1) never has to be drawn.
 zones:
   EG2:
     section: ["33.140"]
@@ -544,6 +847,15 @@ zones:
       value: 20
       cite: MCC 39.4990(J)
       quote: "or/multnomah/_unincorporated/39.mr-4.txt#L173-L178"
+    # 39.6580(A), stated as equal to the building setback -- see the note in
+    # `defaults:`. `same_as` resolves against the front setback above it, and
+    # the sentence carries no figure of its own for anything to be typed from.
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: MCC 39.6580(A), no required street yard used for parking, loading or maneuvering
+      url: https://multco.us/file/chapter_39_-_zoning_code/download
+      retrieved: '2026-08-30'
+      quote: "or/multnomah/_unincorporated/39.parking.txt#L431-L437"
     setback_side_ft:
       value: 5
       cite: MCC 39.4990(J)
@@ -1081,6 +1393,15 @@ zones:
     setback_front_ft:
       value: 20
       quote: "or/multnomah/_unincorporated/33.110.txt#L458"
+    # 39.6580(A), stated as equal to the building setback -- see the note in
+    # `defaults:`. `same_as` resolves against the front setback above it, and
+    # the sentence carries no figure of its own for anything to be typed from.
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: MCC 39.6580(A), no required street yard used for parking, loading or maneuvering
+      url: https://multco.us/file/chapter_39_-_zoning_code/download
+      retrieved: '2026-08-30'
+      quote: "or/multnomah/_unincorporated/39.parking.txt#L431-L437"
     setback_side_ft:
       value: 10
       quote: "or/multnomah/_unincorporated/33.110.txt#L460"
@@ -1130,6 +1451,15 @@ zones:
     setback_front_ft:
       value: 20
       quote: "or/multnomah/_unincorporated/33.110.txt#L458"
+    # 39.6580(A), stated as equal to the building setback -- see the note in
+    # `defaults:`. `same_as` resolves against the front setback above it, and
+    # the sentence carries no figure of its own for anything to be typed from.
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: MCC 39.6580(A), no required street yard used for parking, loading or maneuvering
+      url: https://multco.us/file/chapter_39_-_zoning_code/download
+      retrieved: '2026-08-30'
+      quote: "or/multnomah/_unincorporated/39.parking.txt#L431-L437"
     setback_side_ft:
       value: 10
       quote: "or/multnomah/_unincorporated/33.110.txt#L460"
@@ -1211,6 +1541,15 @@ zones:
     setback_front_ft:
       value: 10
       quote: "or/multnomah/_unincorporated/33.110.txt#L458"
+    # 39.6580(A), stated as equal to the building setback -- see the note in
+    # `defaults:`. `same_as` resolves against the front setback above it, and
+    # the sentence carries no figure of its own for anything to be typed from.
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: MCC 39.6580(A), no required street yard used for parking, loading or maneuvering
+      url: https://multco.us/file/chapter_39_-_zoning_code/download
+      retrieved: '2026-08-30'
+      quote: "or/multnomah/_unincorporated/39.parking.txt#L431-L437"
     setback_side_ft:
       value: 5
       quote: "or/multnomah/_unincorporated/33.110.txt#L460"
@@ -1315,6 +1654,15 @@ zones:
     setback_front_ft:
       value: 15
       quote: "or/multnomah/_unincorporated/33.110.txt#L458"
+    # 39.6580(A), stated as equal to the building setback -- see the note in
+    # `defaults:`. `same_as` resolves against the front setback above it, and
+    # the sentence carries no figure of its own for anything to be typed from.
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: MCC 39.6580(A), no required street yard used for parking, loading or maneuvering
+      url: https://multco.us/file/chapter_39_-_zoning_code/download
+      retrieved: '2026-08-30'
+      quote: "or/multnomah/_unincorporated/39.parking.txt#L431-L437"
     setback_side_ft:
       value: 5
       quote: "or/multnomah/_unincorporated/33.110.txt#L460"
@@ -1397,6 +1745,44 @@ zones:
     setback_front_ft:
       value: 20
       quote: "or/multnomah/_unincorporated/39.lr-7.txt#L409-L411"
+    # 39.6580(A), stated as equal to the building setback -- see the note in
+    # `defaults:`. `same_as` resolves against the front setback above it, and
+    # the sentence carries no figure of its own for anything to be typed from.
+    parking_street_setback_ft:
+      same_as: setback_front_ft
+      cite: MCC 39.6580(A), no required street yard used for parking, loading or maneuvering
+      url: https://multco.us/file/chapter_39_-_zoning_code/download
+      retrieved: '2026-08-30'
+      quote: "or/multnomah/_unincorporated/39.parking.txt#L431-L437"
+    # THE ONE ZONE IN THIS LAYER WHERE DESIGN REVIEW REACHES THE POD, and the
+    # chain is four links with no judgement in any of them. 39.4856(C) makes a
+    # multiplex a CONDITIONAL use in LR-7 -- which is why `quadplex_allowed`
+    # above is false with a `conditional_use` variant. 39.8020(A): the design
+    # review provisions "shall apply to all conditional and community service
+    # uses... in any base zone". 39.8020(B) lets a use needing fewer than four
+    # new spaces off with four criteria; this one needs six under 39.6590, so
+    # 39.8020(C) applies "all of the Design Review Approval Criteria listed in
+    # MCC 39.8040 and 39.8045". And 39.8045(A)(2): usable outdoor recreation
+    # space for the shared use of residents "in any apartment residential
+    # development" -- an Apartment being three or more dwelling units.
+    #
+    # 300 rather than 200 because the standard bands on a fact about the
+    # building this catalog does not hold. One or two-bedroom units take 200
+    # square feet each, three or more take 300, and nothing in the design says
+    # how many bedrooms a unit of this pod has. The strict limb is the base for
+    # the same reason Troutdale takes 20 feet against an unknown neighbour: a
+    # reserve encoded too small is a lot passed that should have failed. The day
+    # the catalog states a bedroom count this becomes a variant.
+    #
+    # 1,200 square feet, and no other zone in this layer owes it: MR-4 permits
+    # the pod outright so design review never starts, and R20/R10/R7/R5/RF are
+    # Portland-administered, where PCC governs and Table 110-4 asks 250.
+    open_space_min_sqft:
+      per_dwelling: 300
+      cite: MCC 39.8045(A)(2)(b) via 39.8020(A) and (C), shared outdoor recreation space
+      url: https://multco.us/file/chapter_39_-_zoning_code/download
+      retrieved: '2026-08-30'
+      quote: "or/multnomah/_unincorporated/39.design-review.txt#L235-L236,L250-L254,L257-L258"
     setback_side_ft:
       value: 5
       quote: "or/multnomah/_unincorporated/39.lr-7.txt#L409-L411"
