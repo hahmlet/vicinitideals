@@ -394,6 +394,23 @@ defaults:
   # Clackamas -- 18,662 lots the pod fits, the third largest count in the
   # corpus -- still produces no site plan. `exempt: true` would be a lie: the
   # standard exists.
+  #
+  # MEASURED 2026-08-30 rather than assumed, so nobody re-probes it. Both
+  # sheets were pulled again and read with pypdf directly: P100 is 145,533
+  # bytes and yields 69 characters of text, P200 is 148,575 and yields 71, and
+  # in both cases every one of those characters is the title block. It is not
+  # that our extractor is losing the callouts -- there are no text objects on
+  # the sheet to lose. The car aisle appears nowhere in the words of the
+  # chapter either: `aisle` occurs eleven times across ZDO 1015 and Roadway
+  # Standards 320 and the only one carrying a figure is the FIVE-FOOT BICYCLE
+  # aisle at 1015.07(B)(2). Closing this needs a person to read a drawing, or
+  # a decision to let OCR be evidence -- which would change what a `quote:`
+  # means everywhere in this corpus, and is not a decision an encoding makes.
+  #
+  # What it costs, measured on the 2026-08-30 site-plan run: 598 green and
+  # 16,888 review lots here are graded with no parking laid out, and those
+  # 16,888 are HALF the corpus's entire 33,626-lot review queue. No other open
+  # question in this project is worth as many lots.
   # (or/clackamas/_unincorporated/zdo.1015.txt#L29,
   #  or/clackamas/_unincorporated/roadway.320.txt#L18,L23,L40,L42-L43)
   #
