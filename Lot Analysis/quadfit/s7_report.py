@@ -1058,9 +1058,13 @@ def main() -> None:
     phase2_cols += [c for c in (
         "slope_p85_pct", "slope_tier", "sewer_main_dist_ft", "in_sewer_district",
         "envelope_setback_sqft") if c in lots.columns]
+    # `geometry_assumed` rides in the CSV beside the plan it qualifies: a
+    # reviewer opening a Milwaukie or Wilsonville row needs the caveat next to
+    # the stall count, not three files away in footprints.yaml.
     siteplan_cols = [c for c in (
         "parking_tier", "stalls_provided", "layout_method", "site_plan_ok",
-        "driveway_len_ft", "open_space_ok", "utility_run_ft") if c in lots.columns]
+        "geometry_assumed", "driveway_len_ft", "open_space_ok",
+        "utility_run_ft") if c in lots.columns]
     screen_cols = ["current_use", "finance_tier", "improvement_share",
                    "LANDVAL", "SALEPRICE", "SALEDATE", "acq_estimate", "acq_basis"]
     csv_cols = [
