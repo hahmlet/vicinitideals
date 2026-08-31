@@ -318,6 +318,43 @@ def test_a_reference_to_a_lettered_chapter_s_section_is_read_at_all() -> None:
     assert not [r for r in refs if r.endswith("L")]
 
 
+def test_a_chapter_letter_may_sit_in_the_middle_of_a_heading() -> None:
+    """The same letter, one step further in: printed, not in a filename.
+
+    `_doc_ids` learned the letter when 73A was fetched. `_headings` did not,
+    and it is the half that reads what a document actually prints. Its pattern
+    took a run of digits and dots and allowed a single letter after it, so
+    "TDC 73C.030.  Parking Lot Design Requirements." was read as a heading for
+    73C -- the whole chapter -- and none of that chapter's nine sections were
+    ever found in the text. Every one of them then reported as an unfetched
+    reference while sitting in the store, which is the store failing to
+    recognise itself for the second time.
+
+    What makes the fix safe is that it is not looser: it reads every other
+    heading shape in this corpus to the same number it read before.
+    """
+    lettered = _headings(
+        "TDC 73C.010.  Off-Street Parking and Loading Purpose and Applicability.\n"
+        "TDC 73C.030.  Parking Lot Design Requirements.\n"
+        "TDC 73C.090.  Parking Lot Driveway and Walkway Requirements.\n",
+        owns={"73C"},
+        own_ids=("73C",),
+    )
+    assert {"73C.010", "73C.030", "73C.090"} <= lettered
+
+    unchanged = {
+        "33.110.250  Development Standards": "33.110.250",
+        "39.6500- Purpose.": "39.6500",
+        "1015.02 PARKING": "1015.02",
+        "7.0400 Middle Housing Design Standards": "7.0400",
+        "§ 17.48.010 Purpose.": "17.48.010",
+        "845.02 Street Design": "845.02",
+        "Section 12 Definitions": "12",
+    }
+    for line, num in unchanged.items():
+        assert _headings(line + "\n", owns=None, own_ids=()) == {num}, line
+
+
 def test_a_filename_may_claim_more_than_one_chapter() -> None:
     """``40-41.residential`` is two chapters in one fetch, and reading it as
     one would report every section of 41 as unfetched."""
@@ -597,7 +634,15 @@ def test_every_document_either_claims_a_chapter_or_is_a_whole_code() -> None:
     was widened to seven letters: at five, the leading word was neither an
     abbreviation to skip nor a number to read, and the Roadway Standards
     claimed nothing while holding the section every parking dimension in that
-    county comes from."""
+    county comes from.
+
+    The fifth member arrived 2026-08-30 and is a third kind. Tualatin's
+    ``appendix-b.figures`` is an appendix, not a chapter: TDC 73C.030(1)
+    states no dimension and sends the reader to Figure 73-1, which lives at
+    the back of the code with the other figures and answers for no section
+    number. It is the same shape as P100 and P200 -- a chapter pointing at a
+    drawing -- with the opposite outcome, because this drawing carries its
+    numbers as a table and they extract."""
     store = ProvenanceStore()
     silent = {d for d in store.documents() if not _doc_ids([d])}
 
@@ -606,6 +651,7 @@ def test_every_document_either_claims_a_chapter_or_is_a_whole_code() -> None:
         "or/clackamas/rivergrove/rldo.composite.txt",
         "or/clackamas/_unincorporated/roadway.p100.txt",
         "or/clackamas/_unincorporated/roadway.p200.txt",
+        "or/clackamas/tualatin/appendix-b.figures.txt",
     }
     assert _doc_ids(["or/clackamas/_unincorporated/roadway.320.txt"]) == {"320"}
 

@@ -4,7 +4,37 @@ eligible: true
 notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s verification was against a
   coarser standard (one citation per row) and does not carry over. UNPORTED: orientation_constraint=''entrance_only''.
   quadfit justified this in a YAML comment with no citation; it needs its own encoding rather than invented
-  provenance.'
+  provenance.
+
+
+  PARKING READ 2026-08-30, and it answers the question Clackamas County could not. TDC 73C.030(1)
+  states no dimension of its own — off-street parking lot design "must comply with the dimensional
+  standards set forth in Figure 73-1" — and Figure 73-1 is in Appendix B at the back of the code.
+  That is the same sentence as ZDO 1015.02(A)(4) pointing at Standard Drawing P100, and the opposite
+  outcome, because this drawing carries its numbers as a table and they extract whole. Ten values in
+  `defaults`, the tenth city the site plan can dimension.
+
+
+  Three readings sit under those numbers and each is written out beside the value it produced.
+  WHICH GRID: Figure 73-1 prints two of them and the captions are drawn into the image, so the
+  larger is taken — 9 by 18.5 with a 24-foot aisle is the stricter rectangle, and a lot that lays
+  out on it lays out on either. THE BUILDING IS NAMED: 73C.090(1)(a) reaches "single-family
+  residential uses and middle housing types (duplexes, triplexes quadplexes, townhouses, and cottage
+  clusters)", so for once no noun had to be argued and no table row chosen. AND FIVE IS THE LINE:
+  73C.220 would set parking ten feet off every property line and ten feet off the building, which
+  takes a rear court apart, but it governs "Multi-family residential uses (as defined in TDC
+  31.060)" and TDC 31.060 defines a Multi-Family Structure as five or more dwelling units on one
+  lot.
+
+
+  Four refusals came out of the same reading and all four are recorded beside the numbers rather
+  than here. Three are landscaping — a five-foot planted perimeter that the side yard already
+  clears, landscape islands at the aisle ends, and thirty percent tree canopy over the court. The
+  fourth is the one to know about: RML states a ten-foot setback between parking and ANY lot line
+  and the model holds only a setback from a street, so the side and rear half is refused, and that
+  refusal is the first in this corpus that is not inert. Every one of Tualatin''s 653 lots in the
+  parcel universe is RL, where the same ten feet is confined to the Conditional Uses row and a
+  quadplex is permitted outright. The day an RML lot appears, this city comes off the laid-out list.'
 ingest:
   geoid: null
   juris_city_codes:
@@ -89,6 +119,202 @@ code:
     # a wall, so nothing cites it. It is held so the reference stops being
     # unread rather than so a value can quote it.
     allow_thin: true
+  # The parking chapter, and the reference the residential tables point at
+  # eleven times over -- "must be sufficient to comply with at least the
+  # minimum access requirements in TDC 73C". Ordinance 1486-24 repealed the
+  # old chapter and enacted this one whole on 10 June 2024, which is why every
+  # subsection carries the same citation.
+  - id: "73C.parking"
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    title: "TDC Chapter 73C - Parking Standards"
+    start: "TDC 73C.010.  Off-Street Parking and Loading Purpose and Applicability."
+    end: "TDC 73D.010. Applicability and Objectives."
+    extraction: plain
+  # 73C.030(1) states no dimension of its own. It says off-street parking lot
+  # design "must comply with the dimensional standards set forth in Figure
+  # 73-1", and the figures live in Appendix B at the back of the code rather
+  # than in the chapter. This is the second time this corpus has followed a
+  # parking chapter into a drawing; unlike Clackamas County's Standard Drawing
+  # P100, this one carries its numbers as a table and they extract.
+  #
+  # The slice opens on the line of Appendix B's figure list that names Figure
+  # 73-1 and runs to the end of the appendix, because the captions on the
+  # figure pages themselves are images. What identifies the two dimension
+  # tables as Figure 73-1 is therefore in the document: the list order, the
+  # page numbering that puts them on TDB:5 and TDB:6 between Figure 71-1 on
+  # TDB:4 and Figure 73-3 after them, and the ordinance -- 1486-24 § 17, the
+  # same June 2024 ordinance that enacted 73C.
+  - id: "appendix-b.figures"
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    title: "TDC Appendix B - Figures, incl. Figure 73-1 Parking Space Design Standards"
+    start: "Figure 73-1: Parking Space Design Standards"
+    end: "TABLE OF OMITTED FIGURES"
+    extraction: plain
+    # Read 2026-08-30, and the plausibility guard is right to be surprised:
+    # zero of its 73 lines carry a section number or a dimensioned standard.
+    # A figure appendix has neither. What it has is two grids of bare decimals
+    # -- "Stall Width A 8.0 9.0 9.0 9.0 9.0" -- whose units and column angles
+    # sit in a diagram the extractor cannot see, so a table that is nothing
+    # BUT dimensions reads as a page with none. Declared thin rather than
+    # forced through at a prompt, because the override belongs where the next
+    # reader will find it.
+    allow_thin: true
+defaults:
+  # PARKING, read 2026-08-30. Tualatin is the second city in this corpus whose
+  # parking chapter states no dimension of its own and sends the reader to a
+  # drawing -- and the first where the drawing answers. TDC 73C.030(1) says
+  # off-street parking lot design "must comply with the dimensional standards
+  # set forth in Figure 73-1", and Figure 73-1 is two grids of numbers in
+  # Appendix B at the back of the code. Clackamas County's Standard Drawing
+  # P100 is the same sentence with a CAD sheet at the end of it, and that one
+  # is still refused.
+  #
+  # WHICH GRID IS THE STANDARD SPACE IS NOT IN THE TEXT, because the two
+  # captions are drawn into the figures. The larger is encoded and the reason
+  # is the direction of the error, not confidence: nine by eighteen and a half
+  # with a 24-foot aisle is the stricter rectangle, so a lot that lays out on
+  # it lays out on either grid. The corroboration is good anyway -- 73C.030(8)
+  # regulates "sub-compact vehicles", the smaller grid's parallel stall is 20
+  # feet where a standard parallel space is 24, and a US sub-compact stall is
+  # about eight by sixteen, which is the smaller grid exactly.
+  #
+  # NOTHING IS REQUIRED AND NOTHING IS CAPPED. Table 73C-1 has no minimum
+  # column for vehicles at all -- its heading is MAXIMUM PERMITTED VEHICLE
+  # PARKING, with minimums stated only for bicycles -- and the Middle Housing
+  # row, which lists Quadplexes by name, prints None in both maximum columns.
+  # Ordinance 1486-24 rewrote this chapter whole in June 2024, which is when
+  # Oregon's parking-mandate rules came due. Checked against the whole
+  # publication and not just the chapter: the only "spaces per unit" figures
+  # anywhere in 21,780 lines are Table 73C-1's multi-family maximums of 1.2
+  # and 2.0 and the bicycle minimums beside them.
+  parking_min_per_unit:
+    value: 0
+    cite: TDC 73C.040 Table 73C-1(a)(ii)(c), Quadplexes; no minimum vehicle parking column exists
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    retrieved: '2026-08-30'
+    quote: "or/clackamas/tualatin/73C.parking.txt#L130,L132,L137,L154,L157,L160"
+  parking_max_per_unit:
+    exempt: true
+    cite: TDC 73C.040 Table 73C-1(a)(ii)(c), Quadplexes, None in both maximum columns
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    retrieved: '2026-08-30'
+    quote: "or/clackamas/tualatin/73C.parking.txt#L130,L132,L137,L154,L157,L160"
+  # Figure 73-1, first grid, 90-degree column. The stored figures document
+  # opens on the line of Appendix B's list that names Figure 73-1 and keeps
+  # the page numbering, because the figure captions themselves are images:
+  # the list puts 73-1 between 71-1 and 73-3, the grids sit on TDB:5 and TDB:6
+  # between Figure 71-1's caption on TDB:4 and Figure 73-3's after them, and
+  # they carry Ord. 1486-24 section 17 -- the same June 2024 ordinance.
+  parking_stall_width_ft:
+    value: 9
+    cite: TDC 73C.030(1) and Figure 73-1 (Appendix B), standard space, 90 degrees
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    retrieved: '2026-08-30'
+    quote: "or/clackamas/tualatin/appendix-b.figures.txt#L21,L26-L27"
+  parking_stall_depth_ft:
+    value: 18.5
+    cite: TDC 73C.030(1) and Figure 73-1 (Appendix B), standard space, 90 degrees
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    retrieved: '2026-08-30'
+    quote: "or/clackamas/tualatin/appendix-b.figures.txt#L21,L26,L28"
+  # One aisle figure per angle, not split by direction -- the fourth layer in
+  # this corpus to state it that way. 24 feet ties Fairview, Gladstone, Happy
+  # Valley and Oregon City; only Troutdale and unincorporated Multnomah ask
+  # more.
+  parking_aisle_one_way_ft:
+    value: 24
+    cite: TDC 73C.030(1) and Figure 73-1 (Appendix B), standard space, 90 degrees
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    retrieved: '2026-08-30'
+    quote: "or/clackamas/tualatin/appendix-b.figures.txt#L21,L26,L29"
+  parking_aisle_two_way_ft:
+    value: 24
+    cite: TDC 73C.030(1) and Figure 73-1 (Appendix B), standard space, 90 degrees
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    retrieved: '2026-08-30'
+    quote: "or/clackamas/tualatin/appendix-b.figures.txt#L21,L26,L29"
+  # THE DRIVE AND THE APPROACH ARE TWO DIFFERENT RULES HERE, and the code
+  # says which is which. Figure 73-1's last two rows dimension the driveway
+  # inside a parking lot: 12 feet one way, 22 feet two way, the same in both
+  # grids. 73C.090(1)(a) dimensions what meets the street, and says so --
+  # "driveway widths must be measured at the right-of-way line". So the side
+  # lane takes the figure and the curb cut takes 73C.090.
+  driveway_min_width_one_way_ft:
+    value: 12
+    cite: TDC 73C.030(1) and Figure 73-1 (Appendix B), Driveway One Way
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    retrieved: '2026-08-30'
+    quote: "or/clackamas/tualatin/appendix-b.figures.txt#L32"
+  driveway_min_width_two_way_ft:
+    value: 22
+    cite: TDC 73C.030(1) and Figure 73-1 (Appendix B), Driveway Two Way
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    retrieved: '2026-08-30'
+    quote: "or/clackamas/tualatin/appendix-b.figures.txt#L33"
+  # 73C.090(1)(a) names the building. "Ingress and egress for single-family
+  # residential uses and middle housing types (duplexes, triplexes quadplexes,
+  # townhouses, and cottage clusters) must be paved to a minimum width of ten
+  # feet. Maximum widths for new or expanded driveways must not exceed 24
+  # feet." No noun has to be argued for and no row has to be chosen: the pod
+  # is listed. The multi-family table underneath it starts at five units and
+  # asks 24 feet, and it is not this building's row.
+  driveway_approach_min_width_ft:
+    value: 10
+    cite: TDC 73C.090(1)(a), middle housing types incl. quadplexes
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    retrieved: '2026-08-30'
+    quote: "or/clackamas/tualatin/73C.parking.txt#L530,L532-L537"
+  driveway_approach_max_width_ft:
+    value: 24
+    cite: TDC 73C.090(1)(a), maximum width for new or expanded driveways
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    retrieved: '2026-08-30'
+    quote: "or/clackamas/tualatin/73C.parking.txt#L530,L532-L537"
+  #
+  # NOT ENCODED: the five-foot perimeter. 73C.210(3) requires landscaping a
+  # "Minimum five feet in width in all off-street parking and vehicular
+  # circulation areas", under a section that opens "All development where new
+  # parking is provided", so it reaches the pod. It is a strip between the
+  # parking and everything around it and no field in this model holds one.
+  # Inert on the numbers this screen already carries: five feet is exactly the
+  # side yard in both RL and RML, and both rear yards and both front yards are
+  # larger, so the envelope the court is drawn in is already cut back at least
+  # this far on every line. Recorded because the day a zone here states a side
+  # yard under five feet it stops being inert.
+  # (or/clackamas/tualatin/73C.parking.txt#L672-L673,L684-L685)
+  #
+  # NOT ENCODED: the landscape islands, and this one is not inert. 73C.210(4)
+  # asks a "Minimum 25 square feet per parking space" of landscape island --
+  # 100 square feet for the pod's four -- and (c) puts them "at aisle ends",
+  # which is inside the court rather than around it, and (e) adds one
+  # deciduous shade tree for every four spaces. A hundred square feet at the
+  # end of a 24-foot aisle is a real claim on the same ground the court needs
+  # and this model has no field for a reserve inside a parking area. The
+  # eight-space separation rule in (d) does not reach a row of four.
+  # (or/clackamas/tualatin/73C.parking.txt#L695-L696,L705-L707,L711-L712)
+  #
+  # NOT ENCODED: 30 percent tree canopy over the parking area, 73C.030(12)(a),
+  # for lots whose parking is under half an acre, which is all of them here. A
+  # canopy is measured at fifteen years and sits above a car rather than in
+  # its way, so unlike the islands it takes no ground the stall needs; it is a
+  # planting schedule this screen cannot check and does not have to.
+  # (or/clackamas/tualatin/73C.parking.txt#L79-L83)
+  #
+  # READ AND DOES NOT REACH. 73C.220 states the two numbers that would have
+  # hurt -- a 10-foot landscape setback between parking and every property
+  # line, and a 10-foot landscaped transition between parking and the building
+  # -- but it governs "Multi-family residential uses (as defined in TDC
+  # 31.060)", and TDC 31.060 defines a Multi-Family Structure as "A structure
+  # containing five or more dwelling units on one lot". The pod is four. That
+  # its transition rule then excepts duplexes and townhouses by name is the
+  # only thing arguing the other way, and a numbered definition beats an
+  # exception list. 73C.030(4)(b)'s no-backing-into-the-street rule reaches
+  # "groups of more than four parking spaces" and the pod parks four exactly;
+  # 73C.210(5)'s access landscaping starts at twelve spaces; 73C.030(11)'s
+  # parking coverage cap starts at 65,000 square feet of floor area; and
+  # 73C.030(13)'s solar-or-canopy choice starts at half an acre of parking.
+  # (or/clackamas/tualatin/31.definitions.txt#L250-L252,
+  #  or/clackamas/tualatin/73C.parking.txt#L44-L46,L728-L731,L737,L746-L747)
 zones:
   RL:
     max_density_du_per_acre:
@@ -115,6 +341,16 @@ zones:
     setback_front_ft:
       value: 15
       quote: "or/clackamas/tualatin/40-41.residential.txt#L211"
+    # NO PARKING SETBACK IN RL, and it is worth saying where the ten feet
+    # went. Table 40.300 does state one -- "Parking and vehicular circula-
+    # tion areas must be set back a minimum of ten feet from any public
+    # right-of-way or property line" -- but the sentence sits inside the
+    # MINIMUM SETBACKS table's Conditional Uses row, beside "As determined
+    # through Architectural Review process", and a quadplex is permitted
+    # outright here by TDC 40.210. RML states the same ten feet as a row of
+    # its own, which is what makes the placement in RL a choice rather than
+    # an accident. All 653 of Tualatin's lots that reach the site plan are
+    # RL. (or/clackamas/tualatin/40-41.residential.txt#L225-L233)
     setback_side_ft:
       value: 5
       quote: "or/clackamas/tualatin/40-41.residential.txt#L220"
@@ -198,6 +434,30 @@ zones:
     setback_front_ft:
       value: 10
       quote: "or/clackamas/tualatin/40-41.residential.txt#L532"
+    # THE ONE PARKING SETBACK IN THIS CITY, and only half of it fits in a
+    # field. Table 41.300's MINIMUM SETBACKS, under "Other Development
+    # Types", carries a row of its own: "Parking and Vehicle Circulation
+    # Areas / 10 feet". Unqualified -- ten feet from a lot line, any lot
+    # line, which is how RL says the same thing in words a page earlier.
+    # Only the street half has a field.
+    parking_street_setback_ft:
+      value: 10
+      cite: TDC 41.300 Table, Minimum Setbacks, Other Development Types, Parking and Vehicle Circulation Areas
+      url: https://api.municode.com/PublicationPdfDownload/1818
+      retrieved: '2026-08-30'
+      quote: "or/clackamas/tualatin/40-41.residential.txt#L554,L561-L563"
+    # NOT ENCODED: the same ten feet against the side and rear lot lines,
+    # and this refusal is NOT inert -- which makes it the first one in this
+    # corpus that is not. RML's side yard for a quadplex is five feet, so a
+    # court drawn to the building envelope stands five feet closer to each
+    # side line than this row allows, and the screen would call a lot
+    # buildable that the code does not. What keeps it honest today is that
+    # RML holds no lots at all in the parcel universe -- all 653 of
+    # Tualatin's lots that reach the site plan are RL, where the ten-foot
+    # sentence is confined to conditional uses. The day an RML lot appears,
+    # this city comes off the laid-out list until the model can hold a
+    # parking setback that is not measured from a street.
+    # (or/clackamas/tualatin/40-41.residential.txt#L554,L561-L563)
     setback_side_ft:
       value: 5
       quote: "or/clackamas/tualatin/40-41.residential.txt#L534"

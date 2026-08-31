@@ -96,7 +96,16 @@ pytestmark = pytest.mark.unit
 #: with no dimension in it; and 48 sq ft of private outdoor space per ground
 #: floor unit, which this model cannot hold beside the shared reserve that IS
 #: encoded on LR7.
-EXPECTED = {"notes": 92, "comments": 99, "tests": 16}
+#: 99 -> 103 on 2026-08-30, all four Tualatin. Three are landscaping: a
+#: five-foot planted strip around every parking area, a hundred square feet of
+#: landscape island at the aisle ends, and thirty percent tree canopy over the
+#: court. The fourth is the one that matters -- RML states a ten-foot setback
+#: between parking and any lot line and only the street half has a field, so
+#: for the first time in this corpus a refusal is NOT inert: RML's side yard
+#: is five feet and a court drawn to the envelope would stand five feet closer
+#: to each side line than the code allows. Nothing turns on it today because
+#: RML holds no lots at all, which is written into the refusal itself.
+EXPECTED = {"notes": 92, "comments": 103, "tests": 16}
 #: Two of the sixteen are this file, which quotes the marker while
 #: explaining it, and one is a back-reference in test_gresham_rockwood --
 #: prose saying a zone *was* not encoded until it was. Left in rather than

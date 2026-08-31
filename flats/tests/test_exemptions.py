@@ -84,7 +84,16 @@ pytestmark = pytest.mark.unit
 #: in Zone B, in a chapter that splits the city in two for the purpose of the
 #: maxima, exempts five kinds of space from them and gives a variance path out
 #: of one. The apparatus is built and none of it points at this building.
-EXPECTED = {"stated": 172, "numeric": 37, "marker": 0, "dash": 2, "silent": 0}
+#: 173 on 2026-08-30, Tualatin's parking maximum and the fourth city to state
+#: one this way. Table 73C-1's heading is MAXIMUM PERMITTED VEHICLE PARKING and
+#: it gives multi-family 1.2 and 2.0 spaces per unit two rows down, so the
+#: ceiling exists and has numbers in it; the Middle Housing row that lists
+#: Quadplexes by name prints None in both of its maximum columns. Words in a
+#: built apparatus, not an empty cell. Worth noting that the same table is why
+#: the MINIMUM is a stated zero rather than an exemption: there is no minimum
+#: vehicle column at all, so nothing was built and pointed away -- absence, and
+#: the two are not the same reading.
+EXPECTED = {"stated": 173, "numeric": 37, "marker": 0, "dash": 2, "silent": 0}
 
 LAKE_OSWEGO = "or/clackamas/lake-oswego"
 

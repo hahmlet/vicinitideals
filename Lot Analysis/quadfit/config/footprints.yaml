@@ -92,8 +92,8 @@ screen:
 # row (front 10 / side 5 / rear 15 / street-side 10, min lot 5,000, FAR 1.0).
 siteplan:
   enabled: true
-  # Every city whose own code states a stall AND an aisle gets laid out. Nine
-  # do as of 2026-08-30, unincorporated Multnomah being the newest; two more
+  # Every city whose own code states a stall AND an aisle gets laid out. Ten
+  # do as of 2026-08-30, Tualatin being the newest; two more
   # state a stall and no aisle and are declined by name below; the rest have
   # not been read and pass through as `not_evaluated`. Narrow to `pilot_cell`
   # to re-run Gresham LDR-5 alone after a layout change.
@@ -314,6 +314,36 @@ siteplan:
       aisle_one_way_ft: 25          # one figure, not split by direction
       aisle_two_way_ft: 25
       cite: MCC 39.6565(A)(1) stall size; 39.6565(B)(1) aisle at ninety degrees
+      max_per_unit: null
+    # The tenth, and the one that answers the question Clackamas County
+    # could not. TDC 73C.030(1) states no dimension of its own -- off-street
+    # parking lot design "must comply with the dimensional standards set forth
+    # in Figure 73-1" -- and Figure 73-1 is in Appendix B at the back of the
+    # code. Same sentence as ZDO 1015.02(A)(4) pointing at Standard Drawing
+    # P100, and the opposite outcome, because this drawing carries its numbers
+    # as a table and they extract.
+    #
+    # WHICH OF THE FIGURE'S TWO GRIDS IS THE STANDARD SPACE IS NOT IN THE
+    # TEXT: the captions are drawn into the images. The larger is taken, and
+    # the reason is the direction of the error rather than confidence -- nine
+    # by eighteen and a half with a 24-foot aisle is the stricter rectangle,
+    # so a lot that lays out on it lays out on either grid. The corroboration
+    # is good anyway: 73C.030(8) regulates "sub-compact vehicles", the smaller
+    # grid's parallel stall is 20 feet where a standard parallel space is 24,
+    # and eight by sixteen is a sub-compact stall in any parking manual.
+    #
+    # `max_per_unit` is null on a reading, like Gladstone's and unlike the
+    # county's. Table 73C-1 is a ceiling table -- its heading is MAXIMUM
+    # PERMITTED VEHICLE PARKING and it gives multi-family 1.2 and 2.0 -- and
+    # it prints None against the Middle Housing row that lists Quadplexes by
+    # name. The same row is why nothing is required either: the table has no
+    # minimum column for vehicles at all.
+    tualatin:
+      stall_width_ft: 9
+      stall_depth_ft: 18.5
+      aisle_one_way_ft: 24          # one figure per angle, not split by direction
+      aisle_two_way_ft: 24
+      cite: TDC 73C.030(1) and Figure 73-1 (Appendix B), standard space at 90 degrees
       max_per_unit: null
     # --- states a stall and no aisle: declined, not borrowed from -----------
     # Both of these dimension a space and never dimension the drive that
@@ -631,6 +661,44 @@ siteplan:
         R7: null
         LR7: 1200
       cite: MCC 39.6560(A) driveway width; 39.6580(A) street setback; 39.8045(A)(2) shared outdoor recreation
+    # TWO RULES, AND THE CODE SAYS WHICH IS WHICH. Figure 73-1's last two
+    # rows dimension the driveway inside a parking lot -- 12 feet one way, 22
+    # two way, identical in both grids -- and 73C.090(1)(a) dimensions what
+    # meets the street, saying so in the sentence: "driveway widths must be
+    # measured at the right-of-way line". So the side lane is the figure's 22
+    # and the cut is 73C.090's, which is a floor of ten feet and a ceiling of
+    # 24. The lane is narrower than the ceiling, so the cut is the lane.
+    #
+    # 73C.090(1)(a) NAMES THE BUILDING, which no other city in this file does:
+    # "Ingress and egress for single-family residential uses and middle
+    # housing types (duplexes, triplexes quadplexes, townhouses, and cottage
+    # clusters)". No noun to argue and no row to choose. The table underneath
+    # it starts at five dwelling units and is not this building's.
+    #
+    # The parking setback is per zone because only one zone has one. RML's
+    # Table 41.300 carries a row of its own -- "Parking and Vehicle
+    # Circulation Areas / 10 feet" -- and RL states the same ten feet inside
+    # its Conditional Uses row, where a quadplex, permitted outright by TDC
+    # 40.210, never lands. Every one of Tualatin's lots in the parcel universe
+    # is RL.
+    #
+    # NOT MIRRORED AND NOT INERT: RML's ten feet is measured from any lot
+    # line, and only the street half has a field. RML's side yard is five, so
+    # a court drawn to the envelope would stand five feet closer to each side
+    # line than the code allows. RML holds no lots today; the day one appears,
+    # this city comes off the list above. No open space anywhere -- neither
+    # residential chapter states a private reserve, and 73C.220's landscape
+    # setback and transition govern "Multi-family residential uses (as defined
+    # in TDC 31.060)", which TDC 31.060 defines as five or more units.
+    tualatin:
+      approach_min_ft: 10
+      approach_max_ft: 24
+      drive_min_one_way_ft: 12
+      drive_min_two_way_ft: 22
+      parking_street_setback_by_zone:
+        RL: null
+        RML: 10
+      cite: TDC 73C.030(1) and Figure 73-1 driveway rows; 73C.090(1)(a) approach; TDC 41.300 parking setback
   # The three engineering constants left after the law came out of this block.
   # Not one is a citation. A car needs a lane and a wall needs a standoff
   # whatever the code says; where a city asks for more, the city wins.

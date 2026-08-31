@@ -158,9 +158,20 @@ _STATE = re.compile(r"\b(?:ORS|OAR)\s+(?P<num>[\d][\d.\-]*)")
 #: without it a city reports its own fetched chapters as missing. Milwaukie led
 #: the first ledger with 123 binding hits on sections printed in the document
 #: the references were read from.
+#: A chapter letter may sit in the MIDDLE of a heading, not only at its end.
+#: The old pattern read a run of digits and dots and allowed one trailing
+#: letter after it, which is Gresham's 7.0400 and Gladstone's 17.48.010 and
+#: everything else in this corpus -- and it read Tualatin's
+#: "TDC 73C.030. Parking Lot Design Requirements." as a heading for 73C, the
+#: whole chapter, because it could not carry the C past the dot. Every one of
+#: that chapter's nine sections then reported as an unfetched reference while
+#: sitting in the store, which is the store failing to recognise itself for
+#: the second time. Rebuilt as dotted components, each of which may end in a
+#: chapter letter; it reads every other heading in the corpus identically.
 _HEADING = re.compile(
     r"^\s*(?:§\s*)?(?:(?:Section|Chapter)\s+|[A-Z]{2,5}\s+)?"
-    r"(?P<num>\d[\d.\-]*\d(?:[A-Z](?![A-Za-z]))?|\d(?:[A-Z](?![A-Za-z]))?)\b"
+    r"(?P<num>\d[\d\-]*(?:[A-Z](?![A-Za-z]))?"
+    r"(?:\.[\d\-]+(?:[A-Z](?![A-Za-z]))?)*)\b"
 )
 
 #: A line that begins with a number is not a heading when the line before
