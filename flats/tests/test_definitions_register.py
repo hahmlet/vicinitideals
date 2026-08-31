@@ -93,6 +93,7 @@ def test_the_jurisdictions_that_have_been_read(rules: RuleSet) -> None:
         "or/multnomah/gresham",
         "or/multnomah/portland",
         "or/multnomah/troutdale",
+        "or/multnomah/wood-village",
     ]
 
 
@@ -358,13 +359,28 @@ def test_the_two_codes_that_state_a_ceiling_state_it_differently(
 
 
 def test_the_county_governs_its_own_land_and_nobody_elses(rules: RuleSet) -> None:
-    """Multnomah County now has a definition, which is exactly the moment a
-    chain-walking resolver would start handing it to Gresham, Fairview,
-    Troutdale and Wood Village. It does not."""
-    assert "corner_lot" in rules.definitions_for("or/multnomah/_unincorporated")
-    for city in ("or/multnomah/fairview", "or/multnomah/wood-village"):
-        assert rules.definitions_for(city) == {}, city
-        assert rules.defines(city, "corner_lot", corner()) is None, city
+    """Multnomah County has a definition, which is exactly the moment a
+    chain-walking resolver would start handing it to Gresham, Fairview and
+    Troutdale. It does not.
+
+    Wood Village was the example here until 2026-08-31, when reading its
+    parking chapter put WVDC 720.030 in the store and its own corner lot with
+    it. That is the better half of the same test: the city now answers, and
+    what it answers is its own. The two codes do not even agree -- the county
+    reads adjacent frontages and bends at less than 135 degrees, the city
+    counts intersecting frontages and bends at 120 or less -- so an inherited
+    definition would be a wrong answer, not a spare one.
+    """
+    county = rules.definitions_for("or/multnomah/_unincorporated")["corner_lot"]
+    assert county.test == "adjacent_frontages"
+
+    assert rules.definitions_for("or/multnomah/fairview") == {}
+    assert rules.defines("or/multnomah/fairview", "corner_lot", corner()) is None
+
+    city = rules.definitions_for("or/multnomah/wood-village")["corner_lot"]
+    assert city.test == "intersecting_frontages"
+    assert city.quote.startswith("or/multnomah/wood-village/")
+    assert city.cite.startswith("WVDC ")
 
 
 def test_the_three_answers_a_bending_street_gets(rules: RuleSet) -> None:

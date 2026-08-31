@@ -105,7 +105,37 @@ pytestmark = pytest.mark.unit
 #: is five feet and a court drawn to the envelope would stand five feet closer
 #: to each side line than the code allows. Nothing turns on it today because
 #: RML holds no lots at all, which is written into the refusal itself.
-EXPECTED = {"notes": 92, "comments": 103, "tests": 16}
+#: 103 -> 106 on 2026-08-30, all three Wood Village, against six encoded
+#: values -- the smallest ratio of refusals to numbers any parking reading in
+#: this corpus has produced. The reason is that the city's whole chapter is
+#: one table: Table 350-3 states the stall and both aisle widths by parking
+#: angle, and Table 350-2 states three setbacks, of which the street one has a
+#: field.
+#:
+#: The first is the familiar side-and-rear pair, and inert here in a way
+#: Tualatin's was not -- five feet is exactly the side yard in LR 7.5, MR 2 and
+#: MR 4, half of LR 12's ten, and a third of every rear yard, so a court drawn
+#: to the envelope already stands where the parking rule wants it.
+#:
+#: The second is the curb cut, and it is the weaker twin of Clackamas County's
+#: Standard Drawing P100: 350.030(D) says access points "shall be the minimum
+#: necessary" and curb cuts "shall be designed to established City standards",
+#: naming no document at all. At least the county pointed at a drawing.
+#:
+#: The third is forward access, and unlike Gladstone's it reaches -- the
+#: exception is for parking areas of one or two spaces and the pod owes four.
+#: The fourth city to state it flat rather than by street class, and the
+#: fourth to have no field for it. Satisfied by the typology rather than by
+#: anything this layer holds, which is the whole reason it is written down.
+#:
+#: 107 the same day, and the fourth one is not about parking at all. Storing
+#: WVDC 720.030 for the article split put the city's CORNER LOT definition in
+#: the store, which is how the tagging ledger noticed it was uncaptured while
+#: two zones price a corner at five feet of side yard and five of rear. The
+#: definition is now encoded; what is refused is Figure 710-1, the drawing it
+#: points at, on the same grounds as Troutdale's -- a figure with no text
+#: saying what it adds to a test the words already state completely.
+EXPECTED = {"notes": 92, "comments": 107, "tests": 16}
 #: Two of the sixteen are this file, which quotes the marker while
 #: explaining it, and one is a back-reference in test_gresham_rockwood --
 #: prose saying a zone *was* not encoded until it was. Left in rather than

@@ -58,7 +58,98 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
   landscaping -- and states height and the four setbacks for itself. It prints no density row in
   either column and neither does any other section of Chapter 235, so encoding MR2''s floor would
   otherwise have handed the Town Center a standard its own table does not carry, off a pointer to a
-  lot-size row.'
+  lot-size row.
+
+
+  PARKING GEOMETRY, read 2026-08-30, and the eleventh city the site plan can dimension. The
+  2026-08-20 reading above answered how many spaces; this one answers how big, and the gap between
+  the two questions is the whole point. Section 350 splits its development standards into an article
+  for one and two unit dwellings (350.050-350.055) and one for everything else (350.060-350.065), and
+  only the second states an aisle. So which article reaches a quadplex is not a technicality: on one
+  branch the city cannot be laid out at all.
+
+
+  It is settled by elimination with a defined noun at the end of it. 350.065(A) reaches "all vehicle
+  areas whether required or excess parking, except for residential parking areas subject to the
+  standards of Section 350.050 through 350.055", and 350.055(A) names its own: "houses, attached
+  houses, duplexes, and manufactured homes". WVDC 720.030 defines all four and the building. A HOUSE
+  is "a detached dwelling unit located on its own lot"; a TOWNHOUSE -- which the same definition says
+  is "also commonly called a rowhouse, attached house, or common-wall house" -- has each unit "on an
+  individual lot or parcel"; a DUPLEX is two units; a MANUFACTURED HOME is a transportable HUD
+  structure. A QUADPLEX is "a structure that contains four (4) primary dwelling units on one (1)
+  lot", which is the pod exactly, and a MULTI-DWELLING STRUCTURE does not start until five. Tables
+  210-2 and 220-3 list "Attached or Detached Tri- or Quadplex" beside Detached House, Duplex and
+  Townhouse rather than inside any of them. Same elimination West Linn needed; there the noun was
+  missing, here it is written down.
+
+
+  The reading is safe because THE STALL COMES OUT THE SAME EITHER WAY. 350.055(C) sets the one and
+  two unit stall at "9 feet by 19 feet" and Table 350-3''s 90-degree Standard row is 9 by 19.
+  Whichever article a reviewer thinks applies, the rectangle does not move. What the elimination
+  decides is the aisle -- 12 feet one way and 24 two way, the same figure at every angle from
+  parallel to 90 -- and three rules that turn out not to reach: 350.055(B) would ban parking within
+  the first ten feet of a front lot line and cap the front yard at 40 percent paved, and 350.055(C)''s
+  nine-foot residential driveway is not this building''s either.
+
+
+  Nothing states a drive or a cut. 350.030(D) is the only sentence in Section 350 about the width of
+  an access point and it states no width: access points "shall be the minimum necessary" and curb
+  cuts "shall be designed to established City standards", naming no document. That is a weaker
+  version of the Clackamas County problem -- there at least the drawing has a number on it -- so both
+  fall to the design defaults, as they do in Fairview, Gladstone, Oregon City and Portland.
+
+
+  The ceiling is now read rather than borrowed. Table 350-1B is titled "Maximum Parking Ratios",
+  caps a restaurant at 23 spaces per 1,000 sq ft, one with a drive-through at 15, a medical office at
+  5.9 and a college at 0.3, and states a second tighter column within a quarter mile of 20-minute
+  transit. Against Household Living it prints "no maximum" in both columns. Built, and pointed away
+  from this building in words.'
+definitions:
+  # Captured 2026-08-31, and the reason it was not captured before is that
+  # nothing here could see it: WVDC 720.030 was fetched for the parking
+  # reading, and storing it is what made the corner lot visible to the tagging
+  # ledger. Both LR zones state a corner-lot side yard of 10 against an
+  # ordinary 5 and a corner-lot rear of 20 against 15, so this term decides ten
+  # feet of envelope on every corner lot in the city, and until now it decided
+  # them by whatever the geometry guessed a corner was.
+  #
+  # "CORNER LOT. A lot has frontage on more than one intersecting street. A
+  # street that curves with angles that are 120 degrees or less is considered
+  # two intersecting streets for the purpose of evaluating whether a lot is a
+  # corner lot."
+  #
+  # Word for word Portland's curve clause, down to the 120 degrees, and no
+  # ceiling on the intersection angle at all -- so a fork meeting at 150
+  # degrees is a corner here as it is in Portland and is not one in Rivergrove.
+  # Silence about the ceiling is read as silence and not as a default.
+  #
+  # ALLEYS ARE OUT, and the code says so twice: "street does not include
+  # alleys" in the STREET definition, and "Street lot line does not include lot
+  # lines that abut an alley" in the STREET LOT LINE one.
+  #
+  # PRIVATE DRIVES ARE IN, which is a reading and worth naming as one. Every
+  # other layer in this corpus leaves `drives_count` false except Wilsonville,
+  # whose code names a private drive beside a street. Wood Village does not
+  # name one -- it defines STREET itself as "a public or private right-of-way
+  # that is intended for motor vehicle travel or for motor vehicle access to
+  # abutting property", which is broad enough to hold a drive without needing
+  # a second noun. The direction of the error decides the doubt: a corner lot
+  # read as an interior lot loses five feet of side yard and five of rear, and
+  # a setback subtracted by a misreading is the false GREEN this screen exists
+  # to avoid.
+  #
+  # NOT ENCODED: Figure 710-1, which the definition points at. Troutdale has
+  # the same shape -- a figure illustrating corner lots with no text stating
+  # what it adds -- and the same disposition. The words carry a complete test
+  # without it.
+  corner_lot:
+    test: intersecting_frontages
+    count: 2
+    curve_at_or_below_deg: 120.0
+    drives_count: true
+    quote: "or/multnomah/wood-village/720.030.definitions.txt#L250"
+    cite: "WVDC 720.030, Lot, Corner Lot"
+
 ingest:
   geoid: null
   juris_city_codes:
@@ -159,6 +250,56 @@ code:
   - id: "350.045.required-spaces"
     url: https://woodvillage.municipal.codes/WVDC/350.045
     title: "WVDC 350.045 - Number of Required Spaces (Tables 350-1A, 350-1B)"
+  # SECTION 350 IS FOUR ARTICLES AND ONLY ONE OF THEM DIMENSIONS THIS
+  # BUILDING'S PARKING, so all three that decide which are stored. 350.045
+  # above answers how many spaces; these answer how big, and until 2026-08-30
+  # only the first question had been asked here. That is the split this corpus
+  # keeps re-learning: a city can require one space per unit and regulate the
+  # size of it in a different article that nothing points at.
+  #
+  # 350.030 is the chapter's own scope -- "all parking areas in all zones,
+  # whether required by the code or put in for the convenience of property
+  # owners" -- and holds the curb-cut sentence that goes nowhere.
+  - id: "350.030.general-regulations"
+    url: https://woodvillage.municipal.codes/WVDC/350.030
+    title: "WVDC 350.030 - General Regulations (Motor Vehicle Parking)"
+    # Five lettered paragraphs of scope and prose. One dimensioned standard in
+    # the whole section (250 feet, for off-site nonresidential parking), which
+    # is what the plausibility gate counts. Read 2026-08-30.
+    allow_thin: true
+  # 350.055 is here to be EXCLUDED, and a document fetched to prove an
+  # exclusion has to be as real as one fetched to prove a rule. Its own first
+  # sentence is the evidence: "The regulations of this section apply to houses,
+  # attached houses, duplexes, and manufactured homes." Storing it is what
+  # makes the elimination checkable instead of asserted -- and it also holds
+  # the two rules that would have bitten hardest if it did reach: parking
+  # banned in the first 10 feet from a front lot line, and a 9-foot driveway.
+  - id: "350.055.one-and-two-unit"
+    url: https://woodvillage.municipal.codes/WVDC/350.055
+    title: "WVDC 350.055 - General Regulations (One and Two Unit Dwellings)"
+    allow_thin: true
+  # And this is the article that does reach it. Table 350-3 states a stall and
+  # both aisle widths by parking angle; Table 350-2 states the setbacks between
+  # a parking area and each kind of lot line.
+  - id: "350.065.all-other-uses"
+    url: https://woodvillage.municipal.codes/WVDC/350.065
+    title: "WVDC 350.065 - General Regulations (All Other Uses; Tables 350-2, 350-3)"
+  # The city's whole glossary, fetched for one word and kept for the rest.
+  # QUADPLEX is defined here as "a structure that contains four (4) primary
+  # dwelling units on one (1) lot", which is the pod exactly, and HOUSE and
+  # TOWNHOUSE are both defined as one dwelling unit on its own lot -- which is
+  # what takes this building out of 350.055 and leaves it in 350.065.
+  - id: "720.030.definitions"
+    url: https://woodvillage.municipal.codes/WVDC/720.030
+    title: "WVDC 720.030 - Definitions"
+    # Thin on purpose and read before the flag was set: 53,000 characters of
+    # text, of which 16 lines out of 643 carry a section number or a
+    # dimension. That is what a glossary looks like -- it is the one chapter
+    # in a code whose job is to state no standards at all, so the ratio the
+    # plausibility gate measures is the wrong measure for it. The document is
+    # the alphabet A through Z with a RESIDENTIAL STRUCTURE TYPES block inside
+    # the R's, and every word this layer leans on is in it.
+    allow_thin: true
   - id: "390.020.applicability"
     url: https://woodvillage.municipal.codes/WVDC/390.020
     title: "WVDC 390.020 - Applicability (solid waste and recyclables storage)"
@@ -223,8 +364,11 @@ crossrefs:
     every use table in the city: "Additional regulations are listed in Section 300." It is a container
     rather than a chapter -- eleven subsections, 310 through 395 -- so the reference cannot be ruled on
     without reading what is in it. Read 2026-08-20. Two subsections reach this building. 350, Parking
-    and Loading, is fetched and its Table 350-1A is now this layer''s parking default. 390, solid waste
-    and recyclables storage, is fetched and does not reach it: 390.020 applies "to new multi-unit
+    and Loading, is fetched and its Table 350-1A is now this layer''s parking default -- and note that
+    this ruling said only that for ten days, which is the Gladstone mistake exactly: a chapter closed
+    on the QUANTITY of parking while its geometry sat unread three articles away. 350.030, 350.055
+    and 350.065 were stored 2026-08-30 and Table 350-3 is now this layer''s stall and aisle. 390, solid
+    waste and recyclables storage, is fetched and does not reach it: 390.020 applies "to new multi-unit
     residential buildings containing five or more units", and this is four. The other nine are other
     use types or other procedures -- home occupations, group living, essential service providers,
     landscaping (330, reached only through the five-or-more-unit table), manufactured homes, mobile
@@ -267,6 +411,50 @@ crossrefs:
     Detached single dwelling units. This pod is four attached ones, so the exception is not available
     to it and the base lot minimum stands.
 
+  # --- surfaced by the three parking documents stored 2026-08-30 -----------
+  # Reading a chapter adds references, which is the queue working. These five
+  # are what 350.030, 350.055, 350.065 and 720.030 point at that nothing had
+  # ruled on before.
+  "31":
+    outcome: later
+    note: >-
+      Chapter 31 of the Uniform Building Code, cited by WVDC 350.065(D)(3): "Where required by this
+      Code, Chapter 31 of the Uniform Building Code or the Americans With Disabilities Act, disabled
+      parking spaces must meet the dimension standards stated in Table 350-3." The WVDC half of that
+      sentence is decided and it requires nothing -- it supplies dimensions for a requirement stated
+      somewhere else, and no row of Table 350-1A asks Household Living for an accessible space. What
+      is deferred is the other half. Table 350-3''s Disabled row is 13 feet wide against the standard
+      9, so if one of this building''s four stalls had to be accessible the court widens by four
+      feet, and whether the Oregon Structural Specialty Code asks that of a four-unit building with
+      no elevator is a building-permit question this screen has never put to any city. Parked rather
+      than closed because the answer would move lots in every jurisdiction at once, not just this
+      one.
+  "340": >-
+    Manufactured Homes, cited by the last sentence of WVDC 350.055(A): "Parking for manufactured home
+    parks is regulated in Section 340 - Manufactured Homes." A different tenure and a different
+    building from the one this screen places, and it is cited out of the article that does not reach
+    the pod in the first place. The same chapter''s .010 and .020 are already ruled on above.
+  "49": >-
+    Title 49 of the Code of Federal Regulations, reached through the definition of PASSENGER VEHICLE:
+    the term "is intended to cover the vehicles defined as passenger cars and multipurpose passenger
+    vehicles by the National Highway Traffic Safety Administration". A federal classification of what
+    a car is, not a standard about where one may be parked.
+  "571.3": >-
+    The section of 49 CFR Chapter V that the PASSENGER VEHICLE definition points at, and the same
+    ruling: it is the federal motor vehicle safety standard defining vehicle classes. Nothing in it
+    dimensions a stall or a lot.
+  "730":
+    outcome: misread
+    note: >-
+      Not a cross-reference at all. "Section 720" and "Section 730" are the breadcrumb the codifier
+      prints above every page -- the chapter before this one and the chapter after -- and they land
+      in the stored text at lines 11 and 13, above the code itself. Recorded rather than left open
+      because an unread reference and a reference that never existed look identical in a queue.
+  "235.275": >-
+    The Community Retail requirement of the Town Center, reached through the definition of LARGE
+    SCALE RETAIL: "single retail uses containing 60,000 or more square feet of gross leasable area".
+    A commercial standard about a use this screen does not place.
+
 defaults:
   # Table 350-1A is headed "Minimum Required Parking Spaces in All Zones" and
   # is stated by use category rather than by district, so it belongs to the
@@ -285,6 +473,143 @@ defaults:
     url: https://woodvillage.municipal.codes/WVDC/350.045
     retrieved: '2026-08-20'
     quote: "or/multnomah/wood-village/350.045.required-spaces.txt#L94-L95,L97"
+  # And the ceiling, read 2026-08-30 off the table printed directly under the
+  # one above. Table 350-1B is a real apparatus -- it caps a restaurant at 23
+  # spaces per 1,000 sq ft, a medical office at 5.9, a college at 0.3, and it
+  # states a second, tighter column for anything within a quarter mile of
+  # 20-minute transit -- and against Household Living it prints "no maximum" in
+  # both columns. Built, and pointed away from this building in words.
+  parking_max_per_unit:
+    exempt: true
+    cite: "WVDC 350.045, Table 350-1B Maximum Parking Ratios -- Household Living, no maximum"
+    url: https://woodvillage.municipal.codes/WVDC/350.045
+    retrieved: '2026-08-30'
+    quote: "or/multnomah/wood-village/350.045.required-spaces.txt#L146,L148-L149"
+  #
+  # THE GEOMETRY, and which of Section 350's articles states it.
+  #
+  # Section 350 splits its development standards in two. 350.050-350.055 is
+  # "Development Standards for One and Two Unit Dwellings" and 350.060-350.065
+  # is "Development Standards for All Other Uses", and the second one says how
+  # the split works: its standards reach "all vehicle areas whether required or
+  # excess parking, EXCEPT for residential parking areas subject to the
+  # standards of Section 350.050 through 350.055". So the question is only
+  # whether the first article reaches the pod, and it answers that itself --
+  # "The regulations of this section apply to houses, attached houses,
+  # duplexes, and manufactured homes."
+  #
+  # A quadplex is none of the four. WVDC 720.030 defines QUADPLEX as "a
+  # structure that contains four (4) primary dwelling units on one (1) lot",
+  # HOUSE as "a detached dwelling unit located on its own lot" and TOWNHOUSE as
+  # a unit "located on an individual lot or parcel"; Tables 210-2 and 220-3
+  # list "Attached or Detached Tri- or Quadplex" as a housing type of its own,
+  # beside and not inside Detached House, Duplex and Townhouse. Same elimination
+  # West Linn needed, with a defined noun at the end of it instead of a gap.
+  #
+  # THE STALL COMES OUT THE SAME EITHER WAY, which is worth saying because it
+  # is the reason this reading is safe. 350.055(C) sets the one-and-two-unit
+  # stall at "9 feet by 19 feet" and Table 350-3's 90-degree Standard row is 9
+  # ft wide by 19 ft deep. Whichever article a reviewer thinks reaches this
+  # building, the rectangle is the same. What the elimination actually decides
+  # is three other things: 350.055 states NO AISLE at all, so on that branch
+  # the city could not be laid out; 350.055(B) would ban parking "within the
+  # first 10 feet from a front lot line" and cap the front yard at 40 percent
+  # paved, and neither reaches; and 350.055(C)'s nine-foot driveway is not the
+  # pod's either, which leaves the drive to the design default.
+  parking_stall_width_ft:
+    value: 9
+    cite: "WVDC 350.065(D)(2)(a), Table 350-3, 90 degrees, Standard, Width (B)"
+    url: https://woodvillage.municipal.codes/WVDC/350.065
+    retrieved: '2026-08-30'
+    quote: "or/multnomah/wood-village/350.065.all-other-uses.txt#L60,L97-L98,L111"
+  parking_stall_depth_ft:
+    value: 19
+    cite: "WVDC 350.065(D)(2)(a), Table 350-3, 90 degrees, Standard, Stall Depth (E)"
+    url: https://woodvillage.municipal.codes/WVDC/350.065
+    retrieved: '2026-08-30'
+    quote: "or/multnomah/wood-village/350.065.all-other-uses.txt#L60,L97-L98,L111"
+  # STANDARD AND NOT COMPACT, on purpose. 350.065(D)(2)(b) requires only that
+  # "at least 50% of required parking spaces" meet the standard dimensions, so
+  # two of this building's four stalls could legally be 7 ft 6 in by 15 ft. A
+  # court drawn to the standard stall everywhere fits on any lot where the
+  # mixed court fits, and the reverse is not true, so the strict branch is the
+  # one encoded and the slack is real rather than assumed.
+  #
+  # The aisle is one figure per direction and the same at every angle in the
+  # table -- 12 feet one way, 24 feet two way, from parallel through 90
+  # degrees. 24 ties Fairview, Gladstone, Happy Valley, Oregon City and
+  # Tualatin; only Troutdale and unincorporated Multnomah ask more.
+  parking_aisle_one_way_ft:
+    value: 12
+    cite: "WVDC 350.065(D)(2)(a), Table 350-3, 90 degrees, 1 Way Aisle Width (D)"
+    url: https://woodvillage.municipal.codes/WVDC/350.065
+    retrieved: '2026-08-30'
+    quote: "or/multnomah/wood-village/350.065.all-other-uses.txt#L60,L97-L98,L111"
+  parking_aisle_two_way_ft:
+    value: 24
+    cite: "WVDC 350.065(D)(2)(a), Table 350-3, 90 degrees, 2 Way Aisle Width (D)"
+    url: https://woodvillage.municipal.codes/WVDC/350.065
+    retrieved: '2026-08-30'
+    quote: "or/multnomah/wood-village/350.065.all-other-uses.txt#L60,L97-L98,L111"
+  # FIVE FEET, AND THE CODE OFFERS TEN AS THE ALTERNATIVE. Table 350-2's cell
+  # reads "5 ft/L2 10 ft/L1" -- one cell, two compliance paths: five feet if
+  # the strip is planted to the L2 standard, ten if only to L1. Five is what
+  # the code requires as a minimum and ten is what a developer buys lighter
+  # planting with, so five is the number, and this model does not check
+  # landscaping standards either way. Nothing turns on the choice here: every
+  # residential zone in the city sets the building ten feet off the front lot
+  # line, so the envelope is already inset twice this far.
+  parking_street_setback_ft:
+    value: 5
+    cite: "WVDC 350.065(C), Table 350-2, Lot line abutting street, all zones except GM"
+    url: https://woodvillage.municipal.codes/WVDC/350.065
+    retrieved: '2026-08-30'
+    quote: "or/multnomah/wood-village/350.065.all-other-uses.txt#L60,L70,L72-L75"
+  # NOT ENCODED: the other two rows of Table 350-2, both of which set a parking
+  # area back from a side or rear lot line rather than from a street, and the
+  # model holds only the street one. Against an LR or MR neighbour it is five
+  # feet with L3 planting; against a commercial or town-centre neighbour it is
+  # the same five-or-ten as the street row. Inert, and this time the margin is
+  # not thin in the way Tualatin's was: five feet is exactly the side yard in
+  # LR 7.5, MR 2 and MR 4, less than LR 12's ten, and a third of every rear
+  # yard, so the building envelope is already cut back at least this far on
+  # every line a parking area could reach. Recorded because the day a Wood
+  # Village zone states a side yard under five feet, this stops being true.
+  # (or/multnomah/wood-village/350.065.all-other-uses.txt#L72,L76-L77)
+  #
+  # NOT ENCODED: the curb cut. WVDC 350.030(D) is the only sentence in the
+  # chapter about the width of an access point and it states no width -- "Access
+  # points with the street shall be the minimum necessary to provide access
+  # while not inhibiting the safe circulation and carrying capacity of the
+  # street. Curb cuts shall be designed to established City standards." The
+  # second sentence is a redirect that names no document, which is a weaker
+  # version of the Clackamas County problem: there, at least, the drawing has a
+  # number. There is nothing here to fetch and nothing to refuse a lot with, so
+  # the drive and the cut fall to the design defaults, and the nine-foot
+  # residential driveway of 350.055(C) is not borrowed for them.
+  # (or/multnomah/wood-village/350.030.general-regulations.txt#L66)
+  #
+  # NOT ENCODED: 350.065(D)(1)(b), forward access, and here it does reach.
+  # "All parking areas must be designed to allow vehicles to enter and exit the
+  # roadway in a forward motion. However, this does not apply to parking areas
+  # with one or two spaces and whose only access is on a non-arterial street."
+  # The pod owes four, so the exception is a stall short twice over -- which is
+  # the opposite of Gladstone, where the same rule starts at more than four and
+  # this building sits exactly on the line. The fourth city to state it flat
+  # rather than by street class, after Milwaukie, Happy Valley and Gresham. No
+  # field holds it in any of the four, and it is satisfied here the same way it
+  # is there: the site plan draws a rear court with a turning bay because the
+  # typology says so, not because this layer asked.
+  # (or/multnomah/wood-village/350.065.all-other-uses.txt#L85)
+  #
+  # READ AND DOES NOT REACH, so that nobody re-reads them: 350.065(E), interior
+  # parking-area landscaping, which applies to "surface parking areas with more
+  # than 10 spaces" and this building has four; the 22-foot garage setback in
+  # Tables 210-3 and 220-3, which regulates a garage and the pod's parking is a
+  # surface court; and 350.045's on-street-parking credit and its sentence that
+  # "no additional parking spaces shall be required for conversion of a
+  # detached single-unit dwelling to a triplex or quadplex", both of which can
+  # only lower a requirement this screen already satisfies.
 
 zones:
   NC:

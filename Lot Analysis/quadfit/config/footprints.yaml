@@ -92,8 +92,8 @@ screen:
 # row (front 10 / side 5 / rear 15 / street-side 10, min lot 5,000, FAR 1.0).
 siteplan:
   enabled: true
-  # Every city whose own code states a stall AND an aisle gets laid out. Ten
-  # do as of 2026-08-30, Tualatin being the newest; two more
+  # Every city whose own code states a stall AND an aisle gets laid out.
+  # Eleven do as of 2026-08-30, Wood Village being the newest; two more
   # state a stall and no aisle and are declined by name below; the rest have
   # not been read and pass through as `not_evaluated`. Narrow to `pilot_cell`
   # to re-run Gresham LDR-5 alone after a layout change.
@@ -344,6 +344,41 @@ siteplan:
       aisle_one_way_ft: 24          # one figure per angle, not split by direction
       aisle_two_way_ft: 24
       cite: TDC 73C.030(1) and Figure 73-1 (Appendix B), standard space at 90 degrees
+      max_per_unit: null
+    # The eleventh, and the last one the backlog could reach: of the four
+    # jurisdictions still holding lots and no layout, Clackamas County's aisle
+    # is refused into a CAD drawing and Milwaukie and Wilsonville state a stall
+    # and no aisle at all.
+    #
+    # Section 350 splits its development standards into one article for
+    # "One and Two Unit Dwellings" and one for "All Other Uses", and 350.065(A)
+    # says which is which: it reaches every vehicle area "except for
+    # residential parking areas subject to the standards of Section 350.050
+    # through 350.055". 350.055(A) then names its own: "houses, attached
+    # houses, duplexes, and manufactured homes". A quadplex -- WVDC 720.030,
+    # "four (4) primary dwelling units on one (1) lot" -- is none of the four,
+    # and Tables 210-2 and 220-3 list it as a housing type of its own.
+    #
+    # THE STALL IS THE SAME ON BOTH BRANCHES, which is what makes the reading
+    # safe: 350.055(C) says 9 by 19 for a house and Table 350-3's 90-degree
+    # Standard row says 9 by 19 too. The elimination decides the AISLE, and
+    # only the "All Other Uses" article has one -- without it this city could
+    # not be drawn at all.
+    #
+    # Standard and not compact: 350.065(D)(2)(b) lets half the required spaces
+    # be 7 ft 6 in by 15 ft, and a court drawn to the standard stall fits
+    # wherever the mixed court fits.
+    #
+    # `max_per_unit` is null on a reading. Table 350-1B caps a restaurant at 23
+    # spaces per 1,000 sq ft and a college at 0.3, states a tighter column near
+    # 20-minute transit, and prints "no maximum" against Household Living in
+    # both.
+    wood_village:
+      stall_width_ft: 9
+      stall_depth_ft: 19
+      aisle_one_way_ft: 12
+      aisle_two_way_ft: 24
+      cite: WVDC 350.065(D)(2)(a) Table 350-3, 90 degrees, Standard
       max_per_unit: null
     # --- states a stall and no aisle: declined, not borrowed from -----------
     # Both of these dimension a space and never dimension the drive that
@@ -699,6 +734,32 @@ siteplan:
         RL: null
         RML: 10
       cite: TDC 73C.030(1) and Figure 73-1 driveway rows; 73C.090(1)(a) approach; TDC 41.300 parking setback
+    # NO DRIVE AND NO CUT, and the code says so twice. The only sentence in
+    # Section 350 about the width of an access point is 350.030(D): "Access
+    # points with the street shall be the minimum necessary... Curb cuts shall
+    # be designed to established City standards" -- a redirect naming no
+    # document, which is a weaker version of Clackamas County's Standard
+    # Drawing P100, because there at least the drawing has a number on it. And
+    # 350.055(C)'s nine-foot residential driveway belongs to the article that
+    # does not reach this building, so it is not borrowed. Both fall to the
+    # design defaults, which is the same place Fairview, Gladstone, Oregon City
+    # and Portland land.
+    #
+    # The parking setback is five feet from a street lot line. Table 350-2
+    # prints "5 ft/L2 10 ft/L1" in one cell -- five feet if the strip is
+    # planted to the L2 standard, ten if only to L1 -- and five is the minimum
+    # the code requires. It is inert either way: every residential zone here
+    # sets the building ten feet off the front lot line.
+    #
+    # NOT MIRRORED AND INERT: the other two rows of Table 350-2 set a parking
+    # area back from a side or rear lot line, five feet against an LR or MR
+    # neighbour. Five feet is exactly the side yard in LR 7.5, MR 2 and MR 4,
+    # less than LR 12's ten, and a third of every rear yard. No open space:
+    # neither residential chapter states a private reserve, and 350.065(E)'s
+    # interior landscaping applies to parking areas "with more than 10 spaces".
+    wood_village:
+      parking_street_setback_ft: 5
+      cite: WVDC 350.065(C) Table 350-2, lot line abutting street, all zones except GM
   # The three engineering constants left after the law came out of this block.
   # Not one is a citation. A car needs a lane and a wall needs a standoff
   # whatever the code says; where a city asks for more, the city wins.

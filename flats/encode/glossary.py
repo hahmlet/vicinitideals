@@ -127,7 +127,16 @@ _CROSS_REFERENCE = re.compile(r"^(?:see|also|and|or|of|the)\b", re.I)
 #: A bullet at the head of an entry's own line. Portland files sub-terms this
 #: way -- "Setback." at the margin, then "• Front Setback.", "• Rear Setback."
 #: -- and a sub-list is ordered however its codifier wanted it.
-_BULLETED = re.compile(r"^[•·▪◦]")
+#:
+#: The hyphen is a bullet too, and it took Wood Village to notice: its glossary
+#: nests "- LIGHT TRUCK.", "- MEDIUM TRUCK.", "- HEAVY TRUCK." under TRUCK, and
+#: "- MOTOR HOME.", "- ACCESSORY RECREATIONAL VEHICLE." under RECREATIONAL
+#: VEHICLE. Read flat they are five entries filed out of alphabet in the middle
+#: of the V's; read as the list items they are printed as, they are ordered by
+#: their parent like Portland's setbacks. The space after it is required --
+#: without it "-5 ft" and "-- see below" are bullets, and a hyphen touching its
+#: word is a compound rather than a marker.
+_BULLETED = re.compile(r"^(?:[•·▪◦]|-\s)")
 
 #: A list marker alone on the line above an entry, which is the same nesting
 #: said with a letter instead of a bullet. Milwaukie writes "Garage" at the

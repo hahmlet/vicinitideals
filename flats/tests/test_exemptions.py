@@ -93,7 +93,13 @@ pytestmark = pytest.mark.unit
 #: the MINIMUM is a stated zero rather than an exemption: there is no minimum
 #: vehicle column at all, so nothing was built and pointed away -- absence, and
 #: the two are not the same reading.
-EXPECTED = {"stated": 173, "numeric": 37, "marker": 0, "dash": 2, "silent": 0}
+#: 174 on 2026-08-30, Wood Village's parking maximum, and the fifth city in a
+#: row to state one this way. Table 350-1B is titled "Maximum Parking Ratios"
+#: and gives a restaurant 23 spaces per 1,000 sq ft, one with a drive-through
+#: 15, and a college 0.3; the row this building sits on, Household Living,
+#: prints "no maximum" in both of its columns. Words in an apparatus that has
+#: numbers in it, none of them pointed here.
+EXPECTED = {"stated": 174, "numeric": 37, "marker": 0, "dash": 2, "silent": 0}
 
 LAKE_OSWEGO = "or/clackamas/lake-oswego"
 

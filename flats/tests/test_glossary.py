@@ -109,6 +109,36 @@ def test_a_bullet_forty_spaces_from_its_term_is_still_an_entry() -> None:
     assert got[0].text.startswith("A lot that has frontage")
 
 
+def test_a_hyphen_is_a_bullet_and_a_hyphenated_word_is_not() -> None:
+    """Wood Village nests with the character every other code nests with a
+    dot for, and it cost the corpus a chapter.
+
+    Its glossary prints "TRUCK." at the margin and then "- LIGHT TRUCK.",
+    "- MEDIUM TRUCK.", "- HEAVY TRUCK." beneath it -- a sub-list ordered by
+    its parent, exactly like Portland's six setbacks. Read flat, the five
+    hyphenated entries sit out of alphabet in the middle of the V's and put
+    the chapter one over its disorder tolerance, so 185 correctly captured
+    definitions reported as a chapter nobody had read.
+
+    The space after the hyphen is what keeps this from swallowing the corpus.
+    A hyphen touching its word is a compound term or a negative number, and
+    fifteen other jurisdictions' chapters are unchanged by the rule -- same
+    entry counts, same disorder counts, measured before and after.
+    """
+    text = "\n".join(
+        [
+            "Truck. A motor vehicle designed primarily for the movement of property.",
+            "- Light Truck. Trucks with single rear axles and single rear wheels.",
+        ]
+    )
+    got = read(text)
+    assert [e.term for e in got] == ["Truck", "Light Truck"]
+    assert [e.nested for e in got] == [False, True]
+
+    compound = read("Multi-Dwelling Structure. A structure containing five or more dwelling units.")
+    assert [(e.term, e.nested) for e in compound] == [("Multi-Dwelling Structure", False)]
+
+
 def test_a_body_that_is_the_next_entry_is_not_this_terms_body() -> None:
     """The misfiling this module has to be incapable of. Portland wraps long
     terms across two lines, so the line under a heading is often the next
