@@ -9,11 +9,21 @@ best parking tier each lot achieves. s7 then TIGHTENS the 1-lot conversion
 verdict with `site_plan_ok` in place of the bare-rectangle test.
 
 Scoped by what has been READ, not by a cell somebody picked: every lot in every
-city whose own code states a stall AND an aisle, in every zone. A city that
-states a stall and no aisle is declined by name — Milwaukie and Wilsonville
-both do, and a court laid out to a borrowed aisle is a stall count no reviewer
-could defend. A city nobody has read passes through untouched with
-`parking_tier = "not_evaluated"`, so s7 still sees the full table.
+city whose own code states a stall AND an aisle, in every zone. A city nobody
+has read passes through untouched with `parking_tier = "not_evaluated"`, so s7
+still sees the full table.
+
+A city that states a stall and no aisle used to be declined by name. Two do —
+Milwaukie and Wilsonville — and both were read to the end of the state's own
+redirect (OAR 660-046-0220(2)(e)(E), single-family standards) before concluding
+the number is not published anywhere. They are now laid out to an ASSUMED 24 ft
+aisle, sourced in footprints.yaml, and every lot so drawn carries
+`geometry_assumed = True` into s7, which never lets such a lot reach GREEN. The
+old rule stands everywhere it still applies: a court laid out to a *borrowed*
+aisle — one lifted off a neighbour, or off a table this city took away from
+this building — is a stall count no reviewer could defend. An assumption that
+names its source and forfeits the verdict is a different animal from a number
+quietly copied.
 
 Each city contributes exactly three numbers: its stall width, its stall depth,
 its aisle — plus a stall CEILING where it states one, because a maximum makes
@@ -435,6 +445,14 @@ def main() -> None:
                else f"its parking chapter does not reach this building on the "
                     f"{sp.plat} plat path")
         print(f"s6s: declining {j} -- {why}")
+    # Said out loud on every run, because it is the one number in this stage
+    # that no city published and the console is where a reviewer meets it.
+    assumed = sp.cities_on_an_assumed_aisle()
+    for j in assumed:
+        g = sp.geometry_for(j)
+        print(f"s6s: {j} laid out on an ASSUMED {g.aisle_two_way_ft:g} ft aisle "
+              f"-- its code states a stall and no aisle; these lots can reach "
+              f"REVIEW but never GREEN")
 
     in_scope = (lots["jurisdiction"].isin(cities) & fits_any).to_numpy()
     if sp.scope == "pilot_cell":
@@ -571,7 +589,8 @@ def main() -> None:
         sp_json[idx] = json.dumps(r["geoms_hex"])
 
     _finalize(lots, site_ok, tier, stalls, method, bname, drive_len,
-              drive_w, park_area, open_sqft, open_req, open_ok, sp_json)
+              drive_w, park_area, open_sqft, open_req, open_ok, sp_json,
+              assumed_cities=assumed)
 
     ev = stalls >= 0
     print(f"s6s: evaluated {int(ev.sum()):,} lots; "
@@ -608,11 +627,20 @@ def main() -> None:
 
 def _finalize(lots, site_ok, tier, stalls, method, bname, drive_len,
               drive_w, park_area, open_sqft, open_req, open_ok,
-              sp_json) -> None:
+              sp_json, assumed_cities=()) -> None:
     import numpy as np
 
     if "env_geom" in lots.columns:
         lots = lots.drop(columns=["env_geom"])  # env re-read from s5o in s7
+    # True where the plan on this row was drawn to an ASSUMED aisle rather than
+    # a published one -- Milwaukie and Wilsonville, the two cities that state a
+    # stall and never state the lane. It rides on the lot rather than being
+    # re-derived from config in s7 so that the CSV a reviewer opens carries the
+    # caveat next to the plan it qualifies, and so a stale run cannot lose it.
+    lots["geometry_assumed"] = (
+        lots["jurisdiction"].isin(list(assumed_cities)).to_numpy()
+        & np.asarray(site_ok, dtype=bool)
+    )
     lots["site_plan_ok"] = site_ok
     lots["parking_tier"] = tier
     lots["stalls_provided"] = stalls

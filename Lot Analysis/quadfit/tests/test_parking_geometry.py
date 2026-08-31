@@ -104,6 +104,18 @@ def test_every_shipped_dimension_is_the_one_the_corpus_holds():
         for mine, theirs in MIRRORED.items():
             shipped = getattr(geom, mine)
             read = corpus.get(theirs)
+            if geom.aisle_assumed and mine.startswith("aisle_"):
+                # The one dimension in this file that is deliberately NOT the
+                # corpus's. The exemption is narrow on purpose: it holds only
+                # while the corpus is SILENT, so the day either city publishes
+                # an aisle this stops being an assumption and starts being a
+                # contradiction, and this test says so.
+                assert read is None, (
+                    f"{jurisdiction}: {mine} is flagged assumed but the corpus "
+                    f"now reads {theirs} = {read.value} ({read.prov.cite}); "
+                    "an assumption outlived the silence that justified it"
+                )
+                continue
             if shipped is None:
                 # Not "unknown" — the claim being made is that the code states
                 # no such dimension. If the corpus has one, the site plan is
@@ -248,6 +260,121 @@ def test_a_city_that_states_no_aisle_is_declined_rather_than_borrowed_from():
     assert StallGeometry(
         stall_width_ft=9.0, stall_depth_ft=18.0, aisle_one_way_ft=20.0
     ).lays_out() is False
+
+
+def test_an_assumed_aisle_is_assumed_because_nobody_published_one():
+    """The whole licence for an assumed dimension, stated as a test.
+
+    Two cities regulate their parking completely and never state the width of
+    the lane between two rows of it. That is not the same as nobody having
+    read them -- both were read, and then read again down OAR
+    660-046-0220(2)(e)(E), which orders a Large City to apply its
+    single-family standards to middle housing and so tells you exactly where
+    to look next. Milwaukie's 19.607.1 names houses and quadplexes in one
+    sentence, so the redirect lands back where it started; Wilsonville's
+    "all residential structures" block is facade and articulation. The number
+    does not exist in either direction.
+
+    So the assumption is allowed. What is not allowed is assuming over the top
+    of something published, which is what this asserts.
+    """
+    from common import load_footprints
+    from flats.encode.port_quadfit import layer_id_for
+
+    sp = load_footprints().siteplan
+    assumed = sp.cities_on_an_assumed_aisle()
+    assert assumed, "nothing is assumed; delete this test with the last one"
+
+    for jurisdiction in assumed:
+        corpus = _corpus_defaults(layer_id_for(jurisdiction))
+        for theirs in ("parking_aisle_one_way_ft", "parking_aisle_two_way_ft"):
+            assert corpus.get(theirs) is None, (
+                f"{jurisdiction}: {theirs} is in the corpus, so the aisle is "
+                "published and must be mirrored rather than assumed"
+            )
+        # The stall is still theirs. An assumption is one number, not a licence.
+        assert corpus.get("parking_stall_width_ft") is not None, (
+            f"{jurisdiction}: an assumed aisle on a city whose stall is also "
+            "unread is two assumptions wearing one flag"
+        )
+
+
+def test_an_assumed_dimension_has_to_name_its_source():
+    """A number with no origin is a guess, and this file has none of those."""
+    import pydantic
+
+    from common import StallGeometry
+
+    with pytest.raises(pydantic.ValidationError):
+        StallGeometry(stall_width_ft=9, stall_depth_ft=18, aisle_one_way_ft=24,
+                      aisle_two_way_ft=24, aisle_assumed=True)
+
+    with pytest.raises(pydantic.ValidationError):
+        StallGeometry(stall_width_ft=9, stall_depth_ft=18, aisle_one_way_ft=24,
+                      aisle_two_way_ft=24, aisle_cite="ULI/NPA")
+
+    ok = StallGeometry(stall_width_ft=9, stall_depth_ft=18, aisle_one_way_ft=24,
+                       aisle_two_way_ft=24, aisle_assumed=True,
+                       aisle_cite="ULI/NPA via SUDAS 8B-1 Table 8B-1.02")
+    assert ok.lays_out() and ok.aisle_assumed
+
+
+def test_an_assumed_aisle_is_neither_convenient_nor_padded():
+    """The number had to be defensible in both directions, so pin both.
+
+    Too NARROW and it is a number chosen because it yields more lots -- and
+    there is one available: Milwaukie's own Table 19.606.1 says 22 ft at 90
+    degrees off the same 9 ft stall, in a section its purpose paragraph takes
+    off this building. Reaching for it would buy lots with a table the city
+    withdrew. So an assumed aisle may not sit below the median of what the
+    corpus actually publishes.
+
+    Too WIDE and it is the "just in case" number, which costs lots for
+    nothing: SUDAS note 1 says the aisle "may be increased up to 3 feet to
+    provide a higher level of comfort", and comfort is not a code requirement.
+    So it may not sit above the widest any city in the corpus asks for either.
+    """
+    from statistics import median
+
+    from common import load_footprints
+
+    sp = load_footprints().siteplan
+    published = sorted(
+        g.aisle_two_way_ft for g in sp.geometry.values()
+        if g.aisle_two_way_ft is not None and not g.aisle_assumed
+    )
+    assert len(published) >= 5, "too few published aisles to calibrate against"
+    floor, ceiling = median(published), max(published)
+
+    for jurisdiction in sp.cities_on_an_assumed_aisle():
+        g = sp.geometry_for(jurisdiction)
+        for width in (g.aisle_one_way_ft, g.aisle_two_way_ft):
+            assert floor <= width <= ceiling, (
+                f"{jurisdiction}: assumed aisle {width} ft sits outside the "
+                f"published corpus range [{floor}, {ceiling}] -- below it is a "
+                "number picked for yield, above it is padding"
+            )
+
+
+def test_a_city_on_an_assumed_aisle_is_still_a_city_that_lays_out():
+    """The flag qualifies the verdict, it does not withdraw the drawing.
+
+    The point of the whole exercise: these lots used to carry no site plan at
+    all, which is strictly less information than a plan with a caveat on it.
+    """
+    from common import load_footprints
+
+    sp = load_footprints().siteplan
+    laid_out = set(sp.cities_it_can_dimension())
+    assumed = set(sp.cities_on_an_assumed_aisle())
+
+    assert assumed <= laid_out
+    for jurisdiction in assumed:
+        assert sp.geometry_for(jurisdiction).lays_out()
+        assert sp.curb_cut_ft_for(jurisdiction) is not None, (
+            f"{jurisdiction} has an assumed aisle and still cannot be drawn, "
+            "so the assumption bought nothing"
+        )
 
 
 # ---------------------------------------------------------------------------

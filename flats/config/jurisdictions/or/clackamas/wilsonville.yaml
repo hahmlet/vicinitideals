@@ -234,6 +234,21 @@ defaults:
   # the Gresham 9.0200 shape -- a dimension in an engineering manual no
   # jurisdiction file in this corpus declares.
   #
+  # WHERE THE NUMBER WENT, 2026-08-31. This refusal stands -- the code states
+  # no aisle and this layer holds none. What changed is downstream: quadfit's
+  # site-plan generator now draws this city to an ASSUMED 24 ft aisle (ULI /
+  # National Parking Association via Iowa SUDAS 8B-1 Table 8B-1.02, 90 degrees,
+  # 85th-percentile design vehicle) rather than declining to draw it at all,
+  # and marks every lot so drawn as REVIEW-only, never GREEN. The search that
+  # licensed the assumption ran through OAR 660-046-0220(2)(e)(E), which sends
+  # middle housing to the single-family standards "in the same zone" -- and
+  # Chapter 4 files residential standards by structure type and the "all
+  # residential structures" block is facade and articulation only.
+  #
+  # The distinction to keep: the corpus records what the code says, and says
+  # nothing here. The generator records what it had to draw with. Neither
+  # borrows from the other.
+  #
   # DRIVEWAY, APPROACH AND PARKING PLACEMENT. Section 4.113(.14) is where
   # Wilsonville says what a quadplex's parking may look like, and subsection D
   # is titled "Standards applicable to Triplexes and Quadplexes" -- this

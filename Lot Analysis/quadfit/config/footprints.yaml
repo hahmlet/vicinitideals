@@ -380,14 +380,93 @@ siteplan:
       aisle_two_way_ft: 24
       cite: WVDC 350.065(D)(2)(a) Table 350-3, 90 degrees, Standard
       max_per_unit: null
-    # --- states a stall and no aisle: declined, not borrowed from -----------
+    # --- states a stall and no aisle: laid out on an ASSUMED aisle ---------
     # Both of these dimension a space and never dimension the drive that
-    # reaches it, so a court laid out here would be laid out to somebody
-    # else's number. They are listed rather than omitted because the drift
-    # test reads an omission as "nobody read this city", and both were read.
+    # reaches it. Until 2026-08-31 that meant declined, and 6,091 lots between
+    # them carried no site plan at all -- not "does not fit", but "never
+    # attempted", which is the least useful thing a screen can say.
+    #
+    # What changed is that the search for a published number was finished
+    # rather than abandoned. OAR 660-046-0220(2)(e)(E) orders a Large City to
+    # apply to middle housing "the same off-street parking surfacing,
+    # dimensional, landscaping, access, and circulation standards that apply to
+    # single-family detached dwellings in the same zone", so the state itself
+    # says where to look next. Both cities were read down that path:
+    #
+    #   Milwaukie  19.607.1's own scope sentence covers "single detached
+    #              dwellings, duplexes, triplexes, quadplexes, townhouses,
+    #              cottage clusters, and residential homes in all zones" -- one
+    #              sentence, both buildings. The redirect lands back on the
+    #              section already read, which states no aisle. There is no
+    #              second place to look.
+    #   Wilsonville  files residential standards by structure type (C all
+    #              structures, D triplex/quadplex, E townhouse, F cottage
+    #              cluster, G cluster housing). C is facade and articulation
+    #              only. All seven "aisle" sentences in Chapter 4 say WHERE an
+    #              aisle may go; none says how wide. 4.155's review criteria
+    #              send "drive aisle design" to a person, not a number.
+    #
+    # So the number does not exist to be found, and the choice is between no
+    # site plan and an honest assumption. The assumption:
+    #
+    #   24 ft, one-way and two-way, 90 degrees.
+    #
+    # Iowa SUDAS Design Manual 8B-1 Table 8B-1.02, "Adapted from Urban Land
+    # Institute, National Parking Association" -- i.e. The Dimensions of
+    # Parking, the US reference both ULI and NPA publish. Its design vehicle is
+    # stated: the 85th percentile vehicle, 6 ft 7 in wide by 17 ft 3 in long,
+    # within an inch or two of that since 1999. Three properties of that table
+    # are why 24 is the right number rather than a cautious one:
+    #
+    #   * Note 1 says aisle width "may be increased up to 3 feet to provide a
+    #     higher level of comfort". 24 is the floor; 25-27 is the padding.
+    #   * The 90-degree column has no one-way entry. One-way reductions exist
+    #     at 60 and 45 degrees only, because backing out of a perpendicular
+    #     stall sweeps the same path whichever way traffic runs. So one-way is
+    #     24 here too, and a narrower one would be invented rather than eased.
+    #   * Stall width does not move it: "the only dimension that varies by
+    #     stall width is the interlock dimension". 8'6" and 9'0" both take 24.
+    #
+    # It also happens to be what Oregon says. Of the eleven jurisdictions in
+    # this corpus that publish a two-way aisle, the median is 24.0 and the mode
+    # is 24.0 (8 of 11); the range is 20 (Portland, off the smallest stall in
+    # the corpus at 8.5 x 16) to 25 (Troutdale, unincorporated Multnomah). And
+    # both of these cities already publish a 9 x 18 stall, which is exactly
+    # ULI/NPA's recommended stall for moderate-to-high turnover at its
+    # recommended 18 ft length. The stall is theirs; only the lane is ours.
+    #
+    # NOT TAKEN, and worth saying so: Milwaukie's own Table 19.606.1 gives 9 x
+    # 18 with a 22 ft aisle at 90 degrees, one-way or two -- narrower than the
+    # national floor and sitting in this city's own code. It is not used,
+    # because 19.606's purpose paragraph excepts middle housing from everything
+    # in that section and Table 19.605.1 files quadplexes there. Reaching into
+    # a table the city took off this building, to get a number that yields more
+    # lots than the engineering minimum does, is the borrowed dimension this
+    # file exists to refuse. The assumption is allowed to be honest; it is not
+    # allowed to be convenient.
+    #
+    # NOT TAKEN either: SUDAS note 2 allows 23 ft "in lots where at least 30%
+    # of stalls have curbs". A four-stall residential court with wheel stops
+    # would qualify and the foot is real, but it is an assumption stacked on an
+    # assumption to buy lots, and one assumed number per city is the limit.
+    #
+    # None of this can produce a GREEN. `aisle_assumed` rides through s6s onto
+    # every lot drawn this way and s7 folds it into REVIEW.
     milwaukie:
       stall_width_ft: 9
       stall_depth_ft: 18
+      aisle_one_way_ft: 24
+      aisle_two_way_ft: 24
+      aisle_assumed: true
+      aisle_cite: >-
+        ASSUMED. Iowa SUDAS Design Manual 8B-1 Table 8B-1.02 (adapted from
+        Urban Land Institute / National Parking Association, The Dimensions of
+        Parking), 90 degrees, two-way, 85th-percentile design vehicle.
+        Milwaukie publishes no aisle for this building: 19.606's aisle table is
+        excepted from middle housing by its own purpose paragraph, and
+        19.607 -- which OAR 660-046-0220(2)(e)(E)'s single-family redirect
+        lands back on, since 19.607.1 names houses and quadplexes in one
+        sentence -- states none.
       cite: MMC 19.607.1.A (Residential Driveways and Vehicle Parking Areas)
       # The tightest ceiling in this corpus: Table 19.605.1 caps a quadplex at
       # one space per unit, which is four — the same as the marketability
@@ -403,6 +482,17 @@ siteplan:
     wilsonville:
       stall_width_ft: 9
       stall_depth_ft: 18
+      aisle_one_way_ft: 24
+      aisle_two_way_ft: 24
+      aisle_assumed: true
+      aisle_cite: >-
+        ASSUMED. Iowa SUDAS Design Manual 8B-1 Table 8B-1.02 (adapted from
+        Urban Land Institute / National Parking Association, The Dimensions of
+        Parking), 90 degrees, two-way, 85th-percentile design vehicle.
+        Wilsonville publishes no aisle for any residential structure: Chapter 4
+        files its standards by structure type, the "all residential structures"
+        block is facade and articulation, and every aisle sentence in the
+        chapter states where an aisle may go rather than how wide it is.
       cite: WC 4.113(.14)D, off-street parking, stall dimensions in the definitions
       max_per_unit: null
   # Driveway, parking placement and open space, per city, mirroring the FLATS

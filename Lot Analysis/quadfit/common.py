@@ -344,6 +344,49 @@ class StallGeometry(BaseModel):
 
     cite: str = ""
 
+    #: True where the aisle above is ASSUMED rather than published by this
+    #: city. It is the one dimension in this file that is not a reading, and
+    #: it exists because two cities in the corpus state a stall, regulate the
+    #: parking completely, and never once say how wide the lane between two
+    #: rows of it has to be -- Milwaukie and Wilsonville, 6,091 lots between
+    #: them that could not be drawn at all.
+    #:
+    #: OAR 660-046-0220(2)(e)(E) is the reason an assumption is legitimate here
+    #: rather than a shrug: state law tells a Large City to apply to middle
+    #: housing "the same off-street parking ... dimensional ... standards that
+    #: apply to single-family detached dwellings in the same zone". Both cities
+    #: were read down that path and both come back empty -- Milwaukie's
+    #: 19.607.1 names single detached dwellings and quadplexes in ONE sentence,
+    #: so the redirect lands back on the section already read, and Wilsonville
+    #: files its residential standards by structure type with no aisle in any
+    #: of them. The number does not exist to be found, in either direction.
+    #:
+    #: An assumed dimension is never a GREEN. s6s writes `geometry_assumed` on
+    #: every lot it draws this way and s7 folds that into REVIEW, so the output
+    #: is "here is the plan, and here is the one number nobody published" --
+    #: which is strictly more than the blank these lots carried before, and
+    #: strictly less than a verdict.
+    aisle_assumed: bool = False
+
+    #: Where an assumed aisle comes from. Required when `aisle_assumed` is set,
+    #: because an assumption with no source is indistinguishable from a guess
+    #: and this file's whole discipline is that every number names its origin.
+    aisle_cite: str = ""
+
+    @model_validator(mode="after")
+    def _an_assumption_names_its_source(self) -> "StallGeometry":
+        if self.aisle_assumed and not self.aisle_cite.strip():
+            raise ValueError(
+                "aisle_assumed is set with no aisle_cite; an assumed dimension "
+                "must say where it came from"
+            )
+        if self.aisle_cite.strip() and not self.aisle_assumed:
+            raise ValueError(
+                "aisle_cite is set without aisle_assumed; a published aisle "
+                "cites itself through `cite`"
+            )
+        return self
+
     def lays_out(self) -> bool:
         """Whether a rear court can be dimensioned from what this code states."""
         return self.aisle_one_way_ft is not None and self.aisle_two_way_ft is not None
@@ -713,6 +756,15 @@ class SiteplanSpec(BaseModel):
         return [n for n in names
                 if (g := self.geometry_for(n)) is not None and g.lays_out()
                 and self.curb_cut_ft_for(n) is not None]
+
+    def cities_on_an_assumed_aisle(self) -> list[str]:
+        """Those of them whose aisle is assumed rather than published.
+
+        Always a subset of `cities_it_can_dimension`, and the reason s7 can
+        keep an assumption out of GREEN without re-reading this file per lot.
+        """
+        return [n for n in self.cities_it_can_dimension()
+                if (g := self.geometry_for(n)) is not None and g.aisle_assumed]
 
     def stall_cap_for(self, jurisdiction: str) -> int:
         """Most stalls s6s will seat here: the marketability ceiling or the law.

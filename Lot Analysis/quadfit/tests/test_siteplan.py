@@ -317,9 +317,27 @@ def test_the_cities_laid_out_are_the_ones_that_state_an_aisle():
         assert geom is None or not geom.lays_out(), (
             f"{j} can be dimensioned and is not being laid out"
         )
-    # Both halves of the refusal are live in the shipped config, and a config
-    # where neither is would mean the machinery is untested in production.
-    assert "milwaukie" in sp.geometry and not sp.geometry["milwaukie"].lays_out()
+    # Milwaukie stood here as the live example of the refusal until
+    # 2026-08-31, when it and Wilsonville were given an assumed aisle and the
+    # declined list went empty. The machinery is still needed -- a code really
+    # may state a stall and no aisle -- but it is now held on a constructed
+    # geometry rather than on a jurisdiction, for the reason its sibling in
+    # test_parking_geometry.py already gives: a test pinned to a live city
+    # goes green on a misreading and red when the misreading is corrected.
+    from common import StallGeometry
+
+    assert not StallGeometry(stall_width_ft=9, stall_depth_ft=18).lays_out()
+
+    # What replaces it is the stronger claim the empty list makes possible:
+    # every aisle in the shipped config is accounted for. Either the city
+    # published it, or it is flagged as assumed and names where it came from.
+    # There is no third state, and an unexplained number cannot hide in one.
+    for j in laid_out:
+        geom = sp.geometry_for(j)
+        assert geom.aisle_assumed == bool(geom.aisle_cite.strip())
+        assert geom.cite or geom.aisle_cite, (
+            f"{j} is laid out to an aisle with no source of any kind"
+        )
 
 
 def test_a_stated_maximum_beats_the_marketability_target():

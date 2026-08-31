@@ -175,3 +175,46 @@ def test_siteplan_subreasons_when_evaluated():
         "siteplan_too_few_stalls", "", "",
     ]
     assert list(lots["triage"]) == ["red", "red", "red", "green", "green"]
+
+
+def test_a_plan_drawn_to_an_assumed_aisle_is_review_and_never_green():
+    """s6s draws Milwaukie and Wilsonville to an aisle nobody published.
+
+    That is worth doing -- a plan with a caveat beats 6,091 lots nobody
+    attempted -- but only because this is the other half of it. The lot passes
+    every hard test, keeps its stall count, and still cannot be told to an
+    acquisitions team as a green. Everything else about the row is clean, so
+    the flag is the only thing standing between it and a verdict.
+    """
+    green, assumed = _run(
+        [
+            _base_row(parking_tier="min", geometry_assumed=False),
+            _base_row(parking_tier="min", geometry_assumed=True),
+        ],
+        has_siteplan=True,
+    )["triage"]
+
+    assert green == "green"
+    assert assumed == "review"
+
+
+def test_a_run_from_before_the_assumption_still_triages():
+    """The column is absent on older parquet, and absent means nothing assumed.
+
+    A missing caveat must not read as a caveat on everything, or every stored
+    run in the repo would go yellow the day this shipped.
+    """
+    (only,) = _run([_base_row(parking_tier="min")], has_siteplan=True)["triage"]
+    assert only == "green"
+
+
+def test_an_assumed_lot_that_fails_a_hard_test_is_still_red():
+    """The flag downgrades a pass. It does not upgrade a failure into review,
+    which would hide a lot that genuinely cannot take the building."""
+    (only,) = _run(
+        [_base_row(parking_tier="min", geometry_assumed=True,
+                   fits_pod=False, fits_cov_pod=False)],
+        has_siteplan=True,
+    )["triage"]
+    assert only == "red"
+

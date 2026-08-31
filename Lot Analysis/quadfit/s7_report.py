@@ -222,7 +222,8 @@ def attribute_and_triage(lots, fp_names, rules, has_siteplan, flag_ovl_cols,
       - review : passes the hard tests but the geometry can't be fully trusted
                  or a silent-killer layer is touched — a narrow flag-lot neck,
                  an irregular (tier C) shape, steep/unknown slope, far/unknown
-                 sewer, an unverified zone rule, or a flag-action overlay
+                 sewer, an unverified zone rule, a flag-action overlay, or a
+                 site plan laid out to an ASSUMED drive aisle
       - green  : passes and is trustworthy
     Review deliberately absorbs the wide-flag-pole false-green: a lot whose
     frontage is a narrow neck is never hard-greened, even though the raster
@@ -321,8 +322,21 @@ def attribute_and_triage(lots, fp_names, rules, has_siteplan, flag_ovl_cols,
     for c in flag_ovl_cols:
         overlay_flag |= lots[c].to_numpy().astype(bool)
 
+    # A plan drawn to an ASSUMED aisle is a plan, not a verdict. Milwaukie and
+    # Wilsonville state a stall, regulate their parking completely, and never
+    # say how wide the lane is -- and the state's own single-family redirect
+    # (OAR 660-046-0220(2)(e)(E)) lands back on sections that state none
+    # either. s6s draws them to a sourced 24 ft rather than leaving 6,091 lots
+    # undrawn, and this is the other half of that bargain: the lot can be told
+    # apart from one nobody attempted, and it still cannot be told a customer
+    # is safe. Absent on pre-assumption parquet, where it is simply all False.
+    if "geometry_assumed" in lots.columns:
+        assumed_geometry = lots["geometry_assumed"].fillna(False).to_numpy().astype(bool)
+    else:
+        assumed_geometry = np.zeros(n, dtype=bool)
+
     review = (flag_suspect | (tier == "C") | unverified_zone | slope_bad
-              | sewer_review | overlay_flag)
+              | sewer_review | overlay_flag | assumed_geometry)
     lots["triage"] = np.where(binding != "", "red",
                               np.where(review, "review", "green"))
 
