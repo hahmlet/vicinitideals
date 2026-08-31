@@ -16,14 +16,18 @@ still sees the full table.
 A city that states a stall and no aisle used to be declined by name. Two do —
 Milwaukie and Wilsonville — and both were read to the end of the state's own
 redirect (OAR 660-046-0220(2)(e)(E), single-family standards) before concluding
-the number is not published anywhere. They are now laid out to an ASSUMED 24 ft
+the number is not published anywhere. They are laid out to an ASSUMED 24 ft
 aisle, sourced in footprints.yaml, and every lot so drawn carries
-`geometry_assumed = True` into s7, which never lets such a lot reach GREEN. The
-old rule stands everywhere it still applies: a court laid out to a *borrowed*
-aisle — one lifted off a neighbour, or off a table this city took away from
-this building — is a stall count no reviewer could defend. An assumption that
-names its source and forfeits the verdict is a different animal from a number
-quietly copied.
+`geometry_assumed = True` for the CSV.
+
+Those lots grade like any other, green included. ORS 197A.400 lets a city apply
+only clear and objective standards to housing, and a standard nobody wrote down
+cannot be one — so silence is a stronger position than a published number, not
+a weaker one. The old rule stands everywhere it still applies: a court laid out
+to a *borrowed* aisle — one lifted off a neighbour, or off a table this city
+took away from this building — is a stall count no reviewer could defend. An
+assumption that names its source, on a dimension the city genuinely never
+stated, is a different animal from a number quietly copied.
 
 Each city contributes exactly three numbers: its stall width, its stall depth,
 its aisle — plus a stall CEILING where it states one, because a maximum makes
@@ -451,8 +455,9 @@ def main() -> None:
     for j in assumed:
         g = sp.geometry_for(j)
         print(f"s6s: {j} laid out on an ASSUMED {g.aisle_two_way_ft:g} ft aisle "
-              f"-- its code states a stall and no aisle; these lots can reach "
-              f"REVIEW but never GREEN")
+              f"-- its code states a stall and no aisle, so under ORS 197A.400 "
+              f"there is no clear and objective width to fail; graded normally, "
+              f"flagged in geometry_assumed")
 
     in_scope = (lots["jurisdiction"].isin(cities) & fits_any).to_numpy()
     if sp.scope == "pilot_cell":

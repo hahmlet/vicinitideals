@@ -450,8 +450,30 @@ siteplan:
     # would qualify and the foot is real, but it is an assumption stacked on an
     # assumption to buy lots, and one assumed number per city is the limit.
     #
-    # None of this can produce a GREEN. `aisle_assumed` rides through s6s onto
-    # every lot drawn this way and s7 folds it into REVIEW.
+    # AND IT CAN PRODUCE A GREEN, decided 2026-08-31 after a run that held
+    # 1,056 otherwise-clean lots at REVIEW on this one number. The statute is
+    # the one the whole screen already rests on: ORS 197A.400 (renumbered from
+    # ORS 197.307(4)) lets a local government apply only CLEAR AND OBJECTIVE
+    # standards to housing, and a standard that does not exist cannot be clear
+    # and objective. Neither city wrote an aisle width down anywhere -- checked
+    # to the end of the state's own redirect -- so neither has a lawful basis
+    # to refuse a court drawn to the national minimum for a dimension it never
+    # published.
+    #
+    # Which makes silence the STRONGER position, not the weaker one. Troutdale
+    # publishes 25 ft and 25 ft binds; here nothing binds, and 24 is a design
+    # choice a reviewer has no written standard to measure against.
+    #
+    # `aisle_assumed` still rides through s6s onto every lot as
+    # `geometry_assumed` and into lots_results.csv, so these rows stay
+    # filterable. It is a provenance column now, not a verdict.
+    #
+    # What would overturn it: either city publishing an aisle (the mirror test
+    # goes red that day), or a discretionary hook surviving 197A.400 for middle
+    # housing -- Wilsonville 4.155 sends "drive aisle design" to review
+    # criteria and Milwaukie 19.607.1.E.2 asks for a turnaround with no width.
+    # Both are narrower risks than a published number would be, and both are
+    # arguments a city would have to win rather than a standard it can cite.
     milwaukie:
       stall_width_ft: 9
       stall_depth_ft: 18

@@ -177,44 +177,56 @@ def test_siteplan_subreasons_when_evaluated():
     assert list(lots["triage"]) == ["red", "red", "red", "green", "green"]
 
 
-def test_a_plan_drawn_to_an_assumed_aisle_is_review_and_never_green():
-    """s6s draws Milwaukie and Wilsonville to an aisle nobody published.
+def test_an_assumed_aisle_is_provenance_and_not_a_verdict():
+    """The assumed aisle held 1,056 otherwise-clean lots at REVIEW for one run,
+    and then stopped, on the statute the whole screen rests on.
 
-    That is worth doing -- a plan with a caveat beats 6,091 lots nobody
-    attempted -- but only because this is the other half of it. The lot passes
-    every hard test, keeps its stall count, and still cannot be told to an
-    acquisitions team as a green. Everything else about the row is clean, so
-    the flag is the only thing standing between it and a verdict.
+    ORS 197A.400 lets a city apply only clear and objective standards to
+    housing. Milwaukie and Wilsonville never wrote a drive-aisle width down --
+    checked to the end of OAR 660-046-0220(2)(e)(E)'s single-family redirect --
+    so there is no width for a court to fail against. Silence is a stronger
+    position than a published number: Troutdale's 25 ft binds, and nothing
+    binds here.
+
+    So the flag grades nothing. It survives as a column a reviewer can filter,
+    which is why this test asserts it is carried and ignored rather than
+    deleting it.
     """
-    green, assumed = _run(
+    lots = _run(
         [
             _base_row(parking_tier="min", geometry_assumed=False),
             _base_row(parking_tier="min", geometry_assumed=True),
         ],
         has_siteplan=True,
-    )["triage"]
+    )
 
-    assert green == "green"
-    assert assumed == "review"
-
-
-def test_a_run_from_before_the_assumption_still_triages():
-    """The column is absent on older parquet, and absent means nothing assumed.
-
-    A missing caveat must not read as a caveat on everything, or every stored
-    run in the repo would go yellow the day this shipped.
-    """
-    (only,) = _run([_base_row(parking_tier="min")], has_siteplan=True)["triage"]
-    assert only == "green"
+    assert list(lots["triage"]) == ["green", "green"]
+    assert list(lots["geometry_assumed"]) == [False, True]
 
 
-def test_an_assumed_lot_that_fails_a_hard_test_is_still_red():
-    """The flag downgrades a pass. It does not upgrade a failure into review,
-    which would hide a lot that genuinely cannot take the building."""
-    (only,) = _run(
-        [_base_row(parking_tier="min", geometry_assumed=True,
-                   fits_pod=False, fits_cov_pod=False)],
+def test_an_assumed_aisle_rescues_nothing_that_actually_fails():
+    """The flag is inert in both directions. A lot that cannot take the
+    building is red whether its aisle was published or assumed -- otherwise
+    the column would be quietly laundering failures into review."""
+    reds = _run(
+        [
+            _base_row(parking_tier="min", geometry_assumed=True,
+                      fits_pod=False, fits_cov_pod=False),
+            _base_row(parking_tier="min", geometry_assumed=True,
+                      site_plan_ok=False, layout_method="none"),
+        ],
         has_siteplan=True,
     )["triage"]
-    assert only == "red"
+    assert list(reds) == ["red", "red"]
+
+
+def test_a_real_review_trigger_still_fires_on_an_assumed_lot():
+    """An assumed aisle must not shadow the triggers that do mean something.
+    Same row, same flag, one unmapped sewer -- still yellow."""
+    (only,) = _run(
+        [_base_row(parking_tier="min", geometry_assumed=True,
+                   sewer_main_dist_ft=float("nan"))],
+        has_siteplan=True,
+    )["triage"]
+    assert only == "review"
 

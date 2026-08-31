@@ -239,7 +239,11 @@ defaults:
   # site-plan generator now draws this city to an ASSUMED 24 ft aisle (ULI /
   # National Parking Association via Iowa SUDAS 8B-1 Table 8B-1.02, 90 degrees,
   # 85th-percentile design vehicle) rather than declining to draw it at all,
-  # and marks every lot so drawn as REVIEW-only, never GREEN. The search that
+  # and grades those lots normally, green included -- ORS 197A.400 lets a city
+  # apply only clear and objective standards to housing, and a width nobody
+  # wrote down is not one, so there is nothing here for a court to fail
+  # against. The lots stay filterable through `geometry_assumed`. The search
+  # that
   # licensed the assumption ran through OAR 660-046-0220(2)(e)(E), which sends
   # middle housing to the single-family standards "in the same zone" -- and
   # Chapter 4 files residential standards by structure type and the "all

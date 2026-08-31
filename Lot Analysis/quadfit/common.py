@@ -361,11 +361,19 @@ class StallGeometry(BaseModel):
     #: files its residential standards by structure type with no aisle in any
     #: of them. The number does not exist to be found, in either direction.
     #:
-    #: An assumed dimension is never a GREEN. s6s writes `geometry_assumed` on
-    #: every lot it draws this way and s7 folds that into REVIEW, so the output
-    #: is "here is the plan, and here is the one number nobody published" --
-    #: which is strictly more than the blank these lots carried before, and
-    #: strictly less than a verdict.
+    #: An assumed dimension DOES reach GREEN, decided 2026-08-31 on the statute
+    #: the screen already rests on. ORS 197A.400 (renumbered from ORS
+    #: 197.307(4)) lets a local government apply only CLEAR AND OBJECTIVE
+    #: standards to housing, and a standard that does not exist cannot be clear
+    #: and objective -- so a city that never wrote an aisle width down has no
+    #: lawful basis to refuse a court drawn to the national minimum. Silence is
+    #: a better position than a published number, not a worse one: Troutdale's
+    #: 25 ft binds and nothing binds here.
+    #:
+    #: `geometry_assumed` still rides onto every lot drawn this way and into
+    #: lots_results.csv, so a reviewer can filter for the rows whose aisle came
+    #: from ULI/NPA rather than from a code. It is a provenance column, not a
+    #: verdict.
     aisle_assumed: bool = False
 
     #: Where an assumed aisle comes from. Required when `aisle_assumed` is set,

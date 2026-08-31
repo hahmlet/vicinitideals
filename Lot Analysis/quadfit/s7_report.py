@@ -222,8 +222,7 @@ def attribute_and_triage(lots, fp_names, rules, has_siteplan, flag_ovl_cols,
       - review : passes the hard tests but the geometry can't be fully trusted
                  or a silent-killer layer is touched — a narrow flag-lot neck,
                  an irregular (tier C) shape, steep/unknown slope, far/unknown
-                 sewer, an unverified zone rule, a flag-action overlay, or a
-                 site plan laid out to an ASSUMED drive aisle
+                 sewer, an unverified zone rule, or a flag-action overlay
       - green  : passes and is trustworthy
     Review deliberately absorbs the wide-flag-pole false-green: a lot whose
     frontage is a narrow neck is never hard-greened, even though the raster
@@ -322,21 +321,30 @@ def attribute_and_triage(lots, fp_names, rules, has_siteplan, flag_ovl_cols,
     for c in flag_ovl_cols:
         overlay_flag |= lots[c].to_numpy().astype(bool)
 
-    # A plan drawn to an ASSUMED aisle is a plan, not a verdict. Milwaukie and
-    # Wilsonville state a stall, regulate their parking completely, and never
-    # say how wide the lane is -- and the state's own single-family redirect
-    # (OAR 660-046-0220(2)(e)(E)) lands back on sections that state none
-    # either. s6s draws them to a sourced 24 ft rather than leaving 6,091 lots
-    # undrawn, and this is the other half of that bargain: the lot can be told
-    # apart from one nobody attempted, and it still cannot be told a customer
-    # is safe. Absent on pre-assumption parquet, where it is simply all False.
-    if "geometry_assumed" in lots.columns:
-        assumed_geometry = lots["geometry_assumed"].fillna(False).to_numpy().astype(bool)
-    else:
-        assumed_geometry = np.zeros(n, dtype=bool)
+    # An assumed aisle is NOT a review trigger, decided 2026-08-31, and the
+    # reason is the statute this whole screen already rests on. ORS 197A.400
+    # (renumbered from ORS 197.307(4)) lets a local government apply only
+    # CLEAR AND OBJECTIVE standards to housing, and a standard that does not
+    # exist cannot be clear and objective. Milwaukie and Wilsonville publish no
+    # drive-aisle width for this building anywhere -- verified to the end of
+    # OAR 660-046-0220(2)(e)(E)'s single-family redirect, which lands back on
+    # sections that state none either -- so neither city has a lawful basis to
+    # impose one. A court drawn to the national engineering minimum cannot be
+    # refused for a dimension nobody wrote down.
+    #
+    # Which makes silence a BETTER position than a published number, not a
+    # worse one: Troutdale's 25 ft binds, and nothing binds here. So these lots
+    # are graded like any other -- green where they pass. `geometry_assumed`
+    # survives as a CSV column rather than a verdict, so a reviewer can still
+    # filter for the rows whose aisle came from ULI/NPA instead of a code.
+    #
+    # What would overturn it: either city publishing an aisle (the mirror test
+    # fails that day), or a discretionary hook surviving 197A.400 for middle
+    # housing -- Wilsonville 4.155 sends "drive aisle design" to review
+    # criteria, and Milwaukie 19.607.1.E.2 asks for a turnaround with no width.
 
     review = (flag_suspect | (tier == "C") | unverified_zone | slope_bad
-              | sewer_review | overlay_flag | assumed_geometry)
+              | sewer_review | overlay_flag)
     lots["triage"] = np.where(binding != "", "red",
                               np.where(review, "review", "green"))
 
