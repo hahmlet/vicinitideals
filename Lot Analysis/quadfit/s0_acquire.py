@@ -176,12 +176,25 @@ PHASE2_LAYERS: dict[str, dict[str, Any]] = {
     "overlay_metro_wetlands": {
         "url": f"{_METRO}/Wetlands/FeatureServer/0",
         "fields": ["SOURCE"]},
-    # Flood: FEMA NFHL, single county-wide source of record
+    # Flood: FEMA NFHL, the source of record for BOTH screened counties.
+    #
+    # This filter read `= '41051C'` until 2026-09-01, which is Multnomah alone.
+    # overlays.yaml has always declared the floodway a carve and the SFHA a flag
+    # for `jurisdictions: all`, so every Clackamas lot was being screened against
+    # a flood layer that stopped at the county line and passing for want of data.
+    # 70,196 Clackamas lots recorded exactly one flood touch between them, which
+    # is what a missing layer looks like rather than a dry county: the NFHL holds
+    # 2,592 flood areas under 41005C.
+    #
+    # DFIRM_ID is FEMA's study identifier and its first five digits are the
+    # county FIPS code -- 41051 Multnomah, 41005 Clackamas. Any third county
+    # added to rules.yaml needs its ID added here in the same breath, or it
+    # inherits the same silent pass.
     "overlay_fema_flood": {
         "url": "https://hazards.fema.gov/arcgis/rest/services/public/NFHL/MapServer/28",
         "fields": ["FLD_ZONE", "ZONE_SUBTY", "SFHA_TF", "STATIC_BFE"],
         # NFHL rejects the unquoted/spaceless form intermittently — keep quoted
-        "where": "\"DFIRM_ID\" = '41051C'"},
+        "where": "\"DFIRM_ID\" IN ('41051C', '41005C')"},
     # Sewer mains (split-candidate proximity; water skipped — see caveats)
     "util_sewer_portland": {
         "url": f"{_PDX}/Utilities_Sewer/MapServer/3",
