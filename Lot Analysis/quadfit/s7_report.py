@@ -125,6 +125,7 @@ def policy_gates(lots, rules, ocfg=None, screen=None):
     z_ok = np.ones(n, dtype=bool)
     min_lot_ok = np.ones(n, dtype=bool)
     frontage_ok = np.ones(n, dtype=bool)
+    frontage_unmeasured = np.zeros(n, dtype=bool)
     flip_allowed = np.ones(n, dtype=bool)
     cov_cap = np.full(n, np.nan)
     accessory = np.zeros(n)
@@ -148,7 +149,13 @@ def policy_gates(lots, rules, ocfg=None, screen=None):
         if rule.min_lot_sqft is not None and float(area) < rule.min_lot_sqft:
             min_lot_ok[i] = False
         if rule.min_frontage_ft is not None and float(frontage) < rule.min_frontage_ft:
-            frontage_ok[i] = False
+            # Where the city's number is a mid-lot WIDTH rather than a street
+            # frontage, the screen is not entitled to a verdict: it measured a
+            # different line. Hold the lot for review instead of dropping it.
+            if j.frontage_is_lot_width:
+                frontage_unmeasured[i] = True
+            else:
+                frontage_ok[i] = False
         constraint = rule.orientation_constraint or j.orientation_constraint
         flip_allowed[i] = constraint != "axis_required"
         cap = rule.coverage_cap_sqft(float(area))
@@ -158,7 +165,8 @@ def policy_gates(lots, rules, ocfg=None, screen=None):
 
     gates = pd.DataFrame({
         "elig_jurisdiction": elig_j, "z_ok": z_ok, "min_lot_ok": min_lot_ok,
-        "frontage_ok": frontage_ok, "flip_allowed": flip_allowed,
+        "frontage_ok": frontage_ok, "frontage_unmeasured": frontage_unmeasured,
+        "flip_allowed": flip_allowed,
         "cov_cap": cov_cap, "accessory": accessory,
     }, index=lots.index)
 
@@ -288,6 +296,10 @@ def attribute_and_triage(lots, fp_names, rules, has_siteplan, flag_ovl_cols,
     juris = lots["jurisdiction"].astype(str).to_numpy()
     zone = lots["zone"].astype(str).to_numpy()
     unverified_zone = np.array([(juris[i], zone[i]) in unver for i in range(n)])
+    if "frontage_unmeasured" in lots.columns:
+        frontage_unmeasured = lots["frontage_unmeasured"].fillna(False).to_numpy().astype(bool)
+    else:
+        frontage_unmeasured = np.zeros(n, dtype=bool)
     if "slope_tier" in lots.columns:
         slope_bad = np.isin(lots["slope_tier"].astype(str).to_numpy(),
                             ("cost_prohibitive", "unknown"))
@@ -364,7 +376,7 @@ def attribute_and_triage(lots, fp_names, rules, has_siteplan, flag_ovl_cols,
     # criteria, and Milwaukie 19.607.1.E.2 asks for a turnaround with no width.
 
     review = (flag_suspect | (tier == "C") | unverified_zone | slope_bad
-              | sewer_review | overlay_flag)
+              | sewer_review | overlay_flag | frontage_unmeasured)
     lots["triage"] = np.where(binding != "", "red",
                               np.where(review, "review", "green"))
 
@@ -1153,6 +1165,13 @@ def main() -> None:
     phase2_cols += [c for c in (
         "slope_p85_pct", "slope_tier", "slope_source", "sewer_main_dist_ft",
         "in_sewer_district", "envelope_setback_sqft") if c in lots.columns]
+    # Why an Oregon City or Tualatin lot is sitting in the review queue with
+    # nothing apparently wrong with it: its street frontage fell short of a
+    # number the code measures across the middle of the lot, and the pipeline
+    # cannot take that measurement. Same idea as `geometry_assumed` -- the
+    # caveat travels with the row, not three files away in rules.yaml.
+    if "frontage_unmeasured" in lots.columns:
+        phase2_cols.append("frontage_unmeasured")
     # `geometry_assumed` rides in the CSV beside the plan it qualifies: a
     # reviewer opening a Milwaukie or Wilsonville row needs the caveat next to
     # the stall count, not three files away in footprints.yaml.

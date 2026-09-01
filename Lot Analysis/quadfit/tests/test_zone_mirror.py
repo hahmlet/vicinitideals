@@ -347,9 +347,12 @@ def test_six_of_them_measure_the_wrong_line_on_the_lot() -> None:
     which is, and that is the only reason its nine are safe.
 
     896 Oregon City lots and 92 Tualatin lots are excluded at
-    `below_min_frontage` today. Closing this needs a lot-width measurement the
-    pipeline does not take; deleting the gate instead would buy possible false
-    reds back with unknown false greens.
+    `below_min_frontage` today, and 605 of them already fit the pod inside
+    their own envelope -- drawn, clearing every setback, killed at a gate three
+    steps before anything looked at the building. Closing this needs a
+    lot-width measurement the pipeline does not take; deleting the gate instead
+    would buy at most those 605 back at the price of an unknown number of false
+    greens.
     """
     audit = _audit()
     alias = audit.aliases()

@@ -55,6 +55,9 @@ Tualatin TDC 31.060 "at the center of the lot". On a rectangle those are the
 same. On a cul-de-sac wedge, a flag lot or anything that tapers they are not,
 and 988 lots -- 896 in Oregon City, 92 in Tualatin -- are currently excluded at
 `below_min_frontage` by a number the code never applied to their street edge.
+605 of them already FIT: the pod is drawn inside the envelope, clears every
+setback, and the lot dies at a gate three steps earlier. 605 is a ceiling
+rather than a recovery, because some would fail the real mid-lot width too.
 West Linn is the control: its tables head the row "Minimum lot width AT FRONT
 LOT LINE", which is the same edge, and its 739 exclusions stand.
 

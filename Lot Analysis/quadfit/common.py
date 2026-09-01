@@ -129,6 +129,24 @@ class JurisdictionRules(BaseModel):
     # axis, everywhere verified so far; axis_required restricts fit testing to
     # width-facing placements only.
     orientation_constraint: OrientationConstraint = "entrance_only"
+    # This city's dimensional table states a LOT WIDTH and defines it as
+    # measured across the MIDDLE of the lot -- Oregon City 17.04.700 "between
+    # the midpoints of the two principal opposite side lot lines", Tualatin TDC
+    # 31.060 "at the center of the lot". `min_frontage_ft` carries that number
+    # because there is nowhere else to put it, but s4 measures the run of
+    # boundary that TOUCHES A STREET, which is a different line on the same
+    # parcel: identical on a rectangle, nothing alike on a wedge, a flag lot or
+    # anything that tapers toward the road.
+    #
+    # Where this is set, falling short sends the lot to REVIEW instead of
+    # dropping it in the funnel. The pipeline cannot take the measurement the
+    # code asks for, and a lot the screen is unable to judge belongs in front of
+    # a person, not in the red pile. It cannot turn anything green.
+    #
+    # Leave it false where the table pins the measurement to the street edge --
+    # West Linn heads the row "Minimum lot width AT FRONT LOT LINE", so its
+    # number is the one s4 measures and its exclusions are sound.
+    frontage_is_lot_width: bool = False
     zones: list[ZoneRule] = Field(default_factory=list)
 
     def normalize_zone(self, raw: str | None) -> str | None:

@@ -288,3 +288,88 @@ def test_the_coarse_gate_is_off_when_the_column_is_absent() -> None:
     lots = _run(rows, ocfg=_Ocfg(may_green=False))
     assert list(lots["triage"]) == ["green", "review"]
     assert "slope_source" not in lots.columns
+
+
+# ---------------------------------------------------------------------------
+# A frontage number that is really a mid-lot width
+# ---------------------------------------------------------------------------
+
+
+def test_an_unmeasurable_frontage_holds_a_lot_at_review():
+    """Oregon City and Tualatin state a lot WIDTH and measure it across the
+    middle of the lot; s4 measures the boundary that touches a street. Those
+    are different lines, so falling short of the number is not a verdict the
+    screen has earned -- it is a question for a person.
+
+    The lot must not be red (nothing about it failed), must not be green (the
+    code's standard is genuinely unchecked), and must carry no binding
+    constraint, because there is no constraint it is known to violate.
+    """
+    lots = _run([
+        _base_row(frontage_unmeasured=True),
+        _base_row(frontage_unmeasured=False),
+    ])
+    assert list(lots["triage"]) == ["review", "green"]
+    assert list(lots["binding_constraint"]) == ["", ""]
+
+
+def test_an_unmeasurable_frontage_cannot_rescue_a_lot_that_fails_on_its_own():
+    """Review is a hold, not a pardon. A lot the pod does not fit is red
+    whether or not its frontage was measurable, or the flag would be a way to
+    launder a failure into the queue."""
+    lots = _run([
+        _base_row(frontage_unmeasured=True, fits_pod=False, fits_cov_pod=False),
+        _base_row(frontage_unmeasured=True, tier="D"),
+    ])
+    assert list(lots["triage"]) == ["red", "red"]
+    assert list(lots["binding_constraint"]) == ["pod_no_fit", "no_buildable_envelope"]
+
+
+def _gate_frame(rows):
+    import pandas as pd
+
+    from s7_report import policy_gates
+
+    return policy_gates(pd.DataFrame(rows), _GateRules())[0]
+
+
+class _GateRules:
+    """The two shapes side by side, built from the real config models so the
+    test breaks if `frontage_is_lot_width` stops being wired through."""
+
+    def __init__(self):
+        from common import JurisdictionRules, ZoneRule
+
+        zone = ZoneRule(
+            zone="R-10", quadplex_allowed=True, setback_front_ft=20,
+            setback_side_ft=8, setback_rear_ft=20, min_frontage_ft=65,
+        )
+        self.jurisdictions = {
+            "oregon_city": JurisdictionRules(
+                eligible=True, frontage_is_lot_width=True, zones=[zone]),
+            "west_linn": JurisdictionRules(
+                eligible=True, frontage_is_lot_width=False, zones=[zone]),
+        }
+
+
+def _gate_row(juris, frontage):
+    return {"jurisdiction": juris, "zone_raw": "R-10", "area_sqft": 9000.0,
+            "frontage_ft": frontage}
+
+
+def test_a_width_standard_does_not_drop_a_lot_in_the_funnel():
+    """The same 40 ft lot under the same 65 ft number, in two cities.
+
+    West Linn's tables head the row "Minimum lot width AT FRONT LOT LINE", so
+    its number IS the street edge and the lot is properly excluded. Oregon
+    City's is measured across the middle of the lot, so the lot survives the
+    funnel carrying a flag instead.
+    """
+    gates = _gate_frame([
+        _gate_row("oregon_city", 40.0),
+        _gate_row("west_linn", 40.0),
+        _gate_row("oregon_city", 80.0),
+    ])
+    assert list(gates["eligible"]) == [True, False, True]
+    assert list(gates["policy_exclusion"]) == ["", "below_min_frontage", ""]
+    assert list(gates["frontage_unmeasured"]) == [True, False, False]

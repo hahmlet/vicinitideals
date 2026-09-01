@@ -337,18 +337,32 @@ alone.
   On a plain rectangular lot those are the same and nothing is wrong. On a
   cul-de-sac wedge, a flag lot, or anything that narrows toward the street they
   are not, and 988 lots are currently being thrown out for failing a test the
-  city never applied to that edge. West Linn does the same thing safely — its
+  city never applied to that edge. **605 of those 988 already fit the building
+  inside their own buildable envelope** — the pod is drawn, it clears every
+  setback, and the lot is rejected at the gate before anything looks at it.
+  That 605 is a ceiling, not a promise: some of them would fail the real
+  mid-lot width test too, and nobody can say how many until the pipeline
+  measures it. The remaining 383 fit nothing and are red on their own merits. West Linn does the same thing safely — its
   tables say "minimum lot width **at the front lot line**", which is the street
   edge — so its 739 exclusions stand, and it is the control that proves the
   other two are wrong.
 
-  Not fixed, on purpose. The honest fix is to measure lot width the way the
-  code defines it, which the pipeline does not do yet. The tempting fix — just
-  stop applying the rule in those two cities — would buy back up to 988 lots we
-  may be wrongly rejecting at the price of an unknown number we would then be
-  wrongly accepting, and a screen that says yes when the answer is no is worth
-  much less than one that says no too often. Agent work, queued behind the
-  measurement. Frozen in a test so it cannot quietly spread to a new city.
+  **Half fixed the same day.** The screen now says "I don't know" instead of
+  "no": in those two cities a lot that falls short of the number goes to the
+  review queue rather than the red pile. It cannot turn anything green — a lot
+  that fails on its own merits is still red, and that is tested — so nothing
+  becomes riskier; the 605 stop being invisible. Lands on the next full
+  pipeline run.
+
+  The other half is still open and is the real fix: measure lot width the way
+  the code defines it, across the middle of the lot, and judge these properly.
+  Agent work. What was deliberately *not* done is simply deleting the rule in
+  those two cities, which would have moved all 988 straight into the pool of
+  buildable lots — buying back some we are wrongly rejecting at the price of an
+  unknown number we would then be wrongly accepting. A screen that says yes
+  when the answer is no is worth much less than one that says no too often.
+  Which cities get the softer treatment is frozen in a test, and a city earns
+  it only with a written reason, never by being left off a list.
 - **"Reaches with no field" refusals**: e.g. Wood Village's forward-access
   rule applies to the pod and the data model has no field to hold it — model
   extension, batched with the next such find.
