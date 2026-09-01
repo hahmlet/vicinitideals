@@ -13,7 +13,16 @@ Tiers:
   D  landlocked (no street within threshold) — excluded from headline stats
 
 RLIS taxlots exclude right-of-way, so lot lines genuinely abut ROW gaps and
-centerline distance is a reliable frontage proxy.
+centerline distance is a reliable frontage proxy. That was an assertion until
+2026-09-01; `audit_landlocked.py` measured it. Of 7,499 tier-D lots, **6,947
+(92.6%) have another taxlot standing between them and the nearest street** --
+reached over a neighbour's land, which is not frontage any code in the corpus
+would accept. The other 552 have an open right-of-way in the gap and are the
+error this test makes: mostly lots on very wide arterials, 252 of them within
+60 ft. Raising the threshold to collect them would buy 552 at the cost of
+calling a street 93 ft away, across somebody's front garden, frontage for the
+other 6,947. If it is ever worth closing, the audit's test is the way -- front
+the lot when nothing private is in the gap, whatever its width.
 """
 
 from __future__ import annotations

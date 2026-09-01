@@ -363,6 +363,19 @@ alone.
   when the answer is no is worth much less than one that says no too often.
   Which cities get the softer treatment is frozen in a test, and a city earns
   it only with a written reason, never by being left off a list.
+- ~~**7,499 lots are dropped for having no street, and 4,491 of them have a
+  house on them**~~ — checked 2026-09-01 and the screen is right. A lot with a
+  house and a mailing address that our map says has no street looks like a bug,
+  so it got measured: for each of those lots, is there *another property*
+  between it and the road? For 6,947 of 7,499 — nine in ten — there is. They
+  are houses reached down someone else's driveway on an old easement, and every
+  code we have read says a lot has to touch a public street before anything can
+  be built on it. Red is the right answer. The remaining 552 have nothing but
+  road in the gap and are genuinely being missed; they are lots on very wide
+  arterials. Not worth chasing: to collect 552 by relaxing the rule we would
+  have to start treating a street 90 ft away across a neighbour's front garden
+  as this lot's frontage for the other 6,947. Recorded in
+  `audit_landlocked.py` so nobody has to ask again.
 - **"Reaches with no field" refusals**: e.g. Wood Village's forward-access
   rule applies to the pod and the data model has no field to hold it — model
   extension, batched with the next such find.
