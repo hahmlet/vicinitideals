@@ -281,9 +281,28 @@ alone.
     legal read rather than ahead of it.
 
   Agent work, no action needed from you.
-- **Corner-lot status**: 14 jurisdictions now define what a corner lot is;
-  nothing yet computes which lots *are* corners. Worth ~10 ft of buildable
-  envelope wherever corner variants exist (e.g. all of Wood Village).
+- **Corner-lot status — and it is the opposite of what this list said.** 14
+  jurisdictions define what a corner lot is; nothing computes which lots *are*
+  corners, so all 78 corner rules in the corpus are switched off and every lot
+  is screened as if it were mid-block. This entry used to read "worth ~10 ft of
+  buildable envelope". Checked properly on 2026-09-01 with a new audit
+  (`Lot Analysis/quadfit/audit_corner_variants.py`, frozen into a test):
+  **turning corner rules on can only take lots away, never add them.**
+
+  The corpus does hold 28 corner rules that give a corner lot *more* room, and
+  they are large — Gresham drops a 100 ft frontage minimum to 32 on a corner.
+  Every single one of them also requires the four-lot subdivision plat, which
+  is not the way we build, so none of them can ever fire. The 29 that would
+  fire all go the other way: Wood Village's side yard goes from 5 ft to 10 and
+  its back yard from 15 to 20 (that is where the "10 ft" came from — it is a
+  cost), Gresham's frontage minimums from 35 ft to 40, and its medium-density
+  lot width from 16 ft to 70.
+
+  **Still worth building**, because these are lots we are currently calling
+  green that a planner would not, and that is the dangerous direction of error.
+  But it belongs on the correctness list, not the opportunity list, and it will
+  shrink the green count when it lands. Agent work; flagged here only so the
+  number moving down is expected rather than alarming.
 - ~~**quadfit/FLATS config divergences**: LR-7 front setback (20 vs 10) and
   Wood Village MR 2 minimum lot — cleanup; zero greens ride on either
   today.~~ Closed 2026-09-01: both aligned to the quoted code text and the
