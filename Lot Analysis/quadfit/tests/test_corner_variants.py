@@ -101,3 +101,27 @@ def test_the_ten_feet_in_the_old_note_is_wood_village_and_it_is_a_cost() -> None
     rear = wv["or/multnomah/wood-village/LR 7.5.setback_rear_ft"]
     assert (rear.base, rear.alt) == (15, 20)
     assert rear.direction == "tightens"
+
+
+def test_only_four_reachable_corner_rules_can_move_a_building() -> None:
+    """How much the unbuilt feature is actually worth, pinned.
+
+    Twenty-nine corner rules would fire, but a lot-width or frontage minimum
+    only ever decides whether a zone's rules apply at all -- it does not move a
+    wall. Four touch a setback, which is what changes an envelope, and 23 of
+    the other 25 are Gresham's, a city with no green lots at all.
+
+    Measured against the 2026-09-01 run: 20 green lots are corners in the one
+    jurisdiction (Wilsonville) holding a reachable corner setback. That is why
+    this is scheduled rather than built. If the number here grows -- a newly
+    encoded city with greens and a corner setback -- the calculation changes
+    and the feature stops being cheap to defer.
+    """
+    audit = _audit()
+    setbacky = [v for v in audit.scan()
+                if v.reachable and v.direction == "tightens"
+                and v.field.startswith("setback_")]
+    assert len(setbacky) == 4, [str(v) for v in setbacky]
+    assert {v.layer for v in setbacky} == {
+        "or/multnomah/wood-village", "or/clackamas/wilsonville",
+    }, sorted({v.layer for v in setbacky})

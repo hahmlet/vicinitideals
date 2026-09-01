@@ -298,11 +298,17 @@ alone.
   cost), Gresham's frontage minimums from 35 ft to 40, and its medium-density
   lot width from 16 ft to 70.
 
-  **Still worth building**, because these are lots we are currently calling
-  green that a planner would not, and that is the dangerous direction of error.
-  But it belongs on the correctness list, not the opportunity list, and it will
-  shrink the green count when it lands. Agent work; flagged here only so the
-  number moving down is expected rather than alarming.
+  **And then sized, the same day: it is worth at most 20 lots today.** Of the
+  29 corner rules that would fire, only four touch a setback — the rest are
+  frontage and lot-width minimums in Gresham, which has no green lots at all.
+  Wood Village has none either. That leaves one Wilsonville side-yard rule
+  against 20 green corner lots, and some of those would survive it.
+
+  So: real, in the dangerous direction (a lot we call green that a planner
+  would not), and currently costing almost nothing. It stays on the list rather
+  than getting built now, and it gets built when a city that *does* have greens
+  turns out to have a corner rule — 1,321 of the 10,179 greens are corner lots,
+  so the exposure is there the moment one appears. Agent work.
 - ~~**quadfit/FLATS config divergences**: LR-7 front setback (20 vs 10) and
   Wood Village MR 2 minimum lot — cleanup; zero greens ride on either
   today.~~ Closed 2026-09-01: both aligned to the quoted code text and the
