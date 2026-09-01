@@ -639,6 +639,19 @@ def main() -> None:
     L.append("|---|---:|---:|")
     for t in ("green", "review", "red"):
         L.append(f"| {t} | {int(tri_all.get(t, 0)):,} | {int(tri_head.get(t, 0)):,} |")
+    if "geometry_assumed" in lots.columns:
+        ga = lots["geometry_assumed"].fillna(False).to_numpy().astype(bool)
+        n_ga = int((ga & (lots["triage"].to_numpy() == "green")).sum())
+        if n_ga:
+            per = lots.loc[ga & (lots["triage"] == "green"),
+                           "jurisdiction"].value_counts()
+            L.append(
+                f"\nOf the greens, **{n_ga:,}** rest on an assumed drive aisle "
+                "(" + ", ".join(f"{k} {v:,}" for k, v in per.items())
+                + ") — the plan is real and every other number is the city's "
+                  "own; only the aisle width comes from the national standard, "
+                  "because the city never published one. "
+                  "`geometry_assumed` marks them in `lots_results.csv`.")
     L.append("\nThe human-review queue is `review_candidates.csv`.")
 
     L.append("\n## Binding constraint — what stops each lot (first-hit)\n")
@@ -881,6 +894,20 @@ def main() -> None:
                       "`not_evaluated`.\n")
             else:
                 L.append("")
+            assumed_cities = sp.cities_on_an_assumed_aisle()
+            if assumed_cities:
+                L.append(
+                    "One exception to \"never to another's\": "
+                    + ", ".join(f"**{c}**" for c in assumed_cities)
+                    + " state a stall and no aisle width anywhere — checked to "
+                      "the end of the state's own single-family redirect — so "
+                      "their courts are drawn to an **assumed 24 ft aisle** "
+                      "(ULI/NPA *Dimensions of Parking* via SUDAS 8B-1, "
+                      "85th-percentile design vehicle). Under ORS 197A.400 a "
+                      "city may apply only clear and objective standards to "
+                      "housing, and a width nobody wrote down is not one, so "
+                      "these lots grade normally, green included. Filter them "
+                      "with the `geometry_assumed` column.\n")
             capped = [(c, sp.stall_cap_for(c)) for c in cities
                       if sp.stall_cap_for(c) < sp.preferred_stalls()]
             if capped:
@@ -906,9 +933,14 @@ def main() -> None:
                     g = sp.geometry_for(c)
                     m = (pil["jurisdiction"] == c).to_numpy()
                     ok_c = int((pil["site_plan_ok"].to_numpy() & m).sum())
+                    # The one number in this table that may not be the city's:
+                    # an assumed aisle is marked where it is printed, because a
+                    # reader comparing this row to the code will not find it.
+                    aisle = (f"{g.aisle_one_way_ft} / {g.aisle_two_way_ft} ft"
+                             + (" **(assumed)**" if g.aisle_assumed else ""))
                     L.append(
                         f"| {c} | {g.stall_width_ft} × {g.stall_depth_ft} ft "
-                        f"| {g.aisle_one_way_ft} / {g.aisle_two_way_ft} ft "
+                        f"| {aisle} "
                         f"| {sp.stall_cap_for(c)} | {int(m.sum()):,} "
                         f"| {ok_c:,} ({_pct(ok_c, int(m.sum()))}) |")
             methods = [(meth, int((pil["layout_method"] == meth).to_numpy().sum()))
