@@ -135,7 +135,23 @@ pytestmark = pytest.mark.unit
 #: definition is now encoded; what is refused is Figure 710-1, the drawing it
 #: points at, on the same grounds as Troutdale's -- a figure with no text
 #: saying what it adds to a test the words already state completely.
-EXPECTED = {"notes": 92, "comments": 108, "tests": 16}
+EXPECTED = {"notes": 100, "comments": 112, "tests": 17}
+
+#: MOVED 2026-09-01 by Wilsonville's V and TC, +8 notes, +4 comments, +1 test.
+#: The Village Zone is the largest single reading in the corpus and it refuses
+#: five things -- the 25 percent open space, the Architectural Pattern Book,
+#: the 60 percent building-frontage build-to, the alley-access rule and four
+#: garage notes -- against ten encoded values. That ratio is the pattern this
+#: ledger keeps finding: the more carefully a code is written, the more of it
+#: this model cannot hold.
+#:
+#: The one test is this ledger doing exactly what its own prose says it does.
+#: test_wilsonville_last_notes now asserts that no Town Center ruling still
+#: says "the Town Center Zone is not encoded", and quoting the stale phrase in
+#: order to forbid it reads to the regex as a refusal. It is a reference, not a
+#: decision, and it is counted anyway -- because a ledger that tries to tell
+#: the two apart is parsing prose, which this module states plainly it does
+#: not do.
 #: Two of the sixteen are this file, which quotes the marker while
 #: explaining it, and one is a back-reference in test_gresham_rockwood --
 #: prose saying a zone *was* not encoded until it was. Left in rather than

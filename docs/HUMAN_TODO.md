@@ -199,7 +199,88 @@ alone.
   two-way driveway minimum — the size of number that moves lots — but the code
   only reaches it for lots fronting *solely* on collectors and arterials, and
   nothing knows what class of street a lot fronts.
-- **Unencoded zones**: Wilsonville V and TC (Lake Oswego closed above).
+- ~~**Unencoded zones**~~ **Closed 2026-09-01 — the corpus now has an entry
+  for every zone the pipeline screens.** Wilsonville TC (59 lots) read the
+  same afternoon and answered quickly: Town Center runs 953 lines and never
+  says quadplex, middle housing, townhouse or duplex. Its one residential
+  use is "multi-family", which Wilsonville has defined to exclude middle
+  housing — so the only housing Town Center allows is the one thing this
+  product is not. Nor does the state mandate reach it: the rule forces
+  middle housing where *detached houses* are allowed, and Town Center allows
+  none. Those 59 lots now screen red instead of vanishing. Wilsonville V
+  closed
+  2026-09-01, and it was ten times larger than the note said: **2,508 lots**,
+  the biggest zone in Wilsonville and the largest block of land the screen was
+  dropping. V is Villebois. Its development standards table has no row for a
+  four-unit building at all, and the way in is a separate provision on
+  redeveloping an existing house — which says a quadplex takes the
+  *single-family* standards, with one change, a 7,000 sq ft minimum lot. The
+  usual week-long argument about which row a four-plex belongs in did not
+  happen here: the city's own definition of "multi-family" excludes middle
+  housing in as many words, so the apartment row is closed to it by
+  definition. Encoded and mirrored into the pipeline; **held at review rather
+  than green** on two open questions, below.
+- **Two questions before Villebois lots can go green** (2,508 lots, agent will
+  ask if you want them asked): (1) Wilsonville requires 25% of a residential
+  development to be open space *not counting the yards*, which no single lot
+  could meet — but the same sentence says a phase inside an approved master
+  plan does not have to meet it alone, and all of Villebois is inside one. The
+  code reads as though the parks already did this. (2) The lot coverage cap is
+  45%, 55%, 65% or 75% depending on which "lot category" the Villebois Pattern
+  Book puts a lot in, and we do not have the Pattern Book. The safest of the
+  four is used, which costs nothing today.
+- ~~**The site plan and the code corpus were never checked against each
+  other**~~ — found and **worked through on 2026-09-01**. A new audit
+  (`Lot Analysis/quadfit/audit_zone_mirror.py`) compared the two files that
+  carry a zone's dimensions — the pipeline screens from a hand-written config,
+  FLATS reads the code and quotes every figure to a line of a stored document —
+  and found 28 disagreements against 431 agreements. **All 21 real ones are
+  resolved.** What is left is not disagreement, and is frozen into a test so
+  nobody "fixes" it by editing a number.
+
+  The 21 were nearly all the same mistake, and it is worth knowing because it
+  will happen again: **the pipeline had been reading the detached house's row
+  of a table that prints one row per housing type.** A four-plex is not a
+  house, and the codes say so in the same table. Oregon City gives a quadplex
+  70% lot coverage where a house gets 50; Happy Valley 60 against 50; Gladstone
+  a 3,600 sq ft minimum lot where a house needs 7,200. Every one of those was
+  lots thrown away for nothing. It ran the other way twice: Milwaukie R-HD was
+  screened on a 5 ft front setback that the code applies only to a handful of
+  mapped properties (the general rule is 20 ft), and Gladstone R-5 on the
+  house's 5,000 sq ft where a quadplex needs 7,000. Those were lots called
+  green that should not have been. **Green counts will move in both directions
+  on the next pipeline run**, and on balance up: five of the eight corrections
+  loosen the screen.
+
+  Three things remain, and each is a real question rather than an error:
+  - **7 places the pipeline cannot express a rule it has no field for.**
+    Gresham prints a 15 ft rear setback in five of its residential districts
+    and then, in a different chapter, caps the roof at 21 ft on that line and
+    lets it rise a foot for every foot further back — so our 26 ft pod actually
+    has to stand at 20 ft, not 15. Milwaukie does the same thing to its side
+    yards. The corpus knows this; **the pipeline has no way to express it at
+    all**, so every Gresham LDR lot is being drawn with five feet of back yard
+    it does not have. Gresham is the largest jurisdiction in the screen. This
+    closes when somebody builds the feature, not by editing five numbers.
+  - **1 place the pipeline is right and the corpus is merely richer.** Lake
+    Oswego asks 5 ft on one side and 15 ft across both. The pipeline has one
+    side-yard number and no combined one, so 7.5 is the only figure it can
+    carry that obeys the rule — "correcting" it to 5 would screen a 10 ft
+    combined yard against a code that demands 15.
+  - **2 zones disagree about something bigger still** — whether a four-plex is
+    allowed there at all: unincorporated Multnomah's LR-7 and Wilsonville's RN.
+    In both, the pipeline says yes and the corpus says no. RN's five
+    dimensional differences are parked behind that question rather than
+    reconciled one number at a time, because if the corpus is right none of its
+    lots is screened and none of those figures matters. **Checked against the
+    current run and it costs nothing today**: LR-7 is 160 red and 1 review, RN
+    is 492 red and 11 review, and neither zone has produced a single green lot.
+    Both are legal arguments — the county never wrote HB 2001 into its own code
+    and Wilsonville's RN says "quadplexes are not permitted" against a state
+    preemption that is real but untested — so they belong with the optional
+    legal read rather than ahead of it.
+
+  Agent work, no action needed from you.
 - **Corner-lot status**: 14 jurisdictions now define what a corner lot is;
   nothing yet computes which lots *are* corners. Worth ~10 ft of buildable
   envelope wherever corner variants exist (e.g. all of Wood Village).
@@ -211,10 +292,17 @@ alone.
   no green moved anywhere. LR-7's building envelopes still reflect the old
   smaller setbacks until the next full pipeline run; at most 15 non-green
   lots ride on that.
-- **Coarse-DEM plumbing shipped 2026-09-01** — the 1/3 arc-second national
-  DEM is fetched, warped and sampled, `slope_source` rides in the CSV, and the
-  false "grade A / 1 m DEM" coverage claims for four cities with no elevation
-  data at all are corrected. Only the green/no-green switch is left, and that
+- **Coarse-DEM plumbing shipped 2026-09-01, and the full run confirms it moved
+  nothing** — the 1/3 arc-second national DEM is fetched, warped and sampled,
+  `slope_source` rides in the CSV, and the false "grade A / 1 m DEM" coverage
+  claims for four cities with no elevation data at all are corrected. The
+  pipeline finished at 11:22 and the verdicts are **identical to the run before
+  it**: 10,179 green, 30,185 review, 208,274 red, to the lot. That is the
+  designed outcome — the coarse figures are recorded but not allowed to clear a
+  lot to green, so they change nothing until somebody says they may. What did
+  change is that **no lot anywhere now has an unknown slope**: 184,101 read off
+  1 m lidar, 64,537 off the 10 m fallback, zero with no answer, where before
+  four whole cities had none. Only the green/no-green switch is left, and that
   is item 2 above.
 - **"Reaches with no field" refusals**: e.g. Wood Village's forward-access
   rule applies to the pod and the data model has no field to hold it — model

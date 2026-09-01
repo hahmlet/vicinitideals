@@ -40,7 +40,9 @@ def test_nothing_is_dropped(dry: dict) -> None:
 
 
 def test_every_quadfit_zone_arrives(dry: dict) -> None:
-    assert dry["stats"]["zones"] == 96
+    # 98 as of 2026-09-01: Wilsonville's V and TC were mirrored into
+    # rules.yaml when they were encoded, so the port carries them too.
+    assert dry["stats"]["zones"] == 98
     assert dry["stats"]["layers"] == len(COUNTY) == 18
 
 
@@ -121,9 +123,11 @@ def test_written_config_loads_through_the_real_loader() -> None:
     rules = RuleSet(load_rules())
 
     assert len(rules.layers) == 19  # 18 jurisdictions + the state layer
-    # 193 as of 2026-08-21: Lake Oswego gained the six residential zones
-    # its use table permits a quadplex in and the port had never carried.
-    assert sum(len(l.zones) for l in rules.layers.values()) == 193
+    # 195 as of 2026-09-01: Lake Oswego gained the six residential zones its
+    # use table permits a quadplex in and the port had never carried (2026-08-21),
+    # then Wilsonville gained V and TC, the two zones its chapter states and no
+    # ledger could see were absent.
+    assert sum(len(l.zones) for l in rules.layers.values()) == 195
 
 
 def test_state_parking_preemption_reaches_a_city_zone() -> None:

@@ -524,26 +524,33 @@ notes:
 
   # --- Section 4.132 Table 1 and Table 2, the Town Center Zone --------
   #
-  # Eight notes on a zone this layer does not hold, and this is a gap rather
-  # than a curiosity. The Town Center Zone is 4.132; it is one of Wilsonville's
-  # ten zones and it permits housing -- Table 2 sets a MINIMUM residential
-  # density of 40 units per acre in MSD, MU and C-MU and 16 in N-MU, a minimum
-  # of two storeys everywhere, and a maximum front setback of 10 or 20 feet.
-  # Every one of those is a field this registry has.
+  # REOPENED AND RE-RULED 2026-09-01. These eight were dismissed on the Town
+  # Center Zone being one this layer did not hold, and the ruling that wrote
+  # them said what to do about it: "If TC is encoded, all eight are reopened --
+  # notes 2, 4 and 6 in particular, which move a setback maximum, a storey
+  # count and a density floor." TC was encoded on 2026-09-01, so they were.
   #
-  # Nothing in this corpus can see the omission. Wilsonville contributes no
-  # observed lots to the coverage ledger at all, so there is no zone_missing
-  # row for TC the way there was none for Lake Oswego's six residential zones
-  # -- a missing zone is invisible to a ledger that counts fields. Gresham's
-  # unheld districts were safe because no lot claimed them; that check cannot
-  # be run here, and the honest statement is that TC is unencoded, not that it
-  # is empty. The V Village Zone at 4.125 is the same story: Villebois is a
-  # built master-planned neighborhood, its Table V-2 is in this document, and
-  # no zone in this file corresponds to it.
+  # The ground is now stronger than the one they stood on, and it is a decision
+  # rather than an absence. 4.132(.02) is the list of uses permitted anywhere
+  # in Town Center and its only residential entry is B, "Multiple-family
+  # Dwelling Units". 4.001(96) defines that term as multiple units on one lot
+  # where the units are NOT middle housing, and 4.001(181) puts the quadplex
+  # inside middle housing. The one housing type Town Center permits is the one
+  # this product is not, so no dimensional standard in 4.132 reaches this
+  # building and none of its footnotes can move a number that binds it.
   #
-  # These eight are dismissed on that ground alone. If TC is encoded, all
-  # eight are reopened -- notes 2, 4 and 6 in particular, which move a
-  # setback maximum, a storey count and a density floor.
+  # That closes notes 2, 4 and 6 on their merits rather than on our ignorance.
+  # Note 2's 10-or-20-foot maximum front setback, note 4's storey bonus and
+  # note 6's 40-units-per-acre density floor are all real standards and all of
+  # them would bite -- four units at 40 per acre needs a lot no larger than
+  # 4,356 sq ft. They govern a building Town Center allows. This one it does
+  # not.
+  #
+  # Each reason below keeps whatever else disposed of it, because a footnote
+  # dismissed on two independent grounds is dismissed twice. If the use ever
+  # opens -- a Town Center Plan amendment, or a state rule that reaches a zone
+  # with no detached housing in it -- these eight reopen again, and this time
+  # the dimensions are in 4.132(.06) and (.07) waiting to be read.
 
   - quote: "or/clackamas/wilsonville/4.planning.txt#L8677"
     digest: "9ab685488fe9"
@@ -552,7 +559,7 @@ notes:
       note 1 of Table 1 counts the landscaping area inside the sidewalk width
       and requires root barriers or structural soils in tree wells. A public
       realm standard about what goes in the right of way, not a standard on
-      the lot, and Table 1 belongs to a zone this layer does not hold
+      the lot; and the quadplex is not a permitted use in the Town Center Zone (4.132(.02)B with 4.001(96)), so no standard of 4.132 reaches this building
 
   - quote: "or/clackamas/wilsonville/4.planning.txt#L8680"
     digest: "335b4fab39a2"
@@ -560,17 +567,17 @@ notes:
     reason: >-
       note 2 permits at most two parklets per block per side of street. A
       parklet occupies on-street parking spaces, which are not the off-street
-      stalls this screen fits, and Table 1 belongs to the Town Center Zone
+      stalls this screen fits; and the quadplex is not a permitted use in the Town Center Zone (4.132(.02)B with 4.001(96)), so no standard of 4.132 reaches this building
 
   - quote: "or/clackamas/wilsonville/4.planning.txt#L8740"
     digest: "6e789cafee3d"
     state: dismissed
     reason: >-
       note 1 of Table 2 exempts existing development and binds all new
-      buildings in the district. It is an applicability sentence, and it says
-      the standards apply in full to exactly what this screen places -- which
-      is the reason the zone being unencoded is a gap rather than a
-      non-question
+      buildings in the district. It is an applicability sentence, and while it
+      was open it was the reason the unencoded zone was a gap rather than a
+      non-question: the standards apply in full to exactly what this screen
+      places. What it does not do is create a use. the quadplex is not a permitted use in the Town Center Zone (4.132(.02)B with 4.001(96)), so no standard of 4.132 reaches this building
 
   - quote: "or/clackamas/wilsonville/4.planning.txt#L8742"
     digest: "01cdc76bc62e"
@@ -580,8 +587,8 @@ notes:
       for commercial, 20 ft front for mixed-use and residential-only -- and
       then permits front setbacks used for seating or other active frontage.
       A maximum setback is a real constraint on a building placed by fixed
-      dimensions, and setback_front_max_ft exists to hold one. Not encoded
-      because the zone is not
+      dimensions and setback_front_max_ft exists to hold one, so this is
+      dismissed on the use and not on the dimension: the quadplex is not a permitted use in the Town Center Zone (4.132(.02)B with 4.001(96)), so no standard of 4.132 reaches this building
 
   - quote: "or/clackamas/wilsonville/4.planning.txt#L8747"
     digest: "4c5ef80a9aad"
@@ -589,8 +596,7 @@ notes:
     reason: >-
       note 3 requires second and higher storeys to be useable and forbids
       false fronts. It polices a design dodge around the two-storey minimum
-      rather than stating a dimension, and the minimum it protects belongs to
-      a zone this layer does not hold
+      rather than stating a dimension, and the quadplex is not a permitted use in the Town Center Zone (4.132(.02)B with 4.001(96)), so no standard of 4.132 reaches this building
 
   - quote: "or/clackamas/wilsonville/4.planning.txt#L8749"
     digest: "3119d5e4524b"
@@ -598,9 +604,9 @@ notes:
     reason: >-
       note 4 grants one extra storey in MSD, MU and C-MU where a quarter of
       the bonus floor area is affordable for ten years at 80 percent of median
-      family income. A height bonus is relief, and this two-storey building
-      does not need it -- but max_height_stories is a field, and the note is
-      the sort that has to be read again the day TC is encoded
+      family income. A height bonus is relief and this two-storey building
+      does not need it. It was flagged to be read again the day TC was
+      encoded; it has been, and the quadplex is not a permitted use in the Town Center Zone (4.132(.02)B with 4.001(96)), so no standard of 4.132 reaches this building
 
   - quote: "or/clackamas/wilsonville/4.planning.txt#L8754"
     digest: "a1c54d894de5"
@@ -610,7 +616,7 @@ notes:
       floor height minimum. That exemption is what makes a residential
       building possible in the district at all, since a 15 ft ground floor
       under a two-storey minimum would put the roof above this pod's 26 feet.
-      It relieves rather than binds, and the zone is unencoded
+      It relieves rather than binds, and in any case the quadplex is not a permitted use in the Town Center Zone (4.132(.02)B with 4.001(96)), so no standard of 4.132 reaches this building
 
   - quote: "or/clackamas/wilsonville/4.planning.txt#L8755"
     digest: "8bc467ec570b"
@@ -621,8 +627,8 @@ notes:
       units per acre in three of the four sub-districts, which is the
       standard in this table most likely to refuse a four-unit building: four
       units at 40 per acre needs a lot no larger than 4,356 sq ft.
-      min_density_du_per_acre and min_units_at_trigger both exist. Not encoded
-      because the Town Center Zone is not encoded
+      min_density_du_per_acre and min_units_at_trigger both exist, so this one
+      is dismissed on the use alone and would otherwise be encoded: the quadplex is not a permitted use in the Town Center Zone (4.132(.02)B with 4.001(96)), so no standard of 4.132 reaches this building
 
   # --- Section 4.155 Table 5, the parking maximums --------------------
   #

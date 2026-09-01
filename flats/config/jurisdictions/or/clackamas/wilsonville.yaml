@@ -79,16 +79,23 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
   ledger working.
 
 
-  TWO ZONES ARE MISSING, named here because nothing else in this system can see them. Wilsonville
-  contributes no observed lots to the coverage ledger, so there is no zone_missing row to raise a
-  hand -- a missing zone is invisible to a ledger that counts fields, which is how Lake Oswego went
-  six residential zones short. This layer holds R, OTR, PDR-1 through PDR-6 and RN. Section 4.125,
-  the V Village Zone, is Villebois: a built master-planned neighborhood with its own use and parking
-  tables in this same document. Section 4.132, the Town Center Zone, permits housing and sets a
-  MINIMUM residential density of 40 units per acre in three of its four sub-districts, a two-storey
-  minimum, and a maximum front setback -- three standards this registry has fields for and any one of
-  which could refuse this building. Neither zone is encoded. That is a gap, not a decision, and
-  fourteen of the footnotes ruled on 2026-08-22 are dismissed on it.
+  THE TWO MISSING ZONES ARE CLOSED, 2026-09-01. They were named here because nothing else in this
+  system could see them: Wilsonville contributes no observed lots to the coverage ledger, so there
+  is no zone_missing row to raise a hand -- a missing zone is invisible to a ledger that counts
+  fields, which is how Lake Oswego went six residential zones short. This layer now holds R, OTR,
+  PDR-1 through PDR-6, RN, V and TC.
+
+  Section 4.125, the V Village Zone, is Villebois, and it was not a footnote-sized gap: 2,508 lots,
+  the largest zone in the city and the biggest block of land the screen was dropping. Table V-1 has
+  no middle-housing row at all and the way in is 4.125(.23)(B), which sends a quadplex to the
+  single-family row with one change, a 7,000 sq ft minimum lot. Held at needs_verification on two
+  open questions, both written into the zone.
+
+  Section 4.132, the Town Center Zone, is 59 lots and a decided RED rather than a gap. Its only
+  residential permitted use is Multiple-family Dwelling Units, which 4.001(96) defines as excluding
+  middle housing. The eight Town Center footnotes ruled on 2026-08-22 were dismissed on the zone
+  being absent and have been reopened and re-ruled on the prohibition instead. The fourteen Table 8B
+  and 8C notes are untouched -- they belong to RN, which this layer has always held.
 
 
   PARKING, read 2026-08-22 and now on the defaults block above: no minimum and no maximum, both
@@ -1356,3 +1363,270 @@ zones:
       require a city to allow middle housing wherever it allows detached single-family, and RN allows
       detached single-family. Both belong in front of a person -- flipping this back is one line, and
       it changes every RN lot from RED to screened.'
+  V:
+    section: ["4.125", "4.001"]
+    cite_default:
+      cite: Wilsonville Development Code 4.125 (V—Village Zone) Table V-1, as applied to a quadplex
+        by 4.125(.23)(B)
+      url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.125VVIZO
+      retrieved: '2026-09-01'
+    quadplex_allowed:
+      # (.02) Permitted Uses lists them by name at C, "Duplexes, Triplexes, and
+      # Quadplexes", one line under Single Family Dwellings. Nothing has to be
+      # argued about the noun here.
+      value: true
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4793-L4798"
+    min_lot_sqft:
+      # THE ONLY NUMBER IN THIS ZONE WRITTEN FOR A QUADPLEX, and it is not in
+      # Table V-1. Table V-1 has no middle-housing row at all -- its building
+      # types are Commercial, Hotels, Mixed Use, Multi-Family Dwellings, Row
+      # Houses, and "Single-Family Dwellings and Duplexes". A reader looking
+      # for a quadplex there finds nothing and would reach for the Multi-Family
+      # row, which is the wrong row: 4.001(96) defines a Multiple-Family
+      # dwelling unit as multiple units on one lot "where ... the dwelling
+      # units are not middle housing", and 4.001(181) puts quadplexes inside
+      # middle housing. Wilsonville has defined the pod OUT of its own
+      # multi-family row.
+      #
+      # 4.125(.23) is the route in, and Table V-1's own note 21 points at it:
+      # "Subsection 4.125(.23) contains special provisions for redevelopment to
+      # add middle housing units." (.23)(B) then says "The standards of Table
+      # V-1 for single-family dwellings apply with the following exceptions",
+      # and exception 3 is "The minimum lot size for quadplexes, four-unit
+      # cluster housing, and cottage clusters is 7,000 square feet". So every
+      # dimension below is the Single-Family Dwellings and Duplexes row, and
+      # this one figure replaces that row's 2,250.
+      value: 7000
+      cite: Wilsonville Development Code 4.125(.23)(B)(3)
+      quote: "or/clackamas/wilsonville/4.planning.txt#L5050,L6449,L6454-L6455"
+    min_lot_width_ft:
+      value: 35
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4984-L4988,L5023"
+    min_lot_depth_ft:
+      value: 50
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4984,L4989-L4990,L5023"
+    max_height_ft:
+      value: 35
+      quote: "or/clackamas/wilsonville/4.planning.txt#L4984,L4998-L5000,L5023"
+    setback_front_ft:
+      # Table V-1 prints 12 and note 6 raises it: "For Standard, or Large Lots
+      # on Collector Avenues, front setbacks are 20 ft. min." Two conditions,
+      # and neither is measurable -- the street class is not in the inventory
+      # for any lot in Oregon, and the lot category comes from the Pattern Book
+      # (note 20), a document this corpus does not hold.
+      #
+      # So 20 is the base and 12 is the relief, the same way Lake Oswego is
+      # carried: the arterial number binds because it is the half that cannot
+      # turn a RED lot green by mistake. `local_street` is assumed unknown, so
+      # the relief never fires and every Village lot is screened at 20. If the
+      # functional-classification layer ever lands, this loosens by eight feet.
+      value: 20
+      quote: "or/clackamas/wilsonville/4.planning.txt#L5023,L5032"
+      variants:
+        - value: 12
+          when: [local_street]
+          quote: "or/clackamas/wilsonville/4.planning.txt#L5006,L5023"
+    setback_front_max_ft:
+      # Villebois is a build-to zone: 20 feet is a ceiling as well as, on a
+      # collector, the floor. Note 19 lets the maximum grow for deeper porches,
+      # building code, utility easements and open space -- all of them
+      # loosenings on facts nothing measures, so none is taken.
+      value: 20
+      quote: "or/clackamas/wilsonville/4.planning.txt#L5007-L5008,L5023"
+    setback_rear_ft:
+      # Note 13 is the measurement rule and it matters on an alley lot: "On
+      # lots with alleys, Rear Setback shall be measured from the rear lot line
+      # abutting the alley." Same line the screen uses.
+      value: 5
+      quote: "or/clackamas/wilsonville/4.planning.txt#L5009-L5010,L5023,L5042"
+    setback_side_ft:
+      # 5 from the table. Note 15's other sentence would drop it to zero -- "On
+      # Small and Medium Lots, minimum side setback shall be 0 ft. or as
+      # required by Building Code" -- and it is not taken, because Small and
+      # Medium are Pattern Book categories (note 20) and nothing published says
+      # which category a lot is in. A loosening on an unknown is not a
+      # loosening.
+      value: 5
+      quote: "or/clackamas/wilsonville/4.planning.txt#L5011-L5012,L5023,L5044"
+    setback_side_total_ft:
+      # The other half of note 15, and the half that tightens: "On Estate Lots
+      # and Large Lots with frontage 70 ft. or wider, the minimum combined side
+      # yard setbacks shall total 15 ft. with a minimum of 5 ft." Five and five
+      # is ten; this asks fifteen, so on a wide lot the pod loses five feet of
+      # width it would otherwise have.
+      #
+      # Note 15 has two limbs and only one of them is measurable. The lot
+      # category is Pattern Book again; the 70-foot frontage is not, and it is
+      # carried as the band. So the rule is applied to every lot 70 feet or
+      # wider whatever its category -- over-applying a tightening standard,
+      # which is the safe direction -- and left off narrower lots, where the
+      # table's plain 5 and 5 governs.
+      # Below the band the code states no combined side yard at all, so this
+      # is exempt rather than ten. Ten was the first encoding and it was a
+      # derived number -- two printed 5-foot yards added up -- which no line of
+      # the code says and the misquote gate correctly refused. It was inert
+      # anyway: the side setback above already holds both yards at 5.
+      exempt: true
+      quote: "or/clackamas/wilsonville/4.planning.txt#L5011-L5012,L5023"
+      variants:
+        - value: 15
+          band: {measure: lot_width_ft, at_least: 70}
+          quote: "or/clackamas/wilsonville/4.planning.txt#L5044"
+    setback_street_side_ft:
+      # Table V-1 has no street-side column, so on a local street a corner lot
+      # takes the ordinary 5-foot side yard. Note 6 writes the collector case:
+      # "side street setbacks are 15' (8' setback to porch)". Carried the same
+      # way as the front: the collector number is the base, the local-street
+      # number is the relief, and the relief does not fire.
+      value: 15
+      quote: "or/clackamas/wilsonville/4.planning.txt#L5032"
+      variants:
+        - value: 5
+          when: [local_street]
+          quote: "or/clackamas/wilsonville/4.planning.txt#L5011-L5012,L5023"
+    max_coverage_pct:
+      # Table V-1's coverage cell holds a note number rather than a figure, and
+      # note 2 is four figures: "Small lots: 75%, Medium Lots: 65%, Standard
+      # and Large Lots: 55%, Estate Lots: 45%". Note 20 says where the
+      # categories come from -- "Lots are categorized as small, medium,
+      # standard, large or estate as shown in the Pattern Book" -- and the
+      # Pattern Book is not a document this corpus holds.
+      #
+      # 45 is the smallest of the four and therefore the safe one. It costs
+      # nothing here: the catalog pod covers 2,000 square feet and 45 percent
+      # of the 7,000-square-foot minimum lot is 3,150. Note 2's second sentence
+      # adds ten points where a detached accessory building is built, and is
+      # not taken -- it is a loosening, and the pod has no outbuilding.
+      value: 45
+      quote: "or/clackamas/wilsonville/4.planning.txt#L5023,L5027-L5028,L5049"
+    notes: 'THE VILLAGE ZONE IS VILLEBOIS, and until 2026-09-01 the screen dropped every lot in it.
+      This is the largest single block of unencoded land left in the corpus -- 2,508 lots at s2, more
+      than PDR-3''s 1,778 and larger than any other Wilsonville zone -- and it was invisible rather
+      than red: the zone literal had no entry, so its lots never reached the fit stage at all. The
+      other half of the same gap is TC, 59 lots, still unread.
+
+      READ 2026-09-01. Every dimension above is Table V-1''s "Single-Family Dwellings and Duplexes"
+      row, because 4.125(.23)(B) says so in as many words -- "The standards of Table V-1 for
+      single-family dwellings apply with the following exceptions" -- with the one exception that
+      moves, a 7,000 square foot minimum lot for quadplexes. The noun question that has cost this
+      corpus a week in three other cities does not arise here: 4.001(96) defines a Multiple-Family
+      dwelling unit as one that is NOT middle housing, and 4.001(181) puts the quadplex in middle
+      housing, so the Multi-Family row of Table V-1 is closed to the pod by definition rather than by
+      elimination. Table V-1 has no middle-housing row of its own, and note 21 sends the reader to
+      (.23) to find out why.
+
+      PARKING NEEDS NOTHING FROM THIS ZONE. 4.125(.07) replaces the citywide parking chapter inside the
+      Village, and Table V-2''s Middle Housing row reads NR under its only vehicle column, which is
+      headed "Max. Vehicle Spaces". Both layer defaults are already `exempt` on the citywide reading --
+      Wilsonville requires no parking and caps none -- and Table V-2 agrees, so the zone restates
+      neither. Table V-2 note 2 goes further for the exact case this product is: "No additional
+      off-street parking is required for middle housing created through the addition to, or conversion
+      of, an existing single-family detached dwelling."
+
+      quadfit confidence: needs_verification. Two things hold this zone out of GREEN and both are
+      written below, because a REVIEW with two named questions is worth more than 2,508 lots nobody can
+      see.
+
+      NOT ENCODED: 4.125(.08)(A), the 25 percent open space standard. This is the one number in the
+      Village that could kill the pod outright -- "at least 25 percent of the area shall be open space,
+      excluding street pavement and surface parking", with "Required yard areas shall not be counted
+      towards the required open space area". Twenty-five percent of a 7,000 square foot lot is 1,750
+      square feet that is not building, not parking, not driveway AND not setback yard, on top of a
+      2,000 square foot pod. Almost no Villebois lot would survive it.
+
+      It is not encoded for two reasons, and the first is the code''s own sentence. (.08)(A) continues:
+      "In multi-phased developments, individual phases are not required to meet the 25 percent standard
+      as long as an approved Specific Area Plan demonstrates that the overall development shall provide
+      a minimum of 25 percent open space." Villebois is a multi-phased development and every lot in the
+      V zone sits inside an approved Specific Area Plan -- (.24) confines the V designation to the
+      Villebois Village Master Plan boundary as of December 31, 2021, and (.22) makes the approved
+      SAPs, PDPs and FDPs the governing plans. The open space was delivered communally, in the parks
+      and greens the Master Plan drew. Read the other way, every house standing in Villebois today is
+      non-conforming, which cannot be the reading. (.23) is also the provision that lists what applies
+      to a middle-housing redevelopment, and it names density, Table V-1, the Pattern Book and parking
+      -- not open space.
+
+      The second reason is shape, and it would bite even if the first failed. The screen measures open
+      space as lot area less building, parking and driveway, which counts the setback yards. (.08) says
+      the yards do not count. Encoding 25 into a field that includes them would look like compliance
+      and mean almost nothing -- the yards alone clear 25 percent on most lots. There is no field in
+      the registry for "open space outside the required yards". A number that cannot be measured the
+      way the code measures it is worse than no number.
+
+      NOT ENCODED: 4.125(.23)(C), Architectural Pattern Book compliance. Mandatory and unread -- the
+      Pattern Book is a Villebois design document this corpus does not hold. What keeps it off the
+      dimensions is (.23)(C)''s own fallback: the full unit-type standards bind only "where the size of
+      the residential structure and lot is the same as shown for one of the unit types", and a
+      factory-built four-unit pod matches no Pattern Book unit type, so "only the Architectural Styles,
+      Architectural Patterns ... and Fencing must be complied with". Cladding, roof pitch, window
+      rhythm and fences. None of it is an envelope. The Pattern Book still reaches the coverage cap
+      through note 20, which is why 45 is taken above rather than 55.
+
+      NOT ENCODED: Table V-1''s Minimum Building Frontage Width, 60 percent. A build-to standard -- the
+      share of the lot width the building face must occupy -- and no field in the registry holds one.
+      It is also the rare standard that a four-unit attached pod passes more easily than the detached
+      house the row was written for: 56 or 80 feet of pod across a 70-foot lot is well over 60 percent.
+      Recorded rather than encoded because the model cannot hold the shape, not because it binds.
+
+      NOT ENCODED: 4.125(.05)(B), alley access. "All lots with access to a public street, and an alley,
+      shall take vehicular access from the alley to a garage or parking area, except as determined by
+      the City Engineer." Villebois is an alley village and this decides which side of the lot the
+      driveway lands on, which changes the site plan without changing the envelope. It needs
+      `abuts_alley`, a registered site fact nothing computes.
+
+      NOT ENCODED: the garage notes on the Single-Family row -- note 7 (garage 3 to 5 feet off the
+      alley, or 18 feet where a parking space sits between), note 8 (street-loaded garage 20 feet back
+      and 5 feet behind the main façade), note 17 (dwellings without alley access at least 36 feet
+      wide), note 18 (one driveway apron). The catalog pod parks on a surface court and has no garage,
+      so none of the four reaches it. Note 17 is the only one that would bind a garageless building and
+      it is a floor the pod clears twice over at 56 feet.'
+  TC:
+    section: ["4.132", "4.001"]
+    cite_default:
+      cite: Wilsonville Development Code 4.132 (Town Center Zone) (.02) and (.03), with 4.001(96)
+      url: https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.132TOCEZO
+      retrieved: '2026-09-01'
+    quadplex_allowed:
+      # The same definition that opened the Village Zone closes this one.
+      # 4.132(.02) is the list of uses permitted anywhere in Town Center and
+      # its only residential entry is B, "Multiple-family Dwelling Units".
+      # 4.001(96) defines that term as multiple units on one lot "where units
+      # are not an accessory dwelling unit AND THE DWELLING UNITS ARE NOT
+      # MIDDLE HOUSING", and 4.001(181) puts the quadplex inside middle
+      # housing. So the one residential use Town Center permits is the one
+      # this product is not.
+      value: false
+      quote: "or/clackamas/wilsonville/4.planning.txt#L572-L574,L8314,L8318"
+    notes: 'THE OTHER HALF OF THE UNENCODED-ZONE GAP, read 2026-09-01 with the Village Zone. TC is 59
+      lots against V''s 2,508, and like V it was invisible rather than red -- no entry, so its lots
+      never reached the fit stage.
+
+      Section 4.132 runs 953 lines and never says quadplex, middle housing, townhouse or duplex once.
+      Its only residential use is Multiple-family Dwelling Units, and Wilsonville has written the
+      definition that excludes this building from that term. The four sub-districts at (.03) --
+      Main Street, Neighborhood-Mixed Use, Mixed Use and Commercial-Mixed Use -- add commercial
+      recreation, large-format retail, cinemas and drive-throughs, and subtract multi-family next to
+      I-5. None of them adds a housing type. This is an absence claim and it was made the way this
+      corpus requires: a whole-section search for every noun the pod could answer to, not a reading
+      of the use list alone.
+
+      THE STATE MANDATE DOES NOT REACH IT EITHER, and that is the part worth writing down, because
+      it is the argument that keeps RN alive two zones up. ORS 197A.420 and OAR 660-046 require a
+      city to allow middle housing wherever it allows detached single-family dwellings. Town Center
+      allows no detached single-family dwelling -- 4.132(.02) has no such entry and the sub-district
+      descriptions mention single-family neighborhoods only as the thing Town Center transitions
+      AWAY from. Nothing attaches. RN is the opposite case: it allows detached houses and bans the
+      quadplex in the same section, which is why that one is flagged rather than settled.
+
+      A commercial center is also where the pod would be worst placed even if it were permitted. The
+      sub-districts run two to five stories with ground-floor active uses and a build-to street
+      wall; a 26-foot townhome pod with a surface parking court is not the building Town Center is
+      written for.
+
+      quadfit confidence: verified.
+
+      NOT ENCODED: everything dimensional. A zone the pod may not be built in does not need a
+      setback, and the corpus already carries a dozen zones that hold `quadplex_allowed: false` and
+      nothing else. If the use ever opens -- a Town Center Plan amendment, or a state rule that
+      reaches a zone with no detached housing in it -- the dimensions are in 4.132(.06) and (.07)
+      and would have to be read then.'

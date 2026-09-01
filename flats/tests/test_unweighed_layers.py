@@ -63,7 +63,10 @@ def test_every_clackamas_layer_is_outside_the_corpus_that_ranks_the_work(
         "or/clackamas/west-linn",
         "or/clackamas/wilsonville",
     ]
-    assert sum(u.zones for u in blind) == 55
+    # 57 as of 2026-09-01: Wilsonville's V and TC. Both are blind in exactly
+    # the way this test is about -- Villebois is 2,508 lots and ranks nowhere,
+    # because no Clackamas parcel is loaded to rank it with.
+    assert sum(u.zones for u in blind) == 57
 
 
 def test_and_the_ledger_totals_are_multnomah_only(rules: RuleSet) -> None:
