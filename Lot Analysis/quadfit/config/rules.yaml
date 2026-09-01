@@ -489,23 +489,23 @@ jurisdictions:
         setback_front_ft: 10
         setback_side_ft: 5
         setback_rear_ft: 15
-        min_lot_sqft: 8000
+        min_lot_sqft: 7500
         max_coverage_pct: 45
-        source: "WVDC 220.310 Tables 220-2/220-3, 220.355 (Ord. 2-2022)"
+        source: "WVDC 220.320 Table 220-3 (Ord. 2-2022)"
         source_url: "https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf"
         confidence: verified
-        notes: "Quadplex min lot 8,000 sf (SFD 7,500). MR tables have NO corner-lot street-side rows — genuinely unspecified in code text; no street-side elevation applied."
+        notes: "ALIGNED TO FLATS 2026-09-01: min lot 8,000 -> 7,500. Table 220-3 states 7,500 in the 'Duplex Triplex Quadplex' column — the pod's column — and the 8,000 appears nowhere in the current code text (FLATS re-read the Ord. 2-2022 table 2026-08-13). Cite corrected 220.310->220.320, where every number actually lives. MR tables have NO corner-lot street-side rows — genuinely unspecified in code text; no street-side elevation applied."
       - zone: "MR 4"
         quadplex_allowed: true
         setback_front_ft: 10
         setback_side_ft: 5
         setback_rear_ft: 15
-        min_lot_sqft: 8000
+        min_lot_sqft: 7500
         max_coverage_pct: 45
-        source: "WVDC 220.310 Tables 220-2/220-3, 220.355 (Ord. 2-2022)"
+        source: "WVDC 220.320 Table 220-3 (Ord. 2-2022)"
         source_url: "https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf"
         confidence: verified
-        notes: "Identical to MR 2 for quads (combined table column)."
+        notes: "Identical to MR 2 for quads (combined table column). Min lot 8,000 -> 7,500 with MR 2, aligned to FLATS 2026-09-01."
       # TC (167 lots, town center) not covered — falls out as zone_not_in_rules.
 
   multnomah_unincorporated:
@@ -564,15 +564,17 @@ jurisdictions:
         notes: "Zone standards verified from code text, but R7 occurrence in the pockets unconfirmed (33 lots observed in Metro layer)."
       - zone: LR7
         quadplex_allowed: true
-        setback_front_ft: 10
+        setback_front_ft: 20
         setback_side_ft: 5
-        setback_rear_ft: 10
+        setback_rear_ft: 15
         setback_street_side_ft: 10
-        min_lot_sqft: 7000
-        source: "MCC 39.4848-.4862 (S-1 2023) + OAR 660-046 Exhibit B Large Cities Model Code §B; OAR 660-046-0010/-0020"
+        min_lot_sqft: 20000
+        min_frontage_ft: 30
+        max_coverage_pct: 40
+        source: "MCC 39.4862(C)/(H) (S-1 2023) — the county's own quoted table, per the FLATS corpus reading"
         source_url: "https://multco.us/file/chapter_39_-_zoning_code/download"
         confidence: needs_verification
-        notes: "County plan areas (Interlachen). MCC has no middle-housing code; the un-adopted state Model Code pre-empts: front/street-side capped at 10 ft, rear capped at 10 ft, SFD side 5 ft governs; MCC 40% coverage cap invalid for quadplexes (Model Code B.1.b). Confirm interpretation with county/DLCD before banking on it."
+        notes: "County plan areas (Interlachen). ALIGNED TO FLATS 2026-09-01: the old values (front/rear 10, min lot 7,000) came from the un-adopted state Model Code Exhibit B — a document not stored anywhere — on a preemption theory FLATS rejected: OAR 660-046-0220 governs Large CITIES by its own terms, and whether it reaches unincorporated county turns on ORS 197A.420, which is not fetched. Until it is, MCC's own row governs: 39.4862(H) reads Front 20 / Side 5 / Street Side 10 / Rear 15, and 39.4862(C) states 5,000 sq ft PER DWELLING UNIT for a multiplex — 20,000 for the pod. Coverage 40% and frontage 30 quoted from the same section. Also per FLATS: a multiplex is a CONDITIONAL use here (MCC 39.4856(C)) needing a hearing plus design review with 1,200 sq ft of shared open space (39.8045(A)(2)) — quadplex_allowed stays true only because needs_verification already caps every lot at review, which is the honest verdict for needs-a-hearing. If ORS 197A.420 turns out to reach the county, the 7,000/10-ft caps come back as a state-layer preemption, not as this zone's base. NOTE: s5 envelopes were last computed on the old front-10/rear-10 setbacks; only the ≤15 lots clearing the 20,000 min lot ride on that, none green, honest at the next full s5+ run."
       - zone: RR
         quadplex_allowed: false
         source: "MCC 39.4350-.4395 (Rural Residential)"
