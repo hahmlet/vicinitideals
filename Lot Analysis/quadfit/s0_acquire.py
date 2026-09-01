@@ -241,6 +241,21 @@ DEM_DIR_NAME = "dem"
 DEM_BBOX_4326 = (-122.90, 45.26, -122.24, 45.65)
 TNM_API = "https://tnmaccess.nationalmap.gov/api/v1/products"
 
+# The 1 m projects do not cover the whole bbox, and no other 1 m product
+# exists for the part they miss -- queried 2026-09-01, the API returns zero
+# 1 m items for a bbox over downtown Gresham. Both metro projects stop at
+# about UTM 10N easting 540,000 (longitude -122.48), which leaves Gresham,
+# Troutdale, Fairview, Wood Village and Portland's eastern third with no
+# elevation at all. The seamless 1/3 arc-second (~10 m) DEM does cover them;
+# one 1-degree tile spans the whole metro. Warped once to the 1 m tiles' CRS
+# so downstream code does not have to care which raster it is reading.
+DEM10_DIR_NAME = "dem10"
+DEM10_UTM_DIR_NAME = "dem10_utm"
+DEM10_DATASET = "National Elevation Dataset (NED) 1/3 arc-second"
+DEM10_CRS = "EPSG:26910"          # same as the 3DEP 1 m tiles
+DEM10_RES_M = 10.0
+DEM10_CLIP_4326 = (-122.95, 45.20, -122.18, 45.70)
+
 
 def raw_path(key: str) -> Path:
     return RAW_DIR / f"{key}.geojson"
@@ -529,13 +544,92 @@ def fetch_dem_tiles(force: bool) -> None:
             print(f"  {dest.name}: {dest.stat().st_size/1e6:.0f} MB")
 
 
+def fetch_dem10_fallback(force: bool) -> None:
+    """The coarse seamless DEM, plus a one-time warp into the 1 m tiles' CRS.
+
+    Downloads the newest 1/3 arc-second tile covering the metro and reprojects
+    the metro window to UTM 10N at 10 m, so `s5o` can read it with the same
+    gradient maths it uses on the 1 m tiles. ~490 MB down, ~110 MB kept.
+    """
+    import numpy as np
+    import rasterio
+    from rasterio.transform import array_bounds
+    from rasterio.warp import Resampling, calculate_default_transform, reproject
+    from rasterio.windows import from_bounds
+
+    raw_dir = RAW_DIR / DEM10_DIR_NAME
+    utm_dir = RAW_DIR / DEM10_UTM_DIR_NAME
+    raw_dir.mkdir(parents=True, exist_ok=True)
+    utm_dir.mkdir(parents=True, exist_ok=True)
+
+    with httpx.Client(timeout=None, follow_redirects=True,
+                      headers={"User-Agent": "quadfit/1.0"}) as client:
+        r = client.get(TNM_API, params={
+            "datasets": DEM10_DATASET,
+            "bbox": ",".join(map(str, DEM_BBOX_4326)),
+            "outputFormat": "JSON", "max": 50,
+        })
+        r.raise_for_status()
+        items = [it for it in r.json().get("items", [])
+                 if (it.get("downloadURL") or "").endswith(".tif")
+                 and (it.get("sizeInBytes") or 0) > 0]
+        if not items:
+            print("dem10: no 1/3 arc-second product for the bbox — skipping")
+            return
+        newest = max(items, key=lambda it: it.get("publicationDate") or "")
+        url = newest["downloadURL"]
+        src = raw_dir / url.rsplit("/", 1)[-1]
+        if src.exists() and not force:
+            print(f"  {src.name}: present — skipping download")
+        else:
+            print(f"  {src.name}: downloading...")
+            with client.stream("GET", url) as resp:
+                resp.raise_for_status()
+                tmp = src.with_suffix(".part")
+                with tmp.open("wb") as fh:
+                    for chunk in resp.iter_bytes(1 << 20):
+                        fh.write(chunk)
+                tmp.replace(src)
+            print(f"  {src.name}: {src.stat().st_size/1e6:.0f} MB")
+
+    dst = utm_dir / f"{src.stem}_utm10_{int(DEM10_RES_M)}m.tif"
+    if dst.exists() and not force:
+        print(f"  {dst.name}: present — skipping warp")
+        return
+    print(f"  {dst.name}: warping to {DEM10_CRS} @ {DEM10_RES_M:g} m...")
+    with rasterio.open(src) as ds:
+        win = from_bounds(*DEM10_CLIP_4326, transform=ds.transform)
+        data = ds.read(1, window=win, masked=True).filled(np.nan)
+        wt = ds.window_transform(win)
+        left, bottom, right, top = array_bounds(data.shape[0], data.shape[1], wt)
+        tr, w, h = calculate_default_transform(
+            ds.crs, DEM10_CRS, data.shape[1], data.shape[0],
+            left=left, bottom=bottom, right=right, top=top,
+            resolution=DEM10_RES_M)
+        out = np.full((h, w), np.nan, dtype="float32")
+        reproject(source=data, destination=out,
+                  src_transform=wt, src_crs=ds.crs, src_nodata=np.nan,
+                  dst_transform=tr, dst_crs=DEM10_CRS, dst_nodata=np.nan,
+                  resampling=Resampling.bilinear)
+        prof = dict(driver="GTiff", dtype="float32", count=1, width=w, height=h,
+                    crs=DEM10_CRS, transform=tr, nodata=-999999.0,
+                    compress="deflate", tiled=True,
+                    blockxsize=512, blockysize=512)
+        with rasterio.open(dst, "w", **prof) as sink:
+            sink.write(np.where(np.isfinite(out), out, -999999.0)
+                       .astype("float32"), 1)
+    print(f"  {dst.name}: {dst.stat().st_size/1e6:.0f} MB")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--force", action="store_true")
-    ap.add_argument("--only", nargs="*", help="subset of dataset keys (or 'dem')")
+    ap.add_argument("--only", nargs="*",
+                    help="subset of dataset keys (or 'dem' / 'dem10')")
     args = ap.parse_args()
 
-    keys = set(args.only or [*RLIS_MEMBERS, *ARCGIS_LAYERS, *PHASE2_LAYERS, "dem"])
+    keys = set(args.only or [*RLIS_MEMBERS, *ARCGIS_LAYERS, *PHASE2_LAYERS,
+                             "dem", "dem10"])
     if keys & set(RLIS_MEMBERS):
         extract_rlis(args.force, keys)
     for slug, (url, fields) in ARCGIS_LAYERS.items():
@@ -554,6 +648,8 @@ def main() -> None:
     derive_fema_split(args.force)
     if "dem" in keys:
         fetch_dem_tiles(args.force)
+    if "dem10" in keys:
+        fetch_dem10_fallback(args.force)
     if failed:
         raise SystemExit(f"s0 finished with failures: {failed}")
     print("s0 done.")

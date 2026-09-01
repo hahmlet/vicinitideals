@@ -291,3 +291,53 @@ def test_county_aware_unincorporated_routing():
     assert cfg.jurisdiction_for_juris_city("MILWAUKIE", None) == "milwaukie"
     # unmapped
     assert cfg.jurisdiction_for_juris_city("NOWHERE", "C") is None
+
+
+def test_slope_coverage_grades_match_the_dem_tiles_that_exist() -> None:
+    """A coverage grade is a claim about data, and this one was false.
+
+    Every jurisdiction in `slope_coverage` read `grade: A, note: "1 m DEM"`
+    until 2026-09-01, including four cities -- Gresham, Troutdale, Fairview,
+    Wood Village -- for which USGS 3DEP publishes no 1 m product at any
+    vintage. Nothing checked the claim against the tiles, so the report told a
+    reader Gresham's slope was grade A while every Gresham lot carried NaN.
+
+    This pins the four at X (no coverage) and the partial ones below A, so the
+    grades cannot silently drift back to flattery. If a lidar project is ever
+    flown out there, this test is the thing that has to be edited on purpose.
+    """
+    from common import load_overlays
+
+    cov = load_overlays().slope_coverage
+    no_one_metre = {"gresham", "troutdale", "fairview", "wood_village"}
+    for jk in no_one_metre:
+        assert cov[jk].grade == "X", f"{jk} has no 1 m lidar at all"
+        assert "ZERO 1 m" in cov[jk].note
+    partial = {"portland", "happy_valley", "multnomah_unincorporated",
+               "clackamas_unincorporated"}
+    for jk in partial:
+        assert cov[jk].grade in ("B", "C"), f"{jk} is only partly on 1 m lidar"
+    assert {jk for jk, c in cov.items() if c.grade == "A"} == {
+        "oregon_city", "gladstone", "milwaukie", "west_linn", "wilsonville",
+        "tualatin"}
+
+
+def test_the_coarse_dem_is_configured_conservatively() -> None:
+    """The calibrated statistic, and the switch that is not ours to flip.
+
+    `max` over a 5-cell (50 m) box is the operating point measured against the
+    1 m DEM on the 184,101 lots where both answer: 1.50% of genuinely steep
+    lots wrongly cleared, 91.8% of genuinely flat ones kept. A smaller window
+    or a percentile instead of the max clears more steep lots; both were
+    measured and both are worse for a screen whose green means "spend money".
+
+    `fallback_10m_may_green` stays false until a human decides otherwise --
+    it is worth about 7,231 lots and it is not a technical question.
+    """
+    from common import load_overlays
+
+    sl = load_overlays().slope
+    assert sl.fallback_10m is True
+    assert sl.fallback_10m_stat == "max"
+    assert sl.fallback_10m_window == 5
+    assert sl.fallback_10m_may_green is False

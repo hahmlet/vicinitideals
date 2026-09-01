@@ -5,8 +5,12 @@ agent cannot do alone. The agent maintains it: items get added when work
 surfaces them, and struck through (with a date and what happened) when they
 close. Items are ordered by how many lots ride on them, biggest first.
 
-Pipeline state when last updated (2026-09-01): **green 11,824 · review 31,912
-· red 204,902** across 13 cities laid out with real site plans.
+Pipeline state when last updated (2026-09-01, after the Portland parking
+correction): **green 10,179 · review 30,185 · red 208,274** across 13 cities
+laid out with real site plans. Portland lost 1,645 greens that morning because
+we found we had been screening it against a parking table written for a
+different kind of plat — its own numbers for the plat we actually draw are
+bigger, so its courts are bigger, so fewer lots hold one.
 
 ---
 
@@ -37,7 +41,43 @@ Note: the "24 ft when nobody published a number" rule from item 2 does NOT
 apply here — the county *did* publish a number, in a drawing. Assuming over
 the top of a published number is the one thing the system refuses to do.
 
-## 2. Two short emails: confirm the assumed 24 ft aisle — **hardens 985 greens**
+## 2. One decision: may a coarser elevation map grade a lot green? — **7,231 lots**
+
+The single biggest number on this list, and it is one yes-or-no answer.
+
+Four whole cities — Gresham, Troutdale, Fairview, Wood Village — have produced
+**zero** green lots for the life of this pipeline, and Portland's eastern third
+has been quietly held back too. Not because of any zoning rule. Because the
+federal government never flew the fine-resolution laser survey out there. The
+screen treats "we do not know the slope" the same as "the slope is bad", so
+every one of those lots sits in the human queue forever.
+
+There is a coarser national elevation map that *does* cover all of it — about
+one reading every 30 feet instead of every 3 feet. It is now wired in, and
+every one of those lots has a slope number for the first time. The question is
+what that number is allowed to conclude.
+
+We measured it rather than guessing: on the 184,101 lots where **both** maps
+answer, the rule we would use agrees with the fine map well enough to clear
+**7,231 lots straight to green**, and it would be **wrong about 1.5% of the
+time** — roughly 110 of those 7,231 would turn out, on a site visit, to be
+steeper than they looked. It is wrong in the safe direction the rest of the
+time: it hardly ever calls a flat lot steep.
+
+So the trade is: **+7,231 green lots (a 71% increase on the whole corpus),
+against roughly 110 of them being duds you would discover on the first visit.**
+
+- **Yes** — flip one setting, re-run, those lots grade green like any other,
+  and a column records that their slope came from the coarse map so anyone can
+  filter them back out.
+- **No** — they stay in the review queue, but now with a slope number attached
+  instead of a blank, which at least makes the queue sortable.
+
+Nothing else is blocked on this; it is purely how bold to be. Same shape as the
+drive-aisle call you made on 2026-08-31, and the same reason it is yours: it
+trades a small chance of wasted diligence for a large amount of pipeline.
+
+## 3. Two short emails: confirm the assumed 24 ft aisle — **hardens 985 greens**
 
 Milwaukie (845 greens) and Wilsonville (140 greens) publish a 9 × 18 parking
 stall and **no drive-aisle width anywhere** — checked all the way through the
@@ -57,7 +97,7 @@ with a different number, the agent re-runs with theirs the same day.
 These lots are filterable: the `geometry_assumed` column in
 `lots_results.csv`, and the greens they produce are itemized in `summary.md`.
 
-## 3. One question for a building-code expert: accessible (ADA) parking — **every city at once**
+## 4. One question for a building-code expert: accessible (ADA) parking — **every city at once**
 
 Open question, deliberately parked: does Oregon's building code (OSSC) require
 one accessible stall — 13 ft wide with its access aisle — for a **4-unit,
@@ -70,7 +110,7 @@ no-elevator building with surface parking**?
 One architect or code consultant can answer this in a sentence. It was parked
 rather than guessed precisely because the answer moves lots everywhere at once.
 
-## 4. Business decision: Milwaukie legally caps parking at 4 stalls — **845 greens**
+## 5. Business decision: Milwaukie legally caps parking at 4 stalls — **845 greens**
 
 Milwaukie's code caps a quadplex at **1 parking space per unit — 4 total**,
 which is exactly the marketability floor. Every legal Milwaukie site plan is a
@@ -81,7 +121,7 @@ Decision needed: **is 1 stall per unit marketable for this product?** If not,
 Milwaukie's 845 greens should be deprioritized before any diligence money is
 spent on them. No agent work either way — this is a product call.
 
-## 5. Data ask: sewer coverage in Happy Valley, unincorporated Clackamas, Tualatin
+## 6. Data ask: sewer coverage in Happy Valley, unincorporated Clackamas, Tualatin
 
 These areas' sewer districts (WES / Clean Water Services) do not publish their
 sanitary main maps, so lots there can never clear the "sewer confirmed" check
@@ -92,7 +132,7 @@ inside a district stays yellow without the mains.
 The fix is a records request or data ask to the districts for their main
 layers. A utility will often hand this over on request; it is not public GIS.
 
-## 6. Start signing: the only thing between FLATS and trusted GREEN
+## 7. Start signing: the only thing between FLATS and trusted GREEN
 
 Every zoning number in the corpus is *encoded* — transcribed with a quote —
 but none is *verified*: nobody has yet sat down, read the quoted sentence
@@ -105,7 +145,7 @@ sessions**, and in what order. Sensible order is by greens at stake: Gresham
 and Happy Valley first, then Portland. Each session is you (or a delegate)
 reading quotes against numbers — tedious, but each one is permanent.
 
-## 7. Optional legal read: the state's "use single-family standards" rule
+## 8. Optional legal read: the state's "use single-family standards" rule
 
 OAR 660-046-0220(2)(e)(E) says a quadplex's parking dimensions must be *the
 same as single-family's in the same zone* — and no city writes down what its
@@ -116,7 +156,7 @@ but creates no risk. A land-use attorney could say whether it's worth pressing
 in any particular city. Perfectly fine to accept as-is; listed so the
 conservatism is a choice, not an accident.
 
-## ~~8. Housekeeping: two old feature branches~~ — closed 2026-09-01
+## ~~9. Housekeeping: two old feature branches~~ — closed 2026-09-01
 
 You delegated the call. Verdict: both branches (plus a third found in the
 audit, `email-multi-deal-triage`) were dead — `draw-type`'s feature had
@@ -131,13 +171,23 @@ alone.
 
 ## Queued for the agent — no action needed from you, listed so nothing is invisible
 
-- **Portland-administered pockets** (PCC 33.266 applied to the 1,489
-  unincorporated-Multnomah lots Portland administers) — worth ~109 lots net
-  after overlays; can only add greens.
+- ~~**Portland-administered pockets** (PCC 33.266 applied to the 1,489
+  unincorporated-Multnomah lots Portland administers)~~ Closed 2026-09-01:
+  read, and it changes nothing. Portland's chapter and the county's state the
+  same 9 × 18 stall, and the county is the stricter of the two on every other
+  dimension, so the pockets keep the county's numbers. The prize was also
+  smaller than billed — 1,806 of those lots die on Portland's Constrained
+  Sites overlay before parking is reached, leaving 39. What is genuinely open
+  there is *which code administers the pockets*, which is a question for a
+  planner, not a reading.
+- ~~**Unencoded zone: Lake Oswego NC (93 lots)**~~ Closed 2026-09-01 as
+  worthless for now: Lake Oswego is not in the lot inventory at all — the
+  pipeline evaluates zero lots there — so encoding a zone in it moves nothing
+  until the parcel data reaches Clackamas' western cities.
 - **Wilsonville Public Works Standards + Gresham's engineering manual** —
   both hold access widths for busy-street frontages that no corpus file
   declares yet; fetch and read.
-- **Unencoded zones**: Lake Oswego NC (93 lots), Wilsonville V and TC.
+- **Unencoded zones**: Wilsonville V and TC (Lake Oswego closed above).
 - **Corner-lot status**: 14 jurisdictions now define what a corner lot is;
   nothing yet computes which lots *are* corners. Worth ~10 ft of buildable
   envelope wherever corner variants exist (e.g. all of Wood Village).
@@ -149,6 +199,11 @@ alone.
   no green moved anywhere. LR-7's building envelopes still reflect the old
   smaller setbacks until the next full pipeline run; at most 15 non-green
   lots ride on that.
+- **Coarse-DEM plumbing shipped 2026-09-01** — the 1/3 arc-second national
+  DEM is fetched, warped and sampled, `slope_source` rides in the CSV, and the
+  false "grade A / 1 m DEM" coverage claims for four cities with no elevation
+  data at all are corrected. Only the green/no-green switch is left, and that
+  is item 2 above.
 - **"Reaches with no field" refusals**: e.g. Wood Village's forward-access
   rule applies to the pod and the data model has no field to hold it — model
   extension, batched with the next such find.

@@ -861,11 +861,36 @@ class OverlaySpec(BaseModel):
 
 
 class SlopeTiers(BaseModel):
-    """Cutlines applied to a per-lot slope statistic at REPORT time (s7)."""
+    """Cutlines applied to a per-lot slope statistic at REPORT time (s7).
+
+    `fallback_10m_*` govern the coarse DEM that stands in where 3DEP has no
+    1 m lidar at all. USGS's metro lidar projects stop at roughly easting
+    540,000 (UTM 10N, about longitude -122.48), which puts every lot in
+    Gresham, Troutdale, Fairview and Wood Village -- and Portland's eastern
+    third -- outside 1 m coverage. The 1/3 arc-second (~10 m) national DEM is
+    seamless and does cover them; it is a different instrument and is labelled
+    as one in `slope_source`.
+    """
 
     stat: Literal["mean", "p85", "max"] = "p85"
     ideal_max_pct: float = 10.0
     tolerable_max_pct: float = 20.0  # above this: cost_prohibitive
+
+    # --- coarse fallback -----------------------------------------------
+    fallback_10m: bool = True
+    # Statistic taken over a window of 10 m cells centred on the lot. `max`
+    # over 5 cells (a 50 m box) is the calibrated choice: measured against the
+    # 1 m answer on the 184,101 lots where both DEMs exist, `max5 <= 10%`
+    # wrongly clears 1.50% of genuinely steep lots while keeping 91.8% of the
+    # genuinely flat ones. Smaller windows keep more flat lots and clear more
+    # steep ones; larger windows the reverse.
+    fallback_10m_stat: Literal["max", "p95", "p85", "mean"] = "max"
+    fallback_10m_window: int = 5
+    # Whether a lot whose slope came from the coarse DEM may grade GREEN.
+    # False = it is reported with a number and a source but still goes to the
+    # human queue. This is a business call, not a technical one: see
+    # docs/HUMAN_TODO.md.
+    fallback_10m_may_green: bool = False
 
     def tier(self, slope_pct: float) -> str:
         if slope_pct <= self.ideal_max_pct:

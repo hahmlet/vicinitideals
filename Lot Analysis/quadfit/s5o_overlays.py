@@ -36,6 +36,9 @@ sys.path.insert(0, str(TOOL_DIR))
 from common import DATA_DIR, load_geojson_features, load_overlays, read_stage, write_stage
 
 RAW_DIR = DATA_DIR / "raw"
+# 1/3 arc-second (~10 m) national DEM, pre-warped to the 1 m tiles'
+# CRS by s0. Stands in east of the metro lidar footprint.
+DEM10_DIR = RAW_DIR / "dem10_utm"
 SHRINK_FT = 0.5  # any-touch test excludes pure boundary contact
 SEWER_LAYERS = [
     "util_sewer_portland", "util_sewer_gresham", "util_sewer_troutdale",
@@ -230,6 +233,95 @@ class DemIndex:
         return float(v.mean()), float(np.percentile(v, 85)), float(v.max())
 
 
+def _fill_from_coarse_dem(lots, tiers) -> None:
+    """Fill slope columns from the ~10 m DEM wherever the 1 m one had nothing.
+
+    3DEP's 1 m lidar for this metro comes from two projects (OR_PortlandMetro,
+    OR_OLCMetro_2019) whose footprints stop at roughly UTM 10N easting 540,000
+    -- about longitude -122.48. Everything east of that line has NO 1 m product
+    at any vintage: Gresham, Troutdale, Fairview, Wood Village entirely, and
+    Portland's eastern third. Those lots carried NaN slope, which s7 tiers as
+    "unknown", which is a review trigger -- so four whole cities could never
+    grade green for want of an elevation pixel, while `slope_coverage` in
+    overlays.yaml called them grade A.
+
+    The 1/3 arc-second national DEM is seamless and covers all of it. It is a
+    coarser instrument, so the statistic is deliberately not the same one: a
+    lot is one to four cells wide here, and the honest reading of a handful of
+    cells is their MAXIMUM over a window around the lot, not a percentile
+    across a polygon. `slope_source` records which DEM answered, and s7
+    decides separately what a coarse answer is allowed to conclude.
+    """
+    import numpy as np
+    import rasterio
+    from pyproj import Transformer
+
+    from common import CRS_WORKING
+
+    tifs = sorted(DEM10_DIR.glob("*.tif")) if DEM10_DIR.exists() else []
+    if not tifs:
+        print("  slope: no coarse (10 m) DEM present — eastern lots stay NaN")
+        return
+    need = ~np.isfinite(np.asarray(lots["slope_p85_pct"], dtype=float))
+    if not need.any():
+        print("  slope: 1 m DEM covered every lot — coarse fallback unused")
+        return
+
+    ds = rasterio.open(tifs[0])
+    elev = ds.read(1, masked=True).filled(np.nan).astype(np.float32)
+    gy, gx = np.gradient(elev, ds.res[0])
+    slope = (np.sqrt(gx * gx + gy * gy) * 100.0).astype(np.float32)
+
+    tf = Transformer.from_crs(CRS_WORKING, ds.crs, always_xy=True)
+    targets = [env if env is not None and not env.is_empty else lot_geom
+               for env, lot_geom in zip(lots["geom"], lots["lot_geom"])]
+    cx = np.array([g.centroid.x if g is not None and not g.is_empty else np.nan
+                   for g in targets])
+    cy = np.array([g.centroid.y if g is not None and not g.is_empty else np.nan
+                   for g in targets])
+    finite = np.isfinite(cx) & np.isfinite(cy)
+    ux = np.full(len(cx), np.nan)
+    uy = np.full(len(cy), np.nan)
+    ux[finite], uy[finite] = tf.transform(cx[finite], cy[finite])
+
+    rows, cols = rasterio.transform.rowcol(
+        ds.transform, np.nan_to_num(ux, nan=ds.bounds.left - 1e6),
+        np.nan_to_num(uy, nan=ds.bounds.bottom - 1e6))
+    rows = np.asarray(rows)
+    cols = np.asarray(cols)
+    r = max(int(tiers.fallback_10m_window) // 2, 0)
+    h, w = slope.shape
+    inside = (rows >= r) & (rows < h - r) & (cols >= r) & (cols < w - r) & finite
+    use = need & inside
+    if not use.any():
+        print("  slope: coarse DEM covers none of the 1 m gaps")
+        return
+
+    ri, ci = rows[use], cols[use]
+    stack = np.stack([slope[ri + dr, ci + dc]
+                      for dr in range(-r, r + 1)
+                      for dc in range(-r, r + 1)], axis=1)
+    with np.errstate(all="ignore"):
+        agg = {"max": np.nanmax(stack, axis=1),
+               "p95": np.nanpercentile(stack, 95, axis=1),
+               "p85": np.nanpercentile(stack, 85, axis=1),
+               "mean": np.nanmean(stack, axis=1)}[tiers.fallback_10m_stat]
+        mean = np.nanmean(stack, axis=1)
+        mx = np.nanmax(stack, axis=1)
+
+    for col, vals in (("slope_p85_pct", agg), ("slope_mean_pct", mean),
+                      ("slope_max_pct", mx)):
+        cur = np.asarray(lots[col], dtype=float)
+        cur[use] = vals
+        lots[col] = cur
+    src = np.asarray(lots["slope_source"], dtype=object)
+    src[use] = "dem_10m"
+    lots["slope_source"] = src
+    print(f"  slope: coarse {tiers.fallback_10m_stat}{tiers.fallback_10m_window} "
+          f"filled {int(use.sum()):,} of {int(need.sum()):,} lots the 1 m DEM "
+          f"could not reach")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--skip-slope", action="store_true")
@@ -286,6 +378,9 @@ def main() -> None:
             lots["slope_mean_pct"] = np.nan
             lots["slope_p85_pct"] = np.nan
             lots["slope_max_pct"] = np.nan
+            lots["slope_source"] = "none"
+            if cfg.slope.fallback_10m:
+                _fill_from_coarse_dem(lots, cfg.slope)
         else:
             print(f"  slope: {len(tifs)} DEM tiles")
             dem = DemIndex(dem_dir)
@@ -306,6 +401,10 @@ def main() -> None:
             lots["slope_max_pct"] = arr[:, 2]
             ok = int(np.isfinite(arr[:, 1]).sum())
             print(f"  slope computed for {ok:,}/{len(lots):,} lots")
+            lots["slope_source"] = np.where(np.isfinite(arr[:, 1]),
+                                            "dem_1m", "none")
+            if cfg.slope.fallback_10m:
+                _fill_from_coarse_dem(lots, cfg.slope)
 
     # Sewer main proximity (all city layers pooled; nearest distance).
     sewer_geoms = []

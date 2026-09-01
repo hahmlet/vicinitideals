@@ -208,7 +208,7 @@ CLACKAMAS_JURIS = (
 
 
 def attribute_and_triage(lots, fp_names, rules, has_siteplan, flag_ovl_cols,
-                         min_stalls):
+                         min_stalls, ocfg=None):
     """Add per-lot `flag_suspect`, `binding_constraint`, and `triage` columns.
 
     `binding_constraint` = the single first-hit reason a lot is NOT buildable
@@ -293,6 +293,26 @@ def attribute_and_triage(lots, fp_names, rules, has_siteplan, flag_ovl_cols,
                             ("cost_prohibitive", "unknown"))
     else:
         slope_bad = np.zeros(n, dtype=bool)
+    # A slope read off the coarse (~10 m) DEM answers a question the 1 m lidar
+    # could not answer at all, because 3DEP has no 1 m product east of about
+    # longitude -122.48 -- Gresham, Troutdale, Fairview and Wood Village
+    # entirely, and Portland's eastern third. Until 2026-09-01 those lots
+    # carried no elevation at all and were held at review as "unknown", which
+    # is why four whole cities had never produced a single green.
+    #
+    # A number from a coarser instrument is not the same claim as a number from
+    # a finer one, and this one is measurably softer: calibrated against the
+    # 1 m answer on the 184,101 lots where both DEMs exist, the rule used here
+    # (max slope over a 50 m box <= 10%) wrongly clears 1.50% of genuinely
+    # steep lots. So by default a coarse answer is REPORTED but may not GREEN
+    # -- the lot keeps its place in the human queue with a number attached
+    # instead of a blank. `slope.fallback_10m_may_green` flips that; it is a
+    # business call about 7,231 lots and 1.5%, not a technical one, and it
+    # lives in docs/HUMAN_TODO.md until somebody makes it.
+    coarse_may_green = bool(ocfg and ocfg.slope.fallback_10m_may_green)
+    if "slope_source" in lots.columns and not coarse_may_green:
+        slope_bad = slope_bad | (
+            lots["slope_source"].astype(str).to_numpy() == "dem_10m")
     if "sewer_main_dist_ft" in lots.columns:
         sew = pd.to_numeric(lots["sewer_main_dist_ft"], errors="coerce").to_numpy()
         near_main = np.isfinite(sew) & (sew <= SEWER_REVIEW_FT)
@@ -543,7 +563,8 @@ def main() -> None:
     flag_ovl_cols = [f"ovl_{s.key}" for s in ocfg.overlays
                      if s.action == "flag" and f"ovl_{s.key}" in lots.columns]
     min_stalls = fps.siteplan.min_stalls() if (has_siteplan and fps.siteplan) else 0
-    attribute_and_triage(lots, fp_names, rules, has_siteplan, flag_ovl_cols, min_stalls)
+    attribute_and_triage(lots, fp_names, rules, has_siteplan, flag_ovl_cols,
+                         min_stalls, ocfg)
 
     elig = lots[lots["eligible"]]
     frontier_cells_e = np.array(
@@ -1065,13 +1086,47 @@ def main() -> None:
                  f"{np.percentile(depths, 25):.1f} | {np.percentile(depths, 75):.1f} | "
                  f"{100 * (depths >= 25).mean():.1f}% |")
 
+    if "slope_source" in lots.columns:
+        src = lots["slope_source"].astype(str)
+        n10 = int((src == "dem_10m").sum())
+        if n10:
+            L.append("\n### Which DEM answered\n")
+            L.append("USGS 3DEP's 1 m lidar for this metro comes from two "
+                     "projects that stop at about longitude -122.48. East of "
+                     "that line there is no 1 m product at any vintage, so "
+                     "those lots are read off the seamless 1/3 arc-second "
+                     f"(~10 m) DEM instead - {n10:,} lots. The statistic there "
+                     "is the MAXIMUM slope over a "
+                     f"{ocfg.slope.fallback_10m_window * 10:.0f} m box, not a "
+                     "polygon percentile, because a lot is one to four cells "
+                     "wide at that resolution.\n")
+            L.append("| jurisdiction | 1 m lidar | 10 m fallback | no data |")
+            L.append("|---|---:|---:|---:|")
+            for jk in sorted(lots["jurisdiction"].astype(str).unique()):
+                m = (lots["jurisdiction"].astype(str) == jk)
+                a = int((m & (src == "dem_1m")).sum())
+                b = int((m & (src == "dem_10m")).sum())
+                c = int((m & (src == "none")).sum())
+                L.append(f"| {jk} | {a:,} | {b:,} | {c:,} |")
+            if not ocfg.slope.fallback_10m_may_green:
+                held = int(((src == "dem_10m")
+                            & (lots["triage"] == "review")).sum())
+                L.append(
+                    f"\n**{held:,} lots are held at review by the source "
+                    "alone** - they pass every hard test and the coarse DEM "
+                    "calls them buildable, but a coarse answer is not "
+                    "currently allowed to grade green "
+                    "(`slope.fallback_10m_may_green: false`). Measured against "
+                    "the 1 m answer where both DEMs exist, the rule used here "
+                    "wrongly clears 1.50% of genuinely steep lots.")
+
     L.append("\n## Blind spots (results are a ceiling)\n")
     L.append("- Private easements (title reports only) are not modeled.")
     L.append("- Portland tree preservation and historic/design review are NOT "
              "modeled (cost/process, not mapped kills). Environmental overlays, "
              "floodplain, and slope ARE applied per the overlay/slope sections "
              "above — but only where source data exists (see coverage matrix; "
-             "slope 'unknown' lots have no DEM tile).")
+             "slope 'unknown' lots have neither a 1 m tile nor a 10 m cell).")
     L.append("- Existing structures assumed demolished; building value & year built "
              "are carried per-lot for later filtering.")
     L.append("- Conversion lots in a city whose code states a stall AND an aisle: "
@@ -1096,8 +1151,8 @@ def main() -> None:
     phase2_cols = [c for c in lots.columns
                    if c.startswith("ovl_") and not c.endswith("_sqft")]
     phase2_cols += [c for c in (
-        "slope_p85_pct", "slope_tier", "sewer_main_dist_ft", "in_sewer_district",
-        "envelope_setback_sqft") if c in lots.columns]
+        "slope_p85_pct", "slope_tier", "slope_source", "sewer_main_dist_ft",
+        "in_sewer_district", "envelope_setback_sqft") if c in lots.columns]
     # `geometry_assumed` rides in the CSV beside the plan it qualifies: a
     # reviewer opening a Milwaukie or Wilsonville row needs the caveat next to
     # the stall count, not three files away in footprints.yaml.

@@ -56,9 +56,21 @@ def _base_row(**over):
     return r
 
 
-def _run(rows, has_siteplan=False, min_stalls=4):
+class _Slope:
+    def __init__(self, may_green):
+        self.fallback_10m_may_green = may_green
+
+
+class _Ocfg:
+    """Only the slope knob `attribute_and_triage` reads off the config."""
+    def __init__(self, may_green=False):
+        self.slope = _Slope(may_green)
+
+
+def _run(rows, has_siteplan=False, min_stalls=4, ocfg=None):
     lots = pd.DataFrame(rows)
-    attribute_and_triage(lots, FP, _Rules(), has_siteplan, ["ovl_flag"], min_stalls)
+    attribute_and_triage(lots, FP, _Rules(), has_siteplan, ["ovl_flag"],
+                         min_stalls, ocfg)
     return lots
 
 
@@ -230,3 +242,49 @@ def test_a_real_review_trigger_still_fires_on_an_assumed_lot():
     )["triage"]
     assert only == "review"
 
+
+
+def test_a_coarse_dem_answer_is_reported_but_may_not_green() -> None:
+    """The eastern metro has no 1 m lidar, and a 10 m answer is a softer claim.
+
+    USGS 3DEP's two metro lidar projects stop at about longitude -122.48. East
+    of it there is no 1 m product at any vintage, which left Gresham,
+    Troutdale, Fairview and Wood Village with NO elevation at all -- tiered as
+    "unknown", which is a review trigger, which is why four whole cities had
+    never produced one green lot. The 1/3 arc-second DEM covers all of it.
+
+    But a number off a coarser instrument is not the same claim: calibrated
+    against the 1 m answer on the 184,101 lots where both exist, the rule used
+    (max slope over a 50 m box <= 10%) wrongly clears 1.50% of genuinely steep
+    lots. So the default is that a coarse answer is printed and the lot still
+    goes to a human. Flipping `fallback_10m_may_green` is the business call.
+    """
+    rows = [
+        _base_row(slope_source="dem_1m"),      # fine instrument -> green
+        _base_row(slope_source="dem_10m"),     # coarse -> review, not green
+        _base_row(slope_source="none"),        # no DEM at all
+    ]
+    rows[2]["slope_tier"] = "unknown"
+
+    held = _run(rows, ocfg=_Ocfg(may_green=False))
+    assert list(held["triage"]) == ["green", "review", "review"]
+    # It is held by the SOURCE, not by a failed test.
+    assert (held["binding_constraint"] == "").all()
+
+    allowed = _run(rows, ocfg=_Ocfg(may_green=True))
+    assert list(allowed["triage"]) == ["green", "green", "review"]
+    # A lot with no DEM at all is still review either way -- the switch buys
+    # nothing where there is no number to trust.
+
+
+def test_the_coarse_gate_is_off_when_the_column_is_absent() -> None:
+    """A frame from before the fallback shipped must triage exactly as before.
+
+    s5o only writes `slope_source` when it reaches the slope block at all
+    (`--skip-slope` does not), so s7 has to tolerate its absence rather than
+    assume every parquet on disk carries it.
+    """
+    rows = [_base_row(), _base_row(slope_tier="unknown")]
+    lots = _run(rows, ocfg=_Ocfg(may_green=False))
+    assert list(lots["triage"]) == ["green", "review"]
+    assert "slope_source" not in lots.columns

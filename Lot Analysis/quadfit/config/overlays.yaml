@@ -21,22 +21,41 @@ slope:
   tolerable_max_pct: 20   # <= : tolerable (stepped foundation / retaining)
                           #  > : cost_prohibitive (also where hillside review
                           #      regimes start breaking the by-right premise)
+  # --- coarse fallback where 3DEP has no 1 m lidar at all -----------------
+  # Both metro 1 m projects (OR_PortlandMetro_B24, OR_OLCMetro_2019) stop at
+  # about UTM 10N easting 540,000 -- longitude -122.48 -- and the National Map
+  # returns ZERO 1 m products east of it (queried over downtown Gresham,
+  # 2026-09-01). The 1/3 arc-second (~10 m) DEM is seamless and does cover it.
+  fallback_10m: true
+  fallback_10m_stat: max  # over a window of 10 m cells, not a polygon: a lot
+  fallback_10m_window: 5  # is 1-4 cells wide here, so max-of-50m-box is the
+                          # honest statistic and the conservative one
+  # Calibrated on the 184,101 lots where BOTH DEMs answer: `max5 <= 10%`
+  # wrongly clears 1.50% of genuinely steep lots and keeps 91.8% of the
+  # genuinely flat ones. Whether that is good enough to grade a lot GREEN is a
+  # business call worth 7,231 lots; until it is made, a coarse answer is
+  # printed but still sends the lot to the human queue.
+  fallback_10m_may_green: false
 
+# 1 m lidar coverage MEASURED against the lots, 2026-09-01, not asserted.
+# Every line below used to read `grade: A, note: "1 m DEM"`; four of them were
+# describing cities with no elevation data at all. The percentage is the share
+# of that jurisdiction's lots the 1 m DEM actually returned a slope for.
 slope_coverage:
-  portland: {grade: A, note: "USGS 3DEP 1 m lidar DEM, uniform"}
-  gresham: {grade: A, note: "1 m DEM; but Gresham HGRO hazard mapping is NOT derivable from slope — city layer used (carve), per GDC 5.0214"}
-  troutdale: {grade: A, note: "1 m DEM"}
-  fairview: {grade: A, note: "1 m DEM"}
-  wood_village: {grade: A, note: "1 m DEM"}
-  multnomah_unincorporated: {grade: A, note: "1 m DEM"}
+  portland: {grade: B, note: "83% on USGS 3DEP 1 m lidar; the eastern third (east of ~-122.48) has no 1 m product at any vintage and falls back to the 10 m DEM"}
+  gresham: {grade: X, note: "ZERO 1 m coverage — outside both metro lidar footprints; 10 m fallback only. (Separately: Gresham HGRO hazard mapping is NOT derivable from slope — city layer used (carve), per GDC 5.0214)"}
+  troutdale: {grade: X, note: "ZERO 1 m coverage; 10 m fallback only"}
+  fairview: {grade: X, note: "ZERO 1 m coverage; 10 m fallback only"}
+  wood_village: {grade: X, note: "ZERO 1 m coverage; 10 m fallback only"}
+  happy_valley: {grade: C, note: "31% on 1 m lidar; the eastern two-thirds falls back to the 10 m DEM"}
+  multnomah_unincorporated: {grade: B, note: "91% on 1 m lidar; the eastern pockets fall back to the 10 m DEM"}
+  clackamas_unincorporated: {grade: B, note: "92% on 1 m lidar (urban Clackamas within widened bbox); the eastern edge falls back"}
   oregon_city: {grade: A, note: "1 m DEM (OR_OLCMetro/PortlandMetro lidar)"}
   gladstone: {grade: A, note: "1 m DEM"}
   milwaukie: {grade: A, note: "1 m DEM"}
   west_linn: {grade: A, note: "1 m DEM"}
   wilsonville: {grade: A, note: "1 m DEM"}
-  happy_valley: {grade: A, note: "1 m DEM"}
   tualatin: {grade: A, note: "1 m DEM"}
-  clackamas_unincorporated: {grade: A, note: "1 m DEM (urban Clackamas within widened bbox)"}
 
 sewer_coverage:
   portland: {grade: A, note: "BES mains, ownership+size"}
