@@ -220,27 +220,34 @@ def test_greshams_one_way_aisle_is_the_parking_aisle_not_the_fire_lane():
     assert geom.aisle_two_way_ft == 24.0
 
 
-def test_portland_takes_the_branch_a_parking_tract_reaches():
-    """Table 266-4's 90° row, not 33.266.120.D.1's 9 x 18.
+def test_portland_takes_the_branch_a_lot_reaches_and_not_the_tract_one():
+    """33.266.120.D.1's 9 x 18, not Table 266-4's 90° row.
 
-    Portland states both and routes between them in one sentence: 33.266.120
-    governs this building type, but 120.B.1 sends parking that is in a parking
-    TRACT to 33.266.130 instead, and 130.B agrees from the other side. A shared
-    rear court serving four attached houses on fee-simple lots is a tract, so
-    the table applies — 8'6" x 16 with a 20 ft aisle, where D.1 alone would have
-    said 9 x 18 and no aisle at all.
+    Portland states both and routes between them in one sentence, and this test
+    pinned the wrong end of it from 2026-08-25 to 2026-09-01. 33.266.120 governs
+    houses through fourplexes and applies to "all parking areas" of them; B.1
+    excepts parking that is in a parking TRACT and sends it to 33.266.130, where
+    Table 266-4 lives. 33.910 defines a tract as land created by a land DIVISION
+    that is "not a lot" — so a court on the same lot as the building it serves
+    is not a tract, and on `plat: one_lot`, the only path this spec will draw,
+    the table is expressly not reached.
 
-    Pinned because the section titled for the building is the one you find
-    first, and reading only that far is a court 9 ft deep instead of 36.
+    Pinned in this direction because the branch that costs lots is the one an
+    encoder walks past: D.1's rectangle is bigger than the table's in both
+    dimensions, and the section states no aisle at all, so the court is drawn on
+    an assumed one and comes out deeper. A test that pins the cheaper branch
+    reads as caution and is not.
     """
     from common import load_footprints
 
     geom = load_footprints().siteplan.geometry["portland"]
-    assert (geom.stall_width_ft, geom.stall_depth_ft) == (8.5, 16.0)
-    # Both columns print 20. Every other city in the corpus widens the two-way,
-    # so an assertion that they differ would look right and be wrong.
-    assert geom.aisle_one_way_ft == 20.0
-    assert geom.aisle_two_way_ft == 20.0
+    assert (geom.stall_width_ft, geom.stall_depth_ft) == (9.0, 18.0)
+    # No aisle in 33.266.120 at any angle, so Portland is drawn on the same
+    # assumption as Milwaukie and Wilsonville rather than on 266-4's 20 ft.
+    assert geom.aisle_assumed
+    assert geom.aisle_one_way_ft == 24.0
+    assert geom.aisle_two_way_ft == 24.0
+    assert "33.266.120" in geom.aisle_cite and "266-4" in geom.aisle_cite
     assert geom.lays_out()
 
 

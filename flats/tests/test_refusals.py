@@ -135,7 +135,7 @@ pytestmark = pytest.mark.unit
 #: definition is now encoded; what is refused is Figure 710-1, the drawing it
 #: points at, on the same grounds as Troutdale's -- a figure with no text
 #: saying what it adds to a test the words already state completely.
-EXPECTED = {"notes": 92, "comments": 107, "tests": 16}
+EXPECTED = {"notes": 92, "comments": 108, "tests": 16}
 #: Two of the sixteen are this file, which quotes the marker while
 #: explaining it, and one is a back-reference in test_gresham_rockwood --
 #: prose saying a zone *was* not encoded until it was. Left in rather than
@@ -150,12 +150,17 @@ EXPECTED = {"notes": 92, "comments": 107, "tests": 16}
 #: deliberately not encoded until LOC 50.03.003.2 is fetched. A decision that
 #: size should cost a line here.
 #:
-#: A refusal was added on 2026-08-24 for Portland's parking aisle and withdrawn
-#: on 2026-08-25, which is the ledger working. The refusal said 33.266.120
-#: states no aisle. It does not -- but 120.B.1 sends parking in a parking tract
-#: to 33.266.130, whose Table 266-4 states one, and the product reaches it. A
-#: refusal is a reading, and a reading that turns out to have stopped a section
-#: early comes back out.
+#: A refusal was added on 2026-08-24 for Portland's parking aisle, withdrawn on
+#: 2026-08-25, and REINSTATED on 2026-09-01. That round trip is the ledger
+#: working twice. The refusal said 33.266.120 states no aisle, which is true;
+#: it was withdrawn because 120.B.1 sends parking in a parking tract to
+#: 33.266.130, whose Table 266-4 states one. Following that pointer to the end
+#: is what brought it back: 130.B applies "except for residential vehicle areas
+#: subject to the standards of 33.266.120", and 33.910 defines a tract as land
+#: created by a land DIVISION that is "not a lot". A court on the same lot as
+#: its building is not a tract, so on the one-lot plat this screen draws, the
+#: table is out of reach and Portland states no aisle after all. Comments 107
+#: -> 108. A count that moves both ways is the point of counting.
 #:
 #: Notes fell 90 -> 89 on 2026-08-25 for the same reason and the worse case.
 #: Fairview R-6 refused a maximum FAR because the registry had no floor-area

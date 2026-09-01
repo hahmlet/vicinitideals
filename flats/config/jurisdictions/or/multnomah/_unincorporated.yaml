@@ -8,21 +8,39 @@ notes: >-
   citation; it needs its own encoding rather than invented provenance.
 
 
-  PARKING IS HALF READ, ON PURPOSE, AND THIS IS THE OTHER HALF. On 2026-08-30 MCC 39.6500 through
-  39.6600 was read into `defaults` -- stall, aisle, driveway, street setback, the Apartment row --
-  and it is the COUNTY's chapter. But R20, R10, R7, R5 and RF in this layer are
-  Portland-administered pockets whose dimensions already come from PCC 33.110, and 1,489 of this
-  layer's 1,578 pod-fitting lots are in them. Their parking chapter is PCC 33.266 and it has not
-  been fetched.
+  PARKING WAS HALF READ ON PURPOSE, AND THE OTHER HALF IS NOW READ -- to the opposite conclusion
+  from the one this note predicted. On 2026-08-30 MCC 39.6500 through 39.6600 went into `defaults`
+  -- stall, aisle, driveway, street setback, the Apartment row -- and it is the COUNTY's chapter.
+  R20, R10, R7, R5 and RF are Portland-administered pockets whose dimensions come from PCC 33.110,
+  and 1,489 of this layer's 1,578 pod-fitting lots are in them. This note used to say their parking
+  chapter, PCC 33.266, was unfetched and could only ADD greens when read. It was fetched and read
+  on 2026-09-01, and it adds nothing.
 
 
-  So every pocket lot is currently screened on the county's numbers, which are stricter than
-  Portland's in every dimension: 9 by 18 with a 25 ft aisle against 8.5 by 16 with 20, and a
-  20 ft drive against Portland's 9. That direction is safe -- a pocket lot that passes on these
-  could not fail on Portland's own -- and it is still wrong. Reading 33.266 into R20/R10/R7/R5/RF
-  as zone values is the next work here, and it can only add GREENs. Note that the quadfit mirror
-  holds ONE geometry per jurisdiction, so that reading cannot reach the site plan generator
-  without a per-zone geometry map beside the per-zone setback map already there.
+  What 33.266 states for a fourplex on ONE LOT: a 9 by 18 space (33.266.120.D.1), a 9-foot driveway
+  (D.2), and no aisle at any angle -- the word does not appear in the section. Table 266-4's 8.5 by
+  16 with a 20-foot aisle belongs to 33.266.130, which 120.B.1 reaches only for parking in a
+  parking TRACT, and 33.910 defines a tract as land created by a land division that is "not a lot".
+  A court on the same lot as its building is not one. See the Portland layer, where the same
+  sentence was read the other way for a week and is now corrected.
+
+
+  So the two codes AGREE on the rectangle -- 9 by 18 either way -- and where they differ the
+  county's number is the stricter one every time: a published 25-foot aisle against Portland's
+  silence, a 20-foot drive against 9, and a parking street setback equal to the building setback
+  (10 to 20 ft here) against Portland's flat 10. The pockets therefore keep the county's chapter,
+  and no pocket zone carries a parking value of its own.
+
+
+  WHAT IS ACTUALLY OPEN IS NOT THE READING, IT IS THE ADMINISTRATION. Nothing stored says whose
+  development code governs parking on this land. MCC 39 has no R5/R7/R10/R20 article at all --
+  which is exactly why the dimensions are read from PCC 33.110 -- but MCC's own parking chapter is
+  written for every base zone and hands parking to nobody. Until a document says which chapter
+  applies, the stricter one stands, which is the only choice that cannot manufacture a green. The
+  question is worth an email rather than an argument, and the whole prize is small: of the 2,027
+  pocket-area lots this pipeline evaluates, 1,806 die on Portland's Constrained Sites overlay and
+  160 on a minimum lot area, leaving 39 that fail only because no site plan fits (18 in R10, 19 in
+  R7, 2 in R20). Those 39 lots are what Portland's 9-foot driveway would be worth here.
 
 
   What the county's own zones get out of the reading now: LR-7 (89 pod-fitting lots), LR-5,
@@ -201,6 +219,15 @@ code:
 - id: "33.140"
   url: https://www.portland.gov/sites/default/files/code/140-ind-zones_1.pdf
   title: PCC Chapter 33.140 Employment and Industrial Zones
+# The other half of the pocket read. 33.110 gave R20/R10/R7/R5/RF their
+# dimensions in the port; their PARKING chapter is this one, and until
+# 2026-09-01 the county's own 39.6500 stood under them by default -- stricter
+# in every dimension, so safe, and wrong about whose code applies. Fetched into
+# this layer rather than borrowed from the Portland one for the reason stated
+# above 33.100: a document is evidence in the layer that cites it.
+- id: "33.266"
+  url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
+  title: PCC Chapter 33.266 Parking, Loading, and Transportation and Parking Demand Management
 - id: "39.or"
   url: https://multco.us/file/chapter_39_-_zoning_code/download
   title: MCC 39.4600-39.4645 Orient Rural Center Residential (OR)
@@ -339,14 +366,16 @@ defaults:
   # district boundary", a line no parcel record here carries. It is also why the
   # Apartment row is the only row there is.
   #
-  # THE PORTLAND POCKETS. R20, R10, R7, R5 and RF in this layer are
-  # Portland-administered and their dimensions are already read from PCC 33.110.
-  # These defaults are the COUNTY's chapter, and they sit under those zones until
-  # PCC 33.266 is read into them, which is the next thing to do here. Standing on
-  # the county's numbers in the meantime is the safe direction and not the right
-  # one: 9 by 18 with a 25 ft aisle is stricter than 33.266 in every dimension,
-  # so a pocket lot that passes on these could not fail on Portland's, and 1,489
-  # of this layer's 1,578 pod-fitting lots are pocket lots waiting for that read.
+  # THE PORTLAND POCKETS, RESOLVED 2026-09-01 AND NOT THE WAY THIS COMMENT
+  # EXPECTED. R20, R10, R7, R5 and RF are Portland-administered and their
+  # dimensions come from PCC 33.110; these defaults are the COUNTY's chapter and
+  # they sat under those zones pending a read of PCC 33.266. That read is done
+  # -- see the layer notes -- and 33.266.120 states the SAME 9 by 18 rectangle
+  # this section states, a narrower driveway, and no aisle whatsoever for a
+  # fourplex on one lot. The county's numbers are the stricter ones on every
+  # dimension where the two codes differ, so they stand for the pockets too and
+  # no pocket zone overrides them. What is unresolved is which code administers
+  # this land, not what either code says.
   parking_min_per_unit:
     # 39.6590(A)(3), "Apartment - One and one-half spaces for each dwelling
     # unit". Six spaces for this building, and the state cuts it to four:

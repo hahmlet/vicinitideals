@@ -7,7 +7,17 @@ parking in a parking tract to 33.266.130, which states one. The section was in
 a document already fetched, so the cross-reference ledger had nothing to
 report; the value had a citation that rendered, so the readiness ladder had
 nothing to report; the refusal was counted, so the refusal ledger had nothing
-to report. Everything was green and the number was wrong.
+to report. Everything was green and the number was unchecked.
+
+The end of that story, 2026-09-01: following the pointer was right and the
+number it produced was wrong anyway. 33.266.130.B applies "except for
+residential vehicle areas subject to the standards of 33.266.120", and a tract
+is defined by 33.910 as land created by a land DIVISION that is "not a lot" --
+so on the one-lot plat this screen draws, the redirect leads to a section that
+hands the building straight back. Table 266-4 now lives in a `unit_lots`
+variant, the aisle is refused again, and this row is back on OPEN. Nothing
+about the ledger changed: it is closed by a citation landing inside the target,
+and a citation that only applies on a plat we refuse is not one.
 
 :func:`test_the_ledger_speaks_on_the_state_the_corpus_was_actually_in`
 reconstructs that day and asserts this ledger would have spoken. It is the
@@ -98,6 +108,22 @@ def rows() -> list[Routing]:
 #: from neglect. That is the honest limit of a ledger built on citations, and
 #: the row should close by a field appearing rather than by a re-read.
 #:
+#: *A rule followed all the way, which sent us back.* Portland's 33.266.120 ->
+#: 33.266.130 was on the FOLLOWED list below from 2026-08-25 to 2026-09-01, and
+#: it came back here for the best possible reason: the section was read to the
+#: end. 120.B.1 excepts parking "in a parking tract" and sends it to 130, whose
+#: Table 266-4 states the aisle 120 does not. 130.B answers from its own side --
+#: the standards apply to all vehicle areas "except for residential vehicle
+#: areas subject to the standards of 33.266.120" -- and 33.910 defines a tract
+#: as land created by a land DIVISION that is "not a lot". A rear court on the
+#: same lot as its building is not a tract, so on `plat: one_lot` the redirect
+#: is real and reaches nothing. The corpus now cites Table 266-4 only in a
+#: `unit_lots` variant, and a variant for a path this screen refuses may not
+#: close a row the base case still has no answer for. That is the rule working
+#: twice: it held the row open when nobody had followed the pointer, and it
+#: holds it open now that following it produced an exception rather than a
+#: number.
+#:
 #: A row that is not on this list is the thing to look at. It means a number
 #: in use sits beside a sentence handing its standard to a section nobody
 #: opened.
@@ -127,6 +153,7 @@ OPEN = {
     "or/multnomah/gresham 4.1415 -> 10.1700",
     "or/multnomah/gresham 4.1508 -> 10.1700",
     "or/multnomah/portland 33.140.210 -> 33.140.215",
+    "or/multnomah/portland 33.266.120 -> 33.266.130",
 }
 
 #: The redirects the corpus can show somebody followed. Small, and worth
@@ -149,7 +176,6 @@ FOLLOWED = {
     "or/multnomah/fairview 19.115.020 -> 19.30",
     "or/multnomah/fairview 19.115.040 -> 19.30.030",
     "or/multnomah/gresham 9.0802 -> 9.0822",
-    "or/multnomah/portland 33.266.120 -> 33.266.130",
 }
 
 
@@ -172,20 +198,24 @@ def test_the_ledger_speaks_on_the_state_the_corpus_was_actually_in() -> None:
     copy of a document and a copy cannot go stale in the same direction the
     original does -- if the extraction of 33.266 ever shifts, this test should
     move with it or fail, not quietly keep testing a file nobody ships.
+
+    The reconstruction got smaller on 2026-09-01, because the corpus walked
+    most of the way back to that state on purpose: the base stall IS .120.D.1
+    again and there are no aisle fields to strip. What is stripped now is the
+    `unit_lots` variant that carries Table 266-4, which is the only thing left
+    in the layer that has ever been read from inside 33.266.130.
     """
     layer = load_rules()["or/multnomah/portland"]
     stall = layer.defaults["parking_stall_width_ft"]
-    for field in (
-        "parking_stall_depth_ft",
-        "parking_aisle_one_way_ft",
-        "parking_aisle_two_way_ft",
-    ):
-        layer.defaults.pop(field)
+    for field in ("parking_stall_depth_ft", "parking_aisle_one_way_ft",
+                  "parking_aisle_two_way_ft"):
+        layer.defaults.pop(field, None)
     layer.defaults["parking_stall_width_ft"] = stall.model_copy(
         update={
+            "variants": (),
             "prov": stall.prov.model_copy(
                 update={"quote": "or/multnomah/portland/33.266.txt#L317-L318"}
-            )
+            ),
         }
     )
 
@@ -289,6 +319,12 @@ def test_the_ledger_writes_one_row_per_redirect(tmp_path, rows: list[Routing]) -
 
     assert len(got) == len(rows)
     assert {r["followed"] for r in got} <= {"yes", ""}
+    # The row this ledger was built around, and it writes as open again: the
+    # pointer was followed to the end and 33.266.130.B handed the building
+    # back, so nothing in the base case cites inside the target. See OPEN.
     portland = next(r for r in got if r["ref"] == "33.266.130")
-    assert portland["followed"] == "yes"
+    assert portland["followed"] == ""
     assert portland["section"] == "33.266.120"
+    # Something has to still write "yes", or this assertion would pass on a
+    # ledger that had quietly stopped closing rows at all.
+    assert any(r["followed"] == "yes" for r in got)

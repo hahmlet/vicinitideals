@@ -133,20 +133,42 @@ siteplan:
       aisle_one_way_ft: 23         # 90° only: 19 at 75°, 14-18 at 60°
       aisle_two_way_ft: 24         # printed in every row, at every angle
       cite: GDC Table 9.0825A, 90 degrees standard, reached via 9.0802(F)
-    # Portland prints two stalls and one sentence deciding between them.
-    # 33.266.120.D.1 says 9 x 18 with a 9 ft driveway and states no aisle;
-    # 33.266.120.B.1 then sends parking that is in a parking TRACT to
-    # 33.266.130 instead, and Table 266-4's 90° row is 8'6" x 16 with a 20 ft
-    # aisle. A shared rear court serving four attached houses on fee-simple
-    # lots is a tract, so the table is the branch this product reaches — and
-    # the deeper court (36 ft vs 27) is the conservative one where the plat is
-    # not yet drawn.
+    # Portland prints two stalls and one sentence deciding between them, and
+    # from 2026-08-25 to 2026-09-01 this file was on the wrong side of it.
+    #
+    # 33.266.120 covers houses through fourplexes and applies to "all parking
+    # areas" of them; D.1 states a 9 x 18 space and D.2 a 9 ft driveway, and the
+    # word "aisle" appears nowhere in the section. B.1 excepts parking that is
+    # in a parking TRACT and sends it to 33.266.130, where Table 266-4's 90-deg
+    # row reads 8'6" x 16 with a 20 ft aisle. 33.910 defines a tract as land
+    # created by a land DIVISION and "not a lot" -- so a court on the same lot
+    # as the building is not one, and on `plat: one_lot`, which is the only path
+    # this spec will draw, Table 266-4 is expressly not reached.
+    #
+    # So the rectangle is the city's own 9 x 18 and the AISLE IS ASSUMED, for
+    # the same reason and to the same figure as Milwaukie and Wilsonville below:
+    # the one table Portland publishes excepts this building by name, a standard
+    # a city excepts you from is not one it may apply to housing (ORS 197A.400),
+    # and 24 ft is the national floor rather than anybody's comfort number. It
+    # costs greens -- a 42 ft court against the old 36 -- which is the tell that
+    # it is a reading and not a convenience.
     portland:
-      stall_width_ft: 8.5          # Table 266-4, 90°
-      stall_depth_ft: 16.0
-      aisle_one_way_ft: 20         # the table prints 20 in BOTH aisle columns
-      aisle_two_way_ft: 20
-      cite: PCC Table 266-4 (90 degrees), reached via 33.266.120.B.1 parking tract
+      stall_width_ft: 9            # 33.266.120.D.1
+      stall_depth_ft: 18.0
+      aisle_one_way_ft: 24
+      aisle_two_way_ft: 24
+      aisle_assumed: true
+      aisle_cite: >-
+        ASSUMED. Iowa SUDAS Design Manual 8B-1 Table 8B-1.02 (adapted from
+        Urban Land Institute / National Parking Association, The Dimensions of
+        Parking), 90 degrees, two-way, 85th-percentile design vehicle. PCC
+        33.266.120 states a 9 x 18 space and a 9 ft driveway for this building
+        and no aisle at any angle; Table 266-4's 20 ft belongs to 33.266.130,
+        which excludes "residential vehicle areas subject to the standards of
+        33.266.120". Overturned the day Portland dimensions an aisle in .120,
+        or the day this spec moves to `unit_lots`, where the tract branch and
+        its 8.5 x 16 / 20 ft row are the standard.
+      cite: PCC 33.266.120.D.1, a parking space must be at least 9 feet by 18 feet
       # PCC 33.266.115 exempts this building from the maximum tables. The 1.35
       # per unit in Tables 266-1/266-2 is real and belongs to RM1-RM4, RX,
       # RMP and the commercial zones — none of which is in this inventory,

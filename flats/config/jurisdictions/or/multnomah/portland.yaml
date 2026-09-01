@@ -171,45 +171,79 @@ defaults:
   # "residential vehicle areas subject to the standards of 33.266.120". The two
   # do not overlap and they do not contradict; the plat decides which applies.
   #
-  # A tract (33.910) is "created and designated as part of a land division",
-  # which is what a shared rear court serving four attached houses on
-  # fee-simple lots is. So the product reaches Table 266-4, not D.1, and the
-  # 90-degree row is what a court is dimensioned against.
+  # A tract (33.910) is "a piece of land created and designated as part of a
+  # land division that is not a lot, adjusted lot, lot remnant, lot of record,
+  # or a public right-of-way". A shared rear court serving four attached houses
+  # on fee-simple lots is one. A rear court on the SAME LOT as the building it
+  # serves is not one -- it is on a lot, which the definition excludes by name.
   #
-  # It is also the binding branch either way. Four stalls plus a 20 ft aisle
-  # wants a 36 ft court; four 9 x 18 stalls off a 9 ft driveway want 27. Where
-  # the plat is not yet drawn, the deeper court is the honest screen -- and
-  # taking one branch whole is the point, since 9 x 18 with a 20 ft aisle is a
-  # standard neither section states.
+  # WHICH BRANCH, RE-READ 2026-09-01, AND THE ANSWER REVERSED. This file stood
+  # on Table 266-4 from 2026-08-25 with the reasoning above, and the reasoning
+  # describes a product this screen does not model. `plat: one_lot` is what the
+  # site plan draws and a SiteplanSpec validator refuses to move off it; on that
+  # path there is no land division, so there is no tract, so 33.266.120 applies
+  # to "all parking areas" of this fourplex and Table 266-4 is expressly not
+  # reached. The paragraph that justified the old choice said so itself --
+  # "where the plat is not yet drawn" -- and the plat is drawn.
+  #
+  # The old note also called 266-4 the deeper court: 8.5 x 16 with a 20 ft aisle
+  # is 36 feet against "four 9 x 18 stalls off a 9 ft driveway", 27. That
+  # comparison is what made the wrong branch look conservative, and it holds
+  # only if a court of eight stalls can be served by a 9-foot driveway with no
+  # aisle at all. It cannot. Under 120.D.1's own rectangle and an aisle nobody
+  # published, the honest court is 18 + 24 = 42 feet -- deeper than either.
+  #
+  # This is the Milwaukie shape exactly. A city prints an aisle table, excepts
+  # this building from it by name, and dimensions nothing in its place; the
+  # excepted table may not be borrowed back (see the Milwaukie 19.606 refusal),
+  # and the aisle is assumed to the national engineering floor in quadfit rather
+  # than encoded here. What the code states for this building is a rectangle and
+  # a driveway, and that is what this layer now holds.
   parking_stall_width_ft:
-    value: 8.5
-    cite: PCC Table 266-4, Minimum Parking Space and Aisle Dimensions (90 degrees), reached via 33.266.120.B.1
+    value: 9
+    cite: PCC 33.266.120.D.1, "A parking space must be at least 9 feet by 18 feet"
     url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
-    retrieved: 2026-08-25
-    quote: "or/multnomah/portland/33.266.txt#L275-L276,L517-L520,L525"
+    retrieved: '2026-09-01'
+    quote: "or/multnomah/portland/33.266.txt#L268,L271-L275,L317-L318"
+    variants:
+      # The other branch, kept because it is real and one plat decision away.
+      # Four attached houses on their own lots sharing a court put the parking
+      # in a tract, 120.B.1 sends it to 33.266.130, and Table 266-4's 90-degree
+      # row is what dimensions it.
+      - value: 8.5
+        when: [unit_lots]
+        cite: PCC Table 266-4, Minimum Parking Space and Aisle Dimensions (90 degrees), reached via 33.266.120.B.1
+        url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
+        retrieved: '2026-09-01'
+        quote: "or/multnomah/portland/33.266.txt#L275-L278,L516-L525"
   parking_stall_depth_ft:
-    value: 16
-    cite: PCC Table 266-4, Minimum Parking Space and Aisle Dimensions (90 degrees), reached via 33.266.120.B.1
+    value: 18
+    cite: PCC 33.266.120.D.1, "A parking space must be at least 9 feet by 18 feet"
     url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
-    retrieved: 2026-08-25
-    quote: "or/multnomah/portland/33.266.txt#L275-L276,L517-L520,L525"
+    retrieved: '2026-09-01'
+    quote: "or/multnomah/portland/33.266.txt#L268,L271-L275,L317-L318"
+    variants:
+      - value: 16
+        when: [unit_lots]
+        cite: PCC Table 266-4, Minimum Parking Space and Aisle Dimensions (90 degrees), reached via 33.266.120.B.1
+        url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
+        retrieved: '2026-09-01'
+        quote: "or/multnomah/portland/33.266.txt#L275-L278,L516-L525"
 
-  # 20 feet at 90 degrees, and the table prints the same 20 in both the one-way
-  # and the two-way column -- unusual enough to be worth saying out loud, since
-  # every other city in this corpus widens the two-way. Read the row, not the
-  # habit.
-  parking_aisle_one_way_ft:
-    value: 20
-    cite: PCC Table 266-4, Minimum Parking Space and Aisle Dimensions (90 degrees), reached via 33.266.120.B.1
-    url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
-    retrieved: 2026-08-25
-    quote: "or/multnomah/portland/33.266.txt#L275-L276,L517-L520,L525"
-  parking_aisle_two_way_ft:
-    value: 20
-    cite: PCC Table 266-4, Minimum Parking Space and Aisle Dimensions (90 degrees), reached via 33.266.120.B.1
-    url: "https://www.portland.gov/sites/default/files/code/266-parking_3.pdf"
-    retrieved: 2026-08-25
-    quote: "or/multnomah/portland/33.266.txt#L275-L276,L517-L520,L525"
+  # NOT ENCODED: an aisle width, because Portland states none for this building.
+  # Section 33.266.120 is five subsections -- purpose, structures, locations,
+  # space sizes, paving -- and the word "aisle" does not occur in any of them,
+  # nor does a pointer to Table 266-4. The table lives in 33.266.130, whose own
+  # applicability sentence excludes "residential vehicle areas subject to the
+  # standards of 33.266.120".
+  #
+  # Twenty feet, one way and two way alike, is what 266-4 prints at 90 degrees.
+  # It is not borrowed. A number the code excepts this building from is not a
+  # clear and objective standard applicable to it (ORS 197A.400), which is the
+  # same ground Milwaukie's 22-foot table was refused on -- and refusing the
+  # city's own narrower figure costs lots rather than saving them, which is how
+  # you can tell it is a reading and not a convenience.
+  # (or/multnomah/portland/33.266.txt#L268,L317-L326,L349,L385-L386,L516-L525)
   # DRIVEWAY AND PARKING PLACEMENT, read 2026-08-27. All of it is Section
   # 33.266.120, and 33.266.120.B is why it is in `defaults` rather than in the
   # zones: "The regulations of this section apply to houses, attached houses,
