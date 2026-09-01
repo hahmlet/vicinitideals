@@ -204,6 +204,27 @@ signed off yet, and no data is missing at all.
 These seven are the whole of the zero-green half of the map. The other seven
 cities all produce greens today.
 
+## Villebois turned out to be a dead end, and for an honest reason — **2,106 lots**
+
+Wilsonville's V zone was the largest block of land the screen had been dropping
+without ever looking at it: 2,508 lots in Villebois, invisible because nobody
+had encoded the zone. It was read on 2026-09-01 and the full run finished the
+same day. **2,106 of its lots reached the screen. None came out green.**
+
+The reason is one number and it is quoted to the line. Villebois was platted as
+a dense new-urbanist neighbourhood — Wilsonville's own table gives a single
+family house there a 2,250 sq ft minimum lot. But when the city wrote its
+middle-housing exception (WDC 4.125(.23)(B)(3)) it set **the minimum lot for a
+quadplex at 7,000 sq ft**, three times the size of the lots the neighbourhood is
+made of. 1,865 of the 2,106 are simply too small. Another 114 fit no building
+and 102 can have no parking drawn.
+
+Nothing here needs fixing. It is worth knowing because Villebois is the kind of
+place that looks obviously right for this product from the street — small
+attached homes, narrow lots, alleys — and the city has written a rule that
+closes it to us without lot assembly. The two-and-a-half thousand lots come off
+the list of places worth hoping about.
+
 ## Queued for the agent — no action needed from you, listed so nothing is invisible
 
 - ~~**Portland-administered pockets** (PCC 33.266 applied to the 1,489
@@ -378,22 +399,25 @@ cities all produce greens today.
   On a plain rectangular lot those are the same and nothing is wrong. On a
   cul-de-sac wedge, a flag lot, or anything that narrows toward the street they
   are not, and 988 lots are currently being thrown out for failing a test the
-  city never applied to that edge. **605 of those 988 already fit the building
-  inside their own buildable envelope** — the pod is drawn, it clears every
-  setback, and the lot is rejected at the gate before anything looks at it.
-  That 605 is a ceiling, not a promise: some of them would fail the real
-  mid-lot width test too, and nobody can say how many until the pipeline
-  measures it. The remaining 383 fit nothing and are red on their own merits. West Linn does the same thing safely — its
+  city never applied to that edge. West Linn does the same thing safely — its
   tables say "minimum lot width **at the front lot line**", which is the street
   edge — so its 739 exclusions stand, and it is the control that proves the
   other two are wrong.
 
-  **Half fixed the same day.** The screen now says "I don't know" instead of
-  "no": in those two cities a lot that falls short of the number goes to the
-  review queue rather than the red pile. It cannot turn anything green — a lot
-  that fails on its own merits is still red, and that is tested — so nothing
-  becomes riskier; the 605 stop being invisible. Lands on the next full
-  pipeline run.
+  **Half fixed the same day, and now measured.** The screen says "I don't know"
+  instead of "no": in those two cities a lot that falls short of the number goes
+  to the review queue rather than the red pile. It cannot turn anything green —
+  a lot that fails on its own merits is still red, and that is tested.
+
+  Ran it on 2026-09-01. **1,730 lots carry the flag; 62 changed verdict.** The
+  first estimate written here was 605, on the grounds that 605 of the 988 fit
+  the building inside their own boundaries. That was a ceiling and it was much
+  too generous: fitting the building is necessary, not sufficient. Of the 1,668
+  flagged lots that stayed red, 742 are below their zone's minimum lot *area*,
+  542 are lots where no parking layout can be drawn at all, and 249 have no
+  buildable envelope once the setbacks come off. Frontage was never the only
+  thing wrong with them. **62 lots, all in Oregon City**, is what this is worth
+  until somebody measures lot width properly.
 
   The other half is still open and is the real fix: measure lot width the way
   the code defines it, across the middle of the lot, and judge these properly.
