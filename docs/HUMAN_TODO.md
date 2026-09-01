@@ -5,12 +5,42 @@ agent cannot do alone. The agent maintains it: items get added when work
 surfaces them, and struck through (with a date and what happened) when they
 close. Items are ordered by how many lots ride on them, biggest first.
 
-Pipeline state when last updated (2026-09-01, after the Portland parking
-correction): **green 10,179 · review 30,185 · red 208,274** across 13 cities
-laid out with real site plans. Portland lost 1,645 greens that morning because
-we found we had been screening it against a parking table written for a
-different kind of plat — its own numbers for the plat we actually draw are
-bigger, so its courts are bigger, so fewer lots hold one.
+Pipeline state when last updated (2026-09-01, after the Villebois run):
+**green 10,179 · review 30,216 · red 210,349** across 250,744 lots in 13 cities
+laid out with real site plans.
+
+---
+
+## If you approved every item below, could you trust a green lot?
+
+Asked directly on 2026-09-01. The honest answer is **not yet, and the gap is
+not mainly on this list.** Working the list is necessary and it is not
+sufficient. Four things stand between a green verdict and a lot you could buy
+on it, and only the first is a queue item:
+
+1. **Nothing is signed.** Not one of ~2,340 encoded numbers has been read and
+   confirmed by a person (item 7). Every green today rests on an unreviewed
+   reading. This is the biggest single item and it is *work*, not a decision —
+   you cannot approve your way past it in an afternoon.
+2. **82% of greens rest on one legal argument** about a parking dimension no
+   city wrote down (item 3, corrected on 2026-09-01 to include Portland). The
+   argument is good. It is still an argument.
+3. **Nothing screens environmental overlays anywhere in Clackamas County** —
+   floodplain, wetland, habitat, historic. Multnomah has thirteen such layers;
+   the eleven Clackamas jurisdictions have none. **2,820 greens (28%) are
+   graded with that check simply absent.** This is not on the list below
+   because it is agent work, but it is the largest *unlisted* source of
+   false greens.
+4. **No green has ever been checked against a real answer.** The one back-test
+   run measured the opposite direction — of fourplexes that really were
+   permitted, did we flag the lot? (60%.) Nobody has taken a green lot to a
+   planner and asked whether we are right. Until that happens the accuracy of
+   a green is an estimate, not a measurement.
+
+The cheapest thing that would change this, by a wide margin, is **(4)**: pull
+twenty greens across three cities and have a land-use planner or attorney rule
+on them. That converts every number on this page from a guess into a rate, and
+it costs one person a few days.
 
 ---
 
@@ -84,22 +114,40 @@ Nothing else is blocked on this; it is purely how bold to be. Same shape as the
 drive-aisle call you made on 2026-08-31, and the same reason it is yours: it
 trades a small chance of wasted diligence for a large amount of pipeline.
 
-## 3. Two short emails: confirm the assumed 24 ft aisle — **hardens 985 greens**
+## 3. Three short emails: confirm the assumed 24 ft aisle — **8,343 greens, which is 82% of all of them**
 
-Milwaukie (845 greens) and Wilsonville (140 greens) publish a 9 × 18 parking
-stall and **no drive-aisle width anywhere** — checked all the way through the
-state's own "use your single-family standards" redirect. Per your 2026-08-31
-decision, those lots are drawn to the national engineering minimum (24 ft,
-ULI/NPA) and grade green, because state law (ORS 197A.400) only lets a city
-apply written, objective standards to housing — and a width nobody wrote down
-is not one.
+**This entry said 985 greens until 2026-09-01. It was counting two of the three
+cities.** Portland carries the identical assumption on **7,358 greens** and had
+been left off. Corrected here because the number changes what the entry is: not
+a tidy-up on two small cities, but the single largest thing standing between
+this screen and a green list you could act on.
 
-The residual risk: both cities have language that *could* be used to send
+Portland (7,358 greens), Milwaukie (845) and Wilsonville (140) all publish a
+parking stall size and **no drive-aisle width that reaches a quadplex**.
+Portland's is the subtlest of the three: PCC 33.266.120 gives houses through
+fourplexes a 9 × 18 stall and states no aisle, and the 20 ft aisle in Table
+266-4 belongs to the *parking-tract* branch of the code, which is a different
+kind of land division from the single lot we draw on.
+
+Per your 2026-08-31 decision, all three are drawn to the national engineering
+minimum (24 ft, ULI/NPA via Iowa SUDAS) and grade green, because state law
+(ORS 197A.400) only lets a city apply written, objective standards to housing —
+and a width nobody wrote down is not one. That reasoning is sound and it is
+still an argument rather than a citation, which is exactly why it is worth
+three emails rather than none.
+
+The residual risk: all three cities have language that *could* be used to send
 "drive aisle design" to a human reviewer. A one-paragraph email to each
 planning department — *"your code gives a quadplex a 9 × 18 stall and states
 no drive-aisle width; we intend 24 ft two-way; please confirm that is
 acceptable"* — converts the assumption into a confirmation. If they answer
 with a different number, the agent re-runs with theirs the same day.
+
+Worth knowing before you send: 24 ft is the **floor**, not a comfortable
+number. The corpus median and mode are also 24 (8 of the 11 cities that publish
+one), and the four that go higher — Troutdale and unincorporated Multnomah at
+25 — are the cities with no greens anyway. If Portland comes back with 20 ft
+this gets *cheaper*, not dearer.
 
 These lots are filterable: the `geometry_assumed` column in
 `lots_results.csv`, and the greens they produce are itemized in `summary.md`.
