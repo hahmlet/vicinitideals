@@ -38,9 +38,15 @@ answers that, its five dimensional differences are a question about a zone that
 may not be screened at all, so they are held behind the permission split rather
 than reconciled one number at a time.
 
-A NAME THE TWO FILES SPELL DIFFERENTLY. Fifteen numbers looked uncited -- stated
-by rules.yaml with nothing in the corpus behind them -- and were nothing of the
-kind. rules.yaml calls the standard `min_frontage_ft`; the corpus reads it off a
+A NAME THE TWO FILES SPELL DIFFERENTLY. Thirty-three numbers looked uncited --
+stated by rules.yaml with nothing in the corpus behind them -- and not one of
+them was. Eighteen belonged to three zones that adopt another zone's standards
+by reference: Fairview's R/SFLD says the R-10 chapter applies, its RM/TOZ says
+RM, Happy Valley's R20CC says R20. `like:` is how the corpus writes that, on
+purpose, so a reference keeps tracking its source instead of going stale as a
+copy. Reading a zone's own block and stopping there makes every one of them
+look unread, and this audit did exactly that until it was taught to walk the
+chain. The other fifteen were nothing of the kind either. rules.yaml calls the standard `min_frontage_ft`; the corpus reads it off a
 row headed "Minimum lot width" and files it as `min_lot_width_ft`. Every number
 agrees. What does not necessarily agree is the LINE ON THE GROUND. s7 measures
 the run of boundary that touches a street; Oregon City 17.04.700 measures
@@ -248,6 +254,64 @@ def _limbs(value) -> list[float]:
     return out
 
 
+class _Effective:
+    """What `_pairs` hands out: a zone block whose `.values` include everything
+    it adopts. Kept as a wrapper rather than a rebuilt Zone so the audit never
+    has to know what else a Zone carries."""
+
+    __slots__ = ("_zl", "values")
+
+    def __init__(self, zl, values: dict) -> None:
+        self._zl = zl
+        self.values = values
+
+    def __getattr__(self, name: str):
+        return getattr(self._zl, name)
+
+
+def _effective(layer, zl) -> dict:
+    """A zone's standards including the ones it adopts by reference.
+
+    `load_rules` returns what each zone block states for itself. A zone that
+    says "the R-10 standards apply" -- Fairview's R/SFLD, its RM/TOZ, Happy
+    Valley's R20CC -- states almost nothing of its own, and reading `zl.values`
+    straight makes it look unread. It is read; the reference IS the encoding,
+    which is the point of `like:` and the reason the corpus does not copy
+    numbers between zones.
+
+    Follows `flats.rules.resolver`'s order: blocks are applied in sequence and
+    the last one wins, so `wins: local` puts the zone's own block last and
+    `wins: referenced` puts the adopted chapter last.
+    """
+    chain: list = []
+    seen: set[str] = set()
+
+    def walk(block) -> None:
+        if block is None or block.zone in seen:
+            return
+        seen.add(block.zone)
+        like = getattr(block, "like", None)
+        if like is None:
+            chain.append(block)
+            return
+        parent = layer.zones.get(like.zone)
+        if parent is None:  # up-hierarchy adoption; nothing more to add here
+            chain.append(block)
+            return
+        if like.wins == "referenced":
+            chain.append(block)
+            walk(parent)
+            return
+        walk(parent)
+        chain.append(block)
+
+    walk(zl)
+    out: dict = {}
+    for block in chain:
+        out.update(block.values)
+    return out
+
+
 def _load() -> tuple[dict, dict]:
     from flats.rules.loader import load_rules
 
@@ -270,7 +334,7 @@ def _pairs(top: dict, corpus: dict):
             zl = layer.zones.get(z.get("zone"))
             if zl is None:
                 continue
-            yield juris, z, zl, layer
+            yield juris, z, _Effective(zl, _effective(layer, zl)), layer
 
 
 def permission_splits() -> list[str]:

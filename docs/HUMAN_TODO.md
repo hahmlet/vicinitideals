@@ -325,9 +325,10 @@ alone.
   is item 2 above.
 - **The screen is measuring the wrong side of the lot in two cities** —
   988 lots (Oregon City 896, Tualatin 92). Found 2026-09-01 by chasing the 33
-  numbers the zone audit said had no code behind them. Fifteen of the 33 turned
-  out to be perfectly well read — the two files just call the same standard by
-  different names. But naming it differently hid the real problem: the screen
+  numbers the zone audit said had no code behind them. All 33 turned out to be
+  perfectly well read — 18 in zones that borrow another zone's rules outright,
+  which the audit could not see, and 15 where the two files simply call the
+  same standard by different names. But naming it differently hid the real problem: the screen
   asks "how much of this lot touches a street?" and compares the answer to a
   number the code measures **across the middle of the lot**. Oregon City spells
   it out (17.04.700: between the midpoints of the two side lot lines), and so
@@ -348,13 +349,6 @@ alone.
   wrongly accepting, and a screen that says yes when the answer is no is worth
   much less than one that says no too often. Agent work, queued behind the
   measurement. Frozen in a test so it cannot quietly spread to a new city.
-- **Three zones are screened on numbers nobody has read** — Fairview's RM/TOZ
-  and R/SFLD, Happy Valley's R20CC. 18 dimensions with no code citation behind
-  any of them. Harmless today (454 lots, all already red or review, no greens
-  at risk) and listed only because the usual coverage check cannot see it:
-  all three zones *exist* in the corpus with a few standards each, so nothing
-  reports them as missing. Same blind spot that hid Wilsonville's Village zone.
-  Agent work.
 - **"Reaches with no field" refusals**: e.g. Wood Village's forward-access
   rule applies to the pod and the data model has no field to hold it — model
   extension, batched with the next such find.

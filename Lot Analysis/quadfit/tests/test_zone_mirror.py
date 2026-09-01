@@ -366,22 +366,42 @@ def test_six_of_them_measure_the_wrong_line_on_the_lot() -> None:
             assert "FRONT LOT LINE" in a.why, a.key
 
 
-def test_the_zones_with_nothing_behind_them_are_the_three_nobody_read() -> None:
-    """What is left of the uncited list once the aliases leave it.
+def test_nothing_in_the_screen_is_unquoted() -> None:
+    """The uncited list is empty, and it took two corrections to get there.
 
-    Three zones, eighteen numbers, and not one of them is quoted to a document:
-    Fairview's RM/TOZ and R/SFLD and Happy Valley's R20CC. The corpus holds all
-    three as zone entries -- RM/TOZ even has height, FAR and landscaping -- so
-    a ledger that counts missing zones sees nothing wrong, which is the same
-    blind spot that hid Wilsonville's V.
+    Fifteen rows were a naming difference. The other eighteen were three zones
+    that adopt another zone's standards by reference -- Fairview R/SFLD says the
+    R-10 chapter applies, RM/TOZ says RM, Happy Valley R20CC says R20 -- which
+    is how the corpus encodes an incorporation so it keeps tracking its source.
+    An audit that reads a zone's own block and stops sees three unread zones and
+    would send somebody off to read code that has already been read.
 
-    They cost nothing today: 454 lots between them, every one already red or
-    review. That is why this is a test and not a fix.
+    Zero here means every dimension the pipeline screens with is quoted to a
+    line of a stored document. It is the strongest claim this file makes, so it
+    is pinned rather than printed.
     """
     audit = _audit()
-    _diverge, uncited, _agree = audit.scan()
-    zones = {u.split(".")[0] for u in uncited}
-    assert zones == {
-        "fairview/RM/TOZ", "fairview/R/SFLD", "happy_valley/R20CC",
-    }, sorted(zones)
-    assert len(uncited) == 18, uncited
+    _diverge, uncited, agree = audit.scan()
+    assert uncited == [], uncited
+    assert agree > 460, agree
+
+
+def test_an_adopted_zone_reports_the_standards_it_adopts() -> None:
+    """The mechanism behind the row above, tested where it is load-bearing.
+
+    R/SFLD is a Metro map label, not a chapter of the Fairview code. The layer
+    holds it as a pointer at R-10 and nothing else; resolving it has to produce
+    R-10's numbers or the audit is comparing rules.yaml against an empty zone
+    and calling the silence agreement.
+    """
+    audit = _audit()
+    from flats.rules.loader import load_rules
+
+    layer = load_rules()["or/multnomah/fairview"]
+    sfld = layer.zones["R/SFLD"]
+    assert sfld.like is not None and sfld.like.zone == "R-10"
+    assert "min_lot_sqft" not in sfld.values, "R/SFLD states its own lot size now"
+
+    effective = audit._effective(layer, sfld)
+    r10 = layer.zones["R-10"]
+    assert effective["min_lot_sqft"].value == r10.values["min_lot_sqft"].value
