@@ -5,8 +5,8 @@ agent cannot do alone. The agent maintains it: items get added when work
 surfaces them, and struck through (with a date and what happened) when they
 close. Items are ordered by how many lots ride on them, biggest first.
 
-Pipeline state when last updated (2026-08-31): **green 11,824 · review 31,921
-· red 204,893** across 13 cities laid out with real site plans.
+Pipeline state when last updated (2026-09-01): **green 11,824 · review 31,912
+· red 204,902** across 13 cities laid out with real site plans.
 
 ---
 
@@ -116,11 +116,16 @@ but creates no risk. A land-use attorney could say whether it's worth pressing
 in any particular city. Perfectly fine to accept as-is; listed so the
 conservatism is a choice, not an accident.
 
-## 8. Housekeeping: two old feature branches
+## ~~8. Housekeeping: two old feature branches~~ — closed 2026-09-01
 
-Worktrees `draw-type` and `ltl-min-gap` exist from earlier app-side work. If
-that work shipped, they should be removed; if not, they're stale context.
-Two-minute check next time you're in a session about the financial-model side.
+You delegated the call. Verdict: both branches (plus a third found in the
+audit, `email-multi-deal-triage`) were dead — `draw-type`'s feature had
+already shipped to main under a different commit, and the other two were
+merged or superseded. All three were archived as patch files first
+(`../vicinitideals-worktrees/archived-patches/`, so nothing is
+unrecoverable), then removed. Three genuinely in-progress worktrees were
+kept untouched. Four orphaned non-worktree folders were noted and left
+alone.
 
 ---
 
@@ -136,8 +141,14 @@ Two-minute check next time you're in a session about the financial-model side.
 - **Corner-lot status**: 14 jurisdictions now define what a corner lot is;
   nothing yet computes which lots *are* corners. Worth ~10 ft of buildable
   envelope wherever corner variants exist (e.g. all of Wood Village).
-- **quadfit/FLATS config divergences**: LR-7 front setback (20 vs 10) and
-  Wood Village MR 2 minimum lot — cleanup; zero greens ride on either today.
+- ~~**quadfit/FLATS config divergences**: LR-7 front setback (20 vs 10) and
+  Wood Village MR 2 minimum lot — cleanup; zero greens ride on either
+  today.~~ Closed 2026-09-01: both aligned to the quoted code text and the
+  report re-run. LR-7's minimum lot was the big one (7,000 → 20,000 — the
+  county wants 5,000 sq ft *per unit*); nine LR-7 lots moved review → red,
+  no green moved anywhere. LR-7's building envelopes still reflect the old
+  smaller setbacks until the next full pipeline run; at most 15 non-green
+  lots ride on that.
 - **"Reaches with no field" refusals**: e.g. Wood Village's forward-access
   rule applies to the pod and the data model has no field to hold it — model
   extension, batched with the next such find.
