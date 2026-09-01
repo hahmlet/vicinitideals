@@ -41,7 +41,7 @@ Note: the "24 ft when nobody published a number" rule from item 2 does NOT
 apply here — the county *did* publish a number, in a drawing. Assuming over
 the top of a published number is the one thing the system refuses to do.
 
-## 2. One decision: may a coarser elevation map grade a lot green? — **7,231 lots**
+## 2. One decision: may a coarser elevation map grade a lot green? — **7,972 lots**
 
 The single biggest number on this list, and it is one yes-or-no answer.
 
@@ -59,13 +59,20 @@ what that number is allowed to conclude.
 
 We measured it rather than guessing: on the 184,101 lots where **both** maps
 answer, the rule we would use agrees with the fine map well enough to clear
-**7,231 lots straight to green**, and it would be **wrong about 1.5% of the
-time** — roughly 110 of those 7,231 would turn out, on a site visit, to be
+**7,972 lots straight to green**, and it would be **wrong about 1.5% of the
+time** — roughly 120 of those 7,972 would turn out, on a site visit, to be
 steeper than they looked. It is wrong in the safe direction the rest of the
 time: it hardly ever calls a flat lot steep.
 
-So the trade is: **+7,231 green lots (a 71% increase on the whole corpus),
+So the trade is: **+7,972 green lots (a 78% increase on the whole corpus),
 against roughly 110 of them being duds you would discover on the first visit.**
+
+(Re-counted 2026-09-01, replacing an earlier 7,231. The new number is the strict
+one: lots where the coarse map is the *only* thing holding them, with the ones
+that would still be stopped by a steep reading, an odd shape, a missing sewer or
+an unsigned zone rule taken out first. It breaks down as Portland 5,320, Gresham
+2,428, Troutdale 126, Wood Village 96, Happy Valley 2 — and Fairview's 199,
+which need item 7 as well, are not in it.)
 
 - **Yes** — flip one setting, re-run, those lots grade green like any other,
   and a column records that their slope came from the coarse map so anyone can
@@ -168,6 +175,34 @@ kept untouched. Four orphaned non-worktree folders were noted and left
 alone.
 
 ---
+
+## Seven of our fourteen cities have zero green lots — and each one has a single reason
+
+Measured 2026-09-01 against the current run. Half the map is producing nothing,
+which looks alarming and is not: every city on this list is blocked by exactly
+one thing, and every one of those things is already an item above. Nothing new
+is being asked of you here — this is the answer to "what do I actually get if I
+do item 2, or item 6, or item 7."
+
+| City | Lots waiting | The one thing holding them |
+|---|---|---|
+| Gresham | 2,899 | Elevation map — **item 2** |
+| Troutdale | 172 | Elevation map — **item 2** |
+| Wood Village | 115 | Elevation map — **item 2** |
+| Fairview | 199 | Elevation map **and** signing — items 2 *and* 7 |
+| Happy Valley | 731 | Sewer coverage — **item 6** |
+| Tualatin | 20 | Sewer coverage — **item 6** |
+| Gladstone | 145 | Signing — **item 7** |
+
+Read across: **item 2 is worth 7,972 lots** — that is the count that would turn
+green immediately, with nothing else standing in their way, and it is 5,320 in
+Portland and 2,428 in Gresham. Item 6 unlocks Happy Valley outright: 722 of its
+731 waiting lots are held by nothing but the missing sewer map. Gladstone is
+pure signing — all 145 of its lots are sitting behind zone rules nobody has
+signed off yet, and no data is missing at all.
+
+These seven are the whole of the zero-green half of the map. The other seven
+cities all produce greens today.
 
 ## Queued for the agent — no action needed from you, listed so nothing is invisible
 

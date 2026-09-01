@@ -99,7 +99,12 @@ pytestmark = pytest.mark.unit
 #: 15, and a college 0.3; the row this building sits on, Household Living,
 #: prints "no maximum" in both of its columns. Words in an apparatus that has
 #: numbers in it, none of them pointed here.
-EXPECTED = {"stated": 174, "numeric": 37, "marker": 0, "dash": 2, "silent": 0}
+EXPECTED = {"stated": 175, "numeric": 37, "marker": 0, "dash": 2, "silent": 0}
+# 174 -> 175 on 2026-09-01: the Village zone's combined side yard. Its base
+# had been a 10 derived from two printed 5 ft yards, and no line of 4.125 says
+# ten, so the base became exempt and note 15's 15 ft kept its band. An
+# exemption is the one value form that can only ever produce a false GREEN, so
+# it is counted rather than assumed -- see the module docstring.
 
 LAKE_OSWEGO = "or/clackamas/lake-oswego"
 

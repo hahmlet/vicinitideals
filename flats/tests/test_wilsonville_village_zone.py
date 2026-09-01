@@ -158,9 +158,18 @@ def test_the_combined_side_yard_bands_at_seventy_feet(village) -> None:
 
     Note 15's other sentence drops small and medium lots to a zero side yard,
     and is not taken. A loosening conditioned on an unknown is not a loosening.
+
+    **The base is exempt, not ten.** It was ten until 2026-09-01, arrived at by
+    adding the two printed five-foot yards, and the readiness check caught it:
+    no line of 4.125 contains the number, so the citation could not carry it.
+    The Code states a combined figure in exactly one place -- note 15, for
+    frontages of 70 feet and up -- and below that width it states none. Silence
+    is encoded as silence, and the per-side five feet still binds through
+    `setback_side_ft`, so nothing is lost but an invented number.
     """
     total = village.values["setback_side_total_ft"]
-    assert total.value == 10
+    assert total.value is None
+    assert total.exempt is True
     assert len(total.variants) == 1
     wide = total.variants[0]
     assert wide.value == 15
