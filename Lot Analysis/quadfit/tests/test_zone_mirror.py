@@ -288,3 +288,100 @@ def test_the_village_zone_mirrors_exactly() -> None:
     assert v["min_lot_sqft"] == 7000
     assert v["setback_front_ft"] == 20
     assert v["confidence"] == "needs_verification"
+
+
+#: The fifteen dimensions the two files hold under different names, split by
+#: whether the two names measure the same line on the ground. Frozen as keys so
+#: a newly encoded city cannot join either list silently -- the whole point is
+#: that the safe half and the unsafe half look identical until somebody reads
+#: the table heading.
+KNOWN_ALIAS_SAME_EDGE: frozenset[str] = frozenset({
+    "west_linn/R-40.min_frontage_ft", "west_linn/R-20.min_frontage_ft",
+    "west_linn/R-15.min_frontage_ft", "west_linn/R-10.min_frontage_ft",
+    "west_linn/R-7.min_frontage_ft", "west_linn/R-5.min_frontage_ft",
+    "west_linn/R-4.5.min_frontage_ft", "west_linn/R-3.min_frontage_ft",
+    "west_linn/R-2.1.min_frontage_ft",
+})
+
+KNOWN_ALIAS_WRONG_EDGE: frozenset[str] = frozenset({
+    "oregon_city/R-10.min_frontage_ft", "oregon_city/R-8.min_frontage_ft",
+    "oregon_city/R-6.min_frontage_ft", "oregon_city/R-5.min_frontage_ft",
+    "oregon_city/R-3.5.min_frontage_ft", "tualatin/RL.min_frontage_ft",
+})
+
+
+def test_the_frontage_numbers_are_quoted_after_all() -> None:
+    """These fifteen read as uncited and were not.
+
+    rules.yaml calls the standard `min_frontage_ft`; the corpus reads it off a
+    row headed "Minimum lot width" and files it under that name. Every number
+    matches a limb of the corpus value, which is the part that is fine. The
+    part that is not fine is the next test.
+    """
+    audit = _audit()
+    alias = audit.aliases()
+    assert {a.key for a in alias} == (
+        KNOWN_ALIAS_SAME_EDGE | KNOWN_ALIAS_WRONG_EDGE
+    ), sorted({a.key for a in alias} ^ (KNOWN_ALIAS_SAME_EDGE | KNOWN_ALIAS_WRONG_EDGE))
+
+    disagree = [str(a) for a in alias if not a.agrees]
+    assert not disagree, (
+        "a rules.yaml frontage number no longer matches the width standard it "
+        f"was read from: {disagree}"
+    )
+
+    # And they are gone from the uncited list, which is what they were mistaken
+    # for before anyone looked at the field names.
+    _diverge, uncited, _agree = audit.scan()
+    assert not [u for u in uncited if "min_frontage_ft" in u], uncited
+
+
+def test_six_of_them_measure_the_wrong_line_on_the_lot() -> None:
+    """The finding, frozen.
+
+    s7 compares a lot's measured `frontage_ft` -- boundary that touches a
+    street -- against `min_frontage_ft`. Oregon City 17.04.700 defines lot
+    width "between the midpoints of the two principal opposite side lot lines";
+    Tualatin TDC 31.060 measures it "at the center of the lot". Neither is the
+    street edge. West Linn heads its row "Minimum lot width AT FRONT LOT LINE",
+    which is, and that is the only reason its nine are safe.
+
+    896 Oregon City lots and 92 Tualatin lots are excluded at
+    `below_min_frontage` today. Closing this needs a lot-width measurement the
+    pipeline does not take; deleting the gate instead would buy possible false
+    reds back with unknown false greens.
+    """
+    audit = _audit()
+    alias = audit.aliases()
+    same = {a.key for a in alias if a.same_edge}
+    wrong = {a.key for a in alias if not a.same_edge}
+
+    assert same == KNOWN_ALIAS_SAME_EDGE, sorted(same ^ KNOWN_ALIAS_SAME_EDGE)
+    assert wrong == KNOWN_ALIAS_WRONG_EDGE, sorted(wrong ^ KNOWN_ALIAS_WRONG_EDGE)
+
+    # A jurisdiction earns the safe list by a reason somebody wrote down, not
+    # by being absent from the unsafe one.
+    for a in alias:
+        if a.same_edge:
+            assert "FRONT LOT LINE" in a.why, a.key
+
+
+def test_the_zones_with_nothing_behind_them_are_the_three_nobody_read() -> None:
+    """What is left of the uncited list once the aliases leave it.
+
+    Three zones, eighteen numbers, and not one of them is quoted to a document:
+    Fairview's RM/TOZ and R/SFLD and Happy Valley's R20CC. The corpus holds all
+    three as zone entries -- RM/TOZ even has height, FAR and landscaping -- so
+    a ledger that counts missing zones sees nothing wrong, which is the same
+    blind spot that hid Wilsonville's V.
+
+    They cost nothing today: 454 lots between them, every one already red or
+    review. That is why this is a test and not a fix.
+    """
+    audit = _audit()
+    _diverge, uncited, _agree = audit.scan()
+    zones = {u.split(".")[0] for u in uncited}
+    assert zones == {
+        "fairview/RM/TOZ", "fairview/R/SFLD", "happy_valley/R20CC",
+    }, sorted(zones)
+    assert len(uncited) == 18, uncited

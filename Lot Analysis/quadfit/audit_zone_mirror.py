@@ -17,7 +17,7 @@ that ran the other way -- Milwaukie R-HD screened on a 5-foot front setback
 that the code applies only to a mapped handful of properties -- was a false
 green in the densest zone of its city.
 
-What is left is not drift, and the run sorts it into three kinds:
+What is left is not drift, and the run sorts it into four kinds:
 
 MISSING STEP-BACK. Gresham prints a 15-foot rear setback in five districts and
 then says at 7.0420(G)(1) that the roof may be no more than 21 feet at that
@@ -37,6 +37,25 @@ against a state-preemption argument that is real and untested. Until somebody
 answers that, its five dimensional differences are a question about a zone that
 may not be screened at all, so they are held behind the permission split rather
 than reconciled one number at a time.
+
+A NAME THE TWO FILES SPELL DIFFERENTLY. Fifteen numbers looked uncited -- stated
+by rules.yaml with nothing in the corpus behind them -- and were nothing of the
+kind. rules.yaml calls the standard `min_frontage_ft`; the corpus reads it off a
+row headed "Minimum lot width" and files it as `min_lot_width_ft`. Every number
+agrees. What does not necessarily agree is the LINE ON THE GROUND. s7 measures
+the run of boundary that touches a street; Oregon City 17.04.700 measures
+"between the midpoints of the two principal opposite side lot lines" and
+Tualatin TDC 31.060 "at the center of the lot". On a rectangle those are the
+same. On a cul-de-sac wedge, a flag lot or anything that tapers they are not,
+and 988 lots -- 896 in Oregon City, 92 in Tualatin -- are currently excluded at
+`below_min_frontage` by a number the code never applied to their street edge.
+West Linn is the control: its tables head the row "Minimum lot width AT FRONT
+LOT LINE", which is the same edge, and its 739 exclusions stand.
+
+That one is not fixed here, because fixing it needs a measurement the pipeline
+does not take. Deleting the gate instead would trade 988 possible false reds for
+an unknown number of false greens, which is the wrong direction for a screen
+whose whole job is to be trusted when it says yes.
 
 Variant-aware on purpose. A corpus value is a base plus banded and conditioned
 variants -- Wilsonville PDR-1's front setback is 15 on a small lot and 20 on a
@@ -72,6 +91,31 @@ MIRRORED: dict[str, str] = {
     "min_lot_sqft": "min_lot_sqft",
     "max_coverage_pct": "max_coverage_pct",
     "min_frontage_ft": "min_frontage_ft",
+}
+
+#: rules.yaml names a standard the corpus files under a different name. A match
+#: here is NOT agreement. It says the number came from a real quoted standard
+#: read under another heading, which leaves the only question that matters:
+#: whether the two names measure the SAME EDGE of the lot.
+#:
+#: s7 compares a lot's measured `frontage_ft` -- the run of boundary that
+#: touches a street -- against `min_frontage_ft`. A code's "lot width" is
+#: usually not that. Oregon City 17.04.700 measures it "between the midpoints of
+#: the two principal opposite side lot lines"; Tualatin TDC 31.060 measures it
+#: "at the center of the lot". Both are the middle of the lot, not the street
+#: edge, and a wedge lot on a cul-de-sac passes one and fails the other.
+ALIASES: dict[str, str] = {"min_frontage_ft": "min_lot_width_ft"}
+
+#: The jurisdictions where the alias is safe, and why. Per-city on purpose:
+#: this is a question about one table's wording, and the answer does not
+#: travel. Anything not listed here is screening the wrong edge.
+ALIAS_SAME_EDGE: dict[str, str] = {
+    "west_linn": (
+        "CDC 08.070 through 16.070 head the row 'Minimum lot width AT FRONT "
+        "LOT LINE' and print a second 'Average minimum lot width' beneath it. "
+        "The first is the street edge, which is what s7 measures, and it is "
+        "the one rules.yaml carries."
+    ),
 }
 
 
@@ -147,6 +191,42 @@ class Divergence:
         return f"{self.key}: rules.yaml {_n(self.shipped)} vs corpus {limbs}"
 
 
+@dataclass(frozen=True)
+class Alias:
+    """One dimension the two files hold under different names.
+
+    `same_edge` is the whole finding. When it is true the corpus simply files a
+    front-lot-line width as a width, and nothing is wrong. When it is false the
+    pipeline is testing a lot's street frontage against a number the code
+    measures across the middle of the lot -- two different lines on the same
+    parcel, which agree on a rectangle and part company on every wedge, flag
+    and cul-de-sac lot in the city.
+    """
+
+    jurisdiction: str
+    zone: str
+    shipped_field: str
+    corpus_field: str
+    shipped: float
+    corpus: tuple[float, ...]
+    same_edge: bool
+    why: str
+
+    @property
+    def key(self) -> str:
+        return f"{self.jurisdiction}/{self.zone}.{self.shipped_field}"
+
+    @property
+    def agrees(self) -> bool:
+        return self.shipped in self.corpus
+
+    def __str__(self) -> str:
+        limbs = "/".join(_n(c) for c in self.corpus)
+        verdict = "same edge" if self.same_edge else "DIFFERENT EDGE"
+        return (f"{self.key}={_n(self.shipped)} <- corpus {self.corpus_field}"
+                f"={limbs} [{verdict}]")
+
+
 def _n(x: float) -> str:
     return str(int(x)) if float(x).is_integer() else str(x)
 
@@ -218,6 +298,39 @@ def permission_splits() -> list[str]:
     return out
 
 
+def aliases() -> list[Alias]:
+    """Dimensions the two files hold under different names.
+
+    Split out from `scan` because they are not drift and not agreement. The
+    number is quoted and the reading is sound; what is unresolved is whether
+    the pipeline's test measures the thing the code measures. A row with
+    `same_edge` false is a lot the screen may be killing for a rule the city
+    does not have -- or passing on a rule it does.
+    """
+    top, corpus = _load()
+    out: list[Alias] = []
+    for juris, z, zl, layer in _pairs(top, corpus):
+        for mine, alt in ALIASES.items():
+            shipped = z.get(mine)
+            if shipped is None:
+                continue
+            theirs = MIRRORED.get(mine, mine)
+            if zl.values.get(theirs) or layer.defaults.get(theirs):
+                continue  # the corpus states it under its own name
+            value = zl.values.get(alt) or layer.defaults.get(alt)
+            if value is None:
+                continue
+            limbs = _limbs(value)
+            if not limbs:
+                continue
+            why = ALIAS_SAME_EDGE.get(juris, "")
+            out.append(
+                Alias(juris, z["zone"], mine, alt, float(shipped),
+                      tuple(limbs), bool(why), why)
+            )
+    return out
+
+
 def scan() -> tuple[list[Divergence], list[str], int]:
     """Returns (mismatches, dimensions rules.yaml states alone, agreements).
 
@@ -241,6 +354,9 @@ def scan() -> tuple[list[Divergence], list[str], int]:
                 continue
             value = zl.values.get(theirs) or layer.defaults.get(theirs)
             if value is None:
+                alt = ALIASES.get(mine)
+                if alt and (zl.values.get(alt) or layer.defaults.get(alt)):
+                    continue  # counted by aliases(), not missing
                 uncited.append(f"{juris}/{z['zone']}.{mine}={_n(shipped)}")
                 continue
             limbs = _limbs(value)
@@ -265,6 +381,18 @@ def scan() -> tuple[list[Divergence], list[str], int]:
 def main() -> None:
     diverge, uncited, agree = scan()
     print(f"{agree} dimensions agree")
+
+    alias = aliases()
+    wrong_edge = [a for a in alias if not a.same_edge]
+    print(f"{len(alias)} match under a name the two files spell differently "
+          f"({len(alias) - len(wrong_edge)} measure the same edge of the lot, "
+          f"{len(wrong_edge)} do not)")
+    for a in alias:
+        print("   ", a)
+    if wrong_edge:
+        print("    ^ these compare a lot's STREET FRONTAGE against a width the")
+        print("      code measures across the middle of the lot. See ALIASES.")
+
     print(f"{len(uncited)} stated by rules.yaml with nothing in the corpus behind them")
     for u in uncited:
         print("   ", u)

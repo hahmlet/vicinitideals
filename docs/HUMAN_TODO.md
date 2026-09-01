@@ -323,6 +323,38 @@ alone.
   1 m lidar, 64,537 off the 10 m fallback, zero with no answer, where before
   four whole cities had none. Only the green/no-green switch is left, and that
   is item 2 above.
+- **The screen is measuring the wrong side of the lot in two cities** —
+  988 lots (Oregon City 896, Tualatin 92). Found 2026-09-01 by chasing the 33
+  numbers the zone audit said had no code behind them. Fifteen of the 33 turned
+  out to be perfectly well read — the two files just call the same standard by
+  different names. But naming it differently hid the real problem: the screen
+  asks "how much of this lot touches a street?" and compares the answer to a
+  number the code measures **across the middle of the lot**. Oregon City spells
+  it out (17.04.700: between the midpoints of the two side lot lines), and so
+  does Tualatin (at the centre of the lot).
+
+  On a plain rectangular lot those are the same and nothing is wrong. On a
+  cul-de-sac wedge, a flag lot, or anything that narrows toward the street they
+  are not, and 988 lots are currently being thrown out for failing a test the
+  city never applied to that edge. West Linn does the same thing safely — its
+  tables say "minimum lot width **at the front lot line**", which is the street
+  edge — so its 739 exclusions stand, and it is the control that proves the
+  other two are wrong.
+
+  Not fixed, on purpose. The honest fix is to measure lot width the way the
+  code defines it, which the pipeline does not do yet. The tempting fix — just
+  stop applying the rule in those two cities — would buy back up to 988 lots we
+  may be wrongly rejecting at the price of an unknown number we would then be
+  wrongly accepting, and a screen that says yes when the answer is no is worth
+  much less than one that says no too often. Agent work, queued behind the
+  measurement. Frozen in a test so it cannot quietly spread to a new city.
+- **Three zones are screened on numbers nobody has read** — Fairview's RM/TOZ
+  and R/SFLD, Happy Valley's R20CC. 18 dimensions with no code citation behind
+  any of them. Harmless today (454 lots, all already red or review, no greens
+  at risk) and listed only because the usual coverage check cannot see it:
+  all three zones *exist* in the corpus with a few standards each, so nothing
+  reports them as missing. Same blind spot that hid Wilsonville's Village zone.
+  Agent work.
 - **"Reaches with no field" refusals**: e.g. Wood Village's forward-access
   rule applies to the pod and the data model has no field to hold it — model
   extension, batched with the next such find.
