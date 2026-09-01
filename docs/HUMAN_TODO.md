@@ -184,9 +184,21 @@ alone.
   worthless for now: Lake Oswego is not in the lot inventory at all — the
   pipeline evaluates zero lots there — so encoding a zone in it moves nothing
   until the parcel data reaches Clackamas' western cities.
-- **Wilsonville Public Works Standards + Gresham's engineering manual** —
-  both hold access widths for busy-street frontages that no corpus file
-  declares yet; fetch and read.
+- ~~**Wilsonville Public Works Standards + Gresham's engineering manual**~~
+  Closed 2026-09-01: both fetched, sliced and read. Gresham's answers in
+  words — a 9 ft citywide minimum driveway approach width is now encoded (it
+  equals what the site plan already assumed, so no lot moved), and the clear
+  vision numbers the code kept pointing at are on file: 20 ft either side of a
+  middle-housing driveway, 40 ft at a street corner, no parking allowed in
+  either triangle. Not encoded, because a triangle cut across a corner is not
+  a setback and nothing knows which lots are corners. Wilsonville's manual
+  does *not* answer: 224 pages, and its only "aisle" is a no-parking throat at
+  the mouth of a lot, not a width between two rows of cars. **The 24 ft
+  assumption behind ~140 Wilsonville greens survives, and now rests on a
+  search rather than on nobody having looked.** The manual does hold a 20 ft
+  two-way driveway minimum — the size of number that moves lots — but the code
+  only reaches it for lots fronting *solely* on collectors and arterials, and
+  nothing knows what class of street a lot fronts.
 - **Unencoded zones**: Wilsonville V and TC (Lake Oswego closed above).
 - **Corner-lot status**: 14 jurisdictions now define what a corner lot is;
   nothing yet computes which lots *are* corners. Worth ~10 ft of buildable
