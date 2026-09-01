@@ -1,0 +1,128 @@
+6.03 DRIVEWAYS
+ Access to private property shall be permitted with the use of a concrete driveway approach,
+per Standard Detail 618A or 618B, where curbs exist and with asphalt concrete connections where no
+curbs exist. In the case of asphalt concrete connections, the width and depth shall match what is shown in
+the standard details for concrete driveway approaches. The access points with the street shall be the
+minimum necessary to provide access while not inhibiting the safe circulation and carrying capacity of the
+street. Driveways shall meet all applicable ADA regulations.  If 50% or more of a driveway approach,
+inclusive of wings and transition ramps,  is damaged, removed, or replaced, the full driveway approach,
+inclusive of wings and transition ramps, shall be replaced to ADA/City standards, except when replacement
+would result in the driveway being undrivable (defined as a grade break at the public to private driveway
+transition being greater than 18% for a crest or 13% for a sag) or if no permission can be obtained from the
+property owner to alter the private portion of the driveway.
+ One driveway per site frontage will be the normal maximum. Double frontage lots and corner
+lots may be limited to access from a single street, usually the lower classification street. Commercial
+City of Gresham Transportation Design PWS Version July 2026
+Design Standards Chapter 6 – Page 16 (Last Revised July 2026)
+developments with frontage greater than 250- feet may request an additional driveway if needed. If
+additional driveways are approved by the Engineer, a finding shall be made that no traffic hazard would
+result, impacts on through traffic would be minimal, projected travel demands indicate it is in the interest of
+good traffic operations, and adequate street frontage exists to meet the driveway spacing standards of this
+section. Restrictions may be imposed on driveways, such as limited turn movements, the req uirement of
+shared access between uses, relocation or closure of existing driveways, or other access management
+actions.
+  In the following circumstances, a new driveway will not be allowed (measured to the driveway
+centerline):
+A. Within 30-feet of any commercial or industrial property line except when it is a shared-use
+driveway serving 2 or more abutting properties;
+B. Within 100-feet of the curb return of an intersecting Major or Standard Arterial street;
+C. When adequate sight distance cannot be provided.
+ Residential driveway approaches  shall be a minimum distance from adjacent property lines
+such that driveway approach curb wings and ramped sidewalk do not encroach on adjacent properties ’
+frontages, unless approved by the Engineer. If shared driveways are utilized, a minimum of 7- feet of
+driveway width shall be on each property frontage. If an exception is granted and there is less than 7-feet
+width on an individual property frontage, a shared access easement shall be granted to both properties for
+the entire driveway width.
+Table 6.03 DRIVEWAY APPROACH LOCATIONS
+(Minimum Distance from Driveway Centerline to Curb Return)
+FUNCTIONAL CLASSIFICATION RESIDENTIAL COMMERCIAL/INDUSTRIAL
+Major Arterial 100 feet1,3 100 feet1
+Standard Arterial 100 feet1,3 100 feet1
+Minor Arterial 45 feet3 100 feet1
+Major, Standard, Minor Collector 45 feet2,3 100 feet1
+Local Transitional, Industrial, Commercial 45 feet2 45 feet
+Local Queuing 45 feet2
+Minor Access Street 45 feet2
+Notes:
+1. Minimum distance from curb return unless this prohibits access to the site.
+2. Corner lot driveways on a frontage that is less than 75-feet shall be located no more than 7-feet from
+the interior property line and shall be no more than 24-feet wide.
+3. Direct access to this street may not be allowed if an alternative exists or is planned.
+
+ All d riveway approach widths shall be a minimum of 9 feet wide. Residential driveway
+approaches shall be a maximum of 24 feet  wide but may be increased to 30 feet for 3- car garages.
+Commercial, industrial and multifamily driveway approaches shall be a maximum of 36 feet wide.
+ Driveways entering onto Arterials adjacent to street intersections shall be located beyond the
+prevailing queue length for traffic movements on that approach to the intersection. If this requirement
+prohibits access to the site, a driveway with restricted turn movements may be required.
+ For commercial, industrial, and multifamily developments, shared driveways and internal
+access between similar uses are encouraged and may be required to reduce the access points to the higher
+classified roadways, to improve internal site circulation, and to reduce local trips or movements on the street
+system. Shared driveways or internal access between uses shall be required and will be established by
+means of common access easements at the time of development.
+City of Gresham Transportation Design PWS Version July 2026
+Design Standards Chapter 6 – Page 17 (Last Revised July 2026)
+ For instances where the pole of a flag lot is an access easement across another property, that
+access easement width will serve as the property frontage width for purposes of driveway width limitations.
+6.04 CLEAR VISION AREAS
+ A Clear Vision Area shall be maintained on each corner at the intersection of two streets, a
+street and a railroad, a street and an alley, a street and a driveway , and a path or trail  and a street. The
+Clear Vision Area restricts sight obstructions in the right -of-way as well as on private property. No fence,
+wall, landscaping, sign, structure, or parked vehicle that would impede visibility between a height of 3 feet
+and 10 feet above the center line grades of the intersecting streets, railroad,  driveway, path, or trail shall
+be located within the Clear Vision Area. No driveway or off-street parking area shall be located in the Clear
+Vision Area. The following intrusions into Clear Vision Areas are allowed:
+A. A public utility pole;
+B. A tree trimmed (to the trunk) to a line at least 8 feet above the level of the intersection;
+C. A supporting member or appurtenance to an existing building;
+D. An official warning sign or signal;
+E. A place where the natural contour of the ground is such that there can be no cross-visibility
+at the intersection;
+F. A sign support structure(s) if combined total width is 12 inches or less, and the combined
+total depth is 12 inches or less, or;
+G. A chain link fence.
+ A Clear Vision Area for intersections of streets shall consist of a triangular area, two sides of
+which are the back of the street curb for a distance specified in the image below and Table 6.04. Where the
+street curb has a rounded corner, a straight line extended along the back of the curb to a point of intersection
+shall be used for measurement.  The third side of the triangle is a line joining the non-intersecting ends of
+the other two sides.
+
+ A Clear Vision Area for intersections of streets and an alley shall consist of a triangular area ,
+one side of which is the back of the street curb and one side of which is the property line along the alley as
+
+City of Gresham Transportation Design PWS Version July 2026
+Design Standards Chapter 6 – Page 18 (Last Revised July 2026)
+extended to the street curb, for a distance specified in the table below , and the third side of which is a line
+joining the non-intersecting ends of the other two sides.
+ A Clear Vision Area for driveways to public streets shall consist of a triangular area,  on both
+sides of the driveway , one side of which is the edge of the driveway  as extended to the street curb,  and
+one side is the back of the street curb, both measured to the distance specified in the table below. The third
+side is a straight line joining the non-intersecting ends of the other two sides.
+ A Clear Vision Area for intersections of paths or trails with streets shall consist of a triangular
+area, on both sides of the path or trail, one side of which is the edge of the property line along the path or
+trail as extended to the street curb,  and one side is  the back of the street curb, both measured to the
+distance specified in the table below. The third side is a straight line joining the non-intersecting ends of the
+other two sides.
+ If a street has no curb or if measuring along a railroad , a straight line parallel and 5 feet from
+edge of pavement, or railroad track, shall be used as that side of the triangle. When a street has a multi -
+use path the Clear Vision Area measurement shall be as specified in the table below for multi -use paths.
+There is no change for alleys or driveways that cross multi-use paths.
+Table 6.04 CLEAR VISION AREA MEASUREMENT
+LOCATION MINIMUM MEASUREMENT ALONG EACH LINE (feet)
+Street Intersections (Including Railroads) 40
+Street Intersections with Multi-use Paths 45
+Alleys 25
+Driveways for Multifamily, Commercial,
+Industrial, and Institutional sites 25
+Driveways for Detached and Middle
+Housing Sites 20
+Paths and Trails 20
+
+ With approval of the Engineer, t he driveway Clear Vision Area requirement in the Downtown
+Plan District, Civic Neighborhood Plan District , and Rockwood Town Center land use district , may be
+waived or modified. When requesting a waiver or modification, the following should generally be the case :
+• The street is not an arterial street; and
+• Vehicle sightlines meet American Association of State Highway and Transportation
+Officials engineering guidelines without applying a Clear Vision Area on private property ;
+and
+• The visibility of pedestrians and bicyclists entering and exiting vehicles is retained.

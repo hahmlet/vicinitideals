@@ -2143,3 +2143,48 @@ notes:
       Pleasant Valley districts -- 22 of this layer's 38 zones. Portland's
       1.35 and 0.5 are the corpus's binding maximums; see
       test_portland_parking_max
+
+  # --- Public Works Standards Table 6.03, the engineering manual -------
+  #
+  # Three notes, and all three are about WHERE a driveway may meet the street
+  # rather than how wide it is. Table 6.03 keys the distance from a driveway
+  # centerline to a curb return to the functional class of the fronting
+  # street, and this layer encodes nothing off that table -- the refusal is
+  # recorded in gresham.yaml, and it is a data refusal: the inventory holds
+  # parcels, not street classifications or curb returns.
+  #
+  # Dismissed rather than `unmeasured`, and the distinction is worth stating
+  # because the safe default usually runs the other way. `unmeasured` caps the
+  # verdict of every value in the note's region, and the region here contains
+  # the one value the manual supplies -- the 9-foot approach minimum, printed
+  # in the paragraph immediately under the notes block. Capping it would take
+  # a green away on the strength of a note that can only ever loosen a
+  # distance this layer does not hold, or that a 9-foot cut already satisfies
+  # with fifteen feet to spare. The corner limb is real and it is recorded as
+  # a refusal waiting on corner data, which is a queue, not a cap.
+  - quote: "or/multnomah/gresham/pws.6.03-6.04.txt#L47"
+    digest: "a0686b1a0feb"
+    state: dismissed
+    reason: >-
+      relaxes a Table 6.03 curb-return distance where it would prohibit site
+      access; this layer encodes no distance from that table, because nothing
+      in the inventory knows the functional class of the fronting street
+
+  - quote: "or/multnomah/gresham/pws.6.03-6.04.txt#L48"
+    digest: "8665b131e137"
+    state: dismissed
+    reason: >-
+      caps a corner lot driveway at 24 feet and pushes it within 7 feet of the
+      interior property line on a frontage under 75 feet; the width limb is
+      slack against the 10-foot approach ceiling this layer already carries,
+      and the placement limb puts the cut where the side-driveway typology
+      already draws it
+
+  - quote: "or/multnomah/gresham/pws.6.03-6.04.txt#L50"
+    digest: "480e2f0edd8f"
+    state: dismissed
+    reason: >-
+      allows the City to refuse direct access to a classified street where an
+      alternative frontage exists or is planned; it decides which frontage the
+      driveway comes off, not whether the pod fits, and this layer encodes no
+      access-location standard at all

@@ -150,6 +150,31 @@ code:
     # 4.002. The chapter is named for planning rather than for words, so
     # the glossary inside it was invisible.
     definitions_at: L232-L1674
+  # THE MANUAL THE AISLE REFUSAL POINTED AT, fetched 2026-09-01. Section
+  # 4.113(.14)D.4.c.ii is the only sentence in Chapter 4 that sends this
+  # building to the Public Works Standards, and the layer's parking note had
+  # been carrying it as an open question for a week: a dimension in an
+  # engineering manual no jurisdiction file in this corpus declared.
+  #
+  # It is declared now, and what it settles is the shape of the refusal rather
+  # than the number. 201.2.23 is where Wilsonville keeps its driveway
+  # standards, and it holds two figures the Development Code does not -- a
+  # 12-foot one-way and 20-foot two-way access driveway minimum, and a
+  # 50-foot clear drive aisle at the mouth of a parking lot with no stalls in
+  # it. Neither is encoded, because the route the code opens is narrow and
+  # conditional; the reading is in this layer's parking note.
+  #
+  # Sliced to the driveway subsection. The manual is 224 pages of pavement
+  # sections, water mains and trench backfill, and nothing else in it is about
+  # a lot. `nth: 2` skips the table of contents, which lists every section
+  # number before the standards start.
+  - id: "pws.201.2.23"
+    url: https://www.wilsonvilleoregon.gov/sites/default/files/fileattachments/engineering/page/11761/public_works_construction_standards_2017.pdf
+    title: "Public Works Standards (2017) 201.2.23, Driveways"
+    start: "201.2.23 Driveways"
+    end: "201.2.24 Curbs and Grading"
+    nth: 2
+    extraction: plain
 defaults:
   # PARKING, read 2026-08-22 off Table 5 and the two notes under it, which were
   # the last unread footnotes in this layer. Wilsonville held no parking field
@@ -252,6 +277,55 @@ defaults:
   # The distinction to keep: the corpus records what the code says, and says
   # nothing here. The generator records what it had to draw with. Neither
   # borrows from the other.
+  #
+  # THE MANUAL WAS FETCHED 2026-09-01, and the aisle is not in it either. This
+  # is the paragraph that closes the question the note above left open.
+  #
+  # Wilsonville's Public Works Standards run 224 pages. The word "aisle"
+  # appears in them seven times and every one of the seven is in 201.2.23(m),
+  # which is not the dimension this screen wanted: a CLEAR drive aisle is the
+  # throat at the mouth of a parking lot, "containing no parking spaces or
+  # intersecting drive aisles", required for 50 feet back from the sidewalk on
+  # a driveway under 100 average daily trips. It says how far in the first
+  # stall may sit, not how wide the lane between two rows of stalls has to be.
+  # So the city that dimensions a parking space in its DEFINITIONS section and
+  # states no aisle in its code states no aisle in its engineering manual
+  # either, and the assumption the site-plan generator draws with now rests on
+  # a search rather than on nobody having looked.
+  #
+  # DETAIL RD-1105 IS NAMED "PARKING LOT DRIVEWAY AISLE" and it is the
+  # Clackamas P100 outcome, one step worse. 201.2.23(m) sends the clear drive
+  # aisle to it by number, so the citation chain does run to a drawing -- and
+  # the drawing is a raster scan with no text layer at all, where P100 at
+  # least published its stall size in a title block. Nothing was read off it.
+  #
+  # THE MANUAL DOES HOLD TWO NUMBERS THE CODE DOES NOT, and neither is
+  # encoded, because of the route rather than the reading. 201.2.23(l):
+  # "Access driveways shall have a minimum width of 12 feet for one-way
+  # traffic and 20 feet for two way traffic." 201.2.23(e): residential
+  # driveway access shall be at least 50 feet from the nearest intersection.
+  # A 20-foot two-way minimum is the size of number that moves lots -- Happy
+  # Valley's is the only driveway figure in this corpus that ever has.
+  #
+  # Chapter 4 sends this building to the Public Works Standards in exactly one
+  # sentence, and it is doubly conditional. Section 4.113(.14)D.4.c is
+  # prefaced "lots or parcels with more than one frontage must comply with the
+  # following", and c.ii reads "Lots or parcels with frontages ONLY on
+  # collectors and/or arterial streets must meet the access standards in the
+  # Wilsonville Public Works Standards." Two conditions, both about the
+  # streets a lot touches, and the inventory knows the streets a lot touches
+  # for no lot in Oregon. The other six routes to the manual in Chapter 4 are
+  # grading, stormwater sizing, low impact development and construction in the
+  # right-of-way; a whole-document search found no seventh.
+  #
+  # The sentence is also the argument. If the manual governed every private
+  # driveway in Wilsonville, naming the collector-and-arterial case would be
+  # redundant -- a code does not carve out what it already covers. And
+  # 201.2.23(j) settles what the manual thinks it is doing: "The City's
+  # authorized representative shall make the final determination of maximum
+  # driveway width on a case-by-case basis", which is discretion, not a clear
+  # and objective standard, and ORS 197A.400 keeps discretion off housing.
+  # (or/clackamas/wilsonville/pws.201.2.23.txt#L1-L3,L18-L20,L73-L78,L84-L95)
   #
   # DRIVEWAY, APPROACH AND PARKING PLACEMENT. Section 4.113(.14) is where
   # Wilsonville says what a quadplex's parking may look like, and subsection D

@@ -117,11 +117,29 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
   streets or a street and a railroad, restricting sight obstructions in the right of way and on private
   property; 9.0202 requires the same on both sides of every driveway and service drive. Both then say
   the same thing: "The dimensions of the clear vision area and exceptions are described in the Public
-  Works Standards (6.04)." The numbers are not in the Development Code. They are in a separate
-  engineering manual this corpus does not hold and no jurisdiction file declares, so the constraint is
-  real, corner-specific, and unmeasurable here. Recorded rather than encoded because there is no number
-  to encode -- fetching Public Works Standards 6.04 is the work this note is asking for, and it is a
-  document class this corpus has never taken in.'
+  Works Standards (6.04)."
+
+
+  THE MANUAL WAS FETCHED 2026-09-01 and the numbers are now in the store, so this refusal is no longer
+  about a missing document. Public Works Standards 6.04 gives a table, and the row it gives is ours by
+  name: "Driveways for Detached and Middle Housing Sites 20", against 25 for multifamily and commercial
+  driveways and 40 at a street intersection. It is a triangle, measured from the back of the street
+  curb, and 6.04 excludes two different things from it. Sight obstructions between 3 and 10 feet of
+  height -- which reaches a STRUCTURE, so on a corner lot a 40-foot triangle is subtracted from the
+  building envelope. And, in its own sentence, "No driveway or off-street parking area shall be located
+  in the Clear Vision Area", which on EVERY lot puts a pair of 20-foot triangles either side of the curb
+  cut where no stall may sit.
+
+
+  Still not encoded, and now for a better reason than absence. There is no clear-vision field, and the
+  shape is not a setback: a triangle cut across a corner is not an inset from a line, and writing 40
+  into a corner setback would take a diagonal off the whole street side. The corner limb also needs the
+  corner data this screen does not have -- 9.0201 joins fourteen other cities corner definitions waiting
+  on the same computation. The driveway limb is inert for this pod rather than unmeasured: 20 feet from
+  the back of curb reaches about the front setback line, and the rear-court typology parks four cars
+  behind the building, so the two triangles at the cut contain front yard. A city that let front-yard
+  parking in at 7.0420(B)(5)(c) takes some of it back here, and this screen never used it.
+  (or/multnomah/gresham/pws.6.03-6.04.txt#L67-L119)'
 ingest:
   geoid: null
   juris_city_codes:
@@ -352,6 +370,35 @@ code:
   - id: "10.1700.affordable"
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-10.1700.pdf
     title: "Section 10.1700 - Affordable Housing with Height and Density Bonuses"
+  # NOT A CODE. The Public Works Standards are an engineering manual adopted
+  # by reference, and this corpus had never taken one in -- the layer's own
+  # reading note on 9.0200 said so, and said fetching 6.04 was the work the
+  # note was asking for. Both clear-vision sections of the Development Code
+  # end on the same sentence, "The dimensions of the clear vision area and
+  # exceptions are described in the Public Works Standards (6.04)", so the
+  # numbers are here or they are nowhere.
+  #
+  # It answers in WORDS, which is the whole difference between this document
+  # and Clackamas County's Drawing P100. Chapter 6 states the driveway
+  # approach minimum, the residential approach maximum, and a clear vision
+  # table that names Middle Housing as its own row. Standard Details 618A and
+  # 618B carry the same widths in a drawing; the prose governs and the
+  # drawings are not declared, because nothing needs them.
+  #
+  # 359 pages of pavement, water mains and sidewalk ramps, sliced to the two
+  # sections the Development Code actually points at.
+  - id: "pws.6.03-6.04"
+    url: https://www.greshamoregon.gov/globalassets/city-departments/environmental-services/public-works-standards/public-works-standards-2026.pdf
+    title: "Public Works Standards (July 2026), 6.03 Driveways and 6.04 Clear Vision Areas"
+    start: "6.03 DRIVEWAYS"
+    end: "6.05 SIDEWALKS"
+    # Layout mode cannot even find the section headings here: it fractures the
+    # numbers away from their titles across a hundred columns of padding
+    # ("6.0                3        DRIVEWAYS"), which would leave the stored
+    # slice starting nowhere. Plain mode reads the headings, the prose and
+    # both tables -- Table 6.04 lands each measurement at the end of its
+    # label's last line, which is what the clear-vision quote cites.
+    extraction: plain
 defaults:
   # The city says it once, in a sentence, for everything: GDC 9.0802(A),
   # "Vehicle parking minimums are not required for any land use type."
@@ -505,6 +552,26 @@ defaults:
   # limb -- 34 percent only exceeds it above 53 feet of frontage -- so 18 is
   # what the unit-lots variant carries, and a lot wide enough for the other
   # limb is screened tighter than the code requires rather than looser.
+  # Public Works Standards 6.03, one sentence for the whole city: "All
+  # driveway approach widths shall be a minimum of 9 feet wide." Not a
+  # condition on a concession and not an overlay -- the Development Code's two
+  # nines are one and the other (see the NOT ENCODED note below on a general
+  # driveway minimum), which is why holding the approach apart from the
+  # driveway was worth doing. The approach is a public-works dimension and
+  # this is the manual public works keeps its numbers in.
+  #
+  # It pins the cut, because the ceiling directly below is ten: this pod meets
+  # the street through an opening between 9 and 10 feet and widens behind the
+  # property line. Nine is also exactly the width one car needs, which is what
+  # the site-plan generator had been assuming citywide. An assumption that
+  # turns out to match the published standard is the cheapest kind of
+  # confirmation, and it is still worth writing down, because now it is cited.
+  driveway_approach_min_width_ft:
+    value: 9
+    cite: Gresham Public Works Standards 6.03, minimum driveway approach width
+    url: https://www.greshamoregon.gov/globalassets/city-departments/environmental-services/public-works-standards/public-works-standards-2026.pdf
+    retrieved: '2026-09-01'
+    quote: "or/multnomah/gresham/pws.6.03-6.04.txt#L52"
   driveway_approach_max_width_ft:
     value: 10
     cite: GDC 7.0420(B)(2)(b)(ii), maximum combined driveway approach width, parent lot, building with no garage
@@ -595,6 +662,35 @@ defaults:
   # NOT ENCODED: 7.0420(B)(1) and 7.0431(B)(1), access shall be taken from an
   # alley where the lot abuts one. Every city in this corpus states it and no
   # parcel record here knows where the alleys are. (or/multnomah/gresham/7.0400.middle-housing-design.txt#L190-L191,L460)
+  #
+  # NOT ENCODED: Public Works Standards 6.03, where a driveway may meet the
+  # street. Table 6.03 sets the minimum distance from a driveway centerline to
+  # a curb return by street classification -- 100 feet on a Major or Standard
+  # Arterial, 45 on everything else a house fronts -- and the prose adds that
+  # no new driveway is allowed within 100 feet of the curb return of an
+  # intersecting Major or Standard Arterial at all. Both are true of the lot
+  # and neither is a dimension of the building. To apply them this screen
+  # would have to know the functional class of the fronting street and where
+  # its nearest curb return is, and the inventory holds neither. It is an
+  # access question rather than a fitment one, and the kind that moves a
+  # driveway to the other frontage rather than ending a project.
+  # (or/multnomah/gresham/pws.6.03-6.04.txt#L24-L29,L36-L50)
+  #
+  # NOT ENCODED: Public Works Standards 6.03 note 2 to Table 6.03, "Corner lot
+  # driveways on a frontage that is less than 75-feet shall be located no more
+  # than 7-feet from the interior property line and shall be no more than
+  # 24-feet wide." A placement rule, not a width this pod fails: 24 feet is
+  # more than double the 10-foot ceiling this layer already carries, so the
+  # width limb never binds, and the 7-foot limb pushes the cut to the far edge
+  # of a frontage on a corner lot the screen cannot identify. Recorded so that
+  # when corner lots are computed this is one of the things waiting for them.
+  # (or/multnomah/gresham/pws.6.03-6.04.txt#L48-L49)
+  #
+  # NOT ENCODED: Public Works Standards 6.04, Clear Vision Areas -- 20 feet for
+  # a middle housing driveway, 40 at a street intersection. The full reading is
+  # in this layer's note on 9.0200 above, which is where the Development Code
+  # sent us and where the refusal is counted.
+  # (or/multnomah/gresham/pws.6.03-6.04.txt#L67-L119)
 
 zones:
   LDR-5:
