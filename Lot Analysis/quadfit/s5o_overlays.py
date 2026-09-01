@@ -311,10 +311,11 @@ def _fill_from_coarse_dem(lots, tiers) -> None:
 
     for col, vals in (("slope_p85_pct", agg), ("slope_mean_pct", mean),
                       ("slope_max_pct", mx)):
-        cur = np.asarray(lots[col], dtype=float)
+        # copy=True: pandas hands back a read-only view of its own block.
+        cur = np.array(lots[col], dtype=float, copy=True)
         cur[use] = vals
         lots[col] = cur
-    src = np.asarray(lots["slope_source"], dtype=object)
+    src = np.array(lots["slope_source"], dtype=object, copy=True)
     src[use] = "dem_10m"
     lots["slope_source"] = src
     print(f"  slope: coarse {tiers.fallback_10m_stat}{tiers.fallback_10m_window} "
