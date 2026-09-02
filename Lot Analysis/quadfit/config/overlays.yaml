@@ -187,6 +187,20 @@ overlays:
       wood_village: {grade: B, note: ""}
       multnomah_unincorporated: {grade: B, note: ""}
 
+  # ---------------- Oregon City ---------------------------------------------
+  # The first Clackamas city overlay in the screen. Until 2026-09-01 no
+  # Clackamas jurisdiction had one, and 2,820 greens -- 28% of the corpus --
+  # were graded with no environmental check at all.
+  - key: oregon_city_nrod
+    name: "Oregon City Natural Resource Overlay District"
+    action: carve
+    buffer_ft: 0
+    jurisdictions: [oregon_city]
+    citation: "OCMC 17.49.070(A) prohibits any new structures or development within the NROD; 17.49.030(1) makes the adopted NROD Map the regulatory boundary (mapped 10 ft beyond the 17.49.110 vegetated corridor)"
+    confidence: verified
+    coverage:
+      oregon_city: {grade: A, note: "city-adopted regulatory map, 130 polygons; boundary may be re-delineated smaller under 17.49.030(2) or expanded under 17.49.035, so carving the adopted map errs conservative"}
+
   # ---------------- Flood (FEMA NFHL split by attribute in s0) --------------
   - key: fema_floodway
     name: "FEMA regulatory floodway"

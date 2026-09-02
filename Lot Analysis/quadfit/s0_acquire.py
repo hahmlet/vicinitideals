@@ -176,6 +176,22 @@ PHASE2_LAYERS: dict[str, dict[str, Any]] = {
     "overlay_metro_wetlands": {
         "url": f"{_METRO}/Wetlands/FeatureServer/0",
         "fields": ["SOURCE"]},
+    # ---------------- Oregon City (Clackamas' first wired overlay) ---------
+    # OCMC 17.49.030(1): the NROD Map "is a regulatory boundary mapped ten feet
+    # beyond the required vegetated corridor width" -- the published map is the
+    # rule, not an illustration of it, which is the thing that has to be true
+    # before a city layer can move a verdict. 17.49.070(A) then prohibits "any
+    # new gardens, lawns, structures, development" inside it, so the overlay is
+    # a carve and not a flag.
+    #
+    # 130 polygons, one attribute (NROD). The boundary can move both ways under
+    # 17.49.030(2) (an applicant may delineate the true resource edge) and
+    # 17.49.035 (a wetland found during review expands it), so carving the
+    # adopted map is the conservative reading in the direction a screen should
+    # err.
+    "overlay_oregon_city_nrod": {
+        "url": "https://maps.orcity.org/arcgis/rest/services/WaterAndNaturalResources/MapServer/2",
+        "fields": ["NROD", "Acres"]},
     # Flood: FEMA NFHL, the source of record for BOTH screened counties.
     #
     # This filter read `= '41051C'` until 2026-09-01, which is Multnomah alone.
