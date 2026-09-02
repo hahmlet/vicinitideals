@@ -279,7 +279,8 @@ judged is the citation that names the row and nothing else — which is the shap
 townhouse frontage misread had. A citation naming its own *header* is the exception to
 the exception: that is the corpus being careful about which of six columns a number came
 from, not reaching for an override, and counting it as a reach left Troutdale and Happy
-Valley almost entirely unjudged. It reaches 555 citations and judges 237 of them.
+Valley almost entirely unjudged. It reaches 581
+citations and judges 255 of them.
 
 Two buckets, because they are different work. A **mismatch** is a cell stating one number
 where another was encoded. A **vacancy** is a cell stating no standard — “None”, “NA” —
@@ -313,7 +314,7 @@ unjudgeable — it would have walked past the misread it was built for. Both are
 `reach()` is pinned by a test: **a reader that has stopped seeing rows reports a clean
 corpus in exactly the words of a corpus that is clean.**
 
-It reads 518 of 2,249 cited values, and its docstring names the five shapes of the rest so
+It reads 581 of 2,249 cited values, and its docstring names the five shapes of the rest so
 that a clean report is not read as a clean corpus. Three of the five are nothing to check —
 prose, a table with one district in it, a header whose columns are housing types. Two are
 real gaps and stay open on purpose. Fairview and unincorporated Clackamas print their

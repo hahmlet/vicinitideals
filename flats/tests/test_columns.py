@@ -32,14 +32,14 @@ pytestmark = pytest.mark.unit
 #: header carries its own row-label cell. The second compared numbers only, so
 #: "None" was invisible to it -- it would have walked past the misread it was
 #: written for.
-REACH = 555
+REACH = 581
 
 #: Of what it reaches, how much it can actually compare. Well below ``REACH``
 #: on purpose: a citation naming a footnote beside the cell is left alone
 #: rather than judged against a value the corpus deliberately overrode, and an
 #: exemption against a cell printing a figure is handed to the exemption ledger
 #: rather than answered here.
-JUDGED = 237
+JUDGED = 255
 
 
 @pytest.fixture(scope="module")
@@ -324,6 +324,68 @@ def test_a_wrapped_cell_is_not_judged_on_the_line_it_starts(tmp_path: Path) -> N
     found = survey(configroot=configroot, docroot=docroot)
     assert found.reached == 1
     assert found.judged == 0
+    assert found.mismatches == ()
+
+
+def test_a_zone_whose_key_has_a_space_is_its_own_zone(tmp_path: Path) -> None:
+    """And the silent half: its fields were being read as the zone above it.
+
+    Wood Village keys four zones ``LR 12``, ``LR 7.5``, ``MR 2`` and ``MR 4``.
+    A pattern that stopped at the space did not skip them -- it kept attributing
+    their values to whichever zone was declared before, so each was checked
+    against another district's columns, found no cell, and passed in silence.
+    """
+    docroot = tmp_path / "docs"
+    configroot = tmp_path / "config"
+    doc = docroot / "or" / "x" / "city" / "table.txt"
+    doc.parent.mkdir(parents=True)
+    doc.write_text(
+        "  Table 1: Development Requirements\n"
+        "     Standard      LR 12     LR 7.5\n"
+        "     Lot width     80 ft     60 ft\n\n",
+        encoding="utf-8",
+    )
+    layer = configroot / "or" / "x" / "city.yaml"
+    layer.parent.mkdir(parents=True)
+    layer.write_text(
+        "zones:\n"
+        "  TC:\n"
+        "    max_height_ft:\n"
+        "      value: 35\n"
+        '      cite: elsewhere\n'
+        "  LR 7.5:\n"
+        "    min_lot_width_ft:\n"
+        "      value: 80\n"
+        '      quote: "or/x/city/table.txt#L3"\n',
+        encoding="utf-8",
+    )
+    found = survey(configroot=configroot, docroot=docroot)
+    assert len(found.mismatches) == 1
+    assert found.mismatches[0].zone == "LR 7.5"
+    assert found.mismatches[0].cell == "60 ft"
+
+
+def test_a_quoted_caption_is_context_like_a_header(tmp_path: Path) -> None:
+    # Wood Village quotes "Table 220-3. Housing Types Allowed" beside the row,
+    # the way other cities quote the header. Counting it as a line the check
+    # failed to read put the whole city in the reaches-past-the-table bucket.
+    configroot, docroot = _corpus(tmp_path, TOWNHOUSE, "exempt: true", spec="L1,L3")
+    found = survey(configroot=configroot, docroot=docroot)
+    assert found.judged == 1
+    assert found.mismatches == ()
+    assert found.vacancies == ()
+
+
+def test_a_decimal_without_its_leading_zero_is_still_that_number(
+    tmp_path: Path,
+) -> None:
+    # Wood Village states LR12's density floor as ".9 (25%)". Read as a whole
+    # number that is nine, and the file's correct 0.9 becomes a finding.
+    configroot, docroot = _corpus(
+        tmp_path, "        Density     .9 (25%)   4.6 (80%)  8.7", "value: 4.6"
+    )
+    found = survey(configroot=configroot, docroot=docroot)
+    assert found.judged == 1
     assert found.mismatches == ()
 
 

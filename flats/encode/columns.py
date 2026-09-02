@@ -24,10 +24,11 @@ them.
 It follows a citation onto every line the citation names, and asks agreement of
 one of them rather than all -- the other lines are context by design, a header
 row quoted to pin a column or a footnote quoted beside the cell it governs. A
-citation that names its own header is being careful rather than reaching past
-the table, so the header line does not count against it; before that was true
-Troutdale and Happy Valley were almost entirely unjudged, because quoting the
-header is exactly how those two say which of six columns a number came from.
+citation that names its own header, or the table's caption, is being careful
+rather than reaching past the table, so neither line counts against it; before
+that was true Troutdale, Happy Valley and all of Wood Village were almost
+entirely unjudged, because quoting the header is exactly how those cities say
+which of six columns a number came from.
 
 What it will not do is judge a cell it cannot turn into the same kind of thing
 as the encoded value. A number against a number, "None" or "NA" against an
@@ -59,7 +60,7 @@ Three counts, reported separately because they are different work:
     clean, so this is pinned by a test.
 
 What it cannot see, so a clean report is read for what it is. Of 2,249 cited
-values it reads 555. Roughly half the remainder name lines in a document with
+values it reads 581. Roughly half the remainder name lines in a document with
 no table this check recognises. The rest name lines in a document that has one
 but outside it; or in a table whose header does not carry that district; or in
 a row whose label wraps across several lines, so that no single line carries a
@@ -167,7 +168,13 @@ _MAX_RANGE = 12
 #: How far a wrapped value may run past the line its row starts on.
 _MAX_WRAP = 3
 
-_ZONE_KEY = re.compile(r"^  ([A-Za-z0-9/_.\-]+):\s*$")
+#: Wood Village keys four of its zones with a space in the name -- ``LR 7.5``,
+#: ``MR 2`` -- and a pattern that stopped at the space did not merely skip
+#: them: it went on attributing their fields to whichever zone was declared
+#: above, so every value in those four was checked against another zone's
+#: columns and quietly found nothing. ``norm`` strips the space back out, so
+#: the key still matches a header cell reading ``LR7.5``.
+_ZONE_KEY = re.compile(r"^  ([A-Za-z0-9/_.\-]+(?: [A-Za-z0-9/_.\-]+)*):\s*$")
 _FIELD_KEY = re.compile(r"^    ([a-z0-9_]+):\s*$")
 _EXEMPT = re.compile(r"^\s+-?\s*exempt:\s*true\s*$")
 _WHEN = re.compile(r"^\s+when:\s*\[(.*)\]\s*$")
@@ -206,7 +213,11 @@ _ELSEWHERE = re.compile(r"\b(see|varies|table note|per section)\b", re.I)
 #: down three lines, and the figure is not on the row the citation names.
 _WRAPPED = re.compile(r"\b(per|of|and|or|to|from|than|for)\s*$", re.I)
 
-_FIGURES = re.compile(r"\d[\d,]*(?:\.\d+)?")
+#: The trailing alternative is for a decimal printed without its leading
+#: zero. Wood Village's Table 210-3 states LR12's density floor as
+#: ".9 (25%)", and read as a whole number that is a density nine times the
+#: real one disagreeing with an encoding that is correct.
+_FIGURES = re.compile(r"\d[\d,]*(?:\.\d+)?|\.\d+")
 
 #: Fields where a cell reading "none" and an encoded ``0`` state the same
 #: requirement, so the corpus writes the number and this check does not report
@@ -231,6 +242,14 @@ _ZERO_IS_THE_SAME_AS_NONE = frozenset(
         "min_landscaped_pct",
     }
 )
+
+#: A cited line that is the table's own caption. Wood Village quotes
+#: ``Table 220-3. Housing Types Allowed`` beside the row, the way other cities
+#: quote the header, and counting it as a line the check failed to read put
+#: every value in that city into the "reaches past the table" bucket. A
+#: footnote never opens with the word Table, so this does not silence the
+#: overrides the bucket exists for.
+_CAPTION = re.compile(r"^\s*Table\s")
 
 _EXEMPT_TOKEN = "EXEMPT"
 
@@ -540,7 +559,12 @@ def survey(
             # and Troutdale pin which of six columns a number came from. So a
             # header line is not a line this check failed to read, and it does
             # not count against the citation below.
-            rows = [n for n in line_nos if not doc.is_header(n)]
+            rows = [
+                n
+                for n in line_nos
+                if not doc.is_header(n)
+                and not (n <= len(doc.lines) and _CAPTION.match(doc.lines[n - 1]))
+            ]
             for line_no in rows:
                 if line_no > len(doc.lines):
                     continue
