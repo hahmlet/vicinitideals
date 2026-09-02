@@ -25,12 +25,16 @@ on it, and only the first is a queue item:
 2. **82% of greens rest on one legal argument** about a parking dimension no
    city wrote down (item 3, corrected on 2026-09-01 to include Portland). The
    argument is good. It is still an argument.
-3. **Nothing screens environmental overlays anywhere in Clackamas County** —
-   floodplain, wetland, habitat, historic. Multnomah has thirteen such layers;
-   the eleven Clackamas jurisdictions have none. **2,820 greens (28%) are
-   graded with that check simply absent.** This is not on the list below
-   because it is agent work, but it is the largest *unlisted* source of
-   false greens.
+3. **Nothing screened environmental overlays anywhere in Clackamas County** —
+   floodplain, wetland, habitat, steep slope. Multnomah had thirteen such
+   layers; the eleven Clackamas jurisdictions had none, and **2,820 greens
+   (28%) were graded with that check simply absent.** Found and half fixed on
+   2026-09-01. The flood half was a one-line bug — the FEMA download was
+   filtered to Multnomah's county code while the config claimed flood applied
+   everywhere — and is corrected and running. The other half is real work and
+   it is agent work: every Clackamas city that produces a green turns out to
+   publish its own natural-resource and wetland geometry, none of it wired in.
+   Audited and written down in `SOURCES_PHASE2.md`.
 4. **No green has ever been checked against a real answer.** The one back-test
    run measured the opposite direction — of fourplexes that really were
    permitted, did we flag the lot? (60%.) Nobody has taken a green lot to a
@@ -274,6 +278,18 @@ closes it to us without lot assembly. The two-and-a-half thousand lots come off
 the list of places worth hoping about.
 
 ## Queued for the agent — no action needed from you, listed so nothing is invisible
+
+- **Wire up the Clackamas environmental layers** — the biggest open correctness
+  job, and it points the dangerous way (it can only take greens away). Oregon
+  City publishes its Natural Resource Overlay District, Milwaukie its habitat
+  and vegetated corridors, West Linn its riparian and wetland inventories,
+  Happy Valley its resource and steep-slope zones. All verified live on
+  2026-09-01. What makes this real work rather than a config edit: finding a
+  map is not the same as knowing what it does, and every overlay already in the
+  screen carries a citation to the clause that gives it force. Oregon City's
+  code names its overlay when it works out how much of a lot counts toward
+  density — which proves it constrains, not that it forbids a building. Each
+  layer needs its chapter read before it moves a verdict.
 
 - ~~**Portland-administered pockets** (PCC 33.266 applied to the 1,489
   unincorporated-Multnomah lots Portland administers)~~ Closed 2026-09-01:
