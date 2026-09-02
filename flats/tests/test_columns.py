@@ -32,13 +32,14 @@ pytestmark = pytest.mark.unit
 #: header carries its own row-label cell. The second compared numbers only, so
 #: "None" was invisible to it -- it would have walked past the misread it was
 #: written for.
-REACH = 518
+REACH = 555
 
-#: Of what it reaches, how much it can actually compare. Far below ``REACH`` on
-#: purpose: two citations in three name a footnote or a second row beside the
-#: cell, and those are left alone rather than judged against a cell the corpus
-#: deliberately overrode.
-JUDGED = 150
+#: Of what it reaches, how much it can actually compare. Well below ``REACH``
+#: on purpose: a citation naming a footnote beside the cell is left alone
+#: rather than judged against a value the corpus deliberately overrode, and an
+#: exemption against a cell printing a figure is handed to the exemption ledger
+#: rather than answered here.
+JUDGED = 237
 
 
 @pytest.fixture(scope="module")
@@ -108,6 +109,108 @@ def _corpus(
 TOWNHOUSE = "        Townhouse   16 ft.     None       16 ft."
 
 
+def _corpus2(tmp_path, header, row, zone, encoded, *, spec="L3"):
+    """A four-line document whose header the caller writes, and one value."""
+    docroot = tmp_path / "docs"
+    configroot = tmp_path / "config"
+    doc = docroot / "or" / "x" / "city" / "table.txt"
+    doc.parent.mkdir(parents=True)
+    doc.write_text(
+        f"  Table 1: Development Requirements\n{header}\n{row}\n\n",
+        encoding="utf-8",
+    )
+    layer = configroot / "or" / "x" / "city.yaml"
+    layer.parent.mkdir(parents=True)
+    layer.write_text(
+        "zones:\n"
+        f"  {zone}:\n"
+        f"    {encoded}\n"
+        f'      quote: "or/x/city/table.txt#{spec}"\n',
+        encoding="utf-8",
+    )
+    return configroot, docroot
+
+
+HEADER_TC = "     Standard      LDR-1     LDR-2     MDR       (TC)      HDR       (TC)"
+ROW_TC = "     Lot width     70        60        50        50        N/A       20"
+
+
+def test_a_header_that_repeats_a_label_is_still_read(tmp_path) -> None:
+    # Troutdale heads six columns LDR-1, LDR-2, MDR, (TC), HDR, (TC): the
+    # town-centre variants take their district's name from the line above.
+    # Rejecting the whole header for the repeat left 64 citations unchecked;
+    # the ambiguity is confined to the label that repeats.
+    configroot, docroot = _corpus2(
+        tmp_path, HEADER_TC, ROW_TC, "MDR", "min_lot_width_ft:\n      value: 99"
+    )
+    found = survey(configroot=configroot, docroot=docroot)
+    assert len(found.mismatches) == 1
+    assert found.mismatches[0].cell == "50"
+
+
+def test_a_district_heading_two_columns_is_declined(tmp_path) -> None:
+    # Which of the two it came from is the whole question, so the check does
+    # not pick the first. Wood Village Table 220-3 heads four housing-type
+    # columns "MR4 and MR2", and reading a value out of it would be a guess.
+    configroot, docroot = _corpus2(
+        tmp_path, HEADER_TC, ROW_TC, "(TC)", "min_lot_width_ft:\n      value: 99"
+    )
+    found = survey(configroot=configroot, docroot=docroot)
+    assert found.reached == 0
+
+
+def test_quoting_the_header_row_is_not_a_reach_past_the_table(tmp_path) -> None:
+    # It is the opposite: quoting the header is how the corpus pins which of
+    # six columns a number came from. Counting it as a line the check failed
+    # to read left Troutdale and Happy Valley almost entirely unjudged.
+    configroot, docroot = _corpus2(
+        tmp_path,
+        HEADER_TC,
+        ROW_TC,
+        "MDR",
+        "min_lot_width_ft:\n      value: 99",
+        spec="L2,L3",
+    )
+    found = survey(configroot=configroot, docroot=docroot)
+    assert found.judged == 1
+    assert len(found.mismatches) == 1
+
+
+def test_an_exemption_against_a_printed_figure_is_not_this_check(tmp_path) -> None:
+    """It is ``flats.encode.exemptions``, which reads words rather than cells.
+
+    Happy Valley's density row prints "4.4 du/net acre" and the encoded value
+    is exempt, because the row is headed "Townhome maximum density" and a
+    quadplex is not a townhouse. No count of columns can see that. What this
+    check owns is the other direction -- a number encoded where the column
+    states no standard -- because there the number is the thing that may have
+    come from somewhere else.
+    """
+    configroot, docroot = _corpus2(
+        tmp_path, HEADER_TC, ROW_TC, "MDR", "min_lot_width_ft:\n      exempt: true"
+    )
+    found = survey(configroot=configroot, docroot=docroot)
+    assert found.reached == 1
+    assert found.judged == 0
+    assert found.mismatches == ()
+
+
+def test_zero_and_none_are_the_same_setback(tmp_path) -> None:
+    # Portland writes 0 where Table 130-2 reads "none" for a street lot line,
+    # and says so in the file. A setback is subtracted rather than tested, so
+    # both readings let the building stand on the line and the number is the
+    # one that stays in the arithmetic. The same cell under a minimum lot size
+    # is a finding, which is what ``test_it_catches_a_number_taken_from_the_
+    # column_next_door`` covers.
+    row = "     Front yard    10        none      10        10        10        10"
+    configroot, docroot = _corpus2(
+        tmp_path, HEADER_TC, row, "LDR-2", "setback_front_ft:\n      value: 0"
+    )
+    found = survey(configroot=configroot, docroot=docroot)
+    assert found.reached == 1
+    assert found.vacancies == ()
+
+
 def test_it_catches_a_number_taken_from_the_column_next_door(tmp_path: Path) -> None:
     configroot, docroot = _corpus(tmp_path, TOWNHOUSE, "value: 16")
     found = survey(configroot=configroot, docroot=docroot)
@@ -154,17 +257,32 @@ def test_a_row_with_dropped_blanks_is_skipped_rather_than_guessed(
     assert found.mismatches == ()
 
 
-def test_zero_is_not_an_exemption(tmp_path: Path) -> None:
-    # A cell reading "0 ft." states a standard of zero, which a lot can fail to
-    # meet in principle and which the screen measures against. "None" states no
-    # standard at all. Reading the first as the second is the one direction
-    # that can green a lot the city would refuse.
+def test_an_exemption_over_a_printed_figure_belongs_to_the_other_ledger(
+    tmp_path: Path,
+) -> None:
+    """The dangerous direction is real, and this is not the reader for it.
+
+    An exemption encoded where the code states a standard is the one mistake
+    in this corpus that produces a false GREEN. But it cannot be caught by
+    counting cells, because the innocent version looks identical: Happy
+    Valley's density row prints "4.4 du/net acre" in R-40's own column and the
+    encoded value is exempt, correctly, because the row is headed "Townhome
+    maximum density" and a quadplex is not a townhouse.
+
+    :mod:`flats.encode.exemptions` reads the words instead, and calls both of
+    them ``numeric`` -- a citation a reviewer cannot read the exemption out
+    of. All seven Happy Valley rows are in its ledger, its count is pinned at
+    37 by ``test_exemptions``, and that line of the table is one of its own
+    test cases. Answering here as well would mean either duplicating the
+    finding or, worse, silencing it with a list of exceptions.
+    """
     configroot, docroot = _corpus(
         tmp_path, "        Townhouse   16 ft.     0 ft.      16 ft.", "exempt: true"
     )
     found = survey(configroot=configroot, docroot=docroot)
-    assert len(found.mismatches) == 1
-    assert found.mismatches[0].cell == "0 ft."
+    assert found.reached == 1
+    assert found.judged == 0
+    assert found.mismatches == ()
 
 
 def test_a_citation_that_reaches_past_the_table_is_left_alone(

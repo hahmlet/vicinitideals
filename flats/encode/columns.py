@@ -23,7 +23,11 @@ them.
 
 It follows a citation onto every line the citation names, and asks agreement of
 one of them rather than all -- the other lines are context by design, a header
-row quoted to pin a column or a footnote quoted beside the cell it governs.
+row quoted to pin a column or a footnote quoted beside the cell it governs. A
+citation that names its own header is being careful rather than reaching past
+the table, so the header line does not count against it; before that was true
+Troutdale and Happy Valley were almost entirely unjudged, because quoting the
+header is exactly how those two say which of six columns a number came from.
 
 What it will not do is judge a cell it cannot turn into the same kind of thing
 as the encoded value. A number against a number, "None" or "NA" against an
@@ -41,12 +45,13 @@ Three counts, reported separately because they are different work:
 
 ``vacancies``
     The cell states no standard -- "None", "NA" -- and a number was encoded
-    against it. Gresham's townhouse frontage was one of these, and so is every
-    Portland commercial setback written as ``0`` where the table says "none".
-    They are not the same decision: zero and no-standard behave alike on a
-    setback and a signer may reasonably prefer either, while a minimum lot size
-    of zero is a claim the table does not make. Reported apart so the ruling
-    can be made per field rather than per city.
+    against it, on a field where that is a different claim. Gresham's townhouse
+    frontage was one of these. Portland's commercial setbacks are not, though
+    they read the same on the page: ``0`` where Table 130-2 says "none". A
+    setback is subtracted rather than tested, so both readings let the building
+    stand on the line and the number is the one that stays in the arithmetic.
+    A minimum lot size of zero is a claim the table does not make. The split is
+    ``_ZERO_IS_THE_SAME_AS_NONE``, and it is per field rather than per city.
 
 ``reach``
     How many citations the check could read at all. A reader that has stopped
@@ -54,7 +59,7 @@ Three counts, reported separately because they are different work:
     clean, so this is pinned by a test.
 
 What it cannot see, so a clean report is read for what it is. Of 2,249 cited
-values it reads 518. Roughly half the remainder name lines in a document with
+values it reads 555. Roughly half the remainder name lines in a document with
 no table this check recognises; the rest name lines in a document that has one,
 but outside it, or in a table whose header does not carry that district. The
 documents with no recognised table fall into five shapes, and the last two are
@@ -117,7 +122,9 @@ DOCROOT = Path("flats/provenance/docs")
 CONFIGROOT = Path("flats/config/jurisdictions")
 
 #: A header cell is a district code: short, starts upper-case, no prose.
-_ZONE = re.compile(r"^[A-Z][A-Za-z0-9/. \-]{0,14}$")
+_ZONE = re.compile(
+    r"^[A-Z][A-Za-z0-9/. \-]{0,14}$|^\([A-Z][A-Za-z0-9/. \-]{0,12}\)$"
+)
 
 #: Cells are separated by runs of two or more spaces in the extracted text.
 _SPLIT = re.compile(r"\s{2,}")
@@ -176,6 +183,30 @@ _ELSEWHERE = re.compile(r"\b(see|varies|table note|per section)\b", re.I)
 _WRAPPED = re.compile(r"\b(per|of|and|or|to|from|than|for)\s*$", re.I)
 
 _FIGURES = re.compile(r"\d[\d,]*(?:\.\d+)?")
+
+#: Fields where a cell reading "none" and an encoded ``0`` state the same
+#: requirement, so the corpus writes the number and this check does not report
+#: it. These are the standards the screen SUBTRACTS with: a setback of zero and
+#: no setback both let the building stand on the line, and writing the number
+#: keeps it in the arithmetic instead of in a list of things that do not apply.
+#:
+#: The fields not on this list are the ones the screen TESTS the lot against --
+#: a minimum lot size, width or frontage. There a floor of zero is a claim the
+#: table does not make, and the difference is what the Gresham townhouse row
+#: turned on. A MAXIMUM is not on this list either, and for the opposite
+#: reason: a maximum setback of "none" is no constraint at all, while a maximum
+#: setback of zero would demand the building stand exactly on the line.
+_ZERO_IS_THE_SAME_AS_NONE = frozenset(
+    {
+        "setback_front_ft",
+        "setback_side_ft",
+        "setback_rear_ft",
+        "setback_street_side_ft",
+        "setback_side_total_ft",
+        "setback_garage_entrance_ft",
+        "min_landscaped_pct",
+    }
+)
 
 _EXEMPT_TOKEN = "EXEMPT"
 
@@ -270,7 +301,16 @@ class _Doc:
             codes = got[1:]
             if not all(_ZONE.match(c) and is_code(c) for c in codes):
                 continue
-            if len({norm(c) for c in codes}) != len(codes):
+            # Every column reading the same thing is a spanning sub-heading
+            # -- a row of four cells all saying "REAR", or Wood Village Table
+            # 220-3 heading four housing-type columns "MR4 and MR2" -- and
+            # taking it for a column order puts every row beneath it against
+            # the wrong district. A header that repeats only SOME of its
+            # labels is a different thing and still readable: Troutdale heads
+            # six columns LDR-1, LDR-2, MDR, (TC), HDR, (TC), and the
+            # ambiguity is confined to the label that repeats. Which district
+            # may be read from it is settled in ``cell``.
+            if len({norm(c) for c in codes}) == 1:
                 continue
             first_is_code = bool(_ZONE.match(got[0])) and is_code(got[0])
             if first_is_code and norm(got[0]) in {norm(c) for c in codes}:
@@ -309,9 +349,13 @@ class _Doc:
             return None
         header, labelled = got
         spelled = [norm(c) for c in header]
-        if norm(zone) not in spelled:
+        # Exactly one, not the first of several. A district heading two columns
+        # of the same table is a question this check cannot answer -- which of
+        # the two the value came from is the whole point -- so it declines.
+        matching = [i for i, c in enumerate(spelled) if c == norm(zone)]
+        if len(matching) != 1:
             return None
-        column = spelled.index(norm(zone))
+        column = matching[0]
         row = cells(self.lines[line_no - 1])
         # Two shapes, and which one applies is settled by the header rather
         # than by the row's length. A header that labels its own rows
@@ -344,21 +388,29 @@ def _figure(text: str) -> float | None:
         return None
 
 
-def _judge(encoded: str, cell: str) -> bool | str | None:
+def _judge(encoded: str, cell: str, field: str = "") -> bool | str | None:
     """``True``, ``False``, ``"vacant"``, or ``None`` where not comparable."""
     text = cell.strip().lower()
     if not text:
         return None
     nothing = text in _NOTHING
     if encoded == _EXEMPT_TOKEN:
-        return nothing
+        # An exemption carries no number, so there is no number for this check
+        # to have taken from the wrong column. Where the cell prints a figure
+        # and the value is exempt, the question is whether the cited text
+        # supports the exemption -- and that is :mod:`flats.encode.exemptions`,
+        # which reads the words rather than counting the cells. It has to be:
+        # Happy Valley's density row prints "4.4 du/net acre" and the value is
+        # exempt because the row is headed "Townhome maximum density" and a
+        # quadplex is not a townhome. No count of columns can see that.
+        return True if nothing else None
     if nothing:
         # A number encoded where the cell states no standard. Judged rather
         # than skipped -- "None" is not a number, so a check that only compares
         # numbers would step straight past the misread it was written for --
-        # but reported apart, because zero and no-standard are the same thing
-        # on a setback and different things on a minimum lot size.
-        return _VACANT
+        # but only for the fields the screen tests a lot against. See
+        # ``_ZERO_IS_THE_SAME_AS_NONE``.
+        return None if field in _ZERO_IS_THE_SAME_AS_NONE else _VACANT
     if _ELSEWHERE.search(cell) or _WRAPPED.search(cell):
         return None
     if text[0].islower():
@@ -459,8 +511,14 @@ def survey(
             if doc is None:
                 continue
             candidates: list[tuple[str, int]] = []
-            for line_no in line_nos:
-                if line_no > len(doc.lines) or doc.is_header(line_no):
+            # A citation that names its own header row is the corpus being
+            # careful, not reaching for something else: it is how Happy Valley
+            # and Troutdale pin which of six columns a number came from. So a
+            # header line is not a line this check failed to read, and it does
+            # not count against the citation below.
+            rows = [n for n in line_nos if not doc.is_header(n)]
+            for line_no in rows:
+                if line_no > len(doc.lines):
                     continue
                 cell = doc.cell(line_no, zone)
                 if cell:
@@ -468,7 +526,7 @@ def survey(
             if not candidates:
                 continue
             reached += 1
-            if len(candidates) != len(line_nos):
+            if len(candidates) != len(rows):
                 # The citation reaches past the table, and what it reaches is
                 # routinely the thing that replaces the cell. Happy Valley's
                 # lot width is "100 feet" in the cell and exempt by note 2 four
@@ -481,7 +539,8 @@ def survey(
                 # the townhouse frontage misread had.
                 continue
             verdicts = [
-                (_judge(encoded, cell), cell, line_no) for cell, line_no in candidates
+                (_judge(encoded, cell, field), cell, line_no)
+                for cell, line_no in candidates
             ]
             comparable = [v for v in verdicts if v[0] is not None]
             if not comparable:

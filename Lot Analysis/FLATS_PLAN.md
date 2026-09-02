@@ -276,13 +276,26 @@ setback is “10 feet” in the cell and five feet by note 3c, on a street class
 cannot read; Happy Valley’s lot width is “100 feet” in the cell and exempt by note 2 four
 hundred lines down. Both encodings are right and neither matches its own cell. What stays
 judged is the citation that names the row and nothing else — which is the shape the
-townhouse frontage misread had. It reaches 518 citations and judges 154 of them.
+townhouse frontage misread had. A citation naming its own *header* is the exception to
+the exception: that is the corpus being careful about which of six columns a number came
+from, not reaching for an override, and counting it as a reach left Troutdale and Happy
+Valley almost entirely unjudged. It reaches 555 citations and judges 237 of them.
 
 Two buckets, because they are different work. A **mismatch** is a cell stating one number
 where another was encoded. A **vacancy** is a cell stating no standard — “None”, “NA” —
-with a number encoded against it, which is a ruling per field rather than per city: zero
-and no-standard behave alike on a setback and a signer may reasonably prefer either, while
-a minimum lot size of zero is a claim the table does not make.
+with a number encoded against it, and it is ruled per field rather than per city. A
+setback is *subtracted*: zero and no-standard both let the building stand on the line, so
+Portland writing `0` where Table 130-2 reads “none” is not a finding. A minimum lot size
+is *tested*: a floor of zero is a claim the table does not make, and that is what the
+Gresham row turned on.
+
+The direction it does **not** answer is an exemption encoded over a cell printing a
+figure — the only kind of error in this corpus that produces a false GREEN. Counting cells
+cannot separate the dangerous version from the innocent one: Happy Valley's density row
+prints *4.4 du/net acre* in R-40's own column and the exemption is correct, because the
+row is headed “Townhome maximum density” and a quadplex is not a townhouse. The exemption
+ledger reads the words instead and files all seven as `numeric`, a citation a reviewer
+cannot read the exemption out of. Two ledgers, one question each.
 
 The failure it exists for: Gresham Table 4.0130 G.1, the townhouse street-frontage row,
 reads *16 ft. / 16 ft. / 16 ft. / None / None / 16 ft. / None* across LDR-5, LDR-7, TR,
