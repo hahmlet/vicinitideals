@@ -146,6 +146,75 @@ def test_the_frontage_that_must_be_built_up_to_the_street_owes_no_setback() -> N
     assert "setback_front_ft" not in on_a_transit_street.values
 
 
+def test_the_note_governs_the_maximum_too_or_the_zone_is_unbuildable() -> None:
+    """Note [5] has two limbs and only one of them had been read.
+
+    The minimum above is exempt on a transit street. The MAXIMUM was stated
+    flat -- 10 ft, everywhere -- and the two together said something the code
+    does not: a 26 ft pod owes 13 ft of front setback and may not stand more
+    than 10 ft back, which no building satisfies. IR is the only zone in the
+    corpus where that could show, because it is the only one that states its
+    minimum as a function of building height; every other zone with a maximum
+    prints a flat minimum at or under it, CI2 at 10 and 10.
+
+    Table 150-2's own row heading is the fix, and it says the same thing note
+    [5] does from the other side: "Maximum Building Setbacks **Street Lot
+    Line, Transit Street or Pedestrian District**". The ceiling applies on
+    those frontages and nowhere else, which is exactly where the floor lifts.
+    Off a transit street: 13 ft and no ceiling. On one: no floor and 10 ft.
+    Both are buildable, and what was encoded was neither.
+    """
+    rules = RuleSet(load_rules())
+
+    ordinary = rules.resolve(PORTLAND, "IR", POD)
+    assert ordinary.values["setback_front_ft"].value == 13
+    assert "setback_front_max_ft" not in ordinary.values
+
+    on_a_transit_street = rules.resolve(PORTLAND, "IR", (*POD, "on_transit_street"))
+    assert "setback_front_ft" not in on_a_transit_street.values
+    assert on_a_transit_street.values["setback_front_max_ft"].value == 10
+
+
+def test_no_zone_asks_a_building_to_stand_further_back_than_it_may() -> None:
+    """The invariant, across the whole corpus rather than one zone.
+
+    A minimum and a maximum on the same edge describe a window the building
+    stands in, and a window with the far side nearer than the near side is not
+    a strict reading -- it is a zone nothing can be built in, which this screen
+    would report as a constraint the city does not have. It is worth checking
+    corpus-wide rather than pinning IR, because the failure needs two standards
+    that are usually written far apart, and nothing else compares them.
+
+    Only the base values are compared. A variant is a different frontage, and
+    the window is per frontage.
+
+    The two other shapes an impossible zone could take were checked the same
+    day and are clean, so they get a sentence rather than a test of their own:
+    no zone states a density floor above its own ceiling, and no zone asks for
+    more building coverage and required landscaping than the lot has.
+    """
+    over = []
+    for layer_id, layer in load_rules().items():
+        for zone_id, zone in layer.zones.items():
+            floor = zone.values.get("setback_front_ft") or layer.defaults.get(
+                "setback_front_ft"
+            )
+            ceiling = zone.values.get("setback_front_max_ft") or layer.defaults.get(
+                "setback_front_max_ft"
+            )
+            if floor is None or ceiling is None:
+                continue
+            if floor.value is None or ceiling.value is None:
+                continue
+            if float(floor.value) > float(ceiling.value):
+                over.append(f"{layer_id}/{zone_id}: {floor.value} > {ceiling.value}")
+
+    assert not over, (
+        "a zone states a minimum front setback larger than its own maximum, so "
+        f"no legal front setback exists in it: {over}"
+    )
+
+
 def test_the_same_note_reaches_the_campus_zone_next_to_it() -> None:
     """CI2 read `setback_front_ft: 0` on the reading that Table 150-2 states no
     minimum street setback at all. It does: each of the three minimum rows is

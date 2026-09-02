@@ -576,6 +576,21 @@ the list of places worth hoping about.
     Neither moves a verdict as things stand, and both would need a column
     before those zones could be trusted green.
 
+    Walking the list also turned up **one zone the screen had made impossible
+    to build in**, which is the opposite of the failure everyone watches for.
+    Portland's IR is the only zone in the whole corpus whose front setback is
+    written as a formula — one foot back for every two feet of building height
+    — and for our 26-foot building that comes to 13 feet. The same table also
+    caps the front setback at 10 feet. Held side by side those two say no
+    building can legally stand there at all. They do not: a footnote says that
+    on the frontages where the cap applies there is no minimum, and the cap's
+    own heading limits it to transit streets and pedestrian districts. So it is
+    13 feet back on an ordinary street with no cap, or right up to the street
+    on a transit one — both buildable. Fixed, and a check now runs across every
+    zone in the corpus so a rule that forbids everything cannot hide as a
+    strict reading. No lot moves: IR has no greens and the screen has no column
+    for a maximum setback yet.
+
   - **1 place the pipeline is right and the corpus is merely richer.** Lake
     Oswego asks 5 ft on one side and 15 ft across both. The pipeline has one
     side-yard number and no combined one, so 7.5 is the only figure it can

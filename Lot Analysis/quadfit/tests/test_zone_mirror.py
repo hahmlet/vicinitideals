@@ -545,13 +545,14 @@ def test_a_zone_missing_from_the_pipeline_is_a_debt_somebody_wrote_down() -> Non
 #: run rather than argued about.
 #:
 #: A MAXIMUM front setback pushes the building toward the street and the
-#: placement search has never heard of it. 24 zones state one and 22 of them are
+#: placement search has never heard of it. 23 zones state one and 21 of them are
 #: `needs_verification`, so their lots reach REVIEW anyway; the two that are
 #: verified -- unincorporated Clackamas VR57 and Gresham CMF -- hold **zero
 #: greens between them**. So the gap moves no verdict as the corpus stands,
-#: which is a fact about the corpus and not about the rule. (Portland IR is the
-#: reason to keep looking: it states a 13 ft minimum front setback and a 10 ft
-#: maximum, so as encoded no legal front setback exists at all.)
+#: which is a fact about the corpus and not about the rule. (Portland IR used to
+#: be the 24th and the reason to keep looking: 13 ft minimum against a 10 ft
+#: maximum, no legal front setback at all. Resolved 2026-09-02 -- see the note
+#: below the list.)
 #:
 #: The other live one was minimum density, and it left this list the same day
 #: it arrived: 2026-09-02, count 14 -> 13. (2)(b) is about maximums and no part
@@ -604,14 +605,31 @@ def test_a_zone_missing_from_the_pipeline_is_a_debt_somebody_wrote_down() -> Non
 #:     greens -- Lake Oswego is `eligible: false` and its side yard already has
 #:     its own entry in KNOWN_SIDE_TOTAL_COLLAPSE.
 #:
+#: A THIRD WAY OFF THE LIST, found 2026-09-02: `setback_front_max_ft` 24 -> 23.
+#: Portland's IR left it, and not by getting a column. Its maximum front
+#: setback had been stated flat at 10 ft while its minimum -- the corpus's only
+#: standard measured off the BUILDING, 1 ft per 2 ft of height -- comes to 13 ft
+#: for the pod. Table 150-2's note [5] says "for frontages where the maximum
+#: building setback applies, there is no minimum setback", and the maximum's own
+#: row is headed "Street Lot Line, Transit Street or Pedestrian District". So
+#: the ceiling reaches only the frontage where the floor lifts: 13 and no
+#: ceiling off a transit street, no floor and 10 on one. Held flat, the two
+#: described a zone no building fits in. The maximum is now exempt at the base
+#: with the 10 as a transit-street variant, so the corpus no longer holds a
+#: number there and this pipeline no longer needs a column for one.
+#:
+#: That is a reading, not a deletion, and it is the only kind of shrink allowed
+#: besides a column: the standard has to stop applying, quoted, on the page.
+#:
 #: Frozen so the list cannot grow quietly. A standard leaves it by getting a
-#: column, never by being dropped from the corpus.
+#: column or by being read as not applying, never by being dropped from the
+#: corpus.
 UNEXPRESSIBLE: dict[str, int] = {
     "setback_garage_entrance_ft": 67,
     "min_lot_width_ft": 65,
     "min_landscaped_pct": 33,
     "min_lot_depth_ft": 28,
-    "setback_front_max_ft": 24,
+    "setback_front_max_ft": 23,
     "max_density_du_per_acre": 20,
     "min_building_separation_ft": 9,
     "min_density_trigger_lot_sqft": 5,

@@ -389,6 +389,17 @@ or,unfielded,,or/clackamas/milwaukie/19.300.base-zones.txt,3002,19.310.4,1,"Maxi
 or,unfielded,,or/clackamas/milwaukie/19.300.base-zones.txt,3918,19.312.5,1,3. Setbacks (ft)
 or,unfielded,,or/clackamas/milwaukie/19.300.base-zones.txt,4125,19.500,1,"Trees shall have a minimum 2-in caliper at time of planting, measured at 4 ft above grade."
 or,unfielded,,or/clackamas/milwaukie/19.300.base-zones.txt,4268,19.312.7,1,Mansard or decorative roofs on buildings less than 3 stories are prohibited.
+or,unfielded,,or/clackamas/milwaukie/19.400.overlays.txt,45,19.401.3,1,New private noncommercial docks exceeding 400 sq ft;
+or,unfielded,,or/clackamas/milwaukie/19.400.overlays.txt,933,19.402.6,1,"Y = 5,000 sq ft outside of HCA/WQR"
+or,unfielded,,or/clackamas/milwaukie/19.400.overlays.txt,934,19.402.6,1,"Z = -3,500 sq ft (1,500 sq ft — 5,000 sq ft)"
+or,unfielded,,or/clackamas/milwaukie/19.400.overlays.txt,937,19.402.6,1,"Y = 2,000 sq ft outside of HCA/WQR"
+or,unfielded,,or/clackamas/milwaukie/19.400.overlays.txt,938,19.402.6,1,"Z = 1,000 sq ft (3,000 sq ft - 2,000 sq ft)"
+or,unfielded,,or/clackamas/milwaukie/19.400.overlays.txt,2328,19.402.15,1,Locate all flood areas within 100 ft of the property.
+or,unfielded,,or/clackamas/milwaukie/19.400.overlays.txt,2364,19.402.15,2,0 ft — 100 ft HCA HCA HCA
+or,unfielded,,or/clackamas/milwaukie/19.400.overlays.txt,2368,19.402.15,1,101 ft — 150 ft Not HCA Not HCA HCA
+or,unfielded,,or/clackamas/milwaukie/19.400.overlays.txt,2370,19.402.15,1,Within 300 ft of river or surface stream HCA HCA HCA
+or,unfielded,,or/clackamas/milwaukie/19.400.overlays.txt,2371,19.402.15,1,More than 300 ft from river or surface stream HCA HCA HCA
+or,unfielded,,or/clackamas/milwaukie/19.400.overlays.txt,2372,19.402.15,1,0 ft — 100 ft from edge of flood area Not HCA HCA HCA
 or,unfielded,,or/clackamas/milwaukie/19.500.supplementary.txt,87,19.501.2,1,The porch or deck is at least 5 ft from the front and/or rear lot line.
 or,unfielded,,or/clackamas/milwaukie/19.500.supplementary.txt,196,19.502.2,1,200 sq ft
 or,unfielded,,or/clackamas/milwaukie/19.500.supplementary.txt,197,19.502.2,1,600 sq ft
@@ -1812,6 +1823,69 @@ or,unfielded,,or/multnomah/_unincorporated/39.uf-20.txt,73,39.6900,1,7 feet and 
 or,unfielded,,or/multnomah/_unincorporated/39.uf-20.txt,86,39.6900,1,feet and no more than 20 feet from
 or,unfielded,,or/multnomah/_unincorporated/39.uf-20.txt,165,39.4751,1,combined footprints of 400 square feet; and
 or,unfielded,,or/multnomah/_unincorporated/39.uf-20.txt,239,39.4743,1,Minimum Front Lot Line Length ¬ 50 feet.
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,77,39.4782,1,shall be four feet if the feature is within 15 feet
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,83,39.4782,1,Ordinance if located at least 20 feet from any
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,174,39.4791,1,At least 80 percent of the lots in a development
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,183,39.4791,1,within 30 degrees of a true east-west
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,197,39.4791,1,(3) There is at least 70 feet between the
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,203,39.4791,1,(4) There is at least 45 feet between the
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,207,39.4791,1,situated so that at least 80 percent of
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,215,39.4791,1,30 degrees of a true east-west axis and
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,216,39.4791,1,at least 80 percent of their ground floor
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,222,39.4791,1,will have at least 32 percent of their
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,223,39.4791,1,glazing and 500 square feet of their roof
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,224,39.4791,1,area which faces within 30 degrees of
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,291,39.4792,1,30 feet tall and more than 6 inches in
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,292,39.4792,1,diameter measured 4 feet above the
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,294,39.4792,1,at least 80 percent of the site or relevant
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,300,39.4792,1,at least 50 percent of the trees that cause
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,327,39.4791,1,at least 5 percent more per lot than if the
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,338,39.4791,1,that is sloped 10 percent or more and is
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,339,39.4791,1,oriented greater than 45 degrees east or
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,380,39.4791,1,least 30 feet tall and more than 6 inches in
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,381,39.4791,1,diameter measured 4 feet above the ground have
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,383,39.4791,1,and at least 50 percent of the crown cover will
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,447,39.4791,1,showing existing trees at least 30 feet
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,449,39.4791,1,"point 4 feet above grade, indicating their"
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,509,39.4801,1,between the 5 foot dimensions listed in Table A.
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,540,39.4801,1,a north-south lot dimension more than 90 feet
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,541,39.4801,1,shall use a value of 90 feet for this section.
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,552,39.4801,1,will shade not more than 20 percent of the south-
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,561,39.4791,1,solar building line 2.5 feet for every 1 foot of
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,563,39.4791,1,non-exempt vegetation over 2 feet.
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,603,39.4800,1,that exceeds 20 percent in a direction greater
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,604,39.4800,1,than 45 degrees east or west of true south based
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,613,39.4800,1,(3) Less than 20 square feet of south-
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,772,39.4806,1,50 percent and up to 25 percent to a front yard
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,874,39.4812,1,which are within 150 feet of the applicant's lot
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,875,39.4812,1,and 54 degrees east and west of true south
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,909,39.4812,1,not less than 21.3 degrees from the horizon and
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,910,39.4812,1,extend not more than 54 degrees east and west
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,970,39.4812,1,northern lot line shall be a line 10 feet in length
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,985,39.4812,3,altitude of 21.3 degrees and an azimuth ranging
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,986,39.4812,1,from 22.7 degrees east and west of true south.
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,991,39.4812,1,from 22.7 degrees east and west of true south;
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,994,39.4812,1,"diameter of 3 feet or less, a chimney, utility pole"
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,1003,39.4812,1,preceding sentence may be reduced by 3 feet. If
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,1004,39.4812,1,a structure has a roof oriented within 45 degrees
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,1006,39.4812,1,than 5 feet (vertical) in 12 feet (horizontal) the
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,1008,39.4812,1,such a roof has a pitch that is 5 feet in 12 feet or
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,1020,39.4812,1,between 22.7 degrees east and west of true south
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,1036,39.4812,1,that contains at least 20 square feet of glazing
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,1037,39.4812,1,oriented within 45 degrees east and west of true
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,1067,39.4812,1,exceeding 20 percent in a direction greater than
+or,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,1068,39.4812,1,"45 degrees east or west of true south, severe"
+or,unfielded,,or/multnomah/fairview/19.106.txt,245,19.106.040,1,Invasive vegetation removal of 300 square feet or less (per calendar year).
+or,unfielded,,or/multnomah/fairview/19.106.txt,618,19.106.040,1,• Within 10 feet of the outer boundary of the 40-foot riparian resource protection area.
+or,unfielded,,or/multnomah/fairview/19.106.txt,773,19.106.070,1,Greater than 15 feet from the outer limits of the 35- or 40-foot resource protection area
+or,unfielded,,or/multnomah/fairview/19.106.txt,878,19.106.080,1,80 feet in each direction measured from the centerline of creek. Total width 160 feet.
+or,unfielded,,or/multnomah/fairview/19.106.txt,883,19.106.080,1,55 feet measured in each direction from the centerline of the creek. Total width 110 feet.
+or,unfielded,,or/multnomah/fairview/19.106.txt,888,19.106.080,1,"Total resource width 80 feet, measured 40 feet in each direction from centerline of creek."
+or,unfielded,,or/multnomah/fairview/19.106.txt,891,19.106.080,1,"Total resource width 70 feet, measured 35 feet in each direction from centerline of creek."
+or,unfielded,,or/multnomah/fairview/19.106.txt,906,19.106.080,1,"100 feet, 50 feet on each side measured from centerline of the stream."
+or,unfielded,,or/multnomah/fairview/19.106.txt,909,19.106.080,1,"75 feet, 37.5 feet on each side measured from centerline of the stream."
+or,unfielded,,or/multnomah/fairview/19.110.txt,47,19.110.035,1,a. Area. Maximum face area of 75 square feet.
+or,unfielded,,or/multnomah/fairview/19.110.txt,51,19.110.035,1,c. Width shall be limited to a maximum of 15 feet.
 or,unfielded,,or/multnomah/fairview/19.13.definitions.txt,161,19.13.030,1,“Constrained slope” means land on slope that is between 15 to 20 percent.
 or,unfielded,,or/multnomah/fairview/19.13.definitions.txt,531,19.13.190,1,“Steep slopes” means slopes of greater than 30 percent.
 or,unfielded,,or/multnomah/fairview/19.140.txt,35,19.140.010,1,"2. A dead-end street, loop, or mid-block where the block is longer than 600 feet; and"
@@ -3485,6 +3559,7 @@ or,unfielded,,or/multnomah/portland/33.910.definitions.txt,1071,33.910,1,shared 
 or,unfielded,,or/multnomah/portland/33.910.definitions.txt,1325,33.910,1,angle of 45 degrees or less from a street lot line. See Figure 910-12.
 or,unfielded,,or/multnomah/portland/33.910.definitions.txt,1425,33.930.150,1,over 20 feet tall.
 or,unfielded,,or/multnomah/portland/33.910.definitions.txt,1539,33.910,1,included as utility trailers. Utility trailers that are longer than 16 feet in length are
+or,unfielded,,or/multnomah/portland/33.920.txt,242,33.920.230,1,"1. Exhibition and meeting areas with less than 20,000 square feet of total event area are"
 or,unfielded,,or/multnomah/troutdale/3.zoning-districts.txt,291,3.130,5,Setbacks (ft):
 or,unfielded,,or/multnomah/troutdale/3.zoning-districts.txt,316,3,1,(20 feet).
 or,unfielded,,or/multnomah/troutdale/3.zoning-districts.txt,380,3,1,Setbacks (ft): N/A N/A
@@ -3816,6 +3891,10 @@ or,unread,max_height_ft,or/clackamas/milwaukie/19.300.base-zones.txt,3991,19.312
 or,unread,max_height_ft,or/clackamas/milwaukie/19.300.base-zones.txt,4157,19.312.7,1,"The ground-floor street wall area is defined as the area up to the finished ceiling height of the space fronting the street or 15 ft above finished grade, whichever is less."
 or,unread,parking_min_per_unit,or/clackamas/milwaukie/19.300.base-zones.txt,4187,19.312.7,1,"All buildings must have at least one primary building entrance (e.g., dwelling entrance, customer entrance, tenant entrance, lobby entrance, or breezeway/courtyard entrance) facing an adjoining street"
 or,unread,max_height_ft,or/clackamas/milwaukie/19.300.base-zones.txt,4278,19.312.7,1,"The ground-floor height must be at least 14 ft, as measured from the finished floor to the ceiling, or from the finished floor to the bottom of the structure above (as in a multistory building). The b"
+or,unread,max_height_ft,or/clackamas/milwaukie/19.400.overlays.txt,33,19.401.3,1,"Commercial, industrial and residential structures and residential accessory structures exceeding 35 ft in height west of McLoughlin Blvd;"
+or,unread,max_height_ft,or/clackamas/milwaukie/19.400.overlays.txt,653,19.402.4,1,"Additional disturbance for outdoor uses, such as gardens and play areas, where the new disturbance area does not exceed 150 sq ft; does not involve the removal of any trees larger than 6-in diameter a"
+or,unread,max_height_ft,or/clackamas/milwaukie/19.400.overlays.txt,717,19.402.4,1,"Plants adjacent to trails may be trimmed, but trimming clearances must not exceed a height of 8 ft and a width of 6 ft."
+or,unread,setback_front_max_ft,or/clackamas/milwaukie/19.400.overlays.txt,2943,19.404.6,1,"The maximum front yard setback is 50 ft. The setback area must be landscaped, except where used for parking as allowed in 19.404.6.F."
 or,unread,min_lot_sqft,or/clackamas/milwaukie/19.500.supplementary.txt,29,19.501.1,1,"Single detached dwellings require a minimum lot size of 5,000 sq ft if the lot was created on or after June 3, 2022, the effective date of Ordinance #2218."
 or,unread,min_lot_sqft,or/clackamas/milwaukie/19.500.supplementary.txt,198,19.502.2,1,"Lesser of 75% of primary structure OR 1,500 sq ft (allowed at least 850 sq ft if lot area > 10,000 sq ft)"
 or,unread,max_height_ft,or/clackamas/milwaukie/19.500.supplementary.txt,259,19.502.2,1,There are no roof pitch requirements for an accessory structure with a height equal to or less than 10 ft. A minimum 4/12 roof pitch is required for an accessory structure with a height over 10 ft.
@@ -4240,6 +4319,15 @@ or,unread,max_height_ft,or/multnomah/_unincorporated/39.or.txt,427,39.5350,1,Max
 or,unread,parking_min_per_unit,or/multnomah/_unincorporated/39.parking.txt,256,39.6565,1,the parking space shall be 23 feet.
 or,unread,max_height_ft,or/multnomah/_unincorporated/39.rural-residential.txt,454,39.4380,1,Maximum Structure Height – 35 feet
 or,unread,max_height_ft,or/multnomah/_unincorporated/39.uf-20.txt,238,39.4743,1,Maximum Structure Height ¬ 35 feet.
+or,unread,min_lot_sqft,or/multnomah/_unincorporated/39.urban-ldr-general.txt,39,39.4782,1,ten percent of the lot area or 25 percent of any
+or,unread,min_lot_sqft,or/multnomah/fairview/19.106.txt,552,19.106.040,1,"ii. In order to accommodate any transferred residential densities, dimensional standards and lot sizes may be adjusted by no more than 20 percent."
+or,unread,max_far,or/multnomah/fairview/19.106.txt,554,19.106.040,1,"iii. Density transfers on commercial and industrial zoned land. The transfer credit of 10,000 square feet floor area ratio (FAR) per acre of land with an upland habitat or riparian resource protection"
+or,unread,max_height_ft,or/multnomah/fairview/19.106.txt,688,19.106.050,1,"B. Within the 100-foot protected area along Fairview Creek, development and resource alteration, other than mitigation or enhancement, will be prohibited within 70 feet of the corridor centered on the"
+or,unread,max_height_ft,or/multnomah/fairview/19.106.txt,690,19.106.050,1,"C. Within the 75-foot protected area along Clear Creek, development and resource alteration, other than mitigation or enhancement, will be prohibited within 45 feet of the corridor centered on the cre"
+or,unread,min_lot_width_ft,or/multnomah/fairview/19.106.txt,724,19.106.060,1,"k. In the Fairview Lake Area. Decks and similar structures; provided, that no more than 20 percent of the lot width within the buffer setback area be occupied by such a structure or structures."
+or,unread,max_height_ft,or/multnomah/fairview/19.110.txt,49,19.110.035,1,b. Height shall be a maximum of 12 feet above grade.
+or,unread,max_height_ft,or/multnomah/fairview/19.110.txt,57,19.110.035,1,f. Base Dimension. The base/foundation dimensions shall not exceed 36 inches in depth or 15 feet in width and shall be no less than 18 inches or more than 24 inches in height.
+or,unread,max_units,or/multnomah/fairview/19.110.txt,71,19.110.040,1,"D. “Front porch” means an open roofed structure attached to the front of the dwelling unit. A front porch shall have a minimum depth of six feet and a minimum width of 12 feet and, except for insect s"
 or,unread,min_lot_sqft,or/multnomah/fairview/19.115.txt,35,19.115.040,1,"A. Lot Size. All VSF lots shall be no less than 4,000 square feet. The 4,000-square-foot-minimum lot size does not apply to townhomes, which lot size is regulated by FMC 19.30.030. Lots with single-un"
 or,unread,max_coverage_pct,or/multnomah/fairview/19.115.txt,39,19.115.040,1,C. Lot Coverage. The total of all structures in the VSF zone shall cover no more than 60 percent of any lot.
 or,unread,max_height_ft,or/multnomah/fairview/19.115.txt,41,19.115.040,1,D. Height. Buildings within this zone may not exceed 35 feet in height.
@@ -4288,6 +4376,8 @@ or,unread,parking_min_per_unit,or/multnomah/fairview/19.164.txt,157,19.1,1,"D. P
 or,unread,max_units,or/multnomah/fairview/19.164.txt,177,19.1,1,"H. Electric Vehicle Conduit. For new multi-unit residential buildings with five or more residential dwelling units, and new mixed-use buildings consisting of privately owned commercial space and five "
 or,unread,parking_min_per_unit,or/multnomah/fairview/19.164.txt,187,19.164.040,1,"a. Short-term bicycle parking shall be provided at a ratio of one bicycle space for every 10 vehicle parking spaces and shall be located within 30 feet of the main entrance to the building, in a locat"
 or,unread,parking_min_per_unit,or/multnomah/fairview/19.164.txt,193,19.164.040,1,"a. Short-term bicycle parking shall be provided at a ratio of one bicycle space for every 10 vehicle parking spaces and shall be located within 50 feet of the main entrance to the building, in a locat"
+or,unread,open_space_min_pct,or/multnomah/fairview/19.165.txt,145,19.165.025,1,"3. Spacing between local street intersections shall have a minimum separation of 125 feet, except where more closely spaced intersections are designed to provide an open space, pocket park, common are"
+or,unread,max_units,or/multnomah/fairview/19.165.txt,187,19.165.025,1,"N. Cul-de-Sacs. A dead-end street shall be no more than 200 feet long, shall not provide access to greater than eight dwelling units, and shall only be used when environmental or topographical constra"
 or,unread,setback_front_ft,or/multnomah/fairview/19.30.txt,475,19.30.030,1,"1. When an existing single-unit dwelling on the same street is located within 30 feet of the subject site, a front yard setback similar to that of the nearest single-unit dwelling shall be used. “Simi"
 or,unread,setback_front_ft,or/multnomah/fairview/19.30.txt,477,19.30.030,1,2. In no case shall a front yard setback be less than 10 feet.
 or,unread,max_height_ft,or/multnomah/fairview/19.30.txt,483,19.30.030,1,"1. This standard applies to new and vertically expanded buildings within 20 feet (as measured horizontally) of an existing single-story building with a height of 20 feet or less, as shown in Figure 19"
@@ -4356,6 +4446,7 @@ or,unread,max_height_ft,or/multnomah/fairview/19.85.txt,157,19.85.060,1,"B. Perf
 or,unread,max_coverage_pct,or/multnomah/fairview/19.85.txt,187,19.85.070,1,1. Lot Coverage. The maximum allowable lot coverage in the general industrial district is 90 percent. The maximum allowable lot coverage is computed by calculating the total area covered by buildings 
 or,unread,max_height_ft,or/multnomah/fairview/19.85.txt,191,19.85.070,1,"a. Base Requirement. Buildings shall be no more than 60 feet in height, and shall comply with the building setback/height standards in FMC 19.85.030, unless subject to additional standards in the airp"
 or,unread,max_height_ft,or/multnomah/fairview/19.85.txt,193,19.85.070,1,"b. Performance Option. The allowable building height may be increased to 70 feet, when approved as part of a conditional use permit. The development approval may require additional setbacks, stepping-"
+or,unread,max_height_ft,or/multnomah/gresham/10.1100.shoreline-height.txt,22,10.1102,1,an existing dwelling shall be permitted with a maximum height of 45 feet above grade.
 or,unread,max_units,or/multnomah/gresham/10.1700.affordable.txt,136,10.1711,1,16 units per acre or fewer 200% 12 ft
 or,unread,max_units,or/multnomah/gresham/10.1700.affordable.txt,137,10.1711,1,16.1 to 45 units per acre 150% 24 ft
 or,unread,max_units,or/multnomah/gresham/10.1700.affordable.txt,138,10.1711,1,45.1 units per acre or more 125% 36 ft
@@ -5407,6 +5498,17 @@ or/clackamas/milwaukie,unfielded,,or/clackamas/milwaukie/19.300.base-zones.txt,3
 or/clackamas/milwaukie,unfielded,,or/clackamas/milwaukie/19.300.base-zones.txt,3918,19.312.5,1,3. Setbacks (ft)
 or/clackamas/milwaukie,unfielded,,or/clackamas/milwaukie/19.300.base-zones.txt,4125,19.500,1,"Trees shall have a minimum 2-in caliper at time of planting, measured at 4 ft above grade."
 or/clackamas/milwaukie,unfielded,,or/clackamas/milwaukie/19.300.base-zones.txt,4268,19.312.7,1,Mansard or decorative roofs on buildings less than 3 stories are prohibited.
+or/clackamas/milwaukie,unfielded,,or/clackamas/milwaukie/19.400.overlays.txt,45,19.401.3,1,New private noncommercial docks exceeding 400 sq ft;
+or/clackamas/milwaukie,unfielded,,or/clackamas/milwaukie/19.400.overlays.txt,933,19.402.6,1,"Y = 5,000 sq ft outside of HCA/WQR"
+or/clackamas/milwaukie,unfielded,,or/clackamas/milwaukie/19.400.overlays.txt,934,19.402.6,1,"Z = -3,500 sq ft (1,500 sq ft — 5,000 sq ft)"
+or/clackamas/milwaukie,unfielded,,or/clackamas/milwaukie/19.400.overlays.txt,937,19.402.6,1,"Y = 2,000 sq ft outside of HCA/WQR"
+or/clackamas/milwaukie,unfielded,,or/clackamas/milwaukie/19.400.overlays.txt,938,19.402.6,1,"Z = 1,000 sq ft (3,000 sq ft - 2,000 sq ft)"
+or/clackamas/milwaukie,unfielded,,or/clackamas/milwaukie/19.400.overlays.txt,2328,19.402.15,1,Locate all flood areas within 100 ft of the property.
+or/clackamas/milwaukie,unfielded,,or/clackamas/milwaukie/19.400.overlays.txt,2364,19.402.15,2,0 ft — 100 ft HCA HCA HCA
+or/clackamas/milwaukie,unfielded,,or/clackamas/milwaukie/19.400.overlays.txt,2368,19.402.15,1,101 ft — 150 ft Not HCA Not HCA HCA
+or/clackamas/milwaukie,unfielded,,or/clackamas/milwaukie/19.400.overlays.txt,2370,19.402.15,1,Within 300 ft of river or surface stream HCA HCA HCA
+or/clackamas/milwaukie,unfielded,,or/clackamas/milwaukie/19.400.overlays.txt,2371,19.402.15,1,More than 300 ft from river or surface stream HCA HCA HCA
+or/clackamas/milwaukie,unfielded,,or/clackamas/milwaukie/19.400.overlays.txt,2372,19.402.15,1,0 ft — 100 ft from edge of flood area Not HCA HCA HCA
 or/clackamas/milwaukie,unfielded,,or/clackamas/milwaukie/19.500.supplementary.txt,87,19.501.2,1,The porch or deck is at least 5 ft from the front and/or rear lot line.
 or/clackamas/milwaukie,unfielded,,or/clackamas/milwaukie/19.500.supplementary.txt,196,19.502.2,1,200 sq ft
 or/clackamas/milwaukie,unfielded,,or/clackamas/milwaukie/19.500.supplementary.txt,197,19.502.2,1,600 sq ft
@@ -5513,6 +5615,10 @@ or/clackamas/milwaukie,unread,max_height_ft,or/clackamas/milwaukie/19.300.base-z
 or/clackamas/milwaukie,unread,max_height_ft,or/clackamas/milwaukie/19.300.base-zones.txt,4157,19.312.7,1,"The ground-floor street wall area is defined as the area up to the finished ceiling height of the space fronting the street or 15 ft above finished grade, whichever is less."
 or/clackamas/milwaukie,unread,parking_min_per_unit,or/clackamas/milwaukie/19.300.base-zones.txt,4187,19.312.7,1,"All buildings must have at least one primary building entrance (e.g., dwelling entrance, customer entrance, tenant entrance, lobby entrance, or breezeway/courtyard entrance) facing an adjoining street"
 or/clackamas/milwaukie,unread,max_height_ft,or/clackamas/milwaukie/19.300.base-zones.txt,4278,19.312.7,1,"The ground-floor height must be at least 14 ft, as measured from the finished floor to the ceiling, or from the finished floor to the bottom of the structure above (as in a multistory building). The b"
+or/clackamas/milwaukie,unread,max_height_ft,or/clackamas/milwaukie/19.400.overlays.txt,33,19.401.3,1,"Commercial, industrial and residential structures and residential accessory structures exceeding 35 ft in height west of McLoughlin Blvd;"
+or/clackamas/milwaukie,unread,max_height_ft,or/clackamas/milwaukie/19.400.overlays.txt,653,19.402.4,1,"Additional disturbance for outdoor uses, such as gardens and play areas, where the new disturbance area does not exceed 150 sq ft; does not involve the removal of any trees larger than 6-in diameter a"
+or/clackamas/milwaukie,unread,max_height_ft,or/clackamas/milwaukie/19.400.overlays.txt,717,19.402.4,1,"Plants adjacent to trails may be trimmed, but trimming clearances must not exceed a height of 8 ft and a width of 6 ft."
+or/clackamas/milwaukie,unread,setback_front_max_ft,or/clackamas/milwaukie/19.400.overlays.txt,2943,19.404.6,1,"The maximum front yard setback is 50 ft. The setback area must be landscaped, except where used for parking as allowed in 19.404.6.F."
 or/clackamas/milwaukie,unread,min_lot_sqft,or/clackamas/milwaukie/19.500.supplementary.txt,29,19.501.1,1,"Single detached dwellings require a minimum lot size of 5,000 sq ft if the lot was created on or after June 3, 2022, the effective date of Ordinance #2218."
 or/clackamas/milwaukie,unread,min_lot_sqft,or/clackamas/milwaukie/19.500.supplementary.txt,198,19.502.2,1,"Lesser of 75% of primary structure OR 1,500 sq ft (allowed at least 850 sq ft if lot area > 10,000 sq ft)"
 or/clackamas/milwaukie,unread,max_height_ft,or/clackamas/milwaukie/19.500.supplementary.txt,259,19.502.2,1,There are no roof pitch requirements for an accessory structure with a height equal to or less than 10 ft. A minimum 4/12 roof pitch is required for an accessory structure with a height over 10 ft.
@@ -7020,6 +7126,58 @@ or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.uf-20.tx
 or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.uf-20.txt,86,39.6900,1,feet and no more than 20 feet from
 or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.uf-20.txt,165,39.4751,1,combined footprints of 400 square feet; and
 or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.uf-20.txt,239,39.4743,1,Minimum Front Lot Line Length ¬ 50 feet.
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,77,39.4782,1,shall be four feet if the feature is within 15 feet
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,83,39.4782,1,Ordinance if located at least 20 feet from any
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,174,39.4791,1,At least 80 percent of the lots in a development
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,183,39.4791,1,within 30 degrees of a true east-west
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,197,39.4791,1,(3) There is at least 70 feet between the
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,203,39.4791,1,(4) There is at least 45 feet between the
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,207,39.4791,1,situated so that at least 80 percent of
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,215,39.4791,1,30 degrees of a true east-west axis and
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,216,39.4791,1,at least 80 percent of their ground floor
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,222,39.4791,1,will have at least 32 percent of their
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,223,39.4791,1,glazing and 500 square feet of their roof
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,224,39.4791,1,area which faces within 30 degrees of
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,291,39.4792,1,30 feet tall and more than 6 inches in
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,292,39.4792,1,diameter measured 4 feet above the
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,294,39.4792,1,at least 80 percent of the site or relevant
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,300,39.4792,1,at least 50 percent of the trees that cause
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,327,39.4791,1,at least 5 percent more per lot than if the
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,338,39.4791,1,that is sloped 10 percent or more and is
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,339,39.4791,1,oriented greater than 45 degrees east or
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,380,39.4791,1,least 30 feet tall and more than 6 inches in
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,381,39.4791,1,diameter measured 4 feet above the ground have
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,383,39.4791,1,and at least 50 percent of the crown cover will
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,447,39.4791,1,showing existing trees at least 30 feet
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,449,39.4791,1,"point 4 feet above grade, indicating their"
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,509,39.4801,1,between the 5 foot dimensions listed in Table A.
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,540,39.4801,1,a north-south lot dimension more than 90 feet
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,541,39.4801,1,shall use a value of 90 feet for this section.
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,552,39.4801,1,will shade not more than 20 percent of the south-
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,561,39.4791,1,solar building line 2.5 feet for every 1 foot of
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,563,39.4791,1,non-exempt vegetation over 2 feet.
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,603,39.4800,1,that exceeds 20 percent in a direction greater
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,604,39.4800,1,than 45 degrees east or west of true south based
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,613,39.4800,1,(3) Less than 20 square feet of south-
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,772,39.4806,1,50 percent and up to 25 percent to a front yard
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,874,39.4812,1,which are within 150 feet of the applicant's lot
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,875,39.4812,1,and 54 degrees east and west of true south
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,909,39.4812,1,not less than 21.3 degrees from the horizon and
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,910,39.4812,1,extend not more than 54 degrees east and west
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,970,39.4812,1,northern lot line shall be a line 10 feet in length
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,985,39.4812,3,altitude of 21.3 degrees and an azimuth ranging
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,986,39.4812,1,from 22.7 degrees east and west of true south.
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,991,39.4812,1,from 22.7 degrees east and west of true south;
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,994,39.4812,1,"diameter of 3 feet or less, a chimney, utility pole"
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,1003,39.4812,1,preceding sentence may be reduced by 3 feet. If
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,1004,39.4812,1,a structure has a roof oriented within 45 degrees
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,1006,39.4812,1,than 5 feet (vertical) in 12 feet (horizontal) the
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,1008,39.4812,1,such a roof has a pitch that is 5 feet in 12 feet or
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,1020,39.4812,1,between 22.7 degrees east and west of true south
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,1036,39.4812,1,that contains at least 20 square feet of glazing
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,1037,39.4812,1,oriented within 45 degrees east and west of true
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,1067,39.4812,1,exceeding 20 percent in a direction greater than
+or/multnomah/_unincorporated,unfielded,,or/multnomah/_unincorporated/39.urban-ldr-general.txt,1068,39.4812,1,"45 degrees east or west of true south, severe"
 or/multnomah/_unincorporated,unread,max_height_ft,or/multnomah/_unincorporated/33.100.txt,186,33.100.200,1,from all property lines a minimum of 1 foot for each foot of building height.
 or/multnomah/_unincorporated,unread,min_lot_sqft,or/multnomah/_unincorporated/33.110.txt,376,33.110,1,minimum lot size requirements by up to 10 percent may be requested. Beginning
 or/multnomah/_unincorporated,unread,max_units,or/multnomah/_unincorporated/33.110.txt,514,33.110.210,1,dwelling unit that is affordable to those earning no more than 60 percent of the area
@@ -7086,6 +7244,18 @@ or/multnomah/_unincorporated,unread,max_height_ft,or/multnomah/_unincorporated/3
 or/multnomah/_unincorporated,unread,max_height_ft,or/multnomah/_unincorporated/39.oci.txt,479,39.4682,1,Maximum Structure Height - 35 feet
 or/multnomah/_unincorporated,unread,parking_min_per_unit,or/multnomah/_unincorporated/39.parking.txt,256,39.6565,1,the parking space shall be 23 feet.
 or/multnomah/_unincorporated,unread,max_height_ft,or/multnomah/_unincorporated/39.uf-20.txt,238,39.4743,1,Maximum Structure Height ¬ 35 feet.
+or/multnomah/_unincorporated,unread,min_lot_sqft,or/multnomah/_unincorporated/39.urban-ldr-general.txt,39,39.4782,1,ten percent of the lot area or 25 percent of any
+or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.106.txt,245,19.106.040,1,Invasive vegetation removal of 300 square feet or less (per calendar year).
+or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.106.txt,618,19.106.040,1,• Within 10 feet of the outer boundary of the 40-foot riparian resource protection area.
+or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.106.txt,773,19.106.070,1,Greater than 15 feet from the outer limits of the 35- or 40-foot resource protection area
+or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.106.txt,878,19.106.080,1,80 feet in each direction measured from the centerline of creek. Total width 160 feet.
+or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.106.txt,883,19.106.080,1,55 feet measured in each direction from the centerline of the creek. Total width 110 feet.
+or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.106.txt,888,19.106.080,1,"Total resource width 80 feet, measured 40 feet in each direction from centerline of creek."
+or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.106.txt,891,19.106.080,1,"Total resource width 70 feet, measured 35 feet in each direction from centerline of creek."
+or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.106.txt,906,19.106.080,1,"100 feet, 50 feet on each side measured from centerline of the stream."
+or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.106.txt,909,19.106.080,1,"75 feet, 37.5 feet on each side measured from centerline of the stream."
+or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.110.txt,47,19.110.035,1,a. Area. Maximum face area of 75 square feet.
+or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.110.txt,51,19.110.035,1,c. Width shall be limited to a maximum of 15 feet.
 or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.13.definitions.txt,161,19.13.030,1,“Constrained slope” means land on slope that is between 15 to 20 percent.
 or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.13.definitions.txt,531,19.13.190,1,“Steep slopes” means slopes of greater than 30 percent.
 or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.140.txt,35,19.140.010,1,"2. A dead-end street, loop, or mid-block where the block is longer than 600 feet; and"
@@ -7109,6 +7279,14 @@ or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.65.txt,582,19.65.090,2
 or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.65.txt,632,19.65.090,1,b. The mural is at least 32 square feet in area.
 or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.70.txt,80,19.70.030,1,b. Maximum Setback. The maximum setback is 20 feet.
 or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.80.txt,63,19.80.020,1,"j. Retail trade and services, not exceeding 5,000 square feet of floor area per building P"
+or/multnomah/fairview,unread,min_lot_sqft,or/multnomah/fairview/19.106.txt,552,19.106.040,1,"ii. In order to accommodate any transferred residential densities, dimensional standards and lot sizes may be adjusted by no more than 20 percent."
+or/multnomah/fairview,unread,max_far,or/multnomah/fairview/19.106.txt,554,19.106.040,1,"iii. Density transfers on commercial and industrial zoned land. The transfer credit of 10,000 square feet floor area ratio (FAR) per acre of land with an upland habitat or riparian resource protection"
+or/multnomah/fairview,unread,max_height_ft,or/multnomah/fairview/19.106.txt,688,19.106.050,1,"B. Within the 100-foot protected area along Fairview Creek, development and resource alteration, other than mitigation or enhancement, will be prohibited within 70 feet of the corridor centered on the"
+or/multnomah/fairview,unread,max_height_ft,or/multnomah/fairview/19.106.txt,690,19.106.050,1,"C. Within the 75-foot protected area along Clear Creek, development and resource alteration, other than mitigation or enhancement, will be prohibited within 45 feet of the corridor centered on the cre"
+or/multnomah/fairview,unread,min_lot_width_ft,or/multnomah/fairview/19.106.txt,724,19.106.060,1,"k. In the Fairview Lake Area. Decks and similar structures; provided, that no more than 20 percent of the lot width within the buffer setback area be occupied by such a structure or structures."
+or/multnomah/fairview,unread,max_height_ft,or/multnomah/fairview/19.110.txt,49,19.110.035,1,b. Height shall be a maximum of 12 feet above grade.
+or/multnomah/fairview,unread,max_height_ft,or/multnomah/fairview/19.110.txt,57,19.110.035,1,f. Base Dimension. The base/foundation dimensions shall not exceed 36 inches in depth or 15 feet in width and shall be no less than 18 inches or more than 24 inches in height.
+or/multnomah/fairview,unread,max_units,or/multnomah/fairview/19.110.txt,71,19.110.040,1,"D. “Front porch” means an open roofed structure attached to the front of the dwelling unit. A front porch shall have a minimum depth of six feet and a minimum width of 12 feet and, except for insect s"
 or/multnomah/fairview,unread,setback_side_ft,or/multnomah/fairview/19.115.txt,57,19.115.040,1,"2. Lots that Abut Fairview Creek. The front and side setbacks described in subsection (E)(1) of this section apply. The rear property line shall be the centerline of Fairview Creek, and the rear setba"
 or/multnomah/fairview,unread,setback_side_ft,or/multnomah/fairview/19.115.txt,59,19.115.040,1,"3. Lots that Abut Clear Creek. The front and side setbacks described in subsection (E)(1) of this section apply. The rear property line shall be the centerline of Clear Creek, and the rear setback sha"
 or/multnomah/fairview,unread,setback_garage_entrance_ft,or/multnomah/fairview/19.115.txt,63,19.115.040,1,1. Four out of five attached garages with front access on any block frontage in the VSF zone shall be set back a minimum of 20 feet from the front facade. Such garages may have a single garage door fo
@@ -7143,6 +7321,8 @@ or/multnomah/fairview,unread,parking_min_per_unit,or/multnomah/fairview/19.164.t
 or/multnomah/fairview,unread,max_units,or/multnomah/fairview/19.164.txt,177,19.1,1,"H. Electric Vehicle Conduit. For new multi-unit residential buildings with five or more residential dwelling units, and new mixed-use buildings consisting of privately owned commercial space and five "
 or/multnomah/fairview,unread,parking_min_per_unit,or/multnomah/fairview/19.164.txt,187,19.164.040,1,"a. Short-term bicycle parking shall be provided at a ratio of one bicycle space for every 10 vehicle parking spaces and shall be located within 30 feet of the main entrance to the building, in a locat"
 or/multnomah/fairview,unread,parking_min_per_unit,or/multnomah/fairview/19.164.txt,193,19.164.040,1,"a. Short-term bicycle parking shall be provided at a ratio of one bicycle space for every 10 vehicle parking spaces and shall be located within 50 feet of the main entrance to the building, in a locat"
+or/multnomah/fairview,unread,open_space_min_pct,or/multnomah/fairview/19.165.txt,145,19.165.025,1,"3. Spacing between local street intersections shall have a minimum separation of 125 feet, except where more closely spaced intersections are designed to provide an open space, pocket park, common are"
+or/multnomah/fairview,unread,max_units,or/multnomah/fairview/19.165.txt,187,19.165.025,1,"N. Cul-de-Sacs. A dead-end street shall be no more than 200 feet long, shall not provide access to greater than eight dwelling units, and shall only be used when environmental or topographical constra"
 or/multnomah/fairview,unread,setback_front_ft,or/multnomah/fairview/19.30.txt,475,19.30.030,1,"1. When an existing single-unit dwelling on the same street is located within 30 feet of the subject site, a front yard setback similar to that of the nearest single-unit dwelling shall be used. “Simi"
 or/multnomah/fairview,unread,setback_front_ft,or/multnomah/fairview/19.30.txt,477,19.30.030,1,2. In no case shall a front yard setback be less than 10 feet.
 or/multnomah/fairview,unread,max_units,or/multnomah/fairview/19.30.txt,503,19.30.030,1,"b. All buildings shall have their primary entrance(s) oriented to the street. Multi-unit housing and neighborhood commercial building entrances may include entrances to individual units, lobby entranc"
@@ -7919,6 +8099,7 @@ or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,967,9.08
 or/multnomah/gresham,unfielded,,or/multnomah/gresham/9.0800.parking.txt,968,9.0852,1,"Office 2.75 : 1,000 sq. ft. 2.75 : 1,000 sq. ft. 2.75 : 1,000 sq. ft."
 or/multnomah/gresham,unfielded,,or/multnomah/gresham/pws.6.03-6.04.txt,43,6.03,1,"Local Transitional, Industrial, Commercial 45 feet2 45 feet"
 or/multnomah/gresham,unfielded,,or/multnomah/gresham/pws.6.03-6.04.txt,111,6.04,1,LOCATION MINIMUM MEASUREMENT ALONG EACH LINE (feet)
+or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/10.1100.shoreline-height.txt,22,10.1102,1,an existing dwelling shall be permitted with a maximum height of 45 feet above grade.
 or/multnomah/gresham,unread,max_units,or/multnomah/gresham/10.1700.affordable.txt,136,10.1711,1,16 units per acre or fewer 200% 12 ft
 or/multnomah/gresham,unread,max_units,or/multnomah/gresham/10.1700.affordable.txt,137,10.1711,1,16.1 to 45 units per acre 150% 24 ft
 or/multnomah/gresham,unread,max_units,or/multnomah/gresham/10.1700.affordable.txt,138,10.1711,1,45.1 units per acre or more 125% 36 ft
@@ -8980,6 +9161,7 @@ or/multnomah/portland,unfielded,,or/multnomah/portland/33.910.definitions.txt,10
 or/multnomah/portland,unfielded,,or/multnomah/portland/33.910.definitions.txt,1325,33.910,1,angle of 45 degrees or less from a street lot line. See Figure 910-12.
 or/multnomah/portland,unfielded,,or/multnomah/portland/33.910.definitions.txt,1425,33.930.150,1,over 20 feet tall.
 or/multnomah/portland,unfielded,,or/multnomah/portland/33.910.definitions.txt,1539,33.910,1,included as utility trailers. Utility trailers that are longer than 16 feet in length are
+or/multnomah/portland,unfielded,,or/multnomah/portland/33.920.txt,242,33.920.230,1,"1. Exhibition and meeting areas with less than 20,000 square feet of total event area are"
 or/multnomah/portland,unread,max_coverage_pct,or/multnomah/portland/11.50.txt,37,11.50.040,1,3 3. Private trees on sites that have existing or proposed building coverage of 85 percent or more.
 or/multnomah/portland,unread,max_coverage_pct,or/multnomah/portland/11.50.txt,170,11.50.050,1,One to Four Family Residential 40 percent of site or development impact area Site area minus building coverage of existing and proposed development
 or/multnomah/portland,unread,max_coverage_pct,or/multnomah/portland/11.50.txt,171,11.50.050,1,Multi Dwelling Residential 20 percent of site or development impact area Site area minus building coverage of existing and proposed development

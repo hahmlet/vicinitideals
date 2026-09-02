@@ -99,12 +99,26 @@ pytestmark = pytest.mark.unit
 #: 15, and a college 0.3; the row this building sits on, Household Living,
 #: prints "no maximum" in both of its columns. Words in an apparatus that has
 #: numbers in it, none of them pointed here.
-EXPECTED = {"stated": 175, "numeric": 37, "marker": 0, "dash": 2, "silent": 0}
+EXPECTED = {"stated": 176, "numeric": 37, "marker": 0, "dash": 2, "silent": 0}
 # 174 -> 175 on 2026-09-01: the Village zone's combined side yard. Its base
 # had been a 10 derived from two printed 5 ft yards, and no line of 4.125 says
 # ten, so the base became exempt and note 15's 15 ft kept its band. An
 # exemption is the one value form that can only ever produce a false GREEN, so
 # it is counted rather than assumed -- see the module docstring.
+#
+# 175 -> 176 on 2026-09-02: Portland IR's MAXIMUM front setback, and this one
+# arrived by a route the other 175 did not -- not a cell read as pointing away,
+# but two encoded numbers that together described a zone no building fits in.
+# IR's minimum front setback is 1 ft per 2 ft of height, 13 ft for the pod,
+# against a flat 10 ft maximum. Table 150-2's note [5] -- "for frontages where
+# the maximum building setback applies, there is no minimum setback" -- was
+# already read onto the minimum and not onto the maximum, and the maximum's own
+# row is headed "Street Lot Line, Transit Street or Pedestrian District". So the
+# ceiling reaches only the frontage where the floor lifts. The base is now
+# exempt with the 10 kept as an on_transit_street variant. Counted here like any
+# other exemption because the danger is identical whatever produced it: an
+# exemption is the corpus saying a standard does not apply, and if that reading
+# is wrong the screen greens a lot the city would refuse.
 
 LAKE_OSWEGO = "or/clackamas/lake-oswego"
 

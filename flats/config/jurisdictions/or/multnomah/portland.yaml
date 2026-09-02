@@ -2417,9 +2417,40 @@ zones:
           quote: "or/multnomah/portland/33.150.txt#L574"
     setback_front_max_ft:
       # Table 150-2, "Maximum Building Setbacks Street Lot Line, Transit
-      # Street or Pedestrian District".
-      value: 10
-      quote: "or/multnomah/portland/33.150.txt#L531,L546-L547"
+      # Street or Pedestrian District" -- and the row heading is the whole
+      # condition. Held EXEMPT at the base and 10 only on that frontage,
+      # corrected 2026-09-02, because stated flat it made this zone
+      # impossible to build in.
+      #
+      # IR is the only zone in the corpus whose minimum front setback exceeds
+      # its maximum, and it is the only one that states the minimum as a
+      # function of building height: 1 ft per 2 ft of height, floor 10, which
+      # is 13 ft for the 26 ft pod against a 10 ft ceiling. Every other zone
+      # with a maximum prints a flat minimum at or below it -- CI2 is 10 and
+      # 10 -- so the clash could only show up here.
+      #
+      # Note [5] is what dissolves it, and it was already read onto the
+      # minimum one field above: "For frontages where the maximum building
+      # setback applies, there is no minimum setback." The two standards are
+      # one rule with two limbs, and reading the note onto only one limb
+      # produced a lot that could satisfy neither. Off a transit street the
+      # minimum is 13 and NO maximum applies; on one the minimum is nothing
+      # and the building must stand within 10 ft. Both are buildable. What
+      # was encoded was neither.
+      #
+      # The base is the branch this screen can see. Neither Map 150-1 through
+      # 150-5 nor the Pedestrian District map is read here, and a maximum
+      # front setback has no column in the pipeline at all, so nothing moves
+      # today either way. When a column arrives, the transit-street frontage
+      # is what has to be read first -- a 10 ft ceiling on the front setback
+      # is the standard most likely to decide a pod, because it forbids the
+      # front-parking layout outright.
+      exempt: true
+      quote: "or/multnomah/portland/33.150.txt#L531,L546-L547,L574"
+      variants:
+        - value: 10
+          when: [on_transit_street]
+          quote: "or/multnomah/portland/33.150.txt#L531,L546-L547"
     # "1 ft. for every 2 ft. of building height but not less than 10 ft." --
     # the only standard in the corpus measured off the BUILDING rather than
     # off the lot. Both printed figures are in the file and the 13 ft it comes
