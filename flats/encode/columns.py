@@ -53,6 +53,52 @@ Three counts, reported separately because they are different work:
     seeing rows reports a clean corpus in exactly the words of a corpus that is
     clean, so this is pinned by a test.
 
+What it cannot see, so a clean report is read for what it is. Of 2,249 cited
+values it reads 518. Roughly half the remainder name lines in a document with
+no table this check recognises; the rest name lines in a document that has one,
+but outside it, or in a table whose header does not carry that district. The
+documents with no recognised table fall into five shapes, and the last two are
+the only real gaps:
+
+*   No table on the cited lines at all -- prose, definitions, a numbered list
+    of standards. Wilsonville's planning chapter is the largest single block of
+    these at 191 citations, Gresham's Pleasant Valley and Springwater plans
+    another 122. There is no column to take a number from.
+
+*   One district per table, or per document. Gladstone gives each district its
+    own chapter; Milwaukie's base-zone tables print ``Standard | R-HD |
+    Additional Provisions``. A table with one district cannot hand its value to
+    another one.
+
+*   A header whose cells do not name districts. Wood Village Table 220-3 reads
+    ``Standard | MR4 and MR2 | MR4 and MR2 | MR4 and MR2``: the columns are
+    housing types and the district repeats across them, so the header says
+    nothing about which column belongs to whom.
+
+*   **A table extracted one cell per line.** Fairview Table 19.30.030.A and
+    Clackamas Table 315-1 print their district codes down the page rather than
+    across it, with every cell beneath them on its own line -- 82 and 64
+    citations. Both are genuine multi-district dimensional tables.
+
+    This one stays blind on purpose. The vertical form loses the thing the
+    horizontal form keeps, which is where a cell ends. Fairview's minimum lot
+    width prints nine lines under five districts, because three of the five
+    carry a second line reading "20 feet for townhouses" and nothing marks that
+    as a continuation rather than a sixth column. Counting down the block would
+    produce a confident finding out of a coin flip -- the same thing this
+    module already refuses to do when a horizontal row has dropped a blank.
+
+*   **A table the OCR has shattered.** Oregon City's zoning chapter is a scan,
+    and its dimensional tables come out as ``Quad pl ex a nd co t tage 1 0 ,
+    000 squ are 8 , 000 squ are 7 , 000 s qu are`` -- 68 citations. The columns
+    are separated by single spaces, and so are the halves of the broken words,
+    so there is no split that recovers cells rather than word fragments.
+
+Both gaps were read by hand on 2026-09-02 instead, every dimensional value in
+each against its own column: Fairview's twelve rows across R-6 and R-7.5, and
+Oregon City's full set across R-10, R-8, R-6, R-5 and R-3.5. All correct. That
+is a reading of a corpus at a moment, not a check that will notice if it moves.
+
 Run it::
 
     uv run python -m flats.encode.columns

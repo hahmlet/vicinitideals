@@ -300,6 +300,19 @@ unjudgeable — it would have walked past the misread it was built for. Both are
 `reach()` is pinned by a test: **a reader that has stopped seeing rows reports a clean
 corpus in exactly the words of a corpus that is clean.**
 
+It reads 518 of 2,249 cited values, and its docstring names the five shapes of the rest so
+that a clean report is not read as a clean corpus. Three of the five are nothing to check —
+prose, a table with one district in it, a header whose columns are housing types. Two are
+real gaps and stay open on purpose. Fairview and unincorporated Clackamas print their
+tables one cell per line, down the page, and the vertical form loses where a cell ends:
+Fairview's lot-width row is nine lines under five districts because three of them carry a
+second line reading “20 feet for townhouses”, and counting down the block would produce a
+confident finding out of a coin flip. Oregon City's chapter is a scan whose tables come out
+as *Quad pl ex a nd co t tage 1 0 , 000 squ are* — the columns are separated by single
+spaces and so are the halves of the broken words. Both gaps were read by hand on 2026-09-02
+instead, every dimensional value against its own column, and both are correct. That is a
+reading of a corpus at a moment, not a check that will notice if it moves.
+
 **Redirect ledger** (`flats/encode/routing.py` → `routing.csv`) — *which sentences hand a
 standard to a section nobody opened.* One row per sentence that replaces a standard
 ("is subject to the standards of Section X instead", "does not apply", "supersede")
