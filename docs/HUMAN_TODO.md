@@ -556,6 +556,26 @@ the list of places worth hoping about.
     are *before* it draws the envelope, which it currently does not, and it is
     not obvious the city means to hand back ground it has already protected.
     Written down in the code file rather than guessed at.
+  - **13 standards the code states and the screen has no column for — all
+    thirteen now have a reason, checked rather than assumed.** Six of them had
+    only a place on the list. Walked on 2026-09-02, and the answers split in
+    two. Three can never matter, because of the pod's own arithmetic: Gladstone
+    caps units at *four* and the pod is four; the minimum-density triggers in
+    Portland and unincorporated Multnomah ask for *two* homes and four clears
+    two; and a ten-foot gap between buildings means nothing to a single
+    building. Those three are now pinned by a test, so a future re-reading that
+    changes one of the numbers cannot leave the reasoning standing.
+
+    The other three are safe today rather than safe forever, which is a
+    different sentence and worth keeping separate. A minimum *landscaped area*
+    — 20% in Fairview and Happy Valley, 30% in Portland's apartment zones — is
+    the one that would genuinely compete with the building for ground, and it
+    sits on 50,132 lots of which **not one is green**. A minimum lot *depth*
+    reaches 28 zones, and only one green-producing zone states one at all:
+    Wilsonville's R, at 70 feet, against twelve greens whose shallowest is 120.
+    Neither moves a verdict as things stand, and both would need a column
+    before those zones could be trusted green.
+
   - **1 place the pipeline is right and the corpus is merely richer.** Lake
     Oswego asks 5 ft on one side and 15 ft across both. The pipeline has one
     side-yard number and no combined one, so 7.5 is the only figure it can
@@ -573,6 +593,16 @@ the list of places worth hoping about.
     and Wilsonville's RN says "quadplexes are not permitted" against a state
     preemption that is real but untested — so they belong with the optional
     legal read rather than ahead of it.
+
+    **Guarded 2026-09-02.** Both rows are marked *needs verification*, which
+    means the screen sends every one of their 664 lots to review no matter what
+    else the lot clears — so the looser permission buys those zones a
+    measurement and cannot buy them a green. That is the whole reason they are
+    allowed to stand while the legal question waits. The audit used to print
+    them exactly like a dispute that *could* produce a wrong green, which read
+    as an alarm that was not sounding; it now says which kind each one is, and
+    a test goes red if anybody promotes either row to "verified" without
+    settling the argument behind it.
 
   Agent work, no action needed from you.
 - **76,752 lots are thrown away for being in a zone the screen has never been

@@ -566,6 +566,44 @@ def test_a_zone_missing_from_the_pipeline_is_a_debt_somebody_wrote_down() -> Non
 #: clearing the floor on gross area settles it and failing on gross area does
 #: not.
 #:
+#: THE OTHER SIX, WALKED 2026-09-02. Six entries had a place on this list and
+#: no reason on it, which is the same shape of silence the list was built to
+#: end. Two kinds of answer came back, and the difference between them is the
+#: only part worth remembering.
+#:
+#: INERT BY ARITHMETIC -- these cannot bite whatever the corpus does next,
+#: because the pod's own numbers clear them:
+#:   * `max_units`: both Gladstone zones state FOUR. The pod is four units. A
+#:     cap met exactly is not a cap, and it would still be met if Gladstone
+#:     were the greenest city in the screen.
+#:   * `min_units_at_trigger` / `min_density_trigger_lot_sqft`: the floor is
+#:     TWO units on every one of the five zones -- Portland R2.5/R5/R7 above
+#:     5,000/10,000/14,000 sq ft, and unincorporated Multnomah's two copies of
+#:     the same Portland sections. Four clears two on any lot.
+#:   * `min_building_separation_ft`: 10 ft between buildings, Fairview and
+#:     Happy Valley. The pod is ONE building. There is nothing to separate it
+#:     from.
+#:
+#: ZERO GREENS TODAY -- a fact about the corpus, not about the rule, and it can
+#: change the moment one of those zones is verified:
+#:   * `min_landscaped_pct` is the biggest of the thirteen after lot width, and
+#:     the only one that would plainly compete with the pod for ground: 20% in
+#:     Fairview and Happy Valley, 30% in Portland's RM zones. Its 33 zones hold
+#:     50,132 lots on the 2026-09-02 run and **not one of them is green** --
+#:     46,205 red and 3,927 in review. Every Portland zone on the list is one
+#:     of the 29 recovered ones, which are `needs_verification` and capped at
+#:     review; Fairview and Happy Valley have no greens at all.
+#:   * `min_lot_depth_ft`, 28 zones, same answer and a sharper check. Only one
+#:     green-producing zone in the screen states a depth: Wilsonville R, at 70
+#:     ft. Its twelve greens were measured against it and the shallowest
+#:     implies 120 ft. It is not close, and the corpus reads no middle-housing
+#:     exception for depth the way it does for width and area -- so if this one
+#:     ever gets a column it will be for a lot that does not exist yet.
+#:   * `max_lot_depth_ratio` (3:1, four Fairview zones) and
+#:     `setback_side_total_ft` (Lake Oswego R-7.5) sit behind cities with no
+#:     greens -- Lake Oswego is `eligible: false` and its side yard already has
+#:     its own entry in KNOWN_SIDE_TOTAL_COLLAPSE.
+#:
 #: Frozen so the list cannot grow quietly. A standard leaves it by getting a
 #: column, never by being dropped from the corpus.
 UNEXPRESSIBLE: dict[str, int] = {
@@ -604,6 +642,56 @@ def test_a_standard_with_no_column_is_a_standard_nobody_applies() -> None:
         "the set of standards this pipeline cannot express moved: "
         f"{ {k: (UNEXPRESSIBLE.get(k), found.get(k)) for k in set(found) ^ set(UNEXPRESSIBLE) | {k for k in found if found[k] != UNEXPRESSIBLE.get(k)}} }"
     )
+
+
+#: The three entries on UNEXPRESSIBLE whose reason is the pod's own arithmetic
+#: rather than the state of the corpus, and the value each has to keep for that
+#: reason to hold. See the ledger note above.
+INERT_BY_ARITHMETIC: dict[str, float] = {
+    #: A cap of four on a four-unit building is met exactly, not breached.
+    "max_units": 4,
+    #: A floor of two units is cleared by four on any lot, at any trigger size.
+    "min_units_at_trigger": 2,
+    #: Ten feet between buildings, and the pod is one building.
+    "min_building_separation_ft": 10,
+}
+
+
+def test_the_inert_standards_are_inert_because_of_their_values() -> None:
+    """Three of the thirteen can never bite, and this is why rather than that.
+
+    The ledger note above says these are safe whatever the corpus does next,
+    which is a claim about the NUMBERS: four units meet a cap of four and clear
+    a floor of two, and one building has nothing to be separated from. Written
+    only as prose, that claim survives a re-reading that changes the number
+    underneath it -- Gladstone amending its cap to three, or a city raising a
+    density floor to five, would leave the sentence standing and the reasoning
+    false.
+
+    So the values are asserted. If one moves, this goes red and the standard
+    has to be argued again rather than inherited.
+    """
+    from flats.encode.port_quadfit import layer_id_for
+
+    audit = _audit()
+    unexpressible = audit.unexpressible_standards()
+    _top, corpus = audit._load()
+
+    for field, expected in INERT_BY_ARITHMETIC.items():
+        zones = unexpressible.get(field, [])
+        assert zones, f"{field} left the ledger; its note has to go with it"
+        for key in zones:
+            juris, _, zone = key.partition("/")
+            layer = corpus[layer_id_for(juris)]
+            # Through the audit's own resolution, not the zone's raw values:
+            # Fairview's R/SFLD states almost nothing of its own and adopts
+            # R-6's block, which is the encoding rather than a gap in it.
+            effective = audit._effective(layer, layer.zones[zone])
+            value = effective.get(field) or layer.defaults.get(field)
+            assert value is not None and float(value.value) == expected, (
+                f"{key}.{field} reads {value and value.value}, not {expected} "
+                f"-- the reason it is inert no longer holds"
+            )
 
 
 #: Standards the corpus states in more than one column of LOT AREA where
