@@ -22,7 +22,61 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
   proportional to the impact of development". The citation chain is complete and ends outside the code, the same
   shape as Clackamas County''s Standard Drawing P100 — except a drawing can be read and a plan we do not hold
   cannot. Recorded rather than encoded, and it is a real risk to a Fairview green rather than an academic one: a
-  lot fronting a street the TSP widens loses depth before anything is built on it.'
+  lot fronting a street the TSP widens loses depth before anything is built on it.
+
+  READ AND NOT ENCODED: Chapter 19.155, Village Trail System Plan. Seven mentions and the loudest unread reference
+  left in this layer, standing beside the front, rear and side setbacks the Village tables state. Fetched 2026-09-02
+  because it was the last hole in a contiguous range: 19.115.010 makes a Village lot comply with "any other applicable
+  Fairview Village standards in Chapters 19.110 through 19.155", and 19.108 through 19.150 were all stored while the
+  first and last of the range never had been. It is a trail plan, and it states no dimension a lot is measured by.
+  What it does state reaches development and cannot be held here: 19.155.040 requires the developer to build "the
+  portion of the trail system located on the site for new development" before occupancy, against a system development
+  charge credit, and 19.155.050 requires that portion to be dedicated, easemented or paid for in lieu. Whether a given
+  lot carries any of it is decided by Figure V-10, a map printed after the chapter and not part of the text. Same
+  shape as 19.165.025 M above and the same answer: an exaction whose amount lives in a document this store does not
+  hold. Recorded as a cost risk on a Fairview lot, not as a constraint on its envelope.
+
+  Chapter 19.110, Village General Provisions, fetched the same day and the other half of that range. No standard in it
+  binds this pod, and three things in it are worth having. 19.110.040 is a HIDDEN GLOSSARY of ten terms nobody had —
+  the layer''s definitions came from 19.13 and this second one was never opened — and it is now declared as a
+  `definitions_at` span rather than re-fetched, so the terms are readable where they already sit. The one that matters
+  is F, "Net acre means all area within a private development zone excluding public rights-of-way", which is the
+  denominator the Village density floor divides by. It AGREES with 19.13''s "Net site area means the square footage of
+  land after subtracting street right-of-way", so 19.110.050''s conflict clause — "Within the Village when there is a
+  conflict between the Village regulations and base zone ... the Village regulations control. All regulations of the
+  base zone still apply except where expressly written otherwise" — never fires on the denominator. That clause is
+  also the written authority for how this layer already stacks the Village chapters on top of 19.30, which had been
+  assumed. Third: 19.110.040 D dimensions the front porch that 19.145.020 B requires on every other unit in a block
+  frontage (minimum six feet deep, twelve wide), and it costs this pod nothing, because 19.145.020 C says in as many
+  words that "front porches may encroach into front setback and are not subject to lot coverage limitations". A
+  required feature that is exempt from both standards it would otherwise consume.
+
+  Chapter 19.106, Natural Resource Regulations, fetched 2026-09-02 to verify a screening layer rather than to encode a
+  value. The pipeline carves Fairview resource corridors out of the buildable area on this chapter''s authority and
+  had been doing it from code-page snippets, because the chapter itself answered 403 — a fetch strategy, as it turned
+  out, not a wall. The reading corroborates the widths in use: 19.106.040 B states a riparian resource protection area
+  of "either 35, 40, 55, or 80 feet ... measured from the centerline of the creek in each direction", 19.106.030 S
+  adds a 50-foot wetland buffer and a 50-foot Fairview Lake buffer, and the same subsection exempts water features
+  "enclosed in pipes, culverts, or similar structures" — the West Linn piped-channel shape again. Table 19.106.040 B
+  permits nothing resembling a dwelling inside a protection area, which is what makes a carve the right action rather
+  than a flag. Two things the snippets had blurred. The 37.5 feet in the screening config is real but belongs to a
+  DIFFERENT rule: 19.106.050 A''s Fairview Village conservation easement, "not less than 50 feet from Fairview Creek
+  centerline and not less than 37.5 feet from Clear Creek centerline", with 19.106.050 C forbidding development within
+  45 feet of the Clear Creek corridor centerline. And 19.106.040 C says the general development standards "do not
+  apply to Fairview Lake or natural resources located within Fairview Village" — an exception that looks like it
+  loosens and does not, because 19.106.050 puts a wider easement over the same ground. None of this is encoded here: a
+  resource corridor is geometry, it is screened by the overlay layer, and this layer holds the zoning standards it
+  stands beside.
+
+  Chapter 19.105, Floodplain Overlay, fetched alongside 19.106 and read the same day. It is the chapter the
+  pipeline''s FEMA floodway carve has been citing for Fairview, and that citation now rests on stored text rather than
+  on a chapter title. 19.105.070 B 5 a prohibits "encroachments, including fill, new construction, substantial
+  improvements, and other development within the adopted regulatory floodway" unless a no-rise certification or a FEMA
+  map revision issues -- so a carve is the right action inside the floodway. Outside it the chapter is a construction
+  standard and not a prohibition: 19.105.060 forbids only "any use otherwise prohibited in the base zone" and
+  uncontained hazardous materials, while 19.105.070 A asks for anchoring, flood-resistant materials and elevated
+  service equipment. That is a cost and a detail, which is why the flood fringe is flagged rather than carved. Nothing
+  encoded here either; both halves are geometry the overlay layer screens.'
 ingest:
   geoid: null
   juris_city_codes:
@@ -62,6 +116,69 @@ crossrefs:
       topography or another physical constraint makes a standard hard to meet. A route to being
       let off a standard is not a standard, and a screen that assumed the variance would be
       granted would be guessing at a decision nobody has made.
+  "19.520.030":
+    outcome: procedure
+    note: >-
+      The same variance chapter as "19.520" above, cited one level deeper. FMC 19.162.030(4) offers "a variance
+      to street spacing standards ... pursuant to FMC 19.520.030 (Class B variances) when resources are present
+      that are mapped on the Natural Resource map". It ranks as binding because it sits beside the driveway
+      approach widths this screen draws to, and it is still a route to being let off a standard rather than a
+      standard. A screen that assumed the variance would be granted would be guessing at a decision nobody has
+      made -- and this one is a Class B, decided by a person on findings.
+  "19.490":
+    outcome: other_building
+    note: >-
+      Home occupations, and the chapter that "19.490.200" above is a section of. Nine mentions and every one of
+      them is the same list entry printed under a zone''s permitted uses -- "G. Home occupations - see Chapter
+      19.490 FMC" in 19.120 and 19.125, and "Subject to standards in Chapter 19.490 FMC, Miscellaneous Permits
+      (Temporary Uses, Home Occupations, Others)" repeated down the use tables of 19.30. It counts as binding
+      because those lists print a few lines under the tables the zone''s dimensions are read from. Nobody is
+      running a business out of this pod.
+  "19.490.400":
+    outcome: other_building
+    note: >-
+      A section of the same miscellaneous-permits chapter, reached from the temporary-use rows of the Town Center
+      use table. A pod is neither temporary nor a use somebody sets up for a season.
+  "19.200":
+    outcome: other_path
+    note: >-
+      Family day care providers and residential homes, cited from one list entry in the permitted uses of the
+      Village townhouse and Village apartment zones: "Family day care providers and residential homes - see
+      Chapter 19.200 FMC." Both are state-protected uses that occupy a dwelling somebody has already built. This
+      screen asks whether the dwelling can be built.
+  "19.420.020":
+    outcome: procedure
+    note: >-
+      Landscape plan contents. FMC 19.163.030 B requires a landscape plan "at the time of design review or other
+      pertinent applications" and says all such plans "shall conform to the requirements in FMC 19.420.020 (E),
+      Landscape plans". It stands beside the minimum landscaped percentage this layer encodes, which is why it
+      ranks, but what it governs is what has to be ON the drawing, not how much of the lot has to be planted.
+      The percentage itself is read from 19.163 and 19.145.070 and is already encoded.
+  "197":
+    outcome: other_path
+    note: >-
+      ORS Chapter 197, the state land use statutes, and both mentions are branches this pod never takes:
+      19.165.025 D makes a building moratorium "conform to the criteria and procedures contained in ORS 197.505
+      to 197.520", and 19.30 cites ORS 197.314 and 197.493 for manufactured homes and manufactured home parks.
+      Not to be confused with ORS 197A.400, the clear-and-objective housing standard this project does rely on
+      elsewhere; that one is argued in the layers it applies to and is not what these two sentences reach.
+  "16.85.050":
+    outcome: other_path
+    note: >-
+      A figure reference, and a stranded one. FMC 19.65.040 requires that "new land divisions and developments
+      with more than one building, which are subject to site design review, shall be configured to provide an
+      alley or interior parking court, as shown in Figure 16.85.050(B)", then caps blocks at 200 feet. The
+      standard reaches a land division or a multi-building site and this screen draws one building on one
+      existing lot, so it never fires. Worth noting that the figure number is a Title 16 number printed inside
+      Title 19: Fairview''s code has no Chapter 16.85, and the citation appears to have been carried over from
+      the model code the section was adapted from. Nothing to fetch -- there is nothing there to fetch.
+  "92":
+    outcome: other_path
+    note: >-
+      ORS Chapter 92, the land division statutes, cited from the definition of "lot" in 19.13 -- "a unit of land
+      that is created by a subdivision of land (See ORS Chapter 92)" -- and from the definition of a middle
+      housing land division. This screen places a pod on a lot that already exists and draws no new lot line, so
+      the chapter that governs creating them is a branch it never takes.
   "19.530":
     outcome: other_path
     note: >-
@@ -135,6 +252,38 @@ code:
   - id: "19.150"
     url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19150.html
     title: Chapter 19.150 Special Development Standards - VO, VC and VMU Zones
+  # A CONTIGUOUS RANGE with two holes in it. FMC 19.115.010 says a Village lot
+  # must comply with "any other applicable Fairview Village standards in
+  # Chapters 19.110 through 19.155" -- and 19.108 through 19.150 are all stored
+  # while the first and last of the range never were. 19.155 is the loudest
+  # unread reference left in this layer: seven mentions, standing beside the
+  # front, rear and side setbacks this screen reads off the Village tables.
+  - id: "19.110"
+    url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19110.html
+    title: Chapter 19.110 Fairview Village Districts - General Provisions
+    # A hidden glossary: 19.110.040 defines ten terms for the Village chapters
+    # and the layer had none of them. `net acre` is the one that matters --
+    # it is the denominator the Village's own density floor is measured on.
+    definitions_at: L61-L83
+  # The chapter the environmental overlay has been citing without being read.
+  # `fairview_nrl` in the pipeline's overlays.yaml carves resource corridors
+  # out of the buildable area on FMC 19.106's authority, and carries
+  # `confidence: needs_verification` with the note "code text partially
+  # unreachable (403) -- widths from code-page snippets". Code Publishing does
+  # serve this to curl-cffi impersonating chrome124, which is how every other
+  # chapter here arrived, so the 403 was a fetch strategy and not a wall.
+  - id: "19.105"
+    url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19105.html
+    # Declared as "Sensitive Lands Overlay" from the reference that ordered it
+    # and corrected on reading: 19.163.030 calls sites "designated as sensitive
+    # lands ... in accordance with Chapter 19.106", and 19.105 is the floodplain.
+    title: Chapter 19.105 Floodplain Overlay
+  - id: "19.106"
+    url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19106.html
+    title: Chapter 19.106 Natural Resource Regulations
+  - id: "19.155"
+    url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19155.html
+    title: Chapter 19.155 Fairview Village Design Standards
   - id: "19.65"
     url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1965.html
     title: Chapter 19.65 Town Center Commercial (TCC) District

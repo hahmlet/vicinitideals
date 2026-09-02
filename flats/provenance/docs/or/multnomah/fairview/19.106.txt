@@ -1,0 +1,1009 @@
+Chapter 19.106
+
+NATURAL RESOURCE REGULATIONS
+
+Sections:
+
+19.106.010 Purpose.
+
+19.106.020 Definitions.
+
+19.106.030 Coordination with other regulations.
+
+19.106.035 Columbia Riverfront redevelopment exceptions.
+
+19.106.040 Resource protection area requirements.
+
+19.106.050 Fairview Creek and Clear Creek conservation easements within Fairview Village.
+
+19.106.060 Fairview Lake.
+
+19.106.070 Permit process for permitted uses.
+
+19.106.080 Map amendments and administration.
+
+19.106.090 Nonconforming uses and structures within resource protection areas.
+
+19.106.100 Floodplain ordinance.
+
+19.106.110 Emergency exemption.
+
+19.106.120 Drainage district exemption.
+
+19.106.130 Penalty.
+
+19.106.010 Purpose.
+
+A. The city has determined through review, investigation and development of appropriate regulation and guidelines to promote the application and utilization of the city’s Comprehensive Plan, that the city’s major water features the Columbia River, Fairview Creek, Osburn Creek, No Name Creek, Raintree Creek, Salmon Creek, Clear Creek, Fairview Lake, Columbia Slough, and associated wetlands and riparian areas, and upland habitat areas, as defined herein, are a valuable and irreplaceable natural resource to the community. It is the intention of the Fairview city council to protect and regulate the city’s natural resources with the following purposes:
+
+1. To protect the natural functions of the city’s natural resources, including its soil structure and vegetation, to maintain water quantity and quality, store recharge and discharge groundwater, and reduce needs for future stormwater treatment, collection and control facilities.
+
+2. To prevent property damage and degradation from storms and floods and to promote bank stabilization.
+
+3. To protect and enhance valuable fisheries and wildlife habitat.
+
+4. To provide an aesthetically pleasing and healthy environment.
+
+5. To implement the city’s Comprehensive Plan.
+
+6. To allow for the storage and conveyance of stream flows through existing and natural flood conveyance systems.
+
+7. To minimize flood impacts, flood peak flows and wind and wave impacts.
+
+8. To maintain water quality by reducing and sorting sediment loads, processing chemical and organic wastes and reducing nutrients.
+
+9. To protect and enhance wildlife habitat.
+
+10. To maintain water quality through the implementation of total maximum daily load (TMDL) requirements.
+
+11. To promote recreational and education opportunities and public access to open spaces and natural resources.
+
+12. Find the appropriate balance between resource protection and enhancement and reasonable development. Variable riparian resource protection areas of 35 feet, 40 feet, 55 feet and 75 feet are established as shown on the city’s adopted natural resources inventory map.
+
+B. The purpose of the upland habitat areas is to protect habitat and wildlife areas while permitting appropriate development when carried out in a sensitive manner with minimal impacts on identified natural resource values.
+
+C. The objectives of the natural resource code provisions are:
+
+1. To protect waterbodies from chemical pollution and siltation by maintaining the vegetative cover and stability of the land surrounding them.
+
+2. To maintain lower water temperatures by maintaining or enhancing vegetative cover.
+
+3. To maintain an appropriate quantity, quality and rate of runoff from sites during and after any alteration, including construction, excavation, filling, earth removal, dredging, et al.
+
+4. To reduce adverse impacts to wetland functions and values from adjacent development.
+
+5. To slow the rate of stormwater runoff, thereby reducing flooding and erosion, and to improve summer water release, by maintaining healthy floodplains and wetlands.
+
+6. To enhance in-stream habitat by protecting and enhancing silt-free rock and gravel bottoms, by maintaining in-stream boulders and woody debris that do not create or foster hazardous conditions.
+
+7. To provide clear and objective standards and a discretionary review process, applicable to development in natural resource areas.
+
+8. To allow and encourage habitat friendly development, while minimizing the impacts on fish and wildlife habitat functions.
+
+9. To provide mitigation standards for the replacement of ecological functions and values lost through development in or adjacent to the city’s designated natural resource areas. (Ord. 3-2012 §§ 2, 3 (Att. 2))
+
+19.106.020 Definitions.
+
+For the purposes of this chapter, the following definitions shall apply:
+
+A. “Alteration” means any change, addition, or modification to any existing structure or improvement on the site, including changes to site access, when such changes result in any one of the following: (1) intensification of the use(s) on the site, (2) intensification of the improvements on the site, or (3) changes that may have a detrimental effect on surrounding properties or a natural resource area. Alteration may or may not involve an increase in gross floor area. Alteration does not include “normal maintenance and repair.”
+
+B. “Bank” means the land area bordering and/or confining a waterbody. The bank has a steeper slope than the bed, and usually has steeper slope than the surrounding landscape. The top of the bank is the first significant break in the slope between the toe of the bank at waterline and the surrounding landscape.
+
+C. “Buffer averaging” means decreasing a portion of the riparian buffer within a proposed development site and increasing the buffer in another portion of the site if the buffer as adjusted will provide equivocal protection or enhance functions of the buffer area for water quality and habitat, provided the total area of the buffer on the development proposal site does not decrease.
+
+D. “Canopy” means area of the tree above the ground, measured in mass or volume including the trunk and branches.
+
+E. “Channelize” means to change the location of a drainage way by digging a new channel and diverting the water from the old channel into the new one.
+
+F. “Cutting” means the falling or removal of a tree, or any procedure that naturally results in the death or substantial destruction of a tree. “Cutting” does not include normal trimming or pruning, but does include topping of healthy trees. Topping of hazard trees to alleviate the hazard is not considered cutting.
+
+G. “Dangerous tree” means the condition or location of the tree presents a clear public safety hazard or an imminent danger of property damage, and such hazard or danger cannot reasonably be alleviated by treatment or pruning.
+
+H. “Dead tree” means the tree is lifeless.
+
+I. “Disturbance” means to make changes to the existing physical status of the land that are made in connection with development.
+
+J. “Disturbed areas” means areas within natural resources and associated protection areas lack significant values and functions associated with the resource.
+
+K. “Dying tree” means the tree is diseased, infested by insects, deteriorating, or rotting, and cannot be saved by reasonable treatment or pruning, or must be removed to prevent the spread of infestation or disease to other trees.
+
+L. “Erosion” means the detachment of solid particles by water, wind, ice, or other physical activity.
+
+M. “Excessive tree trimming or cutting” means any act which causes, or may reasonably be expected to cause, the healthy tree to die by cutting or removing of crown, trunk, or root system of a plant; the uprooting or severing of the main trunk of the tree including without limitation damage inflicted upon the root system by machinery, storage materials, or soil compaction; substantially changing the natural grade above the root system or around the trunk; excessive pruning; or paving with concrete, asphalt, or other impervious materials. This definition does not apply to dying or hazardous trees.
+
+N. “Habitat assessment” means an approach for identifying and assessing the elements of a resources habitat. It is based on a simple protocol using observations of water and upland resource habitat characteristics and major physical attributes. A habitat assessment is useful as: (1) a screening tool to identify habitat stressors and (2) a method for learning about water ecosystems and environmental stewardship.
+
+A habitat assessment includes a general description of the site, a physical characterization and water quality assessment, and a visual assessment of in-stream and riparian habitat quality.
+
+O. “Major pruning” means removal of over 20 percent of the tree’s canopy, or injury to, or cutting of over 10 percent of the root system, during any 12-month period.
+
+P. “Map” means the adopted city of Fairview natural resource map.
+
+Q. “Normal maintenance and repair” includes maintenance, repair, or demolition of existing legal structures and facilities provided there is no change in the location or increase in the footprint of any building, impervious surface, or outdoor storage within the resource protection area, no other site changes are proposed that could result in the increased direct stormwater discharge to the natural resource area.
+
+R. “Qualified professional” means an individual who is professionally qualified and has proven expertise and experience in a given natural resource field.
+
+S. “Resource protection area” means the actual mapped resource and includes any of the following: 35-, 40-, 55-, or 80-foot riparian resource protection area, 50-foot wetland buffer, 50-foot Fairview Lake buffer, or upland habitat area. All identified on the Fairview natural resource map. The riparian resource areas shall be measured from centerline of the water feature in each direction to create a 160-foot corridor (80 feet in each direction from creek centerline), 110-foot corridor (55 feet in each direction from creek centerline), and 80-foot corridor (40 feet in each direction from creek centerline), and 70-foot corridor (35 feet in each direction from creek centerline).
+
+T. “Riparian” means the environment (soil, plants, animals) adjacent to a river or lake which affects the waterbody and which is affected by it.
+
+U. “Stormwater” means surface water that washes off land, including impervious surfaces such as roofs and pavement, during periods of precipitation.
+
+V. “Stream” means a body of moving water including creeks, brooks, and rivers, which moves in a definite channel.
+
+W. “Top of bank” means first significant break in the slope between the toe at the bank of the water line and the surrounding landscape.
+
+X. “Upland habitat area” means vegetated areas adjacent to or near water features that provide valuable functions to the city’s riparian and wetland areas for fish and wildlife.
+
+Y. “Waterbody” means an area, which is covered by surface or near-surface groundwater, either continually or for sufficiently long periods to become the primary factor determining the landscape and the vegetative community. The term shall include rivers, streams, other drainage ways, lakes, ponds, and wetlands.
+
+Z. “Wetland” means land that is inundated or saturated by surface or groundwater at a frequency and duration sufficient to support a prevalence of vegetation typically adapted to life in saturated soil conditions. (Ord. 10-2015 § 2 (Exh. 1); Ord. 3-2012 §§ 2, 3 (Att. 2))
+
+19.106.030 Coordination with other regulations.
+
+A. Implementation of this chapter is in addition to, and shall be coordinated with, FMC Title 19, Development Code, and FMC Title 16, Environmental Regulations.
+
+B. When this chapter conflicts with other sections of the Fairview Municipal Code, the more restrictive provision shall apply.
+
+C. The requirements of this chapter apply in addition to all applicable local, regional, state, and federal regulations, including those for wetlands and flood management areas. Where this chapter imposes restrictions that are more stringent than regional, state, and federal regulations, the more stringent regulation shall apply.
+
+D. Development in or near wetlands and streams may require permits from the Oregon Department of State Lands (DSL) and the U.S. Army Corps of Engineers (Corps). If a federal permit is required, a water quality certification from the Oregon Department of Environmental Quality (DEQ) may also be required. The public works director shall notify DSL and the Corps when an application for development within streams and wetlands is submitted. Applicants are encouraged to contact the above-mentioned agencies first before preparing development plans. (Ord. 3-2012 §§ 2, 3 (Att. 2))
+
+19.106.035 Columbia Riverfront redevelopment exceptions.
+
+The redevelopment of parcels with map and tax lots 1N3E2200504, 1N3E2200503, and 1N3E2100100 to river oriented uses, as defined below, shall be exempt from the requirements of this chapter. The exemption shall be from the mapped riparian resource of the Columbia River. However, all applicable state and federal requirements relating to natural resource protection shall apply. The applicant shall submit demonstration of state and federal approvals with the applicable city of Fairview applications for redevelopment in order to demonstrate the proposal complies with state and federal requirements and conditions of approval. Continuation of and improvements to the existing on-site development (at time of the code adoption – September 5, 2012) and redevelopment to uses other than river oriented uses as described below will be subject to the 50-foot riparian buffer requirements of this chapter.
+
+“River oriented redevelopment” means the redevelopment of industrial properties along the Columbia River consistent with the goals of providing river-oriented recreational, residential, and commercial development as described in the 2004 Comprehensive Plan.
+
+The activities exempt from the city’s natural resource review process as described above include: roadway construction, utility extensions, recreational facilities, residential and commercial developments, tourist facilities, parking facilities, bike paths, walkways, promenades, docks, wharfs, piers, scenic view points, marinas, and related boating services along the Columbia River. (Ord. 3-2012 §§ 2, 3 (Att. 2))
+
+19.106.040 Resource protection area requirements.
+
+A. Standards outlined in this section apply to the city’s riparian resources and upland habitats as shown on the city of Fairview natural resource map adopted by the city council on September 5, 2012, (hereon referred to as “the map”) which includes the Columbia River and Fairview Creek, Osburn Creek, No Name Creek, Salmon Creek, Rain Tree Creek, and Clear Creek, and mapped wetlands and upland habitat.
+
+B. Each resource has been designated with a specific protection area as shown on the map. The map shows Fairview’s riparian resources that are subject to either a 35-, 40-, 55-, or 80-foot riparian buffer resource protection area. The protection areas are measured from the centerline of the creek in each direction either 35, 40, 55, or 80 feet as shown on the map. Where there are multiple reaches of waterbodies the protection area shall be measured from the centerline of each reach.
+
+Other water resources that appear on the map, but are enclosed in pipes, culverts, or similar structures, are not subject to the provisions of this chapter, except where a proposed activity such as an excavation will expose or directly disturb the protected water feature. Site development on properties containing unexposed mapped water quality features shall not prevent the future possibility of daylighting the water feature. If an applicant chooses to daylight a water feature, the maximum buffer width of the underlying designation may not apply to the portion that will be daylighted/exposed. However, a minimum buffer width of 25 feet from centerline shall be applied.
+
+1. Riparian Resource Protection Areas. The riparian resource protection area includes the mapped resource and the area of land immediately adjacent to the edges of banks located along the Columbia River and Fairview Creek, Osburn Creek, No Name Creek, Salmon Creek, Rain Tree Creek, and Clear Creek.
+
+Each resource protection area has a specific required buffer of either 80 feet (160-foot total width), 55 feet (110-foot total width), 40 feet (80-foot total width), and 35 feet (70-foot total width) as set forth below and as shown on the adopted map. The resource protection area shall be measured from the centerline of the creek.
+
+a. The 80-foot resource protection area applies to:
+
+• Fairview Creek from the city’s southern boundary of Glisan Street to the eastern portion of Fairview Community Park. However, the platted buffer designated with the development of the Fairview Village shall apply to the northern portion of Fairview Creek where it abuts the Village commercial, Village apartment and Village townhouse zones as shown on the adopted map. The southern side of Fairview Creek where it abuts city of Fairview property is subject to an 80-foot resource protection area as shown on the map.
+
+b. The 55-foot resource protection area applies to:
+
+• Fairview Creek at the property line between the northern property line of 15 Matney Street and the southern property line of 2010 Fairview Avenue, as shown on the adopted map, running northward to Fairview Lake.
+
+• Salmon Creek
+
+• Columbia River; the Columbia River protection area shall be measured from the mean high water line.
+
+c. The 40-foot resource protection area applies to:
+
+• Fairview Creek from the city detention pond located just north of Fairview Village north toward Smith Memorial Church, as shown on the adopted map.
+
+• No Name Creek
+
+• Rain Tree Creek
+
+d. The 35-foot resource protection area applies to:
+
+• Osburn Creek
+
+e. Previously Platted Protection Areas. Previous subdivision developments set aside resource areas for Fairview Creek and Osburn Creek (and associated wetlands) in easements and tracts. Development was permitted around the resource and the buffer was reviewed at time of development. The map shows the protection area as the mapped tract or easement and development is only permitted within the mapped areas as provided on the plat and/or conditions of the development approval.
+
+i. Lakeshore Estates 2.
+
+ii. Heron Point.
+
+iii. Pelfrey South Shore Estates 1 and 2.
+
+2. Wetland Resource Protection Areas. A buffer area which measures at least 50 feet shall be established between any mapped wetland areas identified on the map and any proposed development. Permitted uses within the underlying zone are allowed to be constructed on properties with mapped wetlands when the development is not located within the wetland or the 50-foot wetland buffer. However, development within 15 feet of a wetland buffer is subject to a Type I wetland boundary verification process (FMC 19.106.070(A)). Mitigation shall be required for all development within the required wetland buffer (subsection (E)(2)(b) of this section).
+
+Minor development is permitted through the Type I and Type II land use process as shown in Table 19.106.040(B).
+
+Significant development within the 50-foot buffer may be permitted subject to a Type III land use application and when the applicant demonstrates:
+
+• The development is the minimum necessary to allow legal use of the property; and
+
+• The development complies with U.S. Army Corps of Engineers and Division of State Land permit requirements.
+
+3. Upland Habitat Resource Protection Areas. Upland habitat areas provide valuable functions to the city’s riparian and wetland areas and to fish and wildlife. The purpose of this section is to encourage habitat friendly development while minimizing impact on water quality and fish and wildlife habitat functions. Development within 15 feet of a mapped upland habitat area is subject to a Type I boundary verification process.
+
+Development of uses listed in Table 19.106.040(B) is permitted on areas mapped with an upland habitat designation subject to the exception process in subsection (D) of this section. To achieve the goals of re-establishing forest canopy that meets the ecological values and functions when development intrudes into an upland habitat area, tree replacement and vegetation planting are required per subsection (E) of this section, Mitigation.
+
+Table 19.106.040(B) Permitted and Prohibited Uses
+A
+Vegetation Management
+35-foot RPA
+40-foot RPA
+55-foot RPA
+80-foot RPA
+50-foot Wetland Buffer
+Upland Habitat
+1
+Vegetation removal, excessive tree trimming or cutting, or disturbance of ground cover or removal of forest debris without an approved permit.
+Prohibited
+Prohibited
+Prohibited
+Prohibited
+Prohibited
+Prohibited
+2
+Planting of vegetation listed as nuisance on the Metro Native Plant List.
+Prohibited
+Prohibited
+Prohibited
+Prohibited
+Prohibited
+Prohibited
+3
+Invasive vegetation removal of 300 square feet or less (per calendar year).
+Permitted
+Permitted
+Permitted
+Permitted
+Permitted
+Permitted
+4
+Removal of more than 300 square feet of plants categorized as a nuisance or invasive species on the Metro Native Plant list. After removal all open soils shall be replanted with native vegetation and/or protected from erosion (per calendar year).
+Type I
+Type I
+Type I
+Type I
+Type I
+Type I
+5
+Native plantings and vegetation management plans.
+Type I
+Type I
+Type I
+Type I
+Type I
+Type I
+6
+Maintenance of existing landscaping and gardens. This exemption extends to the installation of new irrigation and drainage facilities and/or erosion control features as well as to landscaping activities that do not involve:
+a. Removal of native plants or required mitigation.
+b. Planting of any vegetation identified as a nuisance or invasive species on the Metro Native Plant List.
+c. Anything that produces an increase in impervious area.
+d. Other changes that could result in increased direct stormwater discharges to the resource area.
+Permitted
+Permitted
+Permitted
+Permitted
+Permitted
+Permitted
+B
+Tree Removal and Pruning
+35-foot RPA
+40-foot RPA
+55-foot RPA
+80-foot RPA
+50-foot Wetland Buffer
+Upland Habitat
+1
+Tree removal for trees that present an emergency situation with immediate danger to persons or property. Emergency situations may include, but are not limited to, situations in which a tree or portion of a tree has been compromised and has damaged or is damaging structures or utilities, or private or public property or where a tree or portion of a tree is prohibiting safe passage in the public right-of-way. Examples include trees that have fallen into or against an occupied building or trees downed across power lines or roadways. The emergency exemption is limited to removal of the trees or portion of the tree as necessary to eliminate the hazard. Damages or impacts to vegetation within the resource area resulting from the tree removal shall be repaired after the emergency has been resolved.
+Permitted
+Permitted
+Permitted
+Permitted
+Permitted
+Permitted
+2
+Limited tree removal or major pruning of trees six inches or greater in diameter under the following circumstances:
+a. The tree is dead, diseased or dying and cannot be saved as determined by a certified arborist. The tree should be topped to alleviate the hazard.
+b. For major pruning, if a tree is pruned in excess causing it to die, three trees six inches in diameter or greater must be planted as mitigation.
+**Tree removal associated with a development permit or land use application will be reviewed through the applicable application process.
+Type I
+Type I
+Type I
+Type I
+Type I
+Type I
+C
+Maintenance and Repair
+35-foot RPA
+40-foot RPA
+55-foot RPA
+80-foot RPA
+50-foot Wetland Buffer
+Upland Habitat
+1
+Normal maintenance, repair, alteration, or demolition of existing legal structures and facilities; provided, that the following criteria are met:
+a. There is no change in the location or increase in the footprint of any building, impervious surface, or outdoor storage within the resource protection area.
+b. No other site changes are proposed that could result in the increased direct stormwater discharge to the natural resource area.
+c. Legally nonconforming structures within resource protection areas are subject to FMC 19.106.090, Nonconforming uses and structures within resource protection areas.
+Type I
+Type I
+Type I
+Type I
+Type I
+Type I
+2
+Emergency procedures or activities that are necessary to remove or abate hazards to person or property; provided, that the time frame for such remedial or preventative action is too short to allow for compliance with the requirements of this chapter. After the emergency, the person or agency undertaking the action shall repair any impacts to the designated natural resource resulting from the emergency action; example, remove any temporary flood protection such as sandbags, restore hydrologic connections, or replant disturbed areas with native vegetation.
+Permitted
+Permitted
+Permitted
+Permitted
+Permitted
+Permitted
+3
+Normal maintenance and repair of existing stormwater facilities in accordance with stormwater management plan approved by the city.
+Permitted
+Permitted
+Permitted
+Permitted
+Permitted
+Permitted
+4
+Routine maintenance of existing public recreation, utility facilities, access, streets, driveways, and/or parking improvements that disturbed a resource area, provided such activities provide a mitigation plan for restoration of the disturbed area.
+Type I
+Type I
+Type I
+Type I
+Type I
+Type I
+D
+Site Development/Alteration
+35-foot RPA
+40-foot RPA
+55-foot RPA
+80-foot RPA
+50-foot Wetland Buffer
+Upland Habitat
+1
+Activities prohibited by an easement.
+Prohibited
+Prohibited
+Prohibited
+Prohibited
+Prohibited
+Prohibited
+2
+Earth disturbing activities not associated with an approved permit.
+Prohibited
+Prohibited
+Prohibited
+Prohibited
+Prohibited
+Prohibited
+3
+Activities prohibited by Chapter 19.105 FMC, Floodplain Overlay.
+Prohibited
+Prohibited
+Prohibited
+Prohibited
+Prohibited
+Prohibited
+4
+Receiving areas for toxic or hazardous or sanitary waste fills and uncontained hazardous materials, as defined by DEQ.
+Prohibited
+Prohibited
+Prohibited
+Prohibited
+Prohibited
+Prohibited
+5
+Development of permitted structures allowed in the underlying zone within the resource protection area subject to FMC 19.106.040(D), Exception Process.
+Prohibited
+Type III*
+Type III*
+Type III*
+Type III
+Type III
+6
+Type I boundary verification process to demonstrate proposed development is not located within a designated natural resource area or required protection area (FMC 19.106.070(A)).
+Type I
+Type I
+Type I
+Type I
+Type I
+Type I
+7
+Alteration of a stream bank, bed, or water flow without approved permits.
+Prohibited
+Prohibited
+Prohibited
+Prohibited
+Prohibited
+Prohibited
+8
+Alteration of stream bank, bed or water flow.
+Type III
+Type III
+Type III
+Type III
+9
+Direct stormwater discharge into waterbodies without obtaining a permit.
+Prohibited
+Prohibited
+Prohibited
+Prohibited
+Prohibited
+Prohibited
+10
+Installation of required storm management facilities.
+Type III
+Type III
+Type III
+Type III
+Type III
+Type III
+11
+Public and private pathways, trail systems, and boardwalks, subject to construction standards of FMC 19.106.040(C).
+Type II
+Type II
+Type II
+Type II
+Type II
+Type II
+12
+Impervious pathways and pathways greater than five feet in width.
+Type III
+Type III
+Type II
+Type III
+Type II
+Type II
+13
+Viewing areas on parcels zoned for commercial and public use provided no more than 300 square feet of impervious surface is disturbed per 100 feet by 100 feet of resource protection area. For properties with commercial zoning, outdoor patio or seating areas utilizing the aesthetics associated with the adjacent natural resource may occupy no more than 500 square feet of the resource protection area. Encroachments may be subject to buffer averaging where feasible.
+Type II
+Type II
+Type II
+Type III
+Type III
+Type II
+14
+Benches and outdoor furniture and interpretive signage and displays provided such facilities do not disturb more than 20 square feet of impervious surface within the designated natural resource area.
+Type I
+Type I
+Type I
+Type I
+Type I
+Type I
+Uses listed as “Permitted” means they are permitted outright and a land use permit is not required.
+
+*Type III – Subject to standards of FMC 19.106.040(D)(1)(e), Buffer Averaging.
+
+C. Development and Construction Standards. The following standards apply to development and construction in the resource protection areas identified in this section (this section and as permitted in Table 19.106.040(B)). These standards do not apply to Fairview Lake or natural resources located within Fairview Village. An applicant wishing to deviate from these standards to increase the allowable development footprint may make a request to the planning commission through the Type III review process and the exception process listed in subsection D of this section. The request may only be made for permitted uses listed in Table 19.106.040(B).
+
+1. All plantings installed must be native plantings approved on the Metro Native Plant List and be deemed compatible with the environment in which they are to be planted. Plantings shall be in compliance with subsection E of this section, Mitigation.
+
+2. Benches may not exceed eight feet in length and may be no larger than the average industry standards for bench width.
+
+3. Areas disturbed for seating and viewing cannot exceed 300 square feet of applicable resource protection area. Only one seating or viewing area may be installed per 100 feet by 100 feet of applicable resource protection area. Mitigation shall be provided consistent with subsection E of this section.
+
+4. Private natural pathways or trails shall be no wider than 30 inches. Where trails or paths include stairs, the stair width shall not exceed 50 inches. Trails and pathways shall be constructed using nonhazardous, pervious materials where applicable. Raised boardwalks may be considered by the public works director only when needed to lessen impacts to resource areas. Trails shall provide the most direct access to the resource area and shall not excessively meander.
+
+5. Public pathways on public property or easements shall be no wider than five feet and shall be constructed using nonhazardous, pervious materials where applicable. Pathways may be larger than five feet if necessary to comply with ADA requirements or if the public works director deems necessary. Trails shall be constructed using nonhazardous, pervious materials where applicable. Raised boardwalks may be considered only when the applicant demonstrates they are needed to lessen negative impacts to the resource area.
+
+6. Stream bank, bed, or water alteration proposals and applications shall be prepared by a qualified professional and must include submission of a city of Fairview habitat assessment form.
+
+7. Minor encroachments in commercial areas for outdoor seating or resource viewing may not exceed 500 square feet in area per 100 lineal feet of resource buffer. Encroachments are subject to mitigation requirements and resource protection area buffer averaging.
+
+8. Use of heavy machinery or herbicides for invasive and nonnative plant removal is not permitted unless special exception is granted by the public works director.
+
+9. Erosion/sedimentation control devices shall be installed between the area to be disturbed by the proposed development and construction and the adjacent water feature; these devices shall comply with specifications and procedures outlined in the soil erosion control ordinance (Chapter 16.15 FMC), must be installed prior to any soil disturbance, and remain in place during construction and afterwards until the soil has stabilized.
+
+10. Stormwater detention and filtration facilities which are designed according to the best management practices described in the standard specifications ordinance and related ordinances and technical guidance manuals shall be provided when applicable.
+
+11. Bridges, culverts and similar structures shall be designed and constructed to facilitate fish passage during periods of low stream flow.
+
+12. Roads, bridges, culverts, and utility crossings of a waterbody or associated riparian buffer area shall conform with Oregon Department of Fish and Wildlife (ODFW) requirements for such crossings or obtain ODFW approval for any deviation from them; however, such crossings shall be avoided when practical alternative routing exists, and roads shall be constructed away from waterbodies and riparian areas, except at crossings, which shall be aligned perpendicular to the resource site.
+
+13. Temporary disturbances may not exceed more than 25 percent of the area of the applicable resource protection area. Temporary disturbances are those that occur during an allowed or approved development activity but will not persist beyond completion of the project. Temporary disturbances include, but are not limited to, construction access ways, material staging and stockpile areas, and excavation areas for building foundations, utilities, stormwater facilities, etc.
+
+14. Protection of Resource Protection Area During Site Development. During development of any site containing an applicable resource protection area identified in this section, the following standards apply:
+
+a. Work areas shall be marked to reduce potential damage to resource areas.
+
+b. Trees within applicable resource protection areas shall not be used as anchors for stabilizing construction equipment.
+
+c. Native soils disturbed during development shall be conserved on the property.
+
+d. An erosion and sediment control plan is required and shall be prepared in compliance with requirements set forth by the city’s public works standards.
+
+e. Site preparation and construction practices shall be followed that prevent drainage of hazardous materials or erosion, pollution, or sedimentation to any applicable resource protection area adjacent to the project area.
+
+15. Additional Development Standards for Mapped Wetlands. The following standards apply to all wetland areas identified on the map:
+
+a. A buffer area which measures at least 50 feet shall be established between the wetland areas and the proposed development as a condition of development permit approval. The required buffer area width as well as its treatment or enhancement shall be established during the land use review process, after consultation with DSL or ODFW staff.
+
+b. Properties which contain wetland areas shall have a preliminary delineation of the wetland boundary approved by Division of State Land (DSL) or Department of Fish and Wildlife (ODFW) staff before any development permit is issued. If the preliminary delineation requires an additional “jurisdictional delineation” study of the boundary, this must be completed by the applicant’s biologist and approved by DSL staff before building permits are issued. If the preliminary delineation demonstrates that the development will occur outside of the 50-foot buffer, a Type I land use permit is required to demonstrate and document that the development is in fact outside the 50-foot buffer of the delineated wetland.
+
+c. Wetland areas shall be protected in their natural state to preserve water quality and maintain water retention, overflow and natural functions as follows:
+
+i. Activity within wetland areas is subject to the permit requirements of the Division of State Lands (DSL) and the U.S. Army Corps of Engineers. No building permit will be issued for such activity unless all pertinent state and federal requirements are met. The Division of State Lands will be notified of any regulated development proposed in a wetland area. Proposed activities within the wetland area are subject to a Type III land use application and mitigation requirements outlined in subsection (E)(3) of this section.
+
+ii. Any proposed dredging or filling of a wetland area will require issuance of a DSL permit or a finding by the agency that a permit is not necessary, before building permits are issued by the city. All such activity (which requires a DSL permit) will require the applicant to demonstrate, as part of a Type III land use application, that the activity is necessary to develop on that part of the property outside of the wetland, that there is no practical alternative to impacting the wetland, and that measures (described in the application) will be taken to minimize the fill area and other negative impacts. These findings may be waived if, in the opinion of DSL or ODFW, the applicant proposes to create a replacement wetland area on the property that will be of superior value to wildlife compared to the impacted area. Any approved work within the designated wetland buffer is subject to mitigation requirements of subsection (E)(3) of this section.
+
+iii. The city will not approve a partition or subdivision in a wetland area that proposes to create a lot, which because more than 50 percent of its area is a designated wetland, would be unbuildable without variance approval.
+
+iv. Construction sites adjacent to wetland areas shall be required to install erosion/sedimentation control devices between the land area to be disturbed and the wetland area. All such devices shall conform with the specifications and procedure outlined in the city’s erosion control ordinance.
+
+v. Developments adjacent to wetland areas which have significant impervious surface areas must have stormwater detention and filtration facilities as part of their approved design. The design of such facilities shall conform to the best management practices (BMPs) described in the city’s standard specifications ordinance and related ordinances and technical/guidance manuals.
+
+vi. The city may also require the use of tools such as dedication and conservation easements as a means to fully protect wetland areas during the development review process.
+
+D. Exception Process. Any proposed development within a riparian resource protection area, upland habitat areas, or the required 50-foot buffer for wetland areas must file an exception application with the city of Fairview. The intent of the exception process is to allow reasonable development of property while providing protection for water and wildlife resources.
+
+The exception process does not apply to:
+
+• Mapped buffers within the Fairview Village; or
+
+• Properties abutting Fairview Lake.
+
+1. The applicant may utilize the following methods for avoiding or minimizing development within the upland habitat area and riparian resource protection areas. Exception applications must demonstrate compliance with the following criteria:
+
+a. Building setback flexibility to avoid or minimize development within the upland habitat or riparian resource protection area. The minimum building setback of the base zone may be reduced to any distance between the base zone minimum and zero, unless the reduction conflicts with fire or life safety requirements.
+
+b. Flexible landscaping requirements to avoid or minimize development within the habitat or resource protection area. Minimum percentage landscaping requirements, apart from those required for parking lots, street trees, buffers, and required mitigation areas, may be met by preserving the upland habitat area.
+
+c. Facilities that infiltrate stormwater on site, including the associated piping, may be placed within the upland habitat or riparian resource protection area so long as the forest canopy and areas within the drip lines of trees are not disturbed. However, if disturbance cannot be avoided, then the disturbed areas shall be mitigated per subsection (E)(2) of this section, Option 2. Such facilities may include, but are not limited to, vegetated swales, rain gardens, vegetated filter strip, and vegetated infiltration basins. Only native vegetation may be planted in these facilities.
+
+d. Flexible site design (on-site density transfer) to avoid or minimize development within the upland habitat or riparian resource protection area.
+
+i. Residential development proposals on lands with upland habitat or riparian resource protection areas may transfer up to 50 percent of the permitted density permitted on the mapped upland habitat portion or riparian resource protection area of the site onto the portion of the site that is not designated as upland habitat area when the proposal completely avoids development within the resource protection or upland habitat area.
+
+ii. In order to accommodate any transferred residential densities, dimensional standards and lot sizes may be adjusted by no more than 20 percent.
+
+iii. Density transfers on commercial and industrial zoned land. The transfer credit of 10,000 square feet floor area ratio (FAR) per acre of land with an upland habitat or riparian resource protection designation on the project site is permitted when development is not proposed in the protected area.
+
+iv. Mixed-Use Zones. The density transfer credit can be factored using subsections (D)(1)(d)(i) and (D)(1)(d)(ii) of this section, depending on the type of development proposed.
+
+v. All remaining upland habitat or riparian resource protection areas shall be permanently restricted from development and maintained for habitat functions by making a public dedication or executing a restrictive covenant.
+
+e. Buffer Averaging. Buffer averaging is permitted for new development activities, excluding any existing building footprint area already encroaching into the riparian resource area. Reductions from the standard buffer setback distances shall be accomplished through averaging the buffer distance on a site. Buffer averaging involves decreasing a portion of the riparian buffer within the proposed development site and increasing the buffer in another area. The new buffer area will need to provide equivalent or enhanced protection of the functions or values of the riparian resource area and provided the total area contained in the buffer on the proposed development site does not decrease.
+
+i. Criteria for buffer averaging include:
+
+(A) The resource protection area may not be reduced more than 60 percent (or 24 feet) in the 40-foot resource protection area, 50 percent in the 55-foot resource protection area (or 27.5 feet) and 40 percent in the 80-foot resource protection area (or 32 feet).
+
+(B) Buffering averaging is allowed with the following site assessment prepared by a qualified professional. At a minimum the assessment shall contain:
+
+(1) A description of the proposed development, including a site plan and distance to property lines.
+
+(2) A description and illustration of the relationship between the proposed development and the riparian resource protection area.
+
+(3) An assessment and illustration of the existing condition of the riparian resource protection area within and adjacent to the project area. This assessment must include, when appropriate, a wetland delineation report approved by DSL and acreage.
+
+(4) An analysis, based upon best available science, of how the averaged buffer area will provide protection that is equal to or better than the current buffer area.
+
+(5) A discussion of alternatives that would have less impact on the resource protection area and associated buffer.
+
+(C) Any proposed buffer averaging requires enhancement and mitigation of the remaining resource protection area and the new buffer averaging area. A mitigation plan must be prepared that meets subsection E of this section, Mitigation.
+
+(D) Wherever practical, reductions in the buffer distance shall occur adjacent to lower value or less sensitive areas within the buffer site and the expansion of the buffer in compensation shall occur within higher value or more sensitive areas.
+
+(E) To the extent practicable, wherever riparian buffers are reduced from the standard setbacks, the buffer shall be increased on the opposite bank of the channel across from the area where the reduction is allowed.
+
+(F) A development permit shall be obtained before construction or development begins within any area of special flood hazard. Requirements for the permit as well as specific and general standards are outlined in Chapter 19.105 FMC.
+
+f. Disturbance of upland habitat areas cannot exceed 50 percent of the designated upland habitat area.
+
+2. Mitigate Development Impacts. All development approved through the exception process must comply with mitigation requirements of subsection E of this section. Mitigation must be targeted to the most degraded portions, as identified by the resource habitat assessment process, of the resource protection area first. Remaining mitigation requirements shall be spread throughout the resource protection area.
+
+3. Exception Application Procedures and Requirements. All exception applications must be approved by the planning commission at a public hearing.
+
+The applicant must submit a written narrative, site plan, and Fairview habitat assessment form that demonstrates the following:
+
+a. Narrative description and associated site plan demonstrating how the proposal complies with exception requirements as set forth in this section.
+
+b. Completed city of Fairview habitat assessment form. The public works director may require the applicant to hire a qualified professional to conduct the habitat assessment.
+
+c. Application requirements listed in FMC 19.106.070.
+
+E. Mitigation. The purpose of mitigation is to compensate for negative impacts that occur to the natural resource and designated protection area as a result of development activity. Vegetation mitigation is required for the following activities and development:
+
+1. Tree Removal within a Resource Protection Area, Not Associated with a Development.
+
+a. Dead, Diseased or Dying Trees. Regardless if associated with development or not, all dead, diseased, or dying trees that are removed from a designated protection area shall be replaced with one new tree of at least two-inch caliper or at least six feet overall height after planting. Tree replacement is not required for diseased trees that may spread the disease to adjacent trees.
+
+An arborist report will be required if the tree does not display any signs that the tree is dead, diseased, or dying. An exception to the requirement for mitigation may be granted by the public works director when the applicant demonstrates that a replacement tree has already been planted in anticipation of tree removal, or if the existing site conditions otherwise preclude tree replacement (due to existing dense canopy coverage or other ecological reasons).
+
+Trees and large wood debris that are cut down shall remain within the buffer area to the greatest extent feasible to provide wildlife habitat. All hazardous trees to be removed shall only remove the portion necessary to alleviate the hazard.
+
+b. Removal of Viable Trees. Removal of any healthy, viable trees greater than six inches in diameter when not associated with a development within a resource protection area is subject to the mitigation requirements listed in Table 19.106.040(E)(1).
+
+Trees and large wood debris that are cut down shall remain within the buffer area when feasible to provide wildlife habitat.
+
+2. Mitigation Requirements Associated with Development. Mitigation is required for all development:
+
+• Within a designated resource protection area (riparian areas, wetlands, and upland habitat areas).
+
+• Within 10 feet of the outer boundary of the 40-foot riparian resource protection area.
+
+An applicant may choose between Option 1 and Option 2 listed below. However, if development is proposed that does not include removal of trees, that applicant must comply with Option 2.
+
+Option 1. Mitigation is based on the number of trees removed. Dead, diseased, or dying trees must be mitigated per subsection (E)(1)(a) of this section.
+
+Table 19.106.040(E)(1)
+Size of Viable/Healthy Tree Removed  Mitigation Required per Tree Removed
+6- to 12-inch diameter               1 tree and 1 shrub
+13- to 18-inch diameter              2 trees and 3 shrubs
+19- to 24-inch diameter              3 trees and 6 shrubs
+25- to 30-inch diameter              4 trees and 9 shrubs
+Over 30-inch diameter                5 trees and 15 shrubs
+
+Option 2. The mitigation option shall be calculated based on the size of disturbance area within the mapped protection area. Native trees and shrubs are required to be planted at a rate of one tree and five shrubs for every 100 square feet of disturbance area. All fractions shall be rounded to the nearest whole number of trees and shrubs. Bare ground must be planted or seeded with native grasses or herbs.
+
+3. Mitigation Plan and Planting Requirements (For All Types of Required Mitigation). A mitigation plan including a calculation demonstrating compliance with vegetation mitigation requirements must be submitted with the land use application and consistent with this subsection E and shall include the following:
+
+a. A tree removal plan showing all trees greater than six inches in diameter to be removed must be submitted with the land use application. The tree removal plan must clearly label healthy/viable trees, and dead, diseased, or hazardous trees.
+
+b. Plant Size. Replacement trees must be at least two inches in caliper measured at six inches above the ground level for field grown trees or above the soil for container grown trees. Oak or madrone trees shall be a minimum one-gallon size. Shrubs must be in at least a one-gallon container or equivalent ball and burlap and must be at least 12 inches in height.
+
+c. Plant Spacing. When feasible, trees shall be planted between eight and 12 feet on plant center and shrubs shall be planted between four and five feet on center or clustered in single species groups of no more than four plants, with each cluster planted between eight and 10 feet on center.
+
+d. Plant Diversity. Shrubs must consist of at least two different species. If 10 trees or more are planted, no more than 50 percent of the trees may be of the same genus.
+
+e. Native Plants. Only resource-specific native plants identified on the most updated version of the Metro Native Plant List are permitted.
+
+f. Location of Mitigation Area. All vegetation must be planted on the applicant’s site within the resource protection area first. If there is not sufficient room within the resource protection area, planting may occur contiguous to the resource protection area. If the vegetation is planted outside the resource protection area, then the applicant shall preserve the contiguous area by executing a deed restriction such as a restrictive covenant.
+
+g. Invasive Vegetation. Invasive, nonnative or noxious vegetation must be removed within the mitigation area prior to planting mitigation vegetation.
+
+h. Tree and Shrub Survival. A minimum of 80 percent of the trees and shrubs planted shall remain alive on the fifth anniversary of the date that the mitigation planting is complete.
+
+i. Monitoring and Reporting. Monitoring of the mitigation site is the ongoing responsibility of the property owner. Plants that die must be replaced in kind. For a period of five years, the property owner must submit an annual report to the city of Fairview public works director documenting the survival of the trees and shrubs on the mitigation site.
+
+j. To enhance survival of mitigation plantings the following practices are recommended, but not required:
+
+i. Mulching. Mulch new plantings a minimum of three inches in depth and 18 inches in diameter to retain moisture and discourage weed growth.
+
+ii. Irrigation. Water new plantings one inch per week between June 15th and October 15th for the three years following planting.
+
+iii. Weed Control. Remove or control nonnative or noxious vegetation throughout maintenance period.
+
+4. Vegetation Mitigation Bank. An applicant seeking to vary the number and size of trees and shrubs required to be planted on site under this subsection E but who will comply with all other provisions of this subsection E may seek approval to utilize the vegetation mitigation bank.
+
+a. The applicant shall submit:
+
+i. A calculation of the number of trees and shrubs the applicant would be required to plant under subsection (E)(1), (E)(2) or (E)(3) of this section.
+
+ii. The number and size of trees and shrubs that the applicant proposes to plant on the development site within designated protection areas.
+
+iii. The applicant’s mitigation site monitoring and reporting plan.
+
+b. Approval Criteria. A request to vary the number and size of trees and shrubs to be planted shall be approved if the applicant demonstrates that the proposed planting will achieve, at the end of the fifth year after initial planting, comparable or better mitigation results than the number and size required under subsection E of this section.
+
+c. Upon demonstration that required vegetation mitigation cannot be planted within the protection area, the applicant may request the public works director to determine which of the following mitigation bank methods will be used. The applicant may appeal the public works director’s decision to the planning commission.
+
+i. Require the applicant to plant the vegetation on a city owned property.
+
+ii. Require the applicant to plant the vegetation on a private property within the designated natural resource protection area. If vegetation is planted outside of the resource protection area, the planted vegetation shall be placed in a conservation easement.
+
+iii. Pay a fee in lieu of the required vegetation for the city to use on other restoration projects.
+
+d. Application Process. The request to utilize the mitigation bank shall be reviewed with the applicable land use application submitted for the proposed development. Mitigation bank requests for Type III activities shall be reviewed along with the Type III application. Mitigation bank requests for Type II activities shall be reviewed along with the Type II application. (Ord. 10-2015 § 2 (Exh. 1); Ord. 3-2012 §§ 2, 3 (Att. 2))
+
+19.106.050 Fairview Creek and Clear Creek conservation easements within Fairview Village.
+
+A. Concurrent with development of any site containing Fairview Creek or Clear Creek, a conservation easement shall be granted to the city. The conservation easement of approximately 100 feet for Fairview Creek and 75 feet for Clear Creek will provide a control mechanism for these creek corridors. The easements, which shall extend not less than 50 feet from Fairview Creek centerline and not less than 37.5 feet from Clear Creek centerline in either direction, will protect water quality, provide for wildlife movement and enhance the neighborhood aesthetics by providing a greenbelt through the single-unit residential area.
+
+B. Within the 100-foot protected area along Fairview Creek, development and resource alteration, other than mitigation or enhancement, will be prohibited within 70 feet of the corridor centered on the creek. The other 15 feet remaining on either side may allow wooden fences up to six feet in height and plantings using only materials shown on the Fairview Village plant list. Trees existing within the 100-foot corridor shall be nurtured and protected. Plantings that appear on the approved list are encouraged especially where they would provide shade to the creek from direct sun.
+
+C. Within the 75-foot protected area along Clear Creek, development and resource alteration, other than mitigation or enhancement, will be prohibited within 45 feet of the corridor centered on the creek. The other 15 feet remaining on either side may allow wooden fences up to six feet in height with plantings using only materials shown on the Fairview plant list (Fairview uses the Metro Plant List). Trees existing within the 75-foot corridor shall be nurtured and protected. Plantings that appear on the approved list are encouraged especially where they would provide shade to the creek from direct sun.
+
+D. Variance. An applicant may apply for a Class C variance to the conservation easement standards provided in subsections A through C of this section. (Ord. 1-2024 § 1 (Att. A); Ord. 3-2012 §§ 2, 3 (Att. 2))
+
+19.106.060 Fairview Lake.
+
+The provisions of this section only apply to Fairview Lake. A protected riparian buffer of 50 feet from the top of Fairview Lake’s bank, or 50 feet from the annual mean high water level (11.4 feet NGVD) of Fairview Lake in those areas where there is no bank or significant break in slope along the shoreline is required. These requirements also apply to the portion of the submerged lake bottom that is within city of Fairview limits.
+
+A. Riparian Vegetation. A major purpose and goal of the riparian buffer is to preserve, to the maximum extent possible, riparian vegetation within the buffer area. Trimming of vegetation to alleviate a hazard is allowed. Removal of riparian vegetation, as defined in “Alteration” (subsection B of this section), is allowed only after a permit has been granted by the city of Fairview. Replacement vegetation must be riparian species as approved in the permit.
+
+B. Alteration. An alteration is a change in the topography or vegetation of a waterbody or its riparian environment, as regulated by this section, which may affect the functions and values of Fairview Lake. Alteration of the riparian buffer area is subject to the permit procedure and standards of this chapter. No alteration will be allowed which would appreciably diminish the values or functions of Fairview Lake, as set forth in FMC 19.106.010. For the purposes of this section:
+
+1. Alteration includes the following in the riparian buffer area of Fairview Lake:
+
+a. Dredging, filling, excavating or placing riprap or a mooring with rock, trees, wood, etc.
+
+b. The clearing of any native riparian vegetation or the removal of any native tree which has a diameter of six inches or greater at four feet above grade.
+
+c. Construction of buildings and other structures, including the installation of a bridge, culvert, pipeline, retaining wall or deck or any other development as defined by this code.
+
+d. Changing the course or banks.
+
+e. Construction of public streets, including bridges, when part of an approved future street plan, subdivision plan construction, improvement or alteration consistent with the city transportation plan.
+
+f. Construction of public bicycle pedestrian paths.
+
+g. Construction of public parks and recreational facilities.
+
+h. Construction of private driveways or pedestrian paths where necessary to afford access between portions of private property that may be bisected by a riparian buffer.
+
+i. Construction of public utilities such as water, stormwater and sanitary sewer lines.
+
+j. Water detention, filtration facilities and erosion control improvements. Such projects include detention ponds, biofiltration swales or ponds, check dams and bank stabilization measures.
+
+k. In the Fairview Lake Area. Decks and similar structures; provided, that no more than 20 percent of the lot width within the buffer setback area be occupied by such a structure or structures.
+
+2. The following applications will be required for alterations in the Fairview Lake buffer area:
+
+a. Planting vegetation shall be a Type I application (FMC 19.413.010).
+
+b. Placement of docks, rock buffers, pathways or other activities that may negatively impact the values and/or purposes of this section shall be a Type II application (FMC 19.413.020).
+
+c. Alterations involving the installation and construction of applications with structures or other more intrusive activities shall be processed as a Type III application (FMC 19.413.030).
+
+3. Applications for an alteration permit must demonstrate compliance with the following standards:
+
+a. A development site plan must be submitted with the alteration permit which identifies the areas where construction activity will occur. Construction activity may not occur on more than 25 percent of the Fairview Lake buffer area.
+
+b. Erosion/sedimentation control devices must be installed between the area where alterations will occur and Fairview Lake; these devices shall comply with specifications and procedures outlined in the soil erosion control ordinance (Chapter 16.15 FMC) and must be installed prior to any soil disturbance and must remain in place during construction and until the soil has stabilized.
+
+c. Stormwater detention and filtration facilities must be designed according to the best management practices described in the standard specifications ordinance and related ordinances and technical guidance manuals.
+
+d. Any alterations that require/involve planting riparian type trees, shrubs and ground cover to supplement existing vegetation or to replace removed vegetation must be installed in accord with the following standards:
+
+i. A minimum of six trees, 12 shrubs and ground cover plantings per 100 lineal feet of riparian buffer area.
+
+ii. Plant materials shall be guyed and staked to nursery industry standards.
+
+iii. Deciduous trees shall be fully branched and have a minimum caliper of one and one-half inches at the time of planting.
+
+iv. Evergreen trees shall be fully branched and have a minimum height of six feet at the time of planting.
+
+v. Shrubs shall be supplied in one-gallon containers or eight-inch burlap balls with a minimum spread of 12 inches.
+
+vi. Ground cover plantings shall be planted at a maximum of 30 inches on center and 30 inches between rows. Rows of plants shall be staggered for a more effective covering. Ground cover planting shall be supplied in a minimum four-inch size container.
+
+e. Bridges, culverts and similar structures must be designed to facilitate fish passage during periods of low stream flow.
+
+f. Roads, bridges, culverts, and utility crossings on or adjacent to Fairview Lake or associated Fairview Lake riparian buffer area must conform with Oregon Department of Fish and Wildlife (ODFW) requirements for such crossings or ODFW approval must be obtained for any deviation; however, such crossings shall be avoided when practical alternative routing exists, and roads shall be constructed away from Fairview Lake and its riparian areas, except at crossings, which shall be aligned perpendicular to the resource site.
+
+C. Application requirements for development adjacent to Fairview Lake are subject to FMC 19.106.070, Permit process for permitted uses. (Ord. 1-2013 § 1 (Att. 1); Ord. 3-2012 §§ 2, 3 (Att. 2))
+
+19.106.070 Permit process for permitted uses.
+
+A. Boundary Verification. To determine whether the standards of this chapter apply to a proposed development activity at any given location, the boundaries of any designated natural resources on or near the site shall be verified. A Type I boundary verification application is not required when the applicant demonstrates that the development will be greater than 40 feet from the estimated outer boundary of the mapped resource protection area. This shall be shown on the applicant’s site plan submitted with the development (building permit) application.
+
+The Type I boundary verification process is required for activities proposed within:
+
+Table 19.106.070(A)
+Resource Type
+Location of Development
+Application Required
+35-foot and 40-foot resource protection area
+Greater than 15 feet from the outer limits of the 35- or 40-foot resource protection area
+Type I boundary verification required prior to site development or earth disturbing activity
+55-foot and 80-foot resource protection area
+Development or earth disturbing activities outside of the designated resource or resource protection area
+Type I boundary verification process. Boundary verification is not required if the proposed development is greater than 40 feet from the estimated mapped resource
+Wetlands
+Development or earth disturbing activities outside the delineated wetland or 50-foot resource protection area when located within 15 feet of the outer boundary of the 50-foot buffer
+Type I boundary verification process
+Upland habitat
+Development or earth disturbing activities located within 25 feet of the outer boundary of the upland habitat
+Type I boundary verification process
+Clear Creek and Fairview Creek within Fairview Village (Special Standards on the Map)
+Development within the buffer is strictly limited per FMC 19.106.050
+Subject to FMC 19.106.050
+Clear Creek and Fairview Creek within Fairview Village (Special Standards on the Map)
+Development outside the designated conservation area
+Type I boundary verification
+Fairview Lake
+On the same parcel, but outside the 50-foot buffer
+Type I boundary verification process
+
+B. Boundary Verification Process. A Type I boundary verification process is required as defined in Table 19.106.070(A) in order to verify the proximity of the proposed development to a mapped resource or associated protection area and to identify the required land use application type. The applicant shall submit the following:
+
+1. Detailed property description and scaled site plan of the property that includes all existing conditions on site.
+
+2. A copy of the applicable natural resource map section.
+
+3. The latest available aerial photo of the property with property lines shown.
+
+4. A scaled site plan demonstrating the location and boundary of the natural resource and designated protection area in relation to the proposed development. The site plan must be drawn to an architect or engineer scale.
+
+5. Any other factual information that the applicant wished to provide to support the boundary verification.
+
+6. The public works director may require a wetland delineation be conducted based on the proximity of the development to the mapped wetland.
+
+C. Land Use Application Requirements. Before a permit is issued for an alteration or development within or adjacent to a mapped natural resource or protection area, an application must be submitted to the city of Fairview by the person or entity requesting the alteration or development. The application shall include:
+
+1. All proposed developments on parcels with a designated natural resource protection area require a site plan to demonstrate the proximity of a development to the mapped resource areas. The site plan shall include:
+
+a. Verification of boundaries of the designated resource protection areas (FMC 19.106.070(A)).
+
+b. Identification of existing disturbed areas within the applicable resource protection buffer. Required mitigation will focus on restoring the existing disturbed areas.
+
+c. Location of the 100-year floodplain and floodway boundaries as defined by the Federal Emergency Management Agency.
+
+d. Topography shown by contour lines of two-foot intervals for slopes less than 15 percent and by 10-foot intervals for slopes 15 percent or greater.
+
+e. Identification of the proposed development including all building footprints or building/development envelope, site property improvements, utilities and landscaping.
+
+f. Show the proposed limits of any grading required for the project.
+
+2. A completed land use application form with legal description and address of the concerned property, owner’s authorization, and the information requested thereon.
+
+3. Application fee as set forth by resolution.
+
+4. A written narrative which describes:
+
+a. The proposed alteration or development.
+
+b. Materials to be used.
+
+c. The purpose or reasons for the alteration or development.
+
+d. Alterations considered to determine no practicable alternatives exist to the proposed encroachment, alteration, or development.
+
+e. How the impacts have been minimized and/or mitigated.
+
+5. Scaled drawing or drawings of the proposed alteration showing:
+
+a. Overall specifications and dimensions for the proposed alterations or development.
+
+b. The location of any wetlands or waterbodies on the property including the delineation of the designated natural resource protection area.
+
+c. Location of the:
+
+i. 100-year floodplain and floodway boundary as defined by the Federal Emergency Management Agency (FEMA).
+
+ii. Distance from the development to the resource protection areas.
+
+iii. Resource features such as waterbodies or wetlands.
+
+d. Degraded resource areas as identified through the habitat assessment process.
+
+e. Depth of cuts and fills, final slopes, descriptions of fill material, etc.
+
+f. Proposed erosion control measures.
+
+6. Vegetation mitigation plan and monitoring plan. Description of any vegetation that will be removed and of vegetation to be planted, including a landscaping plan showing plant types, location, size and quantities.
+
+7. Habitat assessment form and narrative as required by FMC 19.106.040(D), Exception Process.
+
+8. Written documentation that all required or pertinent state and federal permits have been submitted. Permits may be required from the State Division of Lands, the Oregon Department of Fish and Wildlife, the United States Army Corps of Engineers, the Environmental Protection Agency, the Federal Emergency Management Agency and/or other agencies.
+
+D. Expiration of Approved Applications. The approval of a land use application shall be valid for two years. Approved land use applications and plans may be renewed through the Type I review process for an additional two years upon demonstrating that the original approved plan still meets the applicable criteria provided in this chapter. (Ord. 3-2012 §§ 2, 3 (Att. 2))
+
+19.106.080 Map amendments and administration.
+
+A. The natural resources map (“map”) shows the locations of riparian resources, wetlands, upland habitat and other special resource features. The natural resources map (“map”) is a general indicator of protected resources and their associated vegetated corridors; the location of actual resource protection areas is determined according to the parameters established in Table 19.106.080(A).
+
+Table 19.106.080(A) Riparian Resources
+Resource Type
+Protected Feature
+Width of Resource Protection Area
+80-foot resource protection area
+Fairview Creek from Glisan Street to the eastern portion of Community Park.1
+80 feet in each direction measured from the centerline of creek. Total width 160 feet.
+55-foot resource protection area
+Fairview Creek from property addressed 65 Bridge Street north to Fairview Lake
+Salmon Creek
+Columbia River
+55 feet measured in each direction from the centerline of the creek. Total width 110 feet.
+40-foot resource protection area
+Fairview Creek from Halsey Street to northern property line of 15 Matney Street
+No Name Creek
+Rain Tree Creek
+Total resource width 80 feet, measured 40 feet in each direction from centerline of creek.
+35-foot resource protection area
+Osburn Creek
+Total resource width 70 feet, measured 35 feet in each direction from centerline of creek.
+Fairview Lake
+Shoreline of Fairview Lake
+50 feet measured from top of the bank, or 50 feet from the annual mean high water level (11.4 feet NGVD) of the lake in those areas where there is no bank or significant break of slope along the shoreline. Includes the submerged lake bottom within city limits.
+Wetlands
+All mapped wetlands on the natural resources map
+50-foot buffer measured from the outer wetland boundary.
+Upland habitat
+All mapped upland habitat areas on the natural resources map.
+Areas as shown as upland habitat on the map.
+Special Standards for Fairview Village
+Protected Feature
+Width of Resource Protection Area
+Fairview Creek
+Conservation easement
+100 feet, 50 feet on each side measured from centerline of the stream.
+Clear Creek
+Conservation easement
+75 feet, 37.5 feet on each side measured from centerline of the stream.
+Previously platted resource areas
+Conservation easement, or plat language
+Lakeshore Estates 2
+Heron Point
+Pelfrey South Shore Estates 1 and 2
+1 The platted conservation easement within the Fairview Village development shall apply where it abuts the Village commercial, Village apartments, and Village townhouse zones as shown on the adopted map. The southern side of Fairview Creek where it abuts city of Fairview property is subject to the 75-foot resource protection area.
+1 The platted conservation easement within the Fairview Village development shall apply where it abuts the Village commercial, Village apartments, and Village townhouse zones as shown on the adopted map. The southern side of Fairview Creek where it abuts city of Fairview property is subject to the 75-foot resource protection area.
+1 The platted conservation easement within the Fairview Village development shall apply where it abuts the Village commercial, Village apartments, and Village townhouse zones as shown on the adopted map. The southern side of Fairview Creek where it abuts city of Fairview property is subject to the 75-foot resource protection area.
+
+B. Boundary Amendments. In some cases changes and corrections may need to be made to the map. Changes to resource boundaries shall be reviewed through the Type II land use process. To propose a correction or change to the map, the applicant shall submit the following information depending on the resource type:
+
+1. Waterbodies (Rivers, Streams, Springs, and Lakes). An applicant who believes that a waterbody as shown on the map should be corrected may submit a map amendment request that includes the following:
+
+a. A hydrology report prepared by a professional engineer, demonstrating whether or not the drainage meets the definition of a protected water feature.
+
+b. A topographic map of the site with contour intervals of five feet or less that shows the specific location on the subject property.
+
+c. A report prepared by a qualified professional that gives a detailed reasoning for the proposed map amendment. The report must also include a description of the qualifications and experience of all persons that contributed to the report.
+
+d. A description of the incorrect mapping and reasoning supporting the proposed amendments. A map shall also be submitted showing the mapped boundaries and the proposed boundary changes. The map shall be drawn to an engineer or architect scale.
+
+e. Any additional information necessary to address each of the detailed verification criteria provided in this section.
+
+2. Wetlands. An applicant who believes that a wetland area shown on the map should be corrected may submit a map amendment request that includes the following:
+
+a. A wetland delineation report, prepared by a professional wetland specialist in accordance with the 1996 Oregon Freshwater Wetland Assessment Methodology and following the wetland delineation process established by Department of State Lands (DSL), demonstrating the location of any wetlands on the site.
+
+b. The delineation report will be accepted by the city only after approval by DSL.
+
+c. A description of the incorrect mapping and reasoning supporting the proposed amendments. A map shall also be submitted showing the mapped boundaries and the proposed boundary changes. The map shall be drawn to an engineer or architect scale.
+
+d. A topographic map of the site with contour intervals of five feet or less, that shows the specific location of the wetland on the subject property.
+
+e. The public works director shall confer with DSL and Metro to confirm delineation and the hydrology report, as may be needed, prior to issuing a notice of decision on a requested map correction.
+
+f. A report prepared by a qualified professional that gives a detailed reasoning for the proposed map amendment. The report must also include a description of the qualifications and experience of all persons that contributed to the report.
+
+g. Any additional information necessary to address each of the detailed verification criteria provided in this section.
+
+3. Upland Habitat Areas. An applicant who believes that an upland habitat area shown on the map should be corrected may submit a map amendment request that includes the following:
+
+a. A city of Fairview habitat assessment form demonstrating the values and functions of the upland habitat area.
+
+b. A report prepared by a qualified professional that gives a detailed reasoning for the proposed map amendment. The report must also include a description of the qualifications and experience of all persons that contributed to the report.
+
+c. A description of the incorrect mapping and reasoning supporting the proposed amendments. A map shall also be submitted showing the mapped boundaries and the proposed boundary changes. The map shall be drawn to an engineer or architect scale.
+
+d. Any additional information necessary to address each of the detailed verification criteria provided in this section.
+
+4. Boundary Modification Approval Criteria. The city shall update the map if the wetland or hydrology report submitted demonstrates the following:
+
+a. That there was an error in the original mapping.
+
+b. That the boundaries of the resource have changed since the most recent update to the map (“map”).
+
+c. That a protected water feature or resource no longer exists because that area has been legally filled, culverted, or developed prior to the effective date of the ordinance codified in this chapter.
+
+C. Map Administration.
+
+1. Updates to the Map. When a boundary verification, conducted in accordance with the standards of FMC 19.106.070(B) demonstrates an error in the location of a resource area shown on the map, the city shall update the map to incorporate the corrected information as soon as practicable. Changes to the map are not considered amendments to the city’s Comprehensive Plan, the applicable Comprehensive Plan map, or to the zoning map.
+
+2. Mapping Implications of Allowed Disturbances.
+
+a. Riparian Resources. Permanent disturbances within a riparian resource, whether they legally occurred prior to the adoption of this section or are allowed according to the standards of FMC 19.106.040, do not affect the way related riparian resources are shown on the map.
+
+b. Upland Habitat Areas. When disturbances are allowed within the upland habitat area, in accordance with the applicable standards of FMC 19.106.040, the city may update the map to show that the permanently disturbed area is no longer considered an upland habitat area. (Ord. 3-2012 §§ 2, 3 (Att. 2))
+
+19.106.090 Nonconforming uses and structures within resource protection areas.
+
+Should a nonconforming structure, development footprint, or nonconforming portion of structure be destroyed by any means to an extent more than 75 percent of its current value as assessed by the Multnomah County assessor, it shall be reconstructed only in conformity with the current development code.
+
+Rebuilding of nonconforming structures and development footprints destroyed less than 75 percent of the current value assessed by the Multnomah County assessor shall be rebuilt within five years from the date the structure was destroyed/damaged. (Ord. 3-2012 §§ 2, 3 (Att. 2))
+
+19.106.100 Floodplain ordinance.
+
+Areas adjacent to any of the city of Fairview’s water resources are also regulated by the city’s floodplain overlay district. All riparian buffer alterations must be in compliance with the applicable standards of the floodplain overlay zone before permit issuance. Where regulations of the natural resource overlay zone differ from those found in the floodplain overlay zone, the more restrictive standards shall apply. (Ord. 3-2012 §§ 2, 3 (Att. 2))
+
+19.106.110 Emergency exemption.
+
+The city of Fairview shall be exempt from the permit requirements of this chapter if, during a flooding event, the city manager determines that a portion of the creek channel must be immediately altered in some manner in order to avoid substantial property damage. (Ord. 8-2021 § 1; Ord. 3-2012 §§ 2, 3 (Att. 2))
+
+19.106.120 Drainage district exemption.
+
+A. For resource protection areas located within Multnomah County Drainage District No. 1 and the area managed by the Sandy Drainage Improvement Company, the following will be allowed without obtaining a permit: routine operations, repair, maintenance, reconfiguration, rehabilitation, or replacement of existing drainage and flood control facilities; facilities, and existing related facilities, including any structures, pump stations, water control structures, culverts, irrigation systems, roadways, utilities, accessory uses (such as off-load facilities that facilitate water-based maintenance); erosion control projects, levees, soil and bank stabilization projects; dredging and ditch clearing within the hydraulic cross section in existing stormwater conveyance drainage ways; or other water quality and flood storage projects applicable to existing facilities shall be allowed without obtaining a permit, provided all of the following are met:
+
+1. The project is consistent with all other applicable local, state, and federal laws and regulations.
+
+2. The project does not encroach closer to a surface stream or river, wetland or other body of open water than existing operations and development.
+
+3. Disturbed areas are replanted with vegetation and no bare soils remain after project completion; the planting of native vegetation and removal of invasive nonnative or noxious vegetation is encouraged; invasive nonnative vegetation shall not be planted.
+
+4. Each district submits an annual report to all local permitting agencies in which the district operates, describing the projects the district completed in the previous year and how those projects complied with all applicable federal and state laws and requirements. The report also includes a list of proposed projects for the upcoming year for the city of Fairview to review in advance.
+
+B. Activities that are not consistent with the criteria listed above, as determined by the public works director after reviewing the annual proposed project report, shall be subject to applicable procedures for Type I, Type II, Type III, or Type IV permits. (Ord. 3-2012 §§ 2, 3 (Att. 2))
+
+19.106.130 Penalty.
+
+Property owners are responsible for maintaining natural resource protection areas on their property. Unauthorized removal of native vegetation, or purposeful neglect of native vegetation, is subject to penalty.
+
+Any person, group, corporation or association violating the terms or provisions of this chapter, upon conviction thereof, shall be punished by a fine not exceeding $500.00. Each day the violation continues shall be considered a separate offense. (Ord. 3-2012 §§ 2, 3 (Att. 2))

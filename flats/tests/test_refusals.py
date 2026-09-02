@@ -145,7 +145,28 @@ pytestmark = pytest.mark.unit
 #: are not encoded -- so the ledger counts it again, correctly. A count that
 #: moves up while the refusal shrinks is the honest reading of a partial lift:
 #: this ledger measures how much prose declares a limit, not how much is left.
-EXPECTED = {"notes": 104, "comments": 112, "tests": 17}
+#: MOVED 104 -> 105 on 2026-09-02: Fairview 19.155, the Village Trail System
+#: Plan. Fetched because it was the last hole in a contiguous range -- 19.115.010
+#: binds a Village lot to "any other applicable Fairview Village standards in
+#: Chapters 19.110 through 19.155" and 19.108 through 19.150 were all stored
+#: while the first and last of the range never had been. It states no dimension
+#: a lot is measured by. What it does state is an exaction: 19.155.040 makes the
+#: developer build the trail across the site before occupancy and 19.155.050
+#: makes them dedicate it or pay in lieu, with which lots carry any of it decided
+#: by Figure V-10, a map printed after the chapter. Same shape as 19.165.025(M)
+#: one entry above -- a complete citation chain that ends in a document this
+#: store does not hold.
+#:
+#: The same session fetched three more Fairview chapters and NONE of them added
+#: a refusal, which is worth as much as the one that did. 19.110's Village
+#: glossary agrees with the general one on the density denominator, so its
+#: conflict clause never fires; its required front porch is exempt by name from
+#: both the setback and the coverage limit it would otherwise consume. 19.106's
+#: resource corridors are screened by the pipeline overlay rather than refused,
+#: and 19.105 turned out to be the floodplain chapter the FEMA carve had been
+#: citing without anyone holding it -- now stored, and the carve rests on a
+#: quote. Reading a chapter is not the same as refusing one.
+EXPECTED = {"notes": 105, "comments": 112, "tests": 17}
 
 #: MOVED 2026-09-02 by Fairview 19.165, +1 note, and it is a refusal a FETCH
 #: produced rather than one it removed. The chapter was the loudest reference

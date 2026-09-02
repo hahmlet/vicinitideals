@@ -41,6 +41,7 @@ from __future__ import annotations
 import re
 import sys
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Sequence
 
 from flats.encode.definitions import CHAPTER, _stored
@@ -60,7 +61,14 @@ ENTRY = re.compile(
     # may be any short letter run -- Rivergrove letters its whole glossary
     # "(a)" through "(z)", and a class of roman numerals matched three of
     # them and read the other twenty-three as prose.
-    r"(?:\((?:[0-9]{1,3}|[A-Za-z]{1,3})\)\s+|\(?[0-9ivxIVX]{1,5}[.)]\s+)?"
+    # A BARE letter marker -- "A." not "(A)" -- but only when the term after it
+    # is quoted. Fairview's Village glossary letters its ten entries A through
+    # J, and the roman-numeral class matched exactly one of them: I, for "Tower
+    # element". Widening the class to every letter without the quote lookahead
+    # would make any capitalised word followed by a full stop a candidate term,
+    # which is most of a code. The quote is what says a word is being named.
+    r"(?:\((?:[0-9]{1,3}|[A-Za-z]{1,3})\)\s+|[A-Za-z]{1,2}[.)]\s+(?=[\"“])"
+    r"|\(?[0-9ivxIVX]{1,5}[.)]\s+)?"
     r"(?:\d{1,3}\.\d{2,4}(?:\.\d{1,4})?\s+)?"  # or a section number
     r"[\"“]?(?P<term>[A-Z][A-Za-z0-9'’/()\-]*(?:(?:,\s|[ ,])(?:[A-Za-z0-9'’/()\-]+)){0,6})[\"”]?"
     r"(?P<sep>\s*[.:]\s+|\s*[–—-]\s+|\s+(?:means|shall mean|refers to|is defined as)\s+)"
@@ -81,6 +89,18 @@ STACKED = re.compile(
 #: opens with a preposition or a quantifier.
 NOT_A_DEFINITION = re.compile(
     r"^(?:see|on|for|in|where|when|if|no|all|each|every|except|the following)\b", re.I
+)
+
+#: The separators that make the guard above unnecessary. "X means ..." is a
+#: definition whatever the meaning opens with, and two of Fairview's ten
+#: Village terms were thrown away for opening with the word "all" --
+#: including "Net acre means all area within a private development zone
+#: excluding public rights-of-way", which is the denominator its density
+#: floor divides by. The guard is for the AMBIGUOUS separators, a full stop
+#: or a dash, where only the shape of the body says whether a meaning or a
+#: standard follows. Where the code uses the verb, the code has said so.
+SAYS_IT_IS_A_DEFINITION = re.compile(
+    r"(?:means|shall mean|refers to|is defined as)", re.I
 )
 
 #: Shorter than this and the "body" is a heading, a page number, or the tail of
@@ -286,7 +306,10 @@ def _entries(text: str, *, layer: str, doc: str, offset: int = 0) -> list[Entry]
                 # stops at the next entry, so a fragment that really is one
                 # still cannot borrow length from the entry beneath it.
                 len(whole) >= MIN_BODY
-                and not NOT_A_DEFINITION.match(body)
+                and (
+                    SAYS_IT_IS_A_DEFINITION.search(inline.group("sep"))
+                    or not NOT_A_DEFINITION.match(body)
+                )
                 and not APPARATUS.match(inline.group("term"))
                 and not APPARATUS.match(body)
                 and not _misfiled(inline.group("term"), body)
@@ -489,21 +512,31 @@ def _out_of_order(entries: Sequence[Entry]) -> list[Entry]:
     return [e for i, e in enumerate(entries) if i not in keep]
 
 
-def declared(layer: Layer) -> CodeDocument | None:
-    """Whichever document holds this jurisdiction's definitions.
+def declared_all(layer: Layer) -> list[CodeDocument]:
+    """Every document that holds some of this jurisdiction's definitions.
 
-    A declared span wins over a matching name. Most codes publish a chapter
-    called Definitions and the name is enough to find it; some print their
-    glossary inside a chapter about something else, and the only thing that
-    can say where it starts is somebody who read it.
+    Most codes publish one chapter called Definitions and the name is enough to
+    find it; some print a glossary inside a chapter about something else, and
+    the only thing that can say where that starts is somebody who read it.
+
+    A jurisdiction can do BOTH, and Fairview is the first that does: 19.13
+    defines 214 terms for the whole code and 19.110.040 defines ten more that
+    apply only inside Fairview Village. This returned one document until
+    2026-09-02, first match wins, and declaring the span on 19.110 therefore
+    did not add ten terms -- it REPLACED two hundred and fourteen with one.
+    Named chapters come first so `declared` still answers "which chapter is
+    this city's glossary" with the chapter rather than with a span inside
+    something else.
     """
-    for doc in layer.code:
-        if doc.definitions_at:
-            return doc
-    for doc in layer.code:
-        if CHAPTER.search(f"{doc.id} {doc.title}"):
-            return doc
-    return None
+    named = [doc for doc in layer.code if CHAPTER.search(f"{doc.id} {doc.title}")]
+    spans = [doc for doc in layer.code if doc.definitions_at and doc not in named]
+    return named + spans
+
+
+def declared(layer: Layer) -> CodeDocument | None:
+    """The one document a report should name as this jurisdiction's glossary."""
+    found = declared_all(layer)
+    return found[0] if found else None
 
 
 def _span(raw: str) -> tuple[int, int]:
@@ -513,14 +546,22 @@ def _span(raw: str) -> tuple[int, int]:
 
 def read(layer: Layer) -> Chapter | None:
     """One jurisdiction's definitions, if it declared them and we hold them."""
-    doc = declared(layer)
-    if doc is None:
-        return None
-    stored = {p.stem: p for p in _stored(layer.layer)}
-    path = stored.get(doc.id)
-    if path is None:
-        return None
+    found = read_all(layer)
+    return found[0] if found else None
 
+
+def read_all(layer: Layer) -> list[Chapter]:
+    """Every definitions chapter this jurisdiction declared and we hold."""
+    stored = {p.stem: p for p in _stored(layer.layer)}
+    out: list[Chapter] = []
+    for doc in declared_all(layer):
+        path = stored.get(doc.id)
+        if path is not None:
+            out.append(_read_one(layer, doc, path))
+    return out
+
+
+def _read_one(layer: Layer, doc: CodeDocument, path: Path) -> Chapter:
     name = f"{layer.layer}/{path.name}"
     text = path.read_text(encoding="utf-8", errors="replace")
     offset = 0
@@ -549,9 +590,7 @@ def chapters(layer_id: str | None = None) -> list[Chapter]:
     for identifier, layer in sorted(load_rules().items()):
         if layer_id and identifier != layer_id:
             continue
-        chapter = read(layer)
-        if chapter is not None:
-            out.append(chapter)
+        out.extend(read_all(layer))
     return out
 
 
@@ -595,4 +634,4 @@ if __name__ == "__main__":  # pragma: no cover
     raise SystemExit(main())
 
 
-__all__ = ["Chapter", "Entry", "chapters", "read", "render"]
+__all__ = ["Chapter", "Entry", "chapters", "read", "read_all", "render"]

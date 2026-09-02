@@ -151,10 +151,24 @@ overlays:
     action: carve
     buffer_ft: 0
     jurisdictions: [fairview]
-    citation: "FMC 19.106: Fairview Creek 35 ft/side, Clear Creek 37.5 ft/side; layer TYPE field carries 35/40/55/80 ft corridor polygons"
+    # Chapter 19.106 read end to end 2026-09-02 and stored at
+    # flats/provenance/docs/or/multnomah/fairview/19.106.txt. The 403 that had
+    # kept it to snippets was a fetch strategy, not a wall — Code Publishing
+    # serves it to curl-cffi impersonating chrome124 like every other Fairview
+    # chapter. Two regimes, not one, and the old citation ran them together.
+    citation: >-
+      FMC 19.106.040(B): riparian resource protection area of "either 35, 40, 55, or 80 feet ... measured from
+      the centerline of the creek in each direction"; 19.106.030(S) adds a 50 ft wetland buffer and a 50 ft
+      Fairview Lake buffer. Table 19.106.040(B) permits nothing resembling a dwelling inside one, which is what
+      makes this a carve. Water features "enclosed in pipes, culverts, or similar structures" are exempt
+      (19.106.040(B)). Separately, INSIDE Fairview Village the general standards do not apply (19.106.040(C))
+      and 19.106.050(A) substitutes conservation easements "not less than 50 feet from Fairview Creek centerline
+      and not less than 37.5 feet from Clear Creek centerline", with development forbidden within 45 ft of the
+      Clear Creek corridor centerline (19.106.050(C)) — wider than the general rule, so the exception does not
+      loosen anything. The 37.5 ft figure carried here before belonged to that second regime.
     confidence: needs_verification
     coverage:
-      fairview: {grade: A, note: "city layer; code text partially unreachable (403) — widths from code-page snippets"}
+      fairview: {grade: A, note: "city layer; widths corroborated against the full chapter text 2026-09-02. Still unverified: whether the published polygons already include the buffer, which is what `buffer_ft: 0` assumes"}
 
   # ---------------- Regional fallbacks --------------------------------------
   - key: metro_title3
@@ -429,7 +443,13 @@ overlays:
     action: carve
     buffer_ft: 0
     jurisdictions: all
-    citation: "GDC 5.0121 / TDC Ch 14 / FMC 19.105 / WVDC 425 / MCC 39.5035 — new construction prohibited; Portland floodway is a z trigger (already killed)"
+    # FMC 19.105 fetched and read 2026-09-02 (stored at
+    # flats/provenance/docs/or/multnomah/fairview/19.105.txt). 19.105.070(B)(5)(a)
+    # prohibits "encroachments, including fill, new construction, substantial
+    # improvements, and other development within the adopted regulatory floodway"
+    # unless a no-rise certification or a CLOMR issues. One of the five limbs of
+    # this citation now rests on stored text instead of a chapter title.
+    citation: "GDC 5.0121 / TDC Ch 14 / FMC 19.105.070(B)(5)(a) / WVDC 425 / MCC 39.5035 — new construction prohibited; Portland floodway is a z trigger (already killed)"
     confidence: verified
     coverage:
       portland: {grade: B, note: "NFHL 2009 FIRM"}
