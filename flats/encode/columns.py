@@ -60,7 +60,7 @@ Three counts, reported separately because they are different work:
     clean, so this is pinned by a test.
 
 What it cannot see, so a clean report is read for what it is. Of 2,142 cited
-values it reads 673. A little over a third of the remainder name lines in a
+values it reads 751. A little over a third of the remainder name lines in a
 document with no table this check recognises. The rest name lines in a document
 that has one but outside it; or in a table whose header does not carry that
 district; or in a row whose label wraps across several lines, so that no single
@@ -68,8 +68,9 @@ line carries a full set of cells -- Gresham's downtown Table 4.1130 spends five
 lines on "Minimum Residential Net Density for all residential projects (not
 mixed-use) (units per acre)7 (See definition of Net Density in Article 3)", and
 a row that is mostly its own title cannot be counted across. The
-documents with no recognised table fall into five shapes, and only the fourth
-is still a gap this check has no answer to:
+documents with no recognised table fall into five shapes. The first three are
+nothing to check. The last two were the gaps, and both are now read where the
+shape can be confirmed and refused whole where it cannot:
 
 *   No table on the cited lines at all -- prose, definitions, a numbered list
     of standards. Wilsonville's planning chapter is the largest single block of
@@ -87,20 +88,34 @@ is still a gap this check has no answer to:
     nothing about which column belongs to whom.
 
 *   **A table extracted one cell per line.** Fairview Table 19.30.030.A,
-    Clackamas Table 315-1 and every table in Lake Oswego's dimensional chapter
-    print their district codes down the page rather than across it, with each
-    cell beneath them on its own line. All three are genuine multi-district
-    dimensional tables and this is the largest gap by far -- though Lake
-    Oswego is a jurisdiction currently switched off, so only two of the three
-    are load-bearing today.
+    Clackamas Tables 315-2 and 315-4, Happy Valley Table 16.22.050-2 and every
+    table in Lake Oswego's dimensional chapter print their district codes down
+    the page rather than across it, with each cell beneath them on its own
+    line. This was the largest gap of the five, and Happy Valley's was the
+    dangerous one: its attached districts were being looked up in the nearest
+    header ABOVE the line, which in that file belongs to the single-family
+    table, so 78 citations came back the same way a clean table does.
 
-    This one stays blind on purpose. The vertical form loses the thing the
-    horizontal form keeps, which is where a cell ends. Fairview's minimum lot
-    width prints nine lines under five districts, because three of the five
-    carry a second line reading "20 feet for townhouses" and nothing marks that
-    as a continuation rather than a sixth column. Counting down the block would
-    produce a confident finding out of a coin flip -- the same thing this
-    module already refuses to do when a horizontal row has dropped a blank.
+    ``_vertical`` reads them, and what it has to recover is the one thing the
+    horizontal form gives away for free -- where a row ends. It takes the run
+    of district codes under the caption as the header and then refuses to trust
+    it: at least two rows below must come out that many lines long, or the run
+    was not a header. No row may come out LONGER, because a run past the
+    district count means the boundary between two rows has been lost, and once
+    it is lost anywhere in the table a run of exactly the right length has
+    stopped being evidence. And a row that comes out SHORT is skipped where it
+    sits, the rest of the table still read.
+
+    That is what divides the three that are read from the one that is not.
+    Fairview numbers its row labels -- "1. Minimum Lot Size (sq. ft.)" -- so
+    every label reads as a value, its rows run together eighteen lines at a
+    stretch under a header of three, and somewhere in eighteen lines there is
+    always a run of three that would be read with confidence and no reason. Its
+    minimum lot width is nine lines under five districts anyway, because three
+    of the five carry a second line reading "20 feet for townhouses" and
+    nothing marks that as a continuation rather than a sixth column. So
+    Fairview is refused whole and stays hand-read below, and Lake Oswego is a
+    jurisdiction currently switched off.
 
 *   **A table whose columns are separated by a single space**, which is read
     by grammar rather than by whitespace and is no longer blind. Cells are
@@ -138,10 +153,10 @@ is still a gap this check has no answer to:
     the page.
 
 So the gaps were read by hand on 2026-09-02, every dimensional value against
-its own column. Three of the five have since been closed by the single-space
-reading above and are checked on every run; they are kept here because a hand
-audit is what the check was measured against, and because Lake Oswego and
-Fairview are still only this:
+its own column. All but Fairview are since machine-read on every run, by the
+two readings above; they are kept here because a hand audit is what those
+readings were measured against, and because Fairview, Lake Oswego and the
+scanned half of Oregon City are still only this:
 
 *   Fairview's twelve rows across R-6 and R-7.5. The vertical form is checkable
     by eye because the corpus resolved the wraps when it encoded: R-7.5's lot
@@ -413,6 +428,32 @@ def sparse_cells(line: str, want: int) -> list[str] | None:
     return [" ".join(g) for g in groups]
 
 
+def one_cell(line: str) -> str | None:
+    """The whole of this line as a single cell, if that is what it is."""
+    got = cells(line)
+    return got[0] if len(got) == 1 else None
+
+
+def is_value_line(line: str) -> bool:
+    """Does this line hold a value rather than name the row it belongs to?
+
+    In a table printed down the page there is no question where a cell ends --
+    the line is the cell -- and the only question left is how many lines belong
+    to one row. A cell opens on a figure or on a word meaning no standard, the
+    same test the single-space reading uses; anything else is the next row's
+    name. It is a narrow test on purpose. A cell reading "See Table
+    19.30.030.A.4" or "Townhomes and cottage clusters none" is indistinguishable
+    from a row label, and a row holding one comes out the wrong length and is
+    declined whole rather than read short.
+    """
+    got = one_cell(line)
+    if not got:
+        return False
+    if got.lower().rstrip(".,;:") in _NOTHING:
+        return True
+    return got[:1].isdigit() or (got[:1] == "." and got[1:2].isdigit())
+
+
 def norm(code: str) -> str:
     """A district code as the two files spell it differently.
 
@@ -485,6 +526,7 @@ class _Doc:
             self.labelled[i] = not first_is_code
             self.sparse[i] = False
         self._order = sorted(self.headers)
+        self.vtables = _vertical(self.lines)
 
     def _maybe_sparse(self, i: int, line: str) -> None:
         """A header whose district codes are one space apart, if a row says so.
@@ -521,13 +563,73 @@ class _Doc:
         self.sparse[i] = True
 
     def is_header(self, line_no: int) -> bool:
-        """Is this line itself a column heading?
+        """Is this line itself a column heading, or a row's name?
 
         Citations name one deliberately: a header row is how the corpus pins
         which of three districts a number on the next line belongs to. Reading
         it as a row of values compares an exemption against the word "R-40".
+
+        In a table printed down the page the row's NAME does that job for the
+        other axis, and citations there name it for the same reason -- Happy
+        Valley's side setback quotes "Interior side" and then the one line
+        under it that is its own. So a label line inside such a table is the
+        corpus being careful too, not a line this check failed to read.
+
+        A row label is a line with a full row under it, not merely a line that
+        holds no figure. The footnotes print inside the same span -- Happy
+        Valley's note 5, the one that reduces a party-wall setback to zero,
+        sits four hundred lines below the row it governs and holds no figure
+        either. Forgiving that line as a label would take the override out of
+        the citation and leave a variant to be judged against the cell it was
+        written to replace, which is a finding manufactured out of a reader.
         """
-        return (line_no - 1) in self.headers
+        if (line_no - 1) in self.headers:
+            return True
+        got = self.vtable_at(line_no)
+        if not got:
+            return False
+        start, end, codes = got
+        i = line_no - 1
+        if is_value_line(self.lines[i]):
+            return False
+        run = 0
+        while i + 1 + run < end and is_value_line(self.lines[i + 1 + run]):
+            run += 1
+        return run == len(codes)
+
+    def vtable_at(self, line_no: int) -> tuple[int, int, list[str]] | None:
+        """The down-the-page table this line sits in, if any."""
+        i = line_no - 1
+        for start, end, codes in self.vtables:
+            if start <= i < end:
+                return (start, end, codes)
+        return None
+
+    def _vcell(self, line_no: int, zone: str) -> str | None:
+        """This district's line of the row the cited line belongs to."""
+        got = self.vtable_at(line_no)
+        if got is None:
+            return None
+        start, end, codes = got
+        spelled = [norm(c) for c in codes]
+        if spelled.count(norm(zone)) != 1:
+            return None
+        i = line_no - 1
+        if not is_value_line(self.lines[i]):
+            return None
+        first = i
+        while first - 1 >= start and is_value_line(self.lines[first - 1]):
+            first -= 1
+        last = i
+        while last + 1 < end and is_value_line(self.lines[last + 1]):
+            last += 1
+        # A row that came out the wrong length is a row where a cell wrapped or
+        # a cell was prose, and which line belongs to whom is then a guess.
+        # Fairview's minimum lot width runs to nine lines under five districts,
+        # because three of the five add "20 feet for townhouses".
+        if last - first + 1 != len(codes):
+            return None
+        return one_cell(self.lines[first + spelled.index(norm(zone))])
 
     def header_for(self, line_no: int) -> tuple[list[str], bool, bool] | None:
         """The column order in force at a line, whether it labels its rows, and
@@ -544,6 +646,12 @@ class _Doc:
 
     def cell(self, line_no: int, zone: str) -> str | None:
         """This district's cell on this row, or ``None`` if it cannot be read."""
+        if self.vtable_at(line_no):
+            # Exclusive: the nearest header ABOVE a line printed down the page
+            # belongs to some other table entirely, and reading against it is
+            # how Happy Valley's attached districts were being looked up in the
+            # single-family table's columns.
+            return self._vcell(line_no, zone)
         got = self.header_for(line_no)
         if got is None:
             return None
@@ -573,6 +681,76 @@ class _Doc:
         if len(row) != want:
             return None
         return row[column] if labelled else row[1 + column]
+
+
+def _vertical(lines: Sequence[str]) -> list[tuple[int, int, list[str]]]:
+    """Every table printed down the page, as ``(start, end, districts)``.
+
+    The header is the run of district codes on their own lines beneath the
+    caption, after an optional line naming the column of row names -- Happy
+    Valley writes "Standard", unincorporated Clackamas writes it too. Rows
+    start where that run ends and the table ends at the next caption.
+
+    The count of districts is then checked against the table rather than
+    trusted. Fairview heads six columns and only the first three are written as
+    codes: "Townhouse Overlay", "Residential Medium (RM)" and "Additional
+    Standards and Exceptions" are districts and a notes column that no pattern
+    tells apart, and reading its rows three at a time would take R-10's number
+    for R-7.5's. So the run has to agree with the rows beneath it: the most
+    common row length in the table IS the number of districts, or the header
+    was read wrong and the table is left alone.
+    """
+    out: list[tuple[int, int, list[str]]] = []
+    for i, line in enumerate(lines):
+        if not _CAPTION.match(line):
+            continue
+        j = i + 1
+        while j < len(lines) and (not lines[j].strip() or _CAPTION.match(lines[j])):
+            j += 1
+        got = one_cell(lines[j]) if j < len(lines) else None
+        if got and not (_ZONE.match(got) and is_code(got)):
+            j += 1
+        codes: list[str] = []
+        while j < len(lines):
+            got = one_cell(lines[j])
+            if not got or not (_ZONE.match(got) and is_code(got)):
+                break
+            codes.append(got)
+            j += 1
+        if len(codes) < 2 or len({norm(c) for c in codes}) != len(codes):
+            continue
+        end = next(
+            (k for k in range(j, len(lines)) if _CAPTION.match(lines[k])), len(lines)
+        )
+        sizes: dict[int, int] = {}
+        run = 0
+        for k in range(j, end):
+            if is_value_line(lines[k]):
+                run += 1
+                continue
+            if run:
+                sizes[run] = sizes.get(run, 0) + 1
+            run = 0
+        if run:
+            sizes[run] = sizes.get(run, 0) + 1
+        # Two conditions, and the second is the one that saves it. At least two
+        # rows have to come out the length of the header, or the run of codes
+        # was not the header. And no row may come out LONGER: a run past the
+        # district count means the boundary between rows has been lost, and
+        # once it is lost anywhere in the table a run of exactly the right
+        # length is no longer evidence of anything. Fairview numbers its row
+        # labels -- "1. Minimum Lot Size (sq. ft.)" -- so its labels read as
+        # values and its rows run together eighteen lines at a stretch under a
+        # header of three, which is what the whole-table refusal is for.
+        if sizes.get(len(codes), 0) < 2:
+            continue
+        if any(n > len(codes) for n in sizes):
+            continue
+        # Happy Valley's extractor repeats the caption on four consecutive
+        # lines, and each one finds the same table.
+        if (j, end, codes) not in out:
+            out.append((j, end, codes))
+    return out
 
 
 def _doc(cache: dict[str, _Doc | None], rel: str, root: Path) -> _Doc | None:

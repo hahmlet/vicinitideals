@@ -32,14 +32,14 @@ pytestmark = pytest.mark.unit
 #: header carries its own row-label cell. The second compared numbers only, so
 #: "None" was invisible to it -- it would have walked past the misread it was
 #: written for.
-REACH = 673
+REACH = 751
 
 #: Of what it reaches, how much it can actually compare. Well below ``REACH``
 #: on purpose: a citation naming a footnote beside the cell is left alone
 #: rather than judged against a value the corpus deliberately overrode, and an
 #: exemption against a cell printing a figure is handed to the exemption ledger
 #: rather than answered here.
-JUDGED = 312
+JUDGED = 378
 
 
 @pytest.fixture(scope="module")
@@ -551,6 +551,123 @@ def test_a_single_space_row_that_wrapped_is_declined(tmp_path: Path) -> None:
     )
     found = survey(configroot=configroot, docroot=docroot)
     assert found.reached == 0
+
+
+DOWN = (
+    "  Table 1: Development Standards\n"
+    "Standard\n"
+    "A-1\n"
+    "B-2\n"
+    "C-3\n"
+    "Lot size (minimum)\n"
+    "2,000 sf\n"
+    "3,000 sf\n"
+    "4,000 sf\n"
+    "Lot width (minimum)\n"
+    "20 feet\n"
+    "30 feet\n"
+    "40 feet\n"
+)
+
+
+def _downward(tmp_path, tail, zone, encoded, spec):
+    """A table printed down the page: one cell per line, districts across.
+
+    Two clean rows and then whatever the caller adds, which is where the
+    interesting shapes are -- a cell of prose, a cell that wrapped, a footnote.
+    """
+    docroot = tmp_path / "docs"
+    configroot = tmp_path / "config"
+    doc = docroot / "or" / "x" / "city" / "table.txt"
+    doc.parent.mkdir(parents=True)
+    doc.write_text(DOWN + tail, encoding="utf-8")
+    layer = configroot / "or" / "x" / "city.yaml"
+    layer.parent.mkdir(parents=True)
+    layer.write_text(
+        "zones:\n"
+        f"  {zone}:\n"
+        f"    {encoded}\n"
+        f'      quote: "or/x/city/table.txt#{spec}"\n',
+        encoding="utf-8",
+    )
+    return survey(configroot=configroot, docroot=docroot)
+
+
+def test_a_table_printed_down_the_page_is_read(tmp_path: Path) -> None:
+    """Happy Valley's attached districts and both of unincorporated Clackamas'
+    dimensional tables print one cell per line, down the page.
+
+    78 citations sit in them, and every one came back unread -- worse than
+    unread, because the reader was looking those districts up in the nearest
+    header ABOVE the line, and in Happy Valley's file that is the single-family
+    table's. A header that does not carry the district returns nothing, which
+    is indistinguishable from a table with nothing wrong in it.
+
+    Here the citation names A-1's line and B-2's number is what was encoded.
+    That is the same error the check was written for, on the other axis.
+    """
+    found = _downward(tmp_path, "", "B-2", "min_lot_sqft:\n      value: 2000", "L7")
+    assert len(found.mismatches) == 1
+    assert found.mismatches[0].cell == "3,000 sf"
+
+
+def test_a_row_that_came_out_the_wrong_length_is_declined(tmp_path: Path) -> None:
+    # A cell of prose -- "See Table 19.30.030.A.4, Maximum Density" is one of
+    # Fairview's -- reads as the name of the next row, and the row it was in
+    # comes back one short. Which line then belongs to which district is a
+    # guess, and a guess here is a confident finding out of a coin flip.
+    found = _downward(
+        tmp_path,
+        "Lot depth (minimum)\n60 feet\nSee Table 2\n80 feet\n",
+        "A-1",
+        "min_lot_depth_ft:\n      value: 99",
+        "L15",
+    )
+    assert found.reached == 0
+
+
+def test_a_table_whose_rows_run_together_is_left_alone(tmp_path: Path) -> None:
+    """One row longer than the header condemns the whole table, not just it.
+
+    A run past the district count means the boundary between two rows has been
+    lost, and once it is lost anywhere in the table a run that comes out at
+    exactly the right length has stopped being evidence of anything. Fairview
+    is the case: it numbers its row labels -- "1. Minimum Lot Size (sq. ft.)"
+    -- so the labels read as values, its rows run together eighteen lines at a
+    stretch under a header of three, and somewhere in eighteen lines there is
+    always a run of three.
+    """
+    found = _downward(
+        tmp_path,
+        "Lot depth (minimum)\n60 feet\n20 feet for townhouses\n80 feet\n100 feet\n",
+        "B-2",
+        "min_lot_sqft:\n      value: 2000",
+        "L7",
+    )
+    assert found.reached == 0
+
+
+def test_a_footnote_inside_the_table_is_not_a_row_label(tmp_path: Path) -> None:
+    """A line holding no figure is not thereby the name of a row.
+
+    The footnotes print inside the same span as the rows they govern. Read as
+    row labels they drop out of the citation, and a citation that quotes its
+    override then looks like a citation that names its row and nothing else --
+    which is the one shape this check judges. Happy Valley's note 5 reduces a
+    party-wall setback to zero; forgiven as a label it took three correct
+    encodings of zero and judged them against the very cells that note was
+    written to replace. A row label is a line with a full row under it.
+    """
+    found = _downward(
+        tmp_path,
+        "Side setback\n5 feet[1]\n5 feet[1]\n5 feet[1]\n[1]\n"
+        "Side setbacks may be reduced to zero along a party wall.\n",
+        "B-2",
+        "setback_side_ft:\n      value: 0",
+        "L16,L19",
+    )
+    assert found.judged == 0
+    assert found.mismatches == ()
 
 
 def test_reach_is_the_same_number_the_survey_reports(got: Survey) -> None:

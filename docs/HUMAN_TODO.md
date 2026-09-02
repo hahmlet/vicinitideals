@@ -548,7 +548,7 @@ the list of places worth hoping about.
   cities quote the header row beside the value, which is how a file says which
   of six columns a number came from — and the check was treating that header as
   a line it had failed to read, so Troutdale and Happy Valley were almost
-  entirely unexamined. It now reads 673 citations and can compare 312 of them,
+  entirely unexamined. It now reads 751 citations and can compare 378 of them,
   up from 154, and still finds nothing wrong.
 
   It also found a silent hole in itself, which is the more useful kind. Four of
@@ -572,16 +572,26 @@ the list of places worth hoping about.
   shapes of page defeat a machine that finds columns by looking for gaps, and
   three of those are nothing to check anyway — plain prose, a table with only
   one district in it, a table whose columns are building types rather than
-  districts. Two were real gaps, and one of the two has since been closed.
+  districts. Two were real gaps, and both have since been closed as far as the
+  page allows.
 
-  The one still open is the table printed *down* the page instead of across it,
-  one cell per line: Fairview, Lake Oswego and unincorporated Clackamas all do
-  this. Nothing marks where one district's answer ends and the next begins —
-  Fairview's lot-width row runs to nine lines under five districts, because
-  three of them add a second line reading “20 feet for townhouses” — so a
-  machine counting down the block would be guessing, and it declines instead.
+  The first was the table printed *down* the page instead of across it, one
+  cell per line: Happy Valley, unincorporated Clackamas, Fairview and Lake
+  Oswego all do this. Happy Valley was the one that mattered, and it shows why
+  a quiet check is worth distrusting — its three attached-housing districts
+  were being looked for in the wrong table's headings entirely, so 78 numbers
+  came back the same way a table with nothing wrong in it comes back. They are
+  read now. The trick is making the file prove where one row ends: the districts
+  listed under the heading are only believed once two rows below turn out to
+  have exactly that many lines, and if any row runs *long* the whole table is
+  put down, because a row that ran long means the boundary between two rows was
+  lost and a row of the right length after that is luck rather than evidence.
+  Fairview is the table put down. It numbers its row labels — “1. Minimum Lot
+  Size (sq. ft.)” — so every label reads as a number, its rows run together
+  eighteen lines at a stretch under three districts, and a machine counting
+  down that block would be guessing. It stays hand-read.
 
-  The one now closed is the table whose columns are a single space apart rather
+  The second was the table whose columns are a single space apart rather
   than several, which is how Gresham's two plan districts print and how half of
   Oregon City's scanned chapter comes out. There is no gap to find, so the
   check reads those rows by grammar instead: a value starts at a number and
