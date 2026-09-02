@@ -544,6 +544,26 @@ the list of places worth hoping about.
   example — the table says a ten-foot maximum front setback and the footnote
   makes it five on most street types, and five is what we encoded.
 
+  A second pass the same day found it was skipping the *careful* citations. Two
+  cities quote the header row beside the value, which is how a file says which
+  of six columns a number came from — and the check was treating that header as
+  a line it had failed to read, so Troutdale and Happy Valley were almost
+  entirely unexamined. It now reads 555 citations and can compare 237 of them,
+  up from 154, and still finds nothing wrong.
+
+  It also now says what it *cannot* read, which matters more than the count: a
+  clean report from a narrow reader looks exactly like a clean corpus. Five
+  shapes of page defeat it, and three of those are nothing to check — plain
+  prose, a table with only one district in it, a table whose columns are
+  building types rather than districts. Two are real. Fairview, Lake Oswego and
+  unincorporated Clackamas print their tables one cell per line down the page,
+  and Oregon City's chapter is a scan whose tables come out as *Quad pl ex a nd
+  co t tage 1 0 , 000 squ are* — in both, a machine counting cells would be
+  guessing. So those were read by hand instead, every dimensional number
+  against its own column, about 250 values across four jurisdictions. All
+  correct. That is a reading of today's files, not a check that will notice if
+  they change, and it is written down as that.
+
 - **Wire up the Clackamas environmental layers** — done everywhere a green is
   at stake, and the work turned out to be reading, not configuring. Every city publishes a
   natural-resource map; no two of them mean the same thing by it, and only the

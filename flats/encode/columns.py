@@ -60,8 +60,13 @@ Three counts, reported separately because they are different work:
 
 What it cannot see, so a clean report is read for what it is. Of 2,249 cited
 values it reads 555. Roughly half the remainder name lines in a document with
-no table this check recognises; the rest name lines in a document that has one,
-but outside it, or in a table whose header does not carry that district. The
+no table this check recognises. The rest name lines in a document that has one
+but outside it; or in a table whose header does not carry that district; or in
+a row whose label wraps across several lines, so that no single line carries a
+full set of cells -- Gresham's downtown Table 4.1130 spends five lines on
+"Minimum Residential Net Density for all residential projects (not mixed-use)
+(units per acre)7 (See definition of Net Density in Article 3)", and a row that
+is mostly its own title cannot be counted across. The
 documents with no recognised table fall into five shapes, and the last two are
 the only real gaps:
 
@@ -80,10 +85,13 @@ the only real gaps:
     housing types and the district repeats across them, so the header says
     nothing about which column belongs to whom.
 
-*   **A table extracted one cell per line.** Fairview Table 19.30.030.A and
-    Clackamas Table 315-1 print their district codes down the page rather than
-    across it, with every cell beneath them on its own line -- 82 and 64
-    citations. Both are genuine multi-district dimensional tables.
+*   **A table extracted one cell per line.** Fairview Table 19.30.030.A,
+    Clackamas Table 315-1 and every table in Lake Oswego's dimensional chapter
+    print their district codes down the page rather than across it, with each
+    cell beneath them on its own line. All three are genuine multi-district
+    dimensional tables and this is the largest gap by far -- though Lake
+    Oswego is a jurisdiction currently switched off, so only two of the three
+    are load-bearing today.
 
     This one stays blind on purpose. The vertical form loses the thing the
     horizontal form keeps, which is where a cell ends. Fairview's minimum lot
@@ -99,10 +107,26 @@ the only real gaps:
     are separated by single spaces, and so are the halves of the broken words,
     so there is no split that recovers cells rather than word fragments.
 
-Both gaps were read by hand on 2026-09-02 instead, every dimensional value in
-each against its own column: Fairview's twelve rows across R-6 and R-7.5, and
-Oregon City's full set across R-10, R-8, R-6, R-5 and R-3.5. All correct. That
-is a reading of a corpus at a moment, not a check that will notice if it moves.
+So the gaps were read by hand on 2026-09-02 instead, every dimensional value
+against its own column:
+
+*   Fairview's twelve rows across R-6 and R-7.5. The vertical form is checkable
+    by eye because the corpus resolved the wraps when it encoded: R-7.5's lot
+    width cites L345 and not L344, which is R-6's second line.
+*   Oregon City's full set across R-10, R-8, R-6, R-5 and R-3.5, including the
+    quadplex lot-size row that is the one this screen builds on.
+*   Lake Oswego's low-density table across R-7.5, R-10 and R-15, and the
+    per-zone tables for R-6, R-5, R-3, R-2 and R-0 -- which are one district
+    each, so what was checked there is the row rather than the column, the
+    quadplex line of R-2's Table 50.04.001-13 rather than the duplex above it.
+*   Unincorporated Clackamas across all seven R zones and both VR zones, where
+    the citations run in step -- lot coverage L1162 to L1168 in zone order --
+    so an off-by-one would show as a repeat or a skip and there is neither.
+    R-2.5, the one column of Table 315-1 reading X rather than P for
+    quadplexes, is not encoded at all, so nothing reads it as permitted.
+
+All correct. That is a reading of a corpus at a moment, not a check that will
+notice if it moves.
 
 Run it::
 
