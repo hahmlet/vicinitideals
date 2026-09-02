@@ -11,9 +11,17 @@ environmental overlays were wired in and the whole run repeated):
 laid out with real site plans. The 178 greens lost against the run before it
 are the measured price of looking at habitat, wetland and floodplain land in
 Clackamas County for the first time — 55 in Oregon City, 54 in unincorporated
-Clackamas, 46 in West Linn, 19 in Wilsonville, 17 in Milwaukie. Thirteen lots
-went the other way and became green, because one of those overlays *removes*
-a setback rather than adding a constraint.
+Clackamas, 46 in West Linn, 19 in Wilsonville, 17 in Milwaukie.
+
+Thirteen lots went the *other* way and became green, and the reason is worth
+knowing: **the steep ground and the protected ground turned out to be the same
+ground.** A creek runs in a ravine, and the habitat overlay traces the ravine.
+Cutting the protected strip out of the buildable area also cut out the cliff,
+and the flat bench left behind is where anyone would have built anyway. Across
+those thirteen lots the slope of the buildable part fell from 40% to 9% and the
+buildable area shrank by roughly two-thirds — all ten to twelve thousand square
+feet of it still ample for the building. They were being called too steep on
+the strength of land nobody is allowed to touch.
 
 These numbers are already one step behind. Three changes landed after this run
 and none of them is in it: the sloped setback, **29 zones the pipeline had
