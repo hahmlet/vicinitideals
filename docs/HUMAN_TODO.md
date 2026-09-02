@@ -580,12 +580,27 @@ the list of places worth hoping about.
   wrong green — and that is why it survived. It is 30% of the lot universe
   sitting behind a table nobody thought to compare as a list.
 
-  **Ported 2026-09-02, waiting on a re-run.** All 29 in-market zones are now in
-  the screen (Lake Oswego's six are left out: you have that city switched off,
-  so its lots never reach a measurement either way). Every one arrives marked
-  *needs verification*, which means those 76,752 lots land in the **review**
-  pile, not the green one — work to look at rather than lots to buy. Nothing
-  needed from you; the numbers move on the next full run.
+  **Ported and run, 2026-09-02 — and now measured, which is the part that
+  matters.** All 29 in-market zones are in the screen (Lake Oswego's six are
+  left out: you have that city switched off, so its lots never reach a
+  measurement either way). Every one arrives marked *needs verification*, which
+  means none of them can come back green until somebody reads the numbers on
+  the page.
+
+  The run finished and **41,227 lots were measured that had never been looked
+  at before**. Of those, **3,093 are in the review queue and 38,134 are red.
+  None is green, by design.**
+
+  So the pool was real and the prize is much smaller than the pool, which is
+  worth being blunt about: most of that land fails a hard test the moment you
+  look at it. The reasons, in order, are that the site plan will not lay out on
+  it (12,848), it already holds a commercial building (8,023), the lot is
+  smaller than its own zone's minimum (7,796), the pod does not fit (4,983),
+  and it already holds an apartment building (3,077). These are Portland's
+  apartment and mixed-use zones — dense, mostly built on, and mostly narrow.
+
+  The honest result: **3,093 lots to look at, and a 30% blind spot closed.**
+  Nothing needed from you.
 
 - ~~**110 green lots may be too BIG to build only four units on**~~ —
   **fixed the same day, 2026-09-02.** Found while
@@ -613,7 +628,14 @@ the list of places worth hoping about.
   goes to **review** rather than red. Review because the cities measure the
   floor against developable land and we only know the size of the whole lot —
   clearing it on the whole lot settles the question, failing on the whole lot
-  only raises it. The 110 move on the next run.
+  only raises it.
+
+  **Run and measured 2026-09-02.** The floor now touches **2,644 lots** in the
+  review queue — more than the 110 first estimated, because the newly-screened
+  zones above brought their own floors with them — and **109 of those are held
+  by the floor and nothing else**. Those 109 are the honest size of the
+  question: one measurement of developable land on each would settle every one
+  of them.
 
   Checked at the same time and it came back clean: some cities also set a
   *maximum* front setback — build no further back than this — and the screen
