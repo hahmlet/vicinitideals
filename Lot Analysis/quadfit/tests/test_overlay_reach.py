@@ -46,8 +46,13 @@ UNSCREENED: dict[str, str] = {
     "milwaukie": (
         "2026-09-01: publishes Habitat_Conservation_Areas/7, Wetlands/5, "
         "Vegetated_Corridors/6, Floodplain/9 and Willamette_Greenway/8, all "
-        "verified live. MMC's natural resource chapter not yet read, so no "
-        "action (carve/flag) can be assigned. 845 greens exposed."
+        "verified live with feature counts. The chapter that would give them "
+        "force is MMC 19.400 (overlay zones and special areas -- 19.500 points "
+        "at it by name, and 19.403 is its historic-resource section), and it "
+        "is NOT in the provenance store. Its eCode360 guid is unknown and the "
+        "host began serving Cloudflare challenges while it was being looked "
+        "for, so the fetch is blocked on finding the id, not on reading. "
+        "845 greens exposed -- the largest single block in this list."
     ),
     "west_linn": (
         "2026-09-01: publishes RiparianCI/1 + /2, WetlandInventory/1, "
