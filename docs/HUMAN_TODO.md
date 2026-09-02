@@ -5,9 +5,10 @@ agent cannot do alone. The agent maintains it: items get added when work
 surfaces them, and struck through (with a date and what happened) when they
 close. Items are ordered by how many lots ride on them, biggest first.
 
-Pipeline state when last updated (2026-09-01, after the Villebois run):
-**green 10,179 · review 30,216 · red 210,349** across 250,744 lots in 13 cities
-laid out with real site plans.
+Pipeline state when last updated (2026-09-02, after the FEMA county-gap re-run):
+**green 10,106 · review 30,252 · red 210,386** across 250,744 lots in 13 cities
+laid out with real site plans. The 73 greens lost against 2026-09-01 are the
+measured cost of one missing county in the flood download.
 
 ---
 
@@ -34,13 +35,14 @@ on it, and only the first is a queue item:
    everywhere. Fixed and re-run: **73 lots that had been green were not**, and
    flood touches roughly tripled. The other half was real work and is agent
    work: every Clackamas city that produces a green publishes its own
-   natural-resource geometry, and four of them are now wired — Oregon City,
-   Happy Valley, Wilsonville, West Linn. Three cities remain, and one of them
-   (Milwaukie, 845 greens) is stuck on something small and stupid: its overlay
-   chapter is on a host that will not serve it to a script, and the chapter's
-   id is not published anywhere we can find. **If you are ever in front of
-   Milwaukie's code and can copy the URL of chapter 19.400, that unblocks the
-   single largest remaining block.**
+   natural-resource geometry, and **every city that has a green is now wired** —
+   Oregon City, Happy Valley, Wilsonville, West Linn, unincorporated Clackamas,
+   and Milwaukie. Milwaukie was the one that looked blocked: its overlay
+   chapter sits on a host that will not serve it to a script and the chapter's
+   id is not published anywhere. It was found by reading the raw page of the
+   *next* chapter, which links back to it. **Nothing is needed from you on this
+   item any more.** The two cities still unscreened, Tualatin and Gladstone,
+   have no greens between them.
 4. **No green has ever been checked against a real answer.** The one back-test
    run measured the opposite direction — of fourplexes that really were
    permitted, did we flag the lot? (60%.) Nobody has taken a green lot to a
@@ -285,8 +287,8 @@ the list of places worth hoping about.
 
 ## Queued for the agent — no action needed from you, listed so nothing is invisible
 
-- **Wire up the Clackamas environmental layers** — five of seven done, and the
-  work turned out to be reading, not configuring. Every city publishes a
+- **Wire up the Clackamas environmental layers** — done everywhere a green is
+  at stake, and the work turned out to be reading, not configuring. Every city publishes a
   natural-resource map; no two of them mean the same thing by it, and only the
   city's own code says which. Oregon City calls its map "a regulatory boundary"
   and forbids structures inside it, so it is subtracted from the buildable
@@ -304,8 +306,24 @@ the list of places worth hoping about.
   nothing — the complete list of what you may not do in a habitat area is
   "plant invasive vegetation" and "store materials outside" — so its 598
   greens keep their verdicts and get a second look instead.
-  Remaining: Milwaukie (845 greens, blocked — see item 3), Tualatin and
-  Gladstone (no greens today, so nothing rides on them).
+  Milwaukie is the one that had looked blocked, and it turned into the most
+  interesting reading of the set: one chapter, two opposite answers. Land in
+  the Willamette Greenway can only be built on by *conditional use* — a
+  discretionary approval, a hearing, a decision somebody makes rather than a
+  rule you can meet — so those lots come off the board entirely, the same
+  treatment Portland's environmental zones get. Four sections later the natural
+  resources chapter opens with what reads like the same prohibition, and it is
+  not one: it forbids development "other than those allowed by this section",
+  and the section then allows limited disturbance **for new dwellings
+  specifically**, over the counter, no hearing. So those lots go to review, not
+  off the board. A prohibition followed by "except as allowed below" is not a
+  prohibition until you have read what is allowed below.
+  Milwaukie also publishes the band of every property within 100 feet of a
+  resource — tempting, and deliberately not used. Inside that band but outside
+  the resource, all the city asks for is a construction management plan. That
+  is paperwork, and paperwork is not a reason to lose a green.
+  Remaining: Tualatin and Gladstone, neither of which has a green today, so
+  nothing rides on them.
 
 - **A rule that would ADD greens, found while reading the county** — Clackamas
   ZDO 706.11 says a lot containing a habitat area, inside the Portland urban

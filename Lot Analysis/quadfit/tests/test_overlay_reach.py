@@ -43,17 +43,6 @@ FLOOD_EVERYWHERE = frozenset({"fema_floodway", "fema_sfha"})
 #: been read. Deleting a line without wiring the overlay is how the original
 #: bug comes back.
 UNSCREENED: dict[str, str] = {
-    "milwaukie": (
-        "2026-09-01: publishes Habitat_Conservation_Areas/7, Wetlands/5, "
-        "Vegetated_Corridors/6, Floodplain/9 and Willamette_Greenway/8, all "
-        "verified live with feature counts. The chapter that would give them "
-        "force is MMC 19.400 (overlay zones and special areas -- 19.500 points "
-        "at it by name, and 19.403 is its historic-resource section), and it "
-        "is NOT in the provenance store. Its eCode360 guid is unknown and the "
-        "host began serving Cloudflare challenges while it was being looked "
-        "for, so the fetch is blocked on finding the id, not on reading. "
-        "845 greens exposed -- the largest single block in this list."
-    ),
     "tualatin": (
         "2026-09-01: Public/EnvironmentalExplorer confirmed, layers not "
         "enumerated. Zero greens today (20 lots at review on sewer)."
@@ -287,3 +276,77 @@ def test_every_borrowed_source_names_a_layer_something_actually_fetches() -> Non
         assert f"overlay_{spec.source}" in s0_acquire.PHASE2_LAYERS, (
             f"{spec.key} borrows {spec.source!r}, which s0 never downloads"
         )
+
+
+def test_one_chapter_can_hold_a_kill_and_a_flag_at_the_same_time() -> None:
+    """Milwaukie's MMC 19.400 gives two answers and both of them are right.
+
+    Every other jurisdiction in this corpus reads as a single legal weight per
+    chapter. Milwaukie does not. 19.401.3 makes every land use action and all
+    development in the Willamette Greenway a CONDITIONAL USE under 19.905, and
+    19.401.5.B's thirteen exemptions from Greenway review are interior work,
+    maintenance, driveways and 200 sq ft accessory structures -- a dwelling is
+    on none of them. Discretionary approval is out of reach for a by-right
+    screen, so the greenway KILLS: it is the only city overlay outside
+    Portland's e-zones that does.
+
+    Four sections later, 19.402.5.A prohibits "new structures, development, or
+    landscaping activity other than those allowed by Section 19.402" inside a
+    WQR or HCA -- which reads exactly like Oregon City's carve until Table
+    19.402.3.K routes HCA work meeting the 19.402.11.D nondiscretionary
+    standards, and limited WQR disturbance FOR NEW DWELLING UNITS under
+    19.402.6.B, to Type I review. Type I is ministerial. What the chapter
+    imposes is a disturbance budget with mitigation planting, which this screen
+    cannot size, so the resource layers FLAG.
+
+    A prohibition followed by "other than those allowed by this section" is not
+    a prohibition until you have read what the section allows. That is the
+    lesson worth keeping when the next chapter opens with the same sentence.
+    """
+    specs = {s.key: s for s in _overlays().overlays}
+
+    greenway = specs["milwaukie_greenway"]
+    assert greenway.action == "kill"
+    assert "19.401.3" in greenway.citation and "19.905" in greenway.citation
+    assert greenway.applies_to("milwaukie")
+
+    for key in ("milwaukie_hca", "milwaukie_wqr", "milwaukie_wetlands"):
+        spec = specs[key]
+        assert spec.action == "flag", (
+            f"{key} is a flag because Table 19.402.3.K reaches Type I review "
+            f"for new dwellings; carving it would claim the chapter forbids "
+            f"what it actually meters"
+        )
+        assert spec.applies_to("milwaukie")
+
+    assert "19.402" in specs["milwaukie_hca"].citation
+    assert "19.402.6.B" in specs["milwaukie_wqr"].citation
+
+
+def test_the_applicability_band_is_not_the_restriction() -> None:
+    """Milwaukie publishes its own 100 ft trigger band and we do not screen it.
+
+    NR_100ft_Compliance is a single polygon of every property within 100 ft of
+    a WQR or HCA -- 19.402.3.A's applicability reach, drawn by the city. It is
+    tempting precisely because the flags here fire on touch only and therefore
+    under-flag by up to 100 ft.
+
+    It is still the wrong layer. Table 19.402.3 gives a nonexempt activity that
+    sits outside the resource but inside the band a construction management
+    plan and nothing else -- "Comply with Remainder of Section 19.402: No".
+    Screening it would hold lots out of green for paperwork, which is the
+    opposite error from the one this file was written to catch and no less
+    wrong. Being subject to a chapter is not being restrained by it.
+    """
+    import s0_acquire
+
+    fetched = set(s0_acquire.PHASE2_LAYERS)
+    assert "overlay_milwaukie_hca" in fetched
+    assert "overlay_milwaukie_nr_100ft" not in fetched
+    assert not any(
+        "NR_100ft" in spec.get("url", "") for spec in s0_acquire.PHASE2_LAYERS.values()
+    ), (
+        "the 100 ft band is applicability, not restriction -- if a future "
+        "reader wants it, it belongs in a column that says 'needs a "
+        "construction management plan', not in the flag that costs a green"
+    )

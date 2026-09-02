@@ -134,6 +134,7 @@ _FAI = "https://services5.arcgis.com/3DoY8p7EnUTzaIE7/arcgis/rest/services"
 _WV = "https://services7.arcgis.com/5Loh3xXKWLd2M7xA/arcgis/rest/services"
 _METRO = "https://services2.arcgis.com/McQ0OlIABe29rJJy/arcgis/rest/services"
 _HV = "https://services5.arcgis.com/fuVQ9NIPGnPhCBXp/arcgis/rest/services"
+_MIL = "https://services6.arcgis.com/8e6aYcxt8yhvXvO9/ArcGIS/rest/services/Milwaukie_Zoning/FeatureServer"
 
 PHASE2_LAYERS: dict[str, dict[str, Any]] = {
     # Portland environmental zone GEOMETRY (not the OVRLY letters on zoning)
@@ -293,6 +294,70 @@ PHASE2_LAYERS: dict[str, dict[str, Any]] = {
     "overlay_happy_valley_slope": {
         "url": f"{_HV}/SteepSlopesOZ/FeatureServer/0",
         "fields": ["Id", "Area"]},
+    # ---------------- Milwaukie -------------------------------------------
+    # One chapter, two answers. MMC 19.400 holds five overlay zones and the two
+    # environmental ones point in opposite directions, so this is the first
+    # jurisdiction where kill and flag come out of the same document.
+    #
+    # 19.401.3, Willamette Greenway: "All land use actions and any change or
+    # intensification of use, or development permitted in the underlying zone,
+    # are conditional uses, subject to the provisions of Section 19.905." A
+    # conditional use is discretionary, and this project treats discretionary
+    # approval as out of reach for a by-right screen. 19.401.5.B lists the
+    # thirteen activities that escape Greenway review and a new dwelling is on
+    # none of them; 19.401.5.D then says a greenway conditional use "is
+    # required for all intensification or change of use ... or development",
+    # and 19.401.4 defines development as "to construct or alter a structure".
+    # So nothing gets built in the WG zone by right. KILL, like Portland's
+    # e-zones -- and 19.401.2 puts the WG boundary on the Zoning Map, which is
+    # the service these four layers come from.
+    #
+    # 19.402, Natural Resources: FLAG. 19.402.5.A prohibits "new structures,
+    # development, or landscaping activity other than those allowed by Section
+    # 19.402" inside a WQR or HCA, which reads like a carve until you read what
+    # 19.402 allows. Table 19.402.3.K routes "activities within HCA that meet
+    # nondiscretionary standards (19.402.11.D)" and "limited WQR disturbance for
+    # new dwelling units (19.402.6.B)" to TYPE I review -- ministerial, clear
+    # and objective, no hearing. Development is reachable through a review whose
+    # disturbance limits this screen does not model, so a lot that touches the
+    # NR Map is not a clean green and is not a dead lot either.
+    #
+    # DELIBERATELY NOT USED: the city also publishes NR_100ft_Compliance, a
+    # single polygon of the 19.402.3.A applicability band -- every property
+    # within 100 ft of a resource. Applicability is not restriction. Table
+    # 19.402.3 says a nonexempt activity outside the resource but inside the
+    # band needs a construction management plan and nothing else ("Comply with
+    # Remainder of Section 19.402: No"). Flagging that band would hold lots out
+    # of green for paperwork. The resource layers themselves are the screen.
+    #
+    # Every one of these four layers carries a `Link` attribute pointing at the
+    # code section it implements -- 43861333 (19.402) on the three resources,
+    # 43866788 (19.401) on the greenway. The publisher's own answer agrees with
+    # the reading, which is the first time a layer has said so out loud.
+    "overlay_milwaukie_hca": {
+        "url": f"{_MIL}/7",
+        "fields": ["TOWNSHIP", "Link"]},
+    # The vegetated corridor IS the water quality resource: 19.402.3.D.1 says
+    # WQRs "include protected water features and their associated vegetated
+    # corridors". Note the same subsection calls the map "a general indicator of
+    # the location of vegetated corridors; the specific location ... must be
+    # determined in the field" -- which is exactly why this is a flag.
+    "overlay_milwaukie_wqr": {
+        "url": f"{_MIL}/6",
+        "fields": ["Id", "Link"]},
+    # 26 wetlands from ten different SOURCE values -- MILWAUKIE, GOAL 5, NWI,
+    # ESA, TRIMET, NCPRD, PHS, GIVENS, blank, null. Only the Goal 5 subset is
+    # adopted into the NR Map as HCA per 19.402.3.D.2; the rest are consultant
+    # and federal delineations the code never adopted. Taking all 26 anyway,
+    # because a wetland somebody surveyed is a wetland whoever paid for the
+    # survey, and DSL removal-fill jurisdiction does not care which layer it is
+    # on. Over-flags, in the direction a flag is allowed to.
+    "overlay_milwaukie_wetlands": {
+        "url": f"{_MIL}/5",
+        "fields": ["SOURCE", "Link"]},
+    "overlay_milwaukie_greenway": {
+        "url": f"{_MIL}/8",
+        "fields": ["HIST", "Link"]},
     # ---------------- Oregon City (Clackamas' first wired overlay) ---------
     # OCMC 17.49.030(1): the NROD Map "is a regulatory boundary mapped ten feet
     # beyond the required vegetated corridor width" -- the published map is the

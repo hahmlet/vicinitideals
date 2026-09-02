@@ -360,6 +360,69 @@ overlays:
     coverage:
       oregon_city: {grade: A, note: "city-adopted regulatory map, 130 polygons; boundary may be re-delineated smaller under 17.49.030(2) or expanded under 17.49.035, so carving the adopted map errs conservative"}
 
+  # ---------------- Milwaukie -----------------------------------------------
+  # The first jurisdiction whose single overlay chapter yields two different
+  # actions. MMC 19.401 (Willamette Greenway) makes every land use action and
+  # all development a CONDITIONAL USE under 19.905, and 19.401.5.B's thirteen
+  # exemptions from Greenway review cover interior work, maintenance, driveways
+  # and 200 sq ft accessory structures -- not a dwelling. Discretionary
+  # approval is out of reach for a by-right screen, so the greenway is a KILL
+  # and is the only city overlay outside Portland that is one.
+  #
+  # MMC 19.402 (Natural Resources) reads like a carve and is not one.
+  # 19.402.5.A prohibits "new structures, development, or landscaping activity
+  # other than those allowed by Section 19.402" in a WQR or HCA -- and Table
+  # 19.402.3.K then routes HCA activities meeting the 19.402.11.D
+  # nondiscretionary standards, and limited WQR disturbance for NEW DWELLING
+  # UNITS under 19.402.6.B, to Type I review. Type I is ministerial. What the
+  # chapter actually imposes is a disturbance budget with mitigation planting,
+  # which this screen cannot size, so the resource layers are FLAGS.
+  #
+  # Two limits worth stating rather than discovering:
+  #  - Touch-only. 19.402.3.A applies the section to properties "that contain
+  #    or are within 100 ft of a WQR and/or HCA", and flags do not buffer, so a
+  #    lot 50 ft from a creek is not flagged. The city publishes that band as
+  #    NR_100ft_Compliance and it is deliberately not screened: Table 19.402.3
+  #    gives a nonexempt activity outside the resource but inside the band a
+  #    construction management plan and nothing else. Applicability is not
+  #    restriction, and paperwork is not a reason to lose a green.
+  #  - 19.402.3.I exempts piped portions of protected water features outright,
+  #    the exact opposite of West Linn, whose 190 piped segments stay on the
+  #    map and are flagged. Neither layer here separates piped from open, so
+  #    the WQR flag may fire on a culverted reach the code has released.
+  - key: milwaukie_greenway
+    name: "Milwaukie Willamette Greenway Zone (WG)"
+    action: kill
+    jurisdictions: [milwaukie]
+    citation: "MMC 19.401.3 — 'All land use actions and any change or intensification of use, or development permitted in the underlying zone, are conditional uses, subject to the provisions of Section 19.905'; 19.401.5.D requires a greenway conditional use for all development; 19.401.5.B's thirteen exemptions from Greenway review do not include a new dwelling; 19.401.4 defines 'develop' as 'to construct or alter a structure'"
+    confidence: verified
+    coverage:
+      milwaukie: {grade: A, note: "WG boundary from the city's own Zoning Map service, which is where 19.401.2 says it lives; 2 polygons along the Willamette. Killed rather than flagged because a conditional use is discretionary and this screen only reports what can be built by right"}
+  - key: milwaukie_hca
+    name: "Milwaukie Habitat Conservation Area (NR Map)"
+    action: flag
+    jurisdictions: [milwaukie]
+    citation: "MMC 19.402.5.A prohibits new structures and development within a WQR or HCA 'other than those allowed by Section 19.402'; Table 19.402.3.K routes activities within an HCA meeting the nondiscretionary standards of 19.402.11.D to Type I review; 19.402.11.D.2 sets mitigation planting by disturbance area; 19.402.3.C adopts the NR Map by reference"
+    confidence: verified
+    coverage:
+      milwaukie: {grade: A, note: "adopted NR Map HCA layer, 1 multipart polygon, published with a Link attribute pointing at ecode360 19.402. Under-flags: 19.402.3.A reaches 100 ft beyond the resource and this fires on touch"}
+  - key: milwaukie_wqr
+    name: "Milwaukie water quality resource / vegetated corridor (NR Map)"
+    action: flag
+    jurisdictions: [milwaukie]
+    citation: "MMC 19.402.3.D.1 — water quality resources 'include protected water features and their associated vegetated corridors'; 19.402.5.A prohibits new development within a WQR other than as allowed by Section 19.402; Table 19.402.3.K routes 'limited WQR disturbance for new dwelling units' under 19.402.6.B to Type I review"
+    confidence: verified
+    coverage:
+      milwaukie: {grade: A, note: "61 vegetated-corridor polygons off the NR Map. 19.402.3.D.1 calls the map 'a general indicator ... the specific location of vegetated corridors must be determined in the field', which is the flag's justification in the city's own words. Over-flags piped reaches, which 19.402.3.I exempts and this layer does not separate"}
+  - key: milwaukie_wetlands
+    name: "Milwaukie wetland inventory"
+    action: flag
+    jurisdictions: [milwaukie]
+    citation: "MMC 19.402.3.A applies Section 19.402 to properties containing 'any locally significant Goal 5 wetlands or habitat areas identified by the City of Milwaukie'; 19.402.3.D.2 designates significant Goal 5 wetlands as HCAs"
+    confidence: needs_verification
+    coverage:
+      milwaukie: {grade: B, note: "26 polygons across ten SOURCE values (MILWAUKIE, GOAL 5, NWI, ESA, TRIMET, NCPRD, PHS, GIVENS, blank, null). Only the Goal 5 subset is adopted into the NR Map as HCA; the rest are consultant and federal delineations the code never adopted. Kept whole because a surveyed wetland carries DSL removal-fill jurisdiction regardless of who paid for the survey. Over-flags"}
+
   # ---------------- Flood (FEMA NFHL split by attribute in s0) --------------
   - key: fema_floodway
     name: "FEMA regulatory floodway"
