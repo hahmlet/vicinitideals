@@ -102,11 +102,22 @@ the only real gaps:
     produce a confident finding out of a coin flip -- the same thing this
     module already refuses to do when a horizontal row has dropped a blank.
 
-*   **A table the OCR has shattered.** Oregon City's zoning chapter is a scan,
-    and its dimensional tables come out as ``Quad pl ex a nd co t tage 1 0 ,
-    000 squ are 8 , 000 squ are 7 , 000 s qu are`` -- 68 citations. The columns
-    are separated by single spaces, and so are the halves of the broken words,
-    so there is no split that recovers cells rather than word fragments.
+*   **A table whose columns are separated by a single space.** Cells are found
+    by splitting on runs of two spaces or more, which is the only separator
+    these extractions offer that a word does not also contain. Where a table
+    comes out single-spaced there is no split that recovers cells rather than
+    words, and the whole row reads as one cell.
+
+    Oregon City's zoning chapter is the extreme: it is a scan, so the same
+    single space separates the columns and the halves of the broken words --
+    ``Quad pl ex a nd co t tage 1 0 , 000 squ are 8 , 000 squ are 7 , 000 s qu
+    are``. Gresham's Pleasant Valley and Springwater plan districts are the
+    ordinary case, cleanly extracted and still unreadable: ``5,000 sq. ft.
+    3,000 sq. ft. None`` under a header line reading ``LDR-PV MDR-PV HDR-PV``.
+    A scanner for value tokens rather than cells would read that row, and would
+    then meet Table 4.1414, whose eleven columns are setback positions rather
+    than districts and whose header is printed down the page. 190 citations
+    between the three.
 
 So the gaps were read by hand on 2026-09-02 instead, every dimensional value
 against its own column:
@@ -120,6 +131,12 @@ against its own column:
     per-zone tables for R-6, R-5, R-3, R-2 and R-0 -- which are one district
     each, so what was checked there is the row rather than the column, the
     quadplex line of R-2's Table 50.04.001-13 rather than the duplex above it.
+*   Gresham's two plan districts. LDR-PV for lot size, frontage, density and
+    the eleven-column setback row, where the encoding correctly separates the
+    Interior Side cell from the Common Wall cell beside it -- 5 ft and 0 ft,
+    base and ``attached_wall`` variant. LDR-SW and THR-SW for the four rows
+    they share, each reading the second and third of three columns: widths 45
+    and 20, corner widths 45 and 25, depths 80 and 65, heights 35 and 45.
 *   Unincorporated Clackamas across all seven R zones and both VR zones, where
     the citations run in step -- lot coverage L1162 to L1168 in zone order --
     so an off-by-one would show as a repeat or a skip and there is neither.
