@@ -352,15 +352,33 @@ the list of places worth hoping about.
   Remaining: Tualatin and Gladstone, neither of which has a green today, so
   nothing rides on them.
 
-- **A rule that would ADD greens, found while reading the county** — Clackamas
-  ZDO 706.11 says a lot containing a habitat area, inside the Portland urban
-  growth boundary, has **no minimum front, rear or side yard setback at all**
-  (garages still have to sit back, and fire code still applies). Every other
-  environmental rule found this week takes buildable ground away; this one
-  hands it back, and specifically on the lots that are hardest to fit a pod
-  onto. Nothing in the screen can express "this constraint makes the lot
-  easier", so it is written down here rather than acted on. Worth building the
-  shape for — it can only move lots toward green, never away.
+- **A rule that hands buildable ground back** — Clackamas ZDO 706.11 says a lot
+  containing a habitat area, inside the Portland urban growth boundary, has
+  **no minimum front, rear or side yard setback at all** (garages still have to
+  sit back, and fire code still applies). Every other environmental rule found
+  this week takes buildable ground away; this one gives it back, and
+  specifically on the lots that are hardest to fit a pod onto.
+
+  **Measured 2026-09-02, and it is worth less than it looked — deferred, not
+  dropped.** The habitat layer touches 6,853 lots in unincorporated Clackamas.
+  4,419 of them are already in the review queue and 2,434 are red; of the red,
+  1,053 fail because the building will not fit and 521 because there is no
+  buildable area left at all. So the rule can reach at most **1,574 lots**.
+
+  It cannot reach a single *green* one, and the reason is that the same chapter
+  pulls both ways: 706.10 requires a habitat development permit, which is why
+  every lot in the layer is sent to a person for review in the first place. A
+  lot cannot be flagged for review and cleared green at the same time. So the
+  honest prize is 1,574 lots moving from *discarded* to *worth a look* — real,
+  but it grows a queue rather than the buy list.
+
+  And every one of those lots is in the one jurisdiction that cannot be drawn
+  at all, because its parking aisle width is locked inside the drawing in item
+  1 above. Building this before that question is answered puts 1,574 lots into
+  a queue that cannot move. **Trigger: build it when item 1 is answered**, in
+  the same pass that puts unincorporated Clackamas back through the site-plan
+  generator. Nothing is lost by waiting — the screen recomputes every lot from
+  scratch on each run.
 
 - ~~**Portland-administered pockets** (PCC 33.266 applied to the 1,489
   unincorporated-Multnomah lots Portland administers)~~ Closed 2026-09-01:
