@@ -261,11 +261,28 @@ encoded number appears on the line the citation names, which is true of every di
 that row that happens to share it. This one splits the row into cells, takes the column
 order from the nearest header above it, and reads the district’s own cell by position.
 
-It is deliberately narrow, and reports how narrow: it reads only rows that print a cell
-for every column — an extractor that drops empty cells produces a short row, and the
-dropped cells are exactly the ones that shift every column after them — and judges only
-cells it can compare, a number against a number and “None” or “NA” against an exemption.
-A cell reading “Varies depending on access” is the footnote ledger’s row, not this one.
+It counts cells rather than character offsets. Reading by offset was tried and does not
+work on these extractions: they align body rows with each other but not with the header,
+and Gresham prints its district codes thirty characters right of the values beneath them.
+A row that has dropped an empty cell is skipped rather than indexed, because the dropped
+cells are exactly the ones that shift every column after them.
+
+It follows a citation onto every line the citation names and asks agreement of **one** of
+them, not all — the other lines are context by design, a header row quoted to pin a column
+or a second row the corpus chose between. And a citation that reaches past the table is
+not judged at all. That is the rule that keeps it quiet: what a citation reaches past the
+table for is routinely the thing that *replaces* the cell. Gresham CC’s maximum front
+setback is “10 feet” in the cell and five feet by note 3c, on a street class this screen
+cannot read; Happy Valley’s lot width is “100 feet” in the cell and exempt by note 2 four
+hundred lines down. Both encodings are right and neither matches its own cell. What stays
+judged is the citation that names the row and nothing else — which is the shape the
+townhouse frontage misread had. It reaches 518 citations and judges 154 of them.
+
+Two buckets, because they are different work. A **mismatch** is a cell stating one number
+where another was encoded. A **vacancy** is a cell stating no standard — “None”, “NA” —
+with a number encoded against it, which is a ruling per field rather than per city: zero
+and no-standard behave alike on a setback and a signer may reasonably prefer either, while
+a minimum lot size of zero is a claim the table does not make.
 
 The failure it exists for: Gresham Table 4.0130 G.1, the townhouse street-frontage row,
 reads *16 ft. / 16 ft. / 16 ft. / None / None / 16 ft. / None* across LDR-5, LDR-7, TR,

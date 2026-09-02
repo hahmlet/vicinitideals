@@ -535,6 +535,15 @@ the list of places worth hoping about.
   invisible to it — it would have walked straight past the misread it was
   written for.
 
+  It was then taught the citation shapes it had been skipping — most citations
+  name several lines, not one — and now reads 518 of them where it started at
+  29. It stays quiet about one whole class on purpose: when a citation points
+  at a footnote as well as the table, the footnote is usually the thing that
+  *replaces* the number in the cell, so the check leaves it alone rather than
+  reporting a correct reading as an error. Gresham's downtown corridor is the
+  example — the table says a ten-foot maximum front setback and the footnote
+  makes it five on most street types, and five is what we encoded.
+
 - **Wire up the Clackamas environmental layers** — done everywhere a green is
   at stake, and the work turned out to be reading, not configuring. Every city publishes a
   natural-resource map; no two of them mean the same thing by it, and only the

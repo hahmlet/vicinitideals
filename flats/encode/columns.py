@@ -14,31 +14,44 @@ at all. Every existing check passed: the quoted line contains "16 ft." three
 times over, so the number *is* on the line the citation names. It is simply in
 somebody else's column.
 
-The check is arithmetic on whitespace. Where a document prints one aligned cell
-per column, the row can be split into cells, the nearest preceding header line
-gives the column order, and the zone's own cell can be read by position and
-compared with what was encoded.
+The check counts cells. A row is split on runs of whitespace and the district's
+cell is taken by position in that row, with the nearest header above giving the
+order. Reading by character offset was tried and does not work on these
+extractions: they align body rows with each other but not with the header, and
+Gresham prints its district codes thirty characters right of the values beneath
+them.
 
-Two things it deliberately will not do:
+It follows a citation onto every line the citation names, and asks agreement of
+one of them rather than all -- the other lines are context by design, a header
+row quoted to pin a column or a footnote quoted beside the cell it governs.
 
-*It only reads rows that print a cell for every column.* Extractors that drop
-empty cells produce a short row, and a short row cannot be indexed -- the
-missing cells are exactly the ones that would shift every column after them.
-Those rows are skipped rather than guessed at, which is why the count of what
-this reads is small and is reported next to the count of what it found.
+What it will not do is judge a cell it cannot turn into the same kind of thing
+as the encoded value. A number against a number, "None" or "NA" against an
+exemption, and nothing else: a cell reading "Varies depending on access" hands
+its number to a footnote and belongs to :mod:`flats.encode.footnotes`, a cell
+reading "see 3.235.B" belongs to :mod:`flats.encode.routing`. Judging those
+here would produce confident nonsense in the one place that is meant to be
+arithmetic.
 
-*It only judges cells it can turn into the same kind of thing as the encoded
-value.* A number against a number, and "None" or "NA" against an exemption.
-A cell reading "Varies depending on access" is a footnote pointer and belongs
-to :mod:`flats.encode.footnotes`; a cell of prose is a refusal or a condition
-and belongs to the ledgers that count those. Judging them here would produce
-confident nonsense in the one place that is meant to be arithmetic.
+Three counts, reported separately because they are different work:
 
-So a clean result from this module means one narrow thing -- no encoded number
-sits in the wrong column of a row we can count columns on -- and the module
-reports how narrow. The blindness worth guarding against is the reader that
-stops seeing rows at all and reports the corpus clean; ``reach()`` is the
-number a test pins so that failure is loud.
+``mismatches``
+    The cell states a number and the encoded value is a different number. This
+    is the reading error the module exists for.
+
+``vacancies``
+    The cell states no standard -- "None", "NA" -- and a number was encoded
+    against it. Gresham's townhouse frontage was one of these, and so is every
+    Portland commercial setback written as ``0`` where the table says "none".
+    They are not the same decision: zero and no-standard behave alike on a
+    setback and a signer may reasonably prefer either, while a minimum lot size
+    of zero is a claim the table does not make. Reported apart so the ruling
+    can be made per field rather than per city.
+
+``reach``
+    How many citations the check could read at all. A reader that has stopped
+    seeing rows reports a clean corpus in exactly the words of a corpus that is
+    clean, so this is pinned by a test.
 
 Run it::
 
@@ -63,9 +76,19 @@ _ZONE = re.compile(r"^[A-Z][A-Za-z0-9/. \-]{0,14}$")
 #: Cells are separated by runs of two or more spaces in the extracted text.
 _SPLIT = re.compile(r"\s{2,}")
 
-#: ``quote: "or/multnomah/gresham/4.0100.residential.txt#L313"`` -- one line
-#: only. A range spans rows and cannot be indexed by column.
-_QUOTE = re.compile(r'^\s+quote:\s*"([^"#]+)#L(\d+)"\s*$')
+#: ``quote: "or/multnomah/gresham/4.0100.residential.txt#L313"``, and the
+#: multi-line forms beside it: ``#L315,L319``, ``#L316-L318,L385``.
+_QUOTE = re.compile(
+    r'^\s+quote:\s*"([^"#]+)#(L\d+(?:-L?\d+)?(?:,L\d+(?:-L?\d+)?)*)"\s*$'
+)
+
+_PART = re.compile(r"^L(\d+)(?:-L?(\d+))?$")
+
+#: How long a cited range may be before it is read as prose rather than rows.
+_MAX_RANGE = 12
+
+#: How far a wrapped value may run past the line its row starts on.
+_MAX_WRAP = 3
 
 _ZONE_KEY = re.compile(r"^  ([A-Za-z0-9/_.\-]+):\s*$")
 _FIELD_KEY = re.compile(r"^    ([a-z0-9_]+):\s*$")
@@ -98,9 +121,19 @@ _NOT_A_VALUE = frozenset(
 #: zero is a standard that a lot can fail to meet, and an exemption is not.
 _NOTHING = frozenset({"none", "none.", "na", "n/a", "not applicable", "no maximum"})
 
-_NUMBER = re.compile(r"^([\d.,]+)\s*(?:ft\.?|sq|units?|%|$)")
+#: A cell that hands its number somewhere else. The value is not in it.
+_ELSEWHERE = re.compile(r"\b(see|varies|table note|per section)\b", re.I)
+
+#: A cell ending in a connective is a value that wraps onto the next line.
+#: Portland prints a density as "1 unit per" / "1,450 sq. ft. of" / "site area"
+#: down three lines, and the figure is not on the row the citation names.
+_WRAPPED = re.compile(r"\b(per|of|and|or|to|from|than|for)\s*$", re.I)
+
+_FIGURES = re.compile(r"\d[\d,]*(?:\.\d+)?")
 
 _EXEMPT_TOKEN = "EXEMPT"
+
+_VACANT = "vacant"
 
 
 @dataclass(frozen=True)
@@ -128,8 +161,11 @@ class Mismatch:
 class Survey:
     """What the check reached, and what it found there."""
 
+    #: The cell states a number, and a different number was encoded.
     mismatches: tuple[Mismatch, ...]
-    #: Citations that landed on a full-width row carrying this zone's column.
+    #: The cell states no standard, and a number was encoded against it.
+    vacancies: tuple[Mismatch, ...]
+    #: Citations that landed on a table this check can read by column.
     reached: int
     #: Of those, the ones whose cell could be compared with the encoded value.
     judged: int
@@ -153,17 +189,22 @@ def is_code(cell: str) -> bool:
     """Does this header cell name a district rather than label the rows?
 
     Happy Valley heads its column of row names "Standard"; Gresham heads its
-    with nothing at all. The difference decides whether a row of N cells is N
-    districts with a label in front or a label plus N-1 districts, and getting
-    it wrong reads every value one column to the side. District codes carry a
-    digit (R-40, LDR-5) or are written in capitals (TR, TLDR, MUR-S); a word in
-    sentence case is a heading.
+    with nothing at all. District codes carry a digit (R-40, LDR-5) or are
+    written in capitals (TR, TLDR, MUR-S); a word in sentence case is a
+    heading, and the difference decides where the first district's column
+    starts.
     """
     return any(ch.isdigit() for ch in cell) or cell.upper() == cell
 
 
 class _Doc:
-    """One extracted document, with its header rows located once."""
+    """One extracted document, with its header rows located once.
+
+    Cells are read in order, not by character offset. These extractions align
+    body rows with each other but not with the header above them -- Gresham
+    prints its district codes thirty characters right of the values beneath
+    them -- so counting cells is the only reading that holds.
+    """
 
     def __init__(self, lines: Sequence[str]) -> None:
         self.lines = list(lines)
@@ -194,6 +235,15 @@ class _Doc:
             self.labelled[i] = not first_is_code
         self._order = sorted(self.headers)
 
+    def is_header(self, line_no: int) -> bool:
+        """Is this line itself a column heading?
+
+        Citations name one deliberately: a header row is how the corpus pins
+        which of three districts a number on the next line belongs to. Reading
+        it as a row of values compares an exemption against the word "R-40".
+        """
+        return (line_no - 1) in self.headers
+
     def header_for(self, line_no: int) -> tuple[list[str], bool] | None:
         """The column order in force at a line, and whether it labels its rows.
 
@@ -205,6 +255,29 @@ class _Doc:
                 break
             best = (self.headers[i], self.labelled[i])
         return best
+
+    def cell(self, line_no: int, zone: str) -> str | None:
+        """This district's cell on this row, or ``None`` if it cannot be read."""
+        got = self.header_for(line_no)
+        if got is None:
+            return None
+        header, labelled = got
+        spelled = [norm(c) for c in header]
+        if norm(zone) not in spelled:
+            return None
+        column = spelled.index(norm(zone))
+        row = cells(self.lines[line_no - 1])
+        # Two shapes, and which one applies is settled by the header rather
+        # than by the row's length. A header that labels its own rows
+        # ("Standard") lines up one for one with the row beneath it; a header
+        # of districts only sits over rows that carry a label in front.
+        # Deciding from the row's length instead would read a row that had
+        # dropped one blank cell as a row of the other shape, and then report
+        # every value one column to the side, confidently.
+        want = len(header) if labelled else len(header) + 1
+        if len(row) != want:
+            return None
+        return row[column] if labelled else row[1 + column]
 
 
 def _doc(cache: dict[str, _Doc | None], rel: str, root: Path) -> _Doc | None:
@@ -218,8 +291,15 @@ def _doc(cache: dict[str, _Doc | None], rel: str, root: Path) -> _Doc | None:
     return cache[rel]
 
 
-def _judge(encoded: str, cell: str) -> bool | None:
-    """``True``/``False`` where the two are comparable, ``None`` where not."""
+def _figure(text: str) -> float | None:
+    try:
+        return float(text.replace(",", ""))
+    except ValueError:
+        return None
+
+
+def _judge(encoded: str, cell: str) -> bool | str | None:
+    """``True``, ``False``, ``"vacant"``, or ``None`` where not comparable."""
     text = cell.strip().lower()
     if not text:
         return None
@@ -227,22 +307,60 @@ def _judge(encoded: str, cell: str) -> bool | None:
     if encoded == _EXEMPT_TOKEN:
         return nothing
     if nothing:
-        # A number encoded where the cell states no standard. This is the
-        # Gresham case exactly, and it has to be judged rather than skipped:
-        # "None" is not a number, so a check that only compares numbers would
-        # step straight past the misread it was written for.
-        return False
-    got = _NUMBER.match(cell)
-    if got is None:
+        # A number encoded where the cell states no standard. Judged rather
+        # than skipped -- "None" is not a number, so a check that only compares
+        # numbers would step straight past the misread it was written for --
+        # but reported apart, because zero and no-standard are the same thing
+        # on a setback and different things on a minimum lot size.
+        return _VACANT
+    if _ELSEWHERE.search(cell) or _WRAPPED.search(cell):
+        return None
+    if text[0].islower():
+        # A cell opening in lower case is the tail of the line above it:
+        # Gresham breaks "6.22 units per" and "acre4" across two lines, and
+        # the fragment carries the footnote marker as though it were a
+        # number. Rows start with a figure or a capital; fragments do not.
         return None
     try:
-        return float(got.group(1).replace(",", "")) == float(encoded)
+        want = float(encoded)
     except ValueError:
         return None
+    # Any number in the cell, not only the one it opens with. Portland writes
+    # a density as "1 unit per 2,500 sq. ft." and encodes the 2,500; reading
+    # only the leading figure would report every density in the city wrong.
+    figures = [f for f in (_figure(m) for m in _FIGURES.findall(cell)) if f is not None]
+    if not figures:
+        return None
+    return any(f == want for f in figures)
 
 
-def _citations(path: Path) -> Iterator[tuple[str, str, str, str, str, int]]:
-    """``(zone, field, when, encoded, doc, line)`` for every single-line quote."""
+def cited(spec: str) -> list[int]:
+    """The lines a citation names, as line numbers a row can be read from.
+
+    A citation is routinely more than one line, and the extra lines are how the
+    corpus pins a column: Happy Valley quotes ``L278,L281`` because the header
+    row is what says which of three districts the number on L281 belongs to.
+    """
+    out: list[int] = []
+    for part in spec.split(","):
+        got = _PART.match(part.strip())
+        if not got:
+            continue
+        start = int(got.group(1))
+        end = int(got.group(2)) if got.group(2) else start
+        # A range is normally a row and its wrapped continuation, or the two
+        # rows of a standard the corpus had to choose between. Long ones are a
+        # passage of prose, not a table, and expanding those would compare a
+        # value against every line of an argument.
+        if end < start or end - start > _MAX_RANGE:
+            out.append(start)
+            continue
+        out.extend(range(start, end + 1))
+    return out
+
+
+def _citations(path: Path) -> Iterator[tuple[str, str, str, str, str, list[int]]]:
+    """``(zone, field, when, encoded, doc, lines)`` for every quoted value."""
     zone = field = None
     encoded = when = None
     for line in path.read_text(encoding="utf-8").splitlines():
@@ -263,7 +381,7 @@ def _citations(path: Path) -> Iterator[tuple[str, str, str, str, str, int]]:
             continue
         got = _QUOTE.match(line)
         if got and zone and field and encoded is not None:
-            yield zone, field, when or "", encoded, got.group(1), int(got.group(2))
+            yield zone, field, when or "", encoded, got.group(1), cited(got.group(2))
             continue
         got = _ANY_KEY.match(line)
         if got:
@@ -280,50 +398,60 @@ def survey(
     configroot: Path = CONFIGROOT,
     docroot: Path = DOCROOT,
 ) -> Survey:
-    """Read every aligned citation in the corpus against its own column."""
+    """Read every citation into a readable table against its own column."""
     cache: dict[str, _Doc | None] = {}
-    found: list[Mismatch] = []
+    wrong: list[Mismatch] = []
+    vacant: list[Mismatch] = []
     reached = judged = 0
 
     for path in sorted(configroot.rglob("*.yaml")):
         layer = path.relative_to(configroot).with_suffix("").as_posix()
         if layers and not any(layer.startswith(want.strip("/")) for want in layers):
             continue
-        for zone, field, when, encoded, rel, line_no in _citations(path):
+        for zone, field, when, encoded, rel, line_nos in _citations(path):
             doc = _doc(cache, rel, docroot)
-            if doc is None or line_no > len(doc.lines):
+            if doc is None:
                 continue
-            heading = doc.header_for(line_no)
-            if heading is None:
+            candidates: list[tuple[str, int]] = []
+            for line_no in line_nos:
+                if line_no > len(doc.lines) or doc.is_header(line_no):
+                    continue
+                cell = doc.cell(line_no, zone)
+                if cell:
+                    candidates.append((cell, line_no))
+            if not candidates:
                 continue
-            header, labelled = heading
-            spelled = [norm(c) for c in header]
-            if norm(zone) not in spelled:
-                continue
-            column = spelled.index(norm(zone))
-            row = cells(doc.lines[line_no - 1])
-            # Two shapes, and which one applies is settled by the header
-            # rather than by the row's length. A header that labels its own
-            # rows ("Standard") lines up one for one with the row beneath it; a
-            # header of districts only sits over rows that carry a label in
-            # front. Deciding from the row's length instead would read a row
-            # that had dropped one blank cell as a row of the other shape, and
-            # then confidently report every value one column to the side.
-            want = len(header) if labelled else len(header) + 1
-            if len(row) != want:
-                continue
-            cell = row[column] if labelled else row[1 + column]
             reached += 1
-            verdict = _judge(encoded, cell)
-            if verdict is None:
+            if len(candidates) != len(line_nos):
+                # The citation reaches past the table, and what it reaches is
+                # routinely the thing that replaces the cell. Happy Valley's
+                # lot width is "100 feet" in the cell and exempt by note 2 four
+                # hundred lines down; Gresham CC's maximum front setback is
+                # "10 feet" in the cell and five by note 3c on every street
+                # class this screen cannot read. Both encodings are right and
+                # neither matches its own cell, so a citation that quotes the
+                # override is left alone. What stays judged is the citation
+                # that names the row and nothing else -- which is the shape
+                # the townhouse frontage misread had.
+                continue
+            verdicts = [
+                (_judge(encoded, cell), cell, line_no) for cell, line_no in candidates
+            ]
+            comparable = [v for v in verdicts if v[0] is not None]
+            if not comparable:
                 continue
             judged += 1
-            if not verdict:
-                found.append(
-                    Mismatch(layer, zone, field, when, encoded, cell, rel, line_no)
-                )
+            # A citation naming several lines has to agree with ONE of them,
+            # not all. The others are context by design -- a header row quoted
+            # to pin the column, the second of two rows the corpus chose
+            # between, a footnote quoted beside the cell it governs.
+            if any(v[0] is True for v in comparable):
+                continue
+            verdict, cell, line_no = comparable[0]
+            row = Mismatch(layer, zone, field, when, encoded, cell, rel, line_no)
+            (vacant if verdict == _VACANT else wrong).append(row)
 
-    return Survey(tuple(found), reached, judged)
+    return Survey(tuple(wrong), tuple(vacant), reached, judged)
 
 
 def reach(**kwargs) -> int:
@@ -332,21 +460,25 @@ def reach(**kwargs) -> int:
 
 
 def render(got: Survey) -> Iterator[str]:
-    yield (
-        f"{got.reached} citation(s) landed on a row printing one cell per column"
-        f" and carrying this zone's own column"
-    )
+    yield f"{got.reached} citation(s) landed on a table readable by column"
     yield f"{got.judged} of them could be compared with what was encoded"
-    yield f"{len(got.mismatches)} disagree"
+    yield f"{len(got.mismatches)} state a different number than was encoded"
+    yield f"{len(got.vacancies)} state no standard where a number was encoded"
     if got.mismatches:
         yield ""
+        yield "  --- a different number ---"
     for row in got.mismatches:
         yield f"  {row}"
-    if not got.mismatches:
+    if got.vacancies:
+        yield ""
+        yield "  --- the cell states no standard ---"
+    for row in got.vacancies:
+        yield f"  {row}"
+    if not got.mismatches and not got.vacancies:
         yield ""
         yield (
             "  Clean means one narrow thing: no encoded number sits in another"
-            " district's column of a row this check can count columns on."
+            " district's column of a table this check can read."
         )
 
 
