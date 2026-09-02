@@ -18,12 +18,22 @@ pytestmark = pytest.mark.unit
 
 
 class _Z:
-    def __init__(self, zone, confidence, min_density=None):
+    def __init__(self, zone, confidence, min_density=None, density_from_sqft=None):
         self.zone, self.confidence = zone, confidence
         self.min_density_du_per_acre = min_density
+        #: Where a city applies its density floor only above a lot size --
+        #: Gresham's MDR-24 starts at 11,000 sq ft -- the RATE itself is banded,
+        #: so a small lot has no floor rather than a floor it clears.
+        self.density_from_sqft = density_from_sqft
 
-    def density_floor_lot_sqft(self, units: int = 4):
+    def density_floor_lot_sqft(self, units: int = 4, lot_area_sqft=None):
         if not self.min_density_du_per_acre:
+            return None
+        if (
+            self.density_from_sqft is not None
+            and lot_area_sqft is not None
+            and lot_area_sqft < self.density_from_sqft
+        ):
             return None
         return units / float(self.min_density_du_per_acre) * 43_560.0
 
@@ -41,12 +51,19 @@ class _Rules:
 
     FLOORED states a minimum density of 8.71 units per acre, so four homes need
     20,005 sq ft and anything larger is short of the floor.
+
+    BANDED states the same floor and confines it to sites of 24,000 sq ft and
+    up, the shape Gresham writes MDR-24 in. Below the band there is no floor at
+    all, which is a different thing from a floor a lot happens to clear -- and
+    the gap between 20,005 and 24,000 is where the two answers differ.
     """
     def __init__(self):
         self.jurisdictions = {
             "gresham": _J(True, [_Z("LDR-5", "verified"),
                                  _Z("UNVERIFIED", "needs_verification"),
-                                 _Z("FLOORED", "verified", 8.71)]),
+                                 _Z("FLOORED", "verified", 8.71),
+                                 _Z("BANDED", "verified", 8.71,
+                                    density_from_sqft=24_000)]),
         }
 
 
@@ -413,6 +430,28 @@ def test_a_lot_can_be_too_big_for_four_homes():
     assert list(lots["density_floor_short"]) == [False, True, False]
     # And it is never a red: the lot passes every hard test it is given.
     assert list(lots["binding_constraint"]) == ["", "", ""]
+
+
+def test_a_floor_that_does_not_reach_a_small_lot_is_no_floor():
+    """A city can confine its own minimum density to lots above a size.
+
+    Gresham prints 12.1 units per acre for MDR-24 and then says in the note
+    that it applies to a site of 11,000 sq ft and up. Carried as one number it
+    asked every smaller lot to meet a floor its own code does not reach.
+
+    The first two lots are the same 22,000 sq ft, big enough that four homes
+    miss an 8.71 du/acre floor. FLOORED states that floor for every lot and the
+    lot is a question; BANDED states it only from 24,000 sq ft up, so the same
+    lot is not being asked. The third lot is inside BANDED's band and short.
+    """
+    rows = [
+        _base_row(zone="FLOORED", area_sqft=22_000.0),  # floor reaches it
+        _base_row(zone="BANDED", area_sqft=22_000.0),   # below the band: unfloored
+        _base_row(zone="BANDED", area_sqft=25_000.0),   # inside it, and short
+    ]
+    lots = _run(rows)
+    assert list(lots["density_floor_short"]) == [True, False, True]
+    assert list(lots["triage"]) == ["review", "green", "review"]
 
 
 def test_the_density_floor_cannot_rescue_a_lot_that_fails_on_its_own():

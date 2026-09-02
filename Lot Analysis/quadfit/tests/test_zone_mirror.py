@@ -582,3 +582,90 @@ def test_a_standard_with_no_column_is_a_standard_nobody_applies() -> None:
         "the set of standards this pipeline cannot express moved: "
         f"{ {k: (UNEXPRESSIBLE.get(k), found.get(k)) for k in set(found) ^ set(UNEXPRESSIBLE) | {k for k in found if found[k] != UNEXPRESSIBLE.get(k)}} }"
     )
+
+
+#: Standards the corpus states in more than one column of LOT AREA where
+#: rules.yaml still carries a single number. Each one needs a reason, and each
+#: of these has the same reason: the column that would differ cannot be reached.
+#:
+#: Wilsonville's rear yard is 15 ft on a small lot for a ONE-STOREY building
+#: and 20 ft for two or more; over 10,000 sq ft it is 20 either way. The pod is
+#: two storeys at 26 ft, so it owes 20 ft in every column and the band would
+#: only restate it. Milwaukie's rear yard drops to 15 ft in the 1,500-2,999
+#: sq ft column, and R-MD's own minimum lot is 3,000 unless the plat is unit
+#: lots -- which is not how this pod is built -- so no lot the screen looks at
+#: is ever in that column.
+FLAT_BUT_BANDED: frozenset[str] = frozenset({
+    "milwaukie/R-MD.setback_rear_ft",
+    "wilsonville/OTR.setback_rear_ft",
+    "wilsonville/PDR1.setback_rear_ft",
+    "wilsonville/PDR2.setback_rear_ft",
+    "wilsonville/PDR3.setback_rear_ft",
+    "wilsonville/PDR4.setback_rear_ft",
+    "wilsonville/PDR5.setback_rear_ft",
+    "wilsonville/PDR6.setback_rear_ft",
+    "wilsonville/R.setback_rear_ft",
+})
+
+
+def test_a_table_with_two_columns_of_lot_area_is_held_as_two_columns() -> None:
+    """The blind spot in the check above, and the largest one found so far.
+
+    `scan()` accepts a shipped number when it matches ANY limb of the corpus
+    value. A standard written as several columns of lot area therefore agrees
+    with itself whichever column you ship, and Wilsonville shipped the small-lot
+    single-storey column for every residential zone it has -- with the correct
+    reading spelled out in its own `notes:` line, because rules.yaml had no way
+    to hold a number that depends on the size of the lot.
+
+    `lot_size_bands` is that way. This test says every banded standard in the
+    corpus is either held as a band or listed above with a reason.
+    """
+    audit = _audit()
+    flat = {
+        row.split(" ")[1] for row in audit.banded_standards() if row.startswith("FLAT ")
+    }
+    assert flat == FLAT_BUT_BANDED, (
+        "a banded standard is being screened as one number: "
+        f"new {sorted(flat - FLAT_BUT_BANDED)}, closed {sorted(FLAT_BUT_BANDED - flat)}"
+    )
+
+
+def test_the_band_answers_per_lot_and_not_per_zone() -> None:
+    """Wilsonville's two columns, read off a lot of each size.
+
+    The numbers are WDC 4.113(.14): A for lots over 10,000 sq ft, B for lots
+    not exceeding it, and inside B a storey branch the pod's own height settles.
+    A 9,000 sq ft lot and a 12,000 sq ft lot in the same zone owe different
+    yards, which is the whole point and exactly what a single column cannot say.
+    """
+    from common import load_rules
+
+    r = load_rules().jurisdictions["wilsonville"].rule_for("R")
+    assert (r.effective_setback_front_ft(9_000),
+            r.effective_setback_side_ft(lot_area_sqft=9_000),
+            r.effective_setback_rear_ft(lot_area_sqft=9_000)) == (15, 7, 20)
+    assert (r.effective_setback_front_ft(12_000),
+            r.effective_setback_side_ft(lot_area_sqft=12_000),
+            r.effective_setback_rear_ft(lot_area_sqft=12_000)) == (20, 10, 20)
+
+    # 4.122's coverage is a four-step table and the steps are steep: the same
+    # zone allows half the lot at 6,000 sq ft and a quarter of it at 12,000.
+    assert r.coverage_cap_sqft(6_000) == 3_000
+    assert r.coverage_cap_sqft(12_000) == 3_000
+
+    # And with no area in hand every one of them falls back to the scalar, so
+    # a caller that has not been taught the band keeps the answer it had.
+    assert r.effective_setback_side_ft() == 7
+
+
+def test_a_floor_that_does_not_reach_a_small_lot_is_no_floor() -> None:
+    """Gresham states 12.1 du/acre as a minimum and then confines it to sites
+    of 11,000 sq ft and up. Carried flat it would ask a 9,000 sq ft lot to meet
+    a floor its own code does not apply -- the band is what says "no floor
+    here", which is not the same as a floor of zero."""
+    from common import load_rules
+
+    z = load_rules().jurisdictions["gresham"].rule_for("MDR-24")
+    assert z.density_floor_lot_sqft(lot_area_sqft=9_000) is None
+    assert z.density_floor_lot_sqft(lot_area_sqft=12_000) == pytest.approx(14_400, abs=1)

@@ -466,15 +466,23 @@ def main() -> None:
     # Per-CELL front setback from the verified zone rule (fallback 10 ft). One
     # lookup per (jurisdiction, zone) rather than per lot: there are a few dozen
     # cells and a quarter of a million lots.
-    setbacks: dict[tuple[str, str], float] = {}
+    #
+    # Wilsonville states its front setback per lot size, so the cell is really
+    # (jurisdiction, zone, which band the lot falls in). The band index is one
+    # comparison per lot and the cache still holds a few dozen entries -- what
+    # it must not do is answer per zone and quietly give a 12,000 sq ft lot the
+    # small-lot number.
+    setbacks: dict[tuple[str, str, int], float] = {}
 
-    def _front_setback(jur: str, zone: str) -> float:
-        key = (jur, zone)
+    def _front_setback(jur: str, zone: str, area: float = 0.0) -> float:
+        jr = rules.jurisdictions.get(jur)
+        zr = jr.rule_for(zone) if jr else None
+        rows = zr.lot_size_bands.get("setback_front_ft") if zr else None
+        band = sum(1 for at_least, _ in rows if area >= at_least) if rows else 0
+        key = (jur, zone, band)
         if key not in setbacks:
-            jr = rules.jurisdictions.get(jur)
-            zr = jr.rule_for(zone) if jr else None
-            setbacks[key] = (float(zr.setback_front_ft)
-                             if zr and zr.setback_front_ft else 10.0)
+            v = zr.effective_setback_front_ft(area) if zr else None
+            setbacks[key] = float(v) if v else 10.0
         return setbacks[key]
 
     # Each city's own numbers, keyed by name and handed to the workers whole.
@@ -510,6 +518,10 @@ def main() -> None:
         asks = {z: v for z, v in asks.items() if v}
         if not asks:
             continue
+        # No lot in hand here, so this reads the SMALLEST-lot band -- the
+        # loosest front setback the zone states, which is the one a parking
+        # setback is most likely to reach past. If it does not bind there it
+        # binds nowhere.
         over = {z: (v, _front_setback(j, z)) for z, v in asks.items()
                 if v > _front_setback(j, z)}
         lo, hi = min(asks.values()), max(asks.values())
@@ -556,7 +568,8 @@ def main() -> None:
         tasks.append((
             int(i), shapely.to_wkb(row["env_geom"]),
             json.loads(row["front_bearings_json"]), fedges,
-            float(row["area_sqft"]), _front_setback(jur, zone), jur, zone,
+            float(row["area_sqft"]),
+            _front_setback(jur, zone, float(row["area_sqft"])), jur, zone,
             sp.parking_street_setback_for(jur, zone),
         ))
 

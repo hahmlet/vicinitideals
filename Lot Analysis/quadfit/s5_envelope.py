@@ -74,10 +74,14 @@ def main() -> None:
         # and two Milwaukie zones cap the roof at the setback line and make it
         # rise a foot per foot beyond, so a 26 ft pod owes more yard than the
         # district table prints. See ZoneRule.effective_setback_*.
+        # ...and all three come through the lot-size band: Wilsonville prints
+        # its residential setback table twice, once for lots over 10,000 sq ft
+        # and once for lots under, and neither column is "the zone's setback".
+        area = float(row.area_sqft)
         setbacks = {
-            "F": rule.setback_front_ft,
-            "R": rule.effective_setback_rear_ft(),
-            "S": rule.effective_setback_side_ft(),
+            "F": rule.effective_setback_front_ft(area),
+            "R": rule.effective_setback_rear_ft(lot_area_sqft=area),
+            "S": rule.effective_setback_side_ft(lot_area_sqft=area),
         }
         # Corner lots (tier B): we can't tell which street edge is the legal
         # front, so every street edge takes max(front, street_side) —

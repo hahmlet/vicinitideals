@@ -365,6 +365,59 @@ ROUTED_ELSEWHERE: frozenset[str] = frozenset({
 })
 
 
+def banded_standards() -> list[str]:
+    """Standards the corpus states per LOT SIZE, and what the pipeline holds.
+
+    `scan()` is structurally blind to these. It accepts the shipped number if
+    it equals ANY limb of the corpus value, so a zone that ships one column of
+    a banded table agrees with itself forever. Every Wilsonville residential
+    zone did exactly that -- carrying the small-lot single-storey setback and
+    applying it to lots of any size -- with the correct reading written out in
+    its own `notes:` line, because rules.yaml had no way to hold a number that
+    depends on the size of the lot until `lot_size_bands` existed.
+
+    A row reads `banded` when rules.yaml carries the band and `FLAT` when it
+    carries one number against a table with more than one column. FLAT is not
+    automatically wrong: a band whose lower columns sit below the zone's own
+    minimum lot size can never fire. It always needs a reason, though, which
+    is why they are frozen into a test rather than counted.
+    """
+    top, corpus = _load()
+    out: list[str] = []
+    for juris, z, zl, layer in _pairs(top, corpus):
+        held_all = z.get("lot_size_bands") or {}
+        for mine, theirs in MIRRORED.items():
+            value = zl.values.get(theirs) or layer.defaults.get(theirs)
+            if value is None:
+                continue
+            edges: set[float] = set()
+            for v in getattr(value, "variants", ()) or ():
+                band = getattr(v, "band", None)
+                if band is None or band.measure != "lot_sqft":
+                    continue
+                edge = band.more_than if band.more_than is not None else band.at_least
+                if edge is None and band.at_most is not None:
+                    # A column with a ceiling and no floor is still a band, and
+                    # the edge is where the NEXT column starts. Gresham's MDR-24
+                    # density floor is written this way -- "does not apply below
+                    # 11,000 sq ft" and nothing else -- and reading only the
+                    # lower bounds made the one banded standard in Gresham
+                    # invisible to the check built to find banded standards.
+                    edge = float(band.at_most) + 1
+                if edge is not None:
+                    edges.add(float(edge))
+            if not edges:
+                continue
+            held = sorted(float(r[0]) for r in held_all.get(mine, []))
+            state = "banded" if held else "FLAT"
+            out.append(
+                f"{state} {juris}/{z['zone']}.{mine} "
+                f"corpus={[_n(e) for e in sorted(edges)]} "
+                f"pipeline={[_n(h) for h in held] if held else 'one number'}"
+            )
+    return sorted(out)
+
+
 def unexpressible_standards() -> dict[str, list[str]]:
     """Corpus standards with no column in rules.yaml and no other way in.
 

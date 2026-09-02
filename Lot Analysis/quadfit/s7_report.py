@@ -391,15 +391,18 @@ def attribute_and_triage(lots, fp_names, rules, has_siteplan, flag_ovl_cols,
     # lot that fails on gross might still pass once the undevelopable ground
     # comes out. One direction is settled and the other is a question, which is
     # what the review queue is for.
-    def _floor(j: str, z: str):
+    # The RATE is banded too. Gresham applies MDR-24's 12.1 du/acre only to a
+    # site of 11,000 sq ft and up, so whether a lot has a floor at all is a
+    # question about its own size and has to be asked per lot.
+    def _floor(j: str, z: str, a: float):
         jr = rules.jurisdictions.get(j)
         zr = None if jr is None else jr.rule_for(z)
-        return None if zr is None else zr.density_floor_lot_sqft()
+        return None if zr is None else zr.density_floor_lot_sqft(lot_area_sqft=a)
 
     area = lots["area_sqft"].to_numpy(dtype=float)
     density_floor_short = np.array([
         (f is not None and a > float(f))
-        for f, a in zip((_floor(j, z) for j, z in zip(juris, zone)), area)
+        for f, a in zip((_floor(j, z, a) for j, z, a in zip(juris, zone, area)), area)
     ])
     lots["density_floor_short"] = density_floor_short
 

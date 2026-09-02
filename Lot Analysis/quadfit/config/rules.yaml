@@ -428,7 +428,14 @@ jurisdictions:
         setback_rear_ft: 15
         setback_street_side_ft: 20
         min_lot_sqft: 11000
-        min_density_du_per_acre: 12.1  # per NET developable area; the lot's gross area bounds it
+        # Table 4.0130 F prints 12.1 du/acre as a MINIMUM and note 4 confines
+        # it to a site of 11,000 sq ft and up, so the rate is banded rather
+        # than flat. No scalar below the band on purpose: there is no floor
+        # down there, which is not the same as a floor of zero. Nothing rides
+        # on it today -- the zone's minimum SITE size is the same 11,000, so
+        # a lot the band would exempt has already been dropped -- and it is
+        # mirrored anyway so the two files agree when either number moves.
+        lot_size_bands: {min_density_du_per_acre: [[11000, 12.1]]}  # per NET developable area; the lot's gross area bounds it
         source: "Gresham Development Code Tables 4.0120/4.0130 n.5/4.0131; Sec 3.0103"
         source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf"
         confidence: verified
@@ -1429,6 +1436,12 @@ jurisdictions:
     zone_field: ZONE
     zones:
       - zone: R-MD
+        # Table 19.301.4 is one zone in four columns of LOT AREA. A 3,000-6,999
+        # sq ft lot gets 35% coverage and a 15 ft street side yard; only a lot
+        # of 7,000 and up gets the 30% and 20 ft this row used to carry alone.
+        # The 1,500-2,999 column is real and unreachable -- 19.301.4 sets the
+        # R-MD minimum lot at 3,000 unless the plat is unit lots, which is not
+        # how this pod is built -- so it is deliberately not mirrored.
         quadplex_allowed: true
         setback_front_ft: 20
         setback_side_ft: 5
@@ -1440,13 +1453,16 @@ jurisdictions:
         # exceptions are chimneys and 30-inch eaves; neither is a wall.
         step_back_side: {height_ft: 20, slope_degrees: 45, cite: "MMC Table 19.301.4, Side yard height plane limit"}
         setback_rear_ft: 20
-        setback_street_side_ft: 20
+        setback_street_side_ft: 15
         min_lot_sqft: 3000
-        max_coverage_pct: 30
+        max_coverage_pct: 35
+        lot_size_bands:
+          setback_street_side_ft: [[7000, 20]]
+          max_coverage_pct: [[7000, 30]]
         source: "MMC 19.301 Moderate Density Residential, Table 19.301.4; use table 19.301.2"
         source_url: "https://ecode360.com/43860500"
         confidence: verified
-        notes: "Milwaukie consolidated former R-5/R-7/R-10 SF zones into R-MD; this is the by-right quadplex zone. Values are the lots>=7,000-sf tier (Table 19.301.4): side 5 ft + 10 ft (asymmetric), corner street-side 20 ft, height 35 ft, coverage 30%. Lots <7,000 sf use a smaller-setback tier (verify). Min lot 3,000 sf: Table 19.301.4 bands permitted dwelling type by lot size and the quadplex starts at the 3,000-4,999 band, not the 5,000 this file carried. Middle housing allowed on any SFD lot (density cap waived)."
+        notes: "Milwaukie consolidated former R-5/R-7/R-10 SF zones into R-MD; this is the by-right quadplex zone. Table 19.301.4 is four columns of lot area and this row now carries the band: a 3,000-6,999 sf lot gets 35% coverage and a 15 ft corner street side, a lot of 7,000 and up gets 30% and 20 ft. Side yard 5 ft + 10 ft (asymmetric); height 35 ft. The 1,500-2,999 column is unreachable at a 3,000 sf minimum lot. Min lot 3,000 sf: Table 19.301.4 bands permitted dwelling type by lot size and the quadplex starts at the 3,000-4,999 band, not the 5,000 this file carried. Middle housing allowed on any SFD lot (density cap waived)."
       - zone: R-HD
         quadplex_allowed: true
         setback_front_ft: 20
@@ -1755,104 +1771,193 @@ jurisdictions:
     orientation_constraint: entrance_only
     zones:
       - zone: R
+        # WDC 4.113(.14) prints this zone's setbacks TWICE -- A for lots over
+        # 10,000 sq ft, B for lots not exceeding it -- and inside B again for
+        # one storey against two or more. The note below has said so since the
+        # zone was encoded; the file had no way to hold a number that depends
+        # on the size of the lot, so it carried the small-lot SINGLE-STOREY
+        # column and applied it to every lot in the zone. The pod is two
+        # storeys at 26 ft, which settles the storey branch outright: 7 and 20
+        # on a small lot, not 5 and 15.
         quadplex_allowed: true
         setback_front_ft: 15
-        setback_side_ft: 5
-        setback_rear_ft: 15
+        setback_side_ft: 7
+        setback_rear_ft: 20
         setback_street_side_ft: 10
         min_lot_sqft: 7000
         min_frontage_ft: 30
         max_coverage_pct: 50
+        lot_size_bands:
+          setback_front_ft: [[10000, 20]]
+          setback_side_ft: [[10000, 10]]
+          max_coverage_pct: [[7000, 45], [8000, 40], [12000, 25], [20000, 20]]
         source: "Wilsonville Development Code 4.122 (R Zone) + 4.113(.02) setbacks; Ord. 841 (middle housing)"
         source_url: "https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.122REZO"
         confidence: verified
         notes: "Permits Middle Housing outright. Setbacks per 4.113(.02): lots <=10,000sf get 15/5/15 (2-story side=7, rear=20); lots >10,000sf get 20/10/20. Quadplex min lot 7,000 (SFD/duplex/triplex 5,000)."
       - zone: OTR
+        # WDC 4.113(.14) prints this zone's setbacks TWICE -- A for lots over
+        # 10,000 sq ft, B for lots not exceeding it -- and inside B again for
+        # one storey against two or more. The note below has said so since the
+        # zone was encoded; the file had no way to hold a number that depends
+        # on the size of the lot, so it carried the small-lot SINGLE-STOREY
+        # column and applied it to every lot in the zone. The pod is two
+        # storeys at 26 ft, which settles the storey branch outright: 7 and 20
+        # on a small lot, not 5 and 15.
         quadplex_allowed: true
         setback_front_ft: 15
-        setback_side_ft: 5
-        setback_rear_ft: 15
+        setback_side_ft: 7
+        setback_rear_ft: 20
         setback_street_side_ft: 10
         min_lot_sqft: 7000
         min_frontage_ft: 35
+        lot_size_bands:
+          setback_front_ft: [[10000, 20]]
+          setback_side_ft: [[10000, 10]]
         source: "Wilsonville Development Code 4.123 (Old Town Residential OTR Zone); Ord. 841"
         source_url: "https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.123OLTOREOTZO"
         confidence: needs_verification
         notes: "Zone code + quadplex use VERIFIED (Middle Housing permitted, 7,000sf min). Setbacks NOT verified: 4.123(.06) delegates to the 'Old Town Residential Design Standards Book'. Values shown are the 4.113(.02) underlying-zone default; confirm against the design book."
       - zone: PDR1
+        # WDC 4.113(.14) prints this zone's setbacks TWICE -- A for lots over
+        # 10,000 sq ft, B for lots not exceeding it -- and inside B again for
+        # one storey against two or more. The note below has said so since the
+        # zone was encoded; the file had no way to hold a number that depends
+        # on the size of the lot, so it carried the small-lot SINGLE-STOREY
+        # column and applied it to every lot in the zone. The pod is two
+        # storeys at 26 ft, which settles the storey branch outright: 7 and 20
+        # on a small lot, not 5 and 15.
         quadplex_allowed: true
-        setback_front_ft: 20
-        setback_side_ft: 10
+        setback_front_ft: 15
+        setback_side_ft: 7
         setback_rear_ft: 20
         setback_street_side_ft: 10
         min_lot_sqft: 20000
         min_frontage_ft: 80
         max_coverage_pct: 20
+        lot_size_bands:
+          setback_front_ft: [[10000, 20]]
+          setback_side_ft: [[10000, 10]]
         source: "Wilsonville Development Code 4.124 (PDR Zones) Table 2 + 4.113(.02); Ord. 841"
         source_url: "https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO"
         confidence: verified
         notes: "PDR-1 base min lot 20,000sf (>10,000 -> 20/10/20 setbacks). Depth 100ft, height 35ft. Permits duplex/triplex/quadplex outright."
       - zone: PDR2
+        # WDC 4.113(.14) prints this zone's setbacks TWICE -- A for lots over
+        # 10,000 sq ft, B for lots not exceeding it -- and inside B again for
+        # one storey against two or more. The note below has said so since the
+        # zone was encoded; the file had no way to hold a number that depends
+        # on the size of the lot, so it carried the small-lot SINGLE-STOREY
+        # column and applied it to every lot in the zone. The pod is two
+        # storeys at 26 ft, which settles the storey branch outright: 7 and 20
+        # on a small lot, not 5 and 15.
         quadplex_allowed: true
         setback_front_ft: 15
-        setback_side_ft: 5
-        setback_rear_ft: 15
+        setback_side_ft: 7
+        setback_rear_ft: 20
         setback_street_side_ft: 10
         min_lot_sqft: 7000
         min_frontage_ft: 30
         max_coverage_pct: 45
+        lot_size_bands:
+          setback_front_ft: [[10000, 20]]
+          setback_side_ft: [[10000, 10]]
         source: "Wilsonville Development Code 4.124 Table 2 + 4.113(.02)"
         source_url: "https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO"
         confidence: verified
         notes: "Base min lot 7,000sf. Depth 70ft, height 35ft. Coverage curve 45/40/25 as lot grows. 2-story: side 7/rear 20."
       - zone: PDR3
+        # WDC 4.113(.14) prints this zone's setbacks TWICE -- A for lots over
+        # 10,000 sq ft, B for lots not exceeding it -- and inside B again for
+        # one storey against two or more. The note below has said so since the
+        # zone was encoded; the file had no way to hold a number that depends
+        # on the size of the lot, so it carried the small-lot SINGLE-STOREY
+        # column and applied it to every lot in the zone. The pod is two
+        # storeys at 26 ft, which settles the storey branch outright: 7 and 20
+        # on a small lot, not 5 and 15.
         quadplex_allowed: true
         setback_front_ft: 15
-        setback_side_ft: 5
-        setback_rear_ft: 15
+        setback_side_ft: 7
+        setback_rear_ft: 20
         setback_street_side_ft: 10
         min_lot_sqft: 7000
         min_frontage_ft: 40
         max_coverage_pct: 50
+        lot_size_bands:
+          setback_front_ft: [[10000, 20]]
+          setback_side_ft: [[10000, 10]]
         source: "Wilsonville Development Code 4.124 Table 2 note B + 4.113(.02)"
         source_url: "https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO"
         confidence: verified
         notes: "Quadplex needs 7,000sf (note B, PDR-3..7; base lot min 4,500). Depth 60ft, height 35ft. 2-story: side 7/rear 20. 24 ft frontage on a cul-de-sac."
       - zone: PDR4
+        # WDC 4.113(.14) prints this zone's setbacks TWICE -- A for lots over
+        # 10,000 sq ft, B for lots not exceeding it -- and inside B again for
+        # one storey against two or more. The note below has said so since the
+        # zone was encoded; the file had no way to hold a number that depends
+        # on the size of the lot, so it carried the small-lot SINGLE-STOREY
+        # column and applied it to every lot in the zone. The pod is two
+        # storeys at 26 ft, which settles the storey branch outright: 7 and 20
+        # on a small lot, not 5 and 15.
         quadplex_allowed: true
         setback_front_ft: 15
-        setback_side_ft: 5
-        setback_rear_ft: 15
+        setback_side_ft: 7
+        setback_rear_ft: 20
         setback_street_side_ft: 10
         min_lot_sqft: 7000
         min_frontage_ft: 35
         max_coverage_pct: 75
+        lot_size_bands:
+          setback_front_ft: [[10000, 20]]
+          setback_side_ft: [[10000, 10]]
         source: "Wilsonville Development Code 4.124 Table 2 note B + 4.113(.02)"
         source_url: "https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO"
         confidence: verified
         notes: "Quadplex needs 7,000sf (base lot min 3,000). Depth 60ft, height 35ft. 2-story: side 7/rear 20."
       - zone: PDR5
+        # WDC 4.113(.14) prints this zone's setbacks TWICE -- A for lots over
+        # 10,000 sq ft, B for lots not exceeding it -- and inside B again for
+        # one storey against two or more. The note below has said so since the
+        # zone was encoded; the file had no way to hold a number that depends
+        # on the size of the lot, so it carried the small-lot SINGLE-STOREY
+        # column and applied it to every lot in the zone. The pod is two
+        # storeys at 26 ft, which settles the storey branch outright: 7 and 20
+        # on a small lot, not 5 and 15.
         quadplex_allowed: true
         setback_front_ft: 15
-        setback_side_ft: 5
-        setback_rear_ft: 15
+        setback_side_ft: 7
+        setback_rear_ft: 20
         setback_street_side_ft: 10
         min_lot_sqft: 7000
         min_frontage_ft: 30
         max_coverage_pct: 75
+        lot_size_bands:
+          setback_front_ft: [[10000, 20]]
+          setback_side_ft: [[10000, 10]]
         source: "Wilsonville Development Code 4.124 Table 2 note B + 4.113(.02)"
         source_url: "https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO"
         confidence: verified
         notes: "Quadplex needs 7,000sf (base lot min 2,000). Depth 60ft, height 35ft. 2-story: side 7/rear 20."
       - zone: PDR6
+        # WDC 4.113(.14) prints this zone's setbacks TWICE -- A for lots over
+        # 10,000 sq ft, B for lots not exceeding it -- and inside B again for
+        # one storey against two or more. The note below has said so since the
+        # zone was encoded; the file had no way to hold a number that depends
+        # on the size of the lot, so it carried the small-lot SINGLE-STOREY
+        # column and applied it to every lot in the zone. The pod is two
+        # storeys at 26 ft, which settles the storey branch outright: 7 and 20
+        # on a small lot, not 5 and 15.
         quadplex_allowed: true
         setback_front_ft: 15
-        setback_side_ft: 5
-        setback_rear_ft: 15
+        setback_side_ft: 7
+        setback_rear_ft: 20
         setback_street_side_ft: 10
         min_lot_sqft: 7000
         min_frontage_ft: 30
         max_coverage_pct: 75
+        lot_size_bands:
+          setback_front_ft: [[10000, 20]]
+          setback_side_ft: [[10000, 10]]
         source: "Wilsonville Development Code 4.124 Table 2 note B + 4.113(.02)"
         source_url: "https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.124STAPALPLDEREZO"
         confidence: verified
@@ -1862,6 +1967,9 @@ jurisdictions:
       # table. Villebois is largely built out (few splittable lots). Lots fall
       # out as zone_not_in_rules; revisit if per-SAP standards are obtained.
       - zone: RN
+        # RN states its own setbacks rather than taking 4.113's, and only the
+        # side yard is banded: 4.126's table gives 5 ft and 10 ft on a lot over
+        # 10,000 sq ft. No storey branch here, so nothing else moves.
         quadplex_allowed: true
         setback_front_ft: 15
         setback_side_ft: 5
@@ -1870,6 +1978,8 @@ jurisdictions:
         min_lot_sqft: 4000
         min_frontage_ft: 35
         max_coverage_pct: 60
+        lot_size_bands:
+          setback_side_ft: [[10000, 10]]
         source: "Wilsonville Development Code 4.127 (Residential Neighborhood RN Zone), Table 2 (Frog Pond West)"
         source_url: "https://library.municode.com/or/wilsonville/codes/code_of_ordinances?nodeId=CH4PLLADE_ZO_S4.127RENERNZO"
         confidence: needs_verification

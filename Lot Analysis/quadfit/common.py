@@ -158,6 +158,26 @@ class ZoneRule(BaseModel):
     # marginal_pct_over_break] — e.g. Portland Table 110-5. Overrides
     # max_coverage_pct when present.
     coverage_curve: list[list[float]] | None = None
+    #: Standards a code states per LOT SIZE rather than per zone. Wilsonville
+    #: writes its whole residential setback table twice -- 4.113(.14)A "for
+    #: lots exceeding 10,000 square feet" and 4.113(.14)B "for lots not
+    #: exceeding" it -- and Milwaukie's R-MD is one zone in four columns of
+    #: lot area. Neither number is "the zone's setback", and carrying one of
+    #: them alone applies it to the lots it was not written for.
+    #:
+    #: Maps a scalar field on this rule to ascending [at_least_sqft, value]
+    #: rows. The last row whose threshold the lot reaches wins; below the
+    #: first row the field's own scalar applies. Unlike `corner_lot` or
+    #: `abuts_alley` this can actually be honoured: it is arithmetic on a lot
+    #: we have already measured, not a site fact nobody has surveyed.
+    #:
+    #: A code's exclusive "more than 10,000" is entered as `at_least: 10000`
+    #: on purpose, so a lot of exactly 10,000 sq ft takes the LARGER-lot
+    #: column. That is the conservative side in every band encoded so far --
+    #: Wilsonville's big-lot setbacks are bigger and its big-lot coverage is
+    #: smaller. Where a future band runs the other way the row has to be
+    #: written as the next whole foot instead, and the comment must say so.
+    lot_size_bands: dict[str, list[list[float]]] = Field(default_factory=dict)
     accessory_allowance_sqft: float = 0  # reserved coverage for garage/shed assumption
     # Per-zone override of the jurisdiction orientation_constraint (e.g.
     # Gresham design districts force the long axis parallel to the street).
@@ -185,34 +205,76 @@ class ZoneRule(BaseModel):
                 raise ValueError(f"zone {self.zone}: coverage_curve rows need 3 values")
             if breaks != sorted(breaks):
                 raise ValueError(f"zone {self.zone}: coverage_curve breaks must ascend")
+        for name, rows in self.lot_size_bands.items():
+            if not hasattr(self, name):
+                raise ValueError(f"zone {self.zone}: lot_size_bands has no field {name}")
+            if any(len(row) != 2 for row in rows):
+                raise ValueError(
+                    f"zone {self.zone}: lot_size_bands[{name}] rows need 2 values"
+                )
+            breaks = [row[0] for row in rows]
+            if breaks != sorted(breaks):
+                raise ValueError(
+                    f"zone {self.zone}: lot_size_bands[{name}] breaks must ascend"
+                )
         return self
 
-    def density_floor_lot_sqft(self, units: int = 4) -> float | None:
+    def density_floor_lot_sqft(
+        self, units: int = 4, lot_area_sqft: float | None = None
+    ) -> float | None:
         """Largest lot `units` homes can satisfy the density floor on.
 
-        None when the zone states no floor. Compared against the lot's GROSS
-        area by the caller, which is the conservative direction: the code
-        divides by a smaller number, so a lot this says is too big may not be.
+        None when the zone states no floor -- which Gresham's MDR-24 states
+        only above 10,999 sq ft, so the rate itself comes through the band.
+
+        Compared against the lot's GROSS area by the caller, which is the
+        conservative direction: the code divides by a smaller number, so a lot
+        this says is too big may not be.
         """
-        if not self.min_density_du_per_acre:
+        rate = self.banded("min_density_du_per_acre", lot_area_sqft)
+        if not rate:
             return None
-        return units / float(self.min_density_du_per_acre) * 43_560.0
+        return units / float(rate) * 43_560.0
+
+    def banded(self, name: str, lot_area_sqft: float | None = None) -> float | None:
+        """`name` as it applies to a lot of this size.
+
+        Falls back to the plain scalar when the zone states no band or the
+        caller has no area to hand, so every existing call site keeps its
+        current answer until it passes one.
+        """
+        value = getattr(self, name, None)
+        rows = self.lot_size_bands.get(name)
+        if not rows or lot_area_sqft is None:
+            return value
+        for at_least, banded in rows:
+            if lot_area_sqft >= at_least:
+                value = banded
+        return value
+
+    def effective_setback_front_ft(
+        self, lot_area_sqft: float | None = None
+    ) -> float | None:
+        """The front setback this lot owes. Banded in every Wilsonville zone."""
+        return self.banded("setback_front_ft", lot_area_sqft)
 
     def effective_setback_rear_ft(
-        self, height_ft: float = DESIGN_HEIGHT_FT
+        self, height_ft: float = DESIGN_HEIGHT_FT, lot_area_sqft: float | None = None
     ) -> float | None:
         """The rear setback a building of this height actually stands at."""
-        if self.setback_rear_ft is None or self.step_back_rear is None:
-            return self.setback_rear_ft
-        return self.setback_rear_ft + self.step_back_rear.extra_ft(height_ft)
+        base = self.banded("setback_rear_ft", lot_area_sqft)
+        if base is None or self.step_back_rear is None:
+            return base
+        return base + self.step_back_rear.extra_ft(height_ft)
 
     def effective_setback_side_ft(
-        self, height_ft: float = DESIGN_HEIGHT_FT
+        self, height_ft: float = DESIGN_HEIGHT_FT, lot_area_sqft: float | None = None
     ) -> float | None:
         """The side setback a building of this height actually stands at."""
-        if self.setback_side_ft is None or self.step_back_side is None:
-            return self.setback_side_ft
-        return self.setback_side_ft + self.step_back_side.extra_ft(height_ft)
+        base = self.banded("setback_side_ft", lot_area_sqft)
+        if base is None or self.step_back_side is None:
+            return base
+        return base + self.step_back_side.extra_ft(height_ft)
 
     def coverage_cap_sqft(self, lot_area_sqft: float) -> float | None:
         """Max combined building coverage for a lot, or None if uncapped."""
@@ -222,8 +284,9 @@ class ZoneRule(BaseModel):
                 if lot_area_sqft >= brk:
                     cap = base + marginal / 100.0 * (lot_area_sqft - brk)
             return cap
-        if self.max_coverage_pct is not None:
-            return self.max_coverage_pct / 100.0 * lot_area_sqft
+        pct = self.banded("max_coverage_pct", lot_area_sqft)
+        if pct is not None:
+            return pct / 100.0 * lot_area_sqft
         return None
 
 
