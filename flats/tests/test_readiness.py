@@ -663,3 +663,81 @@ def test_no_value_anywhere_in_the_corpus_is_misquoted() -> None:
         for zone, field in readiness_for(layer, store=store).misquoted
     ]
     assert found == []
+
+
+def test_a_switched_off_jurisdiction_is_not_sent_work(bench: dict) -> None:
+    """A rung says what is missing. It cannot say whether anybody wants it.
+
+    Four jurisdictions in the corpus are switched off: Johnson City and
+    Rivergrove sit under the 1,000-person line that ends ORS 197A.420's
+    middle-housing mandate, Maywood Park has no multi-dwelling zoning, and Lake
+    Oswego is an owner decision about the Mountain Park PUD. The ladder placed
+    them like everywhere else and the plan spoke to them like everywhere else,
+    so it told a reader to encode two cities the screen will never cover and to
+    sign 138 values on land nobody intends to buy -- and Lake Oswego's 132 of
+    those are most of a signing session.
+
+    The rung itself stays what it was. What changes is the sentence beside it,
+    because the rung is a fact about the file and the action is a claim about
+    what to do next, and only the second one is wrong here.
+    """
+    city(bench, CODE + CITE + "eligible: false\nzones:\n  R5:\n    setback_front_ft: 10\n")
+    evidence(bench)
+
+    r = report(bench)
+
+    assert r.eligible is False
+    # Unchanged: it really is unquoted, and pretending otherwise would be a
+    # second bug wearing the first one's clothes.
+    assert r.stage == "unquoted"
+    assert "switched off" in r.action
+    assert "review gaps" not in r.action
+    assert "(off)" in r.line()
+
+
+def test_the_off_switch_does_not_hide_the_row(bench: dict) -> None:
+    """The cousin bug, and the reason this is a marker rather than a filter.
+
+    A queue that drops its decided rows cannot be read: an empty view means
+    both "everything is done" and "nothing matched", and the reader has no way
+    to tell which. That is exactly the failure the crossref ledger had, where
+    every empty filtered set answered "every section this corpus points at is
+    in the store". So a switched-off jurisdiction stays on the ladder, with its
+    counts intact, and only its action changes.
+    """
+    city(bench, CODE + CITE + "eligible: false\nzones:\n  R5:\n    setback_front_ft: 10\n")
+    evidence(bench)
+
+    r = report(bench)
+
+    assert r.unquoted == (("R5", "setback_front_ft"),)
+    assert r.zones == 1
+    assert by_stage([r]) == {"unquoted": 1}
+
+
+def test_the_four_switched_off_jurisdictions_are_named() -> None:
+    """Which ones, and how much of the signing queue they are.
+
+    Named rather than counted because the number is the uninteresting half.
+    If a fifth appears, somebody decided to stop screening a city and this
+    should be read before it is updated; if one disappears, somebody decided to
+    start, and the values behind it become real work.
+    """
+    store = ProvenanceStore()
+    off = {
+        name: readiness_for(layer, store=store)
+        for name, layer in sorted(load_rules().items())
+        if not layer.eligible
+    }
+
+    assert set(off) == {
+        "or/clackamas/johnson-city",
+        "or/clackamas/lake-oswego",
+        "or/clackamas/rivergrove",
+        "or/multnomah/maywood-park",
+    }
+    assert all(not r.eligible for r in off.values())
+    # Lake Oswego is nearly all of it, and it is the only one of the four with
+    # a full encoding behind it -- ten zones read against LOC 50.
+    assert off["or/clackamas/lake-oswego"].values == 132
+    assert sum(r.values - r.verified for r in off.values()) == 138

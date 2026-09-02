@@ -1432,6 +1432,31 @@ zones:
       it away from a single pod on its own lot. The subsection's own text says
       "between developments" and "adjacent", which reads across the line. The
       wider reading costs a review and the narrow one costs a false GREEN.
+
+
+      THE OVERLAY COLUMN SAYS NA TO A QUADPLEX, read 2026-09-02, and it makes
+      the open question above sharper and worse. "What the TOZ overlay changes
+      at parcel level is unconfirmed" was written when the overlay looked like
+      a label of unknown content. It is not. Table 19.30.030.A row 1.d,
+      Minimum Lot Size / Quadplex, prints five cells for five columns with
+      nothing dropped -- 6,000, 7,500, 10,000, **NA**, 2,500 per unit -- and
+      the NA is the Townhouse Overlay's. The overlay states no lot size for
+      this building, and 19.30.010(A)(6) says overlay districts are there to
+      "add or limit uses in the underlying base district". Limit is the word
+      that matters: the reading where the overlay simply has nothing to say
+      about a quadplex and the RM base governs, and the reading where the
+      overlay takes the quadplex away, both fit the page.
+
+
+      So `quadplex_allowed` here is inherited from RM and could be wrong in
+      the direction that costs a GREEN. Nothing certifies on it today --
+      quadfit confidence stays `needs_verification`, which sends all 225 of
+      this zone's lots to review, and none of them is green -- but the cap is
+      what is holding it, not the reading. The use table cannot settle it
+      either: 19.30.020's Table A drops its empty cells, so the four X(5)
+      marks on row h. Quadplex cannot be aligned to columns by position the
+      way the dimensional table can. This is a question for Fairview
+      planning, and it is the one to ask before the RM base is trusted here.
   R/SFLD:
     cite_default:
       cite: 'Mapping inference: Metro ''R/SFLD'' = old Lower Density Residential overlay -> current R-10;

@@ -116,6 +116,41 @@ def test_the_queue_narrows_to_one_zone(bench: dict, capsys) -> None:
     assert "nothing pending" in capsys.readouterr().out
 
 
+def test_the_queue_warns_before_it_hands_out_a_switched_off_city(
+    bench: dict, capsys
+) -> None:
+    """This is the command a signing session is opened with.
+
+    Lake Oswego is switched off — an owner decision about the Mountain Park PUD
+    — and its 132 draft values were handed out here exactly like Portland's,
+    with nothing to say the screen does not cover it. A reviewer following the
+    plan would have spent a session on land nobody intends to buy, and found
+    out only by asking afterwards why the greens had not moved.
+
+    The banner goes before the cards, not after them. A warning underneath 132
+    lines is a warning nobody reads.
+    """
+    bench["rules"].write_text(
+        "label: Portland\neligible: false\n"
+        + CITE
+        + "zones:\n  R5:\n    setback_front_ft: 10\n",
+        encoding="utf-8",
+    )
+
+    assert run(bench, "queue") == 0
+
+    out = capsys.readouterr().out
+    assert "switched off" in out
+    assert out.index("switched off") < out.index("setback_front_ft")
+
+
+def test_an_eligible_city_gets_no_banner(bench: dict, capsys) -> None:
+    """Fourteen of eighteen are ordinary, and a banner on all of them is noise
+    that trains a reader to skip the line that matters."""
+    assert run(bench, "queue") == 0
+    assert "switched off" not in capsys.readouterr().out
+
+
 # --- signing ----------------------------------------------------------
 
 

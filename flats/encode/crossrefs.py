@@ -93,7 +93,7 @@ import sys
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable, Iterator, Sequence
+from typing import Collection, Iterable, Iterator, Sequence
 
 from flats.provenance.store import ProvenanceStore, parse_quote
 from flats.rules.fields import FIELDS
@@ -623,8 +623,25 @@ def _beside(row: Dangling) -> str:
 
 
 def render(
-    rows: Sequence[Dangling], *, binding_only: bool = False, slack_only: bool = False
+    rows: Sequence[Dangling],
+    *,
+    binding_only: bool = False,
+    slack_only: bool = False,
+    off: Collection[str] = (),
 ) -> Iterator[str]:
+    """The queue, and which of it is work.
+
+    ``off`` names jurisdictions the screen does not cover. Two of the six
+    binding references left in this corpus are Lake Oswego's, and Lake Oswego
+    is excluded by an owner decision about the Mountain Park PUD -- so a reader
+    working this list top to bottom would have gone and fetched LOC 50.06.001.5
+    for land nobody intends to buy. The rows stay, marked, for the same reason
+    the ruled ones do: a queue that drops what it has decided about cannot be
+    told apart from one that has finished, and the reader has to be able to
+    disagree with the decision. Passed in rather than read from the corpus
+    here, so a caller surveying a different set of layers cannot have the real
+    one consulted behind its back.
+    """
     ruled = [r for r in rows if r.ruled]
     open_rows = [r for r in rows if not r.ruled]
     shown = open_rows
@@ -675,12 +692,23 @@ def render(
             f" — {total_binding} standing beside a number this screen uses,"
             f" {total_slack} of them beside one that carries a distance"
         )
+        idle = sum(1 for r in shown if r.layer in off)
+        if idle:
+            yield (
+                f"  {idle} of them in jurisdictions the screen does not cover"
+                f" ({', '.join(sorted({r.layer for r in shown if r.layer in off}))}),"
+                f" so reading those chapters changes no verdict"
+            )
         yield ""
         for layer in sorted(
             by_layer, key=lambda l: (-max(r.rank for r in by_layer[l])[0], l)
         ):
             group = by_layer[layer]
-            yield f"  {layer}   ({sum(r.mentions for r in group)} mention(s))"
+            switched_off = "   [SWITCHED OFF -- not screened]" if layer in off else ""
+            yield (
+                f"  {layer}   ({sum(r.mentions for r in group)} mention(s))"
+                f"{switched_off}"
+            )
             for row in group[:12]:
                 mark = f"BINDING x{row.binding}" if row.binding else ""
                 yield f"    {row.ref:<14} {row.mentions:>3} mention(s)  {mark}{_beside(row)}"
@@ -715,7 +743,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     layers = load_rules()
     chosen = [layers[a.strip("/")] for a in args] if args else list(layers.values())
     rows = survey(chosen)
-    for line in render(rows, binding_only=binding_only, slack_only=slack_only):
+    off = {lid for lid, layer in layers.items() if not layer.eligible}
+    for line in render(rows, binding_only=binding_only, slack_only=slack_only, off=off):
         print(line)
 
     for layer in chosen:

@@ -49,7 +49,7 @@ import sys
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable, Mapping, Sequence
+from typing import Collection, Iterable, Mapping, Sequence
 
 from flats.encode.crossrefs import (
     BINDING_WINDOW,
@@ -864,13 +864,24 @@ def fields_in(rows: Iterable[Card]) -> list[tuple[str, int]]:
     return sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))
 
 
-def render(rows: Sequence[Card], *, limit: int = 20) -> str:
-    """The feed as a person reads it at a terminal."""
+def render(rows: Sequence[Card], *, limit: int = 20, off: Collection[str] = ()) -> str:
+    """The feed as a person reads it at a terminal.
+
+    ``off`` names jurisdictions the screen does not cover. It matters here more
+    than in the ledger this feed is built on, because this one ranks by lots at
+    stake and a switched-off city's lots are counted like anyone else's: Lake
+    Oswego's 50.06.001.5 sits third on 350 lots that will never be scored, above
+    Wood Village's 60 that would be. The rank is left alone -- reordering by a
+    second, invisible criterion is how a queue stops being explainable -- and
+    the row says what it is instead.
+    """
     out: list[str] = []
     for card in rows[:limit]:
         head = f"{card.layer}  {card.ref}"
         if card.ruling is not None:
             head += f"   [{card.ruling.outcome}]"
+        if card.layer in off:
+            head += "   [SWITCHED OFF -- these lots are not screened]"
         out.append(head)
         out.append(
             f"    {card.lots:,} lots · binds {card.binding}× · "
@@ -890,6 +901,12 @@ def render(rows: Sequence[Card], *, limit: int = 20) -> str:
         f"{sum(1 for c in rows if c.binding)} binding · "
         f"{sum(c.lots for c in rows):,} lots behind them"
     )
+    idle = [c for c in rows if c.layer in off]
+    if idle:
+        out.append(
+            f"  {len(idle)} of them in jurisdictions the screen does not cover"
+            f" — {sum(c.lots for c in idle):,} of those lots are not scored"
+        )
     return "\n".join(out)
 
 
@@ -1090,7 +1107,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         for name, count in fields_in(rows):
             print(f"{name:34s} {count:5d}")
         return 0
-    print(render(rows, limit=args.limit))
+    off = {lid for lid, layer in load_rules().items() if not layer.eligible}
+    print(render(rows, limit=args.limit, off=off))
     return 0
 
 

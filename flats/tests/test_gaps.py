@@ -335,7 +335,25 @@ def test_an_incorporation_somebody_quoted_is_nobody_s_gap(tmp_path: Path) -> Non
 
 def test_the_three_unmapped_zones_in_the_corpus_are_named() -> None:
     """All three are the same thing: a zoning-layer label whose base zone was
-    inferred. None of them can be closed by reading a code."""
+    inferred. None of them can be closed by reading a code.
+
+    Checked rather than assumed on 2026-09-02, and one of the three came back
+    different from how it reads here. ``TOZ`` is not an unknown label -- FMC
+    19.30 names the Townhouse Overlay and gives it its own column in both the
+    use table and the dimensional table -- so ``RM/TOZ`` is a base zone with a
+    real overlay on it rather than a mystery. That did not close the gap, it
+    sharpened it: Table 19.30.030.A row 1.d prints five aligned cells and the
+    overlay's is ``NA``, so the overlay states no lot size for a quadplex,
+    while 19.30.010(A)(6) says overlays exist to "add or limit uses in the
+    underlying base district". Whether the overlay is silent about this
+    building or takes it away is a reading the city has to give, and the
+    ``like: RM`` here assumes the first. Still unmapped, still needs a person,
+    and now for a reason worth more than a label lookup -- the zone's notes
+    carry it.
+
+    ``R/SFLD`` and ``R20CC`` are what the cause description says: a pre-2024
+    Metro label and an unexplained suffix, neither written in any ordinance.
+    """
     from flats.encode.gaps import gaps as gaps_for
 
     held = {

@@ -39,6 +39,7 @@ from flats.encode.triage import (
     feed,
     fields_in,
     layer_path,
+    render,
     rule,
 )
 from flats.rules.fields import FIELDS
@@ -992,3 +993,31 @@ def test_a_fold_never_shows_one_document_s_words_under_another_s_line() -> None:
     assert repeats == 2
     assert shown.doc == "short.txt" and shown.line == 9
     assert shown.text == "Trees are in Title 11.", "its own words, not the other's"
+
+
+def test_a_card_in_a_city_nobody_screens_says_so_on_its_own_line() -> None:
+    """This feed is ranked by lots at stake, which is what makes it worth
+    marking.
+
+    Lake Oswego is switched off — an owner decision about the Mountain Park PUD
+    — and 50.06.001.5 arrives third in the binding feed on 350 lots, above Wood
+    Village's 60. Those 350 are real lots in a real city; none of them is ever
+    scored, so the number is true and the ranking it produces is not useful.
+
+    The rank is deliberately left alone. Sorting by a second criterion nobody
+    can see is how a queue stops being explainable, and the person reading it
+    can weigh a marked row perfectly well. What they cannot do is guess.
+    """
+    card = Card(
+        layer="or/clackamas/lake-oswego",
+        ref="50.06.001.5",
+        mentions=(Mention(doc="50.04.txt", line=1, text="see LOC 50.06.001.5", binding=True),),
+        neighbours=(),
+    )
+
+    marked = render([card], off={"or/clackamas/lake-oswego"})
+    plain = render([card])
+
+    assert "SWITCHED OFF" in marked
+    assert "the screen does not cover" in marked
+    assert "SWITCHED OFF" not in plain, "the caller decides, not this renderer"

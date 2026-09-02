@@ -794,3 +794,44 @@ def test_a_parking_table_cell_is_not_a_section_number() -> None:
     }
 
     assert {"73C.030", "46.150", "4.0130"} <= live
+
+
+LAKE_OSWEGO = "or/clackamas/lake-oswego"
+
+
+def test_a_reference_in_a_city_nobody_screens_says_so(layers: dict[str, Layer]) -> None:
+    """Six binding references are left in this corpus and two of them are here.
+
+    Lake Oswego is switched off — an owner decision on 2026-07-24 about the
+    Mountain Park PUD, where pre-HB-2001 covenants and design review make a
+    by-right fourplex practically unbankable. Its rules are kept and its
+    chapters are still half-read, so this ledger goes on ranking LOC
+    50.06.001.5 near the top of the queue on the strength of standing beside a
+    density and a use permission. Both of those are real; neither can move a
+    verdict, because no lot here is ever scored.
+
+    Marked rather than dropped, and the reason is the one this module already
+    argues for its ruled rows: a queue that hides what it has decided about
+    reads exactly like a queue that has finished. The mark is what lets a
+    reader see the decision and disagree with it.
+    """
+    rows = dangling(layers[LAKE_OSWEGO])
+    printed = "\n".join(render(rows, slack_only=True, off={LAKE_OSWEGO}))
+
+    assert "50.06.001.5" in printed
+    assert "SWITCHED OFF" in printed
+    assert "changes no verdict" in printed
+
+
+def test_the_mark_is_the_callers_to_make(layers: dict[str, Layer]) -> None:
+    """Without ``off`` nothing is marked, and that is deliberate.
+
+    The eligibility flag lives in the corpus, and this renderer is handed its
+    rows. Reading the real corpus to decide how to describe somebody else's
+    layers would make a caller surveying a test fixture get sentences about
+    Lake Oswego. The one place that knows both is the command line.
+    """
+    printed = "\n".join(render(dangling(layers[LAKE_OSWEGO]), slack_only=True))
+
+    assert "50.06.001.5" in printed
+    assert "SWITCHED OFF" not in printed

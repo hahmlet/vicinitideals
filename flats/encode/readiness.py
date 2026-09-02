@@ -35,6 +35,18 @@ The ladder is ordered by what blocks what, not by severity. Signing values whose
 evidence was never fetched is not possible, so ``unfetched`` outranks ``unsigned``
 however few documents are missing. That ordering is the whole product: it turns
 "603 drafts" into one sentence per jurisdiction that names the next command.
+
+One thing cuts across every rung: a jurisdiction can be **switched off**. Four
+are — Johnson City and Rivergrove are under the 1,000-person line that ends
+ORS 197A.420's middle-housing mandate, Maywood Park has no multi-dwelling
+zoning, and Lake Oswego is an owner decision about the Mountain Park PUD. The
+ladder placed them like everywhere else, so the plan told a reader to encode
+two cities that will never be screened and to sign 138 values on land nobody
+intends to buy. A rung says what is missing; it cannot say whether anyone wants
+it. ``eligible`` is carried alongside so the action can, and the rows stay
+visible rather than filtered out: a queue that hides its decided rows is a
+queue that cannot tell "done" from "not asked", which is the older bug this
+one is a cousin of.
 """
 
 from __future__ import annotations
@@ -65,6 +77,17 @@ STAGES = (
     "unsigned",
     "stale",
     "ready",
+)
+
+#: The action for a jurisdiction the screen does not cover, whatever rung it is
+#: on. Deliberately not a reason: the reasons differ -- a statutory population
+#: floor in two of them, an owner's judgement about a PUD in the third -- and
+#: they are written in the layer's own notes, which is the one place they can be
+#: argued with. Repeating a summary here would be a second copy to drift.
+OFF = (
+    "switched off (`eligible: false`) — the screen does not cover this "
+    "jurisdiction, so nothing here reaches a verdict and none of it is worth "
+    "signing until that decision changes. The reason is in the layer's notes"
 )
 
 #: What to do about each, phrased as the thing somebody would actually run or
@@ -149,6 +172,10 @@ class Readiness:
     #: any: a jurisdiction with several is one where somebody has to choose,
     #: and printing all of them would bury the sentence.
     doc: str = ""
+    #: Does the screen cover this jurisdiction at all? A false here does not
+    #: change the rung -- the values are as unquoted or as unsigned as they
+    #: ever were -- it changes whether the rung is work anybody should pick up.
+    eligible: bool = True
 
     @property
     def rung(self) -> int:
@@ -164,11 +191,14 @@ class Readiness:
 
     @property
     def action(self) -> str:
+        if not self.eligible:
+            return OFF
         return ACTION[self.stage].format(layer=self.layer, doc=self.doc or "<document>")
 
     def line(self) -> str:
+        stage = self.stage if self.eligible else f"{self.stage} (off)"
         return (
-            f"{self.stage:12} {self.layer:34} {self.verified:>4}/{self.values:<4} verified"
+            f"{stage:18} {self.layer:34} {self.verified:>4}/{self.values:<4} verified"
             f"  -> {self.action}"
         )
 
@@ -735,6 +765,7 @@ def readiness_for(
         footnoted=tuple(footnoted),
         stale=stale,
         doc=next(iter(layer.documents()), ""),
+        eligible=bool(layer.eligible),
     )
 
 

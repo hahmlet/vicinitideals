@@ -65,10 +65,24 @@ not mainly on this list.** Working the list is necessary and it is not
 sufficient. Four things stand between a green verdict and a lot you could buy
 on it, and only the first is a queue item:
 
-1. **Nothing is signed.** Not one of ~2,340 encoded numbers has been read and
-   confirmed by a person (item 7). Every green today rests on an unreviewed
-   reading. This is the biggest single item and it is *work*, not a decision —
-   you cannot approve your way past it in an afternoon.
+1. **Nothing is signed.** Not one encoded number has been read and confirmed by
+   a person (item 7). Every green today rests on an unreviewed reading. This is
+   the biggest single item and it is *work*, not a decision — you cannot approve
+   your way past it in an afternoon.
+
+   Counted exactly on 2026-09-02, and the honest total is smaller than it
+   looked: **2,212 numbers on 1,673 cards across 15 code books.** The number
+   quoted before was 2,350 across 19, which included four cities the screen does
+   not cover at all — Lake Oswego (excluded by your own 2026-07-24 call on the
+   Mountain Park PUD), plus Johnson City, Rivergrove and Maywood Park, which are
+   too small to be under the state's fourplex mandate. Lake Oswego alone is 132
+   values, most of a signing session, and the queue was cheerfully listing it.
+   It now marks those four rows *switched off* rather than hiding them, so the
+   decision stays visible and nobody re-does it by accident.
+
+   Two of the fifteen books — Fairview and Happy Valley — cannot be started
+   until item 10 is answered. The other thirteen, including all of Portland and
+   Gresham, are ready now.
 2. **84% of greens rest on one legal argument** about a parking dimension no
    city wrote down (item 3, corrected on 2026-09-01 to include Portland). The
    argument is good. It is still an argument. The share went *up* on the
@@ -271,9 +285,59 @@ the house can't issue a fully trusted GREEN by design.
 
 This is deliberate — signing was pointless while encoding churned. The corpus
 has been stable for a while now. Decision needed: **when to start signing
-sessions**, and in what order. Sensible order is by greens at stake: Gresham
-and Happy Valley first, then Portland. Each session is you (or a delegate)
-reading quotes against numbers — tedious, but each one is permanent.
+sessions**, and in what order. Each session is you (or a delegate) reading
+quotes against numbers — tedious, but each one is permanent.
+
+**The order was wrong here until 2026-09-02** and it is worth correcting,
+because it pointed at the two cities with the least to gain. It said "by greens
+at stake: Gresham and Happy Valley first" — and Gresham and Happy Valley have
+**zero green lots between them**. They are two of the seven cities in the
+section below that produce no greens at all, for reasons that have nothing to
+do with signing. Signing every number in Gresham would unlock nothing.
+
+Worked out properly — and signing turns out to do **two** different jobs, which
+is why the order was easy to get wrong:
+
+- **It makes today's greens trustworthy.** 9,565 lots are green on readings
+  nobody has checked. Signing does not move them; it makes them worth acting on.
+- **It creates new greens.** 710 lots sit in the review queue held by *nothing
+  but* an unverified zone rule. Confirm the rule and they go green that day.
+  (Or red, if the reading was wrong — which is the point of checking.)
+
+| City | Numbers to sign | Greens it would make trustworthy | New greens it would release |
+|---|---:|---:|---:|
+| *state layer* | 3 | every city depends on it | — |
+| **Portland** | 333 | 7,358 | 602 |
+| **Gladstone** | 41 | 0 | 49 |
+| **Milwaukie** | 44 | 622 | 36 |
+| **Oregon City** | 72 | 728 | 0 |
+| unincorporated Clackamas | 89 | 515 | 0 |
+| West Linn | 112 | 288 | 1 |
+| Wilsonville | 198 | 53 | 14 |
+| unincorporated Multnomah | 134 | 1 | 8 |
+| Gresham | 525 | 0 | 0 |
+| Happy Valley | 225 | 0 | 0 |
+| Fairview | 154 | 0 | 0 |
+| Troutdale · Wood Village · Tualatin | 272 | 0 | 0 |
+
+**Portland first, and it is not close** — 333 numbers covering 7,358 existing
+greens (77% of all of them) and 602 new ones (85%), in a single code book. Then
+Gladstone, which is the surprise on this table: it has no greens at all today,
+and 41 numbers would give it 49. Then Milwaukie and Oregon City. **Those four
+are 490 numbers — a fifth of the job — and they carry 8,708 of the 9,565
+existing greens and 687 of the 710 new ones.**
+
+Everything from West Linn down can wait for a reason. Gresham is the clearest
+case: 525 numbers, the largest book in the corpus, and signing every one of
+them releases nothing and reassures nothing. **Every single one of Gresham's
+2,549 review lots is held by slope** — all 2,549, without exception — and slope
+is item 2 on this list, not a signature. Item 2 alone would release 1,820 of
+them; the other 729 are held by slope *and* something else as well, mostly the
+new density floor. Either way Gresham is waiting on your elevation decision
+first, and reading its 525 numbers changes nothing until that lands.
+
+Item 10 below does not touch this. It blocks Fairview and Happy Valley, and
+neither is anywhere near the top of this table.
 
 ## 8. Optional legal read: the state's "use single-family standards" rule
 
@@ -296,6 +360,55 @@ merged or superseded. All three were archived as patch files first
 unrecoverable), then removed. Three genuinely in-progress worktrees were
 kept untouched. Four orphaned non-worktree folders were noted and left
 alone.
+
+## 10. Three zone codes nobody can look up — **454 lots, and the last thing blocking two cities from signing**
+
+Every lot on the county map carries a zone code, and for all but three of them
+we can open the city's code book and find that code written down. These three
+are not in any code book:
+
+| Code | Where | Lots | What we assumed | Green today |
+|---|---|---|---|---|
+| `R/SFLD` | Fairview | 228 | it means the city's R-10 zone | 0 |
+| `RM/TOZ` | Fairview | 225 | it means the city's RM zone | 0 |
+| `R20CC` | Happy Valley | 1 | it means the city's R-20 zone | 0 |
+
+`R/SFLD` looks like a leftover from before Fairview rewrote its code in 2024 —
+the regional map still prints the old label. `R20CC` is Happy Valley's R-20
+with two extra letters nobody here can account for. Both are plain
+what-does-this-mean questions for a city planner, and one phone call to each
+city probably closes both.
+
+`RM/TOZ` is the one that is actually interesting, and it got worse the more we
+read. `TOZ` is real and it is in the code — Fairview's **Townhouse Overlay** —
+so this is not a mystery label, it is a base zone with an overlay painted on
+top. The problem is what the overlay does. Fairview's dimensional table gives
+the Townhouse Overlay its own column, and in the row for a four-unit building
+that column reads **"NA"** — the overlay states no lot size for our building at
+all. The code says overlays exist to *"add or limit uses in the underlying base
+district"*, and **limit** is the word that decides this: either the overlay
+simply has nothing to say about a fourplex and the RM zone underneath governs
+(what we assumed), or the overlay takes the fourplex away and those 225 lots
+are not developable at all. The page supports both readings.
+
+**Cost of getting it wrong:** none today, and that is luck rather than design.
+All three codes are flagged *needs verification*, which sends every one of
+their 454 lots to review no matter what else they clear, so not one of them is
+green and none can become green while the flag stands. The flag is what is
+holding it — not the reading.
+
+**What we need from you:** one call or email to each city.
+- *Fairview* — two questions in the same message: what does the `R/SFLD` label
+  on the county map correspond to in the 2024 code, and does the Townhouse
+  Overlay permit a quadplex on an RM-zoned lot or take it away?
+- *Happy Valley* — one question: what is `R20CC`, and does the `CC` change any
+  standard from plain R-20?
+
+**Why an agent cannot do this.** We have read the whole code book for both
+cities. The answer is not in it — a map label is not something an ordinance
+defines, and the overlay question is a reading the city itself has to give.
+Every other kind of gap in this project closes by finding the right document;
+this one does not.
 
 ---
 
@@ -360,6 +473,25 @@ closes it to us without lot assembly. The two-and-a-half thousand lots come off
 the list of places worth hoping about.
 
 ## Queued for the agent — no action needed from you, listed so nothing is invisible
+
+- **The work queues were pointing at four cities we don't screen** — found and
+  fixed 2026-09-02, and it is the same mistake in three places. Lake Oswego,
+  Johnson City, Rivergrove and Maywood Park are all switched off: three are too
+  small to be under the state's fourplex mandate or have no multi-dwelling
+  zoning, and Lake Oswego is your own call on the Mountain Park PUD. Their rules
+  stay in the file, which is right — a decision you can reverse is worth more
+  than one that deleted the evidence. But every queue built on top of those
+  files was quietly counting them as work: the signing plan listed 138 values to
+  read, the command that hands out signing cards handed out Lake Oswego's 132
+  without a word, and the ledger of unread chapter references had Lake Oswego's
+  near the top of a list of six.
+
+  All three now say *switched off* next to the row instead of dropping it. That
+  is deliberate and it is the same principle as the environmental note below:
+  hiding a decided row makes a queue that has finished look identical to one
+  that was never asked, and the reader loses the ability to disagree. Net
+  effect: the real signing job is **2,212 numbers, not 2,350**, and one of the
+  six outstanding chapter-reads is not a job at all.
 
 - **Wire up the Clackamas environmental layers** — done everywhere a green is
   at stake, and the work turned out to be reading, not configuring. Every city publishes a

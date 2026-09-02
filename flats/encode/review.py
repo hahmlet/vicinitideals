@@ -191,6 +191,18 @@ def cmd_plan(args: argparse.Namespace) -> int:
 
     counts = by_stage(reports)
     print(f"{len(reports)} jurisdiction(s): " + ", ".join(f"{k}={v}" for k, v in counts.items()))
+    # The rung counts above are honest and, on their own, misleading: they put a
+    # city the screen does not cover in the same total as one it does. Said
+    # here rather than by dropping the rows, because the size of the decided
+    # part is the thing worth knowing -- 138 values is most of a signing
+    # session, and nobody would find out by reading a queue that hid them.
+    off = [r for r in reports if not r.eligible]
+    if off:
+        print(
+            f"  {len(off)} of them switched off ({', '.join(r.layer for r in off)})"
+            f" — {sum(r.values - r.verified for r in off)} unsigned value(s) inside them,"
+            f" which is work nobody should pick up"
+        )
     print()
     for r in reports:
         if args.ready or not r.ready:
@@ -265,6 +277,22 @@ def cmd_queue(args: argparse.Namespace) -> int:
         store=ProvenanceStore(args.docs),
         strict=False,
     )
+    # Printed before the cards, not after them, because this is the command a
+    # signing session is opened with and the whole warning is worthless once
+    # somebody has read the first ten. `plan` marks the same rows; this is the
+    # one that hands out work.
+    off = sorted(
+        lid
+        for lid, layer in trusted.layers.items()
+        if not layer.eligible and (not args.layer or lid.startswith(args.layer))
+    )
+    for lid in off:
+        print(
+            f"# {lid} is switched off (`eligible: false`) — the screen does not"
+            f" cover it, so signing these changes no verdict. Reason in the"
+            f" layer's notes."
+        )
+
     shown = 0
     for layer_id, zone_code, zone in _zones(trusted.layers):
         if args.layer and not layer_id.startswith(args.layer):
