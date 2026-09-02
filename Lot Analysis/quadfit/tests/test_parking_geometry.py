@@ -703,6 +703,12 @@ def test_the_open_space_column_prints_each_citys_own_figures():
     The third case is the one the old string could not express at all: a map
     that is present and null throughout is a city that was read and reserves
     nothing, which is the same sentence as a city with no map.
+
+    Portland's row gained a third figure on 2026-09-02 when its multi-dwelling
+    and commercial zones were ported in: Table 120-4's 192 sq ft, which 33.130
+    sends the commercial zones back to as well. That the label moved on its own
+    is the point of deriving it -- the numbers come from the map, so a city that
+    is read further prints further, and nobody has to remember to edit a string.
     """
     import sys
 
@@ -712,7 +718,7 @@ def test_the_open_space_column_prints_each_citys_own_figures():
 
     sp = load_footprints().siteplan
     assert open_space_label(sp.driveway_for("portland")) == (
-        "by zone (250 / 200 sq ft)")
+        "by zone (250 / 200 / 192 sq ft)")
     assert open_space_label(sp.driveway_for("multnomah_unincorporated")) == (
         "by zone (1200 sq ft)")
     assert open_space_label(sp.driveway_for("gresham")) == "15% of lot"

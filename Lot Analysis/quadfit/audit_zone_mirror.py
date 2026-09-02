@@ -351,6 +351,55 @@ def _pairs(top: dict, corpus: dict):
             yield juris, z, _Effective(zl, _effective(layer, zl)), layer
 
 
+#: Standards the corpus reads off the page that reach the pipeline somewhere
+#: OTHER than rules.yaml -- the per-city parking and open-space figures the site
+#: plan generator carries in `footprints.yaml` and `common.py`. They have no
+#: column here and are not missing.
+ROUTED_ELSEWHERE: frozenset[str] = frozenset({
+    "open_space_min_pct",
+    "open_space_min_sqft",
+    "parking_max_per_unit",
+    "parking_min_per_unit",
+    "parking_street_setback_ft",
+})
+
+
+def unexpressible_standards() -> dict[str, list[str]]:
+    """Corpus standards with no column in rules.yaml and no other way in.
+
+    The step-back was one of these and it took a feature to close. This counts
+    the rest of them: a standard the corpus read, cited and holds, on a zone
+    both files carry, that the screen has no way to apply to a lot.
+
+    Not all of them would move a verdict -- a minimum lot WIDTH is largely said
+    again by area and frontage, and a garage entrance setback means nothing to a
+    pod with no garage. A maximum DENSITY looks like the dangerous one and is
+    not: the state layer strikes it out for quadplexes under OAR
+    660-046-0220(2)(b), so having no column for it carries the exemption by
+    accident. Two are live -- a MAXIMUM front setback, which the placement
+    search has never heard of, and minimum density, which (2)(b) pointedly does
+    not touch, so a lot can be too BIG for four units to be enough.
+
+    Returns field -> the zone keys that state it, so the list can be ranked by
+    how many zones each one is silent on.
+    """
+    from flats.encode.port_quadfit import FIELD_MAP
+
+    carried = set(FIELD_MAP.values()) | {"quadplex_allowed"}
+    top, corpus = _load()
+    out: dict[str, list[str]] = {}
+    for juris, z, eff, layer in _pairs(top, corpus):
+        for field, value in eff.values.items():
+            if value is None or value.value is None:
+                continue
+            if field in carried:
+                continue
+            if field in ROUTED_ELSEWHERE:
+                continue
+            out.setdefault(field, []).append(f"{juris}/{z['zone']}")
+    return {k: sorted(v) for k, v in sorted(out.items(), key=lambda kv: -len(kv[1]))}
+
+
 def unscreened_zones() -> dict[str, list[str]]:
     """Zones the corpus says permit the pod and rules.yaml has no entry for.
 
@@ -548,6 +597,12 @@ def main() -> None:
         print(f"{len(rows)} {label}")
         for d in rows:
             print("   ", d)
+
+    unexpressible = unexpressible_standards()
+    print(f"{len(unexpressible)} standards the corpus holds that this pipeline "
+          f"has no column for and no other way in")
+    for field, zones in unexpressible.items():
+        print(f"    {field}: {len(zones)} zones")
 
     unscreened = unscreened_zones()
     n = sum(len(v) for v in unscreened.values())

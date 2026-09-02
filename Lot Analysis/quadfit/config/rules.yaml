@@ -122,6 +122,174 @@ jurisdictions:
         source_url: "https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf"
         confidence: verified
         notes: "Fourplex min lot 1,500 sf. FAR 1.0 for 4+ units. Height 35 ft. Narrow-lot standards <32 ft wide."
+      # ---- ported from the FLATS corpus 2026-09-02 -------------------------
+      # These zones permit a quadplex and this file had never heard of them, so
+      # every lot in them was dropped at `zone_not_in_rules` before anything was
+      # measured. The two files had been checked against each other number by
+      # number for five weeks and never once as a LIST, which is how 14 zones
+      # and 74,446 lots stayed invisible: a lot the screen never looks at cannot
+      # come back green by mistake, so nothing complained.
+      #
+      # Every figure below is the corpus's BASE limb -- the number that binds
+      # when no condition is assumed. The corpus also holds variants keyed to
+      # `unit_lots`, `abuts_alley`, `attached_wall`, `corner_lot`,
+      # `civic_corridor` and `abuts_nonresidential_zone`, and not one of those
+      # is measured by this pipeline, so the unconditioned number is the only
+      # one it can honestly use. Where the corpus states no minimum lot area,
+      # no frontage minimum or no coverage cap, the field is OMITTED rather
+      # than invented -- silence in the code is silence here.
+      #
+      # All are `needs_verification`, which is not a hedge: s7 routes an
+      # unverified zone to REVIEW, so these lots become work to do rather than
+      # lots to buy. That is the correct destination for a number nobody has
+      # read on the page yet.
+      - zone: CE
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 10
+        setback_rear_ft: 10
+        max_coverage_pct: 75
+        source: "PCC 33.130 — Table 130-1 (33.130.100 Primary Uses), 33.130.200 Lot Size, Table 130-2 (Summary of Development Standards in Commercial/Mixed Use Zones), 33.130.215 Setbacks, 33.130.220 Building Coverage, 33.130.225 Landscaped Areas, 33.130.250 General Requirements for Small Housing Types"
+        source_url: "https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf"
+        confidence: needs_verification
+        notes: "Corpus zone or/multnomah/portland/CE, base limbs only. The corpus states no setback_street_side_ft, min_lot_sqft and no min_frontage_ft here, so nothing gates on them. This file also has no column for min_landscaped_pct, setback_front_max_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
+      - zone: CI2
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 10
+        setback_rear_ft: 10
+        max_coverage_pct: 85
+        source: "PCC 33.150 — Table 150-1 (33.150.100 Primary Uses), 33.150.200 Lot Size, Table 150-2 (Summary of Development Standards in Campus Institutional Zones), 33.150.215 Setbacks, 33.150.220 Building Coverage, 33.150.240 Landscaped Areas"
+        source_url: "https://www.portland.gov/sites/default/files/code/150-campus-inst-zones_1.pdf"
+        confidence: needs_verification
+        notes: "Corpus zone or/multnomah/portland/CI2, base limbs only. The corpus states no setback_street_side_ft, min_lot_sqft and no min_frontage_ft here, so nothing gates on them. This file also has no column for min_landscaped_pct, setback_front_max_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
+      - zone: CM1
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 10
+        setback_rear_ft: 10
+        max_coverage_pct: 75
+        source: "PCC 33.130 — Table 130-1 (33.130.100 Primary Uses), 33.130.200 Lot Size, Table 130-2 (Summary of Development Standards in Commercial/Mixed Use Zones), 33.130.215 Setbacks, 33.130.220 Building Coverage, 33.130.225 Landscaped Areas, 33.130.250 General Requirements for Small Housing Types"
+        source_url: "https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf"
+        confidence: needs_verification
+        notes: "Corpus zone or/multnomah/portland/CM1, base limbs only. The corpus states no setback_street_side_ft, min_lot_sqft and no min_frontage_ft here, so nothing gates on them. This file also has no column for min_landscaped_pct, setback_front_max_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
+      - zone: CM2
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 10
+        setback_rear_ft: 10
+        max_coverage_pct: 85
+        source: "PCC 33.130 — Table 130-1 (33.130.100 Primary Uses), 33.130.200 Lot Size, Table 130-2 (Summary of Development Standards in Commercial/Mixed Use Zones), 33.130.215 Setbacks, 33.130.220 Building Coverage, 33.130.225 Landscaped Areas, 33.130.250 General Requirements for Small Housing Types"
+        source_url: "https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf"
+        confidence: needs_verification
+        notes: "Corpus zone or/multnomah/portland/CM2, base limbs only. The corpus states no setback_street_side_ft, min_lot_sqft and no min_frontage_ft here, so nothing gates on them. This file also has no column for min_density_du_per_acre, min_landscaped_pct, setback_front_max_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
+      - zone: CM3
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 10
+        setback_rear_ft: 10
+        max_coverage_pct: 85
+        source: "PCC 33.130 — Table 130-1 (33.130.100 Primary Uses), 33.130.200 Lot Size, Table 130-2 (Summary of Development Standards in Commercial/Mixed Use Zones), 33.130.215 Setbacks, 33.130.220 Building Coverage, 33.130.225 Landscaped Areas, 33.130.250 General Requirements for Small Housing Types"
+        source_url: "https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf"
+        confidence: needs_verification
+        notes: "Corpus zone or/multnomah/portland/CM3, base limbs only. The corpus states no setback_street_side_ft, min_lot_sqft and no min_frontage_ft here, so nothing gates on them. This file also has no column for min_density_du_per_acre, min_landscaped_pct, setback_front_max_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
+      - zone: CR
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 10
+        setback_rear_ft: 10
+        max_coverage_pct: 75
+        source: "PCC 33.130 — Table 130-1 (33.130.100 Primary Uses), 33.130.200 Lot Size, Table 130-2 (Summary of Development Standards in Commercial/Mixed Use Zones), 33.130.215 Setbacks, 33.130.220 Building Coverage, 33.130.225 Landscaped Areas, 33.130.250 General Requirements for Small Housing Types"
+        source_url: "https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf"
+        confidence: needs_verification
+        notes: "Corpus zone or/multnomah/portland/CR, base limbs only. The corpus states no setback_street_side_ft, min_lot_sqft and no min_frontage_ft here, so nothing gates on them. This file also has no column for max_density_du_per_acre, min_landscaped_pct, setback_front_max_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
+      - zone: CX
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 10
+        setback_rear_ft: 10
+        max_coverage_pct: 100
+        source: "PCC 33.130 — Table 130-1 (33.130.100 Primary Uses), 33.130.200 Lot Size, Table 130-2 (Summary of Development Standards in Commercial/Mixed Use Zones), 33.130.215 Setbacks, 33.130.220 Building Coverage, 33.130.225 Landscaped Areas, 33.130.250 General Requirements for Small Housing Types"
+        source_url: "https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf"
+        confidence: needs_verification
+        notes: "Corpus zone or/multnomah/portland/CX, base limbs only. The corpus states no setback_street_side_ft, min_lot_sqft and no min_frontage_ft here, so nothing gates on them. This file also has no column for min_landscaped_pct, setback_front_max_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
+      - zone: EX
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 10
+        setback_rear_ft: 10
+        max_coverage_pct: 100
+        source: "PCC 33.140 — Table 140-1 (33.140.100 Primary Uses), 33.140.100.B.1 and .B.2, 33.140.200 Lot Size, Table 140-2 (Development Standards), Table 140-3 (Minimum Building Setbacks From Residential Zone Lot Lines)"
+        source_url: "https://www.portland.gov/sites/default/files/code/140-ind-zones_1.pdf"
+        confidence: needs_verification
+        notes: "Corpus zone or/multnomah/portland/EX, base limbs only. The corpus states no setback_street_side_ft, min_lot_sqft and no min_frontage_ft here, so nothing gates on them. This file also has no column for min_landscaped_pct, setback_front_max_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
+      - zone: IR
+        quadplex_allowed: true
+        setback_front_ft: 13
+        setback_side_ft: 13
+        setback_rear_ft: 13
+        max_coverage_pct: 70
+        source: "PCC 33.150 — Table 150-1 (33.150.100 Primary Uses), 33.150.200 Lot Size, Table 150-2 (Summary of Development Standards in Campus Institutional Zones), 33.150.215 Setbacks, 33.150.220 Building Coverage, 33.150.240 Landscaped Areas"
+        source_url: "https://www.portland.gov/sites/default/files/code/150-campus-inst-zones_1.pdf"
+        confidence: needs_verification
+        notes: "Corpus zone or/multnomah/portland/IR, base limbs only. The corpus states no setback_street_side_ft, min_lot_sqft and no min_frontage_ft here, so nothing gates on them. This file also has no column for min_landscaped_pct, setback_front_max_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
+      - zone: RM1
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 5
+        min_lot_sqft: 4000
+        max_coverage_pct: 50
+        source: "PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas"
+        source_url: "https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf"
+        confidence: needs_verification
+        notes: "Corpus zone or/multnomah/portland/RM1, base limbs only. The corpus states no setback_street_side_ft and no min_frontage_ft here, so nothing gates on them. This file also has no column for min_density_du_per_acre, min_landscaped_pct, min_lot_width_ft, setback_garage_entrance_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
+      - zone: RM2
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 5
+        min_lot_sqft: 4000
+        max_coverage_pct: 60
+        source: "PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas"
+        source_url: "https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf"
+        confidence: needs_verification
+        notes: "Corpus zone or/multnomah/portland/RM2, base limbs only. The corpus states no setback_street_side_ft and no min_frontage_ft here, so nothing gates on them. This file also has no column for min_density_du_per_acre, min_landscaped_pct, min_lot_width_ft, setback_garage_entrance_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
+      - zone: RM3
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 10
+        setback_rear_ft: 10
+        setback_street_side_ft: 5
+        min_lot_sqft: 4000
+        max_coverage_pct: 85
+        source: "PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas"
+        source_url: "https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf"
+        confidence: needs_verification
+        notes: "Corpus zone or/multnomah/portland/RM3, base limbs only. The corpus states no min_frontage_ft here, so nothing gates on it. This file also has no column for min_density_du_per_acre, min_landscaped_pct, min_lot_width_ft, setback_garage_entrance_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
+      - zone: RM4
+        quadplex_allowed: true
+        setback_front_ft: 5
+        setback_side_ft: 10
+        setback_rear_ft: 10
+        setback_street_side_ft: 5
+        min_lot_sqft: 4000
+        max_coverage_pct: 85
+        source: "PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas"
+        source_url: "https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf"
+        confidence: needs_verification
+        notes: "Corpus zone or/multnomah/portland/RM4, base limbs only. The corpus states no min_frontage_ft here, so nothing gates on it. This file also has no column for min_density_du_per_acre, min_landscaped_pct, min_lot_width_ft, setback_garage_entrance_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
+      - zone: RX
+        quadplex_allowed: true
+        setback_front_ft: 0
+        setback_side_ft: 0
+        setback_rear_ft: 0
+        min_frontage_ft: 10
+        max_coverage_pct: 100
+        source: "PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas"
+        source_url: "https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf"
+        confidence: needs_verification
+        notes: "Corpus zone or/multnomah/portland/RX, base limbs only. The corpus states no setback_street_side_ft and no min_lot_sqft here, so nothing gates on them. This file also has no column for min_density_du_per_acre, min_landscaped_pct, setback_garage_entrance_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
 
   gresham:
     eligible: true
@@ -299,6 +467,111 @@ jurisdictions:
         source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1500.pdf"
         confidence: verified
         notes: "Quadplex NP and detached SFD also NP — OAR mandate does not attach (townhouse/cottage-cluster zone)."
+      # ---- ported from the FLATS corpus 2026-09-02 -------------------------
+      # These zones permit a quadplex and this file had never heard of them, so
+      # every lot in them was dropped at `zone_not_in_rules` before anything was
+      # measured. The two files had been checked against each other number by
+      # number for five weeks and never once as a LIST, which is how 7 zones
+      # and 1,319 lots stayed invisible: a lot the screen never looks at cannot
+      # come back green by mistake, so nothing complained.
+      #
+      # Every figure below is the corpus's BASE limb -- the number that binds
+      # when no condition is assumed. The corpus also holds variants keyed to
+      # `unit_lots`, `abuts_alley`, `attached_wall`, `corner_lot`,
+      # `civic_corridor` and `abuts_nonresidential_zone`, and not one of those
+      # is measured by this pipeline, so the unconditioned number is the only
+      # one it can honestly use. Where the corpus states no minimum lot area,
+      # no frontage minimum or no coverage cap, the field is OMITTED rather
+      # than invented -- silence in the code is silence here.
+      #
+      # All are `needs_verification`, which is not a hedge: s7 routes an
+      # unverified zone to REVIEW, so these lots become work to do rather than
+      # lots to buy. That is the correct destination for a number nobody has
+      # read on the page yet.
+      - zone: CMU
+        quadplex_allowed: true
+        setback_front_ft: 5
+        setback_side_ft: 0
+        setback_rear_ft: 15
+        setback_street_side_ft: 5
+        min_lot_sqft: 10000
+        min_frontage_ft: 100
+        source: "Gresham Development Code 4.0400 Tables 4.0420/4.0430 (Corridor); 4.0433 and 7.0512.A.2; 7.0420(J)"
+        source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0400.pdf"
+        confidence: needs_verification
+        notes: "Corpus zone or/multnomah/gresham/CMU, base limbs only. The corpus states no max_coverage_pct here, so nothing gates on it. This file also has no column for max_density_du_per_acre, min_density_du_per_acre, setback_front_max_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
+      - zone: HDR-PV
+        quadplex_allowed: true
+        setback_front_ft: 5
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 5
+        source: "Gresham Development Code Tables 4.1413/4.1415A/4.1415B (Pleasant Valley); 7.0420"
+        source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1400.pdf"
+        confidence: needs_verification
+        notes: "Corpus zone or/multnomah/gresham/HDR-PV, base limbs only. The corpus states no min_lot_sqft, min_frontage_ft and no max_coverage_pct here, so nothing gates on them. This file also has no column for max_density_du_per_acre, min_density_du_per_acre, setback_garage_entrance_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
+      - zone: MDR-PV
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 10
+        setback_street_side_ft: 10
+        min_lot_sqft: 3000
+        min_frontage_ft: 35
+        source: "Gresham Development Code Tables 4.1413/4.1415A/4.1415B (Pleasant Valley); 7.0420"
+        source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1400.pdf"
+        confidence: needs_verification
+        notes: "Corpus zone or/multnomah/gresham/MDR-PV, base limbs only. The corpus states no max_coverage_pct here, so nothing gates on it. This file also has no column for min_density_du_per_acre, setback_garage_entrance_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
+      - zone: OFR
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 10
+        setback_rear_ft: 15
+        setback_street_side_ft: 20
+        min_lot_sqft: 7200
+        source: "Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420"
+        source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf"
+        confidence: needs_verification
+        notes: "Corpus zone or/multnomah/gresham/OFR, base limbs only. The corpus states no min_frontage_ft and no max_coverage_pct here, so nothing gates on them. This file also has no column for min_density_du_per_acre, min_lot_depth_ft, min_lot_width_ft, setback_garage_entrance_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
+      - zone: SC
+        quadplex_allowed: true
+        setback_front_ft: 5
+        setback_side_ft: 0
+        setback_rear_ft: 15
+        setback_street_side_ft: 5
+        min_lot_sqft: 10000
+        min_frontage_ft: 100
+        source: "Gresham Development Code 4.0400 Tables 4.0420/4.0430 (Corridor); 4.0433 and 7.0512.A.2; 7.0420(J)"
+        source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0400.pdf"
+        confidence: needs_verification
+        notes: "Corpus zone or/multnomah/gresham/SC, base limbs only. The corpus states no max_coverage_pct here, so nothing gates on it. This file also has no column for max_density_du_per_acre, max_height_stories, setback_front_max_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
+      - zone: SC-RJ
+        quadplex_allowed: true
+        setback_front_ft: 5
+        setback_side_ft: 0
+        setback_rear_ft: 15
+        setback_street_side_ft: 5
+        min_lot_sqft: 10000
+        min_frontage_ft: 100
+        source: "Gresham Development Code 4.0400 Tables 4.0420/4.0430 (Corridor); 4.0433 and 7.0512.A.2; 7.0420(J)"
+        source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0400.pdf"
+        confidence: needs_verification
+        notes: "Corpus zone or/multnomah/gresham/SC-RJ, base limbs only. The corpus states no max_coverage_pct here, so nothing gates on it. This file also has no column for max_density_du_per_acre, max_height_stories, setback_front_max_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
+      - zone: VLDR-SW
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 5
+        # 20 is what Table 4.1508 prints. 7.0420(G)(1) caps the roof at 21 ft on
+        # that line, so the 26 ft pod stands at 25 -- derived, not typed.
+        setback_rear_ft: 20
+        setback_street_side_ft: 20
+        min_lot_sqft: 10000
+        min_frontage_ft: 50
+        step_back_rear: {height_ft: 21, rise_per_ft: 1, cite: "Gresham Development Code 7.0420(G)(1), with the applicability sentence of 7.0420"}
+        source: "Gresham Development Code Tables 4.1507/4.1508 (Springwater); 7.0420"
+        source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1500.pdf"
+        confidence: needs_verification
+        notes: "Corpus zone or/multnomah/gresham/VLDR-SW, base limbs only. The corpus states no max_coverage_pct here, so nothing gates on it. This file also has no column for min_lot_depth_ft, min_lot_width_ft, setback_garage_entrance_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
 
   troutdale:
     eligible: true
@@ -359,6 +632,48 @@ jurisdictions:
         notes: "Multifamily/townhouse zone — no detached SFD, no quadplex; OAR mandate does not attach. Inside the Town Center overlay quadplex IS permitted, but the GIS zonecode does not distinguish HDR-TC — treated as excluded (conservative; 369 lots)."
       # UPAR-10 (1 lot): unincorporated UPA parcel, annexation required first —
       # left absent (falls out as zone_not_in_rules).
+      # ---- ported from the FLATS corpus 2026-09-02 -------------------------
+      # These zones permit a quadplex and this file had never heard of them, so
+      # every lot in them was dropped at `zone_not_in_rules` before anything was
+      # measured. The two files had been checked against each other number by
+      # number for five weeks and never once as a LIST, which is how 2 zones
+      # and 72 lots stayed invisible: a lot the screen never looks at cannot
+      # come back green by mistake, so nothing complained.
+      #
+      # Every figure below is the corpus's BASE limb -- the number that binds
+      # when no condition is assumed. The corpus also holds variants keyed to
+      # `unit_lots`, `abuts_alley`, `attached_wall`, `corner_lot`,
+      # `civic_corridor` and `abuts_nonresidential_zone`, and not one of those
+      # is measured by this pipeline, so the unconditioned number is the only
+      # one it can honestly use. Where the corpus states no minimum lot area,
+      # no frontage minimum or no coverage cap, the field is OMITTED rather
+      # than invented -- silence in the code is silence here.
+      #
+      # All are `needs_verification`, which is not a hedge: s7 routes an
+      # unverified zone to REVIEW, so these lots become work to do rather than
+      # lots to buy. That is the correct destination for a number nobody has
+      # read on the page yet.
+      - zone: MU-2
+        quadplex_allowed: true
+        setback_front_ft: 15
+        setback_side_ft: 15
+        setback_rear_ft: 15
+        setback_street_side_ft: 0
+        min_frontage_ft: 15
+        source: "Troutdale Development Code 3.220, 3.230.B (residential uses) and 3.235 (detailed dimensional standards) (Municode, through Ord. 899)"
+        source_url: "https://library.municode.com/or/troutdale/codes/development_code?nodeId=CH3ZODI"
+        confidence: needs_verification
+        notes: "Corpus zone or/multnomah/troutdale/MU-2, base limbs only. The corpus states no min_lot_sqft and no max_coverage_pct here, so nothing gates on them. This file also has no column for min_lot_depth_ft, min_lot_width_ft, setback_garage_entrance_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
+      - zone: MU-3
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 20
+        setback_rear_ft: 20
+        min_frontage_ft: 15
+        source: "Troutdale Development Code 3.220, 3.230.A and 3.230.B (residential uses), 3.235 (Municode, through Ord. 899)"
+        source_url: "https://library.municode.com/or/troutdale/codes/development_code?nodeId=CH3ZODI"
+        confidence: needs_verification
+        notes: "Corpus zone or/multnomah/troutdale/MU-3, base limbs only. The corpus states no setback_street_side_ft, min_lot_sqft and no max_coverage_pct here, so nothing gates on them. This file also has no column for min_lot_depth_ft, min_lot_width_ft, setback_front_max_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
 
   fairview:
     eligible: true
@@ -532,6 +847,38 @@ jurisdictions:
         confidence: verified
         notes: "Identical to MR 2 for quads (combined table column). Min lot 8,000 -> 7,500 with MR 2, aligned to FLATS 2026-09-01."
       # TC (167 lots, town center) not covered — falls out as zone_not_in_rules.
+      # ---- ported from the FLATS corpus 2026-09-02 -------------------------
+      # These zones permit a quadplex and this file had never heard of them, so
+      # every lot in them was dropped at `zone_not_in_rules` before anything was
+      # measured. The two files had been checked against each other number by
+      # number for five weeks and never once as a LIST, which is how 1 zones
+      # and 167 lots stayed invisible: a lot the screen never looks at cannot
+      # come back green by mistake, so nothing complained.
+      #
+      # Every figure below is the corpus's BASE limb -- the number that binds
+      # when no condition is assumed. The corpus also holds variants keyed to
+      # `unit_lots`, `abuts_alley`, `attached_wall`, `corner_lot`,
+      # `civic_corridor` and `abuts_nonresidential_zone`, and not one of those
+      # is measured by this pipeline, so the unconditioned number is the only
+      # one it can honestly use. Where the corpus states no minimum lot area,
+      # no frontage minimum or no coverage cap, the field is OMITTED rather
+      # than invented -- silence in the code is silence here.
+      #
+      # All are `needs_verification`, which is not a hedge: s7 routes an
+      # unverified zone to REVIEW, so these lots become work to do rather than
+      # lots to buy. That is the correct destination for a number nobody has
+      # read on the page yet.
+      - zone: TC
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        min_lot_sqft: 7500
+        max_coverage_pct: 45
+        source: "WVDC 235.200 Table 235-1 (Uses in Town Center Zone); 235.300 Table 235-2 (Development Standards in Town Center Zone)"
+        source_url: "https://woodvillage.municipal.codes/WVDC/235.300"
+        confidence: needs_verification
+        notes: "Corpus zone or/multnomah/wood-village/TC, base limbs only. The corpus states no setback_street_side_ft and no min_frontage_ft here, so nothing gates on them. This file also has no column for min_lot_depth_ft, min_lot_width_ft, setback_garage_entrance_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
 
   multnomah_unincorporated:
     eligible: true
@@ -606,6 +953,50 @@ jurisdictions:
         source_url: "https://multco.us/file/chapter_39_-_zoning_code/download"
         confidence: verified
         notes: "County RURAL zone — overwhelmingly outside the Metro UGB; no quadplex use in MCC 39. Any RR parcel inside the UGB needs individual review."
+      # ---- ported from the FLATS corpus 2026-09-02 -------------------------
+      # These zones permit a quadplex and this file had never heard of them, so
+      # every lot in them was dropped at `zone_not_in_rules` before anything was
+      # measured. The two files had been checked against each other number by
+      # number for five weeks and never once as a LIST, which is how 2 zones
+      # and 33 lots stayed invisible: a lot the screen never looks at cannot
+      # come back green by mistake, so nothing complained.
+      #
+      # Every figure below is the corpus's BASE limb -- the number that binds
+      # when no condition is assumed. The corpus also holds variants keyed to
+      # `unit_lots`, `abuts_alley`, `attached_wall`, `corner_lot`,
+      # `civic_corridor` and `abuts_nonresidential_zone`, and not one of those
+      # is measured by this pipeline, so the unconditioned number is the only
+      # one it can honestly use. Where the corpus states no minimum lot area,
+      # no frontage minimum or no coverage cap, the field is OMITTED rather
+      # than invented -- silence in the code is silence here.
+      #
+      # All are `needs_verification`, which is not a hedge: s7 routes an
+      # unverified zone to REVIEW, so these lots become work to do rather than
+      # lots to buy. That is the correct destination for a number nobody has
+      # read on the page yet.
+      - zone: MR4
+        quadplex_allowed: true
+        setback_front_ft: 20
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 10
+        min_lot_sqft: 16000
+        min_frontage_ft: 20
+        max_coverage_pct: 40
+        source: "MCC 39.4990(J)"
+        source_url: "https://multco.us/file/chapter_39_-_zoning_code/download"
+        confidence: needs_verification
+        notes: "Corpus zone or/multnomah/_unincorporated/MR4, base limbs only. This file also has no column for min_lot_width_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
+      - zone: R5
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 5
+        min_lot_sqft: 3000
+        source: "Portland Zoning Code 33.110 Tables 110-2/110-4/110-5/110-7 (Portland-administered pockets); 33.110.205"
+        source_url: "https://www.portland.gov/sites/default/files/code/110-sd-zone_2.pdf"
+        confidence: needs_verification
+        notes: "Corpus zone or/multnomah/_unincorporated/R5, base limbs only. The corpus states no setback_street_side_ft, min_frontage_ft and no max_coverage_pct here, so nothing gates on them. This file also has no column for min_density_trigger_lot_sqft, min_units_at_trigger, setback_garage_entrance_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
 
   lake_oswego:
     eligible: false
@@ -938,6 +1329,63 @@ jurisdictions:
         source_url: "https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf"
         confidence: needs_verification
         notes: "Distinct layer value 'R20CC' — meaning of CC suffix unconfirmed; standards mirrored from R-20 pending verification."
+      # ---- ported from the FLATS corpus 2026-09-02 -------------------------
+      # These zones permit a quadplex and this file had never heard of them, so
+      # every lot in them was dropped at `zone_not_in_rules` before anything was
+      # measured. The two files had been checked against each other number by
+      # number for five weeks and never once as a LIST, which is how 3 zones
+      # and 715 lots stayed invisible: a lot the screen never looks at cannot
+      # come back green by mistake, so nothing complained.
+      #
+      # Every figure below is the corpus's BASE limb -- the number that binds
+      # when no condition is assumed. The corpus also holds variants keyed to
+      # `unit_lots`, `abuts_alley`, `attached_wall`, `corner_lot`,
+      # `civic_corridor` and `abuts_nonresidential_zone`, and not one of those
+      # is measured by this pipeline, so the unconditioned number is the only
+      # one it can honestly use. Where the corpus states no minimum lot area,
+      # no frontage minimum or no coverage cap, the field is OMITTED rather
+      # than invented -- silence in the code is silence here.
+      #
+      # All are `needs_verification`, which is not a hedge: s7 routes an
+      # unverified zone to REVIEW, so these lots become work to do rather than
+      # lots to buy. That is the correct destination for a number nobody has
+      # read on the page yet.
+      - zone: MURA
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 8
+        min_lot_sqft: 3000
+        max_coverage_pct: 75
+        source: "HV LDC 16.22.050 (MUR-A, Mixed Use Residential-Attached); Table 16.22.050-1 permitted uses, Table 16.22.050-2 development standards"
+        source_url: "https://ecode360.com/print/HA4934?guid=43529907"
+        confidence: needs_verification
+        notes: "Corpus zone or/clackamas/happy-valley/MURA, base limbs only. The corpus states no min_frontage_ft here, so nothing gates on it. This file also has no column for min_building_separation_ft, min_landscaped_pct, setback_garage_entrance_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
+      - zone: SFA
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 8
+        min_lot_sqft: 2000
+        max_coverage_pct: 75
+        source: "HV LDC 16.22.050 (SFA, Single-Family Attached); Table 16.22.050-1 permitted uses, Table 16.22.050-2 development standards"
+        source_url: "https://ecode360.com/print/HA4934?guid=43529907"
+        confidence: needs_verification
+        notes: "Corpus zone or/clackamas/happy-valley/SFA, base limbs only. The corpus states no min_frontage_ft here, so nothing gates on it. This file also has no column for min_building_separation_ft, min_landscaped_pct, setback_garage_entrance_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
+      - zone: VTH
+        quadplex_allowed: true
+        setback_front_ft: 10
+        setback_side_ft: 5
+        setback_rear_ft: 15
+        setback_street_side_ft: 5
+        min_lot_sqft: 2000
+        max_coverage_pct: 65
+        source: "HV LDC 16.22.050 (VTH, Village Townhome); Table 16.22.050-1 permitted uses, Table 16.22.050-2 development standards"
+        source_url: "https://ecode360.com/print/HA4934?guid=43529907"
+        confidence: needs_verification
+        notes: "Corpus zone or/clackamas/happy-valley/VTH, base limbs only. The corpus states no min_frontage_ft here, so nothing gates on it. This file also has no column for max_density_du_per_acre, min_building_separation_ft, min_density_du_per_acre, min_landscaped_pct, setback_front_max_ft, setback_garage_entrance_ft, which the corpus does hold here -- carried across as nothing, which is why the row is needs_verification."
 
   milwaukie:
     eligible: true

@@ -58,27 +58,35 @@ def test_a_skipped_key_has_to_already_be_here() -> None:
     port is losing a plane and calling it a backport.
     """
     ruleset = RuleSet(load_rules())
-    for jname, spec in load_quadfit().items():
-        if not isinstance(spec, dict) or "zones" not in spec:
-            continue
+    checked = 0
+    for jname, spec in load_quadfit()["jurisdictions"].items():
         layer = ruleset.layers.get(layer_id_for(jname))
-        for row in spec["zones"] or []:
+        for row in spec.get("zones") or []:
             for key in BACKPORTED & set(row):
                 field = "setback_" + key.removeprefix("step_back_") + "_ft"
-                zone = (layer.zones.get(row["zone"]) if layer else None)
+                zone = layer.zones.get(row["zone"]) if layer else None
                 held = zone.values.get(field) if zone else None
-                assert held is not None and held.step_back is not None, (
+                assert held is not None and held.step_back_at_ft is not None, (
                     f"{jname}/{row['zone']} declares {key} and the corpus holds "
                     f"no step-back on {field} -- that is a dropped plane, not a "
                     f"backport"
                 )
-                assert float(held.step_back.height_ft) == float(row[key]["height_ft"])
+                assert float(held.step_back_at_ft) == float(row[key]["height_ft"])
+                # And rules.yaml holds the PRINTED figure, not the stepped one.
+                # Storing the sum and the plane together doubles the step-back,
+                # which is how the ported Gresham VLDR-SW row arrived wrong.
+                assert float(held.before_step_back) == float(row[field])
+                checked += 1
+    assert checked == 8, f"expected 8 declared planes, walked {checked}"
 
 
 def test_every_quadfit_zone_arrives(dry: dict) -> None:
-    # 98 as of 2026-09-01: Wilsonville's V and TC were mirrored into
-    # rules.yaml when they were encoded, so the port carries them too.
-    assert dry["stats"]["zones"] == 98
+    # 127 as of 2026-09-02. Was 98 until the zone-coverage gap was measured:
+    # 29 zones the corpus said permit a quadplex and rules.yaml had never heard
+    # of, worth 76,752 lots that were dropped before anything was measured.
+    # Lake Oswego's six are NOT among them -- that jurisdiction is `eligible:
+    # false` by owner decision, so its rows are reference rather than debt.
+    assert dry["stats"]["zones"] == 127
     assert dry["stats"]["layers"] == len(COUNTY) == 18
 
 

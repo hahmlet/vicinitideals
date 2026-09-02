@@ -610,6 +610,27 @@ siteplan:
         R7: 250
         R5: 250
         R2.5: 200
+        # The multi-dwelling and commercial/mixed-use zones, added 2026-09-02
+        # with the zones themselves. 192 sq ft is Table 120-4's outdoor area
+        # per dwelling, and it is the SAME number in the commercial zones that
+        # state one, because 33.130 sends them back to the multi-dwelling
+        # table. The nulls are not omissions: CX, EX, RX, IR and CI2 state no
+        # outdoor area at all, which is what the loosest land in the corpus
+        # looks like from inside a site plan.
+        RM1: 192
+        RM2: 192
+        RM3: 192
+        RM4: 192
+        RX: null
+        CE: 192
+        CM1: 192
+        CM2: 192
+        CM3: 192
+        CR: 192
+        CX: null
+        EX: null
+        CI2: null
+        IR: null
       cite: PCC 33.266.120.C; Table 110-4 outdoor area
     # FMC 19.162.020(L)(1): a residential driveway approach is 10 ft minimum
     # and 24 ft maximum. 19.30.040(F)(1)'s 32 ft is the per-frontage budget for
@@ -658,6 +679,12 @@ siteplan:
         R5: 20
         MURS: 20
         R20CC: 22
+        # Added 2026-09-02 with the zones. All three are 10 ft, and 10 is the
+        # FLOOR 16.43.030.E.4 states rather than a building setback echoed --
+        # these are the districts whose own front setback is at or below it.
+        MURA: 10
+        SFA: 10
+        VTH: 10
       cite: HV LDC 16.41.030.B.1, minimum improved driveway width; 16.43.030.E.4, parking setback
     # Table 16.12.035.D, the widest approach any city here allows this
     # building: 10 ft minimum, 36 ft maximum on the triplex/quadplex row (a
@@ -834,11 +861,21 @@ siteplan:
         R10: 20
         R7: 15
         LR7: 20
+        # Added 2026-09-02 with the zones. MR4 takes the 20 ft the multiple-use
+        # districts carry; R5 takes 10, the lowest street setback in the county
+        # table.
+        MR4: 20
+        R5: 10
       open_space_sqft_by_zone:
         R20: null
         R10: null
         R7: null
         LR7: 1200
+        # Null for the same reason the R zones are: 39.8045(A)(2)'s shared
+        # outdoor recreation area rides on LR-7's design review and reaches no
+        # other district. An absence read, not a field left blank.
+        MR4: null
+        R5: null
       cite: MCC 39.6560(A) driveway width; 39.6580(A) street setback; 39.8045(A)(2) shared outdoor recreation
     # TWO RULES, AND THE CODE SAYS WHICH IS WHICH. Figure 73-1's last two
     # rows dimension the driveway inside a parking lot -- 12 feet one way, 22

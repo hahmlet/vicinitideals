@@ -33,8 +33,11 @@ def test_portland_overlay_suffix_normalization():
     # Overlay letters are appended to Portland zone codes in GIS data.
     assert pdx.rule_for("R5a").zone == "R5"
     assert pdx.rule_for("R2.5h").zone == "R2.5"
-    # Unknown zone → no rule.
-    assert pdx.rule_for("CM2") is None
+    # Unknown zone → no rule. This used to be CM2, which stopped being unknown
+    # on 2026-09-02 when Portland's fourteen commercial and multi-dwelling zones
+    # were ported in from the corpus. IG1 is General Industrial: no housing, so
+    # it will not follow.
+    assert pdx.rule_for("IG1") is None
     assert pdx.rule_for(None) is None
 
 

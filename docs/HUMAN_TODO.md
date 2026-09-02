@@ -477,9 +477,42 @@ the list of places worth hoping about.
 
   **This direction is safe** — a lot the screen never looks at cannot become a
   wrong green — and that is why it survived. It is 30% of the lot universe
-  sitting behind a table nobody thought to compare as a list. The dimensions
-  already exist, read and cited, in the corpus; the work is porting them across
-  and re-running. Agent work, no action needed from you, and it is next.
+  sitting behind a table nobody thought to compare as a list.
+
+  **Ported 2026-09-02, waiting on a re-run.** All 29 in-market zones are now in
+  the screen (Lake Oswego's six are left out: you have that city switched off,
+  so its lots never reach a measurement either way). Every one arrives marked
+  *needs verification*, which means those 76,752 lots land in the **review**
+  pile, not the green one — work to look at rather than lots to buy. Nothing
+  needed from you; the numbers move on the next full run.
+
+- **110 green lots may be too BIG to build only four units on** — found while
+  porting the zones above, measured, and small. Some cities set a *minimum*
+  density as well as a maximum: build housing here and you must build at least
+  so many homes per acre. Four homes clears that floor on a normal lot and
+  stops clearing it on a large one. The state's middle-housing law cancels
+  density *maximums* for a four-plex, which is what protects us in West Linn
+  and Gresham, but it pointedly does not cancel *minimums*.
+
+  Measured against the last full run: **110 of 10,106 greens, every one in
+  Oregon City**, sit above their zone's floor. That is an upper bound — the
+  cities measure the floor on developable land rather than the whole lot, which
+  can only help.
+
+  Oregon City's chapter is already read, and it is the unfriendly answer: the
+  four homes do count toward the floor, and the code says outright that the
+  minimum "may not be reduced". So the floor is real where it applies. The new
+  screen we are building already checks this and gets it right; the older one
+  still producing today's numbers has no column for it. So this is a gap
+  between the two, not an unread rule, and it closes either by teaching the old
+  screen the column or by the changeover. Agent work, queued behind the re-run.
+
+  Checked at the same time and it came back clean: some cities also set a
+  *maximum* front setback — build no further back than this — and the screen
+  has never heard of that either. Twenty-four zones state one, twenty-two of
+  them are already in the review pile for other reasons, and the two that are
+  not hold **no green lots at all**. Nothing to do, written down so the next
+  city somebody reads does not inherit the blind spot silently.
 
 - **Corner-lot status — and it is the opposite of what this list said.** 14
   jurisdictions define what a corner lot is; nothing computes which lots *are*

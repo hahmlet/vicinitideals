@@ -462,14 +462,15 @@ def test_an_adopted_zone_reports_the_standards_it_adopts() -> None:
 #: Frozen so the debt cannot grow while it is being paid down. A zone leaves
 #: this list by being encoded in rules.yaml, never by being deleted from it.
 UNSCREENED_ZONES: dict[str, tuple[str, ...]] = {
-    "gresham": ("CMU", "HDR-PV", "MDR-PV", "OFR", "SC", "SC-RJ", "VLDR-SW"),
-    "happy_valley": ("MURA", "SFA", "VTH"),
+    # All that is left of the 35. The other 29 were ported on 2026-09-02 and
+    # every one arrived `needs_verification`, so their lots reach REVIEW rather
+    # than GREEN -- work to do, not lots to buy.
+    #
+    # Lake Oswego's six stay, and they are not debt: the jurisdiction is
+    # `eligible: false` by owner decision, so nothing screens there at all and
+    # a zone the screen never reaches costs nothing. They are listed because a
+    # decision that can be reversed should leave its consequences visible.
     "lake_oswego": ("R-10", "R-15", "R-2", "R-6", "R-DD", "R-W"),
-    "multnomah_unincorporated": ("MR4", "R5"),
-    "portland": ("CE", "CI2", "CM1", "CM2", "CM3", "CR", "CX", "EX", "IR",
-                 "RM1", "RM2", "RM3", "RM4", "RX"),
-    "troutdale": ("MU-2", "MU-3"),
-    "wood_village": ("TC",),
 }
 
 
@@ -497,4 +498,86 @@ def test_a_zone_missing_from_the_pipeline_is_a_debt_somebody_wrote_down() -> Non
         f"{sorted(set(found) ^ set(UNSCREENED_ZONES))} differ by jurisdiction, "
         f"and per-jurisdiction "
         f"{ {j: sorted(set(found.get(j, ())) ^ set(UNSCREENED_ZONES.get(j, ()))) for j in set(found) | set(UNSCREENED_ZONES)} }"
+    )
+
+
+#: Standards the corpus reads, cites and holds on a zone BOTH files carry, that
+#: rules.yaml has no column for and that reach the pipeline no other way. The
+#: step-back was one of these and it took a feature to close; this is the rest
+#: of the list, with the number of zones each one is silent on.
+#:
+#: Most of them would not move a verdict. A minimum lot WIDTH is largely said
+#: again by area and frontage; a garage entrance setback means nothing to a pod
+#: with no garage; a minimum number of STORIES is not a constraint on a
+#: two-storey building.
+#:
+#: `max_density_du_per_acre` looks like the dangerous one and is not: OAR
+#: 660-046-0220(2)(b) forbids a Large City applying a density maximum to a
+#: quadplex, and the state layer strikes it out with `exempt: true, preempts:
+#: always`. West Linn's R-5 prints 8.7 units per acre against a 5,000 sq ft
+#: minimum lot -- four units is four times that -- and the zone still is not a
+#: wall, because the state says the row does not apply. A column here would
+#: have to carry the exemption too, and not having one carries it by accident.
+#:
+#: Two are live, and both were measured on 2026-09-02 against the pre-overlay
+#: run rather than argued about.
+#:
+#: A MAXIMUM front setback pushes the building toward the street and the
+#: placement search has never heard of it. 24 zones state one and 22 of them are
+#: `needs_verification`, so their lots reach REVIEW anyway; the two that are
+#: verified -- unincorporated Clackamas VR57 and Gresham CMF -- hold **zero
+#: greens between them**. So the gap moves no verdict as the corpus stands,
+#: which is a fact about the corpus and not about the rule. (Portland IR is the
+#: reason to keep looking: it states a 13 ft minimum front setback and a 10 ft
+#: maximum, so as encoded no legal front setback exists at all.)
+#:
+#: Minimum density is the one with a live number. (2)(b) is about maximums and
+#: no part of -0220 relieves a quadplex of a floor, so a lot can be too BIG for
+#: four units to be enough: **110 of 10,106 greens, every one in Oregon City**,
+#: sit above their zone's floor. An upper bound -- the floor is measured on net
+#: developable area and this used gross. Oregon City's chapter is read and
+#: unfriendly: Table 17.08.050 note B.2 counts the pod's four units toward the
+#: floor, and 17.65.070.D.4 says the minimum "may not be reduced". Note that
+#: `flats.score.screen` ALREADY applies this field, as a density with slack
+#: rather than a rounded unit count -- so this is a gap between the two screens
+#: rather than an unread rule, and it closes with the column or the changeover.
+#:
+#: Frozen so the list cannot grow quietly. A standard leaves it by getting a
+#: column, never by being dropped from the corpus.
+UNEXPRESSIBLE: dict[str, int] = {
+    "setback_garage_entrance_ft": 67,
+    "min_lot_width_ft": 65,
+    "min_density_du_per_acre": 40,
+    "min_landscaped_pct": 33,
+    "min_lot_depth_ft": 28,
+    "setback_front_max_ft": 24,
+    "max_density_du_per_acre": 20,
+    "min_building_separation_ft": 9,
+    "min_density_trigger_lot_sqft": 5,
+    "min_units_at_trigger": 5,
+    "max_lot_depth_ratio": 4,
+    "max_units": 2,
+    "max_height_stories": 2,
+    "setback_side_total_ft": 1,
+}
+
+
+def test_a_standard_with_no_column_is_a_standard_nobody_applies() -> None:
+    """The step-back's siblings, counted.
+
+    A number the corpus holds and rules.yaml cannot express is not a
+    disagreement between the files -- it agrees perfectly, on nothing. It took
+    building `StepBack` to see that this was a CATEGORY rather than one odd
+    rule, and the honest thing is to say how big it is rather than close it
+    quietly by hard-coding.
+
+    Anything routed into the pipeline some other way is excluded by
+    `ROUTED_ELSEWHERE`: the per-city parking and open-space figures live in
+    `footprints.yaml` and `common.py`, not here, and are not missing.
+    """
+    audit = _audit()
+    found = {k: len(v) for k, v in audit.unexpressible_standards().items()}
+    assert found == UNEXPRESSIBLE, (
+        "the set of standards this pipeline cannot express moved: "
+        f"{ {k: (UNEXPRESSIBLE.get(k), found.get(k)) for k in set(found) ^ set(UNEXPRESSIBLE) | {k for k in found if found[k] != UNEXPRESSIBLE.get(k)}} }"
     )

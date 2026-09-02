@@ -145,8 +145,23 @@ pytestmark = pytest.mark.unit
 #: are not encoded -- so the ledger counts it again, correctly. A count that
 #: moves up while the refusal shrinks is the honest reading of a partial lift:
 #: this ledger measures how much prose declares a limit, not how much is left.
-EXPECTED = {"notes": 101, "comments": 112, "tests": 17}
+EXPECTED = {"notes": 102, "comments": 112, "tests": 17}
 
+#: MOVED 2026-09-02 by Gresham 7.0420(G)(1)(b), +1 note, and it is the FIRST
+#: refusal in this corpus recorded because a rule would give ground BACK. The
+#: rear roof-height plane is now derived by the pipeline, and (b) switches the
+#: whole plane off for any lot touching the Hillside Geological Risk Area or a
+#: Resource Area -- so those lots are screened five feet stricter than the code
+#: asks. Refused anyway: there is no condition for "inside an overlay", the
+#: envelope is drawn before overlays are measured, and both overlays are carves,
+#: so handing five feet back to a lot whose resource area was just subtracted is
+#: not obviously the code's arithmetic.
+#:
+#: It also demonstrated the dedup rule below in the other direction. Written
+#: first with "NOT ENCODED" opening the paragraph AND "Not encoded" opening a
+#: later sentence, it rendered as TWO rows for one decision. The count moved by
+#: two and only one thing had been refused. Lead with the marker, once.
+#:
 #: MOVED 2026-09-01 by Wilsonville's V and TC, +8 notes, +4 comments, +1 test.
 #: The Village Zone is the largest single reading in the corpus and it refuses
 #: five things -- the 25 percent open space, the Architectural Pattern Book,
