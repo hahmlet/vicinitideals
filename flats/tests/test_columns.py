@@ -389,5 +389,49 @@ def test_a_decimal_without_its_leading_zero_is_still_that_number(
     assert found.mismatches == ()
 
 
+def test_a_quote_inside_measured_on_is_not_the_values_citation(
+    tmp_path: Path,
+) -> None:
+    """It cites the denominator, which is a different document and a different
+    question.
+
+    Happy Valley's maximum density is measured per NET acre, and the block that
+    says what a net acre is carries its own quote -- into a land-division
+    chapter, four sections away from the density table. Read as the density's
+    own citation, a number gets compared against a definition. 103 citations in
+    the corpus sit inside such a block, and none of them reaches a dimensional
+    table today, which is exactly why this needs a test rather than a count:
+    the day one does, it would be a finding invented out of a parser.
+    """
+    docroot = tmp_path / "docs"
+    configroot = tmp_path / "config"
+    doc = docroot / "or" / "x" / "city" / "table.txt"
+    doc.parent.mkdir(parents=True)
+    doc.write_text(
+        "  Table 1: Development Requirements\n"
+        "                    A-1        B-2        C-3\n"
+        "        Density     12         18         24\n\n",
+        encoding="utf-8",
+    )
+    layer = configroot / "or" / "x" / "city.yaml"
+    layer.parent.mkdir(parents=True)
+    layer.write_text(
+        "zones:\n"
+        "  B-2:\n"
+        "    max_density_du_per_acre:\n"
+        "      value: 18\n"
+        '      quote: "or/x/city/table.txt#L3"\n'
+        "      measured_on:\n"
+        "        fact: net_developable_area\n"
+        '        quote: "or/x/city/table.txt#L3"\n',
+        encoding="utf-8",
+    )
+    found = survey(configroot=configroot, docroot=docroot)
+    # One citation, not two: the nested quote is the denominator's.
+    assert found.reached == 1
+    assert found.judged == 1
+    assert found.mismatches == ()
+
+
 def test_reach_is_the_same_number_the_survey_reports(got: Survey) -> None:
     assert reach() == got.reached

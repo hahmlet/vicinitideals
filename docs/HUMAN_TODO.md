@@ -548,8 +548,24 @@ the list of places worth hoping about.
   cities quote the header row beside the value, which is how a file says which
   of six columns a number came from — and the check was treating that header as
   a line it had failed to read, so Troutdale and Happy Valley were almost
-  entirely unexamined. It now reads 555 citations and can compare 237 of them,
+  entirely unexamined. It now reads 581 citations and can compare 255 of them,
   up from 154, and still finds nothing wrong.
+
+  It also found a silent hole in itself, which is the more useful kind. Four of
+  Wood Village's districts are named with a space in them — *LR 7.5*, *MR 2* —
+  and the check did not skip those four, it read their numbers as though they
+  belonged to whichever district was listed above them. So it went looking for
+  them in another district's columns, found nothing, and reported all clear.
+  Fixed, and their numbers are now genuinely checked.
+
+  And one more, the same shape in the other direction: some values say *how*
+  they are measured, and that explanation carries its own page reference. Happy
+  Valley's density is per *net* acre, and the note explaining what a net acre is
+  points four sections away into the land-division chapter. The check had been
+  reading that reference as though it were the density's own, which would
+  compare a number against a definition. 103 references in the corpus are of
+  that kind; none of them was producing a false alarm yet, and now none of them
+  can.
 
   It also now says what it *cannot* read, which matters more than the count: a
   clean report from a narrow reader looks exactly like a clean corpus. Five
@@ -560,8 +576,9 @@ the list of places worth hoping about.
   and Oregon City's chapter is a scan whose tables come out as *Quad pl ex a nd
   co t tage 1 0 , 000 squ are* — in both, a machine counting cells would be
   guessing. So those were read by hand instead, every dimensional number
-  against its own column, about 250 values across four jurisdictions. All
-  correct. That is a reading of today's files, not a check that will notice if
+  against its own column, about 250 values across five jurisdictions — Fairview,
+  Oregon City, Lake Oswego, unincorporated Clackamas, and Gresham's two plan
+  districts. All correct. That is a reading of today's files, not a check that will notice if
   they change, and it is written down as that.
 
 - **Wire up the Clackamas environmental layers** — done everywhere a green is

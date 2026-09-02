@@ -314,7 +314,19 @@ unjudgeable — it would have walked past the misread it was built for. Both are
 `reach()` is pinned by a test: **a reader that has stopped seeing rows reports a clean
 corpus in exactly the words of a corpus that is clean.**
 
-It reads 581 of 2,249 cited values, and its docstring names the five shapes of the rest so
+Two more of the same species surfaced while widening it, and neither showed as an error.
+Four Wood Village zones are keyed with a space — `LR 7.5`, `MR 2` — and the key pattern
+stopped at the space, which did not skip them: it kept attributing their fields to the
+zone declared above, so each was checked against another district's columns, found no
+cell, and passed in silence. And a `quote:` nested one level deeper than the value it
+follows is not that value's citation. `measured_on:` and `like:` open a block carrying
+their own cite, and that cite names the *denominator* or the borrowed-from zone — Happy
+Valley's density quotes 16.63 there for what a net acre is, and read as the density's own
+citation it compares a number against a land-division definition. 103 citations in the
+corpus sit inside such a block; a depth guard now drops them, taking the parsed total from
+2,249 to 2,142 without moving reach or judged.
+
+It reads 581 of 2,142 cited values, and its docstring names the five shapes of the rest so
 that a clean report is not read as a clean corpus. Three of the five are nothing to check —
 prose, a table with one district in it, a header whose columns are housing types. Two are
 real gaps and stay open on purpose. Fairview and unincorporated Clackamas print their

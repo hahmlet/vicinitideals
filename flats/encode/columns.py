@@ -59,7 +59,7 @@ Three counts, reported separately because they are different work:
     seeing rows reports a clean corpus in exactly the words of a corpus that is
     clean, so this is pinned by a test.
 
-What it cannot see, so a clean report is read for what it is. Of 2,249 cited
+What it cannot see, so a clean report is read for what it is. Of 2,142 cited
 values it reads 581. Roughly half the remainder name lines in a document with
 no table this check recognises. The rest name lines in a document that has one
 but outside it; or in a table whose header does not carry that district; or in
@@ -174,7 +174,7 @@ _SPLIT = re.compile(r"\s{2,}")
 #: ``quote: "or/multnomah/gresham/4.0100.residential.txt#L313"``, and the
 #: multi-line forms beside it: ``#L315,L319``, ``#L316-L318,L385``.
 _QUOTE = re.compile(
-    r'^\s+quote:\s*"([^"#]+)#(L\d+(?:-L?\d+)?(?:,L\d+(?:-L?\d+)?)*)"\s*$'
+    r'^(\s+)quote:\s*"([^"#]+)#(L\d+(?:-L?\d+)?(?:,L\d+(?:-L?\d+)?)*)"\s*$'
 )
 
 _PART = re.compile(r"^L(\d+)(?:-L?(\d+))?$")
@@ -191,11 +191,22 @@ _MAX_WRAP = 3
 #: above, so every value in those four was checked against another zone's
 #: columns and quietly found nothing. ``norm`` strips the space back out, so
 #: the key still matches a header cell reading ``LR7.5``.
+#:
+#: The pattern matches on indent alone, so a jurisdiction-level field under
+#: ``defaults:`` -- ``parking_stall_width_ft`` -- is read as though it were a
+#: zone. That is harmless and it is worth knowing why, because it is the kind
+#: of thing that stops being harmless quietly. Nearly all of them are dropped
+#: one line later: their figure sits at the depth this pattern expects a FIELD
+#: name at, so no field is ever pending and no citation is yielded. Four
+#: survive that, the ones carrying a ``variants:`` block, and those are dropped
+#: instead at lookup, because no table header anywhere has a column headed
+#: "parking stall width". A field name is safe here only for as long as it does
+#: not collide with a district code.
 _ZONE_KEY = re.compile(r"^  ([A-Za-z0-9/_.\-]+(?: [A-Za-z0-9/_.\-]+)*):\s*$")
 _FIELD_KEY = re.compile(r"^    ([a-z0-9_]+):\s*$")
-_EXEMPT = re.compile(r"^\s+-?\s*exempt:\s*true\s*$")
+_EXEMPT = re.compile(r"^(\s+-?\s*)exempt:\s*true\s*$")
 _WHEN = re.compile(r"^\s+when:\s*\[(.*)\]\s*$")
-_ANY_KEY = re.compile(r"^\s+-?\s*([a-z0-9_]+):\s*(\S.*?)\s*$")
+_ANY_KEY = re.compile(r"^(\s+-?\s*)([a-z0-9_]+):\s*(\S.*?)\s*$")
 
 #: Forms that state a figure the table also prints, so the two can be compared.
 #: ``per_dwelling`` is here because the corpus deliberately encodes the printed
@@ -521,17 +532,26 @@ def _citations(path: Path) -> Iterator[tuple[str, str, str, str, str, list[int]]
     """``(zone, field, when, encoded, doc, lines)`` for every quoted value."""
     zone = field = None
     encoded = when = None
+    # Where the pending value was declared. A quote is the citation for that
+    # value only if it sits at the same indent -- ``measured_on`` opens a block
+    # one level deeper holding its own cite, and that one names the DENOMINATOR
+    # rather than the standard. Happy Valley's density quotes 16.63 there for
+    # what a net acre is, and reading it as the density's own citation compares
+    # a number against a land-division definition. 103 citations in the corpus
+    # sit inside such a block.
+    depth = -1
     for line in path.read_text(encoding="utf-8").splitlines():
         got = _ZONE_KEY.match(line)
         if got:
-            zone, field, encoded, when = got.group(1), None, None, None
+            zone, field, encoded, when, depth = got.group(1), None, None, None, -1
             continue
         got = _FIELD_KEY.match(line)
         if got:
-            field, encoded, when = got.group(1), None, None
+            field, encoded, when, depth = got.group(1), None, None, -1
             continue
-        if _EXEMPT.match(line):
-            encoded, when = _EXEMPT_TOKEN, None
+        got = _EXEMPT.match(line)
+        if got:
+            encoded, when, depth = _EXEMPT_TOKEN, None, len(got.group(1))
             continue
         got = _WHEN.match(line)
         if got:
@@ -539,15 +559,18 @@ def _citations(path: Path) -> Iterator[tuple[str, str, str, str, str, list[int]]
             continue
         got = _QUOTE.match(line)
         if got and zone and field and encoded is not None:
-            yield zone, field, when or "", encoded, got.group(1), cited(got.group(2))
+            if len(got.group(1)) == depth:
+                yield zone, field, when or "", encoded, got.group(2), cited(
+                    got.group(3)
+                )
             continue
         got = _ANY_KEY.match(line)
         if got:
-            key = got.group(1)
+            key = got.group(2)
             if key in _NUMERIC_FORMS:
-                encoded, when = got.group(2), None
+                encoded, when, depth = got.group(3), None, len(got.group(1))
             elif key not in _NOT_A_VALUE:
-                encoded, when = None, None
+                encoded, when, depth = None, None, -1
 
 
 def survey(
