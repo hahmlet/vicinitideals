@@ -632,34 +632,64 @@ def render(
         shown = [r for r in shown if r.slack_fields]
     elif binding_only:
         shown = [r for r in shown if r.binding]
-    if not shown:
+    if not rows:
         yield "no unfetched references — every section this corpus points at is in the store"
         return
 
-    by_layer: dict[str, list[Dangling]] = defaultdict(list)
-    for row in shown:
-        by_layer[row.layer].append(row)
-
-    total_binding = sum(1 for r in shown if r.binding)
-    total_slack = sum(1 for r in shown if r.slack_fields)
-    yield (
-        f"{len(shown)} unfetched reference(s) across {len(by_layer)} jurisdiction(s)"
-        f" — {total_binding} standing beside a number this screen uses,"
-        f" {total_slack} of them beside one that carries a distance"
-    )
-    yield ""
-    for layer in sorted(by_layer, key=lambda l: (-max(r.rank for r in by_layer[l])[0], l)):
-        group = by_layer[layer]
-        yield f"  {layer}   ({sum(r.mentions for r in group)} mention(s))"
-        for row in group[:12]:
-            mark = f"BINDING x{row.binding}" if row.binding else ""
-            yield f"    {row.ref:<14} {row.mentions:>3} mention(s)  {mark}{_beside(row)}"
-            if row.outcome:
-                yield f"       {row.outcome.upper()}: {row.ruling[:120]}"
-            yield f"       in {row.sources[0]}: {row.sample}"
-        if len(group) > 12:
-            yield f"    ... and {len(group) - 12} more"
+    if not shown:
+        # An empty VIEW is not an empty corpus, and this line used to say it
+        # was. `shown` goes empty two ways that mean nothing like each other:
+        # every dangling reference has been ruled, or a filter matched none of
+        # the ones that have not. Under `--binding` the second is ordinary --
+        # Gladstone reached it the day its last binding row was ruled -- and
+        # the old sentence answered both with "every section this corpus points
+        # at is in the store", which was false in both. A ruling is a decision
+        # about a POINTER; the chapter behind it is still unfetched. Falling
+        # through to the closed list rather than returning is the other half of
+        # the fix: the reader has to be able to see what was ruled.
+        if not open_rows:
+            yield (
+                f"no OPEN unfetched references — all {len(rows)} are ruled."
+                f" Ruled is not fetched: these chapters are still not in the store"
+            )
+        else:
+            asked = (
+                "beside a number that carries a distance"
+                if slack_only
+                else "beside a number this screen uses"
+            )
+            yield (
+                f"no unfetched reference {asked} — {len(open_rows)} remain open"
+                f" on the unfiltered view"
+            )
         yield ""
+    else:
+        by_layer: dict[str, list[Dangling]] = defaultdict(list)
+        for row in shown:
+            by_layer[row.layer].append(row)
+
+        total_binding = sum(1 for r in shown if r.binding)
+        total_slack = sum(1 for r in shown if r.slack_fields)
+        yield (
+            f"{len(shown)} unfetched reference(s) across {len(by_layer)} jurisdiction(s)"
+            f" — {total_binding} standing beside a number this screen uses,"
+            f" {total_slack} of them beside one that carries a distance"
+        )
+        yield ""
+        for layer in sorted(
+            by_layer, key=lambda l: (-max(r.rank for r in by_layer[l])[0], l)
+        ):
+            group = by_layer[layer]
+            yield f"  {layer}   ({sum(r.mentions for r in group)} mention(s))"
+            for row in group[:12]:
+                mark = f"BINDING x{row.binding}" if row.binding else ""
+                yield f"    {row.ref:<14} {row.mentions:>3} mention(s)  {mark}{_beside(row)}"
+                if row.outcome:
+                    yield f"       {row.outcome.upper()}: {row.ruling[:120]}"
+                yield f"       in {row.sources[0]}: {row.sample}"
+            if len(group) > 12:
+                yield f"    ... and {len(group) - 12} more"
+            yield ""
 
     if ruled:
         # Kept in the output rather than filtered away. A queue that silently

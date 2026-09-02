@@ -190,6 +190,26 @@ definitions:
     cite: "Gresham Development Code 3.0100, Lot, Corner Lot"
 
 crossrefs:
+
+  # --- two procedural chapters cited in the design district use tables -----
+  "8.0100":
+    outcome: other_building
+    note: >-
+      Special Use Review, cited by the sentence that introduces two use tables: "permitted as
+      indicated in Table 4.1120 and as provided in Section 8.0100 - Special Use Review", and the
+      same for Table 4.1220(A). The chapter governs the rows those tables mark SUR. Table 4.1120''s
+      Quadplex row reads P in DRL-1 and DRL-2 and NP elsewhere; the SUR marks in that column belong
+      to Elderly Housing. The pod is permitted outright where it is permitted at all, so the
+      special-use path is not on its row.
+      (or/multnomah/gresham/4.1100.downtown.txt#L239)
+  "8.0200":
+    outcome: other_path
+    note: >-
+      Existing and Non-Conforming Uses and Development -- "may continue in existence, subject to
+      provisions of Section 8.0200", "and be altered, subject to provisions of Section 8.0200".
+      Every mention is about a use or a structure that was lawful when it was built and would not
+      be permitted today. This screen places new construction under current standards, which is the
+      case the chapter exists to distinguish itself from.
   "7.05":
     outcome: misread
     note: >-

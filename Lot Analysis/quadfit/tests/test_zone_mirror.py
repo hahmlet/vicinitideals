@@ -285,6 +285,28 @@ def test_the_two_files_disagree_about_the_use_in_exactly_two_zones() -> None:
     assert keys == KNOWN_PERMISSION_SPLITS, splits
 
 
+def test_neither_disputed_permission_can_reach_a_green() -> None:
+    """The assertion the list above cannot make, and the one that matters.
+
+    Both rows claim a permission the corpus denies, which is the direction that
+    manufactures greens -- and neither can, because both carry
+    `confidence: needs_verification` and s7 caps such a lot at REVIEW however
+    much else it clears. That is the whole reason the rows are allowed to stand
+    while the legal question waits for a person: the looser permission buys the
+    zone a measurement, not a verdict.
+
+    So this is not a restatement of the count. If somebody promotes either row
+    to `verified` without settling the preemption argument behind it, the count
+    above does not move and 664 lots become eligible for a green list on a
+    reading the corpus rejects. This test is what goes red instead.
+    """
+    audit = _audit()
+
+    assert audit.live_permission_splits() == []
+    for s in audit.permission_splits():
+        assert "[capped at review by needs_verification]" in s
+
+
 def test_rn_dimensions_wait_on_the_rn_permission() -> None:
     """Five numbers held behind one question.
 

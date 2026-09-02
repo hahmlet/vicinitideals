@@ -131,6 +131,21 @@ ingest:
   zone_field: ZONE
   strip_lowercase_suffix: false
 crossrefs:
+
+  # --- two accessory-use references out of the district use table ----------
+  "16.44.050":
+    outcome: other_building
+    note: >-
+      Accessory dwelling units: "As an accessory use, there may be the customary outbuildings and
+      no more than one accessory dwelling unit, complying with the requirements of Section
+      16.44.050." A subordinate second unit on a lot with a house. This screen places four attached
+      primary units, and the chapter would at most permit a fifth.
+  "16.69.020":
+    outcome: other_building
+    note: >-
+      Home occupations: "A business activity that is carried out on the same site as a dwelling
+      unit, and which is accessory to the residential use on the site." A use conducted inside a
+      dwelling somebody already lives in. It sets no dimension the building has to meet.
   "16.62.020-1":
     outcome: other_building
     note: >-

@@ -46,6 +46,15 @@ definitions:
     cite: "Gladstone Municipal Code 17.06.270, Lot, corner"
 
 crossrefs:
+
+  "17.18.020":
+    outcome: other_building
+    note: >-
+      The C-2 district''s permitted use list, reached from the mixed-use district: "Commercial uses
+      permitted in the mixed-use development include those listed as permitted in the C-2 zoning
+      district, GMC Section 17.18.020." It is cited to say which SHOPS may occupy the commercial
+      half of a mixed-use building. The residential half is permitted by its own row, and this
+      screen places a residential building on a lot of its own.
   "17.38":
     outcome: other_path
     note: >-

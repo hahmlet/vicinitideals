@@ -43,6 +43,18 @@ ingest:
   zone_field: PLANDIST.CZONE
   strip_lowercase_suffix: false
 crossrefs:
+
+  # --- two use-table rows that are not this building -----------------------
+  "34.400":
+    outcome: other_building
+    note: >-
+      "Retirement Housing Facility C Subject to TDC 34.400" -- a conditional use with its own
+      chapter, and a different building from four dwelling units. The pod''s own row is named
+      separately in 73C.030(1), which is what this layer''s parking geometry is read from.
+  "73A.170":
+    outcome: other_building
+    note: >-
+      "Accessory Dwelling Unit P Subject to TDC 73A.170." A subordinate unit beside a house.
   "35":
     outcome: other_path
     note: >-

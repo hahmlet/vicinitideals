@@ -254,8 +254,17 @@ def test_the_filters_compose() -> None:
 
 def test_the_field_menu_is_built_from_the_feed_it_filters() -> None:
     """A filter offering a field no row carries is a dead end, and one that
-    omits a field rows do carry hides them."""
-    rows = feed(layer=GRESHAM)
+    omits a field rows do carry hides them.
+
+    The layer is chosen from the feed for the same reason the composition test
+    above chooses its pair there. This named Gresham, and Gresham's menu went
+    empty the day 10.1100 was fetched: that one card sat inside Table 4.0130
+    and was the only Gresham row standing beside a field at all. Sixty
+    references remain open in the city and not one of them is beside a number
+    this screen measures with, which is a good state for a queue to be in and a
+    bad one to hard-code."""
+    layer = next(c.layer for c in feed() if c.fields)
+    rows = feed(layer=layer)
     menu = dict(fields_in(rows))
 
     assert menu

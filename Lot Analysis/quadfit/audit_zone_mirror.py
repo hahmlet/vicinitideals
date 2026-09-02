@@ -509,7 +509,22 @@ def permission_splits() -> list[str]:
     setback off by five feet moves a lot between green and review; a
     `quadplex_allowed` that disagrees decides whether the zone is screened at
     all, and it is the one row where rules.yaml being looser than the corpus
-    means every lot in the zone is a false green.
+    could make every lot in the zone a false green.
+
+    *Could*, not does, and the difference is worth printing. A row carrying
+    `confidence: needs_verification` is capped at REVIEW by s7 no matter what
+    else it clears, so a looser permission on such a row buys the zone a
+    measurement it would not otherwise get and cannot buy it a green. Both
+    disputes in this corpus are of that kind, deliberately: the reasoning is
+    written out in each row's notes and the flip is a human call. Printing
+    them beside a live dispute -- a `verified` row claiming a permission the
+    corpus denies -- reads as an alarm that is not sounding.
+
+    The corpus's `False` is also not always a refusal. Where it carries a
+    ``when: conditional_use`` variant the code does permit this building; it
+    permits it through a hearing, which is a different sentence from "not
+    permitted" and the one this screen is entitled to hold against a by-right
+    verdict.
     """
     top, corpus = _load()
     out: list[str] = []
@@ -520,11 +535,32 @@ def permission_splits() -> list[str]:
         shipped = z.get("quadplex_allowed")
         if shipped is None or bool(shipped) == bool(allowed.value):
             continue
+        conditional = any(
+            v.value is True and "conditional_use" in (v.when or ())
+            for v in allowed.variants
+        )
+        reads = (
+            "conditionally permitted, hearing required"
+            if conditional
+            else str(bool(allowed.value))
+        )
+        capped = str(z.get("confidence", "")) == "needs_verification"
         out.append(
             f"{juris}/{z['zone']}: rules.yaml quadplex_allowed="
-            f"{bool(shipped)} vs corpus {bool(allowed.value)}"
+            f"{bool(shipped)} vs corpus {reads}"
+            + (" [capped at review by needs_verification]" if capped
+               else " [LIVE -- this row can reach green]")
         )
     return out
+
+
+def live_permission_splits() -> list[str]:
+    """The subset that could actually put a lot in the green list.
+
+    Everything `permission_splits` finds is worth reconciling. Only these are
+    worth reconciling *before the next run*.
+    """
+    return [s for s in permission_splits() if "[LIVE" in s]
 
 
 def aliases() -> list[Alias]:
@@ -676,7 +712,9 @@ def main() -> None:
         print(f"    {juris}: {', '.join(zones)}")
 
     splits = permission_splits()
-    print(f"{len(splits)} zones disagree about whether the pod is permitted")
+    live = [s for s in splits if "[LIVE" in s]
+    print(f"{len(splits)} zones disagree about whether the pod is permitted"
+          f" ({len(live)} of them able to reach green)")
     for s in splits:
         print("   ", s)
 

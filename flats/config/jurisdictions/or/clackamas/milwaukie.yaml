@@ -10,6 +10,32 @@ ingest:
   zoning_layer: zoning_milwaukie
   zone_field: ZONE
   strip_lowercase_suffix: false
+crossrefs:
+
+  # --- four references out of the use table, none of them this building ----
+  "19.903":
+    outcome: procedure
+    note: >-
+      A Director''s Determination: "Similar uses not listed in the table may be allowed through a
+      Director''s determination pursuant to Section 19.903." The path exists for uses the table does
+      not name, and the table names this one -- Milwaukie''s use table has a quadplex row. A
+      determination cannot be needed for a use that is already listed.
+  "19.910.1":
+    outcome: other_building
+    note: >-
+      Accessory Dwelling Units, the subsection the use table''s ADU row points at. A subordinate
+      unit beside a house, not four attached primary ones.
+  "19.910.3":
+    outcome: other_building
+    note: >-
+      Manufactured dwelling parks, the subsection that row of the use table points at. A different
+      tenure and a different site plan.
+  "19.904.8":
+    outcome: other_building
+    note: >-
+      "Specific Standards for Residential Care Facilities" -- the row it qualifies reads "assisted
+      living, nursing facilities, and memory care communities". A different use with its own
+      licensing, not four dwelling units.
 definitions:
   # "Corner lot" means a lot abutting 2 or more streets, other than an alley,
   # at their intersection."

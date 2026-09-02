@@ -166,7 +166,26 @@ pytestmark = pytest.mark.unit
 #: and 19.105 turned out to be the floodplain chapter the FEMA carve had been
 #: citing without anyone holding it -- now stored, and the carve rests on a
 #: quote. Reading a chapter is not the same as refusing one.
-EXPECTED = {"notes": 105, "comments": 113, "tests": 17}
+#:
+#: 113 -> 115 on 2026-09-02, both out of MCC 39.4778-39.4813, the general
+#: provisions every one of Multnomah County's three urban low-density articles
+#: opens by naming and which nothing had opened back. The block was fetched to
+#: close a crossref and it added two refusals of a kind this corpus had not
+#: held before. 39.4801 states a height limit as a formula against the distance
+#: to the NORTHERN lot line, so the side of the building it constrains is
+#: decided by a compass rather than by a named lot line, and no value form here
+#: can say that; 39.4806's mandatory relief from the side, rear and front yards
+#: is the other half of the same rule and is refused with it. 39.4782(E) widens
+#: a yard "to provide for street widening" where the abutting street is
+#: narrower than its TSP classification asks, which is a tightening standard
+#: that states no quantity and rests on a fact nothing measures.
+#:
+#: Worth being exact about the direction: fetching that block also CLOSED five
+#: sections without refusing anything -- the access rule, the eave and porch
+#: projections, the parking redirect into a chapter already stored, conditional
+#: use lot sizing and the unsewered site plan. A read that costs two refusals
+#: and settles five sections is the ledger working, not the corpus decaying.
+EXPECTED = {"notes": 105, "comments": 115, "tests": 17}
 
 #: MOVED 2026-09-02 by Oregon City 16.12.035.A note 2, +1 comment, and this
 #: one is a refusal a RE-READ produced in a chapter already fetched, already

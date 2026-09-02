@@ -106,6 +106,67 @@ ingest:
   zone_field: ZONE
   strip_lowercase_suffix: false
 crossrefs:
+  # --- the last eight references in this layer standing beside a standard --
+  # Three of them are division headings rather than sections -- the county
+  # serves one page per section and 800, 1000 and 1100 all 404 -- so what they
+  # name is a container whose contents this layer already holds.
+  "800":
+    outcome: other_building
+    note: >-
+      Special Use Requirements, and it is a division heading rather than a section: the county
+      serves one page per section and /planning/zdo800 is a 404. Its own citing sentence is gated
+      on a use this pod is not -- "If a minimum lot size for the conditional use is established by
+      Section 800, Special Use Requirements, it remains applicable" -- and Table 315-1 marks every
+      Quadplexes cell P7,8, permitted rather than conditional. What the division contains is
+      already here: note 8 sends this building to Section 845, which is stored, and 845 carries the
+      one minimum lot size that governs the pod anywhere in unincorporated Clackamas.
+  "1000":
+    outcome: other_building
+    note: >-
+      Development Standards, the other division heading, cited beside 1100 in a bare list --
+      "Section 1000, Development Standards; and Section 1100, Development Review Process." Also a
+      404 as a page. The two sections in it this pod is measured by are both stored and encoded:
+      1012, Lot Size and Density, and 1015, Parking and Loading. A container is not a chapter
+      nobody read; it is the name of the shelf.
+  "1100":
+    outcome: procedure
+    note: >-
+      Development Review Process, the second half of that same list. It is how an application is
+      filed, noticed and decided -- Type I through Type IV -- and it states no dimension a building
+      has to meet. A lot does not fail this screen because of it.
+  "106":
+    outcome: procedure
+    note: >-
+      Authorizations of Similar Uses, cited twice and both times for uses the table does NOT name:
+      "In the PMD District, uses similar to one or more of the listed uses for the PMD District may
+      be authorized pursuant to Section 106", and the same for the HDR, SHD and RCHDR Districts.
+      Table 315-1 has a Quadplexes row, so this pod is a listed use and the similar-use path is not
+      available to it or needed by it. The four districts named are also not ones it occupies.
+  "839":
+    outcome: other_building
+    note: >-
+      Accessory Dwelling Units, the section the ADU row of the use table points at: "Accessory
+      Dwelling Units, subject to Section 839". A subordinate second unit on a lot with a house, and
+      this screen places four attached primary ones. Its other mention is the same shape -- "Except
+      as allowed by Section 839, Accessory Dwelling Units, or Section 1204, Temporary Permits, each
+      lot of record may be developed with only one of the following" -- where 839 is named as an
+      exception that ADDS a unit.
+  "846":
+    outcome: narrows_only
+    note: >-
+      Affordable Housing, and it points the opposite way from a standard: "Dwellings not otherwise
+      permitted in the applicable zoning district may nonetheless be permitted if they are
+      developed as affordable housing, as defined in ORS 197A.445(1), and subject to Section 846."
+      Reading it could only admit lots this screen rejects on the use flag -- it cannot reject one
+      it admits. That is the same reasoning applied to variances elsewhere in this corpus, and it
+      holds a fortiori here because the permission is granted by statute rather than discretion.
+  "847":
+    outcome: other_building
+    note: >-
+      Recreational Vehicles as Second Dwellings: "P P P Recreational Vehicles as Second Dwellings,
+      subject to Section 847", and "unless the vehicle is approved as a temporary dwelling pursuant
+      to Section 1204, Temporary Permits, or as a second dwelling pursuant to Section 847". A
+      vehicle, and a second one at that. Not four attached factory-built units on a foundation.
   "1105":
     outcome: later
     note: >-
@@ -208,6 +269,18 @@ code:
 # developed pursuant to Section 845" have to designate short- and long-term
 # bicycle parking -- so the county knows how to hold an 845 quadplex out of a
 # parking standard, and did not do it in the table that counts spaces.
+# The sentence directly under Tables 315-2 through 315-4: "Except in the HDR,
+# SHD, and RCHDR Districts, modifications to the standards in these tables also
+# are established by Section 903, Setback Exceptions." The tables it modifies
+# are the ones this layer's setbacks are read from, and the districts it is
+# withheld from are three the pod does not occupy. A section that modifies the
+# numbers a screen measures with has to be read before the numbers can be
+# trusted, whichever way it points.
+- id: zdo.903
+  url: https://www.clackamas.us/planning/zdo903
+  title: Clackamas County ZDO Section 903 - Setback Exceptions
+  start: "903.01"
+  end: "Return to the Zoning and Development Ordinance main page"
 - id: zdo.1015
   url: https://www.clackamas.us/planning/zdo1015
   title: Clackamas County ZDO Section 1015 - Parking and Loading
@@ -444,6 +517,24 @@ defaults:
   # building. It is not encoded because it is stated of cottage clusters, in
   # the subsection this file's `parking_front_prohibited` note is about, and
   # 845.02 states no equivalent for a quadplex. (or/clackamas/_unincorporated/zdo.845.txt#L121,L193-L199)
+  #
+  # READ AND DOES NOT REACH: Section 903, Setback Exceptions, fetched 2026-09-02
+  # because the sentence citing it sits directly under the tables this layer's
+  # setbacks are read from -- "Except in the HDR, SHD, and RCHDR Districts,
+  # modifications to the standards in these tables also are established by
+  # Section 903, Setback Exceptions." A section that modifies those numbers has
+  # to be read whichever way it points, and this one only ever points one way.
+  # 903.02 REDUCES a front setback where an adjoining lot is lawfully
+  # nonconforming, and separately for additions to an existing structure; 903.03
+  # is public dedications against existing structures; 903.04 exempts
+  # underground structures, ground-mounted solar, rainwater collection and bus
+  # shelters from rear and side setbacks; 903.05 lets architectural features
+  # project into a setback; 903.06 gives an uncovered deck under 30 inches its
+  # own smaller setbacks; 903.07 is fences; 903.08 relabels the lot lines of a
+  # flag lot. Nothing in the section adds a foot to what Table 315-2 states, so
+  # the encoded setbacks are the binding ones and every relief it offers is left
+  # unclaimed, which is the conservative side.
+  # (or/clackamas/_unincorporated/zdo.903.txt#L1-L69)
 
 zones:
   R5:

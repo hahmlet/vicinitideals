@@ -81,6 +81,83 @@ definitions:
     cite: "MCC 39.2000, Lot (Corner)"
 
 crossrefs:
+
+  # --- the four Portland chapters that arrive with 33.110 ------------------
+  # Ruled in or/multnomah/portland.yaml, and repeated here rather than
+  # cross-referenced because the citing sentences are this layer''s own: the
+  # pockets are administered under the same use tables.
+  "33.205":
+    outcome: other_building
+    note: >-
+      Accessory Dwelling Units. Same sentence and same answer as in the Portland layer: an ADU is a
+      second subordinate unit beside a house, and this screen places four attached primary ones.
+  "33.236":
+    outcome: other_building
+    note: >-
+      Floating Structures, cited for houseboat moorages in the I zones. Not a lot, not this
+      building, and not a zone the pod is permitted in.
+  "33.251":
+    outcome: other_building
+    note: >-
+      "Parking for manufactured dwelling parks is regulated in Chapter 33.251." A manufactured
+      dwelling park is a different tenure and a different site plan -- spaces rented within one
+      parcel -- and its parking chapter is reached only from that row of the use table.
+  "33.285":
+    outcome: other_building
+    note: >-
+      Short Term, Mass, and Outdoor Shelters. A different use category from Household Living.
+  "33.700.060":
+    outcome: procedure
+    note: >-
+      Covenant requirements, cited wherever Title 33 asks an owner to record one. Procedure, and no
+      distance in it.
+
+  # --- the county''s own chapter, read 2026-09-02 --------------------------
+  "34":
+    outcome: misread
+    note: >-
+      Not an MCC section. Every mention is "OAR 660 Division 34" or "OAR Division 34 State and
+      Local Park Planning", cited in the State Park and rural trail rows of the resource zones''
+      use lists. The reference detector reads the bare "34" out of "Division 34"; the chapter it
+      would point at in this code is Chapter 34 of the county code, which is not the zoning code at
+      all. Nothing to fetch.
+  "39.8610":
+    outcome: other_building
+    note: >-
+      Mobile home park development standards: "A mobile home park subject to the approval criteria
+      of MCC 39.8605 and the development standards of MCC 39.8610." A different tenure and a
+      different site plan from four attached townhomes on one lot, and reached only from that row.
+  "39.8860":
+    outcome: other_building
+    note: >-
+      Condition of Approval -- Accessory Buildings, cited from the review-use approval criteria as
+      a flat "Compliance with MCC 39.8860 is required" a dozen times over, which is what put it
+      beside the use permission. Read: it requires the owner to record a covenant "that the
+      structure cannot be occupied as a dwelling or for any other form of permanent or temporary
+      residential use", and it applies "prior to issuance of any development permit involving an
+      Accessory Building". This pod is the primary building and its four units are dwellings, which
+      is the opposite of what the covenant is for.
+  "39.8870":
+    outcome: other_building
+    note: >-
+      Farm Stands, cited as "A Farm Stands subject to MCC 39.8870 through MCC 39.8885" out of the
+      resource zones'' use lists. A different structure and a different zone.
+  "39.8885":
+    outcome: other_building
+    note: >-
+      The far end of the same farm stand citation, matched separately because it is written as a
+      range. Ruled with 39.8870 above.
+  "39.8900":
+    outcome: other_building
+    note: >-
+      A winery "as described and regulated in ORS 215.452, and subject to MCC 39.8900 - 39.8920",
+      out of the same resource-zone use list. Not a dwelling.
+  "39.9200":
+    outcome: procedure
+    note: >-
+      Consolidation of Parcels and Lots, listed as a permitted action in most zones. It is the
+      procedure for MERGING lots, so its only effect on this screen would be to hand a proposal
+      more land than it started with. It cannot take ground away, and no lot fails for want of it.
   "11":
     outcome: fee_in_lieu
     note: >-
@@ -276,6 +353,22 @@ code:
   title: MCC 39.4735-39.4739 Retail Commercial (C-3)
   start: "39.4735 USES"
   end: "39.4740 PURPOSES"
+  extraction: plain
+# The general provisions the three urban low-density articles all point back
+# at. Every one of them opens the same way -- "For purposes of this base zone,
+# the Urban Low Density Residential Base zones General Provisions (MCC 39.4778
+# through 39.4786) apply" -- and the block they name was the loudest reference
+# in this layer that nothing had opened. The slice runs past it to 39.4818,
+# where LR-5 begins, because the same part of the chapter carries the solar
+# provisions and 39.4799 says who they reach: "an application for a building
+# permit for all structures in LR-10, LR-7, LR-5 zones". Not lot creation, not
+# detached houses -- all structures. Reading only as far as 39.4786 would have
+# closed the reference and left that sentence unread.
+- id: "39.urban-ldr-general"
+  url: https://multco.us/file/chapter_39_-_zoning_code/download
+  title: MCC 39.4778-39.4813 Urban Low Density Residential General Provisions and Solar
+  start: "39.4778  AREA AFFECTED"
+  end: "39.4818  PURPOSE"
   extraction: plain
 - id: "39.lr-5"
   url: https://multco.us/file/chapter_39_-_zoning_code/download
@@ -576,6 +669,61 @@ defaults:
   # and 39.6550(B) disregards "any fraction up to and including one-half" -- so
   # the pod owes no loading space at all, and the 12 by 25 foot rectangle in
   # 39.6565(C)(1) never has to be drawn.
+  #
+  # --- from the urban low-density general provisions, read 2026-09-02 ------
+  #
+  # READ AND DOES NOT REACH: five of the seven sections in the block, and the
+  # reason it was fetched at all. LR-5, LR-7 and LR-10 each open with the same
+  # sentence -- "For purposes of this base zone, the Urban Low Density
+  # Residential Base zones General Provisions (MCC 39.4778 through 39.4786)
+  # apply" -- so this block governs all 182 lots this layer screens in those
+  # three zones, and nothing had opened it. 39.4781 states an access
+  # requirement the screen already tests in its own terms; 39.4782(C) and (D)
+  # let eaves, chimneys and low porches project into a required yard, which can
+  # only help; 39.4783 sends off-street parking to MCC 39.6500 through 39.6600,
+  # the chapter already held here as `39.parking`; 39.4785 sizes lots for
+  # CONDITIONAL uses and this pod is permitted rather than conditional; 39.4786
+  # is a site-plan requirement for unsewered land, decided upstream of this
+  # screen by the sewer gate. The solar ACCESS design standard at 39.4790 does
+  # not reach it either, on either of its two limbs: it applies "to
+  # applications for a development to create lots" and "for single family
+  # detached dwellings". The two that do reach are refused below, and the
+  # second of them was only found because the slice was carried past 39.4786 to
+  # where 39.4799 states a different and much wider applicability.
+  #
+  # NOT ENCODED: 39.4801, the maximum shade point height standard, and it is
+  # the largest thing in this layer nothing holds. 39.4799 says who it reaches:
+  # "MCC 39.4790 through 39.4813 applies to an application for a building
+  # permit for all structures in LR-10, LR-7, LR-5 zones". Not lot creation and
+  # not detached houses -- all structures, which is 182 lots here. The standard
+  # is a formula, H=[(2xSRL)-N+150]/5, where SRL is the distance from the
+  # building's shade point to the NORTHERN lot line and N is the north-south
+  # lot dimension capped at 90 feet. Solved for a 26 ft pod on a lot 90 feet
+  # deep or more, it asks the shade point to stand 35 feet off the north line.
+  # That is a setback, but one measured from true north rather than from a
+  # named lot line, so which of the pod's four sides it lands on depends on how
+  # the lot is turned -- and this model has no value form for a standard whose
+  # side is decided by a compass. 39.4806 pulls the other way and is refused
+  # with it: the County "shall grant" up to 50 percent off a side or rear yard
+  # and 25 percent off a front one where that is what it takes to comply, which
+  # in LR-5 and LR-7 means a front yard down to 15 feet, a rear to 7.5 and a
+  # side to 3. The two are one rule -- a constraint and the relief that pays
+  # for it -- and encoding either alone would be worse than encoding neither.
+  # Not a data gap: the pipeline knows each lot's shape and orientation. It is
+  # a gap in what a Value can say.
+  # (or/multnomah/_unincorporated/39.urban-ldr-general.txt#L474-L479,L501-L530)
+  #
+  # NOT ENCODED: 39.4782(E), a yard widened for a narrow street. "The minimum
+  # yard requirement shall be increased to provide for street widening in the
+  # event a yard abuts a street having a width less than that specified for the
+  # functional classification in the Multnomah County Transportation System
+  # Plan." It reaches this pod on any LR lot and it tightens rather than
+  # relieves, which is the direction that matters. Two things are missing, not
+  # one: no field holds a setback that grows by a difference, and nothing here
+  # measures the abutting right-of-way width against the TSP classification it
+  # is meant to have. The sentence does not even say how much -- "increased to
+  # provide for street widening" is the whole of it.
+  # (or/multnomah/_unincorporated/39.urban-ldr-general.txt#L61-L66)
 zones:
   EG2:
     section: ["33.140"]

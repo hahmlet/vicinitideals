@@ -26,6 +26,17 @@ ingest:
   zone_field: zonecode
   strip_lowercase_suffix: false
 crossrefs:
+
+  # --- the conditional use chapter, which is not the pod''s path -----------
+  "6.300":
+    outcome: other_building
+    note: >-
+      Conditional uses: "Uses that require conditional use approval in accordance with Section
+      6.300 of this Code are..." -- the sentence that introduces the C column of each district''s
+      use list. Troutdale''s Quadplex row reads P in five of its six residential districts and N in
+      the sixth, with its own standards at 8.120. The pod is never on a C row, so the chapter does
+      not reach it.
+      (or/multnomah/troutdale/3.zoning-districts.txt#L232)
   "5.030":
     outcome: narrows_only
     note: >-

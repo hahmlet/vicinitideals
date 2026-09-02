@@ -6,11 +6,25 @@ surfaces them, and struck through (with a date and what happened) when they
 close. Items are ordered by how many lots ride on them, biggest first.
 
 Pipeline state when last updated (2026-09-02, after the run that carries the
-sloped setback, the 29 recovered zones and the minimum-density floor):
-**green 9,630 · review 32,849 · red 249,492** across 291,971 lots in 13 cities
-laid out with real site plans. Every one of those three changes has now been
-measured against the run before it, lot by lot, and the results are not what
-the estimates said.
+last of the Clackamas environmental overlays):
+**green 9,565 · review 32,827 · red 249,579** across 291,971 lots in 13 cities
+laid out with real site plans. Greens by city: Portland 7,358 · Oregon City 728
+· Milwaukie 622 · unincorporated Clackamas 515 · West Linn 288 · Wilsonville 53
+· unincorporated Multnomah 1.
+
+**Wiring six Clackamas cities' overlays cost 65 greens and all 65 are
+Wilsonville** — 118 down to 53. Every other city came back byte-identical,
+including Milwaukie, whose greenway overlay kills 131 lots outright and whose
+habitat and wetland layers flag many more: none of them was green to begin
+with. That is the shape to expect from an environmental screen. It is a filter
+laid over land that has already passed everything else, so it either lands on
+lots that were going to fail anyway, or it lands somewhere concentrated. In
+Wilsonville it landed on Villebois, where more than half the greens sat inside
+a resource boundary nothing had been checking.
+
+The run before this one (the sloped setback, the 29 recovered zones and the
+minimum-density floor) was measured the same way, and the results are still
+worth keeping.
 
 **The 76,752 recovered lots produced zero greens.** 41,227 of them survived the
 structural filters and reached a measurement for the first time; 38,134 came
@@ -37,9 +51,9 @@ never the number that binds.
 — Portland 10,899, Gresham 1,574, Oregon City 480 — but 10,512 of those were
 already red for other reasons, so the floor is the deciding factor on 2,644.
 
-The review queue now says why each lot is in it. Of the 32,849:
-sewer unconfirmed 18,127 · slope 17,553 · overlay 5,603 · unverified zone 3,645
-· density floor 2,644 · tier C 1,533 · suspect geometry 818 · frontage
+The review queue now says why each lot is in it. Of the 32,827:
+sewer unconfirmed 18,127 · slope 17,539 · overlay 5,591 · unverified zone 3,640
+· density floor 2,644 · tier C 1,534 · suspect geometry 818 · frontage
 unmeasured 56. A lot can be held by several at once.
 
 ---
@@ -78,13 +92,14 @@ on it, and only the first is a queue item:
    item any more.** The two cities still unscreened, Tualatin and Gladstone,
    have no greens between them.
 
-   Now measured, on a full re-run finished 2026-09-02: wiring them **cost 178
-   greens** and turned 338 lots red outright. The habitat layer in
-   unincorporated Clackamas is by far the largest, touching 6,853 lots on its
-   own; Milwaukie's four layers together touch 832. That is the whole of the
-   2,820-green exposure resolved — not 2,820 lots lost, but 2,820 lots that had
-   been graded blind and have now actually been looked at, and 178 of them did
-   not survive the look.
+   Now measured, on a full re-run finished 2026-09-02: wiring them **cost 65
+   greens**, all of them Wilsonville, where the resource boundaries fall across
+   Villebois. The habitat layer in unincorporated Clackamas is by far the
+   largest, touching 6,853 lots on its own; Milwaukie's four layers together
+   touch 832 and its greenway kills 131 outright — and not one of those was
+   green before. That is the whole of the 2,820-green exposure resolved: not
+   2,820 lots lost, but 2,820 lots that had been graded blind and have now
+   actually been looked at, and 65 of them did not survive the look.
 4. **No green has ever been checked against a real answer.** The one back-test
    run measured the opposite direction — of fourplexes that really were
    permitted, did we flag the lot? (60%.) Nobody has taken a green lot to a
@@ -171,7 +186,7 @@ Nothing else is blocked on this; it is purely how bold to be. Same shape as the
 drive-aisle call you made on 2026-08-31, and the same reason it is yours: it
 trades a small chance of wasted diligence for a large amount of pipeline.
 
-## 3. Three short emails: confirm the assumed 24 ft aisle — **8,098 greens, which is 84% of all of them**
+## 3. Three short emails: confirm the assumed 24 ft aisle — **8,033 greens, which is 84% of all of them**
 
 **This entry said 985 greens until 2026-09-01. It was counting two of the three
 cities.** Portland carries the identical assumption on **7,358 greens** and had
@@ -179,7 +194,7 @@ been left off. Corrected here because the number changes what the entry is: not
 a tidy-up on two small cities, but the single largest thing standing between
 this screen and a green list you could act on.
 
-Portland (7,358 greens), Milwaukie (622) and Wilsonville (118) all publish a
+Portland (7,358 greens), Milwaukie (622) and Wilsonville (53) all publish a
 parking stall size and **no drive-aisle width that reaches a quadplex**.
 Portland's is the subtlest of the three: PCC 33.266.120 gives houses through
 fourplexes a 9 × 18 stall and states no aisle, and the 20 ft aisle in Table

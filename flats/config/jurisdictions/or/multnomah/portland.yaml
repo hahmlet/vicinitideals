@@ -50,6 +50,37 @@ definitions:
     cite: "PCC 33.910, Lot-Related Definitions, Corner Lot"
 
 crossrefs:
+
+  # --- five chapters the use tables point at, none of them this building ---
+  # All five stand beside `quadplex_allowed` because they are cited from the
+  # 100s series use tables, a line or two from the row that permits the pod.
+  "33.205":
+    outcome: other_building
+    note: >-
+      Accessory Dwelling Units, cited from the use tables as "Detached accessory dwelling units are
+      addressed in Chapter 33.205" and "Additional regulations for accessory dwelling units are
+      stated in Chapter 33.205". An ADU is a second, subordinate unit on a lot with a house. This
+      screen places four attached primary units, so the chapter regulates a building that is not
+      here. It could only ever add a fifth unit to a lot, which is not what is being asked.
+  "33.236":
+    outcome: other_building
+    note: >-
+      Floating Structures: "houseboat moorages in I zones are regulated by Chapter 33.236, Floating
+      Structures." A moorage is not a lot and a houseboat is not a factory-built townhome, and the
+      zones it is cited in are industrial ones where the pod is not permitted anyway.
+  "33.285":
+    outcome: other_building
+    note: >-
+      Short Term, Mass, and Outdoor Shelters -- "Short term, mass, and outdoor shelters are
+      regulated by Chapter 33.285". A different use category from Household Living, with its own
+      chapter and, in most zones, a conditional use. The pod is four dwelling units.
+  "33.700.060":
+    outcome: procedure
+    note: >-
+      The requirements a recorded covenant has to meet, cited wherever Title 33 asks for one:
+      density transfers, structures left standing after a land division or lot confirmation. It
+      sets what the document says and how it is recorded with the deed, not what may be built. No
+      distance in it.
   "3.75":
     outcome: misread
     note: >-
