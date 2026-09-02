@@ -135,7 +135,17 @@ pytestmark = pytest.mark.unit
 #: definition is now encoded; what is refused is Figure 710-1, the drawing it
 #: points at, on the same grounds as Troutdale's -- a figure with no text
 #: saying what it adds to a test the words already state completely.
-EXPECTED = {"notes": 100, "comments": 112, "tests": 17}
+#: 100 -> 101 notes on 2026-09-01, and the extra one is a refusal getting
+#: SMALLER rather than a new thing nobody could encode. Happy Valley 16.32/16.34
+#: were refused whole on 2026-08-26 because "the binding form is a buildable-area
+#: mask, not a number" and "this layer has no overlay mechanism". The screen has
+#: one now: both city overlay maps are wired into quadfit as FLAGS, so a lot
+#: touching either goes to review. The paragraph rewritten to say so still opens
+#: with NOT ENCODED -- the density caps of 16.32.090 and 16.34.050(B) genuinely
+#: are not encoded -- so the ledger counts it again, correctly. A count that
+#: moves up while the refusal shrinks is the honest reading of a partial lift:
+#: this ledger measures how much prose declares a limit, not how much is left.
+EXPECTED = {"notes": 101, "comments": 112, "tests": 17}
 
 #: MOVED 2026-09-01 by Wilsonville's V and TC, +8 notes, +4 comments, +1 test.
 #: The Village Zone is the largest single reading in the corpus and it refuses

@@ -133,6 +133,7 @@ _TRO = "https://maps.troutdaleoregon.gov/server/rest/services/Public_Web"
 _FAI = "https://services5.arcgis.com/3DoY8p7EnUTzaIE7/arcgis/rest/services"
 _WV = "https://services7.arcgis.com/5Loh3xXKWLd2M7xA/arcgis/rest/services"
 _METRO = "https://services2.arcgis.com/McQ0OlIABe29rJJy/arcgis/rest/services"
+_HV = "https://services5.arcgis.com/fuVQ9NIPGnPhCBXp/arcgis/rest/services"
 
 PHASE2_LAYERS: dict[str, dict[str, Any]] = {
     # Portland environmental zone GEOMETRY (not the OVRLY letters on zoning)
@@ -176,6 +177,122 @@ PHASE2_LAYERS: dict[str, dict[str, Any]] = {
     "overlay_metro_wetlands": {
         "url": f"{_METRO}/Wetlands/FeatureServer/0",
         "fields": ["SOURCE"]},
+    # ---------------- West Linn -------------------------------------------
+    # CDC 32.030: "Alteration, development, or use of real property designated
+    # as, and within, a WRA is strictly prohibited except as specifically
+    # allowed or exempted in this chapter", and Table 32-1's first row puts a
+    # new principal structure at "No" in the water resource and "No, except by
+    # hardship" in the WRA. Hardship (32.110) is a relief application, not a
+    # by-right path. Prohibition plus an adopted map is a carve.
+    #
+    # What the map is, though, decides the geometry. 32.120(A): the adopted May
+    # 2014 WRA Map "is intended to identify WRA water FEATURES (wetlands,
+    # streams, ephemeral streams and riparian corridors). It is NOT intended to
+    # delineate the exact WRA boundaries." So the city publishes the features
+    # and the code supplies the width -- Table 32-2, measured each side of the
+    # resource: 65 ft at 0-25% slope (row A), 200 ft on a long steep face (C),
+    # 100 ft on a riparian corridor (D), 15 ft on an ephemeral stream (F).
+    #
+    # The streams are split by TYPE because the rows differ and one of the
+    # three has no row at all. STREAM takes row A's 65 ft, which is the
+    # NARROWEST width a live water resource can have -- rows B, C and D all go
+    # wider, so this under-carves on steep ground and never over-carves.
+    "overlay_west_linn_wra_stream": {
+        "url": "https://geo.westlinnoregon.gov/server/rest/services/Operational/RiparianCI/MapServer/2",
+        "fields": ["NAME", "TYPE"], "gtype": "polyline",
+        "where": "TYPE = 'STREAM'"},
+    # Row F, and the one width in the table that is smaller than row A.
+    "overlay_west_linn_wra_ephemeral": {
+        "url": "https://geo.westlinnoregon.gov/server/rest/services/Operational/RiparianCI/MapServer/2",
+        "fields": ["NAME", "TYPE"], "gtype": "polyline",
+        "where": "TYPE = 'EPHEMERAL'"},
+    # 190 segments the city maps as PIPED. Every row of Table 32-2 measures
+    # from OHW or a delineated wetland edge and a closed pipe has neither; the
+    # only row that mentions one (E) covers a channel that has been REOPENED,
+    # at 15 ft. So the width is genuinely unstated, and a width nobody wrote is
+    # not carved. Flagged instead -- the resource is on the adopted map, which
+    # is enough to say a person should look.
+    "overlay_west_linn_wra_piped": {
+        "url": "https://geo.westlinnoregon.gov/server/rest/services/Operational/RiparianCI/MapServer/2",
+        "fields": ["NAME", "TYPE"], "gtype": "polyline",
+        "where": "TYPE = 'PIPED'"},
+    # The Riparian Corridor Inventory polygons (10 features, 636 acres). Their
+    # area lands within 4% of the stream layer buffered 65 ft each side, which
+    # says the two are the same regime drawn twice rather than two resources.
+    # Not carved a second time on top of the stream buffer: 32.120(A) says the
+    # map identifies features, and a corridor is a feature whose width row D
+    # would put at 100 ft -- a bigger claim than the published data supports.
+    "overlay_west_linn_rci": {
+        "url": "https://geo.westlinnoregon.gov/server/rest/services/Operational/RiparianCI/MapServer/1",
+        "fields": ["OBJECTID"]},
+    # A wetland is a "water resource" by the CDC Chapter 2 definition ("Water
+    # resource (or feature). Any stream or wetland identified on the West Linn
+    # WRA map"), and Table 32-2 row A measures its 65 ft from "delineated edge
+    # of wetland". The published inventory is the 2005 LWI and the adopted map
+    # is 2014, so whether every polygon here is on that map cannot be checked
+    # from the data -- a coverage question, graded as one.
+    "overlay_west_linn_wetlands": {
+        "url": "https://geo.westlinnoregon.gov/server/rest/services/Operational/WetlandInventory/MapServer/1",
+        "fields": ["WET_CD", "WET_COW_CD", "ACRES"]},
+    # Flood, and it is a FLAG. CDC 27.040 prohibits exactly two things in a
+    # flood management area -- uses the base zone already prohibits, and
+    # uncontained hazardous materials. A house needs a flood management permit
+    # and an elevated lowest floor (27.070/27.080), not permission to exist.
+    "overlay_west_linn_flood": {
+        "url": "https://geo.westlinnoregon.gov/server/rest/services/Operational/FloodManagement/MapServer/1",
+        "fields": ["OBJECTID"]},
+    # ---------------- Wilsonville -----------------------------------------
+    # The city publishes the RING and not the resource. Each of the 22 polygons
+    # is an exterior boundary with exactly one hole, and the hole is the SROZ:
+    # STLength runs ~2x PERIMETER (two boundaries, not one) and STArea lands
+    # within a few percent of PERIMETER x 25 ft. Screening the ring as fetched
+    # would flag a lot NEXT TO a wetland and clear one sitting IN it.
+    #
+    # `fill_holes: true` in overlays.yaml discards the interior rings, which
+    # recovers SROZ + 25 ft impact area -- exactly the extent WDC 4.139.02
+    # regulates: "the portion of any lot or development site, which is within a
+    # Significant Resource Overlay Zone and its associated Impact Areas".
+    #
+    # FLAG, not carve. 4.139.02 says the map "is used to determine whether a
+    # Significant Resource Impact Report (SRIR) is required" and that "the text
+    # provisions ... take precedence over the ... maps"; 4.139.03(.04) forbids
+    # structures in the SROZ only "if they will negatively impact significant
+    # natural resources". A conditional prohibition resolved by a report is a
+    # review trigger, which is the Happy Valley shape and not Oregon City's.
+    "overlay_wilsonville_sroz": {
+        "url": "https://gis.wilsonvillemaps.com/server/rest/services/LandUseDataset/SROZ_ImpactArea/MapServer/166",
+        "fields": ["SROZ_ID", "SIG", "ACRES", "BUFF_DIST"]},
+    # ---------------- Happy Valley ----------------------------------------
+    # These two are FLAGS, not carves, and the city says why in its own words.
+    # LDC 16.34.060: "The preparation of the City of Happy Valley Steep Slopes
+    # and Natural Resources Overlay Zone Map did not include specific field
+    # observations of every individual property. The map is designed to be
+    # specific enough to determine whether further environmental review of a
+    # development proposal is necessary." One map governs both chapters, and
+    # what it triggers is verification -- the exact opposite of Oregon City,
+    # whose 17.49.030(1) calls its map a regulatory boundary. Same kind of
+    # layer, opposite legal weight, and only the code says which.
+    #
+    # 16.32.020 says the same thing from the slope side: "actual site specific
+    # conditions shall take precedence over any aerial topography mapping or
+    # other non-survey specific datum."
+    #
+    # KNOWN LIMIT: 16.34.060 lets development at least 100 ft from the NROZ
+    # proceed without verification, which makes 100 ft the code's own no-review
+    # distance. The flag fires on touch only (s5o applies buffer_ft to carves,
+    # not to flags), so a lot 50 ft away is NOT flagged when the code would
+    # still want it verified. Under-flagging, stated rather than discovered.
+    "overlay_happy_valley_nroz": {
+        "url": f"{_HV}/NaturalResourceOZ/FeatureServer/1",
+        "fields": ["Id"]},
+    # Two steep-slope layers are published and they disagree: SteepSlopesOZ
+    # (5,435 polygons) and Steep_Slope_Overlay_Zone_Final_hopefully (3,883).
+    # Taking the one with the published name over somebody's working title, and
+    # recording the 28% gap here because a future reader should know a second
+    # answer exists rather than find it.
+    "overlay_happy_valley_slope": {
+        "url": f"{_HV}/SteepSlopesOZ/FeatureServer/0",
+        "fields": ["Id", "Area"]},
     # ---------------- Oregon City (Clackamas' first wired overlay) ---------
     # OCMC 17.49.030(1): the NROD Map "is a regulatory boundary mapped ten feet
     # beyond the required vegetated corridor width" -- the published map is the

@@ -28,13 +28,19 @@ on it, and only the first is a queue item:
 3. **Nothing screened environmental overlays anywhere in Clackamas County** —
    floodplain, wetland, habitat, steep slope. Multnomah had thirteen such
    layers; the eleven Clackamas jurisdictions had none, and **2,820 greens
-   (28%) were graded with that check simply absent.** Found and half fixed on
-   2026-09-01. The flood half was a one-line bug — the FEMA download was
+   (28%) were graded with that check simply absent.** Found 2026-09-01, and
+   now mostly closed. The flood half was a one-line bug — the FEMA download was
    filtered to Multnomah's county code while the config claimed flood applied
-   everywhere — and is corrected and running. The other half is real work and
-   it is agent work: every Clackamas city that produces a green turns out to
-   publish its own natural-resource and wetland geometry, none of it wired in.
-   Audited and written down in `SOURCES_PHASE2.md`.
+   everywhere. Fixed and re-run: **73 lots that had been green were not**, and
+   flood touches roughly tripled. The other half was real work and is agent
+   work: every Clackamas city that produces a green publishes its own
+   natural-resource geometry, and four of them are now wired — Oregon City,
+   Happy Valley, Wilsonville, West Linn. Three cities remain, and one of them
+   (Milwaukie, 845 greens) is stuck on something small and stupid: its overlay
+   chapter is on a host that will not serve it to a script, and the chapter's
+   id is not published anywhere we can find. **If you are ever in front of
+   Milwaukie's code and can copy the URL of chapter 19.400, that unblocks the
+   single largest remaining block.**
 4. **No green has ever been checked against a real answer.** The one back-test
    run measured the opposite direction — of fourplexes that really were
    permitted, did we flag the lot? (60%.) Nobody has taken a green lot to a
@@ -279,17 +285,37 @@ the list of places worth hoping about.
 
 ## Queued for the agent — no action needed from you, listed so nothing is invisible
 
-- **Wire up the Clackamas environmental layers** — the biggest open correctness
-  job, and it points the dangerous way (it can only take greens away). Oregon
-  City publishes its Natural Resource Overlay District, Milwaukie its habitat
-  and vegetated corridors, West Linn its riparian and wetland inventories,
-  Happy Valley its resource and steep-slope zones. All verified live on
-  2026-09-01. What makes this real work rather than a config edit: finding a
-  map is not the same as knowing what it does, and every overlay already in the
-  screen carries a citation to the clause that gives it force. Oregon City's
-  code names its overlay when it works out how much of a lot counts toward
-  density — which proves it constrains, not that it forbids a building. Each
-  layer needs its chapter read before it moves a verdict.
+- **Wire up the Clackamas environmental layers** — five of seven done, and the
+  work turned out to be reading, not configuring. Every city publishes a
+  natural-resource map; no two of them mean the same thing by it, and only the
+  city's own code says which. Oregon City calls its map "a regulatory boundary"
+  and forbids structures inside it, so it is subtracted from the buildable
+  area. Happy Valley says its map exists "to determine whether further
+  environmental review is necessary", so it sends the lot to review instead.
+  Wilsonville publishes only the 25-foot ring *around* each resource and not
+  the resource, so the layer had to be filled in before it screened anything —
+  taken as published it would have flagged lots beside a wetland and cleared
+  the one sitting in it. West Linn publishes stream centre lines and makes its
+  code supply the width: 65 feet for a live stream, 15 for a seasonal one, and
+  nothing at all for the 190 piped channels it maps, which are flagged rather
+  than guessed at.
+  Unincorporated Clackamas turned out to be the opposite of a hazard: the
+  county regulates habitat and water quality at length and forbids almost
+  nothing — the complete list of what you may not do in a habitat area is
+  "plant invasive vegetation" and "store materials outside" — so its 598
+  greens keep their verdicts and get a second look instead.
+  Remaining: Milwaukie (845 greens, blocked — see item 3), Tualatin and
+  Gladstone (no greens today, so nothing rides on them).
+
+- **A rule that would ADD greens, found while reading the county** — Clackamas
+  ZDO 706.11 says a lot containing a habitat area, inside the Portland urban
+  growth boundary, has **no minimum front, rear or side yard setback at all**
+  (garages still have to sit back, and fire code still applies). Every other
+  environmental rule found this week takes buildable ground away; this one
+  hands it back, and specifically on the lots that are hardest to fit a pod
+  onto. Nothing in the screen can express "this constraint makes the lot
+  easier", so it is written down here rather than acted on. Worth building the
+  shape for — it can only move lots toward green, never away.
 
 - ~~**Portland-administered pockets** (PCC 33.266 applied to the 1,489
   unincorporated-Multnomah lots Portland administers)~~ Closed 2026-09-01:

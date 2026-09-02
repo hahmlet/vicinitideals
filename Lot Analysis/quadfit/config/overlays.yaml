@@ -187,6 +187,165 @@ overlays:
       wood_village: {grade: B, note: ""}
       multnomah_unincorporated: {grade: B, note: ""}
 
+  # ---------------- Unincorporated Clackamas --------------------------------
+  # The county regulates habitat and water quality thoroughly and PROHIBITS
+  # almost nothing. ZDO 706.05 lists the uses banned in a Habitat Conservation
+  # Area in full: planting invasive vegetation, and outside storage of
+  # materials. 709.05 does the same for a Water Quality Resource Area:
+  # invasive planting, and uncontained hazardous materials. A dwelling is on
+  # neither list. What the districts require instead is a development permit
+  # (706.10 / 709.10) with mitigation — review, not refusal — so both are
+  # flags, and a carve here would have been the mirror of the Portland aisle
+  # mistake: geometry moved by a clause that does not say what it was read to.
+  #
+  # Both maps are Metro's. 706.02 identifies HCAs from the regional inventory
+  # and shuts Section 706 off outside the Metro District and the Portland UGB;
+  # 709 is Oregon's Title 3 regime under a county heading. So these read the
+  # regional layers already on disk rather than fetching a county copy that
+  # is not published — graded C, because a regional proxy is what it is.
+  #
+  # ZDO 706.11 is the finding that does not fit here at all and should not be
+  # lost: a parcel containing an HCA inside the Portland UGB gets a minimum
+  # front, rear and side yard setback of ZERO (garages excepted, fire code
+  # excepted). It is the first rule in the corpus that makes a constrained lot
+  # MORE buildable, the overlay model has no shape for it, and acting on it
+  # could only ADD greens. Left for FLATS.
+  - key: clackamas_hca
+    source: metro_title13
+    name: "Clackamas County Habitat Conservation Area District (ZDO 706)"
+    action: flag
+    jurisdictions: [clackamas_unincorporated]
+    citation: "Clackamas ZDO 706.05 prohibits only invasive planting and outside storage within an HCA; 706.06/706.10 require an HCA development permit for development in the district; 706.02 identifies HCAs on the Comprehensive Plan HCA Map derived from Metro's 2002 regional inventory and applies Section 706 only inside the Metro District or Portland UGB"
+    confidence: verified
+    coverage:
+      clackamas_unincorporated: {grade: C, note: "Metro's regional Title 13 layer standing in for the county's adopted HCA Map, which is not published as GIS on the county's own service. Same 2002 inventory by 706.09's own account, but the county's adopted boundaries may differ. A flag, so the cost of the proxy is a lot read by a person"}
+  - key: clackamas_wqra
+    source: metro_title3
+    name: "Clackamas County Water Quality Resource Area District (ZDO 709)"
+    action: flag
+    jurisdictions: [clackamas_unincorporated]
+    citation: "Clackamas ZDO 709.05 prohibits only invasive planting and uncontained hazardous materials within a WQRA; 709.06/709.10 require a construction management plan and a WQRA development permit; 709.02 applies the district only to parcels inside the Metro District or Portland UGB AND outside both Clackamas County Service District No. 1 and the Surface Water Management Agency of Clackamas County"
+    confidence: needs_verification
+    coverage:
+      clackamas_unincorporated: {grade: C, note: "Metro Title 3 as a proxy for the county WQRA map. OVER-flags: 709.02(A) excludes parcels inside CCSD No. 1 or SWMACC, which between them cover most of the urban unincorporated area this screen looks at, and neither district boundary is applied here. A flag that fires too often costs a read, not a lot"}
+
+  # ---------------- West Linn -----------------------------------------------
+  # The most detailed environmental code in the corpus, and it answers cleanly.
+  # CDC 32.030 strictly prohibits development within a Water Resource Area, and
+  # Table 32-1 puts a new principal structure at "No" both in the resource and
+  # in the WRA (except by hardship, 32.110 -- relief, not a by-right path).
+  #
+  # The subtlety is the map. 32.120(A) adopts the May 2014 WRA Map as the map
+  # that "is intended to identify WRA water features ... It is not intended to
+  # delineate the exact WRA boundaries." So the city publishes water features
+  # and Table 32-2 supplies the width, which is why these are buffers on a
+  # centreline rather than a polygon taken at face value.
+  - key: west_linn_wra_stream
+    name: "West Linn Water Resource Area - streams (CDC Table 32-2 row A)"
+    action: carve
+    buffer_ft: 65
+    jurisdictions: [west_linn]
+    citation: "WLCDC 32.030 prohibits development within a WRA and Table 32-1 puts a new principal structure at No; 32.120(A) adopts the May 2014 WRA Map as the map of water FEATURES, not boundaries; Table 32-2 row A sets the WRA at 65 feet each side of a water resource on 0-25% slope, measured from OHW"
+    confidence: verified
+    coverage:
+      west_linn: {grade: A, note: "city 2014 WRA stream layer, 378 STREAM segments / 155,552 ft. 65 ft is the NARROWEST width Table 32-2 gives a live water resource - rows B (ravine, top of slope + 50), C (long steep face, 200) and D (riparian corridor, 100) all go wider, and the slope test that picks between them needs three field measurements per property. Under-carves on steep ground by construction; never over-carves"}
+  - key: west_linn_wra_ephemeral
+    name: "West Linn Water Resource Area - ephemeral streams (row F)"
+    action: carve
+    buffer_ft: 15
+    jurisdictions: [west_linn]
+    citation: "WLCDC Table 32-2 row F: ephemeral stream, WRA of 15 feet each side measured from the stream thread or centreline"
+    confidence: verified
+    coverage:
+      west_linn: {grade: A, note: "17 segments / 6,539 ft. The only width in Table 32-2 narrower than row A, so it is kept separate rather than swept into the 65 ft buffer"}
+  - key: west_linn_wra_piped
+    name: "West Linn mapped piped watercourse - width unstated"
+    action: flag
+    jurisdictions: [west_linn]
+    citation: "WLCDC 32.120(A) puts these on the adopted WRA Map; Table 32-2 has no row for a channel that is still piped - every row measures from OHW or a delineated wetland edge, and row E covers a formerly closed channel only once it is REOPENED (15 ft)"
+    confidence: verified
+    coverage:
+      west_linn: {grade: B, note: "190 segments / 43,303 ft. Not carved: a width nobody wrote down is not a width. Flagged so the lot is read by a person, which is what the code's own silence leaves"}
+  - key: west_linn_rci
+    name: "West Linn Riparian Corridor Inventory (awareness)"
+    action: flag
+    jurisdictions: [west_linn]
+    citation: "WLCDC 32.120(A) - the adopted map identifies riparian corridors among its water features; Table 32-2 row D would put their WRA at 100 feet, a width the published polygon does not itself state"
+    confidence: needs_verification
+    coverage:
+      west_linn: {grade: B, note: "10 polygons, 636 acres - within 4% of the stream layer buffered 65 ft each side (613 acres), which reads as the same regime drawn twice rather than a second resource. Flagged, not carved again, because carving row D's 100 ft on top of it would claim more than either layer says"}
+  - key: west_linn_wetlands
+    name: "West Linn wetland inventory + WRA width"
+    action: carve
+    buffer_ft: 65
+    jurisdictions: [west_linn]
+    citation: "WLCDC Chapter 2 defines a water resource as 'any stream or wetland identified on the West Linn WRA map'; Table 32-2 row A sets the WRA at 65 feet from the delineated edge of a wetland; 32.030 prohibits development within it"
+    confidence: verified
+    coverage:
+      west_linn: {grade: B, note: "91 polygons, the 2005 Local Wetland Inventory. The adopted WRA Map is dated 2014 and the published data cannot say which of these 2005 polygons carried onto it - a coverage question, not a legal one, and graded as one"}
+  - key: west_linn_flood
+    name: "West Linn flood management area"
+    action: flag
+    jurisdictions: [west_linn]
+    citation: "WLCDC 27.040 prohibits only uses the base zone already prohibits and uncontained hazardous materials; 27.020 requires a flood management area permit and 27.070/27.080 set elevation standards - a permit and a floor height, not a prohibition"
+    confidence: verified
+    coverage:
+      west_linn: {grade: A, note: "city layer, 2,442 acres - wider than the FEMA SFHA it is drawn from, so it flags ground the nationwide layer does not"}
+
+  # ---------------- Wilsonville ---------------------------------------------
+  # The layer is a doughnut and the hole is the point. Wilsonville publishes
+  # SROZ_ImpactArea -- 22 polygons, every one an outer boundary with a single
+  # interior ring -- and the interior ring is the Significant Resource Overlay
+  # Zone itself. Taken as fetched it flags lots BESIDE a resource and clears
+  # lots INSIDE one. `fill_holes` drops the interior rings, giving SROZ + the
+  # 25 ft Impact Area, which is the extent WDC 4.139.02 regulates by name.
+  #
+  # FLAG. 4.139.02: the map "is used to determine whether a Significant
+  # Resource Impact Report (SRIR) is required", and "the text provisions of the
+  # ... ordinance take precedence over the ... maps". 4.139.03(.04) prohibits
+  # new structures in the SROZ "if they will negatively impact significant
+  # natural resources" -- conditional, resolved by a report, and reports are
+  # Class I/II/DRB review rather than by-right. Oregon City's flat 17.49.070(A)
+  # prohibition is what a carve looks like; this is not that.
+  - key: wilsonville_sroz
+    name: "Wilsonville Significant Resource Overlay Zone + Impact Area"
+    action: flag
+    fill_holes: true
+    jurisdictions: [wilsonville]
+    citation: "WDC 4.139.02 applies the SROZ regulations to any lot within the SROZ and its associated Impact Areas, and makes the SROZ Map the test for whether an SRIR is required; 4.139.03(.02) fixes the Impact Area at 25 feet; 4.139.05(.01)(A) requires map verification for development within the SROZ or less than 100 feet outside it"
+    confidence: verified
+    coverage:
+      wilsonville: {grade: B, note: "city layer, 22 polygons, published as the 25 ft ring with the SROZ as the hole; fill_holes recovers resource + buffer. Under-flags: 4.139.05(.01)(A) sets the city's own no-review distance at 100 ft and a flag fires on touch, so a lot 40 ft away is missed. The SROZ core is not published anywhere in Wilsonville's GIS — this reconstruction is the only copy of it we have"}
+
+  # ---------------- Happy Valley --------------------------------------------
+  # FLAG, not carve, and the difference is the city's own sentence. LDC
+  # 16.34.060 says the overlay map "is designed to be specific enough to
+  # determine whether further environmental review of a development proposal is
+  # necessary" -- it triggers verification, it does not draw a prohibition.
+  # Oregon City's 17.49.030(1) says the opposite about its map. Two cities, two
+  # answers, both written down.
+  #
+  # This also lifts half of a standing refusal. Happy Valley 16.32/16.34 were
+  # read on 2026-08-26 and NOT ENCODED because "the binding form is a
+  # buildable-area mask, not a number" and "this layer has no overlay
+  # mechanism". The overlay mechanism is here; the density caps stay refused.
+  - key: happy_valley_nroz
+    name: "Happy Valley Natural Resources Overlay Zone"
+    action: flag
+    jurisdictions: [happy_valley]
+    citation: "HV LDC 16.34.060 — the overlay map determines whether further environmental review is necessary; map verification required before any development permit where development falls within the NROZ boundary"
+    confidence: verified
+    coverage:
+      happy_valley: {grade: A, note: "city overlay-zone map, 1 multipart polygon. Under-flags: 16.34.060 sets the no-review distance at 100 ft from the NROZ and this fires on touch only, so a lot 50 ft away is missed"}
+  - key: happy_valley_slope
+    name: "Happy Valley Steep Slopes Development Overlay Zone"
+    action: flag
+    jurisdictions: [happy_valley]
+    citation: "HV LDC 16.32.020 — 'actual site specific conditions shall take precedence over any aerial topography mapping or other non-survey specific datum'; 16.34.060 makes the shared overlay map a review trigger"
+    confidence: verified
+    coverage:
+      happy_valley: {grade: B, note: "SteepSlopesOZ, 5,435 polygons. A second city layer, Steep_Slope_Overlay_Zone_Final_hopefully, holds 3,883 — a 28% disagreement. Took the published name over the working title; the discrepancy is unresolved"}
+
   # ---------------- Oregon City ---------------------------------------------
   # The first Clackamas city overlay in the screen. Until 2026-09-01 no
   # Clackamas jurisdiction had one, and 2,820 greens -- 28% of the corpus --

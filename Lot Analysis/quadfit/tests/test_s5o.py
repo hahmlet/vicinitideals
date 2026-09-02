@@ -45,6 +45,46 @@ def test_overlay_columns_any_touch_and_area():
     assert sqft[1] == 0.0 and sqft[2] == 0.0
 
 
+def test_fill_holes_recovers_the_resource_a_buffer_ring_leaves_out():
+    """A lot sitting inside a wetland must not read as clear ground.
+
+    Wilsonville publishes SROZ_ImpactArea as the 25 ft ring around each
+    Significant Resource and not the resource itself, so the polygon is a
+    doughnut whose hole is the thing being protected. Screened as fetched, a
+    lot entirely inside the resource intersects nothing and grades clear --
+    the overlay reports the opposite of the truth on exactly the worst lots.
+
+    Filling the interior rings recovers resource + buffer, which is the extent
+    WDC 4.139.02 regulates. The check on the real layer: polygon 1 fetched as a
+    ring is 3.12 acres, and filled it is 27.39 -- its own ACRES attribute says
+    the resource is 24.27, and 24.27 + 3.12 = 27.39 to the penny.
+    """
+    from shapely.geometry import MultiPolygon, Polygon, box
+
+    from s5o_overlays import _fill_holes
+
+    ring = Polygon(
+        box(0, 0, 100, 100).exterior.coords,
+        [box(25, 25, 75, 75).exterior.coords],
+    )
+    assert ring.area == pytest.approx(10000 - 2500)
+    filled = _fill_holes(ring)
+    assert filled.area == pytest.approx(10000)
+    assert not filled.interiors
+    # A lot wholly inside the hole -- the case the unfilled layer misses.
+    assert not ring.intersects(box(40, 40, 60, 60))
+    assert filled.contains(box(40, 40, 60, 60))
+
+    # Multipart geometry keeps every part.
+    multi = MultiPolygon([ring, box(200, 0, 300, 100)])
+    out = _fill_holes(multi)
+    assert out.area == pytest.approx(20000)
+
+    # Anything without interior rings is returned unchanged in area.
+    plain = box(0, 0, 10, 10)
+    assert _fill_holes(plain).area == pytest.approx(100)
+
+
 def test_carve_envelopes_subtracts_buffered_overlay():
     from shapely.geometry import box
 

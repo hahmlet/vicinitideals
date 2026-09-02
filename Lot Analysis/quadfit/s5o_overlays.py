@@ -49,7 +49,27 @@ SEWER_LAYERS = [
 ]
 
 
-def _load_layer_geoms(key: str):
+def _fill_holes(geom):
+    """Drop interior rings, keeping each part's outer boundary.
+
+    For a published buffer ring the hole IS the resource (see
+    `OverlaySpec.fill_holes`), so this is what turns a layer that flags lots
+    beside a wetland into one that also flags lots inside it.
+    """
+    import shapely
+    from shapely.geometry import MultiPolygon, Polygon
+
+    if isinstance(geom, Polygon):
+        return Polygon(geom.exterior)
+    if isinstance(geom, MultiPolygon):
+        return shapely.make_valid(
+            MultiPolygon([Polygon(p.exterior) for p in geom.geoms])
+        )
+    # GeometryCollection or a non-areal type: nothing to fill.
+    return geom
+
+
+def _load_layer_geoms(key: str, fill_holes: bool = False):
     """Valid shapely geometries for one raw layer, or None if file absent."""
     import shapely
 
@@ -63,6 +83,8 @@ def _load_layer_geoms(key: str):
             continue
         try:
             geom = shapely.make_valid(shapely.geometry.shape(g))
+            if fill_holes:
+                geom = shapely.make_valid(_fill_holes(geom))
         except Exception:
             continue
         if not geom.is_empty:
@@ -341,12 +363,21 @@ def main() -> None:
     layer_geoms: dict[str, list] = {}
     missing: list[str] = []
     for spec in cfg.overlays:
-        geoms = _load_layer_geoms(f"overlay_{spec.key}")
+        geoms = _load_layer_geoms(f"overlay_{spec.layer}", spec.fill_holes)
         if geoms is None:
             missing.append(spec.key)
             continue
         layer_geoms[spec.key] = geoms
-        flags, sqft = overlay_columns(lots, spec, geoms)
+        # Measure the touch flag against the SAME geometry the carve uses.
+        # West Linn publishes its water resources as stream centrelines and the
+        # protected area is CDC 32 Table 32-2's width around them, so an
+        # unbuffered line touches almost no lot: the layer would carve hundreds
+        # of envelopes and report "0 lots touched" in the s7 table. A number
+        # that disagrees with what the stage actually did is the same species
+        # of silence as a missing layer.
+        measured = ([shapely.buffer(g, spec.buffer_ft) for g in geoms]
+                    if spec.buffer_ft > 0 else geoms)
+        flags, sqft = overlay_columns(lots, spec, measured)
         lots[f"ovl_{spec.key}"] = flags
         lots[f"ovl_{spec.key}_sqft"] = sqft
         print(f"  ovl_{spec.key} [{spec.action}]: {int(flags.sum()):,} lots touched")

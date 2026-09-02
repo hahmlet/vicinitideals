@@ -54,25 +54,6 @@ UNSCREENED: dict[str, str] = {
         "for, so the fetch is blocked on finding the id, not on reading. "
         "845 greens exposed -- the largest single block in this list."
     ),
-    "west_linn": (
-        "2026-09-01: publishes RiparianCI/1 + /2, WetlandInventory/1, "
-        "FloodManagement/1 and SteepSlope2014/0, all verified live. CDC "
-        "chapter not yet read. 355 greens exposed."
-    ),
-    "clackamas_unincorporated": (
-        "2026-09-01: county GeoHazard FeatureServer found; the resource "
-        "overlay layer has not been located and ZDO has not been read. "
-        "598 greens exposed."
-    ),
-    "wilsonville": (
-        "2026-09-01: LandUseDataset/Map___NaturalResources service confirmed, "
-        "layer ids not yet enumerated. WDC chapter not read. 140 greens."
-    ),
-    "happy_valley": (
-        "2026-09-01: publishes NaturalResourceOZ and SteepSlopesOZ. Zero "
-        "greens today (all 731 lots held at review on sewer), so nothing is "
-        "mis-graded yet -- but the layers exist and the chapter is unread."
-    ),
     "tualatin": (
         "2026-09-01: Public/EnvironmentalExplorer confirmed, layers not "
         "enumerated. Zero greens today (20 lots at review on sewer)."
@@ -169,3 +150,140 @@ def test_oregon_city_is_the_one_clackamas_city_that_is_screened() -> None:
     assert "17.49.070" in spec.citation and "17.49.030" in spec.citation
     assert spec.applies_to("oregon_city")
     assert not spec.applies_to("milwaukie")
+
+
+def test_a_map_means_what_its_own_code_says_it_means() -> None:
+    """The finding worth more than either city on its own.
+
+    Oregon City and Happy Valley both publish a natural-resource overlay map.
+    OCMC 17.49.030(1) calls its map "a regulatory boundary" and 17.49.070(A)
+    prohibits structures inside it -> carve. HV LDC 16.34.060 says its map "is
+    designed to be specific enough to determine whether further environmental
+    review of a development proposal is necessary" -> flag. Same kind of layer,
+    opposite legal weight, and nothing but the code distinguishes them.
+
+    So an overlay's action may never be inferred from what the layer depicts.
+    If this test is ever "fixed" by making the two agree, read both chapters
+    first -- one of them will have changed, not both.
+    """
+    by_key = {s.key: s for s in _overlays().overlays}
+    assert by_key["oregon_city_nrod"].action == "carve"
+    assert by_key["happy_valley_nroz"].action == "flag"
+    assert "17.49.030" in by_key["oregon_city_nrod"].citation
+    assert "16.34.060" in by_key["happy_valley_nroz"].citation
+
+
+def test_a_published_buffer_ring_is_filled_before_it_screens_anything() -> None:
+    """Wilsonville's layer is a doughnut and the hole is the resource.
+
+    SROZ_ImpactArea publishes 22 polygons, each an outer boundary with exactly
+    one interior ring, and the interior ring is the Significant Resource
+    Overlay Zone. Screened as fetched it flags lots BESIDE a wetland and clears
+    the lot sitting IN one -- an overlay that reports the opposite of the truth
+    on the lots that matter most.
+
+    `fill_holes` is what makes it right, and it is the only overlay in the
+    corpus that needs it, so this pins both halves: the flag is set here, and
+    it is set nowhere else by accident.
+    """
+    specs = {s.key: s for s in _overlays().overlays}
+    sroz = specs["wilsonville_sroz"]
+    assert sroz.fill_holes is True
+    assert sroz.action == "flag", (
+        "WDC 4.139.03(.04) prohibits structures in the SROZ only 'if they will "
+        "negatively impact significant natural resources' and 4.139.02 makes "
+        "the map a test for whether a report is required -- conditional, so a "
+        "review trigger, not a carve"
+    )
+    assert sroz.applies_to("wilsonville")
+    filled = sorted(k for k, v in specs.items() if v.fill_holes)
+    assert filled == ["wilsonville_sroz"], (
+        f"fill_holes discards interior rings, which makes a genuine doughnut "
+        f"(a lake with an island) bigger and wrong. Set it only where the hole "
+        f"is known to be the resource: {filled}"
+    )
+
+
+def test_west_linn_carves_a_width_the_code_states_and_flags_one_it_does_not() -> None:
+    """The city that publishes features and makes the code supply the geometry.
+
+    WLCDC 32.120(A) adopts a map of water FEATURES and says in terms that it
+    "is not intended to delineate the exact WRA boundaries" -- so the protected
+    area is a Table 32-2 width around a centreline, not a polygon anyone drew.
+    Three stream types, three different answers, and the third is the point:
+    Table 32-2 has no row for a channel that is still piped, so that layer is
+    flagged rather than carved at a width nobody wrote down.
+    """
+    specs = {s.key: s for s in _overlays().overlays}
+
+    stream = specs["west_linn_wra_stream"]
+    assert (stream.action, stream.buffer_ft) == ("carve", 65)
+    assert "32-2" in stream.citation and "65" in stream.citation
+
+    ephemeral = specs["west_linn_wra_ephemeral"]
+    assert (ephemeral.action, ephemeral.buffer_ft) == ("carve", 15)
+    assert ephemeral.buffer_ft < stream.buffer_ft, (
+        "row F is the one width in Table 32-2 narrower than row A -- folding it "
+        "into the 65 ft buffer would over-carve every ephemeral stream by 50 ft"
+    )
+
+    piped = specs["west_linn_wra_piped"]
+    assert piped.action == "flag" and piped.buffer_ft == 0
+    assert "row E" in piped.citation or "REOPENED" in piped.citation
+
+    # Flood is a permit, not a prohibition: CDC 27.040 bans only what the base
+    # zone already bans, plus uncontained hazardous materials.
+    assert specs["west_linn_flood"].action == "flag"
+
+    for key in ("west_linn_wra_stream", "west_linn_wra_ephemeral",
+                "west_linn_wra_piped", "west_linn_rci",
+                "west_linn_wetlands", "west_linn_flood"):
+        assert specs[key].applies_to("west_linn"), key
+        assert not specs[key].applies_to("oregon_city"), key
+
+
+def test_a_borrowed_layer_keeps_its_own_jurisdiction_s_answer() -> None:
+    """One regional map, two legal weights, and `source` is how both are held.
+
+    Metro's Title 13 habitat inventory is a carve in Wood Village, which adopts
+    it by reference in WVDC 430, and a flag in unincorporated Clackamas, whose
+    ZDO 706.05 lists the uses prohibited in an HCA in full -- invasive planting
+    and outside storage -- and a dwelling is neither. The county requires a
+    development permit, not abstention. Reading the same geometry twice under
+    two actions is the correct outcome; downloading it twice was not.
+    """
+    specs = {s.key: s for s in _overlays().overlays}
+
+    hca = specs["clackamas_hca"]
+    assert hca.source == "metro_title13" and hca.layer == "metro_title13"
+    assert hca.action == "flag" and "706.05" in hca.citation
+    assert hca.applies_to("clackamas_unincorporated")
+    assert not hca.applies_to("wood_village")
+
+    borrowed = specs["metro_title13"]
+    assert borrowed.action == "carve" and borrowed.layer == "metro_title13"
+    assert borrowed.applies_to("wood_village")
+    assert not borrowed.applies_to("clackamas_unincorporated"), (
+        "adding the county here would make the county's HCA a CARVE, which "
+        "ZDO 706.05 does not support -- that is what `source` exists to avoid"
+    )
+
+    wqra = specs["clackamas_wqra"]
+    assert wqra.source == "metro_title3" and wqra.action == "flag"
+    assert "709.05" in wqra.citation
+
+
+def test_every_borrowed_source_names_a_layer_something_actually_fetches() -> None:
+    """A `source` typo would read as a missing layer, which is silence again."""
+    import s0_acquire
+
+    keys = {s.key for s in _overlays().overlays}
+    for spec in _overlays().overlays:
+        if spec.source is None:
+            continue
+        assert spec.source in keys, (
+            f"{spec.key} borrows {spec.source!r}, which is not an overlay key"
+        )
+        assert f"overlay_{spec.source}" in s0_acquire.PHASE2_LAYERS, (
+            f"{spec.key} borrows {spec.source!r}, which s0 never downloads"
+        )

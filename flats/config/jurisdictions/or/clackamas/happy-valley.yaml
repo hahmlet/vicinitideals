@@ -103,6 +103,20 @@ notes: >-
   `max_density_du_per_acre: 2` here would be wrong in both directions: wrong on a lot whose slope
   sits in a corner the pod misses, and far too generous on one where it does not.
 
+  HALF LIFTED 2026-09-01. The sentence above -- "this layer has no overlay mechanism" -- was
+  true of the FLATS value model and is no longer true of the screen. Both maps are now wired
+  into quadfit as `happy_valley_nroz` and `happy_valley_slope`, and both are FLAGS rather than
+  carves, because 16.34.060 says what its own map is for: it "did not include specific field
+  observations of every individual property" and "is designed to be specific enough to determine
+  whether further environmental review of a development proposal is necessary". A lot touching
+  either overlay now goes to REVIEW, which is exactly where the paragraph below says it belongs.
+  What is still NOT ENCODED is everything this refusal was actually about: the density caps of
+  16.32.090 and 16.34.050(B), the sliding buildable fraction of 16.32.040(C), and the setback
+  relief in 16.34.050(A)(1). A flag routes a lot to a human; it does not do the arithmetic.
+  Known limit carried forward: 16.34.060 lets development at least 100 ft from the NROZ proceed
+  without verification, so 100 ft is the code's own no-review distance, and a touch-only flag
+  under-reports lots that are near the overlay without meeting it.
+
   Two smaller readings kept for whoever encodes it. 16.32.020 carves out lots created between
   April 21, 1999 and April 21, 2009 entirely, per ORS 92.040. And the same subsection ends
   "actual site specific conditions shall take precedence over any aerial topography mapping or

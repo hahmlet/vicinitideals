@@ -867,12 +867,39 @@ class OverlayCoverage(BaseModel):
 class OverlaySpec(BaseModel):
     key: str  # matches data/quadfit/raw/overlay_<key>.geojson
     name: str
+    # Read a layer fetched under a DIFFERENT key. One regional map is often
+    # adopted by several jurisdictions that give it different legal weight:
+    # Metro's Title 13 habitat inventory is a carve in Wood Village, which
+    # takes it by reference in WVDC 430, and a flag in unincorporated
+    # Clackamas, whose ZDO 706.05 prohibits exactly two things in an HCA and a
+    # house is neither. Same geometry, two actions, and no reason to download
+    # it twice.
+    source: str | None = None
     action: OverlayAction
     buffer_ft: float = 0.0  # carve only: unbuildable halo around the feature
+    # Some cities publish only the *buffer ring* around a resource, not the
+    # resource. Wilsonville's SROZ_ImpactArea is the worked example: 22 donut
+    # polygons, each an exterior boundary with exactly one hole, the hole being
+    # the Significant Resource Overlay Zone itself. Screening the ring alone
+    # would flag lots BESIDE a wetland and miss a lot sitting INSIDE it, which
+    # is backwards. Discarding interior rings recovers resource + buffer, which
+    # is precisely the extent WDC 4.139.02 applies its regulations to ("the
+    # portion of any lot ... within a Significant Resource Overlay Zone and its
+    # associated Impact Areas").
+    #
+    # Only set this where the hole is known to BE the resource. A genuine
+    # doughnut -- a lake with an island, a floodplain around high ground -- gets
+    # bigger and wronger. The published geometry has to be checked, not guessed.
+    fill_holes: bool = False
     jurisdictions: list[str] | Literal["all"] = "all"  # where the RULE applies
     citation: str = ""
     confidence: Literal["verified", "needs_verification"] = "needs_verification"
     coverage: dict[str, OverlayCoverage] = Field(default_factory=dict)
+
+    @property
+    def layer(self) -> str:
+        """The raw layer this overlay reads — its own key unless it borrows."""
+        return self.source or self.key
 
     def applies_to(self, jurisdiction: str) -> bool:
         return self.jurisdictions == "all" or jurisdiction in self.jurisdictions
