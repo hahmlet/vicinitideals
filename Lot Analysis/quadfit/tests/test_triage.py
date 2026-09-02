@@ -421,3 +421,52 @@ def test_the_density_floor_cannot_rescue_a_lot_that_fails_on_its_own():
                            fits_cov_pod=False)])
     assert lots["triage"][0] == "red"
     assert lots["density_floor_short"][0]
+
+
+def test_a_yellow_lot_says_why_it_is_yellow():
+    """`binding_constraint` names a red lot's blocker; nothing named a yellow's.
+
+    Eight conditions can hold a lot at review and not one of them was written
+    into the row, so working the queue meant re-deriving the whole disjunction
+    from the exported columns -- which two of them cannot support: the
+    unverified-zone test needs rules.yaml, and the slope test needs a config
+    flag that never reaches the CSV. Re-deriving a rule is how you get a
+    different answer from the one the screen actually gave.
+    """
+    rows = [
+        _base_row(),                                       # green: no reasons
+        _base_row(zone="UNVERIFIED"),
+        _base_row(slope_tier="cost_prohibitive"),
+        _base_row(ovl_flag=True),
+        _base_row(sewer_main_dist_ft=9_999.0),
+        _base_row(zone="FLOORED", area_sqft=25_000.0),
+    ]
+    lots = _run(rows, ocfg=_Ocfg())
+    assert list(lots["review_reasons"]) == [
+        "", "unverified_zone", "slope", "overlay", "sewer_unconfirmed",
+        "density_floor",
+    ]
+    assert list(lots["triage"]) == [
+        "green", "review", "review", "review", "review", "review"]
+
+
+def test_every_reason_a_lot_is_held_gets_named_not_just_the_first():
+    """One lot, three problems. A queue sorted on the first one lies about the
+    other two, and a lot whose only cure is item 6 must not read like a lot
+    whose only cure is item 7."""
+    lots = _run([_base_row(zone="UNVERIFIED", slope_tier="cost_prohibitive",
+                           sewer_main_dist_ft=9_999.0, ovl_flag=True)],
+                ocfg=_Ocfg())
+    assert lots["review_reasons"][0] == (
+        "unverified_zone,slope,sewer_unconfirmed,overlay")
+
+
+def test_a_red_lot_carries_no_review_reasons():
+    """Red is answered by `binding_constraint`. Naming yellow causes on a lot
+    that is already off the board would make the queue look bigger than it is."""
+    lots = _run([_base_row(zone="UNVERIFIED", fits_pod=False,
+                           fits_cov_pod=False, slope_tier="cost_prohibitive")],
+                ocfg=_Ocfg())
+    assert lots["triage"][0] == "red"
+    assert lots["binding_constraint"][0] == "pod_no_fit"
+    assert lots["review_reasons"][0] == ""

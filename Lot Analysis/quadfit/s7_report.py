@@ -409,6 +409,35 @@ def attribute_and_triage(lots, fp_names, rules, has_siteplan, flag_ovl_cols,
     lots["triage"] = np.where(binding != "", "red",
                               np.where(review, "review", "green"))
 
+    # Say WHY, in the row. A red lot has carried its `binding_constraint` since
+    # the triage split was built; a yellow one carried nothing, and the eight
+    # conditions above are not all recoverable from the exported columns --
+    # `unverified_zone` needs rules.yaml and `slope_bad` needs a config flag
+    # that is not in the CSV at all. So "why is this lot in the queue" could
+    # only be answered by re-deriving the whole disjunction, which is how the
+    # question gets answered WRONG. One joined column, computed here where the
+    # arrays already exist, and the queue becomes sortable by cause.
+    # Only for lots that ARE yellow. `review` is true on plenty of red lots
+    # too -- triage just reaches `binding` first -- and naming yellow causes on
+    # a lot already off the board would make the queue look bigger than it is.
+    yellow = np.asarray(lots["triage"].to_numpy() == "review", dtype=bool)
+    reasons = np.empty(n, dtype=object)
+    reasons[:] = ""
+    for name, mask in (
+        ("suspect_geometry", flag_suspect),
+        ("tier_c", tier == "C"),
+        ("unverified_zone", unverified_zone),
+        ("slope", slope_bad),
+        ("sewer_unconfirmed", sewer_review),
+        ("overlay", overlay_flag),
+        ("frontage_unmeasured", frontage_unmeasured),
+        ("density_floor", density_floor_short),
+    ):
+        m = np.asarray(mask, dtype=bool) & yellow
+        if m.any():
+            reasons[m] = [r + ("," if r else "") + name for r in reasons[m]]
+    lots["review_reasons"] = reasons
+
 
 def quads_if_split(lots, gates, rules, split):
     """Vector of carve-count estimates (0 where ineligible / nothing fits).
@@ -715,6 +744,32 @@ def main() -> None:
                   "because the city never published one. "
                   "`geometry_assumed` marks them in `lots_results.csv`.")
     L.append("\nThe human-review queue is `review_candidates.csv`.")
+
+    # What the queue is actually made of. The binding-constraint table below
+    # explains every RED lot and there was never a companion for the yellow
+    # ones, so "why are thirty thousand lots in the queue" could only be
+    # answered by re-deriving eight conditions from the CSV -- twice now, and
+    # wrongly the first time. Sorted by lots, because that is the order the
+    # human list is kept in and this is where its next item comes from.
+    if "review_reasons" in lots.columns:
+        rr = lots.loc[lots["triage"] == "review", "review_reasons"]
+        counts: dict[str, int] = {}
+        for cell in rr:
+            for r in str(cell).split(","):
+                if r:
+                    counts[r] = counts.get(r, 0) + 1
+        if counts:
+            L.append("\n### Why each lot is in the queue\n")
+            L.append("A lot can be held by more than one of these, so the "
+                     "column sums past the queue total. **Solo** is the number "
+                     "held by that reason ALONE -- the lots a single answer "
+                     "would release, and the honest size of the prize.\n")
+            solo = rr[~rr.str.contains(",", na=False)].value_counts()
+            L.append("| reason | lots held | solo |")
+            L.append("|---|---:|---:|")
+            for k, v in sorted(counts.items(), key=lambda kv: -kv[1]):
+                L.append(f"| {k} | {v:,} | {int(solo.get(k, 0)):,} |")
+            L.append(f"| **queue total** | **{len(rr):,}** | |")
 
     L.append("\n## Binding constraint — what stops each lot (first-hit)\n")
     L.append("The single first reason each lot is not buildable. Structural drops are "
@@ -1219,7 +1274,10 @@ def main() -> None:
         "TLID", "SITEADDR", "lat", "lng", "jurisdiction", "zone", "tier",
         "area_sqft", "envelope_sqft", "frontage_ft", "YEARBUILT", "BLDGSQFT",
         "BLDGVAL", "TOTALVAL", "split_zone", "policy_exclusion", "eligible",
-        "flag_suspect", "binding_constraint", "triage",
+        # `binding_constraint` says why a lot is RED. `review_reasons` says why
+        # it is YELLOW -- next to it, because the two answer the same question
+        # for the two colours and nobody should have to know which is which.
+        "flag_suspect", "binding_constraint", "review_reasons", "triage",
     ] + screen_cols \
       + [f"fits_{n}" for n in fp_names] + [f"fits_cov_{n}" for n in fp_names] \
       + phase2_cols + siteplan_cols
