@@ -617,7 +617,7 @@
       ],
       "max_height_ft": [
         "civic_corridor",
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_density_du_per_acre": [
         "civic_corridor"
@@ -687,22 +687,22 @@
     },
     "LDR-5": {
       "max_density_du_per_acre": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "max_height_ft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_density_du_per_acre": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_frontage_ft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_lot_sqft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_lot_width_ft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "setback_front_ft": [
         "local_street",
@@ -732,22 +732,22 @@
     },
     "LDR-7": {
       "max_density_du_per_acre": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "max_height_ft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_density_du_per_acre": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_frontage_ft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_lot_sqft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_lot_width_ft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "setback_front_ft": [
         "local_street",
@@ -812,22 +812,22 @@
     },
     "MDR-12": {
       "max_density_du_per_acre": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "max_height_ft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_density_du_per_acre": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_frontage_ft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_lot_sqft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_lot_width_ft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "setback_front_ft": [
         "local_street",
@@ -857,22 +857,22 @@
     },
     "MDR-24": {
       "max_density_du_per_acre": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "max_height_ft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_density_du_per_acre": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_frontage_ft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_lot_sqft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_lot_width_ft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "setback_front_ft": [
         "local_street",
@@ -902,28 +902,28 @@
     },
     "OFR": {
       "max_density_du_per_acre": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "max_far": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "max_height_ft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_density_du_per_acre": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_frontage_ft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_lot_depth_ft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_lot_sqft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_lot_width_ft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "setback_front_ft": [
         "local_street",
@@ -1058,22 +1058,22 @@
     },
     "TLDR": {
       "max_density_du_per_acre": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "max_height_ft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_density_du_per_acre": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_frontage_ft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_lot_sqft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_lot_width_ft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "setback_front_ft": [
         "local_street",
@@ -1103,22 +1103,22 @@
     },
     "TR": {
       "max_density_du_per_acre": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "max_height_ft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_density_du_per_acre": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_frontage_ft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_lot_sqft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "min_lot_width_ft": [
-        "protected_water_feature"
+        "north_of_marine_drive"
       ],
       "setback_front_ft": [
         "local_street",

@@ -46,6 +46,20 @@ definitions:
     cite: "Gladstone Municipal Code 17.06.270, Lot, corner"
 
 crossrefs:
+  "17.38":
+    outcome: other_path
+    note: >-
+      Planned Unit Development. Two of the three mentions open a zone's dimensional standards --
+      "Except as provided in GMC Chapters 17.38 (Planned Unit Development), 17.72 (Variances) and
+      17.76 (Exceptions), the following dimensional standards shall apply" -- so it stands in the
+      same sentence as the setbacks and lot area this screen reads, which is why it ranked binding
+      beside a minimum lot area. It is the exception clause, and every limb of it RELAXES: a PUD,
+      a variance and an exception are three ways of being let off a standard. Reading it could
+      admit lots this screen rejects and can never reject one it admits, which is `narrows_only`
+      pointing the other way. 17.72 is already ruled here on that reasoning. The third mention
+      settles it further: 17.06's definition of a residential PUD requires "at least 80,000 square
+      feet in any zoning district", and anything smaller "must be approved by Planning Commission
+      per GMC 17.38.020". A discretionary approval on a two-acre assembly is not a by-right screen.
   "17.70":
     outcome: other_path
     note: >-

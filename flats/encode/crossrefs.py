@@ -135,8 +135,17 @@ _REF = re.compile(
     #: twice in a held document and appeared in no ledger at all. The letter
     #: must end the chapter token, which is the same rule the named branch
     #: uses and the reason "40.220LOW DENSITY" is still not section 40.220L.
-    r"|(?<![A-Za-z])(?!ORS\b|OAR\b)[A-Z]{2,4}\b\s+"
-    r"(?P<abbrev>\d+(?:[A-Z](?![A-Za-z]))?\.[\d.\-]*\d)"
+    #: The capitals must not be the tail of a hyphenated word, and the
+    #: number must not be a measurement. West Linn's angle-parking table
+    #: prints "30 DRIVE-IN  12.5'  12.5'  16.8' ..." and this branch found
+    #: five sections in it: "IN" is two capitals and 12.5 carries the dot
+    #: the guard above asks for. All five ranked binding beside the parking
+    #: geometry they ARE -- the ledger reporting a table cell as a chapter
+    #: it cannot open, in the one document whose numbers this screen draws
+    #: with. A city abbreviation never follows a hyphen, and a section
+    #: number is never followed by a foot mark.
+    r"|(?<![A-Za-z\-])(?!ORS\b|OAR\b)[A-Z]{2,4}\b\s+"
+    r"(?P<abbrev>\d+(?:[A-Z](?![A-Za-z]))?\.[\d.\-]*\d)(?![\u2032'\u2019])"
     #: And a number with three dotted groups needs no introduction at all — a
     #: decimal never has two dots, and a section number often does.
     r"|(?<![\d.])(?P<dotted>\d+\.\d+\.\d+[\d.]*))"

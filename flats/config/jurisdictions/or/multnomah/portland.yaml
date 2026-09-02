@@ -135,6 +135,35 @@ code:
   - id: "33.910.definitions"
     url: https://www.portland.gov/sites/default/files/code/910-definitions_0.pdf
     title: Chapter 33.910 Definitions
+  # 33.920 is the other half of 33.910: the definitions chapter says what a
+  # word means, this one says which CATEGORY a building falls into, and every
+  # zone chapter in the city carries the same bullet -- "The use categories
+  # are described in Chapter 33.920" -- above a use table whose rows are
+  # categories rather than buildings. Nine mentions, two of them standing
+  # beside a minimum lot area, and it was the loudest unfetched reference in
+  # the largest jurisdiction in the corpus. Which row a four-unit building
+  # takes in six use tables is not a thing to rule on from outside.
+  #
+  # Read 2026-09-02, and it matters in exactly half the city. The single-
+  # dwelling and multi-dwelling tables name the BUILDING -- 33.110's Table
+  # 110-1 has a row reading "Fourplex" and the pod's permission is read from
+  # it directly. The commercial, employment and campus tables name the
+  # CATEGORY: Table 130-1 and Table 140-1 have one row, "Household Living",
+  # and nothing in this file had ever said why a four-unit building is in it.
+  # 33.920.110.A does: "Household Living is the residential occupancy of a
+  # dwelling unit that contains eight or fewer bedrooms", tenancy monthly or
+  # longer, with houses, duplexes, apartments and condominiums as its
+  # examples. The category is drawn per DWELLING UNIT, not per building, so
+  # a four-unit pod is four Household Living occupancies and the count of
+  # units never enters. Nothing moves; the chapter states no distance, no
+  # area and no height anywhere in its 844 lines. What it settles is the use
+  # permission under CR, CM1, CM2, CM3, CE, CX, EG1, EG2, EX, IG1, IG2, IH,
+  # CI1, CI2 and IR -- the largest block of fourplex-eligible land in the city --
+  # which until today rested on a table row this corpus could not have
+  # defended.
+  - id: "33.920"
+    url: https://www.portland.gov/sites/default/files/code/920-categories_1.pdf
+    title: Chapter 33.920 Descriptions of the Use Categories
   - id: "33.266"
     url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
     title: Chapter 33.266 Parking, Loading, and Transportation and Parking Demand Management

@@ -1,0 +1,844 @@
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Chapter 33.920
+8/1/21                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                Description of Use Categories
+
+33.920 Description of Use Categories
+                                                                                                                                                                                                                                                                                                                                                                                                                        920
+
+Sections:
+Introduction to the Use Categories
+                  33.920.010 Purpose
+                  33.920.020 Category Titles
+                  33.920.030 Classification of Use
+Residential Use Categories
+                  33.920.100                                                                           Group Living
+                  33.920.110                                                                           Household Living
+Commercial Use Categories
+                  33.920.200                                                                           Commercial Outdoor Recreation
+                  33.920.210                                                                           Commercial Parking
+                  33.920.220                                                                           Quick Vehicle Servicing
+                  33.920.230                                                                           Major Event Entertainment
+                  33.920.240                                                                           Office
+                  33.920.250                                                                           Retail Sales And Service
+                  33.920 260                                                                                                                                                                Self-Service Storage
+                  33.920.270                                                                           Vehicle Repair
+Industrial Use Categories
+                  33.920.300 Bulk Fossil Fuel Terminal
+                  33.920.31                         0 Industrial Service
+                  33.920.32                         0 Manufacturing And Production
+                  33.920.33                         0 Railroad Yards
+                  33.920.34                         0 Warehouse And Freight Movement
+                  33.920.35                         0 Waste-Related
+                  33.920.36                         0 Wholesale Sales
+Institutional Use Categories
+                  33.920.400                                                                           Basic Utilities
+                  33.920.410                                                                           Colleges
+                  33.920.420                                                                           Community Service
+                  33.920.430                                                                           Daycare
+                  33.920.450                                                                           Medical Centers
+                  33.920.460                                                                           Parks And Open Areas
+                  33.920.470                                                                           Religious Institutions
+                  33.920.480                                                                           Schools
+Other Use Categories
+                  33.920.500                                                                           Agriculture
+                  33.920.510                                                                           Aviation And Surface Passenger Terminals
+                  33.920.520                                                                           Detention Facilities
+                  33.920.530                                                                           Mining
+                  33.920.540                                                                           Radio Frequency Transmission Facilities
+                  33.920.550                                                                           Rail Lines And Utility Corridors
+
+                                                                                                                                                                                                                       920-                                                            1
+
+Chapter 33.920                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            Title 33, Planning and Zoning
+Description of Use Categories                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             8/1/21
+
+                                                                                  Introduction to the Use Categories
+33.920.010 Purpose
+This Chapter classifies land uses and activities into use categories on the basis of common
+functional, product, or physical characteristics. Characteristics include the type and amount of
+activity, the type of customers or residents, how goods or services are sold or delivered, and certain
+site factors. The use categories provide a systematic basis for assignment of present and future uses
+to zones. The decision to allow or prohibit the use categories in the various zones is based on the
+goals and policies of the Comprehensive Plan.
+33.920.020 Category Titles
+The names of the use categories start with capital letters throughout this Title.
+33.920.030 Classification of Uses
+          A.                                                           Considerations.
+                       1.                                                    Uses are assigned to the category whose description most closely describes the nature
+                                     of the primary use.                                     The "Characteristics" subsection of each use category describes
+                                     the characteristics of each use category. Developments may have more than one
+                                     primary use. Developments may also have one or more accessory uses.  Developments
+                                     with more than one primary use are addressed in Subsection B. below. Accessory uses
+                                     are addressed in Subsection C. below.
+                       2.                                                    The following items are considered to determine what use category the use is in, and
+                                     whether the activities constitute primary uses or accessory uses:
+                                          •                                             The description of the activity(ies) in relationship to the characteristics of each
+                                                     use category;
+                                          •                                             The relative amount of site or floor space and equipment devoted to
+                                                     the activity;
+                                          •                                             Relative amounts of sales from each activity;
+                                          •                                             The customer type for each activity;
+                                          •                                             The relative number of employees in each activity;
+                                          •                                             Hours of operation;
+                                          •                                             Building and site arrangement;
+                                          •                                             Vehicles used with the activity;
+                                          •                                            The relative number of vehicle trips generated by the activity;
+                                          •                                            Signs;
+                                          •                                             How the use advertises itself; and
+                                          •                                             Whether the activity would be likely to be found independent of the other
+                                                     activities on the site.
+          B.                                                Developments with multiple primary uses. When all the primary uses of a development
+                       fall within one use category, then the development is assigned to that use category.            For
+                       example, a development that contains a retail bakery and a cafe would be classified in the
+                       Retail Sales And Service category because all                       the primary uses are in that category.            When
+                       the primary uses of a development fall within different use categories, each primary use is
+                       classified in the applicable category and is subject to the regulations for that category.
+
+                                                                                                                               920-                                                            2
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Chapter 33.920
+10/1/24                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         Description of Use Categories
+
+         C.                                                 Accessory uses. Accessory uses are allowed by right in conjunction with the use unless
+                    stated otherwise in the regulations. Also, unless otherwise stated, they are subject to the
+                    same regulations as the primary use. Common accessory uses are listed as examples with
+                    the categories.
+         D.                                            Use of examples. The "Examples" subsection of each use category provides a list of
+                    examples of uses that are included in the use category. The names of uses on the lists are
+                    generic. They are based on the common meaning of the terms and not on what a specific
+                    use may call itself. For example, a use whose business name is "Wholesale Liquidation" but
+                    that sells mostly to consumers, would be included in the Retail Sales And Service category
+                    rather than the Wholesale Sales category. This is because the actual activity on the site
+                    matches the description of the Retail Sales And Service category.
+
+                                                                                Residential Use Categories
+33.920.100 Group Living
+         A.                                              Characteristics. Group Living is the residential occupancy of a dwelling unit that contains
+                    more than eight bedrooms. Group Living is also the residential occupancy of a congregate
+                    housing facility. Tenancy is arranged on a month-to-month basis, or for a longer period.
+                    Uses where tenancy may be arranged for a shorter period are not considered residential.
+                    They are considered to be a form of transient lodging (see the Retail Sales And Service and
+                    Community Service categories). Generally, Group Living uses often include a common
+                    eating area for residents. The residents may or may not receive any combination of care,
+                    training, or treatment, as long as they also reside at the site. Group Living may include the
+                    State definition of residential facility (see Chapter 33.910, Definitions).
+         B.                                                  Accessory Uses. Accessory uses commonly found are recreational facilities, parking of
+                    autos for the occupants and staff, parking of vehicles for the facility, food
+                    membership distribution, and registered or certified family child care homes, for up to 16
+                    children, that meet the State’s requirements of ORS 329A.
+         C.                                                 Examples. Examples include houses and other dwelling units with nine or more bedrooms;
+                    dormitories; fraternities and sororities; nursing and convalescent homes; single room
+                    occupancy housing or SROs, rooming houses, residential hotels and other congregate
+                    housing facilities; some group homes for persons with disabling conditions; and some
+                    residential programs for drug and alcohol treatment.
+         D.                                             Exceptions.
+                    1.                                                   Lodging where the length of stay           may be arranged for periods less than one month is
+                               considered a hotel or motel use and is classified in the Retail Sales And Service
+                               category. However, in certain situations, lodging where the length of stay            may be
+                               arranged for periods less than one month may be classified as a Community Service
+                               use such as short term, mass or outdoor shelters.
+                    2.                                                   Lodging where tenancy is arranged on a month-to-month basis, or for a longer period
+                               in a dwelling unit with eight or fewer bedrooms is classified as Household Living.
+                    3.                                                   Facilities for people who are under judicial detainment and are under the supervision
+                               of sworn officers are included in the Detention Facilities category.
+
+                                                                                                            920-                                                            3
+Chapter 33.920                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Title 33, Planning and Zoning
+Description of Use Categories                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    10/1/24
+33.920.110 Household Living
+         A.                                              Characteristics. Household Living is the residential occupancy of a dwelling unit that
+                      contains eight or fewer bedrooms. Tenancy is arranged on a month-to-month basis, or for a
+                      longer period. Uses where the length of stay may be arranged for a shorter period are not
+                      considered residential. They are considered to be a form of transient lodging (see the Retail
+                      Sales And Service and Community Service categories). In addition, residential homes as
+                      defined by the State of Oregon are included in the Household Living category (see Chapter
+                      33.910, Definitions).
+         B.                                                  Accessory Uses. Accessory uses commonly found are recreational activities, raising of pets,
+                      hobbies, parking of the occupants' vehicles, and registered or certified child care homes,
+                      for up to 16 children, that meet the State’s requirements of ORS 329A.  Home occupations,
+                      accessory dwelling units, accessory short-term rentals, and food membership distribution
+                      are accessory uses that are subject to additional regulations.
+         C.                                                 Examples. Uses include living in houses, duplexes, apartments, condominiums, retirement
+                      center apartments, manufactured housing, houseboats, and other dwellings           with eight or
+                      fewer bedrooms.
+         D.                                             Exceptions.
+                      1.                                                   Situations where the length of stay may be arranged for periods of less than one
+                                  month is considered a hotel or motel use and is classified in the Retail Sales And
+                                  Service category.
+                      2.                                                   In certain situations, lodging where length of stay            may be arranged for periods less
+                                  than one month may be classified as a Community Service use, such as short term  ,
+                                  mass, or outdoor shelter.
+                      3.                                                   Lodging where tenancy is arranged on a month-to-month basis, or for a longer period,
+                                  in a dwelling unit with more than eight bedrooms is classified as Group Living.
+
+                                                                                      Commercial Use Categories
+33.920.200 Commercial Outdoor Recreation
+         A.                                              Characteristics. Commercial Outdoor Recreation uses are large, generally commercial uses
+                      that provide continuous recreation or entertainment oriented activities. They generally
+                      take place outdoors. They may take place in a number of structures which are arranged
+                      together in an outdoor setting.
+         B.                                                  Accessory Uses. Accessory uses may include concessions, restaurants, parking, caretaker's
+                      quarters, food membership distribution, and maintenance facilities.
+         C.                                                 Examples. Examples include amusement parks, theme parks, golf driving ranges, miniature
+                      golf facilities, zoos, marinas, and marine passenger docks for subregional cruise ships such
+                      as Willamette and Columbia River cruises.
+         D.                                             Exceptions.
+                      1.                                                   Golf courses are classified as Parks And Open Areas          .
+                      2.                                                   Uses that draw large numbers of people to periodic events, rather than on a
+                                  continuous basis, are classified as Major Event Entertainment.
+
+                                                                                                                     920-                                                            4
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Chapter 33.920
+10/1/24                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         Description of Use Categories
+
+33.920.210 Commercial Parking
+          A.                                              Characteristics. Commercial Parking facilities provide parking that is not accessory to a
+                       specific use. A fee may or may not be charged. A facility that provides both accessory
+                       parking for a specific use and regular fee parking for people not connected to the use is
+                       also classified as a Commercial Parking facility.
+          B.                                                  Accessory Uses. In a parking structure only, accessory uses may include gasoline sales, car
+                       washing, food membership distribution, and vehicle repair activities if these uses provide
+                       service to autos parked in the garage, and not towards general traffic.
+          C.                                                 Examples. Examples include short- and long-                      term fee parking facilities, commercial district
+                       shared parking lots, commercial shuttle parking, and mixed parking lots (partially for a
+                       specific use, partly for rent to others).
+          D.                                             Exceptions.
+                       1.                                                   Parking facilities that are accessory to a use, but which charge the public to park for
+                                    occasional events nearby, are not considered Commercial Parking facilities.
+                       2.                                                   Parking facilities that are accessory to a primary use are not considered Commercial
+                                    Parking uses, even if the operator leases the facility to the primary use or charges a
+                                    fee to the individuals who park in the facility. See Accessory Parking Facilities in
+                                    Chapter 33.910, Definitions.
+                       3.                                                   Public transit park-and-ride facilities are classified as Community Services.
+33.920.220 Quick Vehicle Servicing
+          A.                                              Characteristics. Quick Vehicle Servicing uses provide direct services for motor vehicles
+                       where the driver generally waits in the car before and while the service is performed. The
+                       development will include a drive-through facility, the area where the service is performed
+                       (see 33.910, Definitions.)  Full-serve and mini-serve gas stations are always classified as a
+                       primary use (Quick Vehicle Servicing), rather than an accessory use, even when they are in
+                       conjunction with other uses.
+          B.                                                  Accessory Uses. Accessory uses may include auto repair, food membership distribution,
+                       and tire sales.
+          C.                                                 Examples. Examples include full-serve and mini-serve gas stations, unattended card key
+                       stations, electric vehicle charging stations, car washes, quick lubrication services, and
+                       Department of Environmental Quality vehicle emission test sites.
+          D.                                             Exceptions.
+                       1.                                                   Truck stops are classified as Industrial Service.
+                       2.                                                   Refueling facilities for the vehicles that belong to a specific use (fleet vehicles) which
+                                    are on the site where the vehicles are kept, are accessory to the use.
+                       3.                                                   Electric vehicle chargers that are intended to be used while the car is parked in a
+                                    parking space are not a Quick Vehicle Servicing use.
+
+                                                                                                                            920-                                                            5
+Chapter 33.920                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Title 33, Planning and Zoning
+Description of Use Categories                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    10/1/24
+33.920.230 Major Event Entertainment
+         A.                                              Characteristics. Major Event Entertainment uses are characterized by activities and
+                     structures that draw large numbers of people to specific events or shows.           Activities are
+                     generally of a spectator nature.
+         B.                                                  Accessory Uses. Accessory uses may include restaurants, bars, concessions, parking, food
+                     membership distribution, and maintenance facilities.
+         C.                                                 Examples. Examples include stadiums, sports arenas, coliseums, race tracks (auto, horse,
+                     dog, etc.), auditoriums, exhibition and meeting areas, and fairgrounds.
+         D.                                             Exceptions.
+                     1.                                                   Exhibition and meeting areas with less than 20,000 square feet of total event area are
+                                  classified as Retail Sales And Service.
+                     2.                                                   Banquet halls that are part of hotels or restaurants are accessory to those uses, which
+                                  are included in the Retail Sales And Service category.
+                     3.                                                   Theaters, including drive-in theaters, are classified as Retail Sales And Service.
+33.920.240 Office
+         A.                                              Characteristics. Office uses are characterized by activities conducted in an office setting
+                     that focus on the provision of goods and services, usually by professionals. There are two
+                     subgroups within the Office category:
+                     1.                                                     Traditional Office. Traditional Office uses are characterized by activities that generally
+                                  focus on business, government, professional, medical, or financial services. Traditional
+                                  Office uses require customers or clients to visit the site on a regular basis.
+                     2.                                                   Industrial Office. Industrial Office uses are characterized by activities that focus on
+                                  science, technology, and design services associated with the production of physical or
+                                  digital goods. They primarily provide products to other businesses.           They do not
+                                  require customers or clients to visit the site; any such visits are infrequent and
+                                  incidental.
+         B.                                               Accessory uses. Accessory uses may include cafeterias, health facilities, parking, or other
+                     amenities primarily for the use of employees in the firm or building. Accessory uses may
+                     also include food membership distribution.
+         C.                                                 Examples. Examples include uses from the two subgroups:
+                     1.                                                     Traditional Office: Professional services such as lawyers,             accountants, or management
+                                  consultants; business services such as headquarters, temporary staffing agencies,
+                                  sales offices, or call centers; financial services such as lenders, brokerage houses,
+                                 banks, or real estate agents and developers or property managers; television and
+                                 radio studios; portrait photography studios; government offices and public utility
+                                 offices; medical and dental clinics, and blood collection facilities.
+                     2.                                                   Industrial Office: Architectural, engineering and related services including landscape
+                                 architects; drafting services; consultant service providers in the building inspection,
+                                 architectural, geophysical surveying and mapping, environmental, agricultural, motion
+                                 picture, biology and life sciences, biotechnology, physics, chemistry, economics,
+                                 energy, and engineering fields; medical, dental, and veterinary labs primarily engaged
+
+                                                                                                                    920-                                                            6
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Chapter 33.920
+10/1/24                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         Description of Use Categories
+
+                                  in providing testing services to practitioners; interior, industrial, and graphic design
+                                  services; commercial photography studios; computer system, software, or internet
+                                  content design services where all support occurs off-                            site; data processing and hosting
+                                  services.
+         D.                                             Exceptions.
+                      1.                                                   Offices that are part of and are located with a firm in another category are considered
+                                  accessory to the firm's primary activity. Headquarters offices, when in conjunction
+                                  with or adjacent to a primary use in another category, are considered part of the other
+                                  category.
+                      2.                                                   Contractors and others who perform services off-                            site are included in the Office
+                                  category if equipment and materials are not stored on the site and fabrication,
+                                  services, or similar work is not carried on at the site.
+33.920.250 Retail Sales And Service
+         A.                                              Characteristics. Retail Sales and Service firms are involved in the sale, lease or rent of new
+                      or used products to the general public. They may also provide personal services or
+                      entertainment, or provide product repair or services for consumer and business goods.
+         B.                                               Accessory uses. Accessory uses may include offices, storage of goods, manufacture or
+                      repackaging of goods for on-site sale, food membership distribution, and parking.
+         C.                                                 Examples. Examples include uses from the four subgroups listed below:
+                      1.                                                   Sales-oriented: Stores selling, leasing, or renting consumer, home, and business goods
+                                  including art, art supplies, bicycles, clothing, dry goods, electronic equipment, fabric,
+                                  furniture, garden supplies, gifts, groceries, hardware, home improvements, household
+                                  products, jewelry, pets, pet food, pharmaceuticals, plants, printed material,
+                                  stationery, and videos; food sales, and Farmers Markets; and sales or leasing of
+                                  consumer vehicles including passenger vehicles, motorcycles, light and medium
+                                  trucks, and other recreational vehicles.
+                      2.                                                   Personal service-oriented: Branch banks; urgency medical care; laundromats;
+                                  photographic studios; photocopy and blueprint services; hair, tanning, and personal
+                                  care services; business, martial arts, and other trade schools; dance or music classes;
+                                  taxidermists; mortuaries; veterinarians; kennels limited to boarding, with no breeding;
+                                  and animal grooming.
+                      3.                                                   Entertainment-                oriented: Restaurants, cafes, delicatessens, taverns, and bars; indoor
+                                  or outdoor continuous entertainment activities such as bowling alleys, ice rinks, and
+                                  game arcades; pool halls; indoor firing ranges; theaters, health clubs, gyms,
+                                  membership clubs, and lodges; hotels, motels, recreational vehicle parks, and other
+                                  temporary lodging with an average length of stay of less than 30 days.
+                      4.                                                   Repair-                                                   oriented: Repair of TVs, bicycles, clocks, watches, shoes, guns, appliances and
+                                  office equipment; photo or laundry drop off; quick printing; recycling drop-off; tailor;
+                                  locksmith; and upholsterer.
+
+                                                                                                                     920-                                                            7
+Chapter 33.920                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Title 33, Planning and Zoning
+Description of Use Categories                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    10/1/24
+
+          D.                                             Exceptions.
+                      1.                                                   Lumber yards and other building material sales that sell primarily to contractors and
+                                   do not have a retail orientation are classified as Wholesale Sales.
+                      2.                                                   Sales of landscape materials, including bark chips and compost, is classified as
+                                   Industrial Service.
+                      3.                                                   Repair and service of consumer motor vehicles, motorcycles, and light and medium
+                                   trucks is classified as Vehicle Repair. Repair and service of industrial vehicles and
+                                   equipment, and heavy trucks is classified as Industrial Service.
+                      4.                                                   Sales, rental, or leasing of heavy trucks and equipment is classified as
+                                   Wholesale Sales.
+                      5.                                                   Hotels, restaurants, and other services which are part of a truck stop are considered
+                                   accessory to the truck stop which is classified as Industrial Service.
+                      6.                                                   In certain situations, hotels and motels may be classified as a Community Service use,
+                                   such as short term housing or mass shelter. See Community Services.
+                      7.                                                   When kennels are limited to boarding, with no breeding, the applicant may choose to
+                                   classify the use as Retail Sales And Service or Agriculture.
+                      8.                                                   Trade schools where industrial vehicles and equipment, including heavy trucks, are
+                                   operated are classified as Industrial Service.
+33.920.260 Self-               Service Storage
+          A.                                              Characteristics. Self-Service Storage uses provide separate storage areas for individual or
+                      business uses. The storage areas are designed to allow private access by the tenant for
+                      storing or removing personal property.
+          B.                                               Accessory uses. Accessory uses may include security and leasing offices and food
+                      membership distribution. Living quarters for one resident manager per site in the E and I
+                      zones are allowed. Other living quarters are subject to the regulations for Residential Uses
+                      in the base zones. Use of the storage areas for sales, service and repair operations, or
+                      manufacturing is not considered accessory to the Self-Service Storage use. The rental of
+                      trucks or equipment is also not considered accessory to a Self-                         Service Storage use.
+          C.                                                 Examples. Examples include single story and multistory facilities that provide individual
+                      storage areas for rent. These uses are also called miniwarehouses.
+          D.                                             Exceptions. A transfer and storage business where there are no individual storage areas or
+                      where employees are the primary movers of the goods to be stored or transferred is in the
+                      Warehouse And Freight Movement category.
+33.920.270 Vehicle Repair
+          A.                                              Characteristics. Firms servicing passenger vehicles, light and medium trucks and other
+                      consumer motor vehicles such as motorcycles, boats and recreational vehicles. Generally,
+                      the customer does not wait at the site while the service or repair is being performed.
+          B.                                                  Accessory Uses. Accessory uses may include offices, sales of parts, vehicle storage, and
+                      food membership distribution.
+
+                                                                                                                        920-                                                            8
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Chapter 33.920
+10/1/24                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         Description of Use Categories
+
+          C.                                                 Examples. Examples include vehicle repair, transmission or muffler shop, auto body shop,
+                      alignment shop, auto upholstery shop, auto detailing, and tire sales and mounting.
+          D.                                             Exceptions. Repair and service of industrial vehicles and equipment, and of heavy trucks;
+                      towing and vehicle storage; and vehicle wrecking and salvage are classified as
+                      Industrial Service.
+
+                                                                                            Industrial Use Categories
+33.920.300 Bulk Fossil Fuel Terminal
+          A.                                              Characteristics. Bulk Fossil Fuel Terminals are establishments primarily engaged in the
+                      transport and bulk storage of fossil fuels. Terminal activities may also include fuel blending,
+                      regional distribution, and wholesaling. Terminals have access to marine, railroad, or
+                      regional pipeline to transport fuels to or from the site, and either have transloading
+                      facilities for transferring a shipment between transport modes, or have transloading
+                      facilities and storage tank capacity exceeding 2 million gallons. There is minimal on-site
+                      sales activity with the customer present.
+          B.                                               Accessory uses. Accessory uses may include retail sales of petroleum products, offices,
+                      food membership distribution, parking, storage, truck fleet parking and maintenance areas,
+                      rail spur or lead lines, and docks.
+          C.                                                 Examples. Examples include crude oil terminals, petroleum products terminals, natural gas
+                      terminals, propane terminals, and coal terminals.
+          D.                                             Exceptions.
+                      1.                                                   Truck or marine freight terminals that do not store, transport or distribute fossil fuels
+                                   are classified as Warehouse And Freight Movement uses.
+                      2.                                                     Truck or marine freight terminals that have storage capacity of 2 million gallons or less
+                                   are classified as Warehouse And Freight Movement uses. However, multiple fossil fuel
+                                   facilities, each with 2 million gallons of fossil fuel storage capacity or less but
+                                   cumulatively having a fossil fuel storage capacity in excess of 2 million gallons, located
+                                   on separate parcels of land will be classified as a Bulk Fossil Fuel Terminal when two or
+                                   more of the following factors are present:
+                                    a.                                                    The facilities are located or will be located on one or more adjacent parcels of
+                                                land. Adjacent includes separated by a shared right-of-way;
+                                    b.                                                  The facilities share or will share operating facilities such as driveways, parking,
+                                                piping, or storage facilities; or
+                                    c.                                                       The facilities are owned or operated by a single parent partnership or
+                                                corporation.
+                      3.                                                   Gasoline stations and other retail sales of fossil fuels are not Bulk Fossil Fuel
+                                   Terminals.
+                      4.                                                   Distributors and wholesalers that receive and deliver fossil fuels exclusively by truck
+                                   are not Bulk Fossil Fuel Terminals.
+                      5.                                                   Industrial, commercial, institutional, and agricultural firms that exclusively store fossil
+                                   fuel for use as an input are not Bulk Fossil Fuel Terminals.
+
+                                                                                                                          920-                                                            9
+Chapter 33.920                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Title 33, Planning and Zoning
+Description of Use Categories                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    10/1/24
+
+                     6.                                                   Uses that involve the transfer or storage of solid or liquid wastes are classified as
+                                Waste-                                       Related uses.
+                     7.                                                   The storage of fossil fuels for exclusive use at an airport, surface passenger terminal,
+                                marine, truck or air freight terminal, drydock, ship or barge servicing facility, rail yard,
+                                or as part of a fleet vehicle servicing facility are not Bulk Fossil Fuel Terminals.
+                     8.                                         Uses that recover or reprocess used petroleum products are not Bulk Fossil Fuel
+                                Terminals.
+33.920.310 Industrial Service
+         A.                                              Characteristics. Industrial Service firms are engaged in the repair or servicing of industrial,
+                     business or consumer machinery, equipment, products or by-products. Firms that service
+                     consumer goods do so by mainly providing centralized services for separate retail outlets.
+                     Contractors and building maintenance services and similar uses perform services off-                            site.
+                     Few customers, especially the general public, come to the site.
+         B.                                               Accessory uses. Accessory uses may include offices, food membership distribution, parking,
+                     storage, rail spur or lead lines, and docks.
+         C.                                                 Examples. Examples include welding shops; machine shops; tool repair; electric motor
+                     repair; repair of scientific or professional instruments; sales, repair, storage, salvage or
+                     wrecking of heavy machinery, metal, and building materials; towing and vehicle storage;
+                     auto and truck salvage and wrecking; heavy truck servicing and repair; tire retreading or
+                     recapping; truck stops; building, heating, plumbing or electrical contractors; trade schools
+                     where industrial vehicles and equipment, including heavy trucks, are operated; printing,
+                     publishing and lithography; exterminators; recycling operations; janitorial and building
+                     maintenance services; fuel oil distributors; solid fuel yards; research and development
+                     laboratories; drydocks and the repair or dismantling of ships and barges; laundry, dry                    -
+                     cleaning, and carpet cleaning plants; and photofinishing laboratories.
+         D.                                             Exceptions.
+                     1.                                                   Contractors and others who perform services off-                            site are included in the Office
+                                category, if equipment and materials are not stored at the site, and fabrication, or
+                                similar work is not carried on at the site.
+                     2.                                                   Hotels, restaurants, and other services which are part of a truck stop are considered
+                                accessory to the truck stop.
+33.920.320 Manufacturing And Production
+         A.                                              Characteristics. Manufacturing And Production firms are involved in the manufacturing,
+                     processing, fabrication, packaging, or assembly of goods. Natural, man-made, raw,
+                     secondary, or partially completed materials may be used. Products may be finished or
+                     semi-finished and are generally made for the wholesale market, for transfer to other
+                     plants, or to order for firms or consumers. Goods are generally not displayed or sold on
+                     site, but if so, they are a subordinate part of sales. Relatively few customers come to the
+                     manufacturing site.
+         B.                                               Accessory uses. Accessory uses may include offices, cafeterias, food membership
+                     distribution, parking, employee recreational facilities, warehouses, storage yards, rail spur
+                     or lead lines, docks, repair facilities, or truck fleets. Living quarters for one caretaker per
+
+                                                                                                               920-                                                            10
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Chapter 33.920
+10/1/24                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         Description of Use Categories
+
+                     site in the E and I zones are allowed. Other living quarters are subject to the regulations for
+                     Residential Uses in the base zones.
+         C.                                                 Examples. Examples include processing of food and related products; catering
+                     establishments; breweries, distilleries, and wineries; slaughter houses, and meat packing;
+                     feed lots and animal dipping; weaving or production of textiles or apparel; lumber mills,
+                     pulp and paper mills, and other wood products manufacturing; woodworking, including
+                     cabinet makers; production of chemical, rubber, leather, clay, bone, plastic, stone, or glass
+                     materials or products; movie and video production facilities; recording s                    tudios; ship and
+                     barge building; concrete batching and asphalt mixing; production or fabrication of metals
+                     or metal products including enameling and galvanizing; manufacture or assembly of
+                     machinery, equipment, instruments, including musical instruments, vehicles, appliances,
+                     precision items, and other electrical items; production of artwork and toys; sign making;
+                     production of prefabricated structures, including manufactured dwellings; and Utility Scale
+                     Energy production.
+         D.                                             Exceptions.
+                     1.                                                   Manufacturing of goods to be sold primarily on-site and to the general public are
+                                 classified as Retail Sales And Service.
+                     2.                                                   Manufacture and production of goods from composting organic material is classified
+                                 as Waste-Related uses.
+                     3.                                                   Small Scale Energy Production is a Basic Utility.
+                     4.                                                   Solid waste incinerators that generate energy but do not meet the definition of Small
+                                 Scale Energy Production are considered Waste Related Uses.
+33.920.330 Railroad Yards
+         A.                                              Characteristics. Railroad yards are areas that contain multiple railroad tracks used for rail
+                     car switching, assembling of trains, and transshipment of goods from other transportation
+                     modes to or from trains.
+         B.                                                  Accessory Uses. Accessory uses include offices, employee facilities, food membership
+                     distribution, storage areas, and rail car maintenance and repair facilities.
+33.920.340 Warehouse And Freight Movement
+         A.                                              Characteristics. Warehouse And Freight Movement firms are involved in the storage, or
+                     movement of goods for themselves or other firms.  Goods are generally delivered to other
+                     firms or the final consumer, except for some will-                                call pickups. There is little on-site sales
+                     activity with the customer present.
+         B.                                               Accessory uses. Accessory uses may include offices, food membership distribution, truck
+                     fleet parking and maintenance areas, rail spur or lead lines, docks, and repackaging
+                     of goods.
+         C.                                                 Examples. Examples include separate warehouses used by retail stores such as furniture
+                     and appliance stores; household moving and general freight storage; cold storage plants,
+                     including frozen food lockers; storage of weapons and ammunition; major wholesale
+                     distribution centers; truck, marine, or air freight terminals; bus barns and light rail barns;
+
+                                                                                                                  920-                                                            11
+Chapter 33.920                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Title 33, Planning and Zoning
+Description of Use Categories                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    10/1/24
+
+                       parcel services; major post offices; grain terminals; and the stockpiling of sand, gravel, or
+                       other aggregate materials.
+          D.                                             Exceptions.
+                       1.                                                   Uses that involve the transfer or storage of solid or liquid wastes are classified as
+                                    Waste-                                       Related uses.
+                       2.                                                   Miniwarehouses are classified as Self-                          Service Storage uses.
+                       3.                                                   Establishments that engage in the transfer or storage of fossil fuels, rely on access by
+                                    marine, railroad or regional pipeline to transport fuels to or from the site, and either
+                                    have transloading facilities or have transloading facilities and storage capacity
+                                    exceeding 2 million gallons for fossil fuels are classified as Bulk Fossil Fuel Terminal
+                                    uses.
+33.920.350 Waste-                                                               Related
+          A.                                              Characteristics. Waste-                                        Related uses are characterized by uses that receive solid or liquid
+                       wastes from others for disposal on the site or for transfer to another location, uses that
+                       collect sanitary wastes, or uses that manufacture or produce goods from the biological
+                       decomposition of organic material. Waste-                                        Related uses also include uses that receive
+                       hazardous wastes from others and are subject to the regulations of OAR 340.100-110,
+                       Hazardous Waste Management.
+          B.                                                  Accessory Uses. Accessory uses may include recycling of materials, offices, food
+                       membership distribution, and repackaging and transshipment of by-products.
+          C.                                                 Examples. Examples include sanitary landfills, limited use landfills, waste composting, solid
+                       waste incinerators that generate energy but do not meet the definition of Small Scale
+                       Energy Production, sewer treatment plants, portable sanitary collection equipment storage
+                       and pumping, and hazardous-waste-collection sites.
+          D.                                             Exceptions.
+                       1.                                                   Disposal of clean fill, as defined in OAR 340-093-0030, is considered a fill, not a Waste-
+                                    Related use.
+                       2.                                                   Infrastructure services that must be located in or near the area where the service is
+                                    provided in order to function are considered Basic Utilities. Examples include sewer
+                                    pipes that serve a development or water re-                         use pipes and tanks, pump stations, and
+                                    collection stations necessary for the water re-use that serve a development
+                                    or institution.
+                       3.                                                   Small Scale Energy Production is considered a Basic Utility.
+                       4.                                                   Utility Scale Energy Production, other than solid waste incinerators that generate
+                                    energy, is considered a Manufacturing and Production Use.
+33.920.360 Wholesale Sales
+          A.                                              Characteristics. Wholesale Sales firms are involved in the sale, lease, or rent of products
+                       primarily intended for industrial, institutional, or commercial businesses. The uses
+                       emphasize on-site sales or order taking and often include display areas. Businesses may or
+                       may not be open to the general public, but sales to the general public are limited as a result
+
+                                                                                                                          920-                                                            12
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Chapter 33.920
+10/1/24                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         Description of Use Categories
+
+                      of the way in which the firm operates. Products may be picked up on site or delivered to
+                      the customer.
+          B.                                               Accessory uses. Accessory uses may include offices, food membership distribution, product
+                      repair, warehouses, parking, minor fabrication services, and repackaging of goods.
+          C.                                                 Examples. Examples include sale or rental of machinery, equipment, heavy trucks, building
+                      materials, special trade tools, welding supplies, machine parts, electrical supplies, janitorial
+                      supplies, restaurant equipment, and store fixtures; mail order houses; and wholesalers of
+                      food, clothing, auto parts, building hardware, and office supplies.
+          D.                                             Exceptions.
+                      1.                                                   Firms that engage primarily in sales to the general public are classified as Retail Sales
+                                   And Service.
+                      2.                                                   Firms that engage in sales on a membership basis are classified as either Retail Sales
+                                   And Service or Wholesale Sales, based on a consideration of the characteristics of
+                                   the use.
+                      3.                                                   Firms that are primarily storing goods with little on-site business activity are classified
+                                   as Warehouse And Freight Movement.
+                      4.                                                   Establishments that engage in the regional wholesaling of fossil fuels, rely on access by
+                                   marine, railroad or regional pipeline to transport fuels to or from the site, and either
+                                   have transloading facilities or have storage capacity exceeding 2 million gallons for
+                                   fossil fuels are classified as Bulk Fossil Fuel Terminal uses.
+
+                                                                                        Institutional Use Categories
+33.920.400 Basic Utilities
+          A.                                              Characteristics. Basic Utilities are infrastructure services which need to be located in or
+                      near the area where the service is provided. Basic Utility uses generally do not have regular
+                      employees at the site. Services may be public or privately provided. All public safety
+                      facilities are Basic Utilities.
+          B.                                               Accessory uses. Accessory uses may include food membership distribution, parking;
+                      control, monitoring, data or transmission equipment; and holding cells within a
+                      police station.
+          C.                                                 Examples. Examples include water and sewer pump stations; sewage disposal and
+                      conveyance systems; electrical substations; water towers and reservoirs; Small Scale
+                      Energy Production, water quality and flow control facilities; water conveyance systems;
+                      water harvesting and re-use conveyance systems and pump stations; stormwater facilities
+                      and conveyance systems; telephone exchanges; mass transit stops or turn arounds, light
+                      rail stations, suspended cable transportation systems, transit centers; and public safety
+                      facilities, including fire and police stations, and emergency communication
+                      broadcast facilities.
+
+                                                                                                                        920-                                                            13
+Chapter 33.920                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Title 33, Planning and Zoning
+Description of Use Categories                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    10/1/24
+
+         D.                                             Exceptions.
+                      1.                                                   Services where people are generally present, other than mass transit stops or turn
+                                  arounds, light rail stations, transit centers, and public safety facilities, are classified as
+                                  Community Services or Offices.
+                      2.                                                   Utility offices where employees or customers are generally present are classified
+                                  as Offices.
+                      3.                                                   Bus and light rail barns are classified as Warehouse And Freight Movement.
+                      4.                                                   Public or private passageways, including easements, for the express purpose of
+                                  transmitting or transporting electricity, gas, oil, water, sewage, communication
+                                  signals, or other similar services on a regional level are classified as Rail Lines And
+                                  Utility Corridors.
+                      5.                                                   Utility Scale Energy Production is considered Manufacturing and Production.
+                      6.                                                   Solid waste incinerators that generate energy but are not Small Scale Energy
+                                  Production are considered Waste Related Uses.
+33.920.410 Colleges
+         A.                                              Characteristics. This category includes colleges and other institutions of higher learning
+                      which offer courses of general or specialized study leading to a degree. They are certified
+                      by the State Board of Higher Education or by a recognized accrediting agency. Colleges tend
+                      to be in campus-like settings or on multiple blocks.
+         B.                                                  Accessory Uses. Accessory uses include offices, housing for faculty, staff and students, food
+                      service, food membership distribution, laboratories, health and sports facilities, theaters,
+                      meeting areas, parking, maintenance facilities, charitable meal service and food
+                      distribution, and support commercial.
+         C.                                                 Examples. Examples include universities, liberal arts colleges, community colleges, nursing
+                      and medical schools not accessory to a hospital, and seminaries.
+         D.                                             Exceptions. Business and trade schools are classified as Retail Sales And Service.
+33.920.420 Community Services
+         A.                                              Characteristics. Community Services are uses of a public, nonprofit, or charitable nature
+                      generally providing a local service to people of the community. Generally, they provide the
+                      service on the site or have employees at the site on a regular basis. The service is ongoing,
+                      not just for special events. Community centers or facilities that have membership
+                      provisions are open to the general public to join at any time, (for instance, any senior
+                      citizen could join a senior center).           The use may provide mass,            outdoor, or short term
+                      shelter with no minimum length of stay when operated by a public or non-profit agency.
+                      The use may also provide special counseling, education, or training of a public, nonprofit or
+                      charitable nature.
+         B.                                               Accessory uses. Accessory uses may include offices, meeting areas, food preparation areas,
+                      food membership distribution, parking, health and hygiene facilities,          therapy areas,
+                      daycare uses, and athletic facilities.
+         C.                                                 Examples. Examples include libraries, museums, senior centers, community centers,
+                      publicly owned swimming pools, youth club facilities, hospices, ambulance stations, drug
+
+                                                                                                                   920-                                                            14
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Chapter 33.920
+10/1/24                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         Description of Use Categories
+
+                        and alcohol centers, social service facilities, mass shelters, outdoor shelters, or short term
+                        shelters when operated by a public or non-profit agency, vocational training for persons
+                        with disabling conditions, crematoriums, columbariums, mausoleums, park-and-ride
+                        facilities for mass transit, and charitable meal service or food distribution centers         .
+          D.                                             Exceptions.
+                        1.                                                   Private lodges, clubs, and private or commercial athletic or health clubs are classified
+                                     as Retail Sales And Service. Commercial museums (such as a wax museum) are in
+                                     Retail Sales And Service.
+                        2.                                                   Parks are in Parks And Open Areas.
+                        3.                                                   Uses where tenancy is arranged on a month-to-month basis, or for a longer period are
+                                     residential, and are classified as Household or Group Living.
+                        4.                                                   Public safety facilities are classified as Basic Utilities.
+33.920.430 Daycare
+          A.                                              Characteristics. Daycare use includes day or evening care of two or more children outside
+                        of the children's homes, for a fee. Daycare uses also include the daytime care of teenagers
+                        or adults who need assistance or supervision.
+          B.                                                  Accessory Uses. Accessory uses include offices, food membership distribution, play areas,
+                        and parking.
+          C.                                                 Examples. Examples include preschools, nursery schools, latch key programs, and adult
+                        daycare programs.
+          D.                                             Exceptions. Daycare use does not include care given by the parents, guardians, or relatives
+                        of the children, or by babysitters.           Daycare use also does not include registered or certified
+                        family child care homes as specified in ORS 329A. Registered or certified family child care
+                        homes for up to 16 or fewer children           that also meet the State’s requirements are
+                        Household Living or Group Living                                 uses.
+33.920.450 Medical Centers
+          A.                                              Characteristics. Medical Centers includes uses providing medical or surgical care to
+                        patients and offering overnight care. Medical centers tend to be on multiple blocks or in
+                        campus settings.
+          B.                                               Accessory uses. Accessory uses include out-patient clinics, offices, laboratories, teaching
+                        facilities, meeting areas, cafeterias, food membership distribution, parking, maintenance
+                        facilities, and housing facilities for staff, trainees                                           , or patient families.
+          C.                                                 Examples. Examples include hospitals and medical complexes that include hospitals.
+          D.                                             Exceptions.
+                        1.                                                   Uses that provide exclusive care and planned treatment or training for psychiatric,
+                                     alcohol, or drug problems, where patients are residents of the program, are classified
+                                     in the Group Living category.
+
+                                                                                                                               920-                                                            15
+Chapter 33.920                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Title 33, Planning and Zoning
+Description of Use Categories                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    10/1/24
+
+                         2.                                                   Medical clinics that provide care where patients are generally not kept overnight are
+                                       classified as Office.
+                         3.                                                   Urgency medical care clinics are classified as Retail Sales And Service.
+33.920.460 Parks And Open Areas
+           A.                                              Characteristics. Parks And Open Areas are uses of land focusing on natural areas, large
+                         areas consisting mostly of vegetative landscaping or outdoor recreation, community
+                         gardens, or public squares. Lands tend to have few structures.
+           B.                                               Accessory uses. Accessory uses may include club houses, maintenance facilities,
+                         concessions, caretaker's quarters, food membership distribution, and parking.
+           C.                                                 Examples. Examples include parks, golf courses, cemeteries, public squares, plazas,
+                         recreational trails, botanical gardens, boat launching areas, nature preserves, off-                             site
+                         mitigation, community gardens, and land used for grazing that is not part of a farm or
+                         ranch.
+           D.                                             Exceptions. On-site mitigation is not a Parks and Open Areas use.
+33.920.470 Religious Institutions
+           A.                                              Characteristics. Religious Institutions are intended to primarily provide meeting areas for
+                         religious activities.
+           B.                                               Accessory uses. Accessory uses include Sunday school facilities, food membership
+                         distribution, food service, charitable meal service and food distribution, parking,
+                         caretaker's housing, and congregate housing facilities          such as convents. A religious
+                         institution may allow overnight living in vehicles as specified in ORS 203.082          .
+           C.                                                 Examples. Examples include churches, temples, synagogues, and mosques.
+33.920.480 Schools
+           A.                                              Characteristics. This category includes public and private schools at the primary,
+                         elementary, middle, junior high, or high school level that provide state mandated
+                         basic education.
+           B.                                               Accessory uses. Accessory uses include play areas, cafeterias, recreational and sport
+                         facilities, athletic fields, auditoriums, food membership distribution, before- or after-school
+                         daycare, and charitable meal service and food distribution          .
+           C.                                                 Examples. Examples include public and private daytime schools, boarding schools and
+                         military academies.
+           D.                                             Exceptions.
+                         1.                                                   Preschools are classified as Daycare uses.
+                         2.                                                   Business and trade schools are classified as Retail Sales and Service.
+
+                                                                                                                                    920-                                                            16
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Chapter 33.920
+10/1/24                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         Description of Use Categories
+
+                                                                                                  Other Use Categories
+33.920.500 Agriculture
+          A.                                              Characteristics. Agriculture includes activities that raise, produce or keep plants
+                       or animals.
+          B.                                               Accessory uses. Accessory uses include dwellings for proprietors and employees of the use,
+                       food membership distribution, and animal training.
+          C.                                                 Examples. Examples include breeding or raising of fowl or other animals, dairy farms,
+                       stables, riding academies, kennels or other animal boarding places, farming, truck
+                       gardening, forestry, tree farming, Market Gardens, and wholesale plant nurseries.
+          D.                                             Exceptions.
+                       1.                                                   Processing of animal or plant products, including milk, and feed lots, are classified as
+                                   Manufacturing And Production.
+                       2.                                                   Livestock auctions are classified as Wholesale Sales.
+                       3.                                                   Plant nurseries that are oriented to retail sales are classified as Retail Sales
+                                   And Service.
+                       4.                                                   When kennels are limited to boarding, with no breeding, the applicant may choose to
+                                   classify the use as Agriculture or Retail Sales And Service.
+33.920.510 Aviation And Surface Passenger Terminals
+          A.                                              Characteristics. Aviation And Surface Passenger Terminals includes facilities for the landing
+                       and takeoff of flying vehicles, including loading and unloading areas. Aviation facilities may
+                       be improved or unimproved. Aviation facilities may be for commercial carriers or for shared
+                       use by private aircraft. Aviation And Surface Passenger Terminals also includes passenger
+                       terminals for aircraft, regional bus service, regional rail service, and regional marine
+                       transportation.
+          B.                                               Accessory uses. Accessory uses include freight handling areas, concessions, offices,
+                       parking, maintenance and fueling facilities, and aircraft sales areas, rental car facilities,
+                       food membership distribution, and Basic Utilities.
+          C.                                                 Examples. Examples include airports, bus passenger terminals for regional bus service,
+                       railroad passenger stations for regional rail service, passenger docks for regional marine
+                       travel such as ocean-going cruise ships, air strips, seaplane facilities, and helicopter
+                       landing facilities.
+          D.                                             Exceptions.
+                       1.                                                   Bus and rail passenger stations for subregional service such as mass transit stops are
+                                   classified as Basic Utilities. Park-and-ride facilities are classified as Community Service.
+                       2.                                                   Marine passenger docks for subregional marine transportation           such as water taxis,
+                                   water buses and ferries; and other marine tie ups (such as the seawall between the
+                                   Broadway bridge and the Hawthorne bridge) are not included in this category and are
+                                   classified as accessory to their adjacent uses          . Marine passenger terminals that are
+                                   accessory to marine freight terminals are classified as accessory facilities in the
+                                   Warehouse And Freight Movement category.
+
+                                                                                                                         920-                                                            17
+Chapter 33.920                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Title 33, Planning and Zoning
+Description of Use Categories                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    10/1/24
+
+                       3.                                                   Private helicopter landing facilities which are accessory to another use, are considered
+                                    accessory uses. However, they are subject to all the regulations and approval criteria
+                                    for helicopter landing facilities.
+33.920.520 Detention Facilities
+          A.                                              Characteristics. Detention Facilities includes facilities for the judicially required detention
+                       or incarceration of people. Inmates and detainees are under 24 hour supervision by peace
+                       officers, except when on an approved leave.
+          B.                                                  Accessory Uses. Accessory uses include offices, recreational and health facilities, therapy
+                       facilities, maintenance facilities, food membership distribution, and hobby and
+                       manufacturing activities.
+          C.                                                 Examples. Examples include prisons, jails, probation centers, and juvenile
+                       detention homes.
+          D.                                             Exceptions. Programs that provide care and training or treatment for psychiatric, alcohol,
+                       or drug problems, where patients are residents of the program, but where patients are not
+                       supervised by peace officers are classified as Group Living. Programs that provide
+                       transitional living experience for former offenders, such as halfway houses, where
+                       residents are not supervised by peace officers, are also classified as Group Living.
+33.920.530 Mining
+          A.                                              Characteristics. Mining includes mining or extraction of mineral or aggregate resources
+                       from the ground for off-                             site use.
+          B.                                               Accessory uses. Accessory uses include storage, sorting, stockpiling, or transfer off-              site of
+                       the mined material
+          C.                                                 Examples. Examples include quarrying or dredging for sand, gravel or other aggregate
+                       materials; mining; and oil, gas, or geothermal drilling.
+33.920.540 Radio Frequency Transmission Facilities
+          A.                                              Characteristics. Radio Frequency Transmission Facilities includes all devices, equipment,
+                       machinery, structures or supporting elements necessary to produce nonionizing
+                       electromagnetic radiation within the range of frequencies from 100 KHz to 300 GHz and
+                       operating as a discrete unit to produce a signal or message. Towers may be self supporting,
+                       guyed, or mounted on poles or buildings.
+          B.                                                  Accessory Uses. Accessory use may include transmitter facility buildings.
+          C.                                                 Examples. Examples include Personal Wireless Service Facilities, Radio or Television
+                       Broadcast Facilities, broadcast towers, communication towers, point to point microwave
+                       towers, accessory equipment, antennas, and transmitter radios.
+          D.                                             Exceptions.
+                       1.                                                   Receive-only antenna are not included in this category.
+                       2.                                                   Radio and television studios are classified in the Office category.
+                       3.                                                   Radio Frequency Transmission Facilities that are public safety facilities are classified as
+                                    Basic Utilities.
+
+                                                                                                                          920-                                                            18
+Title 33, Planning and Zoning                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Chapter 33.920
+10/1/24                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         Description of Use Categories
+
+33.920.550 Rail Lines And Utility Corridors
+            A.                                              Characteristics. This category includes railroad tracks and lines for the movement of trains.
+                           The land may be owned or leased by the railroad. The category also includes public or
+                           private passageways, including easements, for the express purpose of transmitting or
+                           transporting electricity, gas, oil, water, sewage, communication signals, or other similar
+                           services on a regional level.
+            B.                                                Examples. Examples include rail trunk and feeder lines; regional electrical transmission
+                           lines; and regional gas and oil pipelines.
+            C.                                                 Exceptions.
+                           1.                                                   Railroad lead and spur lines for delivery of rail cars to sites or for unloading of rail cars
+                                           on specific sites are classified as accessory to the primary use of the site.
+                           2.                                                   Rail lines and utility corridors that are located within motor vehicle rights-of-way are
+                                           not included.
+                           3.                                                   Light rail lines are not included.
+                           4.                                                   Railroad yards are classified in the Railroad Yards category.
+
+(Amended by: Ord. No. 165681, effective 7/15/92;  Ord. No. 167186, effective 12/31/93;                                        Ord. No.
+167189, effective 1/14/94; Ord. No. 170704, effective 1/1/97; Ord. No. 171718, effective 11/29/97;
+Ord. No. 171879, effective 2/2/98; Ord. No. 174263, effective 4/15/00; Ord. No. 174378, effective
+5/26/00; Ord. No. 175837, effective 9/7/01; Ord. No. 176469, effective 7/1/02; Ord. No. 176742,
+effective 7/31/02; Ord. No. 177028, effective 12/14/02; Ord. No. 177422, effective 6/7/03; Ord. No.
+178509, effective 7/16/04; Ord. No. 179092, effective 4/1/05; Ord. No. 180619, effective 12/22/06;
+Ord. No. 180667, effective 1/12/07; Ord. No. 181357, effective 11/9/07; Ord. No. 182429, effective
+1/16/09; Ord. No. 183598, effective 4/24/10; Ord. No. 184521, effective 5/13/11; Ord. No. 185412,
+effective 6/13/12; Ord. No. 186639, effective 7/11/14; Ord. No. 186736, effecti   ve 8/29/14; Ord. No.
+187216, effective 7/24/15; Ord. No. 188077             , effective 12/9/16; Ord. No. 188142,                                               effective 1/13/17;
+Ord. No. 188177, effective 5/24/18; Ord. No. 189000                                                 , effective 7/9/18; Ord. No. 189807                                               , effective
+12/18/19; Ord. No. 190023, effective 8/10/20                                ; Ord. No. 190380,                                                                                                       effective 4/30/21                                                 and 8/1/21; Ord.
+No. 190978, effective 8                                                            /31/22; Ord. No. 191164, effective 3/31/23; Ord. No. 191779                                                 , effective
+10/1/24.)
+
+                                                                                                                                                  920-19
+Chapter 33.920                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        Title 33, Planning and Zoning
+Description of Use Categories                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    10/1/24
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         920-                                                            20

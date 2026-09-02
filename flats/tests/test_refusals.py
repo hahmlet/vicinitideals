@@ -166,7 +166,18 @@ pytestmark = pytest.mark.unit
 #: and 19.105 turned out to be the floodplain chapter the FEMA carve had been
 #: citing without anyone holding it -- now stored, and the carve rests on a
 #: quote. Reading a chapter is not the same as refusing one.
-EXPECTED = {"notes": 105, "comments": 112, "tests": 17}
+EXPECTED = {"notes": 105, "comments": 113, "tests": 17}
+
+#: MOVED 2026-09-02 by Oregon City 16.12.035.A note 2, +1 comment, and this
+#: one is a refusal a RE-READ produced in a chapter already fetched, already
+#: cited and already ruled on twice. Note 2 is one unconditioned sentence --
+#: "All driveways, except for shared driveways, shall be placed a minimum of
+#: five feet from the property line" -- sitting directly under the spacing
+#: table whose every row exempts a quadplex. The exemption is what made the
+#: block look settled: the rows above were ruled NOT ENCODED because they do
+#: not reach this building, and the sentence below them does. No field holds
+#: a driveway's offset from the lot line it runs beside, so it is refused and
+#: flagged as a live gap rather than a dismissal.
 
 #: MOVED 2026-09-02 by Fairview 19.165, +1 note, and it is a refusal a FETCH
 #: produced rather than one it removed. The chapter was the loudest reference

@@ -359,6 +359,20 @@ crossrefs:
       to pass, and the creation half is a plat that produces the lot in the first place. Parked
       rather than closed: no pod in flats/config/pods declares plat: unit_lots, so this screen
       never creates a lot. The day one does, this is a fetch.
+  "230.350": >-
+    The other half of the same sentence's table. It is the parenthetical under the Landscape
+    Buffer rows of Table 230-2 -- "(See Sections 230.350 and 330)" -- and Table 230-2 is the
+    development standards table for NC, the neighborhood commercial zone. This screen does not
+    place the pod there: Table 230-1 reads CU for the residential row and 230.315.A.1 then allows
+    residential only as part of a mixed use development, so `quadplex_allowed` is false at base
+    in NC and quadfit's rules.yaml carries no NC entry at all. A landscape buffer in a zone the
+    building cannot occupy cannot bind it. Two cautions kept on the record rather than resolved.
+    The reference may also be one of this code's stale pointers -- footnote (5) on the same table
+    sends a reader to "Section 350 - Landscaping and Screening" and after Ord. 2-2022 Section 350
+    is Parking and landscaping is 330, which is the trap already written up under "300" -- and
+    woodvillage.municipal.codes answers 403 to a direct request for either 230.350 or 230.330, so
+    a 404 was never available to prove the section gone. Neither caution changes the ruling: the
+    zone is the reason, not the section number.
   "300": >-
     Additional Use and Development Regulations, and the fourteen mentions are one sentence repeated in
     every use table in the city: "Additional regulations are listed in Section 300." It is a container

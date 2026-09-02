@@ -369,6 +369,23 @@ code:
   - id: "9.0200.clear-vision"
     url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-9.0200.pdf
     title: "Section 9.0200 - Clear Vision Areas"
+  # The chapter Table 4.0130's height cell points at. Every district column in
+  # that table prints its maximum height with note 12 stuck to the number --
+  # "35 ft.12" -- and note 12 sends a shoreline lot here. The footnote ledger
+  # already rules it read-and-waiting-on-data against `protected_water_feature`,
+  # a fact nothing in this system measures, so no shoreline lot can come back
+  # green on a height. What that ruling could not say is what the chapter
+  # actually does to a 26 ft building, because the chapter was never in the
+  # store: it was the loudest unfetched reference in Gresham standing beside a
+  # distance, and a footnote ruling is a decision about a POINTER, not a
+  # reading of what it points at.
+  - id: "10.1100.shoreline-height"
+    url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-10.1100.pdf
+    title: "Section 10.1100 - Shoreline Height Standards"
+    # Twenty-six lines is the whole chapter: a purpose sentence and one
+    # application section with two lettered limits. Read in full before the
+    # override was typed, and the reading is in the ruling below.
+    allow_thin: true
     # Genuinely two paragraphs, and every dimension in them is deferred to
     # the Public Works Standards -- see this layer's reading note on 9.0200,
     # which is where the refusal itself is recorded and counted.

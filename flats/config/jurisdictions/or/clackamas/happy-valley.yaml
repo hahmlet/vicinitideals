@@ -131,6 +131,19 @@ ingest:
   zone_field: ZONE
   strip_lowercase_suffix: false
 crossrefs:
+  "16.62.020-1":
+    outcome: other_building
+    note: >-
+      A relief for CONVERSIONS, reached from 16.43's parking chapter: "The provision of additional
+      parking spaces is not required for housing type conversions (e.g., conversion of a
+      single-family detached dwelling to triplex), per LDC 16.62.020-1." It ranked binding beside
+      the maximum parking per unit because it sits in that table's notes, and it points the other
+      way from a standard: it EXCUSES parking rather than requiring it. The building this screen
+      places is new construction on a lot, not a house being cut into units, so the excuse is not
+      available to it and its absence costs nothing. Worth being exact about what is not being
+      claimed: this rules the REFERENCE, not LDC 16.62.020. That section is cited nowhere else in
+      the corpus and nothing here has read it -- what is known is that 16.43's note points at its
+      note 1 for a conversion relief, and a conversion is not what this screen places.
   "1012":
     outcome: preempted
     note: >-

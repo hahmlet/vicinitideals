@@ -231,15 +231,25 @@ def test_ruled_rows_leave_the_queue_but_fetch_and_later_do_not() -> None:
 
 
 def test_the_filters_compose() -> None:
-    """"Gresham today" and "setbacks everywhere" are the two shapes of session
-    this queue is for, and they have to be able to be the same session."""
-    everywhere = feed(field="setback_rear_ft")
-    here = feed(layer=GRESHAM, field="setback_rear_ft")
+    """"This city today" and "setbacks everywhere" are the two shapes of
+    session this queue is for, and they have to be able to be the same session.
+
+    The pair is taken from the feed rather than typed in. This test used to
+    name Gresham and `setback_rear_ft`, and it went red the day that card was
+    closed -- Section 10.1100 was fetched, and its mention sits inside Table
+    4.0130, so it was the row carrying every dimensional standard in the city.
+    A queue is meant to empty; a test that hard-codes one of its rows fails on
+    success. What is worth asserting is the composition, not the example."""
+    layer, field = next(
+        (c.layer, f) for c in feed() for f in sorted(c.fields)
+    )
+    everywhere = feed(field=field)
+    here = feed(layer=layer, field=field)
 
     assert here
-    assert {c.layer for c in here} == {GRESHAM}
+    assert {c.layer for c in here} == {layer}
     assert {c.key for c in here} <= {c.key for c in everywhere}
-    assert all("setback_rear_ft" in c.fields for c in everywhere)
+    assert all(field in c.fields for c in everywhere)
 
 
 def test_the_field_menu_is_built_from_the_feed_it_filters() -> None:

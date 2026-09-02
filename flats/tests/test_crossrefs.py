@@ -757,3 +757,40 @@ def test_a_standard_can_be_answered_with_money(layers: dict[str, Layer]) -> None
     # words, applying the density standards to "sites within the city and the
     # County Urban Pocket Areas".
     assert {lid for lid, _ in paid} == {"or/multnomah/_unincorporated"}
+
+
+def test_a_parking_table_cell_is_not_a_section_number() -> None:
+    """West Linn's angle-parking table put five chapters in this queue.
+
+    ``30  DRIVE-IN  12.5'  12.5'  16.8'`` — the abbreviation branch matched
+    ``IN`` as the city's own code abbreviation and ``12.5`` as the section it
+    introduced, because the dot the branch requires is a decimal point here.
+    All five ranked BINDING beside the parking geometry they *are*, in the one
+    document this layer draws its stall and aisle from, which is the ledger
+    reporting a table cell as a chapter it cannot open.
+
+    Two guards, and both have to hold: a city abbreviation never follows a
+    hyphen, and a section number is never followed by a foot mark.
+    """
+    refs = {
+        (m.group("named") or m.group("abbrev") or m.group("dotted")).rstrip(".")
+        for m in _REF.finditer(
+            "30\u00b0 DRIVE-IN 12.5' 12.5' 16.8' 13.8' 18.0' 16.0'\n"
+            "90\u00b0 BACK-IN 22.0' 22.0' 18.0' 16.0' 9.0' 8.0'\n"
+        )
+    }
+
+    assert refs == set()
+
+    # Neither guard may cost a real reference. The hyphen guard is about the
+    # capitals, not about a hyphen anywhere on the line, and the foot-mark
+    # guard is about what follows the number.
+    live = {
+        (m.group("named") or m.group("abbrev") or m.group("dotted")).rstrip(".")
+        for m in _REF.finditer(
+            "MID-BLOCK crossings are subject to TDC 73C.030 and CDC 46.150.\n"
+            "per GDC 4.0130 for the 35 ft. maximum.\n"
+        )
+    }
+
+    assert {"73C.030", "46.150", "4.0130"} <= live

@@ -46,6 +46,21 @@ code:
     # against the stored text, and declared rather than guessed -- see
     # CodeDocument.glued_markers.
     glued_markers: true
+  # Overlay Zones and Special Areas, and the reason it is here is that this
+  # store was the last place in the project that had not read it. Quadfit's
+  # overlays.yaml quotes nine of its subsections by number -- 19.402.3.A, .C,
+  # .I and .K, 19.402.5.A, 19.402.6.B, 19.402.11.D.2 and Table 19.402.3, plus
+  # 19.401.3, .4 and .5 for the Willamette Greenway -- and every one of those
+  # citations was written against a document nothing in FLATS held. The
+  # crossref ledger saw the same chapter from the other side: five mentions
+  # from 19.200's definitions, one of them standing beside a density, because
+  # Milwaukie's "net acre" is defined as 43,560 sq ft LESS "protected water
+  # features and their associated vegetated corridors, as established in
+  # Section 19.402". The denominator of its density floor is defined by a
+  # chapter we were citing and could not open.
+  - id: "19.400.overlays"
+    url: https://ecode360.com/print/MI4969?guid=43861241
+    title: "Chapter 19.400 - Overlay Zones and Special Areas"
   - id: "19.500.supplementary"
     url: https://ecode360.com/print/MI4969?guid=43861924
     title: "MMC Chapter 19.500 - Supplementary Development Regulations"

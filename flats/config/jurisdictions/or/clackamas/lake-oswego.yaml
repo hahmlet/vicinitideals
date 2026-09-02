@@ -42,6 +42,16 @@ ingest:
   zone_field: LAYER
   strip_lowercase_suffix: false
 crossrefs:
+  "50.02.002.2": >-
+    How a lot with two zonings is read: "If lot has multiple zones, e.g., R-0/EC, see LOC
+    50.02.002.2.e", footnote 3 under the use table, repeated in seven of its rows. It ranked
+    binding because the footnote hangs off the row that says whether a fourplex is allowed, and
+    that is exactly what a split zoning puts in doubt. It is ruled rather than fetched because
+    this screen does not answer the question either way: quadfit carries a `split_zone` column and
+    a lot with more than one zoning is taken out before it is measured, in every jurisdiction, on
+    the ground that a screen cannot say which half a building lands on. So the section states how
+    a city resolves a case this system declines. Lake Oswego is `eligible: false` besides, by the
+    owner's decision, and its rows are carried here for reference only.
   "46A":
     outcome: read
     note: >-

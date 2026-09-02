@@ -218,20 +218,26 @@ def test_the_zones_that_borrow_nothing_gain_nothing(rules: RuleSet) -> None:
 # -- the queue this emptied --------------------------------------------------
 
 
-def test_the_container_and_seven_other_references_are_ruled(
+def test_the_container_and_eight_other_references_are_ruled(
     wood_village: Layer,
 ) -> None:
-    """Eight of this city's ten binding references, settled from their own
+    """Nine of this city's ten binding references, settled from their own
     citing sentences: the container itself, non-conforming uses, cottage
     housing, manufactured homes, manufactured home parks, accessory dwellings,
-    landscaping reached only through the five-or-more-unit table, and a variance
-    available to detached single dwellings."""
+    landscaping reached only through the five-or-more-unit table, a variance
+    available to detached single dwellings, and the commercial zones' own
+    landscaping section."""
     for ref in ("300", "640", "220.400", "340.010", "340.020", "395", "330", "660"):
         assert ref in wood_village.crossrefs, ref
 
-    # 230.350, the commercial zones' own landscaping section, is unread, and an
-    # unread reference stays in the queue.
-    assert "230.350" not in wood_village.crossrefs
+    # 230.350 was the tenth, and this line used to assert it was NOT ruled --
+    # "the commercial zones' own landscaping section is unread, and an unread
+    # reference stays in the queue". It was ruled on 2026-09-02, on the ground
+    # that carries no reading at all: 230 is the commercial article and NC is a
+    # zone this pod cannot occupy, so what its landscaping section says is not
+    # a question this screen has. A test that pins a gap goes red when the gap
+    # closes, which is the point of pinning it.
+    assert "230.350" in wood_village.crossrefs
 
     # 450, Subdivisions and Partitions, was reserved here for a while on the
     # grounds that "Creation of new lots is subject to the regulations of

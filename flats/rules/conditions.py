@@ -544,6 +544,28 @@ _C: tuple[ConditionDef, ...] = (
         evidence="jurisdiction natural-resource overlay -- none held",
         assume=None,
     ),
+    ConditionDef(
+        "north_of_marine_drive",
+        "site_fact",
+        "The lot lies north of NE Marine Drive, between the road and the "
+        "south bank of the Columbia River. Gresham Table 4.0130's height "
+        "cell carries note 12 -- \"Also see Section 10.1100 for shoreline "
+        "height standards\" -- and 10.1102 is not a setback or a corridor: "
+        "on that land a new structure may not exceed \"a height equivalent "
+        "to an elevation of three feet above the elevation of that portion "
+        "of the Marine Drive roadway which abuts the development site\". "
+        "Three feet above the road, not thirty-five above grade. A 26 ft "
+        "pod clears it only where the site sits some twenty-three feet "
+        "below the roadway, which is a survey question and not a zoning "
+        "one. Narrow and real: Gresham holds fourteen lots above lat "
+        "45.5555 and every one is addressed on NE Marine Dr, so the "
+        "question of which SIDE of it they sit on is the whole fact -- "
+        "an address on a road does not say which side. On the run of "
+        "2026-09-02 thirteen are red and one is in review, so nothing "
+        "green rides on the answer today.",
+        evidence="the Marine Drive centerline against the parcel -- one line, not held",
+        assume=None,
+    ),
     # --- design facts: true of the building, not of the parcel ---------
     ConditionDef(
         "multi_story",

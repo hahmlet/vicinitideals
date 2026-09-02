@@ -364,10 +364,18 @@ notes:
   - quote: "or/multnomah/gresham/4.0100.residential.txt#L388"
     digest: "705b5032c7a2"
     state: unmeasured
-    fact: protected_water_feature
+    fact: north_of_marine_drive
     reason: >-
-      sends the height standard to Section 10.1100 for shoreline lots, and the
-      water layer that would say whether this is one is not held
+      sends the height standard to Section 10.1100 for shoreline lots. Read
+      2026-09-02, and the chapter is not about water at all: 10.1102 applies
+      "on land lying north of Marine Drive" and caps a new structure at three
+      feet above the abutting Marine Drive roadway elevation. So the fact this
+      turns on is a road, not a stream -- the note was held against
+      `protected_water_feature` for as long as the chapter went unfetched, and
+      a natural-resource overlay would never have answered it. Gresham has
+      fourteen lots north of lat 45.5555, all LDR-5 and all addressed on NE
+      Marine Dr; on today's run thirteen are red and one is in review, so the
+      hold costs nothing and names something measurable
 
   # --- 4.0400, the corridor districts ---------------------------------
   #

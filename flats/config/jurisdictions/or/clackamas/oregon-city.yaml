@@ -38,6 +38,25 @@ crossrefs:
       The same citation, read twice. Extraction spaces one of the two occurrences into "OCMC 16.08
       . 065", which breaks the dotted form and leaves the abbreviation branch matching the chapter
       alone. Ruled with 16.08.065, which is where it points.
+  "16.1":
+    outcome: misread
+    note: >-
+      Not a chapter. 17.52.030.A sends parking access to "OCMC 16.1 2. 035" and extraction has put
+      two spaces inside 16.12.035, which leaves the abbreviation branch matching "16.1" and the
+      dotted branch matching nothing. Same shape as 16.08 above, and this one lands somewhere the
+      store already holds: 16.12.035 Driveways is inside the 16.12.streets slice, its approach
+      widths are encoded as `driveway_approach_min_width_ft` and
+      `driveway_approach_max_width_ft`, and its spacing table is ruled NOT ENCODED in this file
+      with reasons. Nothing to fetch and nothing left to read.
+  "13.12":
+    outcome: other_path
+    note: >-
+      Stormwater and grading. Seven mentions across Title 17 and every one is drainage: the design
+      standards a parking surface drains to (17.52.030.C), stormwater quality and quantity
+      treatment, the erosion control that goes with a grading permit. It is a public works
+      engineering title, and the numbers in it are pipe and pond sizes rather than distances on a
+      lot. A quadplex here is built to it and no lot fails this screen because of it -- the
+      standard applies to the development, not to whether the development fits.
 
 definitions:
   # "Corner lot" means a lot abutting upon two or more streets at their
@@ -319,6 +338,22 @@ defaults:
   # more than two; 16.12.035.E.1 allows a middle housing property with one
   # building "one driveway for every two units", which is two for this pod and
   # more than it draws. (or/clackamas/oregon-city/16.12.streets.txt#L978-L1091)
+  #
+  # NOT ENCODED: the driveway's own offset from a lot line. Note 2 under Table
+  # 16.12.035.A is one sentence and it is not conditioned on anything -- "All
+  # driveways, except for shared driveways, shall be placed a minimum of five
+  # feet from the property line." No street classification, no lot-size
+  # escape, no use exemption: unlike the spacing rows above it, this one
+  # reaches the pod. It is refused because no field holds it. The registry has
+  # `parking_street_setback_ft`, which is a parking area's distance from the
+  # STREET, and Gladstone's five-foot rule went in there honestly because
+  # GMC 17.48.040(2)(e) is about parking spaces. This is about the driveway,
+  # measured from whichever lot line it runs beside, and the site plan draws
+  # Oregon City's drive hard against the side line. Worth stating plainly:
+  # this is a live gap, not a dismissal. Five feet off the side line is five
+  # feet of frontage the layout does not currently spend, and closing it needs
+  # a field and a geometry change rather than a reading.
+  # (or/clackamas/oregon-city/16.12.streets.txt#L1020-L1021)
   #
   # NOT ENCODED: any private open space standard, and this is a positive
   # finding rather than a gap. The notes at the head of this file record why

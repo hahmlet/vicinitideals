@@ -62,7 +62,7 @@ def test_a_skipped_key_has_to_already_be_here() -> None:
     for jname, spec in load_quadfit()["jurisdictions"].items():
         layer = ruleset.layers.get(layer_id_for(jname))
         for row in spec.get("zones") or []:
-            for key in BACKPORTED & set(row):
+            for key in (BACKPORTED - {"lot_size_bands"}) & set(row):
                 field = "setback_" + key.removeprefix("step_back_") + "_ft"
                 zone = layer.zones.get(row["zone"]) if layer else None
                 held = zone.values.get(field) if zone else None
@@ -78,6 +78,59 @@ def test_a_skipped_key_has_to_already_be_here() -> None:
                 assert float(held.before_step_back) == float(row[field])
                 checked += 1
     assert checked == 8, f"expected 8 declared planes, walked {checked}"
+
+
+def _band_is_held(held, threshold: float, value: float) -> bool:
+    """Whether the corpus carries `value` for lots at or above `threshold`."""
+    for variant in held.variants:
+        band = variant.band
+        if variant.value is None or band is None or band.measure != "lot_sqft":
+            continue
+        low = band.more_than if band.more_than is not None else band.at_least
+        if low is not None and float(low) == float(threshold):
+            if float(variant.value) == float(value):
+                return True
+    return held.value is not None and float(held.value) == float(value)
+
+
+def test_a_backported_band_has_to_already_be_here() -> None:
+    """The same proof, for the second key on that list.
+
+    `lot_size_bands` is quadfit's flat mirror of a banded table -- one row per
+    threshold, `{field: [[10000, 20]]}` -- and the corpus holds the same table
+    as `variants` carrying a `band:`, each with the quote it was read from. So
+    every row of the mirror has to be findable here: either a variant banded at
+    that threshold, or the BASE value, which is how the corpus writes the band
+    with no upper bound. Wilsonville's coverage bands stop at 19,999 sq ft and
+    the figure above them is the zone's plain number.
+
+    The bounds are checked at their lower edge only. Quadfit's threshold is
+    inclusive and the corpus follows the code, which says "over 10,000" and
+    "not exceeding 10,000"; at exactly the threshold quadfit therefore takes
+    the larger-lot column and this does not. That is a conservative rounding,
+    deliberate, and recorded on `BACKPORTED`.
+    """
+    ruleset = RuleSet(load_rules())
+    checked = 0
+    for jname, spec in load_quadfit()["jurisdictions"].items():
+        layer = ruleset.layers.get(layer_id_for(jname))
+        for row in spec.get("zones") or []:
+            zone = layer.zones.get(row["zone"]) if layer else None
+            for field, bands in (row.get("lot_size_bands") or {}).items():
+                held = zone.values.get(field) if zone else None
+                assert held is not None, (
+                    f"{jname}/{row['zone']} bands {field} by lot size and the "
+                    f"corpus holds no {field} at all -- that is a dropped "
+                    f"table, not a backport"
+                )
+                for threshold, value in bands:
+                    assert _band_is_held(held, threshold, value), (
+                        f"{jname}/{row['zone']} bands {field} at {threshold} "
+                        f"sq ft to {value} and the corpus holds neither a "
+                        f"variant banded there nor that base value"
+                    )
+                    checked += 1
+    assert checked == 24, f"expected 24 banded rows, walked {checked}"
 
 
 def test_every_quadfit_zone_arrives(dry: dict) -> None:

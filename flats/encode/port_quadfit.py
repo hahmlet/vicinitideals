@@ -98,7 +98,26 @@ FIELD_MAP: dict[str, str] = {
 #: standing at a printed figure that assumes a shorter house. Porting them back
 #: would be a round trip: the corpus already holds them, with the citation they
 #: came from.
-BACKPORTED: frozenset[str] = frozenset({"step_back_rear", "step_back_side"})
+#:
+#: `lot_size_bands` is the second, and it arrived the same way. Wilsonville
+#: 4.113(.02) prints its setbacks as two lists -- "For lots over 10,000 square
+#: feet" and "For lots not exceeding 10,000 square feet" -- and Milwaukie's
+#: Table 19.302-1 and Gresham's MDR-24 density floor band the same way. The
+#: corpus reads those bands off the page as `variants` carrying a `band:`, one
+#: quote apiece; rules.yaml grew a flat `{field: [[threshold, value]]}` mirror
+#: of them so the pipeline could apply the right column to a lot whose area it
+#: knows. All 24 rows of that mirror are held here, which
+#: `test_a_backported_band_has_to_already_be_here` walks and asserts.
+#:
+#: One difference is deliberate and runs the safe way: quadfit takes the
+#: larger-lot column at exactly the threshold, where the code -- and so the
+#: corpus -- puts a 10,000 sq ft lot in the "not exceeding" list. At that one
+#: lot size quadfit asks for the bigger setback and the smaller coverage, which
+#: is conservative. It is a rounding convention, not a reading, and the corpus
+#: is the one that matches the sentence.
+BACKPORTED: frozenset[str] = frozenset(
+    {"step_back_rear", "step_back_side", "lot_size_bands"}
+)
 
 #: Retrieval dates from the quadfit header. Clackamas was compiled later.
 RETRIEVED = {"multnomah": "2026-07-24", "clackamas": "2026-07-28"}
