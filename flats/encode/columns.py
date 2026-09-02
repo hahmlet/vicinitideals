@@ -60,16 +60,16 @@ Three counts, reported separately because they are different work:
     clean, so this is pinned by a test.
 
 What it cannot see, so a clean report is read for what it is. Of 2,142 cited
-values it reads 581. Roughly half the remainder name lines in a document with
-no table this check recognises. The rest name lines in a document that has one
-but outside it; or in a table whose header does not carry that district; or in
-a row whose label wraps across several lines, so that no single line carries a
-full set of cells -- Gresham's downtown Table 4.1130 spends five lines on
-"Minimum Residential Net Density for all residential projects (not mixed-use)
-(units per acre)7 (See definition of Net Density in Article 3)", and a row that
-is mostly its own title cannot be counted across. The
-documents with no recognised table fall into five shapes, and the last two are
-the only real gaps:
+values it reads 673. A little over a third of the remainder name lines in a
+document with no table this check recognises. The rest name lines in a document
+that has one but outside it; or in a table whose header does not carry that
+district; or in a row whose label wraps across several lines, so that no single
+line carries a full set of cells -- Gresham's downtown Table 4.1130 spends five
+lines on "Minimum Residential Net Density for all residential projects (not
+mixed-use) (units per acre)7 (See definition of Net Density in Article 3)", and
+a row that is mostly its own title cannot be counted across. The
+documents with no recognised table fall into five shapes, and only the fourth
+is still a gap this check has no answer to:
 
 *   No table on the cited lines at all -- prose, definitions, a numbered list
     of standards. Wilsonville's planning chapter is the largest single block of
@@ -102,25 +102,46 @@ the only real gaps:
     produce a confident finding out of a coin flip -- the same thing this
     module already refuses to do when a horizontal row has dropped a blank.
 
-*   **A table whose columns are separated by a single space.** Cells are found
-    by splitting on runs of two spaces or more, which is the only separator
-    these extractions offer that a word does not also contain. Where a table
-    comes out single-spaced there is no split that recovers cells rather than
-    words, and the whole row reads as one cell.
+*   **A table whose columns are separated by a single space**, which is read
+    by grammar rather than by whitespace and is no longer blind. Cells are
+    normally found by splitting on runs of two spaces or more, the only
+    separator these extractions offer that a word does not also contain, and
+    where a table comes out single-spaced that split returns the whole row as
+    one cell.
 
-    Oregon City's zoning chapter is the extreme: it is a scan, so the same
-    single space separates the columns and the halves of the broken words --
-    ``Quad pl ex a nd co t tage 1 0 , 000 squ are 8 , 000 squ are 7 , 000 s qu
-    are``. Gresham's Pleasant Valley and Springwater plan districts are the
-    ordinary case, cleanly extracted and still unreadable: ``5,000 sq. ft.
-    3,000 sq. ft. None`` under a header line reading ``LDR-PV MDR-PV HDR-PV``.
-    A scanner for value tokens rather than cells would read that row, and would
-    then meet Table 4.1414, whose eleven columns are setback positions rather
-    than districts and whose header is printed down the page. 190 citations
-    between the three.
+    ``sparse_cells`` reads those rows by what the words are instead: a cell
+    opens on a figure or on a word meaning no standard, runs through the units
+    behind it, and the reading stops dead at a word that is neither. Gresham's
+    Pleasant Valley and Springwater plan districts come out whole this way --
+    ``5,000 sq. ft. 3,000 sq. ft. None`` under a header reading ``LDR-PV
+    MDR-PV HDR-PV`` -- and so do the cleanly extracted rows of Oregon City's
+    chapter.
 
-So the gaps were read by hand on 2026-09-02 instead, every dimensional value
-against its own column:
+    Two guards keep this from producing the error the module exists to catch.
+    Every cell of a row has to state the same KIND of quantity, because a row
+    of a dimensional table does: without it a row label carrying a measurement,
+    "Lots over 5,000 sq. ft.", hands its own number to the first district and
+    shifts the whole row one column left. And a single-space header is accepted
+    only once some line below it reads as a row of that many values, because
+    nothing in the shape separates ``USES LDR-PV MDR-PV HDR-PV`` from
+    ``Schools P/SUR15 SUR L/SUR15``, which is a row of a use table three
+    hundred lines above the dimensional one. A candidate promoted without that
+    evidence does not fail to find a row -- it finds one belonging to a
+    different table.
+
+    What still refuses is the rest of Oregon City, which is a scan: there the
+    same single space separates the columns and the halves of the broken words
+    -- ``Quad pl ex a nd co t tage 1 0 , 000 squ are 8 , 000 squ are 7 , 000 s
+    qu are`` -- and "pl" is not a unit, so the reading stops where the
+    extraction did. So does Gresham's Table 4.1414, whose eleven columns are
+    setback positions rather than districts and whose header is printed down
+    the page.
+
+So the gaps were read by hand on 2026-09-02, every dimensional value against
+its own column. Three of the five have since been closed by the single-space
+reading above and are checked on every run; they are kept here because a hand
+audit is what the check was measured against, and because Lake Oswego and
+Fairview are still only this:
 
 *   Fairview's twelve rows across R-6 and R-7.5. The vertical form is checkable
     by eye because the corpus resolved the wraps when it encoded: R-7.5's lot
@@ -279,6 +300,24 @@ _ZERO_IS_THE_SAME_AS_NONE = frozenset(
 #: overrides the bucket exists for.
 _CAPTION = re.compile(r"^\s*Table\s")
 
+#: Words that belong to the figure in front of them instead of opening a cell
+#: of their own, used only where cells are separated by a single space and the
+#: split has to be made on grammar rather than on whitespace. A trailing digit
+#: is a footnote marker -- Gresham prints a maximum height as "45 ft.5" -- and
+#: comes off before the word is looked up.
+_UNIT_WORDS = frozenset(
+    {
+        "sq", "sq.ft", "sf", "square", "ft", "feet", "foot", "in", "inch",
+        "inches", "%", "percent", "unit", "units", "du", "dus", "per", "acre",
+        "acres", "story", "stories",
+    }
+)
+
+#: How far below a candidate single-space header a row that reads as one may
+#: be. A header is only accepted on that evidence, so this is the width of the
+#: window in which the evidence has to appear.
+_CONFIRM = 20
+
 _EXEMPT_TOKEN = "EXEMPT"
 
 _VACANT = "vacant"
@@ -323,6 +362,57 @@ def cells(line: str) -> list[str]:
     return [c.strip() for c in _SPLIT.split(line.strip()) if c.strip()]
 
 
+def _unit(tok: str) -> str | None:
+    """The unit this token names, or ``None`` if it names something else."""
+    word = tok.lower().rstrip("0123456789").rstrip(".,;:")
+    return word if word in _UNIT_WORDS else None
+
+
+def _opens_cell(tok: str) -> bool:
+    if tok.lower().rstrip(".,;:") in _NOTHING:
+        return True
+    return tok[:1].isdigit() or (tok[:1] == "." and tok[1:2].isdigit())
+
+
+def sparse_cells(line: str, want: int) -> list[str] | None:
+    """The ``want`` values on a row whose columns are one space apart.
+
+    Two spaces is the only separator these extractions offer that a word does
+    not also contain, so where a table comes out single-spaced there is no
+    split that recovers cells rather than words. This reads the row by grammar
+    instead: a cell opens on a figure or on a word meaning no standard, and
+    runs through the units behind it. Anything else, once a cell has opened,
+    ends the reading -- ``5 ft. N/A 6 in. on`` is a row that wrapped, and half
+    of somebody's cell is worse than none of it.
+
+    The last guard is the one that matters. Every cell has to state the same
+    KIND of quantity, because a row of a dimensional table does. Without it a
+    row label carrying a measurement -- "Lots over 5,000 sq. ft." -- hands its
+    own number to the first district and shifts the whole row one column left,
+    which is the exact error this module exists to catch, produced by the
+    module.
+    """
+    groups: list[list[str]] = []
+    for tok in line.split():
+        if _opens_cell(tok):
+            groups.append([tok])
+        elif groups:
+            if _unit(tok) is None:
+                return None
+            groups[-1].append(tok)
+        # Before the first cell opens, the tokens are the row's label.
+    if len(groups) != want:
+        return None
+    shapes = {
+        tuple(_unit(t) for t in g[1:])
+        for g in groups
+        if g[0].lower().rstrip(".,;:") not in _NOTHING
+    }
+    if len(shapes) > 1:
+        return None
+    return [" ".join(g) for g in groups]
+
+
 def norm(code: str) -> str:
     """A district code as the two files spell it differently.
 
@@ -359,9 +449,12 @@ class _Doc:
         self.headers: dict[int, list[str]] = {}
         #: Line number -> whether that header's first cell labels the rows.
         self.labelled: dict[int, bool] = {}
+        #: Line number -> whether its rows are one space apart, not two.
+        self.sparse: dict[int, bool] = {}
         for i, line in enumerate(self.lines):
             got = cells(line)
             if len(got) < 3:
+                self._maybe_sparse(i, line)
                 continue
             # The first cell may head the column of row names -- "Standard",
             # "Residential Uses" -- and is allowed to be a phrase. Every cell
@@ -390,7 +483,42 @@ class _Doc:
                 continue
             self.headers[i] = got
             self.labelled[i] = not first_is_code
+            self.sparse[i] = False
         self._order = sorted(self.headers)
+
+    def _maybe_sparse(self, i: int, line: str) -> None:
+        """A header whose district codes are one space apart, if a row says so.
+
+        Nothing about the shape of ``USES LDR-PV MDR-PV HDR-PV`` distinguishes
+        it from ``Schools P/SUR15 SUR L/SUR15``, which is a row of a use table
+        four hundred lines further on, or from a chapter title in capitals. So
+        the shape is not what decides it: a candidate becomes a header only
+        when some line below it reads as a row of exactly that many values.
+        A header with nothing under it to read is not a header this check has
+        any use for, and the two that would have been wrong have nothing under
+        them at all.
+        """
+        toks = line.split()
+        if len(toks) < 3:
+            return
+        first_is_code = bool(_ZONE.match(toks[0])) and is_code(toks[0])
+        codes = toks if first_is_code else toks[1:]
+        if len(codes) < 2:
+            return
+        if not all(_ZONE.match(c) and is_code(c) for c in codes):
+            return
+        if len({norm(c) for c in codes}) != len(codes):
+            return
+        # A district code is written with a digit or a hyphen far more often
+        # than a word in capitals is, and this is the cheap half of the guard.
+        if sum(1 for c in codes if any(ch.isdigit() for ch in c) or "-" in c) < 2:
+            return
+        window = self.lines[i + 1 : i + 1 + _CONFIRM]
+        if not any(sparse_cells(row, len(codes)) for row in window):
+            return
+        self.headers[i] = codes
+        self.labelled[i] = True
+        self.sparse[i] = True
 
     def is_header(self, line_no: int) -> bool:
         """Is this line itself a column heading?
@@ -401,8 +529,9 @@ class _Doc:
         """
         return (line_no - 1) in self.headers
 
-    def header_for(self, line_no: int) -> tuple[list[str], bool] | None:
-        """The column order in force at a line, and whether it labels its rows.
+    def header_for(self, line_no: int) -> tuple[list[str], bool, bool] | None:
+        """The column order in force at a line, whether it labels its rows, and
+        whether its rows are one space apart.
 
         The nearest header above the line.
         """
@@ -410,7 +539,7 @@ class _Doc:
         for i in self._order:
             if i >= line_no:
                 break
-            best = (self.headers[i], self.labelled[i])
+            best = (self.headers[i], self.labelled[i], self.sparse[i])
         return best
 
     def cell(self, line_no: int, zone: str) -> str | None:
@@ -418,7 +547,7 @@ class _Doc:
         got = self.header_for(line_no)
         if got is None:
             return None
-        header, labelled = got
+        header, labelled, sparse = got
         spelled = [norm(c) for c in header]
         # Exactly one, not the first of several. A district heading two columns
         # of the same table is a question this check cannot answer -- which of
@@ -427,6 +556,11 @@ class _Doc:
         if len(matching) != 1:
             return None
         column = matching[0]
+        if sparse:
+            # No label cell to skip: the row's label is however many words come
+            # before the first figure, and what comes back is the values alone.
+            found = sparse_cells(self.lines[line_no - 1], len(header))
+            return found[column] if found else None
         row = cells(self.lines[line_no - 1])
         # Two shapes, and which one applies is settled by the header rather
         # than by the row's length. A header that labels its own rows

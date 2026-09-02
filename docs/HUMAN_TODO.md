@@ -548,7 +548,7 @@ the list of places worth hoping about.
   cities quote the header row beside the value, which is how a file says which
   of six columns a number came from — and the check was treating that header as
   a line it had failed to read, so Troutdale and Happy Valley were almost
-  entirely unexamined. It now reads 581 citations and can compare 255 of them,
+  entirely unexamined. It now reads 673 citations and can compare 312 of them,
   up from 154, and still finds nothing wrong.
 
   It also found a silent hole in itself, which is the more useful kind. Four of
@@ -569,17 +569,40 @@ the list of places worth hoping about.
 
   It also now says what it *cannot* read, which matters more than the count: a
   clean report from a narrow reader looks exactly like a clean corpus. Five
-  shapes of page defeat it, and three of those are nothing to check — plain
-  prose, a table with only one district in it, a table whose columns are
-  building types rather than districts. Two are real. Fairview, Lake Oswego and
-  unincorporated Clackamas print their tables one cell per line down the page,
-  and Oregon City's chapter is a scan whose tables come out as *Quad pl ex a nd
-  co t tage 1 0 , 000 squ are* — in both, a machine counting cells would be
-  guessing. So those were read by hand instead, every dimensional number
-  against its own column, about 250 values across five jurisdictions — Fairview,
-  Oregon City, Lake Oswego, unincorporated Clackamas, and Gresham's two plan
-  districts. All correct. That is a reading of today's files, not a check that will notice if
-  they change, and it is written down as that.
+  shapes of page defeat a machine that finds columns by looking for gaps, and
+  three of those are nothing to check anyway — plain prose, a table with only
+  one district in it, a table whose columns are building types rather than
+  districts. Two were real gaps, and one of the two has since been closed.
+
+  The one still open is the table printed *down* the page instead of across it,
+  one cell per line: Fairview, Lake Oswego and unincorporated Clackamas all do
+  this. Nothing marks where one district's answer ends and the next begins —
+  Fairview's lot-width row runs to nine lines under five districts, because
+  three of them add a second line reading “20 feet for townhouses” — so a
+  machine counting down the block would be guessing, and it declines instead.
+
+  The one now closed is the table whose columns are a single space apart rather
+  than several, which is how Gresham's two plan districts print and how half of
+  Oregon City's scanned chapter comes out. There is no gap to find, so the
+  check reads those rows by grammar instead: a value starts at a number and
+  runs through the words that measure it — *5,000 sq. ft.* — and the reading
+  stops at the first word that is neither. That is 92 more numbers checked, 57
+  of them against a printed figure, and nothing wrong in any of them. Two
+  things stop it inventing errors: every cell in a row has to be the same kind
+  of measurement, so a row that begins “Lots over 5,000 sq. ft.” cannot hand
+  its own number to the first district; and a line only counts as a column
+  heading once a real row of numbers turns up beneath it, which is what keeps a
+  row of a permitted-use table from being mistaken for one.
+
+  What still refuses is the rest of Oregon City, where the scan puts the same
+  single space between the columns as between the halves of its broken words —
+  *Quad pl ex a nd co t tage 1 0 , 000 squ are*. All of it was read by hand on
+  2026-09-02 anyway, every dimensional number against its own column, about 250
+  values across five jurisdictions — Fairview, Oregon City, Lake Oswego,
+  unincorporated Clackamas, and Gresham's two plan districts. All correct.
+  Where the check now reads them, that hand audit has become a floor. Where it
+  still cannot, it stays what it was: a reading of today's files, not a check
+  that will notice if they change.
 
 - **Wire up the Clackamas environmental layers** — done everywhere a green is
   at stake, and the work turned out to be reading, not configuring. Every city publishes a

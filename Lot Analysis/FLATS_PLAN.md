@@ -279,8 +279,8 @@ judged is the citation that names the row and nothing else — which is the shap
 townhouse frontage misread had. A citation naming its own *header* is the exception to
 the exception: that is the corpus being careful about which of six columns a number came
 from, not reaching for an override, and counting it as a reach left Troutdale and Happy
-Valley almost entirely unjudged. It reaches 581
-citations and judges 255 of them.
+Valley almost entirely unjudged. It reaches 673
+citations and judges 312 of them.
 
 Two buckets, because they are different work. A **mismatch** is a cell stating one number
 where another was encoded. A **vacancy** is a cell stating no standard — “None”, “NA” —
@@ -326,18 +326,36 @@ citation it compares a number against a land-division definition. 103 citations 
 corpus sit inside such a block; a depth guard now drops them, taking the parsed total from
 2,249 to 2,142 without moving reach or judged.
 
-It reads 581 of 2,142 cited values, and its docstring names the five shapes of the rest so
+It reads 673 of 2,142 cited values, and its docstring names the five shapes of the rest so
 that a clean report is not read as a clean corpus. Three of the five are nothing to check —
-prose, a table with one district in it, a header whose columns are housing types. Two are
-real gaps and stay open on purpose. Fairview and unincorporated Clackamas print their
-tables one cell per line, down the page, and the vertical form loses where a cell ends:
-Fairview's lot-width row is nine lines under five districts because three of them carry a
-second line reading “20 feet for townhouses”, and counting down the block would produce a
-confident finding out of a coin flip. Oregon City's chapter is a scan whose tables come out
-as *Quad pl ex a nd co t tage 1 0 , 000 squ are* — the columns are separated by single
-spaces and so are the halves of the broken words. Both gaps were read by hand on 2026-09-02
-instead, every dimensional value against its own column, and both are correct. That is a
-reading of a corpus at a moment, not a check that will notice if it moves.
+prose, a table with one district in it, a header whose columns are housing types.
+
+The fourth is the real gap and stays open on purpose. Fairview and unincorporated Clackamas
+print their tables one cell per line, down the page, and the vertical form loses where a
+cell ends: Fairview's lot-width row is nine lines under five districts because three of them
+carry a second line reading “20 feet for townhouses”, and counting down the block would
+produce a confident finding out of a coin flip.
+
+The fifth was a gap and is now read. Where a table comes out with its columns one space
+apart, splitting on whitespace returns the whole row as one cell, so `sparse_cells` reads it
+by grammar instead: a cell opens on a figure or on a word meaning no standard, runs through
+the units behind it, and stops dead at a word that is neither. That takes Gresham's two plan
+districts whole, and the cleanly extracted half of Oregon City's scanned chapter with them —
+92 more citations, 57 more judged, no new findings. Two guards keep it from producing the
+error the module exists for. Every cell of a row must state the same *kind* of quantity, or
+a row label carrying a measurement — “Lots over 5,000 sq. ft.” — hands its own number to the
+first district and shifts the row one column left. And a single-space header is accepted only
+once a line below it reads as a row of that many values: nothing in the shape separates
+`USES LDR-PV MDR-PV HDR-PV` from `Schools P/SUR15 SUR L/SUR15`, and a use row promoted to a
+header does not fail to find a row, it finds one belonging to a different table.
+
+What refuses is the rest of Oregon City, where the scan puts the same single space between
+the columns and between the halves of the broken words — *Quad pl ex a nd co t tage 1 0 ,
+000 squ are* — so the reading stops where the extraction did. All of it was read by hand on
+2026-09-02, every dimensional value against its own column, and all of it is correct. For
+the three shapes now machine-read that is a floor under a check; for Fairview, unincorporated
+Clackamas and the scanned rows it remains a reading of a corpus at a moment, not a check that
+will notice if it moves.
 
 **Redirect ledger** (`flats/encode/routing.py` → `routing.csv`) — *which sentences hand a
 standard to a section nobody opened.* One row per sentence that replaces a standard

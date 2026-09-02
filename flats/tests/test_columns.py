@@ -32,14 +32,14 @@ pytestmark = pytest.mark.unit
 #: header carries its own row-label cell. The second compared numbers only, so
 #: "None" was invisible to it -- it would have walked past the misread it was
 #: written for.
-REACH = 581
+REACH = 673
 
 #: Of what it reaches, how much it can actually compare. Well below ``REACH``
 #: on purpose: a citation naming a footnote beside the cell is left alone
 #: rather than judged against a value the corpus deliberately overrode, and an
 #: exemption against a cell printing a figure is handed to the exemption ledger
 #: rather than answered here.
-JUDGED = 255
+JUDGED = 312
 
 
 @pytest.fixture(scope="module")
@@ -431,6 +431,126 @@ def test_a_quote_inside_measured_on_is_not_the_values_citation(
     assert found.reached == 1
     assert found.judged == 1
     assert found.mismatches == ()
+
+
+HEADER_PV = " LDR-PV MDR-PV HDR-PV"
+
+
+def test_a_table_one_space_apart_is_read(tmp_path: Path) -> None:
+    """Gresham's two plan districts print their tables with no second space.
+
+    122 citations sit in them, and for a month they were in the same bucket as
+    a page of prose. The cells are recoverable, just not by splitting on
+    whitespace: a cell opens on a figure and runs through the units behind it.
+    """
+    configroot, docroot = _corpus2(
+        tmp_path,
+        HEADER_PV,
+        "Townhouse 18 ft. 22 ft. 26 ft.",
+        "MDR-PV",
+        "min_frontage_ft:\n      value: 99",
+    )
+    found = survey(configroot=configroot, docroot=docroot)
+    assert len(found.mismatches) == 1
+    assert found.mismatches[0].cell == "22 ft."
+
+
+def test_a_footnote_marker_stays_with_the_unit_it_follows(tmp_path: Path) -> None:
+    # Pleasant Valley's maximum height in HDR-PV prints "45 ft.5". Read as two
+    # cells that is a row of four under a header of three, and the row is lost.
+    configroot, docroot = _corpus2(
+        tmp_path,
+        HEADER_PV,
+        "All Uses 35 ft. 35 ft. 45 ft.5",
+        "HDR-PV",
+        "max_height_ft:\n      value: 45",
+    )
+    found = survey(configroot=configroot, docroot=docroot)
+    assert found.judged == 1
+    assert found.mismatches == ()
+
+
+def test_a_single_space_row_is_not_mistaken_for_a_header(tmp_path: Path) -> None:
+    """Nothing in the shape separates a header from a row of a use table.
+
+    ``Schools P/SUR15 SUR L/SUR15`` splits into a label and three codes exactly
+    as ``USES LDR-PV MDR-PV HDR-PV`` does, and so does a chapter title in
+    capitals. So the shape is not what decides it: a candidate becomes a header
+    only once some line below it reads as a row of that many values.
+
+    What that guard is worth is only visible at a distance. The dimensional
+    table is three hundred lines below the use table in both of Gresham's plan
+    districts, so a use row promoted to a header does not fail to find a row --
+    it finds one belonging to a different table, and answers with a cell from
+    it. This document is built to that shape: nothing readable under the
+    candidate, and a real row far enough below to be somebody else's.
+    """
+    docroot = tmp_path / "docs"
+    configroot = tmp_path / "config"
+    doc = docroot / "or" / "x" / "city" / "table.txt"
+    doc.parent.mkdir(parents=True)
+    doc.write_text(
+        "  Table 1: Permitted Uses\n"
+        "Schools P/SUR15 SUR L/SUR15\n"
+        "Quadplex P P NP\n"
+        + "\n" * 30
+        + "Minimum lot area 5,000 sq. ft. 3,000 sq. ft. 2,000 sq. ft.\n",
+        encoding="utf-8",
+    )
+    layer = configroot / "or" / "x" / "city.yaml"
+    layer.parent.mkdir(parents=True)
+    layer.write_text(
+        "zones:\n"
+        "  SUR:\n"
+        "    min_lot_sqft:\n"
+        "      value: 3000\n"
+        '      quote: "or/x/city/table.txt#L34"\n',
+        encoding="utf-8",
+    )
+    found = survey(configroot=configroot, docroot=docroot)
+    assert found.reached == 0
+
+
+def test_a_row_label_carrying_a_measurement_does_not_shift_the_row(
+    tmp_path: Path,
+) -> None:
+    """The guard that keeps this reading from inventing the error it hunts.
+
+    A banded row -- "Lots over 5,000 sq. ft." and then three setbacks -- splits
+    into four values under a header of three, or into three if one column is
+    blank, and then every number is one district to the left. Every cell of a
+    dimensional row states the same KIND of quantity, and a square footage
+    sitting beside two lengths says the reading is wrong.
+    """
+    configroot, docroot = _corpus2(
+        tmp_path,
+        HEADER_PV,
+        "Townhouse 18 ft. 22 ft. 26 ft.\nLots over 5,000 sq. ft. 10 ft. 20 ft.",
+        "MDR-PV",
+        "setback_front_ft:\n      value: 99",
+        spec="L4",
+    )
+    found = survey(configroot=configroot, docroot=docroot)
+    assert found.reached == 0
+
+
+def test_a_single_space_row_that_wrapped_is_declined(tmp_path: Path) -> None:
+    # Springwater's setback row runs off the end of its line mid-cell:
+    # "5 ft. N/A 6 in. on" / "zero /" / "6 ft." / "other". Half of somebody's
+    # cell is worse than none of it, so a word that is neither a figure
+    # nor a unit ends the reading even when the count has already come
+    # out right -- a row that kept going is not a row that stopped where
+    # it looks like it stopped.
+    configroot, docroot = _corpus2(
+        tmp_path,
+        HEADER_PV,
+        "Townhouse 18 ft. 22 ft. 26 ft.\nAll Uses 35 ft. 35 ft. 45 ft. or more",
+        "MDR-PV",
+        "setback_side_ft:\n      value: 35",
+        spec="L4",
+    )
+    found = survey(configroot=configroot, docroot=docroot)
+    assert found.reached == 0
 
 
 def test_reach_is_the_same_number_the_survey_reports(got: Survey) -> None:
