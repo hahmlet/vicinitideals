@@ -313,6 +313,67 @@ def test_an_incorporation_counts_as_a_citation(bench: dict) -> None:
     assert report.uncited == ()
 
 
+def test_a_definition_counts_as_a_citation(bench: dict) -> None:
+    """A definitions chapter is evidence, and the audit could not see it.
+
+    ``corner_lot`` is not decoration -- it decides which limb of a setback a
+    lot takes, four codes define it four incompatible ways, and each one is
+    quoted out of a definitions chapter fetched for no other purpose. The
+    reconciliation walked value quotes only, so on 2026-09-02 it reported
+    eleven of those chapters as "stored, no value points at it": the store
+    failing to recognise its own evidence, which is the same blindness the
+    cross-reference ledger had.
+
+    The direction of the error is what makes it worth a test. An orphaned
+    document is a candidate for deletion, and deleting the page a definition
+    was read from would strand the definition.
+    """
+    declaring(
+        bench["root"],
+        PORTLAND,
+        ONE_DOC
+        + "definitions:\n"
+        "  corner_lot:\n"
+        "    test: intersecting_frontages\n"
+        f'    quote: "{PORTLAND}/33.110.txt#L4"\n'
+        '    cite: "PCC 33.910, Corner Lot"\n',
+    )
+    run(bench, "--all")
+
+    report = evidence(load_rules(bench["root"]), ProvenanceStore(bench["docs"]))
+
+    assert report.uncited == ()
+
+
+def test_the_denominator_a_standard_is_measured_on_counts_as_a_citation(
+    bench: dict,
+) -> None:
+    """Seven cities mean seven different things by "net acres".
+
+    Which one a density figure divides by is a reading in its own right, taken
+    from its own passage -- usually a definitions chapter rather than the table
+    the number is printed in. `measured_on_quote` is where that passage goes,
+    and it is a citation exactly like the number's own.
+    """
+    declaring(
+        bench["root"],
+        PORTLAND,
+        ONE_DOC,
+        "  R5:\n"
+        "    min_density_du_per_acre:\n"
+        "      value: 8\n"
+        f'      quote: "{PORTLAND}/33.110.txt#L2"\n'
+        "      measured_on:\n"
+        "        fact: net_developable_area\n"
+        '        cite: PCC 33.910 "Net Site Area"\n'
+        f'        quote: "{PORTLAND}/33.910.txt#L7"\n',
+    )
+
+    report = evidence(load_rules(bench["root"]), ProvenanceStore(bench["docs"]))
+
+    assert f"{PORTLAND}/33.910.txt" in report.undeclared
+
+
 def test_a_variant_citing_another_chapter_counts_as_a_citation(bench: dict) -> None:
     declaring(
         bench["root"],

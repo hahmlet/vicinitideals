@@ -984,8 +984,14 @@ class Evidence:
     ``unfetched``
         Declared and never stored. Ordinary work: run the fetch.
     ``uncited``
-        Stored and cited by nothing. Usually a chapter fetched ahead of the
-        encoding, occasionally a document whose values were deleted.
+        Stored and cited by nothing. Three different things wear this label: a
+        chapter fetched ahead of the encoding, a document whose values were
+        deleted, and -- the one that is not a gap at all -- a chapter fetched
+        to settle a routing question, where the answer is prose. Wood Village's
+        seventeen sections are that: they exist so somebody could decide which
+        of four parking articles a four-plex takes, and the decision is a
+        sentence in the layer's notes, counted by the refusal ledger rather
+        than by a quote.
     """
 
     declared: frozenset[str] = frozenset()
@@ -1046,17 +1052,41 @@ def evidence(layers: dict[str, Layer], store: ProvenanceStore) -> Evidence:
         except ProvenanceError:
             continue
     cited = set()
+
+    def _cite(quote: str | None) -> None:
+        if quote:
+            cited.add(quote.split("#", 1)[0])
+
     for layer in layers.values():
         blocks = [layer.defaults, *(z.values for z in layer.zones.values())]
         for values in blocks:
             for value in values.values():
                 for part in (value, *value.variants):
-                    quote = part.prov.quote or ""
-                    if quote:
-                        cited.add(quote.split("#", 1)[0])
+                    # A value can be read from four places, not one. The number
+                    # comes from `quote`; the height a setback steps back at,
+                    # the denominator it is measured on, and the condition that
+                    # qualifies it each carry their own, and each is a passage
+                    # somebody read in a document. Counting only the first one
+                    # reported eleven definitions chapters and five density
+                    # denominators as "stored, no value points at it" -- the
+                    # store failing to recognise its own evidence, which is the
+                    # same blindness the cross-reference ledger had.
+                    _cite(part.prov.quote)
+                    # A Variant carries the number and its quote and nothing
+                    # else -- the three below live on the Value it belongs to.
+                    for name in ("step_back_quote", "measured_on_quote",
+                                 "qualified_quote"):
+                        _cite(getattr(part, name, None))
         for zone in layer.zones.values():
-            if zone.like is not None and zone.like.prov.quote:
-                cited.add(zone.like.prov.quote.split("#", 1)[0])
+            if zone.like is not None:
+                _cite(zone.like.prov.quote)
+        # A definition is a rule too. `corner_lot` decides which limb of a
+        # setback applies, it is quoted out of a definitions chapter like any
+        # other standard, and eleven of those chapters exist in the store for
+        # no other reason. Left out, every one of them reads as an orphan.
+        for defn in layer.definitions.values():
+            _cite(getattr(defn, "quote", None)
+                  or (defn.get("quote") if isinstance(defn, dict) else None))
     return Evidence(
         frozenset(declared_paths), frozenset(stored), frozenset(cited), frozenset(outdated)
     )

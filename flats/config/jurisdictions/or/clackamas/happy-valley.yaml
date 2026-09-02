@@ -131,6 +131,36 @@ ingest:
   zone_field: ZONE
   strip_lowercase_suffix: false
 crossrefs:
+  "1012":
+    outcome: preempted
+    note: >-
+      Clackamas County ZDO Section 1012, Density and Minimum Lot Size, reached from HVMC
+      16.22's townhouse lot-size paragraph: "Lots created for congregate care facilities, two-
+      and three-family dwellings, or multifamily dwellings are not subject to minimum, maximum,
+      or average lot size standards. However, the density provisions of Section 1012 are
+      applicable." A city citing a county section with no chapter prefix, which is not a
+      mistake -- 16.22 says of the VTH district that it "is based on the Village Townhouse
+      District in the Clackamas County Zoning and Development Ordinance", and the same chapter
+      sends garages to "Clackamas County ZDO Subsection 1604.06(F)" and preexisting dwellings to
+      "the Clackamas County VR-4/5 setback standards". Happy Valley annexed the districts and
+      kept the county's numbering.
+      The chapter was already in this store, filed under or/clackamas/_unincorporated, because
+      the county layer reads it for its own land. The ledger could not see that and was right
+      not to: a "1012" in a Portland document is not this section, and resolving section numbers
+      across jurisdictions would invent references rather than find them. It took a person
+      noticing that the neighbour holds the page.
+      Both limbs are answered. The MAXIMUM density of 1012.05, applied to the VTH districts by
+      1012.06, is a density cap on middle housing and OAR 660-046-0220(2)(b) strikes it out --
+      the same preemption this corpus applies to every other maximum density it has read. The
+      MINIMUM density of 1012.08 does not reach at all: it "applies in the Urban Low Density
+      Residential, HDR, MR-1, MR-2, PMD, RCHDR, SHD, and VA Districts", and SFA, VTH and MUR-A
+      are none of them. That second half is the one worth writing down, because this pipeline
+      now routes a lot too big for its zone's density floor to REVIEW, and these zones have no
+      floor to be short of.
+      What remains in 1012 is subdivisions, partitions and replats -- a land division this screen
+      does not draw. 1012.02(G) waives the minimum lot size for townhouses in the county's R and
+      VR districts, and 16.22's own sentence waives it for lots CREATED for multifamily dwellings;
+      neither reaches a fourplex built on a lot that already exists.
   "16.69.010":
     outcome: other_building
     note: >-
