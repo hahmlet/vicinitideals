@@ -670,6 +670,26 @@ the list of places worth hoping about.
   1 m lidar, 64,537 off the 10 m fallback, zero with no answer, where before
   four whole cities had none. Only the green/no-green switch is left, and that
   is item 2 above.
+- ~~**Are the steep lots actually steep, or are we measuring the ravine at the
+  back?**~~ **Asked and answered 2026-09-02, and the answer is no — closed.**
+  A fair objection to every slope verdict in this screen: it grades a lot on
+  the slope of its whole buildable envelope, and on a hillside lot that
+  envelope includes ground the building will never touch. The question the
+  product actually cares about is narrower — is the ground *under the
+  building, its parking and its driveway* flat enough to set a fixed pod on?
+
+  So it was measured, on the 2,275 lots that are held out of green by slope
+  alone, on real fine-resolution lidar, with a complete site plan already
+  drawn. The improvement footprints are a median 7,030 sq ft. Sampling slope on
+  those instead of the whole envelope moves the typical reading from **26.8%
+  to 26.3% — half a percentage point**, and clears **150 lots of 2,275 (7%)**.
+
+  These lots are on genuinely steep ground. The measurement is not the problem
+  and there is no cheap 2,000-lot win hiding in it. Worth knowing because the
+  objection is a good one and will be raised again; it is now answered with a
+  number rather than an opinion. (Working file `spike_footprint_slope.csv` on
+  the compute box holds the per-lot readings if anyone wants to check.)
+
 - **The screen is measuring the wrong side of the lot in two cities** —
   988 lots (Oregon City 896, Tualatin 92). Found 2026-09-01 by chasing the 33
   numbers the zone audit said had no code behind them. All 33 turned out to be
