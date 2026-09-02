@@ -254,6 +254,35 @@ in its filename, and four Clackamas County files are named for the ordinance ins
 as unfetched — the county's own Section 1012, the loudest reference in that layer, led the
 queue while sitting in the store. 252 rows were the store failing to recognise itself.
 
+**Column ledger** (`flats/encode/columns.py`) — *which encoded numbers came out of the
+wrong column.* A dimensional table prints one row per kind of building and one column per
+district, and a citation names the row. Every other check in this system asks whether the
+encoded number appears on the line the citation names, which is true of every district in
+that row that happens to share it. This one splits the row into cells, takes the column
+order from the nearest header above it, and reads the district’s own cell by position.
+
+It is deliberately narrow, and reports how narrow: it reads only rows that print a cell
+for every column — an extractor that drops empty cells produces a short row, and the
+dropped cells are exactly the ones that shift every column after them — and judges only
+cells it can compare, a number against a number and “None” or “NA” against an exemption.
+A cell reading “Varies depending on access” is the footnote ledger’s row, not this one.
+
+The failure it exists for: Gresham Table 4.0130 G.1, the townhouse street-frontage row,
+reads *16 ft. / 16 ft. / 16 ft. / None / None / 16 ft. / None* across LDR-5, LDR-7, TR,
+TLDR, MDR-12, MDR-24 and OFR. 16 was encoded for all six held districts, two of which
+state no frontage minimum at all. The quoted line contains “16 ft.” three times, so the
+citation checked out; the number was simply somebody else’s. The same pass found five
+more of the species — a minimum lot size encoded as `0` where Table 4.0130 B prints
+`None` in all seven columns, which the screen treats identically and a signer does not.
+
+The failure *it* had, twice, and both invisible in its own output: the first version read
+29 citations and pronounced the corpus clean, missing Happy Valley entirely because its
+layer keys `R40` where its table prints `R-40`, and missing every table whose header
+carries its own row-label cell. The second version compared numbers only, so `None` was
+unjudgeable — it would have walked past the misread it was built for. Both are why
+`reach()` is pinned by a test: **a reader that has stopped seeing rows reports a clean
+corpus in exactly the words of a corpus that is clean.**
+
 **Redirect ledger** (`flats/encode/routing.py` → `routing.csv`) — *which sentences hand a
 standard to a section nobody opened.* One row per sentence that replaces a standard
 ("is subject to the standards of Section X instead", "does not apply", "supersede")

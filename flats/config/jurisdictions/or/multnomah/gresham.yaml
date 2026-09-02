@@ -808,7 +808,13 @@ zones:
       value: 5000
       quote: "or/multnomah/gresham/4.0100.residential.txt#L243"
       variants:
-        - value: 0
+        # Table 4.0130 B, the Townhouse row, prints None in all seven of its
+        # columns: no minimum lot size at all on a unit lot. A zero is a
+        # standard a lot can be measured against and an exemption is the code
+        # declining to measure, and this corpus already reads the same shape as
+        # an exemption two tables away -- Springwater's lot size, and Downtown's
+        # Table 4.1130 Townhouse row. Corrected 2026-09-02 by the column check.
+        - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L242"
     min_density_du_per_acre:
@@ -951,7 +957,13 @@ zones:
       value: 7000
       quote: "or/multnomah/gresham/4.0100.residential.txt#L243"
       variants:
-        - value: 0
+        # Table 4.0130 B, the Townhouse row, prints None in all seven of its
+        # columns: no minimum lot size at all on a unit lot. A zero is a
+        # standard a lot can be measured against and an exemption is the code
+        # declining to measure, and this corpus already reads the same shape as
+        # an exemption two tables away -- Springwater's lot size, and Downtown's
+        # Table 4.1130 Townhouse row. Corrected 2026-09-02 by the column check.
+        - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L242"
     min_density_du_per_acre:
@@ -1142,7 +1154,15 @@ zones:
       value: 35
       quote: "or/multnomah/gresham/4.0100.residential.txt#L314"
       variants:
-        - value: 16
+        # Table 4.0130 G.1 prints None in this district's townhouse cell,
+        # not the 16 ft its neighbours carry. Read cell by cell 2026-09-02:
+        # L313 aligns seven cells across LDR-5 / LDR-7 / TR / TLDR / MDR-12
+        # / MDR-24 / OFR as 16 / 16 / 16 / None / None / 16 / None, and the
+        # 16 that used to stand here was the column next door. None means no
+        # street frontage minimum on a unit lot -- exempt, not a small
+        # number. The corner row below was read that way from the start; the
+        # interior row was not.
+        - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L313"
         # Table 4.0130 G.2, the corner-lot row. The interior number above
@@ -1161,7 +1181,13 @@ zones:
       value: 8000
       quote: "or/multnomah/gresham/4.0100.residential.txt#L593"
       variants:
-        - value: 0
+        # Table 4.0130 B, the Townhouse row, prints None in all seven of its
+        # columns: no minimum lot size at all on a unit lot. A zero is a
+        # standard a lot can be measured against and an exemption is the code
+        # declining to measure, and this corpus already reads the same shape as
+        # an exemption two tables away -- Springwater's lot size, and Downtown's
+        # Table 4.1130 Townhouse row. Corrected 2026-09-02 by the column check.
+        - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L242"
     min_lot_width_ft:
@@ -1222,7 +1248,13 @@ zones:
       value: 4000
       quote: "or/multnomah/gresham/4.0100.residential.txt#L243"
       variants:
-        - value: 0
+        # Table 4.0130 B, the Townhouse row, prints None in all seven of its
+        # columns: no minimum lot size at all on a unit lot. A zero is a
+        # standard a lot can be measured against and an exemption is the code
+        # declining to measure, and this corpus already reads the same shape as
+        # an exemption two tables away -- Springwater's lot size, and Downtown's
+        # Table 4.1130 Townhouse row. Corrected 2026-09-02 by the column check.
+        - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L242"
     min_density_du_per_acre:
@@ -2082,7 +2114,13 @@ zones:
       value: 3600
       quote: "or/multnomah/gresham/4.0100.residential.txt#L243"
       variants:
-        - value: 0
+        # Table 4.0130 B, the Townhouse row, prints None in all seven of its
+        # columns: no minimum lot size at all on a unit lot. A zero is a
+        # standard a lot can be measured against and an exemption is the code
+        # declining to measure, and this corpus already reads the same shape as
+        # an exemption two tables away -- Springwater's lot size, and Downtown's
+        # Table 4.1130 Townhouse row. Corrected 2026-09-02 by the column check.
+        - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L242"
     min_density_du_per_acre:
@@ -2135,7 +2173,15 @@ zones:
       value: 45
       quote: "or/multnomah/gresham/4.0100.residential.txt#L314"
       variants:
-        - value: 16
+        # Table 4.0130 G.1 prints None in this district's townhouse cell,
+        # not the 16 ft its neighbours carry. Read cell by cell 2026-09-02:
+        # L313 aligns seven cells across LDR-5 / LDR-7 / TR / TLDR / MDR-12
+        # / MDR-24 / OFR as 16 / 16 / 16 / None / None / 16 / None, and the
+        # 16 that used to stand here was the column next door. None means no
+        # street frontage minimum on a unit lot -- exempt, not a small
+        # number. The corner row below was read that way from the start; the
+        # interior row was not.
+        - exempt: true
           when: [unit_lots]
           quote: "or/multnomah/gresham/4.0100.residential.txt#L313"
         # Table 4.0130 G.2, the corner-lot row. The interior number above

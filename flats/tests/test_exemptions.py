@@ -99,7 +99,7 @@ pytestmark = pytest.mark.unit
 #: 15, and a college 0.3; the row this building sits on, Household Living,
 #: prints "no maximum" in both of its columns. Words in an apparatus that has
 #: numbers in it, none of them pointed here.
-EXPECTED = {"stated": 176, "numeric": 37, "marker": 0, "dash": 2, "silent": 0}
+EXPECTED = {"stated": 183, "numeric": 37, "marker": 0, "dash": 2, "silent": 0}
 # 174 -> 175 on 2026-09-01: the Village zone's combined side yard. Its base
 # had been a 10 derived from two printed 5 ft yards, and no line of 4.125 says
 # ten, so the base became exempt and note 15's 15 ft kept its band. An
@@ -119,6 +119,22 @@ EXPECTED = {"stated": 176, "numeric": 37, "marker": 0, "dash": 2, "silent": 0}
 # other exemption because the danger is identical whatever produced it: an
 # exemption is the corpus saying a standard does not apply, and if that reading
 # is wrong the screen greens a lot the city would refuse.
+#
+# 176 -> 178 on 2026-09-02, both Gresham, and both a correction rather than a
+# new reading. Table 4.0130 G.1's townhouse row prints seven cells across the
+# residential districts -- 16 / 16 / 16 / None / None / 16 / None -- and 16 had
+# been carried across all six of the encoded ones. TLDR and MDR-12 print None,
+# so their unit-lots street frontage is now exempt. Two more exemptions to sign,
+# which is the price of the correction; the row directly below in the same table
+# was read this way from the start, so the shape was already understood here.
+#
+# 178 -> 183 the same day, same city, same check. Table 4.0130 B's Townhouse
+# row prints None in all seven columns and five districts had encoded a lot
+# size of 0 against it. Zero is a standard a lot can be measured against;
+# None is the code declining to measure. The screen treats the two the same --
+# every lot clears a minimum of zero -- so no verdict moves, and they are
+# counted here anyway, because an exemption is a claim a person has to sign and
+# five of them just came into existence.
 
 LAKE_OSWEGO = "or/clackamas/lake-oswego"
 

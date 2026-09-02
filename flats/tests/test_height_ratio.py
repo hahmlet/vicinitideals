@@ -192,6 +192,23 @@ def test_no_zone_asks_a_building_to_stand_further_back_than_it_may() -> None:
     day and are clean, so they get a sentence rather than a test of their own:
     no zone states a density floor above its own ceiling, and no zone asks for
     more building coverage and required landscaping than the lot has.
+
+    A fourth was checked on 2026-09-02 and deliberately has no test, because it
+    is not this shape and reading it as one would put four false findings in
+    front of somebody. Four zones state a minimum lot narrower than their own
+    side yards leave room for: Gresham MDR-12 and MDR-24 print 16 ft against
+    two 10 ft yards, Troutdale MU-2 15 ft against two 15 ft, MU-3 15 ft against
+    two 20 ft. Gresham's is quoted straight off Table 4.0130 row E.1, the line
+    reading "Duplex, Triplex, Quadplex, and Cottage Cluster", so the 16 is
+    genuinely this building's number.
+
+    None of that is a contradiction. A minimum lot size is a floor on what may
+    be PLATTED, not a promise that something fits on it -- 16 ft is a townhouse
+    unit-lot width, and a city that allows the plat is not thereby claiming a
+    detached building can stand on it. The setback simply binds first, and a
+    wider lot in the same zone is fine. What made IR different is that no lot
+    of any width satisfied both of its rules, which is the only version of this
+    that says something the code does not.
     """
     over = []
     for layer_id, layer in load_rules().items():

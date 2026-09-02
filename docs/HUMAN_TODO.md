@@ -509,6 +509,32 @@ the list of places worth hoping about.
   with the rest. It reports zero today because nothing is signed; the point is
   that it will not report zero on the day it matters.
 
+- **A number can sit on the right line and still be the wrong number** — found
+  and fixed 2026-09-02. Gresham prints its zoning standards as a wide table: one
+  row per kind of building, one column per district. The townhouse row of the
+  street-frontage table reads *16 ft / 16 ft / 16 ft / None / None / 16 ft /
+  None* across seven districts, and 16 had been copied onto all six of the ones
+  we hold. Two of them say None — no frontage requirement at all.
+
+  Every existing check passed it, and this is the part worth knowing: they all
+  ask whether the number appears somewhere on the quoted line, and "16 ft."
+  appears on that line three times. Nothing was asking which *column* it came
+  from. There is now a check that counts columns and compares each district
+  against its own cell. It found the two frontage misreads and five more of the
+  same species — a minimum lot size written as zero where the table says None,
+  which are different claims even though the screen treats them alike.
+
+  None of the seven moves a lot today: they all sit on the townhouse-plat path,
+  which this screen does not model, and each error was in the direction that
+  costs lots rather than inventing them. What they would have cost is you — each
+  one is a number you would have opened the code to sign and found the page
+  saying something else. Two things the check taught while being built, both now
+  written into it: it initially read 29 citations and pronounced the corpus
+  clean, missing an entire city because its table prints *R-40* where our file
+  says *R40*; and the first version compared numbers only, so "None" was
+  invisible to it — it would have walked straight past the misread it was
+  written for.
+
 - **Wire up the Clackamas environmental layers** — done everywhere a green is
   at stake, and the work turned out to be reading, not configuring. Every city publishes a
   natural-resource map; no two of them mean the same thing by it, and only the

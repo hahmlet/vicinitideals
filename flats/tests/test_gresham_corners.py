@@ -79,6 +79,34 @@ def test_a_corner_townhouse_lot_owes_no_frontage_where_the_table_says_none(
     assert "min_frontage_ft" not in got.values
 
 
+def test_the_interior_townhouse_frontage_row_is_read_cell_by_cell(
+    rules: RuleSet,
+) -> None:
+    """G.1 does not print 16 six times, and it had been read as though it did.
+
+    The corner row directly below this one was read carefully from the start --
+    "None" in a cell became a standard that does not apply. The interior row
+    was not: 16 ft was carried across all six districts when two of them print
+    None. Checked cell by cell on 2026-09-02, L313 aligns seven values across
+    LDR-5 / LDR-7 / TR / TLDR / MDR-12 / MDR-24 / OFR as
+    16 / 16 / 16 / None / None / 16 / None.
+
+    Nothing about this changes a verdict today. The screen models the pod on
+    one lot, so no `unit_lots` variant in the city resolves, and in any case a
+    minimum the code does not state cannot certify a lot -- both misreads sat
+    in the safe direction. What it cost was a signer, who would have opened the
+    quoted line and found it saying something other than the number beside it.
+    """
+    lot = {"lot_sqft": 12_000}  # MDR-24's density band wants a lot in front of it
+    for zone in ("LDR-5", "LDR-7", "TR", "MDR-24"):
+        got = rules.resolve(GRESHAM, zone, ("unit_lots",), lot=lot)
+        assert got.values["min_frontage_ft"].value == 16, zone
+    for zone in ("TLDR", "MDR-12"):
+        got = rules.resolve(GRESHAM, zone, ("unit_lots",), lot=lot)
+        assert "min_frontage_ft" in got.exempted, zone
+        assert "min_frontage_ft" not in got.values, zone
+
+
 def test_no_corner_configuration_resolves_two_variants_at_once(rules: RuleSet) -> None:
     # unit_lots and corner_lot both select a variant, so every zone needs the
     # pair stated too. Without it the resolver ties, carries the base, and
