@@ -301,8 +301,15 @@ is why the order was easy to get wrong:
 - **It makes today's greens trustworthy.** 9,565 lots are green on readings
   nobody has checked. Signing does not move them; it makes them worth acting on.
 - **It creates new greens.** 710 lots sit in the review queue held by *nothing
-  but* an unverified zone rule. Confirm the rule and they go green that day.
-  (Or red, if the reading was wrong — which is the point of checking.)
+  but* an unverified zone rule. Confirm the rule and they go green. (Or red, if
+  the reading was wrong — which is the point of checking.)
+
+  One caveat, checked 2026-09-02 rather than assumed: your signature does not
+  reach the screen by itself. The screen reads a separate confidence flag on
+  each zone, and flipping that flag plus re-running the last stage is a second
+  step. It is a small mechanical one and it is agent work, not yours — but it
+  does have to happen, and "signed" and "screening green" are not the same
+  state on the same day.
 
 | City | Numbers to sign | Greens it would make trustworthy | New greens it would release |
 |---|---:|---:|---:|
@@ -492,6 +499,15 @@ the list of places worth hoping about.
   that was never asked, and the reader loses the ability to disagree. Net
   effect: the real signing job is **2,212 numbers, not 2,350**, and one of the
   six outstanding chapter-reads is not a job at all.
+
+- **A guard on the step between signing and the screen** — added 2026-09-02,
+  before it was needed rather than after. Your signature lands in one file and
+  the screen reads a different one, so a zone can be fully read, fully signed,
+  and still send its lots to the review queue because nobody flipped the second
+  switch. Both files would report themselves finished and both would be telling
+  the truth. There is now a check that lists exactly those zones, and it runs
+  with the rest. It reports zero today because nothing is signed; the point is
+  that it will not report zero on the day it matters.
 
 - **Wire up the Clackamas environmental layers** — done everywhere a green is
   at stake, and the work turned out to be reading, not configuring. Every city publishes a

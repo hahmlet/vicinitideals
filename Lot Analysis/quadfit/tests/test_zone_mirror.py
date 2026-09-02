@@ -27,6 +27,7 @@ which side was right, and a silent list would grow forever.
 from __future__ import annotations
 
 import io
+from datetime import date
 
 import pytest
 import yaml
@@ -797,3 +798,87 @@ def test_a_floor_that_does_not_reach_a_small_lot_is_no_floor() -> None:
     z = load_rules().jurisdictions["gresham"].rule_for("MDR-24")
     assert z.density_floor_lot_sqft(lot_area_sqft=9_000) is None
     assert z.density_floor_lot_sqft(lot_area_sqft=12_000) == pytest.approx(14_400, abs=1)
+
+
+# --- the seam between a signature and the screen ---------------------------
+
+
+def test_nothing_is_signed_and_still_capped_at_review() -> None:
+    """The gap that opens the day signing starts, watched before it does.
+
+    "Verified" means two unconnected things. In the corpus it means a person
+    read the quoted sentence against the number and signed it. To the pipeline
+    it means a `confidence:` field on the zone's rules.yaml row, and s7 sends
+    every lot in a `needs_verification` zone to REVIEW whatever else it clears.
+    No code carries the first to the second; flipping the flag and re-running
+    s7 is a separate step somebody has to remember.
+
+    So a zone can be fully read, fully signed, and still cap its lots -- with
+    the corpus reporting it finished and the screen reporting it unverified,
+    both truthfully about their own file. 710 lots in the current run are held
+    by nothing but that flag.
+
+    Zero today because nothing is signed anywhere, which is exactly why it is
+    worth having now. A check written the first time it fires is written by
+    somebody who has already lost the lots.
+    """
+    assert _audit().stalled_signatures() == []
+
+
+def test_a_signed_zone_whose_flag_never_flipped_is_reported() -> None:
+    """And the check actually fires, which zero cannot demonstrate.
+
+    Built rather than found: one signed zone, one rules.yaml row still marked
+    `needs_verification`, and the two names matched up the way the real files
+    match them.
+    """
+    from flats.encode.port_quadfit import layer_id_for
+    from flats.rules.model import Layer, Provenance, Status, Value, Zone
+
+    audit = _audit()
+    # A row the pipeline really does distrust, taken from the feed rather than
+    # named, so the test does not go red the day that zone is verified.
+    juris, zone_code = next(
+        (j, z["zone"])
+        for j, spec in _rules().items()
+        if isinstance(spec, dict) and spec.get("zones")
+        for z in spec["zones"]
+        if str(z.get("confidence", "")) == "needs_verification"
+    )
+    layer_id = layer_id_for(juris)
+
+    signed = Value(
+        name="setback_front_ft",
+        value=10,
+        prov=Provenance(
+            cite="somewhere",
+            url="https://example.invalid/code",
+            retrieved=date(2026, 9, 2),
+            quote="doc.txt#L1",
+        ),
+        status=Status.verified,
+        reviewer="sjk",
+        reviewed=date(2026, 9, 2),
+    )
+    layer = Layer(
+        layer=layer_id,
+        kind="city",
+        label="X",
+        zones={zone_code: Zone(zone=zone_code, values={"setback_front_ft": signed})},
+    )
+
+    class _Trusted:
+        layers = {layer_id: layer}
+
+    import flats.encode.load as load
+
+    original = load.load_trusted
+    load.load_trusted = lambda *a, **k: _Trusted()
+    try:
+        rows = audit.stalled_signatures()
+    finally:
+        load.load_trusted = original
+
+    hit = [r for r in rows if r.startswith(f"{juris}/{zone_code}:")]
+    assert hit, f"a signed {juris}/{zone_code} was not reported: {rows}"
+    assert "needs_verification" in hit[0]

@@ -563,6 +563,70 @@ def live_permission_splits() -> list[str]:
     return [s for s in permission_splits() if "[LIVE" in s]
 
 
+def stalled_signatures() -> list[str]:
+    """Zones read and signed in the corpus that this pipeline still distrusts.
+
+    The two halves of "verified" do not talk to each other, and that is worth
+    stating plainly because the docs read as though they did. Signing happens in
+    the corpus: a person reads the quoted sentence against the number and puts
+    their name on it. The screen reads something else entirely -- a
+    ``confidence:`` field on the zone's rules.yaml row -- and s7 sends every lot
+    in a ``needs_verification`` zone to REVIEW whatever else it clears. Nothing
+    carries the first to the second. Flipping the flag and re-running s7 is a
+    separate, mechanical step.
+
+    So a zone can be fully signed and still cap its lots at review, and nothing
+    anywhere would say so: the corpus reports it finished, the screen reports it
+    unverified, and both are telling the truth about their own file. 710 lots in
+    the current run are held by nothing but that flag, which is the size of what
+    this can quietly cost.
+
+    Empty today, and it will stay empty until signing starts -- which is the
+    point of writing it now rather than after the first session. A check built
+    at the moment it first fires is a check written by somebody already annoyed.
+    """
+    from flats.encode.load import load_trusted
+    from flats.encode.port_quadfit import layer_id_for
+    from flats.rules.model import Status
+
+    top = yaml.safe_load(io.open(RULES, encoding="utf-8"))
+    top = top.get("jurisdictions", top)
+    corpus = load_trusted(strict=False, require_quote=False).layers
+
+    out: list[str] = []
+    for juris, spec in sorted(top.items()):
+        if not isinstance(spec, dict) or "zones" not in spec:
+            continue
+        layer = corpus.get(layer_id_for(juris))
+        if layer is None:
+            continue
+        for z in spec["zones"] or []:
+            if str(z.get("confidence", "")) != "needs_verification":
+                continue
+            zl = layer.zones.get(z.get("zone"))
+            if zl is None:
+                continue
+            # The zone's own block only. A zone that adopts another by `like:`
+            # is signed when the incorporation is signed; walking into the
+            # source zone here would report a borrower finished on somebody
+            # else's signature.
+            statuses = [v.status for v in zl.values.values()]
+            statuses.extend(
+                v.status for value in zl.values.values() for v in value.variants
+            )
+            if zl.like is not None:
+                statuses.append(zl.like.status)
+            if not statuses:
+                continue
+            if all(st is Status.verified for st in statuses):
+                out.append(
+                    f"{juris}/{z['zone']}: {len(statuses)} value(s) signed in the "
+                    f"corpus, rules.yaml still confidence=needs_verification -- "
+                    f"its lots cap at REVIEW until the flag is flipped and s7 re-runs"
+                )
+    return out
+
+
 def aliases() -> list[Alias]:
     """Dimensions the two files hold under different names.
 
@@ -717,6 +781,12 @@ def main() -> None:
           f" ({len(live)} of them able to reach green)")
     for s in splits:
         print("   ", s)
+
+    stalled = stalled_signatures()
+    print(f"{len(stalled)} zones signed in the corpus that rules.yaml still "
+          f"distrusts -- their lots sit in review for no remaining reason")
+    for row in stalled:
+        print("   ", row)
 
 
 if __name__ == "__main__":
