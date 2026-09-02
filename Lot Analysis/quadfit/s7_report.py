@@ -375,8 +375,37 @@ def attribute_and_triage(lots, fp_names, rules, has_siteplan, flag_ovl_cols,
     # housing -- Wilsonville 4.155 sends "drive aisle design" to review
     # criteria, and Milwaukie 19.607.1.E.2 asks for a turnaround with no width.
 
+    # A lot can be too BIG. Forty zones state a MINIMUM density -- units per
+    # acre a residential site has to reach -- and four homes clear it on an
+    # ordinary lot and stop clearing it on a large one. Not preempted: OAR
+    # 660-046-0220(2)(b) strikes out density MAXIMUMS for a quadplex and says
+    # nothing about a floor, and Oregon City states the point twice (Table
+    # 17.08.050 note B.2 counts all four units toward it; 17.65.070.D.4 says the
+    # minimum "may not be reduced").
+    #
+    # REVIEW rather than RED, and the asymmetry is the reason. Every city that
+    # states a floor divides by NET developable area -- gross less rights-of-way,
+    # floodplain, steep slopes and resource land -- and nothing here surveys
+    # that. Net is smaller than gross, so the density computed on net is HIGHER:
+    # a lot that clears the floor on its gross area clears it outright, and a
+    # lot that fails on gross might still pass once the undevelopable ground
+    # comes out. One direction is settled and the other is a question, which is
+    # what the review queue is for.
+    def _floor(j: str, z: str):
+        jr = rules.jurisdictions.get(j)
+        zr = None if jr is None else jr.rule_for(z)
+        return None if zr is None else zr.density_floor_lot_sqft()
+
+    area = lots["area_sqft"].to_numpy(dtype=float)
+    density_floor_short = np.array([
+        (f is not None and a > float(f))
+        for f, a in zip((_floor(j, z) for j, z in zip(juris, zone)), area)
+    ])
+    lots["density_floor_short"] = density_floor_short
+
     review = (flag_suspect | (tier == "C") | unverified_zone | slope_bad
-              | sewer_review | overlay_flag | frontage_unmeasured)
+              | sewer_review | overlay_flag | frontage_unmeasured
+              | density_floor_short)
     lots["triage"] = np.where(binding != "", "red",
                               np.where(review, "review", "green"))
 
@@ -1172,6 +1201,11 @@ def main() -> None:
     # caveat travels with the row, not three files away in rules.yaml.
     if "frontage_unmeasured" in lots.columns:
         phase2_cols.append("frontage_unmeasured")
+    # And why a large Oregon City lot is in the queue looking perfect: it is
+    # above its zone's minimum density, so four homes may not be enough on it.
+    # Same discipline -- the caveat travels with the row.
+    if "density_floor_short" in lots.columns:
+        phase2_cols.append("density_floor_short")
     # `geometry_assumed` rides in the CSV beside the plan it qualifies: a
     # reviewer opening a Milwaukie or Wilsonville row needs the caveat next to
     # the stall count, not three files away in footprints.yaml.

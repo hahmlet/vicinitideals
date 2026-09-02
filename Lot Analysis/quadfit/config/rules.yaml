@@ -179,6 +179,7 @@ jurisdictions:
         setback_side_ft: 10
         setback_rear_ft: 10
         max_coverage_pct: 85
+        min_density_du_per_acre: 30.041
         source: "PCC 33.130 — Table 130-1 (33.130.100 Primary Uses), 33.130.200 Lot Size, Table 130-2 (Summary of Development Standards in Commercial/Mixed Use Zones), 33.130.215 Setbacks, 33.130.220 Building Coverage, 33.130.225 Landscaped Areas, 33.130.250 General Requirements for Small Housing Types"
         source_url: "https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf"
         confidence: needs_verification
@@ -189,6 +190,7 @@ jurisdictions:
         setback_side_ft: 10
         setback_rear_ft: 10
         max_coverage_pct: 85
+        min_density_du_per_acre: 43.56
         source: "PCC 33.130 — Table 130-1 (33.130.100 Primary Uses), 33.130.200 Lot Size, Table 130-2 (Summary of Development Standards in Commercial/Mixed Use Zones), 33.130.215 Setbacks, 33.130.220 Building Coverage, 33.130.225 Landscaped Areas, 33.130.250 General Requirements for Small Housing Types"
         source_url: "https://www.portland.gov/sites/default/files/code/130-c-zones_3.pdf"
         confidence: needs_verification
@@ -240,6 +242,7 @@ jurisdictions:
         setback_rear_ft: 5
         min_lot_sqft: 4000
         max_coverage_pct: 50
+        min_density_du_per_acre: 17.424
         source: "PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas"
         source_url: "https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf"
         confidence: needs_verification
@@ -251,6 +254,7 @@ jurisdictions:
         setback_rear_ft: 5
         min_lot_sqft: 4000
         max_coverage_pct: 60
+        min_density_du_per_acre: 30.041
         source: "PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas"
         source_url: "https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf"
         confidence: needs_verification
@@ -263,6 +267,7 @@ jurisdictions:
         setback_street_side_ft: 5
         min_lot_sqft: 4000
         max_coverage_pct: 85
+        min_density_du_per_acre: 43.56
         source: "PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas"
         source_url: "https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf"
         confidence: needs_verification
@@ -275,6 +280,7 @@ jurisdictions:
         setback_street_side_ft: 5
         min_lot_sqft: 4000
         max_coverage_pct: 85
+        min_density_du_per_acre: 43.56
         source: "PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas"
         source_url: "https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf"
         confidence: needs_verification
@@ -286,6 +292,7 @@ jurisdictions:
         setback_rear_ft: 0
         min_frontage_ft: 10
         max_coverage_pct: 100
+        min_density_du_per_acre: 87.12
         source: "PCC 33.120 — Table 120-2 (33.120.200 Housing Types Allowed), Table 120-3 (33.120.205 When Primary Structures are Allowed), Table 120-4 (printed at the end of 33.120.206), 33.120.210 Floor Area Ratio, 33.120.215 Height, 33.120.220 Setbacks, 33.120.225 Building Coverage, 33.120.235 Landscaped Areas"
         source_url: "https://www.portland.gov/sites/default/files/code/120-md-zones_3.pdf"
         confidence: needs_verification
@@ -318,6 +325,7 @@ jurisdictions:
         step_back_rear: {height_ft: 21, rise_per_ft: 1, cite: "Gresham Development Code 7.0420(G)(1) — max roof height 21 ft at the rear setback line, rising 1 ft per 1 ft further back"}
         setback_street_side_ft: 10
         min_lot_sqft: 5000
+        min_density_du_per_acre: 6.22  # per NET developable area; the lot's gross area bounds it
         source: "Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420"
         source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf"
         confidence: verified
@@ -334,6 +342,7 @@ jurisdictions:
         step_back_rear: {height_ft: 21, rise_per_ft: 1, cite: "Gresham Development Code 7.0420(G)(1) — max roof height 21 ft at the rear setback line, rising 1 ft per 1 ft further back"}
         setback_street_side_ft: 10
         min_lot_sqft: 7000
+        min_density_du_per_acre: 4.35  # per NET developable area; the lot's gross area bounds it
         source: "Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420"
         source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf"
         confidence: verified
@@ -344,6 +353,7 @@ jurisdictions:
         setback_side_ft: 5
         setback_rear_ft: 15
         setback_street_side_ft: 10
+        min_density_du_per_acre: 10  # per NET developable area; the lot's gross area bounds it
         source: "Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420"
         source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf"
         confidence: verified
@@ -360,6 +370,7 @@ jurisdictions:
         step_back_rear: {height_ft: 21, rise_per_ft: 1, cite: "Gresham Development Code 7.0420(G)(1) — max roof height 21 ft at the rear setback line, rising 1 ft per 1 ft further back"}
         setback_street_side_ft: 10
         min_lot_sqft: 4000
+        min_density_du_per_acre: 6.22  # per NET developable area; the lot's gross area bounds it
         source: "Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420"
         source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf"
         confidence: verified
@@ -376,6 +387,7 @@ jurisdictions:
         step_back_rear: {height_ft: 21, rise_per_ft: 1, cite: "Gresham Development Code 7.0420(G)(1) — max roof height 21 ft at the rear setback line, rising 1 ft per 1 ft further back"}
         setback_street_side_ft: 10
         min_lot_sqft: 5000
+        min_density_du_per_acre: 5.3  # per NET developable area; the lot's gross area bounds it
         source: "Gresham Development Code Tables 4.1413/4.1415A/4.1415B (Pleasant Valley); 7.0420"
         source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1400.pdf"
         confidence: verified
@@ -392,6 +404,7 @@ jurisdictions:
         step_back_rear: {height_ft: 21, rise_per_ft: 1, cite: "Gresham Development Code 7.0420(G)(1) — max roof height 21 ft at the rear setback line, rising 1 ft per 1 ft further back"}
         setback_street_side_ft: 10
         min_lot_sqft: 5000
+        min_density_du_per_acre: 5.8  # per NET developable area; the lot's gross area bounds it
         source: "Gresham Development Code Tables 4.1507/4.1508 (Springwater); 7.0420"
         source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1500.pdf"
         confidence: verified
@@ -403,6 +416,7 @@ jurisdictions:
         setback_rear_ft: 15
         setback_street_side_ft: 20
         min_lot_sqft: 3600
+        min_density_du_per_acre: 8.71  # per NET developable area; the lot's gross area bounds it
         source: "Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420"
         source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf"
         confidence: verified
@@ -414,6 +428,7 @@ jurisdictions:
         setback_rear_ft: 15
         setback_street_side_ft: 20
         min_lot_sqft: 11000
+        min_density_du_per_acre: 12.1  # per NET developable area; the lot's gross area bounds it
         source: "Gresham Development Code Tables 4.0120/4.0130 n.5/4.0131; Sec 3.0103"
         source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf"
         confidence: verified
@@ -426,6 +441,7 @@ jurisdictions:
         setback_street_side_ft: 10
         min_lot_sqft: 4000
         orientation_constraint: axis_required
+        min_density_du_per_acre: 8.7  # per NET developable area; the lot's gross area bounds it
         source: "Gresham Development Code Tables 4.1120/4.1130 (Downtown); 7.0420(J)"
         source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf"
         confidence: verified
@@ -438,6 +454,7 @@ jurisdictions:
         setback_street_side_ft: 10
         min_lot_sqft: 4000
         orientation_constraint: axis_required
+        min_density_du_per_acre: 8.7  # per NET developable area; the lot's gross area bounds it
         source: "Gresham Development Code Tables 4.1120/4.1130 (Downtown); 7.0420(J)"
         source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1100.pdf"
         confidence: verified
@@ -451,12 +468,14 @@ jurisdictions:
         min_lot_sqft: 10000
         min_frontage_ft: 100
         orientation_constraint: axis_required
+        min_density_du_per_acre: 12  # per NET developable area; the lot's gross area bounds it
         source: "Gresham Development Code Tables 4.0420/4.0430 (Corridor); 7.0420(J)"
         source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0400.pdf"
         confidence: verified
         notes: "Base CMF regime: residential needs 10,000 sf min AND 100 ft street frontage; max front setback 20 ft + frontage occupancy — axis_required. NE Glisan/162nd corridors follow TLDR standards instead (Table 4.0430 n.14) — NOT split out; base regime applied everywhere = conservative."
       - zone: "LDR/GB"
         quadplex_allowed: false
+        min_density_du_per_acre: 6.22  # per NET developable area; the lot's gross area bounds it
         source: "Gresham Development Code 4.1310 (Gresham Butte)"
         source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1300.pdf"
         confidence: verified
@@ -496,6 +515,7 @@ jurisdictions:
         setback_street_side_ft: 5
         min_lot_sqft: 10000
         min_frontage_ft: 100
+        min_density_du_per_acre: 12  # per NET developable area; the lot's gross area bounds it
         source: "Gresham Development Code 4.0400 Tables 4.0420/4.0430 (Corridor); 4.0433 and 7.0512.A.2; 7.0420(J)"
         source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0400.pdf"
         confidence: needs_verification
@@ -506,6 +526,7 @@ jurisdictions:
         setback_side_ft: 5
         setback_rear_ft: 15
         setback_street_side_ft: 5
+        min_density_du_per_acre: 25  # per NET developable area; the lot's gross area bounds it
         source: "Gresham Development Code Tables 4.1413/4.1415A/4.1415B (Pleasant Valley); 7.0420"
         source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1400.pdf"
         confidence: needs_verification
@@ -518,6 +539,7 @@ jurisdictions:
         setback_street_side_ft: 10
         min_lot_sqft: 3000
         min_frontage_ft: 35
+        min_density_du_per_acre: 12  # per NET developable area; the lot's gross area bounds it
         source: "Gresham Development Code Tables 4.1413/4.1415A/4.1415B (Pleasant Valley); 7.0420"
         source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.1400.pdf"
         confidence: needs_verification
@@ -529,6 +551,7 @@ jurisdictions:
         setback_rear_ft: 15
         setback_street_side_ft: 20
         min_lot_sqft: 7200
+        min_density_du_per_acre: 8.71  # per NET developable area; the lot's gross area bounds it
         source: "Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420"
         source_url: "https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0100.pdf"
         confidence: needs_verification
@@ -695,6 +718,7 @@ jurisdictions:
         setback_street_side_ft: 10
         min_lot_sqft: 6000
         max_coverage_pct: 50
+        min_density_du_per_acre: 5.8  # per NET developable area; the lot's gross area bounds it
         source: "FMC 19.30.020 Table A / 19.30.030 Table A (2023-41-TA amendments, PC Final Review Draft 12-5-2023)"
         source_url: "https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html"
         confidence: needs_verification
@@ -707,6 +731,7 @@ jurisdictions:
         setback_street_side_ft: 10
         min_lot_sqft: 7500
         max_coverage_pct: 50
+        min_density_du_per_acre: 4.6  # per NET developable area; the lot's gross area bounds it
         source: "FMC 19.30.020/19.30.030 (2023-41-TA amendments)"
         source_url: "https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html"
         confidence: needs_verification
@@ -719,6 +744,7 @@ jurisdictions:
         setback_street_side_ft: 10
         min_lot_sqft: 10000
         max_coverage_pct: 50
+        min_density_du_per_acre: 3.5  # per NET developable area; the lot's gross area bounds it
         source: "FMC 19.30.020/19.30.030 (2023-41-TA amendments)"
         source_url: "https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html"
         confidence: needs_verification
@@ -731,6 +757,7 @@ jurisdictions:
         setback_street_side_ft: 10
         min_lot_sqft: 10000
         max_coverage_pct: 60
+        min_density_du_per_acre: 14  # per NET developable area; the lot's gross area bounds it
         source: "FMC 19.30.010.D/.020/.030 (2023-41-TA amendments)"
         source_url: "https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html"
         confidence: needs_verification
@@ -743,6 +770,7 @@ jurisdictions:
         setback_street_side_ft: 10
         min_lot_sqft: 10000
         max_coverage_pct: 60
+        min_density_du_per_acre: 14  # per NET developable area; the lot's gross area bounds it
         source: "FMC 19.30.030 Table A (RM + Townhouse Overlay columns)"
         source_url: "https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html"
         confidence: needs_verification
@@ -755,6 +783,7 @@ jurisdictions:
         setback_street_side_ft: 10
         min_lot_sqft: 10000
         max_coverage_pct: 50
+        min_density_du_per_acre: 3.5  # per NET developable area; the lot's gross area bounds it
         source: "Mapping inference: Metro 'R/SFLD' = old Lower Density Residential overlay -> current R-10; standards per amended 19.30.030"
         source_url: "https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview1930.html"
         confidence: needs_verification
@@ -808,6 +837,7 @@ jurisdictions:
         setback_street_side_ft: 10
         min_lot_sqft: 7500
         max_coverage_pct: 45
+        min_density_du_per_acre: 4.6
         source: "WVDC 210.310 Tables 210-2/210-3, 210.375 (Ord. 2-2022)"
         source_url: "https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf"
         confidence: verified
@@ -820,6 +850,7 @@ jurisdictions:
         setback_street_side_ft: 20
         min_lot_sqft: 12000
         max_coverage_pct: 45
+        min_density_du_per_acre: 0.9
         source: "WVDC 210.310 Tables 210-2/210-3, 210.375 (Ord. 2-2022)"
         source_url: "https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf"
         confidence: verified
@@ -831,6 +862,7 @@ jurisdictions:
         setback_rear_ft: 15
         min_lot_sqft: 7500
         max_coverage_pct: 45
+        min_density_du_per_acre: 8.7
         source: "WVDC 220.320 Table 220-3 (Ord. 2-2022)"
         source_url: "https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf"
         confidence: verified
@@ -842,6 +874,7 @@ jurisdictions:
         setback_rear_ft: 15
         min_lot_sqft: 7500
         max_coverage_pct: 45
+        min_density_du_per_acre: 8.7
         source: "WVDC 220.320 Table 220-3 (Ord. 2-2022)"
         source_url: "https://www.woodvillageor.gov/wp-content/uploads/20220324_City-Council_Staff-Report_CM_HB-2001_Exhibit-A-1.pdf"
         confidence: verified
@@ -1308,6 +1341,7 @@ jurisdictions:
         setback_side_ft: 5
         setback_rear_ft: 20
         setback_street_side_ft: 8
+        min_density_du_per_acre: 6  # per NET developable area; the lot's gross area bounds it
         source: "HV LDC 16.22.040 (MUR-S, Mixed Use Residential-Single-Family); allows detached SFD"
         source_url: "https://www.happyvalleyor.gov/wp-content/uploads/2024/05/Model-Home-Application-5.31.24.pdf"
         confidence: needs_verification
@@ -1382,6 +1416,7 @@ jurisdictions:
         setback_street_side_ft: 5
         min_lot_sqft: 2000
         max_coverage_pct: 65
+        min_density_du_per_acre: 14.52  # per NET developable area; the lot's gross area bounds it
         source: "HV LDC 16.22.050 (VTH, Village Townhome); Table 16.22.050-1 permitted uses, Table 16.22.050-2 development standards"
         source_url: "https://ecode360.com/print/HA4934?guid=43529907"
         confidence: needs_verification
@@ -1454,6 +1489,7 @@ jurisdictions:
         min_lot_sqft: 10000
         min_frontage_ft: 65
         max_coverage_pct: 40
+        min_density_du_per_acre: 3.5  # per NET developable area; the lot's gross area bounds it
         source: "OCMC 17.08.020 (quadplex a permitted use) & Table 17.08.040; middle housing 17.16.060"
         source_url: "https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.08LODEREDI"
         confidence: verified
@@ -1467,6 +1503,7 @@ jurisdictions:
         min_lot_sqft: 8000
         min_frontage_ft: 60
         max_coverage_pct: 40
+        min_density_du_per_acre: 4.4  # per NET developable area; the lot's gross area bounds it
         source: "OCMC 17.08.020 & Table 17.08.040; middle housing 17.16.060"
         source_url: "https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.08LODEREDI"
         confidence: verified
@@ -1480,6 +1517,7 @@ jurisdictions:
         min_lot_sqft: 7000
         min_frontage_ft: 50
         max_coverage_pct: 40
+        min_density_du_per_acre: 5.8  # per NET developable area; the lot's gross area bounds it
         source: "OCMC 17.08.020 & Table 17.08.040; middle housing 17.16.060"
         source_url: "https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.08LODEREDI"
         confidence: verified
@@ -1493,6 +1531,7 @@ jurisdictions:
         min_lot_sqft: 7000
         min_frontage_ft: 35
         max_coverage_pct: 70
+        min_density_du_per_acre: 7  # per NET developable area; the lot's gross area bounds it
         source: "OCMC 17.10.020.E (quadplex permitted) & Table 17.10.040 (Medium Density Residential); middle housing 17.16.060"
         source_url: "https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.10MEDEREDI"
         confidence: verified
@@ -1506,6 +1545,7 @@ jurisdictions:
         min_lot_sqft: 7000
         min_frontage_ft: 25
         max_coverage_pct: 80
+        min_density_du_per_acre: 10  # per NET developable area; the lot's gross area bounds it
         source: "OCMC 17.10.020.E (quadplex permitted) & Table 17.10.040 (Medium Density Residential); middle housing 17.16.060"
         source_url: "https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.10MEDEREDI"
         confidence: verified

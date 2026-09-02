@@ -18,21 +18,35 @@ pytestmark = pytest.mark.unit
 
 
 class _Z:
-    def __init__(self, zone, confidence):
+    def __init__(self, zone, confidence, min_density=None):
         self.zone, self.confidence = zone, confidence
+        self.min_density_du_per_acre = min_density
+
+    def density_floor_lot_sqft(self, units: int = 4):
+        if not self.min_density_du_per_acre:
+            return None
+        return units / float(self.min_density_du_per_acre) * 43_560.0
 
 
 class _J:
     def __init__(self, eligible, zones):
         self.eligible, self.zones = eligible, zones
 
+    def rule_for(self, zone):
+        return next((z for z in self.zones if z.zone == zone), None)
+
 
 class _Rules:
-    """Minimal stand-in: gresham/UNVERIFIED is the only needs_verification zone."""
+    """Minimal stand-in: gresham/UNVERIFIED is the only needs_verification zone.
+
+    FLOORED states a minimum density of 8.71 units per acre, so four homes need
+    20,005 sq ft and anything larger is short of the floor.
+    """
     def __init__(self):
         self.jurisdictions = {
             "gresham": _J(True, [_Z("LDR-5", "verified"),
-                                 _Z("UNVERIFIED", "needs_verification")]),
+                                 _Z("UNVERIFIED", "needs_verification"),
+                                 _Z("FLOORED", "verified", 8.71)]),
         }
 
 
@@ -373,3 +387,37 @@ def test_a_width_standard_does_not_drop_a_lot_in_the_funnel():
     assert list(gates["eligible"]) == [True, False, True]
     assert list(gates["policy_exclusion"]) == ["", "below_min_frontage", ""]
     assert list(gates["frontage_unmeasured"]) == [True, False, False]
+
+
+def test_a_lot_can_be_too_big_for_four_homes():
+    """The one standard in the corpus where MORE land is the problem.
+
+    Forty zones state a minimum density -- homes per acre a residential site
+    has to reach -- and four of them clear it on an ordinary lot and stop
+    clearing it on a large one. It is not preempted: OAR 660-046-0220(2)(b)
+    strikes out density MAXIMUMS for a quadplex and says nothing about a floor.
+
+    REVIEW and not RED, which is the whole reason the check is safe to run.
+    Every city that states a floor divides by NET developable area, and nothing
+    here surveys that. Net is smaller than gross, so density measured on net is
+    HIGHER: clearing the floor on gross area settles the question, and failing
+    on gross area only opens it.
+    """
+    rows = [
+        _base_row(zone="FLOORED", area_sqft=20_000.0),   # under the cap: fine
+        _base_row(zone="FLOORED", area_sqft=25_000.0),   # over it: a question
+        _base_row(zone="LDR-5", area_sqft=25_000.0),     # no floor stated
+    ]
+    lots = _run(rows)
+    assert list(lots["triage"]) == ["green", "review", "green"]
+    assert list(lots["density_floor_short"]) == [False, True, False]
+    # And it is never a red: the lot passes every hard test it is given.
+    assert list(lots["binding_constraint"]) == ["", "", ""]
+
+
+def test_the_density_floor_cannot_rescue_a_lot_that_fails_on_its_own():
+    """A review trigger is a hold, never a pardon -- same as every other one."""
+    lots = _run([_base_row(zone="FLOORED", area_sqft=25_000.0, fits_pod=False,
+                           fits_cov_pod=False)])
+    assert lots["triage"][0] == "red"
+    assert lots["density_floor_short"][0]

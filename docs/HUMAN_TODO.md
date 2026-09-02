@@ -486,7 +486,8 @@ the list of places worth hoping about.
   pile, not the green one — work to look at rather than lots to buy. Nothing
   needed from you; the numbers move on the next full run.
 
-- **110 green lots may be too BIG to build only four units on** — found while
+- ~~**110 green lots may be too BIG to build only four units on**~~ —
+  **fixed the same day, 2026-09-02.** Found while
   porting the zones above, measured, and small. Some cities set a *minimum*
   density as well as a maximum: build housing here and you must build at least
   so many homes per acre. Four homes clears that floor on a normal lot and
@@ -502,10 +503,16 @@ the list of places worth hoping about.
   Oregon City's chapter is already read, and it is the unfriendly answer: the
   four homes do count toward the floor, and the code says outright that the
   minimum "may not be reduced". So the floor is real where it applies. The new
-  screen we are building already checks this and gets it right; the older one
-  still producing today's numbers has no column for it. So this is a gap
-  between the two, not an unread rule, and it closes either by teaching the old
-  screen the column or by the changeover. Agent work, queued behind the re-run.
+  screen we are building already checked this correctly; the older one still
+  producing today's numbers had no column for it — a gap between our own two
+  screens rather than an unread rule, which made it cheap to close.
+
+  Now closed: the floor is carried on all 40 zones that state one, checked
+  against the code corpus like every other dimension, and a lot above its floor
+  goes to **review** rather than red. Review because the cities measure the
+  floor against developable land and we only know the size of the whole lot —
+  clearing it on the whole lot settles the question, failing on the whole lot
+  only raises it. The 110 move on the next run.
 
   Checked at the same time and it came back clean: some cities also set a
   *maximum* front setback — build no further back than this — and the screen

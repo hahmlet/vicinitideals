@@ -79,6 +79,10 @@ FIELD_MAP: dict[str, str] = {
     "max_far": "max_far",
     "max_height_ft": "max_height_ft",
     "min_frontage_ft": "min_frontage_ft",
+    # Added 2026-09-02 with the column itself. Mirrored rather than backported:
+    # the corpus read the figure and rules.yaml now carries the same number, so
+    # the port maps it 1:1 and the mirror audit can check the two agree.
+    "min_density_du_per_acre": "min_density_du_per_acre",
     # Zone-level orientation carries the zone's own citation, so it ports. Only
     # the jurisdiction-level default is unciteable — see the layer notes.
     "orientation_constraint": "orientation_constraint",

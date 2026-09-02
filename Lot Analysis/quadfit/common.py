@@ -129,6 +129,22 @@ class ZoneRule(BaseModel):
     # figure these produce for a DESIGN_HEIGHT_FT building. Every one of them
     # pushes the building further from the line, so leaving them out is the
     # direction that manufactures a green.
+    #: Units per acre a residential site must reach, not a ceiling. Four units
+    #: clear it on an ordinary lot and stop clearing it on a large one, so this
+    #: is the one standard in the corpus where a lot can be too BIG.
+    #:
+    #: Not preempted. OAR 660-046-0220(2)(b) forbids a Large City applying a
+    #: density MAXIMUM to a quadplex and says nothing about a floor, and Oregon
+    #: City states the point twice: Table 17.08.050 note B.2 counts all four
+    #: units toward it, and 17.65.070.D.4 says the minimum "may not be reduced".
+    #:
+    #: Every city that states one divides by NET developable area -- gross area
+    #: less rights-of-way, floodplain, steep slopes and resource land -- and
+    #: nothing here surveys that. The lot's own area is an upper bound on the
+    #: net, so a lot that clears the floor on gross area clears it outright,
+    #: and a lot that fails on gross area MIGHT still pass. That asymmetry is
+    #: why s7 sends the failures to review rather than red.
+    min_density_du_per_acre: float | None = None
     step_back_rear: StepBack | None = None
     step_back_side: StepBack | None = None
     # Minimum lot area for a quadplex where the code sets one (e.g. Portland
@@ -170,6 +186,17 @@ class ZoneRule(BaseModel):
             if breaks != sorted(breaks):
                 raise ValueError(f"zone {self.zone}: coverage_curve breaks must ascend")
         return self
+
+    def density_floor_lot_sqft(self, units: int = 4) -> float | None:
+        """Largest lot `units` homes can satisfy the density floor on.
+
+        None when the zone states no floor. Compared against the lot's GROSS
+        area by the caller, which is the conservative direction: the code
+        divides by a smaller number, so a lot this says is too big may not be.
+        """
+        if not self.min_density_du_per_acre:
+            return None
+        return units / float(self.min_density_du_per_acre) * 43_560.0
 
     def effective_setback_rear_ft(
         self, height_ft: float = DESIGN_HEIGHT_FT

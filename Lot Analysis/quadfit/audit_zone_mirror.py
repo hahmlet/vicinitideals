@@ -105,6 +105,7 @@ MIRRORED: dict[str, str] = {
     "min_lot_sqft": "min_lot_sqft",
     "max_coverage_pct": "max_coverage_pct",
     "min_frontage_ft": "min_frontage_ft",
+    "min_density_du_per_acre": "min_density_du_per_acre",
 }
 
 #: rules.yaml names a standard the corpus files under a different name. A match
@@ -383,10 +384,20 @@ def unexpressible_standards() -> dict[str, list[str]]:
     Returns field -> the zone keys that state it, so the list can be ranked by
     how many zones each one is silent on.
     """
-    from flats.encode.port_quadfit import FIELD_MAP
-
-    carried = set(FIELD_MAP.values()) | {"quadplex_allowed"}
     top, corpus = _load()
+    # What rules.yaml can express is every column it actually uses, not a
+    # hand-kept list. Reading it off the file is the difference between a
+    # ledger that shrinks when a column is added and one that has to be
+    # remembered -- and this ledger exists because something was not
+    # remembered.
+    carried = {"quadplex_allowed", "coverage_curve", "orientation_constraint",
+               "max_far", "max_height_ft"}
+    for _, spec in top.items():
+        if not isinstance(spec, dict) or "zones" not in spec:
+            continue
+        for row in spec["zones"] or []:
+            for key in row:
+                carried.add(MIRRORED.get(key, key))
     out: dict[str, list[str]] = {}
     for juris, z, eff, layer in _pairs(top, corpus):
         for field, value in eff.values.items():

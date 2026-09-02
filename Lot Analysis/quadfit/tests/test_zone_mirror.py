@@ -531,23 +531,24 @@ def test_a_zone_missing_from_the_pipeline_is_a_debt_somebody_wrote_down() -> Non
 #: reason to keep looking: it states a 13 ft minimum front setback and a 10 ft
 #: maximum, so as encoded no legal front setback exists at all.)
 #:
-#: Minimum density is the one with a live number. (2)(b) is about maximums and
-#: no part of -0220 relieves a quadplex of a floor, so a lot can be too BIG for
-#: four units to be enough: **110 of 10,106 greens, every one in Oregon City**,
-#: sit above their zone's floor. An upper bound -- the floor is measured on net
-#: developable area and this used gross. Oregon City's chapter is read and
-#: unfriendly: Table 17.08.050 note B.2 counts the pod's four units toward the
-#: floor, and 17.65.070.D.4 says the minimum "may not be reduced". Note that
-#: `flats.score.screen` ALREADY applies this field, as a density with slack
-#: rather than a rounded unit count -- so this is a gap between the two screens
-#: rather than an unread rule, and it closes with the column or the changeover.
+#: The other live one was minimum density, and it left this list the same day
+#: it arrived: 2026-09-02, count 14 -> 13. (2)(b) is about maximums and no part
+#: of -0220 relieves a quadplex of a floor, so a lot can be too BIG for four
+#: units to be enough -- 110 of 10,106 greens, every one in Oregon City, sat
+#: above their zone's. `flats.score.screen` already applied it and this pipeline
+#: had no column, so it was a gap between two screens rather than an unread
+#: rule, and the cheapest close was the column. It is now mirrored on all 40
+#: zones that state a floor, checked by the mirror audit like any other
+#: dimension, and s7 routes a lot over its floor to REVIEW rather than RED --
+#: the code divides by NET developable area and nothing here surveys that, so
+#: clearing the floor on gross area settles it and failing on gross area does
+#: not.
 #:
 #: Frozen so the list cannot grow quietly. A standard leaves it by getting a
 #: column, never by being dropped from the corpus.
 UNEXPRESSIBLE: dict[str, int] = {
     "setback_garage_entrance_ft": 67,
     "min_lot_width_ft": 65,
-    "min_density_du_per_acre": 40,
     "min_landscaped_pct": 33,
     "min_lot_depth_ft": 28,
     "setback_front_max_ft": 24,
