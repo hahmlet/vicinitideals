@@ -145,7 +145,25 @@ pytestmark = pytest.mark.unit
 #: are not encoded -- so the ledger counts it again, correctly. A count that
 #: moves up while the refusal shrinks is the honest reading of a partial lift:
 #: this ledger measures how much prose declares a limit, not how much is left.
-EXPECTED = {"notes": 103, "comments": 112, "tests": 17}
+EXPECTED = {"notes": 104, "comments": 112, "tests": 17}
+
+#: MOVED 2026-09-02 by Fairview 19.165, +1 note, and it is a refusal a FETCH
+#: produced rather than one it removed. The chapter was the loudest reference
+#: left in that jurisdiction -- twelve mentions, three beside a number with a
+#: distance in it -- and reading it answered the flagged question in the boring
+#: direction: 19.165.025 P sends driveway approaches straight back to Chapter
+#: 19.162, which the layer already held, so the reference stood beside a
+#: driveway width by proximity and not by content.
+#:
+#: What it left behind is worse than what it settled. 19.165.025 M requires
+#: additional right-of-way "whenever existing rights-of-way adjacent to or
+#: within a tract are of less than standard width", at the time of subdivision
+#: OR DEVELOPMENT -- a rule that takes ground off the front of an existing lot.
+#: The width lives in the Fairview transportation system plan, which is not
+#: part of this code, and 19.165.010 D makes the dedication a condition of
+#: approval shown "roughly proportional to the impact". Clackamas County's
+#: Standard Drawing P100 in a different costume, and worse: a drawing can be
+#: read, a plan nobody holds cannot.
 
 #: MOVED 2026-09-02 by Portland's Title 11, +1 note, and the refusal arrived by
 #: DEMOTION rather than by reading. Chapter 11.50, Trees in Development

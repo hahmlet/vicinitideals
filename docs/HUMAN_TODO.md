@@ -5,29 +5,42 @@ agent cannot do alone. The agent maintains it: items get added when work
 surfaces them, and struck through (with a date and what happened) when they
 close. Items are ordered by how many lots ride on them, biggest first.
 
-Pipeline state when last updated (2026-09-02, after every Clackamas city's
-environmental overlays were wired in and the whole run repeated):
-**green 9,928 · review 30,092 · red 210,724** across 250,744 lots in 13 cities
-laid out with real site plans. The 178 greens lost against the run before it
-are the measured price of looking at habitat, wetland and floodplain land in
-Clackamas County for the first time — 55 in Oregon City, 54 in unincorporated
-Clackamas, 46 in West Linn, 19 in Wilsonville, 17 in Milwaukie.
+Pipeline state when last updated (2026-09-02, after the run that carries the
+sloped setback, the 29 recovered zones and the minimum-density floor):
+**green 9,630 · review 32,849 · red 249,492** across 291,971 lots in 13 cities
+laid out with real site plans. Every one of those three changes has now been
+measured against the run before it, lot by lot, and the results are not what
+the estimates said.
 
-Thirteen lots went the *other* way and became green, and the reason is worth
-knowing: **the steep ground and the protected ground turned out to be the same
-ground.** A creek runs in a ravine, and the habitat overlay traces the ravine.
-Cutting the protected strip out of the buildable area also cut out the cliff,
-and the flat bench left behind is where anyone would have built anyway. Across
-those thirteen lots the slope of the buildable part fell from 40% to 9% and the
-buildable area shrank by roughly two-thirds — all ten to twelve thousand square
-feet of it still ample for the building. They were being called too steep on
-the strength of land nobody is allowed to touch.
+**The 76,752 recovered lots produced zero greens.** 41,227 of them survived the
+structural filters and reached a measurement for the first time; 38,134 came
+back red on a real constraint and 3,093 landed in the review queue — Portland
+2,981 of them, then Gresham 79, Happy Valley 18, and single figures in
+Troutdale, Wood Village and unincorporated Multnomah. Not a disappointment, and
+not an accident either: every recovered zone was ported as `needs_verification`,
+which routes to REVIEW by design, so a green was arithmetically impossible on
+this run. What was bought is the ability to see them at all. Verifying those 29
+zones against the page is what turns 3,093 review lots into an answer.
 
-These numbers are already one step behind. Three changes landed after this run
-and none of them is in it: the sloped setback, **29 zones the pipeline had
-never heard of** (76,752 lots that had been thrown away before measurement),
-and the minimum-density floor. The next run is the first that carries them,
-and it will move every figure on this line.
+**300 greens were lost, and only 109 of them are the density floor.** Those 109
+are all Oregon City, all correct, and all sitting in review rather than red
+because the city divides by *net* developable area and nothing here surveys
+that: a lot that fails on gross area might still pass. The other 186 are
+Milwaukie, and they are the sloped setback doing its job. Milwaukie's table
+prints a 5 ft side yard and, four rows below, a 45-degree height plane starting
+at 20 ft above the *yard line*. A 26 ft pod therefore stands 11 ft off the side
+lot line, not 5, and 183 of those lots can no longer fit a building, its
+parking and its drive between the new lines. The number the table prints was
+never the number that binds.
+
+13,156 lots in total are now flagged as too big for their zone's density floor
+— Portland 10,899, Gresham 1,574, Oregon City 480 — but 10,512 of those were
+already red for other reasons, so the floor is the deciding factor on 2,644.
+
+The review queue now says why each lot is in it. Of the 32,849:
+sewer unconfirmed 18,127 · slope 17,553 · overlay 5,603 · unverified zone 3,645
+· density floor 2,644 · tier C 1,533 · suspect geometry 818 · frontage
+unmeasured 56. A lot can be held by several at once.
 
 ---
 
@@ -42,9 +55,11 @@ on it, and only the first is a queue item:
    confirmed by a person (item 7). Every green today rests on an unreviewed
    reading. This is the biggest single item and it is *work*, not a decision —
    you cannot approve your way past it in an afternoon.
-2. **82% of greens rest on one legal argument** about a parking dimension no
+2. **84% of greens rest on one legal argument** about a parking dimension no
    city wrote down (item 3, corrected on 2026-09-01 to include Portland). The
-   argument is good. It is still an argument.
+   argument is good. It is still an argument. The share went *up* on the
+   2026-09-02 run even though the count went down, because the greens that
+   disappeared were mostly in cities that do publish an aisle.
 3. **Nothing screened environmental overlays anywhere in Clackamas County** —
    floodplain, wetland, habitat, steep slope. Multnomah had thirteen such
    layers; the eleven Clackamas jurisdictions had none, and **2,820 greens
@@ -110,7 +125,7 @@ Note: the "24 ft when nobody published a number" rule from item 2 does NOT
 apply here — the county *did* publish a number, in a drawing. Assuming over
 the top of a published number is the one thing the system refuses to do.
 
-## 2. One decision: may a coarser elevation map grade a lot green? — **7,972 lots**
+## 2. One decision: may a coarser elevation map grade a lot green? — **7,360 lots**
 
 The single biggest number on this list, and it is one yes-or-no answer.
 
@@ -128,20 +143,23 @@ what that number is allowed to conclude.
 
 We measured it rather than guessing: on the 184,101 lots where **both** maps
 answer, the rule we would use agrees with the fine map well enough to clear
-**7,972 lots straight to green**, and it would be **wrong about 1.5% of the
-time** — roughly 120 of those 7,972 would turn out, on a site visit, to be
+**7,360 lots straight to green**, and it would be **wrong about 1.5% of the
+time** — roughly 110 of those 7,360 would turn out, on a site visit, to be
 steeper than they looked. It is wrong in the safe direction the rest of the
 time: it hardly ever calls a flat lot steep.
 
-So the trade is: **+7,972 green lots (a 78% increase on the whole corpus),
+So the trade is: **+7,360 green lots (a 76% increase on the whole corpus),
 against roughly 110 of them being duds you would discover on the first visit.**
 
-(Re-counted 2026-09-01, replacing an earlier 7,231. The new number is the strict
-one: lots where the coarse map is the *only* thing holding them, with the ones
-that would still be stopped by a steep reading, an odd shape, a missing sewer or
-an unsigned zone rule taken out first. It breaks down as Portland 5,320, Gresham
-2,428, Troutdale 126, Wood Village 96, Happy Valley 2 — and Fairview's 199,
-which need item 7 as well, are not in it.)
+(Re-counted 2026-09-02 against the current run, replacing 7,972 and, before
+that, 7,231. The number is the strict one: lots where the coarse map is the
+*only* thing holding them, with the ones that would still be stopped by a steep
+reading, an odd shape, a missing sewer or an unsigned zone rule taken out first.
+It breaks down as Portland 5,320, Gresham 1,820, Troutdale 125, Wood Village
+95 — and Fairview's 198, which need item 7 as well, are not in it. Gresham lost
+608 of them to the new minimum-density floor and to zone rules nobody has signed
+yet; both are items on this list, so those lots are not gone, they are queued
+behind something else. Portland's 5,320 did not move at all.)
 
 - **Yes** — flip one setting, re-run, those lots grade green like any other,
   and a column records that their slope came from the coarse map so anyone can
@@ -153,7 +171,7 @@ Nothing else is blocked on this; it is purely how bold to be. Same shape as the
 drive-aisle call you made on 2026-08-31, and the same reason it is yours: it
 trades a small chance of wasted diligence for a large amount of pipeline.
 
-## 3. Three short emails: confirm the assumed 24 ft aisle — **8,343 greens, which is 82% of all of them**
+## 3. Three short emails: confirm the assumed 24 ft aisle — **8,098 greens, which is 84% of all of them**
 
 **This entry said 985 greens until 2026-09-01. It was counting two of the three
 cities.** Portland carries the identical assumption on **7,358 greens** and had
@@ -161,7 +179,7 @@ been left off. Corrected here because the number changes what the entry is: not
 a tidy-up on two small cities, but the single largest thing standing between
 this screen and a green list you could act on.
 
-Portland (7,358 greens), Milwaukie (845) and Wilsonville (140) all publish a
+Portland (7,358 greens), Milwaukie (622) and Wilsonville (118) all publish a
 parking stall size and **no drive-aisle width that reaches a quadplex**.
 Portland's is the subtlest of the three: PCC 33.266.120 gives houses through
 fourplexes a 9 × 18 stall and states no aisle, and the 20 ft aisle in Table
@@ -204,7 +222,7 @@ no-elevator building with surface parking**?
 One architect or code consultant can answer this in a sentence. It was parked
 rather than guessed precisely because the answer moves lots everywhere at once.
 
-## 5. Business decision: Milwaukie legally caps parking at 4 stalls — **845 greens**
+## 5. Business decision: Milwaukie legally caps parking at 4 stalls — **622 greens**
 
 Milwaukie's code caps a quadplex at **1 parking space per unit — 4 total**,
 which is exactly the marketability floor. Every legal Milwaukie site plan is a
@@ -212,8 +230,11 @@ minimum-parking plan; the 1.5-per-unit and 2-per-unit tiers are not something
 that city will permit at any lot size.
 
 Decision needed: **is 1 stall per unit marketable for this product?** If not,
-Milwaukie's 845 greens should be deprioritized before any diligence money is
-spent on them. No agent work either way — this is a product call.
+Milwaukie's 622 greens should be deprioritized before any diligence money is
+spent on them. No agent work either way — this is a product call. (Was 845
+until the 2026-09-02 run; 186 of those lots turned out not to fit a legal site
+plan once Milwaukie's side yard was read as a *sloping* height plane rather
+than a flat 5 ft, which is a correctness gain, not a loss.)
 
 ## 6. Data ask: sewer coverage in Happy Valley, unincorporated Clackamas, Tualatin
 
@@ -265,28 +286,39 @@ alone.
 
 ## Seven of our fourteen cities have zero green lots — and each one has a single reason
 
-Measured 2026-09-01 against the current run. Half the map is producing nothing,
-which looks alarming and is not: every city on this list is blocked by exactly
-one thing, and every one of those things is already an item above. Nothing new
-is being asked of you here — this is the answer to "what do I actually get if I
-do item 2, or item 6, or item 7."
+Re-measured 2026-09-02 against the current run. Half the map is producing
+nothing, which looks alarming and mostly is not: five of the seven are blocked
+by exactly one thing, and every one of those things is already an item above.
+Nothing new is being asked of you here — this is the answer to "what do I
+actually get if I do item 2, or item 6, or item 7."
 
-| City | Lots waiting | The one thing holding them |
+| City | Lots waiting | What is holding them |
 |---|---|---|
-| Gresham | 2,899 | Elevation map — **item 2** |
-| Troutdale | 172 | Elevation map — **item 2** |
-| Wood Village | 115 | Elevation map — **item 2** |
-| Fairview | 199 | Elevation map **and** signing — items 2 *and* 7 |
-| Happy Valley | 731 | Sewer coverage — **item 6** |
-| Tualatin | 20 | Sewer coverage — **item 6** |
-| Gladstone | 145 | Signing — **item 7** |
+| Gresham | 2,549 | Elevation map — **item 2** (2,549 of 2,549) |
+| Happy Valley | 749 | Sewer **and** an environmental overlay — see below |
+| Fairview | 198 | Elevation map **and** signing — items 2 *and* 7 |
+| Troutdale | 177 | Elevation map — **item 2** (177 of 177) |
+| Gladstone | 121 | Signing — **item 7** (121 of 121) |
+| Wood Village | 120 | Elevation map — **item 2** (120 of 120) |
+| Tualatin | 19 | Sewer coverage — **item 6** (19 of 19) |
 
-Read across: **item 2 is worth 7,972 lots** — that is the count that would turn
+Read across: **item 2 is worth 7,360 lots** — that is the count that would turn
 green immediately, with nothing else standing in their way, and it is 5,320 in
-Portland and 2,428 in Gresham. Item 6 unlocks Happy Valley outright: 722 of its
-731 waiting lots are held by nothing but the missing sewer map. Gladstone is
-pure signing — all 145 of its lots are sitting behind zone rules nobody has
-signed off yet, and no data is missing at all.
+Portland and 1,820 in Gresham. Gladstone is pure signing: all 121 of its lots
+are behind zone rules nobody has read on the page yet, and no data is missing at
+all.
+
+**Happy Valley stopped being a one-thing city.** On 2026-09-01 it was 722 of 731
+lots held by nothing but the missing sewer map. Wiring its environmental
+overlays put a second blocker on top: of 749 waiting lots, 740 want a sewer
+answer, **725 now also sit on mapped natural resource**, and 603 want a better
+slope reading. Only 6 are held by sewer alone. That is not a regression — the
+overlay check was simply absent before, and 725 lots were being graded as if
+their resource land were not there. It does mean **item 6 no longer unlocks
+Happy Valley by itself**, and the overlay half is agent work, not yours: Happy
+Valley *flags* resource land rather than carving it out of the buildable area,
+so each flagged lot needs its mapped resource compared against the actual
+envelope.
 
 These seven are the whole of the zero-green half of the map. The other seven
 cities all produce greens today.

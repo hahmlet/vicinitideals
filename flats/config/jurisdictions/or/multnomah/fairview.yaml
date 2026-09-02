@@ -4,7 +4,25 @@ eligible: true
 notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s verification was against a
   coarser standard (one citation per row) and does not carry over. UNPORTED: orientation_constraint=''entrance_only''.
   quadfit justified this in a YAML comment with no citation; it needs its own encoding rather than invented
-  provenance.'
+  provenance.
+
+  READ AND NOT ENCODED: Chapter 19.165, Transportation Standards. Twelve mentions, three of them beside a number
+  this screen uses, and 19.162.030 sends street work here by name — "Public and private streets shall also
+  conform to FMC 19.165.020, Transportation standards". Fetched and read 2026-09-02. Two things came out of it
+  and neither is a value. The first is that the driveway question the ledger flagged is not asked here:
+  19.165.025 P sends "curb cuts, wheelchair, bicycle ramps and driveway approaches" straight back to Chapter
+  19.162, which this layer already holds — the reference stood beside a driveway width by proximity, not by
+  content. The second does reach and has no number in it. 19.165.025 M: "Whenever existing rights-of-way
+  adjacent to or within a tract are of less than standard width, additional rights-of-way shall be provided at
+  the time of subdivision or development." That is a rule that takes ground off the front of a lot, and it
+  applies to development and not only to a land division, so it can reach a fourplex on a lot that already
+  exists. What it cannot supply is how much: 19.165.025 F says rights-of-way "shall be the widths as required in
+  the ''Standards'' section of the Fairview transportation system plan", a separate document that is not part of
+  this code, and 19.165.010 D makes any dedication a condition of approval that must be shown "roughly
+  proportional to the impact of development". The citation chain is complete and ends outside the code, the same
+  shape as Clackamas County''s Standard Drawing P100 — except a drawing can be read and a plan we do not hold
+  cannot. Recorded rather than encoded, and it is a real risk to a Fairview green rather than an academic one: a
+  lot fronting a street the TSP widens loses depth before anything is built on it.'
 ingest:
   geoid: null
   juris_city_codes:
@@ -106,6 +124,14 @@ code:
   - id: "19.164"
     url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19164.html
     title: "FMC 19.164 - Off-Street Parking and Loading"
+  # Ordered by the cross-reference ledger 2026-09-02: twelve mentions, two of
+  # them beside a driveway approach width, and 19.162.030 sends street work
+  # here by name -- "Public and private streets shall also conform to FMC
+  # 19.165.020, Transportation standards". The loudest reference left in this
+  # jurisdiction and the only one standing beside a number with a distance in it.
+  - id: "19.165"
+    url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19165.html
+    title: "FMC 19.165 - Transportation Standards"
   - id: "19.150"
     url: https://www.codepublishing.com/OR/Fairview/html/Fairview19/Fairview19150.html
     title: Chapter 19.150 Special Development Standards - VO, VC and VMU Zones

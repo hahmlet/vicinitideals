@@ -1,0 +1,321 @@
+Chapter 19.165
+
+PUBLIC FACILITIES STANDARDS
+
+Sections:
+
+19.165.010 Purpose and applicability.
+
+19.165.020 Transportation standards.
+
+19.165.025 Transportation improvements.
+
+19.165.030 Public use areas.
+
+19.165.040 Sanitary sewer and water service improvements.
+
+19.165.050 Storm drainage.
+
+19.165.060 Utilities.
+
+19.165.070 Easements.
+
+19.165.080 Construction plan approval and assurances.
+
+19.165.090 Installation.
+
+19.165.010 Purpose and applicability.
+
+A. Purpose. The purpose of this chapter is to provide planning and design standards for public and private transportation facilities and utilities. Streets are the most common public spaces, touching virtually every parcel of land. Therefore, one of the primary purposes of this chapter is to provide standards for attractive and safe streets that can accommodate vehicle traffic from planned growth, and provide a range of transportation options, including options for driving, walking, bus transit and bicycling. This chapter is also intended to implement the city’s transportation system plan.
+
+B. When Standards Apply. Unless otherwise provided, the standard specifications for construction, reconstruction or repair of transportation facilities, utilities and other public improvements within the city shall occur in accordance with the standards of this chapter. No development may occur unless the public facilities related to development comply with the public facility requirements established in this chapter. The street cross sections found in the Fairview transportation system plan may be modified to accommodate alternative stormwater management methods in accordance with the adopted stormwater design manual subject to the approval of the public works director. The public works director may require modification of the typical cross section to accommodate alternative stormwater management methods when associated with development proposals. Such modifications may be applied as conditions of development approval.
+
+C. Standard Specifications. The city engineer shall establish standard construction specifications consistent with the design standards of this chapter and application of engineering principles. They are incorporated in this code by reference.
+
+D. Conditions of Development Approval. No development may occur unless required public facilities are in place or guaranteed, in conformance with the provisions of this code. Improvements required as a condition of development approval that require a dedication of property for a public use, when not voluntarily accepted by the applicant, shall be roughly proportional to the impact of development. Findings in the development approval shall indicate how the required improvements are roughly proportional to the impact of the proposed development on public facilities.
+
+E. Rough Proportionality Report. Where the applicant objects to the imposition of any applicable development standard under this chapter that required a dedication of property for a public use, the applicant must provide a rough proportionality report justifying an alternative level of improvements including:
+
+1. The estimated extent, on a quantitative basis, to which the improvements will be used by persons served by the building or development, whether the use is for safety or convenience;
+
+2. The estimated level, on a quantitative basis, of improvements needed to meet the estimated extent of use by persons served by the building or development;
+
+3. The estimated impact, on a quantitative basis, of the building or development on the public infrastructure system of which the improvements will be a part; and
+
+4. The estimated level, on a quantitative basis, of improvements needed to mitigate the estimated impact on the public infrastructure system. (Ord. 2-2007 § 1(Exh. 1 § 1); Ord. 6-2001 § 1)
+
+19.165.020 Transportation standards.
+
+Transportation standards are necessary so that the Fairview street system remains intact and well connected. Streets are critical to the connection of neighborhoods, businesses, schools, etc. It is important to regulate roadway sizes, locations and right-of-way dimensions.
+
+The street standards are based directly on the Fairview transportation system plan. Traffic calming measures are addressed in the adopted transportation system plan. The city of Fairview has no formalized traffic-calming plan, but has recently adopted a speed hump management program. The street alignment illustrations used in the proposed code are taken directly from the transportation system plan. (Ord. 6-2001 § 1)
+
+19.165.025 Transportation improvements.
+
+A. Development Standards. No development shall occur unless the development has frontage or approved access to a public street, in conformance with the provisions of Chapter 19.162 FMC, Access and Circulation, and the following standards are met:
+
+1. Streets within or adjacent to a development shall be improved in accordance with the transportation system plan and the provisions of this chapter;
+
+2. Development of new streets, and additional street width or improvements planned as a portion of an existing street, shall be improved in accordance with this section, and public streets shall be dedicated to the applicable city, county or state jurisdiction;
+
+3. New streets and drives connected to a collector or arterial street shall be paved; and
+
+4. The city may accept a future improvement guarantee (e.g., owner agrees not to remonstrate (object) against the formation of a local improvement district in the future) in lieu of street improvements if one or more of the following conditions exist:
+
+a. A partial improvement may create a potential safety hazard to motorists or pedestrians;
+
+b. Due to the developed condition of adjacent properties it is unlikely that street improvements would be extended in the foreseeable future and the improvement associated with the project under review does not, by itself, provide increased street safety or capacity, or improved pedestrian circulation;
+
+c. The improvement would be in conflict with an adopted capital improvement plan; or
+
+d. The improvement is associated with an approved land partition on property zoned residential and the proposed land partition does not create any new streets.
+
+B. Variances. Variances to the transportation design standards in this section may be granted by means of a Class B variance, as governed by Article V of this title, Exceptions to Code Standards. A variance may be granted under this provision only if a required improvement is not feasible due to topographic constraints or constraints posed by sensitive lands Chapter 19.106 FMC.
+
+C. Creation of Rights-of-Way for Streets and Related Purposes. Streets shall be created through the approval and recording of a final subdivision or partition plat; except the city may approve the creation of a street by acceptance of a deed; provided, that the street is deemed essential by the city council for the purpose of implementing the transportation system plan, and the deeded right-of-way conforms to the standards of this code. All deeds of dedication shall be in a form prescribed by the city engineer and shall name “the public” as grantee.
+
+D. Creation of Access Easements. The city may approve an access easement established by deed when the easement is necessary to provide for access and circulation in conformance with Chapter 19.162 FMC, Access and Circulation. Setback standards do not permit conflicting structures to be built in public easements.
+
+E. Street Location, Width and Grade. Except as noted below, the location, width and grade of all streets shall conform to the transportation system plan, and an approved street plan or subdivision plat. Street location, width and grade shall be determined in relation to existing and planned streets, topographic conditions, public convenience and safety, and in appropriate relation to the proposed use of the land to be served by such streets:
+
+1. Street grades shall be approved by the city engineer in accordance with the design standards in subsection O of this section; and
+
+2. Where the location of a street is not shown in an existing street plan (see subsection H of this section), the location of streets in a development shall either:
+
+a. Provide for the continuation and connection of existing streets in the surrounding areas, conforming to the street standards of this chapter, or
+
+b. Conform to a street plan adopted by the planning commission, if it is impractical to connect with existing street patterns because of particular topographical or other existing conditions of the land. Such a plan shall be based on the type of land use to be served, the volume of traffic, the capacity of adjoining streets and the need for public convenience and safety.
+
+F. Minimum Rights-of-Way and Street Sections. Street rights-of-way and improvements shall be the widths as required in the “Standards” section of the Fairview transportation system plan. A variance shall be required to vary the standards found in the Fairview transportation system plan. Where a range of width is indicated, the width shall be determined by the decision-making authority based upon the following factors:
+
+1. Street classification in the transportation system plan;
+
+2. Anticipated traffic generation;
+
+3. On-street parking needs;
+
+4. Sidewalk and bikeway requirements based on anticipated level of use;
+
+5. Requirements for placement of utilities;
+
+6. Street lighting;
+
+7. Minimize drainage, slope, and sensitive lands impacts, as identified by Chapter 19.106 FMC;
+
+8. Street tree location, as provided for in Chapter 19.163 FMC;
+
+9. Protection of significant vegetation, as provided for in Chapter 19.163 FMC;
+
+10. Safety and comfort for motorists, bicyclists, and pedestrians;
+
+11. Street furnishings (e.g., benches, lighting, bus shelters, etc.), when provided;
+
+12. Access needs for emergency vehicles; and
+
+13. Transition between different street widths (i.e., existing streets and new streets), as applicable.
+
+G. Traffic Signals and Neighborhood Traffic Management.
+
+1. Traffic management features, such as traffic circles, curb extensions, narrow residential streets, and special paving, may be used to slow traffic in neighborhoods and areas with high pedestrian traffic.
+
+2. Traffic signals shall be required with development when traffic signal warrants are met, in conformance with the Highway Capacity Manual and Manual of Uniform Traffic Control Devices. The location of traffic signals shall be noted on approved street plans. Where a proposed street intersection will result in an immediate need for a traffic signal, a signal meeting approved specifications shall be installed. The developer’s cost and the timing of improvements shall be included as a condition of development approval.
+
+3. Preferred neighborhood traffic management tools are detailed in the Fairview transportation system plan.
+
+H. Future Street Plan and Extension of Streets.
+
+1. A future street plan shall be filed by the applicant in conjunction with an application for a subdivision in order to facilitate orderly development of the street system. The plan shall show the pattern of existing and proposed future streets from the boundaries of the proposed land division and shall include other parcels within 500 feet surrounding and adjacent to the proposed land division. The street plan is not binding; rather it is intended to show potential future street extensions with future development.
+
+2. Streets shall be extended to the boundary lines of the parcel or tract to be developed, when the city council determines that the extension is necessary to give street access to, or permit a satisfactory future division of, adjoining land. The point where the streets temporarily end shall conform to subsections (H)(2)(a) through (d) of this section:
+
+a. These extended streets or street stubs to adjoining properties are not considered to be cul-de-sacs since they are intended to continue as through streets when the adjoining property is developed.
+
+b. A barricade (e.g., fence, bollards, boulders or similar vehicle barrier) shall be constructed at the end of the street by the subdivider and shall not be removed until authorized by the city or other applicable agency with jurisdiction over the street. The cost of the barricade shall be included in the street construction cost.
+
+c. Temporary turnarounds (e.g., hammerhead or bulb-shaped configuration) shall be constructed for stub streets over 150 feet in length.
+
+d. In the case of dead-end stub streets that will connect to streets on adjacent sites in the future, notification that the street is planned for future extension shall be posted on the stub street until the street is extended and shall inform the public that the dead-end street may be extended in the future.
+
+I. Street Alignment and Connections.
+
+1. Mixed-use and residential development proposed on sites five acres or greater must submit a site plan that identifies conceptual street connections that are consistent with the transportation system plan.
+
+2. Staggering of streets making “T” intersections at collectors and arterials shall not be designed so that jogs of less than 300 feet on such streets are created, as measured from the centerline of the street.
+
+3. Spacing between local street intersections shall have a minimum separation of 125 feet, except where more closely spaced intersections are designed to provide an open space, pocket park, common area or similar neighborhood amenity. This standard applies to four-way and three-way (offset) intersections.
+
+4. All local and collector streets which abut a development site shall be extended within the site to provide through circulation unless the applicant demonstrates that extension is prevented by environmental or topographical constraints, existing development patterns or compliance with other standards in this code. This exception applies when it is not possible to redesign or reconfigure the street pattern to provide required extensions. Land is considered topographically constrained if the slope is greater than 15 percent for a distance of 250 feet or more. In the case of environmental or topographical constraints, the mere presence of a constraint is not sufficient to show that a street connection is not possible. The applicant must show why the environmental or topographic constraint precludes some reasonable street connection.
+
+5. Proposed streets or street extensions shall be located to provide direct access to existing or planned commercial services and other neighborhood facilities, such as schools, shopping areas and parks and transit facilities.
+
+6. In order to promote efficient vehicular and pedestrian circulation throughout the city, the design of subdivisions and alignment of new streets shall conform to the following standards in Chapter 19.162 FMC, Access and Circulation. The maximum block length shall not exceed:
+
+a. Five hundred thirty feet in the residential district;
+
+b. Two hundred feet in the town center commercial district, except as provided by FMC 19.65.050, Block layout;
+
+c. Not applicable to the general industrial district;
+
+d. Seven hundred feet in the light industrial district, except as required for commercial developments subject to Chapter 19.80 FMC;
+
+e. Three hundred feet in the corridor commercial district;
+
+f. Three hundred feet in the neighborhood commercial district.
+
+7. A variance to street spacing standards may be granted pursuant to FMC 19.520.030 (Class B variances) when resources are present that are mapped on the Natural Resources Map, where street spacing can be achieved at a minimum of 800 feet and no greater than 1,200 feet.
+
+8. Exceptions to the standards in this subsection may be granted when:
+
+a. Habitat quality or the length of the crossing required prevents a full street connection, pursuant to Chapter 19.106 FMC;
+
+b. An access way is provided at or near midblock, in conformance with the provisions of Chapter 19.162 FMC.
+
+J. Sidewalks, Planter Strips, Bicycle Lanes. Sidewalks, planter strips, and bicycle lanes shall be installed in conformance with applicable provisions of the transportation system plan, the Comprehensive Plan, and adopted street plans. Maintenance of sidewalks, curbs, and planter strips is the continuing obligation of the adjacent property owner. All work must comply with the city of Fairview public works construction standards.
+
+K. Internal Pathways. Pathways shall be at least five feet in unobstructed width and shall be constructed to sidewalk standards found in Standard Specifications for Public Works Construction, or according to Multnomah County or ODOT standards as applicable. The property owner shall keep a minimum of five feet of the pathway width clear of both permanent and temporary obstructions (e.g., utility poles, sandwich signs). Maintenance of internal pathways is the continuing obligation of the property owner or adjacent property owner. All work must comply with the city of Fairview public works construction standards.
+
+L. Intersection Angles. Streets shall be laid out so as to intersect at an angle as near to a right angle as practicable, except where topography requires a lesser angle or where a reduced angle is necessary to provide an open space, pocket park, common area or similar neighborhood amenity. In addition, the following standards shall apply:
+
+1. Streets shall have at least 25 feet of tangent adjacent to the right-of-way intersection unless topography requires a lesser distance;
+
+2. Intersections which are not at right angles shall have a minimum corner radius of 20 feet along the right-of-way lines of the acute angle; and
+
+3. Right-of-way lines at intersection with arterial streets shall have a corner radius of not less than 20 feet.
+
+M. Existing Rights-of-Way. Whenever existing rights-of-way adjacent to or within a tract are of less than standard width, additional rights-of-way shall be provided at the time of subdivision or development, subject to the provision of FMC 19.165.025 (C).
+
+N. Cul-de-Sacs. A dead-end street shall be no more than 200 feet long, shall not provide access to greater than eight dwelling units, and shall only be used when environmental or topographical constraints, existing development patterns, or compliance with other standards in this code preclude street extension and through circulation:
+
+1. All cul-de-sacs shall terminate with a circular turnaround. Circular turnarounds shall have a radius of no less than 25 feet, and not more than a radius of 40 feet (i.e., from center to edge of pavement); except that turnarounds may be larger when they contain a landscaped island or parking bay in their center. When an island or parking bay is provided, there shall be a fire apparatus lane of 20 feet in width; and
+
+2. The length of the cul-de-sac shall be measured along the centerline of the roadway from the near side of the intersecting street to the farthest point of the cul-de-sac.
+
+O. Grades and Curves. Grades shall not exceed 10 percent on arterials, 12 percent on collector streets, or 12 percent on any other street (except that local or residential access streets may have segments with grades up to 15 percent for distances of no greater than 250 feet), and:
+
+1. Centerline curve radii shall not be less than 700 feet on arterials, 500 feet on major collectors, 350 feet on minor collectors, or 100 feet on other streets; and
+
+2. Streets intersecting with a minor collector or greater functional classification street, or streets intended to be posted with a stop sign or signalization, shall provide a landing averaging five percent or less. Landings are that portion of the street within 20 feet of the edge of the intersecting street at full improvement.
+
+P. Curbs, Curb Cuts, Ramps, and Driveway Approaches. Concrete curbs, curb cuts, wheelchair, bicycle ramps and driveway approaches shall be constructed in accordance with standards specified in Chapter 19.162 FMC, Access and Circulation.
+
+Q. Streets Adjacent to Railroad Right-of-Way. Wherever the proposed development contains or is adjacent to a railroad right-of-way, a street approximately parallel to and on each side of such right-of-way at a distance suitable for the appropriate use of the land shall be created. New railroad crossings and modifications to existing crossings are subject to review and approval by Oregon Department of Transportation.
+
+R. Development Adjoining Arterial Streets. Where a development adjoins or is crossed by an existing or proposed arterial street, the development design shall separate residential access and through traffic, and shall minimize traffic conflicts. The design shall include one or more of the following:
+
+1. A parallel access street along the arterial with a landscape buffer separating the two streets;
+
+2. Deep lots abutting the arterial or major collector to provide adequate buffering with frontage along another street. Double-frontage lots shall conform to the buffering standards in FMC 19.163.030;
+
+3. Screen planting at the rear or side property line to be contained in a non-access reservation (e.g., public easement or tract) along the arterial;
+
+4. Other treatment suitable to meet the objectives of this subsection; or
+
+5. If a lot has access to two streets with different classifications, primary access shall be from the lower classification street, in conformance with Chapter 19.162 FMC.
+
+S. Alleys, Public or Private. Alleys shall conform to the standards in the Fairview transportation system plan. While alley intersections and sharp changes in alignment shall be avoided, the corners of necessary alley intersections shall have a radius of not less than 12 feet.
+
+T. Private Streets. Private streets shall not be used to avoid connections with public streets. Gated communities (i.e., where a gate limits access to a development from a public street) are prohibited. Design standards for private streets shall conform to the provisions of the Fairview transportation system plan.
+
+U. Street Names. No street name shall be used which will duplicate or be confused with the names of existing streets in Multnomah County, except for extensions of existing streets. Street names, signs and numbers shall conform to the established pattern in the surrounding area, except as requested by emergency service providers.
+
+V. Survey Monuments. Upon completion of a street improvement and prior to acceptance by the city, it shall be the responsibility of the developer’s registered professional land surveyor to provide certification to the city that all boundary and interior monuments shall be reestablished and protected.
+
+W. Street Signs. The city, county or state with jurisdiction shall install all signs for traffic control and street names. The cost of signs required for new development shall be the responsibility of the developer. Street name signs shall be installed at all street intersections. Stop signs and other signs may be required.
+
+X. Mail Boxes. Plans for mail boxes to be used shall be approved by the United States Postal Service.
+
+Y. Streetlight Standards. Streetlights shall be installed in accordance with city standards.
+
+Z. Street Cross-Sections. All street cross-sections must comply with the Standard Specifications for Public Works Construction pages 40-51. The final lift of asphalt or concrete pavement shall be placed on all new constructed public roadways prior to final city acceptance of the roadway and within one year of the conditional acceptance of the roadway unless otherwise approved by the city engineer. The final lift shall also be placed no later than when 90 percent of the structures in the new development are completed or one year from the commencement of initial construction of the development, whichever is less. All work must comply with public works construction standards.
+
+1. Sub-base and leveling course shall be of select crushed rock;
+
+2. Surface material shall be of Class C or B asphaltic concrete;
+
+3. The final lift shall be Class C asphaltic concrete as defined by APWA standard specifications; and
+
+4. No lift shall be less than one and one-half inches in thickness. (Ord. 2-2017 § 1 (Exh. A); Ord. 3-2012 § 6; Ord. 6-2001 § 1)
+
+19.165.030 Public use areas.
+
+Public use areas implement Comprehensive Plan policies that may require a developer to reserve a piece of land for future park and open space to serve the residents of the new development. Specific issues to consider include the amount of time the city has to purchase parkland and whether dedication of park land should count as a credit towards SDCs.
+
+A. Dedication Requirements.
+
+1. Where a proposed park, playground or other public use shown in a plan adopted by the city is located in whole or in part in a subdivision, the city may require the dedication or reservation of this area on the final plat for the subdivision.
+
+2. If determined by the planning commission to be in the public interest in accordance with adopted Comprehensive Plan policies, and where an adopted plan of the city does not indicate proposed public use areas, the city may require the dedication or reservation of areas within the subdivision of a character, extent and location suitable for the development of parks and other public uses.
+
+3. All required dedications of public use areas shall conform to FMC 19.430.150(D), Conditions of approval.
+
+B. Acquisition by Public Agency. If the developer is required to reserve land area for a park or playground, the land shall be acquired by the appropriate public agency within 12 months following final plat approval, at a price agreed upon prior to approval of the plat, or the reservation shall be released to the property owner.
+
+C. System Development Charge Credit. Dedication of land to the city for public use areas shall be eligible as a credit toward any required system development charge for parks. (Ord. 6-2001 § 1)
+
+19.165.040 Sanitary sewer and water service improvements.
+
+The sanitary sewer and water service improvements ensure adequate sanitary sewer services to new developments.
+
+A. Sewers and Water Mains Required. Sanitary sewers and water mains shall be installed to serve each new development and to connect developments to existing mains in accordance with the city’s construction specifications and the applicable Comprehensive Plan policies.
+
+B. Sewer and Water Plan Approval. Development permits for sewer and water improvements shall not be issued until the city engineer has approved all sanitary sewer and water plans in conformance with city standards.
+
+C. Oversizing. Proposed sewer and water systems shall be sized to accommodate additional development within the area as projected by the Comprehensive Plan. The developer shall be entitled to system development charge credits for the oversizing.
+
+D. Permits Denied. Development permits may be restricted by the city where a deficiency exists in the existing water or sewer system which cannot be rectified by the development and which if not rectified will result in a threat to public health or safety, surcharging of existing mains, or violations of state or federal standards pertaining to operation of domestic water and sewerage treatment systems. Building moratoriums shall conform to the criteria and procedures contained in ORS 197.505 to 197.520. (Ord. 6-2001 § 1)
+
+19.165.050 Storm drainage.
+
+The storm drainage section requires developers to accommodate and treat stormwater runoff from buildings and parking lots.
+
+A. General Provisions. The city shall issue a development permit only where adequate provisions for stormwater and flood water runoff have been made.
+
+B. Accommodation of Upstream Drainage. Culverts and other drainage facilities shall be large enough to accommodate potential runoff from the entire upstream drainage area, whether inside or outside the development. Such facilities shall be subject to review and approval by the city engineer.
+
+C. Effect on Downstream Drainage. Where it is anticipated by the city engineer that the additional runoff resulting from the development will overload an existing drainage facility, the city may deny approval of the development permit unless provisions have been made for improvement of the potential condition or until provisions have been made for storage of additional runoff caused by the development in accordance with city standards.
+
+D. Easements. Where a development is traversed by a watercourse, drainage way, channel or stream, there shall be provided a stormwater easement or drainage right-of-way conforming substantially with the lines of such watercourse and such further width as will be adequate for conveyance and maintenance. (Ord. 6-2001 § 1)
+
+19.165.060 Utilities.
+
+The utilities section provides standards regarding electric lines and cable. Many types of utilities now must be installed underground for safety and aesthetic purposes.
+
+A. Underground Utilities. All utility lines including, but not limited to, those required for electric, communication, lighting and cable television services and related facilities shall be placed underground, except for surface-mounted transformers, surface-mounted connection boxes and meter cabinets which may be placed above ground, temporary utility service facilities during construction, and high capacity electric lines operating at 50,000 volts or above. The following additional standards apply to all new subdivisions, in order to facilitate underground placement of utilities:
+
+1. The developer shall make all necessary arrangements with the serving utility to provide the underground services. Care shall be taken to ensure that all above ground equipment does not obstruct vision clearance areas for vehicular traffic;
+
+2. The city reserves the right to approve the location of all surface-mounted facilities;
+
+3. All underground utilities, including sanitary sewers and storm drains installed in streets by the developer, shall be constructed prior to the surfacing of the streets; and
+
+4. Stubs for service connections shall be long enough to avoid disturbing the street improvements when service connections are made.
+
+B. Easements. Easements shall be provided for all underground utility facilities.
+
+C. Exception to Undergrounding Requirement. The standard applies only to proposed subdivisions. An exception to the undergrounding requirement may be granted due to physical constraints, such as steep topography, sensitive lands, Chapter 19.106 FMC, or existing development conditions. (Ord. 3-2012 § 6; Ord. 6-2001 § 1)
+
+19.165.070 Easements.
+
+The easements section provisions reserve adequate space for utilities.
+
+Easements for sewers, storm drainage and water quality facilities, water mains, electric lines or other public utilities shall be dedicated on a final plat, or provided for in the deed restrictions. See also, Chapter 19.420 FMC, Development Review and Site Design Review and Chapter 19.430, Land Divisions and Lot Line Adjustments. The developer or applicant shall make arrangements with the city, the applicable district and each utility franchise for the provision and dedication of utility easements necessary to provide full services to the development. The city’s standard width for public main line utility easements shall be 20 feet unless otherwise specified by the utility company, applicable district, or city engineer. (Ord. 6-2001 § 1)
+
+19.165.080 Construction plan approval and assurances.
+
+The construction plan approval portion ensures the completion of a development by a builder.
+
+No public improvements, including sanitary sewers, storm sewers, streets, sidewalks, curbs, lighting, parks, or other requirements, shall be undertaken except after the plans have been approved by the city, permit fee paid, and permit issued. The permit fee is required to defray the cost and expenses incurred by the city for construction and other services in connection with the improvement. The permit fee shall be set by the city council. The city may require the developer or subdivider to provide bonding or other performance guarantees to ensure completion of required public improvements. (Ord. 6-2001 § 1)
+
+19.165.090 Installation.
+
+A. Conformance Required. Improvements installed by the developer either as a requirement of these regulations or at his/her own option, shall conform to the requirements of this chapter, approved construction plans, and to improvement standards and specifications adopted by the city.
+
+B. Adopted Installation Standards. The Standard Specifications for Public Works Construction, Oregon Chapter APWA shall be a part of the city’s adopted installation standard(s); other standards may also be required upon recommendation of the city engineer.
+
+C. Commencement. Work shall not begin until the city has been notified in advance.
+
+D. Resumption. If work is discontinued for more than one month, it shall not be resumed until the city is notified.
+
+E. City Inspection. Improvements shall be constructed under the inspection and to the satisfaction of the city. The city may require minor changes in typical sections and details if unusual conditions arising during construction warrant such changes in the public interest. Modifications requested by the developer shall be subject to land use review under Chapter 19.415 FMC, Modifications to Approved Plans and Conditions of Approval. Any monuments that are disturbed before all improvements are completed by the subdivider shall be replaced prior to final acceptance of the improvements.
+
+F. Engineer’s Certification and As-Built Plans. A registered civil engineer shall provide written certification in a form required by the city that all improvements, workmanship and materials are in accord with current and standard engineering and construction practices, conform to approved plans and conditions of approval, and are of high grade, prior to city acceptance of the public improvements, or any portion thereof, for operation and maintenance. The developer’s engineer shall also provide three sets (one mylar, one electronic, one paper copy) of “as-built” plans, in conformance with the city engineer’s specifications, for permanent filing with the city. (Ord. 6-2009 § 4; Ord. 6-2001 § 1)
