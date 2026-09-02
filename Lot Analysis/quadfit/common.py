@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import json
 import math
+import sys
 from pathlib import Path
 from typing import Any, Literal
 
@@ -24,6 +25,18 @@ from pydantic import BaseModel, Field, model_validator
 TOOL_DIR = Path(__file__).resolve().parent
 REPO_ROOT = TOOL_DIR.parents[1]
 CONFIG_DIR = TOOL_DIR / "config"
+if str(REPO_ROOT) not in sys.path:  # the pipeline runs these as scripts
+    sys.path.insert(0, str(REPO_ROOT))
+
+#: How tall the thing we are trying to place is. Lives in the FLATS field
+#: registry, which documents it as the tallest design in the catalog rather
+#: than an average, and guards it with `flats/tests/test_height_ratio.py`.
+#: Imported instead of copied because a step-back setback is DERIVED from it,
+#: and the whole point of deriving is that the number moves when the product
+#: does. `flats.rules.fields` imports nothing but dataclasses and typing, so
+#: this costs the rules compiler nothing and needs no extra installed.
+from flats.rules.fields import DESIGN_HEIGHT_FT  # noqa: E402
+
 GIS_CACHE_DIR = REPO_ROOT / "data" / "gis_cache" / "oregon"
 DATA_DIR = REPO_ROOT / "data" / "quadfit"
 
@@ -44,6 +57,62 @@ Confidence = Literal["verified", "needs_verification"]
 OrientationConstraint = Literal["none", "entrance_only", "axis_required"]
 
 
+class StepBack(BaseModel):
+    """A yard that grows with the building, because the roof is capped at the line.
+
+    Gresham 7.0420(G)(1): "The maximum roof height at the rear setback line is
+    21 feet and increases at a rate of one foot in height for every one foot of
+    distance further from the rear property line." Milwaukie prints the same
+    rule as geometry rather than as a rate -- Table 19.302.4 allows 25 ft at the
+    minimum side yard and slopes the plane up at 45 degrees -- and MMC 19.200
+    fixes where the plane starts: "horizontally offset from the side lot line by
+    the required side yard depth", not at the lot line, which is the difference
+    between 11 ft and 6.
+
+    Both spellings are kept because both are what a reader finds on the page.
+    `rise_per_ft` is computed from `slope_degrees` when only the angle is
+    printed, so no rule file ever types a figure the code does not state.
+
+    The setback this produces is DERIVED from the pod's height, and that is the
+    reason this is a model and not five edited numbers: rules.yaml keeps the
+    figure the district table prints, the envelope gets the figure a 26 ft
+    building actually owes, and if the product ever gets taller every one of
+    these moves on its own.
+    """
+
+    #: Roof height allowed AT the setback line the district prints.
+    height_ft: float
+    #: Feet of height bought per foot of additional setback. 1.0 is a 45-degree
+    #: plane; a 1:2 plane and a 1:1 plane are different rules and both are
+    #: written, so this is stated rather than assumed.
+    rise_per_ft: float | None = None
+    #: The angle, where the code prints one instead of a rate.
+    slope_degrees: float | None = None
+    cite: str = ""
+
+    @model_validator(mode="after")
+    def _validate(self) -> StepBack:
+        if (self.rise_per_ft is None) == (self.slope_degrees is None):
+            raise ValueError("step-back needs exactly one of rise_per_ft, slope_degrees")
+        if self.rise_per_ft is not None and self.rise_per_ft <= 0:
+            raise ValueError("step-back rise_per_ft must be positive")
+        if self.slope_degrees is not None and not 0 < self.slope_degrees < 90:
+            raise ValueError("step-back slope_degrees must be between 0 and 90")
+        return self
+
+    @property
+    def rise(self) -> float:
+        """Feet of height per foot of distance, however the code spelled it."""
+        if self.rise_per_ft is not None:
+            return self.rise_per_ft
+        return math.tan(math.radians(float(self.slope_degrees)))
+
+    def extra_ft(self, height_ft: float = DESIGN_HEIGHT_FT) -> float:
+        """Feet of setback a building of this height owes beyond the printed one."""
+        over = height_ft - self.height_ft
+        return 0.0 if over <= 0 else over / self.rise
+
+
 class ZoneRule(BaseModel):
     zone: str
     quadplex_allowed: bool
@@ -55,6 +124,13 @@ class ZoneRule(BaseModel):
     # tier-B lots via max(front, street_side) — conservative, since the true
     # front edge legally takes only the front setback.
     setback_street_side_ft: float | None = None
+    # Rear/side roof-height planes. See StepBack: the printed setback above
+    # stays what the district table prints, and the ENVELOPE uses the effective
+    # figure these produce for a DESIGN_HEIGHT_FT building. Every one of them
+    # pushes the building further from the line, so leaving them out is the
+    # direction that manufactures a green.
+    step_back_rear: StepBack | None = None
+    step_back_side: StepBack | None = None
     # Minimum lot area for a quadplex where the code sets one (e.g. Portland
     # Table 110-7). Lots below this drop in the s3 funnel.
     min_lot_sqft: float | None = None
@@ -94,6 +170,22 @@ class ZoneRule(BaseModel):
             if breaks != sorted(breaks):
                 raise ValueError(f"zone {self.zone}: coverage_curve breaks must ascend")
         return self
+
+    def effective_setback_rear_ft(
+        self, height_ft: float = DESIGN_HEIGHT_FT
+    ) -> float | None:
+        """The rear setback a building of this height actually stands at."""
+        if self.setback_rear_ft is None or self.step_back_rear is None:
+            return self.setback_rear_ft
+        return self.setback_rear_ft + self.step_back_rear.extra_ft(height_ft)
+
+    def effective_setback_side_ft(
+        self, height_ft: float = DESIGN_HEIGHT_FT
+    ) -> float | None:
+        """The side setback a building of this height actually stands at."""
+        if self.setback_side_ft is None or self.step_back_side is None:
+            return self.setback_side_ft
+        return self.setback_side_ft + self.step_back_side.extra_ft(height_ft)
 
     def coverage_cap_sqft(self, lot_area_sqft: float) -> float | None:
         """Max combined building coverage for a lot, or None if uncapped."""

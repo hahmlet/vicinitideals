@@ -39,23 +39,19 @@ pytestmark = pytest.mark.unit
 #: editing whichever file was wrong.
 KNOWN_DIVERGENT: frozenset[str] = frozenset()
 
-#: Not drift. In each of these rules.yaml holds the number the district table
-#: PRINTS, and the corpus holds what a 26-foot building actually has to stand
-#: at once the step-back is applied -- Gresham 7.0420(G)(1) caps the roof at 21
-#: feet on the rear setback line and lets it rise a foot per foot beyond, and
-#: Milwaukie does the same to a side yard. The pipeline has no step-back model,
-#: so this list closes when that feature lands, not when somebody edits a
-#: number. Every row is the dangerous direction: the screen thinks the pod can
-#: stand five feet closer to the line than it can.
-KNOWN_STEP_BACK_GAPS: frozenset[str] = frozenset({
-    "gresham/LDR-5.setback_rear_ft",
-    "gresham/LDR-7.setback_rear_ft",
-    "gresham/TR.setback_rear_ft",
-    "gresham/LDR-PV.setback_rear_ft",
-    "gresham/LDR-SW.setback_rear_ft",
-    "milwaukie/R-MD.setback_side_ft",
-    "milwaukie/R-HD.setback_side_ft",
-})
+#: Empty since 2026-09-02, and it took the feature rather than seven edits.
+#: These were the seven dimensions where rules.yaml held the number the district
+#: table PRINTS and the corpus held what a 26-foot building actually stands at:
+#: Gresham 7.0420(G)(1) caps the roof at 21 ft on the rear setback line and lets
+#: it rise a foot per foot beyond; Milwaukie states the same rule as a
+#: 45-degree side yard height plane. rules.yaml now declares the plane beside
+#: the printed setback and `common.StepBack` derives the rest, so no file holds
+#: a figure a reader could not find on the page.
+#:
+#: The list stays because the thing it caught can happen again, and always in
+#: the dangerous direction: a corpus step-back the pipeline has not declared
+#: means the screen thinks the pod can stand closer to the line than it can.
+KNOWN_STEP_BACK_GAPS: frozenset[str] = frozenset()
 
 #: Also not drift, and the one place rules.yaml is RIGHT and the corpus is
 #: merely richer. Lake Oswego asks 5 feet on one side and 15 across both.
@@ -173,20 +169,18 @@ def test_the_quadplex_row_is_the_one_that_gets_read() -> None:
     assert _zone("gladstone", "R5")["min_lot_sqft"] == 7000
 
 
-def test_the_step_back_gaps_are_a_missing_feature_not_a_typo() -> None:
-    """Seven dimensions where rules.yaml is right about the printed number.
+def test_no_step_back_in_the_corpus_is_missing_from_the_pipeline() -> None:
+    """The seven are closed, and the guard that found them still runs.
 
-    Gresham prints a 15-foot rear setback in five districts and then, in a
-    different chapter, says the roof may be 21 feet at that line and a foot
-    higher for every foot further back. A 26-foot pod therefore stands at 20.
-    The corpus carries the effective figure and remembers the printed one it
-    came from; rules.yaml carries the printed one, because the pipeline cannot
-    express a step-back at all.
+    This list held seven dimensions for as long as the pipeline had no way to
+    say "the roof is capped at the setback line". It has one now: rules.yaml
+    declares the plane next to the printed setback and the envelope derives
+    what a `DESIGN_HEIGHT_FT` building owes.
 
-    Held in its own list so that nobody "fixes" it by editing five numbers in
-    rules.yaml: the printed number is what the code says, and hard-coding the
-    derived one would be right for a 26-foot building and wrong the moment the
-    product changes height.
+    What must never come back is the failure that put them here. A corpus
+    step-back the pipeline has not declared means the screen is standing the
+    pod closer to the line than the code allows, which is a green that should
+    not exist. Nobody has to remember to check; this does.
     """
     audit = _audit()
     diverge, _uncited, _agree = audit.scan()
@@ -194,16 +188,57 @@ def test_the_step_back_gaps_are_a_missing_feature_not_a_typo() -> None:
              if not d.is_permission_blocked and d.is_step_back}
     assert found == KNOWN_STEP_BACK_GAPS, sorted(found ^ KNOWN_STEP_BACK_GAPS)
 
-    # Every one of them is the direction that produces a false green. Compared
-    # against the base limb rather than the smallest: Gresham's rear setback
-    # drops to 13 on an alley, and an alley is a condition nothing measures, so
-    # it is not the number the screen would use.
-    for d in diverge:
-        if d.is_step_back and not d.is_permission_blocked:
-            assert d.shipped < d.corpus[0], (
-                f"{d.key}: a step-back that does not push the building further "
-                f"from the line is not a step-back"
-            )
+
+def test_the_declared_planes_derive_the_corpus_figure() -> None:
+    """The seven numbers are computed, and this is what they compute to.
+
+    Pinned as arithmetic rather than as constants, because that is the point of
+    the feature: change `DESIGN_HEIGHT_FT` and every one of these moves on its
+    own. A 20-foot pod would owe Gresham nothing extra at all -- the roof is
+    allowed to be 21 at the line -- and this asserts that too, so a future
+    reader can see the plane is a rule and not a fudge.
+
+    Gresham 7.0420(G)(1) and Milwaukie's Table 19.301.4 / 19.302.4 planes state
+    the same geometry two ways: a rate ("one foot in height for every one foot
+    of distance") and an angle ("Slope of plane (degrees) 45"). Both spellings
+    are carried, so this walks both.
+    """
+    from common import DESIGN_HEIGHT_FT, load_rules
+
+    rules = load_rules()
+
+    def rule(juris: str, zone: str):
+        return rules.jurisdictions[juris].rule_for(zone)
+
+    # Gresham: 21 ft allowed at the line, 1 ft of height per foot beyond.
+    for zone, printed in (("LDR-5", 15), ("LDR-7", 15), ("TR", 15),
+                          ("LDR-SW", 15), ("LDR-PV", 10)):
+        zr = rule("gresham", zone)
+        assert zr.setback_rear_ft == printed, "the printed figure must not move"
+        assert zr.step_back_rear is not None and zr.step_back_rear.height_ft == 21
+        assert zr.effective_setback_rear_ft() == printed + (DESIGN_HEIGHT_FT - 21)
+        # A building short enough to fit under the plane owes nothing.
+        assert zr.effective_setback_rear_ft(21) == printed
+        assert zr.effective_setback_rear_ft(12) == printed
+
+    # Milwaukie: the same 1:1 plane written as 45 degrees, starting at the
+    # required yard rather than the lot line (MMC 19.200).
+    for zone, at_ft, effective in (("R-MD", 20, 11), ("R-HD", 25, 6)):
+        zr = rule("milwaukie", zone)
+        assert zr.setback_side_ft == 5, "the printed figure must not move"
+        sb = zr.step_back_side
+        assert sb is not None and sb.slope_degrees == 45
+        assert round(sb.rise, 6) == 1.0, "45 degrees is a 1:1 plane"
+        assert zr.effective_setback_side_ft() == pytest.approx(effective)
+        assert zr.effective_setback_side_ft(at_ft) == 5
+
+    # And the plane only ever pushes the building AWAY from the line.
+    for juris, zones in (("gresham", ("LDR-5", "LDR-7", "TR", "LDR-SW", "LDR-PV")),
+                         ("milwaukie", ("R-MD", "R-HD"))):
+        for zone in zones:
+            zr = rule(juris, zone)
+            assert zr.effective_setback_rear_ft() >= zr.setback_rear_ft
+            assert zr.effective_setback_side_ft() >= zr.setback_side_ft
 
 
 def test_a_collapsed_combined_side_yard_is_not_a_mistake() -> None:
@@ -408,3 +443,58 @@ def test_an_adopted_zone_reports_the_standards_it_adopts() -> None:
     effective = audit._effective(layer, sfld)
     r10 = layer.zones["R-10"]
     assert effective["min_lot_sqft"].value == r10.values["min_lot_sqft"].value
+
+
+#: Zones the corpus says permit a four-plex and rules.yaml has no entry for, so
+#: `s3_filter` drops every lot in them at `zone_not_in_rules` before anything is
+#: measured. Counted for the first time on 2026-09-02 and worth **76,752 lots**
+#: -- 30% of the universe, and the largest recoverable pool measured to date.
+#: Lake Oswego is listed and contributes none of them: the jurisdiction is
+#: `eligible: false` by owner decision, so its rows are reference rather than
+#: debt. Portland is 74,446 of the 76,752.
+#:
+#: It survived five weeks because the direction is safe: a lot the screen never
+#: looks at cannot come back green by mistake. That is also why nothing reported
+#: it. Every ledger in this project counts what it was pointed at, and the audit
+#: that compares these two files compared them NUMBER BY NUMBER, for zones they
+#: both hold. Neither had ever been read as a LIST.
+#:
+#: Frozen so the debt cannot grow while it is being paid down. A zone leaves
+#: this list by being encoded in rules.yaml, never by being deleted from it.
+UNSCREENED_ZONES: dict[str, tuple[str, ...]] = {
+    "gresham": ("CMU", "HDR-PV", "MDR-PV", "OFR", "SC", "SC-RJ", "VLDR-SW"),
+    "happy_valley": ("MURA", "SFA", "VTH"),
+    "lake_oswego": ("R-10", "R-15", "R-2", "R-6", "R-DD", "R-W"),
+    "multnomah_unincorporated": ("MR4", "R5"),
+    "portland": ("CE", "CI2", "CM1", "CM2", "CM3", "CR", "CX", "EX", "IR",
+                 "RM1", "RM2", "RM3", "RM4", "RX"),
+    "troutdale": ("MU-2", "MU-3"),
+    "wood_village": ("TC",),
+}
+
+
+def test_a_zone_missing_from_the_pipeline_is_a_debt_somebody_wrote_down() -> None:
+    """The gap that comparing numbers could never find.
+
+    Two files carry a zone's dimensions and they had been checked against each
+    other figure by figure, for every zone they both hold. That is not the same
+    as checking the LISTS. Doing that on 2026-09-02 found 35 zones the corpus
+    says a four-plex is permitted in and rules.yaml has never heard of --
+    Portland's RM1, RM2, EX, CM2 and CX among them, which is 74,446 of the
+    76,752 lots involved.
+
+    Every one of those lots is dropped at `zone_not_in_rules` before it is
+    measured, so nothing about it can ever be wrong in the dangerous direction.
+    That is precisely why it lasted: safety made it silent.
+
+    This list may SHRINK, by encoding the zone. It may not grow, and a zone may
+    not leave it by being removed from the corpus.
+    """
+    audit = _audit()
+    found = {j: tuple(z) for j, z in audit.unscreened_zones().items()}
+    assert found == UNSCREENED_ZONES, (
+        "zone coverage moved: "
+        f"{sorted(set(found) ^ set(UNSCREENED_ZONES))} differ by jurisdiction, "
+        f"and per-jurisdiction "
+        f"{ {j: sorted(set(found.get(j, ())) ^ set(UNSCREENED_ZONES.get(j, ()))) for j in set(found) | set(UNSCREENED_ZONES)} }"
+    )

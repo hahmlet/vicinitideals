@@ -84,6 +84,18 @@ FIELD_MAP: dict[str, str] = {
     "orientation_constraint": "orientation_constraint",
 }
 
+#: Keys that travel the OTHER WAY and so are not data loss when this port
+#: ignores them. Everything else in quadfit's table is an original number that
+#: has to reach a FLATS field or it is silently dropped -- which is what
+#: `unported` counts. The step-back planes are the exception: the corpus read
+#: them off the page first, and rules.yaml grew a `step_back_rear` /
+#: `step_back_side` key on 2026-09-02 only so the pipeline could DERIVE the
+#: setback a 26-foot building owes from the plane the code states, instead of
+#: standing at a printed figure that assumes a shorter house. Porting them back
+#: would be a round trip: the corpus already holds them, with the citation they
+#: came from.
+BACKPORTED: frozenset[str] = frozenset({"step_back_rear", "step_back_side"})
+
 #: Retrieval dates from the quadfit header. Clackamas was compiled later.
 RETRIEVED = {"multnomah": "2026-07-24", "clackamas": "2026-07-28"}
 
@@ -140,6 +152,8 @@ def port_zone(row: dict[str, Any], retrieved: str) -> tuple[dict[str, Any], list
 
     for key, value in row.items():
         if key in ("zone", "source", "source_url", "confidence", "notes"):
+            continue
+        if key in BACKPORTED:
             continue
         mapped = FIELD_MAP.get(key)
         if mapped is None:

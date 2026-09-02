@@ -70,10 +70,14 @@ def main() -> None:
     for n, row in enumerate(lots.itertuples(index=False)):
         j = rules.jurisdictions[row.jurisdiction]
         rule = j.rule_for(row.zone_raw)
+        # Rear and side come through the step-back: five Gresham districts
+        # and two Milwaukie zones cap the roof at the setback line and make it
+        # rise a foot per foot beyond, so a 26 ft pod owes more yard than the
+        # district table prints. See ZoneRule.effective_setback_*.
         setbacks = {
             "F": rule.setback_front_ft,
-            "R": rule.setback_rear_ft,
-            "S": rule.setback_side_ft,
+            "R": rule.effective_setback_rear_ft(),
+            "S": rule.effective_setback_side_ft(),
         }
         # Corner lots (tier B): we can't tell which street edge is the legal
         # front, so every street edge takes max(front, street_side) —

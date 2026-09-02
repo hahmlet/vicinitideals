@@ -416,16 +416,30 @@ the list of places worth hoping about.
   on the next pipeline run**, and on balance up: five of the eight corrections
   loosen the screen.
 
-  Three things remain, and each is a real question rather than an error:
-  - **7 places the pipeline cannot express a rule it has no field for.**
-    Gresham prints a 15 ft rear setback in five of its residential districts
-    and then, in a different chapter, caps the roof at 21 ft on that line and
-    lets it rise a foot for every foot further back — so our 26 ft pod actually
-    has to stand at 20 ft, not 15. Milwaukie does the same thing to its side
-    yards. The corpus knows this; **the pipeline has no way to express it at
-    all**, so every Gresham LDR lot is being drawn with five feet of back yard
-    it does not have. Gresham is the largest jurisdiction in the screen. This
-    closes when somebody builds the feature, not by editing five numbers.
+  Three things remained. **One of them closed on 2026-09-02.**
+  - ~~**7 places the pipeline cannot express a rule it has no field for**~~ —
+    **built and shipped 2026-09-02.** Gresham prints a 15 ft rear setback in
+    five of its residential districts and then, in a different chapter, caps
+    the roof at 21 ft on that line and lets it rise a foot for every foot
+    further back — so our 26 ft pod has to stand at 20 ft, not 15. Milwaukie
+    says the same thing about its side yards in a different shape, as a
+    45-degree plane. Every Gresham LDR lot was being drawn with five feet of
+    back yard it does not have, in the largest jurisdiction in the screen.
+
+    The fix was deliberately not "edit seven numbers". Both files now hold
+    exactly what the code prints, and the pipeline *derives* the setback a
+    26-foot building owes from the plane the code states. Change the product's
+    height and all seven move on their own. **This takes greens away in
+    Gresham and Milwaukie on the next full run** — it is the same shape as the
+    environmental overlays: reading a rule properly costs lots.
+
+    One thing found while building it and deliberately left alone: Gresham
+    switches the whole rule off for any lot inside its hillside or resource
+    overlay. Those lots are being screened five feet stricter than the code
+    asks. Giving the five feet back needs the screen to know which lots those
+    are *before* it draws the envelope, which it currently does not, and it is
+    not obvious the city means to hand back ground it has already protected.
+    Written down in the code file rather than guessed at.
   - **1 place the pipeline is right and the corpus is merely richer.** Lake
     Oswego asks 5 ft on one side and 15 ft across both. The pipeline has one
     side-yard number and no combined one, so 7.5 is the only figure it can
@@ -445,6 +459,28 @@ the list of places worth hoping about.
     legal read rather than ahead of it.
 
   Agent work, no action needed from you.
+- **76,752 lots are thrown away for being in a zone the screen has never been
+  taught** — found 2026-09-02 while building the step-back, and it is the
+  largest recoverable pool anybody has measured. The screen carries its own
+  hand-written table of what each zone allows. The code corpus carries a
+  second, read properly and quoted to the page. Those two had been checked
+  against each other **number by number** — and never **zone by zone**. Doing
+  that turned up 35 zones where the corpus says a four-plex is permitted and
+  the screen has no entry at all, so every lot in them is dropped before
+  anything is measured.
+
+  Nearly all of it is Portland: RM1 (19,643 lots), RM2 (12,782), EX (9,929),
+  CM2 (9,520), CX (8,488), and nine more — its apartment and mixed-use zones,
+  which is exactly where a four-plex is least controversial. The rest is small:
+  Gresham 1,319, Happy Valley 715, Wood Village 167, Troutdale 72,
+  unincorporated Multnomah 33.
+
+  **This direction is safe** — a lot the screen never looks at cannot become a
+  wrong green — and that is why it survived. It is 30% of the lot universe
+  sitting behind a table nobody thought to compare as a list. The dimensions
+  already exist, read and cited, in the corpus; the work is porting them across
+  and re-running. Agent work, no action needed from you, and it is next.
+
 - **Corner-lot status — and it is the opposite of what this list said.** 14
   jurisdictions define what a corner lot is; nothing computes which lots *are*
   corners, so all 78 corner rules in the corpus are switched off and every lot

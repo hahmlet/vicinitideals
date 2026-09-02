@@ -13,7 +13,15 @@ from pathlib import Path
 import pytest
 import yaml
 
-from flats.encode.port_quadfit import COUNTY, FIELD_MAP, layer_id_for, port, port_zone
+from flats.encode.port_quadfit import (
+    BACKPORTED,
+    COUNTY,
+    FIELD_MAP,
+    layer_id_for,
+    load_quadfit,
+    port,
+    port_zone,
+)
 from flats.rules.fields import FIELDS
 from flats.rules.loader import load_rules
 from flats.rules.model import Status
@@ -37,6 +45,34 @@ def test_nothing_is_dropped(dry: dict) -> None:
     # Every quadfit column either maps to a registered field or is deliberately
     # skipped. An unported field is data loss, and it is silent, so it is a test.
     assert dry["unported"] == []
+
+
+def test_a_skipped_key_has_to_already_be_here() -> None:
+    """The one way a column may be dropped without being data loss.
+
+    `unported` is the port's whole safety net, and `BACKPORTED` is a hole in it.
+    A key earns its place there by travelling the other way -- the corpus read
+    it off the page and rules.yaml derives from it -- so the test is not that
+    the key is on a list, it is that the information is ALREADY HERE. If a
+    step-back is declared in the pipeline and the corpus does not hold it, the
+    port is losing a plane and calling it a backport.
+    """
+    ruleset = RuleSet(load_rules())
+    for jname, spec in load_quadfit().items():
+        if not isinstance(spec, dict) or "zones" not in spec:
+            continue
+        layer = ruleset.layers.get(layer_id_for(jname))
+        for row in spec["zones"] or []:
+            for key in BACKPORTED & set(row):
+                field = "setback_" + key.removeprefix("step_back_") + "_ft"
+                zone = (layer.zones.get(row["zone"]) if layer else None)
+                held = zone.values.get(field) if zone else None
+                assert held is not None and held.step_back is not None, (
+                    f"{jname}/{row['zone']} declares {key} and the corpus holds "
+                    f"no step-back on {field} -- that is a dropped plane, not a "
+                    f"backport"
+                )
+                assert float(held.step_back.height_ft) == float(row[key]["height_ft"])
 
 
 def test_every_quadfit_zone_arrives(dry: dict) -> None:

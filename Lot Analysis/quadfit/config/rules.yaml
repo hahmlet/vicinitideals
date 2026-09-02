@@ -143,6 +143,11 @@ jurisdictions:
         setback_front_ft: 10
         setback_side_ft: 5
         setback_rear_ft: 15
+        # 7.0420(G)(1) applies to VLDR-SW, LDR-SW, LDR-PV, LDR-7, LDR-5 and TR:
+        # the roof may be 21 ft at the rear setback line and rises a foot for
+        # every foot further back. The 15 ft above is what Table 4.0130 prints;
+        # a 26 ft pod stands at 20. Derived, not typed — see common.StepBack.
+        step_back_rear: {height_ft: 21, rise_per_ft: 1, cite: "Gresham Development Code 7.0420(G)(1) — max roof height 21 ft at the rear setback line, rising 1 ft per 1 ft further back"}
         setback_street_side_ft: 10
         min_lot_sqft: 5000
         source: "Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420"
@@ -154,6 +159,11 @@ jurisdictions:
         setback_front_ft: 10
         setback_side_ft: 5
         setback_rear_ft: 15
+        # 7.0420(G)(1) applies to VLDR-SW, LDR-SW, LDR-PV, LDR-7, LDR-5 and TR:
+        # the roof may be 21 ft at the rear setback line and rises a foot for
+        # every foot further back. The 15 ft above is what Table 4.0130 prints;
+        # a 26 ft pod stands at 20. Derived, not typed — see common.StepBack.
+        step_back_rear: {height_ft: 21, rise_per_ft: 1, cite: "Gresham Development Code 7.0420(G)(1) — max roof height 21 ft at the rear setback line, rising 1 ft per 1 ft further back"}
         setback_street_side_ft: 10
         min_lot_sqft: 7000
         source: "Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420"
@@ -175,6 +185,11 @@ jurisdictions:
         setback_front_ft: 10
         setback_side_ft: 5
         setback_rear_ft: 15
+        # 7.0420(G)(1) applies to VLDR-SW, LDR-SW, LDR-PV, LDR-7, LDR-5 and TR:
+        # the roof may be 21 ft at the rear setback line and rises a foot for
+        # every foot further back. The 15 ft above is what Table 4.0130 prints;
+        # a 26 ft pod stands at 20. Derived, not typed — see common.StepBack.
+        step_back_rear: {height_ft: 21, rise_per_ft: 1, cite: "Gresham Development Code 7.0420(G)(1) — max roof height 21 ft at the rear setback line, rising 1 ft per 1 ft further back"}
         setback_street_side_ft: 10
         min_lot_sqft: 4000
         source: "Gresham Development Code Tables 4.0120/4.0130/4.0131; 7.0420"
@@ -186,6 +201,11 @@ jurisdictions:
         setback_front_ft: 10
         setback_side_ft: 5
         setback_rear_ft: 10
+        # 7.0420(G)(1) applies to VLDR-SW, LDR-SW, LDR-PV, LDR-7, LDR-5 and TR:
+        # the roof may be 21 ft at the rear setback line and rises a foot for
+        # every foot further back. The 10 ft above is what Table 4.0130 prints;
+        # a 26 ft pod stands at 15. Derived, not typed — see common.StepBack.
+        step_back_rear: {height_ft: 21, rise_per_ft: 1, cite: "Gresham Development Code 7.0420(G)(1) — max roof height 21 ft at the rear setback line, rising 1 ft per 1 ft further back"}
         setback_street_side_ft: 10
         min_lot_sqft: 5000
         source: "Gresham Development Code Tables 4.1413/4.1415A/4.1415B (Pleasant Valley); 7.0420"
@@ -197,6 +217,11 @@ jurisdictions:
         setback_front_ft: 10
         setback_side_ft: 5
         setback_rear_ft: 15
+        # 7.0420(G)(1) applies to VLDR-SW, LDR-SW, LDR-PV, LDR-7, LDR-5 and TR:
+        # the roof may be 21 ft at the rear setback line and rises a foot for
+        # every foot further back. The 15 ft above is what Table 4.0130 prints;
+        # a 26 ft pod stands at 20. Derived, not typed — see common.StepBack.
+        step_back_rear: {height_ft: 21, rise_per_ft: 1, cite: "Gresham Development Code 7.0420(G)(1) — max roof height 21 ft at the rear setback line, rising 1 ft per 1 ft further back"}
         setback_street_side_ft: 10
         min_lot_sqft: 5000
         source: "Gresham Development Code Tables 4.1507/4.1508 (Springwater); 7.0420"
@@ -924,6 +949,13 @@ jurisdictions:
         quadplex_allowed: true
         setback_front_ft: 20
         setback_side_ft: 5
+        # The table prints 5 ft and four rows below prints a side yard height
+        # plane: 20 ft of height at the minimum side yard, sloping up at 45
+        # degrees. MMC 19.200 puts the plane's start "horizontally offset from
+        # the side lot line by the required side yard depth" — at the yard, not
+        # at the lot line — so a 26 ft wall stands at 11 ft. 19.501.3's two
+        # exceptions are chimneys and 30-inch eaves; neither is a wall.
+        step_back_side: {height_ft: 20, slope_degrees: 45, cite: "MMC Table 19.301.4, Side yard height plane limit"}
         setback_rear_ft: 20
         setback_street_side_ft: 20
         min_lot_sqft: 3000
@@ -936,6 +968,13 @@ jurisdictions:
         quadplex_allowed: true
         setback_front_ft: 20
         setback_side_ft: 5
+        # The table prints 5 ft and four rows below prints a side yard height
+        # plane: 25 ft of height at the minimum side yard, sloping up at 45
+        # degrees. MMC 19.200 puts the plane's start "horizontally offset from
+        # the side lot line by the required side yard depth" — at the yard, not
+        # at the lot line — so a 26 ft wall stands at 6 ft. 19.501.3's two
+        # exceptions are chimneys and 30-inch eaves; neither is a wall.
+        step_back_side: {height_ft: 25, slope_degrees: 45, cite: "MMC Table 19.302.4, Side yard height plane limit"}
         setback_rear_ft: 15
         min_lot_sqft: 3000
         max_coverage_pct: 50

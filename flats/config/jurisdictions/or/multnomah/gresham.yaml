@@ -131,6 +131,27 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
   cut where no stall may sit.
 
 
+  READ AND NOT ENCODED: 7.0420(G)(1)(b), the exemption from the rear roof height limit. The plane
+  itself is encoded on all six districts (G)(1) names and, since 2026-09-02, the site-plan pipeline
+  derives the 20 ft rear setback from it rather than standing at Table 4.0130''s printed 15. (b) is
+  the sentence that switches it off: "This rear roof height limit standard does not apply if any
+  portion of the lot is located within the Hillside Geological Risk Area (HGRO) or Resource Area
+  (RA)." Not encoded, and the direction matters -- this is a refusal that costs lots rather than
+  inventing them. A lot inside either overlay owes the printed setback and is being screened five
+  feet stricter than the code.
+
+  It is refused rather than deferred because the shape is wrong twice over. There is no condition
+  for "inside the hillside or resource overlay", and unlike most site facts in this corpus the data
+  exists: quadfit fetches both layers and screens every Gresham lot against them. But the envelope
+  is built at s5 and the overlays are measured at s5o, so a setback that varies per lot by overlay
+  touch is a stage-ordering change and not a value. And the second half is worse than the first:
+  both layers are CARVES, so a lot in either has already had that ground subtracted from its
+  envelope. Handing the five feet back to a lot whose resource area was just removed is not obviously
+  the code''s arithmetic, and nothing here has read 4.1100 or 4.1200 far enough to say. Two questions
+  in one clause, and the conservative answer is the same for both, which is why this waits.
+  (or/multnomah/gresham/7.0400.middle-housing-design.txt#L364-L365)
+
+
   Still not encoded, and now for a better reason than absence. There is no clear-vision field, and the
   shape is not a setback: a triangle cut across a corner is not an inset from a line, and writing 40
   into a corner setback would take a diagonal off the whole street side. The corner limb also needs the

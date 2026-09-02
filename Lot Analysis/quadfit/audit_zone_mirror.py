@@ -19,12 +19,17 @@ green in the densest zone of its city.
 
 What is left is not drift, and the run sorts it into four kinds:
 
-MISSING STEP-BACK. Gresham prints a 15-foot rear setback in five districts and
-then says at 7.0420(G)(1) that the roof may be no more than 21 feet at that
+MISSING STEP-BACK -- closed 2026-09-02, and the fix was a feature rather than
+seven edited numbers. Gresham prints a 15-foot rear setback in five districts
+and then says at 7.0420(G)(1) that the roof may be no more than 21 feet at that
 line, rising a foot for every foot further back -- so a 26-foot pod stands at
-20, not 15. Milwaukie does the same to its side yards. The corpus carries both
-figures, the effective one and the printed one it came from; rules.yaml carries
-only the printed one, because the pipeline has no step-back model at all.
+20, not 15. Milwaukie states the same rule as a 45-degree side yard height
+plane. rules.yaml now DECLARES the plane next to the printed setback and the
+envelope derives what a `DESIGN_HEIGHT_FT` building owes, so both files hold
+what the code prints and neither holds a number nobody could find on the page.
+The bucket stays because it still catches the thing that mattered: a corpus
+step-back the pipeline has not declared, which is always the direction that
+manufactures a green.
 
 COLLAPSED COMBINED YARD. Lake Oswego asks 5 feet on one side and 15 feet across
 both. rules.yaml has one symmetric side field and no total, so the only faithful
@@ -163,8 +168,13 @@ class Divergence:
 
     @property
     def is_step_back(self) -> bool:
-        """rules.yaml has the number the code prints; the corpus has the number
-        a 26-foot building actually has to stand at."""
+        """The corpus applies a step-back here and rules.yaml has not declared it.
+
+        `shipped` is already the effective figure -- `_stepped_back` applies any
+        plane rules.yaml declares before the comparison -- so this is only true
+        when the pipeline is standing at the printed setback while the corpus
+        stands further back. Always the direction that manufactures a green.
+        """
         return self.printed is not None and self.printed == self.shipped
 
     @property
@@ -191,8 +201,9 @@ class Divergence:
     def __str__(self) -> str:
         limbs = "/".join(_n(c) for c in self.corpus)
         if self.is_step_back:
-            return (f"{self.key}: rules.yaml {_n(self.shipped)} is the printed "
-                    f"setback; the step-back makes it {limbs}")
+            return (f"{self.key}: rules.yaml stands at the printed "
+                    f"{_n(self.shipped)} and declares no plane; the corpus "
+                    f"step-back makes it {limbs}")
         if self.is_side_total_collapse:
             return (f"{self.key}: rules.yaml {_n(self.shipped)} is half the "
                     f"corpus's {_n(self.side_total)} ft combined side yard, "
@@ -340,6 +351,44 @@ def _pairs(top: dict, corpus: dict):
             yield juris, z, _Effective(zl, _effective(layer, zl)), layer
 
 
+def unscreened_zones() -> dict[str, list[str]]:
+    """Zones the corpus says permit the pod and rules.yaml has no entry for.
+
+    Everything else in this file compares the two files NUMBER BY NUMBER, for
+    zones they both hold. That was the whole audit for five weeks, and it could
+    not see the larger thing: rules.yaml is also a LIST, and a zone missing from
+    it is not a disagreement, it is a silence. `s3_filter` drops those lots at
+    `zone_not_in_rules` before anything is measured -- 102,665 of them on the
+    2026-09-01 run, the single biggest step in the funnel.
+
+    The direction is the safe one. A lot the screen never looks at cannot come
+    back green by mistake, which is exactly why nothing noticed: every ledger in
+    this project counts what it was pointed at, and nobody had pointed one at
+    the difference between two lists.
+    """
+    from flats.encode.port_quadfit import layer_id_for
+
+    top, corpus = _load()
+    out: dict[str, list[str]] = {}
+    for juris, spec in sorted(top.items()):
+        if not isinstance(spec, dict) or "zones" not in spec:
+            continue
+        layer = corpus.get(layer_id_for(juris))
+        if layer is None:
+            continue
+        mine = {z.get("zone") for z in (spec["zones"] or [])}
+        missing = []
+        for name, zl in layer.zones.items():
+            if name in mine:
+                continue
+            allowed = _effective(layer, zl).get("quadplex_allowed")
+            if allowed is not None and allowed.value is True:
+                missing.append(name)
+        if missing:
+            out[juris] = sorted(missing)
+    return out
+
+
 def permission_splits() -> list[str]:
     """Zones where the two files disagree about whether the pod may be built.
 
@@ -398,6 +447,25 @@ def aliases() -> list[Alias]:
     return out
 
 
+def _stepped_back(z: dict, field: str, printed: float) -> float:
+    """The figure the ENVELOPE uses, which is not always the one the table prints.
+
+    Five Gresham districts and two Milwaukie zones cap the roof at the setback
+    line and buy height with distance. rules.yaml holds the printed setback and
+    declares the plane beside it; `common.StepBack` turns the pair into the
+    setback a 26-foot building actually stands at. Comparing the printed figure
+    against the corpus here would report seven disagreements that are not.
+    """
+    from common import StepBack
+
+    key = {
+        "setback_rear_ft": "step_back_rear",
+        "setback_side_ft": "step_back_side",
+    }.get(field)
+    spec = z.get(key) if key else None
+    return printed if spec is None else printed + StepBack(**spec).extra_ft()
+
+
 def scan() -> tuple[list[Divergence], list[str], int]:
     """Returns (mismatches, dimensions rules.yaml states alone, agreements).
 
@@ -419,6 +487,7 @@ def scan() -> tuple[list[Divergence], list[str], int]:
             shipped = z.get(mine)
             if shipped is None:
                 continue
+            shipped = _stepped_back(z, mine, float(shipped))
             value = zl.values.get(theirs) or layer.defaults.get(theirs)
             if value is None:
                 alt = ALIASES.get(mine)
@@ -467,7 +536,7 @@ def main() -> None:
     buckets = [
         ("DIVERGENT -- one file was edited and the other was not",
          [d for d in diverge if d.is_drift]),
-        ("where the pipeline is missing the step-back, not drifting",
+        ("where the corpus has a step-back rules.yaml never declared",
          [d for d in diverge if not d.is_permission_blocked and d.is_step_back]),
         ("where rules.yaml collapses a combined side yard it has no field for",
          [d for d in diverge if not d.is_permission_blocked
@@ -479,6 +548,13 @@ def main() -> None:
         print(f"{len(rows)} {label}")
         for d in rows:
             print("   ", d)
+
+    unscreened = unscreened_zones()
+    n = sum(len(v) for v in unscreened.values())
+    print(f"{n} zones the corpus permits the pod in and rules.yaml has no entry "
+          f"for -- their lots never reach a measurement")
+    for juris, zones in sorted(unscreened.items()):
+        print(f"    {juris}: {', '.join(zones)}")
 
     splits = permission_splits()
     print(f"{len(splits)} zones disagree about whether the pod is permitted")
