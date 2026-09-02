@@ -5,10 +5,21 @@ agent cannot do alone. The agent maintains it: items get added when work
 surfaces them, and struck through (with a date and what happened) when they
 close. Items are ordered by how many lots ride on them, biggest first.
 
-Pipeline state when last updated (2026-09-02, after the FEMA county-gap re-run):
-**green 10,106 · review 30,252 · red 210,386** across 250,744 lots in 13 cities
-laid out with real site plans. The 73 greens lost against 2026-09-01 are the
-measured cost of one missing county in the flood download.
+Pipeline state when last updated (2026-09-02, after every Clackamas city's
+environmental overlays were wired in and the whole run repeated):
+**green 9,928 · review 30,092 · red 210,724** across 250,744 lots in 13 cities
+laid out with real site plans. The 178 greens lost against the run before it
+are the measured price of looking at habitat, wetland and floodplain land in
+Clackamas County for the first time — 55 in Oregon City, 54 in unincorporated
+Clackamas, 46 in West Linn, 19 in Wilsonville, 17 in Milwaukie. Thirteen lots
+went the other way and became green, because one of those overlays *removes*
+a setback rather than adding a constraint.
+
+These numbers are already one step behind. Three changes landed after this run
+and none of them is in it: the sloped setback, **29 zones the pipeline had
+never heard of** (76,752 lots that had been thrown away before measurement),
+and the minimum-density floor. The next run is the first that carries them,
+and it will move every figure on this line.
 
 ---
 
@@ -43,6 +54,14 @@ on it, and only the first is a queue item:
    *next* chapter, which links back to it. **Nothing is needed from you on this
    item any more.** The two cities still unscreened, Tualatin and Gladstone,
    have no greens between them.
+
+   Now measured, on a full re-run finished 2026-09-02: wiring them **cost 178
+   greens** and turned 338 lots red outright. The habitat layer in
+   unincorporated Clackamas is by far the largest, touching 6,853 lots on its
+   own; Milwaukie's four layers together touch 832. That is the whole of the
+   2,820-green exposure resolved — not 2,820 lots lost, but 2,820 lots that had
+   been graded blind and have now actually been looked at, and 178 of them did
+   not survive the look.
 4. **No green has ever been checked against a real answer.** The one back-test
    run measured the opposite direction — of fourplexes that really were
    permitted, did we flag the lot? (60%.) Nobody has taken a green lot to a
