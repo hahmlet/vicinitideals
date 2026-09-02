@@ -380,6 +380,30 @@ the list of places worth hoping about.
   generator. Nothing is lost by waiting — the screen recomputes every lot from
   scratch on each run.
 
+- ~~**Portland's tree code — the biggest unread cross-reference in the city**~~
+  Closed 2026-09-02: read, and it costs money rather than land. Four separate
+  places in Portland's zoning code say tree requirements "are specified in
+  Title 11" and then stop — and they say it in the same breath as building
+  coverage and minimum landscaped area, which is why the ledger ranked it the
+  largest unread reference standing next to a number we screen on. Now fetched
+  and read.
+
+  It does apply to us. But every number in it can be paid off. The
+  preservation rule asks for a third of the twelve-inch trees and *all* of the
+  twenty-inch ones, and then says in as many words that any tree not preserved
+  "may be removed" on payment of a per-inch fee; a tree three feet thick adds
+  only a posted notice that carries no comment period and no appeal, and the
+  permit issues the next business day. The planting rule looks alarming — 40%
+  of the site as "required tree area" — but that percentage only sets *how many
+  trees*, and the ground each one actually needs is 50 to 150 square feet. On a
+  7,000 sq ft lot the whole obligation is about 450 square feet of planting, and
+  the city will take a cheque for any of it, at no cap.
+
+  So no lot moves, and nothing goes on your list. What it does produce is a
+  **cost line nobody had**: every Portland site now in play — and Portland is
+  where the 74,446 newly-screened lots are — carries a tree fee that scales
+  with the trees standing on it today. That belongs in the pro forma.
+
 - ~~**Portland-administered pockets** (PCC 33.266 applied to the 1,489
   unincorporated-Multnomah lots Portland administers)~~ Closed 2026-09-01:
   read, and it changes nothing. Portland's chapter and the county's state the

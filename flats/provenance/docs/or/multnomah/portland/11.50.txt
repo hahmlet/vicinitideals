@@ -1,0 +1,320 @@
+11.50.010 Purpose.
+
+1 The regulations of this Chapter support and complement other City development requirements, with a focus on achieving baseline tree preservation and total tree capacity on a site, considering the anticipated use and level of development. This Chapter regulates the removal, protection and planting of trees through the development process to encourage development, where practicable, to incorporate existing trees, particularly high quality or larger trees and groves, into the site design, to retain sufficient space to plant new trees, and to ensure suitable tree replacement when trees are removed. It is the intent of these provisions to lessen the impact of tree removal and to ensure mitigation when tree preservation standards are not met.
+
+11.50.020 When a Tree Plan is Required.
+
+(Amended by Ordinances 188816, 191988, and 192095, effective October 24, 2025.)
+
+A tree plan is required in conjunction with all development permits, unless there are no private trees 12 inches or more in diameter, no City trees six inches or more in diameter, and/or no street trees three inches or more in diameter, and the site or activity is exempt from Section 11.50.050 On-Site Tree Density Standards; and Section 11.50.060 Street Tree Planting Standards. The City Administrator may reduce the tree plan requirements for development alterations that do not include changes to topography, landscaping, exterior improvements, or street improvements or add gross building area. If multiple development permits are required for a development proposal, including demolitions and subsequent construction, the same Tree Plan must be included with each permit. For tree removal when no development permit is required, following completion of the development permit, or when tree preservation does not apply per Subsection 11.50.040 A.1., see Chapter 11.40.
+
+11.50.030 Development Impact Area Option For Large Sites and Streets.
+
+(Amended by Ordinances 188278 and 191988, effective January 3, 2025.)
+
+1 Where development is proposed on a site larger than one acre or where work is occurring in the street and is not associated with an adjacent development site, the applicant may choose to establish a development impact area. For sites using the development impact area option, tree preservation requirements must be based on the trees within the development impact area and tree density will be based on meeting Option A as applied only to the area within the development impact area. Trees may be planted to meet tree density requirement elsewhere on the site.
+
+11.50.040 Tree Preservation Standards.
+
+(Amended by Ordinances 187675, 188278, 188816, 188959, 189078, 189795, 190200, 191030, 191736, 191975, and 191988, effective January 3, 2025.)
+
+1 A. Where these regulations apply.
+
+1 1. This Section applies to trees within the City and trees on sites within the County Urban Pocket Areas in the following situations. On sites where these regulations do not apply, tree removal is subject to the requirements of Chapter 11.40, Tree Permit Requirements.
+
+1 a. On sites. Development activities with any ground disturbance or a construction staging area greater than 100 square feet on unpaved portions of the site within the root protection zone, as defined in Subsection 11.60.030 C.1.a., of one or more private trees 12 or more inches in diameter and/or one or more City Trees six or more inches in diameter.
+
+2 b. In streets. Development activities with any ground disturbance or construction staging not limited to existing paved surfaces where there are one or more street trees three or more inches in diameter.
+
+2 2. Any Heritage Trees and trees required to be preserved through a land use condition of approval or tree preservation plan cannot be removed using the provisions in this Chapter, but may be counted toward the tree preservation requirements of this Section.
+
+2 B. Exemptions. The following are exempt from the tree preservation standards of this Section:
+
+1 1. Private trees on portions of sites located within an IH zone.
+
+2 2. Private trees on sites that are less than 5,000 square feet in area.
+
+3 3. Private trees on sites that have existing or proposed building coverage of 85 percent or more.
+
+4 4. Trees that are dead, dying, dangerous, or a nuisance species, as documented in a Tree Plan per Subsection 11.50.070 B. These are subtracted from the total number of trees to be addressed by the standards.
+
+5 5. Private trees exempted from this standard by a land use decision.
+
+6 6. Tree preservation requirements approved in a land division or planned development review under Title 33, Planning and Zoning and the requirements of that review are still in effect.
+
+7 7. Repair and replacement of existing fences and decks that are not changing in footprint or length when no trees are to be removed as a part of the project.
+
+3 C. Tree preservation requirement. Any trees preserved must be protected in accordance with the specifications in Section 11.60.030.
+
+1 1. Private trees.
+
+1 a. General tree preservation.
+
+1 (1) Retention. An applicant must preserve and protect at least 1/3 of the nonexempt trees 12 inches and larger in diameter located completely or partially on the development site, unless mitigation occurs per Subsection 11.50.040 C.1.a.(2) below. Any fractional result will be rounded up to the next whole number. Retaining trees at least six and less than 12 inches in diameter that are documented in a report prepared by an arborist or landscape professional to be Garry Oak (Quercus garryana), Pacific Madrone (Arbutus menziesii), Pacific Yew (Taxus brevifolia), Ponderosa Pine (Pinus ponderosa), Western Redcedar (Thuja plicata), or Western Flowering Dogwood (Cornus nuttallii) species are not included in the total count of trees on the site but may be used toward meeting the preservation standard.
+
+2 (2) Mitigation. For each tree not preserved and protected below the 1/3 requirement, payment to the Tree Planting and Preservation Fund is required as shown in Table 50-1. For trees not preserved and protected at least 12 inches and less than 20 inches in diameter the mitigation fee is the cost of (2) two-inch diameter replacement trees. For trees not preserved and protected at least 20 inches in diameter or greater the mitigation fee is the cost per diameter inch of tree not preserved and protected. The fee is calculated using the per-inch restoration fee for tree removal in the adopted fee schedule for Title 11. In cases where more than one tree is not preserved and protected in excess of that allowed by Subsection 11.50.040 C.1.a.(1), the mitigation payment required to meet the 1/3 retention standard is based on the largest tree or trees proposed for removal.
+
+3 (3) Removal. Each tree not preserved and protected may be removed. Any trees removed must be removed in accordance with the specifications in Section 11.60.050.
+
+4 Table 50-1
+
+5 Required Mitigation
+
+6
+Size of Tree Removed (inches in diameter)  Required Mitigation
+At least 12 and less than 20               The cost of (2) two-inch diameter replacement trees
+At least 20 or more                        The cost per inch of tree removed
+
+2 b. Preservation of trees 20 inches or greater.
+
+1 (1) Retention. An applicant must preserve and protect all nonexempt trees 20 inches in diameter or greater located completely or partially on the development site, unless mitigation and notice occurs per Subsections 11.50.040 C.1.b.(2) and 11.50.040 C.1.c., below. Retention or mitigation of these trees may also be used to meet the standards for general tree preservation in Subsection 11.50.040 C.1.a. above.
+
+2 (2) Mitigation. For each tree 20 or more inches in diameter not preserved and protected, payment to the Tree Planting and Preservation Fund is required as shown in Table 50-1. The fee is calculated using the per-inch Planting and Establishment Fee in Lieu for development in the adopted fee schedule for Title 11.
+
+3 (3) Removal. Each tree not preserved and protected may be removed. Any trees removed must be removed in accordance with the specifications in Section 11.60.050.
+
+3 c. Notice for trees 36 inches or greater not preserved and protected. If a tree 36 inches or greater in diameter is not preserved and protected as allowed by Subsection 11.50.040 C.1.b.(2) above, the property owner or the property owner’s representative must post a notice on the site and send a notice to the recognized Neighborhood Association and District Coalition in which the site is located. The notices are for notification purposes only. The notices do not provide for public comment on the proposal or for appeal of the proposal. The property owner or the property owner’s representative must provide a signed certification to Portland Permitting & Development that a notice was posted on the site and a notice was sent to the Neighborhood Association and District Coalition. The development permit may not be issued until the business day following the day the notification period is completed.
+
+1 (1) The posted notice must:
+
+1 (a) Be posted on the site for at least 45 calendar days prior to development permit issuance;
+
+2 (b) Be posted within 10 feet of the street lot line nearest the tree or trees to be removed;
+
+3 (c) Include the date of posting and the date of the end of the notification period;
+
+4 (d) Include a site plan at least 8.5 x 11 inches in size showing the location and description of the trees(s) to be removed including diameter inch size(s); and
+
+5 (e) Include contact information for the property owner or the property owner’s representative.
+
+2 (2) The notices to the Neighborhood Association and District Coalition must:
+
+1 (a) Be e-mailed or mailed to the Neighborhood Association and District Coalition using the contact information maintained by the Office of Community & Civic Life. If mailed, the notice must be sent via certified or registered mail. The date of the e-mail or the mailing must be at least 45 calendar days prior to development permit issuance;
+
+2 (b) Include a description of the trees(s) to be removed including diameter inch size(s); and
+
+3 (c) Include contact information for the property owner or the property owner’s representative.
+
+4 d. Exemption of tree preservation mitigation payments for affordable housing developments. Projects are exempt from the mitigation requirements in Subsection 11.50.040 C.1.b.(2) if the development will be an affordable housing development approved for system development charge exemptions under Section 30.01.095. The amount of the mitigation exemption must be pro-rated to a percentage equal to the percentage of dwelling units on the development site that are approved for the systems development charge exemption in Section 30.01.095. The City Administrator may adopt administrative rules for the administration of Subsection 11.50.040 C.1.d.
+
+5 e. Exception for capital improvement projects. Trees on private property that are part of a capital improvement project and within the development impact area are regulated as City and street trees.
+
+2 2. City and street trees.
+
+1 a. General tree preservation.
+
+1 (1) Retention. The City Forester will identify potential impacts and opportunities to preserve and protect existing trees, as well as any measures required to protect trees on site, on adjacent sites, or in the street. Any work on any street tree or City tree must be approved by the City Administrator.
+
+2 (2) Mitigation. Any required mitigation specified below must occur on the site, in the street planter strip, elsewhere on City property or in the street, or as a payment into the Tree Planting and Preservation Fund. The City Administrator may reduce or waive the following mitigation requirements.
+
+1 (a) Approved street tree removal in conjunction with improvements to partially or fully unimproved streets. Each tree at least 12 inches in diameter that is allowed to be removed must be replaced with at least one tree. Trees planted to meet street tree planting standards will be credited toward meeting this requirement.
+
+2 (b) Any other street tree or City tree allowed to be removed that is six or more inches in diameter must be replaced with at least one tree in addition to trees required to meet required tree density or street tree planting standards.
+
+3 (3) Removal. Any trees approved to be removed by the City Administrator may be removed. Any trees removed must be removed in accordance with the specifications in Section 11.60.050.
+
+1
+
+11.50.050 On-Site Tree Density Standards.
+
+(Amended by Ordinances 187675, 188278, 188959, 190200, 191030, 191988, and 192095, effective October 24, 2025.)
+
+1 A. Where these regulations apply. This Section applies to sites within the city and the County Urban Pocket Areas. Unless exempted in Subsection 11.50.050 B., the following are subject to the On-Site Tree Density Standards:
+
+1 1. New development;
+
+2 2. Exterior alterations to existing development when the alteration is subject to the requirements of Subsection 33.258.070 D.2. a.
+
+2 B. Exemptions.
+
+1 1. The following development activities are exempt from the on-site tree density standards:
+
+1 a. A specific condition of land use review approval exempts the site from these density standards;
+
+2 b. The site is within the Portland International Airport Plan District or Cascade Station/Portland International Center Plan District and is subject to the Airport Landscape Standards; see Title 33, Planning and Zoning.
+
+3 c. Private trees on portions of sites located within an IH zone.
+
+4 d. Work conducted under demolition, site development, septic, plumbing or zoning permits.
+
+2 2. Sites with the following primary uses are exempt from the on-site tree density standards:
+
+1 a. Railroad yards;
+
+2 b. Waste related;
+
+3 c. Agriculture;
+
+4 d. Aviation and surface passenger terminals;
+
+5 e. Detention facilities;
+
+6 f. Mining;
+
+7 g. Radio frequency transmission facilities; or
+
+8 h. Rail lines and utility corridors;
+
+3 C. New development must meet City specifications and standards in Chapter 11.60 and the on-site tree density requirements in Subsection D., below. Exterior alterations must meet City specifications and standards in Chapter 11.60 and the on-site tree density requirements in Subsection D., below, but are only required to spend 10 percent of project value on the requirements in Subsection D. and the nonconforming upgrades required by Portland City Code Chapter 33.258, Nonconforming Situations.
+
+4 D. On-site tree density requirements.
+
+1 1. Required tree area. The required tree area is based on the size of the site and the type and size of proposed and existing development as shown in Table 50-2. Applicants may choose Option A or Option B for calculating required tree area except only Option A may be used to apply standards to a "Development Impact Area".
+
+2 Table 50-2
+
+3 Determining Required Tree Area
+
+4
+Development Type                     Option A                                       Option B
+One to Four Family Residential       40 percent of site or development impact area  Site area minus building coverage of existing and proposed development
+Multi Dwelling Residential           20 percent of site or development impact area  Site area minus building coverage of existing and proposed development
+Commercial/Office/ Retail/Mixed Use  15 percent of site or development impact area  Site area minus building coverage of existing and proposed development
+Industrial                           10 percent of site or development impact area  Site area minus building coverage of existing and proposed development
+Institutional                        25 percent of site or development impact area  Site area minus building coverage of existing and proposed development
+Other                                25 percent of site or development impact area  Site area minus building coverage of existing and proposed development
+
+5 2. Required tree density. The required tree area must be planted with some combination of large, medium or small canopy trees at the following rates:
+
+6 Table 50-3
+Number of Required Trees and Minimum Planting Area
+
+7
+Canopy size category (at maturity)  Number of trees required per size of tree area  Min. required planting area per tree (min. dimension)
+Large                               1 per 1,000 s.f.                                150 s.f. (10’ x 10’)
+Medium                              1 per 500 s.f.                                  75 s.f. (5’ x 5’)
+Small                               1 per 300 s.f.                                  50 s.f. (3’ x 3’)
+
+8 Refer to Chapter 11.60, Technical Specifications, to calculate tree canopy size categories. When the canopy size category of the tree species is not or cannot be determined, the tree will be considered a small canopy tree.
+
+9 3. Tree density credits
+
+1 a. Trees planted on site to meet any required stormwater or other landscaping requirement may be counted toward the On-site tree density requirements.
+
+2 b. Trees that are retained and protected, including trees preserved per Section 11.50.040, may be credited as follows:
+
+1 (1) Trees between 1.5 and less than six inches in diameter count as one small canopy size tree.
+
+2 (2) Trees six or more inches in diameter count as one medium canopy size tree for each full increment of six diameter inches.
+
+3 (3) Trees straddling a private property line count as one medium canopy size tree for each full increment of six diameter inches on the property where development is occurring.
+
+3 c. Payment in lieu of planting. The applicant may pay a fee to the Tree Planting and Preservation Fund per Section 11.15.010 equivalent to the cost of planting and establishing one 1.5-inch caliper tree. The fee per tree will be credited at a rate of one medium canopy size tree.
+
+4 d. On sites less than or equal to 3,000 square feet, healthy non-nuisance species trees planted or retained in the street planting strip may be credited as described in this Subsection.
+
+1
+
+11.50.060 Street Tree Planting Standards.
+
+(Amended by Ordinances 191030, 191988, and 192095, effective October 24, 2025.)
+
+1 A. Where these regulations apply.
+
+1 1. This Section applies to projects within or fronting on any City-owned or -managed streets.
+
+2 2.Until January 1, 2029, street trees are required when new buildings are proposed or when street improvements are proposed or required. On and after January 1, 2029 street trees are required where the project value is more than $25,000.
+
+3 3.For developments that require street tree planting, the cost of required street tree improvements is limited to 10 percent of the value of the proposed development.
+
+2 B. Exemptions. The following are exempt from the street tree planting standards of this Section:
+
+1 1. Development activities associated with the following:
+
+1 a. Additions, alterations, or repairsthat do not require frontage improvements through a public works process.
+
+2 b. Additions, alterations, repair or new construction where the project value is less than $25,000;
+
+3 c. Activity that is limited to the street, and does not modify or create sidewalks, tree wells, or existing or potential tree planting areas; or
+
+4 d. Demolition permits.
+
+2 2. Where physical constraints preclude meeting the street tree planting requirement because:
+
+1 a. Existing driveways, trees, and above or below grade utilities prevent planting street trees; or
+
+2 b. The design of the street will not accommodate street tree planting because the planting strip is less than three feet wide, there is not a planting strip, or there is insufficient space to add tree wells.
+
+3 C. Street tree planting requirement. Any proposed change in width in a public street right-of-way or any other proposed street improvement, including the development of new public streets, must include areas for tree and landscape planting where practical. Utility connections and specifications for planting such areas must be integrated into the site plan. Specific locations and species will be determined by the City Administrator. Planting in public streets must meet the specifications in Chapter 11.60 and the following:
+
+1 1. One street tree must be planted or retained for each full increment of 25 linear feet per side of street frontage. When the required number of trees cannot be planted, a fee in lieu of planting may be required. For City projects, required trees that cannot be planted within the improvement area may be planted elsewhere on City property or in the street, instead of paying a fee in lieu of planting.
+
+2 2. When new streets are being created in association with a land division, street tree planting may be deferred until the completion of the building permit on each new lot, subject to City Administrator approval.
+
+11.50.070 Tree Plan Submittal Requirements.
+
+(Amended by Ordinances 188278, 188816, 191030, and 191988, effective January 3, 2025.)
+
+1 A tree plan submittal must include the following information. The tree plan information may be combined with other relevant plan sheets. The submittal must include:
+
+2 A. Site plan requirements. The site plan must include the following information with sufficient detail to show that the proposal complies with this Title. See the definition for site in Title 33.
+
+1 1. Existing improvements;
+
+2 2. Any construction staging areas on site;
+
+3 3. Proposed alterations including structures, impervious area, grading, and utilities;
+
+4 4. Existing trees:
+
+1 a. Trees on the site. Indicate the location and the diameter size of:
+
+1 (1) Any Heritage Trees and trees required to be preserved as part of a condition of land use approval. These must be clearly labeled.
+
+2 (2) All private trees at least 12 inches in diameter and all City Trees at least six inches in diameter located completely or partially on the site. On City-owned or -managed sites, the City Administrator may require smaller size trees be shown.
+
+3 (3) Trees smaller than six inches in diameter must be shown when proposed to be retained for tree density credit.
+
+4 Applicants using the development impact area option as described in Section 11.50.030, need only identify the trees on the site inside and 25 feet beyond the edge of the development impact area. For all trees shown to be retained on the tree plan (including those beyond the development impact area), tree protection methods detailed in Subsection 11.60.030 C. must be implemented. Protection may be achieved using the prescriptive path or performance path.
+
+2 b. Trees in the street. For the street area adjacent to the development site or development impact area, indicate the location and the diameter size of:
+
+1 (1) Any Heritage Trees and trees required to be preserved as part of a condition of land use approval
+
+2 (2) All trees within the adjacent street that are at least three inches in diameter.
+
+3 Applicants using the development impact area option within the street when not associated with development of an adjacent site as described in Section 11.50.030 must identify trees three or more inches in diameter inside and 15 feet beyond the edge of the development impact area.
+
+4 When the 15-foot distance extends onto property outside the street, provide estimates of tree size and location for trees six or more inches in diameter on these properties. For City projects, the City Forester or project arborist may determine which trees on adjacent properties must be identified per this Subsection.
+
+5 5. Proposed tree activity:
+
+1 a. Indicate trees to be retained and proposed tree protection measures meeting the specifications in Chapter 11.60. Trees that are retained but are not protected in accordance with the protection requirements in Chapter 11.60 may not be used to meet preservation or density standards.
+
+2 b. Indicate trees to be removed. It is the applicant’s responsibility to obtain the appropriate consent from the adjacent property owner for tree removal when the tree is only partially on the site.
+
+3 c. Show location, species, planting size and number of trees proposed to be planted. Trees to be planted must meet the specifications in Chapter 11.60.
+
+3 B. Narrative requirements.
+
+1 1. If alternative tree protection measures are proposed, documentation addressing the requirements in Section 11.60.030, Tree Protection Specifications, must be included.
+
+2 2. If a tree is to be exempted from tree preservation standards based on poor tree health or condition, supporting documentation from an arborist must be included.
+
+3 3. If a tree is to be exempted from tree preservation standards based on it being listed on the Nuisance Plants List, supporting documentation from a landscape professional or an arborist must be included.
+
+11.50.080 Changes to Approved Tree Plans and Emergency Tree Removal.
+
+(Amended by Ordinances 191736 and 191988, effective January 3, 2025.)
+
+1 A. When changes are necessary to an approved Tree Plan and the changes will not affect compliance with any applicable conditions of a land use review, the change may be reviewed as a revision to the approved development permit. Any proposed revisions to the Tree Plan will be approved upon demonstrating the applicable tree preservation and density standards are met. When development activity has already commenced on the site and the applicant is proposing to retain alternate trees not previously shown to be protected, an arborist report will be required that documents the alternate tree is healthy and has not been injured by the development activity.
+
+2 B. Emergency tree pruning or removal. Emergency pruning or removal of trees is regulated by this Chapter as follows:
+
+1 1. If an emergency exists because the condition or location of a tree presents such a clear and present danger to structures or the public that there is insufficient time to obtain a tree permit, the hazardous portion of the tree may be removed without first obtaining a revision to an approved tree plan.
+
+2 2. Any person who removes a tree under the provisions of this Section must, within seven days of such action, apply for a revision to the approved tree plan. The application must include photographs or other documentation to prove that an emergency existed. The City Administrator will evaluate the information to determine whether an emergency existed. Failure to submit an application or provide information documenting the emergency nature of the event may be pursued as a violation per Chapter 11.70.
+
+11.50.090 Administrative Review.
+
+(Added by Ordinance 188816; amended by Ordinances 191736 and 191988, effective January 3, 2025.)
+
+1 A. Whenever a decision has been made under this Chapter, the property owner of the development site or that property owner’s representative may request that the decision be reviewed by the City Administrator. The owner or owner’s representative must submit a written request to the City within 180 days of the date of the decision. Such review will be conducted by the City Administrator. The owner or owner’s representative requesting such review will be given the opportunity to present evidence. Following the review, the City Administrator will issue a written determination.
+
+2 B. Nothing in this Section limits the authority of the City Administrator to initiate a proceeding in accordance with Portland City Code Chapter 3.30 Portland Permitting & Development, Title 11 Trees, and Title 22 Hearings Officer.
+
+11.50.095 Appeals.
+
+(Added by Ordinance 188816; amended by Ordinance 191988, effective January 3, 2025.)
+
+1 A determination issued as stated in Section 11.50.090 may be appealed by the property owner of the development site or that property owner’s representative to the Code Hearings Officer, as provided for in Portland City Code Chapter 22.10. All appeals from the Code Hearings Officer’s determination in accordance with this Section will be by writ of review as authorized by Section 22.04.010 and ORS 34.010-34.100.

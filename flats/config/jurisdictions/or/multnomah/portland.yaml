@@ -3,7 +3,26 @@ kind: city
 eligible: true
 notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s verification was against a coarser standard
   (one citation per row) and does not carry over. UNPORTED: orientation_constraint=''entrance_only''. quadfit justified
-  this in a YAML comment with no citation; it needs its own encoding rather than invented provenance. SUNSET: the min_lot_sqft `adjustment` variants on the Table 110-7 zones are the 10 percent reduction 33.110.240.B.2 allows, and that paragraph ends it — requests are barred from January 1, 2032. Nothing in the model expires a variant on a date, so on that day these five variants become wrong and have to be deleted by hand.'
+  this in a YAML comment with no citation; it needs its own encoding rather than invented provenance. SUNSET: the min_lot_sqft `adjustment` variants on the Table 110-7 zones are the 10 percent reduction 33.110.240.B.2 allows, and that paragraph ends it — requests are barred from January 1, 2032. Nothing in the model expires a variant on a date, so on that day these five variants become wrong and have to be deleted by hand.
+
+  READ AND NOT ENCODED: Chapter 11.50, Trees in Development Situations. 33.110.227 sends every residential zone there
+  — "Requirements for street trees and for on-site tree preservation, protection, and overall tree density are
+  specified in Title 11, Trees" — and the identical sentence sits in 33.100, 33.120, 33.130, 33.140 and 33.150, which
+  made it the loudest unfetched reference in this corpus. Fetched and read 2026-09-01. It reaches this building and it
+  takes no ground from it: every requirement in the chapter has a limb that discharges in cash. 11.50.040 C.1.a and
+  C.1.b require preserving a third of the nonexempt trees 12 inches and larger and all of them 20 inches and larger,
+  and both end the same way — "Each tree not preserved and protected may be removed" — against a per-inch payment to
+  the Tree Planting and Preservation Fund under Table 50-1. The 36-inch notice in C.1.c is a posting that "does not
+  provide for public comment on the proposal or for appeal of the proposal", with the permit issuing the business day
+  after it runs. The on-site tree density in 11.50.050 is the only clause that could displace a building, and D.1
+  gives the applicant the choice of Option B, where the required tree area is "site area minus building coverage of
+  existing and proposed development" — which by construction cannot displace one; D.3.c then lets any remaining
+  shortfall be paid, "credited at a rate of one medium canopy size tree", with no cap stated anywhere in the chapter.
+  11.50.060''s street trees stand in the right-of-way, off the lot, with the same fee available. So Title 11 is a cost
+  line and not an envelope constraint, and there is no dimension in it for the screen to hold. The same reading is
+  recorded as a `fee_in_lieu` crossref ruling on or/multnomah/_unincorporated, which does not hold this document and
+  where it still dangles — 11.50.050 A applies the density standards to "sites within the city and the County Urban
+  Pocket Areas" by name.'
 ingest:
   geoid: null
   juris_city_codes:
@@ -119,6 +138,18 @@ code:
   - id: "33.266"
     url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
     title: Chapter 33.266 Parking, Loading, and Transportation and Parking Demand Management
+  # Title 11, Trees. 33.100.230, 33.110, 33.120.237 and 33.120.290 all point
+  # here and never say what it costs, and the pointer sits in the same breath
+  # as building coverage and minimum landscaped area -- which is why the
+  # cross-reference ledger ranked it the largest binding gap in the city. No
+  # PDF exists; the HTML page IS the chapter, so it is sliced at its own first
+  # and last section headings. Without the slice it swallows a road-closure
+  # alert at the top and the whole city-code index at the bottom.
+  - id: "11.50"
+    url: https://www.portland.gov/code/11/50
+    title: Chapter 11.50 Trees in Development Situations
+    start: "11.50.010 Purpose."
+    end: "Upcoming and recent changes"
 defaults:
   # Portland requires no off-street parking anywhere in the city. The chapter
   # is the evidence: it runs from 33.266.100 straight to 33.266.115 Maximum

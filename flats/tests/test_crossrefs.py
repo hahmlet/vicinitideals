@@ -48,7 +48,7 @@ from flats.encode.crossrefs import (
 )
 from flats.provenance.store import ProvenanceStore
 from flats.rules.loader import RuleLoadError, load_rules
-from flats.rules.model import Layer
+from flats.rules.model import CROSSREF_CLOSED, Layer
 
 pytestmark = pytest.mark.unit
 
@@ -715,3 +715,45 @@ def test_a_row_closed_by_reading_leaves(layers: dict[str, Layer]) -> None:
     assert rows["19.245"].outcome == "other_path"
     assert rows["19.245"].ruled
     assert rows["19.245"].rank == (0, 0, 0)
+
+
+def test_a_standard_can_be_answered_with_money(layers: dict[str, Layer]) -> None:
+    """The tenth outcome, and the first that is not about REACH.
+
+    Nine shapes all answered the same question -- does this chapter reach this
+    building? -- with `other_building`, `other_path`, `narrows_only`,
+    `preempted`, `procedure`, `misread` and the two that order work. Portland's
+    Title 11 reaches, and is full of numbers: keep a third of the twelve-inch
+    trees, keep every twenty-inch tree, plant a required tree area of 40 percent
+    of the site. Every one of them then discharges in cash -- 11.50.040
+    C.1.b.(3) says a tree not preserved "may be removed" on payment, and
+    11.50.050 D.3.c buys out planting at one medium tree per fee, uncapped.
+
+    `procedure` would have been false (there are real numbers) and
+    `narrows_only` worse. So the vocabulary grew, and this pins the reason: a
+    rule that takes money instead of ground belongs in the pro forma, not the
+    envelope, and it closes the row.
+    """
+    assert "fee_in_lieu" in CROSSREF_CLOSED, (
+        "a standard that is fully payable is answered, not outstanding")
+
+    paid = [
+        (layer_id, row.ref)
+        for layer_id, layer in layers.items()
+        for row in dangling(layer)
+        if row.outcome == "fee_in_lieu"
+    ]
+    assert paid, "nothing in the corpus is ruled fee_in_lieu"
+    assert {ref for _, ref in paid} == {"11", "11.50"}
+    # One layer, and which one is the point. Portland was ruled here first and
+    # the ruling went stale the same hour, because reading a chapter means
+    # fetching it and a fetched chapter no longer dangles. That reading lives in
+    # Portland's layer notes now, under READ AND NOT ENCODED, where every other
+    # chapter this corpus has read and declined lives.
+    #
+    # The pockets layer is where the ruling belongs and stays: it takes
+    # Portland's zoning chapters by reference without holding the documents, so
+    # Title 11 still dangles there -- and 11.50.050 A reaches it in its own
+    # words, applying the density standards to "sites within the city and the
+    # County Urban Pocket Areas".
+    assert {lid for lid, _ in paid} == {"or/multnomah/_unincorporated"}

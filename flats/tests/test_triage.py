@@ -69,23 +69,33 @@ def test_a_card_names_the_standards_it_stands_beside() -> None:
 
 
 def test_neighbours_group_by_figure_rather_than_repeating_per_zone() -> None:
-    """Four zones sharing one coverage curve is one row, not four.
+    """Seventeen zones sharing two answers is two rows, not seventeen.
 
-    Portland's curve is an eleven-cell array printed identically in R5, R7,
-    R2.5 and R10. Listed per zone it fills the card with the same number four
-    times; what actually differs is the zone names and the lots, and both
-    survive the grouping.
+    Portland's use tables print the same permission over and over. A four-plex
+    is allowed in ten zones and barred in seven, and every one of those cells
+    cites Chapter 33.236, Floating Structures -- houseboat moorages, which is
+    why the chapter is unfetched and will stay that way. Listed per zone the
+    card is seventeen lines of "yes" and "no"; grouped by figure it is two,
+    and the zone names and the lot counts both survive the grouping.
+
+    This used to be pinned on 11.50, whose coverage curve prints identically in
+    R5, R7, R2.5 and R10. That chapter was fetched and read on 2026-09-01, so
+    it stopped dangling and its card went away with it. A test pinned to a
+    corpus GAP goes red when the gap is closed, and this suite has been through
+    that before: it is the right kind of red, and the fix is to re-point it at
+    something the corpus has not answered yet rather than to leave the gap open.
     """
     card = next(
-        c for c in cards(load_rules()["or/multnomah/portland"]) if c.ref == "11.50"
+        c for c in cards(load_rules()["or/multnomah/portland"]) if c.ref == "33.236"
     )
-    curves = [n for n in card.neighbours if n.field == "coverage_curve"]
+    allowed = [n for n in card.neighbours if n.field == "quadplex_allowed"]
 
-    assert len(curves) == 1
-    assert len(curves[0].zones) > 1
-    assert curves[0].lots == sum(
-        dict(card.zone_lots)[z] for z in curves[0].zones
-    )
+    # One row per distinct figure -- not one per zone, and not one overall.
+    assert len(allowed) == 2
+    assert {n.shown for n in allowed} == {"yes", "no"}
+    for row in allowed:
+        assert len(row.zones) > 1
+        assert row.lots == sum(dict(card.zone_lots)[z] for z in row.zones)
 
 
 def test_lots_count_a_zone_once_however_many_standards_it_shares() -> None:

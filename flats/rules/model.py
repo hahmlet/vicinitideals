@@ -102,6 +102,18 @@ CROSSREF_OUTCOMES: dict[str, str] = {
     "procedure": "A process — no number in it",
     "later": "Only matters if we change the building",
     "misread": "Not a reference — a table cell read as one",
+    # Added 2026-09-02, reading Portland's Title 11. A tenth shape, and the
+    # first one that is not about whether a rule REACHES this building: it
+    # reaches, it is full of numbers, and every one of them discharges in cash.
+    # 11.50.040 requires a fourplex site to keep a third of its 12-inch trees
+    # and every 20-inch tree, then says "Each tree not preserved and protected
+    # may be removed" on payment of a fee; 11.50.050 sets a required tree area
+    # of 40 percent of the site, then credits a payment in lieu at the rate of
+    # one medium tree with no cap anywhere in the chapter. Calling that
+    # `procedure` would be false -- there are real numbers -- and calling it
+    # `narrows_only` would be worse. It belongs in the pro forma, not the
+    # envelope.
+    "fee_in_lieu": "Satisfiable by payment — costs money, not ground",
     "read": "Read and ruled before the outcomes existed",
 }
 

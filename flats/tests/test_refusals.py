@@ -145,8 +145,25 @@ pytestmark = pytest.mark.unit
 #: are not encoded -- so the ledger counts it again, correctly. A count that
 #: moves up while the refusal shrinks is the honest reading of a partial lift:
 #: this ledger measures how much prose declares a limit, not how much is left.
-EXPECTED = {"notes": 102, "comments": 112, "tests": 17}
+EXPECTED = {"notes": 103, "comments": 112, "tests": 17}
 
+#: MOVED 2026-09-02 by Portland's Title 11, +1 note, and the refusal arrived by
+#: DEMOTION rather than by reading. Chapter 11.50, Trees in Development
+#: Situations, was the loudest unfetched reference in the corpus -- 33.110.227
+#: sends every residential zone there and five more zoning chapters repeat the
+#: sentence word for word. It was fetched, read, and ruled `fee_in_lieu`, the
+#: tenth crossref outcome and the first that is not about whether a chapter
+#: REACHES the building: it reaches, it is full of numbers, and every number
+#: discharges in cash.
+#:
+#: The ruling went stale the hour it was written, because reading a chapter
+#: means fetching it and a fetched chapter no longer dangles. So the reasoning
+#: moved where the corpus already puts a chapter it has read and declined --
+#: the layer's notes, under READ AND NOT ENCODED, beside Gresham's 7.0512 --
+#: and this ledger counts it, correctly. The crossref ruling survives only on
+#: or/multnomah/_unincorporated, which takes Portland's chapters by reference
+#: without holding the documents.
+#:
 #: MOVED 2026-09-02 by Gresham 7.0420(G)(1)(b), +1 note, and it is the FIRST
 #: refusal in this corpus recorded because a rule would give ground BACK. The
 #: rear roof-height plane is now derived by the pipeline, and (b) switches the

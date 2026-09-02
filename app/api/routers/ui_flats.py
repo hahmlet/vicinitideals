@@ -1586,6 +1586,11 @@ _TRIAGE_ORDER = (
     "narrows_only",
     "preempted",
     "procedure",
+    # Portland's Title 11: it reaches, it is full of numbers, and every one of
+    # them discharges in cash. Sits after `procedure` because it is the same
+    # answer one step further on -- not "no number in it", but "a number that
+    # takes money instead of ground".
+    "fee_in_lieu",
     "misread",
     "later",
 )

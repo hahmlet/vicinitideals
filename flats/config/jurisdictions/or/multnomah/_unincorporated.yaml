@@ -81,6 +81,19 @@ definitions:
     cite: "MCC 39.2000, Lot (Corner)"
 
 crossrefs:
+  "11":
+    outcome: fee_in_lieu
+    note: >-
+      Title 11, Trees, arriving here the same way "0.7" does -- this layer holds Portland's Chapter
+      33.110, so Portland's cross-references come with it. Ruled with 11.50 below.
+  "11.50":
+    outcome: fee_in_lieu
+    note: >-
+      Trees in Development Situations. The ruling is Portland's, in or/multnomah/portland.yaml, and
+      it is not being borrowed by analogy: 11.50.050 A and 11.50.040 A.1 each apply the chapter to
+      "sites within the city AND the County Urban Pocket Areas" by name, which is exactly the
+      1,489 Portland-administered pockets this layer screens. Same answer -- preservation and
+      density both discharge in cash, so the chapter costs money and not buildable ground.
   "0.7":
     outcome: misread
     note: >-
