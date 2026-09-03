@@ -79,6 +79,53 @@ coarse map now answers; sewer fell 18,127 → 5,713 mostly because Clackamas lot
 that were waiting on a sewer answer turned out to have no legal site plan
 either, and a red verdict outranks a queued one.
 
+**The single biggest reason a lot is red now says what it is, and it is not
+what it looked like.** 153,910 lots fail because no site plan can be drawn on
+them — more than every other reason combined. Until 2026-09-03 that was one
+undifferentiated pile. It is now broken out, and the breakdown changes the
+conclusion:
+
+| where the plan gives out | lots |
+|---|---:|
+| no room for the **building** | 1,203 |
+| building fits, no room for a **parking court** behind it | 134,152 |
+| building and court both fit, no room to **drive past the building** | 18,393 |
+| a plan was drawn and rejected on stall count | 87 |
+| the setbacks leave no buildable ground at all | 75 |
+
+**The land is not too small for the product. It is too small for the parking.**
+On 1,203 lots out of 153,910 the building itself does not fit. On the other
+99.2% it fits and the cars have nowhere to go. That is a different problem, and
+it is not one more code reading will solve.
+
+Measured on the lots that fail for want of a court: the median lot has **23 ft
+of usable ground behind the building**, and the layout needs **42** — a parked
+car is 18 to 19 ft and the drive aisle to reach it is another 23 to 24. A car
+fits on most of these lots. A car plus the lane you drive along to reach it
+does not.
+
+**So the obvious question was asked and answered: what if the cars backed
+straight out onto the driveway, the way they do at a house, with no drive aisle
+behind them?** That was run through the real layout engine on a random 20,000
+of the affected lots, changing nothing else — same building, same driveway,
+same open space, same four-stall minimum. **About one in eight would draw a
+complete plan: roughly 17,000 lots.** Worth having, and far short of the
+134,152, because a second wall stands right behind the first — of the ones that
+still fail, 43% now fail for want of the 12 ft to drive *past* the building,
+and 38% do not have even 20 ft behind it. Nothing here is a claim that any city
+allows aisle-free parking; it is the size of the prize, so that reading the
+parking chapters for it can be priced against what it would return.
+
+**What this puts to you is a product question, not a code question.** Every
+lever in the list below is worth what it is worth, and none of them touches
+this. The screen lays out one arrangement — building across the front, one
+driveway down the side, parking in a court at the back — because that is the
+arrangement these codes are written for. The inventory is telling us that
+arrangement wants a deeper lot than Portland-area lots have. Where the cars go
+is worth more than any remaining number on this list, and it is a decision
+about the building, not about the rules. Nothing needs deciding today; it is
+recorded here because the screen can now prove it.
+
 ---
 
 ## If you approved every item below, could you trust a green lot?
