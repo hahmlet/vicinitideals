@@ -72,8 +72,16 @@ grid, building/stalls axis-aligned), then rotates back to EPSG:2913 for output.
 
 Output stage `s6s_lots` carries every s6 column forward and adds:
   site_plan_ok (bool) · parking_tier · stalls_provided · layout_method ·
-  building_name · driveway_len_ft · parking_area_sqft · open_space_sqft ·
-  open_space_ok · utility_run_ft · siteplan_json (role -> WKB-hex geometry).
+  layout_fail · building_name · driveway_len_ft · parking_area_sqft ·
+  open_space_sqft · open_space_ok · utility_run_ft · siteplan_json
+  (role -> WKB-hex geometry).
+
+`layout_fail` is empty where a plan was drawn and where the city was never
+evaluated, and otherwise names how far the best attempt got before it gave
+out -- no_envelope, no_building, no_court, court_too_shallow, no_side_lane,
+or, on a lot that DID draw a plan and was rejected anyway,
+too_few_stalls / no_open_space. Reported, never graded on: it changes no
+verdict, it says why the verdict is what it is.
 """
 
 from __future__ import annotations
@@ -178,11 +186,19 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
     open_pct: float = cell["open_pct"]
     open_flat: float = cell["open_by_zone"].get(zone, cell["open_sqft"]) or 0.0
 
+    # `layout_fail` names how far the lot got before the plan gave out. A flat
+    # "no layout" is the largest single reason in the whole screen -- 148,939
+    # lots on the 2026-09-03 run -- and it has never said whether those lots
+    # are too small for the building, too shallow for a court behind it, or
+    # merely too narrow to get a car down the side. Those are three different
+    # answers: the first is the product, the second is the typology, and the
+    # third is a rule. It is reported, never graded on.
     fail = {
         "site_plan_ok": False, "stalls_provided": 0, "layout_method": "none",
         "building_name": None, "driveway_len_ft": 0.0, "parking_area_sqft": 0.0,
         "open_space_sqft": 0.0, "open_space_req_sqft": 0.0,
         "open_space_ok": False, "driveway_width_ft": 0.0, "geoms": {},
+        "layout_fail": "no_envelope",
     }
 
     env = shapely.from_wkb(env_wkb)
@@ -265,12 +281,21 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
     Sok = _integral(ok)
     plan = None
     best_stalls = -1
+    # How far the best attempt got. A lot is reported on its FURTHEST attempt,
+    # not its first or its last: a pod that will not fit in one orientation but
+    # reaches the driveway test in the other has not been stopped by its size.
+    # Indexed by the last stage PASSED, so each label names what failed next:
+    # nothing placed -> the building; placed -> no court behind it; court found
+    # -> too shallow to park in; stalls counted -> no lane reaches them.
+    reach, REACH = 0, ("no_building", "no_court", "court_too_shallow",
+                       "no_side_lane")
     for name, w_ft, d_ft in pods:
         for ww, dd in ((w_ft, d_ft), (d_ft, w_ft)):
             bw, bh = math.ceil(ww / res), math.ceil(dd / res)
             hit = _placement(Sok, bh, bw)
             if hit is None:
                 continue
+            reach = max(reach, 1)
             br, bc = hit
             court_r0 = max(br + bh + gap_c, park_c)  # behind pod + gap, off the street
             if court_r0 >= R:
@@ -278,6 +303,7 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
             rect = _largest_rect(ok[court_r0:, :])
             if rect is None:
                 continue
+            reach = max(reach, 2)
             cr, cc, rh, rw = rect
             rr = court_r0 + cr                     # court top row in full grid
             cw_ft, cd_ft = rw * res, rh * res
@@ -286,6 +312,7 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
             n_ct = min(cap, rows * int(cw_ft // stall_w))
             if n_ct <= 0:
                 continue
+            reach = max(reach, 3)
             # Side driveway: first clear column run (in the envelope, clear of the
             # building) at least drive_c wide, running alongside the building from
             # its front row down to the court, whose columns overlap the court so
@@ -304,7 +331,9 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
                     if c0 < cc + rw and c0 + drive_c > cc:  # lane meets the court
                         corridor_c0 = c0
                         break
-            if corridor_c0 is None or n_ct <= best_stalls:
+            if corridor_c0 is None:
+                continue
+            if n_ct <= best_stalls:
                 continue
             best_stalls = n_ct
             plan = {
@@ -316,7 +345,7 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
             }
 
     if plan is None:
-        return fail
+        return {**fail, "layout_fail": REACH[reach]}
     stalls, method = plan["stalls"], "townhome_rear_court"
 
     # --- realize the chosen plan into geometry (rotate back to CRS) --------
@@ -356,9 +385,18 @@ def layout_lot(env_wkb: bytes, bearings: list[float], front_edges: list[list[flo
             placed += 1
             x += sw_c
 
+    ok_plan = bool(stalls >= _CFG["min_stalls"] and plan["reaches"]
+                   and open_space_ok)
     return {
-        "site_plan_ok": bool(stalls >= _CFG["min_stalls"] and plan["reaches"]
-                             and open_space_ok),
+        # A drawn plan can still be rejected, and those two rejections are not
+        # "no layout" -- there IS a layout, it is short of stalls or short of
+        # the city's open-space reserve. Naming them separately keeps them out
+        # of the geometry bucket, where they would read as land that cannot
+        # hold the product.
+        "layout_fail": ("" if ok_plan
+                        else "too_few_stalls" if stalls < _CFG["min_stalls"]
+                        else "no_open_space"),
+        "site_plan_ok": ok_plan,
         "stalls_provided": int(stalls),
         "layout_method": method,
         "building_name": bname,
@@ -407,6 +445,7 @@ def main() -> None:
     tier = np.array(["not_evaluated"] * n, dtype=object)
     stalls = np.full(n, -1, dtype=int)
     method = np.array([""] * n, dtype=object)
+    lfail = np.array([""] * n, dtype=object)
     bname = np.array([""] * n, dtype=object)
     drive_len = np.full(n, np.nan)
     park_area = np.full(n, np.nan)
@@ -418,7 +457,7 @@ def main() -> None:
 
     if sp is None or not sp.enabled:
         print("s6s: siteplan disabled in footprints.yaml — writing passthrough columns")
-        _finalize(lots, site_ok, tier, stalls, method, bname, drive_len,
+        _finalize(lots, site_ok, tier, stalls, method, lfail, bname, drive_len,
                   drive_w, park_area, open_sqft, open_req, open_ok, sp_json)
         return
 
@@ -440,7 +479,7 @@ def main() -> None:
     if not cities:
         print("s6s: no city in footprints.yaml states both a stall and an aisle; "
               "writing passthrough columns")
-        _finalize(lots, site_ok, tier, stalls, method, bname, drive_len,
+        _finalize(lots, site_ok, tier, stalls, method, lfail, bname, drive_len,
                   drive_w, park_area, open_sqft, open_req, open_ok, sp_json)
         return
     for j in declined:
@@ -597,6 +636,7 @@ def main() -> None:
         stalls[idx] = s
         tier[idx] = sp.tier_for(s)
         method[idx] = r["layout_method"]
+        lfail[idx] = r["layout_fail"]
         bname[idx] = r["building_name"] or ""
         drive_len[idx] = r["driveway_len_ft"]
         park_area[idx] = r["parking_area_sqft"]
@@ -606,7 +646,7 @@ def main() -> None:
         drive_w[idx] = r["driveway_width_ft"]
         sp_json[idx] = json.dumps(r["geoms_hex"])
 
-    _finalize(lots, site_ok, tier, stalls, method, bname, drive_len,
+    _finalize(lots, site_ok, tier, stalls, method, lfail, bname, drive_len,
               drive_w, park_area, open_sqft, open_req, open_ok, sp_json,
               assumed_cities=assumed)
 
@@ -643,7 +683,7 @@ def main() -> None:
     print("s6s done.")
 
 
-def _finalize(lots, site_ok, tier, stalls, method, bname, drive_len,
+def _finalize(lots, site_ok, tier, stalls, method, lfail, bname, drive_len,
               drive_w, park_area, open_sqft, open_req, open_ok,
               sp_json, assumed_cities=()) -> None:
     import numpy as np
@@ -663,6 +703,9 @@ def _finalize(lots, site_ok, tier, stalls, method, bname, drive_len,
     lots["parking_tier"] = tier
     lots["stalls_provided"] = stalls
     lots["layout_method"] = method
+    # Empty on a lot that got a plan, and on one nobody evaluated. The two are
+    # told apart by parking_tier, as everywhere else in this stage.
+    lots["layout_fail"] = lfail
     lots["building_name"] = bname
     lots["driveway_len_ft"] = drive_len
     # The width of the opening at the property line: the lane, narrowed to the

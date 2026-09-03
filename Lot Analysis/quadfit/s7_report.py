@@ -1118,6 +1118,45 @@ def main() -> None:
                      "`layout_method`, `driveway_len_ft`, `driveway_width_ft`, "
                      "`open_space_req_sqft` and `open_space_ok` are in "
                      "`conversion_candidates.csv`.")
+            # Where the plan gives out. `siteplan_no_layout` is the single
+            # largest reason a lot is red anywhere in this screen, and until
+            # 2026-09-03 it was one undifferentiated pile. The answers it hides
+            # are different jobs: a lot with no room for the BUILDING is the
+            # product being too big for the land, one with no room for the
+            # COURT behind it is this typology rather than the land, and one
+            # that only fails to get a lane down the side is a rule about
+            # driveways.
+            if "layout_fail" in pil.columns:
+                lf = pil["layout_fail"].astype(str)
+                counts = lf[lf != ""].value_counts()
+                if len(counts):
+                    L.append(
+                        "\nWhere the plan gives out, on the "
+                        f"{int((lf != '').sum()):,} evaluated lots that did not "
+                        "resolve. **Reported, never graded on** \u2014 the verdict "
+                        "is the same either way; this says why it is what it is. "
+                        "Column `layout_fail` in `lots_results.csv`.\n")
+                    L.append("| where it stopped | lots | what it means |")
+                    L.append("|---|---:|---|")
+                    for key, what in (
+                        ("no_envelope",
+                         "the setbacks leave no buildable ground at all"),
+                        ("no_building",
+                         "no pod placement fits, either size, either way round"),
+                        ("no_court",
+                         "no rectangle behind the pod to park in"),
+                        ("court_too_shallow",
+                         "the rectangle is there, too shallow for a stall and an aisle"),
+                        ("no_side_lane",
+                         "court and building both fit; no lane reaches the court"),
+                        ("too_few_stalls",
+                         "a plan was drawn, short of the marketability floor"),
+                        ("no_open_space",
+                         "a plan was drawn, leaving less open space than the city asks"),
+                    ):
+                        m = int(counts.get(key, 0))
+                        if m:
+                            L.append(f"| `{key}` | {m:,} | {what} |")
             L.append("\nDriveway, curb cut and open space, per city:\n")
             L.append("| city | side lane | curb cut | private open space |")
             L.append("|---|---|---|---|")
@@ -1329,8 +1368,8 @@ def main() -> None:
     # reviewer opening a Milwaukie or Wilsonville row needs the caveat next to
     # the stall count, not three files away in footprints.yaml.
     siteplan_cols = [c for c in (
-        "parking_tier", "stalls_provided", "layout_method", "site_plan_ok",
-        "geometry_assumed", "driveway_len_ft", "open_space_ok",
+        "parking_tier", "stalls_provided", "layout_method", "layout_fail",
+        "site_plan_ok", "geometry_assumed", "driveway_len_ft", "open_space_ok",
         "utility_run_ft") if c in lots.columns]
     screen_cols = ["current_use", "finance_tier", "improvement_share",
                    "LANDVAL", "SALEPRICE", "SALEDATE", "acq_estimate", "acq_basis"]

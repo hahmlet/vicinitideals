@@ -192,8 +192,11 @@ def test_c_tightening_too_narrow_for_side_lane():
     to the rear cannot reach rear parking -> site_plan_ok False. This is the
     townhome constraint the earlier front-row model wrongly ignored."""
     s6s = _sp_setup()
-    # 46 ft lot -> 36 ft envelope: a 36 ft-wide pod fits, but 36 + 12 > 36, so no
-    # side lane; and the 25 ft-wide pod can't seat 4 units across this frontage.
+    # 46 ft lot -> a 36 ft envelope, which the 36 ft-wide pod misses by the
+    # half-cell the raster leaves at the edge. So the only pod that seats here
+    # is the skinny one, 80 ft deep, and what actually stops the plan is the
+    # 39 ft of court left behind it -- 2.5 ft short of one row of stalls and a
+    # one-way aisle. `layout_fail` says so; see the two tests that assert it.
     env, fe, area, lot = _rect_lot(46.0, 150.0)
     r = _run(s6s, env, fe, area)
     assert r["site_plan_ok"] is False
@@ -521,3 +524,100 @@ def test_happy_valleys_own_numbers_cost_it_nothing():
                        zone=zone, front_setback_ft=asks)
         assert with_rule["site_plan_ok"] == without["site_plan_ok"]
         assert with_rule["stalls_provided"] == without["stalls_provided"]
+
+
+# ---------------------------------------------------------------------------
+# layout_fail — why a lot got no plan
+# ---------------------------------------------------------------------------
+
+
+def test_a_lot_with_a_plan_names_no_failure():
+    """The empty string is load-bearing: it is what tells a reader that a blank
+    `layout_fail` on a resolved lot is an answer rather than a missing one."""
+    s6s = _sp_setup()
+    env, fe, area, lot = _rect_lot(100.0, 150.0)
+    r = _run(s6s, env, fe, area)
+    assert r["site_plan_ok"] is True
+    assert r["layout_fail"] == ""
+
+
+def test_a_lot_too_small_for_the_building_says_so():
+    """The product is too big for the land. This is the answer that means the
+    lot is out of reach of any typology, and it must not be confused with the
+    two below, which are about how we lay a lot out rather than its size."""
+    s6s = _sp_setup()
+    env, fe, area, lot = _rect_lot(30.0, 40.0)
+    r = _run(s6s, env, fe, area)
+    assert r["site_plan_ok"] is False
+    assert r["layout_fail"] == "no_building"
+
+
+def test_a_shallow_lot_blames_the_court_not_the_building():
+    """`test_b_tightening_shallow_no_rear_room` proves the verdict; this proves
+    the *reason*, which is the part that decides whether a second typology
+    would pay. The pod fits and the ground behind it will not hold a car."""
+    s6s = _sp_setup()
+    env, fe, area, lot = _rect_lot(100.0, 70.0)
+    r = _run(s6s, env, fe, area)
+    assert r["site_plan_ok"] is False
+    assert r["layout_fail"] == "court_too_shallow"
+
+
+def test_a_narrow_lot_blames_the_lane():
+    """48 ft of frontage seats the pod and leaves nothing to drive down. That
+    is a rule about driveway width, not a fact about the parcel, so it gets its
+    own answer: these are the lots a shared-access or tandem reading reaches.
+
+    The wide pod places, carves a two-row court, and then finds 2 ft of gap
+    beside itself where the lane wants 12. The skinny pod does leave a lane but
+    stops one stage earlier, and the reason reported is the furthest of the two.
+    """
+    s6s = _sp_setup()
+    env, fe, area, lot = _rect_lot(48.0, 150.0)
+    r = _run(s6s, env, fe, area)
+    assert r["site_plan_ok"] is False
+    assert r["layout_fail"] == "no_side_lane"
+
+
+def test_a_lot_two_feet_short_of_a_court_blames_the_court():
+    """The same frontage two feet narrower, and a different answer.
+
+    At 46 ft the wide pod no longer places at all, so the only attempt left is
+    the 80 ft-deep skinny pod, and the 39 ft behind it is 2.5 ft short of a
+    stall and a one-way aisle. Nothing about the lane is reached or reported.
+    These two lots differ by two feet of frontage and belong to different
+    piles: this one is answered by a shallower parking bay, the other by a
+    narrower driveway, and lumping them together hides both.
+    """
+    s6s = _sp_setup()
+    env, fe, area, lot = _rect_lot(46.0, 150.0)
+    r = _run(s6s, env, fe, area)
+    assert r["site_plan_ok"] is False
+    assert r["layout_fail"] == "court_too_shallow"
+
+
+def test_the_reason_is_the_furthest_attempt_not_the_last():
+    """Two pods in two orientations each, and the reason reported is the best
+    of the four. A lot the wide pod cannot even sit on, but the narrow one can
+    while failing later, must report the LATER failure -- otherwise every
+    number in this table is dragged toward `no_building` by whichever pod
+    happened to be tried last."""
+    s6s = _sp_setup()
+    # 52 x 90: the 56 ft pod does not fit the 42 ft-wide envelope in either
+    # orientation; the 80x25 does, rotated, and then runs out of rear yard.
+    env, fe, area, lot = _rect_lot(52.0, 90.0)
+    r = _run(s6s, env, fe, area)
+    assert r["site_plan_ok"] is False
+    assert r["layout_fail"] != "no_building"
+
+
+def test_a_drawn_plan_short_of_stalls_is_not_a_geometry_failure():
+    """A lot that DID lay out and was rejected on stall count is not land that
+    cannot hold the product, and pooling the two would overstate the geometric
+    ceiling. Gresham reserves 15% of the gross lot as open space, so a small
+    gross area against a full envelope rejects a real plan."""
+    s6s = _sp_setup()
+    env, fe, area, lot = _rect_lot(100.0, 150.0)
+    r = _run(s6s, env, fe, 1000.0)   # gross area far below the plan's footprint
+    assert r["site_plan_ok"] is False
+    assert r["layout_fail"] == "no_open_space"
