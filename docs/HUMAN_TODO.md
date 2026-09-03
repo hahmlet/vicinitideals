@@ -1103,8 +1103,25 @@ the list of places worth hoping about.
   So: real, in the dangerous direction (a lot we call green that a planner
   would not), and currently costing almost nothing. It stays on the list rather
   than getting built now, and it gets built when a city that *does* have greens
-  turns out to have a corner rule — 1,321 of the 10,179 greens are corner lots,
-  so the exposure is there the moment one appears. Agent work.
+  turns out to have a corner rule.
+
+  **That trigger fired on 2026-09-03 and the answer is still no — re-measured,
+  10 lots.** Gresham was the city this clause was waiting for: it holds 30 of
+  the 37 firing corner rules and it went from zero greens to 1,820. 95 of those
+  greens are corner lots, 55 of them in a zone whose frontage or lot-width
+  minimum rises on a corner — and **not one of the 55 falls below the raised
+  number.** Gresham's corner minimums go 35 ft to 40, and every corner green it
+  has is already wider than 40. The exposure is 10 lots: Wood Village's LR 12,
+  where a corner takes the rear setback from 15 ft to 20, and a shrunken
+  envelope is the one kind of corner rule this arithmetic cannot settle from the
+  results file — it needs the geometry re-run. 10 lots does not buy a four-hour
+  stage. Wilsonville's single rule (RN side yard) touches none of its 6 corner
+  greens, and unincorporated Multnomah has no corner greens at all.
+
+  Corner greens corpus-wide are now 1,596 of 16,530, so the exposure is still
+  there the moment a city with a *setback* corner rule starts producing greens.
+  Frontage and width rules can now be checked without building anything, which
+  is the cheap half of this and is what was done here.
 - ~~**quadfit/FLATS config divergences**: LR-7 front setback (20 vs 10) and
   Wood Village MR 2 minimum lot — cleanup; zero greens ride on either
   today.~~ Closed 2026-09-01: both aligned to the quoted code text and the
