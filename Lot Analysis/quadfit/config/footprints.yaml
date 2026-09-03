@@ -367,10 +367,11 @@ siteplan:
       aisle_two_way_ft: 24
       cite: TDC 73C.030(1) and Figure 73-1 (Appendix B), standard space at 90 degrees
       max_per_unit: null
-    # The eleventh, and the last one the backlog could reach: of the four
-    # jurisdictions still holding lots and no layout, Clackamas County's aisle
-    # is refused into a CAD drawing and Milwaukie and Wilsonville state a stall
-    # and no aisle at all.
+    # The eleventh, and for a week the last one the backlog could reach: of the
+    # four jurisdictions still holding lots and no layout, Clackamas County's
+    # aisle was refused into a CAD drawing and Milwaukie and Wilsonville state
+    # a stall and no aisle at all. The county is the twelfth entry below; the
+    # drawing was opened and read.
     #
     # Section 350 splits its development standards into one article for
     # "One and Two Unit Dwellings" and one for "All Other Uses", and 350.065(A)
@@ -401,6 +402,33 @@ siteplan:
       aisle_one_way_ft: 12
       aisle_two_way_ft: 24
       cite: WVDC 350.065(D)(2)(a) Table 350-3, 90 degrees, Standard
+      max_per_unit: null
+    # The twelfth, and the only one in this file whose aisle came off a
+    # DRAWING. ZDO 1015.02(A)(4) hands stall and aisle dimensions to the
+    # Roadway Standards, 320.3(a) hands them to Standard Drawings P100 and
+    # P200, and both sheets carry three lines of title block with every
+    # dimension drawn. The stall was readable -- P100 is titled "(9' x 18')" --
+    # and the aisle was not, which is why this city sat unlaid-out while
+    # smaller ones finished. It was worth 17,486 lots, more than any other open
+    # question in the project.
+    #
+    # Closed 2026-09-03 by a person opening the sheet and reading it: 24 feet
+    # at 90 degrees. The corpus carries that as `drawn: true` with the reader's
+    # name and the date and no `quote:`, because there is no line of text to
+    # point at. This mirror is the same number under the same evidence, and the
+    # drift test above checks it against the corpus like any other.
+    #
+    # NOT assumed, and the distinction matters here more than anywhere else in
+    # this file: Milwaukie and Wilsonville below are drawn to a national
+    # standard because their codes publish no aisle at all. The county DID
+    # publish one. Assuming over the top of a published number is the one thing
+    # this pipeline refuses to do, which is exactly why it waited.
+    clackamas_unincorporated:
+      stall_width_ft: 9
+      stall_depth_ft: 18
+      aisle_one_way_ft: 24         # the sheet prints one figure at 90 degrees
+      aisle_two_way_ft: 24         # and does not split it by direction
+      cite: Clackamas County Roadway Standard Drawing P100, 90 degrees, read off the sheet 2026-09-03
       max_per_unit: null
     # --- states a stall and no aisle: laid out on an ASSUMED aisle ---------
     # Both of these dimension a space and never dimension the drive that

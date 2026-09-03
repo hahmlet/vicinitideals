@@ -187,6 +187,24 @@ pytestmark = pytest.mark.unit
 #: and settles five sections is the ledger working, not the corpus decaying.
 EXPECTED = {"notes": 105, "comments": 115, "tests": 17}
 
+#: STILL 115 on 2026-09-03, and the flat number hides a swap worth more than
+#: most movements on this list. Clackamas County's drive aisle closed -- a
+#: person opened Standard Drawing P100 and read 24 feet at 90 degrees off the
+#: sheet -- and the same block opened a new refusal in its place: the 45, 60
+#: and parallel rows printed beside it.
+#:
+#: The two are not the same shape and that is the point of recording both. The
+#: aisle was unreachable: the chain of authority was complete, terminated in a
+#: picture, and no reader here could follow it, which is why it cost 17,486
+#: lots and a month. The angled rows are reachable and unbuilt -- the numbers
+#: are on a sheet we hold, and what is missing is a layout that could use them
+#: and a field registry that could say which angle a value belongs to.
+#: `parking_aisle_two_way_ft` is one field, not four.
+#:
+#: A ledger that counted only closures would have reported this as -1 and
+#: called the county finished. It is not finished; it is usable, which is a
+#: different claim and a smaller one.
+
 #: MOVED 2026-09-02 by Oregon City 16.12.035.A note 2, +1 comment, and this
 #: one is a refusal a RE-READ produced in a chapter already fetched, already
 #: cited and already ruled on twice. Note 2 is one unconditioned sentence --

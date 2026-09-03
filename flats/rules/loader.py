@@ -49,8 +49,21 @@ from flats.rules.model import (
 
 CONFIG_ROOT = Path(__file__).resolve().parents[1] / "config" / "jurisdictions"
 
-_PROV_KEYS = ("cite", "url", "retrieved", "quote", "clause")
+_PROV_KEYS = ("cite", "url", "retrieved", "quote", "clause", "drawn", "read_by", "read_on")
 _REVIEW_KEYS = ("status", "reviewer", "reviewed", "preempts")
+
+
+def _prov_args(src) -> dict:
+    """Provenance keyword arguments, absent keys included as None.
+
+    Every key is passed even when the YAML omits it, so a value that inherits
+    half its provenance from `cite_default` still gets a complete Provenance.
+    `drawn` is the exception: it is a flag, not a string, and pydantic will not
+    read a missing one as False on its own.
+    """
+    args = {k: src.get(k) for k in _PROV_KEYS}
+    args["drawn"] = bool(args["drawn"])
+    return args
 
 
 class RuleLoadError(Exception):
@@ -414,7 +427,7 @@ def _parse_values(
             continue
 
         try:
-            prov = Provenance(**{k: prov_src.get(k) for k in _PROV_KEYS})
+            prov = Provenance(**_prov_args(prov_src))
             variants = _parse_variants(
                 raw_variants, prov_src, f"{where}.{key}", problems, base=value
             )
@@ -478,9 +491,20 @@ def _parse_values(
                 preempts=Preempt.read(body.get("preempts")),
                 variants=variants,
             )
-            if not (built.prov.quote or "").strip():
+            if not (built.prov.quote or "").strip() and not built.prov.drawn:
                 # Not an error in the file — encoding debt. The honest place for
                 # it is a queue somebody can work, not a zone somebody screens.
+                #
+                # `drawn` is the one exception, and it is why the flag exists at
+                # all. This quarantine reads a missing quote as "nobody has
+                # sourced this number", which is true of every value that
+                # reaches it but one: a figure that is drawn on the sheet rather
+                # than written in it has been sourced, to a named person on a
+                # named date, and it will never acquire a quote no matter how
+                # long it sits in a queue. Holding it here would mean the
+                # corpus could hold a number it can never use. The model
+                # enforces what `drawn` must carry before it gets this
+                # exemption; see `_check_drawn`.
                 if wanted is not None:
                     wanted.append(Wanted(zone=zone, field=key, value=built))
                 continue
@@ -797,7 +821,7 @@ def _parse_variants(
                     ),
                     when=tuple(str(c) for c in when),
                     band=band,
-                    prov=Provenance(**{k: merged.get(k) for k in _PROV_KEYS}),
+                    prov=Provenance(**_prov_args(merged)),
                     status=Status(declared),
                     reviewer=body.get("reviewer"),
                     reviewed=body.get("reviewed"),
@@ -1027,7 +1051,7 @@ def _parse_like(
         return Incorporation(
             zone=str(zone),
             wins=str(wins),
-            prov=Provenance(**{k: prov_src.get(k) for k in _PROV_KEYS}),
+            prov=Provenance(**_prov_args(prov_src)),
             status=Status(declared),
             reviewer=body.get("reviewer"),
             reviewed=body.get("reviewed"),

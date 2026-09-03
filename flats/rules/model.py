@@ -198,6 +198,66 @@ class Provenance(BaseModel):
         default=None,
         description="Clause-ledger id. Links this value to its RASE-tagged source clause.",
     )
+    #: The number is DRAWN rather than written, and a named person read it off
+    #: the sheet. Clackamas County is the case this exists for: ZDO
+    #: 1015.02(A)(4) hands stall and aisle dimensions to the Roadway Standards,
+    #: 320.3(a) hands them to Standard Drawings P100 and P200, and both sheets
+    #: carry three lines of title block and every dimension as CAD geometry.
+    #: The chain of authority is complete and it terminates in a picture.
+    #:
+    #: This is weaker evidence than a quote and the difference is not effort,
+    #: it is repeatability: a second reviewer cannot re-read a `quote:` that
+    #: does not exist, so `drawn` says *whose* reading this is and *when*, and
+    #: the readiness ledger keeps counting these forever instead of clearing
+    #: them. It is not `exempt` -- the standard exists -- and it is not a
+    #: missing quote, which is a number nobody has sourced yet.
+    #:
+    #: A quote alongside it is a contradiction: a drawing has no text to point
+    #: at, and if the number turns out to be written somewhere after all, that
+    #: sentence is the evidence and this flag should come off.
+    drawn: bool = Field(
+        default=False,
+        description="The figure is drawn, not written; a named person read it off the sheet.",
+    )
+    #: Who read the sheet, and when. Deliberately NOT `reviewer`/`reviewed` on
+    #: the value: those mean somebody signed this encoding after reading the
+    #: cited text, and reusing them here would make "I read the drawing" and "I
+    #: approve this row" the same mark. They are different acts, they can be
+    #: done by different people months apart, and a value can be drawn and
+    #: unsigned -- which is what every drawn number in this corpus is until the
+    #: signing pass reaches it.
+    read_by: str | None = Field(
+        default=None, description="Who read the figure off the drawing."
+    )
+    read_on: date | None = Field(
+        default=None, description="The date they read it."
+    )
+
+
+def _check_drawn(prov: Provenance, who: str) -> None:
+    """A drawn figure has to say whose reading it is, and cannot have a quote.
+
+    Both halves are about the same thing: a drawing is the one source in this
+    corpus a later reader cannot re-read from stored text. Without a name and a
+    date it is an unsourced number wearing a flag that tells the readiness
+    ledger to stop asking about it, which is strictly worse than an unsourced
+    number. And a quote alongside `drawn` is a contradiction -- if the figure
+    turns out to be written in words somewhere, that sentence is the evidence
+    and the flag should come off.
+    """
+    if not prov.drawn:
+        return
+    if not (prov.read_by and prov.read_on):
+        raise ValueError(
+            f"{who}: a drawn figure requires 'read_by' and 'read_on' — the name of "
+            f"the person who read the sheet, and the date they read it"
+        )
+    if prov.quote:
+        raise ValueError(
+            f"{who}: a drawn figure has no text to quote. Either the number is "
+            f"written somewhere, in which case cite that sentence and drop "
+            f"'drawn', or it is drawn, in which case there is no quote"
+        )
 
 
 #: Lot measurements a standard may be banded on. Registered for the same
@@ -481,6 +541,14 @@ class Variant(BaseModel):
     def _verified_needs_a_reviewer(self) -> Variant:
         if self.status is Status.verified and not (self.reviewer and self.reviewed):
             raise ValueError("a verified variant requires both 'reviewer' and 'reviewed'")
+        return self
+
+    @model_validator(mode="after")
+    def _a_drawn_number_names_who_read_it(self) -> Variant:
+        # Same bargain as on the base value, and it has to be checked here
+        # rather than inherited: an exception cites its own sentence, so it can
+        # be drawn while the standard it excepts is written, or the reverse.
+        _check_drawn(self.prov, "a drawn variant")
         return self
 
     @model_validator(mode="after")
@@ -890,6 +958,16 @@ class Value(BaseModel):
             raise ValueError(
                 f"{self.name}: status 'verified' requires both 'reviewer' and 'reviewed'"
             )
+        return self
+
+    @model_validator(mode="after")
+    def _a_drawn_number_names_who_read_it(self) -> Value:
+        # `drawn` is the one evidence form in this corpus a later reader cannot
+        # check for themselves, so the two things it must carry are whose
+        # reading it was and when. Without them it is an unsourced number with
+        # a flag on it, which is worse than an unsourced number, because the
+        # flag tells the readiness ledger to stop asking.
+        _check_drawn(self.prov, self.name)
         return self
 
     @model_validator(mode="after")

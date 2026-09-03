@@ -96,7 +96,7 @@ def test_the_ladder_walks_the_denominator_citations(
     """Not a separate audit somebody has to remember to run: a definition that
     stopped resolving lands its jurisdiction on `no_evidence` like any other
     broken quote."""
-    walked = [name for _zone, name, _quote, _n in _quoted_parts(layers[MILWAUKIE])]
+    walked = [name for _zone, name, _quote, _n, _d in _quoted_parts(layers[MILWAUKIE])]
 
     assert any("<net_developable_area>" in name for name in walked)
     assert readiness_for(layers[MILWAUKIE], store=store).no_evidence == ()

@@ -31,7 +31,7 @@ def _citations() -> list[tuple[str, str, str, str]]:
     """(layer, zone, field, quote) for every quote in the shipped corpus."""
     out: list[tuple[str, str, str, str]] = []
     for layer_id, layer in load_rules().items():
-        for zone, field, quote, _ in _quoted_parts(layer):
+        for zone, field, quote, _, _drawn in _quoted_parts(layer):
             if quote:
                 out.append((layer_id, zone, field, quote))
     return out

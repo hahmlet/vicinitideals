@@ -148,6 +148,11 @@ class Readiness:
     unfetched: tuple[str, ...] = ()
     #: (zone, field) pairs carrying no quote.
     unquoted: tuple[tuple[str, str], ...] = ()
+    #: (zone, field) pairs whose figure is drawn rather than written, read off
+    #: the sheet by a named person. Not a gap and never blocking -- the rung
+    #: list has no entry for it -- but reported for the life of the value,
+    #: because nobody else can re-read it from stored text.
+    drawn: tuple[tuple[str, str], ...] = ()
     #: (zone, field) pairs whose quote does not resolve.
     no_evidence: tuple[tuple[str, str], ...] = ()
     #: (zone, field) pairs whose quote resolves to text without the number in
@@ -293,38 +298,49 @@ def _printed_variant(variant: object) -> object:
     )
 
 
-def _rows(where: str, name: str, value: object) -> Iterable[tuple[str, str, str | None, object]]:
-    """Every citation one value asks a reader to open, and what to look for."""
-    yield where, name, value.prov.quote, _printed(value)
+def _rows(
+    where: str, name: str, value: object
+) -> Iterable[tuple[str, str, str | None, object, bool]]:
+    """Every citation one value asks a reader to open, and what to look for.
+
+    The last element says the citation is a DRAWING -- the number is drawn on
+    the sheet and a named person read it off. Carried per row rather than per
+    value because a value's own figure and its step-back can come from
+    different documents, and only one of them may be a picture.
+    """
+    yield where, name, value.prov.quote, _printed(value), value.prov.drawn
     if value.step_back_quote:
         # The half of the number that lives in another chapter. Unlike a
         # denominator there IS a figure to corroborate -- Gresham prints 21
         # and prints the 20 it comes to nowhere -- so this row is checked
         # like any other.
-        yield where, f"{name} [step-back]", value.step_back_quote, value.step_back_at_ft
+        yield where, f"{name} [step-back]", value.step_back_quote, value.step_back_at_ft, False
     if value.measured_on_quote:
         # The denominator's definition is a rule somebody read, and a citation
         # nothing checks is the provenance hole this field was added to close.
         # No number to corroborate -- what is being verified is that the
         # sentence is still where the file says it is.
-        yield where, f"{name} <{value.measured_on}>", value.measured_on_quote, None
+        yield where, f"{name} <{value.measured_on}>", value.measured_on_quote, None, False
     if value.qualified_quote:
         # The rule that says this standard is not the whole rule. No figure
         # either -- what it states is a condition, and the citation exists so
         # a reader can see the sentence rather than take "there is more to
         # this" on trust.
-        yield where, f"{name} ?{value.qualified_by}", value.qualified_quote, None
+        yield where, f"{name} ?{value.qualified_by}", value.qualified_quote, None, False
     for variant in value.variants:
         yield (
             where,
             f"{name} [{'+'.join(sorted(variant.when))}]",
             variant.prov.quote,
             _printed_variant(variant),
+            variant.prov.drawn,
         )
 
 
-def _quoted_parts(layer: Layer) -> Iterable[tuple[str, str, str | None, object]]:
-    """Every (zone, field, quote, number) in a layer, exceptions included.
+def _quoted_parts(
+    layer: Layer,
+) -> Iterable[tuple[str, str, str | None, object, bool]]:
+    """Every (zone, field, quote, number, drawn) in a layer, exceptions included.
 
     A variant citing a different chapter and an incorporation clause are both
     values somebody has to read, so both are counted here. Leaving either out
@@ -342,11 +358,11 @@ def _quoted_parts(layer: Layer) -> Iterable[tuple[str, str, str | None, object]]
         for name, value in zone.values.items():
             yield from _rows(zone_code, name, value)
         if zone.like is not None:
-            yield zone_code, LIKE, zone.like.prov.quote, None
+            yield zone_code, LIKE, zone.like.prov.quote, None, zone.like.prov.drawn
     for w in layer.wanted:
         # Quarantined out of the zones, still owed. Dropping them here would
         # report a jurisdiction as finished the moment its worst values left.
-        yield w.zone, w.field, None, getattr(w.value, "value", None)
+        yield w.zone, w.field, None, getattr(w.value, "value", None), False
 
 
 #: A number as an ordinance prints one: 7500, 7,500, 7500.0, 7.5 -- grouped by
@@ -699,10 +715,21 @@ def readiness_for(
     spaced = frozenset(p for p, doc in layer.documents().items() if doc.spaced)
     glued = frozenset(p for p, doc in layer.documents().items() if doc.glued_markers)
     unquoted: list[tuple[str, str]] = []
+    drawn: list[tuple[str, str]] = []
     no_evidence: list[tuple[str, str]] = []
     misquoted: list[tuple[str, str]] = []
     parts = list(_quoted_parts(layer))
-    for zone_code, name, quote, number in parts:
+    for zone_code, name, quote, number, is_drawn in parts:
+        if is_drawn:
+            # A number that is drawn and not written. It has no quote and it
+            # never will, so it is not `unquoted` -- that rung means nobody has
+            # sourced the number yet, and this one is sourced to a sheet and a
+            # person. It is recorded rather than cleared, because it is the one
+            # evidence form here a later reader cannot check without reopening
+            # the drawing, and a ledger that stopped mentioning it would let
+            # that fact go quiet.
+            drawn.append((zone_code, name))
+            continue
         if not quote:
             unquoted.append((zone_code, name))
             continue
@@ -759,6 +786,7 @@ def readiness_for(
         verified=verified,
         unfetched=unfetched,
         unquoted=tuple(unquoted),
+        drawn=tuple(drawn),
         no_evidence=tuple(no_evidence),
         misquoted=tuple(misquoted),
         undefined=tuple(undefined),

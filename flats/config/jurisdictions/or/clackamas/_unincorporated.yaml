@@ -454,38 +454,76 @@ defaults:
     retrieved: '2026-08-27'
     quote: "or/clackamas/_unincorporated/roadway.p100.txt#L2"
   #
-  # NOT ENCODED: the drive aisle, and this is a new shape of refusal. It is not
-  # that the county states no aisle -- ZDO 1015.02(A)(4) says parking areas
-  # "shall comply with minimum dimensions for curb length, stall depth, and
-  # aisle width established by the Clackamas County Roadway Standards", and
-  # Roadway Standards 320.3(a) says "for dimensions of parking spaces and drive
-  # aisles refer to Standard Drawings P100 and P200". The chain is complete and
-  # it terminates in a picture. Both sheets were fetched and both extract three
-  # lines of title block; every dimension on them is drawn. The aisle is the
-  # one number in this layer that a person with the sheet open could read in
-  # five seconds and no reader here can reach, and it is why unincorporated
-  # Clackamas -- 18,662 lots the pod fits, the third largest count in the
-  # corpus -- still produces no site plan. `exempt: true` would be a lie: the
-  # standard exists.
+  # THE DRIVE AISLE, READ OFF THE DRAWING 2026-09-03. Twenty-four feet at 90
+  # degrees, and it is the first value in this corpus whose evidence is a
+  # picture rather than a sentence.
   #
-  # MEASURED 2026-08-30 rather than assumed, so nobody re-probes it. Both
-  # sheets were pulled again and read with pypdf directly: P100 is 145,533
-  # bytes and yields 69 characters of text, P200 is 148,575 and yields 71, and
-  # in both cases every one of those characters is the title block. It is not
-  # that our extractor is losing the callouts -- there are no text objects on
-  # the sheet to lose. The car aisle appears nowhere in the words of the
-  # chapter either: `aisle` occurs eleven times across ZDO 1015 and Roadway
-  # Standards 320 and the only one carrying a figure is the FIVE-FOOT BICYCLE
-  # aisle at 1015.07(B)(2). Closing this needs a person to read a drawing, or
-  # a decision to let OCR be evidence -- which would change what a `quote:`
-  # means everywhere in this corpus, and is not a decision an encoding makes.
+  # The chain of authority was never in doubt and is worth restating, because
+  # the flag on these two values is not a shortcut around it. ZDO 1015.02(A)(4)
+  # says parking areas "shall comply with minimum dimensions for curb length,
+  # stall depth, and aisle width established by the Clackamas County Roadway
+  # Standards"; Roadway Standards 320.3(a) says "for dimensions of parking
+  # spaces and drive aisles refer to Standard Drawings P100 and P200". The
+  # chain is complete and it terminates in a picture. Both sheets were fetched,
+  # stored, and re-read with pypdf directly on 2026-08-30 to be sure the fault
+  # was not ours: P100 is 145,533 bytes and yields 69 characters, P200 is
+  # 148,575 and yields 71, and in both cases every character is the title
+  # block. There are no text objects on the sheet to lose. The word `aisle`
+  # occurs eleven times across ZDO 1015 and Roadway Standards 320 and the only
+  # one carrying a figure is the FIVE-FOOT BICYCLE aisle at 1015.07(B)(2).
   #
-  # What it costs, measured on the 2026-08-30 site-plan run: 598 green and
-  # 16,888 review lots here are graded with no parking laid out, and those
-  # 16,888 are HALF the corpus's entire 33,626-lot review queue. No other open
-  # question in this project is worth as many lots.
+  # So it was closed the way the drawing allows: a person opened P100 and read
+  # the dimension. `drawn: true` records that, with the name and the date, and
+  # `quote:` is absent because there is no line of text to point at -- the
+  # model refuses to let a drawn figure carry one. This is weaker evidence than
+  # every other number in this file and the difference is repeatability, not
+  # effort: a second reviewer cannot re-read a quote that does not exist, so
+  # the readiness ledger keeps reporting these two forever rather than clearing
+  # them. What was NOT done is letting OCR stand as evidence, which would
+  # change what `quote:` means everywhere in this corpus.
+  #
+  # NOT ENCODED: the 45, 60 and parallel rows on the same sheet. One refusal
+  # closes here and another opens in its place, which is the honest bookkeeping
+  # -- the sheet dimensions four parking angles and this corpus carries one.
+  #
+  # 90 degrees is the only row the screen can use today, because it lays out a
+  # single typology: a rear court with stalls square to the drive. The angled
+  # rows are not a smaller version of that. They buy a narrower aisle in
+  # exchange for a deeper stall module and one-way circulation, and on a lot
+  # too shallow for 18 + 24 + 18 that trade is the difference between a plan
+  # and no plan. Encoding them without a layout that can draw them would put
+  # four numbers in the file that nothing reads, and the field registry has no
+  # way to say which angle a value is for -- `parking_aisle_two_way_ft` is one
+  # field, not four. So the numbers stay on the sheet, and this note is here so
+  # the next person knows they exist on a drawing we already hold rather than
+  # re-deriving that they might.
+  #
+  # What it was costing, measured on the 2026-08-30 site-plan run: 598 green
+  # and 16,888 review lots graded with no parking laid out, those 16,888 being
+  # HALF the corpus's entire 33,626-lot review queue. No other open question in
+  # this project was worth as many lots.
   # (or/clackamas/_unincorporated/zdo.1015.txt#L29,
   #  or/clackamas/_unincorporated/roadway.320.txt#L18,L23,L40,L42-L43)
+  parking_aisle_two_way_ft:
+    value: 24
+    cite: Clackamas County Roadway Standard Drawing P100, Parking and Aisle Layout Details (9' x 18'), 90 degrees, required by Roadway Standards 320.3(a) and ZDO 1015.02(A)(4)
+    url: https://dochub.clackamas.us/documents/drupal/6dab9eb0-a4d6-44bc-8246-bc4465676fbd
+    retrieved: '2026-08-27'
+    drawn: true
+    read_by: sjk
+    read_on: '2026-09-03'
+  # The sheet prints one figure for the aisle at 90 degrees and does not split
+  # it by direction, so both fields take it. Same shape as Tualatin's Figure
+  # 73-1 and Fairview's Table 3, and the direction of the error is the safe
+  # one: a court drawn to the two-way width fits wherever a one-way court fits.
+  parking_aisle_one_way_ft:
+    value: 24
+    cite: Clackamas County Roadway Standard Drawing P100, Parking and Aisle Layout Details (9' x 18'), 90 degrees, required by Roadway Standards 320.3(a) and ZDO 1015.02(A)(4)
+    url: https://dochub.clackamas.us/documents/drupal/6dab9eb0-a4d6-44bc-8246-bc4465676fbd
+    retrieved: '2026-08-27'
+    drawn: true
+    read_by: sjk
+    read_on: '2026-09-03'
   #
   # NOT ENCODED: covered parking above 3,500 feet. Table 1015-2 note 2 requires
   # that "on land above 3,500 feet in elevation, covered parking shall be
