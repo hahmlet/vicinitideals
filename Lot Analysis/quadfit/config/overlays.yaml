@@ -5,7 +5,14 @@
 #                 discretionary review — same thing here)
 #         carve = by-right survives; overlay area + buffer_ft is unbuildable,
 #                 subtracted from the envelope before fitting (s5o)
-#         flag  = cost/process only; reported, never blocks
+#         flag  = cost/process only; the lot keeps its by-right envelope and
+#                 nothing is subtracted -- but it does NOT pass silently. s7
+#                 lists `overlay_flag` among the review triggers, so a flagged
+#                 lot goes to a person rather than green. That is deliberate:
+#                 a permit that costs money and time is not a thing to hand
+#                 somebody as "buildable" without saying so. (This line used to
+#                 read "reported, never blocks", which was wrong from the day
+#                 overlay_flag was wired into the review disjunction.)
 #
 # kill/flag reclassification = s7-only re-run. buffer_ft changes = s5o+s6+s7.
 #

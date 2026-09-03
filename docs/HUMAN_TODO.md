@@ -1025,7 +1025,8 @@ the list of places worth hoping about.
   number rather than an opinion. (Working file `spike_footprint_slope.csv` on
   the compute box holds the per-lot readings if anyone wants to check.)
 
-- **The screen is measuring the wrong side of the lot in two cities** —
+- ~~**The screen is measuring the wrong side of the lot in two cities**~~ —
+  closed 2026-09-03; the measurement is taken and the numbers are below.
   988 lots (Oregon City 896, Tualatin 92). Found 2026-09-01 by chasing the 33
   numbers the zone audit said had no code behind them. All 33 turned out to be
   perfectly well read — 18 in zones that borrow another zone's rules outright,
@@ -1059,11 +1060,38 @@ the list of places worth hoping about.
   thing wrong with them. **62 lots, all in Oregon City**, is what this is worth
   until somebody measures lot width properly.
 
-  The other half is still open and is the real fix: measure lot width the way
-  the code defines it, across the middle of the lot, and judge these properly.
-  Agent work. What was deliberately *not* done is simply deleting the rule in
-  those two cities, which would have moved all 988 straight into the pool of
-  buildable lots — buying back some we are wrongly rejecting at the price of an
+  **The other half shipped 2026-09-03, and the screen now takes the
+  measurement.** Each city gets its own, because the two codes do not describe
+  the same line: Oregon City draws it between the midpoints of the two
+  principal opposite side lot lines, Tualatin draws it parallel to the street
+  through the centre of the lot. 7,870 lots are measured — 7,262 of Oregon
+  City's 10,863 and 608 of Tualatin's 952 — and the rest are refused rather
+  than guessed at. The refusals are mostly corner lots, whose second street
+  edge leaves only one side lot line to measure from, and which Tualatin's code
+  sends to a different definition anyway.
+
+  **It decides 34 lots: 8 out of the queue and green, 25 out of the queue and
+  red, and 1 that had been passing.** The last one is the direction nobody was
+  looking — a lot with generous street frontage that is pinched behind it and
+  fails the standard the city actually wrote. It is the reason this rules in
+  both directions rather than only rescuing lots; a measurement that could only
+  say yes would be an amnesty.
+
+  34 is far short of the 988 the item opens with, and that is the honest
+  answer, not a disappointment. It is the same finding as the paragraph above:
+  frontage was never the only thing wrong with these lots, and once you stop
+  judging them on the wrong edge, most of them are still red for their area,
+  their parking, or their envelope. What is now true is that **18 lots in
+  Oregon City and none in Tualatin** are still held for a width nobody could
+  measure, against 1,730 carrying the flag before.
+
+  Where the measurement declines, the lot keeps exactly the treatment it had —
+  short on frontage goes to review, and a lot clearing the number on frontage
+  is left alone. Without that fallback the fix would have pushed 3,291 passing
+  lots into the queue on the grounds that nobody had measured them, which was
+  true of every lot in both cities the day before. What was deliberately *not*
+  done is simply deleting the rule in those two cities, which would have moved
+  all 988 straight into the pool of buildable lots — buying back some we are wrongly rejecting at the price of an
   unknown number we would then be wrongly accepting. A screen that says yes
   when the answer is no is worth much less than one that says no too often.
   Which cities get the softer treatment is frozen in a test, and a city earns
