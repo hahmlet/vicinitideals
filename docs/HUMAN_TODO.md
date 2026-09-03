@@ -376,18 +376,131 @@ them they hold 126 greens. If Portland comes back with 20 ft this gets
 These lots are filterable: the `geometry_assumed` column in
 `lots_results.csv`, and the greens they produce are itemized in `summary.md`.
 
-## 4. One question for a building-code expert: accessible (ADA) parking — **every city at once**
+## 4. ~~One question for a building-code expert: accessible (ADA) parking~~ — **ANSWERED FROM THE CODE 2026-09-03: nothing is required, nothing moves**
 
-Open question, deliberately parked: does Oregon's building code (OSSC) require
-one accessible stall — 13 ft wide with its access aisle — for a **4-unit,
-no-elevator building with surface parking**? 
+The worry was that Oregon's building code makes one of this building's four
+stalls an accessible one. If it did, that stall plus its striped aisle would eat
+extra feet out of every parking court in all fourteen cities at once, and tight
+lots everywhere would go red on the same day. **It does not.** Read end to end,
+the code lets this exact building out of the requirement — and it is unusually
+clear about it, clear enough that this did not need an expert to answer. No lot
+moves. No court gets wider.
 
-- If **no**: closed everywhere, nothing changes.
-- If **yes**: every court in every city needs one wider first stall, which
-  shrinks tight lots in all 14 laid-out cities simultaneously.
+**Why, in one sentence.** A building only owes accessible *parking* if it owes
+accessible *units*; a four-unit building normally would owe them, but the code
+excuses any unit that is two storeys and has no elevator, which is every unit we
+build — so this building owes no accessible units, and therefore no accessible
+stall.
 
-One architect or code consultant can answer this in a sentence. It was parked
-rather than guessed precisely because the answer moves lots everywhere at once.
+**The one fact the whole answer rests on: every unit is two storeys and there is
+no elevator.** That is the product as designed (`footprints.yaml`: 1,000 sqft
+two-storey townhomes, ~500 sqft on the ground, four side by side). If the
+product ever becomes single-storey flats, the answer flips and the cost is
+real — see "What would reopen this" below. Nothing else matters here: not the
+lot, not the city, not the number of stalls.
+
+**The chain, for whoever checks it later.** Oregon is on the **2025 Structural
+Specialty Code (OSSC)**, which is the 2024 International Building Code plus
+state amendments, mandatory since 2026-04-01. Three sections, in order:
+
+| § (2025 OSSC) | older books | what it says |
+|---|---|---|
+| **1106.3** | 1106.2 | Accessible parking — 2%, never fewer than one — is required in Groups R-2, R-3 and R-4 only where the building is *"required to have Accessible, Type A or Type B dwelling units."* |
+| **1108.6.2.2.2** | 1107.6.2.2.2 | Four or more dwelling units in a single structure → every unit must be a **Type B** unit. *"Exception: … reduced in accordance with Section 1108.7."* |
+| **1108.7.2** | 1107.7.2 | *"A multistory dwelling unit or sleeping unit that is not provided with elevator service is not required to be a Type B unit."* |
+
+Run our building through it: four units, so 1108.6.2.2.2 catches it; every unit
+is multistory with no elevator, so 1108.7.2 releases every one of them; zero
+Type B units are required, so 1106.3 never fires. **Zero accessible spaces.**
+
+**Three other doors, all tried, all closed.**
+
+- **The residential code, if the permit goes that way.** A group of three or
+  more attached units, each running foundation to roof, with a yard on at least
+  two sides, is a *townhouse*, and townhouses up to three storeys are built
+  under the **Oregon Residential Specialty Code (ORSC, 2023 edition; a 2026
+  edition is expected 2026-10-01)**. The ORSC is based on the International
+  Residential Code, which **has no accessibility chapter at all**. This is a
+  second, fully independent route to the same answer — but it depends on how
+  the building is designed and permitted, so the OSSC chain above is the one to
+  rely on. It holds either way.
+- **The federal Fair Housing Act.** It covers buildings of four or more units
+  *with an elevator*, and the ground-floor units of buildings without one. HUD's
+  own design manual says a multistory townhouse in a non-elevator building is
+  not covered. Ours is not covered.
+- **Oregon's own statute, ORS 447.233**, which sets accessible-parking counts
+  independently of the building code. It reaches only *"affected buildings,"* and
+  **ORS 447.210** excludes residential dwellings from that definition except for
+  covered multifamily dwellings as the Fair Housing Act defines them — which,
+  per the line above, we are not.
+
+**What the fourteen cities say — every one of them read, none of them a
+problem.** The pattern is uniform: cities set the *dimensions* and the
+*placement* of an accessible stall and hand the *count* to the building code.
+With the building code asking for none, none of these fire.
+
+| city | what its code does | why it does not reach us |
+|---|---|---|
+| Happy Valley 16.43(G) | *"shall be provided for all uses consistent with the requirements of the Oregon State Structural Specialty Code and/or Federal requirements, whichever is more restrictive"* | "for all uses" is the strongest local wording anywhere in the corpus, and it still takes its number from the OSSC — which is zero |
+| Gresham 9.0826(A) | *"All parking areas shall provide accessible parking spaces and accessible aisles as outlined in the Building Code, Chapter XI"* | same shape: universal-sounding, count deferred |
+| Gresham 9.0852 (plan districts) | *"Minimum off-street parking for all uses is zero. If required by the Building Code, accessible parking spaces shall be provided regardless of the provisions of this subsection."* | explicitly conditional on the Building Code |
+| Troutdale 9.105 | *"The required number of accessible parking spaces shall be in conformance with the applicable provisions of the State of Oregon Structural Specialty Code."* | count deferred outright |
+| Milwaukie 19.600(E) | conform to the ADA, *"subject to review and approval by the Building Official"* | deferred to the Building Official. Note for item 5: a disabled space would count against Milwaukie's 4-stall **maximum**, not sit on top of it |
+| Wood Village 350.065(D)(3) | *"Where required by this Code, Chapter 31 of the Uniform Building Code or the Americans With Disabilities Act, disabled parking spaces must meet the dimension standards…"* | conditional on a requirement stated somewhere else, and no row of Table 350-1A states one for Household Living |
+| Tualatin 73C(7) | *"Accessible parking spaces must meet federal and state building code"* | deferred |
+| Wilsonville def. 223 | its own ratio — one accessible space per 50 standard — but only in *"parking areas which contain ten or more parking spaces"* | the only city with an independent number, and our court is 4–8 stalls, below its own floor |
+| unincorporated Clackamas, Roadway 320 | accessible spaces meet the Oregon Transportation Commission's standards | a dimension rule, not a count |
+| West Linn 46.150(B) | its own count table — but only *"if any parking is provided for the public or visitors"* | resident parking is not visitor parking. **See the warning below** |
+| Portland 33.266, Oregon City 17.zoning, Fairview 19.162, unincorporated Multnomah | accessible parking appears only in passing — where carpool stalls may sit, what a pathway must connect to, what a site plan must label | no count, no trigger |
+
+**Two things to keep an eye on.**
+
+- **West Linn is one design decision away from a real requirement.** Its rule
+  turns on *"if any parking is provided for the public or visitors."* Our courts
+  are resident parking, so it does not fire — but the moment a plan stripes a
+  single guest stall in West Linn, the first row of its table (1–25 spaces)
+  demands one accessible space *and* that it be van-accessible. That is a 17 ft
+  bay in a court that is already the tightest thing on the lot. **Do not add a
+  marked visitor space in West Linn without pricing it.**
+- **Troutdale pays you to do it anyway.** Troutdale 9.100(G) reduces required
+  parking by one space for every two units that are fully accessible. Not
+  relevant while minimums are near zero, but it is the one city that treats
+  accessibility as a credit rather than a cost.
+
+**What it would have cost, had the answer been yes — and the parked question was
+worse than this list thought.** The old version of this item guessed 13 ft,
+taken from Wood Village's own Table 350-3. That is the wrong number. Under
+ORS 447.233 and Gresham 9.0826(B)(1) alike, an accessible space is 9 ft with a
+6 ft aisle, a van-accessible space is 9 ft with an **8 ft** aisle, and where
+only one accessible space is provided **it must be the van-accessible one**. So
+the real figure was a **17 ft first bay against a standard 9 ft — eight extra
+feet**, not four, in every court in every city. Both West Linn 46.150(B)(4) and
+the state statute say federal dimensions prevail where a local table differs, so
+Wood Village's 13 ft would have been superseded anyway.
+
+**What would reopen this.** Exactly one thing: **a single-storey unit.** OSSC
+1108.7.1 is the other half of 1108.7 — in a building with no elevator, the units
+on the *ground* storey still have to be Type B. Every unit of our pod is two
+storeys, so no unit is a ground-storey unit in that sense. Change the product to
+flats and those units become Type B, 1106.3 fires, and one van-accessible 17 ft
+bay lands in every court on the map. A second, smaller trigger: an on-site
+rental or leasing office would be a place of public accommodation with its own
+accessible-parking duty under the ADA.
+
+**Honest limit on this answer.** This is a reading of the published code, not a
+determination by a building official, and the building official has the last
+word at permit. It is closed here because the sections are explicit and the
+whole chain is quotable, and because leaving it open was distorting a screen
+across fourteen cities. Worth one line of confirmation from the plans examiner
+on the first real permit set — as a check, not a blocker.
+
+**Sources.** 2025 OSSC §§1106.3, 1108.6.2.2.2, 1108.7.1–1108.7.2 (IBC 2024
+base; same text and numbering confirmed against the IBC 2024 sections). 2023
+ORSC scope and the IRC townhouse definition. 42 U.S.C. §3604(f) and HUD's Fair
+Housing Act Design Manual on covered multifamily dwellings. ORS 447.210
+(definitions) and ORS 447.233 (counts and dimensions). City text as quoted
+above, all of it from the stored provenance corpus under
+`flats/provenance/docs/or/`.
 
 ## 5. Business decision: Milwaukie legally caps parking at 4 stalls — **622 greens**
 

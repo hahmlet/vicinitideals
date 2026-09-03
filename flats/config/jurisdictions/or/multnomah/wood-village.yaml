@@ -430,19 +430,29 @@ crossrefs:
   # are what 350.030, 350.055, 350.065 and 720.030 point at that nothing had
   # ruled on before.
   "31":
-    outcome: later
+    outcome: other_building
     note: >-
       Chapter 31 of the Uniform Building Code, cited by WVDC 350.065(D)(3): "Where required by this
       Code, Chapter 31 of the Uniform Building Code or the Americans With Disabilities Act, disabled
-      parking spaces must meet the dimension standards stated in Table 350-3." The WVDC half of that
-      sentence is decided and it requires nothing -- it supplies dimensions for a requirement stated
-      somewhere else, and no row of Table 350-1A asks Household Living for an accessible space. What
-      is deferred is the other half. Table 350-3''s Disabled row is 13 feet wide against the standard
-      9, so if one of this building''s four stalls had to be accessible the court widens by four
-      feet, and whether the Oregon Structural Specialty Code asks that of a four-unit building with
-      no elevator is a building-permit question this screen has never put to any city. Parked rather
-      than closed because the answer would move lots in every jurisdiction at once, not just this
-      one.
+      parking spaces must meet the dimension standards stated in Table 350-3." Both halves are now
+      decided and neither requires anything of this building. The WVDC half supplies dimensions for
+      a requirement stated somewhere else, and no row of Table 350-1A asks Household Living for an
+      accessible space. The building-code half was parked from 2026-08 until 2026-09-03 and is now
+      closed against the code itself. Oregon's current book is the 2025 Structural Specialty Code
+      (IBC 2024 base, mandatory 2026-04-01), and its chain is explicit. OSSC 1106.3 requires
+      accessible parking in Groups R-2, R-3 and R-4 only where the building is "required to have
+      Accessible, Type A or Type B dwelling units." OSSC 1108.6.2.2.2 makes every unit of a
+      four-or-more-unit structure a Type B unit, subject to the reductions in 1108.7. OSSC 1108.7.2
+      then says a multistory dwelling unit not provided with elevator service is not required to be
+      a Type B unit. Every unit of this pod is two storeys and there is no elevator, so no unit is
+      required to be Type B, so 1106.3 never fires and the building owes zero accessible spaces.
+      Table 350-3's Disabled row (13 ft against the standard 9) therefore never applies, and would
+      have been superseded anyway -- ORS 447.233 and the federal standard put a lone accessible
+      space at van-accessible width, 9 ft plus an 8 ft aisle. Closed as other_building rather than
+      preempted: the requirement is real and reaches buildings with elevator service or with
+      ground-storey units, just not this one. It reopens if the product ever becomes single-storey
+      flats, because OSSC 1108.7.1 keeps the ground storey of a non-elevator building on the Type B
+      hook. Full reasoning, the city-by-city read, and the sources are in docs/HUMAN_TODO.md item 4.
   "340": >-
     Manufactured Homes, cited by the last sentence of WVDC 350.055(A): "Parking for manufactured home
     parks is regulated in Section 340 - Manufactured Homes." A different tenure and a different
