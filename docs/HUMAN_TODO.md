@@ -116,6 +116,31 @@ and 38% do not have even 20 ft behind it. Nothing here is a claim that any city
 allows aisle-free parking; it is the size of the prize, so that reading the
 parking chapters for it can be priced against what it would return.
 
+**And the same question was asked of the driveway, with the same method and a
+clearer answer: no.** Five cities publish two driveway widths — a wider one for
+a drive cars use in both directions and a narrower one for a drive that runs
+one way — and the screen draws the wider one, because a single driveway in and
+out of a rear court carries traffic both ways. That is the conservative reading
+and it costs real frontage: 24 ft in West Linn, 20 in Happy Valley and
+Troutdale, 22 in Tualatin. So every one of those cities was re-laid out at its
+own one-way figure, everything else untouched, on all 162,533 evaluated lots.
+
+**It moves 486 lots off red, and not one of them is in Portland.** West Linn
+279, Happy Valley 108, Troutdale 89, Tualatin 10 — those are the lots held by
+nothing but the site plan today, so a narrower lane would release them (to
+review or to green, depending on what else they want). Portland appears to
+gain another 1,466, and that number is not offered: Portland's one-way figure
+is 9 ft, and this project decided long ago that a car needs 12 whatever a code
+says. Buying 1,466 lots by drawing a lane narrower than a car is not a trade
+worth making, and it is left on the table deliberately.
+
+**486 out of 18,393.** That is the useful part. The driveway blocks 18,393 lots
+outright and would block another 66,000 if the parking aisle question ever went
+our way — and reading every city's driveway rule at the narrowest width its own
+code allows releases 2.6% of them. The lane is not an encoding problem. Nothing
+left to read here changes the picture, which is why the next paragraph is the
+only lever left.
+
 **What this puts to you is a product question, not a code question.** Every
 lever in the list below is worth what it is worth, and none of them touches
 this. The screen lays out one arrangement — building across the front, one
