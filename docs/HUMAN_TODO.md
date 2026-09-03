@@ -5,12 +5,32 @@ agent cannot do alone. The agent maintains it: items get added when work
 surfaces them, and struck through (with a date and what happened) when they
 close. Items are ordered by how many lots ride on them, biggest first.
 
-Pipeline state when last updated (2026-09-03, after lot width was measured the
-way the two cities that ask for it define it):
-**green 9,572 · review 32,794 · red 249,605** across 291,971 lots in 13 cities
-laid out with real site plans. Greens by city: Portland 7,358 · Oregon City 735
-· Milwaukie 622 · unincorporated Clackamas 515 · West Linn 288 · Wilsonville 53
-· unincorporated Multnomah 1.
+Pipeline state when last updated (2026-09-03, after your two answers — the
+Clackamas drawing and the coarse elevation map — were built and run):
+**green 16,530 · review 12,901 · red 262,540** across 291,971 lots in **14**
+cities laid out with real site plans. Greens by city: Portland 12,678 ·
+**Gresham 1,820** · Oregon City 735 · Milwaukie 622 · West Linn 288 ·
+**Troutdale 125** · unincorporated Clackamas 113 · **Wood Village 95** ·
+Wilsonville 53 · unincorporated Multnomah 1.
+
+**Your two answers nearly doubled the green list and cut the review queue by
+61%.** Green 9,572 → 16,530. Review 32,794 → 12,901. They did it in opposite
+ways, and both are worth understanding:
+
+- **The elevation decision produced +7,360 greens, which is the forecast to the
+  lot** — Portland 5,320, Gresham 1,820, Troutdale 125, Wood Village 95, exactly
+  as the estimate said on 2026-09-02. Three cities that had produced nothing for
+  the life of this pipeline now produce something.
+- **The Clackamas drawing produced no greens at all. It took 402 away, and that
+  is the point of it.** The county had 515 greens before today and they were
+  resting on a parking layout nobody had drawn — with no aisle width, the screen
+  skipped the parking test for that city entirely and graded its lots on the
+  building alone. Now the test runs: of 23,934 county lots, 5,342 can seat a
+  legal court, 19,398 are red, 4,423 are in review, and **113 are green and mean
+  it.** The 17,486 lots that had been unanswerable are answered. Losing 402
+  greens that were never tested is the honest trade for being able to trust the
+  113 — and the county was, before today, the only city on the map graded that
+  way.
 
 **Wiring six Clackamas cities' overlays cost 65 greens and all 65 are
 Wilsonville** — 118 down to 53. Every other city came back byte-identical,
@@ -51,10 +71,13 @@ never the number that binds.
 — Portland 10,899, Gresham 1,574, Oregon City 480 — but 10,512 of those were
 already red for other reasons, so the floor is the deciding factor on 2,644.
 
-The review queue now says why each lot is in it. Of the 32,827:
-sewer unconfirmed 18,127 · slope 17,539 · overlay 5,591 · unverified zone 3,640
-· density floor 2,644 · tier C 1,534 · suspect geometry 818 · frontage
-unmeasured 56. A lot can be held by several at once.
+The review queue now says why each lot is in it. Of the 12,901:
+sewer unconfirmed 5,713 · slope 4,640 · unverified zone 3,529 · density floor
+2,644 · overlay 2,586 · tier C 894 · suspect geometry 414 · frontage unmeasured
+18. A lot can be held by several at once. Slope fell 17,539 → 4,640 because the
+coarse map now answers; sewer fell 18,127 → 5,713 mostly because Clackamas lots
+that were waiting on a sewer answer turned out to have no legal site plan
+either, and a red verdict outranks a queued one.
 
 ---
 
@@ -70,9 +93,10 @@ on it, and only the first is a queue item:
    the biggest single item and it is *work*, not a decision — you cannot approve
    your way past it in an afternoon.
 
-   Counted exactly on 2026-09-02, and the honest total is smaller than it
-   looked: **2,212 numbers on 1,673 cards across 15 code books.** The number
-   quoted before was 2,350 across 19, which included four cities the screen does
+   Counted exactly, and the honest total is smaller than it looked: **2,204
+   numbers across 15 code books** (re-counted 2026-09-03; it includes the two
+   Clackamas aisle values added that day, and the per-city split is the table in
+   item 7). The number quoted before was 2,350 across 19, which included four cities the screen does
    not cover at all — Lake Oswego (excluded by your own 2026-07-24 call on the
    Mountain Park PUD), plus Johnson City, Rivergrove and Maywood Park, which are
    too small to be under the state's fourplex mandate. Lake Oswego alone is 132
@@ -127,10 +151,23 @@ it costs one person a few days.
 
 ---
 
-## 1. ~~Read one drawing: Clackamas County's parking detail~~ — **DONE 2026-09-03, 17,486 lots**
+## 1. ~~Read one drawing: Clackamas County's parking detail~~ — **DONE, BUILT AND RUN 2026-09-03**
 
 **You read it. Twenty-four feet at 90 degrees.** It was the single biggest
 unlock left and it was half the entire review queue.
+
+**Measured after the run, and the result is not the one this entry predicted.**
+It predicted 17,486 lots moving; 17,486 lots did move, and **none of them moved
+to green.** The county went from 515 greens to 113. That is not a failure of the
+reading — it is what the reading was for. Until today the screen had no aisle
+width for Clackamas, so it skipped the parking test for the whole county and
+graded those lots on whether the building alone would fit. 515 lots passed a
+test with a hole in it. Now all 23,934 county lots get the same test every other
+city gets: 5,342 can seat a legal parking court, 19,398 are red (13,651 of them
+because no court can be drawn at all), 4,423 are in review, and 113 are green
+on a plan that has actually been drawn. **The county stops being the one
+jurisdiction on the map whose greens meant something different from everyone
+else's.**
 
 The problem was never that the county was silent. Its rule book says parking
 must match the zoning code AND the standard construction drawings, the zoning
@@ -160,13 +197,22 @@ shallow lot is the difference between a plan and no plan; they become worth
 encoding the day an angled layout is drawn. Written down so nobody has to
 rediscover that the numbers exist on a sheet we already hold.
 
-## 2. ~~One decision: may a coarser elevation map grade a lot green?~~ — **DECIDED YES 2026-09-03, 7,360 lots**
+## 2. ~~One decision: may a coarser elevation map grade a lot green?~~ — **DECIDED YES, BUILT AND RUN 2026-09-03, +7,360 greens**
 
 The single biggest number on this list, and it was one yes-or-no answer. You
 said yes on 2026-09-03. The switch is flipped, and a column named
 `slope_source` records which map answered on every lot, so any green that rests
 on the coarse reading can be filtered back out in one step. Flipping it back is
 a one-line change and a cheap re-run; nothing is built on it staying true.
+
+**The run landed on the forecast exactly: 7,360 greens, split Portland 5,320 ·
+Gresham 1,820 · Troutdale 125 · Wood Village 95 — the same four numbers the
+estimate gave.** That is worth a moment's suspicion and it survives it: the
+estimate was made by running the decision's own rule against the finished lot
+table, so it was a count rather than a projection. What it could not know in
+advance was whether anything downstream would take the lots back, and nothing
+did. Three cities that had produced zero green lots for the life of this
+pipeline now produce 2,040 between them.
 
 The reasoning as it stood before the decision is kept below, because the 1.5%
 is the number anyone will want when a coarse-map green turns out to be steep.
@@ -215,15 +261,19 @@ a small chance of wasted diligence for a large amount of pipeline. The error it
 buys is cheap and self-correcting — one wasted site visit, discovered on that
 visit — which is what made yes the cheaper mistake than holding 7,360 lots.
 
-## 3. Three short emails: confirm the assumed 24 ft aisle — **8,033 greens, which is 84% of all of them**
+## 3. Three short emails: confirm the assumed 24 ft aisle — **13,353 greens, which is 81% of all of them**
 
 **This entry said 985 greens until 2026-09-01. It was counting two of the three
-cities.** Portland carries the identical assumption on **7,358 greens** and had
-been left off. Corrected here because the number changes what the entry is: not
-a tidy-up on two small cities, but the single largest thing standing between
-this screen and a green list you could act on.
+cities.** Portland carries the identical assumption and had been left off.
+Corrected here because the number changes what the entry is: not a tidy-up on
+two small cities, but the single largest thing standing between this screen and
+a green list you could act on. Re-counted after the 2026-09-03 run: Portland's
+share rose from 7,358 to 12,678 because the elevation decision (item 2) turned
+5,320 more Portland lots green, and every one of them is drawn to the assumed
+aisle. **Answering item 2 made this item bigger.** It is now the largest single
+item on the list by lots at stake, and it is three emails.
 
-Portland (7,358 greens), Milwaukie (622) and Wilsonville (53) all publish a
+Portland (12,678 greens), Milwaukie (622) and Wilsonville (53) all publish a
 parking stall size and **no drive-aisle width that reaches a quadplex**.
 Portland's is the subtlest of the three: PCC 33.266.120 gives houses through
 fourplexes a 9 × 18 stall and states no aisle, and the 20 ft aisle in Table
@@ -245,10 +295,11 @@ acceptable"* — converts the assumption into a confirmation. If they answer
 with a different number, the agent re-runs with theirs the same day.
 
 Worth knowing before you send: 24 ft is the **floor**, not a comfortable
-number. The corpus median and mode are also 24 (8 of the 11 cities that publish
-one), and the four that go higher — Troutdale and unincorporated Multnomah at
-25 — are the cities with no greens anyway. If Portland comes back with 20 ft
-this gets *cheaper*, not dearer.
+number. Eleven cities now publish an aisle — Clackamas County joined them on
+2026-09-03 at 24 ft — and 24 is the median, the mode and eight of the eleven.
+Only two go higher, Troutdale and unincorporated Multnomah at 25, and between
+them they hold 126 greens. If Portland comes back with 20 ft this gets
+*cheaper*, not dearer.
 
 These lots are filterable: the `geometry_assumed` column in
 `lots_results.csv`, and the greens they produce are itemized in `summary.md`.
@@ -261,7 +312,7 @@ no-elevator building with surface parking**?
 
 - If **no**: closed everywhere, nothing changes.
 - If **yes**: every court in every city needs one wider first stall, which
-  shrinks tight lots in all 13 laid-out cities simultaneously.
+  shrinks tight lots in all 14 laid-out cities simultaneously.
 
 One architect or code consultant can answer this in a sentence. It was parked
 rather than guessed precisely because the answer moves lots everywhere at once.
@@ -303,19 +354,20 @@ has been stable for a while now. Decision needed: **when to start signing
 sessions**, and in what order. Each session is you (or a delegate) reading
 quotes against numbers — tedious, but each one is permanent.
 
-**The order was wrong here until 2026-09-02** and it is worth correcting,
-because it pointed at the two cities with the least to gain. It said "by greens
-at stake: Gresham and Happy Valley first" — and Gresham and Happy Valley have
-**zero green lots between them**. They are two of the seven cities in the
-section below that produce no greens at all, for reasons that have nothing to
-do with signing. Signing every number in Gresham would unlock nothing.
+**The order was wrong here until 2026-09-02, and it changed again on
+2026-09-03.** It originally said "by greens at stake: Gresham and Happy Valley
+first", which was wrong then because both cities had zero greens. Gresham now
+has 1,820 — your elevation decision gave it them — so the reason it sits low on
+the table has changed completely: not "nothing to reassure" any more, but "525
+numbers, the largest book in the corpus, for 21 new greens". The table below is
+re-measured against the 2026-09-03 run throughout.
 
 Worked out properly — and signing turns out to do **two** different jobs, which
 is why the order was easy to get wrong:
 
-- **It makes today's greens trustworthy.** 9,572 lots are green on readings
+- **It makes today's greens trustworthy.** 16,530 lots are green on readings
   nobody has checked. Signing does not move them; it makes them worth acting on.
-- **It creates new greens.** 710 lots sit in the review queue held by *nothing
+- **It creates new greens.** 1,129 lots sit in the review queue held by *nothing
   but* an unverified zone rule. Confirm the rule and they go green. (Or red, if
   the reading was wrong — which is the point of checking.)
 
@@ -329,37 +381,53 @@ is why the order was easy to get wrong:
 | City | Numbers to sign | Greens it would make trustworthy | New greens it would release |
 |---|---:|---:|---:|
 | *state layer* | 3 | every city depends on it | — |
-| **Portland** | 333 | 7,358 | 602 |
+| **Portland** | 333 | 12,678 | 849 |
+| **Fairview** | 154 | 0 | 150 |
 | **Gladstone** | 41 | 0 | 49 |
 | **Milwaukie** | 44 | 622 | 36 |
-| **Oregon City** | 72 | 728 | 0 |
-| unincorporated Clackamas | 89 | 515 | 0 |
-| West Linn | 112 | 288 | 1 |
+| Gresham | 525 | 1,820 | 21 |
 | Wilsonville | 198 | 53 | 14 |
 | unincorporated Multnomah | 134 | 1 | 8 |
-| Gresham | 525 | 0 | 0 |
+| Oregon City | 72 | 735 | 0 |
+| West Linn | 112 | 288 | 1 |
+| unincorporated Clackamas | 91 | 113 | 0 |
+| Troutdale · Wood Village | 233 | 220 | 1 |
 | Happy Valley | 225 | 0 | 0 |
-| Fairview | 154 | 0 | 0 |
-| Troutdale · Wood Village · Tualatin | 272 | 0 | 0 |
+| Tualatin | 39 | 0 | 0 |
 
-**Portland first, and it is not close** — 333 numbers covering 7,358 existing
-greens (77% of all of them) and 602 new ones (85%), in a single code book. Then
-Gladstone, which is the surprise on this table: it has no greens at all today,
-and 41 numbers would give it 49. Then Milwaukie and Oregon City. **Those four
-are 490 numbers — a fifth of the job — and they carry 8,708 of the 9,572
-existing greens and 687 of the 710 new ones.**
+**Portland first, and it is not close** — 333 numbers covering 12,678 existing
+greens (77% of all of them) and 849 new ones (75%), in a single code book.
 
-Everything from West Linn down can wait for a reason. Gresham is the clearest
-case: 525 numbers, the largest book in the corpus, and signing every one of
-them releases nothing and reassures nothing. **Every single one of Gresham's
-2,549 review lots is held by slope** — all 2,549, without exception — and slope
-is item 2 on this list, not a signature. Item 2 alone would release 1,820 of
-them; the other 729 are held by slope *and* something else as well, mostly the
-new density floor. Either way Gresham is waiting on your elevation decision
-first, and reading its 525 numbers changes nothing until that lands.
+**Then Fairview, which the elevation decision promoted from nowhere to second
+place — with a catch.** It was on the previous version of this table at zero and
+zero, because its lots were held by the coarse elevation map *and* by unsigned
+zone rules and the map came first. The map is answered, and all 198 of
+Fairview's waiting lots are now held by the signature alone — 150 of them by
+nothing else whatsoever. 154 numbers for 150 lots is the best ratio on the
+table by a distance.
 
-Item 10 below does not touch this. It blocks Fairview and Happy Valley, and
-neither is anywhere near the top of this table.
+The catch is that **Fairview cannot be signed today.** Two of its zone codes,
+`R/SFLD` and `RM/TOZ`, are not in any code book, so two of its values have no
+sentence to read against — that is item 10, one phone call, and it now gates
+the second-best signing session on this list. Item 10 was described below as
+blocking two cities that were "nowhere near the top of this table". After
+2026-09-03 that is no longer true of Fairview.
+
+Then Gladstone, the same shape at smaller scale and with nothing in the way: no
+greens today, 41 numbers, 49 lots, and every one of its values already quoted.
+Then Milwaukie. **Those four are 572 numbers — a quarter of the job — and they
+carry 13,300 of the 16,530 existing greens and 1,084 of the 1,129 new ones.**
+
+Everything below that can wait for a reason. Gresham is the interesting case
+and the reason has flipped: it used to be "525 numbers that reassure nothing",
+and now it has 1,820 greens to reassure. But its *review* queue has drained
+from 2,549 to 729 and only 21 of those are held by a signature, so the case for
+Gresham is now purely about trusting greens it already has — a real reason, and
+a weaker one than Portland's identical case at seven times the size.
+
+**Item 10 used to be irrelevant to this table and stopped being so on
+2026-09-03.** It blocks Fairview and Happy Valley from signing at all, and
+Fairview is now second on this list. Happy Valley is still far down it.
 
 ## 8. Optional legal read: the state's "use single-family standards" rule
 
@@ -383,7 +451,13 @@ unrecoverable), then removed. Three genuinely in-progress worktrees were
 kept untouched. Four orphaned non-worktree folders were noted and left
 alone.
 
-## 10. Three zone codes nobody can look up — **454 lots, and the last thing blocking two cities from signing**
+## 10. Three zone codes nobody can look up — **454 lots, and after 2026-09-03 the gate on the second-best signing session**
+
+**This item was promoted by the elevation decision.** It used to be a tidy-up on
+two cities with nothing at stake. Fairview's 198 waiting lots are now held by
+their unsigned zone rules and nothing else, and Fairview cannot be signed while
+two of its zone codes have no page to read — so one phone call to one city
+stands between item 7's second session and 150 green lots.
 
 Every lot on the county map carries a zone code, and for all but three of them
 we can open the city's code book and find that code written down. These three
@@ -434,29 +508,31 @@ this one does not.
 
 ---
 
-## Seven of our fourteen cities have zero green lots — and each one has a single reason
+## ~~Seven~~ Four of our fourteen cities have zero green lots — and each one has a single reason
 
-Re-measured 2026-09-02 against the current run. Half the map is producing
-nothing, which looks alarming and mostly is not: five of the seven are blocked
-by exactly one thing, and every one of those things is already an item above.
-Nothing new is being asked of you here — this is the answer to "what do I
-actually get if I do item 2, or item 6, or item 7."
+Re-measured 2026-09-03 after your two answers ran. **Three of the seven came off
+this list in one afternoon, and all three came off through item 2** — Gresham
+(0 → 1,820 greens), Troutdale (0 → 125) and Wood Village (0 → 95). Ten of the
+fourteen cities now produce greens. What is left:
 
 | City | Lots waiting | What is holding them |
 |---|---|---|
-| Gresham | 2,549 | Elevation map — **item 2** (2,549 of 2,549) |
 | Happy Valley | 749 | Sewer **and** an environmental overlay — see below |
-| Fairview | 198 | Elevation map **and** signing — items 2 *and* 7 |
-| Troutdale | 177 | Elevation map — **item 2** (177 of 177) |
-| Gladstone | 121 | Signing — **item 7** (121 of 121) |
-| Wood Village | 120 | Elevation map — **item 2** (120 of 120) |
+| Fairview | 198 | Signing — **item 7**, which is itself gated by **item 10** |
+| Gladstone | 121 | Signing — **item 7** (121 of 121), nothing in the way |
 | Tualatin | 19 | Sewer coverage — **item 6** (19 of 19) |
 
-Read across: **item 2 is worth 7,360 lots** — that is the count that would turn
-green immediately, with nothing else standing in their way, and it is 5,320 in
-Portland and 1,820 in Gresham. Gladstone is pure signing: all 121 of its lots
-are behind zone rules nobody has read on the page yet, and no data is missing at
-all.
+**Fairview simplified.** It was the one city on the old list held by two things
+at once, elevation *and* signing. The elevation half is answered, and all 198 of
+its waiting lots are now held by unverified zone rules and nothing else — 150 of
+them by that alone. Fairview and Gladstone together are 319 lots that need no
+data and no decision: only somebody reading the page. Gladstone can be read
+today. Fairview needs one phone call first (item 10), because two of its zone
+codes have no page.
+
+The old read-across is now history rather than forecast: **item 2 was worth
+7,360 lots and delivered 7,360**, 5,320 of them in Portland and 1,820 in
+Gresham.
 
 **Happy Valley stopped being a one-thing city.** On 2026-09-01 it was 722 of 731
 lots held by nothing but the missing sewer map. Wiring its environmental
@@ -479,8 +555,8 @@ the overlay *alone*: all 725 overlay-flagged lots also want a sewer answer
 test would move 0 lots to green while it stands behind item 6. It becomes worth
 building the day the sewer answer arrives, and not before.
 
-These seven are the whole of the zero-green half of the map. The other seven
-cities all produce greens today.
+These four are the whole of the silent part of the map, and they are 1,087 lots
+between them. The other ten cities all produce greens today.
 
 ## Villebois turned out to be a dead end, and for an honest reason — **2,106 lots**
 
@@ -521,7 +597,7 @@ the list of places worth hoping about.
   is deliberate and it is the same principle as the environmental note below:
   hiding a decided row makes a queue that has finished look identical to one
   that was never asked, and the reader loses the ability to disagree. Net
-  effect: the real signing job is **2,212 numbers, not 2,350**, and one of the
+  effect: the real signing job is **2,204 numbers, not 2,350**, and one of the
   six outstanding chapter-reads is not a job at all.
 
 - **A guard on the step between signing and the screen** — added 2026-09-02,
@@ -655,8 +731,10 @@ the list of places worth hoping about.
   Unincorporated Clackamas turned out to be the opposite of a hazard: the
   county regulates habitat and water quality at length and forbids almost
   nothing — the complete list of what you may not do in a habitat area is
-  "plant invasive vegetation" and "store materials outside" — so its 598
-  greens keep their verdicts and get a second look instead.
+  "plant invasive vegetation" and "store materials outside" — so its greens
+  keep their verdicts and get a second look instead. (That was 598 greens when
+  written on 2026-09-02 and is 113 after the 2026-09-03 run, for reasons that
+  have nothing to do with the overlay: see item 1.)
   Milwaukie is the one that had looked blocked, and it turned into the most
   interesting reading of the set: one chapter, two opposite answers. Land in
   the Willamette Greenway can only be built on by *conditional use* — a
@@ -703,6 +781,24 @@ the list of places worth hoping about.
   the same pass that puts unincorporated Clackamas back through the site-plan
   generator. Nothing is lost by waiting — the screen recomputes every lot from
   scratch on each run.
+
+  **The trigger fired on 2026-09-03, and re-measuring tripled the prize.** With
+  the county laid out for the first time, 4,915 of its 6,853 habitat lots are
+  now red on something the missing setbacks would touch — 3,335 because no
+  parking court can be drawn, 1,053 because the building will not fit, 521
+  because nothing is buildable at all — against 1,574 when it was measured on a
+  county the screen was not testing. The conclusion does not change with the
+  size: **still no greens.** 706.10's habitat permit puts every one of these
+  lots in front of a person regardless, so the prize is 4,915 lots moving from
+  discarded to worth-a-look, and it is still a queue rather than a buy list.
+  Two things now argue for *not* doing it next. It needs the four-hour envelope
+  stage re-run, not the cheap end of the pipeline, because setbacks are cut
+  before anything else. And it would relax a rule on the strength of a map we
+  do not have: the habitat layer here is Metro's regional inventory standing in
+  for the county's adopted map, graded C. Using a proxy to take ground away is
+  cautious; using one to hand ground back is not. **Re-triggered: build it when
+  the county's own adopted HCA map is in hand, or when somebody wants the 4,915
+  in the queue badly enough to accept a C-grade boundary.**
 
 - ~~**Portland's tree code — the biggest unread cross-reference in the city**~~
   Closed 2026-09-02: read, and it costs money rather than land. Four separate
