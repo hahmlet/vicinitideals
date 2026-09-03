@@ -1319,7 +1319,16 @@ def main() -> None:
                    "LANDVAL", "SALEPRICE", "SALEDATE", "acq_estimate", "acq_basis"]
     csv_cols = [
         "TLID", "SITEADDR", "lat", "lng", "jurisdiction", "zone", "tier",
-        "area_sqft", "envelope_sqft", "frontage_ft", "YEARBUILT", "BLDGSQFT",
+        "area_sqft", "envelope_sqft", "frontage_ft",
+        # Next to the frontage, because it is not the frontage. In Oregon City
+        # and Tualatin the minimum a lot is judged against is a WIDTH across
+        # the middle, and since 55d1e34c the verdict uses this column rather
+        # than the street edge. A reviewer looking at a lot that just turned
+        # red for `below_min_frontage`, or one held at `frontage_unmeasured`,
+        # has to be able to see the number the screen decided on. Blank means
+        # the shape declined to be measured, or the city states a frontage and
+        # this never applied to it.
+        "lot_width_ft", "YEARBUILT", "BLDGSQFT",
         "BLDGVAL", "TOTALVAL", "split_zone", "policy_exclusion", "eligible",
         # `binding_constraint` says why a lot is RED. `review_reasons` says why
         # it is YELLOW -- next to it, because the two answer the same question

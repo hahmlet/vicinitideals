@@ -5,10 +5,10 @@ agent cannot do alone. The agent maintains it: items get added when work
 surfaces them, and struck through (with a date and what happened) when they
 close. Items are ordered by how many lots ride on them, biggest first.
 
-Pipeline state when last updated (2026-09-02, after the run that carries the
-last of the Clackamas environmental overlays):
-**green 9,565 · review 32,827 · red 249,579** across 291,971 lots in 13 cities
-laid out with real site plans. Greens by city: Portland 7,358 · Oregon City 728
+Pipeline state when last updated (2026-09-03, after lot width was measured the
+way the two cities that ask for it define it):
+**green 9,572 · review 32,794 · red 249,605** across 291,971 lots in 13 cities
+laid out with real site plans. Greens by city: Portland 7,358 · Oregon City 735
 · Milwaukie 622 · unincorporated Clackamas 515 · West Linn 288 · Wilsonville 53
 · unincorporated Multnomah 1.
 
@@ -298,7 +298,7 @@ do with signing. Signing every number in Gresham would unlock nothing.
 Worked out properly — and signing turns out to do **two** different jobs, which
 is why the order was easy to get wrong:
 
-- **It makes today's greens trustworthy.** 9,565 lots are green on readings
+- **It makes today's greens trustworthy.** 9,572 lots are green on readings
   nobody has checked. Signing does not move them; it makes them worth acting on.
 - **It creates new greens.** 710 lots sit in the review queue held by *nothing
   but* an unverified zone rule. Confirm the rule and they go green. (Or red, if
@@ -331,7 +331,7 @@ is why the order was easy to get wrong:
 greens (77% of all of them) and 602 new ones (85%), in a single code book. Then
 Gladstone, which is the surprise on this table: it has no greens at all today,
 and 41 numbers would give it 49. Then Milwaukie and Oregon City. **Those four
-are 490 numbers — a fifth of the job — and they carry 8,708 of the 9,565
+are 490 numbers — a fifth of the job — and they carry 8,708 of the 9,572
 existing greens and 687 of the 710 new ones.**
 
 Everything from West Linn down can wait for a reason. Gresham is the clearest
@@ -450,10 +450,19 @@ answer, **725 now also sit on mapped natural resource**, and 603 want a better
 slope reading. Only 6 are held by sewer alone. That is not a regression — the
 overlay check was simply absent before, and 725 lots were being graded as if
 their resource land were not there. It does mean **item 6 no longer unlocks
-Happy Valley by itself**, and the overlay half is agent work, not yours: Happy
+Happy Valley by itself**, and the overlay half looked like agent work: Happy
 Valley *flags* resource land rather than carving it out of the buildable area,
-so each flagged lot needs its mapped resource compared against the actual
-envelope.
+so each flagged lot could have its mapped resource compared against the actual
+envelope instead of against the whole lot.
+
+**Measured 2026-09-03, and it releases nothing today — not built.** Comparing
+the resource against the buildable envelope rather than the lot boundary drops
+**279 of 3,914** natural-resource flags and 314 of 7,301 slope flags — about
+one in fourteen. But **not one** of Happy Valley's 749 waiting lots is held by
+the overlay *alone*: all 725 overlay-flagged lots also want a sewer answer
+(740 of the 749 do), and 603 want a better slope reading. Refining the overlay
+test would move 0 lots to green while it stands behind item 6. It becomes worth
+building the day the sewer answer arrives, and not before.
 
 These seven are the whole of the zero-green half of the map. The other seven
 cities all produce greens today.
