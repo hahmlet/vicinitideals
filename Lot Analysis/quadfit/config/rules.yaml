@@ -1491,10 +1491,15 @@ jurisdictions:
     # OCMC 17.04.700 measures lot width "between the midpoints of the two
     # principal opposite side lot lines" -- across the middle of the lot, not
     # at the street. The min_frontage_ft numbers below are that width standard
-    # (Table 17.08.040 / 17.10.040, the only place the code states one), so a
-    # lot that falls short goes to review rather than red: 896 lots today, 605
-    # of which already fit the pod inside their own envelope.
+    # (Table 17.08.040 / 17.10.040, the only place the code states one).
+    #
+    # That measurement is now taken: 7,262 of 10,863 lots offer two principal
+    # opposite side lines and are ruled on properly. The rest -- irregular
+    # shapes, and corner lots whose second street edge leaves only one side
+    # line -- keep the older treatment, where falling short of the number on
+    # street frontage sends the lot to review rather than red.
     frontage_is_lot_width: true
+    lot_width_measure: side_midpoints
     zones:
       - zone: R-10
         quadplex_allowed: true
@@ -1736,8 +1741,17 @@ jurisdictions:
     zone_field: PLANDIST.CZONE
     orientation_constraint: entrance_only
     # TDC 31.060 measures lot width "at the center of the lot". Same shape as
-    # Oregon City: the number below is a width, s4 measures a street edge.
+    # Oregon City: the number below is a width, s4 measures a street edge --
+    # but not the same measurement, because 31.060 draws its line parallel to
+    # the street and 17.04.700 draws it between two midpoints.
+    #
+    # 31.060 also switches definition entirely on a corner lot, to the distance
+    # between the front lot line and a side lot line, and that is a different
+    # pair of lines on a different axis. Corner lots are declined rather than
+    # measured wrong, which is 289 of Tualatin's 952 and why only 608 are
+    # ruled on here.
     frontage_is_lot_width: true
+    lot_width_measure: center_parallel
     zones:
       - zone: RL
         quadplex_allowed: true

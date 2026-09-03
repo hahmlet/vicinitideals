@@ -365,10 +365,11 @@ def _gate_frame(rows):
 
 
 class _GateRules:
-    """The two shapes side by side, built from the real config models so the
-    test breaks if `frontage_is_lot_width` stops being wired through."""
+    """The three shapes side by side, built from the real config models so the
+    test breaks if `frontage_is_lot_width` or `lot_width_measure` stops being
+    wired through."""
 
-    def __init__(self):
+    def __init__(self, measure=None):
         from common import JurisdictionRules, ZoneRule
 
         zone = ZoneRule(
@@ -377,15 +378,27 @@ class _GateRules:
         )
         self.jurisdictions = {
             "oregon_city": JurisdictionRules(
-                eligible=True, frontage_is_lot_width=True, zones=[zone]),
+                eligible=True, frontage_is_lot_width=True,
+                lot_width_measure=measure, zones=[zone]),
             "west_linn": JurisdictionRules(
                 eligible=True, frontage_is_lot_width=False, zones=[zone]),
         }
 
 
-def _gate_row(juris, frontage):
-    return {"jurisdiction": juris, "zone_raw": "R-10", "area_sqft": 9000.0,
-            "frontage_ft": frontage}
+def _gate_row(juris, frontage, width=None):
+    row = {"jurisdiction": juris, "zone_raw": "R-10", "area_sqft": 9000.0,
+           "frontage_ft": frontage}
+    if width is not None:
+        row["lot_width_ft"] = width
+    return row
+
+
+def _measured_gates(rows):
+    import pandas as pd
+
+    from s7_report import policy_gates
+
+    return policy_gates(pd.DataFrame(rows), _GateRules("side_midpoints"))[0]
 
 
 def test_a_width_standard_does_not_drop_a_lot_in_the_funnel():
@@ -404,6 +417,43 @@ def test_a_width_standard_does_not_drop_a_lot_in_the_funnel():
     assert list(gates["eligible"]) == [True, False, True]
     assert list(gates["policy_exclusion"]) == ["", "below_min_frontage", ""]
     assert list(gates["frontage_unmeasured"]) == [True, False, False]
+
+
+def test_a_measured_width_rules_in_both_directions():
+    """Once the width is measured, the screen owes a verdict either way.
+
+    The first lot is the cul-de-sac wedge this whole measurement exists for: 40
+    ft of street, 70 ft across the middle, and it clears the 65 ft standard it
+    was being thrown out by. The second is the direction nobody was looking --
+    generous street frontage on a lot pinched behind it, which passed the old
+    test and fails the one the city actually wrote. A measurement that could
+    only rescue lots would not be a measurement, it would be an amnesty.
+    """
+    gates = _measured_gates([
+        _gate_row("oregon_city", 40.0, width=70.0),
+        _gate_row("oregon_city", 80.0, width=55.0),
+    ])
+    assert list(gates["eligible"]) == [True, False]
+    assert list(gates["policy_exclusion"]) == ["", "below_min_frontage"]
+    assert list(gates["frontage_unmeasured"]) == [False, False]
+
+
+def test_a_width_that_could_not_be_measured_keeps_the_older_treatment():
+    """The measurement declines on a third of these lots -- corner lots, flag
+    lots, anything whose sides do not pair up. Those must land exactly where
+    they landed before it existed: short on frontage goes to review, and a lot
+    that clears the number on frontage is not disturbed. Otherwise fixing the
+    measurement would push three thousand lots that pass today into a queue on
+    the grounds that nobody measured them, which is true of every lot in the
+    city the day before this shipped.
+    """
+    gates = _measured_gates([
+        _gate_row("oregon_city", 40.0),
+        _gate_row("oregon_city", 80.0),
+    ])
+    assert list(gates["eligible"]) == [True, True]
+    assert list(gates["policy_exclusion"]) == ["", ""]
+    assert list(gates["frontage_unmeasured"]) == [True, False]
 
 
 def test_a_lot_can_be_too_big_for_four_homes():

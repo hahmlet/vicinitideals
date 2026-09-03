@@ -135,14 +135,18 @@ def center_parallel_width_ft(geom, front_bearings) -> float | None:
     clipped = shapely.intersection(geom, chord)
     if clipped.is_empty:
         return None
-    parts = [p for p in shapely.get_parts(clipped) if p.length > 0]
-    if not parts:
-        return None
     here = Point(centre.x, centre.y)
-    on = [p for p in parts if p.distance(here) <= _INSIDE_TOL_FT]
-    if not on:
+    on = [
+        p for p in shapely.get_parts(clipped)
+        if p.length > 0 and p.distance(here) <= _INSIDE_TOL_FT
+    ]
+    # Exactly one piece of the chord contains the centre, and that piece is the
+    # width. The clipped chord's total length is not: on a lot that wraps a
+    # neighbour it crosses the neighbour's ground and comes back, and the sum
+    # of the two arms is a number no line on the parcel is that long.
+    if len(on) != 1:
         return None
-    return round(max(p.length for p in on), 2)
+    return round(on[0].length, 2)
 
 
 #: A width is only taken on a lot whose shape the screen trusts. Tier C is the

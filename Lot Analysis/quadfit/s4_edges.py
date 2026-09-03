@@ -37,6 +37,7 @@ TOOL_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(TOOL_DIR))
 
 from common import load_rules, read_stage, write_stage
+from lotwidth import width_ft
 
 PARALLEL_TOL_DEG = 30.0
 BEARING_CLUSTER_TOL_DEG = 20.0
@@ -179,6 +180,21 @@ def main() -> None:
     lots["edges_json"] = [json.dumps(r["edges"]) for r in results]
     lots["front_bearings_json"] = [json.dumps(r["front_bearings"]) for r in results]
     lots["frontage_ft"] = [r["frontage_ft"] for r in results]
+
+    # Lot WIDTH, where a city's code asks for one, which is a different line on
+    # the same parcel from the frontage measured above. Taken here because this
+    # is where the edges are classified and it needs nothing else; NaN where
+    # the city states a frontage instead, or where the shape declines to be
+    # measured. `lotwidth.py` carries the definitions and the refusals.
+    widths = []
+    for juris, geom, r in zip(lots["jurisdiction"], lots["geom"], results):
+        j = rules.jurisdictions.get(juris)
+        measure = None if j is None else j.lot_width_measure
+        w = width_ft(measure, geom, r["edges"], r["front_bearings"], r["tier"])
+        widths.append(float("nan") if w is None else w)
+    lots["lot_width_ft"] = widths
+    measured = int(np.isfinite(np.array(widths, dtype=float)).sum())
+    print(f"s4 lot width measured on {measured:,} lots")
 
     from collections import Counter
 

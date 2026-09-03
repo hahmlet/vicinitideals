@@ -126,6 +126,14 @@ def policy_gates(lots, rules, ocfg=None, screen=None):
     min_lot_ok = np.ones(n, dtype=bool)
     frontage_ok = np.ones(n, dtype=bool)
     frontage_unmeasured = np.zeros(n, dtype=bool)
+    # s4 takes the width where the city defines one and the shape allows it.
+    # Absent on a pre-width parquet -> every lot falls back to the frontage
+    # treatment, which is what this screen did before the measurement existed.
+    lot_width = (
+        pd.to_numeric(lots["lot_width_ft"], errors="coerce").to_numpy()
+        if "lot_width_ft" in lots.columns
+        else np.full(n, np.nan)
+    )
     flip_allowed = np.ones(n, dtype=bool)
     cov_cap = np.full(n, np.nan)
     accessory = np.zeros(n)
@@ -148,14 +156,24 @@ def policy_gates(lots, rules, ocfg=None, screen=None):
             continue
         if rule.min_lot_sqft is not None and float(area) < rule.min_lot_sqft:
             min_lot_ok[i] = False
-        if rule.min_frontage_ft is not None and float(frontage) < rule.min_frontage_ft:
-            # Where the city's number is a mid-lot WIDTH rather than a street
-            # frontage, the screen is not entitled to a verdict: it measured a
-            # different line. Hold the lot for review instead of dropping it.
-            if j.frontage_is_lot_width:
-                frontage_unmeasured[i] = True
-            else:
-                frontage_ok[i] = False
+        if rule.min_frontage_ft is not None:
+            width = lot_width[i]
+            if j.lot_width_measure and np.isfinite(width):
+                # The city's own measurement, taken. It rules both ways: a lot
+                # too narrow at the street can be wide enough across the middle
+                # and pass, and a lot with generous street frontage can be
+                # pinched behind it and fail.
+                if float(width) < rule.min_frontage_ft:
+                    frontage_ok[i] = False
+            elif float(frontage) < rule.min_frontage_ft:
+                # Where the city's number is a mid-lot WIDTH rather than a
+                # street frontage and no width could be measured, the screen is
+                # not entitled to a verdict: it measured a different line. Hold
+                # the lot for review instead of dropping it.
+                if j.frontage_is_lot_width:
+                    frontage_unmeasured[i] = True
+                else:
+                    frontage_ok[i] = False
         constraint = rule.orientation_constraint or j.orientation_constraint
         flip_allowed[i] = constraint != "axis_required"
         cap = rule.coverage_cap_sqft(float(area))
@@ -583,6 +601,32 @@ def main() -> None:
         shapely.get_x(_cent), shapely.get_y(_cent))
     _s3c = _s3c.assign(lat=np.round(_lat, 6), lng=np.round(_lng, 6))
     lots = lots.merge(_s3c[["TLID", "lat", "lng"]], on="TLID", how="left")
+
+    # A parquet built before s4 measured lot width has no column for it, and
+    # re-running s4 would mean re-running the envelope and the fit behind it
+    # for a number that changes neither. Take it here instead, from the same
+    # edges and the same lot polygon s4 would have used.
+    if "lot_width_ft" not in lots.columns:
+        from lotwidth import width_ft
+
+        _geoms = dict(zip(_s3c["TLID"], _s3c["geom"]))
+        _widths = []
+        for _tlid, _juris, _tier, _ej, _fbj in zip(
+            lots["TLID"], lots["jurisdiction"], lots["tier"],
+            lots["edges_json"], lots["front_bearings_json"],
+        ):
+            _j = rules.jurisdictions.get(_juris)
+            _m = None if _j is None else _j.lot_width_measure
+            _w = width_ft(
+                _m, _geoms.get(_tlid),
+                json.loads(_ej) if _ej else [],
+                json.loads(_fbj) if _fbj else [],
+                _tier,
+            )
+            _widths.append(float("nan") if _w is None else _w)
+        lots["lot_width_ft"] = _widths
+        print(f"s7: lot width backfilled on "
+              f"{int(np.isfinite(np.array(_widths, dtype=float)).sum()):,} lots")
 
     ocfg = load_overlays()
     lots["current_use"] = current_use_column(

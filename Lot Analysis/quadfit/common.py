@@ -329,6 +329,18 @@ class JurisdictionRules(BaseModel):
     # West Linn heads the row "Minimum lot width AT FRONT LOT LINE", so its
     # number is the one s4 measures and its exclusions are sound.
     frontage_is_lot_width: bool = False
+
+    #: How this city's code says to measure that width, when it says. Set it
+    #: and the screen takes the measurement and rules on it; leave it unset and
+    #: the number keeps the treatment above -- short on frontage goes to review
+    #: rather than red, because nothing has been measured to decide with.
+    #:
+    #: `side_midpoints` is Oregon City's definition, `center_parallel` is
+    #: Tualatin's; the two are not the same measurement and `lotwidth.py` says
+    #: why. The measurement is refused on irregular lots, and on corner lots
+    #: under Tualatin's definition, so a city with this set still falls back to
+    #: the frontage treatment on every lot the measurement declines.
+    lot_width_measure: str | None = None
     zones: list[ZoneRule] = Field(default_factory=list)
 
     def normalize_zone(self, raw: str | None) -> str | None:
