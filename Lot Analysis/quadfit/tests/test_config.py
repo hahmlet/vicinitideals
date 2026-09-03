@@ -326,7 +326,7 @@ def test_slope_coverage_grades_match_the_dem_tiles_that_exist() -> None:
 
 
 def test_the_coarse_dem_is_configured_conservatively() -> None:
-    """The calibrated statistic, and the switch that is not ours to flip.
+    """The calibrated statistic, and the switch a human did flip.
 
     `max` over a 5-cell (50 m) box is the operating point measured against the
     1 m DEM on the 184,101 lots where both answer: 1.50% of genuinely steep
@@ -334,8 +334,15 @@ def test_the_coarse_dem_is_configured_conservatively() -> None:
     or a percentile instead of the max clears more steep lots; both were
     measured and both are worse for a screen whose green means "spend money".
 
-    `fallback_10m_may_green` stays false until a human decides otherwise --
-    it is worth about 7,231 lots and it is not a technical question.
+    The three that pin the MEASUREMENT stay where they are. Changing the
+    statistic, the window or the fallback itself changes what the number means,
+    and the 1.50% was measured at this operating point and nowhere else.
+
+    `fallback_10m_may_green` is the one that was never technical, and it was
+    decided yes on 2026-09-03: 7,360 lots against roughly 110 of them turning
+    out steeper than they looked on the first site visit. It is asserted here
+    rather than left free so that flipping it back stays a deliberate act with
+    a test to change, the same as flipping it forward was.
     """
     from common import load_overlays
 
@@ -343,4 +350,4 @@ def test_the_coarse_dem_is_configured_conservatively() -> None:
     assert sl.fallback_10m is True
     assert sl.fallback_10m_stat == "max"
     assert sl.fallback_10m_window == 5
-    assert sl.fallback_10m_may_green is False
+    assert sl.fallback_10m_may_green is True

@@ -1262,6 +1262,23 @@ def main() -> None:
                     "(`slope.fallback_10m_may_green: false`). Measured against "
                     "the 1 m answer where both DEMs exist, the rule used here "
                     "wrongly clears 1.50% of genuinely steep lots.")
+            else:
+                # The same sentence from the other side of the decision. A
+                # reader who does not know WHICH greens rest on the coarse map
+                # cannot act on the 1.50%, and "filter it yourself" is not an
+                # answer if nobody says how many there are to filter.
+                on_coarse = int(((src == "dem_10m")
+                                 & (lots["triage"] == "green")).sum())
+                L.append(
+                    f"\n**{on_coarse:,} of the greens rest on the coarse DEM** "
+                    "and are graded green like any other, decided 2026-09-03 "
+                    "(`slope.fallback_10m_may_green: true`). Measured against "
+                    "the 1 m answer where both DEMs exist, the rule used here "
+                    "wrongly clears 1.50% of genuinely steep lots, so about "
+                    f"{round(on_coarse * 0.015):,} of these should be steeper "
+                    "on the ground than they look here - one wasted site visit "
+                    "each, found on the first one. Filter them with "
+                    "`slope_source == 'dem_10m'` in `lots_results.csv`.")
 
     L.append("\n## Blind spots (results are a ceiling)\n")
     L.append("- Private easements (title reports only) are not modeled.")

@@ -127,36 +127,49 @@ it costs one person a few days.
 
 ---
 
-## 1. Read one drawing: Clackamas County's parking detail — **17,486 lots**
+## 1. ~~Read one drawing: Clackamas County's parking detail~~ — **DONE 2026-09-03, 17,486 lots**
 
-The single biggest unlock left, and it is half the entire review queue.
+**You read it. Twenty-four feet at 90 degrees.** It was the single biggest
+unlock left and it was half the entire review queue.
 
-Clackamas County's rule book says parking must match its zoning code AND its
-standard construction drawings. The stall size was readable off the drawing's
-title block (9 × 18 ft). The **drive-aisle width is drawn inside the picture**,
-and our evidence standard requires quoting words at a line number — a picture
-cannot be quoted, so the county has sat unread-able for a month while smaller
-cities were finished.
+The problem was never that the county was silent. Its rule book says parking
+must match the zoning code AND the standard construction drawings, the zoning
+code hands the aisle to the Roadway Standards, and those hand it to Standard
+Drawing P100. The chain was complete and it ended in a picture. The stall size
+was readable because it is printed in the drawing's title block as text
+(9 × 18 ft); the aisle is drawn inside the image, and the screen's evidence
+rule is that a number has to be quotable from a line of text. So the county sat
+unreadable for a month while smaller cities were finished.
 
-Three ways to close it, strongest first:
+It is encoded now as the first number in the corpus whose evidence is a
+picture: the value carries your name and the date you read it, and it carries
+no quote, because there is no line of text to point at. The system refuses to
+let it carry both. That is weaker evidence than every other number in the file
+and the difference is repeatability — nobody can re-check it without reopening
+the drawing — so it is reported in the readiness ledger for the life of the
+value rather than clearing.
 
-- **Email county planning** and ask, in writing, what drive-aisle width
-  Standard Drawing P100 requires for 90° parking. A written answer is evidence
-  nobody can argue with. (This is the same move as item 2 — could be one
-  batch of emails.)
-- **Open the drawing yourself** (Clackamas County Standard Drawing P100), read
-  the aisle number off it, and tell the agent. It gets encoded with a note
-  that a named human read the drawing on a given date.
-- **Decide that machine-reading of drawings counts as evidence.** Fastest,
-  weakest — the number would carry a "read from a picture" caveat forever.
+What was **not** done: letting the computer read the picture. That would have
+changed what a citation means everywhere in the corpus, for one number.
 
-Note: the "24 ft when nobody published a number" rule from item 2 does NOT
-apply here — the county *did* publish a number, in a drawing. Assuming over
-the top of a published number is the one thing the system refuses to do.
+**The sheet also dimensions 45°, 60° and parallel, and those are not encoded.**
+Not refused for lack of evidence — unbuilt. The screen lays out one shape, a
+rear court with stalls square to the drive, so 90° is the only row it can use.
+The angled rows buy a narrower aisle in exchange for a deeper stall, which on a
+shallow lot is the difference between a plan and no plan; they become worth
+encoding the day an angled layout is drawn. Written down so nobody has to
+rediscover that the numbers exist on a sheet we already hold.
 
-## 2. One decision: may a coarser elevation map grade a lot green? — **7,360 lots**
+## 2. ~~One decision: may a coarser elevation map grade a lot green?~~ — **DECIDED YES 2026-09-03, 7,360 lots**
 
-The single biggest number on this list, and it is one yes-or-no answer.
+The single biggest number on this list, and it was one yes-or-no answer. You
+said yes on 2026-09-03. The switch is flipped, and a column named
+`slope_source` records which map answered on every lot, so any green that rests
+on the coarse reading can be filtered back out in one step. Flipping it back is
+a one-line change and a cheap re-run; nothing is built on it staying true.
+
+The reasoning as it stood before the decision is kept below, because the 1.5%
+is the number anyone will want when a coarse-map green turns out to be steep.
 
 Four whole cities — Gresham, Troutdale, Fairview, Wood Village — have produced
 **zero** green lots for the life of this pipeline, and Portland's eastern third
@@ -190,15 +203,17 @@ It breaks down as Portland 5,320, Gresham 1,820, Troutdale 125, Wood Village
 yet; both are items on this list, so those lots are not gone, they are queued
 behind something else. Portland's 5,320 did not move at all.)
 
-- **Yes** — flip one setting, re-run, those lots grade green like any other,
-  and a column records that their slope came from the coarse map so anyone can
-  filter them back out.
+- **Yes** ← *chosen* — flip one setting, re-run, those lots grade green like
+  any other, and a column records that their slope came from the coarse map so
+  anyone can filter them back out.
 - **No** — they stay in the review queue, but now with a slope number attached
   instead of a blank, which at least makes the queue sortable.
 
-Nothing else is blocked on this; it is purely how bold to be. Same shape as the
-drive-aisle call you made on 2026-08-31, and the same reason it is yours: it
-trades a small chance of wasted diligence for a large amount of pipeline.
+Nothing else was blocked on this; it was purely how bold to be. Same shape as
+the drive-aisle call of 2026-08-31, and the same reason it was yours: it trades
+a small chance of wasted diligence for a large amount of pipeline. The error it
+buys is cheap and self-correcting — one wasted site visit, discovered on that
+visit — which is what made yes the cheaper mistake than holding 7,360 lots.
 
 ## 3. Three short emails: confirm the assumed 24 ft aisle — **8,033 greens, which is 84% of all of them**
 

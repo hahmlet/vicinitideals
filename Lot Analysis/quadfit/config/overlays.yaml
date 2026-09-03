@@ -39,10 +39,23 @@ slope:
                           # honest statistic and the conservative one
   # Calibrated on the 184,101 lots where BOTH DEMs answer: `max5 <= 10%`
   # wrongly clears 1.50% of genuinely steep lots and keeps 91.8% of the
-  # genuinely flat ones. Whether that is good enough to grade a lot GREEN is a
-  # business call worth 7,231 lots; until it is made, a coarse answer is
-  # printed but still sends the lot to the human queue.
-  fallback_10m_may_green: false
+  # genuinely flat ones.
+  #
+  # DECIDED 2026-09-03: yes, a coarse answer may grade a lot green. It was a
+  # business call and not a technical one -- the measurement was the same
+  # either way -- and the trade was stated as 7,360 lots against roughly 110 of
+  # them turning out steeper than they looked on the first site visit. The
+  # error is cheap and it is self-correcting: it costs one wasted visit and you
+  # find out on that visit. Holding 7,360 lots out of the buy list to avoid
+  # ~110 wasted visits is the more expensive mistake. Same shape as the
+  # drive-aisle call of 2026-08-31 and made by the same person.
+  #
+  # It is NOT invisible. `slope_source` records which DEM answered on every
+  # lot, so a green graded on the coarse map can be filtered back out in one
+  # column, and the four cities that have no 1 m coverage at all are named in
+  # `slope_coverage` below. Flipping this back to false is a one-line change
+  # and an s7 re-run; nothing downstream is built on it being true.
+  fallback_10m_may_green: true
 
 # 1 m lidar coverage MEASURED against the lots, 2026-09-01, not asserted.
 # Every line below used to read `grade: A, note: "1 m DEM"`; four of them were
