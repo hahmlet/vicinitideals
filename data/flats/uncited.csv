@@ -3770,7 +3770,6 @@ or,unfielded,,or/multnomah/wood-village/350.065.all-other-uses.txt,110,350.065,1
 or,unfielded,,or/multnomah/wood-village/350.065.all-other-uses.txt,111,350.065,1,90° Standard 9 ft 9 ft 12 ft 24 ft 19 ft
 or,unfielded,,or/multnomah/wood-village/350.065.all-other-uses.txt,112,350.065,1,90° Compact 7 ft 6 in 7 ft 6 in 12 ft 24 ft 15 ft
 or,unfielded,,or/multnomah/wood-village/350.065.all-other-uses.txt,113,350.065,1,90° Disabled 13 ft 9 ft 12 ft 24 ft 19 ft
-or,unfielded,,or/oar.660-046-0220.txt,70,660-046-0220,2,"For Lots or Parcels of less than 3,000 square feet: one space in total;"
 or,unfielded,,or/oar.660-046-0220.txt,76,660-046-0220,1,"For Lots or Parcels greater than or equal to 5,000 square feet: three spaces in total."
 or,unread,max_units,or/clackamas/_unincorporated/zdo.1012.txt,151,1012.05,1,"3 In the MRR District, dwelling units allowed through the bonus density provisions shall be developed with the same unit size mixture as provided in the BD. For example, if a development is proposed w"
 or,unread,max_units,or/clackamas/_unincorporated/zdo.1012.txt,161,1012.05,1,(b) The average of all units on the property is made available to families with incomes of 60 percent or less of AMI; or
@@ -5245,8 +5244,6 @@ or/clackamas/_unincorporated,unread,max_height_ft,or/clackamas/_unincorporated/z
 or/clackamas/_unincorporated,unread,setback_rear_ft,or/clackamas/_unincorporated/zdo.315.txt,1564,315.04,1,"[13] If the rear lot line abuts a residential zoning district other than HDR, SHD, or RCHDR, the minimum rear setback is 20 feet."
 or/clackamas/_unincorporated,unread,setback_side_ft,or/clackamas/_unincorporated/zdo.315.txt,1566,315.04,1,"[14] If the side lot line abuts an Urban Low Density Residential, VR-5/7, or VR-4/5 District, the minimum side setback for a two-story building is 10 feet."
 or/clackamas/_unincorporated,unread,setback_side_ft,or/clackamas/_unincorporated/zdo.315.txt,1570,315.04,1,"[16] If the side lot line abuts a residential zoning district other than HDR, SHD, or RCHDR, the minimum side setback is 15 feet."
-or/clackamas/_unincorporated,unread,parking_min_per_unit,or/clackamas/_unincorporated/zdo.845.txt,107,845.03,1,3 Driveways and off-street parking areas shall not exceed 12 feet wide.
-or/clackamas/_unincorporated,unread,setback_garage_entrance_ft,or/clackamas/_unincorporated/zdo.845.txt,109,845.03,1,"4 The garage width shall not exceed 12 feet, as measured from the inside of the garage door frame."
 or/clackamas/_unincorporated,unread,setback_rear_ft,or/clackamas/_unincorporated/zdo.845.txt,137,845.04,1,7 Minimum Setbacks: The minimum front and rear setbacks are 10 feet. The minimum side setback is five feet.
 or/clackamas/_unincorporated,unread,parking_min_per_unit,or/clackamas/_unincorporated/zdo.845.txt,199,845.04,1,"3 Off-street motor vehicle parking spaces shall not be located within 10 feet of rear or side lot lines, except a lot line that separates the lot from an improved alley that complies with Comprehensiv"
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.06.definitions.txt,1013,17.06.358,1,"“Net acre” means an area measuring 43,560 square feet, which excludes:"
@@ -5687,8 +5684,6 @@ or/clackamas/milwaukie,unfielded,,or/clackamas/milwaukie/19.500.supplementary.tx
 or/clackamas/milwaukie,unfielded,,or/clackamas/milwaukie/19.500.supplementary.txt,1898,19.505.4,1,The common courtyard must be a minimum of 15 ft wide at its narrowest dimension.
 or/clackamas/milwaukie,unfielded,,or/clackamas/milwaukie/19.500.supplementary.txt,1968,19.505.4,1,Parking clusters must be separated from all other areas by at least 4 ft of landscaping.
 or/clackamas/milwaukie,unfielded,,or/clackamas/milwaukie/19.500.supplementary.txt,1980,19.505.4,1,"Within 20 ft of any street property line, except alley property lines;"
-or/clackamas/milwaukie,unfielded,,or/clackamas/milwaukie/19.500.supplementary.txt,2296,19.505.5,1,Outdoor on-site parking and maneuvering areas do not exceed 10 ft wide on any lot.
-or/clackamas/milwaukie,unfielded,,or/clackamas/milwaukie/19.500.supplementary.txt,2304,19.505.5,1,Shared accesses are spaced a minimum of 24 ft apart.
 or/clackamas/milwaukie,unfielded,,or/clackamas/milwaukie/19.500.supplementary.txt,3193,19.508.4,1,The upper story façade must include one of the following no less than every 30 ft:
 or/clackamas/milwaukie,unfielded,,or/clackamas/milwaukie/19.500.supplementary.txt,3733,19.508.4,1,The primary entrance located within 5 ft of the corner of the building.
 or/clackamas/milwaukie,unfielded,,or/clackamas/milwaukie/19.500.supplementary.txt,3741,19.508.4,1,A pedestrian canopy or marquee at least 10 ft long at the corner of the building.
@@ -5800,7 +5795,6 @@ or/clackamas/milwaukie,unread,parking_min_per_unit,or/clackamas/milwaukie/19.500
 or/clackamas/milwaukie,unread,parking_min_per_unit,or/clackamas/milwaukie/19.500.supplementary.txt,1988,19.505.4,1,"Off-street parking spaces must not be located within 10 ft of any other property line, except alley property lines. Driveways and drive aisles are permitted within 10 ft of other property lines."
 or/clackamas/milwaukie,unread,setback_garage_entrance_ft,or/clackamas/milwaukie/19.500.supplementary.txt,2004,19.505.4,1,Garage doors for attached and detached individual garages must not exceed 20 ft in width.
 or/clackamas/milwaukie,unread,min_lot_sqft,or/clackamas/milwaukie/19.500.supplementary.txt,2280,19.505.5,1,"Townhouse development must meet the minimum lot size of 1,500 sq ft."
-or/clackamas/milwaukie,unread,setback_garage_entrance_ft,or/clackamas/milwaukie/19.500.supplementary.txt,2300,19.505.5,1,"The garage width does not exceed 12 ft, as measured from the inside of the garage door frame."
 or/clackamas/milwaukie,unread,min_lot_width_ft,or/clackamas/milwaukie/19.500.supplementary.txt,2336,19.505.5,1,"On townhouse lots with a lot width of 25 ft or less, there is no required side yard between an accessory structure and a side lot line abutting a townhouse lot. All other accessory structure regulatio"
 or/clackamas/milwaukie,unread,max_height_ft,or/clackamas/milwaukie/19.500.supplementary.txt,2474,19.505.7,1,"A prominent architectural element, such as increased building height or massing, a cupola, a turret, or a pitched roof at, or within 20 ft of, the corner of the building."
 or/clackamas/milwaukie,unread,max_height_ft,or/clackamas/milwaukie/19.500.supplementary.txt,2561,19.505.7,1,"For nonresidential and mixed-use buildings, 30% of the ground-floor street wall area must consist of openings; i.e., windows or glazed doors. The ground-floor street wall area is defined as the area u"
@@ -6297,8 +6291,6 @@ or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/4.planning.txt,3529
 or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/4.planning.txt,3592,4.113,1,ii. Be at an angle of up to 45 degrees from the street or private drive (see Figure
 or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/4.planning.txt,3598,4.113,1,A. Be at least 25 square feet in area; and
 or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/4.planning.txt,3601,4.113,1,3. Windows. A minimum of 15 percent of the area of all public-facing façades on each
-or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/4.planning.txt,3637,4.113,1,iii. Outdoor on-site parking and maneuvering areas do not exceed 12 feet wide
-or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/4.planning.txt,3639,4.113,1,"iv. The garage width does not exceed 12 feet, as measured from the inside of"
 or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/4.planning.txt,3679,4,1,5. Footprint. The maximum building footprint for each cottage is 900 square feet. Indi-
 or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/4.planning.txt,3680,4,1,vidual attached garages up to 200 square feet shall be exempted from the calculation of
 or/clackamas/wilsonville,unfielded,,or/clackamas/wilsonville/4.planning.txt,3683,4,1,"1,400 square feet."
@@ -6705,7 +6697,6 @@ or/clackamas/wilsonville,unread,open_space_min_pct,or/clackamas/wilsonville/4.pl
 or/clackamas/wilsonville,unread,setback_garage_entrance_ft,or/clackamas/wilsonville/4.planning.txt,3022,4,1,"5. Minimum setback to garage door or carport entry: 20 feet. Except, however, in the case"
 or/clackamas/wilsonville,unread,max_units,or/clackamas/wilsonville/4.planning.txt,3205,4,1,is 600 square feet of habitable floor area. Larger units shall be subject to standards
 or/clackamas/wilsonville,unread,max_units,or/clackamas/wilsonville/4.planning.txt,3439,4.113,1,at least 50 percent of the façade of two adjacent units can count as two articula-
-or/clackamas/wilsonville,unread,min_frontage_ft,or/clackamas/wilsonville/4.planning.txt,3631,4,1,i. Each townhouse lot has a street frontage of at least 20 feet on a local street.
 or/clackamas/wilsonville,unread,max_height_ft,or/clackamas/wilsonville/4.planning.txt,3678,4,1,4. Building Height. The maximum building height for all structures is 25 feet.
 or/clackamas/wilsonville,unread,setback_garage_entrance_ft,or/clackamas/wilsonville/4.planning.txt,3775,4.113,1,20 feet in width as measured from the interior of the garage door frame.
 or/clackamas/wilsonville,unread,max_height_ft,or/clackamas/wilsonville/4.planning.txt,3783,4.113,1,b. The existing dwelling may be expanded up to a maximum height of 25 feet or a
@@ -7532,7 +7523,6 @@ or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.163.txt,85,19.163.030,
 or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.30.txt,479,19.30.030,1,3. In no case shall the required setback be greater than 40 feet.
 or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.30.txt,591,19.30.040,1,i. Two driveway approaches not exceeding 32 feet in total width on one frontage; or
 or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.30.txt,623,19.30.050,1,b. Be at an angle of up to 45 degrees from the street (see GMC 19.30.040 Figure 2);
-or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.30.txt,663,19.30.050,1,c. Outdoor on-site parking and maneuvering areas do not exceed 12 feet wide on any lot.
 or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.30.txt,713,19.30.060,1,5. Cottages shall have a footprint of less than 900 square feet.
 or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.30.txt,723,19.30.060,1,4. The common courtyard must be a minimum of 15 feet wide at its narrowest dimension.
 or/multnomah/fairview,unfielded,,or/multnomah/fairview/19.30.txt,769,19.30.060,1,"i. Within of 20 feet from any street property line, except alley property lines;"
@@ -7590,8 +7580,6 @@ or/multnomah/fairview,unread,max_units,or/multnomah/fairview/19.165.txt,187,19.1
 or/multnomah/fairview,unread,setback_front_ft,or/multnomah/fairview/19.30.txt,475,19.30.030,1,"1. When an existing single-unit dwelling on the same street is located within 30 feet of the subject site, a front yard setback similar to that of the nearest single-unit dwelling shall be used. “Simi"
 or/multnomah/fairview,unread,setback_front_ft,or/multnomah/fairview/19.30.txt,477,19.30.030,1,2. In no case shall a front yard setback be less than 10 feet.
 or/multnomah/fairview,unread,max_units,or/multnomah/fairview/19.30.txt,503,19.30.030,1,"b. All buildings shall have their primary entrance(s) oriented to the street. Multi-unit housing and neighborhood commercial building entrances may include entrances to individual units, lobby entranc"
-or/multnomah/fairview,unread,min_frontage_ft,or/multnomah/fairview/19.30.txt,659,19.30.050,1,a. Each townhouse lot has a street frontage of at least 15 feet on a local street.
-or/multnomah/fairview,unread,setback_garage_entrance_ft,or/multnomah/fairview/19.30.txt,665,19.30.050,1,"d. The garage width does not exceed 12 feet, as measured from the inside of the garage door frame."
 or/multnomah/fairview,unread,parking_min_per_unit,or/multnomah/fairview/19.30.txt,773,19.30.060,1,"b. Off-street parking spaces shall not be located within 10 feet of any other property line, except alley property lines. Driveways and drive aisles are permitted within 10 feet of other property line"
 or/multnomah/fairview,unread,setback_garage_entrance_ft,or/multnomah/fairview/19.30.txt,785,19.30.060,1,d. Garage doors for attached and detached individual garages must not exceed 20 feet in width.
 or/multnomah/fairview,unread,max_height_ft,or/multnomah/fairview/19.30.txt,829,19.30.080,1,"3. Building Height. The building height of detached accessory dwellings (i.e., separate cottages) shall not exceed 20 feet, as measured in accordance with FMC 19.13.020, except ADUs located above a de"
@@ -8574,9 +8562,6 @@ or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0400.middle-hou
 or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0400.middle-housing-design.txt,373,7.0420,1,"1. Facades greater than one story in height, facing a side setback, and less than 5 feet from a minimum"
 or/multnomah/gresham,unread,max_height_ft,or/multnomah/gresham/7.0400.middle-housing-design.txt,376,7.0420,2,a. Side walls shall not exceed 35 feet in length before a full-height offset a minimum 2 feet in depth
 or/multnomah/gresham,unread,max_units,or/multnomah/gresham/7.0400.middle-housing-design.txt,444,7.0431,1,a. Be set back no greater than 8 feet from the longest street- facing wall of the dwelling unit.
-or/multnomah/gresham,unread,min_frontage_ft,or/multnomah/gresham/7.0400.middle-housing-design.txt,474,7.0431,1,ii. Each townhouse lot has a street frontage of at least 15 feet on a minor access or local street.
-or/multnomah/gresham,unread,parking_min_per_unit,or/multnomah/gresham/7.0400.middle-housing-design.txt,479,7.0431,1,iv. Outdoor off-street parking and maneuvering areas do not exceed 12 feet wide on any lot.
-or/multnomah/gresham,unread,setback_garage_entrance_ft,or/multnomah/gresham/7.0400.middle-housing-design.txt,480,7.0431,1,"v. The garage width does not exceed 12 feet, as measured from the inside of the garage door"
 or/multnomah/gresham,unread,parking_min_per_unit,or/multnomah/gresham/7.0400.middle-housing-design.txt,500,7.0431,1,"b. Off- street parking spaces for residential uses shall be at least 8.5 feet wide by 18 feet deep, or 8"
 or/multnomah/gresham,unread,parking_min_per_unit,or/multnomah/gresham/7.0400.middle-housing-design.txt,501,7.0431,2,feet wide by 24 feet long for parallel parking spaces.
 or/multnomah/gresham,unread,setback_garage_entrance_ft,or/multnomah/gresham/7.0400.middle-housing-design.txt,517,7.0431,1,3 feet beyond the edge of the garage door (see Figure 7.0420(C) ).
@@ -9342,11 +9327,6 @@ or/multnomah/portland,unfielded,,or/multnomah/portland/33.266.txt,464,33.266,1,"
 or/multnomah/portland,unfielded,,or/multnomah/portland/33.266.txt,486,33.266,1,"However, there must be a maneuvering area of at least 20 feet between the"
 or/multnomah/portland,unfielded,,or/multnomah/portland/33.266.txt,488,33.266,1,"less than 20 feet wide, some of this maneuvering area will be on-site."
 or/multnomah/portland,unfielded,,or/multnomah/portland/33.266.txt,507,33.266.140,1,"a. As shown in Figure 266-3, up to 2 feet of the front of the space as measured from"
-or/multnomah/portland,unfielded,,or/multnomah/portland/33.266.txt,521,33.266.140,1,0° (Parallel) 8 ft. 22 ft. 6 in. 12 ft. 20 ft. 8 ft.
-or/multnomah/portland,unfielded,,or/multnomah/portland/33.266.txt,522,33.266.140,1,30° 8 ft. 6 in. 17 ft. 12 ft. 20 ft. 15 ft.
-or/multnomah/portland,unfielded,,or/multnomah/portland/33.266.txt,523,33.266.140,1,45° 8 ft. 6 in. 12 ft. 12 ft. 20 ft. 17 ft.
-or/multnomah/portland,unfielded,,or/multnomah/portland/33.266.txt,524,33.266.140,1,60° 8 ft. 6 in. 9 ft. 9 in. 16 ft. 20 ft. 17 ft. 6 in.
-or/multnomah/portland,unfielded,,or/multnomah/portland/33.266.txt,525,33.266.140,1,90° 8 ft. 6 in. 8 ft. 6 in. 20 ft. 20 ft. 16 ft.
 or/multnomah/portland,unfielded,,or/multnomah/portland/33.266.txt,542,33.266,1,"21,780 square feet in total area. Structured parking is not included in the total."
 or/multnomah/portland,unfielded,,or/multnomah/portland/33.266.txt,544,33.266,1,(1) Tree canopy. Tree canopy must shade at least 4 0 percent of the parking
 or/multnomah/portland,unfielded,,or/multnomah/portland/33.266.txt,560,33.266,1,"following. Parking areas greater than 125,000 square feet on sites in R, C, E, IR,"
@@ -9595,8 +9575,6 @@ or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/3.zoning-districts.txt,
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/3.zoning-districts.txt,472,3.130,1,"is at least 20 feet in width, and the alley intervenes between the dwelling"
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/3.zoning-districts.txt,473,3.130,1,or structure and the other residential zoning district: Minimum of 20 feet
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/8.development-standards.txt,647,8.120,1,Main Entrance at 45 Degree Angle from the Street
-or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9.parking.txt,89,9.010,1,"• Lot size of less than 5,000 sq. ft. 2 spaces total No maximum"
-or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9.parking.txt,90,9.010,1,"• Lot size between 5,000 sq. ft. 3 spaces total No maximum"
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9.parking.txt,96,9.010,1,"area is less than 1,000 sq. ft."
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9.parking.txt,98,9.010,1,"area is over 1,000 sq. ft."
 or/multnomah/troutdale,unfielded,,or/multnomah/troutdale/9.parking.txt,118,9.010,1,"General retail with bulky 2 spaces per 1,000 sq. ft. of 3 spaces per 1,000 sq. ft. of"

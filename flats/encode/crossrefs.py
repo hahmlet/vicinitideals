@@ -98,7 +98,8 @@ from typing import Collection, Iterable, Iterator, Sequence
 from flats.provenance.store import ProvenanceStore, parse_quote
 from flats.rules.fields import FIELDS
 from flats.rules.loader import load_rules
-from flats.rules.model import Layer
+from flats.designs.model import Plat
+from flats.rules.model import Layer, Value
 
 #: Where the ledger is written, beside the coverage ledger it complements.
 LEDGER = Path(__file__).resolve().parents[2] / "data" / "flats" / "crossrefs.csv"
@@ -409,12 +410,37 @@ def _resolves(ref: str, ids: set[str], headings: set[str]) -> bool:
 LIKE = "like"
 
 
-def _cited_lines(layer: Layer) -> dict[str, dict[int, set[str]]]:
+#: Plat facts a design can assert. ``one_lot`` -- all four units on the parcel
+#: being screened -- is the default and asserts nothing, so this is every OTHER
+#: plat: the ones a variant can be gated on and this screen does not draw.
+#: Derived from the enum rather than written out, so a third plat arriving is a
+#: decision somebody has to make here instead of a string nobody updated.
+OTHER_PLATS = frozenset(p.value for p in Plat) - {Plat.one_lot.value}
+
+
+def _cited_lines(
+    layer: Layer, *, off_plat: bool = True
+) -> dict[str, dict[int, set[str]]]:
     """Per document, every line an encoded value was read from, and which one.
 
     The field name is the whole point. A reference twelve lines from *some*
     citation is a coincidence waiting to be judged; a reference twelve lines
     from ``setback_rear_ft`` is the Gresham sentence.
+
+    A value is read the same way wherever it lives. That sentence is here
+    because for a fortnight it was false: this walked a zone value's variants,
+    step-back, measured-on and qualified-by quotes and took only the primary
+    quote off a value in ``defaults``. Every derived form is a citation with a
+    line number in it, and three ledgers are built on this dictionary, so a
+    citation it cannot see is a line the corpus proves was read and all three
+    report as unread. Portland is the case that found it: Table 266-4 lives in
+    33.266.130, the fourplex stall sizes sit in ``defaults`` because
+    33.266.120.B tests the STRUCTURE rather than the zone, and the tract
+    branch is a variant on them -- so routing.csv called 33.266.120.B.1's
+    pointer at 33.266.130 unfollowed while the file was quoting lines 516-525
+    of that very section. Twelve values across ten layers were invisible the
+    same way, all of them parking geometry, because a variant is how this
+    corpus holds "the same standard, measured differently".
     """
     lines: dict[str, dict[int, set[str]]] = defaultdict(lambda: defaultdict(set))
 
@@ -428,18 +454,49 @@ def _cited_lines(layer: Layer) -> dict[str, dict[int, set[str]]]:
         for n in ref.numbers:
             lines[ref.path][n].add(name)
 
-    for name, value in layer.defaults.items():
+    def take_all(value: Value, name: str) -> None:
         take(value.prov.quote, name)
+        take(value.step_back_quote, name)
+        take(value.measured_on_quote, name)
+        take(value.qualified_quote, name)
+        for variant in value.variants:
+            # Two questions are asked of this dictionary and only one of them
+            # cares about the plat:
+            #
+            #   uncited/crossrefs ask "did anybody read this line". A branch the
+            #   screen does not draw today was still read, is still in the file,
+            #   and is one plat decision from being live -- so it counts, and
+            #   `off_plat=True` (the default) keeps it.
+            #
+            #   routing asks "was this section read FOR THE BUILDING WE DRAW",
+            #   which is a different sentence. Portland is the case that fixed
+            #   the wording: 33.266.120.B.1 points at 33.266.130, and the only
+            #   thing this corpus reads from inside 33.266.130 is Table 266-4 on
+            #   a `when: [unit_lots]` variant. This screen draws one_lot. The
+            #   test_routing docstring states the ruling -- "a citation that
+            #   only applies on a plat we refuse is not one" -- and until
+            #   2026-09-03 it held by ACCIDENT, because this function could not
+            #   see a `defaults` value's variants at all.
+            #
+            # Only the plat is excluded, not conditions generally. Multnomah
+            # County's 39.4245 -> 39.3070 row is closed by a variant gated on
+            # `farm_labor_housing, review_use`, and those are facts about a
+            # parcel and an application that the screen evaluates -- a redirect
+            # closed on one of them was genuinely followed. A plat is the one
+            # condition the SITE PLAN fixes before any parcel is looked at.
+            if not off_plat and OTHER_PLATS.intersection(
+                tuple(getattr(variant, "when", ()) or ())
+            ):
+                continue
+            take(variant.prov.quote, name)
+
+    for name, value in layer.defaults.items():
+        take_all(value, name)
     for zone in layer.zones.values():
         if zone.like is not None:
             take(zone.like.prov.quote, LIKE)
         for name, value in zone.values.items():
-            take(value.prov.quote, name)
-            take(value.step_back_quote, name)
-            take(value.measured_on_quote, name)
-            take(value.qualified_quote, name)
-            for variant in value.variants:
-                take(variant.prov.quote, name)
+            take_all(value, name)
     return lines
 
 

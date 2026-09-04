@@ -285,7 +285,14 @@ def redirects(layer: Layer, store: ProvenanceStore | None = None) -> list[Routin
         headings |= _headings(text, owns, own)
         heads[path] = _heading_lines(text, owns, own)
 
-    cited = _cited_lines(layer)
+    # off_plat=False: a citation that only applies on a plat this screen does
+    # not draw does not close a redirect. That is the ruling this module was
+    # rebuilt around on 2026-09-01 -- see the test_routing docstring -- and
+    # until 2026-09-03 it held only because _cited_lines could not see a
+    # `defaults` value's variants at all. The blind spot was costing the
+    # uncited and crossrefs ledgers real rows, so the two questions are now
+    # asked separately instead of one bug answering both.
+    cited = _cited_lines(layer, off_plat=False)
     read = _sections_read(cited, heads)
 
     rows: list[Routing] = []
