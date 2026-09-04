@@ -282,6 +282,31 @@ def test_state_law_is_not_in_this_queue() -> None:
     assert not [r for r in refs if r.upper().startswith(("ORS", "OAR"))]
 
 
+def test_the_state_does_not_scan_a_city_s_code() -> None:
+    """A layer owns the documents in its own directory and no others.
+
+    The ownership test read ``path.startswith(layer + "/")``, which is true of
+    every document in the corpus when the layer is ``or`` -- all 177 of them
+    are filed under ``or/``. So Oregon was scanned against every city code we
+    hold and the queue grew 691 cards numbered like municipal code (1.04.070,
+    02.16.6) filed under the state's name, none of which Oregon writes. The
+    reading ledger had the identical fault and it was found there first; this
+    is its twin, and the reason the queue was four fifths phantom.
+    """
+    from flats.provenance.store import ProvenanceStore
+
+    store = ProvenanceStore()
+    held = {
+        p.rsplit("/", 1)[-1]
+        for p in store.documents()
+        if p.rsplit("/", 1)[0] == "or"
+    }
+    docs = {m.doc for c in cards(load_rules()["or"]) for m in c.mentions}
+
+    assert held, "the state layer does hold documents of its own"
+    assert docs <= held
+
+
 class TestRecordingADecision:
     """Rulings are spliced into hand-written YAML and never dumped over it."""
 

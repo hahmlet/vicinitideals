@@ -695,8 +695,15 @@ def _nesting(refs: Sequence[str]) -> dict[str, tuple[str, tuple[str, ...]]]:
 def _scan(layer: Layer, store: ProvenanceStore | None = None) -> list[Card]:
     """The document read. Expensive, and independent of any ruling."""
     store = store or ProvenanceStore()
-    prefix = f"{layer.layer}/"
-    paths = [p for p in store.documents() if p.startswith(prefix)]
+    # A layer owns the documents in its own directory, and no others. This
+    # read ``p.startswith(f"{layer.layer}/")`` until 2026-09-04 — true of
+    # every document in the corpus when the layer is the state one, because
+    # ``or/`` prefixes all 177 of them. So Oregon was scanned against every
+    # city code in the corpus and the queue grew 691 cards numbered like
+    # municipal code (``1.04.070``, ``02.16.6``) filed under the state's
+    # name, none of which Oregon writes. The same fault was found and fixed
+    # in the reading ledger the same day; this is its twin.
+    paths = [p for p in store.documents() if p.rsplit("/", 1)[0] == layer.layer]
     if not paths:
         return []
 
