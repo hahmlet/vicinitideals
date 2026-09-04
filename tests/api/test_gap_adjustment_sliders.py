@@ -220,7 +220,7 @@ async def test_sliders_404_for_unknown_model(
 
 @pytest.mark.asyncio
 async def test_sliders_concurrent_posts_produce_single_phantom_row(
-    client: AsyncClient,
+    concurrent_client: AsyncClient,
     session: AsyncSession,
 ) -> None:
     """Concurrent slider POSTs must not create duplicate phantom rows.
@@ -232,13 +232,23 @@ async def test_sliders_concurrent_posts_produce_single_phantom_row(
     MultipleResultsFound. The partial unique indexes from migration 0094
     plus the IntegrityError fallback in the upsert helpers serialize the
     writes — one wins as INSERT, the other falls back to UPDATE.
+
+    ``concurrent_client``, not ``client``, and that is the whole test. The
+    shared-session client hands both requests the same connection, so they
+    cannot race and the index under test is never asked to settle anything --
+    the test passed while proving nothing. On CI they interleaved for real,
+    SQLAlchemy refused ("concurrent operations are not permitted"), the
+    session was left mid-transaction, and every test after it hung on the
+    teardown TRUNCATE. One session per request is what production does and
+    what makes these two writes actually simultaneous.
     """
     import asyncio
 
     model_id, project_id = await _seeded_model(session)
+    await session.commit()
 
     results = await asyncio.gather(
-        client.post(
+        concurrent_client.post(
             f"/api/models/{model_id}/sliders",
             json={
                 "revenue_delta_annual": "12000",
@@ -246,7 +256,7 @@ async def test_sliders_concurrent_posts_produce_single_phantom_row(
                 "pp_delta": "-25000",
             },
         ),
-        client.post(
+        concurrent_client.post(
             f"/api/models/{model_id}/sliders",
             json={
                 "revenue_delta_annual": "24000",

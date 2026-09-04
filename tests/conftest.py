@@ -52,6 +52,7 @@ from sqlalchemy.ext.asyncio import (
     async_sessionmaker,
     create_async_engine,
 )
+from sqlalchemy.exc import DBAPIError
 from sqlalchemy.pool import NullPool
 
 from app.api.deps import get_db
@@ -282,8 +283,32 @@ async def session(_test_engine, _rebind_app_db) -> AsyncGenerator[AsyncSession, 
         for t in Base.metadata.sorted_tables
     )
     if table_names:
-        async with _test_engine.begin() as conn:
-            await conn.execute(text(f"TRUNCATE {table_names} RESTART IDENTITY CASCADE"))
+        # ``lock_timeout`` is what keeps one broken test from taking the suite
+        # with it. TRUNCATE needs ACCESS EXCLUSIVE on every table, so a test
+        # that left a transaction open blocks it *forever* -- and on
+        # 2026-09-04 that is exactly what happened in CI. One concurrency test
+        # poisoned its shared session, its connection was never released, and
+        # the next 1,300 tests each hung on this line for the full 120s
+        # pytest timeout while leaking another connection, until Postgres ran
+        # out of them. 674 failures, 844 errors, three and a half hours, and
+        # every one of them the same open transaction.
+        #
+        # Ten seconds, then say so. A suite that fails loudly on the test that
+        # broke it is worth more than one that never finishes.
+        try:
+            async with _test_engine.begin() as conn:
+                await conn.execute(text("SET LOCAL lock_timeout = '10s'"))
+                await conn.execute(
+                    text(f"TRUNCATE {table_names} RESTART IDENTITY CASCADE")
+                )
+        except DBAPIError as exc:  # pragma: no cover - only on a poisoned run
+            raise RuntimeError(
+                "Could not clear the test schema: TRUNCATE could not take its "
+                "lock within 10s, which means a previous test left a "
+                "transaction open. Look at the test that ran before this one, "
+                "not at this one. Every test after it would otherwise hang "
+                "until the pytest timeout and leak a connection."
+            ) from exc
 
 
 @pytest_asyncio.fixture(loop_scope="session")
@@ -303,6 +328,57 @@ async def client(session: AsyncSession) -> AsyncGenerator[AsyncClient, None]:
 
     async def _override_get_db() -> AsyncGenerator[AsyncSession, None]:
         yield session
+
+    app.dependency_overrides[get_db] = _override_get_db
+
+    async with AsyncClient(
+        transport=ASGITransport(app=app),
+        base_url="http://test",
+        headers={"X-User-ID": str(uuid.uuid4())},
+    ) as c:
+        yield c
+
+    app.dependency_overrides.clear()
+
+
+@pytest_asyncio.fixture(loop_scope="session")
+async def concurrent_client(
+    _test_engine, session: AsyncSession
+) -> AsyncGenerator[AsyncClient, None]:
+    """A client that gives every request its own session, as production does.
+
+    The ordinary ``client`` fixture hands the *same* ``AsyncSession`` to every
+    request, which is right for the suite: a test seeds through ``session``,
+    calls the API, and reads back what it wrote without a commit in between.
+
+    It is wrong for the handful of tests that fire requests concurrently. An
+    AsyncSession is not safe to use from two coroutines at once, so two
+    ``asyncio.gather``-ed requests raise "This session is provisioning a new
+    connection; concurrent operations are not permitted" -- and worse, the
+    test passes when they happen not to interleave. That made the one
+    concurrency regression test in this suite both flaky *and* vacuous: it
+    proved nothing about the database race it was written for, because the two
+    requests were sharing one connection and could never race.
+
+    In production each request gets a fresh session from ``AsyncSessionLocal``.
+    So does each request here, off the same engine and the same database, which
+    is what makes the writes genuinely simultaneous and the partial unique
+    index the thing that has to settle them.
+
+    ``session`` is still depended on: the test seeds through it, and its
+    teardown is what clears the schema afterwards.
+    """
+    app = create_app()
+    factory = async_sessionmaker(
+        bind=_test_engine,
+        class_=AsyncSession,
+        expire_on_commit=False,
+        autoflush=False,
+    )
+
+    async def _override_get_db() -> AsyncGenerator[AsyncSession, None]:
+        async with factory() as own:
+            yield own
 
     app.dependency_overrides[get_db] = _override_get_db
 
