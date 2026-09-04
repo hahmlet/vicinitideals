@@ -699,7 +699,8 @@ this one does not.
 
 ## ~~Seven~~ Four of our fourteen cities have zero green lots — and each one has a single reason
 
-Re-measured 2026-09-03 after your two answers ran. **Three of the seven came off
+Re-measured 2026-09-03 after your two answers ran, and again on 2026-09-04 once
+Gladstone's and Tualatin's overlays were wired. **Three of the seven came off
 this list in one afternoon, and all three came off through item 2** — Gresham
 (0 → 1,820 greens), Troutdale (0 → 125) and Wood Village (0 → 95). Ten of the
 fourteen cities now produce greens. What is left:
@@ -707,17 +708,26 @@ fourteen cities now produce greens. What is left:
 | City | Lots waiting | What is holding them |
 |---|---|---|
 | Happy Valley | 749 | Sewer **and** an environmental overlay — see below |
-| Fairview | 198 | Signing — **item 7**, which is itself gated by **item 10** |
-| Gladstone | 121 | Signing — **item 7** (121 of 121), nothing in the way |
-| Tualatin | 19 | Sewer coverage — **item 6** (19 of 19) |
+| Fairview | 198 | Signing — **item 7**, gated by **item 10**. Signing alone releases 150 |
+| Gladstone | 121 | Signing — **item 7**, nothing in the way of doing it. Signing alone releases 35 |
+| Tualatin | 19 | Sewer coverage — **item 6**. Sewer alone releases 6 |
 
 **Fairview simplified.** It was the one city on the old list held by two things
 at once, elevation *and* signing. The elevation half is answered, and all 198 of
-its waiting lots are now held by unverified zone rules and nothing else — 150 of
-them by that alone. Fairview and Gladstone together are 319 lots that need no
-data and no decision: only somebody reading the page. Gladstone can be read
-today. Fairview needs one phone call first (item 10), because two of its zone
-codes have no page.
+its waiting lots are now held by an unverified zone rule — 150 of them by that
+alone. Gladstone is the same shape: all 121 of its waiting lots want a signature
+too.
+
+**But signing is necessary for all 319 and sufficient for 185.** An earlier
+version of this section said the two cities were "319 lots that need no data and
+no decision", and that was too strong. A lot in the review queue is held by
+*every* reason listed against it, so a lot wanting both a signature and a sewer
+answer does not move when it gets one of them. Signing alone releases 150 of
+Fairview's 198 and 35 of Gladstone's 121. The other 134 want a signature **and**
+something else — 86 in Gladstone, 48 in Fairview. What is still true, and is the
+reason both cities are on this list: nothing but a person reading a page stands
+between us and the 185, and Gladstone can be read today. Fairview needs one
+phone call first (item 10), because two of its zone codes have no page.
 
 The old read-across is now history rather than forecast: **item 2 was worth
 7,360 lots and delivered 7,360**, 5,320 of them in Portland and 1,820 in
@@ -726,10 +736,13 @@ Gresham.
 **Happy Valley stopped being a one-thing city.** On 2026-09-01 it was 722 of 731
 lots held by nothing but the missing sewer map. Wiring its environmental
 overlays put a second blocker on top: of 749 waiting lots, 740 want a sewer
-answer, **725 now also sit on mapped natural resource**, and 603 want a better
-slope reading. Only 6 are held by sewer alone. That is not a regression — the
-overlay check was simply absent before, and 725 lots were being graded as if
-their resource land were not there. It does mean **item 6 no longer unlocks
+answer, **725 now also sit on mapped natural resource**, and 331 want a better
+slope reading. Only 21 are held by sewer alone. (Slope was 603 and sewer-alone
+was 6 when this was written on 09-01; the coarse-DEM fill has since answered the
+elevation question for 72,188 lots the 1 m DEM could not reach, which is where
+the difference went.) That is not a regression — the overlay check was simply
+absent before, and 725 lots were being graded as if their resource land were not
+there. It does mean **item 6 no longer unlocks
 Happy Valley by itself**, and the overlay half looked like agent work: Happy
 Valley *flags* resource land rather than carving it out of the buildable area,
 so each flagged lot could have its mapped resource compared against the actual
@@ -738,14 +751,30 @@ envelope instead of against the whole lot.
 **Measured 2026-09-03, and it releases nothing today — not built.** Comparing
 the resource against the buildable envelope rather than the lot boundary drops
 **279 of 3,914** natural-resource flags and 314 of 7,301 slope flags — about
-one in fourteen. But **not one** of Happy Valley's 749 waiting lots is held by
-the overlay *alone*: all 725 overlay-flagged lots also want a sewer answer
-(740 of the 749 do), and 603 want a better slope reading. Refining the overlay
-test would move 0 lots to green while it stands behind item 6. It becomes worth
-building the day the sewer answer arrives, and not before.
+one in fourteen. But only **two** of Happy Valley's 749 waiting lots are held by
+the overlay alone: every other one of the 725 flagged lots wants something else
+as well, usually a sewer answer (740 of the 749 do), and 331 want a better slope
+reading. Refining the overlay test would move **at most two** lots to green
+while it stands behind item 6. It becomes worth building the day the sewer
+answer arrives, and not before.
+
+**Gladstone gained an overlay on 2026-09-03, the same way Happy Valley did.**
+Until that day Clackamas County had no environmental screening at all, and an
+absent overlay grades as clear land. Wiring Gladstone's habitat-conservation and
+water-quality layers put a flag on **51 of its 121** waiting lots (HCA 51, water
+quality 23; FEMA floodway 9 and special flood hazard 19 were already there and
+overlap). Not one of the 51 changes what has to happen first — every one of them
+wants the signature as well — but it does move 21 lots out of reach of the
+signature alone: **56 before the layer existed, 35 after**. The rest of the gap
+between 35 and the 121 this list used to claim was never the overlay's doing.
+Sewer and slope were already holding 65 of the 121 and the list was simply
+overstating what one afternoon of reading would buy. The habitat layer is Metro's regional Title 13 inventory standing
+in for an HCA map the city does not publish as GIS, so it is a **flag**: the
+cost of the proxy is a lot read by a person, not a lot thrown away.
 
 These four are the whole of the silent part of the map, and they are 1,087 lots
-between them. The other ten cities all produce greens today.
+between them — unchanged by the 2026-09-04 run, which moved lots between reasons
+rather than out of the queue. The other ten cities all produce greens today.
 
 ## Villebois turned out to be a dead end, and for an honest reason — **2,106 lots**
 
