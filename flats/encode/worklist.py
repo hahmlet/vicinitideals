@@ -119,13 +119,93 @@ _CITATION = re.compile(r"\b\d+(?:\.\d+){2,}\b")
 _FIGURE = re.compile(r"\b\d[\d,]*(?:\.\d+)?\b")
 
 
-def _numbers(text: str) -> tuple[float, ...]:
-    """Every figure a line states, citations removed, in the order written."""
+#: A list marker opening a line: "8.", "(B)", "b.", "(2)". Ordinance text is
+#: enumerated and the extractor keeps the enumerator, so "8. Off-street parking
+#: spaces shall be improved with a paved surface" stated the number 8 and
+#: disagreed with every parking figure we hold. Four cards led the queue on a
+#: paragraph number. Stripped before figures are read, never before the text is
+#: shown -- the reviewer wants to see which paragraph this is.
+_LIST_MARKER = re.compile(r"^\s*(?:\(?[0-9]{1,3}\)?[.)]|\(?[A-Za-z]\)?[.)])\s+")
+
+#: A figure carrying the unit a field is measured in. Keyed by
+#: :class:`~flats.rules.fields.FieldDef` kind, which is the registry's own
+#: declaration and not a second guess about what a field means.
+#:
+#: This is the corroboration that ``_subject`` cannot give. That matcher reads
+#: a *table label* -- "Minimum lot size", "Maximum height" -- where the label
+#: is the subject and the number is the cell beside it. Run over a prose
+#: sentence it fires on the word wherever it appears, so "the nearest bicycle
+#: parking space shall be no more than 50 feet from the entrance" came back as
+#: a parking-stall standard stating 50, and "tree canopy covering at least 40
+#: percent of the new parking lot area" as a minimum lot size of 40. Requiring
+#: the sentence to state a number in the field's own unit is what separates a
+#: standard from a sentence that merely mentions the noun.
+_UNITS: dict[str, re.Pattern[str]] = {
+    "length_ft": re.compile(
+        r"(\d[\d,]*(?:\.\d+)?)\s*(?:-\s*)?(?:feet|foot|ft\b\.?|')", re.I
+    ),
+    "area_sqft": re.compile(
+        r"(\d[\d,]*(?:\.\d+)?)\s*(?:square\s+(?:feet|foot)|sq\.?\s*ft\.?|sf\b|acres?)", re.I
+    ),
+    "percent": re.compile(r"(\d[\d,]*(?:\.\d+)?)\s*(?:percent|per\s?cent|%)", re.I),
+}
+
+#: Kinds whose figure is a bare number -- stalls per unit, dwelling counts,
+#: floor-area ratios. There is no unit word to look for, so the test is the
+#: other way round: a figure that carries *someone else's* unit is not this
+#: field's number. "50 feet from the entrance" states no stall count.
+_BARE_KINDS = frozenset({"ratio", "count"})
+
+#: Any unit word at all, for the bare-number test above.
+_ANY_UNIT = re.compile(
+    r"(\d[\d,]*(?:\.\d+)?)\s*(?:-\s*)?"
+    r"(?:feet|foot|ft\b\.?|'|\"|inch(?:es)?|square\s+(?:feet|foot)|sq\.?\s*ft\.?|sf\b"
+    r"|acres?|percent|per\s?cent|%|degrees?|stories|storey?s?|days?|years?|months?)",
+    re.I,
+)
+
+
+def _figures(text: str) -> tuple[float, ...]:
+    """Every figure a line states, citations and list marker removed."""
     out: list[float] = []
-    for raw in _FIGURE.findall(_CITATION.sub(" ", text)):
+    body = _CITATION.sub(" ", _LIST_MARKER.sub("", text))
+    for raw in _FIGURE.findall(body):
         try:
             n = float(raw.replace(",", ""))
         except ValueError:  # pragma: no cover - the pattern cannot produce one
+            continue
+        if n not in out:
+            out.append(n)
+    return tuple(out)
+
+
+def _stated(text: str, field: str) -> tuple[float, ...]:
+    """The figures this line states *in the unit the field is measured in*.
+
+    Empty when the sentence names the field's noun but never states a number
+    for it, which is the common case and the one that filled the queue with
+    false alarms. A line with no figure in its field's unit is not a missed
+    standard; it is a sentence we have no reading of, which is a different
+    question and belongs in a different queue.
+    """
+    spec = FIELDS.get(field)
+    if spec is None:
+        return ()
+    body = _CITATION.sub(" ", _LIST_MARKER.sub("", text))
+    if spec.kind in _BARE_KINDS:
+        # Every figure that is not somebody else's measurement.
+        taken = {m.group(1) for m in _ANY_UNIT.finditer(body)}
+        raw = [m for m in _FIGURE.findall(body) if m not in taken]
+    else:
+        pattern = _UNITS.get(spec.kind)
+        if pattern is None:
+            return ()
+        raw = [m.group(1) for m in pattern.finditer(body)]
+    out: list[float] = []
+    for r in raw:
+        try:
+            n = float(r.replace(",", ""))
+        except ValueError:  # pragma: no cover
             continue
         if n not in out:
             out.append(n)
@@ -168,14 +248,32 @@ class Line:
     field: str
     text: str
     repeats: int
-    #: The figures the line states.
+    #: The figures the line states, in the unit its field is measured in.
+    #: Empty when the sentence names the field's noun and never states a
+    #: number for it -- which is not a missed standard, and is why this is
+    #: not simply every figure on the line.
     numbers: tuple[float, ...]
     #: The figures this layer holds for that field, anywhere.
     held: tuple[float, ...]
+    #: Every figure the line states, whatever it measures. Shown, never
+    #: compared: a reviewer reading "40 percent of the parking lot area"
+    #: should see the 40, and nothing should test it against a lot size.
+    figures: tuple[float, ...] = ()
 
     @property
     def conditional(self) -> bool:
         return bool(_CONDITION.search(self.text))
+
+    @property
+    def comparable(self) -> bool:
+        """Whether this line really states a number for the field it names.
+
+        The field comes from a matcher built to read table labels; over prose
+        it fires on the noun wherever it appears. This is the corroboration:
+        a sentence that names parking and states no stall count is not a
+        parking standard we missed.
+        """
+        return bool(self.field and self.numbers)
 
     @property
     def agrees(self) -> bool | None:
@@ -322,7 +420,14 @@ def _kind(rows: Sequence[Uncited], quoted: bool) -> str:
     """
     if not quoted:
         return "chapter"
-    fielded = [r for r in rows if r.field]
+    # Corroborated, not merely fielded. West Linn's parking chapter names a
+    # field on six lines and states a figure for one of them on none: a paving
+    # rule, a lighting rule, a bicycle rack, tree canopy, a frontage cap on
+    # commercial lots and an ADA table keyed at 151 spaces. As "missed
+    # standards" it was six unanswerable questions under one button row. As a
+    # ``nofield`` card it is one ruling -- none of this dimensions our pod --
+    # which is the answer a reader gives it in ten seconds.
+    fielded = [r for r in rows if r.field and _stated(r.text, r.field)]
     if not fielded:
         return "nofield"
     if any(_CONDITION.search(r.text) for r in fielded):
@@ -336,6 +441,70 @@ def _lots_by_layer() -> dict[str, int]:
         out[row.jurisdiction] += row.lots
     return dict(out)
 
+
+
+
+#: How many lines either side of an uncited statement are shown with it.
+#: Three is enough to carry a table row's neighbours -- the bracket above it
+#: and the one below -- which is the case that forced this.
+CONTEXT_PAD = 3
+
+#: The most lines a card will render around its statements. A section with two
+#: hundred uncited lines is a chapter, and a reviewer scrolling a chapter is
+#: not reading it.
+CONTEXT_CAP = 220
+
+
+@dataclass(frozen=True, slots=True)
+class Around:
+    """One line of the document as it stands, and whether it is a statement."""
+
+    line: int
+    text: str
+    #: True where this is one of the card's uncited statements.
+    marked: bool
+    #: True where the line before it was skipped, so the reader can see that
+    #: what is between them was left out rather than reading as continuous.
+    gap: bool
+
+
+def context(
+    card: Card, store: ProvenanceStore | None = None, *, pad: int = CONTEXT_PAD
+) -> tuple[Around, ...]:
+    """The card's statements with the document's own lines either side.
+
+    A statement pulled out of a table is not readable on its own. West Linn
+    prints its accessible-stall count as a table keyed on the size of the lot,
+    and the row that reached the queue --
+
+        501 - 999   2 percent of total spaces   1 in every 6 accessible spaces
+
+    -- says nothing at all until the rows above it are visible and it is clear
+    the smallest bracket in the table is 151 spaces. The reviewer had to click
+    a link labelled with a line number to find that out, which is a link that
+    looks like a citation and acts like the only control on the card.
+
+    So the neighbours come with the statement, unasked. Empty when the document
+    cannot be read -- the statements themselves are already on the card, and a
+    missing file is not worth an error in front of somebody trying to read.
+    """
+    store = store or ProvenanceStore()
+    try:
+        whole = store.load(card.path).text.splitlines()
+    except Exception:  # pragma: no cover - a store fault is not this screen's
+        return ()
+
+    marks = {ln.line for ln in card.lines}
+    wanted: set[int] = set()
+    for n in sorted(marks):
+        wanted.update(range(max(n - pad, 1), min(n + pad, len(whole)) + 1))
+
+    out: list[Around] = []
+    last = 0
+    for n in sorted(wanted)[:CONTEXT_CAP]:
+        out.append(Around(line=n, text=whole[n - 1], marked=n in marks, gap=n > last + 1))
+        last = n
+    return tuple(out)
 
 
 #: The regenerated ledger, held for the life of the process. The scan reads
@@ -421,8 +590,9 @@ def cards(
                         field=r.field,
                         text=r.text,
                         repeats=r.repeats,
-                        numbers=_numbers(r.text),
+                        numbers=_stated(r.text, r.field),
                         held=tuple(sorted(held.get(r.field, ()))),
+                        figures=_figures(r.text),
                     )
                     for r in group
                 ),

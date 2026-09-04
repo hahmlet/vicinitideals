@@ -31,7 +31,9 @@ from flats.encode.worklist import (
     Card,
     Line,
     _kind,
-    _numbers,
+    context,
+    _figures,
+    _stated,
     _rank,
     _splice,
     audit,
@@ -61,8 +63,9 @@ def _line(text: str, *, field: str = "max_height_ft", held: tuple[float, ...] = 
         field=field,
         text=text,
         repeats=1,
-        numbers=_numbers(text),
+        numbers=_stated(text, field),
         held=held,
+        figures=_figures(text),
     )
 
 
@@ -100,18 +103,18 @@ def test_a_section_number_is_not_a_measurement() -> None:
     hold. Two dots or more is the test: codes number by containment and no
     standard is ever written 35.0.0.
     """
-    assert _numbers("See 19.301.4 for the standard") == ()
-    assert _numbers("Per 33.120.205.C, height is 35 ft") == (35.0,)
+    assert _figures("See 19.301.4 for the standard") == ()
+    assert _figures("Per 33.120.205.C, height is 35 ft") == (35.0,)
 
 
 def test_a_number_written_twice_is_counted_once() -> None:
     """Drafters write "twelve (12) feet". One figure, not two."""
-    assert _numbers("a minimum width of twelve (12) feet") == (12.0,)
+    assert _figures("a minimum width of twelve (12) feet") == (12.0,)
 
 
 def test_a_thousands_comma_does_not_make_two_numbers() -> None:
     """A table printing 5,000 and prose printing 5000 state the same standard."""
-    assert _numbers("5,000 square feet") == _numbers("5000 square feet") == (5000.0,)
+    assert _figures("5,000 square feet") == _figures("5000 square feet") == (5000.0,)
 
 
 # --- what the comparison can and cannot say --------------------------------
@@ -476,3 +479,142 @@ def test_an_outcome_named_by_two_queues_means_one_thing() -> None:
     for outcomes in READING_OUTCOMES.values():
         for key, why in outcomes.items():
             assert seen.setdefault(key, why) == why
+
+
+# --- the field is a guess until the sentence corroborates it ----------------
+#
+# ``_subject`` was built to read a table *label* -- "Minimum lot size", "Max.
+# height" -- where the label is the subject and the number is the cell beside
+# it. Run over a prose sentence it fires on the noun wherever it appears, and
+# the reading queue ran it over prose. West Linn's parking chapter came back as
+# six missed parking and lot-size standards; not one of the six states a number
+# for the field it was filed under.
+
+
+def test_a_sentence_that_names_a_field_and_states_no_number_for_it_is_not_a_standard() -> None:
+    """"Off-street parking spaces shall be improved with a paved surface" is a
+    real requirement and says nothing about how many stalls. Filed as a missed
+    parking standard it disagreed with what we hold, because the paragraph
+    number 8 was read as the figure."""
+    text = "8. Off-street parking spaces for attached residences shall be improved with a paved surface."
+
+    assert _stated(text, "parking_min_per_unit") == ()
+    assert not _line(text, field="parking_min_per_unit", held=(0.0,)).comparable
+
+
+def test_a_measure_in_somebody_else_s_unit_is_not_this_field_s_number() -> None:
+    """Two ways the same mistake was made in one card: a distance filed as a
+    stall count, and a proportion filed as a lot area."""
+    bike = "b. The nearest bicycle parking space shall be no more than 50 feet from the entrance."
+    trees = "1. Tree canopy covering at least 40 percent of the new parking lot area at maturity."
+
+    assert _stated(bike, "parking_min_per_unit") == ()
+    assert _stated(trees, "min_lot_sqft") == ()
+    # And the figures are still there to read -- suppressed from the
+    # comparison, never hidden from the reviewer.
+    assert 50.0 in _figures(bike)
+    assert 40.0 in _figures(trees)
+
+
+def test_a_figure_in_the_field_s_own_unit_still_compares() -> None:
+    """The gate must not swallow the finding it exists to protect."""
+    assert _stated("Maximum height: 35 ft", "max_height_ft") == (35.0,)
+    assert _stated("Minimum lot area is 5,000 square feet", "min_lot_sqft") == (5000.0,)
+    assert _stated("no more than 45 percent lot coverage", "max_coverage_pct") == (45.0,)
+    assert _stated("2 spaces per dwelling unit", "parking_min_per_unit") == (2.0,)
+
+
+def test_a_list_marker_is_not_a_measurement() -> None:
+    """Ordinance text is enumerated and the extractor keeps the enumerator.
+    "8." and "(B)" led four cards to the top of the queue as disagreements."""
+    assert _figures("8. Parking shall be paved.") == ()
+    assert _figures("(B) Covered bicycle parking is required.") == ()
+    # A marker before a real measurement leaves the measurement alone.
+    assert _figures("2. Maximum height 35 ft") == (35.0,)
+
+
+def test_a_section_of_uncorroborated_lines_is_not_a_missed_standard() -> None:
+    """The routing consequence, which is the whole point of the gate.
+
+    Six statements needing five different answers under one row of three
+    buttons is unanswerable. As a ``nofield`` card the same section is one
+    ruling -- none of this dimensions our pod -- and the vocabulary for that
+    answer exists there and nowhere else.
+    """
+    rows = [
+        _uncited("8. Off-street parking shall be paved.", field="parking_min_per_unit"),
+        _uncited("1. Tree canopy covering at least 40 percent of the lot.", field="min_lot_sqft"),
+    ]
+
+    assert _kind(rows, quoted=True) == "nofield"
+
+
+def test_one_corroborated_line_is_enough_to_keep_the_section() -> None:
+    """A section that does state a standard stays where it can be checked,
+    however much unrelated prose stands beside it."""
+    rows = [
+        _uncited("8. Off-street parking shall be paved.", field="parking_min_per_unit"),
+        _uncited("Maximum height 35 ft", field="max_height_ft"),
+    ]
+
+    assert _kind(rows, quoted=True) == "missed"
+
+
+# --- a statement is not readable without the lines it sits in ---------------
+
+
+def test_a_table_row_arrives_with_the_rows_around_it(layers: dict[str, Layer]) -> None:
+    """The card that prompted this.
+
+    West Linn prints its accessible-stall requirement as a table keyed on how
+    many spaces the lot has, and one row of it reached the queue:
+
+        501 - 999   2 percent of total spaces   1 in every 6 accessible spaces
+
+    Alone that is unanswerable -- it does not say what 501 counts, and the fact
+    that decides it for us (the smallest bracket in the table is 151 spaces,
+    and our pod parks eight) is three rows above. It was reachable only by
+    pressing a link labelled "line 311", which reads like a citation.
+    """
+    card = next(
+        c for c in cards(layers["or/clackamas/west-linn"]) if c.section == "46.150"
+    )
+    around = context(card)
+    at = {r.line: r for r in around}
+
+    assert 311 in at and at[311].marked, "the statement itself is marked"
+    # The brackets above it, which are what make the row mean anything.
+    assert any("401" in at[n].text for n in (308, 309, 310) if n in at)
+    assert not at[310].marked, "its neighbours are context, not statements"
+
+
+def test_context_shows_the_jumps_rather_than_reading_as_continuous(
+    layers: dict[str, Layer],
+) -> None:
+    """Statements in one section can be a hundred lines apart. Running the
+    windows together would print a passage the document does not contain."""
+    card = next(
+        c for c in cards(layers["or/clackamas/west-linn"]) if c.section == "46.150"
+    )
+    around = context(card)
+
+    assert any(r.gap for r in around[1:]), "a skipped stretch is visible as one"
+    numbers = [r.line for r in around]
+    assert numbers == sorted(set(numbers)), "each line once, in order"
+
+
+def test_a_document_that_cannot_be_read_costs_the_card_nothing(
+    layers: dict[str, Layer],
+) -> None:
+    """The statements are already on the card. A store fault is not worth an
+    error in front of somebody trying to read."""
+
+    class Broken:
+        def load(self, path: str) -> object:
+            raise OSError("gone")
+
+    card = next(
+        c for c in cards(layers["or/clackamas/west-linn"]) if c.section == "46.150"
+    )
+
+    assert context(card, Broken()) == ()  # type: ignore[arg-type]
