@@ -2549,3 +2549,22 @@ async def test_skipping_a_reading_card_records_nothing(
         )
     ).scalar_one()
     assert count == 0, "a skip is not a decision"
+
+
+async def test_the_queues_are_reachable_without_knowing_the_url(
+    client: AsyncClient, session: AsyncSession
+):
+    """A worklist nobody can navigate to is not shipped.
+
+    Both review queues lived for weeks at URLs typed by hand: the sidebar
+    offered Zoning Rules and Plans, and the rules index -- the page a person
+    actually lands on -- linked to the gaps ledger and the feedback bundle and
+    to neither queue. The inventory is not the work; the queues are.
+    """
+    await _login(client, session)
+
+    nav = await client.get("/flats")
+
+    assert nav.status_code == 200
+    assert '"/flats/reading"' in nav.text or "/flats/reading" in nav.text
+    assert "/flats/triage" in nav.text

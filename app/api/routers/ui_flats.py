@@ -1998,7 +1998,7 @@ async def flats_reading_index(request: Request, session: DBSession) -> HTMLRespo
         request,
         "flats_reading_index.html",
         {
-            **_base_ctx(user, dedup_count, "flats", conflicts_count=conflicts_count),
+            **_base_ctx(user, dedup_count, "flats_reading", conflicts_count=conflicts_count),
             "queues": [
                 {
                     "key": kind,
@@ -2047,7 +2047,7 @@ async def flats_reading(
         request,
         "flats_reading.html",
         {
-            **_base_ctx(user, dedup_count, "flats", conflicts_count=conflicts_count),
+            **_base_ctx(user, dedup_count, "flats_reading", conflicts_count=conflicts_count),
             **_reading_ctx(
                 queue,
                 rows,
