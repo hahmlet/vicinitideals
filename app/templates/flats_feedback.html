@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Feedback bundle — Viciniti Deals{% endblock %}
+{% block title %}Hand-off — Viciniti Deals{% endblock %}
 
 {% block content %}
 <div class="topbar">
@@ -8,7 +8,7 @@
 <div class="content">
   <div class="toolbar">
     <div>
-      <h2 style="margin:0">Feedback bundle</h2>
+      <h2 style="margin:0">Hand-off</h2>
       <div class="muted" style="font-size:12px">
         <a href="/flats">All jurisdictions</a> ·
         {% if showing_all %}<a href="/flats/feedback">just the open items</a>
@@ -16,7 +16,7 @@
       </div>
     </div>
     <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
-      <button class="btn btn-sm" onclick="copyBundle()">Copy the bundle</button>
+      <button class="btn btn-sm" onclick="copyBundle()">Copy the problems</button>
       {% if not showing_all and rows %}
       <form hx-post="/ui/flats/bundle" hx-target="#handed" hx-swap="innerHTML" style="display:inline">
         <button class="btn btn-secondary btn-sm">Mark as handed on</button>
@@ -75,15 +75,17 @@
   {% endif %}
 
   <p class="muted" style="font-size:12px;max-width:74ch">
-    Everything you marked wrong or unanswered, with the value, its citation and the exact
-    text you were shown. Copy the block below and paste it back to whoever is doing the
-    encoding. Confirmations are not here — they travel a different road, and mixing them in
-    would bury the handful of items somebody has to act on.
+    Everything a day of review produced that somebody else has to act on, in two parts:
+    <strong>problems found</strong> — values you marked wrong or unanswered — and
+    <strong>work ordered</strong> below, the decisions that asked for something to be
+    done. Each block is self-contained and can be pasted on its own. Confirmations are in
+    neither; they travel a different road, and mixing them in would bury the handful of
+    items somebody has to act on under six hundred that need nothing.
   </p>
 
   {% if not rows %}
-    <p>Nothing open. Either nothing has been marked wrong, or it has all been handed on —
-      <a href="/flats/feedback?all=1">see everything</a>.</p>
+    <p>No problems open. Either nothing has been marked wrong, or it has all been handed
+      on — <a href="/flats/feedback?all=1">see everything</a>.</p>
   {% else %}
 
   <div class="toolbar" style="gap:24px">
@@ -124,18 +126,111 @@
     </table>
   </div>
 
-  <h3 style="margin:16px 0 6px">The bundle</h3>
+  <h3 style="margin:16px 0 6px">Problems found</h3>
   <textarea id="bundle" readonly rows="24"
             style="width:100%;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px">{{ bundle }}</textarea>
+  {% endif %}
+
+  {#
+    Work ordered, which is a different road from work found wrong.
+
+    The bundle above carries what a reviewer decided was WRONG. This carries
+    what a reviewer asked to be DONE — encode this, open that chapter, we need
+    a field, go and fetch this document. Five reading outcomes and two triage
+    outcomes order work, each was recorded in the queue that asked the
+    question, and that is the right place for a decision and the wrong place
+    for a job: spread over five screens, phrased as answers, invisible to
+    anyone sitting down to do a day of encoding.
+
+    Two boxes rather than one, because they are two different hand-offs and
+    either can be sent on its own.
+  #}
+  <h3 style="margin:32px 0 4px">Work ordered</h3>
+  <p class="muted" style="font-size:12px;max-width:74ch">
+    Decisions already made that ask for something to be done, grouped by the kind of
+    doing. Nothing here is a card still waiting to be reviewed, and nothing here has to
+    be ticked off: encode the value and its line stops being uncited, so the card it came
+    from stops existing and the job leaves this list on its own.
+  </p>
+
+  {% if not ordered and not ordered_fetches %}
+    <p>Nothing ordered. Every decision on record either closed its card or has already
+      been acted on.</p>
+  {% else %}
+
+  <div class="toolbar" style="gap:24px">
+    <div><span class="muted">Jobs</span> <strong>{{ ordered | length + ordered_fetches | length }}</strong></div>
+    {% for outcome, job in reading_work.items() %}
+      {% set n = ordered | selectattr("outcome", "equalto", outcome) | list | length %}
+      {% if n %}<div><span class="muted">{{ job.split("—")[0].strip() }}</span> <strong>{{ n }}</strong></div>{% endif %}
+    {% endfor %}
+    {% for outcome, job in crossref_work.items() %}
+      {% set n = ordered_fetches | selectattr("outcome", "equalto", outcome) | list | length %}
+      {% if n %}<div><span class="muted">{{ job.split("—")[0].strip() }}</span> <strong>{{ n }}</strong></div>{% endif %}
+    {% endfor %}
+    <button class="btn btn-sm" style="margin-left:auto" onclick="copyWork()">Copy the work orders</button>
+  </div>
+
+  <div class="table-wrap" style="margin:8px 0 16px">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Asked for</th>
+          <th>Jurisdiction</th>
+          <th>Where</th>
+          <th class="col-right">Lots</th>
+          <th>Standards</th>
+          <th>Why</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for card in ordered %}
+        <tr>
+          <td>{{ reading_work[card.outcome].split("—")[0].strip() }}</td>
+          <td>{{ card.layer }}</td>
+          <td>
+            {{ card.section or "(no heading)" }}
+            <div class="muted" style="font-size:11px">{{ card.doc }}{% if card.moved %} · <span class="badge badge-red">the page moved</span>{% endif %}</div>
+          </td>
+          <td class="col-right muted">{{ "{:,}".format(card.lots) }}</td>
+          <td style="max-width:24ch" class="muted">{{ card.fields | join(", ") or "—" }}</td>
+          <td style="max-width:34ch">{{ card.ruling.note }}</td>
+          <td><a class="btn btn-secondary btn-sm" href="/flats/reading/{{ card.kind }}?layer={{ card.layer }}&amp;ruled=1">Open</a></td>
+        </tr>
+        {% endfor %}
+        {% for card in ordered_fetches %}
+        <tr>
+          <td>{{ crossref_work[card.outcome].split("—")[0].strip() }}</td>
+          <td>{{ card.layer }}</td>
+          <td>
+            {{ card.kind }} {{ card.ref }}
+            {% if card.title %}<div class="muted" style="font-size:11px">{{ card.title }}</div>{% endif %}
+          </td>
+          <td class="col-right muted">{{ "{:,}".format(card.lots) }}</td>
+          <td style="max-width:24ch" class="muted">{{ card.fields | join(", ") or "—" }}</td>
+          {# A triage Ruling is a str subclass: the note is the object itself. #}
+          <td style="max-width:34ch">{{ card.ruling or "" }}</td>
+          <td><a class="btn btn-secondary btn-sm" href="/flats/triage?layer={{ card.layer }}&amp;ruled=1">Open</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <textarea id="work" readonly rows="20"
+            style="width:100%;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px">{{ work }}</textarea>
   {% endif %}
 </div>
 
 <script>
-function copyBundle() {
-  const box = document.getElementById('bundle');
+function copyBox(id) {
+  const box = document.getElementById(id);
   if (!box) return;
   box.select();
   navigator.clipboard.writeText(box.value);
 }
+function copyBundle() { copyBox('bundle'); }
+function copyWork() { copyBox('work'); }
 </script>
 {% endblock %}

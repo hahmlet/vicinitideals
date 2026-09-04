@@ -40,11 +40,19 @@ from flats.encode.worklist import (
     cards,
     counts,
     feed,
+    orders,
     render,
     rule,
 )
 from flats.rules.loader import load_rules
-from flats.rules.model import READING_CLOSED, READING_OUTCOMES, Layer, Reading
+from flats.rules.model import (
+    READING_ALL,
+    READING_CLOSED,
+    READING_OUTCOMES,
+    READING_WORK,
+    Layer,
+    Reading,
+)
 
 pytestmark = pytest.mark.unit
 
@@ -455,6 +463,115 @@ class TestDrift:
 
         assert report.clean, "no rulings written yet, so nothing can have gone stale"
         assert dict(report.open_by_queue).keys() == set(KINDS)
+
+
+class TestWorkOrdered:
+    """A ruling that asks for something is a job, and jobs have to be findable.
+
+    Five reading outcomes and two triage outcomes order work — encode this,
+    open that chapter, we need a field, go and fetch this document. Each was
+    recorded in the queue that asked the question, which is the right place for
+    a decision and the wrong place for a job: spread over five screens, phrased
+    as answers, invisible to anyone sitting down to do a day of encoding.
+    """
+
+    def test_every_outcome_that_leaves_a_card_open_says_what_it_wants(self) -> None:
+        """An outcome that neither closes the card nor names a job is a card
+        that sits open forever with nobody able to say what would close it."""
+        open_ones = set(READING_ALL) - READING_CLOSED
+
+        assert open_ones <= set(READING_WORK), sorted(open_ones - set(READING_WORK))
+
+    def test_an_outcome_that_closes_a_card_can_still_order_work(self) -> None:
+        """The two questions are different and ``not_a_statement`` answers them
+        differently. The reviewer is right — a wrapped line is not a standard
+        and the card will not come back to them — and somebody still has to fix
+        the extractor that put it in a ledger of measurements. Oregon has
+        nothing to do with it.
+        """
+        assert "not_a_statement" in READING_CLOSED
+        assert "not_a_statement" in READING_WORK
+
+    def test_a_ruling_that_disposes_of_a_card_orders_nothing(self) -> None:
+        """The list is worth printing only because most outcomes are absent
+        from it. "Same number, our reader missed it" is a card finished."""
+        for outcome in ("duplicate", "not_here", "never", "nothing_here", "design"):
+            assert outcome in READING_ALL
+            assert outcome not in READING_WORK
+
+    def test_a_ruling_that_ordered_work_comes_back_as_a_job(
+        self, layers: dict[str, Layer]
+    ) -> None:
+        from flats.encode.uncited import survey
+
+        one = {MILWAUKIE: layers[MILWAUKIE]}
+        rows = survey([layers[MILWAUKIE]])
+        card = cards(layers[MILWAUKIE], rows=rows)[0]
+        ruled = {
+            MILWAUKIE: {
+                card.card_key: Reading(
+                    queue=card.kind,
+                    outcome="encode",
+                    note="x" * 80,
+                    fingerprint=card.fingerprint,
+                )
+            }
+        }
+
+        jobs = orders(one, rows=rows, overrides=ruled)
+
+        assert [c.card_key for c in jobs] == [card.card_key]
+        assert jobs[0].outcome == "encode"
+
+    def test_a_job_stops_existing_when_the_work_lands(
+        self, layers: dict[str, Layer]
+    ) -> None:
+        """Nothing has to be ticked off, and that is the whole design.
+
+        Encode the value and its line is no longer uncited, so the section
+        drops out of the ledger and the card built from it stops existing —
+        taking the order with it. A work list somebody has to close by hand is
+        a work list that outlives its reasons, which this project has watched
+        happen twice.
+        """
+        from flats.encode.uncited import survey
+
+        one = {MILWAUKIE: layers[MILWAUKIE]}
+        rows = survey([layers[MILWAUKIE]])
+        gone = {
+            MILWAUKIE: {
+                "19.999.no-such-chapter.txt#19.999": Reading(
+                    queue="missed", outcome="encode", note="x" * 80
+                )
+            }
+        }
+
+        assert orders(one, rows=rows, overrides=gone) == []
+
+    def test_the_heaviest_job_is_first(self, layers: dict[str, Layer]) -> None:
+        """A number the code contradicts is live in production and scoring lots
+        today. A line our extractor mangled is tidying. Ordered by what it
+        costs to leave undone, so the list can be worked from the top.
+        """
+        from flats.encode.uncited import survey
+
+        one = {MILWAUKIE: layers[MILWAUKIE]}
+        rows = survey([layers[MILWAUKIE]])
+        picked = cards(layers[MILWAUKIE], rows=rows)[:2]
+        ruled = {
+            MILWAUKIE: {
+                picked[0].card_key: Reading(
+                    queue=picked[0].kind, outcome="not_a_statement", note="x" * 80
+                ),
+                picked[1].card_key: Reading(
+                    queue=picked[1].kind, outcome="encode", note="x" * 80
+                ),
+            }
+        }
+
+        jobs = orders(one, rows=rows, overrides=ruled)
+
+        assert [c.outcome for c in jobs] == ["encode", "not_a_statement"]
 
 
 # --- the vocabulary ---------------------------------------------------------

@@ -829,6 +829,32 @@ the list of places worth hoping about.
   a chapter and the section moves, the card **reopens flagged** instead of
   staying quietly closed on a page that no longer says that.
 
+- **A day of reading now turns into the next day's work** — built 2026-09-04,
+  live at **`/flats/feedback`**, and there is a **Hand-off** item in the
+  sidebar for it. Answering a card was already recorded properly. What was
+  missing is that five of those answers are not *decisions*, they are *orders*
+  — "encode this one", "open this chapter", "we need somewhere to put this",
+  "this depends on a site fact nothing measures", "our reader mangled this
+  line" — and each one sat in the queue that asked the question. Right place
+  for the decision, wrong place for the job: the work was spread over five
+  screens, written as answers, and invisible to anyone sitting down to do it.
+
+  The page now carries two blocks instead of one. **Problems found** is what
+  it always was — values you marked wrong. **Work ordered** is new: every
+  decision that asked for something, grouped by the kind of work, with the
+  document, the section, the sentences and your reason travelling with it, so
+  it can be handed to someone who was not there. Each block copies on its own.
+
+  Nothing on it has to be ticked off. A job leaves the list when the work
+  lands — encode the value and the sentence stops being unread, so the card it
+  came from stops existing and takes the order with it. The list is always
+  what is still true rather than what was once decided.
+
+  One of the five is honest about needing a person: "depends on a site fact
+  nothing measures". Registering that fact means saying which zones it reaches,
+  and a section of code is not addressed to a zone. The list makes it visible;
+  it cannot answer it.
+
 - **Our "what has nobody read yet" list was wrong in both directions** — found
   and fixed 2026-09-04, straight after the driveway find below. We keep a list
   of every sentence in the codes we hold that states a measurement no rule of

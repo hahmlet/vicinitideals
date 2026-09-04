@@ -161,6 +161,15 @@
     <a href="/flats/reading" class="nav-item {% if active_nav == 'flats_reading' %}active{% endif %}">
       <span class="nav-icon">📖</span> Reading
     </a>
+    {#
+      The hand-off. It carries two things now: what a reviewer found wrong, and
+      what a reviewer asked to be done. The second used to live only in the
+      queue that recorded it, which meant a day of reading produced work orders
+      nobody doing the encoding could see as a list.
+    #}
+    <a href="/flats/feedback" class="nav-item {% if active_nav == 'flats_handoff' %}active{% endif %}">
+      <span class="nav-icon">📤</span> Hand-off
+    </a>
     <a href="/flats/plans" class="nav-item {% if active_nav == 'flats_plans' %}active{% endif %}">
       <span class="nav-icon">🏘</span> Plans
     </a>

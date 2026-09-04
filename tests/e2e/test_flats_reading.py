@@ -127,3 +127,33 @@ def test_a_queue_nobody_named_goes_back_to_the_menu(
     page.goto(f"{base_url}/flats/reading/everything")
 
     assert page.url.rstrip("/").endswith("/flats/reading")
+
+
+# --- where the day's reading goes -------------------------------------------
+
+
+def test_the_hand_off_is_reachable_and_carries_the_work_ordered(
+    logged_in_page: Page, base_url: str
+) -> None:
+    """A day of reading is only worth doing if it becomes a day of encoding.
+
+    Five of the answers a card can take are not decisions, they are orders --
+    encode this, open that chapter, we need a field -- and each was recorded in
+    the queue that asked the question. The hand-off is where they are collected
+    into something an encoder can pick up, so it has to be findable without
+    knowing the URL.
+    """
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/reading")
+
+    page.get_by_role("link", name="Hand-off").first.click()
+    page.wait_for_load_state("domcontentloaded")
+
+    assert "/flats/feedback" in page.url
+    expect(page.get_by_role("heading", name="Work ordered")).to_be_visible()
+    # Both hand-offs named on one page, each copyable on its own. The problems
+    # block itself is only drawn when something is open, so what is pinned here
+    # is the framing rather than the presence of today's items.
+    expect(
+        page.get_by_text("Everything a day of review produced", exact=False).first
+    ).to_be_visible()

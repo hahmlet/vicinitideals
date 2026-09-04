@@ -805,7 +805,7 @@ async def test_confirmations_stay_out_of_the_bundle(
 
     bundle = await client.get("/flats/feedback")
 
-    assert "Nothing open" in bundle.text
+    assert "No problems open" in bundle.text
 
 
 async def test_handing_the_bundle_on_clears_it_without_erasing_it(
@@ -818,7 +818,7 @@ async def test_handing_the_bundle_on_clears_it_without_erasing_it(
     open_now = await client.get("/flats/feedback")
     ever = await client.get("/flats/feedback?all=1")
 
-    assert "Nothing open" in open_now.text
+    assert "No problems open" in open_now.text
     assert "wrong column" in ever.text
 
 
@@ -1031,8 +1031,8 @@ async def test_the_feedback_page_says_which_notes_were_acted_on(
 
     assert "have been acted on" in page.text or "has been acted on" in page.text
     assert "this one was fixed since" in page.text
-    body = page.text.split("have been acted on")[-1].split("The bundle")[0]
-    assert "nobody has touched it" not in body.split("Everything you marked")[0]
+    body = page.text.split("have been acted on")[-1].split("Problems found")[0]
+    assert "nobody has touched it" not in body.split("Everything a day of review")[0]
 
 
 # --- the page of the book ----------------------------------------------
@@ -2480,6 +2480,69 @@ async def test_a_reading_ruling_lands_in_the_inbox_and_the_card_leaves(
     assert _first_card(response.text).get("section") != card.get("section") or _first_card(
         response.text
     ).get("path") != card.get("path")
+
+
+async def test_a_ruling_that_ordered_work_reaches_the_hand_off(
+    client: AsyncClient, session: AsyncSession
+):
+    """A decision is not a disposal, and until now it was filed as one.
+
+    "Encode this one" is a job. It was recorded in the queue that asked the
+    question — the right place for the decision, the wrong place for the work
+    — and somebody sitting down to a day of encoding had no way to see it as a
+    list. The hand-off is where the day's reading becomes the next day's
+    encoding.
+    """
+    await _login(client, session)
+    page = await client.get("/flats/reading/missed")
+    card = _first_card(page.text)
+
+    ruled = await client.post(
+        "/ui/flats/reading/rule",
+        data={
+            **card,
+            "outcome": "encode",
+            "note": (
+                "The code prints a number here we do not hold for this field. "
+                "Read the section against the table and encode what it says."
+            ),
+        },
+    )
+    assert ruled.status_code == 200
+
+    handoff = await client.get("/flats/feedback")
+
+    assert handoff.status_code == 200
+    assert "Work ordered" in handoff.text
+    assert card["path"].rsplit("/", 1)[-1] in handoff.text, "the document it is in"
+    assert "Read the section against the table" in handoff.text, "and why"
+
+
+async def test_a_ruling_that_disposed_of_a_card_orders_nothing(
+    client: AsyncClient, session: AsyncSession
+):
+    """The list is only worth reading because most decisions are absent from
+    it. "Design standard — not modelled" is a section finished, and printing it
+    as work would make the hand-off another 4,693-row ledger."""
+    await _login(client, session)
+    page = await client.get("/flats/reading/nofield")
+    card = _first_card(page.text)
+
+    await client.post(
+        "/ui/flats/reading/rule",
+        data={
+            **card,
+            "outcome": "design",
+            "note": (
+                "Facade articulation and materials for the design district. "
+                "Nothing dimensional in it the screen could hold."
+            ),
+        },
+    )
+
+    handoff = await client.get("/flats/feedback")
+
+    assert "Facade articulation" not in handoff.text
 
 
 async def test_an_answer_borrowed_from_another_queue_is_refused(

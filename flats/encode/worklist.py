@@ -63,7 +63,7 @@ from flats.provenance.store import ProvenanceStore
 from flats.rules.fields import FIELDS
 from flats.rules.ledger import read_coverage
 from flats.rules.loader import MIN_RULING, load_rules
-from flats.rules.model import READING_OUTCOMES, Layer, Reading
+from flats.rules.model import READING_OUTCOMES, READING_WORK, Layer, Reading
 
 #: The four queues, in the order they are worth working. ``missed`` leads
 #: because it is the only one that can find a number we hold and hold wrongly.
@@ -690,6 +690,50 @@ def counts(
             out[card.kind][0] += 1
             out[card.kind][1] += len(card.lines)
     return {k: (v[0], v[1]) for k, v in out.items()}
+
+
+def orders(
+    layers: Mapping[str, Layer] | None = None,
+    store: ProvenanceStore | None = None,
+    rows: Sequence[Uncited] | None = None,
+    overrides: Mapping[str, Mapping[str, Reading]] | None = None,
+) -> list[Card]:
+    """Every ruling that asked for something and has not got it yet.
+
+    A ruling is not a disposal. "Encode this one", "open this chapter", "we
+    need a field for this" are jobs, and until this they were jobs recorded in
+    four separate queues, each phrased as the answer to a question rather than
+    as work somebody could pick up and do.
+
+    Nothing here has to be closed by hand, which is the same bargain the queues
+    themselves strike: a card is derived from the corpus and the current
+    encoding, so encoding the value stops the line being uncited and the card
+    -- and with it the order -- simply stops existing. What this returns is
+    what is still true, not what was once decided.
+
+    Closed cards are included where the closing outcome still orders work.
+    ``not_a_statement`` is the one that does, and it is why this filters on
+    ``READING_WORK`` rather than on ``card.open``: the reviewer is right, the
+    card will not come back to them, and somebody still has to fix the
+    extractor that put a wrapped line in a ledger of measurements.
+    """
+    chosen = layers if layers is not None else load_rules()
+    store = store or ProvenanceStore()
+    if rows is None:
+        rows = ledger(chosen, store)
+    lots = _lots_by_layer()
+
+    out: list[Card] = []
+    for layer_id, obj in chosen.items():
+        here = (overrides or {}).get(layer_id)
+        out += [
+            card
+            for card in cards(obj, store, rows=rows, lots=lots, overrides=here)
+            if card.outcome in READING_WORK
+        ]
+    jobs = list(READING_WORK)
+    out.sort(key=lambda c: (jobs.index(c.outcome), -c.lots, c.layer, c.section))
+    return out
 
 
 

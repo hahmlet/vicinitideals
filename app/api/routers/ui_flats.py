@@ -71,6 +71,7 @@ from flats.encode.worklist import card_key
 from flats.encode.worklist import context as reading_context
 from flats.encode.worklist import counts as reading_counts
 from flats.encode.worklist import feed as reading_feed
+from flats.encode.worklist import orders as reading_orders
 from flats.encode.verify import fingerprint
 from flats.provenance import books, pages as page_map
 from flats.provenance.store import ProvenanceError, ProvenanceStore
@@ -79,7 +80,9 @@ from flats.rules.ledger import CoverageRow, read_coverage
 from flats.rules.loader import MIN_RULING
 from flats.rules.model import (
     CROSSREF_OUTCOMES,
+    CROSSREF_WORK,
     READING_OUTCOMES,
+    READING_WORK,
     Incorporation,
     Layer,
     Reading,
@@ -964,6 +967,117 @@ def _bundle_text(rows: Sequence[Any]) -> str:
     return "\n".join(out)
 
 
+# --- the work ordered ---------------------------------------------------
+#
+# The rule-review bundle above carries what a reviewer found *wrong*. This
+# carries what a reviewer asked to be *done*, which until now went nowhere.
+#
+# Five reading outcomes and two triage outcomes order work -- encode this,
+# open that chapter, we need a field, go and fetch this document -- and each
+# was recorded in the queue that asked the question. That is the right place
+# for a decision and the wrong place for a job: the work was spread across
+# five screens, phrased as answers, and nobody doing a day of encoding could
+# see it as a list.
+
+#: The most statements printed under one reading order. A section with two
+#: hundred is a chapter, and pasting a chapter into a work order buries the
+#: other nineteen jobs beside it.
+WORK_LINES = 12
+
+
+def _work_text(reading: Sequence[Any], fetches: Sequence[Any]) -> str:
+    """Every ruling that ordered work, as a job somebody can pick up.
+
+    Grouped by what is being asked for rather than by city, because those are
+    different days: encoding numbers, opening chapters and fixing the
+    extractor want different heads, and a list interleaving them makes the
+    reader re-decide what kind of work they are doing on every item.
+
+    Nothing here needs closing by hand. Cards are derived from the corpus and
+    the current encoding, so encoding the value stops the line being uncited
+    and the order stops existing on its own -- the same bargain the queues
+    strike, and the reason this can be regenerated rather than maintained.
+
+    Self-contained, like the feedback bundle and for the same reason: the
+    document, the section, the statements and the reviewer's note all travel
+    with the item, so it can be worked by somebody who was not there, after
+    the document has been re-fetched and every line number in it has moved.
+    """
+    total = len(reading) + len(fetches)
+    out = [
+        "# FLATS — work ordered by review",
+        "",
+        f"{total} job(s). Each is a decision somebody already made that asks "
+        "for something to be done, grouped by the kind of doing and ordered "
+        "by the cost of leaving it undone.",
+        "",
+        "These are answers, not questions: no card here is still waiting to "
+        "be reviewed. A job disappears from this list when the work lands — "
+        "encode the value and its line stops being uncited, so the card it "
+        "came from stops existing. Nothing has to be ticked off.",
+        "",
+    ]
+
+    for outcome, job in READING_WORK.items():
+        here = [c for c in reading if c.outcome == outcome]
+        if not here:
+            continue
+        out += ["", f"## {job} ({len(here)})", ""]
+        for card in here:
+            head = f"{card.layer} · {card.section or '(no heading)'}"
+            out += [
+                f"### {head}",
+                "",
+                f"- **document:** `{card.path}`",
+                f"- **queue:** {card.kind} · **lots:** {card.lots:,}"
+                f" · **statements:** {len(card.lines)}",
+                f"- **standards named:** {', '.join(card.fields) or '(none)'}",
+                f"- **fingerprint when ruled:** `{card.ruling.fingerprint or '(none)'}`"
+                + ("  ⚠ the section has moved since" if card.moved else ""),
+                "",
+                "**Why**",
+                "",
+                (card.ruling.note or "(none)").strip(),
+                "",
+                "**What the code says**",
+                "",
+                "```",
+            ]
+            for ln in card.by_interest[:WORK_LINES]:
+                held = f"   [we hold {ln.shown_held}]" if ln.held else ""
+                out.append(f"{ln.line:>6}  {ln.text}{held}")
+            if len(card.lines) > WORK_LINES:
+                out.append(f"       … and {len(card.lines) - WORK_LINES} more")
+            out += ["```", ""]
+
+    for outcome, job in CROSSREF_WORK.items():
+        here = [c for c in fetches if c.outcome == outcome]
+        if not here:
+            continue
+        out += ["", f"## {job} ({len(here)})", ""]
+        for card in here:
+            out += [
+                f"### {card.layer} · {card.kind} {card.ref}",
+                "",
+                f"- **called:** {card.title or '(nothing names it)'}",
+                f"- **lots:** {card.lots:,} · **standards it stands beside:** "
+                f"{', '.join(card.fields) or '(none)'}",
+                "",
+                "**Why**",
+                "",
+                # ``Ruling`` is a str subclass -- the note *is* the object, with
+                # the outcome hung off it. Reading's ``Reading`` is a model and
+                # carries ``.note``; the two are not interchangeable.
+                (str(card.ruling or "") or "(none)").strip(),
+                "",
+            ]
+
+    if total == 0:
+        out += ["Nothing ordered. Every decision on record either closed its card "
+                "or has already been acted on."]
+    return "\n".join(out)
+
+
 def _answered(rows: Sequence[Any]) -> list[dict[str, Any]]:
     """Raised problems whose value has since changed.
 
@@ -1282,14 +1396,29 @@ async def flats_feedback(
             )
         ).scalars()
     )
+    # What somebody asked to be *done*, which is a different road from what
+    # somebody found wrong, and until now had no road at all. Both scans are
+    # cached in the process, so this is a page load, not a rebuild.
+    ordered = await run_in_threadpool(
+        reading_orders, _layers(), _store(), overrides=await _reading_inbox(session)
+    )
+    scanned = await run_in_threadpool(
+        feed, store=_store(), ruled=True, overrides=await _inbox_rulings(session)
+    )
+    ordered_fetches = [c for c in scanned if c.outcome in CROSSREF_WORK]
     return templates.TemplateResponse(
         request,
         "flats_feedback.html",
         {
-            **_base_ctx(user, dedup_count, "flats", conflicts_count=conflicts_count),
+            **_base_ctx(user, dedup_count, "flats_handoff", conflicts_count=conflicts_count),
             "rows": rows,
             "answered": _answered(raised),
             "bundle": _bundle_text(rows),
+            "ordered": ordered,
+            "ordered_fetches": ordered_fetches,
+            "work": _work_text(ordered, ordered_fetches),
+            "reading_work": READING_WORK,
+            "crossref_work": CROSSREF_WORK,
             "showing_all": bool(all),
         },
     )

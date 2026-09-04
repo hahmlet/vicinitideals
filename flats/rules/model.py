@@ -179,6 +179,45 @@ READING_CLOSED = frozenset(READING_ALL) - {
 }
 
 
+#: What a decision asks somebody to *do*, and what kind of doing it is.
+#:
+#: Deliberately not the same list as "what leaves the card open". Those are two
+#: questions and one outcome answers them differently: ``not_a_statement``
+#: closes the card -- the reviewer is right and it will not come back to them
+#: -- and still orders work, because a wrapped line or a metes-and-bounds
+#: description reaching this ledger is our extractor's bug and Oregon has
+#: nothing to do with it.
+#:
+#: An outcome absent here asks for nothing, which is most of them, and is what
+#: makes this list worth printing at all.
+#:
+#: Order is cost of being wrong, heaviest first. A number the code contradicts
+#: is live in production and scoring lots today; a line our extractor mangled
+#: is a tidying job.
+READING_WORK: dict[str, str] = {
+    "encode": "Encode this — the code says something we do not hold",
+    "applies": "Encode this condition — it applies to our pod",
+    "need_a_field": "The model has nowhere to put this",
+    "read_it": "Open this chapter — nothing in it has ever been read",
+    # Not automatable, and worth saying why. ``flats.rules.caps`` hangs an
+    # unmeasured fact on a (zone, field) pair so the screen returns UNKNOWN
+    # instead of GREEN; a reading card names fields but never zones, because
+    # a section of code is not addressed to one. Somebody has to say which
+    # zones it reaches. Until they do the condition is read and inert, which
+    # is the state this list exists to make visible.
+    "cant_tell": "Register the site fact it turns on — nothing measures it yet",
+    "not_a_statement": "Our extractor produced this, not Oregon",
+}
+
+#: The same, for the crossref queue. ``fetch`` is a document to go and get;
+#: ``later`` is work deliberately deferred, and printing it beside the live
+#: work is what keeps "deferred" from quietly becoming "forgotten".
+CROSSREF_WORK: dict[str, str] = {
+    "fetch": "Fetch this document — it can change a number we screen on",
+    "later": "Deferred — only matters if we change the building",
+}
+
+
 class Reading(BaseModel):
     """One decision about a section of code the reading queues asked about.
 
