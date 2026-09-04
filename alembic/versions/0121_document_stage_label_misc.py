@@ -42,6 +42,16 @@ def upgrade() -> None:
     )
 
     # File every task-less document into a per-project "Misc." task.
+    #
+    # Online only. The UPDATE above renders as static SQL and stays outside the
+    # guard; this part reads rows to decide how many Misc. tasks to create and
+    # what to call them, and offline mode has nothing to read -- execute()
+    # returns None and .fetchall() raises. Same guard as 0043 and 0119. A
+    # rendered script omits this step, so a hand-applied upgrade leaves
+    # task-less documents where they were; the deploy path runs online.
+    if op.get_context().as_sql:
+        return
+
     projects = conn.execute(
         sa.text(
             "SELECT DISTINCT org_id, project_id FROM documents WHERE task_id IS NULL"
