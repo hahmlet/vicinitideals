@@ -9,7 +9,7 @@ from uuid import UUID
 
 from fastapi import APIRouter, HTTPException, Request, status
 from fastapi.responses import Response
-from sqlalchemy import select, update
+from sqlalchemy import func, select, update
 from sqlalchemy.exc import IntegrityError
 
 from app.api.deps import CurrentUserId, DBSession
@@ -1165,6 +1165,17 @@ async def _upsert_pp_phantom(
         return existing
 
 
+def _compute_lock_key(model_id: UUID) -> int:
+    """A stable 64-bit lock id for one scenario.
+
+    Postgres advisory locks take a bigint, so the UUID is folded down to its
+    first eight bytes. Collisions between two different scenarios would cost
+    one of them a short wait and nothing else -- the lock guards a recompute,
+    not correctness of the result -- so the cheap derivation is the right one.
+    """
+    return int.from_bytes(model_id.bytes[:8], "big", signed=True)
+
+
 @router.post("/models/{model_id}/sliders", response_model=SliderResponse)
 async def update_gap_adjustment_sliders(
     model_id: UUID,
@@ -1182,6 +1193,27 @@ async def update_gap_adjustment_sliders(
     the post-compute metrics. The UI should debounce slider drag events
     to avoid hammering this endpoint mid-drag.
     """
+    # One recompute of a scenario at a time.
+    #
+    # A fast drag on the slider fires two POSTs, and each gets its own session
+    # in production. ``compute_cash_flows`` clears this scenario's cash flows,
+    # line items, draw events and outputs and writes them again, so two of them
+    # running together are not merely racing on the outputs table's unique
+    # constraint -- which is the error that shows -- they are interleaving four
+    # delete-then-insert passes over the same rows. Migration 0094 and the
+    # IntegrityError fallbacks below fixed exactly this for the three phantom
+    # rows and did not reach the compute.
+    #
+    # Transaction-scoped, so it releases on the commit at the end of this
+    # request or on any rollback out of it. The second drag waits a second or
+    # two and then recomputes from the first one's result, which is what the
+    # user meant by dragging twice.
+    #
+    # Found 2026-09-04, by the concurrency test in
+    # tests/api/test_gap_adjustment_sliders.py the moment it was given a
+    # session per request and could collide for the first time.
+    await session.execute(select(func.pg_advisory_xact_lock(_compute_lock_key(model_id))))
+
     scenario = await _get_deal_or_404(session, model_id)
     income_mode = str(getattr(scenario, "income_mode", None) or "revenue_opex")
     # Multi-project: caller supplies project_id (UI passes active project's id).

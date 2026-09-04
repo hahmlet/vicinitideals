@@ -233,14 +233,26 @@ async def test_sliders_concurrent_posts_produce_single_phantom_row(
     plus the IntegrityError fallback in the upsert helpers serialize the
     writes — one wins as INSERT, the other falls back to UPDATE.
 
-    ``concurrent_client``, not ``client``, and that is the whole test. The
-    shared-session client hands both requests the same connection, so they
-    cannot race and the index under test is never asked to settle anything --
-    the test passed while proving nothing. On CI they interleaved for real,
-    SQLAlchemy refused ("concurrent operations are not permitted"), the
-    session was left mid-transaction, and every test after it hung on the
-    teardown TRUNCATE. One session per request is what production does and
-    what makes these two writes actually simultaneous.
+    ``concurrent_client``, not ``client``, and that is what makes this a test.
+    The shared-session client hands both requests the same connection, so they
+    could not race and nothing was ever asked to settle anything -- it passed
+    while proving nothing. One session per request is what production does.
+
+    What it caught the first time it could collide (2026-09-04, on CI, where
+    the timing is slow enough to interleave reliably) was not the phantom rows
+    at all. It was ``compute_cash_flows``, which clears this scenario's cash
+    flows, line items, draw events and outputs and writes them again: two of
+    those running together interleave four delete-then-insert passes over the
+    same rows, and the first thing to notice is a unique violation on
+    ``uq_operational_outputs_scenario_project``. The route now takes a
+    transaction-scoped advisory lock per scenario, so the second drag waits and
+    then recomputes from the first one's result.
+
+    So what this pins now is that the endpoint survives being driven twice at
+    once, end to end -- the lock, the partial unique indexes from 0094 and the
+    IntegrityError fallbacks together. It does not isolate any one of them, and
+    green here on a machine fast enough to serialise them by accident is worth
+    less than green on CI.
     """
     import asyncio
 
