@@ -358,8 +358,7 @@ def write(rows: Sequence[Routing], path: Path | None = None) -> Path:
     # real change -- 264 new rows inside a 19,082-line diff, 2026-09-03. A
     # ledger nobody can read the diff of is a ledger nobody checks.
     with file.open("w", encoding="utf-8", newline="") as fh:
-        out = csv.writer(fh, lineterminator="
-")
+        out = csv.writer(fh, lineterminator="\n")
         out.writerow(
             ["layer", "path", "line", "section", "ref", "followed", "text"]
         )
