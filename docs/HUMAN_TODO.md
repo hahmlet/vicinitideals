@@ -800,6 +800,35 @@ the list of places worth hoping about.
 
 ## Queued for the agent — no action needed from you, listed so nothing is invisible
 
+- **The 4,693-item reading list is now four queues you can actually sit down
+  with** — built 2026-09-04, live at **`/flats/reading`**. The list below was
+  right and unusable: one line per sentence, grouped by city, ten shown per
+  city and "and 2,431 more" underneath. Grouping by city cannot help, because
+  every city says the same word. And a sentence is not what anybody decides
+  about — a *section* is, and the same 4,693 sentences are **649 sections**.
+
+  So the queue now sorts by what kind of reading each one wants, and you pick
+  the kind before you pick the card:
+
+  | Queue | What you are asking, over and over | To check |
+  |---|---|---:|
+  | **Missed standards** | "This is a plain rule for something we screen on, in a chapter we already read. Why didn't we take it?" | 185 |
+  | **Conditions** | "This moves a number we hold, when something is true of the site. Is it true of ours?" | 136 |
+  | **Unopened chapters** | "Nobody has ever quoted a line of this chapter. Is there anything in it for us?" | 84 |
+  | **No field for it** | "We have nowhere to put this. Is it a gap in the model, or not our problem?" | 244 |
+
+  Each screen asks its one question and offers only the answers to that one,
+  so there is no vocabulary to re-read between cards. The missed-standards
+  queue leads with the cards where **the code's number is not the number we
+  hold** — those are alarms, and everything behind them is bookkeeping.
+
+  Two things keep it from going stale, which has bitten this project twice.
+  Cards are worked out fresh every time the page loads, so encoding a value
+  makes its card disappear with nobody having to remember to retire it. And
+  each decision remembers the words it was made about: when a city republishes
+  a chapter and the section moves, the card **reopens flagged** instead of
+  staying quietly closed on a page that no longer says that.
+
 - **Our "what has nobody read yet" list was wrong in both directions** — found
   and fixed 2026-09-04, straight after the driveway find below. We keep a list
   of every sentence in the codes we hold that states a measurement no rule of
