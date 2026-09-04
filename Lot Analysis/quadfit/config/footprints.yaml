@@ -759,7 +759,16 @@ siteplan:
     # describes -- the drive held to the approach width for 5 ft inside the
     # line, tapering 1:1 behind that. So this city now meets the street through
     # a 16 ft cut rather than a 12 ft one, which is the first real change to
-    # any Milwaukie site plan, and the next run is what measures it.
+    # any Milwaukie site plan.
+    #
+    # MEASURED, same day, s6s+s7 across 221,124 lots: it costs nothing. Every
+    # one of Milwaukie's 919 drawn plans widened its mouth 12 ft -> 16 ft, and
+    # 916 still pass; green 622, review 188, red 6,121, all three unmoved, and
+    # the corpus unmoved with them (16,530 green). The reason is in the failure
+    # column rather than the width: what stops a Milwaukie lot is depth --
+    # court_too_shallow 2,085 and no_court 829 -- and the lots that fit had the
+    # four extra feet to give. A conservative reading that turns out to be free
+    # is the good case, but it is only known to be free because it was run.
     milwaukie:
       approach_min_ft: 16
       approach_max_ft: 20

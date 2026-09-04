@@ -810,7 +810,14 @@ the list of places worth hoping about.
   anywhere. The zoning chapters point at that street chapter three separate
   times and never repeat the number.
 
-  Nothing about this needs you and nothing changes what a lot is graded today.
+  Nothing about this needs you, and it has now been run rather than assumed:
+  every one of Milwaukie's 919 drawn site plans widened its driveway mouth from
+  12 ft to 16 ft, and not one lot changed colour. Milwaukie stays at 622 green,
+  188 in review, and the county-wide total stays at 16,530 green. What stops a
+  Milwaukie lot is depth, not the width of the opening, and the lots that fit
+  had the four extra feet to give. Taking the cautious figure turned out to be
+  free — but free is something you can only know by running it.
+
   Two things worth knowing anyway. First, our own to-read list had been
   flagging that chapter as important for weeks and nobody opened it — the list
   was right and the reading was late, which is the failure worth fixing.
