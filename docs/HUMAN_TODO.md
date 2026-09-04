@@ -200,11 +200,11 @@ on it, and only the first is a queue item:
    id is not published anywhere. It was found by reading the raw page of the
    *next* chapter, which links back to it. **Nothing is needed from you on this
    item any more.** Gladstone was wired on 2026-09-03 — it had no green then
-   either, and that turned out to be the wrong test: all 121 of its lots go
-   green the day you sign, and 51 of them sit on resource land. Tualatin was
-   wired the same day off the city's own adopted layers, which closes this
-   item: **every jurisdiction the screen grades now has an environmental
-   check**, and the exemption list is empty for the first time.
+   either, and that turned out to be the wrong test: all 121 of its lots are
+   held by signing, 35 of them by signing alone, and 51 sit on resource land.
+   Tualatin was wired the same day off the city's own adopted layers, which
+   closes this item: **every jurisdiction the screen grades now has an
+   environmental check**, and the exemption list is empty for the first time.
 
    Now measured, on a full re-run finished 2026-09-02: wiring them **cost 65
    greens**, all of them Wilsonville, where the resource boundaries fall across
@@ -768,9 +768,10 @@ wants the signature as well — but it does move 21 lots out of reach of the
 signature alone: **56 before the layer existed, 35 after**. The rest of the gap
 between 35 and the 121 this list used to claim was never the overlay's doing.
 Sewer and slope were already holding 65 of the 121 and the list was simply
-overstating what one afternoon of reading would buy. The habitat layer is Metro's regional Title 13 inventory standing
-in for an HCA map the city does not publish as GIS, so it is a **flag**: the
-cost of the proxy is a lot read by a person, not a lot thrown away.
+overstating what one afternoon of reading would buy. The habitat layer is
+Metro's regional Title 13 inventory standing in for an HCA map the city does not
+publish as GIS, so it is a **flag**: the cost of the proxy is a lot read by a
+person, not a lot thrown away.
 
 These four are the whole of the silent part of the map, and they are 1,087 lots
 between them — unchanged by the 2026-09-04 run, which moved lots between reasons
@@ -972,10 +973,18 @@ the list of places worth hoping about.
   **Gladstone, wired 2026-09-03 — and the reason it was still on this list was
   wrong.** The line that used to sit here said Tualatin and Gladstone had no
   greens between them, so nothing rode on them. That is true and it is not the
-  question. Gladstone is the *one* city on the board whose lots are held by
-  nothing but signing — no missing data, no unanswered phone call, no decision
-  waiting on you. All 121 of its review lots go green the day item 7 is signed.
-  So "no greens today" was measuring the wrong day.
+  question. Nothing stands in the way of *doing* the signing in Gladstone — no
+  missing chapter, no unanswered phone call, no decision waiting on you. So "no
+  greens today" was measuring the wrong day.
+
+  **Corrected 2026-09-04.** This paragraph said all 121 review lots go green the
+  day item 7 is signed. They do not: **35 do.** A lot in the review queue is
+  held by every reason listed against it, and 86 of the 121 want something else
+  as well — 51 an overlay reading, 40 a sewer answer, 34 a better slope reading.
+  Only 21 of that gap is the overlay wired below; sewer and slope were holding
+  65 of them before any of this, and were not being counted. Gladstone is still
+  the cheapest city on the board to advance and still the one you can start
+  today. It is not a city where one signature finishes the job.
 
   Measured before wiring anything: **51 of those 121 lots sit on mapped habitat
   and 23 on mapped water-quality resource — 51 of 121 between them, two in
