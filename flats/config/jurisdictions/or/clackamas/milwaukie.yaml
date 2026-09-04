@@ -108,6 +108,41 @@ code:
     # not cross-reference parking, and the chapter is not in the eCode360
     # table of contents this fetcher can see -- its guid was recovered from a
     # cross-reference link inside 19.500.
+  #
+  # Access Management. This is a Title 12 chapter -- streets and public
+  # places, not zoning -- and it is here because Title 19 sends the reader out
+  # to it three times and then stops: "Driveways must be designed and
+  # constructed in accordance with Chapters 12.16 and 12.24"
+  # (19.500.supplementary.txt#L669, L731), "Driveway approaches shall comply
+  # with the access spacing standards of Chapter 12.16"
+  # (19.600.parking.txt#L656), and the definition of DRIVEWAY APPROACH ends
+  # "See Chapter 12.16 Access Management for definitions of these terms"
+  # (19.200.definitions.txt#L235).
+  #
+  # The crossref ledger had been calling this chapter BINDING beside "max.
+  # maneuvering-area width" and nobody had opened it. It holds a driveway
+  # approach width table for plex development -- see the correction under
+  # driveway_approach_min_width_ft below, which is the number this file
+  # previously said Milwaukie did not print.
+  - id: "12.16.access-management"
+    url: https://ecode360.com/print/MI4969?guid=43857228
+    title: "MMC Chapter 12.16 - Access Management"
+  #
+  # Clear Vision at Intersections, the other half of "Driveways must be
+  # designed and constructed in accordance with Chapters 12.16 and 12.24".
+  # Fetched the same day and it states no dimension: 12.24.040.A sets the
+  # clear vision area to "that area described in the most recent edition of
+  # the 'AASHTO Policy on Geometric Design of Highways and Streets'", which is
+  # an engineering manual this corpus does not hold and could not cite a line
+  # of. Stored anyway, because eight mentions pointing at an unread chapter
+  # and eight pointing at a chapter that turns out to delegate are different
+  # facts, and only the second one is finished.
+  - id: "12.24.clear-vision"
+    url: https://ecode360.com/print/MI4969?guid=43857300
+    title: "MMC Chapter 12.24 - Clear Vision at Intersections"
+    # Definitions, an enforcement clause and one delegated computation. Thin
+    # by measurement and thin in fact.
+    allow_thin: true
 
 defaults:
   # PARKING, read 2026-08-27. Milwaukie states no vehicle-parking minimum for
@@ -323,13 +358,116 @@ defaults:
   # 4 ft behind the front facade, needs a garage this design does not have.
   # (or/clackamas/milwaukie/19.500.supplementary.txt#L1486-L1487)
   #
-  # NOT ENCODED: 19.607.1.E.1, which holds the driveway to the width of the
-  # approved approach within 5 ft of the right-of-way, or a 1:1 widening to
-  # the 10-ft point starting 2 ft behind it. It is a rule about the SHAPE of a
-  # driveway whose width is fixed somewhere else, and Milwaukie states that
-  # width nowhere in this chapter -- "the approved approach" is a public works
+  # 19.607.1.E.1 holds the driveway to the width of the approved approach
+  # within 5 ft of the right-of-way, or a 1:1 widening to the 10-ft point
+  # starting 2 ft behind it. It is a rule about the SHAPE of a driveway whose
+  # width is fixed somewhere else.
+  #
+  # CORRECTED 2026-09-04. This note used to end: "Milwaukie states that width
+  # nowhere in this chapter -- 'the approved approach' is a public works
   # decision, not a code dimension. So Milwaukie has no encodable driveway
-  # approach width, which is why the field is absent rather than exempt.
+  # approach width, which is why the field is absent rather than exempt."
+  #
+  # The first half is right and the conclusion does not follow from it. The
+  # width is not in this chapter; it is in Chapter 12.16, Access Management,
+  # which is a Title 12 chapter and was not in the store. Three sentences in
+  # Title 19 point at it by name, one of them in the parking chapter itself
+  # (19.600.parking.txt#L656), and the crossref ledger had been reporting it
+  # as BINDING beside "max. maneuvering-area width" the whole time. "Nowhere
+  # in this chapter" was true; "nowhere in Milwaukie" is what the note went on
+  # to claim, and nobody had looked. Same shape as Portland's aisle, where
+  # 33.266.120 states a stall and no aisle and 33.266.120.B.1 routes parking
+  # in a tract to 33.266.130, which states one: the sentence that answers the
+  # question is one cross-reference out of the section being read. What is new
+  # here is that the cross-reference leaves the zoning title altogether, so
+  # grepping every document held for this city would still have missed it.
+  #
+  # 12.16.040.E.3 states it as a use-class row, and plex development is named:
+  #
+  #   "Plex development, cottage cluster developments with up to four (4)
+  #    units, or townhouse developments comprised of up to four (4) units,
+  #    must have a minimum driveway apron width of twelve (12) feet on local
+  #    or neighborhood streets and sixteen (16) feet on collector or arterial
+  #    streets, and a maximum driveway apron width of twenty (20) feet on all
+  #    streets."
+  #
+  # The 16 is the base and the 12 is the variant, for the same reason the
+  # parking minimum above takes arterial as its base: street classification is
+  # not measured for any parcel in this corpus, and of the two figures the
+  # wider minimum is the one that cannot turn a RED lot green by mistake.
+  driveway_approach_min_width_ft:
+    value: 16
+    cite: MMC 12.16.040.E.3, minimum driveway apron width for plex development on collector or arterial streets
+    url: https://ecode360.com/print/MI4969?guid=43857228
+    retrieved: '2026-09-04'
+    quote: "or/clackamas/milwaukie/12.16.access-management.txt#L260"
+    variants:
+      - value: 12
+        when: [local_street]
+        cite: MMC 12.16.040.E.3, minimum driveway apron width for plex development on local or neighborhood streets
+        quote: "or/clackamas/milwaukie/12.16.access-management.txt#L260"
+  # Twenty feet on all streets, so no variant. It is the tightest approach
+  # ceiling in this corpus -- Oregon City allows 36 for the same building and
+  # West Linn 36 -- and it is a ceiling on the curb cut only: 19.607.1.E.1
+  # lets the drive widen at 1:1 once it is 2 ft inside the line, which is what
+  # makes a 24 ft on-site aisle compatible with a 20 ft apron.
+  driveway_approach_max_width_ft:
+    value: 20
+    cite: MMC 12.16.040.E.3, maximum driveway apron width for plex development, all streets
+    url: https://ecode360.com/print/MI4969?guid=43857228
+    retrieved: '2026-09-04'
+    quote: "or/clackamas/milwaukie/12.16.access-management.txt#L260"
+  #
+  # NOT ENCODED: 12.16.040.B.4, "The nearest edge of the driveway apron must
+  # be at least five (5) feet from the side property line in residential
+  # districts." This is a real constraint on this design and there is no field
+  # that can hold it: it sets a clearance between a driveway and a lot line,
+  # and every driveway field in the registry is a width. A pod that runs its
+  # drive up the side of the lot loses 5 ft of it to a rule nothing in the
+  # screen is measuring. Recorded here rather than encoded, and it needs a
+  # field before it can bind.
+  # (or/clackamas/milwaukie/12.16.access-management.txt#L138)
+  #
+  # NOT ENCODED: 12.16.040.B.5.a, 45 ft from the nearest intersecting face of
+  # curb to the nearest edge of the apron, quadplexes named explicitly. It
+  # cannot fail a lot, because the same sentence ends "Where the distance
+  # cannot be met on existing lots, the driveway apron must be located as far
+  # from the nearest intersection street face of curb as practicable; in such
+  # cases a formal modification is not required." A standard whose own text
+  # excuses every existing lot from meeting it is not a standard this screen
+  # can fail anybody on.
+  # (or/clackamas/milwaukie/12.16.access-management.txt#L148)
+  #
+  # NOT ENCODED: 12.16.040.B.1, accessway spacing of 600 ft on arterials and
+  # 300 ft on collectors, and 12.16.040.C.3, one accessway per plex property.
+  # The spacing figures are selected by a street classification this corpus
+  # does not hold -- West Linn's CDC 48.060(C) is refused on the same ground
+  # -- and the one-accessway rule costs a four-unit pod nothing, since it
+  # needs one.
+  # (or/clackamas/milwaukie/12.16.access-management.txt#L116,L120,L182)
+  #
+  # NOT ENCODED: the clear vision area, MMC 12.24.030 and 12.24.040. It bans
+  # any structure over 3 ft in a triangle at every driveway and every corner,
+  # it cannot be varied ("The provisions of this chapter relate to safety.
+  # They shall not be modified by variance and are not subject to appeal"),
+  # and it never says how big the triangle is: 12.24.040.A defers to "the most
+  # recent edition of the 'AASHTO Policy on Geometric Design of Highways and
+  # Streets'". A rule with no number in it is not a rule this screen can
+  # apply, and the number is in a manual, behind a per-intersection design
+  # speed nothing here measures. Every corner lot in Milwaukie loses some
+  # unknown wedge to this, and the honest form of that is a refusal rather
+  # than a guess at a triangle.
+  # (or/clackamas/milwaukie/12.24.clear-vision.txt#L48,L52,L60,L70)
+  #
+  # NOT ENCODED: 12.16.040.D.3, "Accessways must be designed to contain all
+  # vehicle backing movements on the site, except for detached or attached
+  # single detached residential uses on local streets and neighborhood
+  # routes." A quadplex is not a single detached use, so the exception does
+  # not reach it and the pod must turn around on its own lot. That is a
+  # layout requirement, not a dimension, and it is the reason the assumed
+  # aisle matters here: it is the thing the aisle is for, stated by the city.
+  # (or/clackamas/milwaukie/12.16.access-management.txt#L242)
+  #
   # 19.607.1.B forbids any part of a space in a right-of-way, access easement
   # or over a public sidewalk; 19.607.1.C requires a durable, dust-free,
   # all-weather surface in a required front, street-side or side yard.

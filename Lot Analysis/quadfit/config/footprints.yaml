@@ -741,11 +741,32 @@ siteplan:
     # corpus. Milwaukie states no driveway approach width at all: 19.607.1.E.1
     # holds the drive to "the approved approach", which is a public works
     # decision rather than a code dimension.
+    # The curb cut arrived 2026-09-04 out of MMC Chapter 12.16, Access
+    # Management -- a Title 12 chapter, which is why nobody had it: Milwaukie's
+    # zoning title points at it three times and never restates the number.
+    # 12.16.040.E.3 names plex development in its first three words and gives
+    # 12 ft on a local or neighborhood street, 16 on a collector or arterial,
+    # 20 at the most on any of them. The 20 is the tightest approach ceiling in
+    # this corpus and it costs nothing here: the cut is min(lane, ceiling) and
+    # the lane is the 12 ft design lane, so this city draws exactly as it did
+    # yesterday.
+    #
+    # The 16 ft floor is the base because street classification is measured
+    # for no parcel here, and of the two figures the wider minimum is the one
+    # that cannot pass a lot the city would refuse. It is also the number that
+    # made `curb_cut_ft_for` learn to flare: a 16 ft opening in front of a
+    # 12 ft lane used to be no drawing at all, and it is what MMC 19.607.1.E.1
+    # describes -- the drive held to the approach width for 5 ft inside the
+    # line, tapering 1:1 behind that. So this city now meets the street through
+    # a 16 ft cut rather than a 12 ft one, which is the first real change to
+    # any Milwaukie site plan, and the next run is what measures it.
     milwaukie:
+      approach_min_ft: 16
+      approach_max_ft: 20
       parking_front_prohibited: true
       parking_front_yard_max_pct: 50
       open_space_sqft: 384
-      cite: MMC 19.505.3.D.4.a; 19.607.1.D; Table 19.505.3.D.1 private open space
+      cite: MMC 12.16.040.E.3 driveway apron ceiling; 19.505.3.D.4.a; 19.607.1.D; Table 19.505.3.D.1 private open space
     # Declined for want of an aisle, carried because it was read.
     # 4.113(.14)D.4: all driveway approaches together, 32 ft per frontage. D.3:
     # garages plus outdoor parking and maneuvering, 50% of ANY street frontage

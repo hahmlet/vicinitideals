@@ -727,3 +727,40 @@ def test_the_open_space_column_prints_each_citys_own_figures():
     assert open_space_label(
         DrivewayRules(open_space_sqft_by_zone={"A": None, "B": None})
     ) == "**none stated**"
+
+
+def test_an_opening_may_be_wider_than_the_lane_behind_it():
+    """The flare, and the one city that needs it.
+
+    `curb_cut_ft_for` used to return None whenever a city's approach floor
+    stood above the lane, on the reading that a cut wider than its own drive is
+    not a site plan. Milwaukie is the counter-example and it is written into
+    the code: MMC 12.16.040.E.3 asks a four-unit building for a 16 ft apron on
+    a collector or arterial, and MMC 19.607.1.E.1 holds the driveway to the
+    approach width for the first 5 ft inside the line and lets it taper 1:1
+    from there. A 12 ft lane opening through a 16 ft mouth is what the city
+    describes, so nulling it lost a compliant city.
+
+    Pinned as a property of every jurisdiction rather than of Milwaukie alone,
+    because the failure it replaces was silent: a city that cannot be
+    dimensioned simply stops appearing in the site plan stage, and no lot is
+    ever told why.
+    """
+    from common import load_footprints
+
+    sp = load_footprints().siteplan
+
+    for jurisdiction, dw in sp.driveway.items():
+        cut = sp.curb_cut_ft_for(jurisdiction)
+        if dw.approach_min_ft is None or sp.lane_ft_for(jurisdiction) is None:
+            continue
+        assert cut is not None, (
+            f"{jurisdiction}: a stated approach floor made the city undrawable"
+        )
+        assert cut >= dw.approach_min_ft
+        if dw.approach_max_ft is not None:
+            assert cut <= dw.approach_max_ft
+
+    assert sp.curb_cut_ft_for("milwaukie") == 16
+    assert sp.lane_ft_for("milwaukie") == 12
+

@@ -266,9 +266,20 @@ def test_a_section_symbol_is_part_of_the_heading(
     # both side yards of the zone. Fifteen binding references became five.
     assert "19.501.3" not in refs
     assert "19.505.1" not in refs
-    # What is left is a different title, and this corpus is not going to grow
-    # Milwaukie's public-works code.
-    assert "12.24" in refs
+    # What is left is a different title. This line used to read "and this
+    # corpus is not going to grow Milwaukie's public-works code", asserting
+    # "12.24" -- and on 2026-09-04 it grew exactly that: Chapters 12.16 and
+    # 12.24 were fetched, because 12.16 turned out to hold the driveway
+    # approach width the layer file had recorded as nonexistent. A prediction
+    # about what will never be read has no business inside an assertion; it
+    # goes red the day somebody does the work, which is the wrong direction
+    # for a test to point.
+    #
+    # 16.32 stands in its place and carries no prediction: it is Milwaukie's
+    # tree code, another title again, and it is here because a reference in a
+    # held document names it. If it is ever fetched, replace it with whatever
+    # else the ledger still lists rather than loosening the check.
+    assert "16.32" in refs
 
 
 def test_only_the_section_symbol_earns_that(layers: dict[str, Layer]) -> None:

@@ -185,7 +185,7 @@ pytestmark = pytest.mark.unit
 #: projections, the parking redirect into a chapter already stored, conditional
 #: use lot sizing and the unsewered site plan. A read that costs two refusals
 #: and settles five sections is the ledger working, not the corpus decaying.
-EXPECTED = {"notes": 105, "comments": 116, "tests": 17}
+EXPECTED = {"notes": 105, "comments": 120, "tests": 17}
 
 #: STILL 115 on 2026-09-03, and the flat number hides a swap worth more than
 #: most movements on this list. Clackamas County's drive aisle closed -- a
@@ -544,6 +544,41 @@ EXPECTED = {"notes": 105, "comments": 116, "tests": 17}
 #: were written that way first and the count moved by one instead of two. The
 #: cure is prose, not code -- lead with the marker -- but a reviewer who
 #: expects a count to move and watches it not move should suspect this first.
+
+#: 116 -> 120 on 2026-09-04, all four out of Milwaukie's Title 12, and the
+#: interesting thing about them is where they were. The layer file had said
+#: "Milwaukie has no encodable driveway approach width, which is why the field
+#: is absent rather than exempt" -- a claim about a city, resting on a reading
+#: of one chapter. The width is in MMC 12.16.040.E.3, in the STREETS title, and
+#: the zoning title points at that chapter three times without restating it.
+#: The width is now encoded and these four are what came with it:
+#:
+#:   12.16.040.B.4  the apron kept 5 ft off the side property line
+#:   12.16.040.B.5.a 45 ft from an intersection, excused on any existing lot
+#:                   by the same sentence that asks for it
+#:   12.16.040.B.1 / C.3  600 ft and 300 ft accessway spacing, selected by a
+#:                   street classification nothing here measures
+#:   12.16.040.D.3  every backing movement contained on site, with the
+#:                   exception written for single detached uses only
+#:
+#: B.4 is the one worth watching, because it is the SECOND jurisdiction to
+#: refuse this exact rule for this exact reason -- Oregon City 16.12.035.A
+#: note 2, above, is the same five feet with the same missing field. Every
+#: driveway field in the registry is a width and neither of these is a width.
+#: Two independent cities asking for the same thing is what turns "no field
+#: holds this" from a note into a design request.
+#:
+#: Five blocks were written and the count moved by four: the 12.24 refusal and
+#: 12.16.040.D.3 sit adjacent in the same layer and dedupe on window text,
+#: which is the collapse the paragraph above warns about. Recorded here rather
+#: than repaired, since both readings are in the file and only the row count
+#: is short.
+#:
+#: Chapter 12.24 is the fifth: it bans any structure over 3 ft in a sight
+#: triangle at every driveway and every corner, says the ban may not be varied,
+#: and then sizes the triangle by pointing at the AASHTO green book. A rule
+#: with no number in it is not a rule this screen can apply, and no amount of
+#: field registry fixes that one.
 
 
 def test_the_corpus_declares_more_refusals_than_any_ledger_counts() -> None:

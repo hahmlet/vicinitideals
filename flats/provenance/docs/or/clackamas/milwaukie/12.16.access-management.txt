@@ -1,0 +1,328 @@
+Close
+Print
+Resize:
+
+City of Milwaukie, OR
+
+[print date]
+
+Title 12. Streets, Sidewalks, and Public Places
+
+Chapter 12.16. ACCESS MANAGEMENT
+
+Note: Prior ordinance history: Ords. 1175 and 1503.
+
+§ 12.16.010. DEFINITIONS.
+
+For the purposes of this chapter, the following definitions shall apply.
+
+"Accessway"
+means the place, means, or way by which vehicles have safe, adequate, and usable ingress and egress to a property. The accessway consists of the driveway and driveway approach.
+
+"Driveway"
+means the portion of the accessway on private property or public lands outside of the public right-of-way.
+
+"Driveway approach"
+means the portion of the accessway located within the public right-of-way. The driveway approach consists of the driveway apron, wings, and sidewalk section
+
+"Driveway apron"
+means the ramped portion of the driveway approach extending from the public roadway to the sidewalk section and lying between the wings of the driveway approach
+
+"Driveway wings"
+means those portions of the driveway approach which provide a transition from the sidewalk, curb, and existing ground grades to the driveway apron grade.
+
+"Right-of-way"
+means an area that allows for the passage of people or goods. Right-of-way includes passageways such as freeways, pedestrian connections, alleys, and all streets. A right-of-way may be dedicated or deeded to the public for public use and under the control of a public agency, or it may be privately owned. A right-of-way that is not dedicated or deeded to the public is usually in a tract or easement. See also "street."
+
+"Roadway"
+means the portion of the street consisting of the paved area between curbs or shoulders. The roadway includes vehicle travel lanes, parking strips, and bike lanes.
+
+"Sidewalk section"
+means the portion of the driveway approach where the existing or proposed adjacent sidewalk extends through the driveway approach.
+
+"Street"
+means the entire width between right-of-way lines for vehicular, bicycle, and pedestrian traffic and includes the terms "road," "highway," "lane," "place," "avenue," "alley," and other similar designations.
+
+(Ord. 2004 § 1, 2009)
+
+§ 12.16.020. APPLICABILITY.
+
+A.
+
+New accessways are subject to all access management requirements of Chapter 12.16.
+
+B.
+
+Modification of existing conforming accessways shall conform with the access management requirements of Chapter 12.16.
+
+C.
+
+Modification of existing nonconforming accessways shall be brought into conformance with the access management requirements of Chapter 12.16. Where access management requirements cannot be met due to the location or configuration of an existing building that will remain as part of the development, the existing accessways shall be brought into conformance with the requirements of Chapter 12.16 to the greatest extent feasible as determined by the City Engineer.
+
+(Ord. 2004 § 1, 2009; Ord. 2218 § 2 (Exh. B), 2022)
+
+§ 12.16.030. ACCESS PERMITTING.
+
+A permit from the City is required for establishing or constructing a new accessway to a public street and for modifying or reconstructing an existing driveway approach. No person, firm, or corporation shall remove, alter, or construct any curb, sidewalk, driveway approach, gutter, pavement, or other improvement in any public street, alley, or other property owned by, dedicated to, or used by the public, and over which the City has jurisdiction to regulate the matters covered by this chapter, without first obtaining a permit from the City.
+
+A.
+
+Application for permits for access to a street, construction of a new accessway, or modification or reconstruction of an existing driveway approach shall be made to the City Engineer on forms provided for that purpose. A permit fee, as approved by the City Council, shall accompany each application.
+
+B.
+
+The access permit application shall include an electronic copy (AutoCAD, Adobe PDF, Bluebeam, or other acceptable format) of a scaled drawing showing the location and size of all proposed improvements in the right-of-way.
+
+C.
+
+The City Engineer shall review access permits and drawings for conformance with the provisions and standards set forth in this chapter and the Milwaukie Public Works Standards.
+
+D.
+
+Permits for access to State highways shall be subject to review and approval by ODOT, except where ODOT has delegated this responsibility to the City. Decisions regarding access permits to State highways shall be subject to the access standards adopted by ODOT.
+
+E.
+
+Permits for access to County roads shall be subject to review and approval by Clackamas County, except where the County has delegated this responsibility to the City. Where the County has delegated access review responsibility to the City, decisions regarding access permits to County roads shall be subject to the standards of Chapter 12.16 and the Milwaukie Public Works Standards.
+
+F.
+
+Approval of an access permit may be in the form of a drawing stamped by the City, a letter from the City, or a land use decision condition of approval.
+
+(Ord. 2004 § 1, 2009; Ord. 2218 § 2 (Exh. B), 2022)
+
+§ 12.16.040. ACCESS REQUIREMENTS AND STANDARDS.
+
+A.
+
+Access
+
+Private property must be provided street access with the use of accessways. Driveway approaches must be constructed as set forth in the Milwaukie Public Works Standards.
+
+B.
+
+Accessway Location
+
+Spacing and location criteria are based upon several factors, including stopping sight distance, ability of turning traffic to leave a through lane with minimal disruption to operation, minimizing right turn conflict overlaps, maximizing egress capacity, and reducing compound turning conflicts where queues for turning/decelerating traffic encounter conflicting movements from entering/exiting streets and driveways.
+
+1.
+
+Spacing Between Accessways
+
+Spacing between accessways is measured between the closest edges of driveway aprons where they abut the roadway. Spacing between accessways and street intersections is measured between the nearest edge of the driveway apron and the nearest face of curb of the intersecting street. Where intersecting streets do not have curb, the spacing is measured from the nearest edge of pavement.
+
+a.
+
+Spacing for accessways on arterial streets, as identified in the Milwaukie Transportation System Plan, must be a minimum of six hundred (600) feet.
+
+b.
+
+Spacing for accessways on collector streets, as identified in the Milwaukie Transportation System Plan, must be a minimum of three hundred (300) feet.
+
+2.
+
+Double Frontage
+
+When a lot has frontage on two (2) or more streets, access must be provided first from the street with the lowest classification. For example, access must be provided from a local street before a collector or arterial street.
+
+3.
+
+Location Limitations
+
+Individual access to single detached residential lots from arterial and collector streets is prohibited. An individual accessway may be approved by the City Engineer only if there is no practicable alternative to access the site, shared access is provided by easement with adjacent properties, and the accessway is designed to contain all vehicle backing movements on the site and provide shared access with adjacent properties.
+
+4.
+
+Distance from Property Line
+
+The nearest edge of the driveway apron must be at least five (5) feet from the side property line in residential districts and at least ten (10) feet from the side property line in all other districts. This standard does not apply to accessways shared between two (2) or more properties.
+
+5.
+
+Distance from Intersection—Public Streets and Private Access Drives
+
+To protect the safety and capacity of street intersections, the following minimum distances from the nearest intersecting street face of curb to the nearest edge of driveway apron must be maintained. Where intersecting streets do not have curbs, the distances must be measured from the nearest intersecting street edge of pavement. Distance from intersection may be modified as described in Section 12.16.050. Distance from private access drives will be reviewed by the City Engineer on a case-by-case basis, and will include factors such as volume of traffic on both the private access drive and public street it is connected to, clear sight distance, and accident history.
+
+a.
+
+At least forty-five (45) feet for single detached residential properties, plex development (i.e., a duplex, triplex, or quadplex), cottage clusters with four (4) or fewer units, and townhouses of four (4) or fewer units accessing local and neighborhood streets. Where the distance cannot be met on existing lots, the driveway apron must be located as far from the nearest intersection street face of curb as practicable; in such cases a formal modification is not required.
+
+b.
+
+At least one hundred (100) feet for multi-unit residential properties, or cottage cluster developments of five (5) or more units and all other uses accessing local and neighborhood streets.
+
+c.
+
+At least three hundred (300) feet for collectors, or beyond the end of queue of traffic during peak hour conditions, whichever is greater.
+
+d.
+
+At least six hundred (600) feet for arterials, or beyond the end of queue of traffic during peak hour conditions, whichever is greater.
+
+C.
+
+Number of Accessway Locations
+
+1.
+
+Safe Access
+
+Accessway locations must be the minimum necessary to provide access without inhibiting the safe circulation and carrying capacity of the street.
+
+2.
+
+Shared Access
+
+The number of accessways on collector and arterial streets must be minimized whenever possible through the use of shared accessways and coordinated on-site circulation patterns. Within commercial, industrial, and multi-unit areas, shared accessways and internal access between similar uses are required to reduce the number of access points to the higher-classified roadways, to improve internal site circulation, and to reduce local trips or movements on the street system. Shared accessways or internal access between uses must be established by means of common access easements.
+
+3.
+
+Single Detached Residential and Middle Housing
+
+One accessway per property is allowed for single detached residential uses, plex development, cottage cluster development up to four (4) units, and townhouses up to four (4) units.
+
+a.
+
+For lots with more than one street frontage on a local street and/or neighborhood route, one additional accessway may be granted. Under such circumstances, a street frontage must have no more than one driveway approach.
+
+b.
+
+For lots with one street frontage on a local street and/or neighborhood route, one additional accessway may be granted where the driveway approaches can be spaced fifty (50) feet apart, upon review and approval by the City Engineer. The spacing is measured between the nearest edges of the driveway aprons. Where the fifty (50) foot spacing cannot be met, an additional accessway shall not be granted.
+
+c.
+
+No additional accessways shall be granted on collector and arterial streets.
+
+4.
+
+All Uses Other than Single Detached Residential and Middle Housing
+
+The number of accessways for uses other than single detached residential and middle housing developments up to four (4) units is subject to the following provisions:
+
+a.
+
+Access onto arterial and collector streets is subject to the access spacing requirements of Subsection 12.16.040.B.
+
+b.
+
+One accessway is allowed on local streets and neighborhood routes. One additional accessway is allowed per frontage where the driveway approaches, including adjacent property accessways, can be spaced one hundred fifty (150) feet apart. The spacing is measured between the nearest edges of the driveway aprons.
+
+D.
+
+Accessway Design
+
+1.
+
+Design Guidelines
+
+Driveway approaches must meet all applicable standards of the Americans with Disabilities Act, U.S. Access Board guidelines or requirements, and Milwaukie Public Works Standards.
+
+2.
+
+Authority to Restrict Access
+
+The City Engineer may restrict the location of accessways on streets and require that accessways be placed on adjacent streets upon finding that the proposed access would:
+
+a.
+
+Cause or increase existing hazardous traffic conditions;
+
+b.
+
+Provide inadequate access for emergency vehicles; or
+
+c.
+
+Cause hazardous conditions that would constitute a clear and present danger to the public health, safety, and general welfare.
+
+3.
+
+Backing into the Right-of-Way Prohibited
+
+Accessways must be designed to contain all vehicle backing movements on the site, except for detached or attached single detached residential uses on local streets and neighborhood routes.
+
+E.
+
+Accessway Size
+
+The following standards allow adequate site access while minimizing surface water runoff and reducing conflicts between vehicles, bicyclists, and pedestrians.
+
+1.
+
+Accessways must be the minimum width necessary to provide the required number of vehicle travel lanes. The City Engineer may require submission of vehicle turning templates to verify that the accessway is appropriately sized for the intended use.
+
+2.
+
+Single attached and detached residential uses must have a minimum driveway apron width of twelve (12) feet and a maximum width of twenty (20) feet.
+
+3.
+
+Plex development, cottage cluster developments with up to four (4) units, or townhouse developments comprised of up to four (4) units, must have a minimum driveway apron width of twelve (12) feet on local or neighborhood streets and sixteen (16) feet on collector or arterial streets, and a maximum driveway apron width of twenty (20) feet on all streets.
+
+4.
+
+Multi-unit residential or cottage cluster developments with between five (5) and eight (8) units must have a minimum driveway apron width of sixteen (16) feet on local or neighborhood streets and twenty (20) feet on collector or arterial streets, and a maximum driveway apron width of twenty-four (24) feet.
+
+5.
+
+Multi-unit residential or cottage cluster developments with more than eight (8) dwelling units, and off-street parking areas with sixteen (16) or more spaces, must have a minimum driveway apron width of twenty (20) feet on local or neighborhood streets and twenty-four (24) feet on collector or arterial streets, and a maximum driveway apron width of thirty (30) feet.
+
+6.
+
+Commercial, office, and institutional uses must have a minimum driveway apron width of sixteen (16) feet and a maximum width of thirty-six (36) feet.
+
+7.
+
+Industrial uses must have a minimum driveway apron width of twenty-four (24) feet and a maximum width of forty-five (45) feet.
+
+8.
+
+Maximum driveway apron widths for commercial and industrial uses may be increased if the City Engineer determines that more than two (2) lanes are required based on the number of trips anticipated to be generated or the need for on-site turning lanes.
+
+(Ord. 2004 § 1, 2009; Ord. 2168 § 2, 2019; Ord. 2218 § 2 (Exh. B), 2022; Ord. 2236 § 2, 2023)
+
+§ 12.16.050. VARIANCE.
+
+Access management standards may be modified with submission of an access study prepared and certified by a registered Professional Traffic Operations Engineer (PTOE) in the State of Oregon, when required by the City Engineer based on street classification. The Access Study must assess transportation impacts adjacent to the project frontage within a distance equal to the access spacing requirement established in Subsection 12.16.040.B.1. For example, for a site with arterial access, the access study would include evaluation of site access and capacity along the project frontage plus capacity and access issues within six hundred (600) feet of the adjacent property. The access study must include the following:
+
+A.
+
+Review of site access spacing and design;
+
+B.
+
+Evaluation of traffic impacts adjacent to the site within a distance equal to the access spacing distance from the project site;
+
+C.
+
+Traffic Safety: provide ODOT crash data (for the most recent five-year period for which data is available) adjacent to the site within a distance equal to the access spacing distance from the project site;
+
+D.
+
+Review of all modes of transportation to the site;
+
+E.
+
+Evaluation of traffic volume, traffic type, and speed of existing traffic on street(s) where access is proposed to be taken;
+
+F.
+
+Mitigation measures where access standards are not met that include, but are not limited to, assessment of medians, consolidation of accessways, shared accessways, temporary access, provision of future consolidated accessways, or other measures that would be acceptable to the City Engineer;
+
+G.
+
+Evidence of consistency with the Transportation System Plan.
+
+(Ord. 2236 § 2, 2023)
+
+§ 12.16.060. RIGHT OF APPEAL.
+
+If the applicant is dissatisfied with the written decision of the City Engineer for a modification request submitted pursuant to Section 12.16.050, the applicant may file a written appeal with the Community Development Director no later than thirty (30) days from the date that the decision was mailed. The appeal must contain a statement of the reasons why the applicant is dissatisfied with the written decision, and must be signed by the applicant, or by someone authorized to sign on the applicant’s behalf. A notice of receipt must be mailed to the applicant by registered mail within five (5) days of the receipt of the appeal. The Community Development Director must act upon the appeal no later than sixty (60) days after receipt, and a copy of the written decision must be mailed to the applicant by registered mail no later than five (5) days after preparation of the decision. The decision of the Community Development Director shall be final.
+
+(Ord. 2236 § 2, 2023)
+
+§ 12.16.070. VIOLATION PENALTY.
+
+Any person, firm, or corporation violating any of the provisions of this chapter, or causing, permitting, or suffering the same to be done, shall be fined not more than two hundred fifty dollars ($250.00). Each such person, firm, or corporation shall be deemed guilty of a separate offense for each and every day or portion thereof during which any violation of any of the provisions of this chapter is committed, continued, or permitted.
+
+(Ord. 2004 § 1, 2009; Ord. 2236 § 2, 2023)

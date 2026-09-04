@@ -800,6 +800,27 @@ the list of places worth hoping about.
 
 ## Queued for the agent — no action needed from you, listed so nothing is invisible
 
+- **Milwaukie's driveway width was in the code all along, in the wrong book** —
+  found and fixed 2026-09-04. Our notes said Milwaukie never states how wide a
+  driveway has to be where it meets the street, and treated that as a fact
+  about the city. It was a fact about which chapters we had read. Milwaukie
+  keeps its zoning rules in one part of the code and its street rules in
+  another, and the width is in the street part: a four-unit building gets a
+  12 ft opening on a quiet street, 16 ft on a busier one, 20 ft at the most
+  anywhere. The zoning chapters point at that street chapter three separate
+  times and never repeat the number.
+
+  Nothing about this needs you and nothing changes what a lot is graded today.
+  Two things worth knowing anyway. First, our own to-read list had been
+  flagging that chapter as important for weeks and nobody opened it — the list
+  was right and the reading was late, which is the failure worth fixing.
+  Second, two rules in it are real and we still cannot apply them: the city
+  keeps a driveway 5 ft clear of the neighbour's line, and it keeps a
+  sight-line triangle clear at every driveway and corner without ever saying
+  how big the triangle is (it points at a national engineering manual we do
+  not have). Both take room off a lot in a way nothing measures, so they are
+  recorded as known blind spots rather than guessed at.
+
 - **The work queues were pointing at four cities we don't screen** — found and
   fixed 2026-09-02, and it is the same mistake in three places. Lake Oswego,
   Johnson City, Rivergrove and Maywood Park are all switched off: three are too

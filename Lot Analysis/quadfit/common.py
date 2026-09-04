@@ -877,11 +877,24 @@ class SiteplanSpec(BaseModel):
     def curb_cut_ft_for(self, jurisdiction: str) -> float | None:
         """Width of the opening at the property line, or None if it cannot be.
 
-        The lane, narrowed to the city's approach ceiling. Gresham is the case
-        the old constants got backwards: a 12 ft lane meets the street through
-        a 10 ft cut and widens behind the property line, which GDC 7.0420
-        permits and 7.0431's 18 ft never described. None where the ceiling
-        falls below the city's own floor or below one car's width.
+        The lane, narrowed to the city's approach ceiling and then widened to
+        its floor. Gresham is the case the old constants got backwards: a 12 ft
+        lane meets the street through a 10 ft cut and widens behind the
+        property line, which GDC 7.0420 permits and 7.0431's 18 ft never
+        described. None only where the city contradicts itself -- a ceiling
+        below its own floor.
+
+        THE OPENING MAY BE WIDER THAN THE LANE. That used to return None, on
+        the reading that a cut wider than the drive behind it is not a drawing.
+        It is: it is a flare, and Milwaukie describes it in code. MMC
+        12.16.040.E.3 asks a four-unit building for a 16 ft apron on a
+        collector or arterial, MMC 19.607.1.E.1 holds the driveway to "the
+        width of the approved approach" for the first 5 ft inside the
+        right-of-way and lets it taper 1:1 from there, and the lane behind
+        that taper is the 12 ft design lane. Nulling that lost a whole city to
+        a rule it complies with, so the arithmetic changed rather than the
+        reading -- and this is the only jurisdiction it moves: everywhere else
+        the lane already clears the floor.
         """
         lane = self.lane_ft_for(jurisdiction)
         if lane is None:
@@ -893,7 +906,9 @@ class SiteplanSpec(BaseModel):
         floor = self.driveway_cut_min_design_ft
         if dw is not None and dw.approach_min_ft is not None:
             floor = max(floor, dw.approach_min_ft)
-        return None if cut < floor else cut
+        if dw is not None and dw.approach_max_ft is not None and floor > dw.approach_max_ft:
+            return None
+        return max(cut, floor)
 
     def gap_ft_for(self, jurisdiction: str) -> float:
         """Clear distance between the building and the parking court."""
