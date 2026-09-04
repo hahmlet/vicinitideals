@@ -1,7 +1,9 @@
 """Application settings — reads from environment / .env file."""
 
+from typing import Any
 from uuid import UUID
 
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -12,6 +14,30 @@ class Settings(BaseSettings):
         case_sensitive=False,
         extra="ignore",
     )
+
+    @field_validator("inbound_email_org_id", mode="before")
+    @classmethod
+    def _blank_is_unset(cls, value: Any) -> Any:
+        """An empty value in a .env file means "not set", not "invalid".
+
+        Every optional secret in .env.example is written ``KEY=`` and every
+        one of them is typed ``str``, so an empty line parses to an empty
+        string and nothing notices. This field is the only one that is not a
+        string, and pydantic rejects "" for ``UUID | None`` -- so copying
+        .env.example to .env, which is exactly what CI's "Prepare environment
+        file" step does, made ``Settings()`` raise at import.
+
+        The cost was not a red step. ``check_promotion_gates`` imports this
+        module and runs FIRST in the light gate, so the failure skipped Ruff,
+        the FLATS firewall, the unit tests and the FLATS tests underneath it.
+        Every push from 2026-08-14 to 2026-09-03 ran zero tests and zero lint
+        while reporting a red X that looked like the one before it. A gate
+        that has been failing for three weeks is not a gate, and a syntax
+        error rode through it into production on 2026-09-03.
+        """
+        if isinstance(value, str) and not value.strip():
+            return None
+        return value
 
     # -------------------------------------------------------------------------
     # Database

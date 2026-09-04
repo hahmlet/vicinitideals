@@ -58,7 +58,17 @@ def build_gate_plan(environment: str) -> list[GateDefinition]:
         GateDefinition(
             name="critical_lint",
             description="No critical Ruff lint errors (syntax / undefined names)",
-            command=(python, "-m", "ruff", "check", "app", "tests", "--select", "E9,F63,F7,F82"),
+            # flats and scripts are named here because the app imports them at
+            # module scope -- app/api/routers/ui_flats.py pulls in
+            # flats.encode.triage, which pulls in flats.encode.crossrefs, so a
+            # syntax error under flats/ stops create_app() dead. One shipped on
+            # 2026-09-03 and took production down for six minutes. E9 catches it
+            # in under a second; this gate simply was not looking there.
+            command=(
+                python, "-m", "ruff", "check",
+                "app", "tests", "flats", "scripts",
+                "--select", "E9,F63,F7,F82",
+            ),
         ),
         GateDefinition(
             name="compose_config",

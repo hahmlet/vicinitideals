@@ -36,6 +36,21 @@ def test_build_gate_plan_includes_expected_checks_per_environment() -> None:
     ]
 
 
+def test_critical_lint_looks_where_the_app_imports_from() -> None:
+    """The syntax gate must cover every tree the app imports at module scope.
+
+    It covered ``app`` and ``tests`` only. ``app/api/routers/ui_flats.py``
+    imports ``flats.encode.triage``, which imports ``flats.encode.crossrefs``,
+    so a syntax error under ``flats/`` stops ``create_app()`` before the first
+    route is registered -- which is what happened on 2026-09-03, six minutes of
+    502 off a file this gate declined to open. E9 finds it in under a second.
+    """
+    lint = next(g for g in build_gate_plan("dev") if g.name == "critical_lint")
+    for tree in ("app", "tests", "flats", "scripts"):
+        assert tree in lint.command, f"critical_lint does not lint {tree}/"
+    assert "E9" in " ".join(lint.command), "critical_lint no longer selects syntax errors"
+
+
 def test_evaluate_compose_services_requires_running_and_healthy() -> None:
     healthy = [
         {"Service": "api", "State": "running", "Health": "healthy"},

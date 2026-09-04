@@ -272,7 +272,7 @@ uv run pytest tests/ -q -m "unit" --ignore=tests/e2e     # Unit tests only
 uv run pytest flats/tests -q                               # FLATS (no DB needed)
 uv run pytest tests/ -q --ignore=tests/e2e                # Unit + integration
 uv run pytest tests/e2e/ -q -m e2e                        # E2E (needs running app)
-uv run ruff check app/ tests/                              # Lint
+uv run ruff check app/ tests/ flats/ scripts/               # Lint (same scope as CI)
 ```
 
 ### Test Creation Requirement
@@ -331,7 +331,7 @@ $env:E2E_BASE_URL="https://viciniti.deals"; uv run pytest tests/e2e/test_phase_b
 - **Decimal for money** — never `float` for financial values
 - **SQLAlchemy 2.0 style**: `Mapped[type]`, `mapped_column()`, async sessions
 - **Pydantic v2** for schemas and settings
-- **Ruff** for linting (`uv run ruff check app/ tests/`)
+- **Ruff** for linting (`uv run ruff check app/ tests/ flats/ scripts/` — the CI scope; `flats/` matters because the app imports it at module scope)
 - **uv** as package manager (not pip)
 - **HTMX** for UI — server renders HTML partials, no client-side JS framework
 - Module docstrings describe purpose and entity relationships
