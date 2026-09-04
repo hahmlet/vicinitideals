@@ -95,6 +95,7 @@ def test_flats_tables_are_in_their_own_schema() -> None:
         # and stamps exported_at.
         "rule_signatures",
         "crossref_rulings",
+        "reading_rulings",
     }
 
 
