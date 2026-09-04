@@ -73,6 +73,20 @@ ingest. See the Archive note at the bottom of this document.
 | **FlatsRule** | `flats.rules` | Per-run snapshot of a resolved zoning value + the citation behind it | `(run_id, jurisdiction, zone, field)` |
 | **FlatsClause** | `flats.clauses` | RASE-tagged sentence of code text; drives completeness and drift watch | `id` (clause slug) |
 | **FlatsReviewDecision** | `flats.review_decisions` | Durable human verdict, replayed into every later run | partial unique on `(county, tlid, design_key, check_code)` where not superseded |
+| **FlatsRuleSignature** | `flats.rule_signatures` | Inbox for a reviewer's verdict on one encoded standard; drained into `flats/config/verifications.jsonl` and stamped `exported_at` | `id` (bigint), pending index on `exported_at IS NULL` |
+| **FlatsCrossrefRuling** | `flats.crossref_rulings` | Inbox for a fetch-triage decision about a chapter the store cannot open (outcome + required note); drained into the jurisdiction YAML | `id` (bigint), append-only, latest `decided_at` per `(layer, ref)` wins |
+
+**The last two are inboxes, not sources of truth**, and the distinction is the whole
+design. Rules load from the repository — the jurisdiction YAML and the signature log —
+and the container rebuilds both from git on every deploy. So a verdict recorded only in
+Postgres has *not taken effect yet*, which is visible in the queue rather than silent,
+and a verdict spliced only into a running container's YAML is gone at the next release.
+A drain (`scripts/flats_drain_crossref_rulings.py`, `scripts/flats_drain_signatures.py`) writes
+rows into the repository for commit and stamps `exported_at`; `NULL` means pending. The
+reason a table cannot simply *be* the answer: a signature is hashed over the number and
+its citation, so editing either silently withdraws it, and a database row survives an
+edit to the YAML it was about. A stale row certifying a number nobody read is the worst
+failure this system has.
 
 Three keying decisions, all expensive to retrofit and therefore made up front:
 

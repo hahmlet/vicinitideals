@@ -76,6 +76,12 @@ def test_flats_tables_are_in_their_own_schema() -> None:
     # structural, and `public` can never reach screening data by accident.
     flats_tables = {t.name for t in Base.metadata.sorted_tables if t.schema == SCHEMA}
 
+    # Pinned as an exact set on purpose: a table arriving in this schema is a
+    # product decision, and the list is short enough that naming each one costs
+    # less than the surprise of not. The two review inboxes below joined it in
+    # 0126 and 0128 and this assertion did not learn about them for a fortnight,
+    # because CI's first gate step was crashing and every test under it was
+    # being SKIPPED -- see tests/test_config_env_example.py.
     assert flats_tables == {
         "runs",
         "designs",
@@ -84,6 +90,11 @@ def test_flats_tables_are_in_their_own_schema() -> None:
         "rules",
         "clauses",
         "review_decisions",
+        # Inboxes. Rules load from the repository; these hold a reviewer's
+        # verdict until a drain writes it into the YAML or the signature log
+        # and stamps exported_at.
+        "rule_signatures",
+        "crossref_rulings",
     }
 
 

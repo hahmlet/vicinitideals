@@ -1,5 +1,5 @@
 {
-  "digest": "08d702b22977c8e60c68cd1054ceb66040e025aeab9bbb07cdfa0c803c792efc",
+  "digest": "83eaf1bd6e8dd1ae4aa608d4c4d2bee7158f0e80ea426b76e00f284c7fd9d92a",
   "layers": {
     "or": {
       "misattributed": [],
@@ -329,14 +329,7 @@
           "field": "quadplex_allowed",
           "claimed": "4.1413 4.1415 4.1415 7.0420",
           "found": "4.1423",
-          "quote": "or/multnomah/gresham/4.1400.pleasant-valley.txt#L506-L507,L512"
-        },
-        {
-          "zone": "PUB-PV",
-          "field": "quadplex_allowed",
-          "claimed": "4.1431",
-          "found": "4.1425",
-          "quote": "or/multnomah/gresham/4.1400.pleasant-valley.txt#L775-L776,L781"
+          "quote": "or/multnomah/gresham/4.1400.pleasant-valley.txt#L508-L509,L514"
         }
       ],
       "label": "Gresham",
