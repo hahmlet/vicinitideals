@@ -3,22 +3,47 @@
   between the reviewer and the sentences.
 
   No comparison column, because there is nothing to compare to — that is what
-  puts a card in this queue. No quote links either: opening the stored passage
-  helps when a figure is in dispute, and here the question is whether the
-  subject is ours at all, which the sentence answers on its own.
+  puts a card in this queue.
+
+  The document's own lines come with the statements, already open. A statement
+  pulled out of a table says nothing on its own: West Linn's accessible-stall
+  row reads "501 – 999 · 2 percent of total spaces" and means nothing until the
+  rows above it are visible and the smallest bracket in the table turns out to
+  be 151 spaces. That context used to sit behind a link labelled with a line
+  number — a link that looks like a citation, is the only control on the card,
+  and nobody would think to press.
 #}
 <div class="muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin:16px 0 6px">
-  Every statement in this section
+  {% if around %}The section, with every statement marked{% else %}Every statement in this section{% endif %}
 </div>
 
 <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;
-            line-height:1.55;max-height:26em;overflow-y:auto;padding-left:10px;
+            line-height:1.55;max-height:30em;overflow:auto;padding-left:10px;
             border-left:2px solid var(--line,#e5e7eb)">
-  {% for ln in card.lines %}
+  {% if around %}
+    {% for r in around %}
+      {%- if r.gap and not loop.first %}
+  <div class="muted" style="padding:3px 0;user-select:none">⋯</div>
+      {%- endif %}
+  <div style="white-space:pre;{% if r.marked %}background:var(--mark,#fef3c7);font-weight:600{% endif %}">
+    <span class="muted" style="user-select:none">{{ "%5d"|format(r.line) }}</span> {{ r.text }}
+  </div>
+    {% endfor %}
+  {% else %}
+    {# The store could not be read. The statements are still the card. #}
+    {% for ln in card.lines %}
   <div style="margin-bottom:2px">
     <span class="muted" style="user-select:none">{{ "%5d"|format(ln.line) }}</span>
     {{ ln.text }}
     {%- if ln.repeats > 1 %} <span class="muted">(&times;{{ ln.repeats }})</span>{% endif %}
   </div>
-  {% endfor %}
+    {% endfor %}
+  {% endif %}
 </div>
+
+{% if around %}
+<div class="muted" style="font-size:11px;margin-top:4px">
+  {{ card.lines|length }} statement{{ "" if card.lines|length == 1 else "s" }} nothing quotes,
+  highlighted, with the {{ around|length - card.lines|length }} surrounding lines they sit in.
+</div>
+{% endif %}

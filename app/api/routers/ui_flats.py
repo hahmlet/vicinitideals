@@ -68,6 +68,7 @@ from flats.encode.triage import Card, feed, fields_in
 from flats.encode.worklist import KINDS, QUEUES
 from flats.encode.worklist import Card as ReadingCard
 from flats.encode.worklist import card_key
+from flats.encode.worklist import context as reading_context
 from flats.encode.worklist import counts as reading_counts
 from flats.encode.worklist import feed as reading_feed
 from flats.encode.verify import fingerprint
@@ -1956,6 +1957,11 @@ def _reading_ctx(
     # the offset lives in the URL so a reload does not silently rewind.
     ahead = rows[skipped:] if skipped < len(rows) else []
     title, question = QUEUES[queue]
+    # The document's own lines around the statements, fetched for the one card
+    # on screen. A statement lifted out of a table is unreadable alone, and
+    # putting that behind a link labelled with a line number meant nobody saw
+    # it. One document read per page view; the store caches the file.
+    around = reading_context(ahead[0], _store()) if ahead else ()
     fields: dict[str, int] = {}
     for card in rows:
         for name in card.fields:
@@ -1965,6 +1971,7 @@ def _reading_ctx(
         "queue_title": title,
         "queue_question": question,
         "card": ahead[0] if ahead else None,
+        "around": around,
         "remaining": len(ahead),
         # The lines behind what is left, not behind the whole queue. Two
         # numbers side by side describing different sets read as one number
