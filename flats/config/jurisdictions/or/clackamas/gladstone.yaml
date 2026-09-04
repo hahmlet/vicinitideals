@@ -72,11 +72,28 @@ crossrefs:
   "17.70":
     outcome: other_path
     note: >-
-      Conditional Uses. Every mention is the header of a zone's conditional list — "the following
-      uses and their accessory uses are allowed subject to GMC Chapter 17.70" — and a fourplex is
-      not on any of them. What is on the R-7.2 list is a "multi-household dwelling, five- to
-      eight-unit building on a collector or minor arterial", beside churches, fire stations and
-      nursing homes. Four units is one below the bottom of that range.
+      Conditional Uses, and it is reached two ways rather than one. FOUR of the five mentions are
+      the header of a zone's conditional list — "the following uses and their accessory uses are
+      allowed subject to GMC Chapter 17.70" — and a fourplex is not on any of them. What is on the
+      R-7.2 list is a "multi-household dwelling, five- to eight-unit building on a collector or
+      minor arterial", beside churches, fire stations and nursing homes. Four units is one below
+      the bottom of that range. That much has been true since this ruling was written and it stays
+      true.
+      The FIFTH mention arrived on 2026-09-03 with Chapter 17.28 and it is a different animal, so
+      the old wording — "every mention is the header of a zone's conditional list" — was made false
+      by a fetch and is corrected here rather than left to read as an absence claim. GMC 17.28.030:
+      "Intensification, change or development of uses allowed outright, accessory uses allowed or
+      conditional uses allowed under the primary zoning district shall be allowed in a GW zoning
+      district subject to GMC Section 17.28.040 ... and Chapter 17.70 (conditional uses)." In the
+      Willamette River Greenway district, in other words, this building's own outright permission
+      becomes a conditional use, and 17.28.050(6) then sets its setback "on a case-by-case basis".
+      That is discretionary, it would take those lots off the board the way Milwaukie's greenway
+      does, and it is NOT screened — the state publishes the greenway boundary as a polyline and
+      the city publishes no map of it at all, so there is no shape to kill from. Recorded as a
+      stated gap in Lot Analysis/quadfit/config/overlays.yaml beside the two Gladstone overlays
+      that could be built. Kept as other_path because fetching 17.70 cannot close it: no reading of
+      a conditional-use chapter makes a case-by-case setback clear and objective. What would close
+      it is geometry.
   "17.62.070": >-
     Setbacks for manufactured homes in a mobile home park. One sentence, printed once in each
     dimensional table and spanned by rowspan over every setback row, which is why it counts ten
@@ -116,7 +133,10 @@ crossrefs:
       Variances, reached from 17.48.030(2)(e): an exception to a minimum or maximum parking ratio
       above 25 percent goes through this chapter, below it through the minor exception at
       17.80.090. Both are ways of asking to be let off a standard this screen holds the applicant
-      to, so neither can make a lot fit that does not.
+      to, so neither can make a lot fit that does not. 17.27.020(6) added a second route on
+      2026-09-03 and it changes nothing: it lists a variance among the applications that carry
+      water-quality review with them, which is a rule about which desk a variance lands on, not a
+      standard this building has to meet.
   "17.54":
     outcome: narrows_only
     note: >-
@@ -168,6 +188,46 @@ code:
   - id: "17.48.parking"
     url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1748.html
     title: "Chapter 17.48 - Off-Street Parking and Loading"
+  # ---- The four environmental districts, read 2026-09-03 ----
+  #
+  # Gladstone superimposes four overlay districts on its base zoning, each its
+  # own chapter, and 17.06.358's definition of a net acre names them in one
+  # breath: a net acre excludes "areas in the FM district, areas in the WQ
+  # District, natural resource areas protected under statewide planning Goal
+  # 5 ..., slopes in excess of 25 percent and wetlands". None of the four was
+  # screened until now, in the city whose lots are held by nothing but signing.
+  # They are stored here because the screening decision quotes them; the
+  # decision itself, and the reason two of the four are flags rather than
+  # carves, lives beside the layers in Lot Analysis/quadfit/config/overlays.yaml.
+  #
+  # NOT ENCODED as a value, and the omission is deliberate. 17.25.110 gives
+  # ground back -- "for parcels that contain a Habitat Conservation Area, the
+  # minimum front, rear, and side yard setbacks shall be zero", garages and
+  # fire code excepted. It is Clackamas ZDO 706.11 written for a city that has
+  # buildable lots. It stays unencoded because the only HCA boundary anyone
+  # publishes for Gladstone is Metro's regional inventory standing in for the
+  # HCA Map that Comprehensive Plan Chapter 6 adopts, and a grade C proxy may
+  # take ground away but may not hand it back.
+  - id: "17.25.hcad"
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1725.html
+    title: "Chapter 17.25 - Habitat Conservation Area District (HCAD)"
+  - id: "17.27.wq"
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1727.html
+    title: "Chapter 17.27 - Water Quality Resource Area District (WQ)"
+  # The shortest chapter in the layer and the one that cannot be screened:
+  # 17.28.030 makes every development in the greenway a conditional use, and
+  # 17.28.050(6) sets the setback "on a case-by-case basis". The state
+  # publishes the Willamette River Greenway boundary as a line, not an area,
+  # and the city's zoning service carries base zones only, so there is nothing
+  # to draw the kill from. Short because it defers to Chapter 17.70, not
+  # because the URL is wrong.
+  - id: "17.28.greenway"
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1728.html
+    title: "Chapter 17.28 - Greenway Conditional Use District (GW)"
+    allow_thin: true
+  - id: "17.29.flood"
+    url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1729.html
+    title: "Chapter 17.29 - Flood Management Area District (FM)"
 defaults:
   # ---- GMC Chapter 17.48, Off-Street Parking and Loading, read 2026-08-29 ----
   #

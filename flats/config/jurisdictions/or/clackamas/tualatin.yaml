@@ -171,6 +171,45 @@ code:
     # forced through at a prompt, because the override belongs where the next
     # reader will find it.
     allow_thin: true
+  # ---- The two environmental chapters, read 2026-09-03 ----
+  #
+  # Tualatin was the last name on quadfit's UNSCREENED list and it came off the
+  # same day as Gladstone. The reason it sat there was never that the city
+  # publishes nothing -- it publishes the best environmental data in the corpus,
+  # the adopted overlay itself rather than a regional proxy for it -- but that
+  # the note recording the service pointed at a folder path that answers "Token
+  # Required". The layers are at the root of the same server. "The city does not
+  # publish it" and "our path is wrong" look identical from a screen, and only
+  # one of them is a coverage gap.
+  #
+  # Both chapters are stored because the screening decision quotes them; the
+  # decision lives beside the layers in Lot Analysis/quadfit/config/overlays.yaml.
+  # Neither states a dimension this layer's fields could hold: 72's widths are
+  # measured from a creek centreline or a top of bank and 71's 40 feet from a
+  # wetland boundary, and no field here anchors a setback to a resource.
+  #
+  # Worth flagging for whoever reads Chapter 71 next: TDC 71.020 says the
+  # district boundaries "are hereby fixed and established as shown on Map 71-1".
+  # No other city in this corpus says that about its map. Milwaukie calls its
+  # map a general indicator, Gladstone adopts one it does not publish, West Linn
+  # publishes centrelines and makes the code supply the width. A sentence that
+  # makes the map the boundary is the strongest thing a screen can stand on.
+  - id: "71.wetlands-protection"
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    title: "TDC Chapter 71 - Wetlands Protection District (WPD)"
+    start: "TDC 71.010. Purpose."
+    # Ends on the next chapter's banner rather than its first section, which
+    # would leave three lines of Chapter 72's heading on the end of this one.
+    end: "CHAPTER 72."
+    nth: 2
+    extraction: plain
+  - id: "72.natural-resource-overlay"
+    url: https://api.municode.com/PublicationPdfDownload/1818
+    title: "TDC Chapter 72 - Natural Resource Protection Overlay District (NRPO)"
+    start: "TDC 72.010. Purpose."
+    end: "CHAPTER 73A"
+    nth: 2
+    extraction: plain
 defaults:
   # PARKING, read 2026-08-30. Tualatin is the second city in this corpus whose
   # parking chapter states no dimension of its own and sends the reader to a

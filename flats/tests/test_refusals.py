@@ -185,7 +185,7 @@ pytestmark = pytest.mark.unit
 #: projections, the parking redirect into a chapter already stored, conditional
 #: use lot sizing and the unsewered site plan. A read that costs two refusals
 #: and settles five sections is the ledger working, not the corpus decaying.
-EXPECTED = {"notes": 105, "comments": 115, "tests": 17}
+EXPECTED = {"notes": 105, "comments": 116, "tests": 17}
 
 #: STILL 115 on 2026-09-03, and the flat number hides a swap worth more than
 #: most movements on this list. Clackamas County's drive aisle closed -- a
@@ -204,6 +204,27 @@ EXPECTED = {"notes": 105, "comments": 115, "tests": 17}
 #: A ledger that counted only closures would have reported this as -1 and
 #: called the county finished. It is not finished; it is usable, which is a
 #: different claim and a smaller one.
+
+#: 115 -> 116 later on 2026-09-03, by Gladstone 17.25.110, and it is the second
+#: time this corpus has refused the SAME RULE in two jurisdictions for the same
+#: reason. A parcel containing a Habitat Conservation Area gets a minimum front,
+#: rear and side yard setback of zero -- garages and fire code excepted -- which
+#: is Clackamas ZDO 706.11 written for a city that has lots worth the ground.
+#:
+#: It is not refused for want of a field. `setback_front_ft` and its siblings
+#: could hold a zero, and the value form for a conditional standard exists. It
+#: is refused because the condition cannot be evaluated: the rule fires on the
+#: parcel CONTAINING an HCA, and the only HCA geometry anyone publishes for
+#: Gladstone is Metro's regional Title 13 inventory standing in for the map
+#: Comprehensive Plan Chapter 6 adopts and the city does not release. The same
+#: grade C proxy now flags 51 Gladstone lots into review, and that asymmetry is
+#: the whole ruling: a proxy boundary may take ground away, because the cost of
+#: being wrong is a lot somebody reads. It may not hand ground back, because the
+#: cost of being wrong there is a green.
+#:
+#: Recorded here rather than in the layer's notes because the reason lives in
+#: the data and not in the words -- it reopens the day the adopted HCA Map is
+#: published, with no re-reading required.
 
 #: MOVED 2026-09-02 by Oregon City 16.12.035.A note 2, +1 comment, and this
 #: one is a refusal a RE-READ produced in a chapter already fetched, already

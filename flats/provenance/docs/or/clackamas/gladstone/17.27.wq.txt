@@ -1,0 +1,507 @@
+Chapter 17.27
+
+WQ—WATER QUALITY RESOURCE AREA DISTRICT
+
+Sections:
+
+17.27.010 Purpose.
+
+17.27.020 Applicability.
+
+17.27.030 Administration.
+
+17.27.040 Uses Within the WQ District.
+
+17.27.042 Application requirements.
+
+17.27.045 Development standards.
+
+17.27.050 Subdivisions and partitions.
+
+17.27.060 Density transfers.
+
+17.27.070 Variances.
+
+17.27.080 Map administration.
+
+17.27.090 Definitions.
+
+17.27.010 Purpose.
+
+(1) The purpose of the Water Quality Resource Area (WQ) District is to implement the Comprehensive Plan, to protect and improve water quality, to support beneficial water uses, and to protect the functions and values of existing and newly established water quality resource areas that provide a vegetated corridor to separate protected water features from development. The vegetated corridor assists in many functions, including but not limited to, the following:
+
+(a) Maintaining or reducing stream temperatures;
+
+(b) Maintaining natural stream corridors;
+
+(c) Reducing potential sediment, nutrient and pollutant loading into water;
+
+(d) Providing filtration, infiltration and natural water purification; and
+
+(e) Stabilizing slopes to prevent landslides contributing to sedimentation of water features.
+
+Statutory Reference: ORS
+
+History: Ord. 1334 §3 (Part), 2002.
+
+17.27.020 Applicability.
+
+(1) This chapter shall apply to development in the WQ district. The WQ district is composed of water quality resource areas and is an overlay district. “Water quality resource areas” means vegetated corridors and the adjacent protected water features as established by this chapter.
+
+(2) A wetland shall be a primary protected water feature if the wetland meets any one of the following criteria and is not a constructed wetland:
+
+(a) The wetland is fed by surface flows, sheet flows, or precipitation, and has evidence of flooding during the growing season, and has 60 percent or greater vegetative cover, and is over one-half acre in size;
+
+(b) The wetland qualifies as having “intact water quality function” under the 1996 Oregon Freshwater Wetland Assessment Methodology;
+
+(c) The wetland is in the Flood Management Area District, and has evidence of flooding during the growing season, and is five acres or more in size, and has a restricted outlet or no outlet;
+
+(d) The wetland qualifies as having “intact hydrologic control function” under the 1996 Oregon Freshwater Wetland Assessment Methodology;
+
+(e) The wetland or a portion of it is within a horizontal distance of less than one-fourth mile from a water body that meets the Oregon Department of Environmental Quality’s definition of a “water quality limited water body.”
+
+(3) Other primary protected water features include all rivers and perennial streams, intermittent streams draining greater than 100 acres, natural lakes, and springs that feed streams and wetlands and have year-round flow. Secondary protected water features include all intermittent streams draining 100 acres or less.
+
+(4) The minimum required width of the vegetated corridor is specified in Table 1.
+
+(a) At least three slope measurements along the water feature, at no more than 100-foot increments, shall be made for each property for which development is proposed. Depending on the slope measurements, the width of the vegetated corridor may vary.
+
+(b) To establish the width of the vegetated corridor, slope shall be measured in 25-foot increments away from the water feature until slope is less than 25 percent or a point 150 feet from the starting point of measurement is reached, whichever occurs first.
+
+(c) If an improved, public road right-of-way runs parallel to and is included within a water quality resource area as defined above, the water quality resource area shall not extend beyond the improved, public road right-of-way.
+
+Table 1
+Protected Water Feature Type
+Slope Adjacent to Protected Water Feature
+Starting Point for Measurements from Water Feature
+Width of Vegetated Corridor
+Primary Protected Water Feature
+<25 percent
+*Edge of bankfull stage *Delineated edge of protected wetland
+50 feet
+Primary Protected Water Feature
+=25 percent for 150 feet or more
+*Edge of bankfull stage *Delineated edge of protected wetland
+200 feet1
+Primary Protected Water Feature
+=25 percent for less than 150 feet
+*Edge of bankfull stage *Delineated edge of protected wetland
+Distance from starting point of measurement to break in 25 percent slope plus 50 feet1, 2, 3
+Secondary Protected Water Feature
+<25 percent
+*Edge of bankfull stage
+15 feet
+Secondary Protected Water Feature
+=25 percent
+*Edge of bankfull stage
+50 feet1
+1 Vegetated corridors in excess of 50 feet for primary protected features, or in excess of 15 feet for secondary protected features, apply on steep slopes only in the uphill direction from the protected water feature.
+2 Where the protected water feature is confined by a ravine or gully, the top of the ravine is the break in the greater-than-25-percent slope.
+3 A maximum reduction of 25 feet may be permitted in the width of the vegetated corridor beyond the slope break if a geotechnical report demonstrates that the slope is stable.
+1 Vegetated corridors in excess of 50 feet for primary protected features, or in excess of 15 feet for secondary protected features, apply on steep slopes only in the uphill direction from the protected water feature.
+2 Where the protected water feature is confined by a ravine or gully, the top of the ravine is the break in the greater-than-25-percent slope.
+3 A maximum reduction of 25 feet may be permitted in the width of the vegetated corridor beyond the slope break if a geotechnical report demonstrates that the slope is stable.
+1 Vegetated corridors in excess of 50 feet for primary protected features, or in excess of 15 feet for secondary protected features, apply on steep slopes only in the uphill direction from the protected water feature.
+2 Where the protected water feature is confined by a ravine or gully, the top of the ravine is the break in the greater-than-25-percent slope.
+3 A maximum reduction of 25 feet may be permitted in the width of the vegetated corridor beyond the slope break if a geotechnical report demonstrates that the slope is stable.
+1 Vegetated corridors in excess of 50 feet for primary protected features, or in excess of 15 feet for secondary protected features, apply on steep slopes only in the uphill direction from the protected water feature.
+2 Where the protected water feature is confined by a ravine or gully, the top of the ravine is the break in the greater-than-25-percent slope.
+3 A maximum reduction of 25 feet may be permitted in the width of the vegetated corridor beyond the slope break if a geotechnical report demonstrates that the slope is stable.
+
+(5) The text of this chapter shall determine whether development is located in the WQ district.
+
+(a) Map 12 (Water Quality Resource Areas) of the Comprehensive Plan shall be a reference for identifying areas likely to be located in the WQ district. The map identifies protected water features generally, but does not map the boundaries of the features. Because the text of this chapter controls and the map is reference only, there may be water features not shown on the map that require protection pursuant to the text.
+
+(b) If, in the course of a development review, evidence suggests that a property may contain a water quality resource area, the provisions of this chapter shall be applied to that development review. Additionally, the standards of GMC Section 17.27.080 (map administration) shall be applied and, if the standards are met, the WQ district boundaries shall be amended.
+
+(A) However, neither the provisions of this chapter nor the standards of the GMC Section 17.27.080 shall be applied when, pursuant to the review of an application for a building permit, evidence suggests that a property may contain a water quality resource area not referenced on Map 12 (Water Quality Resource Areas) of the Comprehensive Plan.
+
+(c) If, in the course of a development review, evidence suggests that a property may contain a vegetative corridor protecting a water feature lying outside of the city limits, and the protected water feature is identified on the respective jurisdiction’s Title 3 Water Quality Resource Areas Map, the provisions of this chapter shall be applied to that development review.
+
+(6) Pursuant to GMC Subsection 17.27.042 (2) and Division VII (administrative procedures), applicants for development on a site presumed to be within the WQ district may request a determination that the subject site is not in the district and thus is not subject to the standards of this chapter.
+
+(7) A determination by the city under the standards of this chapter shall not excuse the applicant from satisfying any state and federal requirements that are otherwise applicable.
+
+(8) This chapter does not apply to work necessary to protect, repair, maintain or replace existing structures, utility facilities, roadways, driveways, accessory uses and exterior improvements in response to emergencies provided that after the emergency has passed, adverse impacts are mitigated in accordance with Table 2.
+
+Statutory Reference: ORS
+
+History: Ord. 1334 §3 (Part), 2002.
+
+17.27.030 Administration.
+
+(1) Applications for subdivisions, partitions, planned unit developments, conditional uses, variances under GMC Chapter 17.72 (variances), alterations, expansions or changes of use of nonconforming uses, greenway conditional uses and design review shall demonstrate compliance with this chapter as part of the review proceedings for those developments.
+
+(2) Uses identified in GMC Subsection 17.27.040(3) and not subject to review as a subdivision, partition, planned unit development, conditional use, variance under GMC Chapter 17.72 (variances), alteration, expansion or change of use of a nonconforming use, greenway conditional use or design review may be approved under a WQ district permit pursuant to GMC Division VII (administrative procedures) and the provisions of this chapter.
+
+Statutory Reference: ORS Ch.
+
+History: Ord. 1334 §3 (Part), 2002.
+
+17.27.040 Uses within the WQ District.
+
+(1) Uses Allowed Outright.
+
+(a) Stream, wetland, riparian and upland enhancement or restoration projects;
+
+(b) Placement of structures that do not require a grading or building permit;
+
+(c) Maintenance of existing structures, roadways, driveways, utility facilities, accessory uses and other development;
+
+(d) Planting of vegetation listed on the Gladstone Native Plant List;
+
+(e) Removal of vegetation listed on the Gladstone Prohibited Plant List;
+
+(f) Removal of dead or diseased trees or trees that pose an imminent hazard to persons or property;
+
+(g) Removal of vegetation, except trees of 1.5 inches or greater caliper, provided such removal shall not result in more than 10 percent of the area of the vegetated corridor being devoid of vegetation.
+
+(2) Uses Allowed Under Prescribed Conditions.
+
+(a) Repair, replacement or improvement of utility facilities where the disturbed portion of the water quality resource area is restored and vegetation is replaced with vegetation identified on the Gladstone Native Plant List;
+
+(b) Additions, alterations, rehabilitation, or replacement of existing structures, roadways, driveways, accessory uses and other development that do not increase existing structural footprints in the water quality resource area where the disturbed portion of the water quality resource area is restored and vegetation is replaced with vegetation identified on the Gladstone Native Plant List;
+
+(c) Measures to remove or abate nuisances, or any other violation of statute, administrative rule or ordinance, where such measures are required by government order and the disturbed portion of the water quality resource area is restored and vegetation is replaced with vegetation identified on the Gladstone Native Plant List.
+
+(3) Uses Subject to Review. The following uses are allowed subject to compliance with the application requirements and development standards of GMC Sections 17.27.042 and 17.27.045:
+
+(a) Any use allowed in the underlying zoning district, other than those listed in GMC Subsections 17.27.040 (1) and (2);
+
+(b) Roads to provide access to protected water features or necessary ingress and egress across water quality resource areas;
+
+(c) New public or private utility facility construction;
+
+(d) Walkways and bike paths subject to GMC Subsection 17.27.045(1)(f);
+
+(e) New stormwater pretreatment facilities, subject to GMC Subsection 17.27.045(1)(g);
+
+(f) Widening an existing road within a water quality resource area;
+
+(g) Additions, alternations, rehabilitation or replacement of existing structures, driveways, accessory uses and other development that increase the structural footprint within the water quality resource area.
+
+(4) Prohibited Uses.
+
+(a) Any new development, other than that listed in GMC Subsections 17.27.040(1), (2) and (3);
+
+(b) Uncontained areas of hazardous materials as defined by the Department of Environmental Quality.
+
+Statutory Reference: ORS Ch.
+
+History: Ord. 1334 §3 (Part), 2002.
+
+17.27.042 Application requirements.
+
+(1) Applications for uses subject to review must provide the following information in a water resources report in addition to the information required for the underlying zoning district. An application shall not be complete until all of the following information is provided. The water resources report shall be stamped by a registered professional engineer or surveyor licensed by the State of Oregon.
+
+(a) A topographic map of the site at contour intervals of five feet or less showing a delineation of the water quality resource area;
+
+(b) The location of all existing natural features including, but not limited to, all trees of a caliper greater than six inches diameter at a height of four feet, natural or historic drainages on the site, springs, seeps, outcroppings of rocks and boulders within the water quality resource area;
+
+(c) Location of wetlands that qualify as primary protected water features. Where such wetlands are identified, a delineation shall be made by a qualified wetlands specialist pursuant to the Division of State Lands’ recommended wetlands delineation process;
+
+(d) An inventory and location of existing debris, nuisance vegetation, and any noxious or hazardous materials;
+
+(e) An assessment of the existing condition of the water quality resource area in accordance with Table 2;
+
+(f) An inventory of vegetation, including percentage ground and canopy coverage;
+
+(g) An alternatives analysis in conformance with the requirements of GMC Subsections 17.27.045(1)(a) and (b);
+
+(h) A water quality resource area mitigation plan. The plan shall contain the following information:
+
+(A) A description of adverse impacts that will be caused as a result of development;
+
+(B) An explanation of how adverse impacts to resource areas will be avoided, minimized, and/or mitigated in accordance with, but not limited to, Table 2;
+
+(C) A list of all responsible parties including, but not limited to, the owner, applicant, contractor or other persons responsible for work on the development site;
+
+(D) A map showing where the specific mitigation activities will occur;
+
+(E) An implementation schedule, including a timeline for construction, mitigation, mitigation maintenance, monitoring, reporting and a contingency plan. All in-stream work in fish-bearing streams shall be done in accordance with the Oregon Department of Fish and Wildlife in-stream timing schedule.
+
+(i) If applicable, any requests to vary from this chapter’s standards pursuant to GMC Section 17.27.070 (variances);
+
+(j) Existing data may be used to satisfy these requirements only if the protected water feature is not located on the subject property and access to the water feature is denied for the purposes of supplying the above information. In order to use existing data, an applicant must submit the following:
+
+(A) A copy of a letter addressed to the owner of the property on which the protected water feature exists requesting access to the property for the purpose of completing a delineation of the protected water feature; and
+
+(B) A copy of a return receipt from the US Postal Service verifying that the letter was mailed certified and was received or refused.
+
+(2) Requests for determination that a site is not within the WQ District.
+
+(a) Applicants for a determination under this subsection shall submit a site plan meeting the following requirements:
+
+(A) The site plan shall be drawn at a scale of no less than one inch equaling 20 feet;
+
+(B) The site plan shall show the location of the proposed development and the lot lines of the property on which development is proposed;
+
+(C) The site plan shall show the location of the protected water feature. If the protected water feature is a wetland, the delineation shall be made by a qualified wetlands specialist pursuant to the Division of State Lands’ recommended wetlands delineation process. For all other protected water features, the location shall be established by a registered professional engineer or surveyor licensed by the State of Oregon.
+
+(D) The site plan shall show the location of the water quality resource area, including slope and drainage information sufficient to classify the protected water feature under Table 1.
+
+(E) Applicants are required to submit a field-verified delineation of the water quality resource area on the subject property as part of the application. Only if the protected water feature is not located on the subject property and access to the water feature, for purposes of completing a delineation, is denied may existing data be used to delineate the boundary of the water quality resource area. To receive an exemption from the requirement to submit a field-verified delineation, an applicant must submit the following:
+
+(i) A copy of a letter addressed to the owner of the property on which the protected water feature exists requesting access to the property for the purpose of completing a delineation of the protected water feature; and
+
+(ii) A copy of a return receipt from the US Postal Service verifying that the letter was mailed certified and was received or refused.
+
+Statutory Reference: ORS Ch.
+
+History: Ord. 1334 §3 (Part), 2002.
+
+17.27.045 Development standards.
+
+(1) Approvals for uses subject to review shall satisfy the following standards:
+
+(a) No practicable alternative locations exist for the requested development that will not disturb the water quality resource area;
+
+(b) No reasonably practicable alternative design or method of development exists that would have a lesser impact on the water quality resource area than the one proposed. If no such reasonably practicable alternative design or method of development exists, the city shall condition the project to:
+
+(A) Limit its disturbance and impact on the water quality resource area to the minimum extent necessary to achieve the proposed development; and
+
+(B) Ensure that impacts to the functions and values of the water quality resource area will be mitigated or impacted areas restored to the extent practicable;
+
+(c) The water quality resource area shall be restored and maintained in accordance with the mitigation plan and the specifications in Table 2;
+
+(d) To the greatest extent practicable, existing vegetation shall be protected and left in place. Work areas shall be carefully located and marked to reduce potential damage to the water quality resource area. Trees in the water quality resource area shall not be used as anchors for stabilizing construction equipment.
+
+(e) Prior to construction, the water quality resource area shall be flagged, fenced or otherwise marked and shall remain undisturbed except as allowed by this chapter. Such markings shall be maintained until construction is complete.
+
+(f) Walkways and bike paths shall be subject to the following standards:
+
+(A) Where it is not practicable to maintain a setback of greater than 30 feet from a protected water feature, a maximum of ten percent of the total area of a gravel, earthen, tree bark product or equivalent walkway or bike path may be within 30 feet of the protected water feature.
+
+(B) For any paved walkway or bike path, the width of the water quality resource area on the subject property shall be increased by a distance equal to the width of the paved path. Where it is not practicable to maintain a setback of greater than 30 feet from a protected water feature, a maximum of ten percent of the total area of the walkway or bike path may be within 30 feet of the protected water feature.
+
+(C) A walkway or bike path under either subsection (A) or (B) of this subsection shall not exceed ten feet in width, shall not be constructed closer than ten feet from the boundary of the protected water feature, and shall be constructed so as to minimize disturbance to existing vegetation.
+
+(g) Stormwater pretreatment facilities.
+
+(A) A stormwater pretreatment facility may encroach a maximum of 25 feet into the outside boundary of the water quality resource area of a primary protected water feature.
+
+(B) A stormwater pretreatment facility may encroach a maximum of five feet into the outside boundary of the water quality resource area of a secondary protected water feature.
+
+(C) The area of encroachment must be replaced by adding an equal area to the water quality resource area on the subject property.
+
+(D) All stormwater shall be collected on-site and passed through a treatment facility, such as a detention/composting facility or filter as approved by the City Administrator or designee, prior to being discharged into the water quality resource area.
+
+Table 2 Water Quality Resource Area Mitigation Requirements.
+Existing Condition of Water Quality Resource Area
+Mitigation Requirements
+Mitigation Requirements
+Good Existing Corridor:
+Combination of trees, shrubs and groundcover are 80 percent present, and there is more than 50 percent tree canopy coverage in the vegetated corridor.
+If Area is disturbed during construction:
+1. Restore and mitigate according to approved plan using plants identified on the Gladstone Native Plant List.
+2. Remove debris.
+3. Prior to construction, a qualified professional shall prepare and submit a plan for mitigating water quality impacts related to the development, including: sediments, temperature nutrients, sediment control, temperature control, or any other condition that may have caused the protected water feature to be listed on DEQ’s 303(d) list.
+4. Re-vegetation must occur during the next planting season following site disturbance. Seeding may be required prior to establishing plants for site stabilization. Annual replacement of plants that do not survive is required until vegetation representative of natural conditions is established on the site.
+If Area is undisturbed during construction:
+1. Remove debris
+If Area is disturbed during construction:
+1. Restore and mitigate according to approved plan using plants identified on the Gladstone Native Plant List.
+2. Remove debris.
+3. Prior to construction, a qualified professional shall prepare and submit a plan for mitigating water quality impacts related to the development, including: sediments, temperature nutrients, sediment control, temperature control, or any other condition that may have caused the protected water feature to be listed on DEQ’s 303(d) list.
+4. Re-vegetation must occur during the next planting season following site disturbance. Seeding may be required prior to establishing plants for site stabilization. Annual replacement of plants that do not survive is required until vegetation representative of natural conditions is established on the site.
+If Area is undisturbed during construction:
+1. Remove debris
+Marginal Existing Corridor:
+Combination of trees, shrubs and groundcover are 80 percent present, and there is 25 to 50 percent tree canopy coverage in the vegetation corridor.
+If Area is undisturbed during construction:
+If Area is disturbed during construction:
+1. Restore and mitigate according to approved plan using plants identified on the Gladstone Native Plant List that would reasonably represent the vegetative composition that would naturally occur on the site.
+2. Remove debris.
+3. Re-vegetation must occur during the next planting season following site disturbance. Seeding may be required prior to establishing plants for site stabilization. Annual replacement of plants that do not survive is required until vegetation representative of natural conditions is established on the site.
+1. Remove debris.
+If Area is disturbed during construction:
+1. Restore and mitigate according to approved plan using plants identified on the Gladstone Native Plant List that would reasonably represent the vegetative composition that would naturally occur on the site.
+2. Remove debris.
+3. Re-vegetation must occur during the next planting season following site disturbance. Seeding may be required prior to establishing plants for site stabilization. Annual replacement of plants that do not survive is required until vegetation representative of natural conditions is established on the site.
+1. Remove debris.
+Degraded Existing Corridor:
+Less vegetation and canopy coverage than marginal vegetated corridors, and/or greater than ten percent surface coverage of any non-native species.
+If Area is disturbed during construction:
+1. Restore and mitigate according to approved plan using plants identified on the Gladstone Native Plant List that would reasonably represent the vegetative composition that would naturally occur on the site.
+2. Remove debris.
+3. Re-vegetation must occur during the next planting season following site disturbance. Seeding may be required prior to establishing plants for site stabilization. Annual replacement of plants that do not survive is required until vegetation representative of natural conditions is established on the site.
+If Area is undisturbed during construction:
+1. Vegetate bare areas with plants identified on the Gladstone Native Plant List.
+2. Remove non-native species with re-vegetate with plants identified on the Gladstone Native Plant List.
+3. Remove debris
+If Area is disturbed during construction:
+1. Restore and mitigate according to approved plan using plants identified on the Gladstone Native Plant List that would reasonably represent the vegetative composition that would naturally occur on the site.
+2. Remove debris.
+3. Re-vegetation must occur during the next planting season following site disturbance. Seeding may be required prior to establishing plants for site stabilization. Annual replacement of plants that do not survive is required until vegetation representative of natural conditions is established on the site.
+If Area is undisturbed during construction:
+1. Vegetate bare areas with plants identified on the Gladstone Native Plant List.
+2. Remove non-native species with re-vegetate with plants identified on the Gladstone Native Plant List.
+3. Remove debris
+
+Statutory Reference: ORS Ch.
+
+History: Ord. 1334 §3 (Part), 2002.
+
+17.27.050 Subdivisions and partitions.
+
+(1) Subdivision and partition plats shall delineate the water quality resource area as a separate tract or part of a larger tract that meets the requirements of this subsection. The water quality resource area shall not be part of any lot or parcel used for construction of a dwelling unit. Prior to final plat approval, the water quality resource area tract shall be identified as one of the following:
+
+(a) Private open space; or
+
+(b) Public open space where the tract has been dedicated to a governmental unit by mutual agreement.
+
+Statutory Reference: ORS Ch.
+
+History: Ord. 1334 §3 (Part), 2002.
+
+17.27.060 Density transfers.
+
+(1) Residential density accruing to portions of a property within the WQ District may be transferred—for the purpose of residential development—to a portion of the subject property that is outside the district.
+
+(2) Approval of a density transfer does not waive other requirements of this title that pertain to development of the property receiving the density transfer with the following exceptions: minimum lot area, minimum lot width and minimum lot depth. Minimum setbacks shall be those established by GMC Subsection 17.38.060(4).
+
+(3) A request for a density transfer shall be submitted with an application for a subdivision or partition and shall include calculations justifying the requested density increase. Fractional units shall be rounded down to the next whole number.
+
+(4) The minimum density standard shall not increase due to a density transfer.
+
+Statutory Reference: ORS Ch.
+
+History: Ord. 1334 §3 (Part), 2002.
+
+17.27.070 Variances.
+
+(1) In conjunction with an application filed pursuant to GMC Section 17.27.030, a variance to one or more of the standards of this chapter may be requested.
+
+(2) Metro shall be notified of the city’s receiving an application to vary the requirements of this chapter and within seven days of a decision on the variance.
+
+(3) There are three distinct types of variances that may be available.
+
+(a) Lot of Record Variance. Development may occur on lots of record located completely within the WQ district that are created, or that the city has approved for creation, on or before the effective date of this chapter. Development shall not disturb more than 5,000 square feet of the vegetated corridor required by Table 1.
+
+(b) Hardship Variance. A hardship variance may be approved if the applicant demonstrates that the variance is the minimum necessary to allow the proposed use.
+
+(A) The city may impose such conditions as are deemed necessary to limit any adverse impacts that may result from granting a hardship variance. At a minimum, the variance shall be subject to the following conditions:
+
+(i) The minimum width of the vegetated corridor shall be 15 feet on each side of a primary protected water feature; and
+
+(ii) No more than 25 percent of the length of the water quality resource area for a primary protected water feature within a development site shall be less than 30 feet in width on each side of the water feature.
+
+(iii) The minimum width of the vegetated corridor shall be ten feet on each side of a secondary protected water feature.
+
+(c) Buildable Lot Variance. A buildable lot variance may be approved for a lot that is partially inside the water quality resource area. Development of such lots shall not disturb more than 5,000 square feet of the vegetated corridor required by Table 1. The city may impose such conditions as are deemed necessary to limit any adverse impacts that may result from granting a buildable lot variance. The applicant must demonstrate the following:
+
+(A) The proposed use cannot meet the standards in subsection (3)(b)(A)(i) through (iii) of this section;
+
+(B) No other application of this chapter could result in permission for an economically viable use of the subject property. Evidence to meet this criterion shall include a list of uses allowed on the subject property;
+
+(C) The variance is the minimum necessary to allow the proposed use; and
+
+(D) The variance will comply with GMC Subsection 17.27.042(1)(h).
+
+Statutory Reference: ORS Ch.
+
+History: Ord. 1334 §3 (Part), 2002.
+
+17.27.080 Map administration.
+
+(1) If the city receives evidence that a wetland meets any one of the criteria in GMC Subsection 17.27.020(2) or that a protected water feature identified on Map 12 (Water Quality Resource Areas) of the Comprehensive Plan does not qualify as a protected water feature under GMC Subsections 17.27.020(2) or (3), the city shall, subject to GMC Subsection 17.27.020(5)(b)(A), process a legislative application for amendment of Map 12 (Water Quality Resource Areas) of the Comprehensive Plan pursuant to GMC Division VII (administrative procedures).
+
+(2) Notice of the initial public hearing on the application shall be mailed within 90 days of the city’s receipt of the evidence required by subsection (1) of this section.
+
+(3) The application shall be approved if it is demonstrated that:
+
+(a) A protected water feature identified on Map 12 (Water Quality Resource Areas) of the Comprehensive Plan does not qualify as a protected water feature under GMC Subsections 17.27.020(2) or (3); or
+
+(b) A wetland not identified on Map 12 (Water Quality Resource Areas) of the Comprehensive Plan meets any one of the criteria in GMC Subsection 17.27.020(2).
+
+Statutory Reference: ORS Ch.
+
+History: Ord. 1334 §3 (Part), 2002.
+
+17.27.090 Definitions.
+
+Unless specifically defined below, words and phrases used in this chapter shall be interpreted so as to give them the meaning they have in common usage and to give this chapter its most reasonable application. The following definitions supplement those found in GMC Chapter 17.06 (definitions).
+
+(1) “Bankfull stage” means the stage or elevation at which water overflows the natural banks of streams or other waters of the state and begins to inundate the upland. The bankfull stage may be approximated using either the two-year recurrence interval flood elevation or one foot measured vertically above the ordinary mean high water line.
+
+(2) “Beneficial uses” or “beneficial water uses” means, as defined by the Oregon Department of Water Resources, the use of water for the benefit of an appropriator for a purpose consistent with the laws and the economic and general welfare of the people of the state and includes, but is not limited to, domestic, fish life, industrial, instream, irrigation, mining, municipal, pollution abatement, power development, recreation, stockwater and wildlife uses.
+
+(3) “Created wetlands” means wetlands developed in an area previously identified as a non-wetland to replace, or mitigate, wetland destruction or displacement. A created wetland shall be regulated and managed the same as an existing wetland.
+
+(4) “Constructed wetlands” means wetlands developed as a water quality or quantity facility, subject to change and maintenance as such. These areas must be clearly defined and separated from naturally occurring or created wetlands.
+
+(5) “Debris” means discarded man-made objects that would not occur in an undeveloped stream corridor or wetland. Debris includes, but is not limited to, tires, vehicles, litter, scrap metal, construction waste, lumber, plastic or styrofoam. Debris does not include objects necessary to a use allowed by this chapter, or ornamental and recreational structures. Debris does not include existing natural plant materials or natural plant materials that are left after flooding, downed or standing dead trees or trees that have fallen into protected water features.
+
+(6) “Development” means any man-made change, such as buildings or other structures, mining, dredging, paving, filling, vegetation removal or grading in amounts greater than 10 cubic yards on any lot or excavation. Development does not include the following:
+
+(a) Stream enhancement or restoration projects approved by the city; and
+
+(b) Farming practices as defined in ORS 30.930 and farm use as defined in ORS 215.203, except that buildings associated with farm practices and farm uses are subject to the requirements of this chapter; and
+
+(c) Construction on lots in subdivisions meeting the criteria of ORS 92.040(2).
+
+(7) “Disturb” means man-made changes to the existing physical status of the land, which are made in connection with development. The following uses are excluded from the definition:
+
+(a) Enhancement or restoration of the water quality resource area, subject to approval under this chapter;
+
+(b) Planting of vegetation listed on the Gladstone Native Plant List;
+
+(c) Installation of erosion control measures pursuant to an approved erosion and sediment control plan under GMC Chapter 15.06 (earthwork and erosion control standards).
+
+(8) “Emergency” means any man-made or natural event or circumstance causing or threatening loss of life, injury to person or property, and includes, but is not limited to, fire, explosion, flood, severe weather, drought, earthquake, volcanic activity, spills or releases of oil or hazardous material, contamination, utility or transportation disruptions, and disease.
+
+(9) “Enhancement” means the process of improving upon the natural functions and/or values of an area or feature that has been degraded by human activity. Enhancement activities may or may not return the site to a pre-disturbance condition, but create/ recreate processes and features that occur naturally.
+
+(10) “Erosion” means the movement of soil particles resulting from actions of water, wind or mechanical means.
+
+(11) “Fill” means any material such as, but not limited to, sand, soil, rock or gravel that is placed for the purposes of development or redevelopment.
+
+(12) “Metro” means the regional government of the Portland metropolitan area and the elected Metro Council as the policy setting body of the government.
+
+(13) “Mitigation” means the reduction of adverse effects of a proposed project by considering, in the following order:
+
+(a) Avoiding the impact altogether by not taking a certain action or parts of an action;
+
+(b) Minimizing impacts by limiting the degree or magnitude of the action and its implementation;
+
+(c) Rectifying the impact by repairing, rehabilitating or restoring the affected environment;
+
+(d) Reducing or eliminating the impact over time by preservation and maintenance operations during the life of the action by monitoring and taking appropriate measures; and
+
+(e) Compensating for the impact by replacing or providing comparable substitute water quality resource areas.
+
+(14) “Non-native,” “noxious” or “nuisance” vegetation means plant species that have been introduced and, due to aggressive growth patterns and lack of natural enemies in the area where introduced, spread rapidly into native plant communities, or that are identified on the Gladstone Prohibited Plant List.
+
+(15) “Ordinary mean high water line” means the line on the bank or shore to which water ordinarily rises in season; synonymous with “mean high water.”
+
+(16) “Practicable” means available and capable of being done after taking into consideration cost, existing technology and logistics in light of overall project purpose.
+
+(17) “Resource” versus “facility” means the distinction being made is between a “resource,” a functioning natural system such as a wetland or stream; and a “facility” which refers to a created or constructed structure or drainage way that is designed, constructed and maintained to collect and filter, retain, or detain surface water runoff during and after a storm event for the purpose of water quality improvement.
+
+(18) “Restoration” means the process of returning a disturbed or altered area or feature to a previously existing natural condition. Restoration activities re-establish the structure, function and/or diversity to that which existed prior to impacts caused by human activity.
+
+(19) “Riparian” means those areas associated with rivers, streams, lakes and wetlands, consisting of the area of transition from an aquatic ecosystem to a terrestrial ecosystem and where vegetation communities are predominately influenced by their association with water.
+
+(20) “Routine repair and maintenance” means activities directed at preserving an existing allowed use or facility, without expanding the development footprint or site use.
+
+(21) “Significant negative impact” means an impact that affects the natural environment, considered individually or cumulatively with other impacts on the water quality resource area, to the point where existing water quality functions and values are degraded.
+
+(22) “Stormwater” means the surface water runoff that results from all natural forms of precipitation.
+
+(23) “Stormwater pretreatment facility” means any structure or drainage way that is designed, constructed and maintained to collect and filter, retain or detain surface water runoff during and after a storm event for the purpose of water quality improvement.
+
+(24) “Stream” means areas where surface water produces a defined channel or bed, including bedrock channels, gravel beds, sand and silt bends, and defined-channel swales. The channel or bed does not have to contain water year-round. This definition is not meant to include irrigation ditches, canals, storm or surface water runoff structures, or other artificial watercourses unless they are used to convey streams naturally occurring prior to construction of such watercourses. For the purposes of this chapter, streams are categorized into two classes: perennial streams and intermittent streams. “Perennial stream” means a stream that flows year-round during years of normal precipitation; “intermittent stream” means a stream that flows only part of the year, or seasonally, during years of normal precipitation.
+
+(25) “Top of bank” means the same as “bankfull stage.”
+
+(26) “Utility facilities” means buildings, structures or any constructed portion of a system that provides for the production, transmission, conveyance, delivery or furnishing of services including, but not limited to, heat, light, water, power, natural gas, sanitary sewer, stormwater, telephone and cable television. Utility facilities do not include stormwater pretreatment facilities.
+
+(27) “Vegetated corridor” means the area of setback between the top of bank of a protected water feature and the delineated edge of the water quality resource area as defined in Table 1.
+
+(28) “Watershed” means a geographic unit defined by the flows of rainwater or snowmelt. All land in a watershed drains to a common outlet, such as a stream, lake or wetland.
+
+(29) “Wetlands” means those areas that are inundated or saturated by surface water or ground water at a frequency and duration sufficient to support and under normal circumstances do support a prevalence of vegetation typically adapted for life in saturated soil conditions. Wetlands generally include swamps, marshes, bogs and similar areas.
+
+Statutory Reference: ORS Ch.
+
+History: Ord. 1334 §3 (Part), 2002.

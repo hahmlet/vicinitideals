@@ -1,0 +1,905 @@
+Chapter 17.25
+
+HCAD—HABITAT CONSERVATION AREA DISTRICT
+
+Sections:
+
+17.25.010 Purpose.
+
+17.25.020 Area of application.
+
+17.25.030 Definitions.
+
+17.25.040 Exempt uses.
+
+17.25.050 Prohibited uses.
+
+17.25.060 Development review requirements.
+
+17.25.070 Submittal requirements.
+
+17.25.080 Construction management plans.
+
+17.25.090 HCA map verification.
+
+17.25.100 Habitat conservation area development permits.
+
+17.25.110 Setbacks.
+
+17.25.010 Purpose.
+
+Chapter 17.25 is adopted to implement the policies of the Comprehensive Plan for Habitat Conservation Areas.
+
+History: Ord. 1496 §1 (Exh. A), 2009.
+
+17.25.020 Area of application.
+
+A. Chapter 17.25 applies in the Habitat Conservation Area District (HCAD). The HCAD applies to all parcels containing a Habitat Conservation Area (HCA). The HCAD also applies to any area that is less than 100 feet outside the boundary of an HCA even if the area is not located on the same parcel as the HCA. HCAs are identified on maps adopted by reference in Chapter 6 of the Comprehensive Plan (hereinafter referred to as the HCA Map) and are categorized as High, Moderate, or Low HCA.
+
+B. An applicant may dispute the location of an HCA by submitting an application for HCA Map Verification pursuant to Section 17.25.060(B) or by applying for a Comprehensive Plan amendment to modify the HCA Map. HCA Map Verification does not amend the Comprehensive Plan.
+
+C. Development within an HCA in accordance with the provisions of Chapter 17.25 shall not result in removal of such developed areas from the HCA and shall not change the applicable HCA category.
+
+History: Ord. 1496 §1 (Exh. A), 2009.
+
+17.25.030 Definitions.
+
+Unless specifically defined in this Subsection, words or phrases used in Chapter 17.25 shall be interpreted to give them the same meaning as they have in common usage and to give Chapter 17.25 its most reasonable application.
+
+A. Bankfull Stage: The stage or elevation at which water overflows the natural banks of streams or other waters of the state and begins to inundate the upland. The bankfull stage may be approximated using either the two-year recurrence interval flood elevation or one foot measured vertically above the ordinary mean high water line.
+
+B. Building Footprint: The area that is covered by buildings or other roofed structures. A roofed structure includes any structure more than six feet above grade at any point, and that provides an impervious cover over what is below. Building footprint also includes uncovered horizontal structures such as decks, stairways, and entry bridges that are more than six feet above grade. Eaves are not included in the building footprint. Underground facilities and structures are defined based on the foundation line.
+
+C. Developed Areas Not Providing Vegetative Cover: Areas that do not meet the definition of Forest Canopy, Low Structure Vegetation or Open Soils, or Woody Vegetation.
+
+D. Developed Flood Area: A flood area (a) upon which a building or other structure has been located, or (b) that is an uncovered, hard-surfaced area or an area covered with a perforated hard surface (such as “Grasscrete”) that is able to withstand vehicular traffic or other heavy-impact uses; provided, however, that graveled areas shall not be considered developed flood areas.
+
+E. Development: any manmade change defined as structures, roads, utilities, mining, dredging, paving, filling, or grading in amounts greater than 10 cubic yards. In addition, “development” is any other activity that results in the removal of more than 10 percent or 20,000 square feet of the Habitat Conservation Area vegetation on a lot of record, whichever is less. The calculation of the amount of vegetative cover removed shall be done separately for each lot of record and shall include all vegetative cover removed after December 8, 2009, regardless of whether the removal is done as one project or a series of projects. When individual trees are removed, the area contained within the tree’s drip line shall be the basis for calculating the square footage of vegetation removed.
+
+F. Disturb: Manmade changes to the existing physical status of the land, which are made in connection with development.
+
+G. Disturbance Area: An area that contains all temporary and permanent development, exterior improvements, and staging and storage areas on the site. For new development the disturbance area must be contiguous. The disturbance area does not include agricultural and pasture lands or naturalized areas.
+
+H. Drip Line: The outermost edge of a tree’s canopy; when delineating the drip line on the ground, it will appear as an irregularly shaped circle defining the canopy’s perimeter.
+
+I. Ecological Functions: The primary biological and hydrologic characteristics of healthy fish and wildlife habitat. Riparian ecological functions include microclimate and shade, streamflow moderation and water storage, bank stabilization and sediment/pollution control, sources of large woody debris and natural channel dynamics, and organic material sources. Upland wildlife ecological functions include size of habitat area, amount of habitat with interior conditions, connectivity of habitat to water resources, connectivity to other habitat areas, and presence of unique habitat types.
+
+J. Emergency: Any manmade or natural event or circumstance causing or threatening loss of life, injury to person or property, and includes, but is not limited to, fire, explosion, flood, severe weather, drought, earthquake, volcanic activity, spills or releases of oil or hazardous material, contamination, utility or transportation disruptions, and disease.
+
+K. Enhancement: The process of improving upon the natural functions and/or values of an area or water resource that has been degraded by human activity. Enhancement activities may or may not return the site to a pre-disturbance condition, but create/recreate beneficial processes and resources that occur naturally.
+
+L. Erosion: The movement of soil particles resulting from actions of water or wind.
+
+M. Fill: Any material such as, but not limited to, sand, soil, rock, or gravel that is placed in a wetland or flood area for the purposes of development.
+
+N. Flood Areas: Lands contained within the Floodplain Management District regulated by Section Chapter 17.25 and lands that were inundated in the February 1996 flood. (Note: Areas that were mapped as flood areas but were filled to a level above the base flood level prior to September 30, 2005, consistent with all applicable local, state, and federal laws shall no longer be considered habitat based on their status as flood areas.)
+
+O. Flood Management Areas: Flood areas and, in addition, lands that have documented evidence of flooding.
+
+P. Forest Canopy: Areas that are part of a contiguous grove of trees of one acre or larger in area with approximately 60% or greater crown closure, irrespective of whether the entire grove is within 200 feet of the relevant water resource.
+
+Q. Habitat-Friendly Development: A method of developing property that has less detrimental impact on fish and wildlife habitat than do traditional development methods. Examples include clustering development to avoid habitat, using alternative materials and designs such as pier, post, or piling foundations designed to minimize tree root disturbance, managing storm water on-site to help filter rainwater and recharge groundwater sources, collecting rooftop water in rain barrels for reuse in site landscaping and gardening, and reducing the amount of effective impervious surface created by development.
+
+R. Invasive Non-Native or Noxious Vegetation: Plant species that are listed in the Oregon Department of Agriculture’s Noxious Weed Policy and Classification System.
+
+S. Low Structure Vegetation or Open Soils: Areas that are part of a contiguous area one acre or larger of grass, meadow, crop-lands, or areas of open soils located within 300 feet of a surface stream (low structure vegetation areas may include areas of shrub vegetation less than one acre in size if they are contiguous with areas of grass, meadow, crop-lands, orchards, Christmas tree farms, holly farms, or areas of open soils located within 300 feet of a surface stream and together form an area of one acre in size or larger).
+
+T. Mitigation: The reduction of adverse effects of proposed development by considering, in the following order
+
+1. Avoiding the impact by not taking a certain action or parts of an action;
+
+2. Minimizing impacts by limiting the degree or magnitude of the action and its implementation;
+
+3. Rectifying the impact by repairing, rehabilitating, or restoring the affected environment;
+
+4. Reducing or eliminating the impact over time by preservation and maintenance operations during the life of the action by monitoring and taking appropriate measures; and
+
+5. Compensating for the impact by replacing or providing comparable substitute Habitat Conservation Areas.
+
+U. Native Vegetation: Vegetation native to the Portland metropolitan area provided that it is not invasive non-native or noxious vegetation.
+
+V. Open Space: Land that is undeveloped and that is planned to remain so indefinitely. The term encompasses parks, forests, and farmland. It may also refer only to land zoned as being available to the public, including playgrounds, watershed preserves, and parks.
+
+W. Ordinary Mean High Water Line: The line on the bank or shore to which water ordinarily rises in season.
+
+X. Practicable: Available and capable of being done after taking into consideration cost, existing technology, and logistics in light of overall project purpose and probable impact on ecological functions. The practicability of a development option shall include consideration of the type of HCA that will be affected by the proposed development. For example, High HCAs have been so designated because they are areas that have been identified as having lower urban development value and higher-valued habitat, so it should be more difficult to show that alternative development options that avoid the habitat are not practicable. On the other hand, Low HCAs have been so designated because they are areas that have been identified as having higher urban development value and lower-valued habitat, so it should be less difficult to show that alternative development options that avoid the habitat are not practicable.
+
+Y. Restoration: The process of returning a disturbed or altered area or water resource to a previously existing natural condition. Restoration activities reestablish the structure, function, or diversity to that which existed prior to impacts caused by human activity.
+
+Z. Riparian: Those areas associated with streams, lakes, and wetlands where vegetation communities are predominately influenced by their association with water.
+
+AA. Significant Detrimental Impact: An impact that affects the natural environment, considered individually or cumulatively with other impacts on the HCA, to the point where existing fish and wildlife habitat functional values are degraded.
+
+BB. Stormwater: The surface water runoff that results from all natural forms of precipitation.
+
+CC. Stormwater Pretreatment Facility: Any structure or drainage way that is designed, constructed, and maintained to collect and filter, retain, or detain surface water run-off during and after a storm event for the purpose of water quality improvement.
+
+DD. Stream: A body of running water moving over the earth’s surface in a channel or bed, such as a creek, rivulet, or river. A stream flows at least part of the year, including perennial and intermittent streams. Streams are dynamic in nature and their structure is maintained through build-up and loss of sediment.
+
+EE. Structure: A building or other major improvement that is built, constructed, or installed, not including minor improvements—such as fences, utility poles, flagpoles, or irrigation system components—that are not customarily regulated through zoning codes.
+
+FF. Urban Development Value: The economic value of a property lot or parcel as determined by analyzing three separate variables: assessed land value, value as a property that could generate jobs (“employment value”), and the Metro 2040 design type designation of property. The urban development value of all properties containing regionally significant fish and wildlife habitat is depicted on the Metro Habitat Urban Development Value Map.
+
+GG. Utility Facilities: Buildings, structures, or any constructed portion of a system that provides for the production, transmission, conveyance, delivery, or furnishing of services including, but not limited to, heat, light, water, power, natural gas, sanitary sewer, stormwater, telephone, and cable television. Utility facilities do not include stormwater pre-treatment facilities.
+
+HH. Water Resource: All rivers, streams (regardless of whether they carry year-round flow, i.e., including intermittent streams), springs which feed streams and wetlands and have year-round flow, flood management areas, wetlands, and all other bodies of open water.
+
+II. Watershed: A watershed is a geographic unit defined by the flows of rainwater or snowmelt. All land in a watershed drains to a common outlet, such as a stream, lake, or wetland.
+
+JJ. Wetlands: Areas that are inundated or saturated by surface water or ground water at a frequency and duration sufficient to support and under normal circumstances do support a prevalence of vegetation typically adapted for life in saturated soil conditions. Wetlands generally include swamps, marshes, bogs, and similar areas. Wetlands are those areas identified and delineated by a qualified wetland specialist as set forth in the 1987 Corps of Engineers Wetland Delineation Manual.
+
+KK. Woody Vegetation: Areas that are part of a contiguous area one acre or larger of shrub or open or scattered forest canopy (less than 60% crown closure) located within 300 feet of a surface stream.
+
+History: Ord. 1496 §1 (Exh. A), 2009.
+
+17.25.040 Exempt uses.
+
+The following uses and activities are exempt from the requirements of Chapter 17.25, except that if the use or activity requires a building or grading permit, a Construction Management Plan shall be required pursuant to Subsection 17.25.060(A). Notwithstanding the requirement for HCA Map Verification under Subsection 17.25.060(B), the HCA Map shall be deemed reliable for the purpose of administering Section 17.25.040 unless an approved HCA Map Verification exists for the subject property, in which case the approved HCA Map Verification shall be used to administer Section 17.25.040.
+
+A. Uses and activities that do not constitute development, except if the use or activity is prohibited by Section 17.25.050;
+
+B. Development that:
+
+1. Had it been proposed prior to December 8, 2009, would not have required a land use, building, erosion prevention and sediment control, or grading permit; and
+
+2. Is located on a parcel that is developed with a dwelling for which a building or manufactured home placement permit was issued prior to December 8, 2009, or a dwelling that was lawfully established prior to the requirement to obtain such a permit;
+
+C. Development, authorized by a valid design review or conditional use permit for which a complete application was submitted prior to December 8, 2009, provided that the development will not result in an increase in the HCA disturbance area approved under the design review or conditional use permit;
+
+D. Development on a partition parcel or a subdivision lot, provided that the parcel or lot is part of a partition or subdivision approved pursuant to Subsection 17.25.070(A)(4) or (B);
+
+E. Maintenance, alteration, expansion, repair, and replacement of existing structures, provided that the building footprint is not increased;
+
+F. Expansion or replacement of an existing structure, provided that:
+
+1. The expansion or replacement shall not intrude more than 500 square feet into the HCA in addition to the building footprint that lawfully existed on December 8, 2009. If more than one expansion or replacement of the same structure is undertaken—regardless of whether the work is done as one project or a series of projects—the total increase in the intrusion in the HCA shall not exceed this 500-square-foot limit;
+
+2. The new intrusion into the HCA shall be no closer to the protected water resource than the pre-existing structure; and
+
+3. Replacement is lawfully commenced within one year of destruction of the original structure. “Lawfully commenced” means the filing of an application for a land use, building, septic, grading, manufactured dwelling or residential trailer placement, plumbing, electrical, or other development permit required by the County or other appropriate permitting agency that is necessary to begin replacement of the structure.
+
+G. Development that will have a disturbance area that does not exceed 120 square feet. If more than one development is undertaken pursuant to this exemption—regardless of whether the work is done as one project or a series of projects—the total disturbance area shall not exceed this 120 square-foot limit;
+
+H. Temporary clearing of vegetative cover in an HCA, not to exceed 200 square feet per lot of record, for the purpose of site investigations and pits for preparing soil profiles, provided that cleared areas are replanted with native vegetation when the investigation is complete. After replanting, no open soil areas greater than 25 square feet in area shall remain. If a tree is removed, the area contained within the tree’s drip line shall be the basis for calculating the square footage of vegetative cover removed. If a tree is removed in an HCA and the tree is equal to or greater than 6 inches in diameter at breast height, it shall be replaced as set forth in Table 6;
+
+I. Maintenance of existing gardens, pastures, lawns, and landscaping, including the installation of new irrigation systems within existing gardens, pastures, lawns, and landscaping;
+
+J. Removal of invasive non-native or noxious vegetation and the planting or propagation of native vegetation, provided that:
+
+1. Handheld tools are used to remove invasive non-native or noxious vegetation; and
+
+2. After such removal, all open soil areas greater than 25 square feet are replanted with native vegetation;
+
+K. Maintenance, alteration, repair, and replacement of existing roads, railroads, and utilities, provided that there is no additional intrusion into the HCA;
+
+L. Maintenance and repair of existing manmade water control facilities, such as irrigation and drainage ditches, constructed ponds and lakes, wastewater facilities, and stormwater pre-treatment facilities;
+
+M. Projects with the sole purpose of restoring or enhancing wetlands, streams, or fish and wildlife habitat areas, provided that the project is part of an approved local, regional, state, or federal restoration or enhancement plan;
+
+N. Removal of dead or diseased trees or trees that pose an imminent hazard to persons or property, provided that a consulting arborist’s report, or other credible evidence, is provided by the owner of the subject property and verifies the dead, diseased, or hazardous condition of the trees proposed for removal;
+
+O. Low-impact outdoor recreation facilities for public use, such as multi-use paths, trails, picnic areas, interpretive and educational displays, and overlooks, provided that:
+
+1. The facility is located outside of a Water Quality Resource Area regulated pursuant to Chapter 17.25;
+
+2. The facility includes less than 500 square feet of new impervious surface; and
+
+3. Any proposed trails are constructed using non-hazardous, pervious materials, with a maximum width of four feet;
+
+P. Emergency procedures or activities undertaken which are necessary to remove or abate hazards and nuisances, or for the protection of public health, safety, and welfare, provided that:
+
+1. Such remedial or preventative action must take place within a timeframe too short to allow for compliance with the requirements of Chapter 17.25; and
+
+2. After the emergency, the owner shall mitigate adverse impacts to the HCA resulting from the emergency action; and
+
+Q. Facilities that infiltrate stormwater onsite, including the associated piping, provided that forest canopy and areas within the drip lines of trees are not disturbed and that only native vegetation is planted in these facilities. Such facilities may include, but are not limited to, vegetated swales, rain gardens, vegetated filter strips, and vegetated infiltration basins.
+
+History: Ord. 1496 §1 (Exh. A), 2009.
+
+17.25.050 Prohibited uses.
+
+The following uses and activities are prohibited within a Habitat Conservation Area:
+
+A. The planting of invasive non-native or noxious vegetation; and
+
+B. Outside storage of materials and equipment, unless such storage began before December 8, 2009 or is approved pursuant to review under Subsection 17.25.060.06(C).
+
+History: Ord. 1496 §1 (Exh. A), 2009.
+
+17.25.060 Development review requirements.
+
+The following review requirements are applicable to development in the Habitat Conservation Area District (HCAD) unless such development is exempt pursuant to Section 17.25.040.
+
+A. A Construction Management Plan (CMP), consistent with Section 17.25.080, shall be required for development in the HCAD, regardless of whether development will occur within an HCA. However, if an area is in the HCAD solely because it is less than 100 feet outside the boundary of an HCA located on a different parcel, Subsection 17.25.060(A) shall not apply unless HCA Map Verification required pursuant to Subsection 17.25.060(B) determines that an HCA exists on the same parcel as the area for which development is proposed. An application for a CMP shall be reviewed pursuant to one of the following processes:
+
+1. The application shall be reviewed pursuant to Chapter 17.90(C); or
+
+2. The application shall be filed concurrently with an application for review under Subsection 17.25.060(B) or 17.25.060(C), in which case the applications will be consolidated and reviewed pursuant to the process required by Subsection 17.25.060(B)(4) or 17.25.060(C)(3), respectively;
+
+B. In order to confirm the location of an HCA, HCA Map Verification, consistent with Section 17.25.090, shall be required or allowed as follows:
+
+1. HCA Map Verification shall be required for:
+
+a. Development that is proposed to be either in an HCA or less than 100 feet outside of the boundary of an HCA, as shown on the HCA Map; or
+
+b. A parcel that:
+
+i. Either contains an HCA, or any part of which is less than 100 feet outside the boundary of an HCA, as shown on the HCA Map; and
+
+ii. Is the subject of a land use application for a partition, subdivision, or any other land use application the approval of which would authorize new development on the subject parcel.
+
+2. An application for HCA Map Verification may be submitted even if one is not required pursuant to Subsection 17.25.060(B)(1).
+
+3. If a parcel is subject to Subsection 17.25.060(B)(1)(b), an application for HCA Map Verification shall be filed concurrently with the other land use application referenced in Subsection 17.25.060(B)(1)(b)(ii) unless a previously approved HCA Map Verification for the subject property remains valid.
+
+4. An application for HCA Map Verification shall be reviewed pursuant to Section 17.90.010 unless the application is filed concurrently with another land use application that requires review by the Planning Commission or City Council, in which case the applications will be consolidated and reviewed pursuant to the review provisions of Chapter 17.94.
+
+5. Notice required by Section 17.94.040 or 17.94.050 shall be provided to Metro and any watershed council recognized by the Oregon Watershed Enhancement Board and whose boundaries include the subject property.
+
+C. An HCA Development Permit, consistent with Section 17.25.010, shall be required for:
+
+1. Development in an HCA or for a parcel that:
+
+a. Contains an HCA; and
+
+b. Is the subject of a land use application for a partition or subdivision.
+
+2. If a parcel is subject to Subsections 17.25.060(C)(1)(a) and (b), an application for an HCA Development Permit shall be filed concurrently with the application for a partition or subdivision.
+
+3. An application for an HCA Development Permit shall be reviewed pursuant to Section 17.94.050 unless the application is filed concurrently with another land use application that requires review by the Planning Commission or City Council, in which case the applications will be consolidated and reviewed pursuant to Section 17.94.040.
+
+D. HCA Map Verification and HCA Development Permits shall be valid for five years from the date of the final written decision, except:
+
+1. If development lawfully commences within the five-year time period, HCA Map Verification and HCA Development Permits shall remain valid until the development is complete or has been abandoned. Development will be considered to be abandoned if building or grading permits authorizing the development have lapsed or work not requiring a building or grading permit has been discontinued for more than one year; and
+
+2. HCA Map Verification that was valid on the date when the final plat for a subdivision or partition was recorded with the County Clerk shall remain valid for subsequent development on the lots or parcels created by the subdivision or partition.
+
+History: Ord. 1496 §1 (Exh. A), 2009.
+
+17.25.070 Submittal requirements.
+
+Applications filed pursuant to Chapter 17.25 shall comply with the following submittal requirements.
+
+A. An application for a Construction Management Plan shall include:
+
+1. A completed land use application on a form provided by the County Planning Division;
+
+2. A site plan of the subject property, drawn to scale and identifying the following:
+
+a. Location and type of existing and proposed development, including but not limited to, building footprints, roads, driveways, parking areas, utilities, onsite sewage disposal systems, wells, landscaping, and filling or grading in an amount greater than 10 cubic yards. Label each element as existing or proposed;
+
+b. Location and width of existing adjacent roads and road rights-of-way;
+
+c. Location of the Habitat Conservation Area (HCA) as shown on the HCA Map or as identified pursuant to an approved HCA Map Verification;
+
+d. Drip lines outside the HCA of trees that are inside the HCA;
+
+e. Distance between the HCA boundary and proposed development outside the HCA;
+
+f. The site ingress and egress proposed to be used by construction vehicles;
+
+g. Proposed equipment and material staging and stockpile areas; and
+
+h. Proposed orange construction fencing required pursuant to Subsection 17.25.080(B);
+
+3. An Erosion Prevention and Sediment Control (EPSC) plan. This plan may be included on the site plan if acceptable to the EPSC regulatory authority; and
+
+4. If a modification or waiver of the construction fencing requirement of Subsection 17.25.080(B) is proposed, a narrative demonstrating compliance with Subsection 17.25.080(B)(1) or (2).
+
+B. An application for HCA Map Verification shall include:
+
+1. A completed land use application on a form provided by the County Planning Division;
+
+2. A summer 2002 aerial photograph of the subject property, with lot lines shown, at a scale of at least one map inch equal to 50 feet for lots of 20,000 or fewer square feet, and a scale of at least one map inch equal to 100 feet for larger lots (available from the Metro Data Resource Center, 600 N.E. Grand Ave., Portland, OR 97232; 503-797-1742);
+
+3. For an application filed pursuant to Subsection 17.25.090(A)(2), either:
+
+a. A documented demonstration of the misalignment between the HCA Map (generated from the summer 2002 aerial photographs) and the tax lot lines of the subject property. For example, the applicant could compare the road rights-of-way boundaries shown on the tax lot layer for roads within 500 feet of the subject property with the location of such roads as viewed on the summer 2002 aerial photograph of the same area to provide evidence of the scale and amount of incongruity between the HCA Map and the tax lot lines, and the amount of adjustment that would be appropriate to accurately depict habitat on the subject property; or
+
+b. A documented demonstration of another type of computer mapping error that was made in the creation of the HCA map;
+
+4. For an application filed pursuant to Subsection 17.25.090(A)(3):
+
+a. A site plan of the subject property, drawn to scale and identifying the following:
+
+i. Location and type of existing development, including but not limited to, building footprints, roads, driveways, parking areas, utilities, onsite sewage disposal systems, wells, landscaping, and filling or grading in an amount greater than 10 cubic yards. Label the elements that were developed after August 1, 2002;
+
+ii. Location and width of existing adjacent roads and road rights-of-way;
+
+iii. Location of the HCA as shown on the HCA Map, including off-site HCA where review is required due to proposed development within 100 feet outside the HCA boundary and including the location of High, Moderate, and Low HCA; and
+
+iv. Location of the HCA as proposed by the applicant, including the location of High, Moderate, and Low HCA;
+
+b. A summer 2005 aerial photograph of the subject property (or, if available, an aerial photograph taken closer to, but not after, December 8, 2009), with lot lines shown, at a scale of at least one map inch equal to 50 feet for lots of 20,000 or fewer square feet, and a scale of at least one map inch equal to 100 feet for larger lots (available from the Metro Data Resource Center, 600 N.E. Grand Ave., Portland, OR 97232; 503-797-1742);
+
+c. Any approved development permits (e.g. building, grading, land use) and site plans related to the development of the property that took place between August 1, 2002, and December 8, 2009; and
+
+d. A narrative that correlates with the submitted site plan and development permits and identifies the type and scope of the new development that has occurred and the previously identified habitat that no longer exists because it is now part of a developed area; and
+
+5. For an application filed pursuant to Subsection 17.25.090(A)(4):
+
+a. A site plan of the subject property, drawn to scale and identifying the following:
+
+i. Location and type of existing development, including but not limited to, building footprints, roads, driveways, parking areas, utilities, onsite sewage disposal systems, wells, landscaping, and filling or grading in an amount greater than 10 cubic yards;
+
+ii. Location and width of existing adjacent roads and road rights-of-way;
+
+iii. Location of the HCA as shown on the HCA Map, including off-site HCA where review is required due to proposed development within 100 feet outside the HCA boundary and including the location of High, Moderate, and Low HCA;
+
+iv. Location of the HCA as proposed by the applicant, including the location of High, Moderate, and Low HCA;
+
+v. Location of any rivers, streams, wetlands, and flood areas;
+
+vi. Location of agricultural areas (e.g. pastures, orchards);
+
+vii. Location of naturalized areas (e.g. meadows, woods); and
+
+b. A report prepared and signed by either a qualified natural resource professional—such as a wildlife biologist, botanist, or hydrologist—or an environmental engineer registered in Oregon. The report shall include:
+
+i. A description of the qualifications and experience of all persons that contributed to the report, and, for each person that contributed, a description of the elements of the analysis to which the person contributed;
+
+ii. Additional aerial photographs if the applicant believes they provide better information regarding the subject property, including documentation of the date and process used to take the photographs and an expert’s interpretation of the additional information they provide;
+
+iii. A topographic map of the subject property, drawn to scale and shown by contour lines of two-foot intervals for slopes less than 15 percent and 10-foot intervals for slopes 15 percent or greater. On properties that are two acres or larger, such a contour map is required only for the portion of the property to be developed; and
+
+iv. A narrative analysis and any additional documentation necessary to address each step of the verification process set forth in Subsection 17.25.090(E).
+
+C. An application for an HCA Development Permit under Subsection 17.25.100(A) shall include:
+
+1. A completed land use application on a form provided by the County Planning Division;
+
+2. A site plan of the subject property, drawn to scale and identifying the following:
+
+a. Location and type of existing and proposed development, including but not limited to, building footprints, roads, driveways, parking areas, utilities, onsite sewage disposal systems, wells, landscaping, and filling or grading in an amount greater than 10 cubic yards. Label each element as existing or proposed;
+
+b. Location and width of existing adjacent roads and road rights-of-way;
+
+c. Location of the HCA as identified pursuant to a valid HCA Map Verification, and including the location of High, Moderate, and Low HCA;
+
+d. Location of any rivers, streams, wetlands, and flood areas;
+
+e. Location of agricultural areas (e.g. pastures, orchards);
+
+f. Location of naturalized areas (e.g. meadows, woods);
+
+g. Drip lines outside the HCA of trees that are inside the HCA;
+
+h. For a property containing less than one acre of HCA, the location of all trees within the HCA that are greater than six inches diameter at breast height (DBH), identified by DBH and species. For properties containing one acre or more of HCA, the applicant may approximate the number of trees within the HCA that are greater than six inches DBH and the DBH range, and provide a listing of the dominant species;
+
+i. The location of all trees with a DBH of six inches or greater that are proposed to be removed, identified by DBH and species;
+
+j. The site ingress and egress proposed to be used by construction vehicles;
+
+k. Proposed equipment and material staging and stockpile areas; and
+
+l. Location of any Water Quality Resource Area regulated by Chapter 17.25;
+
+3. A mitigation plan that demonstrates compliance with Subsections 17.25.100(A)(6), (7), and, if applicable, (8);
+
+4. If offsite mitigation is proposed pursuant to Subsection 17.25.100(A)(7)(b), the mitigation plan required by Subsection 17.25.070(C)(3) shall address both the subject property and the alternate mitigation site and shall document the following:
+
+a. The number of trees and shrubs that can be planted onsite;
+
+b. The onsite location where those trees and shrubs can be planted;
+
+c. An explanation of why it is not practicable for the remainder of the mitigation to occur onsite; and
+
+d. Identification of the proposed location for off-site mitigation and documentation that the applicant possesses legal authority to conduct and maintain the mitigation, such as having a sufficient ownership interest in the mitigation site, and, if the mitigation is not within an HCA, documentation that the mitigation site will be protected from development after the monitoring period expires by a restrictive covenant, conservation easement, or public dedication;
+
+5. If the applicant proposes to vary the number and size of required trees and shrubs pursuant to Subsection 17.25.100(A)(8), a report, prepared and signed by a qualified professional, such as a botanist or a certified landscape architect, that:
+
+a. Explains why the numbers and sizes of trees and shrubs that the applicant proposes to plant will achieve, at the end of the fifth year after initial planting, comparable or better mitigation results as the results that would be achieved if the applicant complied with all of the requirements of Subsection 17.25.100(A)(6)(a) through (c); and
+
+b. Discusses site preparation, including soil additives, removal of invasive and noxious vegetation, plant diversity, plant spacing, planting season, and immediate post-planting care including mulching, irrigation, wildlife protection, and weed control;
+
+D. An application for an HCA Development Permit under Subsection Chapter 17.25.100(B) shall include:
+
+1. The items listed in Subsections 17.25.070(C)(1) and (2);
+
+2. A topographic map of the subject property, drawn to scale and shown by contour lines of two-foot intervals for slopes less than 15 percent and 10-foot intervals for slopes 15 percent or greater. On properties that are two acres or larger, such a contour map is required only for the portion of the property to be developed;
+
+3. If grading will occur within the HCA, a grading plan showing the proposed alteration of the ground at one-foot vertical contours in areas of slopes less than five percent, two-foot vertical contours in areas of slopes from five percent to 15 percent, and five-foot vertical contours in areas of slopes greater than 15 percent;
+
+4. An Impact Evaluation and Alternatives Analysis, prepared and signed by either a qualified natural resource professional—such as a wildlife biologist, botanist, or hydrologist—or an environmental engineer registered in Oregon. The report shall include:
+
+a. A description of the qualifications and experience of all persons that contributed to the analysis, and, for each person that contributed, a description of the elements of the analysis to which the person contributed;
+
+b. Identification of the ecological functions of the HCA on the subject property. The ecological functions to be evaluated are those identified in Subsections 17.25.100(B)(2)(b)(i) through (iii);
+
+c. Evaluation of alternative locations, design modifications, or alternative methods of development to determine which options reduce significant detrimental impacts on the HCA and the ecological functions provided by the HCA. At a minimum, the approaches identified in Subsections 17.25.100(B)(1)(a) through (g) shall be considered; and
+
+d. Determination of the alternative that best meets the applicable approval criteria, and identification of unavoidable significant detrimental impacts; and
+
+5. A mitigation plan that demonstrates compliance with Subsections 17.25.100(A)(6), (7), and, if applicable, (8) or an alternative mitigation plan. An alternative mitigation plan shall be prepared and signed by a qualified professional, such as a botanist or a certified landscape architect. The report shall include:
+
+a. A description of the qualifications and experience of all persons that contributed to the plan, and, for each person that contributed, a description of the elements of the plan to which the person contributed;
+
+b. An explanation of how the proposed mitigation will adequately compensate for the impacts to ecological functions described in the Impact Evaluation and Alternatives Analysis. The mitigation that would be required under Subsections 17.25.100(A)(6) and (7)(a) may be used as the baseline mitigation required to compensate for disturbance to an HCA that provides an average level of ecological functions. The explanation shall include:
+
+i. If the mitigation that would be required under Subsections 17.25.100(A)(6) and (7)(a) is used as the baseline mitigation required to compensate for disturbance to an HCA, a calculation of the number of trees and shrubs that would be required under Subsection 17.25.100(A)(6)(a);
+
+ii. A site plan showing where the specific mitigation activities will occur and the numbers and sizes of trees and shrubs that are proposed to be planted; and
+
+iii. A discussion of site preparation, including soil additives, removal of invasive and noxious vegetation, plant diversity, plant spacing, planting season, and immediate post-planting care, including mulching, irrigation, wildlife protection, and weed control;
+
+c. Documentation of coordination with appropriate local, regional, special district, state, and federal regulatory agencies;
+
+d. A list of all parties responsible for implementing and monitoring the mitigation plan and, if mitigation will occur offsite, the names of the owners of property where mitigation plantings will occur;
+
+e. A mitigation site monitoring and reporting plan;
+
+f. If the proposed mitigation will not be conducted onsite, a map and accompanying narrative that details the following:
+
+i. The number of trees and shrubs that can be planted onsite;
+
+ii. The onsite location where those trees and shrubs can be planted;
+
+iii. An explanation of why it is not practicable for the remainder of the mitigation to occur onsite; and
+
+iv. The proposed location for off-site mitigation and documentation that the applicant can carry out and ensure the success of the mitigation, including documentation that the applicant possesses legal authority to conduct and maintain the mitigation, such as having a sufficient ownership interest in the mitigation site, and, if the mitigation is not within an HCA, documentation that the mitigation site will be protected from development after the monitoring period expires by a restrictive covenant, conservation easement, or public dedication;
+
+g. If the mitigation area is offsite and not within the same subwatershed (6th Field Hydrologic Unit Code) as the disturbed HCA, an explanation of why it is not practicable to conduct the mitigation within the same subwatershed and of why and how, considering the purpose of the mitigation, the mitigation will provide more ecological functional value if implemented outside of the subwatershed; and
+
+h. An implementation schedule, including a timeline for construction, mitigation, mitigation maintenance, monitoring, and reporting and a contingency plan. If in-stream work in fish-bearing streams is proposed as part of the mitigation plan, documentation that such work will be done in accordance with the Oregon Department of Fish and Wildlife in-stream work timing schedule shall be submitted.
+
+E. Except for utility facilities reviewed pursuant to Subsection 17.25.100(A)(1) and notwithstanding any other provisions of Section 17.25.070, for utility facilities developed by public utilities on property that is not owned by the utility, the utility shall not be required to map or provide any information about the property except for the area within 300 feet of the proposed disturbance area.
+
+History: Ord. 1496 §1 (Exh. A), 2009.
+
+17.25.080 Construction management plans.
+
+A Construction Management Plan (CMP) shall comply with the following criteria.
+
+A. Erosion prevention and sediment control (EPSC) measures shall be required and shall comply with the standards of the EPSC regulatory authority.
+
+B. Orange construction fencing (i.e. safety fencing, snow fencing, or a comparable product) shall be installed on or outside the boundary of the HCA, except where the drip line of a protected tree extends outside the HCA, in which case the drip line shall be included inside the fencing. This requirement may be modified or waived if:
+
+1. Disturbance of the HCA is authorized pursuant to Section 17.25.040 or 17.25.100, in which case the fencing shall be installed in such a manner as to protect the area of the HCA not authorized for disturbance; or
+
+2. The HCA is already lawfully developed, in which case the fencing shall be installed in such a manner as to protect any water resource that is the basis for the HCA designation and any area of the HCA where naturalized vegetative cover exists.
+
+C. Trees in the HCA shall not be used as anchors for stabilizing construction equipment.
+
+D. Native soils disturbed during development shall be conserved on the subject property.
+
+E. Development shall not commence until the EPSC measures and fencing required pursuant to Subsections 17.25.080(A) and (B) are in place.
+
+F. Compliance with the CMP shall be maintained until the development is complete.
+
+History: Ord. 1496 §1 (Exh. A), 2009.
+
+17.25.090 HCA map verification.
+
+HCA Map Verification shall be subject to the following criteria.
+
+A. An applicant for HCA Map Verification shall use one or more of the following methods to verify the Habitat Conservation Area (HCA) boundary and, if applicable, the boundary between High, Moderate, and Low HCA.
+
+1. The applicant may concur with the accuracy of the HCA Map of the subject property;
+
+2. The applicant may demonstrate that a computer mapping error was made in the creation of the HCA map (e.g., the mapped vegetative cover layer—which was derived from aerial photographs taken in the summer of 2002 and was used to establish the Vegetative Cover Map and the HCA Map—in Metro’s geographic information system database does not align precisely with the tax lot layer, thereby resulting in an HCA Map of the subject property that is also misaligned with tax lot lines);
+
+3. The applicant may demonstrate that the subject property was developed lawfully between August 1, 2002 (when the taking of the aerial photographs used to determine the regional habitat inventory commenced) and December 8, 2009 and, therefore, that the HCA boundary or category (High, Moderate, or Low) is inaccurate; or
+
+4. If the identified HCA is riparian habitat rather than publicly-owned upland habitat, the applicant may demonstrate that the HCA Map is inaccurate for a reason other than those described in Subsections 17.25.090(A)(2) and (3).
+
+B. The Planning Administrator, or if the application is reviewed pursuant to the Planning Commission provisions of Chapter 17.94 the Planning Commission, shall determine the location of any HCA on the subject property by considering information submitted by the applicant, information collected during any site visit that may be made to the subject property, information generated by prior HCA Map Verification that has occurred on adjacent properties, and any other relevant information that has been provided.
+
+C. For applications filed pursuant to Subsection 17.25.090(A)(1) or (2), the HCA Map shall be deemed to be accurate unless, as described in Subsection 17.25.090(A)(2), there was a computer mapping error (e.g., an alignment error) made in the creation of the HCA map.
+
+D. For applications filed pursuant to Subsection 17.25.090(A)(3), developed areas not providing vegetative cover shall be removed from the HCA, provided that they were developed lawfully between August 1, 2002, and December 8, 2009, and are more than 50 feet from the water resource. Developed areas not providing vegetative cover that were developed lawfully between August 1, 2002, and December 8, 2009, and are 50 feet or less from the water resource, shall remain classified as HCA, but the HCA category shall be changed if necessary to remain consistent with Tables 1 and 2.
+
+E. For applications filed pursuant to Subsection 17.25.090(A)(4), the HCA boundary shall be established as follows:
+
+1. Locate the water resource that was inventoried by Metro and is the basis for the HCA designation, including: Bankfull stage of streams, rivers, and bodies of open water on or within 200 feet of the subject property; flood areas on or within 100 feet of the subject property; and wetlands on or within 150 feet of the subject property based on the 1994 Clackamas County Wetland Inventory maps adopted by reference in the Comprehensive Plan and the Metro 2002 Wetland Inventory Map (available from the Metro Data Resource Center, 600 N.E. Grand Ave., Portland, OR 97232; 503-797-1742). Identified wetlands shall be further delineated consistent with methods currently accepted by the Oregon Division of State Lands and the U.S. Army Corps of Engineers.
+
+2. Identify the vegetative cover status of all areas on the subject property that are within 200 feet of the bankfull stage of streams, rivers, and bodies of open water; are wetlands or are within 150 feet of wetlands; and are flood areas or are within 100 feet of flood areas.
+
+a. Vegetative cover status shall be as identified on the Metro Vegetative Cover Map (available from the Metro Data Resource Center, 600 N.E. Grand Ave., Portland, OR 97232; 503-797-1742); or
+
+b. Vegetative cover status may be adjusted if the property was developed lawfully between August 1, 2002, and December 8, 2009, or an error was made at the time the vegetative cover status was determined by Metro. To assert the latter type of error, applicants shall submit an analysis of the vegetative cover on their property using summer 2002 aerial photographs and the definitions of the different vegetative cover types provided in Section 17.25.030.
+
+3. Determine whether the degree that the land slopes upward from all streams, rivers, and bodies of open water on or within 200 feet of the subject property is greater than or less than 25 percent. A minimum of three slope measurements along the water resource shall be made on the subject property. The measurements shall be made at no more than 100-foot increments, which means that more than three measurements may be required, depending on the length of the water resource on the subject property. Slope shall be measured in 25-foot increments away from the water resource until a point 200 feet from the starting point of measurement is reached. Where the protected water resource is confined by a ravine or gully, the top of ravine is the break in the greater-than-25-percent slope; and
+
+4. Using Table 1 and the data identified pursuant to Subsections 17.25.090(E)(1) through (3), identify all Class I and II riparian areas on the subject property. The riparian class may vary within a single property.
+
+Table 1 Method for Locating Boundaries of Class I and II Riparian Areas
+Distance from Water Resource
+Vegetative Cover Status1
+Vegetative Cover Status1
+Vegetative Cover Status1
+Vegetative Cover Status1
+Distance from Water Resource
+Developed areas not providing vegetative cover
+Low structure vegetation or open soils
+Woody vegetation
+Forest canopy
+Streams
+Streams
+Streams
+Streams
+Streams
+0-50’
+Class II
+Class I2
+Class I
+Class I
+50’-100’
+Class II3
+Class I
+Class I
+100’-150’
+Class II3 if slope>25%
+Class II3 if slope>25%
+Class II3
+150’-200’
+Class II3 if slope>25%
+Class II3 if slope>25%
+Class II3 if slope>25%
+Wetlands (Wetland itself is a Class I Riparian Area)
+Wetlands (Wetland itself is a Class I Riparian Area)
+Wetlands (Wetland itself is a Class I Riparian Area)
+Wetlands (Wetland itself is a Class I Riparian Area)
+Wetlands (Wetland itself is a Class I Riparian Area)
+0-100’
+Class II3
+Class I
+Class I
+100’-150’
+Class II3
+Flood Areas
+Flood Areas
+Flood Areas
+Flood Areas
+Flood Areas
+Within 300’ of river or surface stream
+Class I
+Class I
+Class I
+More than 300’ from river or surface stream
+See footnote 4.
+Class II3
+Class II3
+Class I
+0-100’ from edge of flood area
+Class II3,5
+Class II3
+1 The vegetative cover type assigned to any particular area is based on two factors: the type of vegetation and the size of the overall contiguous area of vegetative cover to which a particular piece of vegetation belongs. For example, in order to qualify as “forest canopy,” the forested area has to be part of a larger patch of forest of at least one acre in size.
+2 These areas shall be Class II riparian areas if the stream is a high gradient stream. High gradient streams are identified on the Metro Vegetative Cover Map. If the applicant believes the gradient of a stream was incorrectly identified, then the applicant may demonstrate the correct classification by identifying the channel type using the methodology described in the Oregon Watershed Assessment Manual, published by the Oregon Watershed Enhancement Board, and appended to the Metro’s Riparian Corridor and Wildlife Habitat Inventories Report, Attachment 1 to Exhibit F to Metro Ordinance No. 05-1077C.
+3 Areas that have been identified as habitats of concern, as designated on the Metro Habitats of Concern Map (available from the Metro Data Resource Center, 600 N.E. Grand Ave., Portland, OR 97232; 503-797-1742), shall be Class I riparian areas, unless additional information is provided that establishes that they do not meet the criteria used to identify habitats of concern as described in Metro’s Technical Report for Fish and Wildlife. Examples of habitats of concern include: Oregon white oak woodlands, bottomland hardwood forests, wetlands, native grasslands, riverine islands or deltas, and important wildlife migration corridors.
+4 If development prior to December 8, 2009, within a contiguous, undeveloped flood area (to include contiguous flood areas on adjacent properties) that was not mapped as having any vegetative cover has reduced the size of that contiguous flood area to less than one half of an acre in size, then the remaining flood area shall also be considered a developed flood area and shall not be identified as habitat.
+5 Only if within 300 feet of a river or surface stream.
+1 The vegetative cover type assigned to any particular area is based on two factors: the type of vegetation and the size of the overall contiguous area of vegetative cover to which a particular piece of vegetation belongs. For example, in order to qualify as “forest canopy,” the forested area has to be part of a larger patch of forest of at least one acre in size.
+2 These areas shall be Class II riparian areas if the stream is a high gradient stream. High gradient streams are identified on the Metro Vegetative Cover Map. If the applicant believes the gradient of a stream was incorrectly identified, then the applicant may demonstrate the correct classification by identifying the channel type using the methodology described in the Oregon Watershed Assessment Manual, published by the Oregon Watershed Enhancement Board, and appended to the Metro’s Riparian Corridor and Wildlife Habitat Inventories Report, Attachment 1 to Exhibit F to Metro Ordinance No. 05-1077C.
+3 Areas that have been identified as habitats of concern, as designated on the Metro Habitats of Concern Map (available from the Metro Data Resource Center, 600 N.E. Grand Ave., Portland, OR 97232; 503-797-1742), shall be Class I riparian areas, unless additional information is provided that establishes that they do not meet the criteria used to identify habitats of concern as described in Metro’s Technical Report for Fish and Wildlife. Examples of habitats of concern include: Oregon white oak woodlands, bottomland hardwood forests, wetlands, native grasslands, riverine islands or deltas, and important wildlife migration corridors.
+4 If development prior to December 8, 2009, within a contiguous, undeveloped flood area (to include contiguous flood areas on adjacent properties) that was not mapped as having any vegetative cover has reduced the size of that contiguous flood area to less than one half of an acre in size, then the remaining flood area shall also be considered a developed flood area and shall not be identified as habitat.
+5 Only if within 300 feet of a river or surface stream.
+1 The vegetative cover type assigned to any particular area is based on two factors: the type of vegetation and the size of the overall contiguous area of vegetative cover to which a particular piece of vegetation belongs. For example, in order to qualify as “forest canopy,” the forested area has to be part of a larger patch of forest of at least one acre in size.
+2 These areas shall be Class II riparian areas if the stream is a high gradient stream. High gradient streams are identified on the Metro Vegetative Cover Map. If the applicant believes the gradient of a stream was incorrectly identified, then the applicant may demonstrate the correct classification by identifying the channel type using the methodology described in the Oregon Watershed Assessment Manual, published by the Oregon Watershed Enhancement Board, and appended to the Metro’s Riparian Corridor and Wildlife Habitat Inventories Report, Attachment 1 to Exhibit F to Metro Ordinance No. 05-1077C.
+3 Areas that have been identified as habitats of concern, as designated on the Metro Habitats of Concern Map (available from the Metro Data Resource Center, 600 N.E. Grand Ave., Portland, OR 97232; 503-797-1742), shall be Class I riparian areas, unless additional information is provided that establishes that they do not meet the criteria used to identify habitats of concern as described in Metro’s Technical Report for Fish and Wildlife. Examples of habitats of concern include: Oregon white oak woodlands, bottomland hardwood forests, wetlands, native grasslands, riverine islands or deltas, and important wildlife migration corridors.
+4 If development prior to December 8, 2009, within a contiguous, undeveloped flood area (to include contiguous flood areas on adjacent properties) that was not mapped as having any vegetative cover has reduced the size of that contiguous flood area to less than one half of an acre in size, then the remaining flood area shall also be considered a developed flood area and shall not be identified as habitat.
+5 Only if within 300 feet of a river or surface stream.
+1 The vegetative cover type assigned to any particular area is based on two factors: the type of vegetation and the size of the overall contiguous area of vegetative cover to which a particular piece of vegetation belongs. For example, in order to qualify as “forest canopy,” the forested area has to be part of a larger patch of forest of at least one acre in size.
+2 These areas shall be Class II riparian areas if the stream is a high gradient stream. High gradient streams are identified on the Metro Vegetative Cover Map. If the applicant believes the gradient of a stream was incorrectly identified, then the applicant may demonstrate the correct classification by identifying the channel type using the methodology described in the Oregon Watershed Assessment Manual, published by the Oregon Watershed Enhancement Board, and appended to the Metro’s Riparian Corridor and Wildlife Habitat Inventories Report, Attachment 1 to Exhibit F to Metro Ordinance No. 05-1077C.
+3 Areas that have been identified as habitats of concern, as designated on the Metro Habitats of Concern Map (available from the Metro Data Resource Center, 600 N.E. Grand Ave., Portland, OR 97232; 503-797-1742), shall be Class I riparian areas, unless additional information is provided that establishes that they do not meet the criteria used to identify habitats of concern as described in Metro’s Technical Report for Fish and Wildlife. Examples of habitats of concern include: Oregon white oak woodlands, bottomland hardwood forests, wetlands, native grasslands, riverine islands or deltas, and important wildlife migration corridors.
+4 If development prior to December 8, 2009, within a contiguous, undeveloped flood area (to include contiguous flood areas on adjacent properties) that was not mapped as having any vegetative cover has reduced the size of that contiguous flood area to less than one half of an acre in size, then the remaining flood area shall also be considered a developed flood area and shall not be identified as habitat.
+5 Only if within 300 feet of a river or surface stream.
+1 The vegetative cover type assigned to any particular area is based on two factors: the type of vegetation and the size of the overall contiguous area of vegetative cover to which a particular piece of vegetation belongs. For example, in order to qualify as “forest canopy,” the forested area has to be part of a larger patch of forest of at least one acre in size.
+2 These areas shall be Class II riparian areas if the stream is a high gradient stream. High gradient streams are identified on the Metro Vegetative Cover Map. If the applicant believes the gradient of a stream was incorrectly identified, then the applicant may demonstrate the correct classification by identifying the channel type using the methodology described in the Oregon Watershed Assessment Manual, published by the Oregon Watershed Enhancement Board, and appended to the Metro’s Riparian Corridor and Wildlife Habitat Inventories Report, Attachment 1 to Exhibit F to Metro Ordinance No. 05-1077C.
+3 Areas that have been identified as habitats of concern, as designated on the Metro Habitats of Concern Map (available from the Metro Data Resource Center, 600 N.E. Grand Ave., Portland, OR 97232; 503-797-1742), shall be Class I riparian areas, unless additional information is provided that establishes that they do not meet the criteria used to identify habitats of concern as described in Metro’s Technical Report for Fish and Wildlife. Examples of habitats of concern include: Oregon white oak woodlands, bottomland hardwood forests, wetlands, native grasslands, riverine islands or deltas, and important wildlife migration corridors.
+4 If development prior to December 8, 2009, within a contiguous, undeveloped flood area (to include contiguous flood areas on adjacent properties) that was not mapped as having any vegetative cover has reduced the size of that contiguous flood area to less than one half of an acre in size, then the remaining flood area shall also be considered a developed flood area and shall not be identified as habitat.
+5 Only if within 300 feet of a river or surface stream.
+
+5. Use the Metro Habitat Urban Development Value Map (available from the Metro Data Resource Center, 600 N.E. Grand Ave., Portland, OR 97232; 503-797-1742) to identify the urban development value of the subject property.
+
+a. An upward adjustment of the subject property’s urban development value designation shall be made if the Metro 2040 Design Type designation for the subject property has changed from a category designated as a lower urban development value category to one designated as a higher urban development value category. 2040 Design Type designations are identified on the Metro 2040 Applied Concept Map (available from the Metro Data Resource Center, 600 N.E. Grand Ave., Portland, OR 97232; 503-797-1742). The urban development value categories of the 2040 Design Types are identified in the footnotes to Table 2.
+
+b. If the subject property is owned by a regionally significant educational or medical facility, as designated by Title 13 of the Metro Urban Growth Management Functional Plan, it is designated as of high urban development value.
+
+c. If the subject property is located outside the Portland Metropolitan Urban Growth Boundary and therefore does not have a Metro 2040 Design Type designation, it is designated as of high urban development value.
+
+6. Use Table 2 to cross-reference habitat class with urban development value in order to categorize identified HCA as High, Moderate, or Low HCA.
+
+Table 2 Method for Identifying Habitat Conservation Areas (HCA)
+Fish & wildlife habitat classification
+High urban development value1
+Medium urban development value2
+Low urban development value3
+Publicly owned parks and open spaces
+Class I Riparian
+Moderate HCA
+High HCA
+High HCA
+High HCA4
+Class II Riparian
+Low HCA
+Low HCA
+Moderate HCA
+Moderate HCA4
+Class A Upland Wildlife
+No HCA
+No HCA
+No HCA
+High HCA 4
+Class B Upland Wildlife
+No HCA
+No HCA
+No HCA
+High HCA 4
+NOTE: The default urban development value of property is as depicted on the Metro Habitat Urban Development Value Map. The Metro 2040 Design Type designations provided in the following footnotes are only for use when making an adjustment pursuant to Subsection 706.09(E)(5)(a).
+1 Primary 2040 design type: Central City, Regional Centers, Town Centers, and Regionally Significant Industrial Areas
+2 Secondary 2040 design type: Main Streets, Station Communities, Other Industrial Areas, and Employment Centers
+3 Tertiary 2040 design type: Inner and Outer Neighborhoods and Corridors
+4 HCAs in publicly owned parks and open spaces designated as natural areas shall be considered High HCA+. HCAs in other publicly owned parks and open spaces shall be designated as shown in Table 2.
+NOTE: The default urban development value of property is as depicted on the Metro Habitat Urban Development Value Map. The Metro 2040 Design Type designations provided in the following footnotes are only for use when making an adjustment pursuant to Subsection 706.09(E)(5)(a).
+1 Primary 2040 design type: Central City, Regional Centers, Town Centers, and Regionally Significant Industrial Areas
+2 Secondary 2040 design type: Main Streets, Station Communities, Other Industrial Areas, and Employment Centers
+3 Tertiary 2040 design type: Inner and Outer Neighborhoods and Corridors
+4 HCAs in publicly owned parks and open spaces designated as natural areas shall be considered High HCA+. HCAs in other publicly owned parks and open spaces shall be designated as shown in Table 2.
+NOTE: The default urban development value of property is as depicted on the Metro Habitat Urban Development Value Map. The Metro 2040 Design Type designations provided in the following footnotes are only for use when making an adjustment pursuant to Subsection 706.09(E)(5)(a).
+1 Primary 2040 design type: Central City, Regional Centers, Town Centers, and Regionally Significant Industrial Areas
+2 Secondary 2040 design type: Main Streets, Station Communities, Other Industrial Areas, and Employment Centers
+3 Tertiary 2040 design type: Inner and Outer Neighborhoods and Corridors
+4 HCAs in publicly owned parks and open spaces designated as natural areas shall be considered High HCA+. HCAs in other publicly owned parks and open spaces shall be designated as shown in Table 2.
+NOTE: The default urban development value of property is as depicted on the Metro Habitat Urban Development Value Map. The Metro 2040 Design Type designations provided in the following footnotes are only for use when making an adjustment pursuant to Subsection 706.09(E)(5)(a).
+1 Primary 2040 design type: Central City, Regional Centers, Town Centers, and Regionally Significant Industrial Areas
+2 Secondary 2040 design type: Main Streets, Station Communities, Other Industrial Areas, and Employment Centers
+3 Tertiary 2040 design type: Inner and Outer Neighborhoods and Corridors
+4 HCAs in publicly owned parks and open spaces designated as natural areas shall be considered High HCA+. HCAs in other publicly owned parks and open spaces shall be designated as shown in Table 2.
+NOTE: The default urban development value of property is as depicted on the Metro Habitat Urban Development Value Map. The Metro 2040 Design Type designations provided in the following footnotes are only for use when making an adjustment pursuant to Subsection 706.09(E)(5)(a).
+1 Primary 2040 design type: Central City, Regional Centers, Town Centers, and Regionally Significant Industrial Areas
+2 Secondary 2040 design type: Main Streets, Station Communities, Other Industrial Areas, and Employment Centers
+3 Tertiary 2040 design type: Inner and Outer Neighborhoods and Corridors
+4 HCAs in publicly owned parks and open spaces designated as natural areas shall be considered High HCA+. HCAs in other publicly owned parks and open spaces shall be designated as shown in Table 2.
+
+History: Ord. 1496 §1 (Exh. A), 2009.
+
+17.25.100 Habitat conservation area development permits.
+
+A Habitat Conservation Area (HCA) Development Permit shall be approved if the applicant provides evidence substantiating compliance with either Subsection 17.25.100(A) or (B). However, if the proposed development is in a Water Quality Resource Area District regulated pursuant to Chapter 17.27, it shall comply with either Subsection 17.25.100(B) or 17.25.100, except that if the subject parcel contains an HCA and a WQRA and is the subject of a land use application for a partition or subdivision, the partition or subdivision shall comply with the requirements of Sections 17.25.100 and 17.25.110, and if the provisions conflict, the most restrictive standard shall apply.
+
+A. Development in an HCA shall be permitted subject to the following criteria:
+
+1. Except as provided in Subsections 17.25.100(A)(2) through (5), a maximum disturbance area (MDA) shall apply to the subject property.
+
+a. The MDA shall be calculated pursuant to Table 3 for property with a Comprehensive Plan designation of Urban Low Density Residential and Table 4 for property with any other Comprehensive Plan designation.
+
+Table 3 Maximum Disturbance Area for Urban Low Density Residential Property
+HCA Type 1
+Maximum Disturbance Area
+High
+50 percent of the area of the subject property, up to a maximum of 5,000 square feet
+Moderate/Low2
+65 percent of the area of the subject property, up to a maximum of 6,000 square feet
+1 If more than one HCA Type is present on the subject property, the MDA shall be based on the predominant type. For the purpose of this provision, High HCA shall be the predominant type if at least 50 percent of the area of the HCA on the subject property is High HCA.
+2 For the purpose of Table 3, Moderate and Low HCA shall be combined as one HCA Type.
+1 If more than one HCA Type is present on the subject property, the MDA shall be based on the predominant type. For the purpose of this provision, High HCA shall be the predominant type if at least 50 percent of the area of the HCA on the subject property is High HCA.
+2 For the purpose of Table 3, Moderate and Low HCA shall be combined as one HCA Type.
+
+Table 4 Maximum Disturbance Area for Other Property Inside the City
+HCA Type                                                                                                                                                 Maximum Disturbance Area1
+High                                                                                                                                                     10 percent of High HCA on the subject property
+Moderate                                                                                                                                                 15 percent of Moderate HCA on the subject property
+Low                                                                                                                                                      50 percent of Low HCA on the subject property
+1 The MDA refers only to the maximum percentage of each type of HCA that may be disturbed. Table 4 imposes no limit on disturbance area outside an HCA.  1 The MDA refers only to the maximum percentage of each type of HCA that may be disturbed. Table 4 imposes no limit on disturbance area outside an HCA.
+
+2. The following disturbance area limitations shall apply to certain utility facilities. Utility facilities other than those addressed in Subsections 17.25.100(A)(2)(a) through (c) shall be subject to Subsection 17.25.100(A)(1).
+
+a. The disturbance area for private connections of utility lines, pipes, or cables to other utility facilities shall be no greater than 10 feet wide.
+
+b. The disturbance area for the upgrade of existing utility lines, pipes, or cables shall be no greater than 15 feet wide.
+
+c. The disturbance area for new underground utility lines, pipes, or cables shall be no greater than 25 feet wide and shall disturb no more than 200 linear feet of the Water Quality Resource Area District regulated pursuant to Chapter 17.27, provided that this disturbance area, with the exception of necessary access points to the utility facility, shall be restored by the planting of native vegetation.
+
+3. A partition of a parcel that contains an HCA shall comply with one of the following options:
+
+a. There shall be no more than a 30 percentage point difference in the percentage of each parcel’s area that is in an HCA. For example, a partition that produces two parcels, one that is 55 percent HCA and the other that is 35 percent HCA, is permissible; whereas a partition that produces two parcels, one that is 75 percent HCA and the other that is 30 percent HCA, is not permissible. In this case, development in the HCA shall be subject to further review under Chapter 17.25;
+
+b. The partition shall comply with Subsection 17.25.100(A)(4); or
+
+c. The applicant shall demonstrate, through an analysis of different possible partition plans based on the characteristics and zoning of the subject property, that it is not practicable to comply with Subsection 17.25.100(A)(3)(a) or (b) and that the applicant’s alternate plan will result in the smallest practicable percentage point difference in the percentage of each parcel’s area that is in an HCA.
+
+4. A subdivision of property that contains an HCA shall require that a minimum of 90 percent of the subject property’s High HCA and a minimum of 80 percent of its Moderate HCA shall be platted as a tract rather than as part of any lot. Any HCA that remains outside such a tract may be developed, subject to compliance with the mitigation standards of Subsection 17.25.100(A) or (B). Unless any HCA that remains outside an HCA tract is protected from development by a restrictive covenant or a conservation easement, it shall be assumed that such areas eventually will be developed, and mitigation shall be required. Mitigation shall be completed, or a performance bond in an amount sufficient to cover the cost of mitigation shall be posted with the County, prior to approval of the final plat.
+
+a. If over 50% of the HCA on the subject property is High HCA, the entire calculation is for High (i.e., 90% of the HCA shall be placed within a separate tract).
+
+b. If over 50% of the HCA on a property is Moderate HCA, the entire calculation is for Moderate (i.e., 80% of the HCA shall be placed within a separate tract).
+
+c. An HCA tract shall be protected from development by restrictive covenant, conservation easement, or public dedication. However, the tract may be subject to an easement conveying storm and surface water management rights to the surface water management authority. The tract shall be designated as one of the following prior to final plat approval:
+
+i. A private natural area owned by a homeowners association or a private non-profit with the mission of land conservation; or
+
+ii. A public natural area where the tract has been dedicated to a public entity.
+
+5. The MDA for publicly owned parks and open spaces designated as natural areas shall be five percent of the HCA on the subject property. Subsection 17.25.100(A)(5) imposes no limit on disturbance area outside an HCA for such natural areas.
+
+6. If development in an HCA is approved pursuant to Subsection 17.25.100(A), compliance with the following mitigation standards shall be required, except that the mitigation standards for development in a wetland (as distinct from an HCA that is adjacent to a wetland) shall be only those required by federal and state law.
+
+a. Required Plants and Plant Densities. All trees, shrubs and ground cover shall be native vegetation. An applicant shall comply with Subsection 17.25.100(A)(6)(a)(i) or (ii), whichever results in more tree plantings, except that where the disturbance area is one acre or more, the applicant shall comply with Subsection 17.25.100(A)(6)(a)(ii).
+
+i. The mitigation requirement shall be calculated based on the number and size of trees that are removed from the site. Trees that are removed from the site shall be replaced as shown in Table 6. Conifers shall be replaced with conifers. Bare ground shall be planted or seeded with native grasses or herbs. Non-native sterile wheat grass may also be planted or seeded, in equal or lesser proportion to the native grasses or herbs; or
+
+Table 6 Tree Replacement
+Size of Tree to be Removed (inches in diameter at breast height)  Number of Trees and Shrubs to be Planted
+6 to 12                                                           2 trees and 3 shrubs
+over 12 to 18                                                     3 trees and 6 shrubs
+over 18 to 24                                                     5 trees and 12 shrubs
+over 24 to 30                                                     7 trees and 18 shrubs
+over 30                                                           10 trees and 30 shrubs
+
+ii. The mitigation requirement shall be calculated based on the size of the disturbance area within the HCA. Native trees and shrubs shall be planted at a rate of five trees and 25 shrubs per every 500 square feet of disturbance area (calculated by dividing the number of square feet of disturbance area by 500, and then multiplying that result times five trees and 25 shrubs, and rounding all fractions to the nearest whole number of trees and shrubs; for example, if there will be 330 square feet of disturbance area, then 330 divided by 500 equals 0.66, and 0.66 times five equals 3.3, so three trees shall be planted, and 0.66 times 25 equals 16.5, so 17 shrubs shall be planted). Bare ground shall be planted or seeded with native grasses or herbs. Non-native sterile wheat grass may also be planted or seeded, in equal or lesser proportion to the native grasses or herbs.
+
+b. Plant Size. Replacement trees shall be at least one-half inch in caliper, measured at six inches above the ground level for field grown trees or above the soil line for container grown trees (the one-half inch minimum size may be an average caliper measure, recognizing that trees are not uniformly round), unless they are oak or madrone which may be one-gallon size. Shrubs shall be in at least a one-gallon container or the equivalent in ball and burlap and shall be at least 12 inches in height.
+
+c. Plant Spacing. Trees shall be planted between eight and 12 feet on center, and shrubs shall be planted between four and five feet on center, or clustered in single species groups of no more than four plants, with each cluster planted between eight and 10 feet on center. When planting near existing trees, the drip line of the existing tree shall be the starting point for plant spacing measurements.
+
+d. Plant Diversity. Shrubs shall consist of at least two different species. If 10 trees or more are planted, then no more than 50 percent of the trees may be of the same genus.
+
+e. Invasive Vegetation. Invasive non-native or noxious vegetation shall be removed within the mitigation area prior to planting, and shall be removed or controlled for five years following the date that the mitigation planting is completed.
+
+f. Mulching. Mulch shall be applied around new plantings at a minimum of three inches in depth and 18 inches in diameter.
+
+g. Tree and Shrub Survival. Trees and shrubs that die shall be replaced in kind to the extent necessary to ensure that a minimum of 80 percent of the trees initially required and 80 percent of the shrubs initially required shall remain alive on the fifth anniversary of the date that the mitigation planting is completed.
+
+h. Monitoring and Reporting. Monitoring of the mitigation site shall be the ongoing responsibility of the property owner. For a period of five years following the date that the mitigation planting is completed, the property owner shall submit an annual report to the Planning Director documenting the survival of the trees and shrubs on the mitigation site. In lieu of complying with the monitoring and reporting requirement, the property owner may post with the County a performance bond, or other surety acceptable to the County, in an amount sufficient to cover costs of plant material and labor associated with site preparation, planting, and maintenance. An applicant who elects to post a surety shall be subject to Chapter 17.96.
+
+7. The mitigation area required by Subsection 17.25.100(A)(6) shall be located as follows:
+
+a. All vegetation shall be planted on the subject property, either within the HCA or in an area contiguous to the HCA, provided, however, that if the vegetation is planted in an area contiguous to the HCA, such area shall be protected from development by a restrictive covenant, conservation easement, or public dedication.
+
+b. Off-site mitigation within the same subwatershed (6th Field Hydrologic Unit Code) as the HCA within which development is proposed, may be approved for part or all of the required mitigation, if the applicant provides evidence substantiating that:
+
+i. It is not practicable to complete the mitigation on-site; and
+
+ii. The applicant possesses legal authority to conduct and maintain the mitigation, such as having a sufficient ownership interest in the mitigation site, and, if the mitigation is not within an HCA, that the mitigation site will be protected from development after the monitoring period expires by a restrictive covenant, conservation easement, or public dedication.
+
+8. An applicant may request to proportionally vary the number and size of trees and shrubs required pursuant to Subsections 17.25.100(A)(6)(a) and (b)—for example, to plant fewer larger trees and shrubs or to plant more smaller trees and shrubs—and a corresponding modification of the plant spacing requirements of Subsection 17.25.100(A)(6)(c). The request shall be approved if the applicant provides evidence substantiating that the proposed planting will achieve, at the end of the fifth year after initial planting, comparable or better mitigation results as the results that would be achieved if the applicant complied with all of the requirements of Subsections 17.25.100(A)(6)(a) through (c).
+
+B. Development in an HCA that does not comply with Subsection 17.25.100(A) shall be permitted subject to the following criteria:
+
+1. Development in the HCA shall be avoided to the extent practicable. If there is more than one category (High, Moderate, or Low) of HCA on the subject property, then the applicant shall first avoid the intrusion of development into the higher-valued HCA, to the extent practicable. To comply with these requirements, the following approaches shall be used, to the extent practicable:
+
+a. Multi-story construction;
+
+b. Minimizing building and development footprint;
+
+c. Maximizing the use of native landscaping materials and meeting applicable landscaping requirements by preservation of the HCA as permitted by Chapter 17.46;
+
+d. Minimal excavation foundation systems (e.g., pier, post, or piling foundation);
+
+e. Placing facilities that are required to infiltrate stormwater onsite, including associated piping, within the HCA, provided that such facilities comply with Subsection 17.25.040(R); and
+
+f. Complying with the setback standards of Section 17.25.110 rather than those of the underlying zoning district.
+
+2. If there is no practicable alternative that will avoid disturbance of the HCA, then significant detrimental impacts to the HCA shall be minimized as follows:
+
+a. The proposed development shall minimize loss of habitat as compared to other practicable alternatives, including significantly different practicable alternatives that would result in less development within the HCA.
+
+b. The proposed development shall minimize significant detrimental impacts to ecological functions of the HCA on the subject property as compared to other practicable alternatives, including significantly different practicable alternatives that would result in less development within the HCA. The ecological functions that shall be considered are:
+
+i. Connectivity of the habitat to water;
+
+ii. Connectivity of the habitat to other habitat areas; and
+
+iii. The functions identified in Table 7.
+
+Table 7 Ecological Functional Values of Riparian Corridors
+Ecological function
+Landscape features providing functional values
+Microclimate and shade
+Forest canopy or woody vegetation within 100 feet of a stream; a wetland1; or a flood area2
+Streamflow moderation and water storage
+A wetland or other water body3 with a hydrologic connection to a stream; or a flood area2
+Bank stabilization, sediment and pollution control
+All sites within 50 feet of a surface stream;
+Forest canopy, woody vegetation, or low structure vegetation/open soils within 100 feet of a stream or a wetland; or forest canopy, woody vegetation, or low structure vegetation/open soils within a flood area; and
+Forest canopy, woody vegetation, or low structure vegetation/open soils within 100-200 feet of a stream if the slope is greater than 25 percent
+Large wood and channel dynamics
+Forest canopy within 150 feet of a stream or wetland, or within a flood area; and
+The channel migration zone is defined by the flood area, but where there is no mapped flood area, a default of 50 feet is established to allow for the channel migration zone.
+Organic material sources
+Forest canopy or woody vegetation within 100 feet of a stream or wetland, or within a flood area
+1 Refers to “hydrologically-connected wetlands,” which are located partially or wholly within ¼ mile of a surface stream or flood area.
+2 Developed flood areas are not identified as HCAs because they do not provide primary ecological functional value.
+3 “Other water body” could include lakes, ponds, reservoirs, or manmade water resource that is not a water quality facility or farm pond.
+1 Refers to “hydrologically-connected wetlands,” which are located partially or wholly within ¼ mile of a surface stream or flood area.
+2 Developed flood areas are not identified as HCAs because they do not provide primary ecological functional value.
+3 “Other water body” could include lakes, ponds, reservoirs, or manmade water resource that is not a water quality facility or farm pond.
+
+c. If there is more than one category of HCA on the subject property, then development within a higher-valued HCA shall be considered more detrimental than development within a lower-valued HCA.
+
+d. To the extent practicable, development in the HCA shall be designed, located, and constructed to:
+
+i. Minimize grading, removal of native vegetation, and disturbance and removal of native soils by using the approaches required by Section 17.25.080, reducing building footprints, and using minimal excavation foundation systems (e.g., pier, post, or piling foundation);
+
+ii. Minimize adverse hydrological impacts on water resources, such as by using the techniques described in Part (a) of Table 8, unless their use is prohibited by an applicable and required state or federal permit issued to a unit of local government having jurisdiction in the area, such as a permit required under the federal Clean Water Act, 33 U.S.C. §§1251 et seq., or the federal Safe Drinking Water Act, 42 U.S.C. §§300f et seq., and including conditions or plans required by such permit;
+
+iii. Minimize impacts on wildlife corridors and fish passage, such as by using the techniques described in Part (b) of Table 8; and
+
+iv. Consider using the techniques described in Part (c) of Table 8.
+
+Table 8 Habitat-Friendly Development Practices 1
+Part (a): Design and Construction Practices to Minimize Hydrologic Impacts
+1. Amend disturbed soils to original or higher level of porosity to regain infiltration and stormwater storage capacity.
+2. Use pervious paving materials for residential driveways, parking lots, walkways, and within centers of cul-de-sacs.
+3. Incorporate stormwater management in road right-of-ways.
+4. Landscape with rain gardens to provide on-lot detention, filtering of rainwater, and groundwater recharge.
+5. Use green roofs for runoff reduction, energy savings, improved air quality, and enhanced aesthetics.
+6. Disconnect downspouts from roofs and direct the flow to vegetated infiltration/filtration areas such as rain gardens.
+7. Retain rooftop runoff in a rain barrel for later on-lot use in lawn and garden watering.
+8. Use multi-functional open drainage systems in lieu of more conventional curb-and-gutter systems.
+9. Use bioretention cells as rain gardens in landscaped parking lot islands to reduce runoff volume and filter pollutants.
+10. Apply a treatment train approach to provide multiple opportunities for storm water treatment and reduce the possibility of system failure.
+11. Reduce sidewalk width and grade them such that they drain to the front yard of a residential lot or retention area.
+12. Reduce impervious impacts of residential driveways by narrowing widths and moving access to the rear of the site.
+13. Use shared driveways.
+14. Reduce width of residential streets, depending on traffic and parking needs.
+15. Reduce street length, primarily in residential areas, by encouraging clustering and using curvilinear designs.
+16. Reduce cul-de-sac radii and use pervious vegetated islands in center to minimize impervious effects, and allow them to be utilized for truck maneuvering/loading to reduce need for wide loading areas on site.
+17. Eliminate redundant non-ADA sidewalks within a site (i.e., sidewalk to all entryways and/or to truck loading areas may be unnecessary for industrial developments).
+18. Minimize car spaces and stall dimensions, reduce parking ratios, and use shared parking facilities and structured parking.
+19. Minimize the number of stream crossings and place crossing perpendicular to stream channel if possible.
+20. Allow narrow street right-of-ways through stream corridors whenever possible to reduce adverse impacts of transportation corridors.
+Part (b): Design and Construction Practices to Minimize Impacts on Wildlife Corridors and Fish Passage
+1. Carefully integrate fencing into the landscape to guide animals toward animal crossings under, over, or around transportation corridors.
+2. Use bridge crossings rather than culverts wherever possible.
+3. If culverts are utilized, install slab, arch or box type culverts, preferably using bottomless designs that more closely mimic stream bottom habitat.
+4. Design stream crossings for fish passage with shelves and other design features to facilitate terrestrial wildlife passage.
+5. Extend vegetative cover through the wildlife crossing in the migratory route, along with sheltering areas.
+Part (c): Miscellaneous Other Habitat-Friendly Design and Construction Practices
+1. Use native vegetation throughout the development (not just in HCA).
+2. Locate landscaping (required by other sections of this Ordinance) adjacent to HCA.
+3. Reduce light spill-off into HCAs from development.
+4. Preserve and maintain existing trees and tree canopy coverage, and plant trees, where appropriate, to maximize future tree canopy coverage.
+1 These development practices represent the state of scientific knowledge at the time of the adoption of Chapter 17.25. If more effective habitat-friendly practices become available, they may be used.
+
+3. If development in an HCA is approved pursuant to Subsection 17.25.100(B), compliance with the following mitigation standards shall be required, except that the mitigation standards for development in a wetland (as distinct from an HCA that is adjacent to a wetland) shall be only those required by federal and state law.
+
+a. Compliance with Subsections 17.25.100(A) (6), (7), and, if applicable, (8) shall be required; or
+
+b. An alternative mitigation plan (e.g., a proposal to create an alternative plant community type such as an oak savannah or a low-structure plant community, or where an applicant demonstrates that a portion of identified HCA on the subject property provides only impaired ecological functions) may be approved, subject to the following criteria:
+
+i. The mitigation plan shall demonstrate that it compensates for significant detrimental impacts to the ecological functions provided by the HCA on the subject property, after taking into consideration efforts to minimize such significant detrimental impacts through the use of the techniques described in Table 8 and through any additional or innovative techniques.
+
+ii. Mitigation shall occur on the subject property, except that offsite mitigation may be approved pursuant to Subsection 17.25.100(A)(7)(b).
+
+iii. All mitigation plantings shall be native vegetation.
+
+iv. All in-stream work in fish-bearing streams shall be done in accordance with the Oregon Department of Fish and Wildlife in-stream work-timing schedule.
+
+v. A mitigation maintenance plan shall be included and shall be sufficient to ensure the success of the planting.
+
+4. Municipal potable water, stormwater (drainage), and wastewater utility facilities, which may include, but are not limited to, water treatment plants, wastewater treatment plants, raw water intakes, pump stations, transmission mains, conduits or service lines, terminal storage reservoirs, and outfall devices, shall not have to comply with Subsection 17.25.100(B)(1), provided that:
+
+a. Where practicable, the development shall not encroach closer to a water resource than existing operations and development, or for new projects where there are no existing operations or development, the development shall not encroach closer to a water resource than practicable; and
+
+b. Best management practices shall be employed that accomplish the following:
+
+i. Account for watershed assessment information in project design;
+
+ii. Minimize the trench area and tree removal within the HCA;
+
+iii. Utilize and maintain erosion prevention and sediment control measures until other site stabilization measures are established, post-construction;
+
+iv. Replant immediately after backfilling or as soon as effective;
+
+v. Preserve wetland soils and retain soil profiles;
+
+vi. Minimize compactions and the duration of the work within the HCA;
+
+vii. Complete in-water construction during appropriate seasons, or as approved within requisite state or federal permits;
+
+viii. Monitor water quality during the construction phases, if applicable; and
+
+ix. Implement a full inspection and monitoring program during and after project completion, if applicable.
+
+History: Ord. 1496 §1 (Exh. A), 2009.
+
+17.25.110 Setbacks.
+
+For parcels that contain a Habitat Conservation Area, the minimum front, rear, and side yard setbacks shall be zero, except:
+
+A. Garages and carports shall comply with the minimum front yard setback of the underlying zoning district; and
+
+B. A greater setback may be required to comply with applicable fire or life safety requirements.
+
+History: Ord. 1496 §1 (Exh. A), 2009.

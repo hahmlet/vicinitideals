@@ -252,11 +252,23 @@ def test_gladstone_states_no_driveway_width_and_no_curb_cut_ceiling(
 def test_the_chapter_refused_one_standard_for_every_number_it_gave_up() -> None:
     """Seven values encoded and seven refused, out of one chapter.
 
-    Gladstone had no comment refusals at all before 17.48 was read; every one
-    of these is from it. Counted here as well as in the corpus-wide census so
-    that a refusal quietly deleted from this layer fails a test named after
-    this city rather than one named after arithmetic.
+    Gladstone had no comment refusals at all before 17.48 was read, and for a
+    fortnight every one of them was from it. Counted here as well as in the
+    corpus-wide census so that a refusal quietly deleted from this layer fails
+    a test named after this city rather than one named after arithmetic.
+
+    The eighth arrived on 2026-09-03 from a different chapter -- 17.25.110,
+    which hands a parcel containing a Habitat Conservation Area zero front,
+    rear and side setbacks, refused because the only HCA boundary this screen
+    has is a regional proxy and a proxy may take ground away but not hand it
+    back. It is excluded from the seven rather than folded into them, because
+    the sentence this test is making is about ONE chapter's exchange rate --
+    seven numbers out, seven readings declined -- and a total that drifts with
+    every unrelated reading stops making it. The total is pinned on the line
+    below so deleting the eighth still fails here and not only in the census.
     """
     mine = [r for r in refusals() if r.kind == "comments" and r.where == GLADSTONE]
-    assert len(mine) == 7
+    parking = [r for r in mine if "17.25" not in r.text]
+    assert len(parking) == 7
+    assert len(mine) == 8
     assert len(load_rules()[GLADSTONE].defaults) == 7

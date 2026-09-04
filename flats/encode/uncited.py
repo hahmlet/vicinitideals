@@ -244,8 +244,13 @@ def by_field(rows: Sequence[Uncited]) -> dict[str, int]:
 def write(rows: Sequence[Uncited], path: Path | None = None) -> Path:
     file = path or LEDGER
     file.parent.mkdir(parents=True, exist_ok=True)
+    # lineterminator is not cosmetic. csv writes CRLF by default, so this
+    # ledger regenerated on Windows rewrote every row it had and buried the
+    # real change -- 264 new rows inside a 19,082-line diff, 2026-09-03. A
+    # ledger nobody can read the diff of is a ledger nobody checks.
     with file.open("w", encoding="utf-8", newline="") as fh:
-        out = csv.writer(fh)
+        out = csv.writer(fh, lineterminator="
+")
         out.writerow(
             ["layer", "bucket", "field", "path", "line", "section", "repeats", "text"]
         )

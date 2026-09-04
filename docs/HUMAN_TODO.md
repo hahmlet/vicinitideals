@@ -199,8 +199,12 @@ on it, and only the first is a queue item:
    chapter sits on a host that will not serve it to a script and the chapter's
    id is not published anywhere. It was found by reading the raw page of the
    *next* chapter, which links back to it. **Nothing is needed from you on this
-   item any more.** The two cities still unscreened, Tualatin and Gladstone,
-   have no greens between them.
+   item any more.** Gladstone was wired on 2026-09-03 — it had no green then
+   either, and that turned out to be the wrong test: all 121 of its lots go
+   green the day you sign, and 51 of them sit on resource land. Tualatin was
+   wired the same day off the city's own adopted layers, which closes this
+   item: **every jurisdiction the screen grades now has an environmental
+   check**, and the exemption list is empty for the first time.
 
    Now measured, on a full re-run finished 2026-09-02: wiring them **cost 65
    greens**, all of them Wilsonville, where the resource boundaries fall across
@@ -936,8 +940,89 @@ the list of places worth hoping about.
   resource — tempting, and deliberately not used. Inside that band but outside
   the resource, all the city asks for is a construction management plan. That
   is paperwork, and paperwork is not a reason to lose a green.
-  Remaining: Tualatin and Gladstone, neither of which has a green today, so
-  nothing rides on them.
+  **Gladstone, wired 2026-09-03 — and the reason it was still on this list was
+  wrong.** The line that used to sit here said Tualatin and Gladstone had no
+  greens between them, so nothing rode on them. That is true and it is not the
+  question. Gladstone is the *one* city on the board whose lots are held by
+  nothing but signing — no missing data, no unanswered phone call, no decision
+  waiting on you. All 121 of its review lots go green the day item 7 is signed.
+  So "no greens today" was measuring the wrong day.
+
+  Measured before wiring anything: **51 of those 121 lots sit on mapped habitat
+  and 23 on mapped water-quality resource — 51 of 121 between them, two in
+  five.** Signing Gladstone with no environmental screen would have graded two
+  lots in five as clear land. That is the exact failure this whole item exists
+  to prevent, and it would have landed on the cleanest-looking city we have.
+
+  Gladstone runs four environmental districts, each its own chapter, and the
+  city's own definition of a buildable acre names them together. Two are now
+  screened, both as **flags** — the lot keeps its verdict and goes to a person.
+  Not as carves, for two reasons. The city adopts its habitat map inside its
+  Comprehensive Plan and does not publish it as a map file, so what the screen
+  actually uses is Metro's regional layer standing in for it — close, not the
+  same boundary. And the code does not refuse: the complete list of what you
+  may not do in a Gladstone habitat area is *plant invasive vegetation* and
+  *store materials outside*, word for word the county's list, with a permit
+  that the code says "shall be approved" on evidence. Taking a lot off the
+  board on a borrowed boundary for a rule that does not say no is not a trade
+  worth making.
+
+  One number in that chapter is worth your attention even so, because it is the
+  strongest argument anyone will make for going further. A habitat permit on
+  low-density residential land caps the **total disturbed area** — building,
+  parking, staging, everything, and it must be contiguous — at 5,000 to 6,000
+  square feet. Our pod plus its court runs about 7,030. So on that land the
+  in-habitat path is closed by arithmetic, not by judgement. It is not encoded
+  as a kill because the cap only applies to one comprehensive-plan designation
+  and the screen does not carry the designation that tells them apart. If the
+  designation is ever loaded, this becomes a real decision.
+
+  Two things are still not screened in Gladstone and both are written down
+  rather than guessed at. The **greenway** along the Willamette is a kill we
+  cannot draw: every development in it needs a conditional use, and the code
+  sets the setback "on a case-by-case basis", but the state publishes the
+  greenway boundary as a *line* and the city publishes no map of it at all, so
+  there is nothing to take the shape from. Building it from a line and a
+  riverbank would be inventing geometry. The **flood** district is already
+  screened by the FEMA layers everywhere; the piece not screened is Gladstone's
+  own extension of it to land that flooded in February 1996, which the city
+  admits its own map shows only "generally".
+
+  **Tualatin, wired the same day, and it closes this item completely — every
+  jurisdiction the screen grades now has an environmental check.** Tualatin was
+  the last name on the list and it had sat there for a month behind a note
+  saying its map service was "confirmed, layers not enumerated". The note
+  pointed at the wrong path. The city's layers are there, and they are the best
+  environmental data anyone in this project has published: not a regional map
+  borrowed as a stand-in, but the adopted overlay itself, split into exactly the
+  pieces its own code names. Worth remembering the shape of that mistake — "the
+  city doesn't publish it" and "our address for it is wrong" look identical from
+  the outside, and only one of them is a real gap.
+
+  Five layers, and Tualatin is the only city so far where the code is clear
+  enough to *subtract* land rather than send it to a person. Its Chapter 72
+  says plainly that no building, grading, fill or impervious surface may go in
+  a greenway or natural area, and the list of what may is paths, streets,
+  utilities, parks and landscaping — nothing anyone lives in. So those areas
+  come off the buildable part of the lot, along with the 50-foot strip along
+  each stream, which the code writes into the definition of a natural area
+  rather than leaving to be inferred. The wetlands district splits in two and
+  the split is the city's own: the protected pond and its 40-foot setback are
+  no-build and are subtracted; the fringe around them is land the code
+  explicitly expects to be developed, so it keeps its verdict and only picks up
+  a flag, because building there needs an engineer's signed certification.
+
+  One sentence in Tualatin's code is worth more than the layers. Chapter 71
+  says its district boundaries "are hereby fixed and established" as shown on
+  its map. No other city in the fourteen says that. Milwaukie calls its map a
+  general indicator, Gladstone adopts a map it does not publish, West Linn
+  publishes lines and makes the code supply the width. When a city says the map
+  *is* the boundary, a screen can stand on it — and that is the difference
+  between subtracting land and merely flagging it.
+
+  Nothing moves today: 7 of Tualatin's 19 waiting lots touch this, and all 19
+  are blocked on the sewer question in item 6 anyway, so unlike Gladstone,
+  signing alone will not turn them green.
 
 - **A rule that hands buildable ground back** — Clackamas ZDO 706.11 says a lot
   containing a habitat area, inside the Portland urban growth boundary, has

@@ -1,0 +1,764 @@
+TDC 72.010. Purpose.
+(1) T o identify and protect by preservation and conservation the designated significant natural
+resources and Other Natural Areas. The designated significant natural resources are greenways
+and natural areas, which include the riparian areas and scenic areas of the Tualatin River and certain
+creeks and drainage swales, wetlands, upland forests, meadows, fish and wildlife resources, and
+the geologic features of the T onquin Scablands. Significant Natural Resources are identified on the
+Significant Natural Resource List and Map TDC 72.013 and Map 72-3, TDC). The significant natural
+resources designated for protection are shown on Map 72-1.
+(2) T o provide sufficient area for stormwater runoff to reduce flood hazards and enhance water
+quality.
+(3) T o provide public access to scenic and riparian areas, where appropriate, by designating
+pedestrian and bicycle path locations.
+(4) T o provide specific design standards for development adjacent to, and within, greenways and
+natural areas in order to preserve and conserve them, and provide mechanisms for the granting of
+easements or dedications for Greenways, and Natural Areas while allowing reasonable economic
+development of property adjacent to the greenways and natural areas.
+(Ord. 635-84, § 30, 6-11-84; Ord. 933-94, § 31, 11-28-94; Ord. 947-95, § 5, 7-24-95; Ord. 979-97,
+§ 30, 7-14-97; Ord. 1427-19, § 32, 11-25-19)
+TDC72:1Supp. No. 2
+TDC 72.011. Criteria for Determining Significant Natural Resources.
+(1) The Significant Resource Criteria in Subsections (2-3) must be considered when determining
+whether a natural resource site is a Significant Natural Resource or is not significant.
+(2) Significant Resource Criteria—Wetlands Not in Riparian Corridors.
+(a) Exclusions. Wetland natural resources are not significant if they fall within any one of the
+following categories:
+(i) Wetlands artificially created entirely from upland that are:
+(A) Created for the purpose of controlling, storing or maintaining stormwater; or
+(B) Active surface mining or active log ponds; or
+(C) Ditches without a free and open connection to natural waters of the state (as
+defined in OAR 141-85-010(9) and which do not contain food or game fish (as
+defined in ORS 496.009); or
+(D) Less than one acre in size and created unintentionally as the result of irrigation
+water overflow or construction activity not related to compensatory mitigation for
+permitted wetland impacts; or
+(E) Of any size and created for wastewater treatment, farm or stock watering,
+settling of sediment, cooling industrial water, or as a golf course hazard.
+(ii) Wetlands or portions of wetlands that are contaminated by hazardous substances,
+materials or wastes as per the following conditions:
+(A) The wetland is documented as contaminated on either the U.S. Environmental
+Protection Agency's (EPA) National Priority List, or the Department of Environmen-
+tal Quality's (DEQ) Inventory of Hazardous Substance Sites (ORS 465.225).
+(B) Only the portion of the wetland affected by such hazardous substances shall
+be excluded from significance analysis.
+(b) A Wetland natural resource is a Significant Natural Resource if it meets one or more of the
+following criteria:
+(i) The site has a rating of "High" in at least one of the following environmental
+categories in the City of Tualatin Natural Resource Inventory and Local Wetlands
+Inventory (December, 1995) Wetland and Natural Areas Inventory Environmental and
+Social Value Assessment:
+(A) Fish Habitat Value. The assessment values use the low-medium-high rating
+for a site based on the modified fish habitat and wildlife habitat assessment
+methods used in the City of Tualatin Natural Resource Inventory. Fish habitat rates
+high if potential fish habitat exists.
+TDC 72.011 TUALATIN DEVELOPMENT CODE
+TDC72:2Supp. No. 2
+(B) Wildlife Habitat Value. Evaluates habitat diversity. Areas with permanent or
+seasonal water, diverse vegetation and structure, and interspersion of plant com-
+munities rate high. Wildlife habitat value also increases with the size of the site and
+linkage to open space habitat.
+(C) Hydrologic Control, Water Quality Protection, and Water Quality Potential.
+Resource sites that provide or have the potential to provide water quality protection
+to receiving streams or stormwater detention within the watershed are important
+and are rated high.
+(ii) The wetland or a portion of the wetland occurs within a horizontal distance of less
+than one-fourth mile from a water body listed by the Oregon Department of Environmen-
+tal Quality (DEQ) as a water quality limited body [303(d) list) and the wetland' s water
+quality protection or potential function is described as High or Medium in the Wetlands
+and Natural Areas Assessment.
+(iii) The site has a presence of one or more rare or locally unique plant communities that
+are relatively undisturbed with few or no non-native plants.
+(iv) The site has a presence of a plant or animal species that is state or federally listed
+as sensitive, rare, threatened or endangered, or is a critical habitat for such listed species,
+unless the appropriate state or federal agency indicates that the wetland is not important
+for the maintenance of the species.
+(3) Significant Resource Criteria—Streams, riparian corridors, forests, meadows and geologic
+features. A stream, riparian corridor, forest, meadow or geologic feature site is a significant resource
+site if it meets one or more of the following criteria:
+(a) The site has a presence of a plant or animal species that is state or federally listed as
+sensitive, rare, threatened or endangered, or is a critical habitat for such listed species;
+(b) The site has a presence of a physical feature that is designated as a scenic river or natural
+or geologic resource by county or regional government, or state or federal agencies. This
+includes but is not limited to designation as a significant natural resource or geologic area.
+Physical features do not include buildings or other constructed features.
+(c) The site has a presence of one or more relatively undisturbed native plant communities
+with few or no non-native plants.
+(d) The site has a rating of "High" in at least one of the following environmental categories in
+the City of Tualatin Natural Resource Inventory and Local Wetlands Inventory (December,
+1995) Wetland and Natural Areas Inventory Environmental and Social Value Assessment:
+(i) Fish Habitat Value. The assessment values use the low-medium-high rating for a site
+based on the modified fish habitat and wildlife habitat assessment methods used in the
+City of Tualatin Natural Resource Inventory. Fish habitat rates high if potential fish habitat
+exists.
+TDC 72.011NATURAL RESOURCE PROTECTION OVERLAY DISTRICT (NRPO)
+TDC72:3
+(ii) Wildlife Habitat Value. Evaluates habitat diversity. Areas with permanent or seasonal
+water, diverse vegetation and structure, and interspersion of plant communities rate high.
+Wildlife habitat value also increases with the size of the site and linkage to open space
+habitat.
+(iii) Hydrologic Control, Water Quality Protection, and Water Quality Potential. Re-
+source sites that provide or have the potential to provide water quality protection to
+receiving streams or stormwater detention within the watershed are important and are
+rated high.
+(iv) Ecological Integrity. Sites are rated high if they provide ecosystem linkage or
+continuity, allow wildlife passage between larger habitat units or genetic flow between
+plant populations, provide critical habitat for certain life history stages of sensitive fish and
+wildlife species, or other watershed or ecosystem functions. This criterion regards the
+both the ecological integrity and connectivity assessments of the site.
+(v) Uniqueness. Site contains fish and wildlife species, wildlife habitat, plant communi-
+ties or geologic features that are unique in the Tualatin area. Uniqueness is a consider-
+ation of the quantity and quality of a particular resource site relative to other resources in
+the Tualatin area.
+(e) A non-wetland site has a rating of "High" in at least two of the following social categories
+in the City of Tualatin Natural Resource Inventory (December, 1995) Wetland and Natural
+Areas Inventory Environmental and Social Value Assessment:
+(i) Educational Value and Scientific Research. Sites are rated high if they provide
+potential educational opportunities for local schools or parks and recreation programs or
+research opportunities for the scientific community. This value is dependent on access
+and distance from schools.
+(ii) Aesthetic or Scenic Qualities, or Visual or Noise Buffering Qualities.Rating aesthetic
+or scenic quality is based on visual characteristics. Buffering qualities refer to the site's
+ability to serve as a buffer to unattractive or noisy areas such as the interstate freeways.
+(iii) Opportunity for Passive Recreation. Rating for recreational opportunity is based on
+a combination of the availability of public access, environmental value, aesthetic and/or
+scenic value, and low probability for recreational uses that will adversely affect environ-
+mental, aesthetic or scenic values.
+(f) Meets the definition of a riparian corridor in OAR-660-090-(5) and any other criteria in
+subsections (3)(a-e) and (3)(g).
+(g) In addition to (a)—(f) above, a final decision to determine whether a resource site is
+significant or not significant shall consider information about the resource site from all available
+sources, including but not limited to property owners and interested citizens, and may use
+factors not listed in criteria (a)—(f) above provided that it is shown the factor(s) address the
+issue of whether or not the site is significant.
+(Ord. 979-97, § 31, 7-14-97)
+TDC 72.011 TUALATIN DEVELOPMENT CODE
+TDC72:4
+TDC 72.013. Significant Natural Resources.
+The following natural resource sites identified in the City of Tualatin Natural Resource Inventory and
+Local Wetlands Inventory (December, 1995) are Significant Natural Resources:
+Unit # Resource # Assessors Map and Tax Lot
+(Unit C: Cummins Creek; H: Hedges Creek; N: Nyberg Creek; S: Saum Creek;
+SD: Seeley Ditch; T : Tualatin River)
+C1 F25 2S121A002100
+2S122C000801
+2S121DA00300 2S121DA00400
+C1 W37 2S121D000100
+2S121D000500
+2S121DA00400
+2S122C000801
+2S121D000203
+2S121D000600
+2S122B000800
+2S121D000301
+2S121DA00300
+2S122C000603
+C1 W38 2S121A002100 2S121A002600
+H W25 2S127D000106 2S127D001500 2S127D001500
+BNRR
+H W28 2S126CC06000
+H W36 2S1220000400
+2S1220000800
+2S122C000502
+2S122C001800
+2S122C002300
+2S1220000500
+2S122B000800
+2S122C000503
+2S122C001900
+2S1220000600
+2S122C000300
+2S122C000603
+2S122C002200
+H W47 2S135B000803
+2S135BA00500
+2S135BD05000
+2S135BA00300
+2S135BD00200
+2S135BA00400
+2S135BD01500
+H W22 2S124B001300
+2S124BC00500
+2S124BC01300
+2S124BC00100
+2S124BC01100
+2S124BC01301
+2S124BC00300
+2S124BC01200
+2S124BC01400
+H2 F21 2S1230000100 2S123AA00800
+H2 F22 2S123CA00300 2S123CB00102
+H2 F23 2S122D000301
+2S122DA00300
+2S122DA00100
+2S122DA00500
+2S122DA00200
+2S122DA00600
+H2 W23 Wetlands Protection District
+H2 W48 2S123A00600
+H2 F24 2S122D000500
+H3 W35 2S116C002600
+2S122C002100
+2S1220000700
+2S122D000500
+2S122C000103
+H4 W34 2S122C00105
+2S127B000100
+2S127B000500
+2S127B000701
+2S122C001500
+2S127B000102
+2S127B000600
+2S122C001502
+2S127B000300
+2S127B000700
+H5 F26 2S127A000100
+2S127A000300
+2S127A000303
+2S127A000105
+2S127A000300
+2S127A000400
+2S127A000200
+2S127A0001302
+2S127D001500
+H5 W24 2S127A000105
+2S127B000800
+2S127A000300 2S127A000302
+H6 F27 2S127D000400
+2S127D001500
+2S127D001300 2S127D001400
+H6 W26 2S127D000400 2S127D001500
+H7 F28 2S127D000400
+2S127D001500
+2S127D001300 2S127D001400
+H7 W27 2S126CA13800
+2S126CC06100
+2S126CB14000
+2S127D001101
+2S126CC00102
+2S127D001201
+H8 F31 2S126CD13200
+H8 W29 2S126CD13200
+2S126CD13500
+2S126CD13300 2S126CD13400
+TDC 72.013NATURAL RESOURCE PROTECTION OVERLAY DISTRICT (NRPO)
+TDC72:5
+Unit # Resource # Assessors Map and Tax Lot
+H9 F32 2S127B000502
+2S127D000200
+2S134A001001
+2S134A001600
+2S134A002000
+2S134AA01900
+2S134AA02400
+2S127C000100
+2S127D000300
+2S134A001100
+2S134A001700
+2S134A002002
+2S134AA02200
+2S127C000200
+2S127D000301
+2S134A001501
+2S134A001701
+2S134A002100
+2S134AA02300
+H9 F33 2S134A001500
+2S134A002100
+2S134A001501 2S134A002001
+H9 M2 2S134A002100
+H9 W32 2S127D000200
+2S127D000301
+2S134A002001
+2S127D000300
+2S134A001500
+2S134A002100
+2S134A002000
+2S134A001501
+2S134B000600
+RR RR
+N F4 2S126DB00100
+N W5 2S123DA00100
+2S124CB03100
+2S124CB02200
+2S124CB03200
+2S124CB02601
+N1 F1 21E19C00900 21E19C01200 21E19C01400
+N1 W1 21E19C00200
+N1 W2 21E19C00700 21E19C00900 21E19C01200
+N2 F2 2S124DB00102 2S124DC00200 2S124DC00300
+N2 W3 2S124DA00100
+2S124DA00900
+2S124DA00500
+2S124DA01000
+2S124DA00600
+2S124DB00102
+N3 F3 2S124CA00100 2S124CA00300 2S124CD00100
+N3 W4 21E19C00900
+2S124DA00100
+2S124DB00102
+2S124CA00100
+2S124DA00400
+2S124CA00300
+2S124DA00900
+S F9 Interstate 5 Hwy ROW
+S1 F13 21E20CB02700
+S1 W7 21E19DD12700
+21E20CB02500
+21E19DA10000
+21E20CB02700
+21E19DD12700
+S1 W8 21E30A00990
+21E30A01190
+21E30A01000 21E30A01090
+S2 F5 21E30A01300
+21E30B00200
+21E30A01600
+21E30B00600
+21E30A01700
+21E30B00100
+S3 W10 2S125AA05100
+2S125AC03000
+2S125AA05200 2S125AC00100
+S4 F39 2S125CB05800
+2S125CB10000
+2S125CC06400
+2S125CB06400
+2S125CB10100
+2S126DD01100
+2S125CB06500
+2S125CC02400
+SD 1 F35 2S135B000900
+2S135BC01100
+2S135BC01400
+2S135BC01700
+2S135BC02000
+2S135BC02300
+2S135B002500
+2S135BC01200
+2S135BC01500
+2S135BC01800
+2S135BC02100
+2S135BC01000
+2S135BC01300
+2S135BC01600
+2S135BC01900
+2S135BC02200
+SD 1 F36 2S135B002500 2S135B002600
+SD 1 W31 2S135B002500 2S135BC02100
+T1 F14 21E19DA10100 21E19DA10400
+T1 F15 21E1900900
+21E1901000
+21E19C00200 21E19DA10400
+T1 M1 21E19DA10100 21E19DA10400
+T1 W13 21E19C00200
+T1 W14 21E19C00200
+T1 W50 21E19DA10100
+TDC 72.013 TUALATIN DEVELOPMENT CODE
+TDC72:6
+Unit # Resource # Assessors Map and Tax Lot
+T1—T7 F43 21E1900900
+21E19DA10100
+21E20CB02400
+2S114BC01700
+2S114BC02000
+2S114BD04400
+2S114D000200
+2S115AD01200
+21E1901000
+2S115AD01500
+2S115AD01800
+2S115C001500
+2S115C002202
+2S115D001403
+2S115D001600
+2S115DA00300
+2S115DA01100
+2S121A000101
+2S121A000300
+2S121A000500
+2S124A002601
+2S124A002900
+2S124B001100
+21E19C00200
+21E19DA10400
+21E20CB02401
+2S114BC01800
+2S114BC02100
+2S114CA00300
+2S114D000300
+2S115AD01300
+2S115AD01600
+2S115C001400
+2S115C001501
+2S115C002300
+2S115D001404
+2S115D001700
+2S115DA00800
+2S116C002600
+2S121A000102
+2S121A000400
+2S121AB00500
+2S124A002700
+2S124B001006
+2S124B001300
+2S124BC01400
+2S124BC00100
+21E19C00300
+21E19DA10500
+21E20CB02402
+2S114BC01900
+2S114BC02200
+2S114CA00301
+2S115AD01100
+2S115AD01400
+2S115AD01700
+2S115C001401
+2S115C001800
+2S115D001402
+2S115D001500
+2S115DA00100
+2S115DA00900
+2S116D001400
+2S121A000200
+2S121A000401
+2S121AB13700
+2S124A002700
+2S124B001007
+2S124B001500
+T2 F16 2S124AA002503
+2S124A002800
+2S124A002601
+2S124A002900
+2S124A002700
+T2 W15 2S124A002503 2S124A002700 2S124A002800
+T2 W16 2S124A002700
+T3 F17 2S124A002700
+T4 F18 2S124B001100
+T5 W17 2S114D000300 2S123AA00100 2S123AA00200
+T5 W18 2S114D000200
+T5 W52 2S114D000200
+T6 F19 2S115AD01100
+2S115DA00800
+2S115AD01200
+2S115DA00900
+2S115AD01300
+T6 F29 2S114BD04400 2S114CA00300 2S114CA00301
+T6 W19 2S114BC01900
+2S114CB01000
+2S115AD01300
+2S115AD01600
+2S115D001404
+2S115DA00200
+2S115DA00500
+2S115DA00800
+2S114CB00700
+2S115AD01100
+2S115AD01400
+2S115AD01700
+2S115D001405
+2S115DA00300
+2S115DA00600
+2S115DA00900
+2S114CB00800
+2S115AD01200
+2S115AD01500
+2S115AD01800
+2S115DA00100
+2S115DA00400
+2S115DA00700
+2S115DA01100
+T7 F42 2S116C002600 2S121AB13700
+T7 W51 2S116C002600
+(Ord. 979-97, § 32, 7-14-97)
+TDC 72.020. Location of Greenways and Natural Areas.
+(1) The designated significant natural resources are the Greenways and Natural Areas on Map
+72-1, which shows the general location of the NRPO District.
+(2) Lands in the Wetland Protection District (WPD) are subject to Chapter 71, and other applicable
+regulations, but not Chapter 72.
+(Ord. 635-84, § 31, 6-11-84; Ord. 947-95, § 5, 7-24-95; Ord. 979-97, § 33, 7-14-97; Ord. 1427-19,
+§ 33, 11-25-19)
+TDC 72.020NATURAL RESOURCE PROTECTION OVERLAY DISTRICT (NRPO)
+TDC72:7Supp. No. 2
+TDC 72.030. Greenways.
+(1) Greenways can Exhibit Diverse Characteristics. Those along the Tualatin River and Hedges,
+Nyberg and Saum Creeks can be natural in some sections and have pedestrian and bike paths in
+other sections. Greenways in built-up areas such as in subdivisions are typically landscaped with
+lawn and often include concrete pedestrian/bike paths.
+(2) Riverbank Greenway (NRPO-GR).
+(a) Except as provided in Subsection (b), the NRPO District along the south bank of the
+Tualatin River, beginning at the City's western Urban Growth Boundary (UGB) and extending
+to the City' s eastern UGB, and along the north bank of the Tualatin River from the northwest
+corner of T ax Lot 1007 to the southeast corner of T ax Lot 1006, Washington County T ax Map
+2S1 24B, shall have a width as measured from a line 40 feet inland from the top of the bank
+extending to the middle of the river. The top of the bank shall be where the landform called "the
+bank" changes from a generally up-slope feature to a generally flat feature. The NRPO District
+shall automatically apply to property annexed to the City, except as provided for in Appendix G
+to the Parks and Recreation Master Plan.
+(b) For the area 300 feet east and west of the I-5 right-of-way as shown on Map 72-1, the
+NRPO District on the south bank of the Tualatin River shall have a width as measured from a
+line 75 feet in-land from the top of the bank extending to the middle of the river.
+(3) Creek Greenways (NRPO-GC).
+(a) Except as provided in Subsections (b—d), the NRPO-GC District shall have a width of 50
+feet centered on the centerline of Hedges Creek from SW Ibach Street to the western boundary
+of the Wetlands Protection District and from the eastern boundary of the Wetlands Protection
+District to the Tualatin River, and centered on Nyberg Creek from SW T onka Street to the
+Tualatin River.
+(b) The NRPO-GC District shall have a width of 30 feet centered on the centerline of Nyberg
+Creek from SW Boones Ferry Road to SW T onka Street.
+(c) Property owners on opposite sides of a creek may enter into a written agreement to allow
+the NRPO-GC District to be off-center, but in no case shall it be less than 15 feet on one side
+of the creek. Such agreement shall be binding on property owners, their heirs and assigns;
+shall be approved by City Council and shall be placed on permanent file with the City Recorder.
+(d) The NRPO-GC District shall have a width of 50 feet extending out from the top of the
+stream bank or from the upland edge of wetlands within the stream riparian area on the
+following creek sections:
+(i) Hedges Creek from SW 105th Avenue downstream to the private driveway culvert at
+the upper end of the fire pond at Tri-County Industrial Park,
+(ii) Hedges Creek from the fire pond dam's outlet at Tri-County Industrial Park down-
+stream to SW Tualatin-Sherwood Road, and
+TDC 72.030 TUALATIN DEVELOPMENT CODE
+TDC72:8Supp. No. 2
+(iii)  Saum Creek beginning east of I-5, just north of I-205 extending downstream to the
+Tualatin River, except:
+(A)  A width of 25 feet extending out from the upland edge of wetlands in the stream
+riparian area for the severely constrained properties shown on Map 72-1; and
+(B)  To the upland edge of the wetland in the stream riparian area adjacent to
+existing developed residential properties west of Atfalati Park shown on Map 72-1.
+(4)  Other Greenways (NRPO-OG). The greenways listed below are not within a riverbank or creek
+greenway. These areas are primarily drainage corridors for neighboring residential zones. The
+location and size of these greenways are shown on Map 72-1.
+(a)  Chieftain/Dakota Greenway;
+(b)  Indian Meadows Greenway;
+(c)  Hi-West Estates Greenway;
+(d)  Shaniko Greenway;
+(e)  Nyberg Creek Greenway (south).
+(Ord. 979-97, § 34, 7-14-97)
+Editor’s note—Ord. No. 979-97, § 34, adopted July 14, 1997, repealed TDC 72.030 and enacted a
+new TDC 72.030 as set out herein. Former TDC 72.030 derived from Ord. 721-87, adopted May 26,
+1987; Ord. 933-94, adopted November 28, 1994; and Ord. 947-95, adopted July 24, 1995.
+TDC 72.040.  Natural Areas.
+(1)  Natural Areas are the wetlands and upland open space areas on Map 72-1. They provide flood
+control, water quality, erosion control, fish and wildlife habitat, and valuable scenic qualities. Natural
+Areas may include restored and enhanced wetlands, park sites and other areas accessible by the
+public for passive recreation.
+(2)  Wetland Natural Areas.
+(a)  Wetland Preservation Natural Areas (NRPO-WPNA) are shown on Map 72-1. They
+include all land within a delineated wetland boundary.
+(b)  Wetland Conservation Natural Areas (NRPO-WCNA) are shown on Map 72-1. Except as
+provided in Subsection (c), they include all land within a delineated wetland boundary.
+(c)  For uses not permitted in TDC 72.060(3), excavation, fill or removal in a NRPO-WCNA is
+allowed subject to the Oregon Division of State Lands (DSL) requirements and the following
+standards:
+(i)  The wetland acreage affected by the excavation, fill or removal shall not exceed 30
+percent of the subject property's delineated wetland acreage. The wetland acreage
+affected shall include excavation, fill or removal activities conducted since March 1, 1996.
+(ii)  The excavation, fill or removal shall not reduce or block water features such as
+springs, drainage courses and streams.
+ TDC 72.040NATURAL RESOURCE PROTECTION OVERLAY DISTRICT (NRPO)
+TDC72:9Supp. No. 10
+(iii)  The wetland' s functions and values listed in the City of Tualatin Natural Resource
+Inventory and Local Wetlands Inventory (December, 1995) shall be retained or improved
+through mitigation and/or enhancement. The wetland' s functions and values may be
+assessed using the Oregon Freshwater Wetland Assessment Methodology (DSL, 1996,
+as amended).
+(iv)  Mitigation shall be conducted either on the subject property or within the same
+stream watershed as the subject wetland unless the applicant demonstrates the imprac-
+ticality of doing so.
+(3)  Open Space Natural Areas.
+(a)  Open Space Natural Areas (NRPO-OSNA) are shown on Map 72-1. They include upland
+forests, upland forests associated with slopes or streams, upland meadows, upland meadows
+associated with slopes or streams, the geologic features of the Tonquin Scablands, areas with
+slopes greater than 25 percent, areas within 50 feet of a delineated wetland and areas within
+50 feet of a stream top of bank.
+(b)  The top of bank for the Tualatin River is as stated in TDC 72.030 and for all other streams
+is the bankfull stage. Slope is the vertical elevation divided by the horizontal distance of vertical
+change and is measured for a horizontal distance of 100 feet.
+(c)  Land use and permit applications shall show the NRPO-OSNA Boundary and shall
+include information on wetland delineations, location of streams, top of bank, topography and
+a vegetation inventory.
+(Ord. 635-84, § 32, 6-11-84; Ord. 673-85, § 1, 8-12-85; Ord. 721-87, § 2, 5-26-87; Ord. 933-94, § 33,
+11-28-94; Ord. 947-95, § 5, 7-24-95; incorporated into § 72.030 by Ord. 979-97, § 35, 7-14-97; Ord.
+979-97, § 35, 7-14-97)
+TDC 72.050.  Reserved.
+(Ord. 635-84, § 33, 6-11-84; Ord. 947-95, § 5, 7-24-97; incorporated into § 72.030 by Ord. 979-97,
+§ 34, 7-14-97)
+TDC 72.055.  Reserved.
+Editor’s note— Ord. 1427-19, § 34, adopted November 25, 2019, repealed § 72.055. Former
+§ 72.055 pertained to other natural areas and derived from Ord. 635-84, § 33, adopted June 11,
+1984; Ord. 947-95, § 5, adopted July 24, 1995; and Ord. 979-97, § 36, adopted July 14, 1997.
+TDC 72.056.  Vegetated Corridors of Sensitive Areas.
+Lands subject to these regulations are also subject to the regulations in Clean Water Services
+Design and Construction Standards.
+(Ord. 947-95, § 5, 7-24-95; Ord. 979-97, § 37, 7-14-97; Ord. 1070-01 § 10, 4-9-01; Ord. 1070-01,
+4-9-01; Ord. 1489-24, § 5, 8-12-24)
+TDC 72.040 TUALATIN DEVELOPMENT CODE
+TDC72:10Supp. No. 10
+TDC 72.060. Development Restrictions in Greenways and Natural Areas.
+(1) Except as provided in Subsection (2), no building, structure, grading, excavation, placement of
+fill, vegetation removal, impervious surface, use, activity or other development shall occur within
+Riverbank, Creek and Other Greenways, and Wetland and Open Space Natural Areas.
+(2) The following uses, activities and types of development are permitted within Riverbank, Creek
+and Other Greenways, and Wetland and Open Space Natural Areas provided they are designed to
+minimize intrusion into riparian areas:
+(a) Public bicycle or pedestrian ways, subject to the provisions of TDC 72.070.
+(b) Public streets, including bridges, when part of a City approved transportation plan, and
+public utility facilities, when part of a City approved plan and provided appropriate restoration
+is completed.
+(c) Except in Wetland Natural Areas, private driveways and pedestrian ways when necessary
+to afford access between portions of private property that may be bisected by a Greenway or
+Open Space Natural Area.
+(d) Except in Creek Greenways and Wetland Natural Areas, outdoor seating for a restaurant
+within the Central Urban Renewal District, but outside of any sensitive area or its vegetated
+corridor.
+(e) Public parks and recreational facilities including, but not limited to, boat ramps, benches,
+interpretive stations, trash receptacles and directional signage, when part of a City-approved
+Greenway or Natural Area enhancement plan.
+(f) Landscaping, when part of a landscape plan approved through the Architectural Review
+process. City initiated landscape projects are exempt from the Architectural Review process.
+Landscaping in Greenways and Natural Areas shall comply with the approved Plant List in the
+Parks and Recreation Master Plan. When appropriate, technical advice shall be obtained from
+the Oregon Department of Fish and Wildlife, U.S. Soil Conservation Service, or similar agency,
+to ensure the proposed landscaping will enhance the preservation of any existing fish or wildlife
+habitats in the vicinity.
+(g) Wildlife protection and enhancement, including the removal of non-native vegetation and
+replacement with native plant species.
+(h) Except in Wetland Natural Areas, public boating facilities, irrigation pumps, water-related
+and water-dependent uses including the removal of vegetation necessary for the development
+of water-related and water-dependent uses, and replacement of existing structures with
+structures in the same location that do not disturb additional riparian surface.
+(i) In Wetland Natural Areas, perimeter mowing and other cutting necessary for hazard
+prevention.
+TDC 72.060NATURAL RESOURCE PROTECTION OVERLAY DISTRICT (NRPO)
+TDC72:11Supp. No. 2
+(3) The City may, through the subdivision, conditional use, architectural review, or other develop-
+ment approval process, attach appropriate conditions to approval of a development permit. Such
+conditions may include, but are not limited to:
+(a) Use of Greenways and Natural Areas for storm drainage purposes;
+(b) Location of approved landscaping, pedestrian and bike access areas, and other non-
+building uses and activities in Greenways and Natural Areas;
+(c) Setback of proposed buildings, parking lots, and loading areas away from the Greenway
+and Natural Area boundary.
+(4) Greenways and Natural Areas in which an access easement is owned by the City, but retained
+in private ownership, shall be maintained by the property owner in their natural state and may only
+be modified if a landscape and maintenance plan complies with the approved Plant List in the Parks
+and Recreation Master Plan, and has been approved through the Architectural Review process or by
+the Parks and Recreation Director when Architectural Review is not required.
+(5) The Parks and Recreation Director shall be included as a commentor when a development
+application proposes dedication of Greenway or Natural Area property to the City or when develop-
+ment is pro-posed on Greenway or Natural Areas property maintained by the Parks and Recreation
+Department.
+(Ord. 673-85, § 2, 8-12-85; Ord. 933-94, § 34, 11-28-94; Ord. 947-95, § 5, 7-24-95; Ord. 979-97,
+§ 38, 7-14-97)
+TDC 72.065. Hardship Created, Map Error, Property Not Buildable.
+(1) Applications for variances due to a hardship resulting from the requirements of Chapter 72 shall
+be processed in accordance with the provisions of Chapter 33. For variance applications alleging the
+requirements of Chapter 72 have rendered a property not buildable, the applicant has the burden of
+proof to show the property is not buildable and to specify which Chapter 72 requirements are
+proposed to be reduced or removed to render the property buildable.
+(2) Claims of a location error in a Greenway or Natural Area Boundary on Map 72-1 shall be
+considered as part of an application for a subdivision, partition, lot line adjustment, architectural
+review or variance. Claims that an existing Greenway or Natural Area Boundary should be deleted,
+or added, on Map 72-1 shall be considered through the Plan Amendment process. Claims of map
+errors shall be supported by adequate inventory information and analysis to justify the claim and
+meet the land use application approval criteria. Claims of map error for wetland boundaries shall be
+verified by the Oregon Division of State Lands.
+(Ord. 979-97, § 39, 7-14-97)
+TDC 72.070. General Guidelines for Pedestrian and Bike Paths in Greenways.
+T o construct bike and pedestrian paths in greenways, the developer of the path shall adhere to the
+following guidelines, wherever practicable:
+(1) Incorporate trails into the surrounding topography.
+TDC 72.060 TUALATIN DEVELOPMENT CODE
+TDC72:12Supp. No. 2
+(2) Provide viewing opportunities for special vistas, wetlands, and unique natural features.
+(3) Protect existing vegetation to the greatest extent possible. In wooded areas meander paths
+through the woods to avoid significant trees. An arborist should be consulted to determine methods
+for minimizing impact of construction of paths near trees greater than five inch caliper as measured
+four feet above-grade.
+(4) Replant trees in the vicinity where they were removed. Use native species.
+(5) Minimize impact on wetland environments. Build paths above wetlands wherever possible. Use
+boardwalks, bridges or other elevated structures when passing through a wetland. Direct trails away
+from sensitive habitat areas such as nesting or breeding grounds.
+(6) Provide interpretive opportunities along the trail. Use interpretive signage and displays to
+describe plant and animal species, nesting areas, wildlife food sources, and geologic, cultural and
+historic features.
+(7) Provide amenities along the trail. Place benches, picnic tables, trash receptacles and interpre-
+tive signage where appropriate.
+(8) Where paths are placed in utility corridors, path design should be coordinated with the City's
+Engineering and Building Department and Operations Department to allow utility maintenance.
+(9) Mitigate surface water drainage near wetlands and streams. Where hard surface trails occur
+adjacent to wetlands or creeks, provide, when appropriate, an open water system through swales,
+trench percolation, or on-site detention ponds to prevent erosion and negative impacts.
+(10) Incorporate signage. Place properly scaled and sited regulatory and guide signs to instruct
+users on accessibility, local conditions, safety concerns and mileage information.
+(Ord. 635-84, § 35, 6-11-84 and Ord. 933-94, § 35, 11-28-94; Ord. 947-95, § 5, 7-24-95; Ord.
+1427-19, § 35, 11-25-19)
+TDC 72.080. Shift of Density for Residential Development Adjacent to Greenways or Natural
+Areas.
+(1) A shift of density may be allowed in accordance with TDC 41.150 (RML District), 42.150 (RMH
+District), 43.180 (RH District) and 44.160 (RH/HR District).
+(2) Small lots may be allowed in subdivisions and partitions in accordance with TDC 40.055 (RL
+District).
+(Ord. 979-97, § 40, 7-14-97; Ord. 1136-03, 4-28-03)
+TDC 72.085. Landscaping Credit within Commercial and Industrial Planning Districts Adja-
+cent to Greenways and Natural Areas.
+(1) When a property owner in a Commercial, Institutional, or Industrial Planning District dedicates
+to the City a portion of the NRPO District, or vegetated corridor located within or adjacent to the
+NRPO District in accordance with a City-approved landscape plan, a Greenway and Natural Area
+Landscaping Credit shall be applied toward a portion of the site's percentage landscaping require-
+ment.
+TDC 72.085NATURAL RESOURCE PROTECTION OVERLAY DISTRICT (NRPO)
+TDC72:13Supp. No. 2
+(2) The amount of the Greenway and Natural Area Landscaping Credit shall be as provided in TDC
+Chapter 73. The applicant must meet all landscaping requirements in this Code to the satisfaction of
+the Planning Director through the Architectural Review process.
+(Ord. 673-85, § 2, 8-12-85; Ord. 933-94, § 37, 11-28-94; Ord. 947-95, § 5, 7-24-95; Ord. 979-97,
+§ 41, 7-14-97; Ord. 1216-06, 7-24-06; Ord. 1427-19, § 36, 11-25-19)
+TDC 72.090. Reduction in Setback Requirements.
+When a property owner in a IN, CO, CR, CO/MR, ML, or MG Planning District dedicates to the City
+land in the NRPO District, a bikeway or pedestrian path facility, or a vegetated corridor located within
+or adjacent to the NRPO District, the minimum front yard setback may be reduced through the AR
+process as provided in Chapters 50, 51, 52, 55, 60, and 61.
+(Ord. 721-87, § 3, 5-26-87; Ord. 933-94, § 38, 11-28-94; Ord. 947-95, § 5, 7-24-95; Ord. 979-97,
+§ 42, 7-14-97; Ord. 1216-06, 7-24-06; Ord. 1427-19, § 37, 11-25-19)
+TDC 72.100. Parks Systems Development Charge (SDC) Credit.
+Tualatin Municipal Code Chapter 2-6 (System Development Charges) establishes a System
+Development Charge for Parks in residential planning districts. The ordinance contains provisions
+for credits against the Parks SDC, subject to certain limitations and procedures. Credit may be
+received up to the full amount of the Parks SDC fee. Dedication of NRPO District Areas, or vegetated
+corridors located within or adjacent to the NRPO District listed in the SDC capital improvement list
+are eligible for a SDC credit. Dedication and improvement of bicycle and pedestrian paths may also
+be eligible for a SDC credit.
+(Ord. 933-94, § 39, 11-28-94; Ord. 947-95, § 5, 7-24-95; Ord. 979-97, § 43, 7-14-97; Ord. 1427-19,
+§ 38, 11-25-19)
+TDC 72.110. Easements for Pedestrian and Bicycle Access.
+In any portion of the NRPO District, the City may, through the subdivision, partition, conditional use,
+architectural review, or other applicable development approval process, require that easements for
+pedestrian and bicycle access and maintenance uses be granted as a condition of approval when
+said easements are necessary to achieve the purposes of the Parks and Recreation Master Plan,
+Greenway and Trail Development Plan (Figure 72-2), or Bicycle and Pedestrian Plan (Figure 11-4).
+(Ord. 933-94, § 40, 11-28-94; Ord. 947-95, § 5, 7-24-95; Ord. 979-97, § 44, 7-14-97; Ord. 1427-19,
+§ 39, 11-25-19)
+TDC 72.120. Wetlands Protection District.
+In cases where land within the NRPO District is also within the Wetlands Protection District, Chapter
+71, any development permitted by TDC 72.060 shall be subject to the provisions of Chapter 71.
+(Ord. 933-94, § 41, 11-28-94; Ord. 947-95, § 5, 7-24-95; Ord. 979-97, § 45, 7-14-97)
+TDC 72.085 TUALATIN DEVELOPMENT CODE
+TDC72:14Supp. No. 2
+TDC 72.130. Floodplain District.
+In cases where land within the NRPO District is also within the Floodplain District, Chapter 70, any
+development permitted by TDC 72.060 shall be subject to the provisions of Chapter 70.
+(Ord. 933-94, § 42, 11-28-94; Ord. 947-95, § 5, 7-24-95; Ord. 979-97, § 46, 7-14-97)
+TDC 72.140. Dedication of Land for Park Purposes.
+Nothing in this chapter shall prohibit the dedication of land within the NRPO District to the public for
+park or open space purposes when the City Council finds that such dedication would be consistent
+with the purpose and objectives of the parks and recreation element of the Tualatin Public Facilities
+Plan.
+(Ord. 933-94, § 43, 11-28-94; Ord. 947-95, § 5, 7-24-95; Ord. 979-97, § 47, 7-14-97)
+TDC 72.150. Modifications for Storm Drainage Improvements.
+Nothing in this chapter shall prohibit the City or any property owner from altering, enlarging,
+straightening, piping, or otherwise modifying a creek channel in the NRPO District upon a finding by
+the City Engineer that such modification is necessary for maintaining the ability of the creek to
+transmit storm water run-off.
+(Ord. 933-94, § 44, 11-28-94; Ord. 947-95, § 5, 7-5-95; Ord. 979-97, § 48, 7-14-97)
+TDC 72.150NATURAL RESOURCE PROTECTION OVERLAY DISTRICT (NRPO)
+TDC72:15Supp. No. 2

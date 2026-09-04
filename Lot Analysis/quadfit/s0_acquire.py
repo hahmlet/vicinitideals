@@ -135,6 +135,7 @@ _WV = "https://services7.arcgis.com/5Loh3xXKWLd2M7xA/arcgis/rest/services"
 _METRO = "https://services2.arcgis.com/McQ0OlIABe29rJJy/arcgis/rest/services"
 _HV = "https://services5.arcgis.com/fuVQ9NIPGnPhCBXp/arcgis/rest/services"
 _MIL = "https://services6.arcgis.com/8e6aYcxt8yhvXvO9/ArcGIS/rest/services/Milwaukie_Zoning/FeatureServer"
+_TUAL = "https://tualgis.ci.tualatin.or.us/server/rest/services/EnvironmentalExplorer/MapServer"
 
 PHASE2_LAYERS: dict[str, dict[str, Any]] = {
     # Portland environmental zone GEOMETRY (not the OVRLY letters on zoning)
@@ -374,6 +375,91 @@ PHASE2_LAYERS: dict[str, dict[str, Any]] = {
     "overlay_oregon_city_nrod": {
         "url": "https://maps.orcity.org/arcgis/rest/services/WaterAndNaturalResources/MapServer/2",
         "fields": ["NROD", "Acres"]},
+    # ---------------- Tualatin (the last unscreened jurisdiction) ----------
+    # The service was recorded as "confirmed, layers not enumerated" on
+    # 2026-09-01 and stayed that way because Tualatin had no green to lose.
+    # Enumerated 2026-09-03 at the ROOT of the server rather than in the Public
+    # folder that the note pointed at -- /server/rest/services/Public returns
+    # "Token Required" and EnvironmentalExplorer is not in it. A folder that
+    # refuses to list is not a service that refuses to answer.
+    #
+    # What came back is the best environmental publication in the corpus: the
+    # adopted NRPO district itself, the Wetlands Protection District split by
+    # the sub-area names the code defines, and the 50 ft stream buffer with a
+    # piped flag on it.
+    #
+    # TDC 72.020(1) puts the district on Map 72-1 and 72.060(1) is the
+    # prohibition that makes it a carve: "no building, structure, grading,
+    # excavation, placement of fill, vegetation removal, impervious surface,
+    # use, activity or other development shall occur within Riverbank, Creek
+    # and Other Greenways, and Wetland and Open Space Natural Areas." The
+    # exceptions in 72.060(2) are paths, streets, utilities, parks, landscaping
+    # and wildlife work -- a dwelling is on none of them. Map plus prohibition,
+    # the Oregon City shape.
+    #
+    # 159 polygons over six CLASS values, and all six are named by the
+    # prohibition: NRPO-GR riverbank greenway, NRPO-GC creek greenway, NRPO-OG
+    # other greenway, NRPO-WPNA wetland preservation, NRPO-WCNA wetland
+    # conservation, NRPO-OSNA open space. Fetched whole rather than by class
+    # for that reason.
+    "overlay_tualatin_nrpo": {
+        "url": f"{_TUAL}/23",
+        "fields": ["TYPE", "CLASS", "CLASS_NAME", "ACRES"]},
+    # The Wetlands Protection District, split at the one line the code draws
+    # through it. TDC 71.020 defines the sub-areas and then says the boundaries
+    # "are hereby fixed and established as shown on Map 71-1" -- the strongest
+    # map language anywhere in this corpus, and the reason a carve here needs no
+    # hedging.
+    #
+    # No-build subset: the Wetlands Protected Area and the Sweek Pond
+    # Management Area, where 71.065 allows "no permanent use ... other than
+    # passive nature study, wildlife protection and enhancement" and a named
+    # list of public uses; plus the three setback classes, which are 71.061(1)'s
+    # 40 ft development setback drawn -- "all permanent surface structures and
+    # other surface improvements ... shall be set back not less than 40 feet
+    # from the boundary of the Wetlands Protected Area". 71.062(3) permits fill
+    # and earth-moving inside that setback, which is why it is a no-BUILDING
+    # area rather than untouchable ground, and a carve is exactly that.
+    #
+    # The TYPE value for the protected area carries a trailing space in the
+    # published data ('Wetlands Protected Area '), so this filters by what it
+    # is not rather than by what it is.
+    "overlay_tualatin_wpd_nobuild": {
+        "url": f"{_TUAL}/25",
+        "fields": ["TYPE", "ACRES"],
+        "where": "TYPE <> 'Wetlands Fringe Area'"},
+    # The fringe, and it is the opposite: 71.062(2) allows excavation and fill
+    # "in all areas for purposes related to its full development and use in
+    # accordance with applicable primary planning district classifications".
+    # Development is expected there. What survives is 71.030 with 71.040(1),
+    # which makes every application "to construct buildings or other
+    # improvements ... upon lands lying within the Wetlands Protection District"
+    # arrive with a licensed engineer's written certification. That is a real
+    # requirement on a real building and it is not a reason to lose the lot.
+    "overlay_tualatin_wfa": {
+        "url": f"{_TUAL}/25",
+        "fields": ["TYPE", "ACRES"],
+        "where": "TYPE = 'Wetlands Fringe Area'"},
+    # 72.040(3)(a) writes the 50 ft buffer into the definition of an Open Space
+    # Natural Area -- OSNA includes "areas within 50 feet of a delineated
+    # wetland and areas within 50 feet of a stream top of bank" -- so this is
+    # not a second resource on top of the NRPO layer, it is the definitional
+    # limb of it that the city drew separately. Carved for the same 72.060(1)
+    # prohibition.
+    "overlay_tualatin_stream_buffer": {
+        "url": f"{_TUAL}/26",
+        "fields": ["NAME", "IS_PIPED", "FCODE_DESC"],
+        "where": "IS_PIPED = 'FALSE'"},
+    # The eight piped segments, and this is the West Linn ruling again in
+    # another city. 72.040(3)(a) measures the buffer from "a stream top of
+    # bank", and 72.040(3)(b) defines that as the bankfull stage. A closed pipe
+    # has no bankfull stage, so the width the carve would use is not a number
+    # anybody wrote. The segment is on the adopted map, which is enough to say
+    # a person should look.
+    "overlay_tualatin_stream_piped": {
+        "url": f"{_TUAL}/26",
+        "fields": ["NAME", "IS_PIPED", "FCODE_DESC"],
+        "where": "IS_PIPED = 'TRUE'"},
     # Flood: FEMA NFHL, the source of record for BOTH screened counties.
     #
     # This filter read `= '41051C'` until 2026-09-01, which is Multnomah alone.

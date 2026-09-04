@@ -42,16 +42,13 @@ FLOOD_EVERYWHERE = frozenset({"fema_floodway", "fema_sfha"})
 #: every line here is a city whose layers were found and whose chapter has not
 #: been read. Deleting a line without wiring the overlay is how the original
 #: bug comes back.
-UNSCREENED: dict[str, str] = {
-    "tualatin": (
-        "2026-09-01: Public/EnvironmentalExplorer confirmed, layers not "
-        "enumerated. Zero greens today (20 lots at review on sewer)."
-    ),
-    "gladstone": (
-        "2026-09-01: not audited. Zero greens today -- all 145 lots wait on "
-        "signing, so no verdict rides on this. Audit when signing lands."
-    ),
-}
+UNSCREENED: dict[str, str] = {}
+#: Emptied 2026-09-03. Gladstone and Tualatin were the last two names on it and
+#: both were wired the same day. Keep the dict rather than deleting it: it is
+#: the place a NEW jurisdiction lands the moment it is added to rules.yaml, and
+#: the test below fails until somebody either wires the overlay or writes the
+#: reason and the date here. An empty exemption list is the goal state, not a
+#: dead structure.
 
 
 def _overlays():

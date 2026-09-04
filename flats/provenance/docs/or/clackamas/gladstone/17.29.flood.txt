@@ -1,0 +1,601 @@
+Chapter 17.29
+
+FM—FLOOD MANAGEMENT AREA DISTRICT
+
+Sections:
+
+17.29.010 Purpose.
+
+17.29.020 Applicability.
+
+17.29.030 Basis for establishing flood management areas.
+
+17.29.040 Abrogation and greater restrictions.
+
+17.29.050 Warning and disclaimer of liability.
+
+17.29.060 FM district development permits.
+
+17.29.070 City Administrator or designee—Duties and responsibilities.
+
+17.29.080 Map administration.
+
+17.29.090 Variances and appeals.
+
+17.29.100 Standards.
+
+17.29.110 Review of building permits.
+
+17.29.120 Subdivision standards.
+
+17.29.130 Density transfers.
+
+17.29.140 Floodways.
+
+17.29.150 Definitions.
+
+17.29.010 Purpose.
+
+(1) The purpose of the Flood Management Area (FM) District is to promote the public health, safety and general welfare and to minimize public and private losses due to flood conditions in specific areas by provisions designed:
+
+(a) To protect human life and health;
+
+(b) To minimize expenditure of public money and costly flood control projects;
+
+(c) To minimize the need for rescue and relief efforts associated with flooding and generally undertaken at the expense of the general public;
+
+(d) To minimize prolonged business interruptions;
+
+(e) To minimize damage to public facilities and utilities such as water and gas mains, electric, telephone and sewer lines, streets and bridges located in areas of special flood hazard;
+
+(f) To help maintain a stable tax base by providing for the sound use and development of areas of special flood hazard so as to minimize future flood blight areas;
+
+(g) To ensure that potential buyers are notified that property is in an area of special flood hazard;
+
+(h) To ensure that those who occupy the areas of special flood hazard assume responsibility for their actions; and
+
+(i) To protect flood management areas, which provide the following functions:
+
+(A) Protect life and property from dangers associated with flooding;
+
+(B) Flood storage, reduction of flood velocities, reduction of flood peak flows and reduction of wind and wave impacts;
+
+(C) Maintain water quality by reducing and sorting sediment loads, processing chemical and organic wastes and reducing nutrients;
+
+(D) Recharge, store and discharge groundwater; and
+
+(E) Provide plant and animal habitat and support riparian ecosystems.
+
+Statutory Reference: ORS
+
+History: Ord. 1334 §4 (Part), 2002; Ord. 1538 §1 (Exh. A), 2025.
+
+17.29.020 Applicability.
+
+(1) This chapter shall apply to development in the FM district. The FM district includes all special flood hazard areas and is an overlay district.
+
+(2) The standards that apply in the FM district apply in addition to state and federal restrictions governing flood management areas.
+
+Statutory Reference: ORS
+
+History: Ord. 1334 §4 (Part), 2002; Ord. 1538 §1 (Exh. A), 2025.
+
+17.29.030 Basis for establishing flood management areas.
+
+(1) The areas of special flood hazard identified by the Federal Insurance Administration in a scientific and engineering report entitled Flood Insurance Study, Clackamas County, Oregon and Incorporated Areas dated June 17, 2008, and any revisions thereto, with accompanying flood insurance rate map and flood boundary and floodway maps, are hereby adopted by reference and declared to be a part of the ordinance codified in this chapter. The flood insurance study is on file at the Clackamas County Department of Transportation and Development and the office of the City Recorder in the City Hall. For areas annexed to the city, the flood insurance study, with accompanying maps, of Clackamas County, Oregon, shall govern until such time as the city’s study and/or maps are updated by FEMA.
+
+(2) When base flood elevation data has not been provided in A and V zones by the above-referenced study and maps, the city shall obtain, review and reasonably utilize any base flood elevation and floodway data available from federal, state or other sources, in order to administer GMC Sections 17.29.100(6) and 17.29.140.
+
+(3) Flood management areas also include lands that have physical or documented evidence of flooding within recorded history, including areas of inundation for the February 1996 flood. The most recent and technically accurate information available, such as aerial photographs of the 1996 flooding and digitized flood elevation maps, shall be used to determine the historical flood area.
+
+(4) Map 13 (Flood Management Areas) of the Comprehensive Plan shall be a reference for identifying areas likely to be located in the FM district. The map identifies flood management areas generally. Because the text of this chapter controls and the map is a reference only, there may be flood management areas not shown on the map that are regulated pursuant to the text.
+
+(5) If, in the course of a development review, evidence suggests that a property may contain a flood management area not shown on Map 13 (Flood Management Areas) of the Comprehensive Plan, the provisions of this chapter shall be applied to that development review. Additionally, the standards of GMC Section 17.29.080 (Map administration) shall be applied and, if the standards are met, the FM district boundaries shall be amended.
+
+Statutory Reference: ORS
+
+History: Ord. 1334 §4 (Part), 2002, Ord. 1408, §1, 2008; Ord. 1538 §1 (Exh. A), 2025.
+
+17.29.040 Abrogation and greater restrictions.
+
+This chapter is not intended to repeal, abrogate or impair any existing easements, covenants or deed restrictions. However, where this chapter and another chapter, easement, covenant or deed restriction conflict or overlap, whichever imposes the more stringent restrictions shall prevail.
+
+Statutory Reference: ORS
+
+History: Ord. 1334 §4 (Part), 2002, Ord. 1408, 2008; Ord. 1538 §1 (Exh. A), 2025.
+
+17.29.050 Warning and disclaimer of liability.
+
+The degree of flood protection required by this chapter is considered reasonable for regulatory purposes and is based on scientific and engineering considerations. Larger floods can and will occur on rare occasions. Flood heights may be increased by manmade or natural causes. This chapter does not imply that land outside the areas of special flood hazard or uses permitted within such areas will be free from flooding or flood damages. This chapter shall not create liability on the part of the city, any officer or employee thereof, the Federal Insurance Administration or FEMA for any flood damages that result from reliance on this chapter or any administrative decision lawfully made hereunder.
+
+Statutory Reference: ORS
+
+History: Ord. 1538 §1 (Exh. A), 2025.
+
+17.29.060 FM district development permits.
+
+(1) Application for permit to develop in the special flood hazard area must include:
+
+(a) Either:
+
+(A) A statement confirming that the applicant has obtained a floodplain mitigation assessment of the proposed development performed by a qualified professional;
+
+(B) A statement that, in addition to being covered by the consultation and biological opinion issued by the National Oceanic and Atmospheric Administration’s National Marine Fisheries Service (NMFS) for the Federal Emergency Management Agency’s implementation of the National Flood Insurance Program in Oregon (NMFS Consultation No. NWR-2011-3197), the development proposed by the application is a project or project action that is covered by another formal consultation with NMFS or the United States Fish and Wildlife Service, pursuant to Section 4(d), 7, or 10 of the Endangered Species Act of 1973;
+
+(C) A statement that the development proposed by the application fits within the nature and scope of the project types that are addressed in an existing full programmatic habitat assessment of all current and reasonably foreseeable future conditions; or
+
+(D) A statement that the development proposed by the application is exempt from the requirement for a floodplain mitigation assessment because it is one or more of the following activities:
+
+(i) Normal maintenance, repairs, or remodeling of structures, such as re-roofing and replacing siding, that does not (1) expand the footprint or expand the roof of the structure, and (2) constitute a substantial improvement or repair of substantial damage (meaning the work must be less than 50 percent of the market value of the structure(s));
+
+(ii) Routine maintenance of streets, sidewalks, paths and roads (including but not limited to filling potholes, repaving, and installing signs and traffic signals) that does not alter contours or culverts, that is less than six inches above grade, and that does not expand paved areas;
+
+(iii) Routine maintenance of landscaping that does not include grading, excavation, or filling;
+
+(iv) Routine agricultural practices such as tilling, plowing, harvesting, soil amendments, and ditch cleaning that does not alter the ditch configuration and that removes all spoils from the special flood hazard area or tills spoils into fields as a soil amendment;
+
+(v) Routine silviculture practices (harvesting of trees), including hazardous fuels reduction and hazard tree removal with root balls left in place;
+
+(vi) Removal of noxious weeds and hazard trees or replacement of non-native vegetation with native vegetation;
+
+(vii) Normal maintenance of above- and below- ground utilities and facilities, such as replacing downed power lines and utility poles, that does not result in a net change in footprint;
+
+(viii) Normal maintenance of a levee or other flood control facility prescribed in the operations and maintenance plan for the levee or flood control facility (this does not include repair from flood damage, expansion of the prism, expansion of the face or toe or addition of protection on the face or toe with rock armor);
+
+(ix) Habitat restoration activities;
+
+(x) Activities with the sole purpose of creating, restoring, or enhancing natural functions associated with floodplains, streams, lakes, estuaries, marine areas, habitat, and riparian areas, provided the activities meet federal and state standards and do not include structures, grading, fill, or impervious surfaces;
+
+(xi) Development of open space and recreational facilities, such as parks, trails, and hunting grounds, that do not include structures, fill, impervious surfaces, or removal of more than five percent of the native vegetation on the portion of property located within the special flood hazard area;
+
+(xii) Repair to on-site septic systems, provided ground disturbance is the minimal necessary and best management practices are utilized to prevent stormwater runoff and soil erosion; and
+
+(xiii) Preemptive removal of documented susceptible trees to manage the spread of invasive species.
+
+(b) If the applicant has confirmed that it has obtained a floodplain mitigation assessment consistent with subsection (1)(a)(A) of this section, a statement confirming that the proposed development activities, as shown on the design plans and drawings submitted with the application, include measures to incorporate all mitigation identified in the floodplain mitigation assessment as needed for no net loss of floodplain functions.
+
+(2) For purposes of subsections (1)(a)(A) and (1)(b) of this section:
+
+(a) “Floodplain functions” mean flood storage, water quality, and riparian vegetation conditions.
+
+(b) A “floodplain mitigation assessment” is an assessment of the portions of a site that are within the special flood hazard area, performed by a qualified professional, that identifies existing site conditions before development occurs, describes the impact the proposed development would have on existing floodplain functions within the applicable portion of the existing site, and identifies the mitigation needed for the proposed development to result in no net loss of those floodplain functions. The city’s website includes the guidance prepared by the Federal Emergency Management Agency for preparation of a floodplain mitigation assessment.
+
+(c) “No net loss” means development actions that do not result in, or otherwise mitigate, a net change in any floodplain functions as compared to existing conditions at the time of proposed development.
+
+(d) A “qualified professional” is a person who:
+
+(A) Has a minimum of a bachelor’s degree in wildlife or fisheries habitat biology, or a related degree in a biological field from an accredited college or university with a minimum of four years’ experience as a practicing fish or wildlife habitat biologist; or
+
+(B) Is listed on the Oregon Department of Transportation’s official list of consultants qualified to provide Endangered Species Act Documentation.
+
+(e) “Special flood hazard area” or “area of special flood hazard” as defined in GMC Section 17.29.150(2).
+
+(3) The City of Gladstone will deny a permit to develop in the special flood hazard area unless the applicant submits a statement meeting the requirements of subsection (1) of this section.
+
+(4) An FM district development permit shall be obtained before construction or development begins within the FM district. A permit shall be required for all structures, including manufactured homes, and all other development, including fill and other activities.
+
+(5) Application for a development permit shall be made on forms furnished by the city. Requirements may include, but are not limited to: plans in duplicate drawn to scale showing the nature, location, dimensions and elevations of the area in question; existing or proposed structures, fill, storage of materials, drainage facilities and the location of the foregoing.
+
+(6) The following information is specifically required:
+
+(a) Elevation in relation to mean sea level of the lowest floor (including basement) of all structures. Elevation data shall be submitted on current and effective FEMA elevation certificates;
+
+(b) Elevation in relation to mean sea level to which any structure has been floodproofed;
+
+(c) Certification by a registered professional engineer or architect that the floodproofing methods for any nonresidential structure meet the floodproofing criteria in GMC Section 17.29.100(6)(b);
+
+(d) Description of the extent to which any watercourse will be altered or relocated as a result of proposed development.
+
+Statutory Reference: ORS
+
+History: Ord. 1334 §4 (Part), 2002; Ord. 1538 §1 (Exh. A), 2025.
+
+17.29.070 City Administrator or designee—Duties and responsibilities.
+
+(1) The City Administrator or designee is appointed to administer and implement this chapter by granting or denying FM district development permit applications in accordance with its provisions.
+
+(2) Duties of the City Administrator or designee shall include:
+
+(a) Permit Review.
+
+(A) Review all development permit applications to determine that the permit requirements of this chapter have been satisfied;
+
+(B) Review all development permit applications to determine that all necessary permits have been obtained from those federal, state or local governmental agencies from which prior approval is required; and
+
+(C) Review all development permits to determine if the proposed development is located in the floodway. If the proposed development is located in the floodway, assure that the provisions of GMC Section 17.29.140(1)(a) are met.
+
+(b) Information to Be Obtained and Maintained.
+
+(A) Where base flood elevation data is provided through the flood insurance study, FIRM or pursuant to GMC Section 17.29.030(2), obtain and record the actual elevation, in relation to mean sea level, of the lowest floor (including basement) of all new or substantially improved structures, and whether or not the structure contains a basement;
+
+(B) For all new or substantially improved floodproofed structures where base flood elevation data is provided through the flood insurance study, FIRM or pursuant to GMC Section 17.29.030(2):
+
+(i) Verify and record the actual elevation in relation to mean sea level; and
+
+(ii) Maintain the floodproofing certifications required in GMC Section 17.29.060(3)(c);
+
+(C) Maintain a cumulative improvement database for properties within the floodplain in order to administer substantial improvement requirements;
+
+(D) Maintain for public inspection all records pertaining to the provisions of this chapter.
+
+(c) Alteration of Watercourses.
+
+(A) Notify adjacent communities and the Department of Land Conservation and Development prior to any alteration or relocation of a watercourse, and submit evidence of such notification to the Federal Insurance Administration;
+
+(B) Require that maintenance is provided within the altered or relocated portion of the watercourse so that the flood-carrying capacity is not diminished.
+
+Statutory Reference: ORS
+
+History: Ord. 1334 §4 (Part), 2002; Ord. 1538 §1 (Exh. A), 2025.
+
+17.29.080 Map administration.
+
+(1) Interpretation of FM District Boundaries. The City Administrator or designee shall make interpretations, where needed, as to exact location of the boundaries of the FM district (for example, where there appears to be a conflict between a mapped boundary and actual field conditions). The person contesting the location of the boundary shall be given a reasonable opportunity to appeal the interpretation as provided in GMC Section 17.29.090 (Variances and appeals).
+
+(2) If the city receives evidence that the boundaries of the FM district have changed since the adoption of Map 13 (Flood Management Areas) of the Comprehensive Plan, the city shall process a legislative application for amendment of the map pursuant to Division VII of this title (Administrative Procedures); provided, that in the case of a boundary established by FEMA, a letter of map amendment (LOMA) or letter of map revision (LOMR) is first obtained from FEMA.
+
+(3) Notice of the initial public hearing on the application shall be mailed within 90 days of the city’s receipt of the evidence required by subsection (2) of this section.
+
+(4) The application shall be approved if it is demonstrated that the map amendment is necessary to accurately reflect the location of a flood management area.
+
+Statutory Reference: ORS
+
+History: Ord. 1334 §4 (Part), 2002; Ord. 1538 §1 (Exh. A), 2025.
+
+17.29.090 Variances and appeals.
+
+(1) To ensure that compliance with this chapter does not cause unreasonable hardship, including depriving an owner of all economically viable use of land, the requirements of this chapter may be varied.
+
+(2) Variance applications shall be reviewed pursuant to GMC Division VII of this title (Administrative Procedures) and the provisions of this chapter.
+
+(3) Metro shall be notified of a variance application and within seven days of a decision on the variance.
+
+(4) Variance approval shall be granted only if the following criteria are satisfied:
+
+(a) The only condition under which a variance from the elevation standard may be approved is for new construction and substantial improvements to be erected on a lot of one-half acre or less in size, contiguous to and surrounded by lots with existing structures constructed below the base flood level. As the lot size increases, the technical justification required for issuing the variance increases.
+
+(b) Variances may be issued for the reconstruction or restoration of structures listed on the National Register of Historic Places or the State Inventory of Historic Places without regard to the procedures set forth in this section.
+
+(c) Variances shall not be approved within a designated floodway if any increase in flood levels during the base flood discharge would result.
+
+(d) Variances shall only be approved upon a determination that the variance is the minimum necessary, considering the flood hazard, to afford relief, and shall not be approved for required mitigation identified in the floodplain mitigation assessment.
+
+(e) Variances shall only be issued upon:
+
+(A) A showing of good and sufficient cause;
+
+(B) A determination that failure to grant the variance would result in exceptional hardship to the applicant;
+
+(C) A determination that the granting of the variance will not result in increased flood heights, additional threats to public safety, extraordinary public expense, create nuisances, cause fraud on or victimization of the public, or conflict with existing local laws or ordinances.
+
+(f) Variances as interpreted in the National Flood Insurance Program are based on the general zoning law principle that they pertain to a physical piece of property; they are not personal in nature and do not pertain to the structure, its inhabitants, economic or financial circumstances. They primarily address small lots in densely populated residential neighborhoods. As such, variances from the flood elevations should be quite rare.
+
+(g) Variances may be issued for nonresidential buildings in very limited circumstances to allow a lesser degree of floodproofing than watertight or dry-floodproofing, where it can be determined that such action will have low damage potential, complies with all other variance criteria except subsection (4)(a) of this section and otherwise complies with GMC Section 17.29.100(5)(a).
+
+(h) Any applicant to whom a variance is granted shall be given written notice that the structure will be permitted to be built with the lowest floor elevation below the base flood elevation and that the cost of flood insurance will be commensurate with the increased risk resulting from the reduced lowest floor elevation.
+
+(i) The variance shall be the minimum necessary to allow the proposed use or activity;
+
+(j) The variance shall not increase danger to life and property due to flooding or erosion;
+
+(k) The impact of the increase in flood hazard, which will result from the variance, shall not prevent the city from meeting the requirements of this chapter. In support of this criterion, the applicant shall have a qualified professional engineer document the expected height, velocity and duration of floodwaters and estimate the rate of increase in sediment transport of the floodwaters expected both downstream and upstream as a result of the variance;
+
+(l) The variance shall not increase the cost of providing and maintaining public services during and after flood conditions so as to unduly burden public agencies and taxpayers; and
+
+(m) In approving a variance, all technical evaluations, all relevant factors, standards specified in other sections of this chapter and the following shall be considered:
+
+(A) The danger that materials may be swept onto other lands to the injury of others;
+
+(B) The danger to life and property due to flooding or erosion damage;
+
+(C) The susceptibility of the proposed facility and its contents to flood damage and the effect of such damage on the individual owner;
+
+(D) The importance of the services provided by the proposed facility to the community;
+
+(E) The necessity to the facility of a waterfront location, where applicable;
+
+(F) The availability of alternative locations for the proposed use, which are not subject to flooding or erosion damage;
+
+(G) The compatibility of the proposed use with existing and anticipated development;
+
+(H) The relationship of the proposed use to the Comprehensive Plan and floodplain management program for the area;
+
+(I) The safety of access to the property in times of flood for ordinary and emergency vehicles;
+
+(J) The expected heights, velocity, duration, rate of rise and sediment transport of the floodwaters and the effects of wave action, if applicable, expected at the site; and
+
+(K) The costs of providing governmental services during and after flood conditions, including maintenance and repair of public utilities and facilities such as sewer, gas, electrical and water systems, and streets and bridges.
+
+(5) Conditions deemed necessary to further the purposes of this chapter may be attached to a variance approval.
+
+(6) The Planning Commission shall hear and decide appeals when it is alleged there is an error in any requirement, decision or determination made by the City Administrator or designee in the enforcement or administration of this chapter. Such appeals shall be processed pursuant to Division VII of this title (Administrative Procedures).
+
+(7) The City Recorder shall maintain the records of all appeal actions and the City Administrator or designee shall report any approved variances to the Federal Insurance Administration or FEMA upon request.
+
+Statutory Reference: ORS
+
+History: Ord. 1334 §4 (Part), 2002; Ord. 1538 §1 (Exh. A), 2025.
+
+17.29.100 Standards.
+
+(1) The following uses are allowed outright:
+
+(a) Excavation and fill required to plant any new trees or vegetation, provided such activities do not constitute development;
+
+(b) Restoration or enhancement of floodplains, riparian areas, wetlands, upland and streams that meet federal and state standards; provided, that any project which encroaches in the floodway complies with GMC Section 17.29.140 (floodways).
+
+(2) All uses allowed in the underlying zoning district are allowed subject to compliance with the standards of this chapter.
+
+(3) The following uses are prohibited:
+
+(a) Any use prohibited in the underlying zoning district;
+
+(b) Uncontained areas of hazardous materials as defined by the Department of Environmental Quality.
+
+(4) All development in the FM district shall conform to the following balanced cut and fill standards:
+
+(a) This subsection does not apply to work necessary to protect, repair or maintain existing structures, utility facilities, roadways, driveways, accessory uses and exterior improvements in response to emergencies; provided, that after the emergency has passed, adverse impacts are mitigated in accordance with applicable standards.
+
+(b) No net fill in any floodplain is allowed. All fill placed in a floodplain shall be balanced with at least an equal amount of soil material removal. For the purposes of calculating net fill, fill shall include any structure below the design flood elevation that has been floodproofed pursuant to subsection (6)(b) of this section. Such information shall be certified by an engineer.
+
+(c) Any excavation below bankfull stage shall not count toward compensating for fill.
+
+(d) Excavation to balance a fill shall be located on the same parcel as the fill unless it is not practicable to do so. In such cases, the excavation shall be located in the same Gladstone floodplain, so long as the proposed excavation and fill will not increase flood impacts for surrounding properties as determined through hydrologic and hydraulic analysis.
+
+(e) For excavated areas identified by the city to remain dry in the summer, such as parks or mowed areas, the lowest elevation of the excavated area shall be at least six inches above the winter “low water” elevation, and sloped at a minimum of two percent towards the protected water feature pursuant to GMC Chapter 17.27 (WQ—Water Quality Resource Area District). One percent slopes will be allowed in smaller areas.
+
+(f) For excavated areas identified by the city to remain wet in the summer, such as a constructed wetland, the grade shall be designed not to drain into the protected water feature pursuant to GMC Chapter 17.27 (WQ—Water Quality Resource Area District).
+
+(g) Minimum finished floor elevations shall be at least one foot above the design flood elevation or highest flood of record, whichever is higher, for new habitable structures in the flood area.
+
+(h) Parking areas in the floodplain shall be accompanied by signs that inform the public that the parking area is located in a flood management area and that care should be taken when the potential for flooding exists.
+
+(i) Temporary fills permitted during construction shall be removed at the end of construction, 30 days after subdivision acceptance or completion of the final inspection.
+
+(j) New culverts, stream crossings and transportation projects shall be designed as balanced cut and fill projects. Such projects shall be designed to minimize the area of fill in the FM district and to minimize erosive velocities. Stream crossings shall be as close to perpendicular to the stream as practicable. Bridges shall be used instead of culverts wherever practicable.
+
+(k) Excavation and fill required for the construction of detention facilities or structures, and other facilities, such as levees, specifically shall be designed to reduce or mitigate flood impacts and improve water quality. Such information shall be certified by an engineer. Levees shall not be used to create vacant buildable lands.
+
+(5) The following construction standards shall apply in all flood management areas:
+
+(a) Anchoring.
+
+(A) All new construction and substantial improvements shall be anchored to prevent flotation, collapse or lateral movement of the structure.
+
+(B) All manufactured homes shall be anchored to prevent flotation, collapse or lateral movement and shall be installed using methods and practices that minimize flood damage. Anchoring methods may include, but are not limited to, use of over-the-top or frame ties to ground anchors. Additional techniques may be found in FEMA’s “Manufactured Home Installation in Flood Hazard Areas” publication.
+
+(b) Construction Materials and Methods.
+
+(A) All new construction and substantial improvements shall be constructed with materials and utility equipment resistant to flood damage.
+
+(B) All new construction and substantial improvements shall be constructed using methods and practices that minimize flood damage.
+
+(C) Electrical, heating, ventilation, plumbing and air conditioning equipment and other service facilities shall be designed and/or otherwise elevated or located so as to prevent water from entering or accumulating within the components during conditions of flooding.
+
+(c) Utilities.
+
+(A) All new and replacement water supply systems shall be designed to minimize or eliminate infiltration of floodwaters into the system.
+
+(B) New and replacement sanitary sewage systems shall be designed to minimize or eliminate infiltration of floodwaters into the systems and discharge from the systems into floodwaters.
+
+(C) On-site waste disposal systems shall be located to avoid impairment to them or contamination from them during flooding.
+
+(6) In all areas of special flood hazard where base flood elevation data has been provided (Zones A, AH and AE) as set forth in GMC Sections 17.29.030(1) and (2), the following provisions are required:
+
+(a) Residential Construction.
+
+(A) New construction and substantial improvement of any residential structure shall have the lowest floor, including basement, elevated a minimum of one foot above the design flood elevation.
+
+(B) The following standards apply to below-grade crawl spaces:
+
+(i) The building must be designed and adequately anchored to resist flotation, collapse, and lateral movement of the structure resulting from hydrodynamic and hydrostatic loads, including the effects of buoyancy. Hydrostatic loads and the effects of buoyancy can usually be addressed through the required openings stated in subsection (6)(a)(B)(ii) of this section. Because of hydrodynamic loads, crawlspace construction is not allowed in areas with flood velocities greater that five feet per second unless the design is reviewed by a qualified design professional, such as a registered architect or professional engineer. Other types of foundations are recommended for these areas.
+
+(ii) The crawlspace is an enclosed area below the base flood elevation (BFE) and, as such, must have openings that equalize hydrostatic pressures by allowing the automatic entry and exit of floodwaters. The bottom of each flood vent opening can be no more that one foot above the lowest adjacent exterior grade.
+
+(iii) Portions of the building below the BFE must be constructed with materials resistant to flood damage. This includes not only the foundation walls of the crawlspace used to elevate the building, but also any joists, insulation, or other materials that extend below the BFE. The recommended construction practice is to elevate the bottom of joists and all insulation above BFE.
+
+(iv) Any building utility systems within the crawlspace must be elevated above BFE or designed so that floodwaters cannot enter or accumulate within the system components during flood conditions. Ductwork, in particular, must either be placed above the BFE or sealed from floodwaters.
+
+(v) The interior grade of a crawlspace below the BFE must not be more than two feet below the lowest adjacent exterior grade.
+
+(vi) The height of the below-grade crawlspace, measured from the interior grade of the crawlspace to the top of the crawlspace foundation wall, must not exceed four feet in any point. The height limitation is the maximum allowable unsupported wall height according to the engineering analyses and building code requirements for flood hazard areas.
+
+(vii) There must be an adequate drainage system that removes floodwaters from the interior area of the crawlspace. The enclosed area should be drained within a reasonable time after a flood event. The type of drainage system will vary because of the site gradient and other drainage characteristics, such as soil types. Possible options include natural drainage through porous, well-drained soils and drainage systems such as perforated pipes, drainage tiles or gravel or crushed stone drainage by gravity or mechanical means.
+
+(viii) The velocity of floodwaters at the site should not exceed five feet per second for any crawlspace. For velocities in excess of five feet per second, other foundation types should be used.
+
+(C) Fully enclosed areas below the lowest floor that are subject to flooding are prohibited unless they are designed to automatically equalize hydrostatic flood forces on exterior walls by allowing for the entry and exit of floodwaters. Designs for meeting this requirement must either be certified by a registered professional engineer or architect or must meet or exceed the following minimum criteria:
+
+(D) Nonresidential structures that are elevated, not floodproofed, shall comply with subsection (6)(a)(B) of this section; and
+
+(E) Applicants floodproofing nonresidential buildings shall be notified that flood insurance premiums will be based on rates that are one foot below the floodproofed level (e.g., a building floodproofed to the design flood level will be rated as one foot below that level).
+
+(b) Nonresidential Construction. New construction and substantial improvement of any commercial, industrial or other nonresidential structure shall either have the lowest floor, including basement, elevated at or above the base flood elevation; or, together with attendant utility and sanitary facilities, shall:
+
+(A) Be floodproofed so that below the design flood level the structure is watertight with walls substantially impermeable to the passage of water; provided, that the requirements of subsection (4)(b) of this section are met;
+
+(B) Have structural components capable of resisting hydrostatic and hydrodynamic loads and effects of buoyancy;
+
+(C) Be certified by a registered professional engineer or architect that the design and methods of construction are in accordance with accepted standards of practice for meeting provisions of this subsection based on their development and/or review of the structural design, specifications and plans. Such certifications shall be provided pursuant to GMC Section 17.29.070(2)(b)(B);
+
+(D) Nonresidential structures that are elevated, not floodproofed, shall comply with subsection (6)(a)(B) of this section; and
+
+(E) Applicants floodproofing nonresidential buildings shall be notified that flood insurance premiums will be based on rates that are one foot below the floodproofed level (e.g., a building floodproofed to the design flood level will be rated as one foot below that level).
+
+(c) Manufactured Homes.
+
+(A) Manufactured homes to be placed or substantially improved on sites that are outside of a manufactured home park or subdivision; in a new manufactured home park or subdivision; in an expansion to an existing manufactured home park or subdivision; or in an existing manufactured home park or subdivision on which a manufactured home has incurred “substantial damage” as the result of a flood, shall be elevated on a permanent foundation such that the lowest floor of the manufactured home is elevated one foot above the base flood elevation and be securely anchored to an adequately designed foundation system to resist flotation, collapse and lateral movement.
+
+(B) Manufactured homes to be placed or substantially improved on sites in an existing manufactured home park or subdivision within Zones A1-30, AH, and AE on the community’s FIRM that are not subject to subsection (6)(c)(A) of this section shall be elevated so that either:
+
+(i) The lowest floor of the manufactured home is elevated one foot above the base flood elevation and the manufactured home is securely anchored to an adequately designed foundation system to resist flotation, collapse and lateral movement; or
+
+(ii) The manufactured home chassis is supported by reinforced piers or other foundation elements of at least equivalent strength that are no less than three feet in height above grade and is securely anchored to an adequately designed foundation system to resist flotation, collapse and lateral movement.
+
+(d) Recreational Vehicles. Recreational vehicles shall:
+
+(A) Be on the site for fewer than 180 consecutive days; or
+
+(B) Be fully licensed and ready for highway use, on wheels or jacking system, attached to the site only by quick disconnect type utilities and security devices, and have no permanently attached additions; or
+
+(C) Comply with subsection (6)(c) of this section and the elevation and anchoring requirements for manufactured homes.
+
+Statutory Reference: ORS Ch.
+
+History: Ord. 1334 § 4; 2002, Ord. 1408, 2008; Ord. 1538 §1 (Exh. A), 2025.
+
+17.29.110 Review of building permits.
+
+Where elevation data is not available either through the Flood Insurance Study, FIRM or pursuant to GMC Section 17.29.030(2), applications for building permits shall be reviewed to assure that proposed construction will be reasonably safe from flooding. The test of reasonableness shall be made by the City Administrator or designee, considering use of historical data, high water marks, photographs of past flooding, etc., where available, and the provisions of this chapter. Failure to elevate at least two feet above grade in these zones may result in higher insurance rates.
+
+Statutory Reference: ORS
+
+History: Ord. 1334 §4 (Part), 2002; Ord. 1538 §1 (Exh. A), 2025.
+
+17.29.120 Subdivision standards.
+
+(1) Subdivisions shall be consistent with the need to minimize flood damage.
+
+(2) Subdivisions shall have public utilities and facilities such as sewer, gas, electrical and water systems located and constructed to minimize or eliminate flood damage.
+
+(3) Subdivisions shall have adequate drainage provided to reduce exposure to flood damage.
+
+(4) Where base flood elevation data has not been provided or is not available from another authoritative source, it shall be generated for subdivisions and other proposed developments.
+
+(5) Development of subdivisions, including development on newly created lots, shall comply with the standards of this chapter.
+
+Statutory Reference: ORS
+
+History: Ord. 1334 §4 (Part), 2002; Ord. 1538 §1 (Exh. A), 2025.
+
+17.29.130 Density transfers.
+
+(1) Residential density accruing to portions of a property within the FM district may be transferred—for the purpose of residential development—to a portion of the subject property that is outside the district.
+
+(2) Approval of a density transfer does not waive other requirements of this title that pertain to development of the property receiving the density transfer with the following exceptions: minimum lot area, minimum lot width and minimum lot depth. Minimum setbacks shall be those established by GMC Section 17.38.060(4).
+
+(3) A request for a density transfer shall be submitted with an application for a subdivision or partition and shall include calculations justifying the requested density increase. Fractional units shall be rounded down to the next whole number.
+
+(4) The minimum density standard shall not increase due to a density transfer.
+
+Statutory Reference: ORS
+
+History: Ord. 1334 §4 (Part), 2002; Ord. 1538 §1 (Exh. A), 2025.
+
+17.29.140 Floodways.
+
+(1) Located within areas of special flood hazard established in GMC Section 17.29.030 (basis for establishing flood management areas) are areas designated as floodways. Because the floodway is an extremely hazardous area due to the velocity of floodwaters that carry debris, potential projectiles and erosion potential, the following provisions apply:
+
+(a) Encroachments, including fill, new construction, substantial improvements and other development, shall be prohibited unless certification by a registered professional civil engineer is provided demonstrating through hydrologic and hydraulic analyses performed in accordance with standard engineering practice that encroachments shall not result in any increase in flood levels during the occurrence of the base flood discharge.
+
+(b) New construction and substantial improvements shall comply with the applicable standards of GMC Sections 17.29.100 (Standards), 17.29.110 (Review of building permits) and 17.29.120 (Subdivision standards).
+
+Statutory Reference: ORS
+
+History: Ord. 1334 §4 (Part), 2002; Ord. 1538 §1 (Exh. A), 2025.
+
+17.29.150 Definitions.
+
+Unless specifically defined below, words and phrases used in this chapter shall be interpreted so as to give them the meaning they have in common usage and to give this chapter its most reasonable application. The following definitions supplement those found in GMC Chapter 17.06 (Definitions).
+
+(1) “Architect” means an architect licensed by the State of Oregon.
+
+(2) “Area of special flood hazard” means the land in the floodplain within a community subject to a one percent or greater chance of flooding in any given year. Designation on Federal Insurance Administration or Federal Emergency Management Agency (FEMA) maps always includes the letters A or V.
+
+(3) “Bankfull stage” is defined in GMC Section 17.27.090(1).
+
+(4) “Base flood” means the flood having a one percent chance of being equaled or exceeded in any given year. Also referred to as the 100-year flood. Designation on Federal Insurance Administration or FEMA maps always includes the letters A or V.
+
+(5) “Basement” means any area of the building having its floor subgrade (below ground level) on all sides.
+
+(6) “Below-grade crawl space” means an enclosed area below the base flood elevation, which is in nearly all cases considered by the NFIP to also be a basement, that generally serves as the foundation for a structure and exhibits the following characteristics:
+
+(a) All sides of the crawl space are below the adjacent exterior grades outside the crawl space;
+
+(b) The interior grade inside the crawl space is not more than two feet below the lowest adjacent exterior grade;
+
+(c) The height, measured from the interior grade of the crawlspace to the top of the crawlspace foundation, does not exceed four feet at any point.
+
+(7) “Design flood elevation” means the elevation of the base flood or 100-year storm as defined in Federal Insurance Administration or FEMA Flood Insurance Studies, or the highest flood of record since the adoption of the flood insurance maps or, in areas without Federal Insurance Administration or FEMA floodplains, the elevation of the 25-year storm, or the edge of mapped flood-prone soils or similar methodologies, whichever is higher.
+
+(8) “Development” means any manmade change to improved or unimproved real estate, including but not limited to buildings or other structures, mining, dredging, filling, grading, paving, excavation or drilling operations or storage of equipment or materials located within the area of special flood hazard.
+
+(9) “Emergency” is defined in GMC Section 17.27.090(8).
+
+(10) “Engineer” means a registered professional engineer licensed by the State of Oregon.
+
+(11) “Enhancement” means the process of improving upon the natural functions and/or values of an area or feature which has been degraded by human activity. Enhancement activities may or may not return the site to a predisturbance condition, but create/recreate processes and features that occur naturally.
+
+(12) “Existing manufactured home park or subdivision” means a manufactured home park or subdivision for which the construction of facilities for servicing the lots on which the manufactured homes are to be affixed (including, at a minimum, the installation of utilities, the construction of streets, and either final site grading or the pouring of concrete pads) is completed before the effective date of this chapter.
+
+(13) “Expansion to an existing manufactured home park or subdivision” means the preparation of additional sites by the construction of facilities for servicing the lots on which manufactured homes are to be affixed (including the installation of utilities, the construction of streets, and either final site grading or the pouring of concrete pads).
+
+(14) “Fill” means sand, soil, rock, gravel, concrete, asphalt, vegetation, wood, or other material that is placed for the purposes of development or redevelopment that changes the elevation of the floodplain. The placement of fill is considered “development.”
+
+(15) “Flood” or “flooding” means a general and temporary condition of partial or complete inundation of normally dry land areas from:
+
+(a) The overflow of inland or tidal waters; and/or
+
+(b) The unusual and rapid accumulation of runoff of surface waters from any source.
+
+(16) “Flood insurance rate map” means the official map on which the Federal Insurance Administration or FEMA has delineated both the areas of special flood hazard and the risk premium zones applicable to the community.
+
+(17) “Flood insurance study” means the official report provided by the Federal Insurance Administration or FEMA that includes flood profiles, the Flood Boundary-Floodway Map, and the water surface elevation of the base flood.
+
+(18) “Flood management areas” means areas of special flood hazard, areas of inundation for the February 1996 flood and areas that have physical or documented evidence of flooding within recorded history.
+
+(19) “Floodplain” means the land area identified and designated by the United States Army Corps of Engineers, the Oregon Division of State Lands, the Federal Insurance Administration, FEMA or the City of Gladstone that has been or may be covered temporarily by water as a result of a storm event of identified frequency. It is usually the flat area of land adjacent to a stream or river formed by floods.
+
+(20) “Floodway” means the channel of a river or other watercourse and the adjacent land areas that must be reserved in order to discharge the base flood without cumulatively increasing the water surface elevation more than one foot.
+
+(21) “Floodway fringe” means the area of the floodplain, lying outside the floodway, which does not contribute appreciably to the passage of floodwater, but services as a retention area.
+
+(22) “Lowest floor” means the lowest floor of the lowest enclosed area (including basement). An unfinished or flood-resistant enclosure, usable solely for parking of vehicles, building access or storage, in an area other than a basement area, is not considered a building’s lowest floor; provided, that such enclosure is not built so as to render the structure in violation of the applicable non-elevation design requirements in GMC Section 17.29.100(6)(a)(B).
+
+(23) “Manufactured home” means a structure, transportable in one or more sections, which is built on a permanent chassis and is designed for use with or without a permanent foundation when attached to the required utilities. The term “manufactured home” does not include a “recreational vehicle.”
+
+(24) “Manufactured home park or subdivision” means a parcel (or contiguous parcels) of land divided into two or more manufactured home lots for rent or sale.
+
+(25) “Metro” is defined in GMC Section 17.27.090(12).
+
+(26) “New construction” means structures for which the “start of construction” commenced on or after the effective date of this chapter.
+
+(27) “New manufactured home park or subdivision” means a manufactured home park or subdivision for which the construction of facilities for servicing the lots on which the manufactured homes are to be affixed (including, at a minimum, the installation of utilities, the construction of streets, and either final site grading or the pouring of concrete pads) is completed on or after the effective date of this chapter.
+
+(28) “Ordinary mean high water line” is defined in GMC Section 17.27.090(15).
+
+(29) “Practicable” is defined in GMC Section 17.27.090(16).
+
+(30) “Recreational vehicle” means a vehicle which is:
+
+(a) Built on a single chassis;
+
+(b) Four hundred square feet or less when measured at the largest horizontal projection;
+
+(c) Designed to be self-propelled or permanently towable by a light duty truck; and
+
+(d) Designed primarily as temporary living quarters for recreational, camping, travel or seasonal use and not for use as a permanent dwelling.
+
+(31) “Start of construction” is meant to include substantial improvement, and means the date the building permit was issued, provided the actual start of construction, repair, reconstruction, placement or other improvement was within 180 days of the permit date. The actual start means either the first placement of permanent construction of a structure on a site, such as the pouring of slab or footings, the installation of piles, the construction of columns, or any work beyond the stage of excavation; or the placement of a manufactured home on a foundation. Permanent construction does not include land preparation, such as clearing, grading and filling; nor does it include the installation of streets and/or walkways; nor does it include excavation for a basement, footings, piers, or foundations or the erection of temporary forms; nor does it include the installation on the property of accessory buildings, such as garages or sheds not occupied as dwelling units or not part of the main structure. For substantial improvement, the actual start of construction means the first alteration of any wall, ceiling, floor, or other structural part of a building, whether or not that alteration affects the external dimensions of the building.
+
+(32) “Stream” is defined in GMC Section 17.27.090(24).
+
+(33) “Structure” means a walled and roofed building, a manufactured home or a gas or liquid storage tank that is principally above ground.
+
+(34) “Substantial damage” means damage of any origin sustained by a structure whereby the cost of restoring the structure to its before damaged condition would equal or exceed 50 percent of the market value of the structure before the damage occurred.
+
+(35) “Substantial improvement” means any repair, reconstruction or improvement of a structure, the cost of which equals or exceeds 50 percent of the market value of the structure either before the improvement or repair is started or if the structure has been damaged and is being restored, before the damage occurred. For the purposes of this definition “substantial improvement” is considered to occur when the first alteration of any wall, ceiling, floor or other structural part of the building commences, whether or not that alteration affects the external dimensions of the structure. The term does not, however, include either:
+
+(a) Any project for improvement of a structure to correct existing violations of state or local health, sanitary or safety code specifications which have been identified by the local code enforcement official and which are the minimum necessary to assure safe living conditions; or
+
+(b) Any alteration of a structure listed on the National Register of Historic Places or a State Inventory of Historic Places.
+
+(36) “Utility facilities” is defined in GMC Section 17.27.090(26).
+
+(37) “Watercourse” means a channel in which a flow of water occurs, either continuously or intermittently, and if the latter, with some degree of regularity. Such flow must be in a definite direction.
+
+(38) “Wetlands” is defined in GMC Section 17.27.090(29).
+
+Statutory Reference: ORS
+
+History: Ord. 1334 §4 (Part) 2002, Ord. 1408, 2008; Ord. 1538 §1 (Exh. A), 2025.

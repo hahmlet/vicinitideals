@@ -110,6 +110,22 @@ or,unfielded,,or/clackamas/gladstone/17.12.r-5.txt,216,17.12.050,1,At least 20 p
 or,unfielded,,or/clackamas/gladstone/17.12.r-5.txt,346,17.12.065,1,(c) The common courtyard must be a minimum of 15 feet wide at its narrowest dimension.
 or,unfielded,,or/clackamas/gladstone/17.12.r-5.txt,370,17.12.065,1,"(A) Within 20 feet from any street property line, except alley property lines;"
 or,unfielded,,or/clackamas/gladstone/17.12.r-5.txt,386,17.12.065,1,(c) Individual detached garages must not exceed 400 square feet in floor area.
+or,unfielded,,or/clackamas/gladstone/17.25.hcad.txt,185,17.25.040,1,2. The facility includes less than 500 square feet of new impervious surface; and
+or,unfielded,,or/clackamas/gladstone/17.25.hcad.txt,570,17.25.090,5,5 Only if within 300 feet of a river or surface stream.
+or,unfielded,,or/clackamas/gladstone/17.25.hcad.txt,670,17.25.100,1,"50 percent of the area of the subject property, up to a maximum of 5,000 square feet"
+or,unfielded,,or/clackamas/gladstone/17.25.hcad.txt,672,17.25.100,1,"65 percent of the area of the subject property, up to a maximum of 6,000 square feet"
+or,unfielded,,or/clackamas/gladstone/17.25.hcad.txt,680,17.25.100,1,High 10 percent of High HCA on the subject property
+or,unfielded,,or/clackamas/gladstone/17.25.hcad.txt,681,17.25.100,1,Moderate 15 percent of Moderate HCA on the subject property
+or,unfielded,,or/clackamas/gladstone/17.25.hcad.txt,682,17.25.100,1,Low 50 percent of Low HCA on the subject property
+or,unfielded,,or/clackamas/gladstone/17.25.hcad.txt,793,17.25.100,1,All sites within 50 feet of a surface stream;
+or,unfielded,,or/clackamas/gladstone/17.25.hcad.txt,797,17.25.100,1,"Forest canopy within 150 feet of a stream or wetland, or within a flood area; and"
+or,unfielded,,or/clackamas/gladstone/17.27.wq.txt,79,17.27.020,2,<25 percent
+or,unfielded,,or/clackamas/gladstone/17.27.wq.txt,81,17.27.020,1,50 feet
+or,unfielded,,or/clackamas/gladstone/17.27.wq.txt,83,17.27.020,1,=25 percent for 150 feet or more
+or,unfielded,,or/clackamas/gladstone/17.27.wq.txt,87,17.27.020,1,=25 percent for less than 150 feet
+or,unfielded,,or/clackamas/gladstone/17.27.wq.txt,93,17.27.020,1,15 feet
+or,unfielded,,or/clackamas/gladstone/17.27.wq.txt,95,17.27.020,1,=25 percent
+or,unfielded,,or/clackamas/gladstone/17.27.wq.txt,235,17.27.042,1,(A) The site plan shall be drawn at a scale of no less than one inch equaling 20 feet;
 or,unfielded,,or/clackamas/gladstone/17.48.parking.txt,195,17.48.030,1,Residential Unit Under 750 Square Feet
 or,unfielded,,or/clackamas/gladstone/17.48.parking.txt,266,17.48.030,1,1 space per 400 square feet plus 1 space per 2 employees
 or,unfielded,,or/clackamas/gladstone/17.48.parking.txt,296,17.48.030,1,1 space per 4 seats or 8 feet of bench length
@@ -648,6 +664,121 @@ or,unfielded,,or/clackamas/tualatin/40-41.residential.txt,563,41,1,"10 feet For 
 or,unfielded,,or/clackamas/tualatin/40-41.residential.txt,570,41,1,50 feet
 or,unfielded,,or/clackamas/tualatin/40-41.residential.txt,577,41.300,1,All Uses 35 feet If all setbacks are equal to or greater
 or,unfielded,,or/clackamas/tualatin/40-41.residential.txt,580,41.300,1,to a maximum of 50 feet with a
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,409,71.900,1,45 FOOT ROAD CORRIDOR THROUGH WETLANDS PROTECTED AREA:
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,414,71.900,4,855.00 feet North of the East quarter corner of said Section 23;
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,417,71.900,1,"THENCE South 85° 35' 36"" West 141.04 feet to a   inch iron rod;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,418,71.900,1,"THENCE North 87° 40' 52"" West 179.83 feet to a   inch iron rod;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,419,71.900,2,"THENCE North 67° 29' 21"" West 140.78 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,422,71.900,2,"THENCE North 44° 18' 12"" West 121.60 feet to a point on the arc of a 477.50 foot radius"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,424,71.900,2,45 foot road) and the TRUE POINT OF BEGINNING;
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,425,71.900,2,"THENCE South 76° 07' 50"" East 32.43 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,428,71.900,1,"THENCE South 43° 00' 21"" East 14.26 feet to a point on the arc of a 522.50 feet radius"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,435,71.900,1,"THENCE North 44° 18' 12"" West 52.36 feet to the TRUE POINT OF BEGINNING."
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,452,71.900,1,THENCE South along said East line of the Northeast quarter of Section 23 37.21 feet to a
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,458,71.900,1,West 63.50 feet to a
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,461,71.900,1,"THENCE South 65° 48' 33"" West 40.57 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,464,71.900,1,"THENCE South 37° 51' 17"" West 69.35 feet to a   inch iron rod;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,465,71.900,1,"THENCE South 77° 50' 14"" West 184.70 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,468,71.900,1,"THENCE South 56° 36' 32"" West 197.63 feet to a   inch iron rod;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,469,71.900,1,"THENCE South 59° 34' 53"" West 236.68 feet to a   inch iron rod and the TRUE POINT OF"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,471,71.900,1,"THENCE South 36° 50' 45"" West 257.07 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,475,71.900,1,326.86 feet to a point on the North line of the proposed amended boundary of the Wetlands
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,477,71.900,1,"THENCE North 80° 52' 10"" East 181.29 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,485,71.900,1,"THENCE North 45° 47' 30"" East 25.62 feet;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,489,71.900,1,"THENCE South 56° 01' 04"" East 60.08 feet more or less, regardless of footage, to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,511,71,2,"THENCE South 85° 35' 36"" West 141.04 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,514,71,2,"THENCE North 87° 40' 52"" West 179.83 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,517,71,1,"THENCE North 67° 29' 21"" West 140.78 feet to a   inch iron rod;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,520,71,1,"THENCE along the arc of said 477.50 foot radius non-tangent curve to the right, the radial"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,522,71,1,distance of 111.03 feet;
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,526,71,1,"THENCE South 43° 00' 21"" East 86.15 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,529,71,1,"THENCE South 17° 53' 21"" West 57.97 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,532,71,1,"THENCE South 51° 04' 18"" West 108.35 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,535,71,1,"THENCE South 42° 13' 03"" West 179.52 feet to a   inch iron rod;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,536,71,1,"THENCE South 45° 47' 30"" West 65.28 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,539,71,1,"THENCE South 29° 08' 40"" West 107.90 feet to a   inch iron rod;71.090"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,540,71,1,"THENCE South 80° 52' 10"" West 359.44 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,543,71,1,"THENCE North 80° 23' 48"" West 113.56 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,546,71,1,"THENCE North 87° 34' 44"" West 136.49 feet;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,547,71,1,"THENCE South 09° 56' 49"" West 289.60 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,550,71,1,"THENCE North 87° 40' 51"" West 887.38 feet to a   inch iron rod on the West line of the"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,559,71.900,1,West 50.89 feet to the Northeast corner of that tract of land described in Exhibit A in a
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,562,71.900,1,"THENCE South 74° 51' 42"" West 348.14 feet to the Northwest corner of said tract de-scribed"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,564,71.900,1,"THENCE South 82° 55' 14"" West 331.85 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,567,71.900,1,"THENCE South 57° 57' 41"" West 227.20 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,575,71.900,1,"THENCE South 05° 39' 10"" West 182.09 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,578,71.900,1,"THENCE South 54° 21' 48"" West 222.00 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,581,71.900,1,"THENCE South 57° 56' 29"" West 199.67 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,584,71.900,1,"THENCE South 71° 29' 00"" West 253.84 feet to a   inch iron rod;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,587,71.900,1,"THENCE North 69° 11' 24"" West 275.29 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,590,71.900,1,"THENCE South 82° 57' 08"" West 172.29 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,594,71.900,1,"THENCE North 89° 47' 48"" West 59.99 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,598,71.900,1,"THENCE North 25° 15' 57"" West 81.02 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,601,71.900,1,"THENCE North 85° 30' 35"" West 428.39 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,609,71.900,1,"THENCE South 84° 12' 26"" East 391.63 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,612,71.900,1,"THENCE South 77° 57' 12"" East 185.48 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,615,71.900,1,"THENCE North 71° 24' 09"" East 96.33 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,618,71.900,1,"THENCE South 59° 46' 28"" East 104.95 feet to a   inch iron rod;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,619,71.900,1,"THENCE South 42° 55' 31"" East 288.07 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,622,71.900,1,"THENCE South 83° 40' 44"" East 161.47 feet to a   inch iron rod;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,625,71,1,"THENCE South 78° 09' 04"" East 391.63 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,628,71,1,"THENCE North 10° 17' 21"" East 148.83 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,631,71,1,"THENCE South 88° 39' 19"" East 240.85 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,634,71,1,"THENCE North 80° 34' 09"" East 248.18 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,637,71,1,"THENCE North 06° 41' 12"" West 337.06 feet to a   inch iron rod;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,638,71,1,"THENCE South 89° 24' 20"" East 435.53 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,641,71,1,"THENCE South 70° 18' 52"" East 139.25 feet to a   inch iron rod;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,642,71,1,"THENCE South 22° 46' 10"" East 122.94 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,645,71,1,"THENCE South 88° 53' 27"" East 141.72 feet to a   inch iron rod;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,650,71,1,"THENCE continuing South 86° 03' 20"" East, 78.79 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,653,71,1,"THENCE North 89° 33' 02"" East 106.35 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,655,71,1,"THENCE North 03° 39' 34"" West 344.73 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,659,71,1,"THENCE South 86° 55' 31"" East 518.95 feet to a   inch iron rod;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,660,71,1,"THENCE South 81° 47' 42"" East 265.97 feet to a   inch iron rod;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,661,71,1,"THENCE South 22° 36' 05"" East 127.44 feet to a   inch iron rod;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,662,71,1,"THENCE continuing South 22° 36' 05"" East 20.00 feet;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,663,71,1,"THENCE North 84° 34' 12"" East 190.04 feet;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,664,71,1,"THENCE North 72° 06' 06"" East 188.70 feet;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,665,71,1,"THENCE North 30° 07' 44"" East 129.61 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,668,71,1,"THENCE continuing North 30° 07' 44"" East 83.78 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,671,71,1,"THENCE North 31° 57' 59"" East 303.53 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,674,71,1,"THENCE North 59° 24' 27"" East 102.67 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,677,71,1,"THENCE North 36° 50' 45"" East 257.07 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,680,71,1,"THENCE North 59° 34' 53"" East 236.68 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,683,71,1,"THENCE North 56° 36' 32"" East 197.63 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,691,71.900,1,East 184.70 feet to a
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,694,71.900,1,"THENCE North 37° 51' 17"" East 69.35 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,697,71.900,1,"THENCE North 65° 48' 33"" East 40.57 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,700,71.900,1,"THENCE North 59° 47' 08"" East 63.50 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,704,71.900,1,THENCE North along said East line of the Northeast quarter 37.21 feet to a
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,715,71.900,1,West 500.00 feet to a
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,718,71.900,1,"THENCE North 87° 26' 13"" West 150.00 feet to a   inch iron rod;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,719,71.900,1,"THENCE North 02° 33' 47"" East 40.00 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,722,71.900,1,"THENCE North 87° 26' 13"" West 500.00 feet to a   inch iron rod;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,723,71.900,1,"THENCE South 02° 33' 47"" East 40.00 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,728,71.900,1,"THENCE along the East line of said West half, North 00° 09' 17"" East 436.49 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,738,71.900,1,"15"" East 86.52 feet to a ½ inch iron rod;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,741,71.900,1,"THENCE continuing South 5.04 feet to a point on the Southerly line of said Glenmorag Park,"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,778,71,1,"THENCE North 76° 04' 43"" West 55.05 feet;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,779,71,1,"THENCE South 78° 16' 53"" West 91.31 feet;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,780,71,1,"THENCE North 80° 48' 48"" West 157.49 feet;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,781,71,1,"THENCE North 73° 32' 26"" West 109.70 feet;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,782,71,1,"THENCE North 74° 53' 44"" West 81.53 feet;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,783,71,1,"THENCE North 10° 09' 15"" West 124.85 feet;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,784,71,1,"THENCE North 08° 21' 31"" East 94.04 feet;"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,785,71,1,"THENCE North 37° 07' 48"" East 141.70 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,788,71,1,of a 5.00 foot strip dedicated to the City of Tualatin under Washington County Fee Number
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,792,71.900,1,"THENCE North 88° 42' 42"" East 458.98 feet to a"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,795,71.900,1,5.00 foot strip;
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,798,71.900,1,"THENCE North 88° 42' 42"" East 14.25 feet to a point on the West right-of-way line of the"
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,799,71.900,1,aforesaid proposed 45 foot road;
+or,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,801,71.900,1,155.93 feet to a point of curvature;
+or,unfielded,,or/clackamas/tualatin/72.natural-resource-overlay.txt,497,72.030,1,"(b) For the area 300 feet east and west of the I-5 right-of-way as shown on Map 72-1, the"
+or,unfielded,,or/clackamas/tualatin/72.natural-resource-overlay.txt,499,72.030,1,line 75 feet in-land from the top of the bank extending to the middle of the river.
+or,unfielded,,or/clackamas/tualatin/72.natural-resource-overlay.txt,512,72.030,1,(d) The NRPO-GC District shall have a width of 50 feet extending out from the top of the
+or,unfielded,,or/clackamas/tualatin/72.natural-resource-overlay.txt,523,72.030,1,(A) A width of 25 feet extending out from the upland edge of wetlands in the stream
+or,unfielded,,or/clackamas/tualatin/72.natural-resource-overlay.txt,572,72,1,50 feet of a stream top of bank.
+or,unfielded,,or/clackamas/tualatin/72.natural-resource-overlay.txt,575,72,1,change and is measured for a horizontal distance of 100 feet.
 or,unfielded,,or/clackamas/tualatin/73A.020-060.residential-design.txt,8,73A.020,1,(i) A 35 percent or more expansion of the structure's existing footprint.
 or,unfielded,,or/clackamas/tualatin/73A.020-060.residential-design.txt,10,73A.020,1,(iii) A 35 percent or more alteration of an existing wall plane.
 or,unfielded,,or/clackamas/tualatin/73A.020-060.residential-design.txt,23,73A.030,1,(a) Windows that occupy at least 12 percent of the wall plane.
@@ -3721,6 +3852,7 @@ or,unread,max_units,or/clackamas/gladstone/17.12.r-5.txt,256,17.12.055,1,"(c) Av
 or,unread,max_height_ft,or/clackamas/gladstone/17.12.r-5.txt,298,17.12.060,1,(j) Roof pitch of not less than three feet in height for each 12 feet in width; and
 or,unread,parking_min_per_unit,or/clackamas/gladstone/17.12.r-5.txt,374,17.12.065,1,"(b) Off-street parking spaces shall not be located within 10 feet of any other property line, except alley property lines. Driveways and drive aisles are permitted within 10 feet of other property lin"
 or,unread,setback_garage_entrance_ft,or/clackamas/gladstone/17.12.r-5.txt,388,17.12.065,1,(d) Garage doors for attached and detached individual garages must not exceed 20 feet in width.
+or,unread,max_height_ft,or/clackamas/gladstone/17.25.hcad.txt,163,17.25.040,1,"H. Temporary clearing of vegetative cover in an HCA, not to exceed 200 square feet per lot of record, for the purpose of site investigations and pits for preparing soil profiles, provided that cleared"
 or,unread,parking_min_per_unit,or/clackamas/gladstone/17.48.parking.txt,63,17.48.030,1,(f) On-street parking may count towards fulfilling the off-street parking requirements where on-street parking is allowed and the applicant can demonstrate that on-street parking is available. On-stre
 or,unread,parking_min_per_unit,or/clackamas/gladstone/17.48.parking.txt,67,17.48.030,1,"(h) Off-Site Parking. Vehicle parking spaces required by this chapter may be located on another parcel of land, provided the parcel is within 2,000 feet walking distance of the use it serves. The dist"
 or,unread,min_lot_sqft,or/clackamas/gladstone/17.48.parking.txt,81,17.48.030,1,(iii) Tree canopy covering at least 40 percent of the new parking lot area at maturity but no more than 15 years after planting; or
@@ -5138,6 +5270,22 @@ or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.12.r-5.txt,216,17.12
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.12.r-5.txt,346,17.12.065,1,(c) The common courtyard must be a minimum of 15 feet wide at its narrowest dimension.
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.12.r-5.txt,370,17.12.065,1,"(A) Within 20 feet from any street property line, except alley property lines;"
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.12.r-5.txt,386,17.12.065,1,(c) Individual detached garages must not exceed 400 square feet in floor area.
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.25.hcad.txt,185,17.25.040,1,2. The facility includes less than 500 square feet of new impervious surface; and
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.25.hcad.txt,570,17.25.090,5,5 Only if within 300 feet of a river or surface stream.
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.25.hcad.txt,670,17.25.100,1,"50 percent of the area of the subject property, up to a maximum of 5,000 square feet"
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.25.hcad.txt,672,17.25.100,1,"65 percent of the area of the subject property, up to a maximum of 6,000 square feet"
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.25.hcad.txt,680,17.25.100,1,High 10 percent of High HCA on the subject property
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.25.hcad.txt,681,17.25.100,1,Moderate 15 percent of Moderate HCA on the subject property
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.25.hcad.txt,682,17.25.100,1,Low 50 percent of Low HCA on the subject property
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.25.hcad.txt,793,17.25.100,1,All sites within 50 feet of a surface stream;
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.25.hcad.txt,797,17.25.100,1,"Forest canopy within 150 feet of a stream or wetland, or within a flood area; and"
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.27.wq.txt,79,17.27.020,2,<25 percent
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.27.wq.txt,81,17.27.020,1,50 feet
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.27.wq.txt,83,17.27.020,1,=25 percent for 150 feet or more
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.27.wq.txt,87,17.27.020,1,=25 percent for less than 150 feet
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.27.wq.txt,93,17.27.020,1,15 feet
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.27.wq.txt,95,17.27.020,1,=25 percent
+or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.27.wq.txt,235,17.27.042,1,(A) The site plan shall be drawn at a scale of no less than one inch equaling 20 feet;
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48.parking.txt,195,17.48.030,1,Residential Unit Under 750 Square Feet
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48.parking.txt,266,17.48.030,1,1 space per 400 square feet plus 1 space per 2 employees
 or/clackamas/gladstone,unfielded,,or/clackamas/gladstone/17.48.parking.txt,296,17.48.030,1,1 space per 4 seats or 8 feet of bench length
@@ -5205,6 +5353,7 @@ or/clackamas/gladstone,unread,setback_rear_ft,or/clackamas/gladstone/17.12.r-5.t
 or/clackamas/gladstone,unread,max_units,or/clackamas/gladstone/17.12.r-5.txt,256,17.12.055,1,"(c) Average Unit Size. The maximum average floor area for a cottage cluster is 1,400 square feet per dwelling unit. Community buildings shall be included in the average floor area calculation for a co"
 or/clackamas/gladstone,unread,max_height_ft,or/clackamas/gladstone/17.12.r-5.txt,298,17.12.060,1,(j) Roof pitch of not less than three feet in height for each 12 feet in width; and
 or/clackamas/gladstone,unread,parking_min_per_unit,or/clackamas/gladstone/17.12.r-5.txt,374,17.12.065,1,"(b) Off-street parking spaces shall not be located within 10 feet of any other property line, except alley property lines. Driveways and drive aisles are permitted within 10 feet of other property lin"
+or/clackamas/gladstone,unread,max_height_ft,or/clackamas/gladstone/17.25.hcad.txt,163,17.25.040,1,"H. Temporary clearing of vegetative cover in an HCA, not to exceed 200 square feet per lot of record, for the purpose of site investigations and pits for preparing soil profiles, provided that cleared"
 or/clackamas/gladstone,unread,parking_min_per_unit,or/clackamas/gladstone/17.48.parking.txt,63,17.48.030,1,(f) On-street parking may count towards fulfilling the off-street parking requirements where on-street parking is allowed and the applicant can demonstrate that on-street parking is available. On-stre
 or/clackamas/gladstone,unread,parking_min_per_unit,or/clackamas/gladstone/17.48.parking.txt,67,17.48.030,1,"(h) Off-Site Parking. Vehicle parking spaces required by this chapter may be located on another parcel of land, provided the parcel is within 2,000 feet walking distance of the use it serves. The dist"
 or/clackamas/gladstone,unread,min_lot_sqft,or/clackamas/gladstone/17.48.parking.txt,81,17.48.030,1,(iii) Tree canopy covering at least 40 percent of the new parking lot area at maturity but no more than 15 years after planting; or
@@ -5852,6 +6001,121 @@ or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/40-41.residential.txt,545
 or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/40-41.residential.txt,546,41,1,30+ feet 20 feet
 or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/40-41.residential.txt,570,41,1,50 feet
 or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/40-41.residential.txt,580,41.300,1,to a maximum of 50 feet with a
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,409,71.900,1,45 FOOT ROAD CORRIDOR THROUGH WETLANDS PROTECTED AREA:
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,414,71.900,4,855.00 feet North of the East quarter corner of said Section 23;
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,417,71.900,1,"THENCE South 85° 35' 36"" West 141.04 feet to a   inch iron rod;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,418,71.900,1,"THENCE North 87° 40' 52"" West 179.83 feet to a   inch iron rod;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,419,71.900,2,"THENCE North 67° 29' 21"" West 140.78 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,422,71.900,2,"THENCE North 44° 18' 12"" West 121.60 feet to a point on the arc of a 477.50 foot radius"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,424,71.900,2,45 foot road) and the TRUE POINT OF BEGINNING;
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,425,71.900,2,"THENCE South 76° 07' 50"" East 32.43 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,428,71.900,1,"THENCE South 43° 00' 21"" East 14.26 feet to a point on the arc of a 522.50 feet radius"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,435,71.900,1,"THENCE North 44° 18' 12"" West 52.36 feet to the TRUE POINT OF BEGINNING."
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,452,71.900,1,THENCE South along said East line of the Northeast quarter of Section 23 37.21 feet to a
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,458,71.900,1,West 63.50 feet to a
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,461,71.900,1,"THENCE South 65° 48' 33"" West 40.57 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,464,71.900,1,"THENCE South 37° 51' 17"" West 69.35 feet to a   inch iron rod;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,465,71.900,1,"THENCE South 77° 50' 14"" West 184.70 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,468,71.900,1,"THENCE South 56° 36' 32"" West 197.63 feet to a   inch iron rod;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,469,71.900,1,"THENCE South 59° 34' 53"" West 236.68 feet to a   inch iron rod and the TRUE POINT OF"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,471,71.900,1,"THENCE South 36° 50' 45"" West 257.07 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,475,71.900,1,326.86 feet to a point on the North line of the proposed amended boundary of the Wetlands
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,477,71.900,1,"THENCE North 80° 52' 10"" East 181.29 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,485,71.900,1,"THENCE North 45° 47' 30"" East 25.62 feet;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,489,71.900,1,"THENCE South 56° 01' 04"" East 60.08 feet more or less, regardless of footage, to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,511,71,2,"THENCE South 85° 35' 36"" West 141.04 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,514,71,2,"THENCE North 87° 40' 52"" West 179.83 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,517,71,1,"THENCE North 67° 29' 21"" West 140.78 feet to a   inch iron rod;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,520,71,1,"THENCE along the arc of said 477.50 foot radius non-tangent curve to the right, the radial"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,522,71,1,distance of 111.03 feet;
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,526,71,1,"THENCE South 43° 00' 21"" East 86.15 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,529,71,1,"THENCE South 17° 53' 21"" West 57.97 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,532,71,1,"THENCE South 51° 04' 18"" West 108.35 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,535,71,1,"THENCE South 42° 13' 03"" West 179.52 feet to a   inch iron rod;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,536,71,1,"THENCE South 45° 47' 30"" West 65.28 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,539,71,1,"THENCE South 29° 08' 40"" West 107.90 feet to a   inch iron rod;71.090"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,540,71,1,"THENCE South 80° 52' 10"" West 359.44 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,543,71,1,"THENCE North 80° 23' 48"" West 113.56 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,546,71,1,"THENCE North 87° 34' 44"" West 136.49 feet;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,547,71,1,"THENCE South 09° 56' 49"" West 289.60 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,550,71,1,"THENCE North 87° 40' 51"" West 887.38 feet to a   inch iron rod on the West line of the"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,559,71.900,1,West 50.89 feet to the Northeast corner of that tract of land described in Exhibit A in a
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,562,71.900,1,"THENCE South 74° 51' 42"" West 348.14 feet to the Northwest corner of said tract de-scribed"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,564,71.900,1,"THENCE South 82° 55' 14"" West 331.85 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,567,71.900,1,"THENCE South 57° 57' 41"" West 227.20 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,575,71.900,1,"THENCE South 05° 39' 10"" West 182.09 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,578,71.900,1,"THENCE South 54° 21' 48"" West 222.00 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,581,71.900,1,"THENCE South 57° 56' 29"" West 199.67 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,584,71.900,1,"THENCE South 71° 29' 00"" West 253.84 feet to a   inch iron rod;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,587,71.900,1,"THENCE North 69° 11' 24"" West 275.29 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,590,71.900,1,"THENCE South 82° 57' 08"" West 172.29 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,594,71.900,1,"THENCE North 89° 47' 48"" West 59.99 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,598,71.900,1,"THENCE North 25° 15' 57"" West 81.02 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,601,71.900,1,"THENCE North 85° 30' 35"" West 428.39 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,609,71.900,1,"THENCE South 84° 12' 26"" East 391.63 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,612,71.900,1,"THENCE South 77° 57' 12"" East 185.48 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,615,71.900,1,"THENCE North 71° 24' 09"" East 96.33 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,618,71.900,1,"THENCE South 59° 46' 28"" East 104.95 feet to a   inch iron rod;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,619,71.900,1,"THENCE South 42° 55' 31"" East 288.07 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,622,71.900,1,"THENCE South 83° 40' 44"" East 161.47 feet to a   inch iron rod;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,625,71,1,"THENCE South 78° 09' 04"" East 391.63 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,628,71,1,"THENCE North 10° 17' 21"" East 148.83 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,631,71,1,"THENCE South 88° 39' 19"" East 240.85 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,634,71,1,"THENCE North 80° 34' 09"" East 248.18 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,637,71,1,"THENCE North 06° 41' 12"" West 337.06 feet to a   inch iron rod;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,638,71,1,"THENCE South 89° 24' 20"" East 435.53 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,641,71,1,"THENCE South 70° 18' 52"" East 139.25 feet to a   inch iron rod;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,642,71,1,"THENCE South 22° 46' 10"" East 122.94 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,645,71,1,"THENCE South 88° 53' 27"" East 141.72 feet to a   inch iron rod;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,650,71,1,"THENCE continuing South 86° 03' 20"" East, 78.79 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,653,71,1,"THENCE North 89° 33' 02"" East 106.35 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,655,71,1,"THENCE North 03° 39' 34"" West 344.73 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,659,71,1,"THENCE South 86° 55' 31"" East 518.95 feet to a   inch iron rod;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,660,71,1,"THENCE South 81° 47' 42"" East 265.97 feet to a   inch iron rod;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,661,71,1,"THENCE South 22° 36' 05"" East 127.44 feet to a   inch iron rod;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,662,71,1,"THENCE continuing South 22° 36' 05"" East 20.00 feet;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,663,71,1,"THENCE North 84° 34' 12"" East 190.04 feet;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,664,71,1,"THENCE North 72° 06' 06"" East 188.70 feet;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,665,71,1,"THENCE North 30° 07' 44"" East 129.61 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,668,71,1,"THENCE continuing North 30° 07' 44"" East 83.78 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,671,71,1,"THENCE North 31° 57' 59"" East 303.53 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,674,71,1,"THENCE North 59° 24' 27"" East 102.67 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,677,71,1,"THENCE North 36° 50' 45"" East 257.07 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,680,71,1,"THENCE North 59° 34' 53"" East 236.68 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,683,71,1,"THENCE North 56° 36' 32"" East 197.63 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,691,71.900,1,East 184.70 feet to a
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,694,71.900,1,"THENCE North 37° 51' 17"" East 69.35 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,697,71.900,1,"THENCE North 65° 48' 33"" East 40.57 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,700,71.900,1,"THENCE North 59° 47' 08"" East 63.50 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,704,71.900,1,THENCE North along said East line of the Northeast quarter 37.21 feet to a
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,715,71.900,1,West 500.00 feet to a
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,718,71.900,1,"THENCE North 87° 26' 13"" West 150.00 feet to a   inch iron rod;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,719,71.900,1,"THENCE North 02° 33' 47"" East 40.00 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,722,71.900,1,"THENCE North 87° 26' 13"" West 500.00 feet to a   inch iron rod;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,723,71.900,1,"THENCE South 02° 33' 47"" East 40.00 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,728,71.900,1,"THENCE along the East line of said West half, North 00° 09' 17"" East 436.49 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,738,71.900,1,"15"" East 86.52 feet to a ½ inch iron rod;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,741,71.900,1,"THENCE continuing South 5.04 feet to a point on the Southerly line of said Glenmorag Park,"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,778,71,1,"THENCE North 76° 04' 43"" West 55.05 feet;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,779,71,1,"THENCE South 78° 16' 53"" West 91.31 feet;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,780,71,1,"THENCE North 80° 48' 48"" West 157.49 feet;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,781,71,1,"THENCE North 73° 32' 26"" West 109.70 feet;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,782,71,1,"THENCE North 74° 53' 44"" West 81.53 feet;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,783,71,1,"THENCE North 10° 09' 15"" West 124.85 feet;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,784,71,1,"THENCE North 08° 21' 31"" East 94.04 feet;"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,785,71,1,"THENCE North 37° 07' 48"" East 141.70 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,788,71,1,of a 5.00 foot strip dedicated to the City of Tualatin under Washington County Fee Number
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,792,71.900,1,"THENCE North 88° 42' 42"" East 458.98 feet to a"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,795,71.900,1,5.00 foot strip;
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,798,71.900,1,"THENCE North 88° 42' 42"" East 14.25 feet to a point on the West right-of-way line of the"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,799,71.900,1,aforesaid proposed 45 foot road;
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/71.wetlands-protection.txt,801,71.900,1,155.93 feet to a point of curvature;
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/72.natural-resource-overlay.txt,497,72.030,1,"(b) For the area 300 feet east and west of the I-5 right-of-way as shown on Map 72-1, the"
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/72.natural-resource-overlay.txt,499,72.030,1,line 75 feet in-land from the top of the bank extending to the middle of the river.
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/72.natural-resource-overlay.txt,512,72.030,1,(d) The NRPO-GC District shall have a width of 50 feet extending out from the top of the
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/72.natural-resource-overlay.txt,523,72.030,1,(A) A width of 25 feet extending out from the upland edge of wetlands in the stream
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/72.natural-resource-overlay.txt,572,72,1,50 feet of a stream top of bank.
+or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/72.natural-resource-overlay.txt,575,72,1,change and is measured for a horizontal distance of 100 feet.
 or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/73A.020-060.residential-design.txt,8,73A.020,1,(i) A 35 percent or more expansion of the structure's existing footprint.
 or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/73A.020-060.residential-design.txt,10,73A.020,1,(iii) A 35 percent or more alteration of an existing wall plane.
 or/clackamas/tualatin,unfielded,,or/clackamas/tualatin/73A.020-060.residential-design.txt,23,73A.030,1,(a) Windows that occupy at least 12 percent of the wall plane.

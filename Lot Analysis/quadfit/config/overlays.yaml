@@ -457,6 +457,197 @@ overlays:
     coverage:
       milwaukie: {grade: B, note: "26 polygons across ten SOURCE values (MILWAUKIE, GOAL 5, NWI, ESA, TRIMET, NCPRD, PHS, GIVENS, blank, null). Only the Goal 5 subset is adopted into the NR Map as HCA; the rest are consultant and federal delineations the code never adopted. Kept whole because a surveyed wetland carries DSL removal-fill jurisdiction regardless of who paid for the survey. Over-flags"}
 
+  # ---------------- Gladstone ------------------------------------------------
+  # Wired 2026-09-03, and the reason it could not wait: Gladstone is the only
+  # city on the board whose lots are held by nothing but signing -- 121 of 121,
+  # no data gap, no decision, no phone call -- so it is the next city that will
+  # produce greens, and it had no environmental screening of any kind. 51 of
+  # those 121 sit on mapped habitat or water-quality resource. Signing them
+  # before this existed would have graded two lots in five as clear land.
+  #
+  # Gladstone states its environmental regime as four superimposed districts,
+  # each its own chapter of Title 17, and its own definition of "net acre"
+  # (17.06.358) names them together: a net acre excludes "areas in the FM
+  # district, areas in the WQ District, natural resource areas protected under
+  # statewide planning Goal 5 ..., slopes in excess of 25 percent and wetlands".
+  # Two of the four are wired here. The other two are accounted for:
+  #
+  #  - FM (17.29, Flood Management Area). 17.29.020(1) says the district
+  #    "includes all special flood hazard areas", which is the FEMA SFHA the
+  #    fema_floodway carve and fema_sfha flag below already screen everywhere.
+  #    One genuine extension is NOT screened: 17.29.030(3) puts lands with
+  #    "physical or documented evidence of flooding within recorded history,
+  #    including areas of inundation for the February 1996 flood" in the
+  #    district, and 17.29.030(4) says the Comprehensive Plan's Map 13 "is a
+  #    reference only", so the boundary is partly undrawn by the code's own
+  #    admission. The 1996 footprint does exist as an attribute (FLOOD96) on
+  #    the Metro Title 3 layer already on disk and as a Gladstone layer of its
+  #    own; separating it needs an s0 fetch with a where clause. Under-screens.
+  #
+  #  - GW (17.28, Greenway Conditional Use). This one is a KILL and it is not
+  #    screened because nobody publishes the polygon. 17.28.030 makes every
+  #    intensification, change of use or development in the district a
+  #    conditional use under Chapter 17.70, and 17.28.050(6) settles it beyond
+  #    argument: "A setback line shall be established on a case-by-case basis
+  #    for any development, intensification, or change of use in the greenway."
+  #    A setback decided case by case cannot be screened by right, which is the
+  #    same reading that kills Milwaukie's WG and Portland's environmental
+  #    zones. 17.28.020 puts the boundary "on the Gladstone Plan and Zoning
+  #    Map"; the city's zoning service carries base zones only (35 polygons, no
+  #    overlay districts), and the state's own Willamette River Greenway layer
+  #    (OPRD, ORS 390.310-390.368 -- the statute 17.28 implements) publishes the
+  #    boundary as a POLYLINE, not an area. Building the kill area from a line
+  #    and a river bank is geometry invented rather than read, so it is left
+  #    undone and written down. Under-screens, on riverfront lots only, and the
+  #    WQ flag below fires on most of the same ground for a different reason.
+  #
+  # Both districts wired here are FLAGS rather than carves, and the choice is
+  # deliberate twice over.
+  #
+  # First, the maps are proxies. Gladstone adopts its HCA Map by reference in
+  # Chapter 6 of the Comprehensive Plan and publishes no GIS of it; what is
+  # published -- through Oregon City's server, which hosts Gladstone's GIS --
+  # is Metro's regional Title 13 inventory and Metro's Title 3 layer. Same
+  # lineage, different adopted boundary. Grade C, exactly as unincorporated
+  # Clackamas, and for the same reason: a regional layer standing in for a
+  # local map is a reason to send a lot to a person, not to delete it.
+  #
+  # Second, the code does not refuse. 17.25.050 lists the uses prohibited in an
+  # HCA in full and there are two of them -- planting invasive vegetation and
+  # storing materials outside -- which is word for word the county's ZDO
+  # 706.05. A dwelling is on neither list. What the chapter imposes instead is
+  # a permit with a disturbance budget, and the budget is where Gladstone gets
+  # interesting: 17.25.100 says the permit "shall be approved" on evidence, so
+  # it is ministerial, but 17.25.100(A)(1) Table 3 caps the Maximum Disturbance
+  # Area on Urban Low Density Residential property at 50% of the property up to
+  # 5,000 sq ft, or 65% up to 6,000 sq ft for Moderate/Low HCA -- and
+  # 17.25.030(G) defines that area as ALL development on the site and requires
+  # it to be contiguous. This screen's median improvement footprint is 7,030
+  # sq ft. So on low-density land the in-HCA path is closed to this product by
+  # arithmetic rather than by judgement, which is worth recording precisely
+  # because it is the strongest argument for a carve anyone will find here.
+  # It is still not taken, because Table 4 governs every OTHER comprehensive
+  # plan designation -- 10% of High HCA, 15% Moderate, 50% Low, and "no limit
+  # on disturbance area outside an HCA" -- and this screen does not carry a
+  # comprehensive plan designation to tell the two tables apart.
+  #
+  # 17.25.110 is the rule pointing the other way, and it is deliberately NOT
+  # applied: "For parcels that contain a Habitat Conservation Area, the minimum
+  # front, rear, and side yard setbacks shall be zero", garages and fire code
+  # excepted. It is Clackamas ZDO 706.11 again, in a city where it could
+  # actually produce greens rather than queue entries. Handing ground back on
+  # the strength of a grade C proxy boundary is the one thing the overlay work
+  # has consistently refused to do -- taking ground away on a proxy is
+  # cautious, giving it away is not -- so it waits for the adopted HCA Map.
+  - key: gladstone_hca
+    source: metro_title13
+    name: "Gladstone Habitat Conservation Area District (GMC 17.25)"
+    action: flag
+    jurisdictions: [gladstone]
+    citation: "GMC 17.25.020(A) applies Chapter 17.25 to all parcels containing a Habitat Conservation Area and to any area less than 100 ft outside one, on the HCA Map adopted by reference in Chapter 6 of the Comprehensive Plan; 17.25.050 prohibits only invasive planting and outside storage within an HCA; 17.25.060(A) requires a Construction Management Plan for development in the district and 17.25.060(C) an HCA Development Permit for development in an HCA; 17.25.100 provides the permit 'shall be approved' on evidence of compliance with (A) or (B), and 17.25.100(A)(1) Table 3 sets the Maximum Disturbance Area at 50 percent of the subject property up to 5,000 sq ft for High HCA and 65 percent up to 6,000 sq ft for Moderate/Low on Urban Low Density Residential property, with 17.25.030(G) defining the disturbance area as all development on the site and requiring it to be contiguous"
+    confidence: needs_verification
+    coverage:
+      gladstone: {grade: C, note: "Metro's regional Title 13 inventory standing in for the HCA Map adopted in Comprehensive Plan Chapter 6, which the city does not publish as GIS. 422 Gladstone lots touched, 51 of them the 121 held only by signing. A flag, so the cost of the proxy is a lot read by a person rather than a lot thrown away. Under-flags in one direction the code states plainly: 17.25.020(A) reaches 100 ft beyond an HCA boundary and even onto adjacent parcels, and a flag fires on touch"}
+  - key: gladstone_wq
+    source: metro_title3
+    name: "Gladstone Water Quality Resource Area District (GMC 17.27)"
+    action: flag
+    jurisdictions: [gladstone]
+    citation: "GMC 17.27.020(1) makes the WQ district an overlay 'composed of water quality resource areas', meaning vegetated corridors and the adjacent protected water features; 17.27.040(4)(a) prohibits 'any new development, other than that listed in GMC Subsections 17.27.040 (1), (2) and (3)'; 17.27.040(3)(a) puts 'any use allowed in the underlying zoning district' in the subject-to-review class; and the first standard such a use must then meet, 17.27.045(1)(a), is that 'No practicable alternative locations exist for the requested development that will not disturb the water quality resource area'"
+    confidence: needs_verification
+    coverage:
+      gladstone: {grade: C, note: "Metro Title 3 standing in for Map 12 (Water Quality Resource Areas) of the Comprehensive Plan, the map the chapter regulates from and the city does not publish as GIS. The map is disputable in both directions on evidence -- 17.27.020(5) has the city amend it when a listed water feature turns out not to qualify or an unlisted wetland does -- which is a second reason not to carve on it. 105 Gladstone lots touched, 23 of them in the review queue and all 23 inside the 51 the habitat layer already flags. Two known errors, in opposite directions. OVER-flags: the Metro layer carries FEMA and 1996-flood polygons alongside riparian and wetland buffers, and 17.27 governs only the corridors and water features, so a flood-fringe lot with no water feature can fire. UNDER-states: 17.27.020(4) sizes the vegetated corridor by slope measured in the field at 100-ft increments (Table 1), so the true width on a steep bank exceeds anything a regional layer carries. 17.27.045(1)(a)'s practicable-alternatives test is a refusal rather than a review and would justify a carve on a properly separated riparian subset"}
+
+  # ---------------- Tualatin ------------------------------------------------
+  # Wired 2026-09-03, the same day as Gladstone and for the opposite reason.
+  # Gladstone was wired because signing will turn its lots loose next week.
+  # Tualatin was wired because it was the last name on the UNSCREENED list, and
+  # a list with one name on it stops being read. 7 of its 19 waiting lots touch
+  # resource land; all 19 are blocked on the sewer question regardless, so
+  # nothing here moves a verdict today. It is a debt paid, not a gap closed
+  # under pressure.
+  #
+  # The service was recorded a month ago as "confirmed, layers not enumerated"
+  # and the note pointed at a folder that answers "Token Required". The layers
+  # are at the root of the same server. Worth writing down, because "the city
+  # does not publish it" and "the path in our notes is wrong" look identical
+  # from here, and only one of them is a coverage gap.
+  #
+  # What Tualatin publishes is the best environmental data in the corpus: the
+  # NRPO district itself, not a regional proxy for it; the Wetlands Protection
+  # District split by the exact sub-area names Chapter 71 defines; and the 50 ft
+  # stream buffer carrying a piped flag. Three carves and two flags, and every
+  # one of the five lines is drawn by a sentence rather than by a judgement.
+  #
+  # 71.020 is the sentence that settles the WPD half: the boundaries "are hereby
+  # fixed and established as shown on Map 71-1." No other city in this corpus
+  # says that about its map. Compare 72.020(1) on the other half, which says
+  # Map 72-1 "shows the general location of the NRPO District" -- the same hedge
+  # Milwaukie uses, and the reason the NRPO carve is graded B rather than A.
+  # It is still a carve: 72.065(2) puts a claim of map error into a land use
+  # application, which makes the published line the operative one until somebody
+  # disputes it, and a screen that waited for the dispute would be screening
+  # nothing.
+  #
+  # NOT screened, and it is the one that would move lots: TDC 72.040(3)(a)
+  # writes "areas with slopes greater than 25 percent" into the definition of an
+  # Open Space Natural Area, and the city publishes that layer too (12,048
+  # polygons, Environmental Explorer layer 3). Left alone deliberately. The
+  # screen already measures slope from the DEM over the buildable envelope and
+  # grades on it, so carving the city's own 25% polygons would sit a second,
+  # coarser measurement of the same fact on top of the first and there is no way
+  # to tell afterwards which one failed a lot. One fact, one measurement.
+  #
+  # Two rules in the chapter point the other way and neither reaches this
+  # building, which is worth recording because the last two cities each hid one
+  # that did. 72.090 reduces the minimum front yard setback for an owner who
+  # dedicates NRPO land or a path -- but only "in a IN, CO, CR, CO/MR, ML, or MG
+  # Planning District", every one of them industrial or commercial, and only
+  # through the discretionary Architectural Review process. 72.080 shifts
+  # density away from a greenway and allows small lots, both of them tools of a
+  # subdivision or partition, and this screen places one building on one
+  # existing lot. Checked, not applicable, no refusal owed.
+  - key: tualatin_nrpo
+    name: "Tualatin Natural Resource Protection Overlay District (TDC 72)"
+    action: carve
+    jurisdictions: [tualatin]
+    citation: "TDC 72.020(1) puts the designated significant natural resources on Map 72-1; 72.060(1) provides that 'no building, structure, grading, excavation, placement of fill, vegetation removal, impervious surface, use, activity or other development shall occur within Riverbank, Creek and Other Greenways, and Wetland and Open Space Natural Areas', and the uses 72.060(2) lets back in are public paths, streets and utilities, private driveways crossing a bisected lot, restaurant seating in the urban renewal district, parks, landscaping, wildlife enhancement, boating facilities and mowing -- no dwelling among them"
+    confidence: verified
+    coverage:
+      tualatin: {grade: B, note: "159 polygons off the city's own adopted overlay, six CLASS values and every one of them named by the prohibition -- NRPO-GR riverbank, NRPO-GC creek, NRPO-OG other greenway, NRPO-WPNA wetland preservation, NRPO-WCNA wetland conservation, NRPO-OSNA open space. B and not A because 72.020(1) calls Map 72-1 'the general location' of the district. Under-carves in one place the code is explicit about: 72.030(2)(a) measures the riverbank greenway from a line 40 ft inland of the top of bank and 72.030(3) gives creek greenways stated widths of 50 and 30 ft, so where the mapped polygon is thinner than the sentence, the sentence wins and this does not know it"}
+  - key: tualatin_wpd_nobuild
+    name: "Tualatin Wetlands Protection District — protected area, Sweek Pond and the 40 ft setback (TDC 71)"
+    action: carve
+    jurisdictions: [tualatin]
+    citation: "TDC 71.020 fixes the boundaries of the Wetlands Protection District and its sub-areas 'as shown on Map 71-1'; 71.065 allows in the Wetlands Protected Area 'no permanent use ... other than passive nature study, wildlife protection and enhancement' plus one named road and bridge, and in the Sweek Pond Management Area only a listed set of public uses; 71.061(1) requires that 'all permanent surface structures and other surface improvements located adjacent to the Wetlands Protected Area (WPA) shall be set back not less than 40 feet from the boundary'"
+    confidence: verified
+    coverage:
+      tualatin: {grade: A, note: "17 of the district's 19 polygons -- the Wetlands Protected Area, the Sweek Pond Management Area, and the three published setback classes (Type A x8, Type B x6, Restricted x1) which are 71.061's 40 ft drawn. Graded A on the strength of 71.020's 'hereby fixed and established', the only sentence in this corpus that says a map IS the boundary rather than showing where it generally is. The setback polygons are a no-BUILDING area rather than untouchable ground: 71.062(3) permits fill and earth-moving inside them provided the finished profile matches Figure 71-1's Type A or Type B. A carve says exactly that and no more"}
+  - key: tualatin_wfa
+    name: "Tualatin Wetlands Fringe Area (TDC 71)"
+    action: flag
+    jurisdictions: [tualatin]
+    citation: "TDC 71.062(2) allows excavation and filling in the Wetlands Fringe Area 'in all areas for purposes related to its full development and use in accordance with applicable primary planning district classifications'; what survives is 71.030, 'uses located within the Wetlands Protection District (WPD) shall comply with the certification requirements contained in TDC 71.040', and 71.040(1), which requires every application 'to construct buildings or other improvements ... upon lands lying within the Wetlands Protection District' to arrive with the written certification of an Oregon-licensed engineer"
+    confidence: verified
+    coverage:
+      tualatin: {grade: A, note: "The other 2 polygons of the district. Development is expected here -- the code says so in the words quoted -- so the fringe is the half of Chapter 71 that must NOT be carved, and separating it is the whole reason this layer is fetched twice with opposite where clauses. Flagged for the engineer's certification, which is a real requirement on a real building and a cost rather than a refusal. 71.040(3) even deems the certification approved if the city does not act within 45 days"}
+  - key: tualatin_stream_buffer
+    name: "Tualatin 50 ft stream buffer (TDC 72.040(3)(a))"
+    action: carve
+    jurisdictions: [tualatin]
+    citation: "TDC 72.040(3)(a) includes in an Open Space Natural Area 'areas with slopes greater than 25 percent, areas within 50 feet of a delineated wetland and areas within 50 feet of a stream top of bank', and 72.040(3)(b) fixes that top of bank at the bankfull stage; the prohibition that reaches it is 72.060(1)"
+    confidence: verified
+    coverage:
+      tualatin: {grade: B, note: "85 of the 93 published segments, the ones the city does not mark piped. Not a second resource stacked on the NRPO layer: 72.040(3)(a) writes this buffer into the DEFINITION of an Open Space Natural Area, so it is the same district drawn at the width the sentence gives rather than at the width the polygon happened to get. Under-carves where a segment is missing from the published set, since the definition reaches every stream and this layer holds 93"}
+  - key: tualatin_stream_piped
+    name: "Tualatin piped stream segments (TDC 72)"
+    action: flag
+    jurisdictions: [tualatin]
+    citation: "TDC 72.040(3)(a) measures the buffer from 'a stream top of bank' and 72.040(3)(b) defines it as 'the bankfull stage'"
+    confidence: verified
+    coverage:
+      tualatin: {grade: B, note: "The 8 segments the city marks IS_PIPED. West Linn's ruling in another city: a closed pipe has no bankfull stage, so the width a carve would use is not a number anybody wrote. The segment is on the adopted map, which is enough to send the lot to a person. Note the difference from Milwaukie, whose 19.402.3.I exempts piped reaches outright -- Tualatin's code says nothing either way, and silence is why this is a flag and not an exemption"}
+
   # ---------------- Flood (FEMA NFHL split by attribute in s0) --------------
   - key: fema_floodway
     name: "FEMA regulatory floodway"
