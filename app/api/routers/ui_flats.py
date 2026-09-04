@@ -606,12 +606,33 @@ def _pages(document: str, first: int, last: int) -> list[dict[str, Any]]:
     ]
 
 
+def _pages_in(document: str, ranges: Sequence[tuple[int, int]]) -> list[dict[str, Any]]:
+    """The pages every stretch of a citation was printed on, in book order.
+
+    Each range asked separately and the answers unioned, rather than one sweep
+    across the hull. A citation naming a table row and the footnote pages under
+    it is two or three pages; taken as the hull, Wilsonville's
+    ``#L572-L574,L8314,L8318`` answers with two hundred and two, which is the
+    whole back half of the chapter.
+
+    That is the failure this function is least able to afford. A page number
+    exists so a standard can be defended to somebody who does not have this
+    system in front of them, and "pages CD4:15 through CD4:216" tells a planner
+    to read the chapter.
+    """
+    seen: set[int] = set()
+    out: list[dict[str, Any]] = []
+    for first, last in ranges:
+        for page in _pages(document, first, last):
+            if page["n"] not in seen:
+                seen.add(page["n"])
+                out.append(page)
+    return sorted(out, key=lambda page: page["n"])
+
+
 def _page_note(quote: str) -> str:
     """A quote's pages, as one phrase for a written citation."""
-    span = _span(quote)
-    if not span:
-        return ""
-    found = _pages(quote.partition("#L")[0], *span)
+    found = _pages_in(quote.partition("#L")[0], _ranges(quote))
     if not found:
         return ""
     # Both numbers, where both exist. The printed one is what a code cites and
@@ -804,7 +825,7 @@ def _passages(layer: Layer, decided: dict) -> list[dict[str, Any]]:
                     "cite": here[0]["cite"],
                     "url": here[0]["url"],
                     "lines": lines,
-                    "pages": _pages(document, chain[0][0], max(x[1] for x in chain)),
+                    "pages": _pages_in(document, chain),
                     "misattributed": _misattributed(here[0]["cite"], here[0]["quote"]),
                     "error": "",
                     "rows": sorted(here, key=lambda r: (r["line"], r["zone"], r["field"])),
@@ -1310,7 +1331,6 @@ def _evidence(number: Any) -> dict[str, Any]:
     """One number and everything needed to check it against the book."""
     quote = number.prov.quote or ""
     lines, error = _cited_lines(quote) if quote else ([], "")
-    span = _span(quote)
     return {
         "value": number.value,
         "when": ", ".join(getattr(number, "key", ()) or ()),
@@ -1321,7 +1341,7 @@ def _evidence(number: Any) -> dict[str, Any]:
         "url": number.prov.url,
         "quote": quote,
         "document": quote.partition("#L")[0],
-        "pages": _pages(quote.partition("#L")[0], *span) if span else [],
+        "pages": _pages_in(quote.partition("#L")[0], _ranges(quote)),
         "page_note": _page_note(quote),
         "lines": lines,
         "error": error,
@@ -1899,11 +1919,26 @@ def _shown(ref: str) -> str:
     from the browser is evidence somebody could have written. Stored verbatim
     so a note stays readable months later, by someone who was not there, after
     the document has been re-fetched and every line in it has moved.
+
+    Every range the citation names, each with its own context -- the same
+    rendering :func:`_cited_lines` gives the card. This used to take the hull
+    from :func:`_span` and draw one window across it, which is the thing the
+    :func:`_ranges` docstring warns about in as many words: for Wilsonville's
+    ``#L572-L574,L8314,L8318`` the hull is seven thousand seven hundred lines,
+    six of them cited. So the column that exists to say "this is what the
+    reviewer was looking at" held most of a municipal code, and a reader
+    checking a signature months later would have had to find the six lines
+    themselves -- which is the work the column was recording them to save.
+
+    It also put text on screen that no card ever showed. That is how this
+    surfaced: seven thousand unread lines of Wilsonville swept up two glyphs
+    pypdf could not decode, and Postgres refuses a NUL byte inside text, so
+    signing those two cards failed outright with an encoding error naming a
+    roofing-materials table nobody had cited.
     """
-    span = _span(ref)
-    document = ref.partition("#L")[0]
-    lines = _window(document, [span]) if span else _cited_lines(ref)[0]
-    return "\n".join(f"{line['n']:>6}  {line['text']}" for line in lines)
+    return "\n".join(
+        f"{line['n']:>6}  {line['text']}" for line in _cited_lines(ref)[0]
+    )
 
 
 def _mark(layer_id: str, zone: str, field: str, when: str, number: Any) -> str:

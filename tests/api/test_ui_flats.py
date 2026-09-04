@@ -1711,7 +1711,13 @@ async def test_a_flattened_row_is_shown_with_the_cells_under_it(
     candidates, _ = ui._candidates(item)
 
     assert candidates[0]["text"] == "Quadplexes"
-    assert candidates[0]["after"][:3] == ["P7,8", "P7,8", "X"]
+    # ``P[7,8]``, not ``P7,8``: extractor /7 separates a superscript footnote
+    # marker from the value it sits on, because "P7" welded together is a
+    # permission somebody has to know to un-weld and "P" with footnotes 7 and 8
+    # is what the table prints. The corpus was re-extracted under it on
+    # 2026-08-26 and this assertion did not learn, because CI's light gate was
+    # dark from 08-14 to 09-03 and nothing ran it.
+    assert candidates[0]["after"][:3] == ["P[7,8]", "P[7,8]", "X"]
 
 
 
@@ -2115,16 +2121,47 @@ async def test_a_triage_mention_links_to_text_that_resolves(
     assert lines
 
 
+def _queued_at(layer: str, wanted: str) -> int | None:
+    """Where in a triage queue the card carrying ``wanted`` sits, or None.
+
+    The triage screen shows one card, and ``?skipped=`` walks the queue. Both
+    tests below were written against whatever happened to be first for
+    Portland, which is a position rather than a property: encoding Portland's
+    commercial zones put 33.613 at the head and both went red, reporting a
+    broken review page when what had actually happened was that a jurisdiction
+    got further along. Same lesson as ``_hunt`` above, on a different queue.
+    """
+    import dataclasses
+
+    from flats.encode.triage import feed
+
+    for i, card in enumerate(feed(layer=layer)):
+        if wanted in str(dataclasses.asdict(card)):
+            return i
+    return None
+
+
 async def test_a_tiered_standard_is_not_shown_to_a_reviewer_as_a_python_list(
     client: AsyncClient, session: AsyncSession
 ):
-    """Portland's top card stands beside exactly one standard, and it rendered
-    as ``[[0, 0, 50], [3000, 1500, 37.5], [5000, 2...`` — nested brackets, cut
+    """A card standing beside a tiered coverage standard rendered it as
+    ``[[0, 0, 50], [3000, 1500, 37.5], [5000, 2...`` — nested brackets, cut
     mid-number. A card whose only evidence is unreadable asks a question it
-    has not supplied the means to answer."""
+    has not supplied the means to answer.
+
+    The prose form itself is owned by ``flats/tests/test_triage.py``; what is
+    under test here is that it survives the template, which is the half a unit
+    test cannot see.
+    """
     await _login(client, session)
 
-    response = await client.get("/flats/triage?layer=or/multnomah/portland")
+    at = _queued_at("or/multnomah/portland", "of the excess")
+    if at is None:
+        pytest.skip("no tiered standard stands beside a Portland card today")
+
+    response = await client.get(
+        f"/flats/triage?layer=or/multnomah/portland&skipped={at}"
+    )
 
     assert response.status_code == 200
     assert "of the excess" in response.text
@@ -2134,10 +2171,19 @@ async def test_a_tiered_standard_is_not_shown_to_a_reviewer_as_a_python_list(
 async def test_the_card_calls_a_title_a_title(
     client: AsyncClient, session: AsyncSession
 ):
-    """Portland's tree rules head the queue and they are Title 11."""
+    """Portland's tree rules are Title 11, not Section 11. A title is a whole
+    body of code and a section is a paragraph of one, and a card that prints
+    the wrong noun tells a reviewer the document is something other than what
+    it is."""
     await _login(client, session)
 
-    response = await client.get("/flats/triage?layer=or/multnomah/portland")
+    at = _queued_at("or/multnomah/portland", "Title 11")
+    if at is None:
+        pytest.skip("Title 11 is not in the current Portland queue")
+
+    response = await client.get(
+        f"/flats/triage?layer=or/multnomah/portland&skipped={at}"
+    )
 
     assert "Title 11" in response.text
     assert "Section 11 " not in response.text
@@ -2218,3 +2264,93 @@ async def test_every_gap_cause_is_said_in_words_a_reviewer_can_act_on():
     from flats.encode.gaps import CAUSES
 
     assert not [cause for cause in CAUSES if cause not in _CAUSE_WORDS]
+
+
+def _a_split_citation(*, mapped: bool = False) -> str:
+    """Any live citation naming stretches pages apart, or "" if none does.
+
+    Found rather than named, for the reason ``_hunt`` gives: an address written
+    into a test is an address that goes away the day somebody finishes the
+    jurisdiction it is in.
+
+    ``mapped`` narrows to a document that has a page map, which only the PDF
+    half of the corpus does. Without it the first match is Clackamas ZDO 315 --
+    HTML, no pages, nothing for a page test to assert on.
+    """
+    from app.api.routers.ui_flats import _page_index, _passages, _ranges
+    from flats.rules.loader import load_rules
+
+    for layer in load_rules(strict=False).values():
+        for card in _passages(layer, {}):
+            ranges = _ranges(card["ref"])
+            if len(ranges) < 2 or ranges[-1][0] - ranges[0][1] <= 500:
+                continue
+            if mapped and _page_index(card["ref"].partition("#L")[0]) is None:
+                continue
+            return card["ref"]
+    return ""
+
+
+async def test_what_a_signature_records_is_what_the_card_drew(
+    client: AsyncClient, session: AsyncSession
+):
+    """``_shown`` stores the code text a reviewer was looking at, so that a
+    signature stays checkable months later after the document has moved. It
+    took the hull between the stretches a citation names instead of the
+    stretches: Wilsonville's ``#L572-L574,L8314,L8318`` is six cited lines and
+    a hull of seven thousand seven hundred, so the column that exists to say
+    "this is what was on screen" held most of a municipal code and a reader
+    checking the signature had to find the six lines themselves.
+
+    ``_ranges`` says this in as many words -- "a window drawn from the hull is
+    three and a half thousand lines of unrelated code with two of them marked"
+    -- and the card-building path had used it for a fortnight. This one had
+    not.
+    """
+    from app.api.routers.ui_flats import _CONTEXT, _ranges, _shown
+
+    ref = _a_split_citation()
+    if not ref:
+        pytest.skip("no citation in the corpus names stretches pages apart")
+
+    numbers = [int(line.split()[0]) for line in _shown(ref).splitlines()]
+    ranges = _ranges(ref)
+
+    assert numbers, "the cited lines still come back"
+    # Both ends, so nothing was dropped...
+    assert min(numbers) <= ranges[0][0]
+    assert max(numbers) >= ranges[-1][1]
+    # ...and not the thousands of unrelated lines printed between them.
+    assert len(numbers) <= sum(b - a + 1 + 2 * _CONTEXT for a, b in ranges)
+    assert len(numbers) < (ranges[-1][1] - ranges[0][0]) / 10
+
+
+
+async def test_a_page_citation_names_the_pages_it_was_read_from(
+    client: AsyncClient, session: AsyncSession
+):
+    """The same hull, one function further on, and where it costs most.
+
+    A page number exists so an encoded standard can be defended to somebody
+    who does not have this system in front of them -- a planner, an architect,
+    a lawyer reading the code off paper. They cannot check "line 3,041"; they
+    can turn to page CD4:180. Swept across the hull, Wilsonville's
+    ``#L572-L574,L8314,L8318`` answered with two hundred and two pages, which
+    tells that planner to read the chapter.
+    """
+    from app.api.routers.ui_flats import _page_note, _pages_in, _ranges
+
+    ref = _a_split_citation(mapped=True)
+    if not ref:
+        pytest.skip("no split citation sits in a document with a page map")
+
+    document = ref.partition("#L")[0]
+    ranges = _ranges(ref)
+    pages = _pages_in(document, ranges)
+
+    assert pages, "the page map answered for a document that has one"
+
+    # One or two pages per stretch, not every sheet printed between them.
+    assert len(pages) <= 2 * len(ranges)
+    assert [p["n"] for p in pages] == sorted(p["n"] for p in pages)
+    assert _page_note(ref).count("PDF page") == len(pages)
