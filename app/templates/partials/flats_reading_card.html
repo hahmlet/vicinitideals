@@ -1,0 +1,116 @@
+{#
+  One section, and the decision it wants. Swapped in place after every ruling
+  so the queue never reloads the page or loses the filters.
+
+  The shared half only: heading, the buttons this queue asks for, the note, and
+  the skip. What the reviewer actually reads comes from a per-queue evidence
+  partial, because the four questions need four different things on screen and
+  a card carrying the union of them is the "TMI and not the right info" this
+  whole surface exists to end.
+#}
+<div id="reading-card">
+{% if error %}
+<div style="margin:0 0 12px;padding:8px 10px;border-left:3px solid #dc2626;font-size:12px">
+  {{ error }}
+</div>
+{% endif %}
+
+{% if not card %}
+<div style="padding:32px 0;text-align:center">
+  <div style="font-size:15px">Nothing left in this queue.</div>
+  <div class="muted" style="font-size:12px;margin-top:6px">
+    {% if skipped %}
+      Skipped past {{ skipped }}. <a href="?">Start from the top</a>, or widen the filters.
+    {% else %}
+      All ruled. Widen the filters, tick <em>show ruled</em> to read them back, or
+      <a href="/flats/reading">pick another queue</a>.
+    {% endif %}
+  </div>
+</div>
+{% else %}
+
+<div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:2px">
+  <h3 style="margin:0;font-size:17px">
+    {{ labels.get(card.layer, card.layer) }}
+    {%- if card.section %} &middot; &sect;{{ card.section }}{% endif %}
+  </h3>
+  <span class="muted" style="font-size:12px">{{ card.doc }}</span>
+</div>
+<div class="muted" style="font-size:12px;margin-bottom:14px">
+  {{ card.lines|length }} statement{{ "" if card.lines|length == 1 else "s" }} nothing quotes
+  {%- if card.disagrees %} &middot; <strong>{{ card.disagrees }} differ{{ "s" if card.disagrees == 1 else "" }} from what we hold</strong>{% endif %}
+  {%- if card.ruling %} &middot; ruled <strong>{{ card.ruling.outcome }}</strong>{% endif %}
+</div>
+
+{% if card.moved %}
+{#
+  The page moved under a decision already made. Not an error and not a
+  reprimand -- a re-fetch is how this corpus stays true -- but the ruling was
+  written about words nobody has seen since, so it comes back rather than
+  keeping the card silently shut.
+#}
+<div style="font-size:12px;margin:0 0 12px;padding:8px 10px;border-left:3px solid #d97706">
+  This was ruled <strong>{{ card.ruling.outcome }}</strong>, and the section has changed
+  since. Read it again and confirm, or answer differently.
+  <div class="muted" style="font-size:11px;margin-top:4px">{{ card.ruling.note }}</div>
+</div>
+{% endif %}
+
+{% include "partials/flats_reading_evidence_" ~ queue ~ ".html" %}
+
+<form hx-post="/ui/flats/reading/rule"
+      hx-target="#reading-card"
+      hx-swap="outerHTML"
+      style="margin-top:22px;padding-top:14px;border-top:1px solid var(--line,#e5e7eb)">
+  <input type="hidden" name="queue" value="{{ queue }}">
+  <input type="hidden" name="layer_id" value="{{ card.layer }}">
+  <input type="hidden" name="path" value="{{ card.path }}">
+  <input type="hidden" name="section" value="{{ card.section }}">
+  <input type="hidden" name="fingerprint" value="{{ card.fingerprint }}">
+  <input type="hidden" name="layer" value="{{ sel.layer }}">
+  <input type="hidden" name="field" value="{{ sel.field }}">
+  <input type="hidden" name="ruled" value="{{ 'true' if sel.ruled else 'false' }}">
+  <input type="hidden" name="skipped" value="{{ skipped }}">
+
+  {#
+    One row, drawn in the queue's own order, commonest answer first so the
+    hand learns the position. No headings above it: the question is already at
+    the top of the page and repeating it here is what made the old card feel
+    like a vocabulary test.
+  #}
+  <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">
+    {% for key, why in outcomes %}
+    <label style="font-size:12px;border:1px solid var(--line,#d1d5db);border-radius:4px;
+                  padding:6px 10px;cursor:pointer">
+      <input type="radio" name="outcome" value="{{ key }}" style="margin-right:5px">
+      {{ why }}
+    </label>
+    {% endfor %}
+  </div>
+
+  <textarea name="note" rows="3"
+            style="width:100%;font-size:12px;font-family:inherit;padding:6px"
+            placeholder="Why. What you read, and whether it reaches a four-unit townhome. {{ min_note }} characters or more.">{{ note }}</textarea>
+
+  <div style="display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap">
+    <button type="submit" name="action" value="rule"
+            style="font-size:12px;padding:6px 14px">Save &amp; next</button>
+    <button type="submit" name="action" value="skip" formnovalidate
+            style="font-size:12px;padding:6px 12px;background:none;border:1px solid var(--line,#d1d5db)">
+      Can’t tell yet — next one
+    </button>
+    <span class="muted" style="font-size:11px">
+      {{ remaining }} left{% if skipped %}, {{ skipped }} skipped{% endif %}
+    </span>
+  </div>
+
+  {% if pending %}
+  <div class="muted" style="font-size:11px;margin-top:8px">
+    {{ pending }} decision{{ "" if pending == 1 else "s" }} not yet written into the
+    rule files. Decided is not in force.
+  </div>
+  {% endif %}
+</form>
+
+{% endif %}
+</div>

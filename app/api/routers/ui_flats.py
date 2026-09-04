@@ -30,9 +30,11 @@ townhouse lots, cities state different standards for the two, and which one
 is being built is a decision about the product.
 
 Routes: /flats, /flats/plans, /flats/plans/{design}, /flats/review/{layer},
-/flats/gaps, /flats/find/{layer}, /flats/feedback, /flats/why/{layer}, /flats/{layer},
+/flats/gaps, /flats/find/{layer}, /flats/feedback, /flats/why/{layer},
+/flats/reading, /flats/reading/{queue}, /flats/{layer},
 /ui/flats/quote,
 /ui/flats/sign, /ui/flats/sign-passage, /ui/flats/bundle, /ui/flats/book,
+/ui/flats/reading/rule,
 /flats/book/{document}
 """
 from __future__ import annotations
@@ -43,14 +45,18 @@ from functools import lru_cache
 from typing import Any, Sequence
 
 from fastapi import APIRouter, Form, Query, Request
-from fastapi.responses import FileResponse, HTMLResponse
+from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 from sqlalchemy import func, select
 from starlette.concurrency import run_in_threadpool
 
 from app.api.deps import DBSession
 from app.config import settings
 from app.api.routers.ui_helpers import _base_ctx, _get_counts, _get_user, templates
-from app.models.flats import FlatsCrossrefRuling, FlatsRuleSignature
+from app.models.flats import (
+    FlatsCrossrefRuling,
+    FlatsReadingRuling,
+    FlatsRuleSignature,
+)
 from flats.encode import legible
 from flats.designs.model import Design, DesignStatus, Plat, load_catalog
 from flats.encode.attribution import claimed_sections, section_at
@@ -59,6 +65,11 @@ from flats.encode.gaps import digest as gaps_digest
 from flats.encode.gaps import read_ledger
 from flats.encode.load import load_trusted
 from flats.encode.triage import Card, feed, fields_in
+from flats.encode.worklist import KINDS, QUEUES
+from flats.encode.worklist import Card as ReadingCard
+from flats.encode.worklist import card_key
+from flats.encode.worklist import counts as reading_counts
+from flats.encode.worklist import feed as reading_feed
 from flats.encode.verify import fingerprint
 from flats.provenance import books, pages as page_map
 from flats.provenance.store import ProvenanceError, ProvenanceStore
@@ -67,8 +78,10 @@ from flats.rules.ledger import CoverageRow, read_coverage
 from flats.rules.loader import MIN_RULING
 from flats.rules.model import (
     CROSSREF_OUTCOMES,
+    READING_OUTCOMES,
     Incorporation,
     Layer,
+    Reading,
     Ruling,
     Status,
     Value,
@@ -1868,6 +1881,279 @@ async def flats_book(
             "Cache-Control": "private, max-age=86400",
         },
     )
+
+
+# --- reading queues ---------------------------------------------------------
+#
+# The uncited ledger counts every measured statement in a document we hold that
+# no encoded value quotes: 4,693 rows, one per statement, grouped by city. It
+# is the right ledger and an unworkable list, and for one reason -- the unit it
+# prints is not the unit anybody decides in. One decision covers a section, and
+# the same 4,693 lines are 649 sections.
+#
+# So these screens regroup by section and split by the question being asked.
+# One queue, one question, one row of buttons. A reviewer opens a queue and
+# knows what kind of reading the next hour is.
+
+
+async def _reading_inbox(session: DBSession) -> dict[str, dict[str, Reading]]:
+    """The latest reading decision per card, by layer, from the review inbox.
+
+    Rules load from the repository; this is what has been decided since and not
+    yet drained into it. Applied over the rule files rather than merged with
+    them, because a reviewer who changes their mind writes a new row and the
+    newest is the one that counts.
+    """
+    rows = (
+        await session.execute(
+            select(FlatsReadingRuling).order_by(FlatsReadingRuling.decided_at)
+        )
+    ).scalars()
+    out: dict[str, dict[str, Reading]] = {}
+    for r in rows:
+        out.setdefault(r.layer, {})[card_key(r.path, r.section)] = Reading(
+            queue=r.queue,
+            outcome=r.outcome,
+            note=r.note,
+            fingerprint=r.fingerprint or "",
+        )
+    return out
+
+
+async def _reading_pending(session: DBSession) -> int:
+    """Decisions recorded and not yet written into the rule files.
+
+    Surfaced rather than hidden. An undrained ruling has not taken effect, and
+    a reviewer is entitled to know the difference between "decided" and "in
+    force".
+    """
+    return int(
+        (
+            await session.execute(
+                select(func.count())
+                .select_from(FlatsReadingRuling)
+                .where(FlatsReadingRuling.exported_at.is_(None))
+            )
+        ).scalar_one()
+    )
+
+
+def _reading_ctx(
+    queue: str,
+    rows: Sequence[ReadingCard],
+    *,
+    layer: str,
+    field: str,
+    ruled: bool,
+    skipped: int = 0,
+    pending: int = 0,
+    error: str = "",
+    note: str = "",
+) -> dict[str, Any]:
+    layers = _layers()
+    # Skipping walks the queue rather than reordering it: the card a reviewer
+    # could not answer stays exactly where it was for whoever comes next, and
+    # the offset lives in the URL so a reload does not silently rewind.
+    ahead = rows[skipped:] if skipped < len(rows) else []
+    title, question = QUEUES[queue]
+    fields: dict[str, int] = {}
+    for card in rows:
+        for name in card.fields:
+            fields[name] = fields.get(name, 0) + 1
+    return {
+        "queue": queue,
+        "queue_title": title,
+        "queue_question": question,
+        "card": ahead[0] if ahead else None,
+        "remaining": len(ahead),
+        # The lines behind what is left, not behind the whole queue. Two
+        # numbers side by side describing different sets read as one number
+        # contradicting the other.
+        "lines_ahead": sum(len(c.lines) for c in ahead),
+        "min_note": MIN_RULING,
+        "outcomes": list(READING_OUTCOMES[queue].items()),
+        "jurisdictions": sorted(layers),
+        "labels": {k: (v.label or k.rsplit("/", 1)[-1]) for k, v in layers.items()},
+        "field_menu": sorted(fields.items(), key=lambda kv: (-kv[1], kv[0]))[:14],
+        "sel": {"layer": layer, "field": field, "ruled": ruled},
+        "error": error,
+        "note": note,
+        "pending": pending,
+        "skipped": skipped,
+    }
+
+
+@router.get("/flats/reading", response_class=HTMLResponse)
+async def flats_reading_index(request: Request, session: DBSession) -> HTMLResponse:
+    """Pick a mode for the session.
+
+    The landing page exists because the first decision of the day is not about
+    a card, it is about what kind of reading to do. Four counts and four
+    questions; everything else is one click away.
+    """
+    user = await _get_user(session, request)
+    dedup_count, conflicts_count = await _get_counts(session)
+    tally = await run_in_threadpool(reading_counts)
+    return templates.TemplateResponse(
+        request,
+        "flats_reading_index.html",
+        {
+            **_base_ctx(user, dedup_count, "flats", conflicts_count=conflicts_count),
+            "queues": [
+                {
+                    "key": kind,
+                    "title": QUEUES[kind][0],
+                    "question": QUEUES[kind][1],
+                    "cards": tally[kind][0],
+                    "lines": tally[kind][1],
+                }
+                for kind in KINDS
+            ],
+            "pending": await _reading_pending(session),
+        },
+    )
+
+
+@router.get("/flats/reading/{queue}", response_class=HTMLResponse)
+async def flats_reading(
+    request: Request,
+    session: DBSession,
+    queue: str,
+    layer: str = Query(""),
+    field: str = Query(""),
+    ruled: bool = Query(False),
+    skipped: int = Query(0, ge=0),
+) -> HTMLResponse:
+    """One queue, worst first.
+
+    Ranked by disagreement before consequence. Most cards confirm a figure we
+    already hold and a handful print a different one; sorted by lots alone,
+    Portland's bulk would bury every finding in the corpus.
+    """
+    if queue not in KINDS:
+        return RedirectResponse("/flats/reading", status_code=303)
+    user = await _get_user(session, request)
+    dedup_count, conflicts_count = await _get_counts(session)
+    overrides = await _reading_inbox(session)
+    rows = await run_in_threadpool(
+        reading_feed,
+        queue,
+        layer=layer or None,
+        field=field or None,
+        ruled=ruled,
+        overrides=overrides,
+    )
+    return templates.TemplateResponse(
+        request,
+        "flats_reading.html",
+        {
+            **_base_ctx(user, dedup_count, "flats", conflicts_count=conflicts_count),
+            **_reading_ctx(
+                queue,
+                rows,
+                layer=layer,
+                field=field,
+                ruled=ruled,
+                skipped=skipped,
+                pending=await _reading_pending(session),
+            ),
+        },
+    )
+
+
+@router.post("/ui/flats/reading/rule", response_class=HTMLResponse)
+async def flats_reading_rule(
+    request: Request,
+    session: DBSession,
+    queue: str = Form(...),
+    layer_id: str = Form(...),
+    path: str = Form(...),
+    section: str = Form(""),
+    fingerprint: str = Form(""),
+    outcome: str = Form(""),
+    note: str = Form(""),
+    action: str = Form("rule"),
+    layer: str = Form(""),
+    field: str = Form(""),
+    ruled: bool = Form(False),
+    skipped: int = Form(0),
+) -> HTMLResponse:
+    """Record one decision, or skip past it, and hand back the next card.
+
+    Decisions land in the review inbox rather than in the rule files. The
+    container rebuilds those files from git on every deploy, so a ruling
+    spliced into a running container is gone at the next release; a row here
+    survives, and the drain writes it into the repository for commit.
+
+    The note is required and a refusal keeps what was typed. A tagged card with
+    no reasoning is worse than an open one — the open one still shows the
+    sentences, and the tagged one shows a word nobody can check.
+    """
+    user = await _get_user(session, request)
+
+    async def render(error: str = "", keep: str = "", at: int = 0) -> HTMLResponse:
+        overrides = await _reading_inbox(session)
+        rows = await run_in_threadpool(
+            reading_feed,
+            queue if queue in KINDS else KINDS[0],
+            layer=layer or None,
+            field=field or None,
+            ruled=ruled,
+            overrides=overrides,
+        )
+        return templates.TemplateResponse(
+            request,
+            "partials/flats_reading_card.html",
+            _reading_ctx(
+                queue if queue in KINDS else KINDS[0],
+                rows,
+                layer=layer,
+                field=field,
+                ruled=ruled,
+                skipped=at,
+                pending=await _reading_pending(session),
+                error=error,
+                note=keep,
+            ),
+            status_code=400 if error else 200,
+        )
+
+    # Skipping is a real answer to "I cannot rule on this yet" and needs to
+    # cost nothing. It advances past the card without recording anything,
+    # leaving it in place for whoever comes next.
+    if action == "skip":
+        return await render(at=skipped + 1)
+
+    if queue not in KINDS:
+        return await render("that queue does not exist", keep=note, at=skipped)
+    if outcome not in READING_OUTCOMES[queue]:
+        return await render(
+            "pick one of the answers this queue asks for", keep=note, at=skipped
+        )
+    if len(" ".join(note.split())) < MIN_RULING:
+        return await render(
+            f"say why, in at least {MIN_RULING} characters — a card closed with "
+            f"a word nobody can check is worse than an open one",
+            keep=note,
+            at=skipped,
+        )
+    if layer_id not in _layers():
+        return await render("that is not a jurisdiction we hold", keep=note, at=skipped)
+
+    session.add(
+        FlatsReadingRuling(
+            layer=layer_id,
+            path=path,
+            section=section,
+            queue=queue,
+            outcome=outcome,
+            note=" ".join(note.split()),
+            fingerprint=fingerprint,
+            decided_by=getattr(user, "email", "") or "unknown",
+        )
+    )
+    await session.commit()
+    return await render(at=skipped)
 
 
 @router.get("/flats/{layer_id:path}", response_class=HTMLResponse)

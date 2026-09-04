@@ -1,0 +1,24 @@
+{#
+  The fast lane. The whole section at once, one ruling for all of it, nothing
+  between the reviewer and the sentences.
+
+  No comparison column, because there is nothing to compare to — that is what
+  puts a card in this queue. No quote links either: opening the stored passage
+  helps when a figure is in dispute, and here the question is whether the
+  subject is ours at all, which the sentence answers on its own.
+#}
+<div class="muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin:16px 0 6px">
+  Every statement in this section
+</div>
+
+<div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;
+            line-height:1.55;max-height:26em;overflow-y:auto;padding-left:10px;
+            border-left:2px solid var(--line,#e5e7eb)">
+  {% for ln in card.lines %}
+  <div style="margin-bottom:2px">
+    <span class="muted" style="user-select:none">{{ "%5d"|format(ln.line) }}</span>
+    {{ ln.text }}
+    {%- if ln.repeats > 1 %} <span class="muted">(&times;{{ ln.repeats }})</span>{% endif %}
+  </div>
+  {% endfor %}
+</div>

@@ -1,0 +1,43 @@
+{#
+  The number is not in dispute; its applicability is. So the conditional lines
+  lead and the flat ones sit under them, and the standard each one moves is
+  named beside it — "is our pod a corner lot" is unanswerable without knowing
+  what turns on the answer.
+#}
+<div class="muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin:16px 0 6px">
+  What changes, and when
+</div>
+
+{% for ln in card.by_interest %}
+{% if ln.conditional %}
+<div style="font-size:12px;margin:0 0 8px;padding-left:10px;border-left:2px solid #9ca3af">
+  <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap">{{ ln.text }}</div>
+  <div class="muted" style="font-size:11px;margin-top:2px">
+    <a href="#" role="button"
+       hx-get="/ui/flats/quote?ref={{ (card.layer ~ '/' ~ card.doc ~ '#L' ~ ln.line) | urlencode }}"
+       hx-target="#seen-{{ loop.index }}"
+       hx-swap="innerHTML">line {{ ln.line }}</a>
+    {%- if ln.field %} &middot; moves <strong>{{ ln.field }}</strong>{% endif %}
+    {%- if ln.held %} &middot; we hold {{ ln.shown_held }}{% endif %}
+  </div>
+  <div id="seen-{{ loop.index }}"></div>
+</div>
+{% endif %}
+{% endfor %}
+
+{% set flat = card.lines | rejectattr("conditional") | list %}
+{% if flat %}
+<div class="muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin:16px 0 4px">
+  Also in this section, stated flat
+</div>
+{% for ln in flat[:5] %}
+<div class="muted" style="font-size:12px;padding-left:10px;margin-bottom:3px">
+  {{ ln.line }} &nbsp; {{ ln.text[:110] }}
+</div>
+{% endfor %}
+{% if flat|length > 5 %}
+<div class="muted" style="font-size:11px;padding-left:10px">
+  and {{ flat|length - 5 }} more
+</div>
+{% endif %}
+{% endif %}

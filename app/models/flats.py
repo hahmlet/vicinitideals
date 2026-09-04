@@ -555,3 +555,76 @@ class FlatsCrossrefRuling(Base):
     #: When the drain wrote this into the repository. NULL means pending, and
     #: pending is visible in the queue rather than silent.
     exported_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class FlatsReadingRuling(Base):
+    """A reviewer's decision about one section of code nobody had read.
+
+    The reading queues regroup :mod:`flats.encode.uncited` -- every measured
+    statement in a document we hold that no encoded value quotes -- into
+    section cards, and a card asks one of four questions. This is where the
+    answer lands.
+
+    Same inbox bargain as ``FlatsCrossrefRuling`` (0128) and for the same
+    reason: rules load from the repository, the container rebuilds those files
+    from git on every deploy, and a decision spliced into a running container's
+    YAML is gone at the next release. ``scripts/flats_drain_reading_rulings.py``
+    writes these into the rule files for commit and stamps ``exported_at``.
+
+    Append-only. A reviewer who changes their mind writes a second row, and the
+    latest ``decided_at`` for a section is the one that counts.
+    """
+
+    __tablename__ = "reading_rulings"
+    __table_args__ = (
+        Index(
+            "ix_flats_reading_rulings_pending",
+            "decided_at",
+            postgresql_where=text("exported_at IS NULL"),
+        ),
+        Index("ix_flats_reading_rulings_card", "layer", "path", "section", "decided_at"),
+        Index("ix_flats_reading_rulings_fingerprint", "fingerprint"),
+        {"schema": SCHEMA},
+    )
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+
+    #: Layer id, e.g. ``or/multnomah/gresham``.
+    layer: Mapped[str] = mapped_column(String(120), nullable=False)
+    #: Store path of the document, e.g. ``or/multnomah/gresham/4.1100.txt``.
+    path: Mapped[str] = mapped_column(String(300), nullable=False)
+    #: The section heading the lines sit under, as the document prints it.
+    #: Empty where the document prints no headings -- a real state, not a gap.
+    section: Mapped[str] = mapped_column(String(60), nullable=False, server_default="")
+
+    #: Which of the four queues asked. Stored because the same section can be
+    #: re-routed when the encoding changes, and a ruling read back without
+    #: knowing which question it answered is a word without a sentence.
+    queue: Mapped[str] = mapped_column(String(16), nullable=False)
+    #: One of ``flats.rules.model.READING_ALL``. Text rather than an enum, for
+    #: the reason the crossref vocabulary is: it grew the first day it was used
+    #: and a migration per word is a reason not to add the word.
+    outcome: Mapped[str] = mapped_column(String(32), nullable=False)
+    note: Mapped[str] = mapped_column(Text, nullable=False)
+
+    #: The section as it read when the decision was made. When a document is
+    #: re-fetched and the section moves, this stops matching and the card
+    #: reopens -- flagged, with the old text and the new shown together --
+    #: rather than staying silently closed against words nobody has seen. The
+    #: same bargain ``rule_signatures`` strikes over a number and its citation.
+    fingerprint: Mapped[str] = mapped_column(String(32), nullable=False)
+
+    #: What the card showed, so a ruling can be re-read against its subject.
+    lots: Mapped[int | None] = mapped_column(Integer)
+    lines: Mapped[int | None] = mapped_column(Integer)
+    fields_touched: Mapped[str] = mapped_column(
+        Text, nullable=False, server_default=""
+    )
+
+    decided_by: Mapped[str] = mapped_column(String(200), nullable=False)
+    decided_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+    #: When the drain wrote this into the repository. NULL means pending, and
+    #: pending is visible in the queue rather than silent.
+    exported_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))

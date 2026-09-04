@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Reading queues — Viciniti Deals{% endblock %}
+
+{#
+  Pick a mode for the session. The first decision of the day is not about a
+  card, it is about what kind of reading to do — so the four questions are the
+  page, and everything else is one click away.
+#}
+{% block content %}
+<div class="topbar"></div>
+
+<div class="content">
+  <div class="toolbar">
+    <div>
+      <h2 style="margin:0">Reading queues</h2>
+      <div class="muted" style="font-size:12px">
+        <a href="/flats">All jurisdictions</a> ·
+        <a href="/flats/triage">Fetch triage</a> ·
+        <a href="/flats/gaps">What is not encoded</a>
+      </div>
+    </div>
+  </div>
+
+  <p class="muted" style="font-size:12px;max-width:74ch">
+    Every measured sentence in a code we hold that no encoded number quotes.
+    Grouped by the section it sits in, because one decision covers a section,
+    and split by the question it asks. Pick the question you want to answer
+    today.
+  </p>
+
+  <div style="display:flex;flex-direction:column;gap:10px;margin-top:18px;max-width:88ch">
+    {% for q in queues %}
+    <a href="/flats/reading/{{ q.key }}"
+       style="display:block;padding:14px 16px;border:1px solid var(--line,#e5e7eb);
+              border-radius:4px;text-decoration:none;color:inherit">
+      <div style="display:flex;align-items:baseline;gap:12px">
+        <strong style="font-size:15px">{{ q.title }}</strong>
+        <span style="margin-left:auto;font-size:15px"><strong>{{ q.cards }}</strong></span>
+        <span class="muted" style="font-size:11px">
+          to check · {{ q.lines }} line{{ "" if q.lines == 1 else "s" }} behind them
+        </span>
+      </div>
+      <div class="muted" style="font-size:12px;margin-top:4px">{{ q.question }}</div>
+    </a>
+    {% endfor %}
+  </div>
+
+  {% if pending %}
+  <div class="muted" style="font-size:11px;margin-top:14px">
+    {{ pending }} decision{{ "" if pending == 1 else "s" }} not yet written into the
+    rule files. Decided is not in force.
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

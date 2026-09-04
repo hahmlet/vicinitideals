@@ -1,0 +1,42 @@
+{#
+  A card index, flipped through. Nobody has ever quoted a line of this chapter,
+  so there is no comparison to make and nothing to check — the decision is
+  whether to open the door at all, and it wants a sense of what is behind it,
+  not a transcript.
+
+  Thirty seconds each: how much is in there, what the longest statements say,
+  and which standards it would touch if we read it.
+#}
+<div class="muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin:16px 0 6px">
+  What is in here
+</div>
+
+<div style="font-size:12px;margin-bottom:10px">
+  {{ card.lines|length }} measured statement{{ "" if card.lines|length == 1 else "s" }},
+  none of them quoted by anything we encoded.
+  {%- if card.fields %}
+  Touches
+  {% for t in card.titles %}<strong>{{ t }}</strong>{{ ", " if not loop.last }}{% endfor %}.
+  {%- else %}
+  Nothing in it names a standard the screen holds a field for.
+  {%- endif %}
+</div>
+
+{% for ln in card.lines[:6] %}
+<div style="font-size:12px;margin:0 0 6px;padding-left:10px;border-left:2px solid var(--line,#e5e7eb)">
+  <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap">{{ ln.text }}</div>
+  <div class="muted" style="font-size:11px;margin-top:2px">
+    <a href="#" role="button"
+       hx-get="/ui/flats/quote?ref={{ (card.layer ~ '/' ~ card.doc ~ '#L' ~ ln.line) | urlencode }}"
+       hx-target="#seen-{{ loop.index }}"
+       hx-swap="innerHTML">line {{ ln.line }}</a>
+    {%- if ln.field %} &middot; {{ ln.field }}{% endif %}
+  </div>
+  <div id="seen-{{ loop.index }}"></div>
+</div>
+{% endfor %}
+{% if card.lines|length > 6 %}
+<div class="muted" style="font-size:11px">
+  and {{ card.lines|length - 6 }} more statement{{ "" if card.lines|length - 6 == 1 else "s" }}
+</div>
+{% endif %}

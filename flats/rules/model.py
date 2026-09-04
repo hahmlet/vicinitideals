@@ -123,6 +123,89 @@ CROSSREF_OUTCOMES: dict[str, str] = {
 CROSSREF_CLOSED = frozenset(CROSSREF_OUTCOMES) - {"fetch", "later"}
 
 
+#: What a reviewer can answer in each of the four reading queues, and the words
+#: the button carries. Keyed by queue rather than flattened into one vocabulary,
+#: and that keying is the whole design: a screen offering every outcome anybody
+#: has ever needed is a screen where the reviewer re-reads the vocabulary before
+#: each card. One queue asks one question and shows one row of buttons.
+#:
+#: The order inside each queue is the order the buttons are drawn, commonest
+#: answer first, so the hand learns the position.
+READING_OUTCOMES: dict[str, dict[str, str]] = {
+    "missed": {
+        "duplicate": "Same number — our reader missed it",
+        "encode": "Different — encode this one",
+        "not_here": "Doesn't apply here",
+    },
+    "condition": {
+        "applies": "Applies to our pod",
+        "never": "Never applies",
+        "cant_tell": "Depends on the site — we can't tell yet",
+    },
+    "chapter": {
+        "nothing_here": "Nothing for us here",
+        "read_it": "Read it — queue for encoding",
+    },
+    "nofield": {
+        "other_building": "Different building or use",
+        "other_stage": "Different stage",
+        "design": "Design standard — not modelled",
+        "not_a_statement": "Not a statement",
+        "need_a_field": "We need a field for this",
+    },
+}
+
+#: Every reading outcome, whichever queue offers it. Two queues can name the
+#: same shape and must mean the same thing by it.
+READING_ALL: dict[str, str] = {
+    key: why for queue in READING_OUTCOMES.values() for key, why in queue.items()
+}
+
+#: The outcomes that close a card. The rest are work ordered, work deferred, or
+#: a question handed to somebody else, and a queue that hid them would be
+#: reporting a decision as a disposal -- the same rule as ``CROSSREF_CLOSED``.
+#:
+#: ``cant_tell`` is the one worth naming. It is not a dodge and not a failure:
+#: it says the number turns on a site fact nothing measures -- transit, corner,
+#: alley, sewer, slope -- which is a real finding that belongs in the
+#: unmeasured-facts list, where data can answer it later and reading never
+#: will.
+READING_CLOSED = frozenset(READING_ALL) - {
+    "encode",
+    "applies",
+    "cant_tell",
+    "read_it",
+    "need_a_field",
+}
+
+
+class Reading(BaseModel):
+    """One decision about a section of code the reading queues asked about.
+
+    A model rather than a ``str`` subclass -- the shape ``Ruling`` takes -- for
+    the one reason that matters here: this carries a ``fingerprint``, and a
+    fingerprint that could be read as the note is a fingerprint that will be,
+    on the day somebody prints the ruling.
+    """
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    #: Which of the four queues asked. Kept because the same section is
+    #: re-routed when the encoding changes, and an answer read back without
+    #: its question is a word without a sentence.
+    queue: str
+    outcome: str
+    note: str
+    #: The section as it read when this was decided. Empty only for a ruling
+    #: written by hand before the queues existed, which is a state worth being
+    #: able to see rather than a default worth hiding.
+    fingerprint: str = ""
+
+    @property
+    def closed(self) -> bool:
+        return self.outcome in READING_CLOSED
+
+
 class Ruling(str):
     """Why a cross-reference does not need fetching, and which shape of why.
 
@@ -166,6 +249,9 @@ LAYER_META = frozenset(
         "layer",
         "code",
         "crossrefs",
+        # Sections of our own documents that have been read and ruled out
+        # of the reading queues. ``crossrefs`` twin, one step nearer home.
+        "readings",
         "kind",
         "label",
         "eligible",
@@ -1769,6 +1855,18 @@ class Layer(BaseModel):
     #: Not a substitute for fetching. What it records is the one outcome a
     #: fetch cannot produce: the chapter is about somebody else's building.
     crossrefs: dict[str, Ruling] = Field(default_factory=dict)
+    #: Sections of this layer's own documents that have been read and ruled out
+    #: of the reading queues, keyed ``"<document>#<section>"``. The
+    #: cross-reference ledger's twin, one step nearer home: ``crossrefs``
+    #: records a chapter we cannot open, this records a chapter we opened and
+    #: decided about.
+    #:
+    #: The value carries the queue that asked, the outcome, the note, and the
+    #: fingerprint of the section as it read when the decision was made. That
+    #: last one is what keeps the queue honest -- when a document is re-fetched
+    #: and the section moves, the ruling stops matching and the card reopens
+    #: rather than staying closed against words nobody has seen.
+    readings: dict[str, "Reading"] = Field(default_factory=dict)
     #: How this jurisdiction decides a term the rules hang variants on. Held
     #: per layer because four codes define "corner lot" four incompatible ways
     #: and a borrowed default is a wrong answer rather than a safe one. See

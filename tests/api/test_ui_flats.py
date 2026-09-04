@@ -8,6 +8,8 @@ cannot be resolved says so instead of rendering nothing.
 
 from __future__ import annotations
 
+import re
+
 import pytest
 from httpx import AsyncClient
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -2354,3 +2356,196 @@ async def test_a_page_citation_names_the_pages_it_was_read_from(
     assert len(pages) <= 2 * len(ranges)
     assert [p["n"] for p in pages] == sorted(p["n"] for p in pages)
     assert _page_note(ref).count("PDF page") == len(pages)
+
+
+# --- reading queues ---------------------------------------------------------
+#
+# Four screens over one ledger. What these hold to is the thing that makes them
+# four and not one: each asks a different question and offers only the answers
+# to its own, and a card ruled on leaves the queue it was in.
+
+
+def _first_card(html: str) -> dict[str, str]:
+    """The hidden fields identifying the card on screen."""
+    out: dict[str, str] = {}
+    for name in ("queue", "layer_id", "path", "section", "fingerprint"):
+        m = re.search(rf'name="{name}" value="([^"]*)"', html)
+        if m:
+            out[name] = m.group(1)
+    return out
+
+
+async def test_the_landing_page_names_a_mode_and_its_size(
+    client: AsyncClient, session: AsyncSession
+):
+    """The first decision of the day is not about a card, it is about what
+    kind of reading to do. Four questions and four counts, nothing else."""
+    await _login(client, session)
+
+    response = await client.get("/flats/reading")
+
+    assert response.status_code == 200
+    for title in ("Missed standards", "Conditions", "Unopened chapters", "No field for it"):
+        assert title in response.text
+    assert "Why didn&#39;t we take it?" in response.text or "Why didn't we take it?" in response.text
+
+
+async def test_each_queue_offers_only_its_own_answers(
+    client: AsyncClient, session: AsyncSession
+):
+    """The keying of the vocabulary is the design, not decoration.
+
+    A screen offering every outcome anybody has ever needed is a screen where
+    the reviewer re-reads the vocabulary before every card. One queue, one
+    question, one row of buttons.
+    """
+    await _login(client, session)
+
+    missed = await client.get("/flats/reading/missed")
+    chapter = await client.get("/flats/reading/chapter")
+
+    assert missed.status_code == chapter.status_code == 200
+    assert "Same number — our reader missed it" in missed.text
+    assert "Different building or use" not in missed.text
+    assert "Read it — queue for encoding" in chapter.text
+    assert "Same number — our reader missed it" not in chapter.text
+
+
+async def test_a_queue_that_does_not_exist_goes_back_to_the_menu(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+
+    response = await client.get("/flats/reading/everything", follow_redirects=False)
+
+    assert response.status_code == 303
+    assert response.headers["location"] == "/flats/reading"
+
+
+async def test_the_missed_queue_shows_what_we_hold_beside_what_the_code_says(
+    client: AsyncClient, session: AsyncSession
+):
+    """Two columns and nothing else. The reviewer's eye does the comparison;
+    the screen does not explain it."""
+    await _login(client, session)
+
+    response = await client.get("/flats/reading/missed")
+
+    assert response.status_code == 200
+    assert "What the code says" in response.text
+    assert "we hold" in response.text
+
+
+async def test_a_reading_ruling_lands_in_the_inbox_and_the_card_leaves(
+    client: AsyncClient, session: AsyncSession
+):
+    """Rules are rebuilt from git on every deploy, so a decision spliced into a
+    running container would not survive the next release. It goes to a table,
+    and the queue reads the table over the files."""
+    from sqlalchemy import select
+
+    from app.models.flats import FlatsReadingRuling
+
+    await _login(client, session)
+    first = await client.get("/flats/reading/nofield")
+    assert first.status_code == 200
+    card = _first_card(first.text)
+    assert card["queue"] == "nofield"
+
+    response = await client.post(
+        "/ui/flats/reading/rule",
+        data={
+            **card,
+            "outcome": "design",
+            "note": (
+                "Read the whole section. Facade and materials standards for the "
+                "design district — nothing dimensional the screen could hold."
+            ),
+        },
+    )
+
+    assert response.status_code == 200
+    row = (
+        await session.execute(
+            select(FlatsReadingRuling).where(FlatsReadingRuling.path == card["path"])
+        )
+    ).scalar_one()
+    assert row.outcome == "design"
+    assert row.queue == "nofield"
+    assert row.fingerprint, "a ruling remembers what it was about"
+    assert row.decided_by, "a ruling is attributable or it is not a ruling"
+    assert row.exported_at is None, "recorded, not yet in force"
+
+    # And the card on screen is a different one — the queue moved on.
+    assert _first_card(response.text).get("section") != card.get("section") or _first_card(
+        response.text
+    ).get("path") != card.get("path")
+
+
+async def test_an_answer_borrowed_from_another_queue_is_refused(
+    client: AsyncClient, session: AsyncSession
+):
+    """"Different building" is a real answer to a section we have no field for
+    and a meaningless one to a chapter nobody has opened. A ruling that answers
+    a question it was not asked reads fine and means nothing."""
+    await _login(client, session)
+    page = await client.get("/flats/reading/chapter")
+    card = _first_card(page.text)
+
+    response = await client.post(
+        "/ui/flats/reading/rule",
+        data={
+            **card,
+            "outcome": "other_building",
+            "note": "x" * 90,
+        },
+    )
+
+    assert response.status_code == 400
+    assert "answers this queue asks for" in response.text
+
+
+async def test_a_reading_tag_with_no_reasoning_is_refused_and_the_words_kept(
+    client: AsyncClient, session: AsyncSession
+):
+    """A card closed with a word nobody can check is worse than an open one:
+    the open one still shows the sentences."""
+    await _login(client, session)
+    page = await client.get("/flats/reading/nofield")
+    card = _first_card(page.text)
+
+    response = await client.post(
+        "/ui/flats/reading/rule",
+        data={**card, "outcome": "design", "note": "no"},
+    )
+
+    assert response.status_code == 400
+    assert "say why" in response.text
+    assert "no</textarea>" in response.text, "what was typed survives the refusal"
+
+
+async def test_skipping_a_reading_card_records_nothing(
+    client: AsyncClient, session: AsyncSession
+):
+    """Skipping is a real answer to "I cannot rule on this yet" and has to cost
+    nothing — the card stays where it was for whoever comes next."""
+    from sqlalchemy import func, select
+
+    from app.models.flats import FlatsReadingRuling
+
+    await _login(client, session)
+    page = await client.get("/flats/reading/missed")
+    card = _first_card(page.text)
+
+    response = await client.post(
+        "/ui/flats/reading/rule", data={**card, "action": "skip"}
+    )
+
+    assert response.status_code == 200
+    assert _first_card(response.text) != card, "it moved on"
+    count = (
+        await session.execute(
+            select(func.count()).select_from(FlatsReadingRuling)
+        )
+    ).scalar_one()
+    assert count == 0, "a skip is not a decision"

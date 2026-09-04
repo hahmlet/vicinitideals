@@ -31,6 +31,7 @@ from flats.rules.fields import DESIGN_HEIGHT_FT, DWELLINGS, SQFT_PER_ACRE, field
 from flats.rules.definitions import parse as parse_definitions
 from flats.rules.model import (
     CROSSREF_OUTCOMES,
+    READING_OUTCOMES,
     LAYER_META,
     ZONE_META,
     CodeDocument,
@@ -38,6 +39,7 @@ from flats.rules.model import (
     Layer,
     Preempt,
     Provenance,
+    Reading,
     Ruling,
     Status,
     Value,
@@ -1187,6 +1189,95 @@ def _parse_crossrefs(
         out[ref] = Ruling(" ".join(why.split()), outcome)
     return out
 
+
+def _parse_readings(
+    raw: object, *, where: str, problems: list[str]
+) -> dict[str, Reading]:
+    """Sections of this layer's own documents that have been read and ruled.
+
+    The cross-reference block's twin, one step nearer home. ``crossrefs``
+    records a chapter the store cannot open; this records a chapter it can,
+    which somebody opened, and decided about::
+
+        readings:
+          "4.1100.downtown.txt#4.1152":
+            queue: nofield
+            outcome: design
+            note: >-
+              Facade articulation for the downtown design district ...
+            fingerprint: 3f9a1c2b8e7d4560
+
+    Always a mapping. There is no bare-string form and there will not be one:
+    every ruling here was written by this queue, which knows its own outcome,
+    and admitting a shape with no outcome would put untagged rows into a ledger
+    whose whole purpose is to be counted by outcome.
+
+    The fingerprint is optional and its absence is not an error -- a ruling can
+    be written by hand -- but it is what lets a re-fetched document reopen the
+    card instead of leaving it closed against words nobody has seen.
+    """
+    if raw is None:
+        return {}
+    if not isinstance(raw, dict):
+        problems.append(f"{where}.readings: expected a mapping of section -> ruling")
+        return {}
+    out: dict[str, Reading] = {}
+    for key, body in raw.items():
+        key = str(key).strip()
+        if not key or "#" not in key:
+            problems.append(
+                f"{where}.readings: a key is '<document>#<section>'; got {key!r}"
+            )
+            continue
+        if not isinstance(body, dict):
+            problems.append(
+                f"{where}.readings.{key}: a ruling is a queue, an outcome and a note"
+            )
+            continue
+        extra = set(body) - {"queue", "outcome", "note", "fingerprint"}
+        if extra:
+            problems.append(
+                f"{where}.readings.{key}: unexpected {', '.join(sorted(extra))}"
+            )
+            continue
+
+        queue = str(body.get("queue", "")).strip()
+        if queue not in READING_OUTCOMES:
+            problems.append(
+                f"{where}.readings.{key}: unknown queue {queue!r}; "
+                f"one of {', '.join(sorted(READING_OUTCOMES))}"
+            )
+            continue
+        outcome = str(body.get("outcome", "")).strip()
+        # Checked against the queue that asked, not against every outcome the
+        # vocabulary holds. "Different building" is a real answer to a section
+        # we have no field for and a meaningless one to a chapter nobody has
+        # opened, and a ruling that answers a question it was not asked is the
+        # kind of row that reads fine and means nothing.
+        if outcome not in READING_OUTCOMES[queue]:
+            problems.append(
+                f"{where}.readings.{key}: {outcome!r} is not an answer the "
+                f"{queue} queue asks for; one of "
+                f"{', '.join(sorted(READING_OUTCOMES[queue]))}"
+            )
+            continue
+        note = body.get("note")
+        if not isinstance(note, str) or len(note.strip()) < MIN_RULING:
+            problems.append(
+                f"{where}.readings.{key}: a ruling states what was read and why "
+                f"it does or does not reach this building, in at least "
+                f"{MIN_RULING} characters"
+            )
+            continue
+        out[key] = Reading(
+            queue=queue,
+            outcome=outcome,
+            note=" ".join(note.split()),
+            fingerprint=str(body.get("fingerprint", "")).strip(),
+        )
+    return out
+
+
 def _terse(exc: Exception) -> str:
     """Pydantic errors are verbose; keep the message a reviewer can scan."""
     msg = str(exc).replace("\n", " ")
@@ -1255,6 +1346,7 @@ def load_layer(path: Path, root: Path, problems: list[str]) -> Layer | None:
             ingest=raw.get("ingest") or {},
             code=_parse_code(raw.get("code"), where, problems),
             crossrefs=_parse_crossrefs(raw.get("crossrefs"), where=where, problems=problems),
+            readings=_parse_readings(raw.get("readings"), where=where, problems=problems),
             definitions=parse_definitions(raw.get("definitions"), where=where, problems=problems),
             definitions_from=_adoptions(raw.get("definitions_from"), where=where, problems=problems),
         )

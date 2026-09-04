@@ -1,0 +1,40 @@
+{#
+  Two columns and nothing else: what the code says, beside what we hold for
+  that standard. The reviewer's eye does the comparison; the screen does not
+  explain it.
+
+  Disagreements first inside the card as well as between cards. A section can
+  print twenty figures we already have and one we do not, and the one is the
+  reason the card exists.
+#}
+<div class="muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin:16px 0 6px">
+  What the code says &middot; what we hold
+</div>
+
+<table style="width:100%;font-size:12px;border-collapse:collapse">
+  {% for ln in card.by_interest %}
+  <tr style="border-top:1px solid var(--line,#e5e7eb)">
+    <td style="padding:6px 10px 6px 0;vertical-align:top;width:58%">
+      <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap">{{ ln.text }}</div>
+      <div class="muted" style="font-size:11px;margin-top:2px">
+        <a href="#" role="button"
+           hx-get="/ui/flats/quote?ref={{ (card.layer ~ '/' ~ card.doc ~ '#L' ~ ln.line) | urlencode }}"
+           hx-target="#seen-{{ loop.index }}"
+           hx-swap="innerHTML">line {{ ln.line }}</a>
+        {%- if ln.repeats > 1 %} &middot; and {{ ln.repeats - 1 }} more place{{ "" if ln.repeats == 2 else "s" }} saying this{% endif %}
+      </div>
+      <div id="seen-{{ loop.index }}"></div>
+    </td>
+    <td style="padding:6px 0 6px 10px;vertical-align:top">
+      <div class="muted" style="font-size:11px">{{ ln.field }}</div>
+      {% if ln.agrees is none %}
+        <div>{% if ln.held %}—{% else %}<span class="muted">we hold nothing here</span>{% endif %}</div>
+      {% elif ln.agrees %}
+        <div>we hold {{ ln.shown_held }} <span class="muted">— same figure</span></div>
+      {% else %}
+        <div><strong>we hold {{ ln.shown_held }}</strong></div>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
