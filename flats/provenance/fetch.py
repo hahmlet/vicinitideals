@@ -69,7 +69,8 @@ from flats.rules.model import CodeDocument, Layer
 #:
 #: /7 separates a superscript footnote marker from the value it sits on. See
 #: `_SUP_RUN`.
-EXTRACTOR = "flats-html-text/7"
+#: /8 turns an undecodable glyph into U+FFFD instead of NUL. See `UNDECODED`.
+EXTRACTOR = "flats-html-text/8"
 #: A slice shorter than this is reported. Legitimate one-line sections exist;
 #: a marker that hit the table of contents is far more common.
 SHORT_SLICE = 3
@@ -505,6 +506,25 @@ def slice_between(text: str, start: str = "", end: str = "", *, nth: int = 1) ->
 #: error anywhere. Plain mode reads them.
 _ROTATED = "rotated text"
 
+#: What pypdf hands back for a glyph whose font declares no Unicode mapping.
+#: A NUL is the worst possible way to say "I could not read this character":
+#: it is invisible in every viewer, it is not a space so it does not even
+#: leave a gap, and Postgres refuses it outright inside text — so the failure
+#: surfaces, if it surfaces at all, as an encoding error thousands of lines
+#: from the number somebody was actually reading.
+#:
+#: Tualatin's wetlands chapter is the case that matters. Its boundary is fixed
+#: by metes and bounds — "a ½ inch iron rod set in Washington County Survey
+#: number 20550" — and the fraction glyph is exactly what has no mapping. The
+#: stored text read "a  inch iron rod", which is not a warning; it is a
+#: complete-looking sentence with the dimension taken out of it. Ninety-nine
+#: of them in one chapter, and one in a Wilsonville table.
+#:
+#: U+FFFD is the character that means this and nothing else, and it survives
+#: into the reading view where a reviewer can see that the extraction, not the
+#: city, is what left the number out.
+UNDECODED = "\ufffd"
+
 
 class _Dropped(logging.Handler):
     """Counts the pages an extraction admitted it could not fully read."""
@@ -556,8 +576,22 @@ def pdf_to_text(
     logger.removeHandler(dropped)
     if lost is not None and dropped.rotated:
         lost.append(
-            f"{dropped.rotated} page(s) carry rotated text that layout mode drops"
+            f"{dropped.rotated} page(s) carry rotated text that layout mode "
+            f"drops. Declare `extraction: plain` on the `code:` entry if the "
+            f"rotated text is a table's column headers, which is what it "
+            f"usually is."
         )
+    undecoded = sum(page.count("\x00") for page in pages)
+    if undecoded:
+        pages = [page.replace("\x00", UNDECODED) for page in pages]
+        if lost is not None:
+            lost.append(
+                f"{undecoded} character(s) have no Unicode mapping in the "
+                f"font that prints them and are stored as {UNDECODED}. Read "
+                f"the PDF at those lines before citing them: a fraction in a "
+                f"dimension is the common case, and nothing downstream can "
+                f"tell that one is missing."
+            )
     # Internal spacing is kept, unlike the HTML path. Portland states its
     # standards in a grid with one column per zone, and the gaps between
     # columns are the only thing that says which number belongs to which zone.
@@ -801,12 +835,9 @@ def fetch_one(
         # Not a warning about formatting. Text the extraction dropped is text no
         # reviewer will ever see and no value can ever cite, and the drop is
         # silent: pypdf logs it and returns a document that looks complete.
-        print(
-            f"note: {path} — {note}. Declare `extraction: plain` on the `code:` "
-            "entry if the rotated text is a table's column headers, which is what "
-            "it usually is.",
-            file=sys.stderr,
-        )
+        # Each note carries its own remedy, because there is now more than one
+        # way to lose text and the two are fixed differently.
+        print(f"note: {path} — {note}", file=sys.stderr)
 
     if extraction == "layout" and fused(text):
         print(

@@ -202,6 +202,19 @@ class ProvenanceStore:
         self, path: str, *, url: str, text: str, retrieved: date, extractor: str = ""
     ) -> Document:
         """Write a document and its sidecar. Overwrites — re-fetching is normal."""
+        if "\x00" in text:
+            # Not sanitised here on purpose. A NUL means some extractor met a
+            # glyph it could not decode, and silently swapping it at the last
+            # gate would store a document whose extractor string is a lie
+            # about how it was produced. The extraction fixes it and declares
+            # itself — see flats/provenance/fetch.py:UNDECODED — and this only
+            # has to make sure no path skips that.
+            raise ProvenanceError(
+                f"{path}: the extracted text carries "
+                f"{text.count(chr(0))} NUL byte(s), which no document contains. "
+                f"They are a glyph the extractor could not decode; it must "
+                f"declare them rather than pass them through."
+            )
         text_path = self.text_path(path)
         text_path.parent.mkdir(parents=True, exist_ok=True)
         normalized = text.replace("\r\n", "\n")

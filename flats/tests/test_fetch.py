@@ -584,7 +584,12 @@ def test_a_page_that_lost_text_reaches_the_caller(monkeypatch) -> None:
     text = pdf_to_text(b"%PDF-not-really", lost=lost)
 
     assert "10 ft." in text, "the text it did read is still stored"
-    assert lost == ["1 page(s) carry rotated text that layout mode drops"]
+    assert len(lost) == 1
+    assert lost[0].startswith("1 page(s) carry rotated text that layout mode drops")
+    # The remedy moved into the note. There is more than one way to lose text
+    # now and they are fixed differently, so the caller can no longer append
+    # one fix to all of them.
+    assert "extraction: plain" in lost[0]
 
 
 def test_the_handler_counts_only_what_it_is_for() -> None:
@@ -722,3 +727,88 @@ def test_the_body_did_not_move_under_the_header(corpus: ProvenanceStore) -> None
     doc = "or/clackamas/milwaukie/19.300.base-zones.txt"
     assert corpus.quote(f"{doc}#L194").strip() == "5"
     assert "Side yard height plane limit" in corpus.quote(f"{doc}#L229")
+
+
+# -- a glyph the font does not map ------------------------------------------
+
+
+def _one_page(monkeypatch: pytest.MonkeyPatch, text: str) -> None:
+    """A PDF of one page that extracts to exactly ``text``."""
+    import pypdf
+
+    class _Page(dict):
+        def __init__(self) -> None:
+            super().__init__({"/Contents": object()})
+
+        def extract_text(self, **_: object) -> str:
+            return text
+
+    monkeypatch.setattr(
+        pypdf, "PdfReader", lambda _stream: type("R", (), {"pages": [_Page()]})()
+    )
+
+
+def test_an_undecodable_glyph_is_stored_as_a_glyph_that_says_so(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """pypdf hands back NUL for a character whose font declares no Unicode
+    mapping, and NUL is the worst available way to say "unreadable": invisible
+    in every viewer, not even a space, and refused outright by Postgres inside
+    text. Tualatin's wetland boundary is fixed by metes and bounds, and the
+    fraction in "a 1/2 inch iron rod" is exactly the glyph that has no mapping
+    -- so the stored text read "a  inch iron rod", which is not a warning but a
+    complete-looking sentence with the dimension taken out of it."""
+    from flats.provenance.fetch import UNDECODED, pdf_to_text
+
+    _one_page(monkeypatch, "THENCE South 141.04 feet to a \x00 inch iron rod;")
+    lost: list[str] = []
+
+    text = pdf_to_text(b"%PDF-not-really", lost=lost)
+
+    assert "\x00" not in text
+    assert f"to a {UNDECODED} inch iron rod" in text
+    assert len(lost) == 1
+    assert "1 character(s) have no Unicode mapping" in lost[0]
+
+
+def test_a_document_that_decoded_cleanly_says_nothing_about_glyphs(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from flats.provenance.fetch import pdf_to_text
+
+    _one_page(monkeypatch, "19.301.4 Side yard 5 ft")
+    lost: list[str] = []
+
+    pdf_to_text(b"%PDF-not-really", lost=lost)
+
+    assert lost == []
+
+
+def test_the_store_refuses_to_hold_a_nul(tmp_path: Path) -> None:
+    """Not sanitised at the last gate on purpose. A NUL arriving here means
+    some extraction met a glyph it could not decode and passed it through, and
+    quietly swapping it would store a document whose recorded extractor is a
+    lie about how it was produced."""
+    store = ProvenanceStore(tmp_path)
+
+    with pytest.raises(ProvenanceError) as exc:
+        store.save(
+            "or/clackamas/test/x.txt",
+            url="https://example.test/x",
+            text="a \x00 inch iron rod",
+            retrieved=date(2026, 9, 3),
+        )
+
+    assert "NUL byte" in str(exc.value)
+    assert not (tmp_path / "or/clackamas/test/x.txt").exists()
+
+
+def test_no_stored_document_carries_one(corpus: ProvenanceStore) -> None:
+    """The regression on the corpus rather than on the function. Two documents
+    held 125 of these between them -- 99 in Tualatin's wetlands chapter, 26 in
+    a Wilsonville roofing table -- and nothing reported it for as long as they
+    sat there, because the character is invisible. What surfaced it was a
+    Postgres insert failing thousands of lines away from anything anybody had
+    cited."""
+    carrying = [path for path in corpus.documents() if "\x00" in corpus.load(path).text]
+    assert carrying == []
