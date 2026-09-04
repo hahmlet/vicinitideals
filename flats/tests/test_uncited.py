@@ -197,3 +197,50 @@ def test_the_ledger_round_trips(tmp_path: Path, milwaukie: list[Uncited]) -> Non
 def test_an_empty_answer_says_so_rather_than_printing_nothing() -> None:
     assert "no unread statements" in "\n".join(render(()))
     assert "no unfielded statements" in "\n".join(render((), unfielded=True))
+
+
+def test_a_number_written_twice_is_still_a_number() -> None:
+    """Ordinance drafters write the figure out and then repeat it in brackets:
+    "a minimum driveway apron width of twelve (12) feet". The closing bracket
+    stood between the digits and the unit, so the census saw no measurement --
+    and Milwaukie's access-management chapter, 328 lines that had just answered
+    a standing question about driveway width, was reported as stating nothing
+    measurable at all. A zero is the one answer this ledger must never give
+    cheaply.
+
+    Troutdale is why it is not a local repair: it drafts this way throughout.
+    """
+    assert MEASURE.search("a minimum driveway apron width of twelve (12) feet")
+    assert MEASURE.search("Maximum Building Height: Three (3) stories or forty (40) feet")
+    assert MEASURE.search("shall not be located within ten (10) feet of any other")
+    # Still a number and a unit, not a paragraph number followed by a word.
+    assert not MEASURE.search("3. Side yard height plane limit")
+    assert not MEASURE.search("(a) On the portion of the site")
+
+
+def test_the_chapter_that_prompted_the_repair_reports_its_statements(
+    milwaukie: list[Uncited],
+) -> None:
+    """The corpus half of the test above. A pattern fixed in isolation is a
+    pattern that can be fixed against a string nobody holds."""
+    access = f"{MILWAUKIE}/12.16.access-management.txt"
+    assert [r for r in milwaukie if r.path == access]
+
+
+def test_the_state_does_not_survey_a_city_s_code(layers: dict[str, Layer]) -> None:
+    """A layer owns the documents in its own directory and no others.
+
+    The ownership test was ``path.startswith(layer + "/")``, which is true of
+    every document in the corpus when the layer is ``or``. So Oregon was
+    surveyed against Milwaukie's zoning code, found almost nothing cited there,
+    and filed a second copy of nearly every unread line under the state's name
+    -- 4,686 of 10,018 rows, each one blaming the wrong jurisdiction. A census
+    half of which is a shadow of the other half cannot be counted.
+    """
+    from flats.provenance.store import ProvenanceStore
+
+    store = ProvenanceStore()
+    held = {p for p in store.documents() if p.rsplit("/", 1)[0] == "or"}
+
+    assert held, "the state layer does hold documents of its own"
+    assert {r.path for r in uncited(layers["or"])} <= held

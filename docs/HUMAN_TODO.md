@@ -800,6 +800,31 @@ the list of places worth hoping about.
 
 ## Queued for the agent — no action needed from you, listed so nothing is invisible
 
+- **Our "what has nobody read yet" list was wrong in both directions** — found
+  and fixed 2026-09-04, straight after the driveway find below. We keep a list
+  of every sentence in the codes we hold that states a measurement no rule of
+  ours quotes. It is how we know what reading is still owed. It was lying twice.
+
+  It could not see a number written the way lawyers write them. Ordinance
+  drafters put the figure in words and then repeat it in brackets — "a minimum
+  driveway apron width of twelve (12) feet" — and the bracket sat between the
+  number and the word "feet", so the list saw no measurement at all. Milwaukie's
+  entire street chapter, the one that had *just* answered the driveway question
+  below, read to us as containing nothing measurable. Troutdale writes its whole
+  code that way, and nine other cities do in places: 304 sentences invisible.
+
+  And half of it was a duplicate. Every city's code was also being checked
+  against Oregon's own state rules, which quote almost nothing in a city
+  chapter, so nearly every unread line was filed a second time under the state's
+  name. The list read 9,650 items; 4,686 of them were that shadow. It is 4,693
+  now — about half as long and, for the first time, all of it real.
+
+  Nothing here changes a lot's colour. What it changes is how much reading we
+  think is left, which is the number this list exists to give you. Two of the
+  newly visible sentences were worth chasing on the spot and both came back
+  clean: Wilsonville's 30 ft setbacks are in an industrial zone we don't build
+  in, and Gresham's corridor setbacks were already encoded off a different page.
+
 - **Milwaukie's driveway width was in the code all along, in the wrong book** —
   found and fixed 2026-09-04. Our notes said Milwaukie never states how wide a
   driveway has to be where it meets the street, and treated that as a fact

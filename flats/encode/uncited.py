@@ -91,8 +91,21 @@ _DEFINITION = re.compile(r"^(?:means|refers to|shall mean)\b", re.I)
 #: cells are printed in. The second half is what catches a linearised table,
 #: where the label line carries "(ft)" and the cells below it are bare digits —
 #: which is how eCode360 renders every table in four of these jurisdictions.
+#:
+#: The brackets around the numeral are the 2026-09-04 repair. Ordinance drafters
+#: write a number twice — "a minimum driveway apron width of twelve (12) feet" —
+#: and the closing bracket sat between the digits and the unit, so the pattern
+#: did not fire. Milwaukie's whole access-management chapter, the one that had
+#: just answered a standing question about driveway width, read to this ledger
+#: as containing no measurement at all: 328 lines, zero statements, an unread
+#: chapter reported as fully read. It is not a Milwaukie habit — Troutdale
+#: drafts this way throughout, 209 invisible lines across four chapters, and so
+#: in places do nine other jurisdictions. 304 lines corpus-wide.
+#:
+#: A ledger that counts what nobody has read is only as honest as its definition
+#: of "read", and a silent zero is the answer it must never give cheaply.
 MEASURE = re.compile(
-    r"\d[\d,]*(?:\.\d+)?\s*(?:ft\.?|feet|foot|%|percent|percentage points|"
+    r"\(?\d[\d,]*(?:\.\d+)?\)?\s*(?:ft\.?|feet|foot|%|percent|percentage points|"
     r"sq\.?\s*ft|square feet|stories|storeys|degrees?|units? per acre|du/acre)\b"
     r"|\((?:ft|feet|percent|degrees|square feet|acres|stories|storeys|"
     r"dwelling units per acre|units per acre)\)",
@@ -144,8 +157,16 @@ def _sections(lines: Sequence[str], owns: set[str]) -> list[str]:
 def uncited(layer: Layer, store: ProvenanceStore | None = None) -> list[Uncited]:
     """Every measured statement in this layer's documents that nothing cites."""
     store = store or ProvenanceStore()
-    prefix = f"{layer.layer}/"
-    paths = [p for p in store.documents() if p.startswith(prefix)]
+    # A layer owns the documents in its own directory, and no others. This read
+    # ``p.startswith(f"{layer.layer}/")`` until 2026-09-04, which is true of
+    # every document in the corpus when the layer is the state one: ``or/``
+    # prefixes all 177 of them. So Oregon was surveyed against Milwaukie's
+    # zoning code, found almost nothing cited there (it holds four OAR/ORS
+    # documents and cites lines in those), and filed a second copy of nearly
+    # every unread line in the corpus under the state's name — 4,686 of 10,018
+    # rows, a ledger half again as long as the reading it measures, with the
+    # duplicate blaming the wrong jurisdiction.
+    paths = [p for p in store.documents() if p.rsplit("/", 1)[0] == layer.layer]
     if not paths:
         return []
 
