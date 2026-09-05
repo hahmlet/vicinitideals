@@ -311,7 +311,15 @@ $env:E2E_BASE_URL="https://viciniti.deals"; uv run pytest tests/e2e/test_phase_b
 - **Scope detection**: skips heavy gates for docs/templates-only changes
 - **Light gate**: Ruff lint + unit tests (every push/PR)
 - **Full gate**: integration tests + E2E (Playwright) + Phase B regression + Trivy image scan + Semgrep SAST
-- CI seeds E2E user via `app/scripts/seed_e2e_user.py`
+- CI seeds the login via `app/scripts/seed_e2e_user.py` and the reference rows the
+  suite reads but never creates via `app/scripts/seed_e2e_fixtures.py` (brokers, so
+  far). Every seeder there is guarded on its table being empty, so it no-ops
+  anywhere the rows already exist.
+- The E2E step runs `-m "e2e and not slow"`. `slow` excludes exactly
+  `tests/e2e/test_proforma_cache.py`, which needs the analysis worker *and* a
+  locally-hosted Ollama model — neither exists on a runner. Run it deliberately
+  against an environment that has them: `pytest tests/e2e/test_proforma_cache.py
+  -m "e2e and slow"`.
 
 ---
 
