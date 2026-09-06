@@ -1989,7 +1989,15 @@ async def test_the_queue_asks_one_question_about_one_reference(
     # whether a chapter can change a number could do nothing with a six-figure
     # total, and it was on every card twice. The queue is still ranked on it.
     assert "lots at stake" not in response.text
-    assert "Standards written near it" in response.text
+    # The card says what is written near the chapter either way, and which way
+    # depends on which card is at the top of a queue that moves. The original
+    # assertion named only the populated half and went red the day a chapter
+    # reached the top through a *word* -- written beside nothing, and correctly
+    # showing the other line.
+    assert (
+        "Standards written near it" in response.text
+        or "No standards written near it." in response.text
+    )
 
 
 async def test_a_ruling_lands_in_the_inbox_and_the_row_leaves_the_queue(
