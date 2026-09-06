@@ -24,6 +24,7 @@ from flats.encode.triage import (
     Neighbour,
     _below_a_section,
     _curve,
+    _deferred_to,
     _key,
     _named_in,
     _nesting,
@@ -205,6 +206,106 @@ def test_a_standard_with_no_slack_contributes_no_lots() -> None:
     assert settled.live_lots == 0
     assert loose.live_lots == 900
     assert loose.rank > settled.rank
+
+
+# --- the second route in ----------------------------------------------------
+#
+# Everything above counts a chapter by what it is written *beside*. That is one
+# of the two ways a chapter reaches our numbers and it was, until now, the only
+# one this queue could see. The other is being handed a *word* every one of
+# those numbers is measured in, said once, in prose, nowhere near a value.
+
+
+def test_a_chapter_reached_only_through_a_word_is_still_at_stake() -> None:
+    """Portland's Chapter 33.930, Measurements, pinned as a shape.
+
+    It stands beside nothing -- no table, no figure, no standard -- so every
+    number this card has ever counted is zero, and it ranked (0, 0, 0, 0) at
+    position 69 of 75. It also settles how height is measured on 95% of the
+    city. A queue that cannot see that is sorting on the wrong thing, not
+    sorting badly.
+    """
+    silent = Card(
+        layer="or/x",
+        ref="33.930",
+        mentions=(),
+        neighbours=(),
+        zone_lots=(),
+        undefined=("building height", "lot width"),
+        undefined_lots=186_888,
+    )
+    ordinary = Card(
+        layer="or/x",
+        ref="33.613",
+        mentions=(),
+        neighbours=(Neighbour("min_lot_sqft", "5,000 sq ft", ("R5",), 0, 13_710),),
+        zone_lots=(("R5", 13_710),),
+    )
+
+    assert silent.live_lots == 0
+    assert silent.reach == 186_888
+    assert silent.rank > ordinary.rank
+
+
+def test_the_two_routes_are_the_same_lots_reached_twice_not_twice_the_lots() -> None:
+    """A chapter cited beside a city's setback table *and* handed the word that
+    setback is measured in is one chapter over one city. Adding the counts
+    would report a jurisdiction larger than it is."""
+    both = Card(
+        layer="or/x",
+        ref="1.1",
+        mentions=(),
+        neighbours=(Neighbour("setback_rear_ft", "20 ft", ("R5",), 0, 900),),
+        zone_lots=(("R5", 900),),
+        undefined=("yard",),
+        undefined_lots=900,
+    )
+
+    assert both.reach == 900
+
+
+def test_a_subsection_is_credited_to_the_chapter_that_contains_it() -> None:
+    """"See 33.930.100" and "See Chapter 33.930, Measurements" are one fetch,
+    and both are cards in this queue. Crediting only the exact string would
+    rank the parent below the child inside it and split one decision in two."""
+    deferred = {
+        "33.930": (("building height",), 186_888),
+        "33.930.100": (("lot width",), 24_689),
+    }
+
+    words, lots = _deferred_to(deferred, "33.930")
+    assert words == ("building height", "lot width")
+    assert lots == 186_888, "the larger of two overlapping counts, not their sum"
+
+    assert _deferred_to(deferred, "33.930.100") == (("lot width",), 24_689)
+
+
+def test_a_chapter_that_merely_starts_the_same_way_is_a_different_chapter() -> None:
+    """33.9301 is not inside 33.930. Matching on the string alone would hand a
+    chapter its neighbour's lots."""
+    deferred = {"33.9301": (("yard",), 900)}
+
+    assert _deferred_to(deferred, "33.930") == ((), 0)
+
+
+def test_a_card_at_the_top_of_the_queue_says_what_put_it_there() -> None:
+    """The rank moved and the row did not, so the queue's own first card read
+    "0 lots · binds 0× · 8 mentions" with nothing to explain itself. A chapter
+    that jumps to the top for a reason nobody can see is worse than one sitting
+    at the bottom."""
+    card = Card(
+        layer="or/x",
+        ref="33.930",
+        mentions=(),
+        neighbours=(),
+        zone_lots=(),
+        undefined=("building height",),
+        undefined_lots=186_888,
+    )
+
+    shown = render([card])
+    assert "building height" in shown
+    assert "186,888" in shown
 
 
 def test_ruled_rows_leave_the_queue_but_fetch_and_later_do_not() -> None:

@@ -70,7 +70,35 @@
 {% endif %}
 {% else %}
 <div class="muted" style="font-size:12px;margin:12px 0">
-  No standards written near it. Usually a process, not a standard.
+  No standards written near it.
+  {%- if card.undefined %} It reaches our numbers the other way &mdash; below.
+  {%- else %} Usually a process, not a standard.{% endif %}
+</div>
+{% endif %}
+
+{% if card.undefined %}
+{#
+  The second route into this queue. A chapter usually arrives here standing
+  beside a number we read; this one arrives because the code hands it a *word*
+  every one of those numbers is measured in, and never says what the word
+  means. Portland's 33.930 has no standard written near it at all and settles
+  how height is measured on 95% of the city.
+#}
+<div class="muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin:18px 0 4px">
+  Words this code hands it
+</div>
+<div style="font-size:12px;margin:0;padding:6px 10px;border-left:2px solid #d97706">
+  This code says
+  {% for w in card.undefined %}<strong>&ldquo;{{ w }}&rdquo;</strong>{{ ", " if not loop.last }}{% endfor %}
+  {{ "is" if card.undefined|length == 1 else "are" }} settled here, and defines
+  {{ "it" if card.undefined|length == 1 else "them" }} nowhere we can read.
+  {% if card.undefined_lots %}
+  <div class="muted" style="margin-top:4px">
+    {{ "{:,}".format(card.undefined_lots) }} lot{{ "" if card.undefined_lots == 1 else "s" }}
+    hold a standard measured in
+    {{ "that word" if card.undefined|length == 1 else "one of those words" }}.
+  </div>
+  {% endif %}
 </div>
 {% endif %}
 

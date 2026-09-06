@@ -27,6 +27,8 @@ reopen rather than stay silently shut.
 
 from __future__ import annotations
 
+import re
+
 import pytest
 import yaml
 
@@ -53,7 +55,11 @@ from flats.rules.model import (
     WORD_CLOSED,
     WORD_OUTCOMES,
     WORD_WORK,
+    Layer,
+    Provenance,
     Reading,
+    Value,
+    Zone,
 )
 
 pytestmark = pytest.mark.unit
@@ -195,6 +201,28 @@ class TestUsageGate:
         for card in cards(load_rules()[GRESHAM]):
             assert card.values > 0, f"{card.term} would sort last forever"
 
+    def test_a_word_buried_inside_a_longer_word_is_not_a_use_of_it(self) -> None:
+        """The gate is worth only as much as the match underneath it.
+
+        Unbounded, *alley* matched inside "Pleasant Valley" and "Happy Valley",
+        so two cities passed a gate about vehicle access on the strength of
+        their own place names -- Happy Valley on 105 uses of which 14 were
+        real -- and the lines the card offered as evidence were about solar
+        energy systems and tree removal plans.
+        """
+        alley = re.compile(W._flex("alley"), re.I)
+        assert not alley.search("within the Happy Valley Town Center Plan area")
+        assert alley.search("Access shall be taken from the alley where one exists")
+        assert alley.search("Alleys shall be paved to the property line")
+
+        story = re.compile(W._flex("story"), re.I)
+        assert not story.search("the history of the district")
+        assert story.search("No building shall exceed two stories")
+
+        yard = re.compile(W._flex("yard"), re.I)
+        assert not yard.search("a courtyard or plaza open to the sky")
+        assert yard.search("The required rear yard is 20 feet")
+
 
 
 # --- the lines the code writes the word on ----------------------------------
@@ -325,6 +353,153 @@ class TestMentions:
             assert any(ref.startswith("33.930") for ref in card.sends), (
                 f"{term} is silent and the card does not say where to look"
             )
+
+# --- what this queue owes the fetch queue -----------------------------------
+
+
+class TestUndefinedHere:
+    """The chapter behind a silence, handed to the queue that fetches things.
+
+    A chapter reaches our numbers two ways and the fetch ledger could only ever
+    see one of them: standing beside a standard, in the margin of a table. The
+    other is being handed a *word* every one of those standards is measured in,
+    which a code says once, in prose, nowhere near a value. Portland's Chapter
+    33.930, Measurements, settles how height is measured on 95% of the city and
+    ranked (0, 0, 0, 0) at position 69 of 75 because nothing we encode quotes a
+    line near it.
+    """
+
+    LOTS = {("zz/county/town", "R5"): 700, ("zz/county/town", "R10"): 300}
+
+    def _town(self, tmp_path, monkeypatch, *lines: str) -> Layer:
+        home = tmp_path / "zz" / "county" / "town"
+        home.mkdir(parents=True)
+        (home / "19.300.txt").write_text("\n".join(lines), encoding="utf-8")
+        monkeypatch.setattr(W, "DOCS", tmp_path)
+        width = Value(
+            name="min_lot_width_ft",
+            value=50,
+            prov=Provenance(
+                cite="TMC 19.300",
+                url="https://example.test/19.300",
+                retrieved="2026-09-06",
+            ),
+        )
+        return Layer(
+            layer="zz/county/town",
+            kind="city",
+            label="Town",
+            zones={"R5": Zone(zone="R5", values={"min_lot_width_ft": width})},
+        )
+
+    def test_the_chapter_a_silence_points_at_is_named_with_its_word(
+        self, tmp_path, monkeypatch
+    ) -> None:
+        town = self._town(
+            tmp_path,
+            monkeypatch,
+            "19.300 Residential Zones",
+            "Minimum lot width is 50 feet in the R5 zone.",
+            "Lot width is measured as described in Chapter 19.100, Measurements.",
+        )
+        found = W.undefined_here(town, self.LOTS)
+
+        assert found["19.100"][0] == ("lot width",)
+        assert found["19.100"][1] == 700
+
+    def test_a_reference_that_settles_nothing_is_not_where_a_word_is_defined(
+        self, tmp_path, monkeypatch
+    ) -> None:
+        """The narrowing that kept a plan-procedure chapter out of first place.
+
+        Portland writes "shown as open space. See Chapter 33.810, Comprehensive
+        Plan Amendments". That is a hand-off, and on the broad pattern it put a
+        chapter about amending the comprehensive plan second in the whole city's
+        fetch queue on 185,397 lots. A hand-off only says where a *word* is
+        settled if it carries a verb of determining.
+        """
+        town = self._town(
+            tmp_path,
+            monkeypatch,
+            "19.300 Residential Zones",
+            "Minimum lot width is 50 feet in the R5 zone.",
+            "Lot width is shown as open space. See Chapter 19.800, Plan Amendments.",
+        )
+
+        assert W.undefined_here(town, self.LOTS) == {}
+
+    def test_a_pointer_that_stays_inside_its_own_chapter_hands_nothing_over(
+        self, tmp_path, monkeypatch
+    ) -> None:
+        """"Minimum Lot Width (see 19.300.4)" tells a reader of 19.300 nothing
+        they did not already have, and fetching it is not a fetch."""
+        town = self._town(
+            tmp_path,
+            monkeypatch,
+            "19.300 Residential Zones",
+            "Minimum Lot Width (see 19.300.4), as defined in 19.300.4",
+        )
+
+        assert W.undefined_here(town, self.LOTS) == {}
+
+    def test_a_word_that_moves_no_number_here_lifts_no_chapter(
+        self, tmp_path, monkeypatch
+    ) -> None:
+        """The field gate, again. This town holds a lot width and nothing else,
+        so its code's care over *building height* costs it nothing."""
+        town = self._town(
+            tmp_path,
+            monkeypatch,
+            "19.300 Residential Zones",
+            "Building height is measured as described in Chapter 19.100.",
+        )
+
+        assert W.undefined_here(town, self.LOTS) == {}
+
+    def test_the_lots_are_the_ones_behind_the_numbers_that_word_measures(
+        self, tmp_path, monkeypatch
+    ) -> None:
+        """A layer default applies to every zone, so a word measuring a
+        defaulted number reaches the whole jurisdiction rather than the one
+        zone that happens to restate it."""
+        town = self._town(
+            tmp_path,
+            monkeypatch,
+            "19.300 Residential Zones",
+            "Lot width is measured as described in Chapter 19.100, Measurements.",
+        )
+        everywhere = town.model_copy(
+            update={
+                "defaults": {
+                    "min_lot_width_ft": Value(
+                        name="min_lot_width_ft",
+                        value=50,
+                        prov=Provenance(
+                cite="TMC 19.300",
+                url="https://example.test/19.300",
+                retrieved="2026-09-06",
+            ),
+                    )
+                }
+            }
+        )
+
+        assert W.undefined_here(town, self.LOTS)["19.100"][1] == 700
+        assert W.undefined_here(everywhere, self.LOTS)["19.100"][1] == 1_000
+
+    def test_only_a_word_this_glossary_leaves_alone_lifts_a_chapter(self) -> None:
+        """The two callers must mean the same thing by *defined*.
+
+        This function ranks a chapter in the fetch queue; :func:`cards` asks a
+        reviewer about the same word here. If they disagreed, a chapter would
+        climb to the top of one queue for a word the other shows as answered.
+        """
+        for layer_id in (PORTLAND, GRESHAM):
+            layer = load_rules()[layer_id]
+            silent = {c.term for c in cards(layer) if c.standing == "silent"}
+            for chapter, (terms, _) in W.undefined_here(layer).items():
+                assert not set(terms) - silent, f"{layer_id} {chapter}"
+
 
 # --- the three standings ----------------------------------------------------
 

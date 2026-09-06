@@ -608,11 +608,17 @@ of its 21 words — 118 distinct encoded values, including every setback Portlan
 holds. Two of those words, *lot width* and *building height*, are defined
 nowhere in the 296-entry definitions chapter we do hold; the code's answer to
 both is "see Chapter 33.930". We do not have that chapter. Unincorporated
-Multnomah defers to the same one for another 43 values. It is already sitting
-in fetch triage unruled, ranked at the bottom because the references live in
-prose no encoded value quotes — which is exactly the kind of thing a lot count
-cannot see. Fetching it before the Portland word session would answer five
-cards outright rather than parking them as *defined elsewhere*.
+Multnomah defers to the same one for another 43 values.
+
+**Fetch triage now leads with it, so there is nothing to look up.** Open
+`/flats/triage?layer=or/multnomah/portland` and 33.930 is the first card, with
+33.930.100 behind it. It used to be 69th of 75 and ranked at zero, because that
+queue counted a chapter by the standards written *beside* it and 33.930 is
+written beside nothing — it is reached by being handed the words the standards
+are measured in, which Portland says once, in prose, nowhere near a value. The
+card now names those words and the 186,888 lots that hold a number measured in
+them. Fetching it before the Portland word session answers five cards outright
+rather than parking them as *defined elsewhere*.
 
 **Then Fairview, which the elevation decision promoted from nowhere to second
 place — with a catch.** It was on the previous version of this table at zero and

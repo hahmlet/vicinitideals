@@ -2191,6 +2191,38 @@ async def test_the_card_calls_a_title_a_title(
     assert "Section 11 " not in response.text
 
 
+async def test_a_chapter_reached_through_a_word_says_so_on_the_card(
+    client: AsyncClient, session: AsyncSession
+):
+    """The queue ranks on two routes now and the card only ever drew one.
+
+    A chapter handed a measuring word stands beside no standard at all, so
+    every figure this card prints for it is zero. Portland's 33.930 went from
+    position 69 of 75 to the head of the queue on that signal, and without this
+    block the first card a reviewer sees says "no standards written near it"
+    and nothing about why it is first.
+    """
+    from flats.encode.triage import feed
+
+    await _login(client, session)
+
+    rows = feed(layer="or/multnomah/portland")
+    at = next((i for i, c in enumerate(rows) if c.undefined), None)
+    if at is None:
+        pytest.skip("no Portland chapter is reached through a word today")
+    card = rows[at]
+
+    response = await client.get(
+        f"/flats/triage?layer=or/multnomah/portland&skipped={at}"
+    )
+
+    assert response.status_code == 200
+    assert "Words this code hands it" in response.text
+    assert card.undefined[0] in response.text
+    if card.undefined_lots:
+        assert f"{card.undefined_lots:,}" in response.text
+
+
 async def test_a_rejected_number_reads_as_rejected_on_the_screen(
     client: AsyncClient, session: AsyncSession, monkeypatch: pytest.MonkeyPatch
 ):

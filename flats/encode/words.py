@@ -56,6 +56,7 @@ from pathlib import Path
 
 from flats.encode import glossary
 from flats.encode.crossrefs import _HEADING, _REF
+from flats.rules.fields import FIELDS
 from flats.rules.loader import load_rules
 from flats.rules.model import WORD_CLOSED, Layer, Reading
 
@@ -260,16 +261,28 @@ DOCS = Path(__file__).resolve().parents[1] / "provenance" / "docs"
 
 
 def _flex(phrase: str) -> str:
-    """A phrase as it appears in running code text: plural, any spacing."""
+    """A phrase as it appears in running code text: plural, any spacing.
+
+    Bounded at both ends, and the boundaries are not decoration. Without them
+    *alley* matched inside "Pleasant Valley" and "Happy Valley" -- so Gresham
+    and Happy Valley were credited with hundreds of uses of a word about
+    vehicle access on the strength of their own place names, the usage gate
+    passed on that, and the lines the card offered as evidence were about
+    solar energy systems and tree removal plans.
+
+    A vowel before the final *y* takes a plain -s: the plural of *alley* is
+    alleys, and only *story* becomes stories. Spelling both the same way cost
+    the word about vehicle access every plural sentence in the corpus.
+    """
     out = []
     for word in _norm(phrase).split():
-        if word.endswith("y") and len(word) > 3:
+        if word.endswith("y") and len(word) > 3 and word[-2] not in "aeiou":
             out.append(re.escape(word[:-1]) + "(?:y|ies)")
         elif word.endswith("s"):
             out.append(re.escape(word))
         else:
             out.append(re.escape(word) + "s?")
-    return r"\s+".join(out)
+    return r"\b" + r"\s+".join(out) + r"\b"
 
 
 #: The verbs that hand a word's meaning to another chapter.
@@ -627,6 +640,166 @@ def _glossary(
     return out, bool(chapters)
 
 
+#: A sentence that says where a word is *settled*, not merely where to read
+#: on. Narrower than :data:`_DEFERS` on purpose, and the narrowing was
+#: measured: "shown as open space. See Chapter 33.810, Comprehensive Plan
+#: Amendments" defers, names a chapter, and is about how a map designation is
+#: amended -- and on the broad pattern it put a plan-procedure chapter second
+#: in Portland's whole fetch queue, on 185,397 lots. What separates it from
+#: "See Chapter 33.930, Measurements" is that the second sentence is about
+#: measuring. So this wants a verb or a noun of determination, and a chapter
+#: cited for its standards rather than for its meanings does not qualify --
+#: that is a missed standard, which is a different queue's question.
+_SETTLES = re.compile(
+    r"\b(?:is|are|shall be|must be|to be)\s+"
+    r"(?:measured|determined|calculated|computed|defined|established)"
+    r"|\bas\s+(?:defined|measured|determined|calculated|described)\s+in"
+    r"|\bfor (?:the )?purposes? of"
+    r"|\b(?:measurement|definition|meaning)s?\b",
+    re.I,
+)
+
+
+def _governed(layer: Layer) -> dict[str, tuple[str, ...]]:
+    """Words that set the meaning of a number this jurisdiction actually holds."""
+    held = _held(layer)
+    if not held:
+        return {}
+    governed = {t: tuple(f for f in g if f in held) for t, g in GOVERNS.items()}
+    return {t: f for t, f in governed.items() if f}
+
+
+def _says(
+    term: str, entries: Sequence[tuple[frozenset[str], tuple[str, ...], Definition]]
+) -> tuple[list[Definition], list[Definition]]:
+    """This code's entries for a word: the exact ones, then the near ones.
+
+    One function because two callers must mean the same thing by *defined*.
+    The queue asks a reviewer about a word its glossary is silent on; the fetch
+    ranking below lifts the chapter that silence points at. If they disagreed,
+    a chapter would climb to the top of one queue for a word the other shows
+    as answered.
+    """
+    bags = forms(term)
+    seqs = _seqs(term)
+    exact: list[Definition] = []
+    near: list[Definition] = []
+    seen: set[str] = set()
+    for bag, stems, found in entries:
+        if found.cite in seen:
+            continue
+        if bag in bags:
+            seen.add(found.cite)
+            exact.append(found)
+        elif any(_contains(stems, s) for s in seqs):
+            seen.add(found.cite)
+            near.append(found)
+    return exact, near
+
+
+def _lots_on(
+    layer: Layer, fields: Sequence[str], lots: Mapping[tuple[str, str], int]
+) -> int:
+    """Lots in zones holding a number on one of these fields.
+
+    A layer default applies to every zone, so a field held only in ``defaults``
+    reaches the whole jurisdiction. Counted per zone and never per value: a
+    zone holding four of these numbers is one zone.
+    """
+    wanted = set(fields)
+    here = {z: n for (layer_id, z), n in lots.items() if layer_id == layer.layer}
+    if wanted & set(layer.defaults):
+        return sum(here.values())
+    return sum(
+        n
+        for zone, n in here.items()
+        if zone in layer.zones and wanted & set(layer.zones[zone].values)
+    )
+
+
+def undefined_here(
+    layer: Layer, lots: Mapping[tuple[str, str], int] | None = None
+) -> dict[str, tuple[tuple[str, ...], int]]:
+    """Chapters this code says a word is settled in, that its glossary is not.
+
+    Written for the fetch queue rather than for this one, and this is the
+    measurement behind it: a chapter reaches our numbers two ways, and only one
+    of them leaves a trace where :mod:`flats.encode.triage` looks. It can stand
+    beside a standard we read -- a reference in the margin of a table, which is
+    what that ledger ranks on. Or the code can hand it a *word* every one of
+    those standards is measured in, which is said once, in prose, nowhere near
+    a value. Portland's Chapter 33.930, Measurements, is the second kind: it
+    settles how every setback in the city is measured, it is not in the store,
+    and it ranked (0, 0, 0, 0) at the bottom of a 75-card queue.
+
+    Deliberately only the words this code's own definitions chapter leaves
+    alone. Measured over the corpus, every governed word deferring anywhere
+    would lift 123 of the cards -- most of them "as defined in Chapter 17",
+    which tells a reviewer nothing. The silent ones are 18, and each is a
+    chapter we cannot open standing where a definition we do not have should
+    be.
+
+    Returns chapter -> (the words, the lots behind the numbers measured in
+    them). Counted over every deferring line, not the handful a card shows.
+    """
+    from flats.encode.triage import _lots_by_zone
+
+    governed = _governed(layer)
+    if not governed:
+        return {}
+    entries, _ = _glossary(layer)
+    silent = {t: f for t, f in governed.items() if not any(_says(t, entries))}
+    if not silent:
+        return {}
+
+    directory = DOCS / layer.layer
+    if not directory.is_dir():
+        return {}
+    patterns = {
+        term: re.compile("|".join(_flex(s) for s in spellings(term)), re.I)
+        for term in silent
+    }
+    fields: dict[str, set[str]] = {}
+    words: dict[str, list[str]] = {}
+    for path in sorted(directory.glob("*.txt")):
+        home = _home(path.name)
+        for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+            if len(line) < 4:
+                continue
+            sends = _sends(line)
+            if not sends or not _away(home, sends):
+                continue
+            if not _SETTLES.search(line):
+                continue
+            for term, pattern in patterns.items():
+                if not pattern.search(line):
+                    continue
+                for chapter, _ in sends:
+                    # Only standards with room in them, the same filter
+                    # ``triage.Card.live_lots`` applies and for the same
+                    # reason: a chapter that can only make a prohibited use
+                    # more prohibited is not eating anybody's building.
+                    # Without it the two halves of the rank would be measured
+                    # on different scales and the deferral half would win
+                    # every comparison.
+                    fields.setdefault(chapter, set()).update(
+                        f
+                        for f in silent[term]
+                        if f not in FIELDS or FIELDS[f].has_slack
+                    )
+                    if term not in words.setdefault(chapter, []):
+                        words[chapter].append(term)
+
+    known = _lots_by_zone() if lots is None else lots
+    return {
+        chapter: (
+            tuple(sorted(words[chapter])),
+            _lots_on(layer, sorted(held), known),
+        )
+        for chapter, held in fields.items()
+    }
+
+
 def cards(
     layer: Layer,
     *,
@@ -634,12 +807,7 @@ def cards(
     overrides: Mapping[str, Reading] | None = None,
 ) -> list[Card]:
     """Every word worth asking about in one jurisdiction."""
-    held = _held(layer)
-    if not held:
-        return []
-
-    governed = {t: tuple(f for f in g if f in held) for t, g in GOVERNS.items()}
-    governed = {t: f for t, f in governed.items() if f}
+    governed = _governed(layer)
     if not governed:
         return []
 
@@ -655,23 +823,10 @@ def cards(
         if not spoken[term]:
             continue
 
-        bags = forms(term)
-        seqs = _seqs(term)
         # Exact entries first. A code that files both "Street" and "Design
         # Street" has defined the word in the first one; leading with the
         # qualified flavour makes a reviewer read the special case as the rule.
-        exact: list[Definition] = []
-        near: list[Definition] = []
-        seen: set[str] = set()
-        for bag, stems, found in entries:
-            if found.cite in seen:
-                continue
-            if bag in bags:
-                seen.add(found.cite)
-                exact.append(found)
-            elif any(_contains(stems, s) for s in seqs):
-                seen.add(found.cite)
-                near.append(found)
+        exact, near = _says(term, entries)
         # Exact entries first, then the rest in the order the code lists them.
         # No cleverer ranking: "Street Tree" and "Street, Road or Highway" both
         # open with the word and only one of them defines it, and every rule

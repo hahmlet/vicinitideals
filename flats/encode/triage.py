@@ -175,6 +175,16 @@ class Card:
     inside: str = ""
     #: References inside this one that are also in the queue.
     contains: tuple[str, ...] = ()
+    #: Measuring words this code says are settled in this chapter and does not
+    #: define anywhere we can read. A chapter reaches our numbers two ways and
+    #: this ledger could only see one of them -- standing beside a standard,
+    #: in the margin of a table. The other is being handed a *word* every one
+    #: of those standards is measured in, which a code says once, in prose,
+    #: nowhere near a value. See :func:`flats.encode.words.undefined_here`.
+    undefined: tuple[str, ...] = ()
+    #: Lots behind the numbers measured in those words, counted the way
+    #: ``live_lots`` counts: standards with room in them only.
+    undefined_lots: int = 0
     ruling: Ruling | None = None
 
     @property
@@ -307,16 +317,32 @@ class Card:
         return sum(lots for zone, lots in self.zone_lots if zone in live)
 
     @property
+    def reach(self) -> int:
+        """Lots this chapter could move, by either route it has.
+
+        A reference standing beside a standard is ``live_lots`` and is what
+        this queue has always counted. The other route leaves no trace here at
+        all: the code hands the chapter a *word* the standard is measured in,
+        says so once in prose, and nothing we encode quotes the line. Portland
+        Chapter 33.930, Measurements, settles how height is measured on 95% of
+        the city's lots, and it ranked (0, 0, 0, 0) at position 69 of 75.
+
+        The two overlap -- the same zones, reached two ways -- so the larger
+        is the reach rather than the sum.
+        """
+        return max(self.live_lots, self.undefined_lots)
+
+    @property
     def rank(self) -> tuple[int, int, int, int]:
         """Worst first.
 
-        Lots behind standards with slack, then how many distinct standards it
+        Lots this chapter could move, then how many distinct standards it
         touches -- a chapter cited beside four different numbers is a standards
         chapter, one cited beside the same number everywhere is usually a
         pointer -- then total lots, then how often it binds.
         """
         return (
-            self.live_lots,
+            self.reach,
             len(self.fields),
             self.lots,
             self.binding,
@@ -622,13 +648,44 @@ def _cited_values(layer: Layer) -> dict[str, dict[int, list[tuple[str, str, str]
 #: up immediately and a re-scan is never needed to see it.
 _SCANNED: dict[str, tuple[Card, ...]] = {}
 
+#: Chapters this layer hands an undefined measuring word to, cached beside the
+#: scan and dropped with it. Same bargain: it reads every stored document, and
+#: what changes while somebody works the queue is the rulings, not the code.
+_DEFERRED: dict[str, dict[str, tuple[tuple[str, ...], int]]] = {}
+
 
 def refresh(layer_id: str | None = None) -> None:
     """Drop the scan cache — call after fetching a document into the store."""
     if layer_id is None:
         _SCANNED.clear()
+        _DEFERRED.clear()
     else:
         _SCANNED.pop(layer_id, None)
+        _DEFERRED.pop(layer_id, None)
+
+
+def _deferred_to(
+    deferred: Mapping[str, tuple[tuple[str, ...], int]], ref: str
+) -> tuple[tuple[str, ...], int]:
+    """What this chapter is handed, counting a subsection of it as its own.
+
+    "See 33.930.100" and "See Chapter 33.930, Measurements" are one fetch and
+    both are cards in this queue. Crediting only the exact string would rank a
+    parent below the child it contains and split one decision in two.
+
+    Lots are the largest of the overlapping counts rather than their sum: the
+    zones behind a chapter's words and the zones behind its subsection's are
+    mostly the same zones, and adding them would report a jurisdiction as
+    larger than it is.
+    """
+    terms: list[str] = []
+    lots = 0
+    for chapter, (words, behind) in deferred.items():
+        if chapter != ref and not chapter.startswith(f"{ref}."):
+            continue
+        lots = max(lots, behind)
+        terms += [w for w in words if w not in terms]
+    return tuple(sorted(terms)), lots
 
 
 def cards(
@@ -648,8 +705,22 @@ def cards(
     if scanned is None:
         scanned = tuple(_scan(layer, store))
         _SCANNED[layer.layer] = scanned
+    deferred = _DEFERRED.get(layer.layer)
+    if deferred is None:
+        # Imported here rather than at module scope: the word queue reaches
+        # back for ``_lots_by_zone``, and one of the two has to be lazy.
+        from flats.encode.words import undefined_here
+
+        deferred = undefined_here(layer)
+        _DEFERRED[layer.layer] = deferred
     extra = overrides or {}
     family = _nesting(tuple(c.ref for c in scanned))
+    # Asked only of chapters already in this queue, which is the right filter
+    # rather than a shortcut: a chapter this code hands a word to and we
+    # already hold is not a fetch. Fairview points *story* at three of its own
+    # chapters and all three are in the store, so the word card for it is
+    # answerable by reading, and none of them belongs here.
+    handed = {c.ref: _deferred_to(deferred, c.ref) for c in scanned}
     return [
         Card(
             layer=c.layer,
@@ -661,6 +732,8 @@ def cards(
             kind=c.kind,
             inside=family[c.ref][0],
             contains=family[c.ref][1],
+            undefined=handed[c.ref][0],
+            undefined_lots=handed[c.ref][1],
             ruling=extra.get((c.layer, c.ref)) or layer.crossrefs.get(c.ref),
         )
         for c in scanned
@@ -894,6 +967,15 @@ def render(rows: Sequence[Card], *, limit: int = 20, off: Collection[str] = ()) 
             f"    {card.lots:,} lots · binds {card.binding}× · "
             f"{len(card.mentions)} mention(s) · {', '.join(card.docs)}"
         )
+        if card.undefined:
+            # Without this line the queue's own top card is unexplainable: a
+            # chapter reached only by the word route has no standard written
+            # near it, so every number printed above it is zero.
+            words = ", ".join(f"“{w}”" for w in card.undefined)
+            out.append(
+                f"      hands it  {words}  — undefined here, "
+                f"{card.undefined_lots:,} lots measured in them"
+            )
         for n in card.neighbours[:4]:
             out.append(f"      beside  {n.label}  ({n.lots:,} lots, {n.distance} lines)")
         if len(card.neighbours) > 4:
