@@ -108,13 +108,23 @@ def test_a_silent_word_shows_where_the_code_sends_the_reader(
     runs to 296 entries and defines neither *lot width* nor *building height*;
     its own text points at Chapter 33.930, Measurements, for both. The card
     shows that sentence, so the ruling is one click and a chapter number rather
-    than a hunt through ten documents."""
+    than a hunt through ten documents.
+
+    Filtered to one field rather than taking whatever is on top of the queue.
+    The queue sorts by what rests on a word, and Portland's largest silent
+    word is *lot area* — written 94 times and handed to nobody. That card is
+    right to show no hand-off, and a test that landed on it would be making
+    its assertion about the wrong sentence.
+    """
     page = logged_in_page
-    page.goto(f"{base_url}/flats/words/silent?layer=or/multnomah/portland")
+    page.goto(
+        f"{base_url}/flats/words/silent"
+        "?layer=or/multnomah/portland&field=min_lot_width_ft"
+    )
 
     card = page.locator("#word-card")
     if "Nothing left in this queue" in card.inner_text():
-        pytest.skip("Portland's silent words have all been ruled")
+        pytest.skip("Portland's lot-width card has been ruled")
 
     expect(page.get_by_text("How this code writes it").first).to_be_visible()
 
@@ -123,6 +133,7 @@ def test_a_silent_word_shows_where_the_code_sends_the_reader(
     # number does not tell a reviewer whether the next step is a read or a
     # fetch.
     text = card.inner_text()
+    assert "hands the measuring to" in text
     assert "We hold" in text or "in the store" in text
 
 

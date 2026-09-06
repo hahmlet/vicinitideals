@@ -30,7 +30,12 @@ from playwright.sync_api import Page, expect
 
 pytestmark = pytest.mark.e2e
 
-PORTLAND = "or/multnomah/portland"
+#: Where a word-reached chapter still leads the queue. Portland's 33.930 was
+#: the finding, and fetching it is what took Portland off this list — a queue
+#: that empties is the point of it. Unincorporated Multnomah runs on the same
+#: Title 33 and has not been fetched: 33.930 is still first there, handed
+#: *building height* on 2,480 lots and written beside nothing.
+HANDED = "or/multnomah/_unincorporated"
 
 
 def test_the_queue_opens_on_one_card_under_a_mode_line(
@@ -50,18 +55,19 @@ def test_the_chapter_at_the_top_says_what_put_it_there(
 ) -> None:
     """The card carrying the word route has to name the words and the lots.
 
-    Portland leads with 33.930 and it is written beside no standard at all, so
-    the rest of the card reads "no standards written near it" and every count
-    on it is zero. Without this block the first thing a reviewer sees is a
-    chapter at the head of the queue with nothing to justify it.
+    Unincorporated Multnomah leads with 33.930, which is written beside no
+    standard at all, so the rest of the card reads "no standards written near
+    it" and every count on it is zero. Without this block the first thing a
+    reviewer sees is a chapter at the head of the queue with nothing on it to
+    justify being there.
     """
     page = logged_in_page
-    page.goto(f"{base_url}/flats/triage?layer={PORTLAND}")
+    page.goto(f"{base_url}/flats/triage?layer={HANDED}")
 
     card = page.locator("#triage-card")
     expect(card).to_be_visible()
     if not card.get_by_text("Words this code hands it").count():
-        pytest.skip("no Portland chapter is reached through a word on this card")
+        pytest.skip("no chapter here is reached through a word on this card")
 
     expect(card.get_by_text("Words this code hands it")).to_be_visible()
     expect(card.get_by_text("settled here", exact=False)).to_be_visible()
