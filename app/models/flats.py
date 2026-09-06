@@ -628,3 +628,84 @@ class FlatsReadingRuling(Base):
     #: When the drain wrote this into the repository. NULL means pending, and
     #: pending is visible in the queue rather than silent.
     exported_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class FlatsWordRuling(Base):
+    """A reviewer's decision about what one word means in one jurisdiction.
+
+    The ledger under the other two. ``crossref_rulings`` records a chapter we
+    cannot open and ``reading_rulings`` a chapter we opened and decided about;
+    this records what the *words* those chapters are written in mean here. A
+    number read correctly out of a sentence is still wrong if the sentence
+    measures it in a word this city defines its own way, which is why this
+    queue is worked before signing rather than after it.
+
+    Keyed by ``(layer, term)`` where the term is ours -- the key
+    :data:`flats.encode.words.GOVERNS` uses -- not the city's spelling. One
+    code files the entry "Lot, Width" and another writes "lot width"; they are
+    answering the same question, and keying on their spelling would make the
+    ledger uncountable.
+
+    Same inbox bargain as 0128 and 0129, for the same reason: rules load from
+    the repository, the container rebuilds those files from git on every
+    deploy, and a decision spliced into a running container's YAML is gone at
+    the next release. ``scripts/flats_drain_word_rulings.py`` writes these into
+    the rule files for commit and stamps ``exported_at``.
+
+    Append-only. A reviewer who changes their mind writes a second row, and the
+    latest ``decided_at`` for a word is the one that counts.
+    """
+
+    __tablename__ = "word_rulings"
+    __table_args__ = (
+        Index(
+            "ix_flats_word_rulings_pending",
+            "decided_at",
+            postgresql_where=text("exported_at IS NULL"),
+        ),
+        Index("ix_flats_word_rulings_card", "layer", "term", "decided_at"),
+        Index("ix_flats_word_rulings_fingerprint", "fingerprint"),
+        {"schema": SCHEMA},
+    )
+
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
+
+    #: Layer id, e.g. ``or/multnomah/gresham``.
+    layer: Mapped[str] = mapped_column(String(120), nullable=False)
+    #: The word, in our vocabulary — a key of ``flats.encode.words.GOVERNS``.
+    term: Mapped[str] = mapped_column(String(60), nullable=False)
+
+    #: What was known about the word when the question was put: ``defined``,
+    #: ``silent`` or ``unread``. Stored because those are three different
+    #: questions sharing no answer, and a ruling read back without knowing
+    #: which was asked is a word without a sentence.
+    standing: Mapped[str] = mapped_column(String(16), nullable=False)
+    #: One of ``flats.rules.model.WORD_ALL``. Text rather than an enum, for the
+    #: reason the other two vocabularies are: they grow on first real use and a
+    #: migration per word is a reason not to add the word.
+    outcome: Mapped[str] = mapped_column(String(32), nullable=False)
+    note: Mapped[str] = mapped_column(Text, nullable=False)
+
+    #: The definitions this card showed, as they read. A glossary is
+    #: re-extracted whenever a document is re-fetched — and this corpus has
+    #: already had entries appear, split and triple on a re-read — so a ruling
+    #: whose fingerprint no longer matches reopens rather than staying closed
+    #: against wording nobody has seen.
+    fingerprint: Mapped[str] = mapped_column(String(32), nullable=False)
+
+    #: What the card showed, so a ruling can be re-read against its subject.
+    lots: Mapped[int | None] = mapped_column(Integer)
+    #: Encoded values resting on this word here — the cost of being wrong, in
+    #: numbers that would have to be read again.
+    values_touched: Mapped[int | None] = mapped_column(Integer)
+    fields_touched: Mapped[str] = mapped_column(
+        Text, nullable=False, server_default=""
+    )
+
+    decided_by: Mapped[str] = mapped_column(String(200), nullable=False)
+    decided_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
+    #: When the drain wrote this into the repository. NULL means pending, and
+    #: pending is visible in the queue rather than silent.
+    exported_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))

@@ -2631,3 +2631,270 @@ async def test_the_queues_are_reachable_without_knowing_the_url(
     assert nav.status_code == 200
     assert '"/flats/reading"' in nav.text or "/flats/reading" in nav.text
     assert "/flats/triage" in nav.text
+
+
+# --- the word review ---------------------------------------------------------
+#
+# The queue underneath signing. Signing asks whether a number matches the
+# sentence it was taken from; this asks whether the sentence measures what we
+# think it measures. What these hold to is the same discipline the reading
+# queues have -- one standing, one question, one row of buttons -- plus the one
+# thing that is only true here: a word answered for Gresham is not answered for
+# Portland, because the whole finding is that the same word means different
+# things in different books.
+
+
+def _first_word(html: str) -> dict[str, str]:
+    """The hidden fields identifying the word card on screen."""
+    out: dict[str, str] = {}
+    for name in ("queue", "layer_id", "term", "fingerprint"):
+        m = re.search(rf'name="{name}" value="([^"]*)"', html)
+        if m:
+            out[name] = m.group(1)
+    return out
+
+
+async def test_the_word_landing_names_a_standing_and_what_rests_on_it(
+    client: AsyncClient, session: AsyncSession
+):
+    """Three standings, three different jobs. Two numbers on each, because
+    "how many questions" and "how many numbers would have to be read again"
+    say different things and a reviewer picks the day on the second."""
+    await _login(client, session)
+
+    response = await client.get("/flats/words")
+
+    assert response.status_code == 200
+    for title in ("No glossary read", "The code is quiet", "Defined here"):
+        assert title in response.text
+    assert "resting on them" in response.text
+
+
+async def test_each_standing_offers_only_its_own_answers(
+    client: AsyncClient, session: AsyncSession
+):
+    """"Means what we assumed" is not an answer anybody can give about a
+    glossary nobody has opened."""
+    await _login(client, session)
+
+    defined = await client.get("/flats/words/defined")
+    silent = await client.get("/flats/words/silent")
+
+    assert defined.status_code == silent.status_code == 200
+    assert "Means what we assumed" in defined.text
+    assert "Quiet, and that is a gap" not in defined.text
+    assert "Quiet, and that is a gap" in silent.text
+    assert "Means what we assumed" not in silent.text
+
+
+async def test_a_standing_that_does_not_exist_goes_back_to_the_menu(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+
+    response = await client.get("/flats/words/everything", follow_redirects=False)
+
+    assert response.status_code == 303
+    assert response.headers["location"] == "/flats/words"
+
+
+async def test_a_word_card_shows_what_it_costs_to_be_wrong(
+    client: AsyncClient, session: AsyncSession
+):
+    """The reason the card is in front of anybody is not that the word is
+    interesting. It is that these numbers are measured in it."""
+    await _login(client, session)
+
+    response = await client.get("/flats/words/defined")
+
+    assert response.status_code == 200
+    assert "Our numbers measured in this word" in response.text
+    assert "measured in it" in response.text
+
+
+async def test_a_word_ruling_lands_in_the_inbox_and_the_card_leaves(
+    client: AsyncClient, session: AsyncSession
+):
+    """Rules are rebuilt from git on every deploy, so a decision spliced into
+    a running container would not survive the next release."""
+    from sqlalchemy import select
+
+    from app.models.flats import FlatsWordRuling
+
+    await _login(client, session)
+    first = await client.get("/flats/words/defined")
+    assert first.status_code == 200
+    card = _first_word(first.text)
+    assert card["queue"] == "defined"
+
+    response = await client.post(
+        "/ui/flats/words/rule",
+        data={
+            **card,
+            "outcome": "matches",
+            "note": (
+                "Read the definition against how the screen measures it. Same "
+                "edge, same exclusions - nothing here changes a number."
+            ),
+        },
+    )
+
+    assert response.status_code == 200
+    row = (
+        await session.execute(
+            select(FlatsWordRuling).where(FlatsWordRuling.term == card["term"])
+        )
+    ).scalar_one()
+    assert row.outcome == "matches"
+    assert row.standing == "defined"
+    assert row.layer == card["layer_id"]
+    assert row.fingerprint, "a ruling remembers what the city said"
+    assert row.decided_by, "a ruling is attributable or it is not a ruling"
+    assert row.exported_at is None, "recorded, not yet in force"
+
+    moved_on = _first_word(response.text)
+    assert (moved_on.get("layer_id"), moved_on.get("term")) != (
+        card["layer_id"],
+        card["term"],
+    )
+
+
+async def test_a_word_ruling_that_ordered_work_reaches_the_hand_off(
+    client: AsyncClient, session: AsyncSession
+):
+    """"This city measures it differently" is the loudest thing this queue can
+    find: numbers already in production were read against the wrong edge. It
+    is a job, and a job filed inside the queue that asked the question is a job
+    nobody doing the encoding can see."""
+    await _login(client, session)
+    page = await client.get("/flats/words/defined")
+    card = _first_word(page.text)
+
+    ruled = await client.post(
+        "/ui/flats/words/rule",
+        data={
+            **card,
+            "outcome": "differs",
+            "note": (
+                "Measured at the building line here, not the front lot line, "
+                "so every number on this field is against a different edge."
+            ),
+        },
+    )
+    assert ruled.status_code == 200
+
+    handoff = await client.get("/flats/feedback")
+
+    assert handoff.status_code == 200
+    assert "Work ordered" in handoff.text
+    assert card["term"] in handoff.text, "the word it is about"
+    assert "Measured at the building line here" in handoff.text, "and why"
+
+
+async def test_a_word_ruling_that_settled_the_word_orders_nothing(
+    client: AsyncClient, session: AsyncSession
+):
+    """The hand-off is only worth reading because most decisions are absent
+    from it."""
+    await _login(client, session)
+    page = await client.get("/flats/words/defined")
+    card = _first_word(page.text)
+
+    await client.post(
+        "/ui/flats/words/rule",
+        data={
+            **card,
+            "outcome": "matches",
+            "note": (
+                "Definition read in full and it is the ordinary one: same edge, "
+                "same exclusions, nothing our numbers assume differently."
+            ),
+        },
+    )
+
+    handoff = await client.get("/flats/feedback")
+
+    assert "Definition read in full" not in handoff.text
+
+
+async def test_a_word_answer_borrowed_from_another_standing_is_refused(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+    page = await client.get("/flats/words/defined")
+    card = _first_word(page.text)
+
+    response = await client.post(
+        "/ui/flats/words/rule",
+        data={**card, "outcome": "find_glossary", "note": "x" * 90},
+    )
+
+    assert response.status_code == 400
+    assert "answers this queue asks for" in response.text
+
+
+async def test_a_word_ruling_with_no_reasoning_is_refused_and_the_words_kept(
+    client: AsyncClient, session: AsyncSession
+):
+    await _login(client, session)
+    page = await client.get("/flats/words/defined")
+    card = _first_word(page.text)
+
+    response = await client.post(
+        "/ui/flats/words/rule",
+        data={**card, "outcome": "matches", "note": "no"},
+    )
+
+    assert response.status_code == 400
+    assert "say why" in response.text
+    assert "no</textarea>" in response.text, "what was typed survives the refusal"
+
+
+async def test_skipping_a_word_card_records_nothing(
+    client: AsyncClient, session: AsyncSession
+):
+    from sqlalchemy import func, select
+
+    from app.models.flats import FlatsWordRuling
+
+    await _login(client, session)
+    page = await client.get("/flats/words/defined")
+    card = _first_word(page.text)
+
+    response = await client.post(
+        "/ui/flats/words/rule", data={**card, "action": "skip"}
+    )
+
+    assert response.status_code == 200
+    assert _first_word(response.text) != card, "it moved on"
+    count = (
+        await session.execute(select(func.count()).select_from(FlatsWordRuling))
+    ).scalar_one()
+    assert count == 0, "a skip is not a decision"
+
+
+async def test_every_review_screen_is_reachable_from_the_sidebar(
+    client: AsyncClient, session: AsyncSession
+):
+    """A queue nobody can navigate to is not shipped.
+
+    Three of these lived for weeks at URLs typed by hand - fetch triage, the
+    gaps ledger and the word queue were reachable only from inside another
+    page, which for a reviewer who lands on the dashboard is the same as not
+    existing.
+    """
+    await _login(client, session)
+
+    page = await client.get("/flats")
+
+    assert page.status_code == 200
+    for href in (
+        '"/flats"',
+        '"/flats/words"',
+        '"/flats/reading"',
+        '"/flats/triage"',
+        '"/flats/gaps"',
+        '"/flats/feedback"',
+        '"/flats/plans"',
+    ):
+        assert href in page.text, f"{href} is not in the sidebar"

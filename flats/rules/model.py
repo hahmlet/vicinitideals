@@ -218,6 +218,66 @@ CROSSREF_WORK: dict[str, str] = {
 }
 
 
+#: What a word means *here*, keyed by what we know about it already.
+#:
+#: Keyed by standing rather than by queue, for the same reason
+#: ``READING_OUTCOMES`` is keyed by queue: one screen, one question, one row of
+#: buttons. The three standings are three different questions and share no
+#: answer. "Means what we assumed" is meaningless where the code says nothing,
+#: and "the code is quiet" is a claim nobody can make about a glossary they
+#: have not opened.
+#:
+#: See :mod:`flats.encode.words`.
+WORD_OUTCOMES: dict[str, dict[str, str]] = {
+    "defined": {
+        "matches": "Means what we assumed",
+        "differs": "Measured differently here — re-read our numbers",
+        "not_binding": "Doesn't move a number we hold",
+        "needs_test": "Needs a per-city test",
+        "cant_tell": "Turns on a site fact nothing measures",
+    },
+    "silent": {
+        "silent_safe": "Quiet, and the ordinary meaning is safe",
+        "silent_gap": "Quiet, and that is a gap",
+        "elsewhere": "Defined elsewhere in this code — go and find it",
+    },
+    "unread": {
+        "find_glossary": "Nobody has read this city's definitions — go and get them",
+        "no_glossary": "This code has no definitions chapter",
+    },
+}
+
+WORD_ALL: dict[str, str] = {
+    key: why for standing in WORD_OUTCOMES.values() for key, why in standing.items()
+}
+
+#: The outcomes that close a word. ``no_glossary`` closes because it is a
+#: finding about the code and there is nothing left to go and get; ``silent_gap``
+#: does not, because deciding what the screen should assume in the absence of a
+#: definition is a decision nobody has made yet.
+WORD_CLOSED = frozenset(WORD_ALL) - {
+    "differs",
+    "needs_test",
+    "cant_tell",
+    "silent_gap",
+    "elsewhere",
+    "find_glossary",
+}
+
+#: Ordered by cost of being wrong. ``differs`` is first because it is the only
+#: one that says numbers *already in production* are measured against the wrong
+#: thing; everything under it is a question still open rather than an answer
+#: already wrong.
+WORD_WORK: dict[str, str] = {
+    "differs": "Re-read every number this word measures — the city measures it differently",
+    "needs_test": "The screen needs a per-city test for this word",
+    "silent_gap": "The code never defines this — decide what the screen may assume",
+    "elsewhere": "Find where this code defines it — the definitions chapter does not",
+    "find_glossary": "Fetch this jurisdiction's definitions chapter",
+    "cant_tell": "Register the site fact it turns on — nothing measures it yet",
+}
+
+
 class Reading(BaseModel):
     """One decision about a section of code the reading queues asked about.
 
@@ -291,6 +351,11 @@ LAYER_META = frozenset(
         # Sections of our own documents that have been read and ruled out
         # of the reading queues. ``crossrefs`` twin, one step nearer home.
         "readings",
+        # What the words our standards are written in mean here. The ledger
+        # under the other two: a number read correctly out of a sentence is
+        # still wrong if the sentence measures it in a word this city defines
+        # its own way.
+        "words",
         "kind",
         "label",
         "eligible",
@@ -1906,6 +1971,19 @@ class Layer(BaseModel):
     #: and the section moves, the ruling stops matching and the card reopens
     #: rather than staying closed against words nobody has seen.
     readings: dict[str, "Reading"] = Field(default_factory=dict)
+    #: What the words our standards are written in mean here, keyed by the word
+    #: as :data:`flats.encode.words.GOVERNS` names it. The third ledger of the
+    #: same shape, and the one that sits *underneath* the other two: a number
+    #: read correctly out of a sentence is still wrong if the sentence measures
+    #: it in a word this city defines its own way.
+    #:
+    #: Shares :class:`Reading` with the reading queues rather than inventing a
+    #: near-identical model. ``queue`` holds the standing the card had when it
+    #: was answered -- defined, silent or unread -- because the answer only
+    #: makes sense against the question, and ``fingerprint`` holds the
+    #: definition text as it read, so a re-extracted glossary reopens the card
+    #: instead of leaving it closed against words that have since changed.
+    words: dict[str, "Reading"] = Field(default_factory=dict)
     #: How this jurisdiction decides a term the rules hang variants on. Held
     #: per layer because four codes define "corner lot" four incompatible ways
     #: and a borrowed default is a wrong answer rather than a safe one. See

@@ -1,0 +1,160 @@
+{#
+  One word, in one city, with what that city says about it. Swapped in place
+  after every ruling so the queue never reloads the page or loses the filters.
+
+  Unlike the reading card there is no per-queue evidence partial: all three
+  standings look at the same two things — the numbers resting on the word, and
+  whatever the code says about it — and the difference between them is what is
+  *missing*, which the card states in words rather than by changing shape.
+#}
+<div id="word-card">
+{% if error %}
+<div style="margin:0 0 12px;padding:8px 10px;border-left:3px solid #dc2626;font-size:12px">
+  {{ error }}
+</div>
+{% endif %}
+
+{% if not card %}
+<div style="padding:32px 0;text-align:center">
+  <div style="font-size:15px">Nothing left in this queue.</div>
+  <div class="muted" style="font-size:12px;margin-top:6px">
+    {% if skipped %}
+      Skipped past {{ skipped }}. <a href="?">Start from the top</a>, or widen the filters.
+    {% else %}
+      All ruled. Widen the filters, tick <em>show ruled</em> to read them back, or
+      <a href="/flats/words">pick another standing</a>.
+    {% endif %}
+  </div>
+</div>
+{% else %}
+
+<div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:2px">
+  <h3 style="margin:0;font-size:17px">“{{ card.term }}”</h3>
+  <span class="muted" style="font-size:13px">in {{ card.label or card.layer }}</span>
+</div>
+<div class="muted" style="font-size:12px;margin-bottom:14px">
+  {{ card.values }} encoded number{{ "" if card.values == 1 else "s" }} measured in it
+  &middot; {{ card.uses }} line{{ "" if card.uses == 1 else "s" }} of this code write it
+  {%- if card.lots %} &middot; {{ "{:,}".format(card.lots) }} lots{% endif %}
+  {%- if card.ruling %} &middot; ruled <strong>{{ card.ruling.outcome }}</strong>{% endif %}
+</div>
+
+{% if card.moved %}
+{#
+  A glossary is re-extracted whenever its document is re-fetched, and this
+  corpus has watched entries appear, split and triple on a re-read. So a
+  decision made against wording nobody has seen since comes back rather than
+  keeping the card silently shut.
+#}
+<div style="font-size:12px;margin:0 0 12px;padding:8px 10px;border-left:3px solid #d97706">
+  This was ruled <strong>{{ card.ruling.outcome }}</strong>, and what the city says has
+  changed since. Read it again and confirm, or answer differently.
+  <div class="muted" style="font-size:11px;margin-top:4px">{{ card.ruling.note }}</div>
+</div>
+{% endif %}
+
+{#
+  What it costs to get wrong, named as our own standards. This is the reason
+  the card is in front of anybody: not that the word is interesting, but that
+  these numbers are measured in it.
+#}
+<div style="margin-bottom:14px">
+  <div class="muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.04em">
+    Our numbers measured in this word
+  </div>
+  <div style="font-size:12px;margin-top:4px">
+    {% for f in card.fields %}<code style="margin-right:8px">{{ f }}</code>{% endfor %}
+  </div>
+</div>
+
+{% if card.says %}
+<div class="muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.04em">
+  What {{ card.label or card.layer }} says
+</div>
+{% if not card.exact %}
+{#
+  The code defines flavours of the word and never the word itself — "Design
+  Street", "Street Tree", no "Street". Said out loud, because a list that looks
+  like an answer is worse than no list: the reviewer would read the special
+  case as the rule.
+#}
+<div style="font-size:12px;margin-top:6px;padding:8px 10px;border-left:3px solid #6b7280">
+  No entry for “{{ card.term }}” itself. These contain the word; whether any of
+  them settles what it means here is the judgement being asked for.
+</div>
+{% endif %}
+<div style="margin-top:8px;display:flex;flex-direction:column;gap:10px">
+  {% for d in card.says %}
+  <div style="font-size:12px;padding-left:10px;border-left:2px solid var(--line,#e5e7eb)">
+    <div><strong>{{ d.term }}</strong></div>
+    <div style="margin-top:2px">{{ d.text }}</div>
+    <div class="muted" style="font-size:11px;margin-top:3px">{{ d.cite }} · line {{ d.line }}</div>
+  </div>
+  {% endfor %}
+</div>
+{% elif card.standing == "silent" %}
+<div style="font-size:12px;padding:8px 10px;border-left:3px solid #6b7280">
+  We have read this city's definitions and “{{ card.term }}” is not among them.
+  Nothing here can be assumed from the code — the question is whether the
+  ordinary meaning is safe for a four-unit townhome.
+</div>
+{% else %}
+<div style="font-size:12px;padding:8px 10px;border-left:3px solid #6b7280">
+  No definitions chapter has been read for this jurisdiction at all, so the word
+  may well be defined and nobody has looked. This is a finding about us, not
+  about the code.
+</div>
+{% endif %}
+
+<form hx-post="/ui/flats/words/rule"
+      hx-target="#word-card"
+      hx-swap="outerHTML"
+      style="margin-top:22px;padding-top:14px;border-top:1px solid var(--line,#e5e7eb)">
+  <input type="hidden" name="queue" value="{{ queue }}">
+  <input type="hidden" name="layer_id" value="{{ card.layer }}">
+  <input type="hidden" name="term" value="{{ card.term }}">
+  <input type="hidden" name="fingerprint" value="{{ card.fingerprint }}">
+  <input type="hidden" name="values_touched" value="{{ card.values }}">
+  <input type="hidden" name="lots" value="{{ card.lots }}">
+  <input type="hidden" name="fields_touched" value="{{ card.fields|join(',') }}">
+  <input type="hidden" name="layer" value="{{ sel.layer }}">
+  <input type="hidden" name="field" value="{{ sel.field }}">
+  <input type="hidden" name="ruled" value="{{ 'true' if sel.ruled else 'false' }}">
+  <input type="hidden" name="skipped" value="{{ skipped }}">
+
+  <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">
+    {% for key, why in outcomes %}
+    <label style="font-size:12px;border:1px solid var(--line,#d1d5db);border-radius:4px;
+                  padding:6px 10px;cursor:pointer">
+      <input type="radio" name="outcome" value="{{ key }}" style="margin-right:5px">
+      {{ why }}
+    </label>
+    {% endfor %}
+  </div>
+
+  <textarea name="note" rows="3"
+            style="width:100%;font-size:12px;font-family:inherit;padding:6px"
+            placeholder="Why. What the city measures, and whether our numbers assume the same. {{ min_note }} characters or more.">{{ note }}</textarea>
+
+  <div style="display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap">
+    <button type="submit" name="action" value="rule"
+            style="font-size:12px;padding:6px 14px">Save &amp; next</button>
+    <button type="submit" name="action" value="skip" formnovalidate
+            style="font-size:12px;padding:6px 12px;background:none;border:1px solid var(--line,#d1d5db)">
+      Can’t tell yet — next one
+    </button>
+    <span class="muted" style="font-size:11px">
+      {{ remaining }} left{% if skipped %}, {{ skipped }} skipped{% endif %}
+    </span>
+  </div>
+
+  {% if pending %}
+  <div class="muted" style="font-size:11px;margin-top:8px">
+    {{ pending }} decision{{ "" if pending == 1 else "s" }} not yet written into the
+    rule files. Decided is not in force.
+  </div>
+  {% endif %}
+</form>
+
+{% endif %}
+</div>

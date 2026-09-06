@@ -32,6 +32,7 @@ from flats.rules.definitions import parse as parse_definitions
 from flats.rules.model import (
     CROSSREF_OUTCOMES,
     READING_OUTCOMES,
+    WORD_OUTCOMES,
     LAYER_META,
     ZONE_META,
     CodeDocument,
@@ -1278,6 +1279,86 @@ def _parse_readings(
     return out
 
 
+def _parse_words(
+    raw: object, *, where: str, problems: list[str]
+) -> dict[str, Reading]:
+    """What the words this layer's standards are written in mean here::
+
+        words:
+          lot width:
+            queue: defined
+            outcome: differs
+            note: >-
+              Measured at the building line, not the frontage, so the 50 ft
+              minimum is not the same 50 ft as Portland's ...
+            fingerprint: 8c14be07a2f9
+
+    Keyed by the word as :data:`flats.encode.words.GOVERNS` names it, in our
+    vocabulary rather than the city's -- a code that files the entry "Lot,
+    Width" and another that writes "lot width" are answering the same question,
+    and keying on their spelling would make the ledger uncountable.
+
+    ``queue`` is the standing the card had when it was answered. Checked
+    against the outcome for the same reason a reading is: "means what we
+    assumed" is not an answer anybody can give about a glossary nobody has
+    opened, and a ruling that answers a question it was not asked reads fine
+    and means nothing.
+    """
+    if raw is None:
+        return {}
+    if not isinstance(raw, dict):
+        problems.append(f"{where}.words: expected a mapping of word -> ruling")
+        return {}
+    out: dict[str, Reading] = {}
+    for key, body in raw.items():
+        term = str(key).strip().lower()
+        if not term:
+            problems.append(f"{where}.words: a key is the word being ruled on")
+            continue
+        if not isinstance(body, dict):
+            problems.append(
+                f"{where}.words.{term}: a ruling is a standing, an outcome and a note"
+            )
+            continue
+        extra = set(body) - {"queue", "outcome", "note", "fingerprint"}
+        if extra:
+            problems.append(
+                f"{where}.words.{term}: unexpected {', '.join(sorted(extra))}"
+            )
+            continue
+
+        standing = str(body.get("queue", "")).strip()
+        if standing not in WORD_OUTCOMES:
+            problems.append(
+                f"{where}.words.{term}: unknown standing {standing!r}; "
+                f"one of {', '.join(sorted(WORD_OUTCOMES))}"
+            )
+            continue
+        outcome = str(body.get("outcome", "")).strip()
+        if outcome not in WORD_OUTCOMES[standing]:
+            problems.append(
+                f"{where}.words.{term}: {outcome!r} is not an answer asked of a "
+                f"{standing} word; one of "
+                f"{', '.join(sorted(WORD_OUTCOMES[standing]))}"
+            )
+            continue
+        note = body.get("note")
+        if not isinstance(note, str) or len(note.strip()) < MIN_RULING:
+            problems.append(
+                f"{where}.words.{term}: a ruling states what the code says and "
+                f"how it differs from how we measure, in at least "
+                f"{MIN_RULING} characters"
+            )
+            continue
+        out[term] = Reading(
+            queue=standing,
+            outcome=outcome,
+            note=" ".join(note.split()),
+            fingerprint=str(body.get("fingerprint", "")).strip(),
+        )
+    return out
+
+
 def _terse(exc: Exception) -> str:
     """Pydantic errors are verbose; keep the message a reviewer can scan."""
     msg = str(exc).replace("\n", " ")
@@ -1347,6 +1428,7 @@ def load_layer(path: Path, root: Path, problems: list[str]) -> Layer | None:
             code=_parse_code(raw.get("code"), where, problems),
             crossrefs=_parse_crossrefs(raw.get("crossrefs"), where=where, problems=problems),
             readings=_parse_readings(raw.get("readings"), where=where, problems=problems),
+            words=_parse_words(raw.get("words"), where=where, problems=problems),
             definitions=parse_definitions(raw.get("definitions"), where=where, problems=problems),
             definitions_from=_adoptions(raw.get("definitions_from"), where=where, problems=problems),
         )

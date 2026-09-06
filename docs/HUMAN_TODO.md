@@ -587,6 +587,20 @@ is why the order was easy to get wrong:
 **Portland first, and it is not close** — 333 numbers covering 12,678 existing
 greens (77% of all of them) and 849 new ones (75%), in a single code book.
 
+**Spend the first hour of a Portland session on 21 words, not on 333 numbers.**
+New on 2026-09-06, at `/flats/words`. Signing asks whether a number matches the
+sentence it was taken from; that is the right question and it is not the first
+one. These codes define ordinary words their own way — four of them give four
+incompatible tests for "corner lot", and seven subtract seven different lists
+from a "net acre" — so a number read perfectly out of its sentence is still the
+wrong number if this city measures the sentence's words differently. Portland
+has 21 such words, and 758 of its encoded values are measured in them. Answer
+those first and the 333 signatures underneath them stand; answer them after,
+and a single "they measure it from the building line" costs you the session.
+The other three cities on the short list are 26, 19 and 23 words. Nothing here
+is a code reading in the usual sense — most cards are a glossary entry beside
+our own standard, and the answer is usually "yes, the same thing".
+
 **Then Fairview, which the elevation decision promoted from nowhere to second
 place — with a catch.** It was on the previous version of this table at zero and
 zero, because its lots were held by the coarse elevation map *and* by unsigned

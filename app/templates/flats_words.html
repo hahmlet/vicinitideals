@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}{{ queue_title }} — Words — Viciniti Deals{% endblock %}
+
+{#
+  One standing, one question, one row of buttons — the same shape as the
+  reading queues, because it is the same discipline. The mode line says what
+  today is and how big it is before anything is read.
+#}
+{% block content %}
+<div class="topbar"></div>
+
+<div class="content">
+  <div class="toolbar">
+    <div>
+      <h2 style="margin:0">Words · {{ queue_title }}</h2>
+      <div class="muted" style="font-size:12px">
+        <a href="/flats/words">All three</a> ·
+        <a href="/flats/reading">Reading</a> ·
+        <a href="/flats">All jurisdictions</a>
+      </div>
+    </div>
+    <div style="margin-left:auto;text-align:right">
+      <div><span class="muted">To check</span> <strong>{{ remaining }}</strong></div>
+      <div class="muted" style="font-size:11px">
+        {{ "{:,}".format(values_ahead) }} number{{ "" if values_ahead == 1 else "s" }}
+        resting on them
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:13px;max-width:74ch;margin:6px 0 0">{{ queue_question }}</p>
+
+  <form method="get" action="/flats/words/{{ queue }}"
+        style="display:flex;flex-wrap:wrap;gap:10px;align-items:end;margin:16px 0 18px;
+               padding:10px;border:1px solid var(--line,#e5e7eb);border-radius:4px">
+    <div>
+      <label class="muted" style="font-size:11px;display:block">Jurisdiction</label>
+      <select name="layer" style="font-size:12px;padding:4px">
+        <option value="">Everywhere</option>
+        {% for j in jurisdictions %}
+        <option value="{{ j }}" {% if sel.layer == j %}selected{% endif %}>
+          {{ labels.get(j, j) }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+    {% if field_menu %}
+    <div>
+      <label class="muted" style="font-size:11px;display:block">Standard it measures</label>
+      <select name="field" style="font-size:12px;padding:4px">
+        <option value="">Any</option>
+        {% for name, count in field_menu %}
+        <option value="{{ name }}" {% if sel.field == name %}selected{% endif %}>
+          {{ name }} ({{ count }})
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+    {% endif %}
+    <label class="muted" style="font-size:12px">
+      <input type="checkbox" name="ruled" value="true" {% if sel.ruled %}checked{% endif %}>
+      show ruled
+    </label>
+    <input type="hidden" name="skipped" value="0">
+    <button type="submit" style="font-size:12px;padding:5px 12px">Filter</button>
+    {% if sel.layer or sel.field or sel.ruled %}
+    <a href="/flats/words/{{ queue }}" class="muted" style="font-size:11px">clear</a>
+    {% endif %}
+  </form>
+
+  <div style="max-width:88ch;padding:16px;border:1px solid var(--line,#e5e7eb);border-radius:4px">
+    {% include "partials/flats_word_card.html" %}
+  </div>
+</div>
+{% endblock %}

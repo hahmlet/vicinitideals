@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Words — Viciniti Deals{% endblock %}
+
+{#
+  Pick a standing for the session. Three, and they are three different jobs:
+  comparing a definition to how we measure, deciding what a silent code lets us
+  assume, and going to fetch a glossary nobody has read. Mixing them is the tax
+  the whole verticals design exists to avoid.
+#}
+{% block content %}
+<div class="topbar"></div>
+
+<div class="content">
+  <div class="toolbar">
+    <div>
+      <h2 style="margin:0">Words</h2>
+      <div class="muted" style="font-size:12px">
+        <a href="/flats">All jurisdictions</a> ·
+        <a href="/flats/reading">Reading</a> ·
+        <a href="/flats/triage">Fetch triage</a> ·
+        <a href="/flats/gaps">What is not encoded</a> ·
+        <a href="/flats/feedback">Hand-off</a>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:13px;max-width:74ch;margin:6px 0 0">
+    What the words our numbers are written in mean <em>in this city</em>.
+  </p>
+  <p class="muted" style="font-size:12px;max-width:74ch">
+    Signing asks whether a number matches its sentence. This asks the question
+    underneath it: whether the sentence measures what we think it measures. Four
+    of these codes define <em>corner lot</em> four incompatible ways and seven
+    subtract seven different lists from a <em>net acre</em>, so a number read
+    perfectly can still be the wrong number. Worth an hour before a signing
+    session, not after one.
+  </p>
+
+  <div style="display:flex;flex-direction:column;gap:10px;margin-top:18px;max-width:88ch">
+    {% for s in standings %}
+    <a href="/flats/words/{{ s.key }}"
+       style="display:block;padding:14px 16px;border:1px solid var(--line,#e5e7eb);
+              border-radius:4px;text-decoration:none;color:inherit">
+      <div style="display:flex;align-items:baseline;gap:12px">
+        <strong style="font-size:15px">{{ s.title }}</strong>
+        <span style="margin-left:auto;font-size:15px"><strong>{{ s.cards }}</strong></span>
+        <span class="muted" style="font-size:11px">
+          to check · {{ "{:,}".format(s.numbers) }} number{{ "" if s.numbers == 1 else "s" }}
+          resting on them
+        </span>
+      </div>
+      <div class="muted" style="font-size:12px;margin-top:4px">{{ s.question }}</div>
+    </a>
+    {% endfor %}
+  </div>
+
+  {% if pending %}
+  <div class="muted" style="font-size:11px;margin-top:14px">
+    {{ pending }} decision{{ "" if pending == 1 else "s" }} not yet written into the
+    rule files. Decided is not in force.
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

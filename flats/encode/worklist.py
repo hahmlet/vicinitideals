@@ -927,18 +927,30 @@ def _entry_key(line: str) -> str:
 
 
 def _splice(
-    lines: list[str], key: str, queue: str, outcome: str, note: str, fingerprint: str
+    lines: list[str],
+    key: str,
+    queue: str,
+    outcome: str,
+    note: str,
+    fingerprint: str,
+    block: str = "readings",
 ) -> list[str]:
-    """Put one ruling into the file's lines, replacing any already there."""
+    """Put one ruling into the file's lines, replacing any already there.
+
+    ``block`` because the word queue writes rulings of the same shape into a
+    ``words:`` block, and two copies of this splice would be two places for the
+    YAML to be got subtly wrong.
+    """
     entry = _entry(key, queue, outcome, note, fingerprint)
 
-    start = next((i for i, ln in enumerate(lines) if ln.rstrip() == "readings:"), None)
+    head = f"{block}:"
+    start = next((i for i, ln in enumerate(lines) if ln.rstrip() == head), None)
     if start is None:
         at = next(
             (i for i, ln in enumerate(lines) if any(ln.startswith(k) for k in _AFTER)),
             len(lines),
         )
-        return lines[:at] + ["readings:", *entry, ""] + lines[at:]
+        return lines[:at] + [head, *entry, ""] + lines[at:]
 
     stop = start + 1
     while stop < len(lines) and (

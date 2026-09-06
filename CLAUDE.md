@@ -188,6 +188,9 @@ flats/                 # FLATS — parcel screening. Imports nothing from app/en
     ledger.py          # Coverage ledger (missing zones) + clause ledger (missing rules)
   normalize/condo.py   # Condo / air-parcel detector — recall-biased three verdicts
   encode/              # port_quadfit.py (one-shot import), backlog.py (work queue)
+                       # words.py — the word-review queue: what a city's own
+                       # definitions mean for the numbers we measured in them.
+                       # Worked *before* signing, not after.
   config/jurisdictions/or/<county>/<city>.yaml   # The encoded rules
   tests/               # Runs in the CI light gate; no DB fixtures
 Lot Analysis/

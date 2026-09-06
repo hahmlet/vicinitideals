@@ -139,6 +139,7 @@
   <div class="sidebar-logo"><div class="brand">Viciniti <span>Deals</span></div></div>
 
   <nav class="nav">
+    <div class="nav-section-label">Underwriting</div>
     <a href="/deals" class="nav-item {% if active_nav == 'deals' %}active{% endif %}">
       <span class="nav-icon">🏠</span> Deals
     </a>
@@ -155,11 +156,33 @@
     <a href="/ui/email-inbox" class="nav-item {% if active_nav == 'email_inbox' %}active{% endif %}">
       <span class="nav-icon">📬</span> Email Inbox
     </a>
+    {#
+      FLATS, and the whole review surface with it. Six screens under one label
+      rather than two loose ones: the three review queues were reachable only
+      by typing the URL or by finding a link inside another page, which is the
+      same as not existing. Ordered the way a day runs — what we hold, then the
+      queues that question it, then what comes out the other end.
+    #}
+    <div class="nav-section-label">FLATS</div>
     <a href="/flats" class="nav-item {% if active_nav == 'flats' %}active{% endif %}">
-      <span class="nav-icon">📐</span> Zoning Rules
+      <span class="nav-icon">📐</span> Rules &amp; signing
+    </a>
+    {#
+      The word queue sits *underneath* signing and is worked before it: a
+      number read perfectly out of its sentence is still wrong if the city
+      measures that sentence's words its own way.
+    #}
+    <a href="/flats/words" class="nav-item {% if active_nav == 'flats_words' %}active{% endif %}">
+      <span class="nav-icon">🔤</span> Words
     </a>
     <a href="/flats/reading" class="nav-item {% if active_nav == 'flats_reading' %}active{% endif %}">
       <span class="nav-icon">📖</span> Reading
+    </a>
+    <a href="/flats/triage" class="nav-item {% if active_nav == 'flats_triage' %}active{% endif %}">
+      <span class="nav-icon">🔍</span> Fetch triage
+    </a>
+    <a href="/flats/gaps" class="nav-item {% if active_nav == 'flats_gaps' %}active{% endif %}">
+      <span class="nav-icon">🕳</span> Not encoded
     </a>
     {#
       The hand-off. It carries two things now: what a reviewer found wrong, and

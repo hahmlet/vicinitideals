@@ -56,6 +56,7 @@ from app.models.flats import (
     FlatsCrossrefRuling,
     FlatsReadingRuling,
     FlatsRuleSignature,
+    FlatsWordRuling,
 )
 from flats.encode import legible
 from flats.designs.model import Design, DesignStatus, Plat, load_catalog
@@ -73,6 +74,12 @@ from flats.encode.worklist import counts as reading_counts
 from flats.encode.worklist import feed as reading_feed
 from flats.encode.worklist import orders as reading_orders
 from flats.encode.verify import fingerprint
+from flats.encode.words import STANDINGS as WORD_STANDINGS
+from flats.encode.words import QUEUES as WORD_QUEUES
+from flats.encode.words import Card as WordCard
+from flats.encode.words import feed as word_feed
+from flats.encode.words import orders as word_orders
+from flats.encode.words import tally as word_tally
 from flats.provenance import books, pages as page_map
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.fields import FIELDS
@@ -83,6 +90,8 @@ from flats.rules.model import (
     CROSSREF_WORK,
     READING_OUTCOMES,
     READING_WORK,
+    WORD_OUTCOMES,
+    WORD_WORK,
     Incorporation,
     Layer,
     Reading,
@@ -984,8 +993,15 @@ def _bundle_text(rows: Sequence[Any]) -> str:
 #: other nineteen jobs beside it.
 WORK_LINES = 12
 
+#: The most glossary entries printed under one word order. A code that files a
+#: word under nine headings has said something worth knowing in the first few;
+#: the rest is the same job, and pasting them all buries the next order.
+WORK_WORDS = 5
 
-def _work_text(reading: Sequence[Any], fetches: Sequence[Any]) -> str:
+
+def _work_text(
+    reading: Sequence[Any], fetches: Sequence[Any], words: Sequence[Any] = ()
+) -> str:
     """Every ruling that ordered work, as a job somebody can pick up.
 
     Grouped by what is being asked for rather than by city, because those are
@@ -1003,7 +1019,7 @@ def _work_text(reading: Sequence[Any], fetches: Sequence[Any]) -> str:
     with the item, so it can be worked by somebody who was not there, after
     the document has been re-fetched and every line number in it has moved.
     """
-    total = len(reading) + len(fetches)
+    total = len(reading) + len(fetches) + len(words)
     out = [
         "# FLATS — work ordered by review",
         "",
@@ -1071,6 +1087,35 @@ def _work_text(reading: Sequence[Any], fetches: Sequence[Any]) -> str:
                 (str(card.ruling or "") or "(none)").strip(),
                 "",
             ]
+
+    for outcome, job in WORD_WORK.items():
+        here = [c for c in words if c.outcome == outcome]
+        if not here:
+            continue
+        out += ["", f"## {job} ({len(here)})", ""]
+        for card in here:
+            out += [
+                f"### {card.layer} · “{card.term}”",
+                "",
+                f"- **standing when asked:** {card.standing}"
+                + ("" if card.exact else " (no entry for the word itself)"),
+                f"- **numbers measured in it:** {card.values} · **lots:** {card.lots:,}",
+                f"- **standards it sets the meaning of:** {', '.join(card.fields) or '(none)'}",
+                f"- **fingerprint when ruled:** `{card.ruling.fingerprint or '(none)'}`"
+                + ("  ⚠ what the city says has moved since" if card.moved else ""),
+                "",
+                "**Why**",
+                "",
+                (card.ruling.note or "(none)").strip(),
+                "",
+            ]
+            if card.says:
+                out += ["**What the city says**", "", "```"]
+                for entry in card.says[:WORK_WORDS]:
+                    out.append(f"{entry.cite}  {entry.term}: {entry.text}")
+                if len(card.says) > WORK_WORDS:
+                    out.append(f"       … and {len(card.says) - WORK_WORDS} more")
+                out += ["```", ""]
 
     if total == 0:
         out += ["Nothing ordered. Every decision on record either closed its card "
@@ -1253,7 +1298,7 @@ async def flats_gaps(request: Request, session: DBSession) -> HTMLResponse:
         request,
         "flats_gaps.html",
         {
-            **_base_ctx(user, dedup_count, "flats", conflicts_count=conflicts_count),
+            **_base_ctx(user, dedup_count, "flats_gaps", conflicts_count=conflicts_count),
             "rows": sorted(rows, key=lambda r: -len(r["gaps"])),
             "total": sum(len(r["gaps"]) for r in rows),
             "current": ledger["current"],
@@ -1406,6 +1451,12 @@ async def flats_feedback(
         feed, store=_store(), ruled=True, overrides=await _inbox_rulings(session)
     )
     ordered_fetches = [c for c in scanned if c.outcome in CROSSREF_WORK]
+    # Word rulings order work of a fourth kind, and the loudest of it: "this
+    # city measures it differently" says numbers already in production were
+    # read against the wrong thing.
+    ordered_words = await run_in_threadpool(
+        word_orders, overrides=await _word_inbox(session)
+    )
     return templates.TemplateResponse(
         request,
         "flats_feedback.html",
@@ -1416,9 +1467,11 @@ async def flats_feedback(
             "bundle": _bundle_text(rows),
             "ordered": ordered,
             "ordered_fetches": ordered_fetches,
-            "work": _work_text(ordered, ordered_fetches),
+            "ordered_words": ordered_words,
+            "work": _work_text(ordered, ordered_fetches, ordered_words),
             "reading_work": READING_WORK,
             "crossref_work": CROSSREF_WORK,
+            "word_work": WORD_WORK,
             "showing_all": bool(all),
         },
     )
@@ -1849,7 +1902,7 @@ async def flats_triage(
         request,
         "flats_triage.html",
         {
-            **_base_ctx(user, dedup_count, "flats", conflicts_count=conflicts_count),
+            **_base_ctx(user, dedup_count, "flats_triage", conflicts_count=conflicts_count),
             **_triage_ctx(
                 rows,
                 layer=layer,
@@ -2285,6 +2338,274 @@ async def flats_reading_rule(
             outcome=outcome,
             note=" ".join(note.split()),
             fingerprint=fingerprint,
+            decided_by=getattr(user, "email", "") or "unknown",
+        )
+    )
+    await session.commit()
+    return await render(at=skipped)
+
+
+# --- word review -------------------------------------------------------------
+#
+# The queue underneath signing. Signing asks whether a number matches the
+# sentence it was taken from; this asks whether the sentence measures what we
+# think it measures. Four cities in this corpus give four incompatible tests
+# for "corner lot" and seven subtract seven different lists from a "net acre",
+# so a number read perfectly can still be the wrong number -- and finding that
+# out after three hundred signatures means signing some of them again.
+
+
+async def _word_inbox(session: DBSession) -> dict[str, dict[str, Reading]]:
+    """The latest word decision per card, by layer, from the review inbox.
+
+    Rules load from the repository; this is what has been decided since and not
+    yet drained into it. ``Reading`` is reused rather than a third model being
+    invented for it: the shape a word ruling needs is exactly what queue asked,
+    what was answered, why, and against what text.
+    """
+    rows = (
+        await session.execute(
+            select(FlatsWordRuling).order_by(FlatsWordRuling.decided_at)
+        )
+    ).scalars()
+    out: dict[str, dict[str, Reading]] = {}
+    for r in rows:
+        out.setdefault(r.layer, {})[r.term] = Reading(
+            queue=r.standing,
+            outcome=r.outcome,
+            note=r.note,
+            fingerprint=r.fingerprint or "",
+        )
+    return out
+
+
+async def _word_pending(session: DBSession) -> int:
+    """Word decisions recorded and not yet written into the rule files."""
+    return int(
+        (
+            await session.execute(
+                select(func.count())
+                .select_from(FlatsWordRuling)
+                .where(FlatsWordRuling.exported_at.is_(None))
+            )
+        ).scalar_one()
+    )
+
+
+def _word_ctx(
+    queue: str,
+    rows: Sequence[WordCard],
+    *,
+    layer: str,
+    field: str,
+    ruled: bool,
+    skipped: int = 0,
+    pending: int = 0,
+    error: str = "",
+    note: str = "",
+) -> dict[str, Any]:
+    layers = _layers()
+    ahead = rows[skipped:] if skipped < len(rows) else []
+    title, question = WORD_QUEUES[queue]
+    fields: dict[str, int] = {}
+    for card in rows:
+        for name in card.fields:
+            fields[name] = fields.get(name, 0) + 1
+    return {
+        "queue": queue,
+        "queue_title": title,
+        "queue_question": question,
+        "card": ahead[0] if ahead else None,
+        "remaining": len(ahead),
+        # The numbers behind what is *left*, not behind the whole queue. Two
+        # counts side by side describing different sets read as one number
+        # contradicting the other.
+        "values_ahead": sum(c.values for c in ahead),
+        "min_note": MIN_RULING,
+        "outcomes": list(WORD_OUTCOMES[queue].items()),
+        "jurisdictions": sorted(layers),
+        "labels": {k: (v.label or k.rsplit("/", 1)[-1]) for k, v in layers.items()},
+        "field_menu": sorted(fields.items(), key=lambda kv: (-kv[1], kv[0]))[:14],
+        "sel": {"layer": layer, "field": field, "ruled": ruled},
+        "error": error,
+        "note": note,
+        "pending": pending,
+        "skipped": skipped,
+    }
+
+
+@router.get("/flats/words", response_class=HTMLResponse)
+async def flats_words_index(request: Request, session: DBSession) -> HTMLResponse:
+    """Pick a standing for the session.
+
+    Three, and they are three different jobs — go and fetch a book nobody has
+    opened, decide what a silent code lets us assume, compare a definition to
+    how we measure. Mixing them is the tax the verticals design exists to
+    avoid.
+    """
+    user = await _get_user(session, request)
+    dedup_count, conflicts_count = await _get_counts(session)
+    overrides = await _word_inbox(session)
+    tally = await run_in_threadpool(word_tally, overrides=overrides)
+    return templates.TemplateResponse(
+        request,
+        "flats_words_index.html",
+        {
+            **_base_ctx(user, dedup_count, "flats_words", conflicts_count=conflicts_count),
+            "standings": [
+                {
+                    "key": kind,
+                    "title": WORD_QUEUES[kind][0],
+                    "question": WORD_QUEUES[kind][1],
+                    "cards": tally[kind][0],
+                    # Not "values". Jinja resolves an attribute before a key, so
+                    # a dict with a "values" key renders dict.values -- the bound
+                    # method, printed as "<built-in method values ...>".
+                    "numbers": tally[kind][1],
+                }
+                for kind in WORD_STANDINGS
+            ],
+            "pending": await _word_pending(session),
+        },
+    )
+
+
+@router.get("/flats/words/{queue}", response_class=HTMLResponse)
+async def flats_words(
+    request: Request,
+    session: DBSession,
+    queue: str,
+    layer: str = Query(""),
+    field: str = Query(""),
+    ruled: bool = Query(False),
+    skipped: int = Query(0, ge=0),
+) -> HTMLResponse:
+    """One standing, heaviest first.
+
+    Ranked by the numbers resting on the word here, then by lots. Consequence
+    is the sort and never a filter — a small city's word is still wrong if it
+    is wrong.
+    """
+    if queue not in WORD_STANDINGS:
+        return RedirectResponse("/flats/words", status_code=303)
+    user = await _get_user(session, request)
+    dedup_count, conflicts_count = await _get_counts(session)
+    overrides = await _word_inbox(session)
+    rows = await run_in_threadpool(
+        word_feed,
+        queue,
+        layer=layer or None,
+        field=field or None,
+        ruled=ruled,
+        overrides=overrides,
+    )
+    return templates.TemplateResponse(
+        request,
+        "flats_words.html",
+        {
+            **_base_ctx(user, dedup_count, "flats_words", conflicts_count=conflicts_count),
+            **_word_ctx(
+                queue,
+                rows,
+                layer=layer,
+                field=field,
+                ruled=ruled,
+                skipped=skipped,
+                pending=await _word_pending(session),
+            ),
+        },
+    )
+
+
+@router.post("/ui/flats/words/rule", response_class=HTMLResponse)
+async def flats_words_rule(
+    request: Request,
+    session: DBSession,
+    queue: str = Form(...),
+    layer_id: str = Form(...),
+    term: str = Form(...),
+    fingerprint: str = Form(""),
+    outcome: str = Form(""),
+    note: str = Form(""),
+    action: str = Form("rule"),
+    values_touched: int = Form(0),
+    lots: int = Form(0),
+    fields_touched: str = Form(""),
+    layer: str = Form(""),
+    field: str = Form(""),
+    ruled: bool = Form(False),
+    skipped: int = Form(0),
+) -> HTMLResponse:
+    """Record one decision about a word, or skip past it, and hand back the next.
+
+    Decisions land in the review inbox rather than in the rule files, because
+    the container rebuilds those from git on every deploy and a ruling spliced
+    into a running container would be gone at the next release.
+
+    The outcome is checked against the standing that asked, not against the
+    whole vocabulary. "Nobody has read this city's definitions" is not an
+    answer to a word the city plainly defines, and a screen that accepts it
+    silently records a decision nobody made.
+    """
+    user = await _get_user(session, request)
+
+    async def render(error: str = "", keep: str = "", at: int = 0) -> HTMLResponse:
+        overrides = await _word_inbox(session)
+        rows = await run_in_threadpool(
+            word_feed,
+            queue if queue in WORD_STANDINGS else WORD_STANDINGS[0],
+            layer=layer or None,
+            field=field or None,
+            ruled=ruled,
+            overrides=overrides,
+        )
+        return templates.TemplateResponse(
+            request,
+            "partials/flats_word_card.html",
+            _word_ctx(
+                queue if queue in WORD_STANDINGS else WORD_STANDINGS[0],
+                rows,
+                layer=layer,
+                field=field,
+                ruled=ruled,
+                skipped=at,
+                pending=await _word_pending(session),
+                error=error,
+                note=keep,
+            ),
+            status_code=400 if error else 200,
+        )
+
+    if action == "skip":
+        return await render(at=skipped + 1)
+
+    if queue not in WORD_STANDINGS:
+        return await render("that queue does not exist", keep=note, at=skipped)
+    if outcome not in WORD_OUTCOMES[queue]:
+        return await render(
+            "pick one of the answers this queue asks for", keep=note, at=skipped
+        )
+    if len(" ".join(note.split())) < MIN_RULING:
+        return await render(
+            f"say why, in at least {MIN_RULING} characters — a word closed with "
+            f"a word nobody can check is worse than an open one",
+            keep=note,
+            at=skipped,
+        )
+    if layer_id not in _layers():
+        return await render("that is not a jurisdiction we hold", keep=note, at=skipped)
+
+    session.add(
+        FlatsWordRuling(
+            layer=layer_id,
+            term=term,
+            standing=queue,
+            outcome=outcome,
+            note=" ".join(note.split()),
+            fingerprint=fingerprint,
+            lots=lots,
+            values_touched=values_touched,
+            fields_touched=fields_touched,
             decided_by=getattr(user, "email", "") or "unknown",
         )
     )
