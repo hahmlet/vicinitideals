@@ -97,12 +97,56 @@
   We have read this city's definitions and “{{ card.term }}” is not among them.
   Nothing here can be assumed from the code — the question is whether the
   ordinary meaning is safe for a four-unit townhome.
+  {% if card.sends %}
+  Its own text hands the measuring to
+  {% for chapter in card.sends %}<code>{{ chapter }}</code>{{ "" if loop.last else ", " }}{% endfor %}.
+  If one of those settles it, rule <em>defined elsewhere</em> and name the chapter.
+  {% endif %}
 </div>
 {% else %}
 <div style="font-size:12px;padding:8px 10px;border-left:3px solid #6b7280">
   No definitions chapter has been read for this jurisdiction at all, so the word
   may well be defined and nobody has looked. This is a finding about us, not
   about the code.
+</div>
+{% endif %}
+
+{% if card.shown %}
+{#
+  How the code itself writes the word, with the lines that hand it somewhere
+  else on top. Without this a silent card says only that the glossary has no
+  entry and leaves the reviewer to go looking — while the corpus usually
+  already knows where to look, because the code says so out loud: Portland's
+  own text points at Chapter 33.930, Measurements, twelve times for how its
+  setbacks and heights are measured. That is the difference between a
+  twenty-minute hunt and a one-click ruling that names the chapter.
+#}
+<div style="margin-top:16px">
+  <div class="muted" style="font-size:11px;text-transform:uppercase;letter-spacing:.04em">
+    How this code writes it
+  </div>
+  {% if card.sends %}
+  <div style="font-size:12px;margin-top:6px">
+    Its own text sends the reader to
+    {% for chapter in card.sends %}<code style="margin-right:6px">{{ chapter }}</code>{% endfor %}
+  </div>
+  {% endif %}
+  <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px">
+    {% for m in card.shown %}
+    <div style="font-size:12px;padding-left:10px;
+                border-left:2px solid {{ '#d97706' if m.sends else 'var(--line,#e5e7eb)' }}">
+      <div>{{ m.text }}</div>
+      <div class="muted" style="font-size:11px;margin-top:3px">
+        {{ m.doc }} &middot; line {{ m.line }}
+        {%- if m.sends %} &middot; points at {{ m.sends|join(", ") }}{% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="muted" style="font-size:11px;margin-top:6px">
+    {{ card.shown|length }} of {{ card.uses }} line{{ "" if card.uses == 1 else "s" }},
+    the ones that point somewhere first.
+  </div>
 </div>
 {% endif %}
 

@@ -196,6 +196,136 @@ class TestUsageGate:
             assert card.values > 0, f"{card.term} would sort last forever"
 
 
+
+# --- the lines the code writes the word on ----------------------------------
+
+
+class TestMentions:
+    """What a card shows of the code itself, and why it shows the hand-offs.
+
+    A ``silent`` card that says only "the glossary has no entry" leaves the
+    reviewer to go and find out where else the word might be settled. The
+    corpus usually already knows, because the code says so out loud: Portland
+    defines neither *lot width* nor *building height* and points at Chapter
+    33.930, Measurements, for both. Surfacing that is the difference between a
+    hunt and a one-click ``elsewhere`` ruling that names the chapter.
+    """
+
+    def test_a_reference_with_no_deferring_verb_is_not_a_hand_off(self) -> None:
+        assert W._sends("Maximum height 35 ft. and 33.110.215 applies to lots") == ()
+
+    def test_a_deferring_verb_with_no_reference_is_not_a_hand_off(self) -> None:
+        assert W._sends("Lot width is measured as described in this section.") == ()
+
+    def test_a_section_does_not_send_the_reader_to_itself(self) -> None:
+        """A heading prints its own number, and "33.130.200 Lot Size" sends
+        nobody anywhere. Counting it would put every heading in the corpus at
+        the top of a queue about where a word is defined."""
+        assert W._sends("33.130.200 Lot Size. As described in 33.130.200.") == ()
+
+    def test_the_chapter_it_does_send_to_comes_back_with_where_it_was_raised(
+        self,
+    ) -> None:
+        line = "measured as lot width is measured. See 33.930.100."
+        sent = W._sends(line)
+        assert [ref for ref, _ in sent] == ["33.930.100"]
+        assert sent[0][1] == line.index("33.930.100")
+
+    def test_a_pointer_inside_the_open_chapter_is_not_leaving_the_book(self) -> None:
+        """Portland's height table writes "Base Height (see 33.130.210.B.1)",
+        which tells a reader of 33.130 nothing they did not have. Four lines
+        away the same chapter says height is stated in Chapter 33.930, and that
+        is the sentence a word card exists to surface."""
+        assert not W._away("33.130", (("33.130.210", 12),))
+        assert W._away("33.130", (("33.930", 12),))
+
+    def test_a_document_whose_name_does_not_say_its_chapter_keeps_every_pointer(
+        self,
+    ) -> None:
+        """Refusing to guess. Where the filename does not name a chapter there
+        is nothing to compare against, and dropping the pointer would be us
+        deciding it was local."""
+        assert W._away("", (("16.42.030", 3),))
+
+    def _corpus(self, tmp_path, monkeypatch) -> str:
+        home = tmp_path / "or" / "test" / "town"
+        home.mkdir(parents=True)
+        (home / "19.300.txt").write_text(
+            "\n".join(
+                [
+                    "19.300 Residential Zones",
+                    "Maximum lot coverage is 40 percent of the lot area.",
+                    "The lot area of a corner lot excludes the flag pole.",
+                    "Lot area is measured as described in Chapter 19.100.",
+                    "Minimum Lot Area (see 19.300.4) 5,000 sq ft",
+                ]
+            ),
+            encoding="utf-8",
+        )
+        monkeypatch.setattr(W, "DOCS", tmp_path)
+        return "or/test/town"
+
+    def test_the_hand_off_leads_however_late_in_the_document_it_sits(
+        self, tmp_path, monkeypatch
+    ) -> None:
+        layer_id = self._corpus(tmp_path, monkeypatch)
+        counted, shown = W._scan(layer_id, ["lot area"])
+
+        assert counted["lot area"] == 4
+        first = shown["lot area"][0]
+        assert first.sends == ("19.100",)
+        assert "Chapter 19.100" in first.text
+        assert [m.sends for m in shown["lot area"][1:]] == [("19.300.4",), (), ()]
+
+    def test_the_ordinary_uses_stay_in_the_order_the_code_prints_them(
+        self, tmp_path, monkeypatch
+    ) -> None:
+        """The first lines of a chapter are the code being read from the top,
+        which is the right way to meet a word. Only the hand-offs are ranked."""
+        layer_id = self._corpus(tmp_path, monkeypatch)
+        plain = [m for m in W._scan(layer_id, ["lot area"])[1]["lot area"] if not m.sends]
+        assert [m.line for m in plain] == [2, 3]
+
+    def test_counting_alone_finds_no_lines_to_show(self, tmp_path, monkeypatch) -> None:
+        """The usage gate wants a number and nothing else, and should not pay
+        for the sampling. ``uses`` and a full scan must still agree."""
+        layer_id = self._corpus(tmp_path, monkeypatch)
+        counted, shown = W._scan(layer_id, ["lot area"], keep=0)
+        assert shown == {"lot area": ()}
+        assert counted == uses(layer_id, ["lot area"])
+
+    def test_a_card_names_every_chapter_its_lines_point_at_once_each(self) -> None:
+        card = _card(
+            shown=(
+                W.Mention(doc="a.txt", line=1, text="see 33.930", sends=("33.930",)),
+                W.Mention(doc="b.txt", line=2, text="see 33.930", sends=("33.930",)),
+                W.Mention(doc="b.txt", line=9, text="plain use"),
+            )
+        )
+        assert card.sends == ("33.930",)
+
+    def test_the_lines_shown_are_not_part_of_the_fingerprint(self) -> None:
+        """Context, not testimony. These are the lines that *use* the word, not
+        what the city says it means, and a fingerprint over them would reopen
+        every card in the corpus every time a document was re-extracted."""
+        bare = _card()
+        with_lines = _card(
+            shown=(W.Mention(doc="a.txt", line=1, text="see 33.930", sends=("33.930",)),)
+        )
+        assert bare.fingerprint == with_lines.fingerprint
+
+    def test_portland_is_shown_the_measurements_chapter_it_defers_to(self) -> None:
+        """The finding this was built for. Portland's definitions chapter runs
+        to 296 entries and defines neither of these words; its own text sends
+        the reader to Chapter 33.930, Measurements, for both."""
+        found = {c.term: c for c in cards(load_rules()[PORTLAND])}
+        for term in ("lot width", "building height"):
+            card = found[term]
+            assert card.standing == "silent"
+            assert any(ref.startswith("33.930") for ref in card.sends), (
+                f"{term} is silent and the card does not say where to look"
+            )
+
 # --- the three standings ----------------------------------------------------
 
 
@@ -370,6 +500,68 @@ class TestFeed:
         assert (GRESHAM, "lot width") in got
         assert (GRESHAM, "lot depth") not in got
 
+
+
+# --- keeping the queue honest -----------------------------------------------
+
+
+class TestAudit:
+    """Whether the queue would still ask what it is asking.
+
+    Cards are derived, so a card retires itself the moment its reason goes.
+    What cannot retire itself is a *ruling*, and this is the check that finds
+    the two ways one goes stale: standing over a question nobody would ask
+    now, and made against wording that has moved since. Run before working the
+    queue, not after -- the alternative is a morning spent on a word somebody
+    settled last week.
+    """
+
+    def _with(self, layer_id: str, words: dict[str, Reading]) -> dict[str, object]:
+        layers = dict(load_rules())
+        layers[layer_id] = layers[layer_id].model_copy(update={"words": words})
+        return layers
+
+    def test_the_corpus_asks_nothing_it_has_already_answered(self) -> None:
+        assert W.audit().clean
+
+    def test_the_audit_counts_the_queue_it_audits(self) -> None:
+        """An audit that disagrees with the queue behind it is worse than
+        none: it would send a reviewer looking for work that is not there."""
+        found = dict(W.audit().open_by_standing)
+        rows = feed()
+        for standing in STANDINGS:
+            assert found[standing] == sum(1 for c in rows if c.standing == standing)
+
+    def test_a_ruling_on_a_word_nothing_rests_on_any_more_is_reported(self) -> None:
+        """The word is still a word. What has gone is the reason to ask: this
+        jurisdiction holds no number it governs, or its code stopped writing
+        it, and either way the card is not there to carry the ruling."""
+        ruling = Reading(
+            queue="defined", outcome="matches", note="z" * 80, fingerprint=""
+        )
+        found = W.audit(self._with(GRESHAM, {"nothing rests on this": ruling}))
+        assert not found.clean
+        assert any("nothing rests on this" in row for row in found.settled)
+
+    def test_a_ruling_made_against_wording_that_moved_is_reported(self) -> None:
+        term = next(c.term for c in feed(layer=GRESHAM))
+        stale = Reading(
+            queue="defined", outcome="matches", note="q" * 80, fingerprint="0" * 16
+        )
+        found = W.audit(self._with(GRESHAM, {term: stale}))
+        assert any(row.endswith(term) for row in found.moved)
+        assert not found.settled
+
+    def test_a_jurisdiction_the_screen_is_switched_off_for_is_not_work(self) -> None:
+        """Counting a switched-off city's cards would report a morning that
+        does not exist."""
+        layers = dict(load_rules())
+        off = [k for k, v in layers.items() if not v.eligible]
+        if not off:
+            pytest.skip("every jurisdiction in the corpus is switched on")
+        rows = feed()
+        assert sum(n for _, n in W.audit().open_by_standing) == len(rows)
+        assert all(c.layer not in off for c in rows)
 
 # --- writing a decision into the rule files ---------------------------------
 

@@ -601,6 +601,19 @@ The other three cities on the short list are 26, 19 and 23 words. Nothing here
 is a code reading in the usual sense — most cards are a glossary entry beside
 our own standard, and the answer is usually "yes, the same thing".
 
+**One document stands behind 118 of that session's numbers: Portland's
+Chapter 33.930, Measurements.** The word cards now show the lines of a city's own code
+that hand a word to another chapter, and Portland's point at 33.930 from five
+of its 21 words — 118 distinct encoded values, including every setback Portland
+holds. Two of those words, *lot width* and *building height*, are defined
+nowhere in the 296-entry definitions chapter we do hold; the code's answer to
+both is "see Chapter 33.930". We do not have that chapter. Unincorporated
+Multnomah defers to the same one for another 43 values. It is already sitting
+in fetch triage unruled, ranked at the bottom because the references live in
+prose no encoded value quotes — which is exactly the kind of thing a lot count
+cannot see. Fetching it before the Portland word session would answer five
+cards outright rather than parking them as *defined elsewhere*.
+
 **Then Fairview, which the elevation decision promoted from nowhere to second
 place — with a catch.** It was on the previous version of this table at zero and
 zero, because its lots were held by the coarse elevation map *and* by unsigned

@@ -84,6 +84,24 @@ def test_a_card_says_what_it_costs_to_get_the_word_wrong(
     expect(page.get_by_text("measured in it", exact=False).first).to_be_visible()
 
 
+
+def test_a_silent_word_shows_where_the_code_sends_the_reader(
+    logged_in_page: Page, base_url: str
+) -> None:
+    """A silence is not the end of the answer. Portland's definitions chapter
+    runs to 296 entries and defines neither *lot width* nor *building height*;
+    its own text points at Chapter 33.930, Measurements, for both. The card
+    shows that sentence, so the ruling is one click and a chapter number rather
+    than a hunt through ten documents."""
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/words/silent?layer=or/multnomah/portland")
+
+    card = page.locator("#word-card")
+    if "Nothing left in this queue" in card.inner_text():
+        pytest.skip("Portland's silent words have all been ruled")
+
+    expect(page.get_by_text("How this code writes it").first).to_be_visible()
+
 @pytest.mark.parametrize("standing", ("silent", "defined"))
 def test_each_standing_offers_only_the_answers_to_its_own_question(
     logged_in_page: Page, base_url: str, standing: str

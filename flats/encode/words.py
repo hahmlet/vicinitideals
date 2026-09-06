@@ -32,17 +32,30 @@ about *us*: no glossary has been read for this jurisdiction, so the word may
 well be defined and nobody has looked. Collapsing the last two would hide the
 difference between "the code is quiet" and "we did not open the book", which
 are opposite pieces of news.
+
+**A silence is not the end of the answer.** A card that reports only that the
+glossary has no entry hands the reviewer a hunt through every document we
+hold, and the corpus usually already knows where to look, because the code
+says so out loud: Portland defines neither *lot width* nor *building height*
+and its own text sends the reader to "Chapter 33.930, Measurements" for both.
+So every card carries a few of the lines that write the word, with the ones
+that hand it to another chapter on top -- and the reviewer answers with a
+chapter number in one click instead of twenty minutes. Those lines are context
+and are deliberately outside the fingerprint: they are how the word gets
+*used*, not what the city says it *means*.
 """
 
 from __future__ import annotations
 
 import hashlib
 import re
+from bisect import insort
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
 
 from flats.encode import glossary
+from flats.encode.crossrefs import _HEADING, _REF
 from flats.rules.loader import load_rules
 from flats.rules.model import WORD_CLOSED, Layer, Reading
 
@@ -259,6 +272,186 @@ def _flex(phrase: str) -> str:
     return r"\s+".join(out)
 
 
+#: The verbs that hand a word's meaning to another chapter.
+#:
+#: Deliberately the list :mod:`flats.encode.routing` refuses. That ledger is
+#: hunting sentences that *replace a standard* -- "instead of", "supersedes" --
+#: and it excludes "see" and "as defined in" because admitting them would
+#: report every chapter in the store. Here they are the whole point: the
+#: question a word card asks is where this code settles what a word means, and
+#: "See 33.930.100" is the code answering it in as many words.
+_DEFERS = re.compile(
+    r"\b(?:see|refer to|in accordance with|pursuant to|according to"
+    r"|as (?:defined|described|measured|provided|specified|set forth|listed|used)"
+    r"|(?:standards?|requirements?|provisions?|purposes?|definitions?) of"
+    r"|(?:defined|described|specified|measured|listed|stated|regulated) in"
+    r"|is governed by|are governed by|subject to)\b",
+    re.I,
+)
+
+
+@dataclass(frozen=True, slots=True)
+class Mention:
+    """One line of this jurisdiction's own code that writes the word."""
+
+    doc: str
+    line: int
+    text: str
+    #: Chapters or sections this line hands the reader to. Non-empty is the
+    #: interesting case and the reason mentions are shown at all.
+    sends: tuple[str, ...] = ()
+
+
+#: How many mentions of each kind a card keeps. Two handfuls: enough to show
+#: how a code uses a word, few enough that the card stays a card. Deferrals
+#: are kept apart from plain uses because they answer a different question --
+#: not "what does this look like in use" but "where has this code put the
+#: answer".
+KEEP = 4
+
+
+#: The chapter a stored document *is*, read off its own filename. Every
+#: document in this store is filed under the chapter it holds -- "33.130.txt",
+#: "33.910.definitions.txt" -- which is what makes an intra-chapter pointer
+#: tellable from a hand-off to another book.
+_CHAPTER = re.compile(r"^(\d+(?:\.\d+)*)")
+
+
+def _home(doc: str) -> str:
+    """The chapter this document holds, or "" if its name does not say."""
+    found = _CHAPTER.match(doc)
+    return found.group(1) if found else ""
+
+
+def _away(home: str, sends: Sequence[tuple[str, int]]) -> bool:
+    """Whether this line sends the reader out of the chapter they are in.
+
+    The distinction that matters on a word card. Portland's height table
+    prints "Base Height (see 33.130.210.B.1)" -- a pointer to a subsection of
+    the chapter already open, which tells a reviewer nothing they did not have.
+    Four lines away the same chapter says height is "stated in Chapter 33.930,
+    Measurements", and that is the sentence the card exists to surface. Both
+    are references sitting next to the word; only one leaves the book.
+    """
+    if not home:
+        return True
+    return any(
+        not (ref == home or ref.startswith(f"{home}.")) for ref, _ in sends
+    )
+
+
+def _sends(line: str) -> tuple[tuple[str, int], ...]:
+    """Where this line hands the reader, if it hands them anywhere.
+
+    A reference alone is not a hand-off: a section prints its own number at
+    the head of its own heading, and "33.130.200 Lot Size" sends nobody
+    anywhere. So the line's own heading number is dropped, and what is left
+    counts only beside a verb that defers -- which is the difference between
+    a chapter mentioned in passing and the chapter this code says the answer
+    is in.
+
+    Each chapter comes back with where on the line it was raised, so a card
+    can lead with the hand-off that is about *this word* rather than the one
+    that happens to sit earliest in the document. Portland's tree chapter
+    opens by citing four sections at once, and without that a card about
+    density would put a tree plan above "See 33.930.100, Measurements".
+    """
+    if not _DEFERS.search(line):
+        return ()
+    head = _HEADING.match(line)
+    mine = head.group("num").rstrip(".") if head else ""
+    out: list[tuple[str, int]] = []
+    seen: set[str] = set()
+    for m in _REF.finditer(line):
+        ref = (
+            m.group("named") or m.group("abbrev") or m.group("dotted") or ""
+        ).rstrip(".")
+        if not ref or ref == mine or ref in seen or (ref.isdigit() and len(ref) < 2):
+            continue
+        seen.add(ref)
+        out.append((ref, m.start()))
+    return tuple(out)
+
+
+def _scan(
+    layer_id: str, terms: Sequence[str], *, keep: int = KEEP
+) -> tuple[dict[str, int], dict[str, tuple[Mention, ...]]]:
+    """Count and sample the lines of stored code that write each word.
+
+    One pass. Counting and sampling separately would read every document
+    twice for an answer the first pass already had, and ``keep=0`` is the
+    counting-only case -- the usage gate does not want the samples and should
+    not pay for finding them.
+    """
+    counts = dict.fromkeys(terms, 0)
+    #: Deferrals ranked, ordinary uses in the order the code prints them. The
+    #: first four uses of a word are the code being read from the top, which
+    #: is the right way to meet it; the first four *deferrals* would be an
+    #: accident of which document sorts first.
+    ranked: dict[str, list[tuple[tuple[int, int], str, int, Mention]]] = {
+        t: [] for t in terms
+    }
+    plain: dict[str, list[Mention]] = {t: [] for t in terms}
+
+    directory = DOCS / layer_id
+    if not directory.is_dir():
+        return counts, {t: () for t in terms}
+
+    patterns = {
+        term: re.compile("|".join(_flex(s) for s in spellings(term)), re.I)
+        for term in terms
+    }
+    for path in sorted(directory.glob("*.txt")):
+        doc = path.name
+        home = _home(doc)
+        text = path.read_text(encoding="utf-8", errors="replace")
+        for number, line in enumerate(text.splitlines(), start=1):
+            if len(line) < 4:
+                continue
+            hit = [(t, m) for t, p in patterns.items() if (m := p.search(line))]
+            if not hit:
+                continue
+            sends: tuple[tuple[str, int], ...] | None = None
+            for term, word in hit:
+                counts[term] += 1
+                if not keep:
+                    continue
+                if sends is None:
+                    sends = _sends(line)
+                if not sends:
+                    if len(plain[term]) < keep:
+                        plain[term].append(
+                            Mention(doc=doc, line=number, text=" ".join(line.split()))
+                        )
+                    continue
+                # Out of the chapter first, then by how far the nearest
+                # chapter sits from the word itself. A sentence that names the
+                # word and the chapter in the same breath is the hand-off; one
+                # that cites four sections at the other end of the line is a
+                # list that happens to contain it.
+                gap = min(abs(at - word.start()) for _, at in sends)
+                row = (
+                    (0 if _away(home, sends) else 1, gap),
+                    doc,
+                    number,
+                    Mention(
+                        doc=doc,
+                        line=number,
+                        text=" ".join(line.split()),
+                        sends=tuple(ref for ref, _ in sends),
+                    ),
+                )
+                bucket = ranked[term]
+                if len(bucket) < keep or row[:3] < bucket[-1][:3]:
+                    insort(bucket, row, key=lambda r: r[:3])
+                    del bucket[keep:]
+    # Deferrals first. "See Chapter 33.930, Measurements" is the answer to the
+    # question the card is asking; an ordinary use is only context for it.
+    return counts, {
+        t: tuple([r[3] for r in ranked[t]] + plain[t]) for t in terms
+    }
+
+
 def uses(layer_id: str, terms: Sequence[str]) -> dict[str, int]:
     """Lines of this jurisdiction's stored code that use each word.
 
@@ -268,22 +461,7 @@ def uses(layer_id: str, terms: Sequence[str]) -> dict[str, int]:
     to skip rows. A word this code never uses cannot be measuring one of our
     numbers, whatever our field names call it.
     """
-    directory = DOCS / layer_id
-    out = dict.fromkeys(terms, 0)
-    if not directory.is_dir():
-        return out
-    patterns = {
-        term: re.compile("|".join(_flex(s) for s in spellings(term)), re.I)
-        for term in terms
-    }
-    for path in sorted(directory.glob("*.txt")):
-        for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
-            if len(line) < 4:
-                continue
-            for term, pattern in patterns.items():
-                if pattern.search(line):
-                    out[term] += 1
-    return out
+    return _scan(layer_id, terms, keep=0)[0]
 
 
 @dataclass(frozen=True, slots=True)
@@ -323,6 +501,19 @@ class Card:
     #: Lines of this jurisdiction's stored code that write the word. Evidence
     #: that the question is real: a card exists only where this is non-zero.
     uses: int = 0
+    #: A few of those lines as the code writes them, the ones that hand the
+    #: reader somewhere else first. A ``silent`` card otherwise says only that
+    #: the glossary has no entry, which leaves the reviewer to go and find out
+    #: where else the word might be settled -- and this corpus usually already
+    #: knows, because the code says so out loud: Portland's own text points at
+    #: "Chapter 33.930, Measurements" twelve times for how its setbacks and
+    #: heights are measured. Showing that turns a hunt into an ``elsewhere``
+    #: ruling that names the chapter.
+    #:
+    #: Context, never part of the fingerprint. This is how the word gets used,
+    #: not what the city says it means; hashing it would reopen every card
+    #: every time a document was re-extracted.
+    shown: tuple[Mention, ...] = ()
     #: Lots in this jurisdiction. The sort, never a filter.
     lots: int = 0
     ruling: Reading | None = None
@@ -331,6 +522,16 @@ class Card:
     def key(self) -> str:
         """How a ruling addresses this card: our word, not the city's."""
         return self.term
+
+    @property
+    def sends(self) -> tuple[str, ...]:
+        """Chapters this jurisdiction's own text hands the word off to.
+
+        Deduplicated across the shown lines and left in the order the code
+        raises them. Where a word is silent this is the shortlist of places
+        the answer is, written by the city rather than guessed by us.
+        """
+        return tuple(dict.fromkeys(c for m in self.shown for c in m.sends))
 
     @property
     def outcome(self) -> str:
@@ -442,7 +643,7 @@ def cards(
     if not governed:
         return []
 
-    spoken = uses(layer.layer, list(governed))
+    spoken, sampled = _scan(layer.layer, list(governed))
     entries, read_any = _glossary(layer)
     rulings = dict(layer.words or {})
     rulings.update(overrides or {})
@@ -498,6 +699,7 @@ def cards(
                 fields=mine,
                 values=_weight(layer, mine),
                 uses=spoken[term],
+                shown=sampled[term],
                 lots=lots,
                 ruling=rulings.get(term),
             )
@@ -630,6 +832,87 @@ def orders(
     return out
 
 
+@dataclass(frozen=True, slots=True)
+class Audit:
+    """What the queue would no longer ask, and what it should ask again."""
+
+    #: Rulings with no card behind them any more. The word is still a word;
+    #: what has gone is the *reason to ask* -- this jurisdiction stopped
+    #: holding a number the word governs, or its code stopped writing it.
+    settled: tuple[str, ...]
+    #: Ruled, and the city's wording has changed since. These are back in the
+    #: queue already; the audit is how you find out how many before opening it.
+    moved: tuple[str, ...]
+    #: Still open, by standing. Not a fault -- the size of the day's work.
+    open_by_standing: tuple[tuple[str, int], ...]
+
+    @property
+    def clean(self) -> bool:
+        return not self.settled and not self.moved
+
+
+def audit(layers: Mapping[str, Layer] | None = None) -> Audit:
+    """Ask the queue whether it would still ask what it is asking.
+
+    Run before working it, not after. A queue that outlives its reasons is
+    worse than no queue: it spends the one scarce thing here, a reviewer's
+    attention, on questions that answered themselves. This project has watched
+    that happen twice -- a ledger reporting lines unread that the corpus proved
+    were quoted, and a test pinning a corpus condition that went red when the
+    corpus was fixed -- so the check is cheap and unconditional.
+
+    Cards are derived, so nothing has to be retired by hand: encode a number
+    and the card it justified disappears on its own. What this catches is the
+    other half -- a *ruling* left standing over a question nobody would ask
+    now, and a ruling made against wording that has since moved.
+    """
+    chosen = layers if layers is not None else load_rules()
+
+    settled: list[str] = []
+    moved: list[str] = []
+    open_counts = dict.fromkeys(STANDINGS, 0)
+
+    for layer_id, this in chosen.items():
+        # The same set the queue asks about. A jurisdiction the screen is
+        # switched off for is not work anybody has, and counting its cards as
+        # open would report a morning that does not exist.
+        if not this.eligible:
+            continue
+        made = cards(this)
+        here = {c.term: c for c in made}
+        for term in this.words or {}:
+            if term not in here:
+                settled.append(f"{layer_id}  {term}")
+        for card in made:
+            if card.moved:
+                moved.append(f"{layer_id}  {card.term}")
+            if card.open:
+                open_counts[card.standing] += 1
+
+    return Audit(
+        settled=tuple(sorted(settled)),
+        moved=tuple(sorted(moved)),
+        open_by_standing=tuple((s, open_counts[s]) for s in STANDINGS),
+    )
+
+
+def report(found: Audit) -> str:
+    """The audit, for a terminal."""
+    out: list[str] = []
+    if found.clean:
+        out.append("every open card still asks something this corpus has not answered")
+    for name in found.settled:
+        out.append(f"settled   {name}  (ruled, and nothing rests on the word here now)")
+    for name in found.moved:
+        out.append(f"moved     {name}  (ruled against wording that has changed since)")
+    out.append("")
+    out.append(
+        "  ".join(f"{s}={n}" for s, n in found.open_by_standing)
+        + f"  open={sum(n for _, n in found.open_by_standing)}"
+    )
+    return "\n".join(out)
+
+
 def render(rows: Sequence[Card]) -> str:
     lines = []
     for card in rows:
@@ -648,6 +931,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     import sys
 
     args = list(sys.argv[1:] if argv is None else argv)
+    if "--audit" in args:
+        print(report(audit()))
+        return 0
     rows = feed(ruled="--ruled" in args)
     if "--counts" in args:
         tally = counts(rows)

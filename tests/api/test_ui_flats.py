@@ -2898,3 +2898,25 @@ async def test_every_review_screen_is_reachable_from_the_sidebar(
         '"/flats/plans"',
     ):
         assert href in page.text, f"{href} is not in the sidebar"
+
+
+async def test_a_silent_word_says_where_this_code_sends_the_reader(
+    client: AsyncClient, session: AsyncSession
+):
+    """A card that says only "the glossary has no entry" hands the reviewer a
+    hunt. Portland defines neither *lot width* nor *building height* and its
+    own text points at Chapter 33.930, Measurements, for both — so the card
+    shows the sentence that says so, and the answer is one click and a chapter
+    number instead of twenty minutes."""
+    await _login(client, session)
+
+    response = await client.get(
+        "/flats/words/silent?layer=or/multnomah/portland&field=max_height_ft"
+    )
+
+    assert response.status_code == 200
+    if "Nothing left in this queue" in response.text:
+        pytest.skip("Portland's height words have been ruled")
+    assert "How this code writes it" in response.text
+    assert "33.930" in response.text
+    assert "sends the reader to" in response.text
