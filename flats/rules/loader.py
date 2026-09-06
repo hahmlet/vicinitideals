@@ -1365,9 +1365,24 @@ def _terse(exc: Exception) -> str:
     return msg[:300]
 
 
+#: The *safe* loader, C-accelerated where PyYAML was built against libyaml and
+#: the pure-Python one where it was not. Both are safe in the sense that
+#: matters -- ``yaml.safe_load`` is exactly ``yaml.load(text, SafeLoader)``,
+#: and ``CSafeLoader`` resolves the same closed tag set, so neither will
+#: construct a Python object out of a rule file.
+#:
+#: Every review screen re-reads all nineteen jurisdiction files,
+#: and the pure-Python scanner is most of what that costs -- two and a half
+#: seconds a page, spent tokenising files that have not changed. Same grammar,
+#: same safe tag set, same ``yaml.YAMLError`` on a file we cannot read; only
+#: the speed differs, so there is nothing here to fall back *from* if a build
+#: lacks the extension.
+_LOADER = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
+
+
 def load_layer(path: Path, root: Path, problems: list[str]) -> Layer | None:
     try:
-        raw = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        raw = yaml.load(path.read_text(encoding="utf-8"), Loader=_LOADER) or {}
     except yaml.YAMLError as exc:
         problems.append(f"{path}: unparseable YAML — {_terse(exc)}")
         return None

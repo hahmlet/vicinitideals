@@ -162,6 +162,13 @@ def test_skipping_swaps_the_next_word_in_without_a_page_load(
 
     page.get_by_role("button", name=re.compile("Can.t tell yet")).click()
     wait_for_htmx(page)
+    # Wait for the swap to have happened, not for a fixed budget to elapse.
+    # ``wait_for_htmx`` swallows its own timeout, so when the queue took
+    # longer than the wait allowed, everything below read the card that was
+    # still on screen and the failure named the card instead of the clock.
+    # The skip counter is the one thing on the form that cannot be true of
+    # the card we just left.
+    expect(page.locator("#word-card input[name='skipped']")).to_have_value("1")
 
     assert page.url == url_before, "the queue does not navigate"
     assert _card_key(page) != first, "it moved on"
@@ -187,6 +194,10 @@ def test_a_filter_survives_the_next_word(
 
     page.get_by_role("button", name=re.compile("Can.t tell yet")).click()
     wait_for_htmx(page)
+    # Same reason as the skip test: the filter is on the card we came from as
+    # well as the one we are going to, so reading it before the swap lands
+    # would pass whether or not the filter survived anything.
+    expect(page.locator("#word-card input[name='skipped']")).to_have_value("1")
 
     held = page.locator("#word-card input[name='layer']").input_value()
     assert held == "or/multnomah/gresham"

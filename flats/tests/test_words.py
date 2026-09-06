@@ -354,6 +354,108 @@ class TestMentions:
                 f"{term} is silent and the card does not say where to look"
             )
 
+# --- the corpus is read once, not once a click ------------------------------
+
+
+class TestTheScanIsPaidOnce:
+    """The queue used to re-read every stored document on every page load.
+
+    Nine seconds a click, which is not a queue anybody works — and long enough
+    that the browser test's own wait gave up and read the card that had not
+    moved yet, so the failure blamed the skip. The store cannot change under a
+    running container (documents are fetched into the repository and shipped
+    in the image), so the scan is paid once and the rulings, which do change,
+    are still read fresh every time.
+    """
+
+    def _town(self, root, monkeypatch, line: str) -> str:
+        home = root / "or" / "test" / "town"
+        home.mkdir(parents=True, exist_ok=True)
+        (home / "19.300.txt").write_text(
+            f"19.300 Residential Zones\n{line}\n", encoding="utf-8"
+        )
+        monkeypatch.setattr(W, "DOCS", root)
+        return "or/test/town"
+
+    def test_the_second_read_of_a_store_does_not_touch_the_disk(
+        self, tmp_path, monkeypatch
+    ) -> None:
+        layer_id = self._town(tmp_path, monkeypatch, "The lot area is 5,000 sq ft.")
+        assert W._scan(layer_id, ["lot area"])[0]["lot area"] == 1
+
+        (tmp_path / "or" / "test" / "town" / "19.300.txt").write_text(
+            "19.300 Residential Zones\nlot area\nlot area\n", encoding="utf-8"
+        )
+        assert W._scan(layer_id, ["lot area"])[0]["lot area"] == 1, (
+            "a second page load re-read the corpus"
+        )
+
+    def test_a_fetched_document_is_seen_once_the_cache_is_dropped(
+        self, tmp_path, monkeypatch
+    ) -> None:
+        """The one thing a cache owes: a way back. Fetching a document into
+        the store is exactly when the scan's answer stops being true."""
+        layer_id = self._town(tmp_path, monkeypatch, "The lot area is 5,000 sq ft.")
+        W._scan(layer_id, ["lot area"])
+
+        (tmp_path / "or" / "test" / "town" / "19.100.txt").write_text(
+            "19.100 Measurements\nLot area is measured to the lot line.\n",
+            encoding="utf-8",
+        )
+        W.refresh(layer_id)
+        assert W._scan(layer_id, ["lot area"])[0]["lot area"] == 2
+
+    def test_two_corpora_that_share_a_layer_id_are_two_corpora(
+        self, tmp_path, monkeypatch
+    ) -> None:
+        """The store's own path is half the key. Every synthetic corpus in
+        this suite is "or/test/town", and a cache keyed on the layer alone
+        would hand one test another's answer — a green test measuring nothing.
+        """
+        one = self._town(tmp_path / "one", monkeypatch, "The lot area is 5,000 sq ft.")
+        assert W._scan(one, ["lot area"])[0]["lot area"] == 1
+
+        two = self._town(tmp_path / "two", monkeypatch, "lot area\nlot area\nlot area\n")
+        assert one == two
+        assert W._scan(two, ["lot area"])[0]["lot area"] == 3
+
+    def test_what_a_caller_is_handed_is_not_the_cache(
+        self, tmp_path, monkeypatch
+    ) -> None:
+        """Counts go out to callers that group and total them. One that edited
+        what it was given would edit what everybody after it reads."""
+        layer_id = self._town(tmp_path, monkeypatch, "The lot area is 5,000 sq ft.")
+        counted, shown = W._scan(layer_id, ["lot area"])
+        counted["lot area"] = 999
+        shown["lot area"] = ()
+
+        assert W._scan(layer_id, ["lot area"])[0]["lot area"] == 1
+        assert W._scan(layer_id, ["lot area"])[1]["lot area"]
+
+    def test_the_cheap_first_question_loses_no_line(
+        self, tmp_path, monkeypatch
+    ) -> None:
+        """A line is asked one question — does it write *any* of these words —
+        before it is asked thirty. That gate is the same alternation joined up,
+        so a word late in the list must still be found on a line no earlier
+        word appears in."""
+        layer_id = self._town(
+            tmp_path, monkeypatch, "Minimum street frontage is 25 feet."
+        )
+        terms = ["lot area", "lot width", "building height", "street frontage"]
+        counted, shown = W._scan(layer_id, terms)
+
+        assert counted == {
+            "lot area": 0,
+            "lot width": 0,
+            "building height": 0,
+            "street frontage": 1,
+        }
+        assert [m.text for m in shown["street frontage"]] == [
+            "Minimum street frontage is 25 feet."
+        ]
+
+
 # --- read it, or go and get it ----------------------------------------------
 
 

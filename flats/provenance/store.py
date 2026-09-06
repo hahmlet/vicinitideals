@@ -189,11 +189,18 @@ class ProvenanceStore:
         return self.text_path(path).is_file() and self.meta_path(path).is_file()
 
     def documents(self) -> list[str]:
-        """Every stored document path, sorted."""
+        """Every stored document path, sorted.
+
+        Matched on the way out of the walk rather than filtered afterwards:
+        the store holds a ``.meta.json`` beside every document, so walking
+        everything and asking each entry whether it is a file was two stat
+        calls per document to find one. The sidecars cannot match ``*.txt``,
+        which is what the discarded name test was for.
+        """
         return sorted(
             str(p.relative_to(self.root)).replace("\\", "/")
-            for p in self.root.rglob("*")
-            if p.is_file() and not p.name.endswith(".meta.json") and p.suffix == ".txt"
+            for p in self.root.rglob("*.txt")
+            if p.is_file()
         )
 
     # --- read / write ------------------------------------------------

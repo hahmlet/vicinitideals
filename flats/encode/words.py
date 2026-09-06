@@ -386,10 +386,58 @@ def _sends(line: str) -> tuple[tuple[str, int], ...]:
     return tuple(out)
 
 
+#: Scans already paid for, keyed by the store that was read.
+#:
+#: A scan opens every stored document of a jurisdiction and runs the word
+#: patterns over every line of it. The answer changes only when a document is
+#: fetched, and documents are fetched into the repository and shipped in the
+#: image, so inside a running container the store cannot move under a reader.
+#: That is the same bargain the fetch queue's ``_SCANNED`` makes, and it is
+#: what turns the word queue from five seconds a click into one page load that
+#: pays and the rest of the session free. What *does* change while somebody
+#: works the queue is the rulings, and those are read fresh on every call.
+#:
+#: The store's own path is half the key because the tests build synthetic
+#: corpora that reuse layer ids: "or/test/town" is four different towns under
+#: four ``tmp_path`` roots, and a key that named only the layer would hand one
+#: test another's corpus.
+_SCANNED: dict[
+    tuple[str, str, tuple[str, ...], int],
+    tuple[dict[str, int], dict[str, tuple[Mention, ...]]],
+] = {}
+
+
+def refresh(layer_id: str | None = None) -> None:
+    """Drop the scan cache — call after fetching a document into the store."""
+    if layer_id is None:
+        _SCANNED.clear()
+        return
+    for key in [k for k in _SCANNED if k[1] == layer_id]:
+        del _SCANNED[key]
+
+
 def _scan(
     layer_id: str, terms: Sequence[str], *, keep: int = KEEP
 ) -> tuple[dict[str, int], dict[str, tuple[Mention, ...]]]:
     """Count and sample the lines of stored code that write each word.
+
+    Cached per store; see ``_SCANNED``. The copies are shallow and cheap —
+    a handful of counts and tuples of frozen mentions — and they are made
+    because a caller that edits what it was handed would edit the cache.
+    """
+    key = (str(DOCS), layer_id, tuple(terms), keep)
+    held = _SCANNED.get(key)
+    if held is None:
+        held = _read(layer_id, terms, keep)
+        _SCANNED[key] = held
+    counts, shown = held
+    return dict(counts), dict(shown)
+
+
+def _read(
+    layer_id: str, terms: Sequence[str], keep: int
+) -> tuple[dict[str, int], dict[str, tuple[Mention, ...]]]:
+    """The scan itself.
 
     One pass. Counting and sampling separately would read every document
     twice for an answer the first pass already had, and ``keep=0`` is the
@@ -414,12 +462,22 @@ def _scan(
         term: re.compile("|".join(_flex(s) for s in spellings(term)), re.I)
         for term in terms
     }
+    if not patterns:
+        return counts, {}
+    #: One question asked of a line before the thirty. Almost every line of a
+    #: zoning code writes none of these words, and asking each word separately
+    #: is thirty scans of a line the first one could have dismissed -- three
+    #: million of them across the corpus, which is most of what the queue
+    #: spends. The gate is the same alternation joined up, so it cannot
+    #: disagree with the patterns it guards: a union of alternations is the
+    #: alternation of the union. Only lines it lets through pay for the rest.
+    gate = re.compile("|".join(p.pattern for p in patterns.values()), re.I)
     for path in sorted(directory.glob("*.txt")):
         doc = path.name
         home = _home(doc)
         text = path.read_text(encoding="utf-8", errors="replace")
         for number, line in enumerate(text.splitlines(), start=1):
-            if len(line) < 4:
+            if len(line) < 4 or not gate.search(line):
                 continue
             hit = [(t, m) for t, p in patterns.items() if (m := p.search(line))]
             if not hit:
