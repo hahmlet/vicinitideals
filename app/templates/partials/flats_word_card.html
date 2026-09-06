@@ -28,9 +28,18 @@
 </div>
 {% else %}
 
+{#
+  The jurisdiction is half the card's identity, not a subtitle. The whole
+  finding this queue exists for is that the same word means different things in
+  different books, so two cards running -- “lot line” in Gresham, “lot line” in
+  Portland -- are a different question asked twice, and a heading that names
+  only the word reads as a skip that did not take.
+#}
 <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:2px">
-  <h3 style="margin:0;font-size:17px">“{{ card.term }}”</h3>
-  <span class="muted" style="font-size:13px">in {{ card.label or card.layer }}</span>
+  <h3 style="margin:0;font-size:17px">
+    “{{ card.term }}”
+    <span class="muted" style="font-weight:400;font-size:14px">in {{ card.label or card.layer }}</span>
+  </h3>
 </div>
 <div class="muted" style="font-size:12px;margin-bottom:14px">
   {{ card.values }} encoded number{{ "" if card.values == 1 else "s" }} measured in it

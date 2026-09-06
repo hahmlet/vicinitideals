@@ -37,6 +37,22 @@ def _card_heading(page: Page) -> str:
     return page.locator("#word-card h3").inner_text().strip()
 
 
+def _card_key(page: Page) -> tuple[str, str]:
+    """Which card is on screen: the word *and* the city.
+
+    A card is one word in one jurisdiction, and the word alone does not
+    identify it -- the whole finding this queue exists for is that the same
+    word means different things in different books, so two cards running can
+    both be "lot line". Asserting on the word alone reported a skip that had
+    worked as a skip that had not.
+    """
+    card = page.locator("#word-card")
+    return (
+        card.locator("input[name='layer_id']").input_value(),
+        card.locator("input[name='term']").input_value(),
+    )
+
+
 def test_the_landing_page_lets_you_pick_the_day_s_standing(
     logged_in_page: Page, base_url: str
 ) -> None:
@@ -133,14 +149,18 @@ def test_skipping_swaps_the_next_word_in_without_a_page_load(
     if "Nothing left in this queue" in card.inner_text():
         pytest.skip("the defined queue is empty")
 
-    first = _card_heading(page)
+    first = _card_key(page)
     url_before = page.url
 
     page.get_by_role("button", name=re.compile("Can.t tell yet")).click()
     wait_for_htmx(page)
 
     assert page.url == url_before, "the queue does not navigate"
-    assert _card_heading(page) != first, "it moved on"
+    assert _card_key(page) != first, "it moved on"
+    # And the reviewer can see that it moved: the heading names the city as
+    # well as the word, because two cards running may be the same word in two
+    # different books and a bare word reads as a skip that did not take.
+    assert " in " in _card_heading(page)
     expect(page.get_by_text("1 skipped", exact=False).first).to_be_visible()
 
 
