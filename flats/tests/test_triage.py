@@ -42,6 +42,7 @@ from flats.encode.triage import (
     layer_path,
     render,
     rule,
+    unscreened,
 )
 from flats.rules.fields import FIELDS
 from flats.rules.loader import load_rules
@@ -1147,3 +1148,31 @@ def test_a_card_in_a_city_nobody_screens_says_so_on_its_own_line() -> None:
     assert "SWITCHED OFF" in marked
     assert "the screen does not cover" in marked
     assert "SWITCHED OFF" not in plain, "the caller decides, not this renderer"
+
+
+def test_which_cities_are_switched_off_is_one_list_both_surfaces_read() -> None:
+    """The terminal said it and the browser did not.
+
+    A fifth of this queue is chapters for land nothing is ever scored on, and
+    for as long as the marker lived in the CLI's ``main`` the screen showed
+    them as ordinary work. Two surfaces reading one queue may not disagree
+    about which land is live, so there is one list and both call it.
+    """
+    rules = load_rules()
+    off = unscreened(rules)
+
+    assert off, "the corpus has switched-off jurisdictions; this found none"
+    for layer_id in off:
+        assert not rules[layer_id].eligible
+    for layer_id, layer in rules.items():
+        if layer.eligible:
+            assert layer_id not in off
+
+
+def test_a_layer_filter_nobody_matches_is_an_empty_queue() -> None:
+    """The filter is a query parameter, so it is whatever a browser sends: a
+    stale bookmark, a typo, a city renamed since. Indexing straight into the
+    hierarchy made all three a 500. The word and reading queues compare rather
+    than index and answer "nothing here"; this one has to agree."""
+    assert feed(layer="or/clackamas/lake-oswead") == []
+    assert feed(layer="or/multnomah/portland"), "a real layer still answers"

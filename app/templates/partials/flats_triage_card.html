@@ -27,6 +27,22 @@
     {{ labels.get(card.layer, card.layer) }} &middot; {{ card.kind }} {{ card.ref }}{% if card.title %}<span style="font-weight:400"> &mdash; {{ card.title }}</span>{% endif %}
   </h3>
 </div>
+{% if card.layer in unscreened %}
+{#
+  This queue ranks on lots at stake and counts a switched-off city's lots like
+  anyone else's -- deliberately, because re-ranking by a second invisible
+  criterion is how a queue stops being explainable. So the card says it. The
+  terminal has said this since the queue was built; the screen did not, and a
+  fifth of these cards are for land nothing will ever be scored on.
+#}
+<div style="font-size:12px;margin:0 0 12px;padding:8px 10px;border-left:3px solid #d97706">
+  <strong>{{ labels.get(card.layer, card.layer) }} is not screened.</strong>
+  Nothing here is scored against a lot, so fetching this chapter changes no
+  verdict. It is in the queue because the ranking does not hide anything —
+  work it only if this city is coming back.
+</div>
+{% endif %}
+
 <div class="muted" style="font-size:12px;margin-bottom:14px">
   {{ card.mentions|length }} mention{{ "" if card.mentions|length == 1 else "s" }}
   &middot; {{ card.docs|length }} document{{ "" if card.docs|length == 1 else "s" }}

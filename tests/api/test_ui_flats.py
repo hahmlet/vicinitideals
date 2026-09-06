@@ -2000,6 +2000,52 @@ async def test_the_queue_asks_one_question_about_one_reference(
     )
 
 
+async def test_a_card_for_land_nobody_screens_says_so_before_the_evidence(
+    client: AsyncClient, session: AsyncSession
+):
+    """A fifth of this queue is chapters for cities that are switched off.
+
+    They are in it on purpose — the queue ranks on lots at stake and hiding
+    them would mean re-ranking by a criterion nobody can see — and the terminal
+    has marked them since the queue was built. The screen did not, so nine of
+    the first twenty-five cards read as ordinary work when fetching them
+    changes no verdict at all.
+    """
+    await _login(client, session)
+
+    response = await client.get("/flats/triage?layer=or/clackamas/lake-oswego")
+
+    assert response.status_code == 200
+    assert "is not screened" in response.text
+    assert "Nothing here is scored against a lot" in response.text
+
+
+async def test_a_layer_nobody_has_is_an_empty_queue_and_not_a_crash(
+    client: AsyncClient, session: AsyncSession
+):
+    """The filter comes off a query string — a stale bookmark, a typo, a city
+    renamed since. Indexing straight into the hierarchy turned every one of
+    those into a 500."""
+    await _login(client, session)
+
+    response = await client.get("/flats/triage?layer=or/clackamas/lake-oswead")
+
+    assert response.status_code == 200
+    assert "Nothing left in this queue" in response.text
+
+
+async def test_a_card_for_land_the_screen_covers_carries_no_such_warning(
+    client: AsyncClient, session: AsyncSession
+):
+    """The other half of it. A marker on every card is not a marker."""
+    await _login(client, session)
+
+    response = await client.get("/flats/triage?layer=or/multnomah/portland")
+
+    assert response.status_code == 200
+    assert "is not screened" not in response.text
+
+
 async def test_a_ruling_lands_in_the_inbox_and_the_row_leaves_the_queue(
     client: AsyncClient, session: AsyncSession
 ):

@@ -65,7 +65,7 @@ from flats.encode.find import passages
 from flats.encode.gaps import digest as gaps_digest
 from flats.encode.gaps import read_ledger
 from flats.encode.load import load_trusted
-from flats.encode.triage import Card, feed, fields_in
+from flats.encode.triage import Card, feed, fields_in, unscreened
 from flats.encode.worklist import KINDS, QUEUES
 from flats.encode.worklist import Card as ReadingCard
 from flats.encode.worklist import card_key
@@ -1861,6 +1861,14 @@ def _triage_ctx(
         "jurisdictions": sorted(layers),
         "labels": {k: (v.label or k.rsplit("/", 1)[-1]) for k, v in layers.items()},
         "field_menu": fields_in(rows)[:14],
+        # Which of these cards are for land the screen does not cover. This
+        # queue keeps switched-off cities on purpose -- it ranks on lots at
+        # stake and re-ranking by a second invisible criterion is how a queue
+        # stops being explainable -- so the card has to say it. The terminal
+        # has said it since the queue was built and this screen did not, which
+        # is 156 of 737 cards and nine of the first twenty-five reading exactly
+        # like work. Same list the terminal uses.
+        "unscreened": unscreened(_layers()),
         "sel": {"layer": layer, "field": field, "doc": doc, "ruled": ruled},
         "error": error,
         "note": note,

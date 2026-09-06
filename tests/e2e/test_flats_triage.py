@@ -37,6 +37,11 @@ pytestmark = pytest.mark.e2e
 #: *building height* on 2,480 lots and written beside nothing.
 HANDED = "or/multnomah/_unincorporated"
 
+#: A city the screen does not cover. Lake Oswego is switched off -- an
+#: owner decision about the Mountain Park PUD -- and its chapters sit
+#: fourth and fifth in the whole corpus queue on lots nothing will score.
+UNSCREENED = "or/clackamas/lake-oswego"
+
 
 def test_the_queue_opens_on_one_card_under_a_mode_line(
     logged_in_page: Page, base_url: str
@@ -72,3 +77,35 @@ def test_the_chapter_at_the_top_says_what_put_it_there(
     expect(card.get_by_text("Words this code hands it")).to_be_visible()
     expect(card.get_by_text("settled here", exact=False)).to_be_visible()
     expect(card.get_by_text("hold a standard measured in", exact=False)).to_be_visible()
+
+
+def test_a_card_for_land_nobody_screens_says_so_before_the_evidence(
+    logged_in_page: Page, base_url: str
+) -> None:
+    """A fifth of this queue is chapters for cities that are switched off.
+
+    They are in it deliberately -- the rank is on lots at stake and hiding
+    them would mean re-ranking by something nobody can see -- and the terminal
+    has marked them since the queue was built. The screen did not, so nine of
+    the first twenty-five cards read as ordinary work while fetching them
+    changes no verdict at all.
+    """
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/triage?layer={UNSCREENED}")
+
+    card = page.locator("#triage-card")
+    expect(card).to_be_visible()
+    expect(card.get_by_text("is not screened", exact=False).first).to_be_visible()
+    expect(
+        card.get_by_text("Nothing here is scored against a lot", exact=False).first
+    ).to_be_visible()
+
+
+def test_a_layer_nobody_has_is_an_empty_queue_and_not_an_error(
+    logged_in_page: Page, base_url: str
+) -> None:
+    """The filter is a query parameter, so it is whatever the browser sends."""
+    page = logged_in_page
+    page.goto(f"{base_url}/flats/triage?layer=or/clackamas/lake-oswead")
+
+    expect(page.locator("#triage-card")).to_contain_text("Nothing left in this queue")

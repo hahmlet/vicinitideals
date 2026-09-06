@@ -912,8 +912,15 @@ def feed(
     """
     store = store or ProvenanceStore()
     layers = load_rules()
+    # A layer nobody has is an empty queue, not a crash. The filter arrives
+    # from a query string -- a stale bookmark, a typo, a city that has since
+    # been renamed -- and indexing straight into the hierarchy turned any of
+    # those into a 500. The word and reading queues have always compared
+    # rather than indexed and answer "nothing here"; this one now agrees.
     chosen = (
-        [layers[layer]] if layer else [v for k, v in sorted(layers.items())]
+        [lay for lid, lay in sorted(layers.items()) if lid == layer]
+        if layer
+        else [lay for _, lay in sorted(layers.items())]
     )
 
     rows: list[Card] = []
@@ -942,6 +949,23 @@ def fields_in(rows: Iterable[Card]) -> list[tuple[str, int]]:
         for f in card.fields:
             counts[f] += 1
     return sorted(counts.items(), key=lambda kv: (-kv[1], kv[0]))
+
+
+def unscreened(rules: Mapping[str, Layer] | None = None) -> frozenset[str]:
+    """Jurisdictions the screen does not cover.
+
+    One list, because two surfaces reading the same queue must not disagree
+    about which land is live. The terminal has said this since the queue was
+    built and the browser did not, which is 156 of 737 cards -- nine of the
+    first twenty-five -- looking exactly like work.
+
+    The word and reading queues drop these layers outright (``eligible_only``,
+    ``include_off``). This one keeps them on purpose: it ranks on lots at
+    stake, and re-ranking by a second invisible criterion is how a queue stops
+    being explainable. So the card says it instead.
+    """
+    rules = rules if rules is not None else load_rules()
+    return frozenset(lid for lid, layer in rules.items() if not layer.eligible)
 
 
 def render(rows: Sequence[Card], *, limit: int = 20, off: Collection[str] = ()) -> str:
@@ -1196,8 +1220,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         for name, count in fields_in(rows):
             print(f"{name:34s} {count:5d}")
         return 0
-    off = {lid for lid, layer in load_rules().items() if not layer.eligible}
-    print(render(rows, limit=args.limit, off=off))
+    print(render(rows, limit=args.limit, off=unscreened()))
     return 0
 
 
