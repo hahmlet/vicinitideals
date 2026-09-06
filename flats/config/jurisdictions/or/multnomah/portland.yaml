@@ -195,6 +195,22 @@ code:
   - id: "33.920"
     url: https://www.portland.gov/sites/default/files/code/920-categories_1.pdf
     title: Chapter 33.920 Descriptions of the Use Categories
+  # 33.930 is the third of the trio, and the note above 33.910 was wrong about
+  # it: the definitions chapter is where a word is *filed*, this one is where a
+  # measurement is *taken*. Portland's 296-entry definitions chapter has no
+  # entry for "building height" and none for "lot width"; this chapter's
+  # 33.930.050 Measuring Height and 33.930.100 Measuring Lot Widths are the
+  # code's own answer to both, and until today every setback and height the
+  # city holds was measured under rules stored nowhere.
+  #
+  # It arrives here from the word queue rather than from the reference ledger,
+  # which is the whole point of that queue: 33.930 stands beside no standard
+  # anywhere in the corpus, so the fetch feed scored it (0, 0, 0, 0) and sat it
+  # 69th of 75. What reaches it is being handed the words 186,888 lots' worth
+  # of numbers are measured in.
+  - id: "33.930"
+    url: https://www.portland.gov/sites/default/files/code/930-measurements_0.pdf
+    title: Chapter 33.930 Measurements
   - id: "33.266"
     url: https://www.portland.gov/sites/default/files/code/266-parking_3.pdf
     title: Chapter 33.266 Parking, Loading, and Transportation and Parking Demand Management

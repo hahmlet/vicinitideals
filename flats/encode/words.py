@@ -50,11 +50,11 @@ from __future__ import annotations
 import hashlib
 import re
 from bisect import insort
-from collections.abc import Mapping, Sequence
+from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
 
-from flats.encode import glossary
+from flats.encode import crossrefs, glossary
 from flats.encode.crossrefs import _HEADING, _REF
 from flats.rules.fields import FIELDS
 from flats.rules.loader import load_rules
@@ -529,6 +529,13 @@ class Card:
     shown: tuple[Mention, ...] = ()
     #: Lots in this jurisdiction. The sort, never a filter.
     lots: int = 0
+    #: Which of :attr:`sends` the store can actually open. A shortlist of
+    #: chapters is two different instructions wearing one set of clothes --
+    #: "go and read this" and "go and fetch this" are not the same morning --
+    #: and the reviewer cannot tell them apart by looking at a section number.
+    #: Portland's silent words pointed at 33.930 for weeks while it was not in
+    #: the store; it is now, and nothing on the card said so.
+    held: tuple[str, ...] = ()
     ruling: Reading | None = None
 
     @property
@@ -545,6 +552,17 @@ class Card:
         the answer is, written by the city rather than guessed by us.
         """
         return tuple(dict.fromkeys(c for m in self.shown for c in m.sends))
+
+    @property
+    def unheld(self) -> tuple[str, ...]:
+        """Of those, the ones the store cannot open — a fetch, not a read.
+
+        Kept as its own list rather than left to the reader to subtract: the
+        two halves are different work on different days, and a shortlist that
+        does not separate them sends somebody to look up a chapter that is not
+        there.
+        """
+        return tuple(ref for ref in self.sends if ref not in self.held)
 
     @property
     def outcome(self) -> str:
@@ -800,6 +818,22 @@ def undefined_here(
     }
 
 
+def _NOTHING_OPENS(ref: str) -> bool:
+    """No reference resolves — the answer where nothing was handed off."""
+    return False
+
+
+def _holds(opens: Callable[[str], bool], shown: Sequence[Mention]) -> tuple[str, ...]:
+    """Which of the chapters these lines point at the store can open.
+
+    The same test the fetch queue uses, deliberately: a card saying "we hold
+    that chapter" of something :mod:`flats.encode.crossrefs` is still asking
+    for would be two ledgers with two answers about one document.
+    """
+    sent = dict.fromkeys(chapter for m in shown for chapter in m.sends)
+    return tuple(ref for ref in sent if opens(ref))
+
+
 def cards(
     layer: Layer,
     *,
@@ -815,6 +849,14 @@ def cards(
     entries, read_any = _glossary(layer)
     rulings = dict(layer.words or {})
     rulings.update(overrides or {})
+    # Built once for the whole feed, and only where a card would use it: the
+    # test reads every document this layer owns (0.1s for Portland), and
+    # asking for it per card would read them again for each of twenty words.
+    opens = (
+        crossrefs.opens(layer)
+        if any(m.sends for shown in sampled.values() for m in shown)
+        else _NOTHING_OPENS
+    )
 
     out: list[Card] = []
     for term, mine in governed.items():
@@ -855,6 +897,7 @@ def cards(
                 values=_weight(layer, mine),
                 uses=spoken[term],
                 shown=sampled[term],
+                held=_holds(opens, sampled[term]),
                 lots=lots,
                 ruling=rulings.get(term),
             )

@@ -93,7 +93,7 @@ import sys
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Collection, Iterable, Iterator, Sequence
+from typing import Callable, Collection, Iterable, Iterator, Sequence
 
 from flats.provenance.store import ProvenanceStore, parse_quote
 from flats.rules.fields import FIELDS
@@ -507,6 +507,31 @@ def _near(line: int, cited: dict[int, set[str]]) -> set[str]:
         if abs(line - cite) <= BINDING_WINDOW:
             found |= names
     return found
+
+
+def opens(layer: Layer, store: ProvenanceStore | None = None) -> Callable[[str], bool]:
+    """Whether this jurisdiction's store answers for a reference, as a test.
+
+    :func:`dangling` asks the same question of every reference at once and
+    keeps the ones that fail; a caller holding a handful of references wants
+    the other side of it, and both sides must agree — a screen saying "we hold
+    that chapter" of something the fetch queue is still asking for would be
+    two ledgers with two answers.
+
+    Built once and closed over: the ids and headings cost a read of every
+    document this layer owns.
+    """
+    store = store or ProvenanceStore()
+    prefix = f"{layer.layer}/"
+    paths = [p for p in store.documents() if p.startswith(prefix)]
+    ids = _doc_ids(paths)
+    headings: set[str] = set()
+    for path in paths:
+        text = store.text_path(path).read_text(encoding="utf-8")
+        own = _doc_ids([path])
+        owns = {i.partition(".")[0] for i in own} if own else None
+        headings |= _headings(text, owns, own)
+    return lambda ref: _resolves(ref, ids, headings)
 
 
 def dangling(layer: Layer, store: ProvenanceStore | None = None) -> list[Dangling]:

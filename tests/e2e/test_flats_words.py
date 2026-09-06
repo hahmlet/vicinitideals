@@ -118,6 +118,14 @@ def test_a_silent_word_shows_where_the_code_sends_the_reader(
 
     expect(page.get_by_text("How this code writes it").first).to_be_visible()
 
+    # And it has to say which of those chapters we can actually open. Portland
+    # pointed at 33.930 for weeks while it was not in the store, and a section
+    # number does not tell a reviewer whether the next step is a read or a
+    # fetch.
+    text = card.inner_text()
+    assert "We hold" in text or "in the store" in text
+
+
 @pytest.mark.parametrize("standing", ("silent", "defined"))
 def test_each_standing_offers_only_the_answers_to_its_own_question(
     logged_in_page: Page, base_url: str, standing: str

@@ -2952,3 +2952,26 @@ async def test_a_silent_word_says_where_this_code_sends_the_reader(
     assert "How this code writes it" in response.text
     assert "33.930" in response.text
     assert "sends the reader to" in response.text
+
+
+async def test_a_shortlist_says_which_of_it_the_reviewer_can_open(
+    client: AsyncClient, session: AsyncSession
+):
+    """A section number does not say whether we hold the chapter.
+
+    Portland's silent height words pointed at 33.930 for weeks while it was
+    not in the store; it was fetched on 2026-09-06 and the card said nothing
+    either way. "Go and read this" and "go and fetch this" are different work
+    on different days and the card has to name which one it is asking for.
+    """
+    await _login(client, session)
+
+    response = await client.get(
+        "/flats/words/silent?layer=or/multnomah/portland&field=max_height_ft"
+    )
+
+    assert response.status_code == 200
+    if "Nothing left in this queue" in response.text:
+        pytest.skip("Portland's height words have been ruled")
+    assert "We hold" in response.text
+    assert "defined elsewhere" in response.text

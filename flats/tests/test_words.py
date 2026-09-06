@@ -354,6 +354,65 @@ class TestMentions:
                 f"{term} is silent and the card does not say where to look"
             )
 
+# --- read it, or go and get it ----------------------------------------------
+
+
+class TestWhatWeCanOpen:
+    """A shortlist of chapters is two instructions wearing one set of clothes.
+
+    "Go and read 33.930" and "go and fetch 33.930" are not the same morning,
+    and a section number does not say which it is. Portland's silent words
+    pointed at 33.930 for weeks while it was not in the store, and nothing on
+    the card said so.
+    """
+
+    def test_the_shortlist_splits_into_what_we_hold_and_what_we_do_not(
+        self,
+    ) -> None:
+        for layer_id in (PORTLAND, GRESHAM):
+            for card in cards(load_rules()[layer_id]):
+                assert set(card.held) | set(card.unheld) == set(card.sends)
+                assert not set(card.held) & set(card.unheld)
+
+    def test_a_chapter_we_say_we_hold_is_not_one_the_fetch_queue_wants(
+        self,
+    ) -> None:
+        """Two ledgers, one document, one answer.
+
+        Both sides use ``crossrefs._resolves``, and this is the reason: a card
+        telling a reviewer to go and read a chapter that the fetch queue is
+        still asking somebody to buy would be the corpus disagreeing with
+        itself in front of the person it is asking.
+        """
+        from flats.encode.triage import feed
+
+        for layer_id in (PORTLAND, GRESHAM):
+            waiting = {c.ref for c in feed(layer=layer_id)}
+            for card in cards(load_rules()[layer_id]):
+                assert not set(card.held) & waiting, card.term
+
+    def test_nothing_is_held_where_the_code_hands_the_word_nowhere(self) -> None:
+        assert W._holds(lambda ref: True, ()) == ()
+
+    def test_a_chapter_named_twice_is_asked_about_once(self) -> None:
+        """The store test reads every document this jurisdiction owns. Asking
+        it once per mention rather than once per chapter would read them all
+        again for every line a card shows."""
+        asked: list[str] = []
+
+        def opens(ref: str) -> bool:
+            asked.append(ref)
+            return True
+
+        shown = (
+            W.Mention(doc="a.txt", line=1, text="see 33.930", sends=("33.930",)),
+            W.Mention(doc="b.txt", line=9, text="see 33.930", sends=("33.930",)),
+        )
+
+        assert W._holds(opens, shown) == ("33.930",)
+        assert asked == ["33.930"]
+
+
 # --- what this queue owes the fetch queue -----------------------------------
 
 

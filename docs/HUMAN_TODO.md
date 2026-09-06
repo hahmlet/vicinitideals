@@ -610,15 +610,27 @@ nowhere in the 296-entry definitions chapter we do hold; the code's answer to
 both is "see Chapter 33.930". We do not have that chapter. Unincorporated
 Multnomah defers to the same one for another 43 values.
 
-**Fetch triage now leads with it, so there is nothing to look up.** Open
-`/flats/triage?layer=or/multnomah/portland` and 33.930 is the first card, with
-33.930.100 behind it. It used to be 69th of 75 and ranked at zero, because that
-queue counted a chapter by the standards written *beside* it and 33.930 is
-written beside nothing — it is reached by being handed the words the standards
-are measured in, which Portland says once, in prose, nowhere near a value. The
-card now names those words and the 186,888 lots that hold a number measured in
-them. Fetching it before the Portland word session answers five cards outright
-rather than parking them as *defined elsewhere*.
+**Fetched 2026-09-06, and it is now in the store** — 548 lines at
+`or/multnomah/portland/33.930.txt`, declared in the Portland rule file. Nothing
+to go and get. It reached the top of fetch triage the same day by the route
+that queue had been blind to: it stands beside no standard anywhere in the
+corpus, so it scored zero on everything the feed counted and sat 69th of 75,
+and what actually reaches it is being handed the words 186,888 lots' worth of
+numbers are measured in.
+
+**What the Portland word session now does with it.** Five cards point at it —
+*lot width* (5 values), *building height* (22), *setback* (90), *building* (12)
+and *street* (26). Two of them, *lot width* and *building height*, are the ones
+Portland's 296-entry definitions chapter is silent on, and 33.930 is the code's
+own answer to both: §33.930.050 Measuring Height and §33.930.100 Measuring Lot
+Widths. Rule those two against the chapter rather than parking them.
+
+Note that Portland mostly does not cite a section. Seventeen lines across the
+corpus name 33.930, and twelve of them say only "See Chapter 33.930,
+Measurements" — the chapter has eighteen sections and the reader is left to
+find the right one. Five name a section: 33.930.100 for a cottage cluster's
+lot width (33.110 and 33.120, and unincorporated Multnomah's copy of 33.110),
+and 33.930.150, Measuring Top of Bank, twice inside the definitions chapter.
 
 **Then Fairview, which the elevation decision promoted from nowhere to second
 place — with a catch.** It was on the previous version of this table at zero and

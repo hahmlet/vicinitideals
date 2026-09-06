@@ -109,7 +109,16 @@
   {% if card.sends %}
   Its own text hands the measuring to
   {% for chapter in card.sends %}<code>{{ chapter }}</code>{{ "" if loop.last else ", " }}{% endfor %}.
-  If one of those settles it, rule <em>defined elsewhere</em> and name the chapter.
+  {% if card.held %}
+  We hold
+  {% for chapter in card.held %}<code>{{ chapter }}</code>{{ "" if loop.last else ", " }}{% endfor %} —
+  read {{ "it" if card.held|length == 1 else "them" }}, and if
+  {{ "it settles" if card.held|length == 1 else "one settles" }} the word,
+  rule <em>defined elsewhere</em> and name the chapter.
+  {% else %}
+  {{ "That chapter is" if card.sends|length == 1 else "None of those chapters are" }}
+  in the store, so this one is a fetch before it is a reading.
+  {% endif %}
   {% endif %}
 </div>
 {% else %}
@@ -139,6 +148,18 @@
     Its own text sends the reader to
     {% for chapter in card.sends %}<code style="margin-right:6px">{{ chapter }}</code>{% endfor %}
   </div>
+  {% if card.unheld %}
+  {#
+    A section number does not say whether we can open it, and "go and read
+    this" and "go and fetch this" are not the same morning. Same test the
+    fetch queue uses, so the two cannot disagree about one document.
+  #}
+  <div class="muted" style="font-size:11px;margin-top:4px">
+    Not in the store:
+    {% for chapter in card.unheld %}<code>{{ chapter }}</code>{{ "" if loop.last else ", " }}{% endfor %}
+    &mdash; {{ "that one is" if card.unheld|length == 1 else "those are" }} a fetch.
+  </div>
+  {% endif %}
   {% endif %}
   <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px">
     {% for m in card.shown %}
