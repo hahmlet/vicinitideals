@@ -99,7 +99,27 @@ pytestmark = pytest.mark.unit
 #: 15, and a college 0.3; the row this building sits on, Household Living,
 #: prints "no maximum" in both of its columns. Words in an apparatus that has
 #: numbers in it, none of them pointed here.
-EXPECTED = {"stated": 183, "numeric": 37, "marker": 0, "dash": 2, "silent": 0}
+#
+# 183 -> 189 stated and 37 -> 43 numeric on 2026-09-07, and it is one finding
+# twelve times: Portland waives the garage entrance setback against an alley in
+# BOTH residential chapters, and neither waiver was held. 33.110.220.C.9 says
+# it for the single-dwelling zones -- "Alley. No side, rear, or garage entrance
+# setback is required from a lot line abutting an alley" -- and 33.120.283.E.1.b
+# says it for the multi-dwelling ones. Every one of the twelve zones carried
+# Table 110-3's or Table 120-4's flat 18 feet and nothing else.
+#
+# The split across the two buckets is an artefact and not a distinction: the
+# 33.110 citation has to include its own subsection number to be readable, and
+# a bare "9." is a figure to the ledger. The six from 33.120 quote prose with
+# no number in it and land in `stated`. Both are the same sentence and the same
+# reading.
+#
+# Nothing moves today. `setback_garage_entrance_ft` is captured and never
+# screened -- no rule in flats/fit or flats/score reads it -- so twelve
+# exemptions on it change no lot's verdict. They are counted because the day
+# that field is wired to a verdict is the day the reading has to already be
+# right, and because an exemption is the one value form a person has to sign.
+EXPECTED = {"stated": 189, "numeric": 43, "marker": 0, "dash": 2, "silent": 0}
 # 174 -> 175 on 2026-09-01: the Village zone's combined side yard. Its base
 # had been a 10 derived from two printed 5 ft yards, and no line of 4.125 says
 # ten, so the base became exempt and note 15's 15 ft kept its band. An

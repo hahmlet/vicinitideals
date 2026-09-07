@@ -266,9 +266,20 @@ def test_the_chapter_refused_one_standard_for_every_number_it_gave_up() -> None:
     seven numbers out, seven readings declined -- and a total that drifts with
     every unrelated reading stops making it. The total is pinned on the line
     below so deleting the eighth still fails here and not only in the census.
+
+    Three more arrived on 2026-09-07 and they are the same kind of outsider as
+    the eighth: the blind second reading found that this city's garage entrance
+    setback -- R-7.2, R-5 and the R-10 placeholder -- had been quoted from
+    17.10.065(6)(d) and 17.12.065(6)(d), which are cottage cluster garage door
+    WIDTH maxima. Gladstone states no garage entrance setback anywhere in Title
+    17, so the value came out and the reading went in. Excluded from the seven
+    for the same reason 17.25 is: they are not 17.48's exchange rate.
     """
     mine = [r for r in refusals() if r.kind == "comments" and r.where == GLADSTONE]
-    parking = [r for r in mine if "17.25" not in r.text]
+    #: The chapters that are not 17.48. Named rather than counted, so a new
+    #: refusal from a new chapter has to be admitted here on purpose.
+    elsewhere = ("17.25", "17.10.065", "17.12.065", "R7.2")
+    parking = [r for r in mine if not any(x in r.text for x in elsewhere)]
     assert len(parking) == 7
-    assert len(mine) == 8
+    assert len(mine) == 11
     assert len(load_rules()[GLADSTONE].defaults) == 7

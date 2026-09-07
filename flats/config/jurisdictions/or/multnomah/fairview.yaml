@@ -1809,6 +1809,25 @@ zones:
     # street a lot fronts is not a fact this system holds, so the exception is
     # the base and the menu is in the notes.
     setback_front_ft:
+      # 19.125.040.D is a menu, not a minimum: "Front facades shall be set back
+      # from right-of-way a distance of either zero feet or 10 feet or 15
+      # feet." Three permitted distances, and the 20 this file holds is not one
+      # of them -- it is the next sentence's exception, "except for the VA zone
+      # adjacent to NE Halsey Street where the setback for the Halsey Street
+      # frontage shall be 20 feet", carried across the whole zone.
+      #
+      # The 20 stays, because it is the strictest of the four numbers on the
+      # page and which VA lots front Halsey is NOT ENCODED -- no condition in
+      # the registry marks a parcel as adjacent to a named street, and the only
+      # thing of that shape here is `north_of_marine_drive`, written for one
+      # boundary in one city. What changes is that the sentence is on the
+      # record: away from Halsey this zone asks fifteen feet at the most and
+      # will take zero, so a VA lot refused on its front setback is refused on
+      # a figure Fairview states for a single street frontage.
+      #
+      # Whether a menu of three permitted distances is a minimum at all is the
+      # reading behind it, and that is a question for a person.
+      # Found 2026-09-07 by the blind second reading.
       value: 20
       quote: "or/multnomah/fairview/19.125.txt#L47,L55"
     setback_side_ft:

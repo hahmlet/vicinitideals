@@ -369,7 +369,8 @@ zones:
     section: ["17.08.", "17.16."]
     cite_default:
       cite: OCMC 17.08.020 (quadplex a permitted use) and Table 17.08.040 (dimensional
-        standards); middle housing standards OCMC 17.16.060, 17.16.070 (garage setback)
+        standards, including its garage setback row); middle housing standards OCMC
+        17.16.060
       url: https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.08LODEREDI
       retrieved: '2026-08-14'
     quadplex_allowed:
@@ -434,13 +435,27 @@ zones:
       cluster. No FAR. Quadplex uses base-zone dimensions per 17.16.060.A; >=1 street-facing main entrance
       req''d (17.16.060.C). Coverage 45% only with an ADU.'
     setback_garage_entrance_ft:
+      # Table 17.08.040's own garage row, three lines of it on the page: "20 feet
+      # from / ROW, except / Garage setback ... 5 feet Alley".
+      #
+      # The 20 this file carried was quoted from 17.16.070's cottage-cluster
+      # figure notes, where the only 20 on the page is a garage door's WIDTH --
+      # a maximum, about a housing type this pod is not, on a plan the city
+      # draws for clustered cottages. The number happens to survive; the
+      # sentence it rested on never said it, and it hid the alley exception
+      # the real row states beside it.
       value: 20
-      quote: "or/clackamas/oregon-city/17.zoning.txt#L5706-L5707"
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4153-L4155"
+      variants:
+        - value: 5
+          when: [abuts_alley]
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L4155"
   R-8:
     section: ["17.08.", "17.16."]
     cite_default:
       cite: OCMC 17.08.020 (quadplex a permitted use) and Table 17.08.040 (dimensional
-        standards); middle housing standards OCMC 17.16.060, 17.16.070 (garage setback)
+        standards, including its garage setback row); middle housing standards OCMC
+        17.16.060
       url: https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.08LODEREDI
       retrieved: '2026-08-14'
     quadplex_allowed:
@@ -504,13 +519,21 @@ zones:
     notes: 'quadfit confidence: verified | Height 35 ft. Front 10 ft for a porch. No FAR. One street-facing
       entrance per quadplex (17.16.060.C). Coverage 45% only with an ADU.'
     setback_garage_entrance_ft:
+      # Table 17.08.040's own garage row, three lines of it on the page: "20 feet
+      # from / ROW, except / Garage setback ... 5 feet Alley".
+      # Same row of Table 17.08.040 as R-10, same three columns.
       value: 20
-      quote: "or/clackamas/oregon-city/17.zoning.txt#L5706-L5707"
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4153-L4155"
+      variants:
+        - value: 5
+          when: [abuts_alley]
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L4155"
   R-6:
     section: ["17.08.", "17.16."]
     cite_default:
       cite: OCMC 17.08.020 (quadplex a permitted use) and Table 17.08.040 (dimensional
-        standards); middle housing standards OCMC 17.16.060, 17.16.070 (garage setback)
+        standards, including its garage setback row); middle housing standards OCMC
+        17.16.060
       url: https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.08LODEREDI
       retrieved: '2026-08-14'
     quadplex_allowed:
@@ -574,13 +597,21 @@ zones:
     notes: 'quadfit confidence: verified | Height 35 ft. Front 5 ft for a porch. Quadplex min lot (7,000)
       exceeds detached-SFD min (6,000). No FAR. Coverage 45% only with an ADU.'
     setback_garage_entrance_ft:
+      # Table 17.08.040's own garage row, three lines of it on the page: "20 feet
+      # from / ROW, except / Garage setback ... 5 feet Alley".
+      # Same row of Table 17.08.040 as R-10, same three columns.
       value: 20
-      quote: "or/clackamas/oregon-city/17.zoning.txt#L5706-L5707"
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4153-L4155"
+      variants:
+        - value: 5
+          when: [abuts_alley]
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L4155"
   R-5:
     section: ["17.10.", "17.16."]
     cite_default:
       cite: OCMC 17.10.020 (quadplex a permitted use) and Table 17.10.040 (dimensional
-        standards); middle housing standards OCMC 17.16.060, 17.16.070 (garage setback)
+        standards, including its garage setback row); middle housing standards OCMC
+        17.16.060
       url: https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.10MEDEREDI
       retrieved: '2026-08-14'
     quadplex_allowed:
@@ -650,13 +681,25 @@ zones:
     notes: 'quadfit confidence: verified | Height 35 ft. Ch 17.10 ''Medium Density'' but permits detached
       SFD (17.10.020.A) so HB 2001 attaches. Quadplex min lot 7,000 > detached 5,000. Coverage 50%.'
     setback_garage_entrance_ft:
+      # Table 17.10.040's own garage row, three lines of it on the page: "20 feet
+      # from / ROW, except / Garage setback ... 5 feet Alley".
+      #
+      # Same misreading as the 17.08 zones above: the 20 came from the cottage
+      # cluster figure notes at 17.16.070, which state a garage door's maximum
+      # WIDTH and no setback at all. Table 17.10.040 prints the real row, and
+      # both of its columns read the same.
       value: 20
-      quote: "or/clackamas/oregon-city/17.zoning.txt#L5706-L5707"
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4345-L4347"
+      variants:
+        - value: 5
+          when: [abuts_alley]
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L4347"
   R-3.5:
     section: ["17.10.", "17.16."]
     cite_default:
       cite: OCMC 17.10.020 (quadplex a permitted use) and Table 17.10.040 (dimensional
-        standards); middle housing standards OCMC 17.16.060, 17.16.070 (garage setback)
+        standards, including its garage setback row); middle housing standards OCMC
+        17.16.060
       url: https://library.municode.com/or/oregon_city/codes/municipal_code?nodeId=TIT17ZO_CH17.10MEDEREDI
       retrieved: '2026-08-14'
     quadplex_allowed:
@@ -727,5 +770,12 @@ zones:
       min lot 7,000 >> detached 3,500. Coverage 55%. NOT the multi-family zone (that is R-2 / Ch 17.12,
       excluded).'
     setback_garage_entrance_ft:
+      # Table 17.10.040's own garage row, three lines of it on the page: "20 feet
+      # from / ROW, except / Garage setback ... 5 feet Alley".
+      # Same row of Table 17.10.040 as R-5, same three columns.
       value: 20
-      quote: "or/clackamas/oregon-city/17.zoning.txt#L5706-L5707"
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4345-L4347"
+      variants:
+        - value: 5
+          when: [abuts_alley]
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L4347"

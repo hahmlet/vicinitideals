@@ -2102,14 +2102,35 @@ zones:
       value: 20
       quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
     setback_side_ft:
+      # Table 4.0131's Townhouse block names this zone in the same breath as
+      # OFR -- "MDR-12, OFR, and MDR-24" at L408-L409 -- and prints a looser
+      # row than the Duplex/Triplex/Quadplex one above it: interior side 5,
+      # street side 8, rear 10 and 8 with an alley. Only OFR carried them.
+      # Found 2026-09-07 by the blind second reading, which could not see the
+      # column headers from the cited line and went looking for them.
       value: 10
       quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
+      variants:
+        - value: 5
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
     setback_rear_ft:
       value: 15
       quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
+      variants:
+        - value: 10
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
+        - value: 8
+          when: [unit_lots, abuts_alley]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
     setback_street_side_ft:
       value: 20
       quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
+      variants:
+        - value: 8
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
     min_lot_sqft:
       value: 3600
       quote: "or/multnomah/gresham/4.0100.residential.txt#L243"
@@ -2228,14 +2249,35 @@ zones:
       value: 20
       quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
     setback_side_ft:
+      # Table 4.0131's Townhouse block names this zone in the same breath as
+      # OFR -- "MDR-12, OFR, and MDR-24" at L408-L409 -- and prints a looser
+      # row than the Duplex/Triplex/Quadplex one above it: interior side 5,
+      # street side 8, rear 10 and 8 with an alley. Only OFR carried them.
+      # Found 2026-09-07 by the blind second reading, which could not see the
+      # column headers from the cited line and went looking for them.
       value: 10
       quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
+      variants:
+        - value: 5
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
     setback_rear_ft:
       value: 15
       quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
+      variants:
+        - value: 10
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
+        - value: 8
+          when: [unit_lots, abuts_alley]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
     setback_street_side_ft:
       value: 20
       quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
+      variants:
+        - value: 8
+          when: [unit_lots]
+          quote: "or/multnomah/gresham/4.0100.residential.txt#L405,L408-L409"
     min_lot_sqft:
       # Table 4.0130 section A, Minimum Site Size, all other uses: 11,000 sq
       # ft in MDR-24. Seven district columns and seven values in the row, so
@@ -2661,12 +2703,22 @@ zones:
       value: 10
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L495"
     setback_side_ft:
+      # NOT ENCODED: a party-wall zero. This file carried one, quoted from the
+      # cell at L504 that reads "Common (Townhouse): 0" -- and both halves of
+      # that label put it out of our reach. The row is headed "Single-detached,
+      # duplex, triplex, and quadplex dwellings in any district; and Townhouse
+      # and Cottage Cluster in DRL-1 and DRL-2" (L492): the quadplex half is
+      # the half that reaches this building, and the cell is labelled for the
+      # other half. GDC 3.0100 settles which half we are -- "Middle housing
+      # quadplex units that have been divided onto individual lots through a
+      # Middle Housing Land Division are considered a quadplex"
+      # (3.0100.definitions.txt L962-L964) -- so no plat moves this pod into
+      # the Townhouse row. That reading is already written down three times in
+      # this file, under DMU, DEM and DCL. Five feet is the interior side
+      # setback here, on one lot or on four.
+      # Found 2026-09-07 by the blind second reading.
       value: 5
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L499"
-      variants:
-        - value: 0
-          when: [attached_wall]
-          quote: "or/multnomah/gresham/4.1100.downtown.txt#L504"
     setback_rear_ft:
       value: 10
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L506"
@@ -2796,12 +2848,22 @@ zones:
       value: 10
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L495"
     setback_side_ft:
+      # NOT ENCODED: a party-wall zero. This file carried one, quoted from the
+      # cell at L504 that reads "Common (Townhouse): 0" -- and both halves of
+      # that label put it out of our reach. The row is headed "Single-detached,
+      # duplex, triplex, and quadplex dwellings in any district; and Townhouse
+      # and Cottage Cluster in DRL-1 and DRL-2" (L492): the quadplex half is
+      # the half that reaches this building, and the cell is labelled for the
+      # other half. GDC 3.0100 settles which half we are -- "Middle housing
+      # quadplex units that have been divided onto individual lots through a
+      # Middle Housing Land Division are considered a quadplex"
+      # (3.0100.definitions.txt L962-L964) -- so no plat moves this pod into
+      # the Townhouse row. That reading is already written down three times in
+      # this file, under DMU, DEM and DCL. Five feet is the interior side
+      # setback here, on one lot or on four.
+      # Found 2026-09-07 by the blind second reading.
       value: 5
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L499"
-      variants:
-        - value: 0
-          when: [attached_wall]
-          quote: "or/multnomah/gresham/4.1100.downtown.txt#L504"
     setback_rear_ft:
       value: 10
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L506"
@@ -2935,12 +2997,20 @@ zones:
       value: 10
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L492,L495"
     setback_side_ft:
+      # NOT ENCODED: a party-wall zero, and this district is the plainer of the
+      # two cases. The 0 came from the cell at L504 reading "Common
+      # (Townhouse): 0", inside the row headed "...and Townhouse and Cottage
+      # Cluster in DRL-1 and DRL-2" (L492) -- a row whose townhouse half does
+      # not reach this district at all. Downtown does print its own townhouse
+      # row, "Townhouse in DCC, DMU, DTM, DEM, and DCL" (L474), with Common: 0
+      # (L481), and that is still not ours: GDC 3.0100 holds that "Middle
+      # housing quadplex units that have been divided onto individual lots
+      # through a Middle Housing Land Division are considered a quadplex"
+      # (3.0100.definitions.txt L962-L964) -- the same reading already written
+      # down under DMU, DEM and DCL. Five feet, on one lot or on four.
+      # Found 2026-09-07 by the blind second reading.
       value: 5
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L492,L499"
-      variants:
-        - value: 0
-          when: [attached_wall]
-          quote: "or/multnomah/gresham/4.1100.downtown.txt#L492,L504"
     setback_rear_ft:
       value: 10
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L492,L506"
@@ -3068,12 +3138,20 @@ zones:
       value: 10
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L492,L495"
     setback_side_ft:
+      # NOT ENCODED: a party-wall zero, and this district is the plainer of the
+      # two cases. The 0 came from the cell at L504 reading "Common
+      # (Townhouse): 0", inside the row headed "...and Townhouse and Cottage
+      # Cluster in DRL-1 and DRL-2" (L492) -- a row whose townhouse half does
+      # not reach this district at all. Downtown does print its own townhouse
+      # row, "Townhouse in DCC, DMU, DTM, DEM, and DCL" (L474), with Common: 0
+      # (L481), and that is still not ours: GDC 3.0100 holds that "Middle
+      # housing quadplex units that have been divided onto individual lots
+      # through a Middle Housing Land Division are considered a quadplex"
+      # (3.0100.definitions.txt L962-L964) -- the same reading already written
+      # down under DMU, DEM and DCL. Five feet, on one lot or on four.
+      # Found 2026-09-07 by the blind second reading.
       value: 5
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L492,L499"
-      variants:
-        - value: 0
-          when: [attached_wall]
-          quote: "or/multnomah/gresham/4.1100.downtown.txt#L492,L504"
     setback_rear_ft:
       value: 10
       quote: "or/multnomah/gresham/4.1100.downtown.txt#L492,L506"

@@ -185,7 +185,67 @@ pytestmark = pytest.mark.unit
 #: projections, the parking redirect into a chapter already stored, conditional
 #: use lot sizing and the unsewered site plan. A read that costs two refusals
 #: and settles five sections is the ledger working, not the corpus decaying.
-EXPECTED = {"notes": 105, "comments": 120, "tests": 17}
+#: 120 -> 124 comments on 2026-09-07, all four from the blind second reading of
+#: every cited number in the corpus -- 1,902 passages read by a reader who was
+#: shown the page, the zone and the standard and NOT the number we hold. It
+#: found three of a kind and one of its own.
+#:
+#: The three: Gladstone's garage entrance setback in R-7.2, R-5 and the R-10
+#: placeholder, each quoting a cottage cluster's garage door WIDTH maximum --
+#: "must not exceed 20 feet in width" -- as though it were a setback. A whole
+#: chapter grep for "garage" turns up five more sentences and not one of them
+#: sets a garage back from anything, so the value came out. Oregon City had the
+#: identical misread against the identical sentence and is NOT in this count,
+#: because that city does print a real garage setback row: the citation moved
+#: onto it and picked up the alley exception it had been hiding. Same error,
+#: two different endings, and only the one that ends in a refusal is counted.
+#:
+#: The fourth is the one worth reading. Troutdale MU-3 states "Middle housing
+#: dwelling units shall have a minimum building height of twenty-five (25)
+#: feet" -- the only standard in this corpus a pod could fail by being too
+#: SHORT, aimed by name at this building, in a zone that permits it. There is
+#: no field for a height floor; `max_height_ft` is a ceiling and nothing sits
+#: opposite it. The catalog pod clears it by one foot, on a height the catalog
+#: itself marks as not taken from a drawing set. A refusal is the honest place
+#: for that until the model grows somewhere to put it.
+#:
+#: 124 -> 127 on the same day, from the second half of the same reading. Two
+#: more shapes, and both are an exception that had been standing in for a rule:
+#:
+#: Gresham's four downtown districts each carried a party-wall zero quoted from
+#: a table cell that reads "Common (Townhouse): 0". Two things put that cell out
+#: of reach and either would do it alone -- the row it sits in extends Townhouse
+#: only to DRL-1 and DRL-2, and the cell is labelled for the townhouse half of a
+#: row whose other half is ours. GDC 3.0100 settles which half: "Middle housing
+#: quadplex units that have been divided onto individual lots through a Middle
+#: Housing Land Division are considered a quadplex", so no plat moves this pod
+#: into a townhouse row. That reading was already written down three times in
+#: the same file, under DMU, DEM and DCL; the four setback cells had simply
+#: never been held to it. Four values came out and the ledger counts two,
+#: because the argument reads differently in two pairs -- DRL-1 and DRL-2 are
+#: in the row and not in the cell, DCC and DTM are in neither -- and identical
+#: text in one layer is one refusal here by design. Pleasant Valley keeps its
+#: bare `attached_wall` zero and is right to: there the Common Wall column sits
+#: in the quadplex row itself.
+#:
+#: The third is Fairview VA, where 19.125.040.D offers a MENU -- "either zero
+#: feet or 10 feet or 15 feet" -- and the file held 20, which is not on it. The
+#: 20 is the next sentence's Halsey Street exception. It stays as the strictest
+#: reading on the page, and what is refused is the condition underneath it: no
+#: registered condition marks a parcel as adjacent to a named street, and the
+#: one thing of that shape, `north_of_marine_drive`, was written for a single
+#: boundary in a different city.
+#:
+#: 127 -> 128 the same day, from the missed-standard queue rather than the
+#: second reading, and it is a shape this model has no room for. Portland
+#: 33.120.283.E.1.a states the garage entrance setback in RM2, RM3, RM4 and RX
+#: as a forbidden BAND: "the garage entrance must be either 5 feet or closer to
+#: the street lot line, or 18 feet or farther from the street lot line." Not a
+#: floor with an exception -- two permitted zones with a gap between them, and
+#: which one a garage takes is the architect's choice rather than any fact
+#: about the site or the pod. A value here is one threshold with variants hung
+#: off facts, so the far branch is held and the near one is written down.
+EXPECTED = {"notes": 105, "comments": 128, "tests": 17}
 
 #: STILL 115 on 2026-09-03, and the flat number hides a swap worth more than
 #: most movements on this list. Clackamas County's drive aisle closed -- a

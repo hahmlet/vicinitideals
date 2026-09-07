@@ -334,8 +334,15 @@ def test_the_refused_ledger_carries_every_standard_this_model_cannot_hold(
         if refusal.kind == "comments" and TROUTDALE in refusal.where
     ]
     # Six from this reading, plus the continuously-curved corner-lot figure
-    # that was already here from the definitions read.
-    assert len(mine) == 8
+    # that was already here from the definitions read, plus the one the blind
+    # second reading added on 2026-09-07: MU-3's twenty-five foot MINIMUM
+    # building height (TDC 8.230.A), which is the only standard in the whole
+    # corpus a pod could fail by being too short and which this model has no
+    # field for -- `max_height_ft` is a ceiling and there is no counterpart.
+    # The count is nine because a height floor is exactly the kind of thing
+    # this ledger exists to hold: not a number we read wrong, a shape we
+    # cannot store.
+    assert len(mine) == 9
 
     text = " ".join(refusal.text for refusal in mine)
     for marker in (
@@ -346,6 +353,7 @@ def test_the_refused_ledger_carries_every_standard_this_model_cannot_hold(
         "9.095(A)",                   # the neighbour's setback
         "CFEC waiver",                # 9.005 and 9.035
         "on-street credit",           # 9.040 and 8.120.B.3.b
+        "minimum building height",    # 8.230.A, the one standard a pod fails short
     ):
         assert marker in text, marker
 

@@ -683,6 +683,15 @@ zones:
       accessory-structure setbacks (see 5.010) and the 20,000 sq ft maximum
       building footprint are stated and do not bind a 2,016 sq ft building.
   MU-3:
+    # NOT ENCODED, and it is the only standard in this corpus that a pod could
+    # fail by being too SHORT. TDC 8.230.A: "Middle housing dwelling units
+    # shall have a minimum building height of twenty-five (25) feet." Aimed by
+    # name at this building, in a zone that permits it, and there is no field
+    # for a height floor -- `max_height_ft` is a ceiling and the required-field
+    # check has no counterpart. The catalog pod stands 26 ft, so it clears the
+    # bar by one foot on a dimension the catalog itself flags as "not from a
+    # drawing set". A field, not a value, is what closes this.
+    # or/multnomah/troutdale/8.development-standards.txt#L1531
     max_density_du_per_acre:
       # 3.140.B.4: "Maximum density standards shall not apply to duplex,
       # triplex, quadplex, cottage cluster projects ... on a dwelling units per

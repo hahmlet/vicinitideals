@@ -447,7 +447,7 @@ zones:
     section: ["17.10."]
     cite_default:
       cite: Gladstone Municipal Code 17.10.020 (middle housing allowed outright), 17.10.050 (dimensional
-        standards), 17.10.065 (garage setback)
+        standards)
       url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1710.html
       retrieved: '2026-07-28'
     quadplex_allowed:
@@ -507,14 +507,22 @@ zones:
     max_height_ft:
       value: 35
       quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L204"
-    setback_garage_entrance_ft:
-      value: 20
-      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L381"
+    # NOT ENCODED: a minimum setback to the garage entrance, because Gladstone
+    # states none. This file carried 20 ft against GMC 17.10.065(6)(d), and
+    # that line reads "Garage doors for attached and detached individual
+    # garages must not exceed 20 feet in width" -- a maximum WIDTH, inside the
+    # cottage cluster design standards, about a housing type this pod is not.
+    # A grep of the whole chapter for "garage" returns five more sentences and
+    # not one of them is a setback: 17.10.030(1) sets accessory buildings back
+    # 20 ft at the front, 17.10.060(1) caps the street-facing garage WALL at
+    # half the facade, and 17.10.065(6) governs floor area and courtyards.
+    # Nothing is lost by the removal -- an attached garage's face is the
+    # building's face, and setback_front_ft already holds it at 20 ft.
   R5:
     section: ["17.12."]
     cite_default:
       cite: Gladstone Municipal Code 17.12.020 (middle housing allowed outright), 17.12.050 (dimensional
-        standards), 17.12.065 (garage setback)
+        standards)
       url: https://www.codepublishing.com/OR/Gladstone/html/Gladstone17/Gladstone1712.html
       retrieved: '2026-07-28'
     quadplex_allowed:
@@ -587,9 +595,10 @@ zones:
     max_height_ft:
       value: 35
       quote: "or/clackamas/gladstone/17.12.r-5.txt#L212"
-    setback_garage_entrance_ft:
-      value: 20
-      quote: "or/clackamas/gladstone/17.12.r-5.txt#L388"
+    # NOT ENCODED, and it is 17.10's error repeated in 17.12: the 20 ft this
+    # file carried came from GMC 17.12.065(6)(d), the cottage-cluster garage
+    # door WIDTH maximum, not from any setback. R-5's chapter states no garage
+    # entrance setback either; setback_front_ft holds this zone at 20 ft.
   R10:
     max_density_du_per_acre:
       # GMC 17.10.030, Maximum Density. The rows are by housing type and the
@@ -673,6 +682,6 @@ zones:
     max_height_ft:
       value: 35
       quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L204"
-    setback_garage_entrance_ft:
-      value: 20
-      quote: "or/clackamas/gladstone/17.10.r-7.2.txt#L381"
+    # NOT ENCODED, following R7.2, whose numbers this placeholder zone copies:
+    # the 20 ft removed there was a garage door width maximum misread as a
+    # setback, and Gladstone states no garage entrance setback in Title 17.
