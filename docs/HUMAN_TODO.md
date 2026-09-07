@@ -165,6 +165,16 @@ on it, and only the first is a queue item:
    the biggest single item and it is *work*, not a decision — you cannot approve
    your way past it in an afternoon.
 
+   **It got one degree less frightening on 2026-09-07 and not one degree
+   shorter.** Every number in the corpus was read a second time by a machine
+   reader that was shown the page and deliberately not shown our answer, and
+   1,845 of the 1,845 it could score came back matching. That is real evidence
+   the books are not full of typos — and it is not a signature and does not
+   substitute for one. A second reading confirms two readers agree; signing is a
+   person taking responsibility for the reading being right. The full result,
+   the six corrections it produced and the eight questions it could not settle
+   are **item 11**.
+
    Counted exactly, and the honest total is smaller than it looked: **2,204
    numbers across 15 code books** (re-counted 2026-09-03; it includes the two
    Clackamas aisle values added that day, and the per-city split is the table in
@@ -740,6 +750,150 @@ defines, and the overlay question is a reading the city itself has to give.
 Every other kind of gap in this project closes by finding the right document;
 this one does not.
 
+## 11. Eight readings a person has to make — the leftovers of a machine that re-read every number we hold
+
+**On 2026-09-07 every encoded number in the corpus was read a second time, by a
+reader who was shown the page, the zone and the standard and *not* shown the
+number we hold.** 1,902 citations. 1,845 of them could be scored against what
+we hold, and **1,845 agreed.** Not one confirmed wrong number in the whole
+corpus.
+
+That sentence needs its caveat said plainly, because it is easy to over-read:
+this is a *second reading*, not a signature. It says two independent readings of
+the same page landed on the same number. It does not say the page is the right
+page, and it is not the thing item 7 is about. But it is the first evidence
+anybody has that the corpus is not full of transcription errors, and it cost no
+human time.
+
+**What it did find was six corrections, and they were all the same mistake.**
+In every case a number was quoted from a sentence that states an *exception*,
+and held as though it were the rule:
+
+- **Oregon City** — five zones' garage setback came from a cottage-cluster
+  drawing note about how wide a garage *door* may be. The city prints a real
+  garage setback row two tables away; the citation moved onto it, and picked up
+  a 5 ft alley exception that had been hidden behind the wrong sentence.
+- **Gladstone** — three zones had the identical misreading of the identical
+  sentence, and Gladstone has no real garage row to move to. Reading the whole
+  chapter for the word "garage" returns five more sentences and not one of them
+  sets a garage back from anything, so the number came out.
+- **Portland** — seven zones asked every site for 48 square feet of outdoor area
+  per home, which is the figure for sites over 20,000 square feet. Under that
+  size the code asks 36. A four-unit lot is almost never over 20,000, so nearly
+  every Portland site was being asked for a third more open space than the city
+  requires.
+- **Gresham** — two zones were missing the looser setbacks the city prints for
+  townhouses in a row that names them out loud; four downtown zones had the
+  opposite problem and were claiming a party-wall relief the city gives to a
+  building type that, by Gresham's own definition, ours is not.
+- **West Linn** — four zones print two minimum lot sizes, one for detached and
+  one for attached, and only the detached one was held. The city's definitions
+  say which is which and the answer is the *plat*, not the walls.
+- **Fairview** — one zone's front setback was a figure the code states for a
+  single street, held across the whole zone.
+
+**None of the six changed a single lot's verdict, and the reason is not luck.**
+Three of them are on standards the screen records and does not yet test at all
+-- the garage door and the outdoor area. The other three only apply if the four
+homes are sold on four separate lots, and the two building designs we screen
+with are both drawn on one. So the corpus was wrong in exactly the places
+nothing currently reads.
+
+That cuts both ways and both halves are worth saying. The good half: an audit
+of this size usually turns up transcription errors by the dozen and this one
+found none. The uncomfortable half: **six of the standards we carefully
+transcribe are standards the screen never asks about**, which is its own
+finding, and it is why (h) below is last on the list and still on it.
+
+### What is left for you
+
+Eight questions the machine could not answer without ruling on something. The
+honest headline is that **not one of them is holding a green lot today** — they
+are debts that come due when signing starts, which is item 7.
+
+| # | The question | Where | How much land the chapter reaches |
+|---|---|---|---|
+| a | Does splitting the plat move our building into the "townhouse" rules? | Gresham | 28,873 lots citywide |
+| b | Is a menu of three permitted distances a minimum? | Fairview VA | 2,456 lots citywide |
+| c | Which column of the Frog Pond table governs an RN lot? | Wilsonville | the city's 53 greens |
+| d | A zoning code that asks a building to be at least 25 ft *tall* | Troutdale MU-3 | 5,139 lots citywide |
+| e | Three rural lot minimums whose cited page prints no figure | unincorporated Multnomah | 2,855 lots |
+| f | A setback stated only on a map we have never opened | Milwaukie R-HD | one zone of 622 greens |
+| g | One table cell answering three different questions | Portland IR | one zone |
+| h | Portland's either/or garage rule | Portland RM2-RX | four zones of 195,708 lots |
+
+The right-hand column is how big the *chapter* is, not how many lots the answer
+would move -- which is zero today, for every row. It is there so the eight can
+be ranked against each other, not against item 3.
+
+**(a) Gresham — does splitting the plat move us into the townhouse rules?**
+Gresham prints two sets of standards, one for a quadplex and a looser one for
+townhouses, and the looser set matters: it is the difference between a 10-foot
+side yard and a 5-foot one. Gresham's own dictionary says a quadplex split onto
+four lots "is considered a quadplex" — so the split does *not* buy the townhouse
+numbers. Three places in our Gresham file say exactly that. One place, the
+Springwater district, encodes the opposite. Both readings are defensible from
+the page and they cannot both be right. **This is the largest of the eight and
+the only one where our file currently contradicts itself.**
+
+**(b) Fairview VA — is a menu a minimum?** The code says front facades "shall be
+set back from right-of-way a distance of either zero feet or 10 feet or 15
+feet." That is a choice of three, not a floor, and 20 — the number we hold — is
+not one of them; it is the next sentence's rule for lots on NE Halsey Street.
+Two questions in one: does a menu like this bind us at all, and can anyone tell
+us which VA lots front Halsey? Nothing in our data marks a parcel as being on a
+named street.
+
+**(c) Wilsonville RN — which column?** Seven of Frog Pond's numbers are quoted
+from a 57-line table that has no row called RN. It has three: Large Lot, Medium
+Lot and Small Lot, and the seven we hold are the Large Lot column throughout —
+the strictest, which is the right way to guess but is still a guess. The same
+city's Village zone has a street-side setback taken from a table with no
+street-side column, off a row headed "Commercial Buildings." Wilsonville has 53
+greens and this is the cheapest of the eight to settle.
+
+**(d) Troutdale MU-3 — the only rule in Oregon a pod can fail by being too
+short.** "Middle housing dwelling units shall have a minimum building height of
+twenty-five (25) feet." Aimed by name at this building, in a district that
+permits it. Our pod stands 26 feet — and that 26 is a number the design catalog
+itself marks as *not taken from a drawing set*. One foot of margin on an
+unconfirmed dimension. Two ways out and both are yours: confirm the pod's real
+height, or accept that Troutdale's mixed-use district wants a taller building
+than we make.
+
+**(e) Three rural Multnomah lot sizes.** The cited sentence says the minimum lot
+size is one acre "except as provided in" a list of other sections, one of which
+is the planned-development chapter — and then prints no planned-development
+figure at all. We hold one. Either somebody read the other chapter and the
+citation never followed, or the number came from nowhere. Rural land we are
+unlikely to build on, listed so it is not invisible.
+
+**(f) Milwaukie R-HD — a setback that lives on a map.** The table's front yard
+is 20 feet "except for properties identified in Figure 19.302.4," which get 5.
+We hold the 20, which is the safe end. The map is a picture in a PDF and nothing
+here can read it. If those 15 feet matter to a Milwaukie deal, somebody opens
+the figure.
+
+**(g) Portland IR.** Already known and already on the record: one table cell is
+merged across three rows, so the same sentence has to answer front, side and
+rear, and the rule inside it is "one foot for every two feet of building height,
+but not less than ten." Our model holds a single number per yard and cannot say
+that. Unchanged; repeated here because the second reading independently walked
+into it.
+
+**(h) Portland's either/or garage rule.** In four multi-dwelling zones the
+garage entrance "must be either 5 feet or closer to the street lot line, or 18
+feet or farther." Two permitted zones with a forbidden gap between them, and
+which one a building takes is the architect's choice, not a fact about the site.
+We hold 18 — the branch a building that cannot pull its garage flush must meet.
+It is last on this list for a reason: **this standard is captured and never
+tested**, in every city, so no lot anywhere has ever been graded on a garage
+door. That is also why it should be settled before it ever is.
+
+**What we need from you.** (a), (b) and (d) are readings — a planner or a
+land-use attorney, thirty minutes each. (c) is one email to Wilsonville. (f) is
+one PDF someone has to open. (e), (g) and (h) are ours, not yours, and are
+recorded so they are not lost.
 ---
 
 ## ~~Seven~~ Four of our fourteen cities have zero green lots — and each one has a single reason
@@ -844,6 +998,30 @@ closes it to us without lot assembly. The two-and-a-half thousand lots come off
 the list of places worth hoping about.
 
 ## Queued for the agent — no action needed from you, listed so nothing is invisible
+
+- **Every number we hold has now been read twice, and the second reader was
+  not allowed to see the first one's answer** — run 2026-09-07, and the result
+  is item 11. Worth knowing here is how it was done, because it is repeatable
+  and it cost nothing but machine time. Each of the 1,902 citations was turned
+  into a card carrying the passage of code, the zone and the name of the
+  standard, with the number we hold **stripped out**. Forty-eight readers worked
+  them in parallel, wrote down what the page says, and only afterwards were the
+  answers joined back to ours. A reader who cannot see the answer cannot drift
+  toward it.
+
+  Both ledgers are in the repository — `data/flats/second_reading_2026_09_07.csv`
+  (1,902 rows, one per number) and `data/flats/missed_reading_2026_09_07.csv`
+  (221 rows, the separate sweep of sentences that state a standard nothing of
+  ours quotes). Every fix made from them says so in the code file, with the date
+  and the sentence it now rests on, so a signer meets the reasoning rather than
+  a changed number.
+
+  Three of the readings it flagged turned out to be the *reader* being wrong,
+  and all three were the same defect on our side: the card showed six lines
+  either side of the citation, which is not enough to reach the column headings
+  of Gresham's eleven-column setback table. The reader said honestly that it
+  could not tell which cell was which. Widening that window is the first thing
+  to do before this is run again.
 
 - **The 4,693-item reading list is now four queues you can actually sit down
   with** — built 2026-09-04, live at **`/flats/reading`**. The list below was
