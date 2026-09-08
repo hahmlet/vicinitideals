@@ -1020,8 +1020,45 @@ the list of places worth hoping about.
   and all three were the same defect on our side: the card showed six lines
   either side of the citation, which is not enough to reach the column headings
   of Gresham's eleven-column setback table. The reader said honestly that it
-  could not tell which cell was which. Widening that window is the first thing
-  to do before this is run again.
+  could not tell which cell was which. That window is now twenty lines wide and
+  a card also reaches back to the caption of the table it is standing in.
+
+  **It had a second blind spot and it is the more serious one: the readers were
+  never shown a footnote.** Notes print below the table they qualify, past any
+  window a citation can carry, so a reader was handed "5 ft" and never saw
+  "except on a corner lot" underneath it. That affected **1,480 of the 1,919
+  numbers**, and for **731 of them the footnote is one we have ruled actually
+  does something** — it changes the figure, or it turns on something about the
+  lot nobody has measured. The card now carries the text of every note over the
+  lines it cites, and re-reading those 731 is the next machine job. It needs no
+  human time; it is listed here because the first run's clean result should be
+  read as "clean on the cell", not "clean on the rule".
+
+- **Both directions of the footnote check now run** — built 2026-09-07. The
+  system was only ever half-built and the missing half was the unsafe one.
+
+  Going one way, it always worked: for every number we hold, which footnotes
+  sit over the lines it was read from, and has anybody ruled on them. An
+  unruled footnote blocks the value from ever being signed. 1,792 numbers sit
+  under a footnote and nothing is blocked.
+
+  Going the other way, nothing ran at all. When somebody rules a footnote
+  "encoded", they write down what it became — which zone, which standard, which
+  figure. Forty-five of those sentences were on the record and **not one had
+  ever been checked against the encoding.** So a rule could be deleted, renamed
+  or moved out from under a closed decision and the decision would sit there
+  looking settled. That is not hypothetical: four party-wall setbacks were
+  deleted from Gresham the same week, and if a footnote had been standing on
+  one, nothing would have said so.
+
+  Checked for the first time: **44 of the 45 confirmed, one benign, and two
+  errors** — both the same one, in two cities. Gresham and Wilsonville each
+  encode a band as "up to 10,999" and "up to 19,999" where their codes say
+  "less than 11,000" and "less than 20,000", and each file explains in writing
+  that it did so because the model had no way to say "less than". The model has
+  had one for months, and both notes were carrying their own excuse forward. A
+  square foot of error each, in the safe direction, now exact. The check runs in
+  the test suite, so the next one goes red instead of quiet.
 
 - **The 4,693-item reading list is now four queues you can actually sit down
   with** — built 2026-09-04, live at **`/flats/reading`**. The list below was
