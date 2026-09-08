@@ -199,3 +199,38 @@ def test_every_card_shows_the_lines_it_cites(built) -> None:
     cards, _, _ = built
     for card in cards:
         assert any(line.startswith(">>") for line in card["passage"]), card["id"]
+
+
+# --- the footnote under the cell --------------------------------------------
+
+
+def test_a_card_carries_the_footnotes_over_the_lines_it_cites(built) -> None:
+    """The 2026-09-07 run's own blind spot.
+
+    A notes block sits below the table it qualifies, past any context window a
+    citation can carry, so the first reading showed 1,480 cards a cell with no
+    sight of the sentence that qualifies it. A footnote is the cheapest way for
+    a code to make a number mean something else, which makes this the most
+    expensive thing for the card to leave out.
+    """
+    cards, _, _ = built
+    carrying = [c for c in cards if c["notes"]]
+    assert len(carrying) > len(cards) * 0.5
+    assert all(isinstance(n, str) and n.startswith("[note ") for c in carrying for n in c["notes"])
+
+
+def test_a_card_never_carries_what_we_decided_about_a_footnote(built) -> None:
+    """A ruling names the figure the note became. Showing it would hand the
+    reader the answer through the side door -- the one leak the blindness
+    assertion above cannot see, because it never looks at ``notes``."""
+    from flats.encode.dispositions import notes as rulings
+
+    said = {
+        " ".join(r.encoded_as.split())
+        for r in rulings()
+        if r.state == "encoded" and r.encoded_as.strip()
+    }
+    assert said, "nothing to leak means nothing was tested"
+    cards, _, _ = built
+    shown = {n for card in cards for n in card["notes"]}
+    assert not {s for s in said if any(s in n for n in shown)}

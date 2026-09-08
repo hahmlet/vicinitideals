@@ -24,6 +24,16 @@ though it were the rule. Three more were the *reader* being wrong, every one of
 them because the card could not reach the column headings of a wide table.
 That is what ``CONTEXT`` and ``HEADER_LINES`` are for.
 
+That run had a blind spot of its own and it is worth naming, because it is the
+same shape as the errors it was hunting. A card carried the cell and not the
+*footnote* under it. Notes blocks sit below the table they qualify, past any
+window a citation can reasonably carry, so a reader was shown "5 ft" and not
+"except on a corner lot" -- and a footnote is the cheapest way for a code to
+make a number mean something other than what it says. So a card now carries
+the text of every note whose region contains its cited lines, and only the
+text: the ruling we made about that note would be the answer, which is the one
+thing the reader may not see.
+
 Usage:
     uv run python -m flats.encode.reread --out <dir> [--batch 40] [--context 20]
     uv run python -m flats.encode.reread --score <dir> [--csv out.csv]
@@ -41,6 +51,9 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
+from flats.encode.dispositions import notes as _rulings
+from flats.encode.footnotes import survey
+from flats.encode.qualified import _governing
 from flats.encode.readiness import _quoted_parts
 from flats.provenance.store import ProvenanceError, ProvenanceStore
 from flats.rules.fields import FIELDS
@@ -184,6 +197,24 @@ def _label(name: str) -> tuple[str, str, str]:
     return key, fdef.shown, f"{fdef.describe}{sense} Kind: {fdef.kind}."
 
 
+def _notes_over(census, spans: list[tuple[int, int]], per_doc: dict) -> list[str]:
+    """The footnotes governing these lines, as the code prints them.
+
+    Text only. A ruling carries ``encoded_as`` -- the number this note became
+    -- and putting that on a card would hand the reader the answer through the
+    side door, which is the one failure this module has no defence against.
+    """
+    if census is None:
+        return []
+    lines = [n for a, b in spans for n in range(a, b + 1)]
+    out: list[str] = []
+    for note in _governing(census, lines, per_doc):
+        text = " ".join(note.text.split())
+        if text:
+            out.append(f"[note {note.mark}] {text}")
+    return out
+
+
 def work_list(
     layers: dict[str, Layer],
     store: ProvenanceStore,
@@ -200,6 +231,16 @@ def work_list(
     key: list[dict[str, Any]] = []
     skipped = {"no_quote": 0, "no_number": 0, "drawn": 0, "unresolved": 0, "no_lines": 0}
     docs: dict[str, list[str]] = {}
+
+    # The footnote census, once. Region scope is the same wide reading
+    # `qualified` takes and for the same reason: a marker on a column head
+    # binds every zone under it, telling that apart from a marker on one cell
+    # is the judgement that goes wrong silently, and an over-shown note costs
+    # a reader ten seconds where an unshown one costs a wrong number.
+    censuses = {c.doc: c for c in survey()}
+    per_doc: dict[str, list[Any]] = {}
+    for ruling in _rulings():
+        per_doc.setdefault(ruling.doc, []).append(ruling)
 
     for lid, layer in sorted(layers.items()):
         for zone, name, quote, number, drawn in _quoted_parts(layer):
@@ -255,6 +296,7 @@ def work_list(
                     "cited_lines": ",".join(f"L{a}-L{b}" for a, b in spans),
                     "headings": headings,
                     "passage": _passage(whole, spans, context, caption_at),
+                    "notes": _notes_over(censuses.get(path), spans, per_doc),
                 }
             )
             key.append(
