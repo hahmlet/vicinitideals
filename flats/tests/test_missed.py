@@ -18,7 +18,19 @@ from decimal import Decimal
 
 import pytest
 
-from flats.encode.missed import Missed, _figures, _held, audit, by_figure, render
+from pathlib import Path
+
+from flats.encode.missed import (
+    Missed,
+    _figures,
+    _held,
+    audit,
+    by_figure,
+    render,
+    report,
+    score,
+    work_list,
+)
 from flats.encode.uncited import Uncited
 
 pytestmark = pytest.mark.unit
@@ -304,3 +316,146 @@ def test_the_report_names_its_three_tiers() -> None:
     text = render(audit([_row("an additional 12 ft of height")], {"or/x/y": _Layer()}, read={}))
     assert "in a section we took THIS standard from" in text
     assert "unread_section" in text
+
+
+# --- the reading queue ------------------------------------------------------
+
+
+class _Store:
+    """Just enough of the provenance store to hand back a document."""
+
+    def __init__(self, lines: list[str]) -> None:
+        self._lines = lines
+
+    def text_path(self, path: str):
+        import tempfile
+
+        handle = tempfile.NamedTemporaryFile(
+            "w", suffix=".txt", delete=False, encoding="utf-8"
+        )
+        handle.write("\n".join(self._lines))
+        handle.close()
+        return Path(handle.name)
+
+
+def _made(**kw) -> Missed:
+    base = dict(
+        layer="or/x/y",
+        field="max_height_ft",
+        path="or/x/y/doc.txt",
+        line=3,
+        section="19.301",
+        text="the maximum height is 24 ft",
+        stated=(Decimal("24"),),
+        held=(Decimal("35"),),
+        matched=(),
+        repeats=1,
+        read_here=("max_height_ft",),
+    )
+    base.update(kw)
+    return Missed(**base)
+
+
+_DOC = ["Table 19.301.4", "Standard", "the maximum height is 24 ft", "next row", "and another"]
+
+
+def test_the_card_never_carries_the_number_we_hold() -> None:
+    """The one property that makes the answer worth having.
+
+    A reader shown "we hold 35" agrees with 35. The card carries the page and
+    nothing this corpus concluded from it -- not the figure, and not even which
+    standard we guessed the line was about.
+    """
+    cards, key, _ = work_list([_made()], _Store(_DOC))
+    assert set(cards[0]) == {
+        "id",
+        "jurisdiction",
+        "document",
+        "cited_lines",
+        "section",
+        "headings",
+        "passage",
+    }
+    assert "held" in key[0] and "field" in key[0] and "stated" in key[0]
+
+
+def test_the_marked_line_is_the_one_being_asked_about() -> None:
+    cards, _, _ = work_list([_made()], _Store(_DOC))
+    marked = [line for line in cards[0]["passage"] if line.startswith(">>")]
+    assert len(marked) == 1
+    assert "maximum height is 24 ft" in marked[0]
+
+
+def test_a_held_or_unnumbered_line_is_not_asked() -> None:
+    cards, _, skipped = work_list(
+        [_made(matched=(Decimal("35"),), stated=(Decimal("35"),))], _Store(_DOC)
+    )
+    assert cards == [] and skipped["held_or_unnumbered"] == 1
+
+
+def test_an_unopened_chapter_is_a_different_question() -> None:
+    cards, _, skipped = work_list([_made(read_here=())], _Store(_DOC))
+    assert cards == [] and skipped["far_tier"] == 1
+
+
+def test_the_far_tier_can_be_asked_for_deliberately() -> None:
+    cards, _, _ = work_list([_made(read_here=())], _Store(_DOC), tiers=("unread_section",))
+    assert len(cards) == 1
+
+
+# --- scoring the readings ---------------------------------------------------
+
+
+def _key(**kw) -> list[dict]:
+    row = {
+        "id": "00000",
+        "layer": "or/x/y",
+        "field": "max_height_ft",
+        "path": "or/x/y/doc.txt",
+        "line": 3,
+        "section": "19.301",
+        "nearness": "same_field",
+        "repeats": 1,
+        "text": "the maximum height is 24 ft",
+        "stated": ["24"],
+        "held": ["35"],
+    }
+    row.update(kw)
+    return [row]
+
+
+def _verdict(**answer) -> str:
+    return score(_key(), {"00000": answer})[0]["verdict"]
+
+
+def test_a_reader_who_says_it_does_not_bind_agrees_with_us() -> None:
+    assert _verdict(binds="no", about="fences") == "agree"
+
+
+def test_a_figure_we_carry_elsewhere_means_our_reader_took_it_off_another_row() -> None:
+    assert _verdict(binds="yes", number="35") == "already_held"
+
+
+def test_a_figure_we_carry_nowhere_is_the_finding() -> None:
+    assert _verdict(binds="yes", number="24") == "missed"
+
+
+def test_an_unanswered_card_is_not_an_agreement() -> None:
+    assert score(_key(), {})[0]["verdict"] == "missing"
+
+
+def test_a_reader_who_cannot_tell_says_so() -> None:
+    assert _verdict(binds="unclear", note="the column head did not extract") == "unclear"
+
+
+def test_a_number_is_read_out_of_whatever_the_reader_typed() -> None:
+    assert _verdict(binds="yes", number="35 ft") == "already_held"
+    assert _verdict(binds="yes", number="5,000") == "missed"
+    assert _verdict(binds="yes", number="") == "missed"
+
+
+def test_the_report_leads_with_the_findings() -> None:
+    rows = score(_key(), {"00000": {"binds": "yes", "number": "24", "standard": "height"}})
+    text = report(rows)
+    assert "A STANDARD THIS CORPUS HOLDS NOWHERE: 1" in text
+    assert "in a section we took that very standard from: 1" in text

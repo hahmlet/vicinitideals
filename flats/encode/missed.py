@@ -55,16 +55,24 @@ acreages, one-space-per-two-units rates -- and it is reused here rather than
 re-derived, so a new form has one place to be taught, exactly as the citation
 check does.
 
+The sort is half the job. The other half is a blind reading of what it puts at
+the top -- :func:`work_list` builds cards carrying the sentence and the page
+around it and *not* the figure this corpus holds, and :func:`score` joins the
+readings back. ``missed`` is the only answer that is a finding.
+
 Run it::
 
     uv run python -m flats.encode.missed
     uv run python -m flats.encode.missed or/clackamas/milwaukie
     uv run python -m flats.encode.missed --csv data/flats/missed.csv
+    uv run python -m flats.encode.missed --out work/ --batch 25
+    uv run python -m flats.encode.missed --score work/ --csv data/flats/read.csv
 """
 
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 from collections import Counter, defaultdict
@@ -74,6 +82,7 @@ from pathlib import Path
 from typing import Iterable, Sequence
 
 from flats.encode.crossrefs import _cited_lines, _doc_ids
+from flats.encode.reread import CONTEXT, _above, _passage
 from flats.encode.readiness import _printed, _printed_variant
 from flats.encode.uncited import Uncited, _sections, survey
 from flats.provenance.store import ProvenanceStore
@@ -448,12 +457,230 @@ def render(rows: Sequence[Missed], *, top: int = 40) -> str:
     return "\n".join(out)
 
 
+# --- reading it out ---------------------------------------------------------
+#
+# The ledger says which lines are worth a second opinion. Getting the opinion
+# is a reading job, and it is blind in the one way that decides whether the
+# answer is worth having: the card carries the sentence and the page around it
+# and **not the figure this corpus holds**. A reader shown "we hold 35" agrees
+# with 35, every time, and the agreement means nothing.
+#
+# It is blind in a second way too, and this one is particular to this ledger.
+# The card does not say which standard we think the line is about. That guess
+# is `uncited._subject`'s, made from the line's own wording, and it is wrong
+# often enough to be worth checking -- a sentence about trimming plants beside
+# a trail is filed under building height. Asking an open question costs
+# nothing here and buys the guess back as an answer.
+
+
+def work_list(
+    rows: Sequence[Missed] | None = None,
+    store: ProvenanceStore | None = None,
+    context: int = CONTEXT,
+    tiers: Sequence[str] = ("same_field", "read_section"),
+) -> tuple[list[dict[str, object]], list[dict[str, object]], dict[str, int]]:
+    """``(cards, answer key, what was skipped)`` for the unheld statements.
+
+    Only ``unheld`` lines, and by default only the two near tiers. The third
+    is 357 lines in chapters nobody has opened, which is a different question
+    -- "is there anything in here for us" -- and a card built for this one
+    answers it badly.
+    """
+    rows = audit() if rows is None else rows
+    store = ProvenanceStore() if store is None else store
+
+    cards: list[dict[str, object]] = []
+    key: list[dict[str, object]] = []
+    skipped = {"held_or_unnumbered": 0, "far_tier": 0, "no_text": 0}
+    docs: dict[str, list[str]] = {}
+
+    order = {n: i for i, n in enumerate(NEARNESS)}
+    for row in sorted(rows, key=lambda r: (order[r.nearness], r.layer, r.path, r.line)):
+        if row.verdict != "unheld":
+            skipped["held_or_unnumbered"] += 1
+            continue
+        if row.nearness not in tiers:
+            skipped["far_tier"] += 1
+            continue
+        if row.path not in docs:
+            try:
+                docs[row.path] = store.text_path(row.path).read_text(
+                    encoding="utf-8"
+                ).splitlines()
+            except OSError:
+                docs[row.path] = []
+        whole = docs[row.path]
+        if not whole:
+            skipped["no_text"] += 1
+            continue
+
+        headings, caption_at = _above(whole, row.line)
+        ident = f"{len(cards):05d}"
+        cards.append(
+            {
+                "id": ident,
+                "jurisdiction": row.layer,
+                "document": row.path,
+                "cited_lines": f"L{row.line}",
+                "section": row.section,
+                "headings": headings,
+                "passage": _passage(whole, [(row.line, row.line)], context, caption_at),
+            }
+        )
+        key.append(
+            {
+                "id": ident,
+                "layer": row.layer,
+                "field": row.field,
+                "path": row.path,
+                "line": row.line,
+                "section": row.section,
+                "nearness": row.nearness,
+                "repeats": row.repeats,
+                "text": row.text,
+                # The answers. Never on the card.
+                "stated": [format(f.normalize(), "f") for f in row.stated],
+                "held": [format(f.normalize(), "f") for f in row.held],
+            }
+        )
+    return cards, key, skipped
+
+
+def _reader_number(said: object) -> Decimal | None:
+    """The first figure in whatever the reader typed."""
+    match = re.search(r"\d{1,3}(?:,\d{3})+|\d+(?:\.\d+)?", str(said or ""))
+    if not match:
+        return None
+    try:
+        return Decimal(match.group(0).replace(",", ""))
+    except InvalidOperation:  # pragma: no cover - the pattern cannot produce this
+        return None
+
+
+#: What the reading can conclude. ``missed`` is the only one that is a finding.
+READINGS = ("missed", "already_held", "agree", "unclear", "missing")
+
+
+def score(key: Sequence[dict], answers: dict[str, dict]) -> list[dict[str, object]]:
+    """Join the readings back to the ledger.
+
+    ``agree``         the reader says the sentence does not bind this building,
+                      so leaving it unencoded was right
+    ``already_held``  it binds, and the figure they read is one we carry for
+                      that standard -- our reader took it off another row
+    ``missed``        it binds, and the figure is one this corpus holds nowhere
+    ``unclear``       the reader could not tell from the page
+    ``missing``       nobody answered this card
+    """
+    out: list[dict[str, object]] = []
+    for k in key:
+        a = answers.get(str(k["id"])) or {}
+        binds = str(a.get("binds") or "").strip().lower()
+        read = _reader_number(a.get("number"))
+        held = [Decimal(h) for h in k["held"]]
+        if not binds:
+            verdict = "missing"
+        elif binds == "no":
+            verdict = "agree"
+        elif binds != "yes":
+            verdict = "unclear"
+        elif read is not None and _near(read, held):
+            verdict = "already_held"
+        else:
+            verdict = "missed"
+        out.append(
+            {
+                **{n: v for n, v in k.items() if n != "held"},
+                "held": ",".join(k["held"]),
+                "stated": ",".join(k["stated"]),
+                "verdict": verdict,
+                "binds": binds,
+                "reader_number": "" if read is None else format(read.normalize(), "f"),
+                "reader_standard": str(a.get("standard") or "")[:120],
+                "reader_about": str(a.get("about") or "")[:120],
+                "reader_note": str(a.get("note") or "")[:400],
+            }
+        )
+    return out
+
+
+def report(rows: Sequence[dict]) -> str:
+    counts = Counter(str(r["verdict"]) for r in rows)
+    missed = [r for r in rows if r["verdict"] == "missed"]
+    out = [
+        f"cards={len(rows)} " + " ".join(f"{n}={counts[n]}" for n in READINGS if counts[n]),
+        "",
+        f"A STANDARD THIS CORPUS HOLDS NOWHERE: {len(missed)}",
+    ]
+    same = [r for r in missed if r["nearness"] == "same_field"]
+    out.append(f"  of those, in a section we took that very standard from: {len(same)}")
+    out.append("")
+    for r in sorted(missed, key=lambda r: (r["nearness"] != "same_field", str(r["layer"]))):
+        out.append(f"  [{r['layer']}] {r['path']}#L{r['line']}  ({r['section']}) {r['nearness']}")
+        out.append(f"      reader: {r['reader_standard']} = {r['reader_number']}"
+                   f"  about: {r['reader_about']}")
+        out.append(f"      we hold for {r['field']}: {r['held'] or '(nothing)'}")
+        out.append(f"      line  : {str(r['text'])[:150]}")
+        if r["reader_note"]:
+            out.append(f"      note  : {str(r['reader_note'])[:200]}")
+    return "\n".join(out)
+
+
+def _write_work(out_dir: Path, batch: int, context: int, tiers: Sequence[str]) -> int:
+    out_dir.mkdir(parents=True, exist_ok=True)
+    cards, key, skipped = work_list(context=context, tiers=tiers)
+    (out_dir / "answer_key.json").write_text(json.dumps(key, indent=1), encoding="utf-8")
+    for n in range(0, len(cards), batch):
+        (out_dir / f"batch_{n // batch:03d}.json").write_text(
+            json.dumps(cards[n : n + batch], indent=1), encoding="utf-8"
+        )
+    print(
+        f"cards={len(cards)} batches={(len(cards) + batch - 1) // batch} skipped={skipped}"
+    )
+    return 0
+
+
+def _score_dir(work: Path, csv_out: Path | None) -> int:
+    key = json.loads((work / "answer_key.json").read_text(encoding="utf-8"))
+    answers: dict[str, dict] = {}
+    for path in sorted(work.glob("answers_*.json")):
+        try:
+            for a in json.loads(path.read_text(encoding="utf-8")):
+                answers[str(a.get("id"))] = a
+        except json.JSONDecodeError as exc:
+            print(f"BAD JSON {path.name}: {exc}")
+    rows = score(key, answers)
+    print(report(rows))
+    if csv_out:
+        import csv
+
+        csv_out.parent.mkdir(parents=True, exist_ok=True)
+        with csv_out.open("w", newline="", encoding="utf-8") as fh:
+            w = csv.DictWriter(fh, fieldnames=list(rows[0].keys()), lineterminator="\n")
+            w.writeheader()
+            w.writerows(rows)
+        print("wrote", csv_out)
+    return 0
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("layer", nargs="*", help="restrict to these layer ids")
     ap.add_argument("--csv", type=Path)
     ap.add_argument("--top", type=int, default=40)
+    ap.add_argument("--out", type=Path, help="write a blind reading list here")
+    ap.add_argument("--score", type=Path, help="score a finished reading directory")
+    ap.add_argument("--batch", type=int, default=25)
+    ap.add_argument("--context", type=int, default=CONTEXT)
+    ap.add_argument(
+        "--tier",
+        action="append",
+        choices=NEARNESS,
+        help="which nearness tiers to read (default: the two near ones)",
+    )
     args = ap.parse_args(argv)
+    if args.score:
+        return _score_dir(args.score, args.csv)
     if hasattr(sys.stdout, "reconfigure"):
         # Extracted PDF text carries ligatures -- 'fl' as one glyph -- that a
         # Windows console cannot encode, and a ledger that dies printing the
@@ -464,6 +691,13 @@ def main(argv: Sequence[str] | None = None) -> int:
     if args.layer:
         layers = {lid: layer for lid, layer in layers.items() if lid in set(args.layer)}
     rows = audit(layers=layers)
+    if args.out:
+        return _write_work(
+            args.out,
+            args.batch,
+            args.context,
+            tuple(args.tier) if args.tier else ("same_field", "read_section"),
+        )
     print(render(rows, top=args.top))
     if args.csv:
         import csv
