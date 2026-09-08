@@ -2095,6 +2095,22 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/multnomah/gresham/4.0100.residential.txt#L134"
+    setback_front_max_ft:
+      # Note 7 of Table 4.0131: "Maximum front and street-side setbacks apply
+      # in MDR-12, MDR-24, OFR, as provided for the Corridor Multi-family
+      # (CMF) District in Table 4.0430" (4.0100.residential #L433). The note
+      # states no number -- it points -- so the quote is row H of the table it
+      # points at, whose CMF column reads "20 feet front and street-side",
+      # which is the figure CMF already carries here.
+      # The street-side half of that same sentence has nowhere to go: this
+      # registry has setback_street_side_ft but no maximum beside it.
+      # Found 2026-09-07 by the blind re-read of dismissed footnotes, which
+      # flagged a dismissal that had quoted this number and still declined it.
+      value: 20
+      cite: GDC Table 4.0131 note 7, adopting Table 4.0430 row H (CMF column)
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0400.pdf
+      retrieved: 2026-07-24
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L351-L356"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
@@ -2242,6 +2258,22 @@ zones:
     quadplex_allowed:
       value: true
       quote: "or/multnomah/gresham/4.0100.residential.txt#L134"
+    setback_front_max_ft:
+      # Note 7 of Table 4.0131: "Maximum front and street-side setbacks apply
+      # in MDR-12, MDR-24, OFR, as provided for the Corridor Multi-family
+      # (CMF) District in Table 4.0430" (4.0100.residential #L433). The note
+      # states no number -- it points -- so the quote is row H of the table it
+      # points at, whose CMF column reads "20 feet front and street-side",
+      # which is the figure CMF already carries here.
+      # The street-side half of that same sentence has nowhere to go: this
+      # registry has setback_street_side_ft but no maximum beside it.
+      # Found 2026-09-07 by the blind re-read of dismissed footnotes, which
+      # flagged a dismissal that had quoted this number and still declined it.
+      value: 20
+      cite: GDC Table 4.0131 note 7, adopting Table 4.0430 row H (CMF column)
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0400.pdf
+      retrieved: 2026-07-24
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L351-L356"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/gresham/4.0100.residential.txt#L403"
@@ -2493,6 +2525,22 @@ zones:
       # Row J states a ratio for LDR-5, LDR-7 and TR and NA for this column.
       exempt: true
       quote: "or/multnomah/gresham/4.0100.residential.txt#L347-L348"
+    setback_front_max_ft:
+      # Note 7 of Table 4.0131: "Maximum front and street-side setbacks apply
+      # in MDR-12, MDR-24, OFR, as provided for the Corridor Multi-family
+      # (CMF) District in Table 4.0430" (4.0100.residential #L433). The note
+      # states no number -- it points -- so the quote is row H of the table it
+      # points at, whose CMF column reads "20 feet front and street-side",
+      # which is the figure CMF already carries here.
+      # The street-side half of that same sentence has nowhere to go: this
+      # registry has setback_street_side_ft but no maximum beside it.
+      # Found 2026-09-07 by the blind re-read of dismissed footnotes, which
+      # flagged a dismissal that had quoted this number and still declined it.
+      value: 20
+      cite: GDC Table 4.0131 note 7, adopting Table 4.0430 row H (CMF column)
+      url: https://www.greshamoregon.gov/globalassets/government/city-codes-and-policies/development-code/dc-section-4.0400.pdf
+      retrieved: 2026-07-24
+      quote: "or/multnomah/gresham/4.0400.corridor.txt#L351-L356"
     setback_front_ft:
       value: 10
       quote: "or/multnomah/gresham/4.0100.residential.txt#L399,L403-L404"

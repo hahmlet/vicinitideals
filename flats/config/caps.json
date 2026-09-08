@@ -834,6 +834,9 @@
         "sidewalk_easement",
         "through_lot"
       ],
+      "setback_front_max_ft": [
+        "civic_corridor"
+      ],
       "setback_garage_entrance_ft": [
         "local_street",
         "sidewalk_easement",
@@ -878,6 +881,9 @@
         "local_street",
         "sidewalk_easement",
         "through_lot"
+      ],
+      "setback_front_max_ft": [
+        "civic_corridor"
       ],
       "setback_garage_entrance_ft": [
         "local_street",
@@ -929,6 +935,9 @@
         "local_street",
         "sidewalk_easement",
         "through_lot"
+      ],
+      "setback_front_max_ft": [
+        "civic_corridor"
       ],
       "setback_garage_entrance_ft": [
         "local_street",
