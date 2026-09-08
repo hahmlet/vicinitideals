@@ -757,6 +757,147 @@ commit that made each. The check that would have found it earlier is the same
 shape as the mirror itself: *diff the paths every `pytest` line names against
 the directories that hold tests.*
 
+**Then the same question was asked of every city at once, and R-2 turned out to
+be the small version of it.** `flats/encode/districts.py` reads the stored
+corpus for the designations a jurisdiction *prints* and compares them to the
+zone list we hold. It is a lead generator, not a ledger of debt — a designation
+it reports is a question, and most of the answers are "that is not a zone". The
+answers live in `flats/tests/test_districts.py`, one line each, and **the test
+fails when a designation appears that nobody has ruled on.** That is the only
+property worth having, because every one of the five zone-gap findings so far
+was silence rather than error.
+
+It takes three harvests, and the second and third exist because the first one
+misses exactly the thing that matters. A parenthesis is how a code *introduces*
+a district, but a use table names its columns bare — Milwaukie's Table 19.303.2
+heads three columns `GMU`, `NMU`, `SMU` and never spells SMU inside a
+parenthesis anywhere in Title 19. So the second harvest takes any line that is
+*nothing but* a designation, printed that way at least twice, within 25 lines of
+a sentence about zones. That found SMU and all eight of the Clackamas County
+districts the first harvest saw only as one long parenthesis. The third exists
+because **Lake Oswego's use table is printed exactly once**, so nine of its
+fifteen column heads were still invisible to a rule that wants to see a
+designation twice — a run of three or more consecutive designation-shaped lines
+is a column-head block and running prose never is. A fourth fix, smaller and
+just as necessary: a column head **carries its footnotes with it**
+(`NC [8], [9]`, `HC [9]`, `OC [8]`), and stripping the trailing marker run was
+the difference between finding one of Lake Oswego's commercial zones and
+finding all of them.
+
+**Seventy-nine designations across twelve layers, and the queue behind them is
+fourteen districts to encode and five to fetch.** Not one of them needs a human
+ruling; every one was settled by the city's own use table.
+
+- **Oregon City's commercial land permits our building nearly everywhere.**
+  `17.29.020.M` (MUC-1, MUC-2), `17.32.020.S` (C), `17.34.020.L` (MUD) and
+  `17.35`'s `R.` (WFD) each permit "Multi-family residential, triplexes and
+  quadplexes" outright. Two of the seventeen districts in `17.06.010` refuse
+  it, and both refuse it in writing: HC prohibits "Triplexes and quadplexes"
+  at `17.26.035.B`, and NC — which would inherit the MUC permission through
+  `17.24.020.A`'s "any use permitted in the mixed-use corridor" — strikes
+  "Residential use that exceeds fifty percent of the total square footage of
+  the development", and a residential pod is all of it. MUC-1 carries the same
+  17.4 du/acre **minimum** density that makes an R-2 lot able to be too large,
+  and a **5 ft maximum** front setback.
+- **Clackamas County holds nine of the eleven columns of Table 315-1 and the
+  pod is permitted in ten of them.** The one X is R-2.5. `PMD`, `MR-1`, `MR-2`
+  and `VA` have complete Table 315-4 rows and are encodable today; `HDR`, `SHD`
+  and `RCHDR` answer rear setback, side setback and building separation with
+  "See Subsection 1005.02(L)" and **no ZDO 1005 is in the store**; `VTH`'s
+  Table 315-3 prints two cells in several three-column rows, which is a column
+  question before it is a reading.
+- **Tualatin's RMH chapter is not in the store at all.** `40-41.residential.txt`
+  is 646 lines long and line 645 is the heading `CHAPTER 42 / MEDIUM HIGH
+  DENSITY RESIDENTIAL ZONE (RMH)`. The file ends there. A whole medium-high
+  density residential chapter, missing at the last line of the document that
+  should have carried it.
+- **Wilsonville has a seventh PDR.** `4.113(.01)C` divides Planned Development
+  Residential into PDR-1 through **PDR-7**; we hold six.
+- **Lake Oswego's two WLG zones.** `WLG R-2.5` is called *Townhome
+  Residential* and `WLG RMU` *Residential Mixed Use*; both have yard-setback
+  tables in `50.04` and neither is in the corpus.
+- **Gresham's two centre sub-districts.** `TC-PV` "permits a wide range of
+  housing types, including … adjacent townhouses and apartments" and `VC-SW`
+  sits beside the `THR-SW` townhouse land we do hold. We hold five of Pleasant
+  Valley's six sub-districts and five of Springwater's six.
+
+**A refusal here is a use-table cell, not a category.** Milwaukie's GMU, NMU and
+SMU are `CU` in Table 19.303.2 — conditional, so refused for the same reason
+R-2 was *accepted*: the question is whether the use is permitted outright, not
+whether it is imaginable. DMU and MUTSA carry no quadplex row at all while
+listing "Multifamily" separately, and Milwaukie keeps those two use categories
+apart wherever it lists both. Happy Valley's FU-10 permits "One single-family
+dwelling … per lot". Fairview's MH permits homes *in a park*, one per 2,500 sqft
+space.
+
+**And one verdict the vocabulary did not have.** Lake Oswego's `50.03.002` is
+held, its only household-living row is found — "Residential use at R-5 density
+or greater" — and the cell still cannot be read, because the extractor prints
+eleven cells against fifteen column heads. That is neither a fetch (there is
+nothing to fetch) nor a reading (there is nothing readable), and calling it
+either would hide the only work that closes it. `column` is its own verdict, and
+ten of Lake Oswego's columns carry it. It is the same failure the column ledger
+already names — *a number can be on the cited line and still be the wrong
+column* — arriving this time as a permission rather than a dimension.
+
+**What the ledger cannot see, written down rather than assumed.** Oregon City's
+general commercial district is called `C`. One character, and a single capital
+letter is noise everywhere else in the corpus, so no harvest can ever surface
+it. It permits our building. `NC` and `HC` were found the same way — by hand,
+while ruling the rows the ledger *did* report. `test_districts.py` keeps those
+three in a `BY_HAND` table beside the rest, because a reading that is not
+written down is a reading that will be done again.
+
+**And the number that decides what to do with all of it: none of these fourteen
+districts holds a single observed lot.** `_lots_by_zone()` is Multnomah County
+plus 758 Lake Oswego parcels; Oregon City, Clackamas County unincorporated,
+Tualatin and Wilsonville contribute nothing, and no Gresham lot carries `TC-PV`
+or `VC-SW`. So the queue this audit produced is **coverage work for the day the
+inventory extends past Multnomah**, not a screen fix, and ranking it by lots
+would rank all fourteen at zero. That is the honest reading of it and it is
+worth saying plainly, because the same sort that says *encode PMD next* would
+say *encode nothing* if lots were a filter rather than a sort.
+
+What lots *do* say is where the gap already bites. **536 observed lots sit on a
+zone code no rule matches**, and the largest single one is Lake Oswego's
+`NC/R-0` at 84, with a bare `NC` behind it at 4 and `PNA` at 5. Those 93 lots
+are the `column` verdict arriving as a consequence: the reason we cannot write a
+rule for Lake Oswego NC is not that nobody has read `50.03.002` — it is that its
+household-living row prints eleven cells against fifteen heads. The unreadable
+table is not a filing problem. It is 93 lots the screen cannot answer for.
+
+**Chasing that one table down produced a check worth more than the table.** Lake
+Oswego's own preamble says *"a blank cell in a use table indicates that the land
+use is prohibited"*, and the extractor drops blanks: `Cemetery` arrives as one
+cell, `Group care home` as two, `Dwelling, live-work` as seven, `Residential use
+at R-5 density or greater` as eleven — all against sixteen column heads. **A
+dropped cell is worse than a missing one**: it does not merely lose a
+prohibition, it shifts every cell after it, so a permission read off such a
+table can silently be the neighbouring zone's. That is the question worth asking
+of the whole corpus, and `flats/encode/ragged.py` asks it — a use table
+linearises to runs of consecutive verdict-cell lines, and if extraction kept
+every cell then every run in a table is exactly as wide as the table.
+
+**The corpus separates cleanly, and only one document is broken.** Lake Oswego
+`50.03.002` at 64 percent of its rows short of its own widest; every other
+document in the store at zero. No threshold was tuned — that is simply what the
+numbers do, which is why `flats/tests/test_ragged.py` can be a test rather than
+a report. It fails in both directions: a second ragged document means something
+was fetched that nothing may be encoded from, and Lake Oswego falling to zero
+means the re-fetch worked and the ten `column` rulings are owed a re-read.
+
+The version of this check that got the answer wrong is worth recording, because
+it got it wrong in the direction that matters. A first pass matched a cell as a
+single verdict letter with footnote markers, and reported **ZDO 315 as 26
+percent ragged** — the very table the nine Clackamas districts' `quadplex_allowed`
+is read from. It was the *pattern* that was short, not the rows: a limited use
+prints `L[1],C[2]`, the pattern missed it, and each miss broke one eleven-cell
+row into two short ones. Table 315-1 is whole, all eleven wide, and the test now
+asserts that specifically. **A reader that cannot spell a cell reports the page
+as damaged**, which is the same failure as a reader that cannot see one
+reporting the page as clean — both are the reader, and only the second one is
+quiet about it.
+
 **`orphans` asks the question from the neighbours' side.** For each `(layer, field)` where
 the layer holds the field in no zone and in no default, while at least half the other live
 layers hold it, the pair is an asymmetry worth explaining. Seven rows on first run, two
