@@ -197,22 +197,36 @@ def _label(name: str) -> tuple[str, str, str]:
     return key, fdef.shown, f"{fdef.describe}{sense} Kind: {fdef.kind}."
 
 
-def _notes_over(census, spans: list[tuple[int, int]], per_doc: dict) -> list[str]:
-    """The footnotes governing these lines, as the code prints them.
+#: The two rulings that mean a note changes the answer. ``dismissed`` is the
+#: third and it does not: "detached dwellings only" said over a quadplex is a
+#: note the reader may skip without risk.
+ACTING = frozenset({"encoded", "unmeasured", "unread"})
 
-    Text only. A ruling carries ``encoded_as`` -- the number this note became
-    -- and putting that on a card would hand the reader the answer through the
-    side door, which is the one failure this module has no defence against.
+
+def _notes_over(
+    census, spans: list[tuple[int, int]], per_doc: dict
+) -> tuple[list[str], bool]:
+    """``(the footnotes governing these lines, whether any of them acts)``.
+
+    Text only on the card. A ruling carries ``encoded_as`` -- the number this
+    note became -- and putting that on a card would hand the reader the answer
+    through the side door, which is the one failure this module has no defence
+    against. The second half of the pair goes to the *answer key* for the same
+    reason: "a live footnote sits over this one" is not the answer, but it is a
+    nudge, and a blind reading that nudges is not blind.
     """
     if census is None:
-        return []
+        return [], False
     lines = [n for a, b in spans for n in range(a, b + 1)]
     out: list[str] = []
+    acts = False
     for note in _governing(census, lines, per_doc):
         text = " ".join(note.text.split())
         if text:
             out.append(f"[note {note.mark}] {text}")
-    return out
+        if note.state in ACTING:
+            acts = True
+    return out, acts
 
 
 def work_list(
@@ -277,6 +291,7 @@ def work_list(
                 when = name[name.index("[") + 1 : name.index("]")]
             item_id = f"{len(cards):05d}"
             headings, caption_at = _above(whole, spans[0][0])
+            note_text, acts = _notes_over(censuses.get(path), spans, per_doc)
             cards.append(
                 {
                     "id": item_id,
@@ -296,7 +311,7 @@ def work_list(
                     "cited_lines": ",".join(f"L{a}-L{b}" for a, b in spans),
                     "headings": headings,
                     "passage": _passage(whole, spans, context, caption_at),
-                    "notes": _notes_over(censuses.get(path), spans, per_doc),
+                    "notes": note_text,
                 }
             )
             key.append(
@@ -310,6 +325,7 @@ def work_list(
                     "encoded": (
                         number if isinstance(number, (int, float, str)) else str(number)
                     ),
+                    "acting_footnote": acts,
                 }
             )
     return cards, key, skipped
@@ -411,9 +427,17 @@ def score(key: list[dict], answers: dict[str, dict]) -> list[dict[str, Any]]:
 # --- CLI -------------------------------------------------------------------
 
 
-def _write_work(out_dir: Path, batch: int, context: int) -> int:
+def _write_work(out_dir: Path, batch: int, context: int, acting_only: bool = False) -> int:
     out_dir.mkdir(parents=True, exist_ok=True)
     cards, key, skipped = work_list(load_rules(), ProvenanceStore(), context)
+    if acting_only:
+        # The 2026-09-07 run showed no card a footnote. Re-reading the ones a
+        # dismissed note sits over would re-read a number nothing qualifies;
+        # these are the ones where the note changes the answer or turns on
+        # something nobody has measured.
+        keep = {k["id"] for k in key if k.get("acting_footnote")}
+        cards = [c for c in cards if c["id"] in keep]
+        key = [k for k in key if k["id"] in keep]
     (out_dir / "answer_key.json").write_text(json.dumps(key, indent=1), encoding="utf-8")
     n = 0
     for i in range(0, len(cards), batch):
@@ -463,11 +487,16 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--score", type=Path, help="score the answers in this directory")
     ap.add_argument("--batch", type=int, default=40)
     ap.add_argument("--context", type=int, default=CONTEXT)
+    ap.add_argument(
+        "--under-footnote",
+        action="store_true",
+        help="only cards a footnote that acts sits over",
+    )
     ap.add_argument("--csv", type=Path)
     ap.add_argument("--show", default="", help="verdicts or flags to print, comma separated")
     args = ap.parse_args(argv)
     if args.out:
-        return _write_work(args.out, args.batch, args.context)
+        return _write_work(args.out, args.batch, args.context, args.under_footnote)
     if args.score:
         return _score_dir(args.score, args.csv, {s for s in args.show.split(",") if s})
     ap.error("one of --out or --score is required")

@@ -234,3 +234,52 @@ def test_a_card_never_carries_what_we_decided_about_a_footnote(built) -> None:
     cards, _, _ = built
     shown = {n for card in cards for n in card["notes"]}
     assert not {s for s in said if any(s in n for n in shown)}
+
+
+def test_whether_a_footnote_acts_is_told_to_the_key_and_not_to_the_card(built) -> None:
+    """"A live note sits over this one" is a nudge, and a nudge is not blind.
+
+    The re-read of 2026-09-07 needed to be narrowed to the cards a footnote
+    actually does something on, so the work list has to carry that fact. It
+    goes on the *answer key*, next to the encoded figure the reader must not
+    see, for exactly the same reason.
+    """
+    cards, key, _ = built
+    assert all("acting_footnote" in k for k in key)
+    assert any(k["acting_footnote"] for k in key)
+    assert not any("acting_footnote" in c for c in cards)
+
+
+def test_only_a_ruling_that_does_something_counts_as_acting(built) -> None:
+    """``dismissed`` is the third ruling and it is the reason for the filter.
+
+    "Detached dwellings only", said over a quadplex, is a note a reader may
+    skip without risk. Counting it would have put 1,480 cards in a re-read that
+    only 731 of them needed.
+    """
+    from flats.encode.reread import ACTING
+
+    assert ACTING == {"encoded", "unmeasured", "unread"}
+    _, key, _ = built
+    acting = [k for k in key if k["acting_footnote"]]
+    assert 0 < len(acting) < len(key)
+
+
+def test_the_filtered_work_list_is_the_acting_cards_and_nothing_else(tmp_path) -> None:
+    from flats.encode.reread import _write_work
+
+    _write_work(tmp_path / "all", batch=10_000, context=CONTEXT)
+    _write_work(tmp_path / "act", batch=10_000, context=CONTEXT, acting_only=True)
+
+    import json
+
+    whole = json.loads((tmp_path / "all" / "answer_key.json").read_text(encoding="utf-8"))
+    part = json.loads((tmp_path / "act" / "answer_key.json").read_text(encoding="utf-8"))
+
+    want = {k["id"] for k in whole if k["acting_footnote"]}
+    assert {k["id"] for k in part} == want
+    assert 0 < len(part) < len(whole)
+
+    cards = json.loads((tmp_path / "act" / "batch_000.json").read_text(encoding="utf-8"))
+    assert {c["id"] for c in cards} == want
+    assert all(c["notes"] for c in cards)
