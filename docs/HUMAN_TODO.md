@@ -1112,6 +1112,134 @@ The full ledgers are `data/flats/dismissal_reading_2026_09_07.csv` (584 rows)
 and `data/flats/stale_reasons_2026_09_07.csv` (49).
 ---
 
+## 14. Two readings where the code prints a standard our numbers do not have
+
+**What was checked.** The previous item read back decisions we had *made*.
+This one reads the sentences nobody ever decided anything about. In the
+fifteen code books we hold there are about a thousand lines that state a
+measurement and that not one of our numbers was taken from. Read end to end
+they are unworkable — most are the second column of a table we took the first
+column of, or the same standard written for a detached house.
+
+So the machine did the one thing it is better at than a person: for every one
+of those lines it compared the number printed on it against **every number
+that city holds for that kind of standard, in any of its zones**. A line
+saying 35 feet in a city that records a 35 somewhere is bookkeeping — our
+reader took it off a neighbouring row. A line saying 24 feet in a city that
+records no 24 for height anywhere is a number this system has never seen, and
+that is either a rule we skipped or a rule for a building that is not ours.
+**542 lines came back in that second pile.**
+
+Then the 185 nearest of them — the ones sitting in a section we had already
+taken that very standard from — were read by eight readers who were shown the
+page and, deliberately, neither our number nor even which standard we thought
+the line was about. **150 agreed the line does not apply to us, 6 could not
+tell, and 29 said it states a requirement our building would have to meet.**
+
+**All 29 were then checked back against the code and against our own files.**
+Twenty-one closed on the evidence, and the six shapes they closed in are worth
+knowing because they are what a reader cannot see:
+
+- **Unincorporated Clackamas** — two notes raising the side setback to 10 and
+  15 feet where the neighbour is a low-density district. They are footnotes to
+  Table 315-4, which is the table for PMD, MR-1, MR-2, HDR, VA, SHD and RCHDR.
+  We take our numbers from Tables 315-2 and 315-3. Different table, different
+  districts.
+- **Troutdale** — a 20-foot street-side setback where the driveway comes off
+  the side street. It is real, and it is in the HDR (TC) column, which is a
+  district we do not screen.
+- **Gresham** — a cap of 24 homes per acre for middle housing on two named
+  corridors. Already considered and already declined, on the record, because
+  the district's ordinary rules are the stricter of the two.
+- **Portland** — a fourplex height cut to 25 feet. It sits inside the
+  *affordable* fourplex option, which requires half the units to be let at 60%
+  of area median income. Nothing we build has to take that deal.
+- **Rivergrove** — no maximum height recorded anywhere. True, and it cannot
+  matter: we already record that a fourplex is not allowed in Rivergrove at
+  all, so the lot is refused on use before any height is measured.
+- **West Linn** — the Willamette Historic District caps houses at 28 feet. Our
+  building is 26.
+
+### The two that need you
+
+**(i) West Linn: twenty feet of driveway in front of the garage door.** The
+city's access chapter says *"The driveway shall include a minimum of 20 feet
+in length between the garage door and the back of sidewalk, or, if no sidewalk
+is proposed, to the paved portion of the right-of-way."* We record nothing for
+that standard in West Linn. Gresham and Wilsonville both record exactly 20
+feet for the same thing, so this is not a standard we decline to model — it is
+one we have in two cities and not in the third.
+
+The reason it is a question and not a fix is that West Linn's chapter is
+written in two branches. One is headed *houses* — one home, or "two to four
+single-family residential homes" — and the 20 feet is inside it. The other is
+headed *multifamily dwellings*, and it says nothing about garages. **We have
+already chosen the multifamily branch once**: our 24-foot minimum driveway
+width in West Linn is quoted from it. So encoding the 20 feet would mean
+reading our building as a house in one paragraph and as an apartment in the
+next.
+
+**What we need:** which branch a four-unit attached building on one lot sits
+in for West Linn's purposes. *Trade-off, plainly:* taking the 20 feet is the
+cautious call — it costs lots on shallow West Linn parcels and can never make
+a lot look better than it is. Leaving it out keeps those lots and rests on the
+multifamily reading being right. Taking both is also defensible and is the
+strictest of the three.
+
+**(ii) Fairview: the front setback has to match the neighbours.** In an
+"established residential area" — the parts of town platted before a date the
+code names — *"When an existing single-unit dwelling on the same street is
+located within 30 feet of the subject site, a front yard setback similar to
+that of the nearest single-unit dwelling shall"* apply, never less than 10
+feet and never more than 40. Every Fairview zone that permits a fourplex holds
+a flat 10-foot front setback with us, which is the floor of that rule. So the
+rule can only ever push our building further back — up to thirty feet further.
+
+**What we need:** a ruling that this reaches a fourplex, and then it joins the
+list of things we cannot answer without data — where the neighbouring houses
+actually sit, which is the same missing fact as the corner-lot question in
+item 11 and the abutting-zone question in item 13. It does not block anything
+today; it is here so the third road to that same door is on the record.
+
+### Two more that are real and are in a city nobody screens
+
+Both are Lake Oswego, which you switched off on 2026-07-24 over the Mountain
+Park PUD. They change nothing today. They are worth writing down because they
+are the price of switching it back on:
+
+- **Lake Oswego caps the total floor area of the whole project**, by a formula
+  printed in all three of its residential tables: 3,000 square feet, plus 19%
+  of however much the lot exceeds 5,800 square feet, plus an extra 600 to 850
+  square feet for each unit that has a garage. Our building is about 4,000
+  square feet of floor across two storeys. On a minimum-size R-7.5 lot the
+  allowance is **3,323 square feet**, so the pod does not fit unless every
+  unit has a garage. **We have no field for a floor-area cap of that shape at
+  all** — the nearest thing we hold is a floor-area *ratio*, which four other
+  cities use and this is not.
+- **Lake Oswego sets an 18-foot front setback on steeply sloped lots**, and it
+  says so three times, once per density band, each time naming "middle
+  housing" — which in Oregon includes a fourplex. In six of its zones we hold
+  a front setback of 10 feet or none, so this is stricter than what we have.
+  It also turns on a phrase — "steeply sloped" — that **the Lake Oswego code
+  we hold never defines**, so it would go to the word queue before it could go
+  anywhere else.
+
+### What was fixed without asking
+
+Nothing in the code books. One thing in the queue itself, and it is the
+finding of the day about how we work rather than about Oregon: **the reading
+list did not know which cities the screen covers.** 26 of the 185 readings,
+and 8 of the 29 findings, were Lake Oswego and Rivergrove — an hour of reading
+with no lot behind it. Every other queue in this system already drops or marks
+excluded cities; this one, three days old, did not. It does now, and the count
+still reports them, because a list that hides what it has excluded cannot be
+told apart from a list that has finished.
+
+The full ledger is `data/flats/missed.csv` (1,206 lines) and the readings are
+`data/flats/missed_reading_2026_09_08.csv` (185).
+
+---
+
 ## ~~Seven~~ Four of our fourteen cities have zero green lots — and each one has a single reason
 
 Re-measured 2026-09-03 after your two answers ran, and again on 2026-09-04 once
@@ -1259,6 +1387,44 @@ the list of places worth hoping about.
   a person sees that in a second. The opposite error cannot be seen at all,
   because a stale reason reads exactly like a sound one. Seven rows to read out
   of 784 is the right price for that.
+
+- **The thousand lines nobody ever quoted were sorted by arithmetic, and the
+  nearest 185 were read blind, on 2026-09-08** — the run behind item 14. Every
+  other check in this system reads back a decision somebody made. This is the
+  first one that reads the sentences nobody decided anything about, which is
+  the harder half: a standard we simply never took looks exactly like the nine
+  hundred lines around it, and Milwaukie's side-yard height plane was found by
+  hand because nothing was going to find the next one.
+
+  The lever is a comparison a machine can do and a person should not have to.
+  For each unquoted line stating a measurement, the number printed on it is
+  compared against **every number that city holds for that kind of standard, in
+  any zone**. 174 lines state a figure we already carry somewhere — bookkeeping,
+  our reader took it off a neighbouring row. 490 state nothing comparable. 542
+  state a figure the city's whole file has never held, and those are the only
+  ones worth a reading. What counts as a number is kept deliberately narrow:
+  section numbers, ordinance numbers and the years in an amendment trail are
+  masked out first, and each standard's kind supplies a sanity range, because a
+  height of 40,000 is a floor area that wandered into the sentence.
+
+  **It is a sort, not a verdict, and the first run measured the price of that
+  honestly.** Of the 29 lines the readers said would bind us, 21 closed on the
+  evidence within the hour — wrong table, wrong district, an option nobody has
+  to take, a city where a fourplex is already refused on use. Two need you and
+  are in item 14; two more are real and are in Lake Oswego, which is switched
+  off. That ratio is the queue working, not failing: the cost of the 21 is
+  minutes, and the thing it is protecting against is a standard sitting unread
+  in a document we have held for months.
+
+  **One defect in our own machinery came out of it**, and it is the reason the
+  run is written up rather than just filed: the reading list did not know which
+  cities the screen covers, so a seventh of it was Lake Oswego and Rivergrove.
+  Every other queue here already drops or marks excluded land. This one does
+  now, while the ledger keeps counting them, because a list that hides what it
+  has excluded cannot be told apart from a list that has finished.
+
+  The ledger is `data/flats/missed.csv` (1,206 lines) and the readings are
+  `data/flats/missed_reading_2026_09_08.csv` (185).
 
 - **Every number we hold has now been read twice, and the second reader was
   not allowed to see the first one's answer** — run 2026-09-07, and the result

@@ -403,6 +403,37 @@ def test_the_far_tier_can_be_asked_for_deliberately() -> None:
     assert len(cards) == 1
 
 
+def test_a_city_nobody_screens_is_not_reading_work() -> None:
+    """The first run of this queue spent a seventh of itself on excluded land.
+
+    26 of 185 cards, and 8 of the 29 findings, were Lake Oswego and Rivergrove
+    -- one shut off by an owner decision about the Mountain Park PUD, three
+    too small to be under the state's fourplex mandate. A finding there is a
+    true statement about a code nobody is screening.
+    """
+    cards, _, skipped = work_list([_made()], _Store(_DOC), off={"or/x/y"})
+    assert cards == [] and skipped["switched_off"] == 1
+
+
+def test_an_excluded_city_comes_back_when_it_is_asked_for() -> None:
+    cards, _, skipped = work_list(
+        [_made()], _Store(_DOC), off={"or/x/y"}, include_off=True
+    )
+    assert len(cards) == 1 and skipped["switched_off"] == 0
+
+
+def test_the_ledger_still_counts_what_the_reading_queue_drops() -> None:
+    """A ledger that hides excluded land cannot be told from a finished one.
+
+    Same split as the crossref and triage queues: the count keeps everything
+    and says so, and only the queue somebody has to *work* is narrowed.
+    """
+    out = render([_made()], off={"or/x/y"})
+    assert "unread statements naming a field we screen on: 1" in out
+    assert "in cities the screen does not cover: 1" in out
+    assert "[SWITCHED OFF -- not screened]" in out
+
+
 # --- scoring the readings ---------------------------------------------------
 
 

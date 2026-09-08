@@ -675,6 +675,24 @@ converted: what is compared is the figure a reader will find against the figure 
 records having found, which is the bargain `readiness._printed` already makes and is
 reused here rather than re-derived — so a new derived form has one place to be taught.
 
+**The reading queue drops what the ledger keeps counting, and the first run paid to
+learn it.** `work_list` builds one card per line and somebody reads a page of code to
+answer it, so a card is *work* in a way a row in a ranked feed is not — and 26 of the
+first 185 cards, with 8 of the 29 findings, were Lake Oswego and Rivergrove, which the
+screen does not cover. `triage.feed` deliberately keeps excluded layers and marks them,
+because it ranks on lots at stake and a second invisible sort would make it
+unexplainable. The reading queues drop them (`eligible_only`, `include_off`), and this
+one now joins them, while `render` keeps them in the count: a list that hides what it
+excluded cannot be told from a list that has finished.
+
+The first blind reading of it ran 2026-09-08: **29 of 185 said the line binds, 150 said
+it does not, 6 could not tell**, and 21 of the 29 closed against the corpus the same day
+— a footnote block belonging to a table whose districts we do not encode, a column for a
+zone we do not hold, an affordable-housing option nobody has to take, a city already RED
+on use. Two need a human ruling and two are real in a switched-off city. That ratio is
+the ledger working: the cost of closing 21 is minutes, and the thing it buys is that a
+standard printed on a page we have held for months cannot stay invisible.
+
 **Footnote scope, and the one way to narrow it.** A footnote governs every value quoted
 from its *region* — the run of lines between the previous notes block and this one's
 heading — not the cell its marker sits on. That is wider than the truth on purpose:

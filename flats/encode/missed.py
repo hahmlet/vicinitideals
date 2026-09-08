@@ -60,6 +60,16 @@ the top -- :func:`work_list` builds cards carrying the sentence and the page
 around it and *not* the figure this corpus holds, and :func:`score` joins the
 readings back. ``missed`` is the only answer that is a finding.
 
+**The reading queue drops the cities the screen does not cover, and the ledger
+does not.** That split is settled practice here, and the first run of this
+queue is why it is worth stating twice: 26 of its 185 readings, and 8 of its 29
+findings, were Lake Oswego and Rivergrove -- land nobody screens. A finding
+there is a true statement about a code that decides nothing, and unlike a
+marked row in a ranked feed it cannot be skipped past, because reading the card
+*is* the work. So :func:`render` marks them and keeps counting them, and only
+:func:`work_list` narrows; ``include_off`` puts them back for the day a city is
+switched on.
+
 Run it::
 
     uv run python -m flats.encode.missed
@@ -79,11 +89,12 @@ from collections import Counter, defaultdict
 from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
-from typing import Iterable, Sequence
+from typing import Collection, Iterable, Sequence
 
 from flats.encode.crossrefs import _cited_lines, _doc_ids
 from flats.encode.reread import CONTEXT, _above, _passage
 from flats.encode.readiness import _printed, _printed_variant
+from flats.encode.triage import unscreened
 from flats.encode.uncited import Uncited, _sections, survey
 from flats.provenance.store import ProvenanceStore
 from flats.rules.fields import FIELDS
@@ -416,15 +427,21 @@ def by_figure(rows: Iterable[Missed]) -> list[tuple[str, str, Decimal, int, str]
     ]
 
 
-def render(rows: Sequence[Missed], *, top: int = 40) -> str:
+def render(rows: Sequence[Missed], *, top: int = 40, off: Collection[str] = ()) -> str:
     counts = Counter(r.verdict for r in rows)
     near = Counter(r.nearness for r in rows if r.verdict == "unheld")
     ranked = by_figure(rows)
+    dark = sum(1 for r in rows if r.layer in off)
     out = [
         f"unread statements naming a field we screen on: {len(rows)}",
         f"  states a figure this layer holds nowhere: {counts['unheld']}",
         f"  states a figure the layer already carries: {counts['held']}",
         f"  states no comparable figure:               {counts['unnumbered']}",
+        *(
+            [f"  of all of them, in cities the screen does not cover: {dark}"]
+            if dark
+            else []
+        ),
         "",
         "of the unheld, where the line sits:",
         f"  in a section we took THIS standard from: {near['same_field']}",
@@ -441,7 +458,8 @@ def render(rows: Sequence[Missed], *, top: int = 40) -> str:
             shown_tier = nearness
             out.append(f"--- {nearness} ---")
         shown = format(figure.normalize(), "f")
-        out.append(f"  {lines:>3} lines  [{layer}] {field} = {shown}")
+        mark = "   [SWITCHED OFF -- not screened]" if layer in off else ""
+        out.append(f"  {lines:>3} lines  [{layer}] {field} = {shown}{mark}")
         example = next(
             r
             for r in rows
@@ -478,6 +496,8 @@ def work_list(
     store: ProvenanceStore | None = None,
     context: int = CONTEXT,
     tiers: Sequence[str] = ("same_field", "read_section"),
+    off: Collection[str] = (),
+    include_off: bool = False,
 ) -> tuple[list[dict[str, object]], list[dict[str, object]], dict[str, int]]:
     """``(cards, answer key, what was skipped)`` for the unheld statements.
 
@@ -485,13 +505,33 @@ def work_list(
     is 357 lines in chapters nobody has opened, which is a different question
     -- "is there anything in here for us" -- and a card built for this one
     answers it badly.
+
+    ``off`` names the jurisdictions the screen does not cover, and this list
+    drops them, which is the opposite of what :func:`flats.encode.triage.feed`
+    does with the same set. The two are not inconsistent: triage ranks cards
+    by lots at stake and can afford to show excluded land marked, because the
+    reader is choosing what to open. Here a card *is* the work -- somebody
+    reads a page of code and answers a question -- and the first run of this
+    queue spent 26 of its 185 readings, and 8 of its 29 findings, on Lake
+    Oswego and Rivergrove, which nobody screens. That is not a marked row a
+    reader can skip past. It is an hour of reading with no lot behind it.
+
+    The ledger still counts them; :func:`render` marks them. Only the reading
+    queue drops them, and ``include_off`` puts them back for the day somebody
+    switches a city on.
     """
     rows = audit() if rows is None else rows
     store = ProvenanceStore() if store is None else store
+    off = frozenset(() if include_off else off)
 
     cards: list[dict[str, object]] = []
     key: list[dict[str, object]] = []
-    skipped = {"held_or_unnumbered": 0, "far_tier": 0, "no_text": 0}
+    skipped = {
+        "held_or_unnumbered": 0,
+        "far_tier": 0,
+        "switched_off": 0,
+        "no_text": 0,
+    }
     docs: dict[str, list[str]] = {}
 
     order = {n: i for i, n in enumerate(NEARNESS)}
@@ -501,6 +541,9 @@ def work_list(
             continue
         if row.nearness not in tiers:
             skipped["far_tier"] += 1
+            continue
+        if row.layer in off:
+            skipped["switched_off"] += 1
             continue
         if row.path not in docs:
             try:
@@ -626,9 +669,18 @@ def report(rows: Sequence[dict]) -> str:
     return "\n".join(out)
 
 
-def _write_work(out_dir: Path, batch: int, context: int, tiers: Sequence[str]) -> int:
+def _write_work(
+    out_dir: Path,
+    batch: int,
+    context: int,
+    tiers: Sequence[str],
+    off: Collection[str] = (),
+    include_off: bool = False,
+) -> int:
     out_dir.mkdir(parents=True, exist_ok=True)
-    cards, key, skipped = work_list(context=context, tiers=tiers)
+    cards, key, skipped = work_list(
+        context=context, tiers=tiers, off=off, include_off=include_off
+    )
     (out_dir / "answer_key.json").write_text(json.dumps(key, indent=1), encoding="utf-8")
     for n in range(0, len(cards), batch):
         (out_dir / f"batch_{n // batch:03d}.json").write_text(
@@ -678,6 +730,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         choices=NEARNESS,
         help="which nearness tiers to read (default: the two near ones)",
     )
+    ap.add_argument(
+        "--include-off",
+        action="store_true",
+        help="build reading cards for jurisdictions the screen does not cover",
+    )
     args = ap.parse_args(argv)
     if args.score:
         return _score_dir(args.score, args.csv)
@@ -691,14 +748,17 @@ def main(argv: Sequence[str] | None = None) -> int:
     if args.layer:
         layers = {lid: layer for lid, layer in layers.items() if lid in set(args.layer)}
     rows = audit(layers=layers)
+    off = unscreened(layers)
     if args.out:
         return _write_work(
             args.out,
             args.batch,
             args.context,
             tuple(args.tier) if args.tier else ("same_field", "read_section"),
+            off,
+            args.include_off,
         )
-    print(render(rows, top=args.top))
+    print(render(rows, top=args.top, off=off))
     if args.csv:
         import csv
 
