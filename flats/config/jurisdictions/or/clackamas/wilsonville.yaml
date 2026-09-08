@@ -542,12 +542,14 @@ zones:
           band: {measure: lot_sqft, more_than: 8000, at_most: 12000}
           quote: "or/clackamas/wilsonville/4.planning.txt#L4458-L4467"
         # The code writes this row "more than 12,000 sf and less than 20,000
-        # sf" and the band grammar has no exclusive upper bound. 19,999 is
-        # the last whole square foot in it; a lot measured between 19,999 and
-        # 20,000 falls through to the base 20, which is the stricter side and
-        # the right way to miss.
+        # sf". This band read `at_most: 19999` and said the grammar had no
+        # exclusive upper bound; it has `less_than`, which is the exact mirror
+        # of the `more_than` on the other end of this same band, so the row
+        # can now be stated as the code states it. Gresham carried the
+        # identical stale sentence over its own workaround.
+        # Found 2026-09-07 by the footnote-application check.
         - value: 25
-          band: {measure: lot_sqft, more_than: 12000, at_most: 19999}
+          band: {measure: lot_sqft, more_than: 12000, less_than: 20000}
           quote: "or/clackamas/wilsonville/4.planning.txt#L4458-L4467"
     notes: 'quadfit confidence: verified | Permits Middle Housing outright. Setbacks per 4.113(.02): lots
       <=10,000sf get 15/5/15 (2-story side=7, rear=20); lots >10,000sf get 20/10/20. Quadplex min lot

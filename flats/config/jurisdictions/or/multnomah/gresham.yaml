@@ -2294,11 +2294,19 @@ zones:
         # Note 5: "this does not apply to lots of record less than
         # 11,000 square feet in size". Exempt rather than zero -- the
         # standard does not reach the lot, which is a different
-        # sentence from a floor every lot clears. 10,999 is the last
-        # whole square foot below 11,000; the band grammar has no
-        # exclusive bound and the residual side is the stricter one.
+        # sentence from a floor every lot clears.
+        #
+        # This band read `at_most: 10999` and said in writing that the
+        # grammar had no exclusive bound. It has one -- `less_than`,
+        # and fifty-five bands in this corpus use it -- so the
+        # workaround had outlived its reason and was carrying its own
+        # justification forward. It cost a square foot: a lot of
+        # 10,999.5 is under 11,000 and the code exempts it, and this
+        # file applied the floor to it. Found 2026-09-07 by the
+        # footnote-application check, which reads a ruling's claim back
+        # against the encoding.
         - exempt: true
-          band: {measure: lot_sqft, at_most: 10999}
+          band: {measure: lot_sqft, less_than: 11000}
           quote: "or/multnomah/gresham/4.0100.residential.txt#L233-L234,L244-L246"
       # Article 3 computes net density on the parcel less the Natural
       # Resource, Hillside and Geologic Risk overlays, dedicated
