@@ -157,7 +157,7 @@ recorded here because the screen can now prove it.
 
 Asked directly on 2026-09-01. The honest answer is **not yet, and the gap is
 not mainly on this list.** Working the list is necessary and it is not
-sufficient. Four things stand between a green verdict and a lot you could buy
+sufficient. Five things stand between a green verdict and a lot you could buy
 on it, and only the first is a queue item:
 
 1. **Nothing is signed.** Not one encoded number has been read and confirmed by
@@ -229,6 +229,14 @@ on it, and only the first is a queue item:
    permitted, did we flag the lot? (60%.) Nobody has taken a green lot to a
    planner and asked whether we are right. Until that happens the accuracy of
    a green is an estimate, not a measurement.
+5. **A green means the lot passed the standards we test, and we test 23 of the
+   47 kinds we record.** Measured 2026-09-07. The untested 24 hold 400 real
+   numbers, and while some are honest inventory — the parking geometry is
+   waiting on a layout stage that does not exist yet — a rule nobody checks
+   cannot fail a lot that ought to fail it. The largest is the corner-lot street
+   setback, and it is untested for a stated reason: nothing in our data says
+   which lots are corners. This is **item 12**, and it is the one gap on this
+   page that could make a green *too generous* rather than too cautious.
 
 The cheapest thing that would change this, by a wide margin, is **(4)**: pull
 twenty greens across three cities and have a land-use planner or attorney rule
@@ -894,6 +902,84 @@ door. That is also why it should be settled before it ever is.
 land-use attorney, thirty minutes each. (c) is one email to Wilsonville. (f) is
 one PDF someone has to open. (e), (g) and (h) are ours, not yours, and are
 recorded so they are not lost.
+
+**A second machine pass, later the same day, walked into (c) and (g) on its
+own.** The first reading had a blind spot: footnotes print *below* the table
+they qualify, so no reader ever saw one. Seven hundred and thirty-one of the
+numbers we hold sit under a footnote that does something, and those were read
+again — this time with the footnote text on the card. The readers agreed with
+every number, and two of the places they could not read at all were Wilsonville
+RN and Portland IR, arrived at from a different direction with no knowledge of
+this list. Two independent readings landing on the same two questions is the
+best evidence available that the eight are the real leftovers and not an
+artefact of how one reader was asked.
+
+**It closed nothing new that costs you anything.** Of the 731, a footnote moves
+the number on 299. Every one of those either already has the exception encoded,
+already caps the lot at REVIEW instead of GREEN, sits in a zone where a fourplex
+is forbidden outright, or loosens a standard we hold at its strict end — which
+costs lots, never correctness. Twelve notes were left over and eleven of those
+are relaxations we can afford to ignore. The twelfth is the subject of item 12.
+---
+
+## 12. One decision: a fifth of everything we have read cannot change an answer
+
+**The finding.** We hold 1,775 zoning standards, each one quoted from a city's
+own page and each one costing somebody — a machine or a person — the same care
+to get right. **Four hundred of them are never asked for.** Nothing in the
+screen reads them. A wrong number in any of the 400 would produce no wrong
+answer, because no answer is computed from it.
+
+Ninety-five of the 400 are deliberate and say so: the corner-lot street setback,
+which the fit report names out loud as something it does not cost, because
+nothing in our data yet tells us which lots are corners. That leaves **305
+standards in 23 different kinds, across 14 cities, that are unread and where
+nothing anywhere says so.** Roughly half of those 305 are parking geometry —
+stall sizes, aisle widths, driveway approaches — waiting on a stage of the
+screen that has not been built. The rest are scattered.
+
+**Why this is on your list and not ours.** Twice now a machine audit has come
+back with the same shape of answer: the corpus is sound, and the handful of
+mistakes in it are in fields nothing reads. That is not luck. A reader gives a
+citation the same care whether or not it matters, because nothing on the page
+tells them which is which — so the errors accumulate exactly where nobody would
+ever notice, and the effort accumulates there too.
+
+**The concrete case, found this week.** Milwaukie caps middle housing at half a
+parking space per unit on arterial and collector streets. We hold one space per
+unit. Half a space is *stricter* than what we hold — on those streets a fourplex
+is allowed two stalls, not four — so this is the one kind of mistake that can
+call a lot green when it is not. It cannot do that today for a single reason:
+the screen never looks at a parking **maximum**. It looks at the minimum beside
+it. The number is right, the reading was right, the footnote was right, and it
+sits in a drawer.
+
+**Three ways to go, and the choice is yours:**
+
+1. **Teach the screen to read them.** The cheapest three are the parking
+   ceiling, the maximum front setback (27 standards in 8 cities — a rule that
+   the building must sit *close* to the street, and in Wilsonville V, Portland
+   CI2 and Troutdale MU-3 it pins the front setback to one exact distance), and
+   minimum lot depth (32 standards in 6 cities). Each is about a day's work and
+   each turns a drawer of numbers into a real check. Worth saying plainly: for
+   our pod, with its parking court behind it, the maximum front setback would
+   usually be satisfiable by sliding the building forward — nobody has checked
+   that it always is, and "usually" is the reason it is on this list rather
+   than settled. Adding checks makes the screen stricter, so expect *fewer*
+   green lots, not more.
+2. **Stop reading them.** Mark the 305 as inventory, exclude them from the
+   review queues, and spend the reviewer's hours on the 1,375 that decide
+   something. Fastest, and it means accepting that if we later build the check,
+   those numbers get read again from scratch.
+3. **Leave it and just make it visible.** Already done: the ledger is built and
+   runs, so the list can never go quietly stale again. Nothing more happens.
+
+**Our recommendation is (1) for the three named fields and (2) for the rest** —
+the maximum front setback in particular is a rule our building can fail on a
+real lot, and eight cities have one.
+
+**No lot is wrong today because of any of this.** It is about where the next
+hundred hours of reading go.
 ---
 
 ## ~~Seven~~ Four of our fourteen cities have zero green lots — and each one has a single reason
@@ -1030,9 +1116,34 @@ the list of places worth hoping about.
   numbers**, and for **731 of them the footnote is one we have ruled actually
   does something** — it changes the figure, or it turns on something about the
   lot nobody has measured. The card now carries the text of every note over the
-  lines it cites, and re-reading those 731 is the next machine job. It needs no
-  human time; it is listed here because the first run's clean result should be
-  read as "clean on the cell", not "clean on the rule".
+  lines it cites, so the first run's clean result should be read as "clean on
+  the cell", not "clean on the rule".
+
+- **Those 731 were read again the same day, with the footnote on the card** —
+  run 2026-09-07, nineteen readers, no human time. Same rules as before: the
+  reader sees the page, the zone, the standard and now every note that governs
+  the lines, and never the number we hold. Two jobs per card — what does the
+  cell say, and does each note reach a four-unit attached townhome. The ledger
+  is `data/flats/footnote_reading_2026_09_07.csv`, 731 rows.
+
+  **On the cell: 714 agreed, 11 read a defensible alternative, 6 could not be
+  read at all, and nothing disagreed.** All six unreadable are Wilsonville RN —
+  item 11(c), arrived at from a different direction by a reader who had never
+  seen that list.
+
+  **On the rules: a footnote moves the number on 299 of the 731.** The question
+  that matters is whether any of those 299 has a live route to a wrong answer,
+  and for 271 of them it does not — the exception is already encoded, or the
+  note already caps that lot at REVIEW instead of GREEN, or the zone forbids a
+  fourplex outright so nothing there can grade green anyway. That leaves 28
+  numbers behind twelve notes, every one of them in Clackamas County. Eleven of
+  the twelve *loosen* a standard we hold at its strict end: Happy Valley lets a
+  townhome take the greater of the table's coverage percent or 1,000 square
+  feet, and lets side and rear walls reach 49 feet where the front is capped at
+  45. Holding the strict end costs lots and cannot cost correctness, which is
+  the trade this project has chosen everywhere else.
+
+  **The twelfth is Milwaukie's parking ceiling and it became item 12.**
 
 - **Both directions of the footnote check now run** — built 2026-09-07. The
   system was only ever half-built and the missing half was the unsafe one.
