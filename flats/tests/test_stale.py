@@ -21,9 +21,19 @@ from flats.encode.stale import Stale, _named, audit, render
 pytestmark = pytest.mark.unit
 
 
+class _Value:
+    def __init__(self, value) -> None:
+        self.value = value
+
+
+class _Zone:
+    def __init__(self, quadplex: bool | None = None) -> None:
+        self.values = {} if quadplex is None else {"quadplex_allowed": _Value(quadplex)}
+
+
 class _Layer:
     def __init__(self, *zones: str) -> None:
-        self.zones = {z: object() for z in zones}
+        self.zones = {z: _Zone() for z in zones}
 
 
 def _ruling(reason: str, state: str = "dismissed") -> Ruling:
@@ -39,8 +49,21 @@ def _ruling(reason: str, state: str = "dismissed") -> Ruling:
     )
 
 
-def _run(reason: str, *zones: str, state: str = "dismissed") -> list[Stale]:
-    return audit({"or/x/y": [_ruling(reason, state)]}, {"or/x/y": _Layer(*zones)})
+def _run(
+    reason: str,
+    *zones: str,
+    state: str = "dismissed",
+    over: tuple[str, ...] = (),
+    forbidden: tuple[str, ...] = (),
+) -> list[Stale]:
+    layer = _Layer(*zones)
+    for zone in forbidden:
+        layer.zones[zone] = _Zone(quadplex=False)
+    return audit(
+        {"or/x/y": [_ruling(reason, state)]},
+        {"or/x/y": layer},
+        {("or/x/y/doc.txt", 1): set(over)},
+    )
 
 
 # --- which reasons are even in scope ---------------------------------------
@@ -134,7 +157,7 @@ def test_the_report_leads_with_the_ones_a_person_can_act_on() -> None:
         ]
     )
     assert "contradicted by the layer as it stands: 1" in text
-    assert "naming nothing this can re-ask:         1" in text
+    assert "naming nothing this can re-ask:          1" in text
     assert "d#L1" in text
     assert "d#L2" not in text
 
@@ -161,3 +184,87 @@ def test_the_check_reaches_the_whole_register() -> None:
     rows = audit()
     assert rows, "no dismissal reads as a claim about our own files -- suspicious"
     assert len({r.layer for r in rows}) > 1
+
+
+# --- does getting it wrong cost anything? -----------------------------------
+
+
+def test_a_false_reason_over_permitted_land_is_the_one_that_bites() -> None:
+    rows = _run("scoped to SFA, which this layer does not encode", "SFA", over=("SFA",))
+    assert rows[0].bites
+    assert rows[0].permitting == ("SFA",)
+
+
+def test_a_false_reason_over_a_prohibited_district_is_a_wrong_sentence_only() -> None:
+    """Gresham's CC and MC hold quadplex_allowed False.
+
+    The reason on that note is wrong about the corpus and the answer is still
+    right, because the lot is red on use before any footnote is reached.
+    """
+    rows = _run(
+        "in the CC district, which is not encoded here",
+        "CC",
+        over=("CC",),
+        forbidden=("CC",),
+    )
+    assert rows[0].verdict == "contradicted"
+    assert rows[0].permitting == ()
+    assert not rows[0].bites
+
+
+def test_a_note_standing_over_nothing_cannot_bite() -> None:
+    rows = _run("scoped to SFA, which this layer does not encode", "SFA")
+    assert rows[0].over == ()
+    assert not rows[0].bites
+
+
+def test_a_district_we_have_never_recorded_a_use_for_counts_as_open() -> None:
+    """Absent is permitted. Only a recorded False closes a district."""
+    rows = _run("the MU zone, not encoded here", "MU", over=("MU",))
+    assert rows[0].permitting == ("MU",)
+
+
+# --- work already done ------------------------------------------------------
+
+
+def test_a_reason_that_records_its_own_repair_is_not_asked_again() -> None:
+    """The first run of this check flagged the one note somebody had fixed.
+
+    Its reason quotes the false claim in order to record killing it, and a
+    queue that keeps returning finished work stops being read.
+    """
+    rows = _run(
+        "this used to be dismissed on the grounds that CC and MC were not "
+        "encoded here, which stopped being true when both were encoded",
+        "CC",
+        "MC",
+        over=("CC",),
+    )
+    assert rows[0].verdict == "repaired"
+    assert not rows[0].bites
+
+
+def test_repair_language_is_narrow_enough_to_mean_something() -> None:
+    rows = _run("a district this layer does not encode, and was true once", "SFA")
+    assert rows[0].verdict != "repaired"
+
+
+def test_the_report_separates_a_wrong_sentence_from_a_wrong_answer() -> None:
+    text = render(
+        [
+            Stale("or/x/y", "d#L1", "not encoded here", ("SFA",), ("SFA",), ("SFA",)),
+            Stale("or/x/y", "d#L2", "not encoded here", ("CC",), ("CC",), ()),
+        ]
+    )
+    assert "COULD STILL BE A WRONG GREEN: 1" in text
+    assert "wrong sentence, right answer (no permitted zone behind it): 1" in text
+
+
+def test_the_corpus_run_carries_scope_for_every_row() -> None:
+    """`over` comes from the same value -> note map the whole register uses.
+
+    A row with no scope is not an error -- plenty of notes stand over nothing
+    we hold -- but every permitting zone must be one of them.
+    """
+    for row in audit():
+        assert set(row.permitting) <= set(row.over)

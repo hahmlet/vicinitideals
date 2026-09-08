@@ -1100,10 +1100,13 @@ the sentence."* Somebody caught it once, for one note, by hand.
 
 **Now something watches for the rest.** Of the 784 dismissals, 49 argue about
 our own files rather than about Oregon — those are the only ones that can go
-stale — and eleven of them name a district the corpus holds today. That list is
-rebuilt from the register every time it is asked, so it cannot quietly rot the
-way the reasons it audits did. It is the agent's to work, not yours; the three
-above are on this page because each needs a ruling only a person can give.
+stale — and ten of them name a district the corpus holds today. Seven of those
+ten stand over land where a fourplex is actually permitted, which is the only
+way a false sentence can turn into a wrong answer; the other three are wrong
+sentences over districts already closed on use. That list is rebuilt from the
+register every time it is asked, so it cannot quietly rot the way the reasons
+it audits did. It is the agent's to work, not yours; the three above are on
+this page because each needs a ruling only a person can give.
 
 The full ledgers are `data/flats/dismissal_reading_2026_09_07.csv` (584 rows)
 and `data/flats/stale_reasons_2026_09_07.csv` (49).
@@ -1235,16 +1238,27 @@ the list of places worth hoping about.
   — *does this reason still say something true about our own files?* Of the 784
   dismissals, **49 argue about our corpus rather than about Oregon**, and those
   are the only ones that can decay; a reason that says "this sentence is about a
-  detached house" is as durable as the page it read. Eleven of the 49 name a
-  zone the layer holds today. Thirty-eight name nothing anybody can re-ask,
-  which is not a bug but is worth knowing about a claim with a shelf life.
+  detached house" is as durable as the page it read. Ten of the 49 name a zone
+  the layer holds today, one says in its own words that somebody already came
+  back and fixed it, and thirty-eight name nothing anybody can re-ask — which
+  is not a bug but is worth knowing about a claim with a shelf life.
+
+  **The ledger sorts itself by consequence, which is the part that makes it
+  workable.** A false sentence about a district where we already record that a
+  fourplex is forbidden cannot make a lot green wrongly — the lot is red on use
+  long before any footnote is reached. So each row carries the zones the note
+  stands over and how many of those permit the building, and the report leads
+  with the seven that can still bite. Reading those seven by hand the same day,
+  five gave a *second* ground that survives on its own and only the Happy Valley
+  buffer changes what a lot must satisfy. That ratio is the point: the screen is
+  cheap and the reading is short.
 
   The ledger is `data/flats/stale_reasons_2026_09_07.csv` and it deliberately
   over-reports: a reason can name a live zone for its own reasons — "120 feet
   from a lot zoned R-6" is a measurement, not a claim that R-6 is missing — and
   a person sees that in a second. The opposite error cannot be seen at all,
-  because a stale reason reads exactly like a sound one. Eleven rows to glance
-  at, out of 784, is the right price for that.
+  because a stale reason reads exactly like a sound one. Seven rows to read out
+  of 784 is the right price for that.
 
 - **Every number we hold has now been read twice, and the second reader was
   not allowed to see the first one's answer** — run 2026-09-07, and the result

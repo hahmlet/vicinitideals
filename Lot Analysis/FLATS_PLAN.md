@@ -639,6 +639,19 @@ purpose: a reason that names a live zone for its own reasons ("120 feet from a l
 R-6" is a measurement) is visible as such in a second, whereas a stale reason reads
 exactly like a sound one.
 
+**It is also the only one of the six that ranks itself by consequence, and that is not
+decoration.** The other five audit a number against a page, so every row is worth the
+same. Here a row's cost depends on something outside the reason entirely: what the note
+stands over. A false claim about a district where `quadplex_allowed` is already `False`
+cannot produce a wrong GREEN, because the lot is RED on use before a footnote is reached.
+So each row carries its zones and the subset that permits the building, and `bites` marks
+the intersection — 7 of the 10 contradicted on the run this was built for. It is a screen
+and not a finding: reading those 7, five gave a second ground that stands on its own
+(the note is about cottage clusters, it loosens rather than tightens, the pod is not the
+building type named) and one changed what a lot must satisfy. `_permits` treats absence
+as permission — only a recorded `False` closes a district — because the conservative
+error here is to over-report, exactly as everywhere else in this project.
+
 **Footnote scope, and the one way to narrow it.** A footnote governs every value quoted
 from its *region* — the run of lines between the previous notes block and this one's
 heading — not the cell its marker sits on. That is wider than the truth on purpose:
