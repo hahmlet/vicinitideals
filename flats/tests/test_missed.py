@@ -26,9 +26,11 @@ from flats.encode.missed import (
     _held,
     audit,
     by_figure,
+    chapter_list,
     render,
     report,
     score,
+    score_chapters,
     work_list,
 )
 from flats.encode.uncited import Uncited
@@ -420,6 +422,94 @@ def test_an_excluded_city_comes_back_when_it_is_asked_for() -> None:
         [_made()], _Store(_DOC), off={"or/x/y"}, include_off=True
     )
     assert len(cards) == 1 and skipped["switched_off"] == 0
+
+
+def test_a_section_card_asks_about_every_unread_line_at_once() -> None:
+    """89 of 144 unopened sections hold one line; the largest holds 34.
+
+    A per-line card would ask the largest of them thirty-four times and buy
+    thirty-four copies of one answer.
+    """
+    rows = [
+        _made(line=3, read_here=(), text="the maximum height is 24 ft"),
+        _made(line=4, read_here=(), text="next row"),
+    ]
+    cards, key, _ = chapter_list(rows, _Store(_DOC))
+    assert len(cards) == 1
+    marked = [line for line in cards[0]["passage"] if line.startswith(">>")]
+    assert len(marked) == 2
+    assert cards[0]["marked_lines"] == "L3, L4"
+    assert key[0]["lines"] == [3, 4]
+
+
+def test_a_section_card_carries_no_guess_of_ours_either() -> None:
+    cards, key, _ = chapter_list([_made(read_here=())], _Store(_DOC))
+    assert set(cards[0]) == {
+        "id",
+        "jurisdiction",
+        "document",
+        "section",
+        "headings",
+        "marked_lines",
+        "passage",
+    }
+    assert key[0]["fields"] == ["max_height_ft"]
+
+
+def test_only_the_unopened_tier_becomes_a_section_card() -> None:
+    cards, _, skipped = chapter_list([_made()], _Store(_DOC))
+    assert cards == [] and skipped["not_the_far_tier"] == 1
+
+
+def test_a_section_in_a_city_nobody_screens_is_not_asked() -> None:
+    cards, _, skipped = chapter_list([_made(read_here=())], _Store(_DOC), off={"or/x/y"})
+    assert cards == [] and skipped["switched_off"] == 1
+
+
+def test_the_biggest_section_is_the_first_card() -> None:
+    rows = [
+        _made(line=3, section="small", read_here=()),
+        _made(line=3, section="big", read_here=()),
+        _made(line=4, section="big", read_here=()),
+    ]
+    cards, _, _ = chapter_list(rows, _Store(_DOC))
+    assert [c["section"] for c in cards] == ["big", "small"]
+
+
+def _chapter_key() -> list[dict]:
+    return [
+        {
+            "id": "00000",
+            "layer": "or/x/y",
+            "path": "or/x/y/doc.txt",
+            "section": "19.301",
+            "lines": [3],
+            "fields": ["max_height_ft"],
+            "texts": ["the maximum height is 24 ft"],
+        }
+    ]
+
+
+def test_an_unopened_section_with_nothing_in_it_closes() -> None:
+    rows = score_chapters(_chapter_key(), {"00000": {"binds": "no"}}, layers={})
+    assert rows[0]["verdict"] == "agree"
+
+
+def test_a_figure_printed_nowhere_in_that_city_is_worth_reading() -> None:
+    rows = score_chapters(
+        _chapter_key(), {"00000": {"binds": "yes", "number": "24"}}, layers={}
+    )
+    assert rows[0]["verdict"] == "worth_reading"
+
+
+def test_a_figure_the_city_prints_somewhere_is_the_weaker_answer() -> None:
+    layer = _Layer(A=_Zone(max_height_ft=_Value(35)))
+    rows = score_chapters(
+        _chapter_key(),
+        {"00000": {"binds": "yes", "number": "35"}},
+        layers={"or/x/y": layer},
+    )
+    assert rows[0]["verdict"] == "seen_elsewhere"
 
 
 def test_the_ledger_still_counts_what_the_reading_queue_drops() -> None:

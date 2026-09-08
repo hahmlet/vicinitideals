@@ -76,6 +76,7 @@ Run it::
     uv run python -m flats.encode.missed or/clackamas/milwaukie
     uv run python -m flats.encode.missed --csv data/flats/missed.csv
     uv run python -m flats.encode.missed --out work/ --batch 25
+    uv run python -m flats.encode.missed --out work/ --sections --context 2
     uv run python -m flats.encode.missed --score work/ --csv data/flats/read.csv
 """
 
@@ -589,6 +590,171 @@ def work_list(
     return cards, key, skipped
 
 
+# --- the chapter nobody opened -----------------------------------------------
+#
+# The third nearness tier is a different question and a per-line card answers
+# it badly. 347 of its lines sit in 144 sections of screened cities, and 89 of
+# those sections hold exactly one measuring line -- so asking line by line
+# would buy 347 readings of a question that has 144 answers, and would ask the
+# largest of them (Gresham 4.1252, 34 lines) thirty-four times over.
+#
+# So one card is one section, every unquoted measuring line in it marked at
+# once, and the question changes with the shape: not "does this line bind us"
+# but "is there anything in this section our building has to satisfy, and
+# where". A section of land-division procedure closes in one answer. That is
+# the whole economy of it.
+
+
+def chapter_list(
+    rows: Sequence[Missed] | None = None,
+    store: ProvenanceStore | None = None,
+    context: int = 2,
+    off: Collection[str] = (),
+    include_off: bool = False,
+) -> tuple[list[dict[str, object]], list[dict[str, object]], dict[str, int]]:
+    """``(cards, answer key, what was skipped)``, one card per unopened section.
+
+    Biggest section first, because a card's cost is one reading either way and
+    the 34-line ones carry more of the queue than the 89 single-line ones put
+    together.
+    """
+    rows = audit() if rows is None else rows
+    store = ProvenanceStore() if store is None else store
+    off = frozenset(() if include_off else off)
+
+    groups: dict[tuple[str, str, str], list[Missed]] = defaultdict(list)
+    skipped = {"not_the_far_tier": 0, "switched_off": 0, "no_text": 0}
+    for row in rows:
+        if row.verdict != "unheld" or row.nearness != "unread_section":
+            skipped["not_the_far_tier"] += 1
+        elif row.layer in off:
+            skipped["switched_off"] += 1
+        else:
+            groups[(row.layer, row.path, row.section)].append(row)
+
+    cards: list[dict[str, object]] = []
+    key: list[dict[str, object]] = []
+    docs: dict[str, list[str]] = {}
+    ordered = sorted(groups.items(), key=lambda kv: (-len(kv[1]), kv[0]))
+    for (layer, path, section), members in ordered:
+        if path not in docs:
+            try:
+                docs[path] = store.text_path(path).read_text(
+                    encoding="utf-8"
+                ).splitlines()
+            except OSError:
+                docs[path] = []
+        whole = docs[path]
+        if not whole:
+            skipped["no_text"] += len(members)
+            continue
+        members = sorted(members, key=lambda r: r.line)
+        lines = [r.line for r in members]
+        headings, caption_at = _above(whole, lines[0])
+        ident = f"{len(cards):05d}"
+        cards.append(
+            {
+                "id": ident,
+                "jurisdiction": layer,
+                "document": path,
+                "section": section,
+                "headings": headings,
+                "marked_lines": ", ".join(f"L{n}" for n in lines),
+                "passage": _passage(
+                    whole, [(n, n) for n in lines], context, caption_at
+                ),
+            }
+        )
+        key.append(
+            {
+                "id": ident,
+                "layer": layer,
+                "path": path,
+                "section": section,
+                "lines": lines,
+                # Our guesses, and they are only guesses -- never on the card.
+                "fields": sorted({r.field for r in members}),
+                "texts": [r.text for r in members],
+            }
+        )
+    return cards, key, skipped
+
+
+def score_chapters(
+    key: Sequence[dict],
+    answers: dict[str, dict],
+    layers: dict[str, Layer] | None = None,
+) -> list[dict[str, object]]:
+    """Join the section readings back.
+
+    There is no held figure to compare against here -- that is what makes it
+    the unopened tier -- so the only machine check available is the weak one:
+    is the number the reader read printed *anywhere* in that jurisdiction's
+    file, for any standard at all. ``worth_reading`` means it is not, which is
+    the same claim the per-line ledger makes and a much weaker version of it.
+    """
+    layers = load_rules(strict=False) if layers is None else layers
+    pooled: dict[str, list[Decimal]] = {}
+    out: list[dict[str, object]] = []
+    for k in key:
+        a = answers.get(str(k["id"])) or {}
+        binds = str(a.get("binds") or "").strip().lower()
+        read = _reader_number(a.get("number"))
+        layer = str(k["layer"])
+        if layer not in pooled:
+            found = layers.get(layer)
+            pooled[layer] = (
+                sorted({f for figs in _held(found).values() for f in figs})
+                if found is not None
+                else []
+            )
+        if not binds:
+            verdict = "missing"
+        elif binds == "no":
+            verdict = "agree"
+        elif binds != "yes":
+            verdict = "unclear"
+        elif read is not None and _near(read, pooled[layer]):
+            verdict = "seen_elsewhere"
+        else:
+            verdict = "worth_reading"
+        out.append(
+            {
+                **{n: v for n, v in k.items() if n not in ("lines", "fields", "texts")},
+                "lines": ",".join(f"L{n}" for n in k["lines"]),
+                "fields": ",".join(k["fields"]),
+                "verdict": verdict,
+                "binds": binds,
+                "reader_lines": str(a.get("lines") or ""),
+                "reader_number": str(a.get("number") or ""),
+                "reader_standard": str(a.get("standard") or ""),
+                "reader_about": str(a.get("about") or ""),
+                "reader_note": str(a.get("note") or ""),
+            }
+        )
+    return out
+
+
+def report_chapters(rows: Sequence[dict]) -> str:
+    counts = Counter(str(r["verdict"]) for r in rows)
+    out = [
+        f"sections read: {len(rows)}  "
+        + "  ".join(f"{n}={counts[n]}" for n in sorted(counts)),
+        "",
+        f"SOMETHING IN HERE BINDS US: {counts['worth_reading'] + counts['seen_elsewhere']}",
+        f"  and the figure is printed nowhere in that city's file: {counts['worth_reading']}",
+        "",
+    ]
+    for r in rows:
+        if r["verdict"] in ("worth_reading", "seen_elsewhere"):
+            out.append(
+                f"  [{r['layer']}] {r['section']} {r['reader_lines']}"
+                f"  {r['reader_standard']} = {r['reader_number']}"
+            )
+            out.append(f"      {str(r['reader_note'])[:150]}")
+    return "\n".join(out)
+
+
 def _reader_number(said: object) -> Decimal | None:
     """The first figure in whatever the reader typed."""
     match = re.search(r"\d{1,3}(?:,\d{3})+|\d+(?:\.\d+)?", str(said or ""))
@@ -676,11 +842,17 @@ def _write_work(
     tiers: Sequence[str],
     off: Collection[str] = (),
     include_off: bool = False,
+    sections: bool = False,
 ) -> int:
     out_dir.mkdir(parents=True, exist_ok=True)
-    cards, key, skipped = work_list(
-        context=context, tiers=tiers, off=off, include_off=include_off
-    )
+    if sections:
+        cards, key, skipped = chapter_list(
+            context=context, off=off, include_off=include_off
+        )
+    else:
+        cards, key, skipped = work_list(
+            context=context, tiers=tiers, off=off, include_off=include_off
+        )
     (out_dir / "answer_key.json").write_text(json.dumps(key, indent=1), encoding="utf-8")
     for n in range(0, len(cards), batch):
         (out_dir / f"batch_{n // batch:03d}.json").write_text(
@@ -701,8 +873,14 @@ def _score_dir(work: Path, csv_out: Path | None) -> int:
                 answers[str(a.get("id"))] = a
         except json.JSONDecodeError as exc:
             print(f"BAD JSON {path.name}: {exc}")
-    rows = score(key, answers)
-    print(report(rows))
+    # The two card shapes score differently and the key says which it is: a
+    # section card carries a list of lines, a line card carries one.
+    if key and isinstance(key[0].get("lines"), list):
+        rows = score_chapters(key, answers)
+        print(report_chapters(rows))
+    else:
+        rows = score(key, answers)
+        print(report(rows))
     if csv_out:
         import csv
 
@@ -735,6 +913,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         action="store_true",
         help="build reading cards for jurisdictions the screen does not cover",
     )
+    ap.add_argument(
+        "--sections",
+        action="store_true",
+        help="one card per unopened section instead of one per line",
+    )
     args = ap.parse_args(argv)
     if args.score:
         return _score_dir(args.score, args.csv)
@@ -757,6 +940,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             tuple(args.tier) if args.tier else ("same_field", "read_section"),
             off,
             args.include_off,
+            args.sections,
         )
     print(render(rows, top=args.top, off=off))
     if args.csv:
