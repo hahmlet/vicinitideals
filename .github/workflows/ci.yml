@@ -95,7 +95,12 @@ jobs:
         uses: astral-sh/setup-uv@v3
 
       - name: Install dependencies
-        run: uv sync --extra dev --extra api --extra flats
+        # `gis` and `tools` are here for the quadfit suite below, not for the
+        # app: quadfit's s0_acquire imports pyshp at module scope and its
+        # overlay stage imports rasterio. They are the price of running the
+        # zone mirror audit on every push, which is cheaper than the audit
+        # going stale again.
+        run: uv sync --extra dev --extra api --extra flats --extra gis --extra tools
 
       - name: Prepare environment file
         run: cp .env.example .env
@@ -129,6 +134,17 @@ jobs:
       # the light gate rather than waiting on the full gate.
       - name: FLATS tests
         run: uv run pytest flats/tests -q
+
+      # quadfit is FLATS' predecessor and is still the pipeline that does the
+      # county runs, so `rules.yaml` is what a lot is actually screened
+      # against. Added 2026-09-08 because this directory was in NO CI job: the
+      # zone mirror audit -- the only check comparing what the screen RUNS on
+      # against what was READ -- had been red since 8a6924a5 and nobody knew,
+      # because running it was a thing somebody had to remember. Two corpus
+      # commits landed over it. No per-file ignores, same rule as the suites
+      # above: test_s5o needs rasterio, so CI installs rasterio.
+      - name: quadfit tests
+        run: uv run pytest "Lot Analysis/quadfit/tests" -q
 
   # ---------------------------------------------------------------------------
   # Full gate — runs on PRs to main and pushes to main
