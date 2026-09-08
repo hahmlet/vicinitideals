@@ -134,12 +134,17 @@ def test_a_backported_band_has_to_already_be_here() -> None:
 
 
 def test_every_quadfit_zone_arrives(dry: dict) -> None:
+    # 128 as of 2026-09-08: Oregon City R-2, which rules.yaml had excluded on
+    # the note "NOT the multi-family zone" until the city's own definitions
+    # (17.04.989 quadplex = four attached units; 17.04.780 multi-family = five
+    # or more) showed the premise was wrong.
+    #
     # 127 as of 2026-09-02. Was 98 until the zone-coverage gap was measured:
     # 29 zones the corpus said permit a quadplex and rules.yaml had never heard
     # of, worth 76,752 lots that were dropped before anything was measured.
     # Lake Oswego's six are NOT among them -- that jurisdiction is `eligible:
     # false` by owner decision, so its rows are reference rather than debt.
-    assert dry["stats"]["zones"] == 127
+    assert dry["stats"]["zones"] == 128
     assert dry["stats"]["layers"] == len(COUNTY) == 18
 
 
@@ -220,11 +225,14 @@ def test_written_config_loads_through_the_real_loader() -> None:
     rules = RuleSet(load_rules())
 
     assert len(rules.layers) == 19  # 18 jurisdictions + the state layer
+    # 196 as of 2026-09-08: Oregon City R-2, the district the blind chapter
+    # reading found and the city's own glossary let us encode without a ruling.
+    #
     # 195 as of 2026-09-01: Lake Oswego gained the six residential zones its
     # use table permits a quadplex in and the port had never carried (2026-08-21),
     # then Wilsonville gained V and TC, the two zones its chapter states and no
     # ledger could see were absent.
-    assert sum(len(l.zones) for l in rules.layers.values()) == 195
+    assert sum(len(l.zones) for l in rules.layers.values()) == 196
 
 
 def test_state_parking_preemption_reaches_a_city_zone() -> None:

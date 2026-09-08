@@ -714,6 +714,49 @@ The three that survived include a whole missing zone: Oregon City R-2, whose own
 names "Triplex, quadplex and multi-family" at 6,000 sqft, excluded from the corpus in a
 one-word aside — the `project_flats_zone_gap` shape, which no field-counting ledger sees.
 
+**Oregon City R-2, closed the same day, on the code's own dictionary.** The district was
+excluded on the note *"NOT the multi-family zone (that is R-2 / Ch 17.12, excluded)"* —
+a category, not a measurement, and therefore checkable against the definitions the city
+itself prints. 17.04.989: *"'Quadplex' means four attached dwelling units on a lot."*
+17.04.780: multi-family residential is *"five or more"* total dwelling units. The pod is
+the first and is excluded from the second by count, and 17.12.020.D lists *Quadplexes*
+among R-2's **permitted** uses. The premise was wrong, not the judgement. **R-2 is
+encoded**, 14 values off Table 17.12.040 / 17.12.050 quoting the rows, in this corpus and
+in quadfit's `rules.yaml` (as `needs_verification`, so its lots route to REVIEW until the corpus signatures land — the same treatment the 35 ported zones got), and both stale notes are corrected in place. The general
+lesson is cheap and reusable: *an exclusion recorded as a category can be adjudicated by
+the code's own glossary, without a human ruling* — the same instrument the word-review
+queue was built on, pointed at a zone list instead of a value.
+
+It brings one shape the corpus had never held. R-2 states a **minimum** density of 17.4
+du/acre (17.12.050.A) and, uniquely among Oregon City's residential districts, states no
+"a quadplex counts as one unit" exception — the other five carry it at 17.08.050.B.2 /
+17.10.050.B.2, which is why `max_density_du_per_acre` is encoded nowhere else in the
+file. Four units at 17.4 wants net area **at or under** ~10,000 sqft, so **an R-2 lot can
+be too LARGE for a fourplex**, the first standard here that binds in that direction; the
+window is roughly 6,000–10,000 sqft of net developable area. Its 21.8 du/acre partner
+would have squeezed from below, and R-2 is the one district where the state layer's
+`OAR 660-046-0220(2)(b)` (`exempt: true, preempts: always`) does real work rather than
+duplicating a city's own exception — `_state.yaml`'s note names "Oregon City's exception
+B.2" among the cities that restated the rule, true of the five districts that have a B.2
+and not of the one that does not. Reach is unmeasured: `read_coverage()` holds no Oregon
+City rows, so nobody can count R-2 lots until the inventory extends past Multnomah.
+
+**Porting it into `rules.yaml` is what found the third dark gate.**
+`Lot Analysis/quadfit/tests` was named by no CI job — the light gate runs
+`tests/ -m unit` and `flats/tests`, the full gate runs `tests/` and `tests/e2e` —
+so its 160 tests ran only when somebody remembered. `test_zone_mirror.py` had
+been red since `8a6924a5` (three `setback_garage_entrance_ft` values withdrawn,
+67 → 64) and `c9ed261f` (three `setback_front_max_ft` values encoded, 23 → 26),
+and both shipped over it. The audit that went dark is the one that matters most:
+the mirror is the **only** check comparing what the screen RUNS on against what
+was READ; every other ledger checks the corpus against itself. The light gate now
+syncs `--extra gis --extra tools` (quadfit's `s0_acquire` imports pyshp at module
+scope, its overlay stage imports rasterio) and runs the directory, with no
+per-file ignore. `UNEXPRESSIBLE` records all three moves attributed to the
+commit that made each. The check that would have found it earlier is the same
+shape as the mirror itself: *diff the paths every `pytest` line names against
+the directories that hold tests.*
+
 **`orphans` asks the question from the neighbours' side.** For each `(layer, field)` where
 the layer holds the field in no zone and in no default, while at least half the other live
 layers hold it, the pair is an asymmetry worth explaining. Seven rows on first run, two

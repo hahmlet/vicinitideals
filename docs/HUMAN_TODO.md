@@ -1198,33 +1198,9 @@ day the product changed. So it does not depend on anyone remembering: a test now
 reads the building catalogue and fails the moment a design appears that parks
 under the building. The ruling cannot outlive the thing it was about.
 
-### Two more that still need you
+### One more that still needs you
 
-*(Numbered as they were first written. (ii) and (iii) are answered, below.)*
-
-**(i) Oregon City has a district that names our building, and we threw it
-away.** Oregon City's R-2 district prints its own dimensional table, and the
-first row of it reads *"Triplex, quadplex and multi-family — 6,000 square
-feet"*. It is a permissive district: 5-foot front setback, 85% lot coverage,
-35 feet of height, 10-foot rear yard. **We do not hold it at all.** Our Oregon
-City numbers cover five districts and R-2 is not one of them.
-
-It was not an oversight. Buried in a note against a different district is the
-sentence *"NOT the multi-family zone (that is R-2 / Ch 17.12, excluded)"* — so
-somebody saw it and left it out. What is not recorded anywhere is **why**, and
-that is the whole problem: a one-word reason cannot be checked, and this is the
-third time this month a decision written that way has turned out to need
-re-opening.
-
-The direction of the risk is worth being clear about. A missing district never
-makes a bad lot look good — it makes good land invisible. So this costs us
-candidates, not credibility.
-
-**What we need:** whether R-2 gets screened. *Trade-off, plainly:* encoding it
-is roughly a day of measuring twenty numbers out of one table we already hold,
-and it opens up a slice of Oregon City we currently do not look at. Leaving it
-out keeps things as they are and costs nothing except the land. There is no
-safety argument on either side.
+*(Numbered as they were first written. (i), (ii) and (iii) are answered, below.)*
 
 **(iv) Fairview: the front setback has to match the neighbours.** In an
 "established residential area" — the parts of town platted before a date the
@@ -1241,7 +1217,7 @@ actually sit, which is the same missing fact as the corner-lot question in
 item 11 and the abutting-zone question in item 13. It does not block anything
 today; it is here so the third road to that same door is on the record.
 
-### The other two, answered the same day
+### The three that are answered
 
 **Fairview's ten percent open space — you said yes, and it is encoded.** The
 number is on the record against Fairview's RM district, quoting the sentence
@@ -1276,6 +1252,49 @@ already decided. Nothing in Oregon changed; a claim about us did.
 **And you ruled on the real question underneath it: incorporate the aisle.**
 That is now done, and it is the largest correctness change in this system in
 weeks. See below.
+
+**Oregon City's R-2 — you asked the right question, and it answers itself.** You
+said we should be able to pull the definitions of those terms and see whether
+our building meets them. We can, and it does:
+
+> **17.04.989** — *"Quadplex" means four attached dwelling units on a lot.*
+> **17.04.780** — *"Multi-family residential" is a structure or structures
+> located on one lot and containing **five or more** total dwelling units.*
+
+Our pod is four attached units on a lot. It **is** a quadplex by the first
+definition and is **excluded** from the second by the unit count. And R-2 lists
+*"D. Quadplexes"* among its **permitted** uses — not conditional, and not a
+multi-family-only district; it is simply Oregon City's high density residential
+zone. So the one-word reason the district was thrown out on — "that is the
+multi-family zone" — was not a judgement call we needed to make. It was a wrong
+premise, and the city's own dictionary settles it.
+
+**R-2 is now encoded**, fourteen numbers off Table 17.12.040 and 17.12.050, each
+quoting the row it came from, in both the FLATS corpus and the older pipeline
+that does the county runs. It is a permissive district on paper: 6,000 sq ft
+minimum lot, 85 percent coverage, 35 feet, a 5-foot front yard and a 10-foot
+rear yard — looser than any Oregon City district we already screen.
+
+**One thing in it is genuinely new, and it runs backwards.** R-2 sets a minimum
+density of 17.4 homes per acre. Four homes at that rate means the lot has to be
+**no bigger than about 10,000 square feet** — so in R-2 a lot can be *too large*
+for a fourplex, which is the opposite of every constraint in this system. The
+usable window is roughly 6,000 to 10,000 square feet. Its matching 21.8-per-acre
+*maximum* would have squeezed from the other side, and R-2 is the one Oregon
+City district whose code forgot to exempt fourplexes from it — but state law
+bars a city from applying a density ceiling to a quadplex at all, and we already
+carry that rule, so it never reaches a lot.
+
+**What this does not tell you** is how much land it opens up. Our lot inventory
+does not currently carry Oregon City parcels, so nobody can count R-2 lots yet.
+The district is ready for the day it does.
+
+**And it will show amber, not green, until somebody signs it.** Every number in
+it is a draft — read once, by me, off the table. The screen is set to send R-2
+lots to *review* rather than let them come back buildable, which is how the
+thirty-five districts added last week were treated and for the same reason: one
+reading is not a check. It flips to green-capable when the signatures land.
+
 
 ### Two more that are real and are in a city nobody screens
 
@@ -1632,15 +1651,24 @@ the list of places worth hoping about.
   now, while the ledger keeps counting them, because a list that hides what it
   has excluded cannot be told apart from a list that has finished.
 
-  **Two of the four questions were answered the same day, and the answers cost
-  more work than the questions did.** Ruling that the pod has no garage retired
+  **Three of the four questions are answered, and the answers cost more work
+  than the questions did.** The fourth, Oregon City's R-2, closed on Steph's
+  own suggestion: pull the city's definitions and see whether the building
+  meets them. It does -- 17.04.989 makes a quadplex four attached units on a
+  lot and 17.04.780 makes multi-family five or more -- so the district's
+  one-word exclusion rested on a wrong premise rather than a judgement, and
+  R-2 is now encoded in both the corpus and the older pipeline. The lesson is
+  the cheap one: a decision recorded as a category ("the multi-family zone")
+  can be checked against the code's own dictionary, and this one took minutes.
+  Its density floor is the first standard in this corpus that makes a lot too
+  LARGE to qualify. Ruling that the pod has no garage retired
   66 numbers and closed both garage findings — and the exclusion is written into
   the screen's own list of what it declines to charge, with a test that fails the
   day a design with a garage enters the catalogue, so the ruling cannot outlive
   the building it was about. Ruling to incorporate the parking aisle turned out
   to be much larger: **nothing here had ever charged a lot for the ground the
   cars stand on**, and the court behind the pod is deeper than the pod. Every
-  quadplex-permitting zone now needs 22 to 42 more feet than we were saying, and
+  quadplex-permitting zone now needs 12 to 42 more feet than we were saying, and
   wiring it uncovered a live false GREEN — a pod that fits only sideways was
   being measured against its own narrow dimension. Both are written up under
   item 14.
@@ -1655,6 +1683,26 @@ the list of places worth hoping about.
   The ledger is `data/flats/missed.csv` (1,206 lines). The readings are
   `data/flats/missed_reading_2026_09_08.csv` (185 lines) and
   `data/flats/chapter_reading_2026_09_08.csv` (144 sections).
+
+  **And encoding R-2 turned up something you should know about, which is that
+  a set of our checks was not running.** The older screening pipeline — the one
+  that actually produces the county numbers — keeps its own folder of tests,
+  and none of our automatic checks had ever been pointed at it. Nobody had
+  noticed, because an unrun test and a passing test look exactly alike from
+  outside.
+
+  Two of those tests had been failing for days, and one of them is the check I
+  would least like to lose: it is the **only** thing that compares the numbers
+  the screen actually runs on against the numbers we read off the page. Two
+  earlier corrections this week walked straight past it and shipped. Nothing
+  was wrong on the ground — both corrections were right — but for a few days
+  the one instrument that would have caught a mismatch was switched off and
+  silent.
+
+  Both are fixed, and more to the point the folder now runs on every push, so
+  it cannot go quiet again. The general lesson is uncomfortable and cheap:
+  **ask which folders no automatic check names.** A failing test shouts; a test
+  nobody runs says nothing at all.
 
 - **Every number we hold has now been read twice, and the second reader was
   not allowed to see the first one's answer** — run 2026-09-07, and the result

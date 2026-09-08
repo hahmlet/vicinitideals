@@ -63,10 +63,16 @@ def test_every_clackamas_layer_is_outside_the_corpus_that_ranks_the_work(
         "or/clackamas/west-linn",
         "or/clackamas/wilsonville",
     ]
+    # 58 as of 2026-09-08: Oregon City R-2, and it is the cleanest example this
+    # test has of the thing it warns about. R-2 was encoded off its own table in
+    # a day, it holds every required field, and nobody can say what it is worth
+    # -- `read_coverage()` carries no Oregon City row, so the district ranks
+    # nowhere and will go on ranking nowhere until Clackamas parcels load.
+    #
     # 57 as of 2026-09-01: Wilsonville's V and TC. Both are blind in exactly
     # the way this test is about -- Villebois is 2,508 lots and ranks nowhere,
     # because no Clackamas parcel is loaded to rank it with.
-    assert sum(u.zones for u in blind) == 57
+    assert sum(u.zones for u in blind) == 58
 
 
 def test_and_the_ledger_totals_are_multnomah_only(rules: RuleSet) -> None:

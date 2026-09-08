@@ -245,7 +245,23 @@ pytestmark = pytest.mark.unit
 #: which one a garage takes is the architect's choice rather than any fact
 #: about the site or the pod. A value here is one threshold with variants hung
 #: off facts, so the far branch is held and the near one is written down.
-EXPECTED = {"notes": 105, "comments": 128, "tests": 17}
+#: notes 105 -> 107 on 2026-09-08, and both came in with Oregon City R-2 --
+#: which is the honest way this number is supposed to move. Encoding a district
+#: does not only add values; it adds the standards in that district's table
+#: that this model has no room for, and R-2's block says so out loud. The two
+#: are the table's garage setback row ("20 feet from ROW, except 5 feet from
+#: alley"), left out on the same-day ruling that the pod parks in a rear court
+#: and has no garage, and a block covering 17.12.060 (the Thimble Creek Concept
+#: Plan Area supersedes the district inside one geography, the same treatment
+#: 17.16.155 already gets for R-5) together with 17.12.050.C (an
+#: affordable-housing density bonus reaching only projects of five or more
+#: units, so it cannot help a fourplex). The rest of R-2's block -- the three
+#: table notes -- reads as ruled rather than refused, because those rulings
+#: live in the footnote file.
+#:
+#: Worth saying because the direction is counter-intuitive: closing a zone gap
+#: RAISES this count. A district nobody encoded refuses nothing.
+EXPECTED = {"notes": 107, "comments": 128, "tests": 17}
 
 #: STILL 115 on 2026-09-03, and the flat number hides a swap worth more than
 #: most movements on this list. Clackamas County's drive aisle closed -- a

@@ -365,6 +365,13 @@ KNOWN_ALIAS_WRONG_EDGE: frozenset[str] = frozenset({
     "oregon_city/R-10.min_frontage_ft", "oregon_city/R-8.min_frontage_ft",
     "oregon_city/R-6.min_frontage_ft", "oregon_city/R-5.min_frontage_ft",
     "oregon_city/R-3.5.min_frontage_ft", "tualatin/RL.min_frontage_ft",
+    # R-2 joined on 2026-09-08, encoded the same day, and it joins the UNSAFE
+    # half for the same reason its five siblings are here: 17.04.700 is one
+    # definition for the whole city. Ported anyway rather than left out --
+    # withholding the number would drop the district at `zone_not_in_rules`
+    # instead of over-excluding at `below_min_frontage`, and a lot the screen
+    # never looks at is worse than one it looks at too strictly.
+    "oregon_city/R-2.min_frontage_ft",
 })
 
 
@@ -625,13 +632,28 @@ def test_a_zone_missing_from_the_pipeline_is_a_debt_somebody_wrote_down() -> Non
 #: Frozen so the list cannot grow quietly. A standard leaves it by getting a
 #: column or by being read as not applying, never by being dropped from the
 #: corpus.
+#: MOVED 2026-09-08, and two of the moves had been sitting red for days
+#: because nothing runs this directory. `Lot Analysis/quadfit/tests` is in no
+#: CI job -- the light gate runs `tests/` and `flats/tests` -- so the mirror
+#: audit, the only thing comparing what the screen RUNS on against what was
+#: READ, went stale the moment a corpus commit landed without somebody
+#: remembering to run it by hand. Three moves, attributable to the line:
+#:
+#:   8a6924a5  -3 setback_garage_entrance_ft  (67 -> 64) three numbers quoted
+#:             from an exception and held as the rule, withdrawn
+#:   c9ed261f  +3 setback_front_max_ft        (23 -> 26) three dismissals that
+#:             quoted a number and declined it anyway, encoded
+#:   this one  +1 to five fields              Oregon City R-2
+#:
+#: A CI step now runs this directory, which is the actual fix; the numbers
+#: below are the second fix.
 UNEXPRESSIBLE: dict[str, int] = {
-    "setback_garage_entrance_ft": 67,
-    "min_lot_width_ft": 65,
-    "min_landscaped_pct": 33,
-    "min_lot_depth_ft": 28,
-    "setback_front_max_ft": 23,
-    "max_density_du_per_acre": 20,
+    "setback_garage_entrance_ft": 64,
+    "min_lot_width_ft": 66,
+    "min_landscaped_pct": 34,
+    "min_lot_depth_ft": 29,
+    "setback_front_max_ft": 27,
+    "max_density_du_per_acre": 21,
     "min_building_separation_ft": 9,
     "min_density_trigger_lot_sqft": 5,
     "min_units_at_trigger": 5,

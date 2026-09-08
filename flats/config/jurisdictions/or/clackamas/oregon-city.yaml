@@ -694,6 +694,219 @@ zones:
         - value: 5
           when: [abuts_alley]
           quote: "or/clackamas/oregon-city/17.zoning.txt#L4347"
+  R-2:
+    # WHY THIS DISTRICT WAS MISSING, AND WHY IT IS BACK, 2026-09-08.
+    #
+    # R-2 was left out of this file with a one-word reason, recorded in a note
+    # against R-3.5: "NOT the multi-family zone (that is R-2 / Ch 17.12,
+    # excluded)". The blind chapter reading of 2026-09-08 raised it, and
+    # Oregon City's own definitions settle it against that reason:
+    #
+    #   17.04.989  "Quadplex" means four attached dwelling units on a lot.
+    #   17.04.780  "Multi-family residential" is a structure or structures
+    #              located on one lot and containing FIVE OR MORE total
+    #              dwelling units in any vertical or horizontal arrangement.
+    #
+    # The pod is four attached units on a lot. It is a quadplex by the first
+    # definition and is excluded from the second by the unit count. R-2 lists
+    # "D. Quadplexes" among its PERMITTED uses at 17.12.020 -- not conditional,
+    # not a multi-family-only district -- so the premise the exclusion rested
+    # on is simply wrong. R-2 is high density residential (17.12.010) and it
+    # permits this building outright.
+    #
+    # The district is permissive on paper: 6,000 sq ft, 85 percent coverage,
+    # 35 ft, a 5 ft front yard, a 10 ft rear yard. What binds is the density
+    # floor, and it binds in the direction nothing else in this corpus does --
+    # an R-2 lot can be too LARGE for a fourplex. See the two density values.
+    section: ["17.12.", "17.16."]
+    cite_default:
+      cite: OCMC 17.12.020 (quadplex a permitted use) and Table 17.12.040 (dimensional
+        standards); density standards OCMC 17.12.050; middle housing standards OCMC
+        17.16.060
+      url: https://api.municode.com/PublicationPdfDownload/1377
+      retrieved: '2026-09-08'
+    quadplex_allowed:
+      # 17.12.020 Permitted uses, item D. Permitted, not conditional: the
+      # conditional list is a separate section (17.12.025) and quadplexes are
+      # not on it.
+      value: true
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4498,L4505"
+    min_lot_sqft:
+      # Table 17.12.040, the row "Triplex, quadplex and multi-family". The row
+      # label wraps across two lines on the page, which is why the quote takes
+      # both -- "multi-family" alone on L4580 is the tail of this row, not a
+      # row of its own.
+      value: 6000
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4579-L4580"
+      variants:
+        # The townhouse row of the same table, one line above. Four of these
+        # is 8,000 sq ft, more than the quadplex row asks of one lot.
+        - value: 2000
+          when: [unit_lots]
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L4578"
+    min_lot_width_ft:
+      # "Minimum lot width / All, except 50 feet, except / Townhouse 20 feet".
+      # The pod on one lot is in "All".
+      value: 50
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4590-L4591"
+      variants:
+        - value: 20
+          when: [unit_lots]
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L4592"
+    min_lot_depth_ft:
+      # "Minimum lot depth / All, except 70 feet, except / Multi-family 75
+      # feet". The 75 is the multi-family exception and does not reach a
+      # four-unit building; 70 is the figure for everything else, this
+      # included. The only lot-depth minimum in this corpus outside Fairview.
+      value: 70
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4593-L4595"
+    max_coverage_pct:
+      # One figure for the whole district, no use split -- unlike R-5 and
+      # R-3.5, whose tables print a detached row and a triplex/quadplex row
+      # and where reading the wrong one cost this corpus lots in August.
+      value: 85
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4589"
+    max_height_ft:
+      # "Maximum height / All, except 35 feet, except / Multi-family 45 feet /
+      # Cottage cluster 25 feet". Both exceptions are named use types the pod
+      # is not, so the "All" figure governs. Taking the 45 would be reading a
+      # relaxation written for a five-unit building onto a four-unit one.
+      value: 35
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4585-L4588"
+    setback_front_ft:
+      # "5 feet, except / 0 feet -- Porch". The porch exception is a
+      # projection allowance for a feature the pod does not have.
+      value: 5
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4596-L4597"
+    setback_front_max_ft:
+      # A MAXIMUM front setback: the building may be no further back than 20
+      # ft. Encoded because it is a real standard of this district, and
+      # flagged because nothing screens on it yet -- `setback_front_max_ft` is
+      # in the reach ledger's silently-unread set. Note 3 of the table says
+      # "Maximum setback may be increased per OCMC 17.62.055.D", a relaxation
+      # nobody has read; it can only loosen this, so leaving it unread is the
+      # conservative direction.
+      value: 20
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4598"
+    setback_side_ft:
+      # "Minimum interior side yard setback / All, except 5 feet / Townhouse 0
+      # feet (attached)/5 feet (side)". The stray "1" on L4602 is footnote
+      # marker 1 shaken loose from the row above it by the extractor; the note
+      # it points at is quoted under `notes` and does not reach this building.
+      value: 5
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4599-L4601"
+    setback_street_side_ft:
+      # "Minimum corner side yard setback 5 feet" -- the label wraps, so the
+      # quote takes both lines. Corner lots only, which is why the paper fit
+      # declares it excluded rather than folding it into every answer.
+      value: 5
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4605-L4606"
+    setback_rear_ft:
+      # "10 feet, except / 5 feet -- Porch". Half of R-5's and R-3.5's 20 ft,
+      # which matters more since 2026-09-08 than it used to: the parking court
+      # behind the pod overlaps the rear yard, so a shallow rear yard means
+      # more of the court is charged to the lot rather than absorbed by ground
+      # the setback already took.
+      value: 10
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4607-L4608"
+    min_landscaped_pct:
+      # "Minimum required landscaping 15% (including landscaping within a
+      # parking lot)". R-2 is the ONLY Oregon City residential district whose
+      # table states one -- 17.08.040 and 17.10.040 have no such row, checked
+      # by reading every "required landscaping" line in Title 17. The
+      # parenthetical is what makes it survivable: the court counts toward it.
+      value: 15
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4611-L4613"
+    min_density_du_per_acre:
+      # 17.12.050.A, and the standard that actually binds in this district --
+      # see `max_density_du_per_acre` below for why its partner does not.
+      # 17.16.060.A puts the pod under it: "Triplexes and quadplexes shall meet
+      # the dimensional and density standards of the underlying zoning
+      # district." The highest floor in this corpus by some way; R-3.5's is 10.
+      #
+      # Unlike the other five districts, 17.12.050 states no exception letting
+      # a quadplex count as one unit, so the pod counts as four -- which here
+      # helps, since four units clear a floor a single unit would not.
+      value: 17.4
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4638-L4640"
+      measured_on:
+        fact: net_developable_area
+        cite: OCMC 17.04.810 "Net developable area"; 17.04.808 "Net density"
+        quote: "or/clackamas/oregon-city/17.zoning.txt#L2441-L2443,L2468-L2491"
+    max_density_du_per_acre:
+      # 17.12.050.B. Encoded because the district states it, and then struck
+      # out by the state before it reaches a lot -- which is worth writing
+      # down, because R-2 is the one Oregon City district where the striking
+      # out does any work.
+      #
+      # In R-10/R-8/R-6 and in R-5/R-3.5 the ceiling could never bind a
+      # quadplex anyway: each of those density sections carries its own
+      # exception -- "Duplexes, triplexes and quadplexes shall count as a
+      # single dwelling unit for the purposes of calculating maximum net
+      # density" (17.08.050.B.2 at L4194-L4198, 17.10.050.B.2 at L4386-L4390).
+      # One unit against a 7.3 or 12.4 du/acre ceiling clears on any lot the
+      # district would allow, which is why the field is encoded nowhere else
+      # in this file.
+      #
+      # 17.12.050 HAS NO SUCH EXCEPTION. Its three subsections are A (the
+      # floor), B (this ceiling) and C (an affordable-housing bonus for
+      # projects of five or more units). The other two exceptions are each
+      # written into their own section and each names its own table, so
+      # neither reaches here -- there is no Table 17.12.050 and no B.2 to
+      # borrow. Read on Oregon City's text alone, a quadplex counts as four
+      # units and needs at least 4/21.8 acre, about 7,990 sq ft of net area.
+      #
+      # It does not, because the state says so. OAR 660-046-0220(2)(b): "If a
+      # Large City applies density maximums in a zone, it may not apply those
+      # maximums to the development of Quadplex and Triplexes." The state
+      # layer carries that as an `exempt` with `preempts: always`, so this
+      # value resolves away and no lot is measured against it. The `_state`
+      # file's own note lists the cities that restated the rule themselves and
+      # names "Oregon City's exception B.2" among them -- true of the five
+      # districts that have a B.2, and R-2 is the district that does not. This
+      # is the case the preemption layer exists for.
+      #
+      # What is left binding, then, is the FLOOR, and it binds in an
+      # unfamiliar direction: 17.4 du/acre with four units wants net area at
+      # or under 4/17.4 acre, about 10,000 sq ft. So in R-2 the 6,000 sq ft
+      # minimum lot size is not the number to watch -- an R-2 lot can be too
+      # BIG for a fourplex, and the usable window is roughly 6,000 to 10,000
+      # sq ft of net area. Computed on net, so the screen answers only the
+      # certain half.
+      value: 21.8
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L4641-L4642"
+      measured_on:
+        fact: net_developable_area
+        cite: OCMC 17.04.810 "Net developable area"; 17.04.808 "Net density"
+        quote: "or/clackamas/oregon-city/17.zoning.txt#L2441-L2443,L2468-L2491"
+    notes: >-
+      Encoded 2026-09-08 from Table 17.12.040 and 17.12.050, after the chapter
+      reading found the district and the definitions closed the question it was
+      excluded on. NOT ENCODED, with reasons. The garage setback row ("20 feet
+      from ROW, except 5 feet from alley", L4609-L4610) is real and is left out
+      on the 2026-09-08 ruling that the pod parks in a rear court and has no
+      garage; `PaperFit.excluded` declares it. The three table notes are ruled
+      in the footnote file, not here, and encoding this district is what made
+      two of those rulings bite: L4615 and L4619 sit in R-2's own notes block,
+      so from 2026-09-08 they cap every value above. Note 1 ("If a multi-family
+      residential development abuts a parcel zoned R-10, R-8, R-6, there shall
+      be a landscaped yard of ten feet on the side abutting the adjacent zone",
+      L4615-L4618) is held `unmeasured` on `abuts_lower_density_zone` from the
+      2026-08-19 ruling, and is LEFT THAT WAY although 17.04.780 defines
+      multi-family as five or more units and so arguably keeps the note off a
+      quadplex entirely: a cap only ever withholds a GREEN, every Oregon City
+      zone is already capped by note 2, and the definition argument is on the
+      record here if anyone revisits it. Note 2 ("Public utility easements may
+      supersede the minimum setback", L4619-L4620) TIGHTENS -- an easement
+      moves the building further in by an amount the text never states -- and
+      is one of three printings of that sentence, all `unmeasured` on
+      `utility_easement`. Note 3 (17.62.055.D may increase the maximum setback)
+      is dismissed there: it can only relax, and relaxes a standard nothing
+      reads. 17.12.060
+      (Thimble Creek Concept Plan Area) supersedes this district inside one
+      geographic area and is not encoded, the same treatment 17.16.155 already
+      gets for R-5. The affordable-housing density bonus of 17.12.050.C reaches
+      only projects of five or more units and cannot help a fourplex.
   R-3.5:
     section: ["17.10.", "17.16."]
     cite_default:
@@ -767,8 +980,9 @@ zones:
         cite: OCMC 17.04.810 "Net developable area"; 17.04.808 "Net density"
         quote: "or/clackamas/oregon-city/17.zoning.txt#L2441-L2443,L2468-L2491"
     notes: 'quadfit confidence: verified | Height 35 ft. Permits detached SFD (17.10.020.A). Quadplex
-      min lot 7,000 >> detached 3,500. Coverage 55%. NOT the multi-family zone (that is R-2 / Ch 17.12,
-      excluded).'
+      min lot 7,000 >> detached 3,500. Coverage 55%. R-2 / Ch 17.12 was excluded here as "the multi-family zone"; that was wrong and is
+      corrected 2026-09-08 -- 17.04.780 defines multi-family as FIVE or more units and R-2 permits
+      quadplexes outright, so R-2 is now encoded above.'
     setback_garage_entrance_ft:
       # Table 17.10.040's own garage row, three lines of it on the page: "20 feet
       # from / ROW, except / Garage setback ... 5 feet Alley".
