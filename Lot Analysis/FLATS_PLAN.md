@@ -719,9 +719,47 @@ the layer holds the field in no zone and in no default, while at least half the 
 layers hold it, the pair is an asymmetry worth explaining. Seven rows on first run, two
 real, and both were `setback_garage_entrance_ft` — which `consumed.py` already reports as
 the largest silently-unread field in the system (66 values, 10 jurisdictions), while both
-catalog pods are `config: rear_court` and have no garage. The exclusion is deliberately
-*not* declared in `paper.py`: declaring it would silently suppress a real constraint the
-day the product adopts tuck-under parking, so it is a question on the human list instead.
+catalog pods are `config: rear_court` and have no garage. **Ruled 2026-09-08: no
+garage.** `setback_garage_entrance_ft (the pod has no garage)` is now a literal in
+`PaperFit.excluded`, which `consumed.py` reads as a *declared* exclusion rather than a
+silent one, and `orphans()` takes the declared set as its `declared` argument and stops
+asking. The worry that made this a question rather than a default — that a ruling about
+our product goes silently wrong when the product changes — is answered by
+`test_no_catalog_design_has_a_garage`, which fails the day a `tuck_under` design is
+added. The general shape: a ruling about the design is only safe when a test binds it to
+the design.
+
+**A rear court is depth, and until 2026-09-08 nothing charged a lot for it.** Both pods
+park six cars behind the building; `Parking` now carries `stall_depth_ft` (18) and
+`aisle_ft` (24) and exposes `court_depth_ft`. `paper.court_depth(design, rules)` raises
+either from the zone where it states one — `parking_stall_depth_ft`,
+`parking_aisle_two_way_ft`, `max()` in both cases, never substituting a one-way aisle —
+and returns the standards it actually used, so a court resting on the design's assumption
+is distinguishable from one the code supplied. **A missing aisle width is not a missing
+standard**: Portland, Milwaukie and Wilsonville each dimension a stall for this building
+and state no aisle, all three refused on the record with the exclusion sentence quoted
+(ORS 197A.400 clear-and-objective), and the pod still has to turn round. The 24 ft is
+what quadfit's site-plan generator already draws.
+
+The court and a required rear yard **overlap rather than stack** — parking in a rear yard
+is permitted in every Oregon code read for this — so the charge is `max(rear, court)` in
+`paper_fit` and `max(0, court - rear)` on top of the fit threshold in `screen`. A zone
+stating no rear setback pays the whole court. Measured impact: **all 120
+quadplex-permitting zones need 12–42 ft more depth, mean 27, none exempt**
+(court resolves to 42.0 / 42.5 / 43.0 ft across 61 / 32 / 27 zones). What is still uncharged is the
+court's *width* (six stalls ≈ 54 ft across) and the driveway reaching it; both can only
+raise the requirement, so the paper fit remains the optimistic bound.
+
+**`Fit.required_ft`, and the false GREEN it closes.** `Fitter.fit` tries the flipped
+orientation by searching the envelope at the design's *depth* and needing its *width*,
+but records `width_ft`/`depth_ft` unrotated. `screen._checks` compared `best_depth_ft`
+against `depth_ft`, so whenever the flip won it measured the found run against the wrong
+dimension: a 40×50 envelope against a 56×36 pod reads 50 ft found versus 36 ft needed and
+passes, on a lot holding no 56 ft run at any angle. `Fit.required_ft` recovers the real
+requirement as `best_depth_ft - slack_ft` — from the slack the search actually set, so it
+cannot drift — and the fit check now reads it. `Screening.fit_slack_ft` likewise reports
+the check's slack, not the raw geometry's, because the number a developer argues with has
+to be the number the verdict turned on.
 
 **Footnote scope, and the one way to narrow it.** A footnote governs every value quoted
 from its *region* — the run of lines between the previous notes block and this one's

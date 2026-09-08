@@ -1155,7 +1155,7 @@ files.** Fifty of the fifty-seven closed on the evidence. What follows is the
 seven that did not, and then — because it is the more useful half — the shapes
 the fifty closed in.
 
-### The one ruling that closes sixty-six numbers
+### ~~The one ruling that closes sixty-six numbers~~ — ANSWERED 2026-09-08
 
 Three of the seven findings are about a **garage**, and all three stop existing
 the moment you answer one question.
@@ -1180,23 +1180,27 @@ Two cities came back with the same gap, found two different ways:
   that asks which standards most of a city's neighbours regulate and this city
   does not.
 
-**What we need:** *does the pod have a garage?* If the answer is no, one
-sentence — "the pod parks in a rear court and has no garage, so garage
-standards do not reach it" — retires 66 encoded numbers, both gaps above, and
-both of the findings that new check has produced so far, and no one need ever
-read a garage standard again. If the answer is "not yet, but tuck-under parking
-is on the table", then the 66 numbers are live, the two gaps are real work, and
-the screen has to start reading them.
+**You ruled: no garage.** The exclusion is now written down where the screen
+states what it does and does not charge a lot for — alongside the two standards
+it already declared it leaves out — rather than being a silence anyone would
+have to notice. Three consequences, all live:
 
-*Trade-off, plainly:* ruling it out is the tidy call and is safe **only for as
-long as the building stays as it is** — it is a statement about our product,
-not about Oregon, and if the product changes the ruling silently becomes wrong.
-Leaving it open costs nothing today and keeps the numbers we already paid for.
-I did not write the exclusion into the code myself for exactly that reason: a
-rule that says "we never check garages" is invisible on the day somebody
-designs a garage.
+- The 66 garage numbers are retired. They stay on the books, because they are
+  correctly measured and cost nothing to keep, but nothing is owed on them.
+- Both gaps above are closed: West Linn's driveway length and Fairview's
+  garage setback are garage standards and do not reach a pod without one.
+- The neighbours' check no longer raises garage standards, so its remaining
+  output is signal rather than the same finding ten more times.
 
-### Four more that need you
+**The safety net you were owed.** The worry with this ruling was that it is a
+statement about our product, not about Oregon, and would go silently wrong the
+day the product changed. So it does not depend on anyone remembering: a test now
+reads the building catalogue and fails the moment a design appears that parks
+under the building. The ruling cannot outlive the thing it was about.
+
+### Two more that still need you
+
+*(Numbered as they were first written. (ii) and (iii) are answered, below.)*
 
 **(i) Oregon City has a district that names our building, and we threw it
 away.** Oregon City's R-2 district prints its own dimensional table, and the
@@ -1222,36 +1226,6 @@ and it opens up a slice of Oregon City we currently do not look at. Leaving it
 out keeps things as they are and costs nothing except the land. There is no
 safety argument on either side.
 
-**(ii) Fairview requires ten percent of the site to be open space, and we hold
-nothing for it.** In the RM district — which permits a fourplex — *"a minimum
-of 10 percent of the site area shall be designated and permanently reserved as
-usable common open space in all multiple-unit developments"*. Gresham has the
-same kind of rule and we hold it there; Fairview we hold nothing for.
-
-This is the least dramatic of the four and the easiest to say yes to. The rule
-counts required yard setbacks toward the ten percent, which is exactly how our
-screen already measures open space — everything that is not building. A
-2,000-square-foot building leaves ten percent free on any lot bigger than about
-2,200 square feet, so this will not fail a single lot. It is a number that
-should be on the record and is not.
-
-**What we need:** a yes, and then it is fifteen minutes of work.
-
-**(iii) Milwaukie prints a parking table we never took.** Milwaukie's parking
-chapter gives, for every parking angle, the stall width, the curb length, the
-depth, and the one-way and two-way aisle widths — a 22-foot two-way aisle at
-ninety degrees, 16 feet where the aisle runs past no stalls. We hold Milwaukie's
-stall width and depth and **nothing at all for its aisles**.
-
-Honest caveat, because it changes the priority: **no part of the screen reads
-an aisle width in any city.** We hold eleven of them, from eleven cities, and
-they have never been consulted. So taking Milwaukie's would be completeness,
-not a fix — it changes no answer today.
-
-**What we need:** whether parking aisles are worth encoding anywhere. If the
-answer is no, eleven cities' worth of numbers should be marked as deliberately
-left out rather than sitting there looking encoded.
-
 **(iv) Fairview: the front setback has to match the neighbours.** In an
 "established residential area" — the parts of town platted before a date the
 code names — *"When an existing single-unit dwelling on the same street is
@@ -1266,6 +1240,42 @@ list of things we cannot answer without data — where the neighbouring houses
 actually sit, which is the same missing fact as the corner-lot question in
 item 11 and the abutting-zone question in item 13. It does not block anything
 today; it is here so the third road to that same door is on the record.
+
+### The other two, answered the same day
+
+**Fairview's ten percent open space — you said yes, and it is encoded.** The
+number is on the record against Fairview's RM district, quoting the sentence
+that states it, and it loads under the strict reader. It fails no lot: the pod
+leaves ten percent of the site free on anything above about 2,240 square feet.
+It carries a signature request like every new number, so it is a draft until
+somebody signs it on screen.
+
+One thing in it is worth knowing, because it is the kind of detail that decides
+a case. Fairview's own driveway table distinguishes a *"quadplex"* from a
+*"multiple-unit use of between four and seven dwelling units"* — the same
+building, filed under two names, with a 10-foot minimum driveway under one and
+20 feet under the other. The open-space rule says "multiple-unit developments",
+and reading that to include our fourplex is the strict reading, which is the one
+taken. The argument is written beside the number rather than left implied.
+
+**Milwaukie's parking table — I reported this wrongly, and the correction
+matters more than the finding.** I told you Milwaukie prints an aisle table we
+never took. Our own files already contain a reasoned refusal of exactly that
+table, and of Portland's and Wilsonville's, each one quoting the sentence in
+the city's own code that puts our building outside it. Milwaukie's parking
+chapter opens by excluding middle housing, and a quadplex is middle housing
+there. Portland's aisle table sits in a section whose applicability excludes the
+very standard our building is judged under. Three cities, three exclusion
+sentences, all already on the record.
+
+This is the failure this project has a standing rule against — *"the code states
+nothing here" needs a whole-document search* — turned around and pointed at our
+own corpus. The reading that produced the finding never looked at what we had
+already decided. Nothing in Oregon changed; a claim about us did.
+
+**And you ruled on the real question underneath it: incorporate the aisle.**
+That is now done, and it is the largest correctness change in this system in
+weeks. See below.
 
 ### Two more that are real and are in a city nobody screens
 
@@ -1332,6 +1342,54 @@ per-acre corridor rule was considered and declined on the record months ago;
 Portland's 25-foot fourplex height sits inside the *affordable* option, which
 requires half the units let at 60% of area median income.
 
+### What your parking ruling turned into — and the false GREEN it uncovered
+
+You said: *we need to incorporate parking aisle width.* Doing it turned out to
+be the largest correctness change in this system in weeks, and it found a
+separate bug on the way in.
+
+**What was wrong.** When we worked out how much land a pod needs, we counted
+the building and its front and rear yards and **nothing at all for the six
+cars**. Both our designs park in a court behind the building, and that court —
+a row of stalls plus the lane that serves them — is about **42 feet deep in most
+of Oregon, deeper than the building itself**. We were sizing lots as though the
+cars parked nowhere.
+
+**What it costs.** Every one of the **120 zones where a fourplex is allowed now
+needs 12 to 42 more feet of depth** than we were saying — 27 feet on average, and
+not one zone escapes it. The range is the rear yard: a required rear yard is land
+you are allowed to park on, in every Oregon code read for this, so the yard and
+the court overlap rather than stack. A zone asking for a 25-foot rear yard is
+charged only the 17 feet of court that reaches past it; a zone asking for no rear
+yard is charged the whole 42.
+
+**Where the number comes from, city by city.** Where a city states a stall depth
+or a two-way lane width, we use the city's number and it can only push the
+figure up. Where a city states none — Portland, Milwaukie and Wilsonville each
+dimension a parking space for this building and deliberately state no lane, all
+three on the record with the exclusion sentence quoted — we use the building's
+own: an 18-foot stall and a 24-foot lane, which is the same figure our site
+plans have always been drawn to. Refusing to answer for those three would have
+been the wrong kind of caution. The pod still has to turn round.
+
+**What is still not charged, and which way it errs.** The court's *width*. Six
+stalls need about 54 feet across, and the driveway reaching them needs its own.
+Both are unmeasured, and both can only make a lot need **more** than this now
+says — so the figures above remain the optimistic end.
+
+**The false GREEN found on the way in.** Separately, and worse: when a pod fits
+a lot only by turning sideways, the screen was comparing the wrong two numbers.
+It read the space actually available against the building's *narrow* dimension
+instead of the long one it needed — passing a lot with 50 feet of room as
+comfortable when the building wanted 56 and the lot held no such run anywhere.
+That is exactly the failure this project exists to prevent, and it was live.
+Fixed, with a test that reproduces the lot it happened on.
+
+**Honest scope.** The per-lot grader is not yet the thing doing the county runs
+— the older pipeline still does those — so **no lot changed colour today**. What
+changed is that the planning view and the grader now answer the parking question
+the same way, and the grader is right on the day it takes over.
+
 ### What was fixed without asking
 
 Nothing in the code books, and one sentence in ours: Fairview's creek reasoning
@@ -1351,6 +1409,18 @@ a city's neighbours regulate and this city does not.** It found seven, of which
 two were real — West Linn's driveway and Fairview's garage setback. Both are
 garage standards, which is how the sixty-six numbers above came to be counted
 at all.
+
+One more thing about how we work, and it is the uncomfortable one. The
+Milwaukie finding above was **my error, not a gap in Oregon**: I reported an
+aisle table as untaken without checking what our own files already said about
+it, and they said, in three cities, exactly why it does not reach us. The rule
+this project has for reading Oregon — a claim that nothing states something
+needs a search of the whole document — applies to our own corpus, and I did not
+apply it. The blindness is deliberate and is what makes these readings worth
+anything: the reader never sees our answer, so it cannot be talked into
+agreeing. But that puts the whole burden of checking on the step *after* the
+reading, and on this one I skipped it. No tooling change fixes that; the
+discipline is to search our own files before writing "we hold nothing".
 
 The full ledger is `data/flats/missed.csv` (1,206 lines). The readings are
 `data/flats/missed_reading_2026_09_08.csv` (185 lines) and
@@ -1561,6 +1631,26 @@ the list of places worth hoping about.
   Every other queue here already drops or marks excluded land. This one does
   now, while the ledger keeps counting them, because a list that hides what it
   has excluded cannot be told apart from a list that has finished.
+
+  **Two of the four questions were answered the same day, and the answers cost
+  more work than the questions did.** Ruling that the pod has no garage retired
+  66 numbers and closed both garage findings — and the exclusion is written into
+  the screen's own list of what it declines to charge, with a test that fails the
+  day a design with a garage enters the catalogue, so the ruling cannot outlive
+  the building it was about. Ruling to incorporate the parking aisle turned out
+  to be much larger: **nothing here had ever charged a lot for the ground the
+  cars stand on**, and the court behind the pod is deeper than the pod. Every
+  quadplex-permitting zone now needs 22 to 42 more feet than we were saying, and
+  wiring it uncovered a live false GREEN — a pod that fits only sideways was
+  being measured against its own narrow dimension. Both are written up under
+  item 14.
+
+  **And one of the four findings was mine, not Oregon's.** I reported Milwaukie's
+  aisle table as a standard we never took. Our own files already refuse it, and
+  Portland's and Wilsonville's, each with the city's own exclusion sentence
+  quoted. The blindness that makes these readings worth having — the reader never
+  sees our answer — puts the whole burden of checking on the triage step after
+  it, and I did not search our own corpus before writing "we hold nothing".
 
   The ledger is `data/flats/missed.csv` (1,206 lines). The readings are
   `data/flats/missed_reading_2026_09_08.csv` (185 lines) and
