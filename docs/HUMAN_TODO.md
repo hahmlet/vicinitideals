@@ -1447,6 +1447,75 @@ The full ledger is `data/flats/missed.csv` (1,206 lines). The readings are
 
 ---
 
+## 15. One decision: our reader throws away a city's empty boxes, and fixing it moves every page reference we have saved
+
+Found 2026-09-08, while checking which zones each city has that we have not
+written down. Nothing here needs a phone call — it needs you to say whether it
+is worth the disruption.
+
+**What is broken.** Cities write their rules as tables: a row for each kind of
+building, a column for each zone, and a letter in each box. In some cities an
+**empty box is not missing information — it means "not allowed here"**. Lake
+Oswego says exactly that in its own opening paragraph.
+
+When our reader pulls a table off a web page, it usually keeps the shape and an
+empty box stays empty. But when a table is very wide it gives up on the shape
+and writes the boxes out one to a line — **and it throws the empty ones away
+instead of leaving a gap.** That is worse than losing them. Every box after the
+missing one slides up a place, so an answer that belongs to one zone can end up
+filed under its neighbour.
+
+**How far it reaches, and how far we can see.** We checked every use table in
+every document we hold. **Exactly one is damaged** — Lake Oswego's, where about
+two thirds of the rows are short — and every other one is intact. That is good
+news and it is also the limit of what we can check: the test only sees tables
+full of one-letter answers. A table of measurements with a blank in it would be
+damaged the same way and would not show up.
+
+**Why it is not just a fix.** Every number we have encoded points at a line in a
+stored document — "this figure is on line 4,579". Re-reading the documents with
+a corrected reader changes where the lines fall, so a share of those pointers
+have to be walked to their new homes. We have a tool that does that walking, and
+it deliberately refuses to touch a pointer that lives inside a test, because a
+tool that edits an assertion until it passes has removed the reason for the
+assertion. So some of it lands as hand work.
+
+We also cannot tell you the exact size in advance. We keep the *cleaned-up text*
+of each document, not the original web page, so the only way to learn how many
+documents move is to re-fetch them and look. What we can say: **178 documents,
+of which 129 came from web pages and could move; 49 came from PDFs and cannot.**
+A rougher check — looking for the same wide-table shape anywhere in a document
+rather than only in a yes/no table — narrows it to **44 documents that contain
+such a table at all, 20 with uneven rows.** Treat those as an upper bound rather
+than a finding: that looser check also accuses a Clackamas table we know to be
+intact, because it cannot tell a box in a table from a short line of writing.
+And the corpus is already carrying this debt — 173 of the 178 were read by a
+version of the reader we have since replaced twice, so *something* will move the
+next time anything is re-fetched regardless.
+
+**What it costs to leave it.** Directly: **93 lots** we cannot answer for today,
+all of them Lake Oswego, because the only table saying what may be built in its
+commercial zones is the damaged one. Indirectly: the same trap is waiting in the
+next city with a wide table, and it fails silently — the reader reports a clean
+page either way.
+
+**The choice.**
+
+- **Fix it and re-read everything.** Safest end state, and it also clears the
+  two-versions-behind debt in the same pass. Costs a re-fetch of 129 documents,
+  an unknown share of page references to walk over, and some hand work where
+  those references sit inside tests.
+- **Fix it and re-read only Lake Oswego.** Cheap, unblocks the 93 lots, moves
+  almost nothing. Leaves the rest of the corpus exactly as it is — including any
+  measurement table that lost a blank without our being able to see it.
+- **Leave it and mark the table unusable.** Costs nothing now. The 93 lots stay
+  unanswerable and the next wide table repeats it.
+
+The middle one is what I would do, and it is reversible: doing Lake Oswego first
+tells us what a re-fetch actually disturbs before deciding on the other 128.
+
+---
+
 ## ~~Seven~~ Four of our fourteen cities have zero green lots — and each one has a single reason
 
 Re-measured 2026-09-03 after your two answers ran, and again on 2026-09-04 once
@@ -1549,6 +1618,39 @@ closes it to us without lot assembly. The two-and-a-half thousand lots come off
 the list of places worth hoping about.
 
 ## Queued for the agent — no action needed from you, listed so nothing is invisible
+
+- **The lot ledger cannot see Clackamas County, and it nearly hid item 15's
+  neighbours** — found 2026-09-08. Two different counts of the same land exist.
+  The screening pipeline runs on **291,971 lots across fourteen cities**, and
+  Oregon City (735 greens), Milwaukie (622), unincorporated Clackamas (113) and
+  Wilsonville (53) are all in it. The ledger that answers *"how many lots ride
+  on this zone"* was built on **Multnomah only** — 236,889 lots, 195,708 of them
+  Portland, and the sole Clackamas entry is 758 Lake Oswego parcels.
+
+  This is not a small bookkeeping difference. An audit the same day found
+  fourteen districts across five cities that permit our building and that we
+  have never encoded, and asked the ledger how much land was behind them. The
+  ledger said **zero**, for all fourteen, because four of the five cities are in
+  a county it has never counted. Written up as "not worth doing" it would have
+  closed the whole queue on a number that meant nothing.
+
+  What saved it is a rule already written down here: **lots is a sort, not a
+  filter.** Used as a filter, a zero closes a card. Used as a sort, a zero only
+  puts it last — which is why this was recoverable by re-reading the ledger's
+  own header rather than by noticing the mistake.
+
+  The fix is plumbing, not judgement: rebuild the ledger over the Clackamas
+  parcels the screening pipeline already holds, so the two counts describe the
+  same land. Until then, no ranking that uses lots is trustworthy outside
+  Multnomah, and anything that reads zero there should be read as *unknown*.
+
+- **Fourteen districts to encode and five documents to fetch**, from the same
+  2026-09-08 audit — every one settled by the city's own use table, none needing
+  a ruling from you. Oregon City's commercial zones permit our building nearly
+  everywhere; unincorporated Clackamas permits it in ten of eleven residential
+  districts; Tualatin's medium-high-density chapter turns out to be missing from
+  our files entirely, ending at its own heading on the last line of the document
+  that should have carried it.
 
 - **The 784 footnote dismissals were read back, blind, on 2026-09-07** — the
   run behind item 13, and the third of the three checks that stand over the

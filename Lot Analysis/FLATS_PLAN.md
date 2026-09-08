@@ -848,19 +848,41 @@ while ruling the rows the ledger *did* report. `test_districts.py` keeps those
 three in a `BY_HAND` table beside the rest, because a reading that is not
 written down is a reading that will be done again.
 
-**And the number that decides what to do with all of it: none of these fourteen
-districts holds a single observed lot.** `_lots_by_zone()` is Multnomah County
-plus 758 Lake Oswego parcels; Oregon City, Clackamas County unincorporated,
-Tualatin and Wilsonville contribute nothing, and no Gresham lot carries `TC-PV`
-or `VC-SW`. So the queue this audit produced is **coverage work for the day the
-inventory extends past Multnomah**, not a screen fix, and ranking it by lots
-would rank all fourteen at zero. That is the honest reading of it and it is
-worth saying plainly, because the same sort that says *encode PMD next* would
-say *encode nothing* if lots were a filter rather than a sort.
+**Then the sort by lots said all fourteen were worth nothing, and the sort was
+reading the wrong ledger.** `_lots_by_zone()` returns zero lots for every one of
+them, and the first draft of this section said so — that Oregon City, Clackamas
+County unincorporated, Tualatin and Wilsonville contribute nothing and the queue
+is coverage work for a day that has not come.
 
-What lots *do* say is where the gap already bites. **536 observed lots sit on a
-zone code no rule matches**, and the largest single one is Lake Oswego's
-`NC/R-0` at 84, with a bare `NC` behind it at 4 and `PNA` at 5. Those 93 lots
+**That was wrong, and it was wrong in the way this project has been caught
+before: a ledger answered for a reality it cannot see.** `read_coverage()` reads
+`data/flats/coverage.csv`, built 2026-09-02 from a **Multnomah-only** parcel
+corpus — 236,889 lots, of which 195,708 are Portland and the only Clackamas
+entry is 758 Lake Oswego parcels. The quadfit pipeline that actually screens
+land runs on **291,971 lots across fourteen cities**, and its green list is
+Portland 12,678, Gresham 1,820, **Oregon City 735**, **Milwaukie 622**, West
+Linn 288, Troutdale 125, **unincorporated Clackamas 113**, Wood Village 95,
+**Wilsonville 53**. Four of the five jurisdictions this audit found districts in
+are screened today and hold greens today. The coverage ledger simply cannot see
+the county they are in.
+
+So the honest reading is the opposite of the first draft. These fourteen
+districts are not worth zero; **nobody can say what they are worth, because the
+one ledger that would say is county-blind relative to the screen it serves.**
+That is its own finding and it belongs above the encoding queue: regenerating
+`coverage.csv` over the Clackamas parcels quadfit already holds is what turns
+this audit's output from a list into a ranking.
+
+The rule the mistake breaks is one already written down here — *lots is a sort,
+not a filter*. Used as a filter, a stale ledger reading zero would have closed
+all fourteen cards. Used as a sort it merely put them last, which is why the
+error was recoverable and why the rule is worth keeping even when the ledger is
+right.
+
+What that ledger *can* still say is where the gap bites inside its own
+territory. **536 of its lots sit on a zone code no rule matches**, and the
+largest single one is Lake Oswego's `NC/R-0` at 84, with a bare `NC` behind it
+at 4 and `PNA` at 5. Those 93 lots
 are the `column` verdict arriving as a consequence: the reason we cannot write a
 rule for Lake Oswego NC is not that nobody has read `50.03.002` — it is that its
 household-living row prints eleven cells against fifteen heads. The unreadable
@@ -897,6 +919,53 @@ asserts that specifically. **A reader that cannot spell a cell reports the page
 as damaged**, which is the same failure as a reader that cannot see one
 reporting the page as clean — both are the reader, and only the second one is
 quiet about it.
+
+**The cause is one word, and it is not Lake Oswego's.** `_Table.render()` in
+[flats/provenance/fetch.py](flats/provenance/fetch.py) has two paths. The grid
+path lays a table's cells out in aligned columns and an empty cell survives as
+padding — that is the path the extractor was taught in `/6` precisely so table
+geometry would stop dying. The flow path is the fallback, taken when a table
+renders wider than `_GRID_LINE_MAX` (400 characters), and it writes one cell per
+line:
+
+```python
+body = "\n".join(
+    part for r in grid for c in r for part in c.split(_CELL_BLOCK) if part
+)
+```
+
+`if part` is the bug. It drops an empty cell rather than emitting an empty line,
+so on the one path where alignment is already given up, the count goes too.
+Lake Oswego's use table has sixteen zone columns plus a use-specific-standards
+column carrying strings like "WLG zones: § 50.03.003.1.a; NC, GC, EC and CI
+zones: § 50.03.003.2" — comfortably past 400 — so it takes the fallback, and a
+code that says a blank means *prohibited* loses every prohibition it states that
+way.
+
+**Fixing it is one line and re-fetching is not.** The store hashes extracted
+text, so changing the algorithm moves the hash of every document holding a wide
+table with a blank in it, and a citation is a line number. The corpus is
+already carrying this debt: 173 of its 178 documents were extracted by
+`flats-html-text/7` and the code is at `/8`, so nothing has been re-extracted
+since the footnote-separation change. 129 of the 178 came from HTML and could be
+affected; 49 came from PDFs, where this code never runs. How many actually move
+cannot be known without doing it, because the raw HTML is not kept — only the
+extracted text is.
+
+What *can* be said is the shape of the exposure, and it is worth saying because
+"unmeasurable" is the kind of word that stops work. The two paths leave
+different fingerprints: a grid row is one line carrying several cells separated
+by runs of two or more spaces, a flow cell is a line to itself. Counting runs of
+consecutive short lines with no internal double space finds **44 documents
+holding flow-path tables at all, 20 of them with uneven runs** — the largest
+being unincorporated Multnomah's `39.cfu` (158 runs) and `39.efu` (139). That is
+a hint and not a count, and the proof is in this list itself: it flags ZDO 315
+at 18% uneven, and ZDO 315 is the table the nine Clackamas quadplex values are
+read from, which `ragged.py` — the check that knows what a cell looks like —
+puts at zero. A heuristic that cannot tell a table cell from a short line of
+prose overcounts, and this one does. So: **one document proven damaged, and at
+most 44 that could be, of 129 that could have been.** That makes this a decision
+rather than a fix, and it is on [docs/HUMAN_TODO.md](docs/HUMAN_TODO.md) as one.
 
 **`orphans` asks the question from the neighbours' side.** For each `(layer, field)` where
 the layer holds the field in no zone and in no default, while at least half the other live
