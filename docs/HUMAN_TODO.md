@@ -932,6 +932,7 @@ already caps the lot at REVIEW instead of GREEN, sits in a zone where a fourplex
 is forbidden outright, or loosens a standard we hold at its strict end — which
 costs lots, never correctness. Twelve notes were left over and eleven of those
 are relaxations we can afford to ignore. The twelfth is the subject of item 12.
+
 ---
 
 ## 12. One decision: a fifth of everything we have read cannot change an answer
@@ -992,6 +993,7 @@ real lot, and eight cities have one.
 
 **No lot is wrong today because of any of this.** It is about where the next
 hundred hours of reading go.
+
 ---
 
 ## 13. Three readings where our own written reason turns out to be false
@@ -1110,16 +1112,17 @@ this page because each needs a ruling only a person can give.
 
 The full ledgers are `data/flats/dismissal_reading_2026_09_07.csv` (584 rows)
 and `data/flats/stale_reasons_2026_09_07.csv` (49).
+
 ---
 
-## 14. Two readings where the code prints a standard our numbers do not have
+## 14. Two blind readings of the sentences nobody ever decided anything about
 
-**What was checked.** The previous item read back decisions we had *made*.
-This one reads the sentences nobody ever decided anything about. In the
-fifteen code books we hold there are about a thousand lines that state a
-measurement and that not one of our numbers was taken from. Read end to end
-they are unworkable — most are the second column of a table we took the first
-column of, or the same standard written for a detached house.
+**What was checked.** Item 13 read back decisions we had *made*. This one reads
+the sentences nobody ever decided anything about. In the fifteen code books we
+hold there are about a thousand lines that state a measurement and that not one
+of our numbers was taken from. Read end to end they are unworkable — most are
+the second column of a table we took the first column of, or the same standard
+written for a detached house.
 
 So the machine did the one thing it is better at than a person: for every one
 of those lines it compared the number printed on it against **every number
@@ -1130,70 +1133,133 @@ records no 24 for height anywhere is a number this system has never seen, and
 that is either a rule we skipped or a rule for a building that is not ours.
 **542 lines came back in that second pile.**
 
-Then the 185 nearest of them — the ones sitting in a section we had already
-taken that very standard from — were read by eight readers who were shown the
-page and, deliberately, neither our number nor even which standard we thought
-the line was about. **150 agreed the line does not apply to us, 6 could not
-tell, and 29 said it states a requirement our building would have to meet.**
+That pile was then worked in two passes — different halves of it, and two
+different shapes of question — by readers who were shown the page and,
+deliberately, neither our number nor even which standard we thought the line was
+about.
 
-**All 29 were then checked back against the code and against our own files.**
-Twenty-one closed on the evidence, and the six shapes they closed in are worth
-knowing because they are what a reader cannot see:
+**Reading one — the near ones, line by line.** The 185 lines sitting in a
+section we had already taken that very standard from. **150 agreed the line
+does not apply to us, 6 could not tell, and 29 said it states a requirement our
+building would have to meet.**
 
-- **Unincorporated Clackamas** — two notes raising the side setback to 10 and
-  15 feet where the neighbour is a low-density district. They are footnotes to
-  Table 315-4, which is the table for PMD, MR-1, MR-2, HDR, VA, SHD and RCHDR.
-  We take our numbers from Tables 315-2 and 315-3. Different table, different
-  districts.
-- **Troutdale** — a 20-foot street-side setback where the driveway comes off
-  the side street. It is real, and it is in the HDR (TC) column, which is a
-  district we do not screen.
-- **Gresham** — a cap of 24 homes per acre for middle housing on two named
-  corridors. Already considered and already declined, on the record, because
-  the district's ordinary rules are the stricter of the two.
-- **Portland** — a fourplex height cut to 25 feet. It sits inside the
-  *affordable* fourplex option, which requires half the units to be let at 60%
-  of area median income. Nothing we build has to take that deal.
-- **Rivergrove** — no maximum height recorded anywhere. True, and it cannot
-  matter: we already record that a fourplex is not allowed in Rivergrove at
-  all, so the lot is refused on use before any height is measured.
-- **West Linn** — the Willamette Historic District caps houses at 28 feet. Our
-  building is 26.
+**Reading two — the unopened sections, whole.** The 347 measuring lines in
+sections *nobody has ever quoted a single word of*. Asked one line at a time
+these are unanswerable, because the sentence above the line is usually what
+says which building it is about. Grouped into whole sections they are **144
+questions**, and six readers answered all of them. **116 said nothing in the
+section touches our building. 26 said something does. 2 could not tell.**
 
-### The two that need you
+**All 29 and all 28 were then checked back against the code and against our own
+files.** Fifty of the fifty-seven closed on the evidence. What follows is the
+seven that did not, and then — because it is the more useful half — the shapes
+the fifty closed in.
 
-**(i) West Linn: twenty feet of driveway in front of the garage door.** The
-city's access chapter says *"The driveway shall include a minimum of 20 feet
-in length between the garage door and the back of sidewalk, or, if no sidewalk
-is proposed, to the paved portion of the right-of-way."* We record nothing for
-that standard in West Linn. Gresham and Wilsonville both record exactly 20
-feet for the same thing, so this is not a standard we decline to model — it is
-one we have in two cities and not in the third.
+### The one ruling that closes sixty-six numbers
 
-The reason it is a question and not a fix is that West Linn's chapter is
-written in two branches. One is headed *houses* — one home, or "two to four
-single-family residential homes" — and the 20 feet is inside it. The other is
-headed *multifamily dwellings*, and it says nothing about garages. **We have
-already chosen the multifamily branch once**: our 24-foot minimum driveway
-width in West Linn is quoted from it. So encoding the 20 feet would mean
-reading our building as a house in one paragraph and as an apartment in the
-next.
+Three of the seven findings are about a **garage**, and all three stop existing
+the moment you answer one question.
 
-**What we need:** which branch a four-unit attached building on one lot sits
-in for West Linn's purposes. *Trade-off, plainly:* taking the 20 feet is the
-cautious call — it costs lots on shallow West Linn parcels and can never make
-a lot look better than it is. Leaving it out keeps those lots and rests on the
-multifamily reading being right. Taking both is also defensible and is the
-strictest of the three.
+**Both of our two building designs park in a rear court. Neither has a
+garage.** That is on the record in the design files and always has been. What
+is not on the record anywhere is what follows from it: **we hold 66 garage
+setback numbers, measured out of ten different cities' codes, and no part of
+the screen reads a single one of them.** It is the largest such block in the
+system — more than twice the next one — and every hour anyone has ever spent
+reading a garage standard has bought nothing.
 
-**(ii) Fairview: the front setback has to match the neighbours.** In an
+Two cities came back with the same gap, found two different ways:
+
+- **West Linn** requires *"a minimum of 20 feet in length between the garage
+  door and the back of sidewalk"*. We record nothing for it in West Linn, while
+  Gresham and Wilsonville both record exactly 20 feet for the same standard.
+  A reader raised it off the page.
+- **Fairview** requires, in the VSF district — which does permit a fourplex and
+  where we hold only nine numbers — a garage set 20 feet back from the front
+  face of the building. Nobody read that page. It surfaced from a new check
+  that asks which standards most of a city's neighbours regulate and this city
+  does not.
+
+**What we need:** *does the pod have a garage?* If the answer is no, one
+sentence — "the pod parks in a rear court and has no garage, so garage
+standards do not reach it" — retires 66 encoded numbers, both gaps above, and
+both of the findings that new check has produced so far, and no one need ever
+read a garage standard again. If the answer is "not yet, but tuck-under parking
+is on the table", then the 66 numbers are live, the two gaps are real work, and
+the screen has to start reading them.
+
+*Trade-off, plainly:* ruling it out is the tidy call and is safe **only for as
+long as the building stays as it is** — it is a statement about our product,
+not about Oregon, and if the product changes the ruling silently becomes wrong.
+Leaving it open costs nothing today and keeps the numbers we already paid for.
+I did not write the exclusion into the code myself for exactly that reason: a
+rule that says "we never check garages" is invisible on the day somebody
+designs a garage.
+
+### Four more that need you
+
+**(i) Oregon City has a district that names our building, and we threw it
+away.** Oregon City's R-2 district prints its own dimensional table, and the
+first row of it reads *"Triplex, quadplex and multi-family — 6,000 square
+feet"*. It is a permissive district: 5-foot front setback, 85% lot coverage,
+35 feet of height, 10-foot rear yard. **We do not hold it at all.** Our Oregon
+City numbers cover five districts and R-2 is not one of them.
+
+It was not an oversight. Buried in a note against a different district is the
+sentence *"NOT the multi-family zone (that is R-2 / Ch 17.12, excluded)"* — so
+somebody saw it and left it out. What is not recorded anywhere is **why**, and
+that is the whole problem: a one-word reason cannot be checked, and this is the
+third time this month a decision written that way has turned out to need
+re-opening.
+
+The direction of the risk is worth being clear about. A missing district never
+makes a bad lot look good — it makes good land invisible. So this costs us
+candidates, not credibility.
+
+**What we need:** whether R-2 gets screened. *Trade-off, plainly:* encoding it
+is roughly a day of measuring twenty numbers out of one table we already hold,
+and it opens up a slice of Oregon City we currently do not look at. Leaving it
+out keeps things as they are and costs nothing except the land. There is no
+safety argument on either side.
+
+**(ii) Fairview requires ten percent of the site to be open space, and we hold
+nothing for it.** In the RM district — which permits a fourplex — *"a minimum
+of 10 percent of the site area shall be designated and permanently reserved as
+usable common open space in all multiple-unit developments"*. Gresham has the
+same kind of rule and we hold it there; Fairview we hold nothing for.
+
+This is the least dramatic of the four and the easiest to say yes to. The rule
+counts required yard setbacks toward the ten percent, which is exactly how our
+screen already measures open space — everything that is not building. A
+2,000-square-foot building leaves ten percent free on any lot bigger than about
+2,200 square feet, so this will not fail a single lot. It is a number that
+should be on the record and is not.
+
+**What we need:** a yes, and then it is fifteen minutes of work.
+
+**(iii) Milwaukie prints a parking table we never took.** Milwaukie's parking
+chapter gives, for every parking angle, the stall width, the curb length, the
+depth, and the one-way and two-way aisle widths — a 22-foot two-way aisle at
+ninety degrees, 16 feet where the aisle runs past no stalls. We hold Milwaukie's
+stall width and depth and **nothing at all for its aisles**.
+
+Honest caveat, because it changes the priority: **no part of the screen reads
+an aisle width in any city.** We hold eleven of them, from eleven cities, and
+they have never been consulted. So taking Milwaukie's would be completeness,
+not a fix — it changes no answer today.
+
+**What we need:** whether parking aisles are worth encoding anywhere. If the
+answer is no, eleven cities' worth of numbers should be marked as deliberately
+left out rather than sitting there looking encoded.
+
+**(iv) Fairview: the front setback has to match the neighbours.** In an
 "established residential area" — the parts of town platted before a date the
 code names — *"When an existing single-unit dwelling on the same street is
 located within 30 feet of the subject site, a front yard setback similar to
-that of the nearest single-unit dwelling shall"* apply, never less than 10
-feet and never more than 40. Every Fairview zone that permits a fourplex holds
-a flat 10-foot front setback with us, which is the floor of that rule. So the
-rule can only ever push our building further back — up to thirty feet further.
+that of the nearest single-unit dwelling shall"* apply, never less than 10 feet
+and never more than 40. Every Fairview zone that permits a fourplex holds a flat
+10-foot front setback with us, which is the floor of that rule. So the rule can
+only ever push our building further back — up to thirty feet further.
 
 **What we need:** a ruling that this reaches a fourplex, and then it joins the
 list of things we cannot answer without data — where the neighbouring houses
@@ -1224,19 +1290,71 @@ are the price of switching it back on:
   we hold never defines**, so it would go to the word queue before it could go
   anywhere else.
 
+### The fifty that closed, and how
+
+These are the useful half, because they are what a person reading a page cannot
+see and a file can. Between the two readings the same six shapes closed almost
+everything:
+
+- **A different table in the same chapter.** Two unincorporated Clackamas notes
+  raising the side setback to 10 and 15 feet turned out to be footnotes to
+  Table 315-4 — the table for seven districts we take no numbers from. We read
+  315-2 and 315-3.
+- **A district we do not hold.** Troutdale's 20-foot street-side setback is in
+  the HDR (TC) column. Four of Milwaukie's five findings are in its downtown
+  and innovation-area districts. Multnomah County's alarming *"buildings must
+  be set back from all property lines a minimum of 1 foot for each foot of
+  building height"* — 26 feet on every side, for us — is the **Open Space
+  zone**, where a fourplex is not allowed at all.
+- **A purpose paragraph, not a standard.** All four Gresham density findings
+  quote the sentence describing what a district is *for*. Gresham's actual
+  table prints **no maximum density** against "Duplex, Triplex, Quadplex,
+  Cottage Cluster"; the 25 homes per acre the readers found belongs to
+  townhouses on their own lots, and we already hold it that way, with the
+  quote.
+- **A menu, not a requirement.** Gladstone appears to require a minimum roof
+  pitch and a garage or carport, which would have been serious — a
+  factory-built module does not necessarily have either. It requires *"at least
+  four of the following"* from a list of eleven, and porches, eaves, gables,
+  offsets and street-facing windows are also on it.
+- **A choice the applicant makes.** Portland's tree code appears to demand 40%
+  of the site be tree area. The applicant may instead choose *"site area minus
+  building coverage"* — which is whatever the building does not use, so it can
+  never limit the building.
+- **Already ruled, just not where the reader was looking.** Fairview's 70-foot
+  no-build strip along Fairview Creek is real, and our file already says the
+  creek corridors are handled as mapped ground rather than as a number. The
+  reasoning quoted the narrower Clear Creek half and not this one, which is why
+  it came back. It now quotes both.
+
+And two that closed simply because we were already right: Gresham's 24-homes-
+per-acre corridor rule was considered and declined on the record months ago;
+Portland's 25-foot fourplex height sits inside the *affordable* option, which
+requires half the units let at 60% of area median income.
+
 ### What was fixed without asking
 
-Nothing in the code books. One thing in the queue itself, and it is the
-finding of the day about how we work rather than about Oregon: **the reading
-list did not know which cities the screen covers.** 26 of the 185 readings,
-and 8 of the 29 findings, were Lake Oswego and Rivergrove — an hour of reading
-with no lot behind it. Every other queue in this system already drops or marks
-excluded cities; this one, three days old, did not. It does now, and the count
-still reports them, because a list that hides what it has excluded cannot be
-told apart from a list that has finished.
+Nothing in the code books, and one sentence in ours: Fairview's creek reasoning
+now quotes the wider of its two no-build strips as well as the narrower, so the
+next reader does not raise it a third time.
 
-The full ledger is `data/flats/missed.csv` (1,206 lines) and the readings are
-`data/flats/missed_reading_2026_09_08.csv` (185).
+The rest is about how we work rather than about Oregon. **The reading list did
+not know which cities the screen covers.** 26 of the 185 readings, and 8 of the
+29 findings, were Lake Oswego and Rivergrove — an hour of reading with no lot
+behind it. Every other queue in this system already drops or marks excluded
+cities; this one, three days old, did not. It does now, and the count still
+reports them, because a list that hides what it has excluded cannot be told
+apart from a list that has finished.
+
+A second check was built and run for the first time: **a standard that most of
+a city's neighbours regulate and this city does not.** It found seven, of which
+two were real — West Linn's driveway and Fairview's garage setback. Both are
+garage standards, which is how the sixty-six numbers above came to be counted
+at all.
+
+The full ledger is `data/flats/missed.csv` (1,206 lines). The readings are
+`data/flats/missed_reading_2026_09_08.csv` (185 lines) and
+`data/flats/chapter_reading_2026_09_08.csv` (144 sections).
 
 ---
 
@@ -1408,13 +1526,34 @@ the list of places worth hoping about.
   height of 40,000 is a floor area that wandered into the sentence.
 
   **It is a sort, not a verdict, and the first run measured the price of that
-  honestly.** Of the 29 lines the readers said would bind us, 21 closed on the
+  honestly.** Of the 29 lines the readers said would bind us, 25 closed on the
   evidence within the hour — wrong table, wrong district, an option nobody has
   to take, a city where a fourplex is already refused on use. Two need you and
   are in item 14; two more are real and are in Lake Oswego, which is switched
-  off. That ratio is the queue working, not failing: the cost of the 21 is
+  off. That ratio is the queue working, not failing: the cost of the 25 is
   minutes, and the thing it is protecting against is a standard sitting unread
   in a document we have held for months.
+
+  **Then the same ledger was asked its harder question**, the same day: the 347
+  measuring lines that sit in sections nobody has ever quoted a single word of.
+  One line at a time those are unanswerable, because the sentence above the line
+  is usually what says which building it is about — so the card became the whole
+  section, and 347 lines became **144 questions**. 116 came back with nothing in
+  them for us; 26 with something; 2 undecided. Twenty-five of those 28 closed on
+  the evidence, and the shapes are worth naming because a person reading a page
+  cannot see any of them: a paragraph describing what a district is *for*
+  mistaken for a standard, a menu of eleven design features of which any four
+  will do, a tree rule the applicant may satisfy with whatever land the building
+  does not use, and the Open Space zone. Three are in item 14, and one of those
+  is a whole district — Oregon City's R-2, which prints *"Triplex, quadplex and
+  multi-family — 6,000 square feet"* in its own table and was left out of our
+  screen with the single word "excluded".
+
+  **A third check was built and run for the first time**: for each city, which
+  standards do most of its neighbours regulate and it does not. Seven rows, two
+  of them real, and both were garage standards — which is what led to counting
+  the 66 garage numbers, in ten cities, that no part of the screen has ever
+  read.
 
   **One defect in our own machinery came out of it**, and it is the reason the
   run is written up rather than just filed: the reading list did not know which
@@ -1423,8 +1562,9 @@ the list of places worth hoping about.
   now, while the ledger keeps counting them, because a list that hides what it
   has excluded cannot be told apart from a list that has finished.
 
-  The ledger is `data/flats/missed.csv` (1,206 lines) and the readings are
-  `data/flats/missed_reading_2026_09_08.csv` (185).
+  The ledger is `data/flats/missed.csv` (1,206 lines). The readings are
+  `data/flats/missed_reading_2026_09_08.csv` (185 lines) and
+  `data/flats/chapter_reading_2026_09_08.csv` (144 sections).
 
 - **Every number we hold has now been read twice, and the second reader was
   not allowed to see the first one's answer** — run 2026-09-07, and the result

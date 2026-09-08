@@ -686,12 +686,42 @@ one now joins them, while `render` keeps them in the count: a list that hides wh
 excluded cannot be told from a list that has finished.
 
 The first blind reading of it ran 2026-09-08: **29 of 185 said the line binds, 150 said
-it does not, 6 could not tell**, and 21 of the 29 closed against the corpus the same day
+it does not, 6 could not tell**, and 25 of the 29 closed against the corpus the same day
 — a footnote block belonging to a table whose districts we do not encode, a column for a
 zone we do not hold, an affordable-housing option nobody has to take, a city already RED
 on use. Two need a human ruling and two are real in a switched-off city. That ratio is
-the ledger working: the cost of closing 21 is minutes, and the thing it buys is that a
+the ledger working: the cost of closing 25 is minutes, and the thing it buys is that a
 standard printed on a page we have held for months cannot stay invisible.
+
+**A card is a section when nothing in the chapter has ever been quoted.** The
+`read_section` tier — a line whose *document* we take numbers from but whose section we
+have never opened — cannot be answered one line at a time, because the sentence above a
+line is usually what says which building it governs. `chapter_list` groups those rows by
+`(layer, path, section)` and hands over the section entire, with `>>` on every measuring
+line and the nearest table caption and heading above the first of them; `score_chapters`
+verdicts them `missing / agree / unclear / seen_elsewhere / worth_reading`, the split
+being whether the reader's figure is printed anywhere in that layer's own file. 347 lines
+in screened cities collapsed to **144 sections** (89 of them a single line, the largest
+Gresham 4.1252 at 34), and the run of 2026-09-08 returned **116 agree, 26 binding, 2
+unclear** — of which 25 closed the same day. The recurring false positives are worth
+naming, because each is a shape no per-line card could have shown: a district *purpose*
+paragraph read as a standard (all four Gresham density findings — the dimensional table
+prints no maximum against "Duplex, Triplex, Quadplex, Cottage Cluster"), a design *menu*
+read as a requirement (Gladstone's "at least four of the following" out of eleven), an
+applicant's *choice* read as a floor (Portland's tree area, Option B being whatever the
+building does not cover), and a chapter belonging to a district the layer does not hold.
+The three that survived include a whole missing zone: Oregon City R-2, whose own table
+names "Triplex, quadplex and multi-family" at 6,000 sqft, excluded from the corpus in a
+one-word aside — the `project_flats_zone_gap` shape, which no field-counting ledger sees.
+
+**`orphans` asks the question from the neighbours' side.** For each `(layer, field)` where
+the layer holds the field in no zone and in no default, while at least half the other live
+layers hold it, the pair is an asymmetry worth explaining. Seven rows on first run, two
+real, and both were `setback_garage_entrance_ft` — which `consumed.py` already reports as
+the largest silently-unread field in the system (66 values, 10 jurisdictions), while both
+catalog pods are `config: rear_court` and have no garage. The exclusion is deliberately
+*not* declared in `paper.py`: declaring it would silently suppress a real constraint the
+day the product adopts tuck-under parking, so it is a question on the human list instead.
 
 **Footnote scope, and the one way to narrow it.** A footnote governs every value quoted
 from its *region* — the run of lines between the previous notes block and this one's

@@ -61,8 +61,11 @@ notes: 'Ported from quadfit rules.yaml. Every value is `draft` — quadfit''s ve
   permits nothing resembling a dwelling inside a protection area, which is what makes a carve the right action rather
   than a flag. Two things the snippets had blurred. The 37.5 feet in the screening config is real but belongs to a
   DIFFERENT rule: 19.106.050 A''s Fairview Village conservation easement, "not less than 50 feet from Fairview Creek
-  centerline and not less than 37.5 feet from Clear Creek centerline", with 19.106.050 C forbidding development within
-  45 feet of the Clear Creek corridor centerline. And 19.106.040 C says the general development standards "do not
+  centerline and not less than 37.5 feet from Clear Creek centerline", with 19.106.050 B forbidding development
+  within 70 feet of the corridor centered on Fairview Creek and 19.106.050 C within 45 feet of the Clear Creek
+  corridor centerline. B is the wider of the pair and was the half a blind reader raised on 2026-09-08, so it is
+  quoted here beside its twin rather than left to be found again. And 19.106.040 C says the general development
+  standards "do not
   apply to Fairview Lake or natural resources located within Fairview Village" — an exception that looks like it
   loosens and does not, because 19.106.050 puts a wider easement over the same ground. None of this is encoded here: a
   resource corridor is geometry, it is screened by the overlay layer, and this layer holds the zoning standards it
