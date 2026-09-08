@@ -623,8 +623,21 @@ Coverage ledger catches "we never looked at this zone." Clause ledger catches "w
 but missed the exception." Cross-reference ledger catches "the sentence that changes this
 number is in a chapter nobody fetched." Redirect ledger catches "we read the section that
 says this section does not apply." Exemption ledger catches "we wrote down that there is
-no standard and cited a page that never says so." All five are needed; none substitutes
-for another.
+no standard and cited a page that never says so." Stale-reason ledger
+(`flats/encode/stale.py`, 2026-09-07) catches "we wrote down *why* a footnote does not
+apply and the why has since become false." All six are needed; none substitutes for
+another.
+
+The sixth is a different animal from the other five and the difference is worth naming.
+Those five ask whether we read Oregon correctly, and their answers are as durable as the
+page. A dismissal reason may instead argue about **this repository** — "a district this
+layer does not encode" — and that is a true statement with a shelf life, falsified the
+day somebody encodes the district, with the note still dismissed and nothing watching.
+Of 784 dismissals, 49 argue about the corpus rather than the code; those 49 are the only
+ones that can rot, and they are the only ones this ledger reads. It over-reports on
+purpose: a reason that names a live zone for its own reasons ("120 feet from a lot zoned
+R-6" is a measurement) is visible as such in a second, whereas a stale reason reads
+exactly like a sound one.
 
 **Footnote scope, and the one way to narrow it.** A footnote governs every value quoted
 from its *region* — the run of lines between the previous notes block and this one's
