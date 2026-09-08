@@ -92,6 +92,7 @@ from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Collection, Iterable, Sequence
 
+from flats.encode.consumed import readers_by_field
 from flats.encode.crossrefs import _cited_lines, _doc_ids
 from flats.encode.reread import CONTEXT, _above, _passage
 from flats.encode.readiness import _printed, _printed_variant
@@ -635,6 +636,7 @@ def orphans(
     layers: dict[str, Layer],
     off: Collection[str] = (),
     share: float = 0.5,
+    declared: Collection[str] | None = None,
 ) -> list[Orphan]:
     """Fields a city records nothing for while most of its neighbours do.
 
@@ -659,7 +661,20 @@ def orphans(
     driveway, Fairview's garage setback in VSF), two were the field guess
     misfiring on a cottage-cluster garage *door width*, one was an option in a
     menu nobody has to pick, and two were in a field no screen reads.
+
+    **A field the screen has declared it does not cost is not an asymmetry
+    worth a person's afternoon.** Both real rows above were
+    ``setback_garage_entrance_ft``, and on 2026-09-08 that was ruled out at
+    source -- the pod parks in a rear court and has no garage -- so ``paper.py``
+    now names it in ``PaperFit.excluded`` and this check skips it. Only a
+    *declared* exclusion is skipped: a field nothing happens to read is still a
+    question, because the asymmetry may be the reason it should be read. Pass
+    ``declared=()`` to ask the question anyway.
     """
+    if declared is None:
+        declared = frozenset(f for f, mods in readers_by_field()[1].items() if mods)
+    else:
+        declared = frozenset(declared)
     off = frozenset(off)
     live = {
         lid: layer for lid, layer in layers.items() if lid not in off and "/" in lid
@@ -674,7 +689,7 @@ def orphans(
 
     grouped: dict[tuple[str, str], list[Missed]] = defaultdict(list)
     for row in rows:
-        if row.verdict == "unheld" and row.layer in live:
+        if row.verdict == "unheld" and row.layer in live and row.field not in declared:
             grouped[(row.layer, row.field)].append(row)
 
     floor = len(live) * share

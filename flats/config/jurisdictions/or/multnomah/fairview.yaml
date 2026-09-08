@@ -1173,6 +1173,40 @@ zones:
       value: 30
       quote: "or/multnomah/fairview/19.30.txt#L371"
   RM:
+    open_space_min_pct:
+      # Read blind 2026-09-08 out of a section nobody had ever quoted, and
+      # ruled the same day. 19.30.090.B.1: "Inclusive of required yard
+      # setbacks, a minimum of 10 percent of the site area shall be designated
+      # and permanently reserved as usable common open space in all
+      # multiple-unit developments."
+      #
+      # RM only, and that is checked rather than assumed: 19.30.090 is the RM
+      # district's own section, and the seven "(2) Subject to additional
+      # standards in FMC 19.30.090" footnotes in Table 19.30.020.A all sit in
+      # the RM column. No other Fairview district reaches it, and a whole-
+      # corpus read for "open space" finds no second percentage anywhere.
+      #
+      # The one thing worth arguing with. Fairview's own 19.162.020.L
+      # distinguishes a "quadplex" (L105, min driveway 10 ft) from a
+      # "multiple-unit use ... between four and seven dwelling units" (L107,
+      # min 20 ft) -- so in that section the two are not the same word, and
+      # this rule says "multiple-unit developments". Taken anyway, for two
+      # reasons that point the same way: the phrase "in all multiple-unit
+      # developments" is the widest reading available in the sentence itself,
+      # and a quadplex is four units in one structure by 19.13's own
+      # definition. Steph ruled on it 2026-09-08 -- the pod will accommodate
+      # 10 percent -- so the conservative reading costs nothing to hold.
+      #
+      # It will not fail a lot, and that is stated rather than left to be
+      # rediscovered: the rule counts required yard setbacks toward the ten
+      # percent, which is exactly how `flats.score.screen` measures open space
+      # (everything the footprint does not cover), so a 2,016 sq ft pod clears
+      # it on any lot above about 2,240 sq ft.
+      value: 10
+      cite: FMC 19.30.090.B.1, Common Open Space (Multi-Unit Housing, RM)
+      url: https://fairvieworegon.gov/DocumentCenter/View/1319
+      retrieved: '2026-09-08'
+      quote: "or/multnomah/fairview/19.30.txt#L917,L919,L923,L925"
     min_density_du_per_acre:
       # Row 3.b prints "14 (Triplexes and Quadplexes)" in the RM column, and
       # row 3.c prints 14 for townhouses. One figure whichever way the pod is

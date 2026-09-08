@@ -445,7 +445,10 @@ def test_a_field_every_neighbour_holds_and_this_city_does_not_is_asked() -> None
     """
     layers = {**_peers(9), "or/x/y": _Layer(Z=_Zone(max_height_ft=_Value(35)))}
     row = _made(field="setback_garage_entrance_ft")
-    found = orphans([row], layers)
+    # `declared=()` asks the question the way it was asked on 2026-09-08, before
+    # the answer -- the pod has no garage -- was written into `paper.py`. The
+    # shape being pinned here is the check, not the corpus's live state.
+    found = orphans([row], layers, declared=())
     assert [(o.layer, o.field, o.peers, o.total) for o in found] == [
         ("or/x/y", "setback_garage_entrance_ft", 9, 10)
     ]
@@ -653,3 +656,34 @@ def test_the_report_leads_with_the_findings() -> None:
     text = report(rows)
     assert "A STANDARD THIS CORPUS HOLDS NOWHERE: 1" in text
     assert "in a section we took that very standard from: 1" in text
+
+
+def test_a_standard_the_screen_says_it_leaves_out_is_not_asked_again() -> None:
+    """The 2026-09-08 ruling, made durable.
+
+    Both real rows of this check's first run were garage-entrance setbacks,
+    and the answer turned out to be one sentence about our own building rather
+    than anything about Oregon. `paper.py` now names the field in
+    `PaperFit.excluded`, and a question whose answer is already written down is
+    not a question -- so the live default reads those declarations and drops it.
+    """
+    layers = {**_peers(9), "or/x/y": _Layer(Z=_Zone(max_height_ft=_Value(35)))}
+    row = _made(field="setback_garage_entrance_ft")
+
+    assert orphans([row], layers) == []
+    assert orphans([row], layers, declared=()) != []
+
+
+def test_a_field_nothing_happens_to_read_is_still_asked() -> None:
+    """Only a *declared* exclusion closes the question. A field no screen reads
+    is a different state: the asymmetry may be the very reason it should be
+    read, and silently dropping it would hide the case this check exists for.
+    """
+    layers = {
+        **_peers(9, field="min_lot_depth_ft"),
+        "or/x/y": _Layer(Z=_Zone(max_height_ft=_Value(35))),
+    }
+    row = _made(field="min_lot_depth_ft")
+
+    found = orphans([row], layers)
+    assert [(o.layer, o.field) for o in found] == [("or/x/y", "min_lot_depth_ft")]

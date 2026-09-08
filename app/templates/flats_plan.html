@@ -24,6 +24,7 @@
     <div><span class="muted">Storeys</span> <strong>{{ design.stories }}</strong></div>
     <div><span class="muted">Height</span> <strong>{{ design.height }} ft</strong></div>
     <div><span class="muted">Stalls provided</span> <strong>{{ design.stalls }}</strong></div>
+    {% if design.court %}<div><span class="muted">Parking court</span> <strong>{{ "{:,.0f}".format(design.court) }} ft deep</strong></div>{% endif %}
   </div>
 
   <div class="toolbar" style="gap:8px">
@@ -97,7 +98,11 @@
             {% endif %}
           </td>
           <td class="col-right">{% if row.width %}{{ "{:,.0f}".format(row.width) }} ft{% else %}—{% endif %}</td>
-          <td class="col-right">{% if row.depth %}{{ "{:,.0f}".format(row.depth) }} ft{% else %}—{% endif %}</td>
+          <td class="col-right">
+            {% if row.depth %}{{ "{:,.0f}".format(row.depth) }} ft
+              {%- if row.court %}<br><span class="muted" style="font-size:11px">incl. {{ "{:,.0f}".format(row.court) }} ft court</span>{% endif %}
+            {% else %}—{% endif %}
+          </td>
           <td class="col-right">{% if row.area %}<strong>{{ "{:,.0f}".format(row.area) }} sf</strong>{% else %}—{% endif %}</td>
           <td class="muted" style="font-size:11px">
             {% if row.binding == 'min_lot_sqft' %}minimum lot size

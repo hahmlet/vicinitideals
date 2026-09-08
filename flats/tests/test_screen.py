@@ -21,7 +21,7 @@ import pytest
 
 pytest.importorskip("shapely")
 
-from flats.designs.model import Plat, load_catalog  # noqa: E402
+from flats.designs.model import Orientation, Plat, load_catalog  # noqa: E402
 from flats.fit.rectangle import Fit  # noqa: E402
 from flats.geom.edges import Tier as GeometryTier  # noqa: E402
 from flats.rules.conditions import Tier  # noqa: E402
@@ -126,7 +126,22 @@ def rules(verdict: RuleVerdict = RuleVerdict.trusted, **overrides) -> ZoneResolu
     )
 
 
-def fit(*, best_depth_ft: float = 40.0, depth_ft: float = 36.0) -> Fit:
+#: What this design's own parking asks of the lot, behind the building. The
+#: screen charges the part of it a rear setback does not already provide, and
+#: `CLEAR` states no rear setback, so the whole court is charged here.
+COURT_FT = DESIGN.parking.court_depth_ft
+
+
+def fit(*, over_ft: float = 4.0, depth_ft: float = 36.0) -> Fit:
+    """A synthetic fit, stated as room to spare rather than as a raw depth.
+
+    ``over_ft`` is feet of envelope beyond everything the pod needs -- itself
+    *and* its parking court. Negative is a shortfall of that many feet, which
+    is how every failing-fit test here says what it means. Writing these as
+    absolute depths hid the arithmetic and made them silently wrong the day the
+    court started being charged.
+    """
+    best_depth_ft = depth_ft + COURT_FT + over_ft
     return Fit(
         fits=best_depth_ft >= depth_ft,
         width_ft=56.0,
@@ -345,7 +360,7 @@ def test_the_tightest_constraint_leads() -> None:
 
 
 def test_a_pod_too_big_for_the_envelope_still_reports_its_shortfall() -> None:
-    result = run(f=fit(best_depth_ft=30.0))
+    result = run(f=fit(over_ft=-6.0))
 
     assert result.head == "fit_ft"
     assert result.fit_slack_ft == pytest.approx(-6.0)
@@ -356,14 +371,14 @@ def test_a_miss_inside_measurement_noise_is_unknown_not_red() -> None:
     # One raster cell of shortfall. That is our instrument, not the lot: we do
     # not know whether it misses at all, which is a different thing from
     # knowing it misses and needing permission.
-    result = run(f=fit(best_depth_ft=35.7))
+    result = run(f=fit(over_ft=-0.3))
 
     assert result.triage is Triage.unknown
     assert result.head == "fit_ft"
 
 
 def test_tolerance_never_manufactures_a_green() -> None:
-    result = run(f=fit(best_depth_ft=35.7))
+    result = run(f=fit(over_ft=-0.3))
 
     assert result.triage is not Triage.green
 
@@ -371,10 +386,68 @@ def test_tolerance_never_manufactures_a_green() -> None:
 def test_a_definite_miss_outranks_a_fuzzy_one() -> None:
     # A lot that definitely fails one standard and might fail another is not
     # unanswerable — it needs an application. The doubt can only add asks.
-    result = run(rules(min_lot_sqft=8000), f=fit(best_depth_ft=35.7))
+    result = run(rules(min_lot_sqft=8000), f=fit(over_ft=-0.3))
 
     assert result.triage is Triage.yellow
 
+
+# --- the ground the cars need, and which way the pod stood ------------
+
+
+def test_a_lot_deep_enough_for_the_building_and_not_its_parking_fails() -> None:
+    # The pod parks six cars in a rear court. An envelope that holds the
+    # building and nothing behind it holds no pod at all, and until 2026-09-08
+    # this screen called that lot GREEN.
+    result = run(f=fit(over_ft=-COURT_FT + 4.0), relief=NO_RELIEF)
+
+    assert result.head == "fit_ft"
+    assert result.triage is Triage.red
+
+
+def test_a_required_rear_yard_is_ground_the_court_can_park_on() -> None:
+    # The envelope already has the rear setback taken off it, and every Oregon
+    # code read for this lets you park in a rear yard. So the setback and the
+    # court overlap rather than stack, and a zone asking for 20 ft of rear yard
+    # charges only the 20-odd feet of court that reaches past it.
+    tight = fit(over_ft=-20.0)
+
+    assert run(f=tight, relief=NO_RELIEF).triage is Triage.red
+    assert run(rules(setback_rear_ft=25), f=tight).triage is Triage.green
+
+
+def test_a_rear_yard_deeper_than_the_court_is_not_a_credit() -> None:
+    # The overlap can cancel the court and it can never go further: a 60 ft
+    # rear yard does not hand the building back depth it never had.
+    deep = rules(setback_rear_ft=60)
+    fits = next(c for c in run(deep, f=fit(over_ft=-COURT_FT)).checks if c.check == "fit_ft")
+
+    assert fits.threshold == pytest.approx(36.0)
+
+
+def test_a_pod_that_only_fits_end_on_is_measured_against_the_run_it_needed() -> None:
+    # The flip searches the envelope at the pod's *depth* and needs its
+    # *width*, so a Fit whose recorded depth_ft is the smaller dimension must
+    # not be read as the requirement. 50 ft of found run against a 36 ft
+    # dimension read as a comfortable pass on a lot with no 56 ft run anywhere.
+    end_on = Fit(
+        fits=False,
+        width_ft=56.0,
+        depth_ft=36.0,
+        best_depth_ft=50.0,
+        slack_ft=-6.0,
+        orientation=Orientation.depth_facing,
+    )
+
+    assert end_on.required_ft == pytest.approx(56.0)
+    assert run(f=end_on, relief=NO_RELIEF).triage is Triage.red
+
+
+def test_the_slack_reported_is_the_one_the_check_used() -> None:
+    # `Fit.slack_ft` knows nothing about parking or orientation. The number a
+    # developer argues with has to be the number the verdict turned on.
+    result = run(f=fit(over_ft=7.0))
+
+    assert result.fit_slack_ft == pytest.approx(7.0)
 
 # --- a ceiling counted in storeys instead of feet ---------------------
 
@@ -577,8 +650,8 @@ def test_the_histogram_ranks_what_is_costing_lots() -> None:
     # The point is not the total. It is seeing that one line in a code costs
     # thousands of lots, which turns a number into an argument worth having.
     results = [
-        run(f=fit(best_depth_ft=20.0)),
-        run(f=fit(best_depth_ft=20.0)),
+        run(f=fit(over_ft=-16.0)),
+        run(f=fit(over_ft=-16.0)),
         run(rules(min_lot_sqft=8000)),
     ]
 
@@ -626,7 +699,7 @@ def test_an_ambiguous_rule_set_cannot_delete_a_lot() -> None:
     # Same asymmetry as an unverified standard, and for the same reason: a
     # false RED silently removes an acquisition target and nobody ever looks
     # at it again.
-    result = run(rules(RuleVerdict.ambiguous), f=fit(best_depth_ft=20.0), relief=NO_RELIEF)
+    result = run(rules(RuleVerdict.ambiguous), f=fit(over_ft=-16.0), relief=NO_RELIEF)
 
     assert result.triage is Triage.unknown
 

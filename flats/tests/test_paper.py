@@ -93,13 +93,15 @@ def fit(root: Path, design: Design = POD, draft: str = "", **fields: object):
 
 
 def test_the_cheaper_orientation_is_the_one_reported(tmp_path: Path) -> None:
-    # Broadside is 66 x 76 = 5,016; end-on is 46 x 96 = 4,416. Reporting the
-    # first would tell somebody a lot they can build on is too small.
+    # Both depths carry the 42 ft rear court, which is deeper than the 20 ft
+    # rear setback and so replaces it: broadside 66 x 98 = 6,468, end-on
+    # 46 x 118 = 5,428. Reporting the first would tell somebody a lot they can
+    # build on is too small.
     got = fit(tmp_path)
 
-    assert (got.min_width_ft, got.min_depth_ft) == (46, 96)
+    assert (got.min_width_ft, got.min_depth_ft) == (46, 118)
     assert got.orientation == "depth_facing"
-    assert got.min_area_sqft == 4416
+    assert got.min_area_sqft == 5428
     assert got.binding == BY_ENVELOPE
     assert got.complete
 
@@ -168,7 +170,7 @@ def test_a_standard_the_zone_never_states_is_missing_not_unsigned(tmp_path: Path
     assert got.min_width_ft is None
     assert not got.complete
     # Depth is unaffected — one missing standard does not void the others.
-    assert got.min_depth_ft == 76
+    assert got.min_depth_ft == 98
 
 
 def test_an_orientation_that_could_not_be_costed_never_wins(tmp_path: Path) -> None:
@@ -187,6 +189,11 @@ def test_the_standards_left_out_are_named_and_why(tmp_path: Path) -> None:
 
     assert any("street_side" in x for x in got.excluded)
     assert any("frontage" in x for x in got.excluded)
+    # A rear court is entered and left forward, so the two-way aisle is the
+    # one that governs and the narrower one-way figure is never substituted.
+    # Declared for the same reason as the garage below: an unread field with
+    # no reason written against it reads exactly like one nobody noticed.
+    assert any(x.startswith("parking_aisle_one_way_ft ") for x in got.excluded)
 
 
 # --- height ----------------------------------------------------------
@@ -226,7 +233,7 @@ def test_the_fourplex_minimum_is_not_multiplied_into_a_townhouse_one(tmp_path: P
     got = fit(tmp_path, design=SPLIT, min_lot_sqft=7000)
 
     assert "min_lot_sqft" in got.unknown
-    assert got.min_area_sqft == 4416, "the envelope still answers"
+    assert got.min_area_sqft == 5428, "the envelope still answers"
     assert not got.complete
 
 
@@ -344,3 +351,110 @@ def test_a_combined_side_yard_is_spent_once_not_twice() -> None:
     assert _pair(None, 15.0) == 15.0
     # Neither is an unknown requirement, not a free one.
     assert _pair(None, None) is None
+
+
+# --- the parking court, and the ground it asks for -----------------------
+#
+# Until 2026-09-08 min_depth_ft was the footprint plus its two setbacks, as
+# though the pod's six cars parked nowhere. These pin the two halves of the
+# fix: that the court is charged at all, and that it is charged against the
+# rear yard rather than on top of it.
+
+
+def test_the_rear_court_is_charged_to_the_lot(tmp_path: Path) -> None:
+    # 18 ft of stall plus a 24 ft aisle is 42 ft behind the building -- deeper
+    # than the 36 ft building itself, and more than the 20 ft rear setback it
+    # replaces. End-on: 56 deep + 20 front + 42 court.
+    got = fit(tmp_path)
+
+    assert got.parking_depth_ft == 42
+    assert got.min_depth_ft == 118
+
+
+def test_the_rear_yard_absorbs_the_court_rather_than_stacking_with_it(
+    tmp_path: Path,
+) -> None:
+    # A required rear yard is land you may drive and park on. Summing them
+    # would ask 62 ft of every lot in this zone and lose real land for a
+    # prohibition no Oregon code read for this actually states.
+    shallow = fit(tmp_path, setback_rear_ft=10)
+    deep = fit(tmp_path, setback_rear_ft=60)
+
+    assert shallow.min_depth_ft == 56 + 20 + 42, "the court governs, not the 10"
+    assert deep.min_depth_ft == 56 + 20 + 60, "the setback governs, not the 42"
+
+
+def test_a_city_that_asks_for_more_raises_the_court(tmp_path: Path) -> None:
+    # Troutdale prints a 25 ft aisle and Oregon City a 19 ft stall. Where the
+    # code asks more than the design assumes, the code is the answer.
+    got = fit(tmp_path, parking_stall_depth_ft=19, parking_aisle_two_way_ft=25)
+
+    assert got.parking_depth_ft == 44
+    assert "parking_aisle_two_way_ft" in got.unsigned or got.complete
+
+
+def test_a_city_that_asks_for_less_does_not_shrink_the_court(tmp_path: Path) -> None:
+    # Portland's Table 266-4 prints a 20 ft aisle and a 16 ft stall at 90
+    # degrees. Even where such a figure applied, it is a legal minimum and not
+    # a statement that six cars fit in 36 ft -- the design's own geometry is
+    # the floor.
+    got = fit(tmp_path, parking_stall_depth_ft=16, parking_aisle_two_way_ft=20)
+
+    assert got.parking_depth_ft == 42
+
+
+def test_a_city_that_states_no_aisle_is_not_an_unanswered_lot(tmp_path: Path) -> None:
+    """Portland, Milwaukie and Wilsonville each dimension a parking space for
+    this building and state no aisle at all, every one on the record with the
+    exclusion sentence quoted. Refusing to answer for them would be the wrong
+    caution: the pod still has to turn round, and ORS 197A.400 means a width
+    nobody published is not a standard a court can fail against."""
+    got = fit(tmp_path)
+
+    assert "parking_aisle_two_way_ft" not in got.unknown
+    assert got.complete
+    assert got.parking_depth_ft == 42
+
+
+def test_a_design_that_parks_on_the_street_is_charged_no_court(
+    tmp_path: Path,
+) -> None:
+    # Gresham LDR-5 requires zero stalls. A design that takes that deal asks
+    # the lot for nothing behind the building, and the old arithmetic returns.
+    street = POD.model_copy(
+        update={"parking": POD.parking.model_copy(update={"stalls_per_unit": 0})}
+    )
+    got = fit(tmp_path, design=street)
+
+    assert got.parking_depth_ft == 0.0
+    assert got.min_depth_ft == 56 + 20 + 20
+
+
+def test_the_garage_setback_is_declared_left_out_not_silently_dropped(
+    tmp_path: Path,
+) -> None:
+    """Ruled 2026-09-08. Sixty-six garage-entrance setbacks in ten cities were
+    encoded and read by nothing, which is indistinguishable from an oversight
+    until somebody writes down why. Naming it in the result is what makes
+    `flats.encode.consumed` call it declared rather than silently unread."""
+    got = fit(tmp_path)
+
+    assert any(s.startswith("setback_garage_entrance_ft ") for s in got.excluded)
+
+
+def test_no_catalog_design_has_a_garage() -> None:
+    """The guard on that ruling, and the reason it is safe to declare.
+
+    "The pod has no garage" is a statement about our product, not about
+    Oregon. It holds only while every design parks in a rear court or on the
+    street -- add a tuck_under design and sixty-six real standards come back
+    to life, so this fails on the day that happens rather than quietly
+    screening a garage against nothing."""
+    from flats.designs.model import ParkingConfig, load_catalog
+
+    garaged = {ParkingConfig.tuck_under}
+    for design in load_catalog():
+        assert design.parking.config not in garaged, (
+            f"{design.key} parks in a garage -- setback_garage_entrance_ft is no "
+            "longer excludable, see PaperFit.excluded and HUMAN_TODO item 14"
+        )

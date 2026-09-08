@@ -114,12 +114,48 @@ class Footprint(BaseModel):
 
 
 class Parking(BaseModel):
+    """How many cars this design parks, and the ground that takes to do.
+
+    The count and the geometry are different kinds of fact and are sourced
+    differently. The *count* is a marketability target and the code states a
+    separate legal minimum. The *geometry* is the design's own: a court has to
+    be wide enough to back out of whether or not the city ever wrote a number
+    down, and three of our cities deliberately never did — Portland, Milwaukie
+    and Wilsonville each state parking dimensions for this building and no
+    aisle at all, on the record and for a quoted reason. ORS 197A.400 lets a
+    city apply only clear and objective standards to housing, so a width nobody
+    published is not a standard a court can fail against.
+
+    So the numbers here are the design's, the code's stated minimum raises them
+    where one exists, and the default is the assumption quadfit's site-plan
+    generator already draws to: 24 ft of two-way aisle at 90 degrees, from
+    ULI / National Parking Association via Iowa SUDAS 8B-1 Table 8B-1.02, at
+    the 85th-percentile design vehicle.
+    """
+
     model_config = ConfigDict(frozen=True)
 
     #: Marketability target, not a legal floor. The legal minimum comes from the
     #: rule set and may be lower — Gresham LDR-5 requires zero.
     stalls_per_unit: float = Field(ge=0)
     config: ParkingConfig
+    #: Depth of one stall in the court. Raised by a code that asks for more.
+    stall_depth_ft: float = Field(default=18.0, gt=0)
+    #: Width of the drive aisle serving the court, two-way. Raised by a code
+    #: that asks for more.
+    aisle_ft: float = Field(default=24.0, gt=0)
+
+    @property
+    def court_depth_ft(self) -> float:
+        """Depth this parking asks of the lot behind the building.
+
+        A rear court is one row of stalls plus the aisle serving them. Nothing
+        is charged where the design parks under the building, on the street, or
+        not at all — and a side drive costs *width*, which nothing models yet.
+        """
+        if self.config is not ParkingConfig.rear_court or not self.stalls_per_unit:
+            return 0.0
+        return self.stall_depth_ft + self.aisle_ft
 
 
 class DeliverySpec(BaseModel):

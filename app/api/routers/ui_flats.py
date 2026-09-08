@@ -395,6 +395,10 @@ def _plan_rows(design: Design) -> list[dict[str, Any]]:
                     "capped": bool(isinstance(cap, (int, float)) and cap < design.units),
                     "width": fit.min_width_ft,
                     "depth": fit.min_depth_ft,
+                    # Shown beside the depth rather than folded silently into
+                    # it: a 118 ft answer for a 36 ft building is startling
+                    # until you can see that 42 ft of it is where the cars go.
+                    "court": fit.parking_depth_ft,
                     "area": fit.min_area_sqft,
                     "binding": fit.binding,
                     "orientation": fit.orientation,
@@ -452,6 +456,9 @@ def _design_card(design: Design, plat: str) -> dict[str, Any]:
         "stories": design.stories,
         "height": design.height_ft,
         "stalls": design.stalls_required,
+        # The design's own court, before any city raises it. Named on the page
+        # because every depth in the table below now carries it.
+        "court": design.parking.court_depth_ft,
         "typology": design.typology.value,
         "delivery": design.delivery.method.value,
         "plat": costed.plat.value,

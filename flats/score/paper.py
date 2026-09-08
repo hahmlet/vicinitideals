@@ -32,7 +32,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field as _dc_field
 from typing import TYPE_CHECKING
 
-from flats.designs.model import Design, Orientation, Plat
+from flats.designs.model import Design, Orientation, ParkingConfig, Plat
 
 if TYPE_CHECKING:  # pragma: no cover - typing only
     from flats.rules.resolver import ZoneResolution
@@ -53,8 +53,14 @@ class PaperFit:
     zone: str
     #: Frontage the footprint plus its side setbacks consumes.
     min_width_ft: float | None = None
-    #: Front lot line to rear, footprint plus front and rear setbacks.
+    #: Front lot line to rear: footprint, front setback, and whichever is
+    #: deeper of the rear setback and the parking court behind the building.
     min_depth_ft: float | None = None
+    #: What the parking asks of the lot behind the building — a row of stalls
+    #: and the aisle serving them, the design's own geometry raised by any
+    #: figure the zone states. 0.0 where the design parks nowhere the lot has
+    #: to give depth for.
+    parking_depth_ft: float = 0.0
     #: The binding area floor across every standard that states one.
     min_area_sqft: float | None = None
     #: Which standard set that floor.
@@ -165,6 +171,60 @@ def lot_standard(
     return None, False
 
 
+#: Parking configurations that put a row of stalls and its drive aisle behind
+#: the building. ``tuck_under`` is inside the footprint and ``street_only``
+#: provides none, so neither asks the lot for depth the footprint does not
+#: already show. ``side_drive`` costs *width* rather than depth; no catalog
+#: design uses it, and charging it is a separate piece of work.
+_COURT_CONFIGS = frozenset({ParkingConfig.rear_court})
+
+
+def court_depth(design: Design, rules: "ZoneResolution") -> tuple[float, tuple[str, ...]]:
+    """How much depth this design's own parking needs behind the building.
+
+    A rear court is a row of stalls plus the aisle that serves them, and until
+    2026-09-08 nothing here charged a lot for either: ``min_depth_ft`` was the
+    footprint plus its two setbacks, as though six cars parked nowhere. In most
+    of Oregon that court is about 42 ft — deeper than the building itself — so
+    leaving it out was the largest single overstatement of what a lot can hold.
+
+    **A missing aisle width is not a missing standard.** Portland, Milwaukie and
+    Wilsonville each dimension a parking space for this building and state no
+    aisle, every one of them on the record with the exclusion sentence quoted,
+    and refusing to answer for them would be the wrong kind of caution: the pod
+    still needs somewhere to turn round. So the design carries its own court
+    geometry and a code that states more raises it. Where the code states
+    nothing, the answer rests on the design's assumption and says so.
+
+    The aisle read is the **two-way** figure, because ``townhome_rear_court``
+    enters and leaves the court forward. A one-way court is a different site
+    plan and would be a different typology, so the narrower number is never
+    substituted for it.
+
+    What this still does not charge: the court's *width*. Six stalls need about
+    54 ft across, and the side driveway reaching them needs its own — both are
+    width questions, both are unmodelled, and both can only make a lot need
+    more than this says.
+
+    Returns ``(depth, from_code)``, where ``from_code`` names the standards the
+    zone actually supplied. An empty tuple against a non-zero depth means the
+    number is the design's assumption and nothing in the code raised it.
+    """
+    court = design.parking.court_depth_ft
+    if not court or design.parking.config not in _COURT_CONFIGS:
+        return 0.0, ()
+    used: list[str] = []
+    stall = design.parking.stall_depth_ft
+    aisle = design.parking.aisle_ft
+    if (stated := _number(rules, "parking_stall_depth_ft")) is not None:
+        used.append("parking_stall_depth_ft")
+        stall = max(stall, stated)
+    if (stated := _number(rules, "parking_aisle_two_way_ft")) is not None:
+        used.append("parking_aisle_two_way_ft")
+        aisle = max(aisle, stated)
+    return stall + aisle, tuple(used)
+
+
 def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
     """The lot this design needs in this zone, on paper.
 
@@ -200,6 +260,7 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
     # the pair wider -- 5 ft either side of a "total 15" cell is still 15, but
     # 8 ft either side of one would be 16.
     sides = _pair(side, side_total)
+    court, court_from_code = court_depth(design, rules)
     needed = (
         ("setback_front_ft", front),
         ("setback_rear_ft", rear),
@@ -216,6 +277,7 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
     used = [name for name, got in needed if got is not None]
     if side_total is not None:
         used.append("setback_side_total_ft")
+    used += list(court_from_code)
     used += [
         name
         for name, got in (
@@ -233,8 +295,17 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
         needed_width = width_ft + sides if sides is not None else None
         if needed_width is not None and min_width is not None:
             needed_width = max(needed_width, min_width)
+        # The court sits between the building's rear wall and the rear lot
+        # line, and a required rear yard is land you may drive and park on in
+        # every Oregon code read for this — so the two overlap rather than
+        # stack, and what the lot must give is the deeper of them. Where a
+        # jurisdiction bars parking from a required rear yard this understates
+        # by up to the setback; that is an unmeasured condition on the human
+        # list, not a thing assumed away here.
         needed_depth = (
-            depth_ft + front + rear if front is not None and rear is not None else None
+            depth_ft + front + max(rear, court)
+            if front is not None and rear is not None
+            else None
         )
 
         floors: list[tuple[float, str]] = []
@@ -255,6 +326,7 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
             zone=rules.zone,
             min_width_ft=needed_width,
             min_depth_ft=needed_depth,
+            parking_depth_ft=court,
             min_area_sqft=area,
             binding=binding,
             height_ok=None if height is None else design.height_ft <= height,
@@ -265,6 +337,17 @@ def paper_fit(design: Design, rules: "ZoneResolution") -> PaperFit:
             excluded=(
                 "setback_street_side_ft (corner lots only)",
                 "min_frontage_ft (measured at the street, not the envelope)",
+                # Ruled 2026-09-08: the pod parks in a rear court and has no
+                # garage, so a garage-entrance setback cannot reach it. This is
+                # a statement about the product, not about Oregon — it holds
+                # only while every catalog design is rear_court or street_only,
+                # and `test_no_catalog_design_has_a_garage` fails the day one is not.
+                "setback_garage_entrance_ft (the pod has no garage)",
+                # `townhome_rear_court` enters and leaves the court forward, so
+                # the two-way figure is the one that governs. Substituting the
+                # narrower one-way aisle would understate the court on the
+                # strength of a site plan nobody has drawn.
+                "parking_aisle_one_way_ft (the court is two-way)",
             ),
         )
         if best is None or _worse(best, candidate):

@@ -14,29 +14,34 @@ from flats.encode.consumed import Reach, reach, readers_by_field, render
 from flats.rules.fields import FIELDS
 
 #: Every field the corpus encodes that no scoring module names, as of
-#: 2026-09-07. This is not a wish list -- it is the record of what a reviewer's
+#: 2026-09-08. This is not a wish list -- it is the record of what a reviewer's
 #: care currently buys nothing, and it exists so that *adding* to it is a
 #: deliberate act rather than a side effect. Two ways to make this test pass
 #: when it fails, and they are not equivalent: teach a screen to read the
 #: field, or write the field down here having decided it can wait.
 #:
-#: The parking-geometry block (stall, aisle, driveway, maneuvering) is the
-#: honest kind: the stalls are laid out by a stage that does not exist yet.
-#: `setback_garage_entrance_ft` and `open_space_min_sqft` are the other kind --
-#: both already hold numbers the 2026-09-07 blind reading found misquoted, and
-#: nobody noticed because nothing reads them.
+#: Four fields left this set on 2026-09-08, two by each route. `paper.court_depth`
+#: now reads `parking_stall_depth_ft` and `parking_aisle_two_way_ft` to size the
+#: rear court, so the "stalls are laid out by a stage that does not exist yet"
+#: excuse no longer covers the two that set the court's *depth*. The other two --
+#: `setback_garage_entrance_ft` and `parking_aisle_one_way_ft` -- are now
+#: *declared* in `PaperFit.excluded` on a ruling: the pod has no garage and its
+#: court is two-way. Declared is not the same as read, and that is the point --
+#: a reason on the record can be argued with, and a silence cannot.
+#:
+#: What is left of the parking-geometry block (widths, driveways, maneuvering)
+#: is still the honest kind: those numbers size the court *across*, and nothing
+#: measures a lot that way yet. `open_space_min_sqft` is the other kind -- it
+#: already holds numbers the 2026-09-07 blind reading found misquoted, and
+#: nobody noticed because nothing reads it.
 SILENTLY_UNREAD = frozenset(
     {
-        "setback_garage_entrance_ft",
         "min_lot_depth_ft",
         "parking_street_setback_ft",
         "setback_front_max_ft",
         "parking_max_per_unit",
         "open_space_min_sqft",
-        "parking_stall_depth_ft",
         "parking_stall_width_ft",
-        "parking_aisle_one_way_ft",
-        "parking_aisle_two_way_ft",
         "driveway_approach_max_width_ft",
         "min_building_separation_ft",
         "parking_front_prohibited",

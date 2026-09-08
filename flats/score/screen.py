@@ -54,7 +54,7 @@ from flats.rules.conditions import Tier
 from flats.rules.fields import REQUIRED_FIELDS
 from flats.rules.resolver import Verdict as RuleVerdict, ZoneResolution
 from flats.score.configure import Configuration
-from flats.score.paper import lot_standard
+from flats.score.paper import court_depth, lot_standard
 from flats.score.relief import (
     RELIEF_UNCONFIRMED,
     ReliefOutcome,
@@ -157,8 +157,10 @@ class Screening:
     unchecked: tuple[str, ...] = ()
     #: Checks whose observed value is a favourable approximation.
     optimistic: tuple[str, ...] = ()
-    #: Feet of margin on the fit itself, kept out front because it is the
-    #: number a developer argues with.
+    #: Feet of margin on the fit check, kept out front because it is the
+    #: number a developer argues with — so it is the check's slack, which
+    #: counts the parking court and the orientation the pod actually stood in,
+    #: not the raw geometry's, which counts neither.
     fit_slack_ft: float | None = None
 
     #: The blocker that most explains the outcome — largest proportional
@@ -269,11 +271,34 @@ def _checks(
         unchecked.append(name)
         unmeasured.add(held.measured_on)
 
-    # Fitment. The threshold is the design's depth; the observation is the
-    # deepest rectangle of that width the envelope holds.
+    # Fitment. The observation is the deepest run the envelope holds at the
+    # width the winning orientation asked for; the threshold is what that
+    # orientation had to find, plus whatever the design's own parking needs
+    # behind it that the rear setback does not already give it.
+    #
+    # `fit.required_ft`, not `fit.depth_ft`: where the pod fits only end-on the
+    # search was run against its width, and comparing the found depth to the
+    # unrotated `depth_ft` passed lots that hold no run long enough for the
+    # building. See :attr:`flats.fit.rectangle.Fit.required_ft`.
+    #
+    # The court sits between the building's rear wall and the rear lot line,
+    # and the envelope has already had the rear setback taken off it -- so the
+    # setback is land the court may use, and only the excess is charged. This
+    # is the same overlap `paper_fit` states as `max(rear, court)`; where a
+    # jurisdiction bars parking from a required rear yard the two would stack
+    # instead, which is an unmeasured condition on the human list rather than a
+    # thing assumed away here. A zone stating no rear setback charges the whole
+    # court, which is both conservative and correct: no yard, no shared ground.
+    court, _court_from_code = court_depth(design, rules)
+    rear_held = rules.get("setback_rear_ft")
+    rear_ft = float(rear_held) if isinstance(rear_held, (int, float)) else 0.0
     out.append(
         policy.evaluate(
-            "fit_ft", fit.best_depth_ft, fit.depth_ft, is_maximum=False, jurisdiction=where
+            "fit_ft",
+            fit.best_depth_ft,
+            fit.required_ft + max(0.0, court - rear_ft),
+            is_maximum=False,
+            jurisdiction=where,
         )
     )
 
@@ -498,7 +523,11 @@ def screen(
         "dominant": worst_check.check if worst_check else None,
         "unchecked": tuple(unchecked),
         "optimistic": optimistic,
-        "fit_slack_ft": fit.slack_ft,
+        # The fit check's own slack, not the raw geometry's: the number a
+        # developer argues with is the one that includes the ground the cars
+        # need and the orientation the pod actually stood in. `fit.slack_ft`
+        # knows about neither.
+        "fit_slack_ft": next((c.slack for c in checks if c.check == "fit_ft"), fit.slack_ft),
         "ask": hardest.tier if hardest else Tier.as_of_right,
         "relief": tuple(outcomes),
     }

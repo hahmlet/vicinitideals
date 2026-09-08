@@ -338,6 +338,11 @@ async def test_a_plan_page_says_what_lot_the_building_needs(
     # Every encoded zone is listed, including ones that say no — a zone that
     # refuses a fourplex is a fact about the market, not a row to hide.
     assert "Portland" in page.text
+    # The depth column carries the parking court as of 2026-09-08, and a
+    # 118 ft answer for a 36 ft building is startling until the page says
+    # where 42 ft of it went. Silently folding it in would read as a bug.
+    assert "Parking court" in page.text
+    assert "ft court" in page.text
 
 
 async def test_the_plat_path_is_a_control_not_a_second_catalog_entry(

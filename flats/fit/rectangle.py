@@ -36,15 +36,36 @@ class Fit:
     fits: bool
     width_ft: float
     depth_ft: float
-    #: Deepest rectangle of ``width_ft`` the envelope holds, over every angle
-    #: and orientation tried. Zero when nothing of that width fits at all.
+    #: Deepest run the envelope holds at the winning orientation's *across*
+    #: dimension, over every angle tried. Zero when nothing that wide fits.
     best_depth_ft: float
-    #: ``best_depth_ft - depth_ft``. Negative is a shortfall in feet.
+    #: ``best_depth_ft`` less what the winning orientation had to find.
+    #: Negative is a shortfall in feet.
     slack_ft: float
     angle_deg: float | None = None
     orientation: Orientation | None = None
     #: The winning rectangle in the lot's own coordinates, when asked for.
     placement: BaseGeometry | None = None
+
+    @property
+    def required_ft(self) -> float:
+        """The depth that had to be found, for the orientation that won.
+
+        Not always ``depth_ft``. A pod that will not stand broadside may stand
+        end-on, and when that flip wins the envelope was searched at the *depth*
+        as a width, so the run it had to hold is the design's **width**. The two
+        recorded dimensions are the design's, unrotated, so a caller comparing
+        ``best_depth_ft`` against ``depth_ft`` measures the wrong pair whenever
+        the flip won — reading 50 ft of found depth against a 36 ft dimension as
+        a comfortable pass on a lot where a 56 ft run was needed and never
+        found. That is a false GREEN, and it was live in
+        :func:`flats.score.screen._checks` until 2026-09-08.
+
+        Recovered from ``slack_ft`` rather than re-derived, because ``slack_ft``
+        is set from the requirement the search actually used and so cannot drift
+        away from it.
+        """
+        return self.best_depth_ft - self.slack_ft
 
 
 class Fitter:

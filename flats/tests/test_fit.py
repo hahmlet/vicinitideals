@@ -206,6 +206,28 @@ def test_turning_the_pod_sideways_can_save_the_lot() -> None:
     assert fit.orientation is Orientation.depth_facing
 
 
+def test_the_flip_reports_the_run_it_actually_needed() -> None:
+    # `depth_ft` and `width_ft` are the design's, unrotated, whichever
+    # orientation won. When the flip wins, the run the envelope had to hold is
+    # the design's *width*, and a caller reading `depth_ft` as the requirement
+    # reads the wrong number by twenty feet.
+    deep = shapely.box(0, 0, 40, 50)
+
+    fit = fitter(deep).fit(56, 36)
+
+    assert fit.orientation is Orientation.depth_facing
+    assert not fit.fits
+    assert fit.depth_ft == 36
+    assert fit.required_ft == pytest.approx(56.0)
+    assert fit.best_depth_ft == pytest.approx(50.0)
+
+
+def test_the_unflipped_requirement_is_simply_the_depth() -> None:
+    fit = fitter(LOT).fit(56, 36)
+
+    assert fit.orientation is Orientation.width_facing
+    assert fit.required_ft == pytest.approx(fit.depth_ft)
+
 def test_a_street_facing_requirement_forbids_the_flip() -> None:
     # Some codes fix the orientation. Then the sideways placement is not a
     # placement, and the lot is out.
