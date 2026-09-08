@@ -27,6 +27,7 @@ from flats.encode.missed import (
     audit,
     by_figure,
     chapter_list,
+    orphans,
     render,
     report,
     score,
@@ -58,8 +59,9 @@ class _Zone:
 
 
 class _Layer:
-    def __init__(self, **zones: _Zone) -> None:
+    def __init__(self, defaults: dict | None = None, **zones: _Zone) -> None:
         self.zones = dict(zones)
+        self.defaults = dict(defaults or {})
 
 
 def _row(text: str, field: str = "max_height_ft", **kw) -> Uncited:
@@ -422,6 +424,77 @@ def test_an_excluded_city_comes_back_when_it_is_asked_for() -> None:
         [_made()], _Store(_DOC), off={"or/x/y"}, include_off=True
     )
     assert len(cards) == 1 and skipped["switched_off"] == 0
+
+
+# --- a standard everybody else regulates ------------------------------------
+
+
+def _peers(n: int, field: str = "setback_garage_entrance_ft") -> dict:
+    return {
+        f"or/x/peer{i}": _Layer(**{"Z": _Zone(**{field: _Value(20)})}) for i in range(n)
+    }
+
+
+def test_a_field_every_neighbour_holds_and_this_city_does_not_is_asked() -> None:
+    """West Linn, and the accident this check was written from.
+
+    Nine zones, all complete, and no garage-entrance setback in any of them --
+    while ten of fourteen screened cities hold one and West Linn's own access
+    chapter states 20 feet. No coverage ledger sees that, because the field is
+    not required.
+    """
+    layers = {**_peers(9), "or/x/y": _Layer(Z=_Zone(max_height_ft=_Value(35)))}
+    row = _made(field="setback_garage_entrance_ft")
+    found = orphans([row], layers)
+    assert [(o.layer, o.field, o.peers, o.total) for o in found] == [
+        ("or/x/y", "setback_garage_entrance_ft", 9, 10)
+    ]
+
+
+def test_a_city_that_holds_the_field_somewhere_is_not_a_gap() -> None:
+    layers = {
+        **_peers(9),
+        "or/x/y": _Layer(Z=_Zone(setback_garage_entrance_ft=_Value(20))),
+    }
+    assert orphans([_made(field="setback_garage_entrance_ft")], layers) == []
+
+
+def test_a_recorded_no_standard_counts_as_holding_it() -> None:
+    """A value written down as None is an answer somebody gave, not a gap."""
+    layers = {
+        **_peers(9),
+        "or/x/y": _Layer(Z=_Zone(setback_garage_entrance_ft=_Value(None))),
+    }
+    assert orphans([_made(field="setback_garage_entrance_ft")], layers) == []
+
+
+def test_a_field_only_a_few_cities_regulate_is_ordinary_variation() -> None:
+    """Gresham has no residential lot coverage standard and that is correct."""
+    others = {
+        f"or/x/other{i}": _Layer(Z=_Zone(max_height_ft=_Value(35))) for i in range(8)
+    }
+    layers = {
+        **_peers(2),
+        **others,
+        "or/x/y": _Layer(Z=_Zone(max_height_ft=_Value(35))),
+    }
+    assert orphans([_made(field="setback_garage_entrance_ft")], layers) == []
+
+
+def test_a_city_the_screen_does_not_cover_is_neither_gap_nor_peer() -> None:
+    layers = {**_peers(9), "or/x/y": _Layer(Z=_Zone(max_height_ft=_Value(35)))}
+    assert orphans([_made(field="setback_garage_entrance_ft")], layers, off={"or/x/y"}) == []
+
+
+def test_a_held_line_does_not_raise_a_gap() -> None:
+    """The city's own code has to have said something we never took."""
+    layers = {**_peers(9), "or/x/y": _Layer(Z=_Zone(max_height_ft=_Value(35)))}
+    row = _made(
+        field="setback_garage_entrance_ft",
+        matched=(Decimal("24"),),
+        stated=(Decimal("24"),),
+    )
+    assert orphans([row], layers) == []
 
 
 def test_a_section_card_asks_about_every_unread_line_at_once() -> None:

@@ -428,7 +428,13 @@ def by_figure(rows: Iterable[Missed]) -> list[tuple[str, str, Decimal, int, str]
     ]
 
 
-def render(rows: Sequence[Missed], *, top: int = 40, off: Collection[str] = ()) -> str:
+def render(
+    rows: Sequence[Missed],
+    *,
+    top: int = 40,
+    off: Collection[str] = (),
+    orphaned: Sequence[Orphan] = (),
+) -> str:
     counts = Counter(r.verdict for r in rows)
     near = Counter(r.nearness for r in rows if r.verdict == "unheld")
     ranked = by_figure(rows)
@@ -473,6 +479,22 @@ def render(rows: Sequence[Missed], *, top: int = 40, off: Collection[str] = ()) 
         out.append(f"           {example.text[:150]}")
     if len(ranked) > top:
         out.append(f"  ... and {len(ranked) - top} more")
+    if orphaned:
+        out += [
+            "",
+            f"A STANDARD MOST NEIGHBOURS REGULATE AND THIS CITY DOES NOT: {len(orphaned)}",
+            "(held in no zone here, held by most screened layers, and named by an"
+            " unread line in this city's own code)",
+            "",
+        ]
+        for o in orphaned:
+            first = o.rows[0]
+            out.append(
+                f"  {o.peers:>3}/{o.total} cities  [{o.layer}] {o.field}"
+                f"  ({o.lines} unread line{'s' if o.lines != 1 else ''})"
+            )
+            out.append(f"           {first.path}#L{first.line}  ({first.section})")
+            out.append(f"           {first.text[:150]}")
     return "\n".join(out)
 
 
@@ -588,6 +610,86 @@ def work_list(
             }
         )
     return cards, key, skipped
+
+
+# --- the standard every neighbour regulates and this city does not -----------
+
+
+@dataclass(frozen=True, slots=True)
+class Orphan:
+    """A field this layer holds in no zone at all, that most of its peers do."""
+
+    layer: str
+    field: str
+    peers: int
+    total: int
+    rows: tuple[Missed, ...]
+
+    @property
+    def lines(self) -> int:
+        return len(self.rows)
+
+
+def orphans(
+    rows: Sequence[Missed],
+    layers: dict[str, Layer],
+    off: Collection[str] = (),
+    share: float = 0.5,
+) -> list[Orphan]:
+    """Fields a city records nothing for while most of its neighbours do.
+
+    A different question from the rest of this module, and it came from an
+    accident. West Linn holds no garage-entrance setback in any of its nine
+    zones; Gresham holds one in sixteen and Wilsonville in nine; and West
+    Linn's own access chapter says a driveway "shall include a minimum of 20
+    feet in length between the garage door and the back of sidewalk". No
+    coverage ledger sees that, because the field is not required and the zones
+    are complete without it -- the gap is only visible against what everybody
+    else wrote down.
+
+    So: a field held *nowhere* in this layer, held by at least ``share`` of the
+    screened layers, and named by at least one unread line in this layer's own
+    documents. All three conditions matter. The first two alone are ordinary
+    variation between cities -- Gresham genuinely has no residential lot
+    coverage standard, and a whole-corpus read confirms it. The third is what
+    makes it a question: the city's own code has a sentence about the thing.
+
+    Precision is about what the rest of this module gets, and for the same
+    reason -- two of the seven rows on the first run were real (West Linn's
+    driveway, Fairview's garage setback in VSF), two were the field guess
+    misfiring on a cottage-cluster garage *door width*, one was an option in a
+    menu nobody has to pick, and two were in a field no screen reads.
+    """
+    off = frozenset(off)
+    live = {
+        lid: layer for lid, layer in layers.items() if lid not in off and "/" in lid
+    }
+    holds: dict[str, set[str]] = defaultdict(set)
+    for lid, layer in live.items():
+        for zone in layer.zones.values():
+            for name in zone.values:
+                holds[name].add(lid)
+        for name in layer.defaults:
+            holds[name].add(lid)
+
+    grouped: dict[tuple[str, str], list[Missed]] = defaultdict(list)
+    for row in rows:
+        if row.verdict == "unheld" and row.layer in live:
+            grouped[(row.layer, row.field)].append(row)
+
+    floor = len(live) * share
+    out = [
+        Orphan(
+            layer=layer,
+            field=field,
+            peers=len(holds.get(field, ())),
+            total=len(live),
+            rows=tuple(sorted(members, key=lambda r: r.line)),
+        )
+        for (layer, field), members in grouped.items()
+        if layer not in holds.get(field, ()) and len(holds.get(field, ())) >= floor
+    ]
+    return sorted(out, key=lambda o: (-o.peers, -o.lines, o.layer, o.field))
 
 
 # --- the chapter nobody opened -----------------------------------------------
@@ -942,7 +1044,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             args.include_off,
             args.sections,
         )
-    print(render(rows, top=args.top, off=off))
+    print(render(rows, top=args.top, off=off, orphaned=orphans(rows, layers, off)))
     if args.csv:
         import csv
 
