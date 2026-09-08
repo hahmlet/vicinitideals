@@ -1,10 +1,25 @@
-"""Lake Oswego's commercial half, and the ninety-three lots it costs.
+"""Lake Oswego's commercial half, and the lots it costs -- which is not 93.
 
 Thirty-three footnotes, all of them on the two tables that govern the sixteen
 zones in this city that are not residential. None of the sixteen is encoded.
-Three of them carry observed lots -- NC/R-0 with 84, PNA with 5, NC with 4 --
-so unlike Gresham's unbuilt sub-districts and unlike Wilsonville's Town Center
-this gap is visible in the ledger, has a size, and is pinned here.
+
+This file used to pin the cost at ninety-three lots: NC/R-0 with 84, PNA with
+5, NC with 4, read straight off the coverage ledger. That number died on
+2026-09-08 when the ledger was rebuilt over both counties, and how it died is
+worth more than the number was.
+
+The ninety-three were 6% of one city. They came from Lake Oswego's Multnomah
+slice, the only part of it a Multnomah-only parcel corpus could see. The
+rebuilt ledger sees 16,300 Lake Oswego lots and gives a zone to none of them,
+because `Lot Analysis/quadfit/config/rules.yaml` marks the jurisdiction
+`eligible: false` and `s2_assign.py` skips the zoning join for an ineligible
+jurisdiction outright. So the city arrives in the ledger as a single row --
+`(unzoned in parcel data)`, 14,256 lots -- and the commercial gap has no
+measured size at all.
+
+Two separate facts wore the same number, and only one of them was about
+footnotes. The gap is real and the thirty-three rulings still rest on it; what
+is gone is any claim about how much land is behind it.
 
 **The tables resolve, and the notes are what resolve them.** Both extract as a
 header block followed by a flat run of cells with no column attached, and a
@@ -57,31 +72,60 @@ COMMERCIAL_ZONES = (
     "PNA",
 )
 
-#: Zones observed on real lots that this layer does not hold, with the lot
-#: count the coverage ledger reports for each.
-ZONE_MISSING = {"NC/R-0": 84, "PNA": 5, "NC": 4}
+#: What the ledger reports for this city, whole. One row, no zone on it.
+#: Named rather than described so that re-enabling Lake Oswego in the quadfit
+#: config breaks this test and sends the reader back to the thirty-three
+#: rulings that assume the commercial zones are absent.
+UNZONED = "(unzoned in parcel data)"
+
+#: The zones that carried the old ninety-three, kept because they are the
+#: evidence that this city's commercial land is built on and not theoretical.
+#: They are no longer observable: the corpus has stopped assigning zones here.
+ONCE_OBSERVED = {"NC/R-0": 84, "PNA": 5, "NC": 4}
 
 
 def test_the_layer_has_no_unread_notes_left() -> None:
     assert [n for n in notes(LAKE_OSWEGO) if n.state == "unread"] == []
 
 
-def test_the_gap_has_the_size_the_rulings_claim() -> None:
-    """Ninety-three lots reporting zone_missing.
+def test_the_whole_city_arrives_without_a_zone_on_it() -> None:
+    """Not a gap in the rules. A jurisdiction the pipeline is switched off for.
 
     The rulings dismiss thirty-three notes on the ground that the zone is not
-    encoded. That ground is only honest if the size of what it costs is stated
-    somewhere a change would break, which is here.
+    encoded. That ground is only honest if what it costs is stated somewhere a
+    change would break, which is here -- and what it costs is now unknown,
+    stated as unknown, at a scale nine times the slice the old figure came
+    from.
+
+    A single row is the fingerprint of the switch: `s2_assign.py` joins zoning
+    only where `j.eligible`, so an ineligible city's lots all land in the one
+    bucket named for having no zone. If this ever splits back into R-0, R-7.5
+    and the rest, somebody re-enabled Lake Oswego, and the thirty-three rulings
+    below need re-reading against a city that is suddenly being screened.
     """
-    missing = {
-        row.zone: row.lots
-        for row in read_coverage()
-        if row.jurisdiction == LAKE_OSWEGO and row.status == "zone_missing"
+    rows = [r for r in read_coverage() if r.jurisdiction == LAKE_OSWEGO]
+
+    assert [r.zone for r in rows] == [UNZONED]
+    assert rows[0].status == "zone_missing"
+    assert rows[0].lots == 14256
+    assert rows[0].lots > 9 * sum(ONCE_OBSERVED.values())
+
+
+def test_the_zones_that_carried_the_old_figure_are_no_longer_observable() -> None:
+    """The three that made this gap concrete, and why the number is retired.
+
+    NC/R-0, PNA and NC are still where Lake Oswego's unencoded commercial land
+    is built on -- that has not changed and is not in doubt. What changed is
+    that nothing counts them any more, so quoting 93 would be quoting a run
+    that no longer exists.
+    """
+    observed = {
+        r.zone for r in read_coverage() if r.jurisdiction == LAKE_OSWEGO
     }
 
-    for zone, lots in ZONE_MISSING.items():
-        assert missing.get(zone) == lots, zone
-    assert sum(ZONE_MISSING.values()) == 93
+    for zone in ONCE_OBSERVED:
+        assert zone not in observed, zone
+    assert sum(ONCE_OBSERVED.values()) == 93
 
 
 def test_no_commercial_zone_is_encoded() -> None:

@@ -15,6 +15,15 @@ Reads quadfit's stage-2 parquet until the FLATS ingest stage exists. Condo and
 air parcels are removed first — they inflate dense-zone counts and would skew
 the ranking toward zones that are mostly not land.
 
+**Which parquet matters more than it looks.** ``CORPUS`` defaults to the copy
+under this repo, and on a development machine that copy is whatever was last
+pulled — for five weeks it was a Multnomah-only file while the pipeline this
+ledger serves screened two counties. The corpus the screen actually runs on
+lives beside the pipeline on the analysis host (LXC 137,
+``/root/code/vicinitideals/data/quadfit/s2_lots.parquet``), and the honest way
+to regenerate is to run this module there and bring the CSV back. ``shrinkage``
+below is the guard for the day somebody forgets.
+
 Run::
 
     python -m flats.encode.backlog
@@ -23,15 +32,18 @@ Run::
 from __future__ import annotations
 
 import argparse
+from collections.abc import Sequence
 from pathlib import Path
 
 from flats.encode.port_quadfit import layer_id_for
 from flats.normalize.condo import classify_frame
 from flats.rules.ledger import (
     COVERAGE,
+    CoverageRow,
     ObservedZone,
     build_coverage,
     coverage_summary,
+    read_coverage,
     unweighed,
     write_coverage,
 )
@@ -98,16 +110,63 @@ def observed(corpus: Path = CORPUS, *, drop_condos: bool = True) -> list[Observe
     return rows
 
 
+def shrinkage(
+    rows: Sequence[CoverageRow], previous: Sequence[CoverageRow] | None
+) -> list[str]:
+    """Jurisdictions the committed ledger counts that this run does not.
+
+    A regeneration is not automatically an improvement. The corpus path is an
+    argument with a default, the default file is whatever happens to be on the
+    machine, and the ledger is committed -- so a run against a smaller corpus
+    silently replaces a wider count with a narrower one and every ranking that
+    reads it gets quieter about land that has not gone anywhere.
+
+    That is not a hypothetical either. This ledger spent five weeks holding
+    Multnomah County alone while the pipeline it serves screened two, and the
+    cost surfaced as a district audit that ranked fourteen cities at zero lots
+    apiece and nearly closed its own queue on the number. The check is cheap,
+    the failure is silent, and silence is the part worth spending code on.
+
+    Returns the jurisdictions that would be lost, empty where nothing is.
+    """
+    if not previous:
+        return []
+    before = {row.jurisdiction for row in previous}
+    after = {row.jurisdiction for row in rows}
+    return sorted(before - after)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--corpus", type=Path, default=CORPUS)
     ap.add_argument("--out", type=Path, default=OUT)
     ap.add_argument("--top", type=int, default=25, help="Rows to print.")
     ap.add_argument("--keep-condos", action="store_true", help="Do not drop condo/air parcels.")
+    ap.add_argument(
+        "--shrink",
+        action="store_true",
+        help="Write even if this corpus counts fewer jurisdictions than the committed ledger.",
+    )
     args = ap.parse_args()
 
     rules = RuleSet(load_rules())
     rows = build_coverage(observed(args.corpus, drop_condos=not args.keep_condos), rules)
+
+    lost = shrinkage(rows, read_coverage(args.out))
+    if lost and not args.shrink:
+        print(f"REFUSING TO WRITE {args.out}\n")
+        print(f"  {args.corpus} counts no lot in {len(lost)} jurisdiction(s) the")
+        print("  committed ledger already holds:\n")
+        for name in lost:
+            print(f"    {name}")
+        print(
+            "\n  A narrower corpus overwriting a wider ledger reads as those cities"
+            "\n  having no land, not as nobody having counted it. Point --corpus at"
+            "\n  the parcel file the screening pipeline runs on, or pass --shrink if"
+            "\n  losing them is what you meant."
+        )
+        return 1
+
     write_coverage(rows, args.out)
     summary = coverage_summary(rows)
 

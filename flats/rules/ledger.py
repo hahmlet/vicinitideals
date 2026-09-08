@@ -196,15 +196,33 @@ def unweighed(rows: Sequence[CoverageRow], rules: RuleSet) -> list[UnweighedLaye
     to contain — so a layer outside it is not merely unranked, it is silently
     excluded from the denominator.
 
-    That is not hypothetical. The parcel corpus this ledger is built from is
-    Multnomah County only, and ten encoded Clackamas jurisdictions have never
-    had a lot weighed against them. Lake Oswego looked like the exception and
-    was not: its rows come from the sliver of the city that lies inside
-    Multnomah, 757 lots in the four zones that happened to be encoded, which
-    is exactly why the six zones it was missing could not surface here.
+    That was not hypothetical, and for months this docstring described the
+    live case: the parcel corpus was Multnomah County only, ten encoded
+    Clackamas jurisdictions had never had a lot weighed against them, and Lake
+    Oswego looked like the exception without being one -- its rows came from
+    the sliver of the city inside Multnomah, 757 lots in the four zones that
+    happened to be encoded, which is exactly why the six zones it was missing
+    could not surface here.
+
+    **Closed 2026-09-08.** The ledger was regenerated over the two-county
+    corpus the screening pipeline already runs on -- 333 pairs over 334,959
+    lots against 155 over 236,889, eighteen jurisdictions against fourteen --
+    and this function now returns an empty list. It stays because an empty
+    answer from a check like this is worth something only while the check is
+    still asked, and because the failure it guards against is not a one-off:
+    it recurred the same day it was found, when a district audit ranked
+    fourteen cities at zero lots apiece from the stale ledger and nearly
+    closed its own queue on the number.
+
+    What it still cannot see is a city the pipeline is switched off for. An
+    ineligible jurisdiction gets no zoning join at all, so its lots arrive
+    under ``UNZONED`` rather than absent -- Lake Oswego is 14,256 of them --
+    and a layer with one such row is not "unweighed" even though every zone in
+    it is. That is a different hole and it is named in the plan, not fixed
+    here.
 
     Reported from the written ledger rather than the parcel corpus on purpose.
-    The corpus is a 62 MB read and a command; the ledger is what shipped, and
+    The corpus is a 130 MB read and a command; the ledger is what shipped, and
     what shipped is what a reader is entitled to be told the shape of.
     """
     seen = {row.jurisdiction for row in rows}

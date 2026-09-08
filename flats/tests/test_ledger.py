@@ -256,6 +256,64 @@ def test_a_written_ledger_reads_back_as_what_was_written(tmp_path) -> None:
     assert read_coverage(path) == [row]
 
 
+def _row(jurisdiction: str, zone: str = "R5", lots: int = 10):
+    from flats.rules.ledger import CoverageRow
+
+    return CoverageRow(
+        jurisdiction=jurisdiction,
+        zone=zone,
+        lots=lots,
+        acres=1.0,
+        status="partial",
+        verified_fields=0,
+        total_fields=1,
+        missing_required="",
+        untrusted_fields="",
+        blocking=lots,
+    )
+
+
+def test_a_narrower_corpus_is_named_before_it_can_overwrite_a_wider_one() -> None:
+    """The regression this ledger actually suffered, made loud.
+
+    It held Multnomah County alone for five weeks while the pipeline it serves
+    screened two, and nothing anywhere said so. A rebuild is not automatically
+    an improvement: the corpus is an argument with a default, the default is
+    whatever file is on the machine, and the output is committed. So a run
+    against the smaller of two parcel files replaces a wider count with a
+    narrower one and every ranking downstream goes quiet about land that has
+    not gone anywhere.
+    """
+    from flats.encode.backlog import shrinkage
+
+    wide = [_row("or/multnomah/portland"), _row("or/clackamas/oregon-city")]
+    narrow = [_row("or/multnomah/portland")]
+
+    assert shrinkage(narrow, wide) == ["or/clackamas/oregon-city"]
+
+
+def test_a_wider_corpus_is_not_shrinkage() -> None:
+    """The check has to be silent in the direction we want, or it is noise
+    that gets passed --shrink by habit."""
+    from flats.encode.backlog import shrinkage
+
+    wide = [_row("or/multnomah/portland"), _row("or/clackamas/oregon-city")]
+    narrow = [_row("or/multnomah/portland")]
+
+    assert shrinkage(wide, narrow) == []
+    assert shrinkage(wide, wide) == []
+
+
+def test_a_first_run_has_nothing_to_shrink_from() -> None:
+    """No committed ledger is not a loss. `read_coverage` answers None there,
+    and None must not read as an empty ledger that everything shrinks from --
+    that is the same confusion this file already pins one test against."""
+    from flats.encode.backlog import shrinkage
+
+    assert shrinkage([_row("or/multnomah/portland")], None) == []
+    assert shrinkage([], None) == []
+
+
 def test_a_zone_that_forbids_the_building_asks_for_no_dimensions() -> None:
     """The queue's job is work that can move a verdict, and a setback in a
     zone where a fourplex is prohibited cannot: the screen returns RED at the

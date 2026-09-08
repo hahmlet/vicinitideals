@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import re
+
 import pytest
 
 pytest.importorskip("yaml")
@@ -165,12 +167,38 @@ def test_overlay_policy_schema():
 
 
 def test_lake_oswego_policy_disabled_but_rules_retained():
-    """LO is gated at report time — geometry stays so re-enabling is s7-only."""
+    """LO is excluded by policy; its compiled rules are kept, not deleted.
+
+    This used to say the gate was at report time and re-enabling was "s7-only".
+    That was wrong and it mattered, so it is corrected here: s2 joins zoning
+    only `if j.eligible`, so an excluded jurisdiction's lots never receive a
+    zone and are gone long before s7. Lake Oswego does not appear in the
+    results as zero greens -- it does not appear. Re-enabling means re-running
+    from s2, and the coverage ledger shows the consequence as one row of
+    16,300 lots with no zone on it rather than as an exclusion.
+    """
     from common import load_rules
 
     lo = load_rules().jurisdictions["lake_oswego"]
     assert lo.eligible is False
     assert lo.rule_for("R-7.5") is not None  # rules compiled, not deleted
+
+
+def test_the_zoning_join_is_where_eligibility_actually_bites():
+    """Pinned against the source, because a docstring cannot go red.
+
+    The claim above is only worth having if it fails when s2 changes. If the
+    join stops asking about eligibility -- or starts asking somewhere else --
+    this is the line that says so, and the exclusion's real blast radius has
+    to be re-described rather than assumed.
+    """
+    from pathlib import Path
+
+    src = (Path(__file__).resolve().parents[1] / "s2_assign.py").read_text(
+        encoding="utf-8"
+    )
+
+    assert re.search(r"if\s+j\.eligible\s+and\s+j\.zoning_layer\s*:", src)
 
 
 def test_screen_spec_defaults_and_yaml():

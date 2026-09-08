@@ -13,9 +13,12 @@ towards RED, which is the safe direction and not a free one. Untouched by the
 2026-09-01 work: RN was always encoded.
 
 **The Town Center Zone.** Eight notes that were dismissed on the zone being
-missing, which was the Lake Oswego shape -- Wilsonville contributes no observed
+missing, which was the Lake Oswego shape -- Wilsonville contributed no observed
 lots to the coverage ledger, so no zone_missing row could raise a hand, and a
-ledger that counts fields cannot see an absent zone. TC was encoded on
+ledger that counts fields cannot see an absent zone. (That half is fixed: the
+ledger was rebuilt over both counties on 2026-09-08 and now carries twenty
+Wilsonville rows, nine of them zones with lots and no rules. The reading below
+was done without it.) TC was encoded on
 2026-09-01 and the eight were reopened, exactly as their ruling said they must
 be. They are dismissed again on a stronger ground: 4.132(.02)'s only
 residential use is Multiple-family Dwelling Units and 4.001(96) defines that
@@ -119,14 +122,54 @@ def test_no_town_center_ruling_still_rests_on_the_zone_being_absent() -> None:
             assert phrase not in n.reason, (phrase, n.reason)
 
 
-def test_no_coverage_row_can_see_the_missing_zones() -> None:
-    """Which is the point, and why the gap had to be written down by hand.
+def test_the_ledger_can_now_see_this_city_and_agrees_with_the_hand_count() -> None:
+    """It could not on 2026-09-01, which is why the gap was written by hand.
 
-    Wilsonville contributes no observed lots at all, so the ledger that finds
-    a zone nobody encoded -- by joining what lots claim against what rules
-    hold -- has nothing to join here. An empty result is not a clean one.
+    Wilsonville contributed no observed lots at all then -- the parcel corpus
+    the ledger was built from was Multnomah County only -- so the check that
+    finds a zone nobody encoded, by joining what lots claim against what rules
+    hold, had nothing to join here. That is why V and TC had to be found by
+    reading the chapter rather than by being reported.
+
+    The ledger was rebuilt over both counties on 2026-09-08 and now carries
+    twenty Wilsonville rows. The interesting part is that the two counts were
+    made independently and agree: Villebois was read off the zoning layer by
+    hand at 2,508 lots and the ledger says 2,370 after condominium and air
+    parcels are dropped, and TC was read at 59 and the ledger says 59 exactly.
+    A hand count corroborated by a machine count is worth more than either.
     """
-    assert [r for r in read_coverage() if r.jurisdiction == WILSONVILLE] == []
+    rows = {
+        r.zone: r.lots for r in read_coverage() if r.jurisdiction == WILSONVILLE
+    }
+
+    assert len(rows) == 20
+    assert rows["TC"] == 59
+    assert 2_300 < rows["V"] < 2_508
+
+
+def test_the_zones_this_city_still_owes_are_now_reported_rather_than_hunted() -> None:
+    """The difference the rebuild makes, stated as the thing it changes.
+
+    Nine Wilsonville zones carry lots and no rules -- PDI at 283, PDC at 184,
+    the five FDAH districts, PF, and a pair of parcels the zoning join left
+    blank. Every one of them would have had to be found by hand a week ago,
+    the way V and TC were. None of them has to be found now: they arrive as
+    `zone_missing` rows with a lot count on them, which is a queue.
+
+    Asserted loosely on purpose. The exact list will change as these are
+    encoded and that is the point of it; what must not change is that a zone
+    with lots and no rules reports itself.
+    """
+    missing = {
+        r.zone: r.lots
+        for r in read_coverage()
+        if r.jurisdiction == WILSONVILLE and r.status == "zone_missing"
+    }
+
+    assert missing["PDI"] == 283
+    assert missing["PDC"] == 184
+    assert "V" not in missing
+    assert "TC" not in missing
 
 
 def test_rn_is_a_settled_prohibition_read_off_frog_pond_west() -> None:

@@ -13,6 +13,14 @@ cities laid out with real site plans. Greens by city: Portland 12,678 ·
 **Troutdale 125** · unincorporated Clackamas 113 · **Wood Village 95** ·
 Wilsonville 53 · unincorporated Multnomah 1.
 
+**Fourteen is fourteen of eighteen.** Four places are switched off and never
+reach the screen at all — Lake Oswego, Maywood Park, Rivergrove and Johnson
+City. Lake Oswego is 16,300 lots and 96% of that excluded land, and whether it
+should still be excluded is **item 16**. The other three are 556 lots between
+them. Noted here because a city that is switched off does not appear in this
+table as a zero; it does not appear, which is how it stayed invisible for six
+weeks.
+
 **Your two answers nearly doubled the green list and cut the review queue by
 61%.** Green 9,572 → 16,530. Review 32,794 → 12,901. They did it in opposite
 ways, and both are worth understanding:
@@ -1493,11 +1501,18 @@ And the corpus is already carrying this debt — 173 of the 178 were read by a
 version of the reader we have since replaced twice, so *something* will move the
 next time anything is re-fetched regardless.
 
-**What it costs to leave it.** Directly: **93 lots** we cannot answer for today,
-all of them Lake Oswego, because the only table saying what may be built in its
-commercial zones is the damaged one. Indirectly: the same trap is waiting in the
-next city with a wide table, and it fails silently — the reader reports a clean
-page either way.
+**What it costs to leave it — and this changed while the item was being
+written.** The damaged table is Lake Oswego's, and the first draft of this item
+said it costs 93 lots today. Rebuilding the lot ledger the same afternoon
+showed that Lake Oswego is not being screened at all: **the whole city, 16,300
+lots, is switched off**, for reasons that are now item 16 below. So the honest
+cost is *nothing today and the commercial half of a 16,300-lot city the day
+that switch is flipped* — which makes this item cheaper to leave alone than it
+looked an hour ago, and makes item 16 the one that decides when it matters.
+
+Indirectly the cost does not change: the same trap is waiting in the next city
+with a wide table, and it fails silently — the reader reports a clean page
+either way.
 
 **The choice.**
 
@@ -1505,14 +1520,75 @@ page either way.
   two-versions-behind debt in the same pass. Costs a re-fetch of 129 documents,
   an unknown share of page references to walk over, and some hand work where
   those references sit inside tests.
-- **Fix it and re-read only Lake Oswego.** Cheap, unblocks the 93 lots, moves
-  almost nothing. Leaves the rest of the corpus exactly as it is — including any
-  measurement table that lost a blank without our being able to see it.
-- **Leave it and mark the table unusable.** Costs nothing now. The 93 lots stay
-  unanswerable and the next wide table repeats it.
+- **Fix it and re-read only Lake Oswego.** Cheap, moves almost nothing, and
+  makes the city's commercial half readable before anybody needs it. Leaves the
+  rest of the corpus exactly as it is — including any measurement table that
+  lost a blank without our being able to see it.
+- **Leave it until item 16 is answered.** Costs nothing now. If Lake Oswego
+  stays switched off this item never has to be paid at all; if it comes back on,
+  do it then, and do it as part of turning the city on rather than as its own
+  errand.
 
-The middle one is what I would do, and it is reversible: doing Lake Oswego first
-tells us what a re-fetch actually disturbs before deciding on the other 128.
+The last one is now what I would do, and only because item 16 exists. Without
+it I would have said do Lake Oswego first. The middle option stays reversible
+and stays the cheap way to learn what a re-fetch actually disturbs, so take it
+if you want that answer before committing to the other 128.
+
+---
+
+## 16. One decision: the largest city we have switched off was switched off for a reason about one tenth of it
+
+Found 2026-09-08, in the same afternoon as item 15 and by the same mistake
+being corrected. This one is worth reading even though nothing is broken —
+because it is a decision you already made, made against a picture that has
+since changed underneath it.
+
+**What is switched off.** Lake Oswego. On 2026-07-24 it was excluded from the
+screen, and the reason written into the file at the time is this: the zoning
+permits our building, but the part of the city we could see is the Mountain
+Park planned development, where 1968 neighbourhood covenants and design review
+predate the state housing law and remain a real private gate. That is a good
+reason and I am not second-guessing it.
+
+**What has changed is which part of the city we could see.** At the time, our
+land data covered one county, and Lake Oswego straddles two. The part inside
+that county — the part the exclusion was reasoned about — is about **1,500
+lots**. The city we hold today is **16,300 lots**, and the Mountain Park
+argument was never made about the other 14,800. Three other places are switched
+off as well — all three together are 556 lots. Lake Oswego is roughly **96% of
+everything we have decided not to look at.**
+
+**What being switched off actually does.** More than gating a report. The
+screening pipeline skips assigning a zone to any lot in an excluded city, so
+those lots never reach the part of the pipeline that measures anything. Lake
+Oswego does not appear in the results as zero greens; it does not appear. This
+is also why an old note in our own tests saying the exclusion "only affects the
+final report" is wrong, and it has been corrected: turning the city back on
+means re-running the land stages, not flipping a flag.
+
+**Why it is a question and not a fix.** Our stated market is the whole state
+and no jurisdiction is excluded — that policy was written four days after this
+exclusion and does not mention it. So the two are in tension and only you can
+say which wins. I have not changed anything.
+
+**The choice.**
+
+- **Turn the whole city back on.** Biggest single block of land we could add,
+  and the covenant risk you named in July applies to a minority of it. Costs a
+  pipeline re-run and puts sixteen unencoded commercial zones plus a damaged
+  table (item 15) on the critical path.
+- **Turn on everything except Mountain Park.** Keeps your original judgement
+  exactly and drops only what it was about. Needs a boundary for the planned
+  development, which we do not currently hold and would have to find.
+- **Leave it off and write down the reason in today's terms.** Costs nothing,
+  and the value is real: the file would then say *we exclude 16,300 lots*
+  rather than a sentence about a slice, so the next person to read it is not
+  misled the way I was.
+
+The second is what I would do, and the third is the honest fallback if the
+boundary turns out to be hard to get. Doing nothing at all is the one option I
+would argue against, because the reason on file now reads as smaller than the
+decision it is making.
 
 ---
 
@@ -1619,8 +1695,9 @@ the list of places worth hoping about.
 
 ## Queued for the agent — no action needed from you, listed so nothing is invisible
 
-- **The lot ledger cannot see Clackamas County, and it nearly hid item 15's
-  neighbours** — found 2026-09-08. Two different counts of the same land exist.
+- **The lot ledger could not see Clackamas County, and it nearly hid item 15's
+  neighbours** — found *and fixed* 2026-09-08. Two different counts of the same
+  land existed.
   The screening pipeline runs on **291,971 lots across fourteen cities**, and
   Oregon City (735 greens), Milwaukie (622), unincorporated Clackamas (113) and
   Wilsonville (53) are all in it. The ledger that answers *"how many lots ride
@@ -1639,14 +1716,20 @@ the list of places worth hoping about.
   puts it last — which is why this was recoverable by re-reading the ledger's
   own header rather than by noticing the mistake.
 
-  The fix is plumbing, not judgement: rebuild the ledger over the Clackamas
-  parcels the screening pipeline already holds, so the two counts describe the
-  same land. Until then, no ranking that uses lots is trustworthy outside
-  Multnomah, and anything that reads zero there should be read as *unknown*.
+  The fix was plumbing, not judgement, and it is done: the ledger has been
+  rebuilt over the parcels the screening pipeline already holds, and now counts
+  **334,959 lots across eighteen jurisdictions** instead of 236,889 across
+  fourteen. The mirror check that reports cities nothing has ever counted lots
+  against now comes back empty for the first time. Three things fell out of it
+  in the same pass — a real ranking for the queue below, the discovery behind
+  item 16, and two zones that turn out to owe a measurement nobody had noticed,
+  both of them owed on purpose and both now written down as such.
 
 - **Fourteen districts to encode and five documents to fetch**, from the same
   2026-09-08 audit — every one settled by the city's own use table, none needing
-  a ruling from you. Oregon City's commercial zones permit our building nearly
+  a ruling from you. Now ranked, since the ledger can see them: **2,095 lots**,
+  more than half of it in unincorporated Clackamas, led by `MR-1` at 839, Oregon
+  City's `MUC-1` at 402 and `MUD` at 278. Oregon City's commercial zones permit our building nearly
   everywhere; unincorporated Clackamas permits it in ten of eleven residential
   districts; Tualatin's medium-high-density chapter turns out to be missing from
   our files entirely, ending at its own heading on the last line of the document

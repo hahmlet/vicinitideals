@@ -879,14 +879,119 @@ all fourteen cards. Used as a sort it merely put them last, which is why the
 error was recoverable and why the rule is worth keeping even when the ledger is
 right.
 
-What that ledger *can* still say is where the gap bites inside its own
-territory. **536 of its lots sit on a zone code no rule matches**, and the
-largest single one is Lake Oswego's `NC/R-0` at 84, with a bare `NC` behind it
-at 4 and `PNA` at 5. Those 93 lots
-are the `column` verdict arriving as a consequence: the reason we cannot write a
-rule for Lake Oswego NC is not that nobody has read `50.03.002` — it is that its
-household-living row prints eleven cells against fifteen heads. The unreadable
-table is not a filing problem. It is 93 lots the screen cannot answer for.
+**So the ledger was rebuilt, the same day, and it changes the size of
+everything above.** `python -m flats.encode.backlog` on the two-county parcel
+corpus that lives beside the pipeline on LXC 137: **333 (jurisdiction, zone)
+pairs over 334,959 lots**, against 155 pairs over 236,889. Fourteen
+jurisdictions became eighteen. `unweighed()` — the mirror check that reports
+encoded layers no lot has ever been counted against, written precisely because
+the corpus was Multnomah-only — **now returns an empty list.**
+
+The queue this audit produced acquired a ranking the moment it could be asked:
+
+| lots | verdict | district |
+|---:|---|---|
+| 839 | encode | unincorporated Clackamas `MR-1` |
+| 402 | encode | Oregon City `MUC-1` |
+| 278 | encode | Oregon City `MUD` |
+| 253 | fetch | unincorporated Clackamas `HDR` |
+| 120 | encode | unincorporated Clackamas `MR-2` |
+| 115 | fetch | unincorporated Clackamas `VTH` |
+| 40 | encode | Oregon City `MUC-2` |
+| 32 | fetch | unincorporated Clackamas `RCHDR` |
+| 9 | encode | unincorporated Clackamas `PMD` |
+| 5 | fetch | Tualatin `RMH` |
+| 1 each | encode / fetch | unincorporated Clackamas `VA`, `SHD` |
+
+**2,095 lots**, and unincorporated Clackamas holds more than half of them.
+Gresham's `TC-PV` and `VC-SW`, Wilsonville's `PDR-7` and Oregon City's `WFD`
+stay at zero and stay in the queue — the same unbuilt-sub-district shape the
+Gresham notes file already pins, a standard written before anyone built under
+it.
+
+**And where the gap bites, whole: 11,520 lots sit on a zone code no rule
+matches**, across 141 zones — where the county-blind ledger said 536. The
+largest are unincorporated Clackamas `RRFF5` at 2,082, `MR1` at 839, `FU10` at
+693 and `RA2` at 491.
+
+**The ten `column` verdicts are all Lake Oswego's, and Lake Oswego is switched
+off.** This is the finding the rebuild was worth having. The old ledger said 93
+lots rode on the unreadable commercial table — `NC/R-0` at 84, `NC` at 4, `PNA`
+at 5. The rebuilt one says Lake Oswego has **16,300 lots and a zone on none of
+them**, arriving as a single row named `(unzoned in parcel data)`, 14,256 lots
+after the ledger drops condominium and air parcels.
+`Lot Analysis/quadfit/config/rules.yaml` marks the jurisdiction `eligible:
+false` — an owner decision of 2026-07-24 — and
+[s2_assign.py:109](Lot%20Analysis/quadfit/s2_assign.py#L109) joins zoning only
+`if j.eligible`, so an excluded city's lots never receive a zone at all and are
+dropped before scoring. The 93 were Lake Oswego's **Multnomah** parcels, 6% of
+the city, counted by a run made before the switch bit.
+
+Two things wore that number and only one of them was about a table. The
+unreadable table still costs the city's whole commercial half; what is gone is
+any claim about how much land that is. And the exclusion's own written reason —
+*"the Multnomah slice is the Mountain Park PUD"* — is scoped to the 9% of the
+city that a Multnomah-only corpus could see, which makes it the same mistake as
+the ledger it was reasoned from. That one is not ours to fix: it is an owner
+decision, and it is on [docs/HUMAN_TODO.md](docs/HUMAN_TODO.md) as one.
+
+**The brief for the top of that queue, gathered but not spent.** Table 315-4
+governs PMD, MR-1, MR-2, HDR, VA, SHD and RCHDR, prints seven cells in every
+row, and `ragged.py` puts it at zero — so the columns are readable by position
+and were checked that way on every row, not just the one being quoted. What
+they say:
+
+| | PMD | MR-1 | MR-2 | VA |
+|---|---|---|---|---|
+| min lot | None`[1]`/`[2]` | None | None | None |
+| front | 15, garage 20 | 15, garage 20 `[3,4]` | 15, garage 20 `[4]` | 10 `[6,7]`, max 18 |
+| rear | 30 `[10]` | 20 `[5,10,11,12]` | 20 `[5,10]` | None `[6,7]` |
+| side | 30 `[10]` | 5 / 7 / 15 by storey `[…14,15]` | 5 / 7 / 15 by storey `[…14,15]` | None |
+| height | None | None | None | 45 |
+| separation | 10 | None | None | 20 between multifamily |
+
+`min_lot_sqft` is not the table's "None": ZDO 845.01 states *"7,000 square feet
+for a quadplex"* with no district limitation, and the stored `zdo.845.txt` runs
+from `845.01` to its ordinance history with no applicability clause above it —
+so the section reaches every district, which is the reading the eight already
+encoded R-zones use. Table 315-1's note `[8]` signposts Section 845 on the
+`R-5 – R-30` and VR cells only; PMD through RCHDR read a bare `P`, which
+signposts nothing and excludes nothing.
+
+**The one question that needs deciding before MR-1 is written, and it is worth
+deciding carefully because MR-1 is 839 lots.** The side setback prints a storey
+ladder — five feet at one storey, seven at two, fifteen at three — and note
+`[14]` adds: *"If the side lot line abuts an Urban Low Density Residential,
+VR-5/7, or VR-4/5 District, the minimum side setback for a two-story building
+is 10 feet."* The pod is two storeys, so the binding figure is seven or ten
+depending on who the neighbour is, and who the neighbour is is a site fact
+nothing measures.
+
+`abuts_nonresidential_zone` is the same shape and its handling is the
+precedent: `assume=None`, and the restrictive number sits in the **base** so
+that an unknown leaves it binding. Here the restrictive number is in the
+*variant*, and the vocabulary has no negation to invert it — a variant of ten
+`when: [multi_story, abuts_low_density_zone]` would simply not fire on an
+unknown and leave seven standing, which is the false-GREEN direction. So the
+conservative encoding puts **ten** on `when: [multi_story]` and says in the
+comment that seven is the figure where the side line does not abut low-density
+land. That is the Milwaukie side-yard result again — *the five foot side yard
+is really eleven* — and it is a decision about which of two printed numbers the
+screen carries, so it belongs in a commit of its own rather than at the end of
+this one.
+
+**Two zones now owe a required standard, and both owe deliberately.** The guard
+`test_no_observed_zone_owes_a_required_field` asserted `owing == []` for months
+and went red on the rebuild, correctly: Wilsonville `OTR` (103 lots) owes
+`max_height_ft` because `4.123(.06)A` hands height to an Old Town design book
+the corpus does not hold, and Happy Valley `MURX` (14 lots) owes five standards
+because Table 16.22.060-2 is headed MUR-M1/M2/M3 and carries no MUR-X column at
+all. Neither is new; both were written months ago with the deferral spelled out
+in the zone's notes. What was new is a ledger that could see the lots and
+therefore ask. The guard is now a declared-exception test in the shape the
+reach ledger uses — a silent gap and a declared one look identical in a ledger,
+so the declaration has to be somewhere a change breaks, and `== []` had become
+a lie in the other direction.
 
 **Chasing that one table down produced a check worth more than the table.** Lake
 Oswego's own preamble says *"a blank cell in a use table indicates that the land

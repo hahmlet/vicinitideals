@@ -225,21 +225,91 @@ def test_portland_ci1_gets_its_lot_minimum_from_the_far(rules: RuleSet) -> None:
     assert values["min_landscaped_pct"].value == 25
 
 
-def test_no_observed_zone_owes_a_required_field() -> None:
+#: The zones allowed to owe a required standard, and the argument for each.
+#: A silent gap and a declared one look identical in the ledger, which is the
+#: whole reason this dictionary exists rather than a bare ``== []``: the first
+#: is a zone somebody forgot to finish, the second is a city that states no
+#: number and a corpus that refuses to invent one. Both cannot reach GREEN.
+#: Only the second is allowed to.
+#:
+#: Both of these arrived on 2026-09-08, when the coverage ledger was rebuilt
+#: over both counties. Neither is new encoding -- they were written months ago
+#: with the deferral spelled out in the zone's own notes. What was new was a
+#: ledger that could see the lots, and therefore ask.
+DECLARED_OWING = {
+    "or/clackamas/wilsonville/OTR": (
+        "max_height_ft. 4.123(.06)A hands height, setbacks and lot coverage to "
+        "the Old Town Residential Design Standards Book by name, and the book "
+        "is not a stored document. There is no citywide figure to fall back "
+        "on: 4.113(.03) Height Guidelines is discretionary -- a list of what "
+        "the Development Review Board may regulate -- and states no number. "
+        "Fetching the book is the close; guessing a height would be a "
+        "false GREEN on 103 lots."
+    ),
+    "or/clackamas/happy-valley/MURX": (
+        "max_height_ft, min_lot_sqft, setback_front_ft, setback_rear_ft and "
+        "setback_side_ft. Table 16.22.060-2 is headed MUR-M1, MUR-M2 and "
+        "MUR-M3 and carries no MUR-X column, so the chapter governing this "
+        "district prints no dimensional standard for it at all -- not "
+        "'Variable', not deferred, absent. MUR-M's 65 feet is deliberately not "
+        "carried across, because that figure is printed in a table this "
+        "district is not named in. quadplex_allowed is false here except on "
+        "unit lots, so the gap keeps a live path and is left owing rather "
+        "than exempted."
+    ),
+}
+
+
+def test_every_zone_that_owes_a_required_field_says_why() -> None:
     """The guard, and the reason this file exists at all.
 
-    These four sat in the ledger owing five standards apiece and nobody saw it,
-    because the committed `coverage.csv` predated the resolver change that
-    started asking. A ledger is only a report of the run that wrote it, so the
-    invariant has to be asserted somewhere that runs every time.
+    Four zones once sat in the ledger owing five standards apiece and nobody
+    saw it, because the committed `coverage.csv` predated the resolver change
+    that started asking. A ledger is only a report of the run that wrote it, so
+    the invariant has to be asserted somewhere that runs every time.
 
-    A failure here means one of two things and both are worth stopping for: a
-    zone was encoded without its required standards, or a footnote ruling moved
-    and unsettled a gate that used to be settled."""
-    owing = [
-        (row.jurisdiction, row.zone, row.missing_required)
+    It ran for months as ``owing == []`` and that was right while it held. It
+    stopped holding the moment the ledger learned to count Clackamas: two zones
+    that had always owed became visible, and both owe on purpose. An empty list
+    would now be a lie in the other direction -- it would say the corpus states
+    every required number, when what it states is that two cities do not and we
+    declined to invent for them.
+
+    A failure here means one of three things and all are worth stopping for: a
+    zone was encoded without its required standards, a footnote ruling moved
+    and unsettled a gate that used to be settled, or one of the two declared
+    gaps was closed and this list was not."""
+    owing = {
+        f"{row.jurisdiction}/{row.zone}": row.missing_required
         for row in read_coverage()
         if row.missing_required
-    ]
+    }
 
-    assert owing == []
+    assert sorted(owing) == sorted(DECLARED_OWING)
+
+
+def test_every_declared_gap_argues_from_the_page() -> None:
+    """A reason with no section number in it is not a reason, it is a shrug.
+
+    The same rule the district rulings are held to. Each of these has to name
+    the clause that hands the number away, because the next reader's only
+    defence against a stale deferral is being able to go and look."""
+    for zone, reason in DECLARED_OWING.items():
+        assert len(reason) > 120, zone
+        assert any(ch.isdigit() for ch in reason), zone
+
+
+def test_a_declared_gap_owes_exactly_what_it_says_it_owes() -> None:
+    """The declaration names its fields, so the fields can be checked against
+    it. A zone that quietly starts owing a sixth standard would otherwise hide
+    behind a reason written for five."""
+    owing = {
+        f"{row.jurisdiction}/{row.zone}": row.missing_required.split(";")
+        for row in read_coverage()
+        if row.missing_required
+    }
+
+    for zone, fields in owing.items():
+        reason = DECLARED_OWING[zone]
+        for field in fields:
+            assert field in reason, f"{zone} owes {field}, unmentioned"
