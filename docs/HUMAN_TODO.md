@@ -157,7 +157,7 @@ recorded here because the screen can now prove it.
 
 Asked directly on 2026-09-01. The honest answer is **not yet, and the gap is
 not mainly on this list.** Working the list is necessary and it is not
-sufficient. Five things stand between a green verdict and a lot you could buy
+sufficient. Six things stand between a green verdict and a lot you could buy
 on it, and only the first is a queue item:
 
 1. **Nothing is signed.** Not one encoded number has been read and confirmed by
@@ -237,6 +237,18 @@ on it, and only the first is a queue item:
    setback, and it is untested for a stated reason: nothing in our data says
    which lots are corners. This is **item 12**, and it is the one gap on this
    page that could make a green *too generous* rather than too cautious.
+6. **Nine tenths of our footnote decisions are "this does not apply to us", and
+   until 2026-09-07 nobody had ever checked one.** 784 decisions; the rule was
+   only that a reason exists. They were read back blind that day and the news is
+   mostly good — the readers agreed with 406 of 584 outright, and of the 71 they
+   disputed in the direction that could hurt, nearly all reach only districts
+   where a fourplex is already forbidden, or state limits our small building
+   cannot come near. **Three were real, and all three failed the same way**: the
+   written reason says a district is not in our files, and it is. That is a
+   sentence that was true when somebody wrote it and was quietly falsified when
+   somebody else encoded the district. This is **item 13**; the check that
+   re-asks all 784 of those reasons now exists, so this particular rot is
+   watched rather than merely fixed.
 
 The cheapest thing that would change this, by a wide margin, is **(4)**: pull
 twenty greens across three cities and have a land-use planner or attorney rule
@@ -982,6 +994,121 @@ real lot, and eight cities have one.
 hundred hours of reading go.
 ---
 
+## 13. Three readings where our own written reason turns out to be false
+
+**What was checked.** When a footnote in a zoning code does not apply to our
+building, somebody writes down why and the note stops being mentioned. There
+are **784 of those** on the record — nine tenths of every footnote decision we
+have made — and until 2026-09-07 nothing had ever checked one. The rule was
+only that a reason exists, never that it is right.
+
+That is the one mistake that can call a lot buildable when it is not. A note
+nobody has read *blocks* the lot. A note read and encoded leaves a number
+somebody can compare against the page. A note waved away leaves nothing at all:
+the standard underneath it keeps whatever value it had, one condition looser
+than the code actually allows, and there is nothing left on the screen to
+notice.
+
+**How.** 584 of those decisions sit over at least one number we hold. Each was
+turned into a card carrying the footnote's own words, the page of code around
+it, and the list of standards it stands over — **and not our reason for
+dismissing it**, because a reader shown "detached dwellings only" agrees with
+it. Twenty-four readers worked them in parallel. Two questions each: does this
+sentence reach a four-unit attached townhome, and if it does, does it make a
+standard *harder* or *easier* to meet. Dismissing an easier rule costs lots and
+never correctness — that is the trade this whole project makes. Dismissing a
+harder one is the bug.
+
+**The result.** The readers agreed with 406 and disputed 178. Of those, **71
+were disputed in the direction that matters** — a restriction we waved away.
+Every one of the 71 was then checked back against the code and against our own
+encoding, and they sort into three piles:
+
+- **Forty-odd close on the spot** because the note only reaches districts where
+  we already record that a fourplex is *not allowed* — Gresham's industrial,
+  commercial and two corridor districts, Troutdale's two commercial zones,
+  Wood Village NC, Happy Valley MUR-M, Pleasant Valley NC-PV. A lot in those
+  districts is already red on use, so nothing the note says can make it green.
+- **Most of the rest cannot bind the building we build.** Footprint caps of
+  40,000 and 100,000 square feet against our 2,000; storey caps of four and six
+  against our two; height reductions that bottom out at 30 feet against our 26.
+  The readers said so themselves.
+- **Three are real, and all three are the same failure**: our written reason
+  says a zone or a district is *not encoded here*, and it is.
+
+### The three
+
+**(i) Happy Valley SFA — a buffer we said we do not model, in a zone we do.**
+The city's note reads: *"Where the SFA district abuts lower density residential
+districts, the abutting yards shall have a 10-foot landscaped buffer area."*
+Our reason for waving it away is "scoped to SFA, which this layer does not
+encode." **SFA is encoded**, with sixteen standards, and it holds a five-foot
+side yard. Where the buffer applies that yard is really ten. This is the only
+one of the three that could make a green lot wrong, and the thing standing
+between it and a wrong answer is that nothing in our data yet says which lots
+abut a lower-density zone — the same missing fact as the corner-lot question in
+item 11. **What we need:** a ruling on whether a "landscaped buffer area" is a
+building setback. We are not encoding that reading on our own, because turning
+prose into a number without being asked is exactly the habit this project
+refuses.
+
+**(ii) Gresham, the Rockwood mapped area.** A note says *all buildings* on
+parcels with at least 100 feet of frontage on Stark, within 500 feet of two
+named intersections, must have non-residential uses at the ground floor. Our
+reason: "it marks a cell in a district this layer does not encode." All seven
+districts it stands over are encoded, and four of them permit a fourplex. The
+note is not scoped by use at all — it is scoped by a map we have never opened.
+**What we need:** whether any land inside that mapped area sits in one of the
+four. If it does, an all-residential pod is barred there and we would not know.
+
+**(iii) Troutdale's mixed-use districts.** A note raises the street-side
+setback from zero to eighteen feet on a corner lot whose driveway comes off the
+side street. Our reason names two table columns "neither of which is encoded
+here" — true of those exact columns, but the note reaches the mixed-use zones,
+two of which permit a fourplex. Corner lots are the unmeasured fact from item
+11 again; this is a third road to the same door.
+
+### What was fixed without asking
+
+One thing was unambiguous enough to correct outright. Gresham's residential
+table carries a note reading *"Maximum front and street-side setbacks apply in
+MDR-12, MDR-24, OFR, as provided for the Corridor Multi-family (CMF) District
+in Table 4.0430."* The dismissal quotes the number that pointer lands on — 20
+feet — and then declines it, leaving those three districts with no maximum
+front setback while CMF, the district the sentence points at, carries one. The
+20 is now recorded in all three, unsigned, pointing at both the note and the
+row it borrows from. It changes no verdict today, for the reason item 12
+exists: **nothing reads a maximum front setback.**
+
+### What this says about the corpus
+
+Worth saying, because it is the reassuring half. Six of the seventy-one turned
+out to be the *reader* misreading and our written reason being better than the
+challenge to it: unincorporated Clackamas requires covered parking above 3,500
+feet *of elevation*, not 3,500 square feet; two districts the reader thought we
+had skipped genuinely do not exist in that county's code; Lake Oswego's
+sloping-lot height rule lands exactly on the number we already hold. A reason
+written months ago survived a hostile reading it could not see coming.
+
+**And the shape of the three failures is one shape.** Every one is a sentence
+that was true when it was written — the district really was not encoded then —
+and quietly stopped being true when somebody encoded the district and never
+came back to the footnote. One of the reasons we read says so out loud: *"This
+used to be dismissed on the grounds that CC and MC were not encoded here, which
+stopped being true when both were encoded on 2026-08-21 and nobody came back to
+the sentence."* Somebody caught it once, for one note, by hand.
+
+**Now something watches for the rest.** Of the 784 dismissals, 49 argue about
+our own files rather than about Oregon — those are the only ones that can go
+stale — and eleven of them name a district the corpus holds today. That list is
+rebuilt from the register every time it is asked, so it cannot quietly rot the
+way the reasons it audits did. It is the agent's to work, not yours; the three
+above are on this page because each needs a ruling only a person can give.
+
+The full ledgers are `data/flats/dismissal_reading_2026_09_07.csv` (584 rows)
+and `data/flats/stale_reasons_2026_09_07.csv` (49).
+---
+
 ## ~~Seven~~ Four of our fourteen cities have zero green lots — and each one has a single reason
 
 Re-measured 2026-09-03 after your two answers ran, and again on 2026-09-04 once
@@ -1084,6 +1211,40 @@ closes it to us without lot assembly. The two-and-a-half thousand lots come off
 the list of places worth hoping about.
 
 ## Queued for the agent — no action needed from you, listed so nothing is invisible
+
+- **The 784 footnote dismissals were read back, blind, on 2026-09-07** — the
+  run behind item 13, and the third of the three checks that stand over the
+  footnote register. The other two were already built: one asks, of every
+  number we hold, which notes sit over it and has anybody ruled on them; the
+  second takes the 45 rulings that say "we encoded this" and checks the figure
+  they claim to have become. Neither ever touched a dismissal, which is nine
+  tenths of the register.
+
+  The mechanism is the one item 11 describes, with the reason stripped instead
+  of the number, and it needs saying that a *good* dismissal usually quotes the
+  note before arguing with it — so the quoted half belongs on the card and the
+  argued half must never be, and telling those apart is what the test in
+  `flats/tests/test_waved.py` does. Cards are one footnote, not one number: the
+  same sentence standing over eleven zones is one decision, and re-reading it
+  eleven times would buy eleven copies of one answer.
+
+  **The gap it found is now closed, and that is the part worth keeping.** All
+  three of item 13's failures are the same failure: a reason that was true when
+  written and was quietly falsified by somebody else doing their job. So the
+  register is now asked, in bulk, the question a person had asked once by hand
+  — *does this reason still say something true about our own files?* Of the 784
+  dismissals, **49 argue about our corpus rather than about Oregon**, and those
+  are the only ones that can decay; a reason that says "this sentence is about a
+  detached house" is as durable as the page it read. Eleven of the 49 name a
+  zone the layer holds today. Thirty-eight name nothing anybody can re-ask,
+  which is not a bug but is worth knowing about a claim with a shelf life.
+
+  The ledger is `data/flats/stale_reasons_2026_09_07.csv` and it deliberately
+  over-reports: a reason can name a live zone for its own reasons — "120 feet
+  from a lot zoned R-6" is a measurement, not a claim that R-6 is missing — and
+  a person sees that in a second. The opposite error cannot be seen at all,
+  because a stale reason reads exactly like a sound one. Eleven rows to glance
+  at, out of 784, is the right price for that.
 
 - **Every number we hold has now been read twice, and the second reader was
   not allowed to see the first one's answer** — run 2026-09-07, and the result
