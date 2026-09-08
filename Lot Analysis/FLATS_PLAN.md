@@ -625,8 +625,10 @@ number is in a chapter nobody fetched." Redirect ledger catches "we read the sec
 says this section does not apply." Exemption ledger catches "we wrote down that there is
 no standard and cited a page that never says so." Stale-reason ledger
 (`flats/encode/stale.py`, 2026-09-07) catches "we wrote down *why* a footnote does not
-apply and the why has since become false." All six are needed; none substitutes for
-another.
+apply and the why has since become false." Missed-standard ledger
+(`flats/encode/missed.py` → `missed.csv`, 2026-09-08) catches "the standard is printed
+in a document we hold, on a page we read, and nobody ever took it." All seven are needed;
+none substitutes for another.
 
 The sixth is a different animal from the other five and the difference is worth naming.
 Those five ask whether we read Oregon correctly, and their answers are as durable as the
@@ -639,7 +641,7 @@ purpose: a reason that names a live zone for its own reasons ("120 feet from a l
 R-6" is a measurement) is visible as such in a second, whereas a stale reason reads
 exactly like a sound one.
 
-**It is also the only one of the six that ranks itself by consequence, and that is not
+**It is also one of only two that rank themselves by consequence, and that is not
 decoration.** The other five audit a number against a page, so every row is worth the
 same. Here a row's cost depends on something outside the reason entirely: what the note
 stands over. A false claim about a district where `quadplex_allowed` is already `False`
@@ -651,6 +653,27 @@ and not a finding: reading those 7, five gave a second ground that stands on its
 building type named) and one changed what a lot must satisfy. `_permits` treats absence
 as permission — only a recorded `False` closes a district — because the conservative
 error here is to over-report, exactly as everywhere else in this project.
+
+The seventh is the reading ledger's sharp end. `uncited.py` already lists every line in
+our documents that states a measure nothing quotes — 1,206 of them name a field we screen
+on, which is a true count and an unworkable queue, because read end to end it is mostly
+the industrial column of a table whose residential column we took. So this compares the
+figure on the line against every figure the jurisdiction holds for that field: 542 state
+a number this corpus has never held. It is a sort and not a verdict, and it is ranked by
+two keys in this order — how near the line sits to reading somebody already did (a figure
+in a section we took *this same standard* out of is a skipped row; the same figure in a
+chapter nobody opened is a different job), then how many lines print it. Sorting by count
+alone put fences, parapets and cistern heights at the top of the first run.
+
+Two gates decide what counts as a number and both are load-bearing. The **unit** gate
+says the sentence meant this figure as a measure of this kind: Milwaukie says a building
+"can utilize up to 2 of the development incentive bonuses", and two feet is a perfectly
+plausible height, so no magnitude window catches that and only the missing "ft" does. The
+**window** says the measure is of a size the unit can have, and it belongs to the unit
+rather than to the field because an area is 5,000 square feet or 80 acres. Nothing is
+converted: what is compared is the figure a reader will find against the figure the file
+records having found, which is the bargain `readiness._printed` already makes and is
+reused here rather than re-derived — so a new derived form has one place to be taught.
 
 **Footnote scope, and the one way to narrow it.** A footnote governs every value quoted
 from its *region* — the run of lines between the previous notes block and this one's
