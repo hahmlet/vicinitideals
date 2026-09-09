@@ -525,6 +525,24 @@ _C: tuple[ConditionDef, ...] = (
         assume=None,
     ),
     ConditionDef(
+        "abuts_residential_zone",
+        "site_fact",
+        "The site shares a boundary with a residential zone, looked at from "
+        "outside one. Every commercial and mixed-use chapter of Oregon City's "
+        "Title 17 states its setbacks twice over on this one hinge -- "
+        "\"Minimum required setbacks if not abutting a residential zone: "
+        "None\" against twenty feet where it does -- and the same sentence "
+        "recurs across the corpus wherever a code lets a commercial building "
+        "come to its own lot line but not to a neighbour's. Held apart from "
+        "`abuts_lower_density_zone`, which asks about intensity between two "
+        "residential districts and answers a different question: this one "
+        "turns on which side of the residential/non-residential line the "
+        "neighbour sits, and a zone can be denser than ours and still trip "
+        "it.",
+        evidence="jurisdiction zoning polygons, adjacency on the shared edge",
+        assume=None,
+    ),
+    ConditionDef(
         "abuts_lower_density_zone",
         "site_fact",
         "The site shares a boundary with a less intense residential zone. "

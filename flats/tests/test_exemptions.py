@@ -119,7 +119,15 @@ pytestmark = pytest.mark.unit
 # exemptions on it change no lot's verdict. They are counted because the day
 # that field is wired to a verdict is the day the reading has to already be
 # right, and because an exemption is the one value form a person has to sign.
-EXPECTED = {"stated": 196, "numeric": 43, "marker": 0, "dash": 2, "silent": 0}
+EXPECTED = {"stated": 201, "numeric": 43, "marker": 0, "dash": 2, "silent": 0}
+# 196 -> 201 on 2026-09-08, and all five are the same sentence in five
+# different chapters of Oregon City's Title 17: "Minimum lot area: None."
+# MUC-1, MUC-2, MUD, C and WFDD each print it, each on its own line, each
+# in the district's own dimensional-standards section. This is the safest
+# shape an exemption comes in -- the cell is printed, the code is answering
+# the question, and the answer is that it does not measure this. It is
+# counted here with the dangerous ones because the ledger cannot tell them
+# apart and should not try: a person signs every one.
 # 189 -> 196 on 2026-09-08, all seven from unincorporated Clackamas Table
 # 315-4, and they are the safe shape of this value rather than the
 # dangerous one: every cell is printed and every one of them prints a word

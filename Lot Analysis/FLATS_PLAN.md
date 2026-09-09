@@ -3034,3 +3034,245 @@ layer now returns four real districts owed — HDR, RCHDR, SHD, VTH, all four
 named above with their reasons — and eleven acronyms it cannot tell from zone
 codes (DLA, HRA, MRA, NR, BD and the habitat-district abbreviations), which is
 the known false-positive shape and not work.
+
+---
+
+## 29. Eleven districts in one pass, and a setback that is a question about the neighbour
+
+Written 2026-09-08, later the same day as §28 and off the same queue. Oregon
+City had 1,162 lots in `zone_missing` across twelve districts — its entire
+non-residential side, untouched since the port. Eleven are encoded now. The
+twelfth is `County`, twelve lots on seven acres that the parcel layer labels
+with the county's zoning rather than the city's; that is a join question and
+not a reading, and it is left where it is.
+
+They were read in one pass because they are one reading. Chapters 17.24
+through 17.39 print the same nine-paragraph dimensional standard over and
+over with the numbers changed, so the interesting part is never the number.
+It is which paragraph reaches a four-unit building, and that turns out to
+differ district by district in ways no table would show.
+
+**What was encoded.**
+
+| zone | lots | acres | verdict |
+|---|---:|---:|---|
+| MUC-1 | 402 | 134 | permitted — 40 ft / 3 storeys, 80% coverage |
+| MUD | 278 | 566 | permitted — 58 ft, 90% coverage |
+| C | 74 | 163 | permitted — 60 ft, 85% coverage |
+| MUC-2 | 40 | 100 | permitted — 60 ft, 90% coverage |
+| WFDD | 4 | 23 | permitted — 80 ft, 100% coverage |
+| MUE | 133 | 165 | **refused** — no residential use listed |
+| I | 93 | 434 | **refused** — no residential use listed |
+| GI | 57 | 225 | **refused** — "all other residential uses are prohibited" |
+| HC | 37 | 5 | **refused** — 17.26.035.B |
+| CI | 31 | 174 | **refused** — 17.37.060.C.6, six named tax lots, detached only |
+| NC | 1 | 12 | **refused** — 17.24.035.L caps residential at half the floor area |
+
+798 lots on 986 acres can hold the building; 352 cannot. The six refusals are
+written into the file rather than left out, and that is not bookkeeping: an
+unencoded zone is a hole, and a hole is invisible to every ledger in this
+project that counts fields. A refusal is a reading, and it is the only form
+of reading that a coverage ledger can otherwise never distinguish from
+neglect.
+
+### The setback is stated twice, and the hinge had no name
+
+Every mixed-use and commercial chapter in this city writes its setbacks the
+same way: *"Minimum required setbacks if not abutting a residential zone:
+None"*, then twenty feet where it does abut one. Four of the five permitting
+districts print exactly that, and the fifth prints zero with no limb at all.
+
+Zero is the loosest number anywhere in this corpus and it must not be held
+flat. Encoding the zero alone greens a lot the city would refuse; encoding
+the twenty alone reds a downtown block the city would permit. So the
+condition decides, and the condition needed a name.
+
+`abuts_lower_density_zone` was the closest thing already registered and it is
+the wrong question. That one compares two residential districts by intensity.
+This one asks which side of the residential/non-residential line the
+neighbour sits on, and a *denser* neighbour trips it. `abuts_residential_zone`
+is registered for it, with `assume=None` — nobody has measured it, the
+registry refuses to guess, and so every lot in these four districts leans on
+an unobserved fact and routes to review instead of certifying on the zero.
+
+That is the correct answer and not a defect. It is also the fifth entry on
+the list of site facts that block a verdict, and — like ZDO 1005's compass
+bearing from §28 and unlike transit, corner, alley and sewer — it is
+**computable from data already held**: it is a polygon adjacency between the
+parcel layer and the zoning layer, not a purchase.
+
+### A paragraph somebody did not copy
+
+OCMC 17.29.050.I reads: *"Standalone residential development of fewer than
+five units are exempt from maximum setbacks and minimum density requirements
+of the underlying zone."* Our pod is four units. The same sentence appears at
+17.34.060.K and 17.34.070.K and stops one clause earlier — *"exempt from
+maximum setbacks"*, no density limb. And it is simply absent from 17.29.060
+and 17.32.050, four lines and one chapter away respectively.
+
+Four districts, three different answers, from one sentence printed three
+times:
+
+| district | max front setback | minimum density |
+|---|---|---|
+| MUC-1 | exempt (17.29.050.I) | exempt (17.29.050.I) |
+| MUD | exempt (17.34.060.K / .070.K) | **17.4 du/ac binds** |
+| MUC-2 | **5 ft binds** | **17.4 du/ac binds** |
+| C | **5 ft binds** | **17.4 du/ac binds** |
+
+A five-foot maximum front setback pushes a building to the street line, so
+this is not a rounding difference — it decides whether a pod with parking
+behind it is legal. Copying MUC-1's block across the chapter, which is what
+a table-driven reading would have produced, would have been wrong in three
+districts out of four.
+
+The 17.4 is a *minimum* density measured on net developable area, the city's
+own denominator and not gross lot area. `measured_on` carries it, which is
+what stops the screen dividing four units by a number this project does not
+hold and reporting a pass.
+
+### The word was on the permitted list and the use is prohibited
+
+Historic Corridor's 17.26.020.C permits *"conversions of an existing
+single-family detached residential unit or duplex into a triplex or
+quadplex"*. Sixty lines below, 17.26.035.B prohibits *"Triplexes and
+quadplexes"*.
+
+Chapter 17.26 contains the word "quadplex" exactly twice, and a keyword
+search returns the first one. A factory-built pod on a bare lot converts
+nothing, so HC is closed — 37 lots that a search would have called open.
+`test_oregon_city_commercial.py` pins both line numbers, because the next
+district read this way will be read by whoever trusts the search.
+
+### The layer's own parking defaults are residential-only
+
+OCMC 17.16.060.D opens *"In residential zones"*, and its two limbs — forty
+feet of parking width, fifty percent of frontage — sit in this file's
+`defaults:` with no such limit on them. In these five districts they are
+over-strict rather than wrong-headed, which is the safe direction, so they
+are left inherited and named in the file instead of quietly unset.
+
+The paragraph that *does* reach here is 17.16.060.E: parking behind the
+facade closest to the street, below the building, or beside it. So
+`parking_front_prohibited` is `true` in each of the five against `exempt`
+citywide, restated per district from E rather than borrowed from D — because
+D is a prohibition, and inheriting a prohibition from the wrong paragraph is
+how a district gets refused for a rule that does not apply to it.
+
+### The state preemption does not reach here, and the screen applies it anyway
+
+This is the case `or/_state.yaml` warned about in writing, arriving.
+
+OAR 660-046-0010(2)(a) excuses a Large City for *"Lots or Parcels that are
+not zoned for residential use, including but not limited to Lots or Parcels
+zoned primarily for commercial, industrial, agricultural, or public uses"*,
+and (b) for residential lots that do not allow a detached house. MUD
+prohibits detached houses outright (17.34.040.D); MUC-1, MUC-2 and C never
+permit one, and 17.06.010.A turns that silence into a prohibition; WFD
+reaches residential only at 17.35.020.R, *"Residential units—Multi-family,
+triplexes and quadplexes"*. All five sit outside the division.
+
+The state layer applies its defaults to every zone regardless, which was
+harmless while the corpus held only residential districts and is not harmless
+now. Two things ride on it:
+
+* `max_density_du_per_acre: exempt` is inherited and cancels nothing — none
+  of these districts states a density maximum. Harmless.
+* `parking_min_per_unit` is inherited as the state's four-spaces-total cap.
+  If the division does not reach here, **Oregon City's own Table 17.52.020
+  governs unrelieved** — and this file already refuses that row in writing,
+  because it states no unit: read as totals it asks two spaces, read per unit
+  it asks eight. Four is the middle reading and it is what the screen now
+  uses in five districts where the ceiling that justified it may not apply.
+
+That is written down rather than fixed, because fixing it needs the adopted
+ordinance text rather than the codified table. It is the first thing to read
+at signing, and `test_oregon_city_commercial.py` pins the current behaviour
+so that scoping the state layer produces a red test rather than a silent
+change of verdict on 798 lots.
+
+### Three model gaps, and only one of them bites
+
+* **No minimum-FAR field.** MUC-2 asks 0.25 and MUD asks 0.30/0.5, and both
+  are refused *on scope* rather than for want of a field: 17.29.070.A and
+  17.34.080.A say in their own words that minimum FARs reach *"all
+  nonresidential and mixed-use building development"*, and a standalone
+  quadplex is neither. WFDD is the exception — Chapter 17.35 states no such
+  confinement, so its minimum FAR of 1.0 is a real hole. Four lots.
+* **No minimum-building-height field.** Three districts ask twenty-five feet
+  or two storeys. The pod is two storeys at twenty-six feet and clears both
+  limbs of all three, so the gap cannot bite anywhere in this city.
+* **No maximum street-side setback field.** MUC-2's 17.29.060.G.3 caps the
+  corner side yard at twenty feet. One district, forty lots, and only on
+  corners.
+
+Refusing on scope where scope is available is worth the extra reading every
+time: it is what keeps the model-gap list from filling up with standards that
+were never going to reach this building.
+
+### Three correctly cited numbers the reader could not read
+
+The corroboration check flagged three of these values as misquotes — a
+citation pointing at text that does not state its number — and all three
+were the check being blind rather than the encoding being wrong. Worth
+writing down because they are three *different* blindnesses and none of them
+had been seen before:
+
+| value | what the page says | why it was invisible |
+|---|---|---|
+| MUC-1 `max_height_stories` = 3 | "Forty feet or three sto-<br>ries, whichever is less" | the **unit** is hyphenated across a line |
+| MUC-1 `max_coverage_pct` = 80 | "Eight y percent" | the scan put a space **inside a spelled number** |
+| WFDD `max_coverage_pct` = 100 | "One hundred percent" | the spelled vocabulary stopped at ninety-nine |
+
+The first is the subtlest. A spelled number only counts when a unit follows
+it — otherwise "one" and "two" would corroborate anything — and the unit here
+is `sto-\nries`, which no pattern for `stor(y|ies)` can match. So the guard
+that makes spelled numbers safe is exactly what made this one unreadable.
+
+The second is not repairable by the letter-spacing repair that already runs
+over this document, and cannot be: `1 0 , 000` is visibly broken, and
+`Eight y` is two real English words. The fix is to let the letters of a
+spelled number be interrupted **when the document is already declared
+spaced**, with the unit guard still standing behind it. "eight years" does
+not become eighty, because after the `y` comes an `e` and the word boundary
+refuses it.
+
+The third had no reason behind it at all. Ninety-nine was as far as anything
+had needed to count. It is a maximum site coverage, so the number that could
+not be corroborated was the one that lets a building take the whole lot.
+
+Corpus-wide the misquote count is **zero** after the repair, and the three
+guards are pinned alongside the three repairs in `test_readiness.py`: a
+spelled number with no unit behind it is still not evidence, and closing up
+a hyphenated line break must never invent a number — `20-\n30` is two
+numbers, not two thousand and thirty.
+
+This is the same shape as every other entry on the reader-blindness list. A
+blind reader reports the corpus clean, and the only way these three surfaced
+is that somebody encoded values into the part of the page it could not see.
+
+### Where the city stands
+
+| census | was | is | why it moved |
+|---|---:|---:|---|
+| encoded zones, corpus-wide | 201 | 212 | eleven districts |
+| exemptions | 196 | 201 | five printed "Minimum lot area: None." cells |
+| declared refusals | 258 | 267 | nine, and up is correct |
+| districts owed an encode | 10 | 5 | the queue was worked |
+| Oregon City zones held | 6 | 17 | — |
+
+The nine refusals are nine separate readings of nine separate paragraphs,
+which is itself the finding: no block header stands over a family of related
+ones. Three are exempted by the code itself, two are out of scope, and four
+have nowhere to go in this registry — of which three cannot bite and one
+does.
+
+Oregon City's districts audit now returns three undeclared acronyms and no
+work: `NROD` is an overlay, `MUC` is the parent name the corridor chapter
+prints over MUC-1 and MUC-2, and `WFD` is the ordinance's spelling of the
+district the parcel layer calls `WFDD` — a real base zone that is encoded,
+under the other spelling. `test_districts.py` gained an `aliased` verdict for
+exactly that case, because it is not work owed and calling it `encode` would
+have kept a closed question open forever.
+
+One district left in this city, and it is a join.

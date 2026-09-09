@@ -993,3 +993,658 @@ zones:
         - value: 5
           when: [abuts_alley]
           quote: "or/clackamas/oregon-city/17.zoning.txt#L4347"
+
+  # ------------------------------------------------------------------
+  # THE MIXED-USE AND COMMERCIAL SIDE OF OREGON CITY, read 2026-09-08.
+  #
+  # Twelve districts held 1,162 lots that this file had never heard of, and
+  # they are the whole of what is left in this city. Eleven are read here,
+  # 1,150 lots; the twelfth is "County", twelve lots on seven acres that the
+  # parcel layer labels with the county's zoning rather than the city's, and
+  # it is a join question rather than a reading. They are read here in one
+  # pass because they are one reading: Chapters 17.24 through 17.39 print the
+  # same nine-paragraph dimensional standard over and over with the numbers
+  # changed, so the interesting part is never the number -- it is which
+  # paragraph applies to a four-unit building, and that turns out to differ
+  # district by district in ways no table would show.
+  #
+  # FOUR THINGS CAME BACK THAT THE ERRAND WAS NOT FOR.
+  #
+  # (1) The setback in every one of these districts is stated twice, on a
+  # hinge this corpus had no name for: "Minimum required setbacks if not
+  # abutting a residential zone: None", then twenty feet where it does abut
+  # one. `abuts_lower_density_zone` was the closest condition we held and it
+  # is the wrong question -- it compares two residential districts by
+  # intensity, and this one asks which side of the residential line the
+  # neighbour is on. `abuts_residential_zone` is registered for it. Nothing
+  # measures it, so every zone below leans on an unobserved fact and cannot
+  # certify GREEN until an adjacency layer exists. That is the correct answer
+  # and not a defect: the alternative was encoding twenty feet flat and
+  # rejecting every mixed-use lot in the city that happens to sit among
+  # commercial neighbours.
+  #
+  # (2) A four-unit building is exempt from the maximum front setback in
+  # MUC-1 and MUD, and is not in C and MUC-2. OCMC 17.29.050.I and 17.34.060.K
+  # both read "Standalone residential development of fewer than five units are
+  # exempt from maximum setbacks" -- our pod is four -- and the identical
+  # paragraph is simply absent from 17.32.050 and 17.29.060. So the five-foot
+  # maximum front setback, which would push a pod to the street line, binds in
+  # two districts and not in the other two, and the difference is a paragraph
+  # somebody did not copy. MUC-1's version of it exempts minimum density too;
+  # MUD's exempts only the setbacks, which is why 17.4 units per acre is
+  # encoded in MUD and absent from MUC-1.
+  #
+  # (3) HC prohibits this building in as many words, and a keyword search
+  # would have said the opposite. 17.26.020.C permits "conversions of an
+  # existing single-family detached residential unit or duplex into a triplex
+  # or quadplex" -- the word is there and the use is not, because a
+  # factory-built pod on a bare lot converts nothing. 17.26.035.B settles it:
+  # "Triplexes and quadplexes" are prohibited outright. The conversion
+  # sentence is the exception that proves the rule and it is quoted in the
+  # refusal so the next reader does not have to find it twice.
+  #
+  # (4) THE LAYER'S OWN PARKING DEFAULTS ARE RESIDENTIAL-ONLY AND ARE APPLIED
+  # HERE ANYWAY. OCMC 17.16.060.D opens "In residential zones", and its two
+  # limbs -- forty feet of parking width, fifty percent of frontage -- are in
+  # this file's `defaults:` with no such limit. In the five districts below
+  # that permit the pod they are over-strict rather than wrong-headed, which
+  # is the safe
+  # direction, so they are left inherited and named here instead of unset. The
+  # paragraph that DOES reach these districts is 17.16.060.E, "In mixed-use
+  # and commercial zones, parking aisles or areas shall be located behind the
+  # building facade that is closest to the street, below buildings, or on one
+  # or both sides of buildings" -- so `parking_front_prohibited` is `true`
+  # here against `exempt` citywide, and each district says so.
+  #
+  # WHAT IS REFUSED AND WHY IT IS SAFE TO REFUSE IT. MUE, I, GI and CI list no
+  # residential use at all, and OCMC 17.06.010.A is the sentence that turns
+  # silence into a prohibition: no land may "be used or designated to be used
+  # for any use other than is permitted in the district". GI says it twice --
+  # caretaker dwellings are permitted and "all other residential uses are
+  # prohibited". CI says it for six named tax lots and single-family only.
+  #
+  # THE STATE PREEMPTION DOES NOT REACH ANY OF THESE DISTRICTS, and this is
+  # the case or/_state.yaml warned about in writing. OAR 660-046-0010(2)(a)
+  # excuses a Large City for "Lots or Parcels that are not zoned for
+  # residential use, including but not limited to Lots or Parcels zoned
+  # primarily for commercial, industrial, agricultural, or public uses", and
+  # (b) for residential lots that do not allow a detached house. MUD prohibits
+  # detached houses outright (17.34.040.D); MUC-1, MUC-2 and C never permit
+  # one, and 17.06.010.A makes that a prohibition; WFD's use list reaches
+  # residential only at 17.35.020.R, "Residential units--Multi-family,
+  # triplexes and quadplexes", with no detached house anywhere in the
+  # chapter. So all five sit outside the
+  # division. The state file predicted that the gap "moves no verdict" because
+  # the only commercial zones then encoded prohibited the quadplex; these are
+  # the first that do not, and the gap moves two things:
+  #
+  #   * `max_density_du_per_acre: exempt` is inherited and cancels nothing --
+  #     none of these districts states a density maximum. Harmless.
+  #   * `parking_min_per_unit` is inherited as the state's four-spaces-total
+  #     cap, and if the division does not reach here then Oregon City's own
+  #     Table 17.52.020 governs unrelieved. This file already refuses that row
+  #     in writing, in `defaults:`, because it states no unit: read as totals
+  #     it asks two spaces, read per unit it asks eight. Four is the middle
+  #     reading and it is the one the screen now uses in a district where the
+  #     ceiling that justified it may not apply. It is written here rather
+  #     than fixed because fixing it needs the adopted ordinance text, and it
+  #     is the thing to read first at signing.
+  MUC-1:
+    section: ["17.29.", "17.16."]
+    cite_default:
+      cite: OCMC 17.29.020 (permitted uses) and 17.29.050 (dimensional standards,
+        MUC-1); middle housing standards OCMC 17.16.060
+      url: https://api.municode.com/PublicationPdfDownload/1377
+      retrieved: '2026-09-08'
+    quadplex_allowed:
+      # 17.29.020.M, one entry in an alphabetical list of permitted uses:
+      # "Multi-family residential, triplexes and quadplexes." No conversion
+      # clause, no conditional-use path, no footnote.
+      value: true
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L6993-L6994"
+    min_lot_sqft:
+      # 17.29.050.A: "Minimum lot areas: None." The safe use of `exempt` --
+      # the paragraph is printed and states no standard, rather than being
+      # absent. The scan has detached the paragraph letters from their text
+      # on this page, so the quote spans the heading down to the sentence.
+      exempt: true
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7103-L7107"
+    max_height_ft:
+      # 17.29.050.B: "Maximum building height: Forty feet or three stories,
+      # whichever is less." Both limbs are encoded, in the two fields that
+      # hold them, and the screen takes the binding one.
+      value: 40
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7103-L7109"
+    max_height_stories:
+      value: 3
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7103-L7109"
+    setback_front_ft:
+      # 17.29.050.C, and the front yard has only the one reading: paragraph D
+      # tightens the INTERIOR SIDE and REAR yards where the site abuts a
+      # residential zone and says nothing about the front, so the front is
+      # None either way.
+      value: 0
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7112-L7113"
+    setback_side_ft:
+      value: 0
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7112-L7113"
+      variants:
+        # 17.29.050.D. The escalator -- "plus one foot additional yard setback
+        # for every one foot of building height over thirty-five feet" -- adds
+        # nothing to this building: the pod is twenty-six feet.
+        - value: 20
+          when: [abuts_residential_zone]
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L7103,L7117-L7120"
+          cite: OCMC 17.29.050.D (MUC-1, setbacks abutting a residential zone; the
+            page furniture over these lines is OCMC 17.29.060, the next section)
+    setback_rear_ft:
+      value: 0
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7112-L7113"
+      variants:
+        - value: 20
+          when: [abuts_residential_zone]
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L7103,L7117-L7120"
+          cite: OCMC 17.29.050.D (MUC-1, setbacks abutting a residential zone; the
+            page furniture over these lines is OCMC 17.29.060, the next section)
+    max_coverage_pct:
+      # 17.29.050.F states a coverage "of the building AND PARKING LOT", and
+      # this field is building coverage alone. Encoding eighty here is a
+      # weaker claim than the code makes and a true one -- if the pair may not
+      # exceed eighty percent then the building alone may not either -- so it
+      # can only ever fail a lot the code would also fail. The tighter reading
+      # is unavailable: nothing here knows the parking's footprint on a lot it
+      # has not laid out.
+      value: 80
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7103,L7129-L7130"
+      # The scan prints a running header of 17.29.060 over the second half of
+      # 17.29.050, so the quote carries L7103 -- the real section number -- and
+      # the cite names both, which is what the attribution check reads.
+      cite: OCMC 17.29.050 (MUC-1 dimensional standards; the page furniture over these
+        lines is OCMC 17.29.060, which is the next section and not this one)
+    min_landscaped_pct:
+      value: 20
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7103,L7131-L7132"
+      # The scan prints a running header of 17.29.060 over the second half of
+      # 17.29.050, so the quote carries L7103 -- the real section number -- and
+      # the cite names both, which is what the attribution check reads.
+      cite: OCMC 17.29.050 (MUC-1 dimensional standards; the page furniture over these
+        lines is OCMC 17.29.060, which is the next section and not this one)
+    parking_front_prohibited:
+      # 17.16.060.E, and it overrides this file's citywide `exempt`. The
+      # escape hatch needs all three of its conditions at once -- a local
+      # street, not a corner, AND "an existing topographic constraint that
+      # precludes locating the parking area in conformance with this
+      # standard" -- and the third is a finding about a particular site, so
+      # the standard is taken as binding.
+      value: true
+      cite: OCMC 17.16.060.E (parking location, mixed-use and commercial zones)
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L5427-L5437"
+    notes: >-
+      NOT ENCODED, and both are the same paragraph. 17.29.050.E caps the front
+      yard at five feet and 17.29.050.H asks a minimum net density of 17.4
+      units per acre; 17.29.050.I exempts "standalone residential development
+      of fewer than five units" from both, and this pod is four units. The
+      exemption is quoted at L7137-L7139 and is the reason two of this
+      district's nine paragraphs are absent from the fields above. MUD's
+      version of the same sentence exempts only the setbacks, which is why
+      17.4 IS encoded there -- the difference between the two districts is one
+      clause somebody did not carry across.
+  MUC-2:
+    section: ["17.29.", "17.16."]
+    cite_default:
+      cite: OCMC 17.29.020 (permitted uses) and 17.29.060 (dimensional standards,
+        MUC-2); middle housing standards OCMC 17.16.060
+      url: https://api.municode.com/PublicationPdfDownload/1377
+      retrieved: '2026-09-08'
+    quadplex_allowed:
+      # 17.29.020 is headed "Permitted uses--MUC-1 and MUC-2": one list, two
+      # districts.
+      value: true
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L6993-L6994"
+    min_lot_sqft:
+      exempt: true
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7144-L7145"
+    max_height_ft:
+      value: 60
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7150"
+    setback_front_ft:
+      value: 0
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7151-L7152"
+    setback_side_ft:
+      value: 0
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7151-L7152"
+      variants:
+        # 17.29.060.F, escalating a foot for every two over thirty-five. The
+        # pod is twenty-six, so twenty is the whole number.
+        - value: 20
+          when: [abuts_residential_zone]
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L7153-L7156"
+    setback_rear_ft:
+      value: 0
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7151-L7152"
+      variants:
+        - value: 20
+          when: [abuts_residential_zone]
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L7153-L7156"
+    setback_front_max_ft:
+      # 17.29.060.G.1, and MUC-2 is where the exemption stops. The paragraph
+      # that frees a four-unit building from maximum setbacks is 17.29.050.I,
+      # which is inside the MUC-1 section and has no counterpart in this one.
+      # So a pod here must stand within five feet of the front lot line.
+      value: 5
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7157-L7158"
+    max_coverage_pct:
+      # Building plus parking lot, weakened to building alone -- see MUC-1.
+      value: 90
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7164-L7165"
+    min_landscaped_pct:
+      value: 10
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7166-L7167"
+    min_density_du_per_acre:
+      # 17.29.060.J. Encoded here and not in MUC-1 for one reason: MUC-1's
+      # paragraph I exempts a standalone residential development of fewer than
+      # five units from "maximum setbacks and minimum density requirements",
+      # and this section has no paragraph I at all. The two exceptions the
+      # sentence does state -- residential above a nonresidential use, and
+      # live/work -- describe neither this pod nor its lot.
+      value: 17.4
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7168-L7171"
+      measured_on:
+        fact: net_developable_area
+        cite: OCMC 17.04.810 "Net developable area"; 17.04.808 "Net density"
+        quote: "or/clackamas/oregon-city/17.zoning.txt#L2441-L2443,L2468-L2491"
+    parking_front_prohibited:
+      value: true
+      cite: OCMC 17.16.060.E (parking location, mixed-use and commercial zones)
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L5427-L5437"
+    notes: >-
+      NOT ENCODED: the minimum floor area ratio of 0.25 at 17.29.060.B, and it
+      is refused on scope rather than for want of a field. 17.29.070.A states
+      what the minimum FARs reach -- "all nonresidential and mixed-use
+      building development" -- and a standalone quadplex is neither.
+      (L7175-L7182.) NOT ENCODED: the minimum building height at 17.29.060.C,
+      "twenty-five feet or two stories". This model has no minimum-height
+      field, which would be a gap except that it cannot bite: the pod is two
+      storeys and twenty-six feet, so it clears both limbs of every minimum
+      height Oregon City states. Recorded because the next building might not.
+      Also not encoded: 17.29.060.G.3 caps the CORNER SIDE setback at twenty
+      feet, a maximum, and there is no field for a maximum street-side
+      setback.
+  MUD:
+    section: ["17.34.", "17.16."]
+    cite_default:
+      cite: OCMC 17.34.020 (permitted uses) and 17.34.060 / 17.34.070 (dimensional
+        standards, outside and within the downtown design district); middle housing
+        standards OCMC 17.16.060
+      url: https://api.municode.com/PublicationPdfDownload/1377
+      retrieved: '2026-09-08'
+    # THIS DISTRICT STATES ITS DIMENSIONS TWICE, and which set applies is a
+    # geographic fact: 17.34.060 governs properties outside the downtown
+    # design district and 17.34.070 those within it. FLATS holds no boundary
+    # for that overlay, so each field below takes the tighter of the two and
+    # cites the section it came from -- which means the encoded district is a
+    # composite that exists at no address, and every number in it is still
+    # quoted from a page. Where the two agree, either citation would do and
+    # the first is used. The paragraphs that differ, and the direction:
+    #
+    #   max_height_ft         75 outside, 58 within  -> 58   (both academic)
+    #   setback if abutting   15 outside, 20 within  -> 20
+    #   max_coverage_pct      90 outside, 95 within  -> 90
+    #   min_landscaped_pct    10 outside,  5 within  -> 10
+    #   min FAR             0.30 outside, 0.5 within -> refused on scope
+    quadplex_allowed:
+      # 17.34.020.L. The use gate here is sharper than it looks: 17.34.040.D
+      # PROHIBITS "single-family detached residential units, townhouses and
+      # duplexes" in the same chapter. So a quadplex on one lot is permitted
+      # and the same four units on four lots are not -- this is the first
+      # district in the corpus where the land division decides the use rather
+      # than the dimensions. The `unit_lots` path is refused in the notes.
+      value: true
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7725-L7726"
+    min_lot_sqft:
+      exempt: true
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7853"
+    max_height_ft:
+      value: 58
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7903"
+    setback_front_ft:
+      value: 0
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7869-L7870"
+    setback_side_ft:
+      value: 0
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7869-L7870"
+      variants:
+        - value: 20
+          when: [abuts_residential_zone]
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L7908-L7911"
+    setback_rear_ft:
+      value: 0
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7869-L7870"
+      variants:
+        - value: 20
+          when: [abuts_residential_zone]
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L7908-L7911"
+    max_coverage_pct:
+      # Building plus parking lot, weakened to building alone -- see MUC-1.
+      value: 90
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7881-L7882"
+    min_landscaped_pct:
+      value: 10
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7883-L7884"
+    min_density_du_per_acre:
+      # 17.34.060.J and 17.34.070.J, identical. MUD's exemption for a
+      # standalone residential development of fewer than five units --
+      # paragraph K in both sections -- covers "maximum setbacks" and stops
+      # there, where MUC-1's covers "maximum setbacks AND minimum density
+      # requirements". One clause of difference, and it is the clause that
+      # decides whether this row binds. It binds.
+      value: 17.4
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7885-L7891"
+      measured_on:
+        fact: net_developable_area
+        cite: OCMC 17.04.810 "Net developable area"; 17.04.808 "Net density"
+        quote: "or/clackamas/oregon-city/17.zoning.txt#L2441-L2443,L2468-L2491"
+    parking_front_prohibited:
+      value: true
+      cite: OCMC 17.16.060.E (parking location, mixed-use and commercial zones)
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L5427-L5437"
+    notes: >-
+      NOT ENCODED: the maximum front setback, twenty feet outside the design
+      district and ten within it. 17.34.060.K and 17.34.070.K both exempt
+      "standalone residential development of fewer than five units" from the
+      maximum setbacks, and this pod is four (L7889-L7891, L7930-L7932). NOT
+      ENCODED: the minimum floor area ratio, 0.30 and 0.5. 17.34.080.A.1
+      states what it reaches -- "all nonresidential and mixed-use building
+      development" -- and a standalone quadplex is neither (L7949-L7955). NOT
+      ENCODED: the minimum building height of twenty-five feet or two storeys,
+      for the reason given under MUC-2; the pod clears it either way. REFUSED,
+      AND IT IS A USE RATHER THAN A DIMENSION: the `unit_lots` path. This file
+      runs a townhouse variant through most of its zones, and 17.34.040.D
+      prohibits townhouses in MUD outright, so four units on four lots is not
+      a thing that may be built here even though four units on one lot is. No
+      variant expresses that -- `quadplex_allowed` is one boolean per zone --
+      so it is written down instead, and a batch view offering unit lots in
+      MUD would be offering something the code forbids.
+  C:
+    section: ["17.32.", "17.16."]
+    cite_default:
+      cite: OCMC 17.32.020 (permitted uses) and 17.32.050 (dimensional standards,
+        general commercial); middle housing standards OCMC 17.16.060
+      url: https://api.municode.com/PublicationPdfDownload/1377
+      retrieved: '2026-09-08'
+    quadplex_allowed:
+      # 17.32.020.S: "Multi-family residential, triplexes, quadplexes,".
+      value: true
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7533-L7534"
+    min_lot_sqft:
+      exempt: true
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7620-L7621"
+    max_height_ft:
+      value: 60
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7622"
+    setback_front_ft:
+      value: 0
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7623-L7624"
+    setback_side_ft:
+      value: 0
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7623-L7624"
+      variants:
+        - value: 20
+          when: [abuts_residential_zone]
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L7625-L7628"
+    setback_rear_ft:
+      value: 0
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7623-L7624"
+      variants:
+        - value: 20
+          when: [abuts_residential_zone]
+          quote: "or/clackamas/oregon-city/17.zoning.txt#L7625-L7628"
+    setback_front_max_ft:
+      # 17.32.050.E.1. Like MUC-2 and unlike MUC-1 and MUD, this section
+      # carries no exemption for a residential development of fewer than five
+      # units, so the five-foot maximum reaches this building.
+      value: 5
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7629-L7630"
+    max_coverage_pct:
+      # Building plus parking lot, weakened to building alone -- see MUC-1.
+      value: 85
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7639-L7640"
+    min_landscaped_pct:
+      value: 15
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7641-L7642"
+    min_density_du_per_acre:
+      value: 17.4
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L7643-L7646"
+      measured_on:
+        fact: net_developable_area
+        cite: OCMC 17.04.810 "Net developable area"; 17.04.808 "Net density"
+        quote: "or/clackamas/oregon-city/17.zoning.txt#L2441-L2443,L2468-L2491"
+    parking_front_prohibited:
+      value: true
+      cite: OCMC 17.16.060.E (parking location, mixed-use and commercial zones)
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L5427-L5437"
+    notes: >-
+      The general commercial district states the tightest version of this
+      chapter's standard shape: a five-foot maximum front setback with no
+      four-unit relief, fifteen percent landscaping, and a minimum net density
+      of 17.4 units per acre that on four units puts a ceiling of about ten
+      thousand square feet of NET developable area on the lot. Nothing here is
+      an interpretation; the paragraphs it would need are simply not in
+      17.32.050 the way they are in 17.29.050 and 17.34.060.
+  WFDD:
+    section: ["17.35.", "17.16."]
+    cite_default:
+      cite: OCMC 17.35.020 (permitted uses) and 17.35.060 (Willamette Falls Downtown
+        District dimensional standards); middle housing standards OCMC 17.16.060
+      url: https://api.municode.com/PublicationPdfDownload/1377
+      retrieved: '2026-09-08'
+    # THE ZONE CODE HERE IS NOT THE ORDINANCE'S. Title 17 calls this district
+    # WFD throughout; the county parcel layer spells it WFDD on the four lots
+    # that carry it. The key has to match the parcel data or the rules reach
+    # nothing, so WFDD it is, and it is safe: Oregon City has exactly one
+    # Willamette Falls Downtown district and Chapter 17.35 is all of it.
+    quadplex_allowed:
+      # 17.35.020.R: "Residential units--Multi-family, triplexes and
+      # quadplexes". 17.35.040.E prohibits detached houses, duplexes and
+      # townhouses, which is the same seam as MUD -- see the `unit_lots`
+      # refusal in the notes.
+      value: true
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L8016,L8064-L8065"
+      cite: OCMC 17.35.020.R (permitted uses, Willamette Falls Downtown; the list
+        runs across a page break whose running header reads OCMC 17.35.030)
+    min_lot_sqft:
+      exempt: true
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L8188-L8190"
+    max_height_ft:
+      value: 80
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L8201"
+    setback_front_ft:
+      # 17.35.060.E: "Minimum required setbacks: None." Stated once, with no
+      # abutting-a-residential-zone limb at all -- the only district in this
+      # group without one, and the reason this zone leans on no unobserved
+      # fact.
+      value: 0
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L8202-L8204"
+    setback_side_ft:
+      value: 0
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L8202-L8204"
+    setback_rear_ft:
+      value: 0
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L8202-L8204"
+    setback_front_max_ft:
+      # 17.35.060.F: "Maximum allowed setbacks: Ten feet." No four-unit
+      # exemption in this chapter either.
+      value: 10
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L8205"
+    max_coverage_pct:
+      # 17.35.060.G: one hundred percent. Encoded rather than exempted
+      # because the paragraph states a number, and the number happens to
+      # constrain nothing.
+      value: 100
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L8206"
+    parking_front_prohibited:
+      value: true
+      cite: OCMC 17.16.060.E (parking location, mixed-use and commercial zones)
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L5427-L5437"
+    notes: >-
+      NOT ENCODED, and this is the one place in Oregon City where the missing
+      field would bite. 17.35.060.B sets a MINIMUM floor area ratio of 1.0 and
+      -- unlike the MUC and MUD sections, whose own explanatory paragraph
+      confines minimum FARs to nonresidential and mixed-use development --
+      Chapter 17.35 states no such limit; it borrows 17.34.080 only for the
+      DEFINITION of floor area ratio. Read plainly, a building here must have
+      gross floor area at least equal to its lot, which on a two-storey pod
+      means covering half the lot. This model has no minimum-FAR field, and
+      inventing one from `max_far` would invert the comparison. Four lots
+      carry this zone, which is why it is written down rather than built.
+      Also not encoded: the minimum building height at 17.35.060.C, "two
+      entire stories AND twenty-five feet" -- the conjunction is this
+      district's own and the pod satisfies both limbs. REFUSED: the
+      `unit_lots` path, on 17.35.040.E, exactly as in MUD.
+  MUE:
+    section: ["17.31."]
+    cite_default:
+      cite: OCMC 17.31.020 through 17.31.050 (permitted, limited, conditional and
+        prohibited uses, mixed-use employment district), with OCMC 17.06.010.A
+      url: https://api.municode.com/PublicationPdfDownload/1377
+      retrieved: '2026-09-08'
+    quadplex_allowed:
+      # REFUSED ON SILENCE, WHICH IS ONLY SAFE BECAUSE OF ONE SENTENCE.
+      # Chapter 17.31 runs four use lists -- permitted, limited, conditional,
+      # prohibited -- and no dwelling of any kind appears on any of them.
+      # 17.06.010.A is what makes that a prohibition rather than a gap: "nor
+      # shall any building, structure or land be used or designated to be used
+      # for any use other than is permitted in the district in which such
+      # building, structure or land is located". The district's own purpose
+      # paragraph agrees -- "designed for employment-intensive uses such as
+      # large offices and research and development complexes" -- and its only
+      # discretionary route is "or similar as defined by the community
+      # development director", which is a similar-use finding about
+      # employment, not a residential permission.
+      value: false
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L3899-L3906"
+    notes: >-
+      One hundred and thirty-three lots closed on a use gate. Nothing
+      dimensional is read here and nothing needs to be: 17.31.060 states a
+      full set of standards and every one of them is moot while the building
+      may not be built. If the district is ever amended to admit housing, the
+      standards are at L7398-L7438 and the shape is the same nine paragraphs
+      as MUC-1.
+  I:
+    section: ["17.39."]
+    cite_default:
+      cite: OCMC 17.39.020 (permitted uses) and 17.39.030 (accessory uses),
+        institutional district, with OCMC 17.06.010.A
+      url: https://api.municode.com/PublicationPdfDownload/1377
+      retrieved: '2026-09-08'
+    quadplex_allowed:
+      # The institutional district's permitted list is eight entries long --
+      # schools, parks, public facilities, stadiums, banquet rooms, government
+      # offices, transportation facilities, mobile food units -- and its
+      # accessory list five, none of them a dwelling. Refused on 17.06.010.A,
+      # the same sentence as MUE.
+      value: false
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L3899-L3906"
+    notes: >-
+      Ninety-three lots. The permitted list is at L8741-L8756 and the
+      accessory list at L8758-L8770; neither mentions housing of any kind, and
+      unlike GI this chapter does not even carry a caretaker's dwelling.
+  GI:
+    section: ["17.36."]
+    cite_default:
+      cite: OCMC 17.36.020.E (permitted uses, general industrial district)
+      url: https://api.municode.com/PublicationPdfDownload/1377
+      retrieved: '2026-09-08'
+    quadplex_allowed:
+      # The only district in this city that refuses in its own words rather
+      # than by silence: "E. Necessary dwellings for caretakers and watchmen
+      # (all other residential uses are prohibited)". A quadplex is an "other
+      # residential use", and the exception names its own scope.
+      value: false
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L8256-L8258"
+    notes: >-
+      Fifty-seven lots, closed on a parenthesis. Worth keeping as the pattern
+      for the other three refusals in this layer: where a code bothers to say
+      "all other residential uses are prohibited", the refusal needs no
+      argument from 17.06.010.A at all.
+  CI:
+    section: ["17.37."]
+    cite_default:
+      cite: OCMC 17.37.060.C.6 (campus industrial district, Thimble Creek Concept
+        Plan Area special provision), with OCMC 17.06.010.A
+      url: https://api.municode.com/PublicationPdfDownload/1377
+      retrieved: '2026-09-08'
+    quadplex_allowed:
+      # Campus industrial permits residential on six named tax lots, detached
+      # single-family only, and freezes it: "This property may only maintain
+      # and expand the current use." Everywhere else in the district the
+      # silence plus 17.06.010.A refuses. Six tax lots is a smaller unit than
+      # a zone and this model has no way to hold it, which does not matter
+      # here -- the permission is for a use we are not building, on land that
+      # may not change use.
+      #
+      # The cite was written as 17.37.030 and is 17.37.060: the attribution
+      # check caught it, and the correction narrows the provision further than
+      # the first reading did. It is not a general campus-industrial clause at
+      # all -- it sits inside "Additional standards for Thimble Creek Concept
+      # Plan Area", so it reaches six tax lots inside one concept plan area
+      # inside one district.
+      value: false
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L8593-L8598"
+    notes: >-
+      Thirty-one lots. The named-tax-lot permission is the third of its kind
+      in this chapter of Title 17 -- MUD has one for pre-existing industry and
+      MUC-2 one for the Thimble Creek Concept Plan Area -- and it is the shape
+      to watch for, because a use permission attached to a plat number is
+      invisible to a screen keyed on zone codes. None of the three admits this
+      building, so none of them is encoded.
+  HC:
+    section: ["17.26."]
+    cite_default:
+      cite: OCMC 17.26.035.B (prohibited uses, historic commercial district)
+      url: https://api.municode.com/PublicationPdfDownload/1377
+      retrieved: '2026-09-08'
+    quadplex_allowed:
+      # 17.26.035 Prohibited uses: "A. Townhouses. B. Triplexes and
+      # quadplexes. C. Multi-family residential." All three of this project's
+      # paths, refused in one list. The trap is 17.26.020.C, which permits
+      # "conversions of an existing single-family detached residential unit or
+      # duplex into a triplex or quadplex" -- the word quadplex is on the
+      # permitted list, and the use is not, because a factory-built pod on a
+      # bare lot converts nothing. A keyword search of this chapter says the
+      # opposite of what it means.
+      value: false
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L6884-L6891"
+    notes: >-
+      Thirty-seven lots. This is the clearest case in the corpus of a use
+      permitted by name and prohibited in substance, and it is worth the entry
+      even at thirty-seven lots because the conversion clause recurs: any city
+      that permits "conversion of an existing dwelling into a triplex or
+      quadplex" is describing a renovation, and this project builds new. Where
+      that sentence is the ONLY quadplex permission in a district, the answer
+      is no.
+  NC:
+    section: ["17.24."]
+    cite_default:
+      cite: OCMC 17.24.035.L (prohibited uses, neighborhood commercial district)
+      url: https://api.municode.com/PublicationPdfDownload/1377
+      retrieved: '2026-09-08'
+    quadplex_allowed:
+      # The permission and the prohibition are both real and the prohibition
+      # wins. 17.24.020.A opens the district to "any use permitted in the
+      # mixed-use corridor", which carries MUC-1's quadplexes straight in;
+      # 17.24.035.L then prohibits "residential use that exceeds fifty percent
+      # of the total building square footage on-site". A standalone pod is one
+      # hundred percent of the building on the site, so it is prohibited by
+      # the one clause and permitted by the other, and the specific beats the
+      # general. What this district allows is housing over a shop.
+      value: false
+      quote: "or/clackamas/oregon-city/17.zoning.txt#L6586-L6587,L6606-L6608"
+    notes: >-
+      One lot, and it is here for the shape rather than the acre. Neighborhood
+      commercial is the only district in this city that admits our building by
+      reference and then throws it out by proportion -- a rule about the MIX
+      rather than about the use -- and no field in this model holds "at most
+      half the floor area may be dwellings". It reduces to a use gate here
+      only because the pod is a whole building; on a mixed-use scheme the
+      answer would be a fraction and there would be nowhere to put it.

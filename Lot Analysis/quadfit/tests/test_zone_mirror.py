@@ -504,6 +504,52 @@ UNSCREENED_ZONES: dict[str, tuple[str, ...]] = {
 }
 
 
+#: The same silence, arrived at the other way round, and it needs its own name
+#: because the ratchet above cannot hold it.
+#:
+#: :data:`UNSCREENED_ZONES` was frozen on the assumption that the list could
+#: only grow through neglect -- somebody encoding a zone in the corpus and not
+#: carrying it across. On 2026-09-08 it grew twice in one evening for the
+#: opposite reason: the corpus is being extended faster than ``rules.yaml``, on
+#: purpose, because FLATS replaces this pipeline rather than feeding it.
+#:
+#: WHY THESE ARE NOT SIMPLY PORTED, which is the question the frozen list
+#: answers with "they should be". Nine of the ten hang on a condition
+#: ``rules.yaml`` has no way to write down:
+#:
+#:   * Oregon City's five state their setbacks twice -- "Minimum required
+#:     setbacks if not abutting a residential zone: None", and twenty feet
+#:     where it does abut one. The corpus holds that as a base value with a
+#:     variant keyed on `abuts_residential_zone`, an unmeasured site fact, so
+#:     the screen returns UNKNOWN rather than GREEN. ``rules.yaml`` holds one
+#:     number per field. Porting the zero produces a measurement that is wrong
+#:     on exactly the lots where the standard bites; porting the twenty
+#:     disagrees with the corpus, and the number-by-number half of this same
+#:     audit would then report it as drift. Neither is the truth.
+#:   * MR-1 and MR-2 in unincorporated Clackamas are the same shape through
+#:     Table 315-4's note 14, ruled `unmeasured` against
+#:     `abuts_lower_density_zone`.
+#:
+#: The tenth, PMD, could be ported and is held with the other three so the
+#: reason for the group stays one reason.
+#:
+#: This list is not frozen the way the one above is. It may grow, because the
+#: corpus is meant to; what it may not do is grow SILENTLY, which is the whole
+#: property this test defends. Every entry names the zone, and the assertion
+#: below fails the moment one appears that nobody has written a line for.
+AHEAD_OF_QUADFIT: dict[str, tuple[str, ...]] = {
+    # Encoded 2026-09-08 off the top of the rebuilt two-county coverage
+    # ledger. R-2.5 was encoded in the same pass and is absent here because it
+    # is a prohibition -- `unscreened_zones` counts only zones that permit the
+    # pod, and a zone that forbids it costs the pipeline nothing to not know.
+    "clackamas_unincorporated": ("MR1", "MR2", "PMD", "VA"),
+    # Oregon City's commercial and mixed-use side, encoded 2026-09-08. The
+    # five that permit a quadplex; MUE, I, GI, CI, HC and NC were encoded in
+    # the same pass as refusals and so are not here.
+    "oregon_city": ("C", "MUC-1", "MUC-2", "MUD", "WFDD"),
+}
+
+
 def test_a_zone_missing_from_the_pipeline_is_a_debt_somebody_wrote_down() -> None:
     """The gap that comparing numbers could never find.
 
@@ -520,14 +566,26 @@ def test_a_zone_missing_from_the_pipeline_is_a_debt_somebody_wrote_down() -> Non
 
     This list may SHRINK, by encoding the zone. It may not grow, and a zone may
     not leave it by being removed from the corpus.
+
+    It grew anyway on 2026-09-08, and the growth was correct: the corpus is
+    now being extended faster than ``rules.yaml``, deliberately, because FLATS
+    replaces this pipeline rather than feeds it. So the assertion is against
+    :data:`UNSCREENED_ZONES` and :data:`AHEAD_OF_QUADFIT` together -- the first
+    still frozen as debt, the second an open list that may grow and may not
+    grow silently. Whichever side a zone is on, appearing on neither is what
+    fails.
     """
     audit = _audit()
     found = {j: tuple(z) for j, z in audit.unscreened_zones().items()}
-    assert found == UNSCREENED_ZONES, (
+    expected = {
+        j: tuple(sorted(set(UNSCREENED_ZONES.get(j, ())) | set(AHEAD_OF_QUADFIT.get(j, ()))))
+        for j in set(UNSCREENED_ZONES) | set(AHEAD_OF_QUADFIT)
+    }
+    assert found == expected, (
         "zone coverage moved: "
-        f"{sorted(set(found) ^ set(UNSCREENED_ZONES))} differ by jurisdiction, "
+        f"{sorted(set(found) ^ set(expected))} differ by jurisdiction, "
         f"and per-jurisdiction "
-        f"{ {j: sorted(set(found.get(j, ())) ^ set(UNSCREENED_ZONES.get(j, ()))) for j in set(found) | set(UNSCREENED_ZONES)} }"
+        f"{ {j: sorted(set(found.get(j, ())) ^ set(expected.get(j, ()))) for j in set(found) | set(expected)} }"
     )
 
 

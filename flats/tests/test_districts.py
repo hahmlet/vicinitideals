@@ -51,6 +51,15 @@ from flats.encode.districts import by_layer, unheld
 #: ``overlay``      an overlay or plan district, not a base zone.
 #: ``not-a-zone``   a formula variable, a table legend, a plan's name, a FEMA
 #:                  map label, or extractor debris.
+#: ``aliased``      a real base zone that IS encoded, under the spelling the
+#:                  parcel layer uses rather than the one the ordinance
+#:                  prints. Oregon City forced this one into existence: Title
+#:                  17 says WFD from end to end and the county parcel layer
+#:                  says WFDD on the four lots that carry it, and the rules
+#:                  have to be keyed on the parcel spelling or they reach no
+#:                  land at all. It is not an ``encode`` -- there is nothing
+#:                  left to do -- and calling it one would leave a permanent
+#:                  entry on a queue of work.
 VERDICTS = frozenset(
     {
         "encode",
@@ -61,6 +70,7 @@ VERDICTS = frozenset(
         "column",
         "overlay",
         "not-a-zone",
+        "aliased",
     }
 )
 
@@ -237,25 +247,31 @@ RULINGS: dict[str, dict[str, str]] = {
         ),
     },
     "or/clackamas/oregon-city": {
-        "MUC-1": (
-            "encode: OCMC 17.29.020.M permits 'Multi-family residential, "
-            "triplexes and quadplexes'; 17.29.050 gives 40 ft or three "
-            "storeys, no minimum lot, a 5 ft maximum front setback, 80 "
-            "percent coverage, 20 percent landscaping and the same 17.4 "
-            "du/acre minimum density that makes R-2 lots able to be too big."
-        ),
-        "MUC-2": (
-            "encode: the same 17.29.020.M permission as MUC-1, with its own "
-            "dimensional standards at 17.29.060."
-        ),
-        "MUD": (
-            "encode: OCMC 17.34.020.L permits 'Multi-family residential, "
-            "triplexes and quadplexes' in the mixed-use downtown district."
-        ),
+        # Four rulings stood here until 2026-09-08 -- MUC-1, MUC-2, MUD and
+        # WFD, all four to encode -- and three are gone because the zones are
+        # encoded and the ledger no longer asks. WFD is the fourth and it is
+        # the odd one: the zone is encoded, under the parcel layer's spelling
+        # WFDD, so the ledger goes on printing the ordinance's WFD forever and
+        # a ruling has to stay to answer it. That is what `aliased` is for.
+        #
+        # Two of the three that went taught something worth keeping even
+        # though the ruling itself is gone. The MUC-1 ruling written from the
+        # use table said the district carries "a 5 ft maximum front setback"
+        # and "the same 17.4 du/acre minimum density" -- and reading the
+        # section found that OCMC 17.29.050.I exempts a standalone residential
+        # development of fewer than five units from BOTH. So the two standards
+        # that ruling named are the two this pod does not carry, and the
+        # difference is one paragraph that MUC-2, C and the general commercial
+        # district do not have. A ruling made off a use table is a queue
+        # entry, never a reading.
         "WFD": (
-            "encode: OCMC 17.35, the Willamette Falls Downtown District, "
-            "whose permitted uses include 'R. Residential units--Multi-"
-            "family, triplexes and quadplexes'."
+            "aliased: OCMC 17.35, the Willamette Falls Downtown District, is "
+            "encoded -- as WFDD, which is how the county parcel layer spells "
+            "it on the four lots that carry it. Title 17 says WFD throughout "
+            "and never WFDD; the rules must be keyed on the parcel spelling "
+            "or they reach no land, and Oregon City has exactly one "
+            "Willamette Falls Downtown district, so the two names cannot be "
+            "two places."
         ),
         "MUC": (
             "not-a-zone: the chapter name OCMC 17.29.010 gives the mixed-use "
@@ -394,12 +410,19 @@ RULINGS: dict[str, dict[str, str]] = {
 #: is a reading that will be done again.
 BY_HAND: dict[str, dict[str, str]] = {
     "or/clackamas/oregon-city": {
-        "C": (
-            "encode: OCMC 17.32.020.S permits 'Multi-family residential, "
-            "triplexes, quadplexes' in the general commercial district. One "
-            "character long, so no harvest can ever see it -- a single "
-            "capital letter is noise everywhere else in the corpus."
-        ),
+        # C is gone from here on 2026-09-08, encoded. It was the entry that
+        # justified this whole dict existing: one capital letter, which no
+        # harvest can ever see because a lone capital is noise everywhere else
+        # in the corpus, so the only way it was ever going to be found was by
+        # somebody reading the chapter list. It was, and now it is 74 lots
+        # with rules on them.
+        #
+        # NC and HC stay, and they are not stale. Both are `prohibited`, which
+        # owes nobody any work, and both are now ALSO encoded -- as
+        # `quadplex_allowed: false`, quoting the same sentences these two
+        # rulings quote. The ruling and the rule agree, which is the state
+        # this file wants; if they ever stop agreeing, that is worth knowing
+        # and deleting the ruling would hide it.
         "NC": (
             "prohibited: OCMC 17.24.020.A lets neighbourhood commercial take "
             "'any use permitted in the mixed-use corridor', which would carry "
@@ -496,6 +519,15 @@ def test_the_districts_still_owed_are_the_ones_we_think() -> None:
     rather than an encode and so was never in this count. That is the first
     time this number has fallen because the queue was worked rather than
     because the reader changed.
+
+    Five now, later the same evening, and the second fall is Oregon City's
+    whole commercial side: MUC-1, MUC-2, MUD and C encoded, and WFD re-ruled
+    `aliased` because the zone IS encoded and the ledger will go on printing
+    the ordinance's spelling of it forever. Two more districts were encoded in
+    the same pass and never appeared in this count at all -- MUE and I are
+    refusals reasoned from OCMC 17.06.010.A, which the ledger cannot ask about
+    because it only knows what a jurisdiction PRINTS as a designation, not
+    what it declines to permit.
     """
     owed: dict[str, list[str]] = {"encode": [], "fetch": [], "column": []}
     for layer, rulings in list(RULINGS.items()) + list(BY_HAND.items()):
@@ -505,6 +537,6 @@ def test_the_districts_still_owed_are_the_ones_we_think() -> None:
             verdict = match.group(1)
             if verdict in owed:
                 owed[verdict].append(f"{layer}/{token}")
-    assert len(owed["encode"]) == 10, sorted(owed["encode"])
+    assert len(owed["encode"]) == 5, sorted(owed["encode"])
     assert len(owed["fetch"]) == 5, sorted(owed["fetch"])
     assert len(owed["column"]) == 10, sorted(owed["column"])

@@ -1763,7 +1763,7 @@ the list of places worth hoping about.
   blocks 115 lots. That last one changed my recommendation on item 15 and is
   written up there.
 
-  **Nine districts left, and the one I called cheapest is not.** Three more
+  **Of the nine then left, the one I called cheapest is not.** Three more
   Clackamas districts — 286 lots — send their setbacks to one chapter of the
   county ordinance that is not in our store, and I wrote here that fetching it
   was the cheapest work left in the layer. Then I read the page, which is
@@ -1778,6 +1778,63 @@ the list of places worth hoping about.
   **computed from the lot shapes we already have**, and it is the first of its
   kind on that list. It is a piece of work, not a purchase. Nothing for you to
   decide; noted here because the earlier line said the opposite.
+
+  **Oregon City's whole commercial side is read — 1,150 lots, the same
+  evening.** This was the last untouched part of that city: eleven districts,
+  everything that is not a plain residential neighbourhood. Six of them turn
+  out to prohibit our building and five permit it, so **798 lots on 986 acres
+  are newly in play** and 352 are newly and definitively out. Both halves are
+  worth the same to us — a district we have read and that says no is off the
+  list for good, where a district nobody has opened just sits there looking
+  like a maybe forever.
+
+  One thing came back that you should know about, because it changes what
+  "in play" means for those 798. **Downtown-style zoning here lets you build
+  right up to the property line — unless the property next door is houses,
+  in which case you must stand twenty feet back.** That is the whole ball
+  game on a small commercial lot, and which of the two applies depends
+  entirely on what the neighbouring parcel is zoned. We have never needed to
+  know that before, so nothing in the system looks it up, and until it does
+  every one of these 798 lots will come out as "needs a look" rather than a
+  clean pass.
+
+  The good news is the same as the good news two paragraphs up: this is
+  another one we can **work out from maps we already own** rather than buy.
+  It is the second such item in a row, after the sun rule, and the two of
+  them together are starting to look like one piece of work — teaching the
+  system to answer questions about the parcel *next door* — rather than two
+  unrelated gaps. Nothing for you to decide. I am flagging it because "798
+  lots in play" and "798 lots we can actually grade today" are not the same
+  sentence, and I do not want the first one quoted as if it were the second.
+
+  Two smaller notes from the same reading. One district's permitted-use list
+  contains the word "quadplex" and the district prohibits quadplexes — the
+  word is there because you may *convert* an existing house into one, which
+  is not what we do. Thirty-seven lots that a quick search would have called
+  open. And Oregon City's own parking table does not say whether its numbers
+  are per unit or per building; we read it the middle way and have been
+  relying on a state rule to cap it, and that state rule may not reach
+  commercial land. It is written down as the first thing to check before any
+  of these 798 lots is signed off. Neither needs anything from you now.
+
+  One more, and it is the kind of thing worth knowing we keep finding. Our
+  own checker — the one whose job is to confirm that every number we hold is
+  actually printed on the page we cite — reported three of these standards as
+  wrong. They were not. It could not read them: the scan had broken one word
+  across a line, put a space in the middle of another, and the checker's
+  vocabulary for numbers spelled out in words simply stopped at ninety-nine,
+  so "one hundred percent" was a number it had never learned. All three are
+  fixed and every number in the whole corpus now checks out. The reason this
+  keeps happening is worth stating plainly: **a checker that cannot see
+  something reports it as fine**, so these only ever surface when somebody
+  writes a number into the part of the page it was blind to.
+
+  **Five districts and five documents left across all cities**, down from
+  fourteen and five this morning. Two of the five districts are in Lake
+  Oswego, which is switched off — see item 16 — so in practice it is three:
+  one in Wilsonville and two in Gresham. Oregon City has a single zone left
+  and it is not a reading at all: twelve lots that our map labels with the
+  county's zoning instead of the city's.
 
 - **The 784 footnote dismissals were read back, blind, on 2026-09-07** — the
   run behind item 13, and the third of the three checks that stand over the

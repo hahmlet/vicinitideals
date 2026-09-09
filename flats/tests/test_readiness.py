@@ -469,6 +469,49 @@ def test_waiving_language_does_not_excuse_a_number_that_is_absent() -> None:
     assert not quotes_the_number("Maximum lot coverage", 0)
 
 
+def test_a_word_the_typesetter_broke_across_a_line_is_still_a_word() -> None:
+    """Three of Oregon City's commercial standards, all correctly cited, all
+    reported as misquotes on 2026-09-08 by a reader that could not read them.
+
+    Each is a different blindness and none is about the encoding:
+
+    * ``sto-\\nries`` -- the UNIT is hyphenated across a line, so the guard
+      that stops "one" and "two" corroborating anything at all could not see
+      that a unit followed at all;
+    * ``Eight y`` -- the scan put a space inside a spelled number, which
+      nothing repairs, because both halves are real words;
+    * ``One hundred`` -- the spelled vocabulary stopped at ninety-nine.
+
+    The third is the one that mattered most: it is a maximum site coverage,
+    so the number that could not be corroborated was the one that lets a
+    building take the whole lot.
+    """
+    from flats.encode.readiness import quotes_the_number
+
+    assert quotes_the_number(
+        "Maximum building height: Forty feet or three sto-\nries, "
+        "whichever is less.",
+        3,
+        spaced=True,
+    )
+    assert quotes_the_number(
+        "F. Maximum lot coverage of the building and parking\n"
+        "lot: Eight y percent.",
+        80,
+        spaced=True,
+    )
+    assert quotes_the_number("G. Maximum site coverage: One hundred percent.", 100)
+
+    # And none of the three widenings loosens the check where it was tight.
+    # "eight years" is not eighty: the unit guard refuses what follows.
+    assert not quotes_the_number("eight years of feet", 80, spaced=True)
+    # A spelled number with no unit behind it is still not evidence.
+    assert not quotes_the_number("three of the sto-\nries are ours", 3)
+    # And closing up a hyphenated break must never invent a number: a range
+    # broken across a line is two numbers, not one four-digit one.
+    assert not quotes_the_number("setback 20-\n30 feet", 2030)
+
+
 def test_a_non_numeric_value_is_never_misquoted() -> None:
     # Permission flags and enums have no number to look for, and flagging
     # them would bury the citations that really did drift.

@@ -421,6 +421,170 @@
         "protected_water_feature"
       ]
     },
+    "C": {
+      "max_coverage_pct": [
+        "protected_water_feature"
+      ],
+      "max_height_ft": [
+        "protected_water_feature"
+      ],
+      "min_density_du_per_acre": [
+        "protected_water_feature"
+      ],
+      "min_landscaped_pct": [
+        "protected_water_feature"
+      ],
+      "min_lot_sqft": [
+        "protected_water_feature"
+      ],
+      "parking_front_prohibited": [
+        "protected_water_feature"
+      ],
+      "quadplex_allowed": [
+        "protected_water_feature"
+      ],
+      "setback_front_ft": [
+        "protected_water_feature"
+      ],
+      "setback_front_max_ft": [
+        "protected_water_feature"
+      ],
+      "setback_rear_ft": [
+        "protected_water_feature"
+      ],
+      "setback_side_ft": [
+        "protected_water_feature"
+      ]
+    },
+    "CI": {
+      "quadplex_allowed": [
+        "protected_water_feature"
+      ]
+    },
+    "GI": {
+      "quadplex_allowed": [
+        "protected_water_feature"
+      ]
+    },
+    "HC": {
+      "quadplex_allowed": [
+        "protected_water_feature"
+      ]
+    },
+    "I": {
+      "quadplex_allowed": [
+        "utility_easement"
+      ]
+    },
+    "MUC-1": {
+      "max_coverage_pct": [
+        "protected_water_feature"
+      ],
+      "max_height_ft": [
+        "protected_water_feature"
+      ],
+      "max_height_stories": [
+        "protected_water_feature"
+      ],
+      "min_landscaped_pct": [
+        "protected_water_feature"
+      ],
+      "min_lot_sqft": [
+        "protected_water_feature"
+      ],
+      "parking_front_prohibited": [
+        "protected_water_feature"
+      ],
+      "quadplex_allowed": [
+        "protected_water_feature"
+      ],
+      "setback_front_ft": [
+        "protected_water_feature"
+      ],
+      "setback_rear_ft": [
+        "protected_water_feature"
+      ],
+      "setback_side_ft": [
+        "protected_water_feature"
+      ]
+    },
+    "MUC-2": {
+      "max_coverage_pct": [
+        "protected_water_feature"
+      ],
+      "max_height_ft": [
+        "protected_water_feature"
+      ],
+      "min_density_du_per_acre": [
+        "protected_water_feature"
+      ],
+      "min_landscaped_pct": [
+        "protected_water_feature"
+      ],
+      "min_lot_sqft": [
+        "protected_water_feature"
+      ],
+      "parking_front_prohibited": [
+        "protected_water_feature"
+      ],
+      "quadplex_allowed": [
+        "protected_water_feature"
+      ],
+      "setback_front_ft": [
+        "protected_water_feature"
+      ],
+      "setback_front_max_ft": [
+        "protected_water_feature"
+      ],
+      "setback_rear_ft": [
+        "protected_water_feature"
+      ],
+      "setback_side_ft": [
+        "protected_water_feature"
+      ]
+    },
+    "MUD": {
+      "max_coverage_pct": [
+        "protected_water_feature"
+      ],
+      "max_height_ft": [
+        "protected_water_feature"
+      ],
+      "min_density_du_per_acre": [
+        "protected_water_feature"
+      ],
+      "min_landscaped_pct": [
+        "protected_water_feature"
+      ],
+      "min_lot_sqft": [
+        "protected_water_feature"
+      ],
+      "parking_front_prohibited": [
+        "protected_water_feature"
+      ],
+      "quadplex_allowed": [
+        "protected_water_feature"
+      ],
+      "setback_front_ft": [
+        "protected_water_feature"
+      ],
+      "setback_rear_ft": [
+        "protected_water_feature"
+      ],
+      "setback_side_ft": [
+        "protected_water_feature"
+      ]
+    },
+    "MUE": {
+      "quadplex_allowed": [
+        "utility_easement"
+      ]
+    },
+    "NC": {
+      "quadplex_allowed": [
+        "protected_water_feature"
+      ]
+    },
     "R-10": {
       "max_coverage_pct": [
         "utility_easement"
@@ -652,6 +816,35 @@
       ],
       "setback_street_side_ft": [
         "utility_easement"
+      ]
+    },
+    "WFDD": {
+      "max_coverage_pct": [
+        "protected_water_feature"
+      ],
+      "max_height_ft": [
+        "protected_water_feature"
+      ],
+      "min_lot_sqft": [
+        "protected_water_feature"
+      ],
+      "parking_front_prohibited": [
+        "protected_water_feature"
+      ],
+      "quadplex_allowed": [
+        "protected_water_feature"
+      ],
+      "setback_front_ft": [
+        "protected_water_feature"
+      ],
+      "setback_front_max_ft": [
+        "protected_water_feature"
+      ],
+      "setback_rear_ft": [
+        "protected_water_feature"
+      ],
+      "setback_side_ft": [
+        "protected_water_feature"
       ]
     }
   },

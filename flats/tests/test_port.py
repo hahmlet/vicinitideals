@@ -225,6 +225,13 @@ def test_written_config_loads_through_the_real_loader() -> None:
     rules = RuleSet(load_rules())
 
     assert len(rules.layers) == 19  # 18 jurisdictions + the state layer
+    # 212 as of 2026-09-08, later still: Oregon City's whole non-residential
+    # side, eleven districts at once. Six of them refuse the pod and are
+    # encoded anyway -- a refusal is a reading, and an unencoded zone is not
+    # a refusal, it is a hole. Five carry dimensional standards, and they are
+    # the first zones in this corpus where the front setback is zero and the
+    # binding number is what the *neighbour* is zoned.
+    #
     # 201 as of 2026-09-08, later the same day: unincorporated Clackamas
     # gained R-2.5, PMD, MR-1, MR-2 and VA -- the first districts taken off
     # the top of the rebuilt two-county coverage ledger, and the largest
@@ -237,7 +244,7 @@ def test_written_config_loads_through_the_real_loader() -> None:
     # use table permits a quadplex in and the port had never carried (2026-08-21),
     # then Wilsonville gained V and TC, the two zones its chapter states and no
     # ledger could see were absent.
-    assert sum(len(l.zones) for l in rules.layers.values()) == 201
+    assert sum(len(l.zones) for l in rules.layers.values()) == 212
 
 
 def test_state_parking_preemption_reaches_a_city_zone() -> None:

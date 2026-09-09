@@ -445,8 +445,16 @@ _UNIT_WORD = re.compile(
 def _spelled(number: float) -> str:
     """How a code would write this number out in words, or "" for none.
 
-    Whole numbers to ninety-nine, and halves, which is the whole of what any
-    ordinance in this corpus spells. Beyond that they print digits.
+    Whole numbers to nine hundred and ninety-nine, and halves, which is the
+    whole of what any ordinance in this corpus spells. Beyond that they print
+    digits.
+
+    The hundreds were added 2026-09-08 for one line -- Oregon City's
+    Willamette Falls Downtown District, "Maximum site coverage: One hundred
+    percent" -- and they are the ceiling on a coverage standard, so the value
+    that could not be corroborated was the one that lets a building take the
+    whole lot. Ninety-nine was never a principled limit; it was as far as
+    anything had needed to count.
     """
     whole = int(number)
     if whole != number:
@@ -457,16 +465,53 @@ def _spelled(number: float) -> str:
         return _TENS[whole]
     if 20 < whole < 100:
         return f"{_TENS[whole // 10 * 10]}-{_UNITS[whole % 10]}"
+    if 100 <= whole < 1000:
+        hundreds = f"{_UNITS[whole // 100]} hundred"
+        # Not `if rest` -- _spelled(0) is "zero", and "one hundred zero" is
+        # not a thing anybody has ever printed.
+        return f"{hundreds} {_spelled(whole % 100)}" if whole % 100 else hundreds
     return ""
 
 
-def _says(text: str, number: float) -> bool:
-    """Whether the text states this number in words, with a unit behind it."""
+def _says(text: str, number: float, *, spaced: bool = False) -> bool:
+    """Whether the text states this number in words, with a unit behind it.
+
+    ``spaced`` lets the letters of the word be interrupted, because a scan
+    that breaks "10,000" into "1 0 , 000" breaks "Eighty" into "Eight y", and
+    the second is not repaired by anything that repairs the first -- both
+    halves are real words, so nothing downstream can tell it happened. The
+    unit still has to follow, which is what stops "eight years" reading as
+    eighty: after the "y" comes an "e", and the word boundary refuses it.
+    """
     word = _spelled(number)
     if not word:
         return False
-    pattern = re.compile(r"\b" + word.replace("-", "[- ]").replace(" ", r"\s+") + r"\b", re.I)
+    parts = [p for p in re.split(r"[- ]", word) if p]
+    if spaced:
+        parts = [r"\s*".join(re.escape(c) for c in part) for part in parts]
+    else:
+        parts = [re.escape(part) for part in parts]
+    # Components join over a hyphen, a space, an "and", or -- after a
+    # hyphenated line break has been closed up -- nothing at all.
+    pattern = re.compile(r"\b" + r"[-\s]*(?:and[-\s]+)?".join(parts) + r"\b", re.I)
     return any(_UNIT_WORD.match(text[found.end():]) for found in pattern.finditer(text))
+
+
+#: A word broken across a line by the typesetter, in either of the two hyphens
+#: this corpus uses. Closed up before anything is looked for, because the unit
+#: that has to follow a spelled number is as breakable as any other word --
+#: Oregon City prints "Forty feet or three sto-\nries", and a check that could
+#: not see "stories" there reported a correctly cited three as a misquote.
+#:
+#: Guarded on a letter before and a LOWERCASE letter after, which is what a
+#: continuation looks like and what a range or a compound does not. Without
+#: that guard "20-\n30" would close up into 2030 and invent a number the page
+#: does not state.
+_HYPHEN_BREAK = re.compile(r"(?<=[A-Za-z])[-­][ \t]*\r?\n[ \t]*(?=[a-z])")
+
+
+def _dehyphenate(text: str) -> str:
+    return _HYPHEN_BREAK.sub("", text)
 
 
 #: How an ordinance prints a standard it does not impose. A zero encoded
@@ -675,8 +720,8 @@ def quotes_the_number(
     """
     if isinstance(value, bool) or not isinstance(value, (int, float)):
         return True
-    hay = _in_feet(_decimalise(repair_text(text) if spaced else text))
-    if _states(hay, float(value)) or _says(hay, float(value)):
+    hay = _dehyphenate(_in_feet(_decimalise(repair_text(text) if spaced else text)))
+    if _states(hay, float(value)) or _says(hay, float(value), spaced=spaced):
         return True
     if glued and _states(_unmarked(hay), float(value)):
         return True

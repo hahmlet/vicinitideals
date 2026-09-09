@@ -261,7 +261,40 @@ pytestmark = pytest.mark.unit
 #:
 #: Worth saying because the direction is counter-intuitive: closing a zone gap
 #: RAISES this count. A district nobody encoded refuses nothing.
-EXPECTED = {"notes": 111, "comments": 130, "tests": 17}
+EXPECTED = {"notes": 120, "comments": 130, "tests": 17}
+#
+# 258 -> 267 on 2026-09-08, later still, and every one of the nine is Oregon
+# City's non-residential side. Nine notes, no comments, which is itself the
+# finding: these are not one block header standing over a family of related
+# refusals, they are nine separate readings of nine separate paragraphs.
+#
+# Three shapes, and only one of them is a hole in this model:
+#
+#   Exempted by the code itself (3). MUC-1's five-foot maximum front yard
+#   and its 17.4 units-per-acre minimum density, and MUD's maximum front
+#   setback, are all switched off by the same sentence in three different
+#   chapters -- "standalone residential development of fewer than five
+#   units" -- and this pod is four. Nothing is missing; the standard does
+#   not reach us.
+#
+#   Out of scope (2). MUC-2's minimum FAR of 0.25 and MUD's of 0.30/0.5 are
+#   refused because 17.29.070.A and 17.34.080.A say in their own words what
+#   minimum FARs reach: "all nonresidential and mixed-use building
+#   development". A standalone quadplex is neither. Refusing on scope is
+#   stronger than refusing for want of a field, and it is worth the extra
+#   reading every time it is available.
+#
+#   No field, three of which cannot bite and one of which can (4). Three
+#   minimum building heights -- MUC-2, MUD, WFDD, all "twenty-five feet or
+#   two stories" -- have nowhere to go in this registry and it does not
+#   matter: the pod is two storeys at twenty-six feet and clears both limbs
+#   of all three. WFDD's minimum FAR of 1.0 is the one that bites, because
+#   Chapter 17.35 states no scope limit of its own and so the exemption the
+#   other two districts hand us is absent here. Four lots, and the honest
+#   place to record that is a refusal rather than a silence.
+#
+#   Plus MUC-2's twenty-foot cap on the CORNER side setback: a maximum
+#   street-side setback, which no field in the registry is shaped for.
 #
 # 252 -> 258 on 2026-09-08, and the note above about direction is exactly
 # why: unincorporated Clackamas gained five districts, and six refusals it
