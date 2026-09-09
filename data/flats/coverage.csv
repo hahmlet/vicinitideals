@@ -45,7 +45,7 @@ or/multnomah/gresham,TLDR,1024,383.69,partial,0,20,,driveway_approach_max_width_
 or/clackamas/_unincorporated,VR57,977,187.53,partial,0,17,,driveway_approach_max_width_ft;land_division_parent_standards;max_coverage_pct;max_height_ft;min_lot_sqft;parking_aisle_one_way_ft;parking_aisle_two_way_ft;parking_area_max_frontage_pct;parking_min_per_unit;parking_stall_depth_ft;parking_stall_width_ft;quadplex_allowed;setback_front_ft;setback_front_max_ft;setback_garage_entrance_ft;setback_rear_ft;setback_side_ft,977
 or/clackamas/tualatin,RL,956,333.05,partial,0,20,,driveway_approach_max_width_ft;driveway_approach_min_width_ft;driveway_min_width_one_way_ft;driveway_min_width_two_way_ft;land_division_parent_standards;max_coverage_pct;max_height_ft;min_lot_sqft;min_lot_width_ft;parking_aisle_one_way_ft;parking_aisle_two_way_ft;parking_min_per_unit;parking_stall_depth_ft;parking_stall_width_ft;quadplex_allowed;setback_front_ft;setback_garage_entrance_ft;setback_rear_ft;setback_side_ft;setback_street_side_ft,956
 or/clackamas/_unincorporated,R15,935,469.47,partial,0,16,,driveway_approach_max_width_ft;land_division_parent_standards;max_coverage_pct;max_height_ft;min_lot_sqft;parking_aisle_one_way_ft;parking_aisle_two_way_ft;parking_area_max_frontage_pct;parking_min_per_unit;parking_stall_depth_ft;parking_stall_width_ft;quadplex_allowed;setback_front_ft;setback_garage_entrance_ft;setback_rear_ft;setback_side_ft,935
-or/clackamas/_unincorporated,MR1,839,610.15,zone_missing,0,0,,,839
+or/clackamas/_unincorporated,MR1,839,610.15,partial,0,14,,driveway_approach_max_width_ft;land_division_parent_standards;min_lot_sqft;parking_aisle_one_way_ft;parking_aisle_two_way_ft;parking_area_max_frontage_pct;parking_min_per_unit;parking_stall_depth_ft;parking_stall_width_ft;quadplex_allowed;setback_front_ft;setback_garage_entrance_ft;setback_rear_ft;setback_side_ft,839
 or/clackamas/happy-valley,R7,818,428.1,partial,0,21,,driveway_min_width_one_way_ft;driveway_min_width_two_way_ft;land_division_parent_standards;max_coverage_pct;max_height_ft;min_frontage_ft;min_landscaped_pct;min_lot_depth_ft;min_lot_sqft;min_lot_width_ft;parking_aisle_one_way_ft;parking_aisle_two_way_ft;parking_min_per_unit;parking_stall_depth_ft;parking_stall_width_ft;parking_street_setback_ft;quadplex_allowed;setback_front_ft;setback_rear_ft;setback_side_ft;setback_street_side_ft,818
 or/multnomah/troutdale,MDR,800,299.94,partial,0,21,,driveway_approach_max_width_ft;driveway_min_width_one_way_ft;driveway_min_width_two_way_ft;land_division_parent_standards;max_height_ft;min_frontage_ft;min_lot_depth_ft;min_lot_sqft;min_lot_width_ft;parking_aisle_one_way_ft;parking_aisle_two_way_ft;parking_area_max_frontage_pct;parking_min_per_unit;parking_stall_depth_ft;parking_stall_width_ft;parking_street_setback_ft;quadplex_allowed;setback_front_ft;setback_rear_ft;setback_side_ft;setback_street_side_ft,800
 or/clackamas/wilsonville,PDR4,793,252.7,partial,0,15,,driveway_approach_max_width_ft;land_division_parent_standards;max_coverage_pct;max_height_ft;min_frontage_ft;min_lot_sqft;parking_area_max_frontage_pct;parking_stall_depth_ft;parking_stall_width_ft;quadplex_allowed;setback_front_ft;setback_garage_entrance_ft;setback_rear_ft;setback_side_ft;setback_street_side_ft,793
@@ -132,7 +132,7 @@ or/clackamas/oregon-city,MUE,133,164.89,zone_missing,0,0,,,133
 or/clackamas/gladstone,C3,131,161.46,zone_missing,0,0,,,131
 or/clackamas/_unincorporated,CC,130,115.94,zone_missing,0,0,,,130
 or/clackamas/happy-valley,IPU,122,899.26,zone_missing,0,0,,,122
-or/clackamas/_unincorporated,MR2,120,244.55,zone_missing,0,0,,,120
+or/clackamas/_unincorporated,MR2,120,244.55,partial,0,14,,driveway_approach_max_width_ft;land_division_parent_standards;min_lot_sqft;parking_aisle_one_way_ft;parking_aisle_two_way_ft;parking_area_max_frontage_pct;parking_min_per_unit;parking_stall_depth_ft;parking_stall_width_ft;quadplex_allowed;setback_front_ft;setback_garage_entrance_ft;setback_rear_ft;setback_side_ft,120
 or/clackamas/milwaukie,DMU,120,66.26,zone_missing,0,0,,,120
 or/clackamas/_unincorporated,TBR,118,901.92,zone_missing,0,0,,,118
 or/clackamas/_unincorporated,VTH,115,15.36,zone_missing,0,0,,,115
@@ -159,7 +159,7 @@ or/multnomah/gresham,HI,81,298.99,partial,0,10,,driveway_approach_max_width_ft;d
 or/clackamas/milwaukie,BI,78,227.92,zone_missing,0,0,,,78
 or/clackamas/milwaukie,M,78,69.51,zone_missing,0,0,,,78
 or/multnomah/gresham,DRL-1,78,21.15,partial,0,23,,driveway_approach_max_width_ft;driveway_approach_min_width_ft;land_division_parent_standards;max_far;max_height_ft;min_density_du_per_acre;min_frontage_ft;min_lot_depth_ft;min_lot_sqft;min_lot_width_ft;open_space_min_pct;orientation_constraint;parking_aisle_one_way_ft;parking_aisle_two_way_ft;parking_min_per_unit;parking_stall_depth_ft;parking_stall_width_ft;quadplex_allowed;setback_front_ft;setback_garage_entrance_ft;setback_rear_ft;setback_side_ft;setback_street_side_ft,78
-or/clackamas/_unincorporated,R2.5,77,10.36,zone_missing,0,0,,,77
+or/clackamas/_unincorporated,R2.5,77,10.36,partial,0,9,,driveway_approach_max_width_ft;land_division_parent_standards;parking_aisle_one_way_ft;parking_aisle_two_way_ft;parking_area_max_frontage_pct;parking_min_per_unit;parking_stall_depth_ft;parking_stall_width_ft;quadplex_allowed,77
 or/clackamas/oregon-city,C,74,162.55,zone_missing,0,0,,,74
 or/multnomah/gresham,HDR-PV,74,15.57,partial,0,17,,driveway_approach_max_width_ft;driveway_approach_min_width_ft;land_division_parent_standards;max_height_ft;min_density_du_per_acre;open_space_min_pct;parking_aisle_one_way_ft;parking_aisle_two_way_ft;parking_min_per_unit;parking_stall_depth_ft;parking_stall_width_ft;quadplex_allowed;setback_front_ft;setback_garage_entrance_ft;setback_rear_ft;setback_side_ft;setback_street_side_ft,74
 or/multnomah/troutdale,NSA,74,124.0,zone_missing,0,0,,,74
@@ -239,7 +239,7 @@ or/clackamas/oregon-city,County,12,7.7,zone_missing,0,0,,,12
 or/multnomah/gresham,NC,12,8.15,partial,0,10,,driveway_approach_max_width_ft;driveway_approach_min_width_ft;land_division_parent_standards;open_space_min_pct;parking_aisle_one_way_ft;parking_aisle_two_way_ft;parking_min_per_unit;parking_stall_depth_ft;parking_stall_width_ft;quadplex_allowed,12
 or/multnomah/fairview,LI,11,17.71,partial,0,11,,driveway_approach_max_width_ft;driveway_approach_min_width_ft;land_division_parent_standards;parking_aisle_one_way_ft;parking_aisle_two_way_ft;parking_area_max_frontage_pct;parking_building_buffer_ft;parking_min_per_unit;parking_stall_depth_ft;parking_stall_width_ft;quadplex_allowed,11
 or/multnomah/gresham,IND-SW,11,113.65,partial,0,10,,driveway_approach_max_width_ft;driveway_approach_min_width_ft;land_division_parent_standards;open_space_min_pct;parking_aisle_one_way_ft;parking_aisle_two_way_ft;parking_min_per_unit;parking_stall_depth_ft;parking_stall_width_ft;quadplex_allowed,11
-or/clackamas/_unincorporated,PMD,9,2.58,zone_missing,0,0,,,9
+or/clackamas/_unincorporated,PMD,9,2.58,partial,0,15,,driveway_approach_max_width_ft;land_division_parent_standards;min_building_separation_ft;min_lot_sqft;parking_aisle_one_way_ft;parking_aisle_two_way_ft;parking_area_max_frontage_pct;parking_min_per_unit;parking_stall_depth_ft;parking_stall_width_ft;quadplex_allowed;setback_front_ft;setback_garage_entrance_ft;setback_rear_ft;setback_side_ft,9
 or/clackamas/_unincorporated,R-MD,9,71.5,zone_missing,0,0,,,9
 or/clackamas/happy-valley,MUE,9,76.6,zone_missing,0,0,,,9
 or/clackamas/happy-valley,MURM3,8,3.03,zone_missing,0,0,,,8
@@ -305,7 +305,7 @@ or/clackamas/_unincorporated,R-7.5,1,6.83,zone_missing,0,0,,,1
 or/clackamas/_unincorporated,R-HD,1,6.27,zone_missing,0,0,,,1
 or/clackamas/_unincorporated,RC-ME,1,0.14,zone_missing,0,0,,,1
 or/clackamas/_unincorporated,SHD,1,5.42,zone_missing,0,0,,,1
-or/clackamas/_unincorporated,VA,1,6.23,zone_missing,0,0,,,1
+or/clackamas/_unincorporated,VA,1,6.23,partial,0,14,,driveway_approach_max_width_ft;land_division_parent_standards;max_height_ft;min_building_separation_ft;min_lot_sqft;parking_aisle_one_way_ft;parking_aisle_two_way_ft;parking_area_max_frontage_pct;parking_min_per_unit;parking_stall_depth_ft;parking_stall_width_ft;quadplex_allowed;setback_front_ft;setback_front_max_ft,1
 or/clackamas/_unincorporated,VCS,1,9.46,zone_missing,0,0,,,1
 or/clackamas/gladstone,C1,1,0.87,zone_missing,0,0,,,1
 or/clackamas/gladstone,RRFF5,1,16.01,zone_missing,0,0,,,1

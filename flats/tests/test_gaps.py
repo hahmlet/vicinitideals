@@ -417,3 +417,38 @@ def test_a_ledger_nobody_has_written_is_absent_not_empty(tmp_path):
     from flats.encode.gaps import read_ledger
 
     assert read_ledger(tmp_path / "nothing.json") is None
+
+
+def test_the_written_ledger_is_current_with_the_corpus_it_describes():
+    """The check that was only ever run on the other side of the wall.
+
+    ``flats/config/gaps.json`` is measured by a command and committed, because
+    measuring it reads every stored document and is a minute a jurisdiction --
+    too slow for a page load and far too slow for a test. So the page reads the
+    written answer back and compares a digest of the corpus against the digest
+    the ledger was written with, and says "overtaken" rather than quietly
+    presenting last week's work list as today's.
+
+    That comparison existed, and it lived in ``tests/api``. Encoding a
+    jurisdiction does not touch ``app/``, so an encoding session runs
+    ``pytest flats/tests``, sees green, and pushes a ledger that is behind the
+    rules it describes. That is not hypothetical: it happened on 2026-09-08
+    with Oregon City R-2 and stayed broken for five commits, every one of them
+    red in CI for this one reason, because the person who could have caught it
+    locally was running the suite that could not see it.
+
+    So the check is here as well now. The API test stays -- it is about the
+    page saying the right thing -- and this one is about the file being right
+    before anybody serves it. `load_trusted` rather than `load_rules` for the
+    same reason the router uses it: the digest must be taken over the corpus
+    the screen actually reads.
+    """
+    from flats.encode.gaps import digest, read_ledger
+    from flats.encode.load import load_trusted
+
+    ledger = read_ledger()
+    assert ledger is not None, "flats/config/gaps.json is missing"
+    assert ledger.get("digest") == digest(load_trusted(strict=False).layers), (
+        "flats/config/gaps.json is behind the YAML — re-run "
+        "`python -m flats.encode.gaps`"
+    )
