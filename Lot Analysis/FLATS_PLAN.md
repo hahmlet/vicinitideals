@@ -2936,8 +2936,50 @@ values to 390 and freed PMD entirely.
 where their rear and side setbacks belong. ZDO 1005 is not in the store. A zone
 whose setbacks are a cross-reference nobody has read is not a zone this project
 guesses at, so the three stay `zone_missing` — which is now a queue entry with a
-lot count on it rather than an absence. **Fetching ZDO 1005 is the single
-cheapest 286 lots left in this layer.**
+lot count on it rather than an absence.
+
+This section first said fetching ZDO 1005 was *"the single cheapest 286 lots
+left in this layer"*, written before anybody had read the chapter. **That was
+wrong, and the correction is more interesting than the claim.** The page is
+live and the subsection is on it, so it took a read rather than a fetch to
+find out:
+
+> "The minimum distance on a north-south axis between any building and a site
+> area line north of said building shall be the horizontal distance calculated
+> by drawing a 60-degree angle line from the top of the structure to the
+> natural ground elevation north of the structure."
+
+and, for the other axis, with the county doing its own trigonometry:
+
+> "Formula: Separation = b x .267 (tan 15 degrees)"
+
+**It is a solar-access rule, and it is measured off compass north.** One lot
+line wants a large separation because a building shades the land behind it;
+two want a small one; the fourth is not regulated at all. Which line is which
+depends on where the lot is pointing, and **FLATS holds no bearing for any lot
+line** — `orientation` in the screen means which way the *pod* sits in its
+envelope, not which way the lot faces. So `setback_rear_ft` and
+`setback_side_ft`, which are directionless in this model, cannot carry it: rear
+would have to mean "the north one" and it does not.
+
+The forms to hold the arithmetic already exist — `per_height_ft` is a divisor
+over `DESIGN_HEIGHT_FT`, `step_back` takes a `slope_degrees` and converts it,
+and all three of the fields involved accept them. What is missing is not a
+value form. It is the fact. So this joins the fourth-footnote-state list beside
+transit, corner, alley and sewer, with one difference worth noting: unlike
+those, **the fact is computable from geometry we already hold** — the parcel
+polygons are in PostGIS and a lot line's bearing is arithmetic on two points.
+That makes it a measurement to build rather than a datum to buy, and it is the
+first item on that list of which that is true.
+
+The same chapter answers the maximum front setback these four districts defer
+to, and it lands in the same place: 1005.02(H) caps the setback at 20 feet, but
+only for a building *"located at a major transit stop"* — frontage on the
+transit street and any part of the building within a 200-foot radius. Another
+unmeasured site fact, and a second word question underneath it, because the row
+reaches *"retail, office, mixed use, multifamily, and institutional
+buildings"* and this county's own use table lists Quadplexes as a separate
+line from Multifamily Dwellings.
 
 **VTH (115 lots)** is refused for a worse reason, and it is HUMAN_TODO item 15
 appearing in a second document with a name attached. Table 315-3 heads three

@@ -1763,9 +1763,21 @@ the list of places worth hoping about.
   blocks 115 lots. That last one changed my recommendation on item 15 and is
   written up there.
 
-  **Nine districts left, and the cheapest is a fetch.** Three more Clackamas
-  districts — 286 lots — are blocked on one un-fetched chapter of the county
-  ordinance and nothing else.
+  **Nine districts left, and the one I called cheapest is not.** Three more
+  Clackamas districts — 286 lots — send their setbacks to one chapter of the
+  county ordinance that is not in our store, and I wrote here that fetching it
+  was the cheapest work left in the layer. Then I read the page, which is
+  public, and it is not: the setback it supplies is a **sun rule**. How far the
+  building must stand off a lot line depends on which line faces north, because
+  the point is to stop the building shading the land behind it. We hold no
+  compass direction for any lot line, so there is nothing to put the number in.
+
+  That is a better problem than it sounds. The four site facts that have
+  blocked us before — is there a bus stop, is it a corner, is there an alley,
+  is there sewer — all have to be bought or asked for. This one can be
+  **computed from the lot shapes we already have**, and it is the first of its
+  kind on that list. It is a piece of work, not a purchase. Nothing for you to
+  decide; noted here because the earlier line said the opposite.
 
 - **The 784 footnote dismissals were read back, blind, on 2026-09-07** — the
   run behind item 13, and the third of the three checks that stand over the
