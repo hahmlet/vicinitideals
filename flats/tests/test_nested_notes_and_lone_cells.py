@@ -237,21 +237,40 @@ def test_and_the_cell_that_points_at_them_is_read_as_a_row(store: ProvenanceStor
 
 
 def test_every_note_in_this_layer_is_ruled_and_none_of_them_blocks() -> None:
-    """Ninety-six, from eight blocks, none left unread. The count is the
-    point: the layer reported clean at zero, at fifty-seven, at
-    seventy-seven, at eighty-four, at eighty-nine and now at ninety-six, and
-    only the last of those is because it is. The fifth block is Table 1012-1,
-    Bonus Density, which announces itself with nothing but a weld.
+    """A hundred and forty-four, from ten blocks, none left unread. The count
+    is the point: the layer reported clean at zero, at fifty-seven, at
+    seventy-seven, at eighty-four, at eighty-nine, at ninety-six and now at
+    a hundred and forty-four, and only the last of those is because it is. The
+    fifth block is Table 1012-1, Bonus Density, which announces itself with
+    nothing but a weld.
 
-    The last three blocks arrived with ZDO 1015 on 2026-08-27, when this layer
+    Three of the blocks arrived with ZDO 1015 on 2026-08-27, when this layer
     was read for parking. Five of the seven govern the encoded number, because
     the whole notes block under a table governs and not the cell -- only two
     are about a quadplex at all. The other two blocks are Table 1015-1's unit
     and the rural bicycle discount, and they are ruled for the reason every
     note here is ruled: a layer that reports clean because nobody looked reads
-    exactly like a layer that is clean."""
+    exactly like a layer that is clean.
+
+    The last two arrived with ZDO 316 on 2026-09-08, when the rural half of the
+    county was read: Table 316-1's thirty-five use-table notes, which govern
+    all five rural refusals, and Table 316-2's thirteen dimensional ones, which
+    govern nothing at all. Eight of the forty-eight needed no reason written
+    for them -- the county repeats sentences about towers, recyclable drop-off
+    sites, temporary signs and utility cabinets verbatim between chapters, and
+    a ruling here is a statement about a sentence, so the digests written for
+    Section 315 answered them where they stand.
+
+    Table 316-2's thirteen are the interesting ones, because nothing cites the
+    lines they sit on and the blocking check would never have looked at them.
+    Ruling them on "it qualifies nothing we hold" would have been a reason
+    about our corpus, and one that expires the day somebody encodes a
+    dimension in these districts. They are ruled on what they say instead:
+    another application path, another building, a rule about creating lots
+    rather than building on one, or a relaxation.
+    """
     ruled = list(dispositions(CLACKAMAS))
-    assert len(ruled) == 96
+    assert len(ruled) == 144
     assert not [n for n in ruled if n.state == "unread"]
     rows = [r for r in qualified() if r.layer == CLACKAMAS]
     # 74 until 2026-09-08, when Table 315-4's four districts were encoded and

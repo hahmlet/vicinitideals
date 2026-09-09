@@ -172,6 +172,14 @@ OPEN = {
 FOLLOWED = {
     "or/clackamas/_unincorporated 845.01 -> 845.02",
     "or/clackamas/_unincorporated 315.04 -> 845",
+    # Both arrived with ZDO Section 316 on 2026-09-08 and both are followed,
+    # which is the outcome this ledger wants: 316.03(A)(3) sends permitted
+    # uses to "Subsection 316.04, Dimensional Standards" and 316.04(B) sends
+    # the modifications to Section 1015, Parking and Loading. Table 316-2 is
+    # inside the same document and 1015 has been in the store since the
+    # parking read, so neither redirect leads anywhere unread.
+    "or/clackamas/_unincorporated 316.03 -> 316.04",
+    "or/clackamas/_unincorporated 316.04 -> 1015",
     "or/multnomah/_unincorporated 39.4245 -> 39.3070",
     "or/multnomah/fairview 19.115.020 -> 19.30",
     "or/multnomah/fairview 19.115.040 -> 19.30.030",

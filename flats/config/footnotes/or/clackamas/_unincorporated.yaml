@@ -1039,3 +1039,435 @@ notes:
       them, and a rule that makes a requirement smaller could not shrink a lot
       out of fitting in any case
 
+
+  # --- Table 316-1, the rural use table, read 2026-09-08 --------------
+  #
+  # Thirty-five notes under one table, and the whole block governs the five
+  # rural refusals, because a notes block's region is the run of lines above
+  # it and the refusal is quoted from the table those notes hang off. Seven
+  # were already dismissed on digests written for Section 315: the county
+  # repeats sentences about towers, recyclable drop-off sites, temporary
+  # signs and utility cabinets verbatim between chapters, and a ruling is a
+  # statement about a sentence rather than about a place in a file.
+  #
+  # The other twenty-eight are ruled here, and every one of them is ruled on
+  # the row it sits on rather than on ours. Finding that row is the work. A
+  # cell in this document arrives on its own line, so a marker is four
+  # characters with no use beside it, and the only way to say what a note is
+  # about is to walk back up the column to the row heading.
+  #
+  # Note 13 is why that matters. It reads "Uses similar to this may be
+  # authorized pursuant to Section 106, Authorizations of Similar Uses" --
+  # the one shape of note in this chapter that could turn an unlisted use
+  # into a permitted one, which is exactly the mechanism the refusal rests
+  # on. It sits on six rows: fraternal organization lodges, government uses,
+  # transmission towers and earth stations, recreational uses, recreational
+  # vehicle camping facilities, and utility facilities not otherwise listed.
+  # None of them is a dwelling. Had it been printed on the duplex row this
+  # refusal would not have been safe to write, and nothing short of reading
+  # the markers off the cells would have shown that either way.
+  #
+  # Note 8 is the opposite of a dismissal. It is the evidence. It is printed
+  # on exactly five rows -- detached single-family dwellings, duplexes,
+  # manufactured dwellings, prefabricated structures and single room
+  # occupancies -- which is the same list, in the same order, that the note
+  # itself gives as the one thing a lot of record may be developed with.
+  #
+  # Table 316-2's own thirteen notes are left unread on purpose. They govern
+  # lot size and setbacks in districts where this layer holds no lot size and
+  # no setback, so they qualify nothing; ruling them would mean writing
+  # reasons about numbers we do not have.
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L614"
+    digest: "01c5d2a325ef"
+    state: dismissed
+    reason: >-
+      printed on the RR cell of the Aircraft Landing Areas row, and it limits
+      that conditional use to emergency aircraft. An airstrip is not a
+      dwelling and this note only makes it smaller
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L616"
+    digest: "1be667330a73"
+    state: dismissed
+    reason: >-
+      on the FU-10 cell of the Child Care Facilities row: the use is limited
+      to the alteration or expansion of a facility that lawfully exists. A
+      different use, and a restriction on it
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L618"
+    digest: "9f5cf7663c25"
+    state: dismissed
+    reason: >-
+      printed on the Farm Uses heading and on Commercial or Processing
+      Activities in Conjunction with Farm or Forest Uses. It says what "farm
+      uses" does not take in -- marijuana production, processing, wholesaling
+      and retailing, each of which has its own row. It sorts crops from
+      cannabis; neither side of that sorting is a dwelling
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L620"
+    digest: "03fdbb513129"
+    state: dismissed
+    reason: >-
+      printed on the prohibited FU-10 cells of Community Halls and Libraries,
+      and it says the use is nevertheless reachable under the government use
+      category. It moves a public building between two rows of this table.
+      Neither row is a dwelling, and no reading of it reaches one
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L622"
+    digest: "8bb72b90ebd3"
+    state: dismissed
+    reason: >-
+      on the FU-10 cell of Daycare Services, Adult, limiting the use to the
+      alteration or expansion of a service that lawfully exists. The same
+      shape as note 2 on child care, and the same answer
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L624"
+    digest: "66d90b0d1534"
+    state: dismissed
+    reason: >-
+      printed on every cell of the Accessory Dwelling Units row, and it
+      withdraws the ADU inside an urban reserve established under OAR 660
+      Division 21 or 27. An accessory dwelling unit is a second unit on a lot
+      that already has a house on it, not a four-unit attached building, and
+      this note only ever subtracts. It is one of the three sections note 8
+      excepts, which is why it was followed rather than skimmed
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L626"
+    digest: "d113f786c26d"
+    state: dismissed
+    reason: >-
+      printed on the Accessory Historic Dwellings row, confining that use to
+      land outside both an urban growth boundary and an urban reserve. Section
+      843 is the second of the three sections note 8 excepts; it converts an
+      existing historic house into a second dwelling and cannot produce a new
+      four-unit building. A restriction on it reaches this pod even less
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L628"
+    digest: "a0096903b8af"
+    state: encoded
+    encoded_as: >-
+      quadplex_allowed: false in RRFF5, FU10, RA2, RA1 and FF10
+    reason: >-
+      the sentence the whole rural refusal rests on, and the reason it is an
+      affirmative rather than an argument from silence: "each lot of record
+      may be developed with only one of the following: detached single-family
+      dwelling, duplex (only if approved as a conditional use in the RA-1
+      District), manufactured dwelling, prefabricated structure, or single
+      room occupancy." It is printed on exactly those five rows of Table
+      316-1, and there is no triplex, quadplex, townhouse, cottage cluster or
+      multifamily row anywhere in the table to print it on. 316.03(A)(1)
+      supplies the other half -- "Uses not listed are prohibited"
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L630"
+    digest: "4b0e2593b004"
+    state: dismissed
+    reason: >-
+      printed beside note 8 on the Single Room Occupancies row, and the six is
+      a ceiling rather than a licence: the use is confined to the inside of an
+      urban growth boundary and capped at six units. A single room occupancy
+      is rooms with shared facilities, which is a different use from four
+      self-contained dwellings, and note 8 is on the same cells saying a lot
+      gets one of the five listed things
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L632"
+    digest: "92a3940c0f69"
+    state: dismissed
+    reason: >-
+      printed on the crop rows inside Farm Uses -- raising and selling crops,
+      preparing and storing what is raised on the land, growing cultured
+      Christmas trees -- and it confines those to lots larger than five acres.
+      A farm-size floor on farming
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L634"
+    digest: "a934713d87d6"
+    state: dismissed
+    reason: >-
+      printed on the prohibited livestock cells, and it routes livestock
+      between two use categories depending on the district. It decides which
+      row an animal is read under. Nothing in it is about a building
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L636"
+    digest: "bedffcf61394"
+    state: dismissed
+    reason: >-
+      printed on the Forest Practices row, and it points at Subsection 1002.02
+      "regarding a development restriction that may apply if excessive tree
+      removal occurs" inside the Portland Metropolitan Urban Growth Boundary.
+      Two independent reasons it cannot move this value: the row is forest
+      practices -- reforestation, harvesting, thinning -- and what it points
+      at is a restriction, which can make a permitted building harder and
+      never makes a prohibited one possible. Subsection 1002 is not in the
+      store and stays ruled `fetch` in the crossref ledger rather than being
+      closed here, because the restriction itself may well bite an urban
+      district that does permit this pod
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L638"
+    digest: "ff76a7523aec"
+    state: dismissed
+    reason: >-
+      the one note in this chapter that could have opened the door: "Uses
+      similar to this may be authorized pursuant to Section 106,
+      Authorizations of Similar Uses." It is printed on six rows and every one
+      of them was checked -- fraternal organization lodges, government uses,
+      radio and television transmission towers and earth stations,
+      recreational uses, recreational vehicle camping facilities, and utility
+      facilities not otherwise listed. No dwelling row carries it. A quadplex
+      is not similar to a lodge, a broadcast tower or a campground, so
+      Section 106 is not a path to it here
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L640"
+    digest: "3174ffbdb69a"
+    state: dismissed
+    reason: >-
+      printed on the Home Occupations row heading. It lets a use be permitted
+      as a home occupation under Section 822 even where it is listed
+      elsewhere in the table -- a business run out of a dwelling somebody
+      already has, not a permission to build one
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L642"
+    digest: "5560ea8e0705"
+    state: dismissed
+    reason: >-
+      on the Kennels row: the portion of the premises used shall be 200 feet
+      from all property lines. A setback, but on a kennel, and read off the
+      kennel's own cells. It moves dog runs
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L644"
+    digest: "61b5e84bf30d"
+    state: dismissed
+    reason: >-
+      on the Kitchens, Accessory row, confining an accessory kitchen to a
+      detached single-family dwelling, a manufactured dwelling or a
+      prefabricated structure, one apiece. A different use, and it corroborates
+      the refusal rather than qualifying it: this is the third place in the
+      chapter where the county lists the dwellings it has in mind and an
+      attached four-unit building is not among them
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L646"
+    digest: "c2f4e64b1496"
+    state: dismissed
+    reason: >-
+      on the Produce Stands row, sending that use to Section 1015 for its
+      parking. This layer reads its parking numbers from 1015 directly and a
+      produce stand's requirement is not a dwelling's
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L648"
+    digest: "ec828323724e"
+    state: dismissed
+    reason: >-
+      also on Produce Stands, and it widens what may be sold from one -- goods
+      grown on site plus agricultural products from the surrounding community.
+      A rule about produce
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L654"
+    digest: "264b507ae393"
+    state: dismissed
+    reason: >-
+      on the Recreational Uses row, making equine facilities a primary use
+      subject to a horse count and a limit on who may take a riding lesson.
+      One horse per acre or five in total is not a standard a building is
+      measured against
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L660"
+    digest: "516882ba0102"
+    state: dismissed
+    reason: >-
+      on Recreational Uses, Government-Owned and on Government-Owned Golf
+      Courses: any principal building or swimming pool shall be 45 feet from
+      any other lot in a residential zoning district. A separation standard
+      imposed on the public amphitheatre or clubhouse, measured away from
+      residential land rather than onto it, and read off those rows' cells.
+      It moves the neighbour, not the pod
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L664"
+    digest: "9976f1abd0cc"
+    state: dismissed
+    reason: >-
+      the six criteria on the CPUD cells of four commercial rows -- retailing,
+      food and beverage services, personal and convenience services, and
+      studios. It admits a shop inside a planned unit development of at least
+      100 dwelling units, at half an acre per hundred and 4,000 square feet a
+      use. It is the corner store in somebody else's PUD, and a PUD is a
+      different application path from the by-right lot this screen measures
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L678"
+    digest: "8ee81048d73f"
+    state: dismissed
+    reason: >-
+      on the Schools row, prohibiting schools within the Employment,
+      Industrial and Regionally Significant Industrial areas of Metro's 2040
+      Growth Concept Map. A geography that subtracts a use we are not placing
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L680"
+    digest: "72666ea7a16c"
+    state: dismissed
+    reason: >-
+      on the FU-10 cell of the Schools row, limiting the use to the alteration
+      or expansion of a school that lawfully exists. The same shape as notes 2
+      and 5, on a third use
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L682"
+    digest: "3e0d7f0e9a3f"
+    state: dismissed
+    reason: >-
+      on the Short-Term Rental row heading, and it forbids short-term renting
+      in an accessory dwelling unit under 839.04 and in a recreational vehicle
+      second dwelling. A rule about letting a dwelling out by the night, which
+      is downstream of the dwelling existing at all
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L684"
+    digest: "d87d5b37166d"
+    state: dismissed
+    reason: >-
+      on the Short-Term Rental cells, withdrawing the use inside an urban or
+      rural reserve established under OAR 660 Division 27. The same row as
+      note 27 and the same answer, narrowed by geography instead of by
+      building
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L688"
+    digest: "43502bb4548f"
+    state: dismissed
+    reason: >-
+      on the row for sewer system components serving land inside an urban
+      growth boundary: components serving land outside one are prohibited.
+      Infrastructure, and a prohibition on it
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L690"
+    digest: "01c1f7c22406"
+    state: dismissed
+    reason: >-
+      on the row for sewer systems and extensions serving land outside an
+      urban growth boundary, holding their capacity to the minimum necessary
+      for the area described at OAR 660-011-0060(4)(b)(B). A sizing rule for
+      a pipe
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L692"
+    digest: "327dcafc9826"
+    state: dismissed
+    reason: >-
+      on the Stormwater Management Facilities row, making the facility a
+      primary use where it is underground, vegetated, or approved alongside
+      another land use permit. It decides whether a detention basin needs its
+      own conditional use, which is a question about the basin
+
+  # --- Table 316-2, the rural dimensional standards -------------------
+  #
+  # Thirteen more, and the first is already answered on a Section 315 digest.
+  # None of them qualifies an encoded value: this layer holds nothing but a
+  # use gate in these six districts, so no citation reaches the region they
+  # govern and the blocking check never sees them.
+  #
+  # They are ruled anyway, and that is the point of the invariant this layer
+  # keeps. A layer that reports clean because nobody looked reads exactly
+  # like a layer that is clean, and "it qualifies nothing we hold" is a
+  # reason about our corpus, which goes stale the day somebody encodes a
+  # dimension here. Each of these is ruled on what the note says instead,
+  # and every one of them falls into a family this file already has a name
+  # for: another application path, another building, a rule about creating
+  # lots rather than building on one, or a relaxation.
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L718"
+    digest: "004e1b70a9ac"
+    state: dismissed
+    reason: >-
+      a planned unit development's lot sizes -- no individual minimum, a
+      one-acre average, two acres where the lots are to carry duplexes. A PUD
+      is a different application path from the by-right lot of record this
+      screen measures, and the duplex clause is the third of the county's
+      three separate accommodations for the RA-1 duplex, every one of which
+      says duplex and stops
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L720"
+    digest: "12f25c1ae2f4"
+    state: dismissed
+    reason: >-
+      the 20-acre minimum inside the Portland Metropolitan Urban Growth
+      Boundary, and it says what it governs: "applicable to subdivisions,
+      partitions, and Type II replats, but not to Type I replats or property
+      line adjustments." A rule about creating lots, not about building on one
+      that exists, and it raises a minimum rather than lowering it
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L722"
+    digest: "c33790abc8bf"
+    state: dismissed
+    reason: >-
+      a measuring convention: for the minimum lot size standard, a lot fronting
+      a County or public road may count the ground out to the centerline of the
+      right of way. It is one of the denominators this corpus collects, and it
+      is about how lot area is counted for one standard. Nothing in it speaks
+      to which uses are permitted
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L724"
+    digest: "aa895e8a6308"
+    state: dismissed
+    reason: >-
+      a five-acre minimum lot size inside the urban growth boundaries of Canby,
+      Estacada, Molalla and Sandy. Four cities named, a minimum stated, and a
+      minimum lot size cannot admit a use the use table refuses
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L726"
+    digest: "fed86b7e2bb1"
+    state: dismissed
+    reason: >-
+      the arithmetic of an average lot size -- divide the land proposed for
+      subdivision, partition or replat by the number of lots. A land division
+      calculation, and the sentence names the three land divisions it is for
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L728"
+    digest: "22cefa4d591e"
+    state: dismissed
+    reason: >-
+      the same shape as note 2, one district band up: in a planned unit
+      development the individual minimum is two acres, five inside four named
+      city UGBs, and the average is ten. A different application path
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L730"
+    digest: "9a3e3b792364"
+    state: dismissed
+    reason: >-
+      "In a planned unit development, the minimum front setback is 20 feet."
+      A different application path, and a relaxation within it -- 20 feet where
+      the table says 30. A rule that makes a setback smaller cannot make a
+      building fail to fit
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L732"
+    digest: "79e17afb9a04"
+    state: dismissed
+    reason: >-
+      a relaxation on a condition nothing here measures: on a corner lot above
+      3,500 feet in elevation one of the front setbacks drops to 10 feet. It
+      only ever gives ground back, so leaving it unencoded is the conservative
+      reading, which is the direction that cannot produce a false GREEN
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L734"
+    digest: "c3fa09a59d7b"
+    state: dismissed
+    reason: >-
+      in a planned unit development there are no minimum rear and side setbacks
+      except at the perimeter of the final plat. A different application path
+      and a relaxation inside it, the same pair as note 8
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L736"
+    digest: "6aefe0d9f4a4"
+    state: dismissed
+    reason: >-
+      a five-foot rear setback for an accessory building. The pod is the
+      principal building on the lot, and this note is written for the shed
+      behind it
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L738"
+    digest: "5c664e26de95"
+    state: dismissed
+    reason: >-
+      the same rule as note 11 at ten feet instead of five, and the same
+      answer: an accessory building's rear setback is not the principal
+      building's
+
+  - quote: "or/clackamas/_unincorporated/zdo.316.txt#L740"
+    digest: "eb6bb39b409c"
+    state: dismissed
+    reason: >-
+      an accessory building's side setback, five feet. Third of the three
+      accessory-building notes on this table, and the ordinance's amendment
+      history is welded onto the end of it by the extractor, which is why the
+      stored text of this note runs on into a list of ordinance numbers

@@ -271,7 +271,13 @@ def _is_followed(ref: str, read: set[str]) -> bool:
 def redirects(layer: Layer, store: ProvenanceStore | None = None) -> list[Routing]:
     """Every redirect this layer's own documents make beside a number it uses."""
     store = store or ProvenanceStore()
-    paths = [p for p in store.documents() if p.startswith(f"{layer.layer}/")]
+    # A layer owns the documents in its own directory, and no others.
+    # ``p.startswith(f"{layer.layer}/")`` is true of every document in the
+    # corpus when the layer is the state one, because ``or/`` prefixes all
+    # 179 of them. Found and fixed in the reading ledger and the fetch
+    # queue on 2026-09-04; both left a comment saying the other was its
+    # twin, and neither of them looked here. Fixed 2026-09-08.
+    paths = [p for p in store.documents() if p.rsplit("/", 1)[0] == layer.layer]
     if not paths:
         return []
 

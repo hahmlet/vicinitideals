@@ -58,9 +58,17 @@ def test_every_encoded_footnote_still_finds_its_rule(rows) -> None:
 
 
 def test_the_register_and_the_ledger_agree_on_how_many_are_encoded(rows) -> None:
-    """45 as of 2026-09-07. A number that moves means a footnote was ruled or
-    un-ruled, which is a thing to notice rather than a thing to absorb."""
-    assert len(rows) == 45
+    """46 as of 2026-09-08. A number that moves means a footnote was ruled or
+    un-ruled, which is a thing to notice rather than a thing to absorb.
+
+    45 -> 46 on 2026-09-08: Clackamas ZDO Table 316-1 note 8, the sentence the
+    five rural refusals rest on. "Each lot of record may be developed with only
+    one of the following", and the following is five things ending at a duplex.
+    It reaches FF10, FU10, RA1, RA2 and RRFF5 and confirms in all five, which
+    is what an `encoded` ruling is supposed to look like: a footnote that did
+    not qualify a number so much as become one.
+    """
+    assert len(rows) == 46
 
 
 def test_no_ruling_is_pure_prose(rows) -> None:

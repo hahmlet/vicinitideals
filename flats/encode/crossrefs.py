@@ -522,8 +522,13 @@ def opens(layer: Layer, store: ProvenanceStore | None = None) -> Callable[[str],
     document this layer owns.
     """
     store = store or ProvenanceStore()
-    prefix = f"{layer.layer}/"
-    paths = [p for p in store.documents() if p.startswith(prefix)]
+    # A layer owns the documents in its own directory, and no others.
+    # ``p.startswith(f"{layer.layer}/")`` is true of every document in the
+    # corpus when the layer is the state one, because ``or/`` prefixes all
+    # 179 of them. Found and fixed in the reading ledger and the fetch
+    # queue on 2026-09-04; both left a comment saying the other was its
+    # twin, and neither of them looked here. Fixed 2026-09-08.
+    paths = [p for p in store.documents() if p.rsplit("/", 1)[0] == layer.layer]
     ids = _doc_ids(paths)
     headings: set[str] = set()
     for path in paths:
@@ -537,8 +542,13 @@ def opens(layer: Layer, store: ProvenanceStore | None = None) -> Callable[[str],
 def dangling(layer: Layer, store: ProvenanceStore | None = None) -> list[Dangling]:
     """Every reference this layer's documents make that the store cannot open."""
     store = store or ProvenanceStore()
-    prefix = f"{layer.layer}/"
-    paths = [p for p in store.documents() if p.startswith(prefix)]
+    # A layer owns the documents in its own directory, and no others.
+    # ``p.startswith(f"{layer.layer}/")`` is true of every document in the
+    # corpus when the layer is the state one, because ``or/`` prefixes all
+    # 179 of them. Found and fixed in the reading ledger and the fetch
+    # queue on 2026-09-04; both left a comment saying the other was its
+    # twin, and neither of them looked here. Fixed 2026-09-08.
+    paths = [p for p in store.documents() if p.rsplit("/", 1)[0] == layer.layer]
     if not paths:
         return []
 
@@ -555,7 +565,16 @@ def dangling(layer: Layer, store: ProvenanceStore | None = None) -> list[Danglin
     binding: dict[str, int] = defaultdict(int)
     beside: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
     sources: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
-    sample: dict[str, str] = {}
+    #: The sample is keyed by DOCUMENT as well as by reference, because the
+    #: row prints one and labels it with the other. `sources[0]` is the
+    #: document that mentions the reference most; a single `sample` was the
+    #: first line seen anywhere in the layer, so the two came apart whenever
+    #: a reference appeared in more than one file -- and the row then read
+    #: "in zdo.316.txt: <a sentence from zdo.202.definitions.txt>". Found
+    #: 2026-09-08 when Section 316 arrived and made Section 843 a two-document
+    #: reference for the first time. A line attributed to a document that does
+    #: not contain it is the failure this whole ledger exists to prevent.
+    sample: dict[str, dict[str, str]] = defaultdict(dict)
 
     for path, text in texts.items():
         here = cited.get(path, {})
@@ -575,7 +594,15 @@ def dangling(layer: Layer, store: ProvenanceStore | None = None) -> list[Danglin
                     binding[ref] += 1
                     for name in near:
                         beside[ref][name] += 1
-                sample.setdefault(ref, line.strip()[:160])
+                sample[ref].setdefault(Path(path).name, line.strip()[:160])
+
+    def _ordered(ref: str) -> tuple[str, ...]:
+        return tuple(
+            name
+            for name, _ in sorted(
+                sources[ref].items(), key=lambda kv: (-kv[1], kv[0])
+            )
+        )
 
     out = [
         Dangling(
@@ -583,13 +610,8 @@ def dangling(layer: Layer, store: ProvenanceStore | None = None) -> list[Danglin
             ref=ref,
             mentions=count,
             binding=binding[ref],
-            sources=tuple(
-                name
-                for name, _ in sorted(
-                    sources[ref].items(), key=lambda kv: (-kv[1], kv[0])
-                )
-            ),
-            sample=sample[ref],
+            sources=_ordered(ref),
+            sample=sample[ref][_ordered(ref)[0]],
             ruling=layer.crossrefs.get(ref, ""),
             fields=tuple(
                 name
@@ -622,11 +644,10 @@ def stale_rulings(layer: Layer, store: ProvenanceStore | None = None) -> list[st
 def state_law(layer: Layer, store: ProvenanceStore | None = None) -> dict[str, int]:
     """ORS and OAR references, counted apart from a city's own chapters."""
     store = store or ProvenanceStore()
-    prefix = f"{layer.layer}/"
     counts: dict[str, int] = defaultdict(int)
     held = {Path(p).stem for p in store.documents() if p.startswith("or/")}
     for path in store.documents():
-        if not path.startswith(prefix):
+        if path.rsplit("/", 1)[0] != layer.layer:
             continue
         text = store.text_path(path).read_text(encoding="utf-8")
         for m in _STATE.finditer(text):

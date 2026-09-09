@@ -3276,3 +3276,267 @@ exactly that case, because it is not work owed and calling it `encode` would
 have kept a closed question open forever.
 
 One district left in this city, and it is a join.
+
+---
+
+## 30. The rural half of a county, and three ledgers that had been blaming Oregon
+
+The largest block of unencoded land left in either county was not a city. It
+was the countryside: five districts of unincorporated Clackamas — RRFF-5,
+FU-10, RA-2, RA-1, FF-10 — carrying **3,676 lots on 6,798 acres**, more than
+any city's remainder and more than twice the Oregon City commercial side read
+the day before. Their governing chapter, ZDO Section 316, had never been
+fetched, which is why the coverage ledger had shown five `zone_missing` rows
+here since it could first see this county.
+
+All five are the same answer, and the answer is no.
+
+### The refusal, and why it took four sentences rather than one
+
+Section 316's use table has rows for detached single-family dwellings,
+duplexes, manufactured dwellings, prefabricated structures, single room
+occupancies, ADUs, accessory historic dwellings and recreational vehicles as
+second dwellings. It has no triplex, quadplex, townhouse, cottage cluster or
+multifamily row of any kind. A whole-document sweep for every one of those
+words returns three hits and all three are the word *duplex*.
+
+Silence is only a prohibition where the code says so, and here it does:
+
+> **316.03(A)(1)** — "Uses permitted in each rural residential and future urban
+> residential zoning district are listed in Table 316-1 … **Uses not listed are
+> prohibited.**"
+
+Note 8 then says it the other way round, affirmatively, which is the stronger
+form:
+
+> "Except as allowed by Section 839, Accessory Dwelling Units, Section 843,
+> Accessory Historic Dwellings, or Section 1204, Temporary Permits, **each lot
+> of record may be developed with only one of the following**: detached
+> single-family dwelling, duplex (only if approved as a conditional use in the
+> RA-1 District), manufactured dwelling, prefabricated structure, or single
+> room occupancy."
+
+And the corroboration comes from a different chapter entirely. ZDO 1012 is
+where this county writes its middle-housing relief, and it names the districts
+it reaches **three times**, in identical words:
+
+| clause | what it does | districts named |
+|---|---|---|
+| 1012.02(G) | waives minimum lot size for townhouses | R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5, VR-5/7 |
+| 1012.02(H) | waives minimum lot size for a middle housing land division | the same nine |
+| 1012.04(A) | says DLA is not the minimum lot area per dwelling unit for a duplex, triplex, quadplex or cottage cluster | the same nine |
+
+Nine urban districts, listed the same way in all three places, and not one of
+these five among them. The county is not silent about where middle housing
+goes. It said, somewhere else.
+
+The three cross-references out of note 8 were followed and none opens a door —
+839 is accessory dwelling units, 843 is accessory historic dwellings, 1204 is
+temporary permits. Section 845, the county's own middle-housing chapter and
+already the source of the 7,000 sq ft minimum on every *urban* district here,
+is a standards section and not a permission: it opens "The subject lot shall be
+a minimum of", and 316.03(A)(3) sends permitted uses to Sections 1000 and 1100,
+not to 845. **A design standard cannot create the use it designs.**
+
+### Thirty-five notes under the table, and the one that could have opened it
+
+Table 316-1 carries thirty-five footnotes, and the block governs all five
+refusals: a notes block's region is the run of lines above it, and the refusal
+is quoted from the table those notes hang off. Seven were already answered —
+the county repeats sentences about towers, recyclable drop-off sites, temporary
+signs and utility cabinets verbatim between chapters, and a ruling in this
+system is a statement about a sentence rather than about a place in a file, so
+the digests written for Section 315 matched here without being retyped.
+
+The other twenty-eight were read, and every one is ruled **on the row it sits
+on rather than on ours**. Finding that row is the work. This document is an
+HTML table, so each cell arrives on its own line: a marker is four characters
+with no use beside it, and the only way to say what a note is about is to walk
+back up the column to the row heading.
+
+Note 13 is why that matters:
+
+> "Uses similar to this may be authorized pursuant to Section 106,
+> Authorizations of Similar Uses."
+
+That is the one shape of note in the chapter that can turn an unlisted use into
+a permitted one — which is the exact mechanism the refusal rests on. It is
+printed on six rows: fraternal organization lodges, government uses,
+transmission towers and earth stations, recreational uses, RV camping
+facilities, and utility facilities not otherwise listed. **None of them is a
+dwelling.** A quadplex is not similar to a lodge, a broadcast tower or a
+campground, so Section 106 is not a path to it here. Had that marker been
+printed on the duplex row instead, this refusal would not have been safe to
+write — and nothing short of reading the markers off the cells would have shown
+it either way.
+
+The same walk settled the rest. Note 8 turns out to be printed on exactly five
+rows — detached single-family dwellings, duplexes, manufactured dwellings,
+prefabricated structures and single room occupancies — which is the same list,
+in the same order, that the note itself gives as the one thing a lot of record
+may be developed with. Note 9's "maximum of six units" is on the single room
+occupancy row and is a ceiling on rooms, not a licence for dwellings. Note 16
+confines an accessory kitchen to "a detached single-family dwelling, a
+manufactured dwelling, or a prefabricated structure", which is the third place
+in the chapter where the county lists the dwellings it has in mind, and the
+third time an attached four-unit building is not among them.
+
+And it corrected the tree-removal reference. Note 12 is a **Table 316-1** note
+on the **Forest Practices** row, not a dimensional note as first read. That row
+is why the footnote is dismissed and the crossref is not: a note about forestry
+cannot move a use gate, but Subsection 1002.02 is a development restriction and
+says nothing about who is doing the clearing.
+
+Table 316-2's own thirteen notes govern nothing at all — no citation reaches
+the lines they sit on, so the blocking check would never have looked at them.
+They are ruled anyway, and the reason is the invariant this layer keeps: *a
+layer that reports clean because nobody looked reads exactly like a layer that
+is clean.* Closing them on "it qualifies nothing we hold" would have been a
+reason about our corpus, and one that expires the day somebody encodes a
+dimension in these districts — the exact failure the dismissal re-read found
+seventy-one of on 2026-09-07. So each is ruled on what it says: another
+application path (four of them are planned unit developments), another
+building (three are an accessory building's setback), a rule about creating
+lots rather than building on one, or a relaxation.
+
+And the same layout caught the citation check. On its first rebuild the gaps
+ledger reported all five refusals mis-attributed: the cite named 316.03 while
+the span reads as 316.02, 316.03 **and 316.04**. Both tables are printed after
+all of the section prose, so Table 316-1 and its notes sit below the 316.04
+heading, and nearest-heading-above lands there. The check says disagreement is
+"reported, never repaired", and the repair it asks for is to the *claim*: the
+cite now names all three sections and says which of them is layout rather than
+filing. Corpus-wide misattributions are back to 47, where they stood before
+this work began.
+
+### The limb worth checking rather than assuming
+
+Everywhere else in this corpus, OAR 660-046 is the thing that overrides a local
+refusal. Here it does not reach, for two independent reasons, and the second is
+load-bearing:
+
+- **-0010(1)** binds "a Medium City or Large City", and -0020's definition
+  reaches county land only where it is "provided with sufficient urban services
+  … within an urban service district boundary". Rural residential land outside
+  an urban service district is the definition's own exclusion.
+- **-0010(2)(c)** excuses, by name, "Lots or Parcels that are not incorporated
+  and that are zoned under an interim zoning designation that maintains the
+  land's potential for planned urban development."
+
+The second matters because the first is weakest exactly where the lots are.
+Some of this land *is* inside the Portland Metropolitan UGB — ZDO 1012.02(A)
+sets a 20-acre minimum "inside the Portland Metropolitan Urban Growth Boundary
+… in the FF-10, RA-1, RA-2, RC, RI, and RRFF-5 Districts", and Table 316-2 note
+3 says the same. "Inside a UGB" is the instinctive test and it is not the test
+the rule states; resting the whole refusal on the word *rural* would have been
+resting it on the wrong word. FU-10 is the district that forces the point, and
+Happy Valley's FU-10 was ruled the same way months ago on its own code — two
+jurisdictions reaching one answer about one kind of place.
+
+RA-1 is the only district in the section that admits any attached housing, and
+it is the best evidence of all, because it cuts the other way. The county did
+not merely tolerate the RA-1 duplex; it wrote **three** accommodations for it —
+note 8 carves it out of the one-dwelling rule by name, 1012.02(F) gives it its
+own subsection and waives the minimum lot size outright, and Table 316-2 note 2
+doubles the average lot size a PUD must hold for it. Three places where a code
+meaning to admit more than two units would have had to say so, and in all three
+it says duplex and stops.
+
+RR is the sixth district Section 316 governs and carries no lots in the parcel
+layer, so it is ruled in the district ledger rather than encoded — which is why
+the zone census moves by five and not six.
+
+### Three ledgers that had been filing the whole corpus under "Oregon"
+
+This is the find of the day and it was not what the errand was for.
+
+`or/` prefixes every document in the store. A ledger that selects its layer's
+documents with `startswith(f"{layer.layer}/")` therefore swallows the entire
+corpus when the layer is the **state** one — which holds four OAR and ORS
+documents and cites lines only in those. The fault was found in the reading
+ledger and the fetch queue on 2026-09-04 and fixed in both; each left a comment
+in the source calling the other its twin, **and neither of them looked at the
+crossref ledger or the redirect ledger.**
+
+In the crossref ledger it was live. Oregon filed **591 rows** about references
+it does not make — 44 percent of a 1,348-row queue, every row blaming the wrong
+jurisdiction, and every one of them ranked for "binding" against an encoding
+that could not possibly cite the lines they sit on. After the fix the state
+layer has one row and the corpus has 758.
+
+In the redirect ledger the same bug produced nothing, because a redirect only
+counts beside a number the layer uses and the state layer's citations reach
+none of those lines. It is fixed there anyway. A bug that is latent is not a
+bug that is absent, and this one had already surfaced twice.
+
+A fourth, smaller one in the same module: a crossref row prints one line of
+context and labels it with a document, and those were chosen independently —
+`sources[0]` is wherever the reference appears most, `sample` was the first
+line the walk happened to reach. A reference confined to one document is safe;
+the moment a second document mentions it the two come apart. Section 316 made
+Section 843 this layer's first two-document reference standing beside a
+standard, and the row read `in zdo.316.txt:` above a sentence from
+`zdo.202.definitions.txt`. That is the failure this ledger exists to prevent,
+committed by the ledger. Both are now pinned corpus-wide: every row's sample
+must be findable in the document the row names, and no layer may report a row
+from another layer's directory.
+
+### And a stale ledger the guard could not see
+
+Rebuilding the coverage ledger from a pristine checkout moved six rows nobody
+touched. Oregon City's six refusal districts — MUE, I, GI, CI, HC, NC — went
+from owing nothing to owing five required standards apiece.
+
+Nothing about them changed. The ledger shipped the previous day was built on
+the analysis host from a **hand-copied working tree**, copied at a moment when
+those six zones still carried the dimensional standards they were later trimmed
+of. So it reported them owing nothing, and `test_unsettled_gates.py` — the
+guard written after 809 lots hid behind a stale ledger for a fortnight — passed
+on a file that did not describe the corpus.
+
+The corrected rows are correct. A `quadplex_allowed: false` that is **capped**
+owes everything, because the cap is the admission that we cannot say the gate
+stays shut, and all six are capped: `utility_easement` ("Public utility
+easements may supersede the minimum", OCMC 17.zoning L4161) on MUE and I, and
+the vegetated-corridor footnotes at L12517–L12523 on the other four. Neither
+can plausibly turn a use prohibition into a permission — the same thing already
+true of Portland CI1 — and the narrowing that would close them is a *field*
+scope, where `zones:` is the only narrowing a footnote ruling has. All six are
+declared with their reasoning rather than silenced.
+
+The five new rural districts are the other kind: an uncapped false, owing
+nothing, RED at the use gate before a setback is ever read.
+
+**Regenerate before trusting.** The rule was already written down for the
+reading ledger. It applies to every ledger built anywhere but here.
+
+### Where the corpus stands
+
+| census | was | is | why it moved |
+|---|---:|---:|---|
+| encoded zones, corpus-wide | 212 | 217 | five rural districts |
+| districts ruled, not encoded | — | +1 | RR, which carries no lots |
+| crossref queue, corpus-wide | 1,348 | 758 | Oregon stopped answering for everyone |
+| crossref rows filed under the state layer | 591 | 1 | — |
+| zones declared owing a required field | 2 | 8 | six were owing all along |
+| notes read in this layer | 96 | 144 | both of Section 316's blocks, none left unread |
+| rulings written in this layer | 96 | 136 | the other 8 matched on Section 315 digests |
+| unincorporated Clackamas `zone_missing` lots | 6,257 | 2,581 | 46 rows to 41 |
+| corpus-wide `zone_missing` lots | 24,146 | 20,470 | — |
+
+Four crossref references arrived with Section 316 and three of them close:
+Section 843 and OAR 660 Divisions 21 and 27 all gate uses this pod is not — an
+RV as a second dwelling, an accessory historic dwelling. The fourth does not
+close and should not. Table 316-1 note 12, printed on the **Forest Practices**
+row, points at **Subsection 1002.02** "regarding a development restriction that
+may apply if excessive tree removal occurs", for land inside the Portland Metro
+UGB. The row is why the footnote is dismissed and the reference is not: a note
+on forestry cannot move a use gate, but the subsection it points at is a
+development restriction and says nothing about who is doing the clearing. That
+is the shape of Portland's
+Title 11, which is encoded `fee_in_lieu` and cost real ground before anybody
+read it. Section 1002 is not in the store. It is ruled `fetch`, which keeps it
+in the queue — and deliberately *not* ruled moot on the grounds that Section
+316's own districts refuse the pod, because that is a reason that argues about
+our corpus rather than about the page, and it goes stale the moment somebody
+reads 1002 for the urban districts.

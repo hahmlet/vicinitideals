@@ -1,0 +1,742 @@
+316.01 Purpose
+
+Section 316 is adopted to implement the policies of the Comprehensive Plan for Unincorporated Community Residential, Rural, and Future Urban areas.
+
+316.02 Applicability
+
+Section 316 applies to land in the Rural Area Residential 1-Acre (RA-1), Rural Area Residential 2-Acre (RA-2), Recreational Residential (RR), Rural Residential Farm Forest 5-Acre (RRFF-5), Farm Forest 10-Acre (FF-10), and Future Urban 10-Acre (FU-10) Districts, hereinafter collectively referred to as the rural residential and future urban residential zoning districts.
+
+316.03 Uses Permitted
+
+1 Uses permitted in each rural residential and future urban residential zoning district are listed in Table 316-1, Permitted Uses in the Rural Residential and Future Urban Residential Zoning Districts. Uses not listed are prohibited.
+
+2 As used in Table 316-1:
+
+1 "P" means the use is a primary use.
+
+2 "A" means the use is an accessory use.
+
+3 "C" means the use is a conditional use, approval of which is subject to Section 1203, Conditional Uses.
+
+4 "CPUD" means the use is allowed as a conditional use in a planned unit development.
+
+5 "X" means the use is prohibited.
+
+6 "Type II" means the use requires review of a Type II application, pursuant to Section 1307, Procedures.
+
+7 Numbers in superscript correspond to the notes that follow Table 316-1.
+
+3 Permitted uses are subject to the applicable provisions of Subsection 316.04, Dimensional Standards; Section 1000, Development Standards; and Section 1100, Development Review Process.
+
+316.04 Dimensional Standards
+
+1 General: Dimensional standards applicable in the rural and future urban residential zoning districts are listed in Table 316-2, Dimensional Standards in the Rural Residential and Future Urban Residential Zoning Districts. As used in Table 316-2, numbers in superscript correspond to the notes that follow the table.
+
+2 Modifications: Modifications to the standards in Table 316-2 are established by Sections 800, Special Use Requirements; 903, Setback Exceptions; 1012, Lot Size and Density; 1107, Property Line Adjustments; and 1205, Variances.
+
+Table 316-1: Permitted Uses in the Rural Residential and Future Urban Residential Zoning Districts
+
+Use
+RA-1
+RA-2
+RR
+RRFF-5
+FF-10
+FU-10
+Accessory Buildings and Uses, Customarily Permitted, such as amateur (Ham) radio antennas and towers, arbors, bicycle racks, carports, citizen band transmitters and antennas, cogeneration facilities, courtyards, decks, decorative ponds, driveways, electric vehicle charging stations, family child care homes, fountains, garages, garden sheds, gazebos, greenhouses, HVAC units, meeting facilities, outdoor kitchens, parking areas, patios, pergolas, pet enclosures, plazas, property management and maintenance offices, recreational facilities (such as bicycle trails, children's play structures, dance studios, exercise studios, playgrounds, putting greens, recreation and activity rooms, saunas, spas, sport courts, swimming pools, and walking trails), rainwater collection systems, satellite dishes, self-service laundry facilities, shops, solar energy systems, storage buildings/rooms, stormwater management facilities, television antennas and receivers, transit amenities, trellises, utility service equipment, and utility service lines
+A
+A
+A
+A
+A
+A
+Aircraft Land Uses
+X
+X
+X
+C
+C
+C
+Aircraft Landing Areas
+X
+C
+C[1]
+X
+X
+X
+Bed and Breakfast Inns, subject to Section 832
+C
+C
+C
+C
+C
+X
+Bed and Breakfast Residences, subject to Section 832
+C
+C
+C
+C
+C
+C
+Bus Shelters
+P
+P
+P
+P
+P
+P
+Campgrounds
+C
+C
+C
+C
+C
+C
+Cemeteries, subject to Section 808
+C
+C
+X
+C
+C
+C
+Child Care Facilities
+C
+C
+C
+C
+C
+C[2]
+Commercial or Processing Activities that are in Conjunction with Farm or Forest Uses[3]
+X
+X
+X
+C
+C
+X
+Community Halls
+CPUD
+CPUD
+CPUD
+CPUD
+CPUD
+X[4]
+Composting Facilities, subject to Section 834
+X
+X
+X
+C
+C
+X
+Conservation Areas or Structures for the Conservation of Water, Soil, Forest, or Wildlife Habitat Resources
+P
+P
+P
+P
+P
+P
+Crematories, subject to Section 808
+C
+C
+X
+X
+X
+X
+Daycare Services, Adult
+C
+C
+C
+C
+C
+C[5]
+Dwellings, including:
+Dwellings, including:
+Dwellings, including:
+Dwellings, including:
+Dwellings, including:
+Dwellings, including:
+Dwellings, including:
+Accessory Dwelling Units, subject to Section 839
+A[6]
+A[6]
+A[6]
+A[6]
+A[6]
+A[6]
+Accessory Historic Dwellings, subject to Section 843
+A[7]
+A[7]
+A[7]
+A[7]
+A[7]
+X
+Detached Single-Family Dwellings
+P[8]
+P[8]
+P[8]
+P[8]
+P[8]
+P[8]
+Duplexes
+C[8]
+X
+X
+X
+X
+X
+Manufactured Dwellings
+P[8]
+P[8]
+P[8]
+P[8]
+P[8]
+P[8]
+Prefabricated Structures
+P[8]
+P[8]
+P[8]
+P[8]
+P[8]
+P[8]
+Recreational Vehicles as Second Dwellings, subject to Section 847
+A[6]
+A[6]
+A[6]
+A[6]
+A[6]
+A[6]
+Single Room Occupancies
+P[8,9]
+P[8,9]
+P[8,9]
+P[8,9]
+P[8,9]
+P[8,9]
+Energy Source Development
+X
+X
+C
+X
+X
+X
+Farm Uses, including[3]:
+Farm Uses, including[3]:
+Farm Uses, including[3]:
+Farm Uses, including[3]:
+Farm Uses, including[3]:
+Farm Uses, including[3]:
+Farm Uses, including[3]:
+Raising, harvesting, and selling crops
+P
+P
+P[10]
+P
+P
+P
+Feeding, breeding, management and sale of, or the produce of, livestock, poultry, fur-bearing animals, or honeybees
+X[11]
+P
+X[11]
+P
+P
+P
+Dairying and the sale of dairy products
+X[11]
+P
+X[11]
+P
+P
+P
+Any other agricultural or horticultural use or animal husbandry or any combination thereof
+X[11]
+P
+X[11]
+P
+P
+P
+Preparation, storage, and disposal by marketing or otherwise of the products or by-products raised on such land for human or animal use
+P
+P
+P[10]
+P
+P
+P
+Propagation, cultivation, maintenance, and harvesting of aquatic, bird, and animal species that are under the jurisdiction of the Oregon Fish and Wildlife Commission, to the extent allowed by the rules adopted by the commission
+X[11]
+P
+X[11]
+P
+P
+P
+Growing cultured Christmas trees
+P
+P
+P[10]
+P
+P
+P
+Farmers' Markets, subject to Section 840
+A
+A
+A
+A
+A
+A
+Fish or Wildlife Management Programs
+X
+X
+X
+P
+P
+P
+Forest Practices, including the following operations conducted on or pertaining to forestland: reforestation of forestland, road construction and maintenance, harvesting of forest tree species, application of chemicals, disposal of slash, and removal of woody biomass
+P[12]
+P[12]
+P
+P[12]
+P[12]
+P[12]
+Fraternal Organization Lodges
+C[13]
+C[13]
+C[13]
+C[13]
+C[13]
+C[13]
+Government Uses, unless such a use is specifically listed as a primary, accessory, conditional, or prohibited use in the applicable zoning district
+C[13]
+C[13]
+C[13]
+C[13]
+C[13]
+C[13]
+Guest Houses, subject to Section 833
+A
+A
+A
+A
+A
+A
+Guest Ranches and Lodges
+X
+X
+C
+X
+X
+X
+Home Occupations, including bed and breakfast homestays, subject to Section 822[14]
+A
+A
+A
+A
+A
+A
+Home Occupations to Host Events, subject to Section 806
+C
+C
+C
+C
+C
+C
+Kennels
+C[15]
+C[15]
+X
+C[15]
+C[15]
+X
+Kitchens, Accessory
+A[16]
+A[16]
+A[16]
+A[16]
+A[16]
+A[16]
+Libraries
+CPUD
+CPUD
+CPUD
+CPUD
+CPUD
+X[4]
+Livestock, subject to Section 821
+P
+X[11]
+A
+X[11]
+X[11]
+X[11]
+Marijuana Processing
+X
+X
+X
+X
+X
+X
+Marijuana Production, subject to Section 841
+X
+X
+X
+A
+A
+X
+Marijuana Retailing
+X
+X
+X
+X
+X
+X
+Marijuana Wholesaling
+X
+X
+X
+X
+X
+X
+Operations Conducted for the Exploration, Mining, or Processing of Geothermal Resources or Other Subsurface Resources
+X
+X
+X
+C
+C
+X
+Places of Worship, subject to Section 804
+P
+P
+P
+P
+P
+P
+Produce Stands
+A[17]
+A[17]
+A[17]
+A[17]
+A[17]
+A[17,18]
+Radio and Television Transmission and Receiving Towers and Earth Stations
+C[13,19]
+C[13,19]
+C[13,19]
+C[13,19]
+C[13,19]
+C[13,19]
+Recreational Uses, including boat moorages, community gardens, country clubs, equine facilities, gymnastics facilities, golf courses, horse trails, pack stations, parks, playgrounds, sports courts, swimming pools, ski areas, and walking trails[20]
+C[13]
+C[13,21]
+C[13]
+C[13,21]
+C[13,21]
+C[13,21]
+Recreational Uses, Government-Owned, including amphitheaters; arboreta; arbors, decorative ponds, fountains, gazebos, pergolas, and trellises; ball fields; bicycle and walking trails; bicycle parks and skate parks; equine facilities; boat moorages and ramps; community buildings and grounds; community and ornamental gardens; courtyards and plazas; fitness and recreational facilities, such as exercise equipment, gymnasiums, and swimming pools; horse trails; miniature golf, putting greens, and sports courts; pack stations; parks; picnic areas and structures; play equipment and playgrounds; nature preserves and wildlife sanctuaries; ski areas; tables and seating; and similar recreational uses[20]
+P[22]
+P[22]
+P[22]
+P
+P
+P
+Recreational Uses, Government-Owned Golf Courses[20]
+P[22]
+P[22]
+P[22]
+P
+P
+P
+Recreational Vehicle Camping Facilities, subject to Section 813
+C[13]
+C[13]
+C
+C[13]
+C[13]
+X
+Recyclable Drop-Off Sites, subject to Section 819
+A[23]
+A[23]
+A[23]
+A[23]
+A[23]
+A[23]
+Retailing—whether by sale, lease, or rent—of any of the following new or used products: apparel, appliances, art, art supplies, beverages, bicycle supplies, bicycles, books, cameras, computers, computer supplies, cookware, cosmetics, dry goods, electrical supplies, electronic equipment, flowers, food, furniture, garden supplies, hardware, interior decorating materials, jewelry, linens, medications, music (whether recorded or printed), musical instruments, nutritional supplements, office supplies, optical goods, paper goods, periodicals, pet supplies, pets, plumbing supplies, photographic supplies, signs, small power equipment, sporting goods, stationery, tableware, tobacco, toiletries, tools, toys, vehicle supplies, and videos.
+CPUD[24]
+X
+X
+X
+X
+X
+Roads
+P
+P
+P
+P
+P
+P
+Sanitary Landfills and Debris Fills
+X
+X
+X
+C
+C
+X
+Schools, subject to Section 805
+C[25]
+C[25]
+C
+C[25]
+C[25]
+C[26]
+Services, Commercial—Food and Beverage, including catering and eating and drinking establishments
+CPUD[24]
+X
+X
+X
+X
+X
+Services, Commercial—Personal and Convenience, including barbershops, beauty salons, dry cleaners, laundries, photo processing, seamstresses, shoe repair, tailors, and tanning salons. Also permitted are incidental retail sales of products related to the service provided.
+CPUD[24]
+X
+X
+X
+X
+X
+Services, Commercial—Studios of the following types: art, craft, dance, music, and photography
+CPUD[24]
+X
+X
+X
+X
+X
+Short-Term Rental in a dwelling unit or guest house permitted by this table[27]
+P
+P[28]
+P
+P[28]
+P[28]
+P[28]
+Signs, subject to Section 1010
+A[29]
+A[29]
+A[29]
+A[29]
+A[29]
+A[29]
+Surface Mining, subject to Section 818
+X
+X
+X
+C
+C
+X
+Temporary Buildings for Uses Incidental to Construction Work. Such buildings shall be removed upon completion or abandonment of the construction work.
+A
+A
+A
+A
+A
+A
+Temporary Storage within an Enclosed Structure of Source-Separated Recyclable/Reusable Materials Generated and/or Used On-site Prior to On-site Reuse or Removal by the Generator or Licensed or Franchised Collector to a User or Broker
+A
+A
+A
+A
+A
+A
+Transfer Stations, subject to Section 819
+X
+X
+C
+X
+X
+C
+Utility Facilities, including:
+Utility Facilities, including:
+Utility Facilities, including:
+Utility Facilities, including:
+Utility Facilities, including:
+Utility Facilities, including:
+Utility Facilities, including:
+Sewer System Components that Serve Lands Inside an Urban Growth Boundary, subject to OAR 660-011-0060(3)
+Type II[30]
+Type II[30]
+Type II[30]
+Type II[30]
+Type II[30]
+Type II[30]
+Sewer Systems and Extensions of Sewer Systems to Serve Land Outside an Urban Growth Boundary and Unincorporated Community, subject to OAR 660-011-0060(4)
+Type II[31]
+Type II[31]
+Type II[31]
+Type II[31]
+Type II[31]
+Type II[31]
+Stormwater Management Facilities
+P,C[32]
+P,C[32]
+P,C[32]
+P,C[32]
+P,C[32]
+P,C[32]
+Utility Cabinets
+P,C[33]
+P,C[33]
+P,C[33]
+P,C[33]
+P,C[33]
+P,C[33]
+Utility Facilities, except Utility Lines, in Road Rights-of-Way
+P
+P
+P
+P
+P
+P
+Utility Facilities Not Otherwise Listed in Table 316-1
+C[13,34]
+C[13,34]
+C[13,34]
+C[13,34]
+C[13,34]
+C[13,34]
+Utility Lines
+P,C[35]
+P,C[35]
+P,C[35]
+P,C[35]
+P,C[35]
+P,C[35]
+Wireless Telecommunication Facilities, subject to Section 835
+See Table 835-1
+See Table 835-1
+See Table 835-1
+See Table 835-1
+See Table 835-1
+See Table 835-1
+
+[1] Aircraft landing areas are permitted for use by emergency aircraft (e.g., fire, rescue) only.
+
+[2] This use is limited to alteration or expansion of a lawfully established child care facility.
+
+[3] As used in Table 316-1, farm uses do not include marijuana production, marijuana processing, marijuana wholesaling, or marijuana retailing. See separate listings in Table 316-1 for these uses.
+
+[4] Even though it is prohibited in this category, this use is included in the "government use" category.
+
+[5] This use is limited to alteration or expansion of a lawfully established adult daycare service.
+
+[6] This use is not permitted in an urban reserve established pursuant to OAR 660, Division 21 or OAR 660, Division 27. Recreational Vehicles as Second Dwellings are also not permitted within the urban growth boundaries of Barlow, Canby, Estacada, Molalla, and Sandy.
+
+[7] This use is permitted only outside of both an urban growth boundary and an urban reserve established pursuant to OAR 660, Division 21 or OAR 660, Division 27.
+
+[8] Except as allowed by Section 839, Accessory Dwelling Units, Section 843, Accessory Historic Dwellings, or Section 1204, Temporary Permits, each lot of record may be developed with only one of the following: detached single-family dwelling, duplex (only if approved as a conditional use in the RA-1 District), manufactured dwelling, prefabricated structure, or single room occupancy.
+
+[9] This use is permitted only inside an urban growth boundary and shall contain a maximum of six units.
+
+[10] This use is permitted only on lots larger than five acres.
+
+[11] In the RA-2, RRFF-5, FF-10, and FU-10 Districts, livestock is permitted as described under the use category of farm uses. In the RA-1 and RR Districts, livestock is permitted as described under the use category of livestock.
+
+[12] For land inside the Portland Metropolitan Urban Growth Boundary, refer to Subsection 1002.02 regarding a development restriction that may apply if excessive tree removal occurs.
+
+[13] Uses similar to this may be authorized pursuant to Section 106, Authorizations of Similar Uses.
+
+[14] A use may be permitted as a home occupation, subject to Section 822, even if such use is also identified in another use listing in Table 316-1.
+
+[15] The portion of the premises used shall be located a minimum of 200 feet from all property lines.
+
+[16] An accessory kitchen is permitted only in a detached single-family dwelling, a manufactured dwelling, or a prefabricated structure. Only one accessory kitchen is permitted in each single-family dwelling, manufactured dwelling, or prefabricated structure.
+
+[17] A produce stand shall be subject to the parking requirements of Section 1015, Parking and Loading.
+
+[18] In addition to selling produce grown on-site, a produce stand may sell agricultural products that are produced in the surrounding community in which the stand is located.
+
+[19] The base of such towers shall not be closer to the property line than a distance equal to the height of the tower.
+
+[20] This use may include concessions, restrooms, maintenance facilities, and similar support uses.
+
+[21] Equine facilities are a primary use, subject to the following standards and criteria:
+
+1 The number of horses shall be limited to no more than one horse per acre or five horses in total, whichever is less. Horses owned by the operator of the equine facility, or owned by a 501(c)(3) organization and being temporarily fostered by the operator of the equine facility, do not count toward the maximum number of horses. The one-horse-per-acre standard shall be calculated based on the area of the lot of record or tract on which the equine facility is located.
+
+2 Services offered at the equine facility, such as riding lessons, training clinics, and schooling shows, shall be provided only to the family members and nonpaying guests of the operator of the equine facility, the owners of boarded horses, or the family members and nonpaying guests of the owners of boarded horses.
+
+[22] Any principal building or swimming pool shall be located a minimum of 45 feet from any other lot in a residential zoning district.
+
+[23] Recyclable drop-off sites are permitted only if accessory to an institutional use.
+
+[24] The use is subject to the following standards and criteria:
+
+a. The use shall be located in a planned unit development (PUD) with a minimum of 100 dwelling units. No building permit for the use shall be issued until a minimum of 100 dwelling units are constructed within the PUD.
+
+b. The area occupied by all uses subject to Note 23 and located in a single PUD, including their parking, loading, and maneuvering areas, shall not exceed a ratio of one-half acre per 100 dwelling units in the PUD.
+
+c. The use shall be an integral part of the general plan of development for the PUD and provide facilities related to the needs of residents of the PUD.
+
+d. The use shall be located, designed, and operated to efficiently serve frequent trade and service needs of residents of the PUD and not persons residing elsewhere.
+
+e. The use shall not, by reason of its location, construction, manner or hours of operation, signs, lighting, parking arrangements, or other characteristics, have adverse effects on residential uses within or adjoining the PUD.
+
+f. The maximum building floor space per commercial use is 4,000 square feet except that no maximum applies to uses authorized under Oregon Statewide Planning Goals 3 and 4 and uses intended to serve the community and surrounding rural area or the travel needs of people passing through the area.
+
+[25] Schools are prohibited within the areas identified as Employment, Industrial, and Regionally Significant Industrial on the Metropolitan Service District's 2040 Growth Concept Map.
+
+[26] This use is limited to alteration or expansion of a lawfully established school.
+
+[27] This use is prohibited in an accessory dwelling unit established pursuant to Subsection 839.04. This use is prohibited in a recreational vehicle established pursuant to Section 847, Recreational Vehicles as Second Dwellings, and in the primary dwelling on the same lot of record as the recreational vehicle.
+
+[28] This use is not permitted in an urban or rural reserve established pursuant to OAR 660, Division 27.
+
+[29] Temporary signs regulated under Subsection 1010.13(A) are a primary use.
+
+[30] Components of a sewer system that serve land outside urban growth boundaries or unincorporated community boundaries are prohibited.
+
+[31] The use is limited to sewer systems that: are designed and constructed so that their capacity does not exceed the minimum necessary to serve the area within the boundaries described under OAR 660-011-0060(4)(b)(B), except for urban reserve areas as provided under OAR 660-021-0040(6); and do not serve any uses other than those existing or allowed in the identified service area on the date the sewer system is approved.
+
+[32] Stormwater management facilities are a primary use if:
+
+a. They are underground, except for an outlet structure if applicable;
+
+b. They are vegetated, except for an outlet structure if applicable; or
+
+c. They are approved in conjunction with a development approved through another land use permit (e.g., a subdivision or design review).
+
+[33] Utility cabinets are a primary use if they comply with Section 830, Utility Cabinets, or if they are inside a road right-of-way.
+
+[34] Except for hydroelectric facilities and telephone exchanges, utility facilities shall not include shops, garages, or general administrative offices.
+
+[35] Utility lines are a conditional use only if they are gas transmission lines or electric transmission lines.
+
+Table 316-2: Dimensional Standards in the Rural Residential and Future Urban Residential Zoning Districts
+
+Standard                                                   RA-1            RA-2            RR                                                                      RRFF-5                                                                                                                                 FF-10            FU-10
+Minimum Lot Size[1]                                        1 acre[2,3]     2 acres[3]      2 acres                                                                 2 acres, provided that the minimum average lot size of all lots or parcels in a subdivision, partition, or replat is 5 acres[3,4,5,6]  10 acres[3,4,7]  10 acres[4]
+Minimum Front Setback                                      30 feet[8]      30 feet[8]      15 feet, except 20 feet to garage and carport motor vehicle entries[9]  30 feet[8]                                                                                                                             30 feet[8]       30 feet
+Minimum Rear Setback                                       30 feet[10,11]  30 feet[10,12]  15 feet[10]                                                             30 feet[10,12]                                                                                                                         30 feet[10,12]   30 feet[12]
+Minimum Side Setback                                       10 feet[10,13]  10 feet[10]     5 feet[10]                                                              10 feet[10]                                                                                                                            10 feet[10]      10 feet
+Maximum Lot Coverage                                       None            None            40 percent                                                              None                                                                                                                                   None             None
+Minimum Building Separation above 3,500 Feet in Elevation  None            None            20 feet between buildings with contiguous snow slide areas              None                                                                                                                                   None             None
+
+[1] The minimum lot size standards apply as established by Sections 1012 and 1107. Notwithstanding the minimum lot size standard, a lot of record may be developed subject to other applicable standards of this Ordinance, except minimum lot size standards of Section 800 apply.
+
+[2] In a planned unit development, there is no minimum individual lot size. However, the minimum average lot size is one acre except for lots to be developed with a duplex, in which case the minimum average lot size is two acres. The average lot size is calculated by determining the lot area of the land proposed for subdivision, partition, or replat and dividing by the number of lots or parcels in the proposed planned unit development.
+
+[3] The minimum lot size inside the Portland Metropolitan Urban Growth Boundary is 20 acres. The 20-acre minimum lot size is applicable to subdivisions, partitions, and Type II replats, but not to Type I replats or property line adjustments. Where this standard applies, it supersedes any other minimum lot size standard in Table 316-2.
+
+[4] For the purpose of complying with the minimum lot size standard, lots with street frontage on County or public road rights-of-way may include the land area between the front lot line and the centerline of the County or public road right-of-way.
+
+[5] The minimum lot size inside the urban growth boundaries of the cities of Canby, Estacada, Molalla, and Sandy is five acres.
+
+[6] The average lot size is calculated by determining the lot area of the land proposed for subdivision, partition, or replat and dividing by the number of lots or parcels in the proposed partition, subdivision, or replat.
+
+[7] In a planned unit development, the minimum individual lot size is two acres, except inside the urban growth boundaries of the cities of Canby, Estacada, Molalla, and Sandy, where the minimum individual lot size is five acres. In all cases, the minimum average lot size is 10 acres. The average lot size is calculated by determining the lot area of the land proposed for subdivision, partition, or replat and dividing by the number of lots or parcels in the proposed planned unit development.
+
+[8] In a planned unit development, the minimum front setback is 20 feet.
+
+[9] For a corner lot located above 3,500 feet in elevation, one of the minimum front setbacks is 10 feet, except 20 feet to garage and carport motor vehicle entries.
+
+[10] In a planned unit development, there are no minimum rear and side setbacks except from rear and side lot lines on the perimeter of the final plat. Where this standard applies, it supersedes any other rear or side setback standard in Table 316-2.
+
+[11] The minimum rear setback for an accessory building shall be five feet except as established by Note 10.
+
+[12] The minimum rear setback for an accessory building shall be 10 feet except as established by Note 10.
+
+[13] The minimum side setback for an accessory building shall be five feet except as established by Note 10.
+
+[Added by Ord. ZDO-252, 6/1/2015; Amended by Ord. ZDO-253, 6/1/2015; Amended by Ord. ZDO-254, 1/4/2016; Amended by Ord. ZDO-263, 5/23/2017; Amended by Ord. ZDO-266, 5/23/2018; Amended by Ord. ZDO-269, 9/6/2018; Amended by Ord. ZDO-268, 10/2/2018; Amended by Ord. ZDO-280, 10/23/2021; Amended by Ord. ZDO-282, 7/1/2022; Amended by Ord. ZDO-273, on remand, 5/30/2023; Amended by Ord. ZDO-287, 8/3/2023; Amended by Ord. ZDO-283, 9/5/2023; Amended by Ord. ZDO-285, 9/3/2024; Amended by Ord. ZDO-288, 9/9/2024]

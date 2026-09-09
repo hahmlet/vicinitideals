@@ -106,7 +106,10 @@ ingest:
   zone_field: ZONE
   strip_lowercase_suffix: false
 crossrefs:
-  # --- the last eight references in this layer standing beside a standard --
+  # --- eight references standing beside a standard, ruled 2026-08-27 -------
+  # They were the last eight at the time. Section 316 added four more on
+  # 2026-09-08; those are grouped separately below rather than merged in,
+  # because a header that counts is a header that goes quietly wrong.
   # Three of them are division headings rather than sections -- the county
   # serves one page per section and 800, 1000 and 1100 all 404 -- so what they
   # name is a container whose contents this layer already holds.
@@ -182,6 +185,52 @@ crossrefs:
       Temporary Permits, cited by ZDO 315's one-dwelling-per-lot rule as an exception alongside
       Section 839, Accessory Dwelling Units. A temporary permit is not a path to a permanent
       four-unit building.
+  # --- and four more, all of them arrivals of ZDO Section 316 on 2026-09-08 --
+  # Three close and one does not. The one that does not is the only reference
+  # this county makes to a restriction that could bind our building on land
+  # we would actually buy, and it was invisible until the rural chapter was
+  # fetched.
+  "843":
+    outcome: other_building
+    note: >-
+      Accessory Historic Dwellings. Mentioned in the definitions since the layer began and only
+      made binding by Section 316, whose use table carries the row "Accessory Historic Dwellings,
+      subject to Section 843" (L165) beside a permission we encode. ZDO 202 says what one is: "A
+      detached single-family dwelling legally constructed between 1850 and 1945 that was converted
+      from a primary dwelling to an accessory dwelling." A pre-1945 house demoted to an accessory
+      is not four attached units built new, and note 8 lists it as one of the three exceptions to
+      the one-dwelling rule alongside 839 and 1204, both already ruled the same way.
+  "21":
+    outcome: other_building
+    note: >-
+      OAR 660 Division 21, urban reserves. Section 316 cites it three times and never about a
+      dwelling we build: note 6 (L624) and note 7 (L626) both gate Recreational Vehicles as Second
+      Dwellings and Accessory Historic Dwellings on whether the land is in a reserve. The reserve
+      rules are about which land may urbanise and when, not about what a building must measure.
+  "27":
+    outcome: other_building
+    note: >-
+      OAR 660 Division 27, urban and rural reserves, cited by the same three notes as Division 21
+      plus note 28 (L684). Same answer for the same reason: every citing sentence in this layer
+      gates a use that is not this pod -- an RV as a second dwelling, an accessory historic
+      dwelling -- and none of them states a dimension.
+  "1002.02":
+    outcome: fetch
+    note: >-
+      Tree removal, and the one reference here that is genuinely about our building on land we
+      would buy. Table 316-1 note 12 (L636), printed on the Forest Practices row: "For land
+      inside the Portland Metropolitan Urban Growth Boundary, refer to Subsection 1002.02
+      regarding a development restriction that may apply if excessive tree removal occurs." The
+      row it sits on is why the footnote itself is dismissed and this reference is not: a note
+      about forestry cannot move a use gate, but the subsection it points at is a development
+      restriction and says nothing about who is doing the clearing. A development restriction
+      triggered by clearing is
+      the same shape as Portland's Title 11, which is encoded as fee_in_lieu and cost real ground
+      before it was read -- and this cannot be ruled the way it is tempting to rule it, namely
+      that Section 316's own districts refuse the pod so the note is moot. That is a reason that
+      argues about OUR corpus rather than about the page, and it goes stale the moment anybody
+      reads 1002 for the urban districts. Section 1002 is not in the store. `fetch` keeps the row
+      in the queue, which is where it belongs.
 
 definitions:
   # "LOT, CORNER: A lot with street frontage on two streets intersecting at a
@@ -234,6 +283,19 @@ code:
   start: "315.01 Purpose"
   end: "Return to the Zoning and Development Ordinance main page"
   # Table 315-1's ~1,900 use-name lines dilute the density ratio. Read 2026-08-12.
+  allow_thin: true
+# The rural half of the county's residential land, and the largest block of
+# unencoded lots left anywhere in the corpus: RRFF-5 (2,082 lots), FU-10
+# (693), RA-2 (491), RA-1 (329) and FF-10 (81) together carry 3,676 lots on
+# 6,798 acres. Section 315 is the URBAN low-density chapter and says nothing
+# about any of them, which is why the coverage ledger has had five
+# `zone_missing` rows here since it could first see this county.
+- id: zdo.316
+  url: https://www.clackamas.us/planning/zdo316
+  title: Clackamas County ZDO Section 316 - Rural Residential Districts (RA-1, RA-2, RR, RRFF-5, FF-10, FU-10)
+  start: "316.01"
+  end: "Return to the Zoning and Development Ordinance main page"
+  # Same shape as 315: a long use table whose use names dilute the ratio.
   allow_thin: true
 # Table 315-2 states the pod's dimensions and points somewhere else for two
 # standards that decide whether it fits at all. "District Land Area (DLA) for
@@ -1751,3 +1813,213 @@ zones:
       area for four units -- which is below the 7,000 Section 845 asks, so
       this is the one district of the four where the county's density standard
       would not have bound anyway) and minimum density ("See Section 1012").
+  # ------------------------------------------------------------------
+  # The rural half of the county, read 2026-09-08 from ZDO Section 316.
+  #
+  # Five districts, 3,676 lots on 6,798 acres -- the largest block of
+  # unencoded land left in either county -- and all five are the same answer.
+  # Section 316 governs six districts; RR is the sixth and carries no lots in
+  # the parcel layer, so it is ruled in the district ledger rather than
+  # encoded here.
+  #
+  # The refusal rests on three sentences and is corroborated by a fourth from
+  # a different chapter:
+  #
+  #   316.03(A)(1)  "Uses not listed are prohibited."  (L11)
+  #   Table 316-1   has rows for Detached Single-Family Dwellings, Duplexes,
+  #                 Manufactured Dwellings, Prefabricated Structures, Single
+  #                 Room Occupancies, ADUs, Accessory Historic Dwellings and
+  #                 Recreational Vehicles as Second Dwellings -- and no
+  #                 triplex, quadplex, townhouse, cottage cluster or
+  #                 multifamily row of any kind. A whole-document sweep for
+  #                 every one of those words returns three hits, all of them
+  #                 the word "duplex".
+  #   Note [8]      states it affirmatively rather than by omission: "each lot
+  #                 of record may be developed with only ONE of the following:
+  #                 detached single-family dwelling, duplex (only if approved
+  #                 as a conditional use in the RA-1 District), manufactured
+  #                 dwelling, prefabricated structure, or single room
+  #                 occupancy."  (L628)
+  #
+  # The fourth is ZDO 1012, which is where this county writes its middle
+  # housing relief and which names the districts it reaches twice over:
+  # 1012.02(H) waives minimum lot size for a middle housing land division "In
+  # the R-5, R-7, R-8.5, R-10, R-15, R-20, R-30, VR-4/5, or VR-5/7 District"
+  # (zdo.1012.txt#L57), and 1012.04(A) exempts "a duplex, triplex, quadplex,
+  # or cottage cluster" from DLA in that identical list (L73). Nine urban
+  # districts, named the same way in both places, and not one of these five
+  # among them. The county is not silent about where middle housing goes; it
+  # said, and it said somewhere else.
+  #
+  # THE STATE DOES NOT REACH HERE, and this is the limb worth checking rather
+  # than assuming, because everywhere else in this corpus OAR 660-046 is the
+  # thing that overrides a local refusal. Two independent reasons:
+  #
+  #   -0010(1) binds "a Medium City or Large City" (oar.660-046-0010.txt#L25),
+  #   and -0020's definition of Large City reaches county land only where it
+  #   is "provided with sufficient urban services as defined in ORS 195.065.
+  #   Sufficient urban services means areas that are within an urban service
+  #   district boundary" (oar.660-046-0020.txt#L72). Rural residential land
+  #   outside an urban service district is the definition's own exclusion.
+  #
+  #   -0010(2)(c) excuses, separately and by name, "Lots or Parcels that are
+  #   not incorporated and that are zoned under an interim zoning designation
+  #   that maintains the land's potential for planned urban development"
+  #   (#L36-L37). That sentence was written for a district like FU-10.
+  #
+  # The second reason matters because the first is weakest exactly where the
+  # lots are: some of this land IS inside the Portland Metropolitan Urban
+  # Growth Boundary -- ZDO 1012.02(A) sets a 20-acre minimum lot size "inside
+  # the Portland Metropolitan Urban Growth Boundary ... in the FF-10, RA-1,
+  # RA-2, RC, RI, and RRFF-5 Districts" (zdo.1012.txt#L19), and Table 316-2
+  # note [3] says the same. Inside a UGB is not the test the division states,
+  # but it is close enough to it that resting the whole refusal on "rural"
+  # would have been resting it on the wrong word.
+  #
+  # NOTHING DIMENSIONAL IS ENCODED, the same way Oregon City's six refusals
+  # encode only the use gate. Table 316-2 is complete and readable and every
+  # figure in it is moot while the building may not be built: minimum lot
+  # sizes of one to ten acres, front 30, rear 30 and side 10 in all five of
+  # the districts encoded here, and no maximum lot coverage in any of them.
+  # (RR is the exception on every row -- 15, 15, 5 and 40 percent -- which is
+  # the recreational district up above 3,500 feet where the same table sets a
+  # 20 foot separation "between buildings with contiguous snow slide areas".)
+  # If the county ever admits middle housing to these districts the table is
+  # at L708-L714 and its thirteen notes at L716-L740.
+  RRFF5:
+    cite_default:
+      cite: Clackamas ZDO 316.02 (applicability), 316.03(A)(1) and Table 316-1
+        (permitted uses, rural residential and future urban residential
+        districts), with Table 316-1 note 8. The two tables are printed after
+        all of the section prose, so in the stored text the use table and its
+        notes sit below the 316.04 heading; 316.04 is named here because that
+        is where a reader lands, not because the county files the use table
+        there
+      url: https://www.clackamas.us/planning/zdo316
+      retrieved: '2026-09-08'
+    quadplex_allowed:
+      # Rural Residential Farm Forest 5-Acre, the fourth column of Table
+      # 316-1. Detached Single-Family Dwellings reads P[8]; Duplexes reads X;
+      # there is no further dwelling row. 2,082 lots, more than any other
+      # unencoded zone in either county, closed on a use gate.
+      value: false
+      quote: "or/clackamas/_unincorporated/zdo.316.txt#L7,L11,L37,L39-L45,L151,L172-L185,L628"
+    notes: >-
+      Encoded 2026-09-08 from Table 316-1. The largest single block of land in
+      this corpus to be answered by one sentence, and the answer is no.
+
+      Read for the opposite result first, because 2,082 lots is worth being
+      wrong about carefully. Three cross-references out of note 8 were
+      followed and none of them opens a door: Section 839 is accessory
+      dwelling units, Section 843 is accessory historic dwellings, Section
+      1204 is temporary permits. Section 845 -- the county's own middle
+      housing chapter, already in the store and already the source of the
+      7,000 square foot minimum on all thirteen urban districts here that
+      permit the pod -- is a standards
+      section and not a permission: it opens "The subject lot shall be a
+      minimum of", and 316.03(A)(3) sends permitted uses to Sections 1000 and
+      1100, not to 845. A design standard cannot create the use it designs.
+  FU10:
+    cite_default:
+      cite: Clackamas ZDO 316.02 (applicability), 316.03(A)(1) and Table 316-1
+        (permitted uses, rural residential and future urban residential
+        districts), with Table 316-1 note 8. The two tables are printed after
+        all of the section prose, so in the stored text the use table and its
+        notes sit below the 316.04 heading; 316.04 is named here because that
+        is where a reader lands, not because the county files the use table
+        there
+      url: https://www.clackamas.us/planning/zdo316
+      retrieved: '2026-09-08'
+    quadplex_allowed:
+      # Future Urban 10-Acre, the sixth and last column. Same pair of cells:
+      # P[8] against detached single-family, X against duplexes.
+      value: false
+      quote: "or/clackamas/_unincorporated/zdo.316.txt#L7,L11,L37,L39-L45,L151,L172-L185,L628"
+    notes: >-
+      Encoded 2026-09-08. The one district of the five whose refusal needed a
+      second argument, and the one that now has the best of them.
+
+      FU-10 is a holding zone: land the region intends to urbanise and has not
+      urbanised yet, which is why 693 lots sit on only 897 acres while
+      RRFF-5's 2,082 sit on 4,565. Being inside the Portland Metropolitan
+      Urban Growth Boundary is normal for it, and "inside a UGB" is the
+      instinctive test for whether the state middle housing mandate applies.
+      It is not the test the rule states. OAR 660-046-0010(2)(c) excuses
+      unincorporated land "zoned under an interim zoning designation that
+      maintains the land's potential for planned urban development", which
+      describes this district exactly -- and Happy Valley's FU-10 was ruled
+      the same way in the district ledger on its own code, which is two
+      jurisdictions reaching one answer about one kind of place.
+  RA2:
+    cite_default:
+      cite: Clackamas ZDO 316.02 (applicability), 316.03(A)(1) and Table 316-1
+        (permitted uses, rural residential and future urban residential
+        districts), with Table 316-1 note 8. The two tables are printed after
+        all of the section prose, so in the stored text the use table and its
+        notes sit below the 316.04 heading; 316.04 is named here because that
+        is where a reader lands, not because the county files the use table
+        there
+      url: https://www.clackamas.us/planning/zdo316
+      retrieved: '2026-09-08'
+    quadplex_allowed:
+      # Rural Area Residential 2-Acre, second column. P[8] detached, X duplex.
+      value: false
+      quote: "or/clackamas/_unincorporated/zdo.316.txt#L7,L11,L37,L39-L45,L151,L172-L185,L628"
+    notes: >-
+      Encoded 2026-09-08. 491 lots on 625 acres. Table 316-2 asks two acres
+      per lot here and Table 316-1 asks that only one dwelling stand on it,
+      which is the same policy stated twice in two units.
+  RA1:
+    cite_default:
+      cite: Clackamas ZDO 316.02 (applicability), 316.03(A)(1) and Table 316-1
+        (permitted uses, rural residential and future urban residential
+        districts), with Table 316-1 note 8. The two tables are printed after
+        all of the section prose, so in the stored text the use table and its
+        notes sit below the 316.04 heading; 316.04 is named here because that
+        is where a reader lands, not because the county files the use table
+        there
+      url: https://www.clackamas.us/planning/zdo316
+      retrieved: '2026-09-08'
+    quadplex_allowed:
+      # Rural Area Residential 1-Acre, first column, and the one cell in the
+      # Duplexes row that is not an X: it reads C[8], a conditional use. Two
+      # attached units on a discretionary approval is not four attached units
+      # by right, and this project refuses a conditional permission the same
+      # way it accepted Oregon City R-2 -- by asking whether the use is
+      # permitted outright, not whether it is imaginable.
+      value: false
+      quote: "or/clackamas/_unincorporated/zdo.316.txt#L7,L11,L37,L39-L45,L151,L172-L185,L628"
+    notes: >-
+      Encoded 2026-09-08. 329 lots on 455 acres, and the only district in
+      Section 316 that admits any attached housing at all.
+
+      The duplex limb is the strongest evidence in the section that four
+      units have no unstated route here, and it is strongest because it cuts
+      the other way. The county did not merely tolerate the RA-1 duplex; it
+      wrote three separate accommodations for it. Table 316-1 note 8 carves
+      it out of the one-dwelling rule by name ("duplex (only if approved as a
+      conditional use in the RA-1 District)"). ZDO 1012.02(F) gives it its own
+      subsection and waives the minimum lot size outright, subject only to the
+      maximum density of 1012.07. Table 316-2 note [2] doubles the average lot
+      size a planned unit development must hold for it, one acre to two. Three
+      places where a code that meant to admit more than two units would have
+      had to say so, and in all three it says duplex and stops.
+  FF10:
+    cite_default:
+      cite: Clackamas ZDO 316.02 (applicability), 316.03(A)(1) and Table 316-1
+        (permitted uses, rural residential and future urban residential
+        districts), with Table 316-1 note 8. The two tables are printed after
+        all of the section prose, so in the stored text the use table and its
+        notes sit below the 316.04 heading; 316.04 is named here because that
+        is where a reader lands, not because the county files the use table
+        there
+      url: https://www.clackamas.us/planning/zdo316
+      retrieved: '2026-09-08'
+    quadplex_allowed:
+      # Farm Forest 10-Acre, fifth column. P[8] detached, X duplex.
+      value: false
+      quote: "or/clackamas/_unincorporated/zdo.316.txt#L7,L11,L37,L39-L45,L151,L172-L185,L628"
+    notes: >-
+      Encoded 2026-09-08. 81 lots on 257 acres, the smallest of the five and
+      read at the same care as the largest. Ten acres a dwelling, one dwelling
+      a lot of record.

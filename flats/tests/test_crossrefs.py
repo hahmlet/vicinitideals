@@ -846,3 +846,95 @@ def test_the_mark_is_the_callers_to_make(layers: dict[str, Layer]) -> None:
 
     assert "50.06.001.5" in printed
     assert "SWITCHED OFF" not in printed
+
+
+# -- the line and the document it is labelled with -------------------------
+
+
+def test_the_sample_line_is_in_the_document_the_row_names(
+    layers: dict[str, Layer]
+) -> None:
+    """A row prints one line and labels it with a document, and for a year
+    those could be two different files.
+
+    ``sources`` is ordered by mention count, so ``sources[0]`` is wherever the
+    reference appears most. ``sample`` was one line per reference, taken from
+    the first file the walk happened to reach. A reference confined to one
+    document is safe; the moment a second document mentions it the two come
+    apart, and the row reads ``in zdo.316.txt:`` above a sentence from
+    ``zdo.202.definitions.txt``.
+
+    Found 2026-09-08, when Section 316 arrived and made Section 843 the
+    layer's first two-document reference standing beside a standard. It is the
+    failure this ledger exists to prevent, committed by the ledger: a citation
+    that points at the wrong page reads as evidence.
+
+    Asserted over the whole corpus rather than on the one row, because the
+    property is cheap to check everywhere and the bug was invisible anywhere
+    nobody happened to look.
+    """
+    store = ProvenanceStore()
+    checked = 0
+    for layer in layers.values():
+        for row in dangling(layer, store):
+            named = f"{row.layer}/{row.sources[0]}"
+            text = store.text_path(named).read_text(encoding="utf-8")
+            assert row.sample in text, (
+                f"{row.layer} {row.ref}: the row is labelled {row.sources[0]} "
+                f"and the line it prints is not in that document"
+            )
+            checked += 1
+    assert checked > 500, f"only {checked} rows walked — the corpus went quiet"
+
+
+def test_a_layer_owns_only_the_documents_in_its_own_directory(
+    layers: dict[str, Layer]
+) -> None:
+    """The third and fourth places this fault was hiding.
+
+    ``or/`` prefixes every document in the corpus, so a layer selecting its
+    documents with ``startswith`` swallows the whole store when the layer is
+    the state one. It was found in the reading ledger and the fetch queue on
+    2026-09-04 and fixed in both; each left a comment calling the other its
+    twin, and neither of them looked at this module or the redirect ledger.
+    Here it was live: Oregon filed 591 rows about references it does not
+    make, against an encoding of four OAR and ORS documents that could not
+    possibly cite them -- 44 percent of the whole crossref queue, every row
+    blaming the wrong jurisdiction. In the redirect ledger the same bug
+    produced nothing, because a redirect only counts beside a number the
+    layer uses and the state layer's citations reach none of those lines. It
+    was fixed there anyway; a bug that is latent is not a bug that is absent.
+
+    Asserted as ownership rather than as a count, so it holds when the corpus
+    grows.
+    """
+    store = ProvenanceStore()
+    for name, layer in layers.items():
+        mine = {
+            p.rsplit("/", 1)[0]
+            for row in dangling(layer, store)
+            for p in (f"{name}/{s}" for s in row.sources)
+        }
+        assert mine <= {name}, f"{name} reports rows from {sorted(mine - {name})}"
+
+    state = dangling(layers["or"], store)
+    assert len(state) < 10, (
+        "the state layer holds four documents and cites lines in them; a "
+        f"ledger of {len(state)} rows is the whole corpus filed under Oregon"
+    )
+
+
+def test_the_reference_that_found_it(layers: dict[str, Layer]) -> None:
+    """The specific row, kept beside the general property.
+
+    Section 843 is mentioned in ZDO 202's definition of an accessory historic
+    dwelling and in Section 316's use table, and 316 mentions it more. So the
+    row names 316 and must print 316's line — the use-table row — not the
+    definition, which is the one it used to print.
+    """
+    rows = {d.ref: d for d in dangling(layers["or/clackamas/_unincorporated"])}
+    row = rows["843"]
+
+    assert row.sources[0] == "zdo.316.txt"
+    assert "subject to Section 843" in row.sample
+    assert "1850 and 1945" not in row.sample

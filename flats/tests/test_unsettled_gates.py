@@ -257,6 +257,89 @@ DECLARED_OWING = {
         "unit lots, so the gap keeps a live path and is left owing rather "
         "than exempted."
     ),
+    # --- Oregon City's six refusals, added 2026-09-08 --------------------
+    #
+    # Six districts that prohibit the pod outright and hold nothing but the
+    # use gate, so each owes max_height_ft, min_lot_sqft, setback_front_ft,
+    # setback_rear_ft and setback_side_ft. Under the rule at the top of this
+    # file an uncapped false owes nothing -- and these are the other kind.
+    # Every one of them is cited to Title 17, and Title 17's notes blocks
+    # carry two footnotes ruled `unmeasured`: "Public utility easements may
+    # supersede the minimum" (L4161, three printings) and the vegetated
+    # corridor rules at L12517-L12523. A footnote governs its whole notes
+    # block, so both land on `quadplex_allowed` as well as on the setbacks
+    # they were written about.
+    #
+    # Neither can plausibly turn a prohibition into a permission, and that is
+    # the same thing already said of Portland CI1 above: the census scopes a
+    # footnote widely on purpose, because an over-scoped one costs a review
+    # and an under-scoped one costs a false GREEN. The narrowing that would
+    # close these is a field scope, and `zones:` is the only narrowing the
+    # ruling format has.
+    #
+    # They arrived here on the day the ledger was rebuilt correctly rather
+    # than the day they were encoded, and that gap is the finding. The
+    # coverage ledger shipped on 2026-09-08 was built on the analysis host
+    # from a hand-copied working tree, and copied at a moment when these six
+    # zones still carried the dimensional standards they were later trimmed
+    # of. So the ledger reported them owing nothing and this guard -- the one
+    # written after 809 lots hid behind a stale ledger for a fortnight --
+    # passed on a file that did not describe the corpus. Rebuilt from a
+    # pristine checkout it reports all six, which is the corpus telling the
+    # truth about itself. Regenerate before trusting, every time.
+    "or/clackamas/oregon-city/MUE": (
+        "max_height_ft, min_lot_sqft, setback_front_ft, setback_rear_ft and "
+        "setback_side_ft. Chapter 17.31 prohibits every dwelling, so nothing "
+        "dimensional was encoded and nothing needs to be -- but the false is "
+        "capped by `utility_easement`, OCMC 17.zoning L4161: 'Public utility "
+        "easements may supersede the minimum.' That note is about a setback "
+        "and governs its whole notes block, which is where the cap on the use "
+        "gate comes from. It cannot lift a use prohibition; it is scoped wide "
+        "on purpose and narrowing it would need a field scope the ruling "
+        "format does not have."
+    ),
+    "or/clackamas/oregon-city/I": (
+        "max_height_ft, min_lot_sqft, setback_front_ft, setback_rear_ft and "
+        "setback_side_ft. The institutional district: OCMC 17.39.020 and .030 "
+        "list no dwelling and 17.06.010.A turns that silence into a "
+        "prohibition. Same `utility_easement` cap from OCMC 17.zoning L4161 "
+        "as MUE, same reason -- the note is a setback note, its block is the "
+        "scope, and a recorded easement does not admit a use the chapter "
+        "refuses."
+    ),
+    "or/clackamas/oregon-city/GI": (
+        "max_height_ft, min_lot_sqft, setback_front_ft, setback_rear_ft and "
+        "setback_side_ft. General Industrial: 17.36.020.E is a permitted-use "
+        "list with no dwelling on it, prohibited by 17.06.010.A. Capped by "
+        "`protected_water_feature` -- the "
+        "vegetated corridor rules at OCMC 17.zoning L12517 to L12523, which "
+        "set a corridor width measured from a water feature nothing in this "
+        "system locates. A corridor moves a building; it does not permit one."
+    ),
+    "or/clackamas/oregon-city/CI": (
+        "max_height_ft, min_lot_sqft, setback_front_ft, setback_rear_ft and "
+        "setback_side_ft. Campus Industrial, 17.37.060.C.6, prohibited on "
+        "17.06.010.A, "
+        "capped by the same `protected_water_feature` corridor footnotes at "
+        "OCMC 17.zoning L12517 to L12523 as GI."
+    ),
+    "or/clackamas/oregon-city/HC": (
+        "max_height_ft, min_lot_sqft, setback_front_ft, setback_rear_ft and "
+        "setback_side_ft. Historic Commercial, and the loudest of the six: "
+        "17.26.035.B prohibits 'Triplexes and quadplexes' by name, where "
+        "four of the others are refused on silence and NC on a "
+        "prohibited-uses list that does not name this building. Capped by `protected_water_feature`, OCMC "
+        "17.zoning L12517 to L12523. A district that names the building and "
+        "refuses it is the clearest case in this list of a cap that cannot "
+        "reach the gate it sits on."
+    ),
+    "or/clackamas/oregon-city/NC": (
+        "max_height_ft, min_lot_sqft, setback_front_ft, setback_rear_ft and "
+        "setback_side_ft. Neighborhood Commercial, one lot, and prohibited in "
+        "writing rather than by silence: 17.24.035.L is a prohibited-uses "
+        "list. Capped by the same `protected_water_feature` corridor "
+        "footnotes at OCMC 17.zoning L12517 to L12523."
+    ),
 }
 
 
@@ -272,8 +355,16 @@ def test_every_zone_that_owes_a_required_field_says_why() -> None:
     stopped holding the moment the ledger learned to count Clackamas: two zones
     that had always owed became visible, and both owe on purpose. An empty list
     would now be a lie in the other direction -- it would say the corpus states
-    every required number, when what it states is that two cities do not and we
-    declined to invent for them.
+    every required number, when what it states is that some cities do not and
+    we declined to invent for them.
+
+    Eight since 2026-09-08, and the six that joined are the same failure this
+    docstring describes, caught a second time. They were encoded on 2026-09-08
+    and the ledger shipped that day said they owed nothing, because it was
+    built on the analysis host from a working tree copied there before those
+    zones were trimmed to the use gate. Rebuilt from a pristine checkout, all
+    six report. The guard did not fail; it was handed a file that did not
+    describe the corpus, which is the one thing it cannot check for itself.
 
     A failure here means one of three things and all are worth stopping for: a
     zone was encoded without its required standards, a footnote ruling moved

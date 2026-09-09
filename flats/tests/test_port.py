@@ -225,6 +225,15 @@ def test_written_config_loads_through_the_real_loader() -> None:
     rules = RuleSet(load_rules())
 
     assert len(rules.layers) == 19  # 18 jurisdictions + the state layer
+    # 217 as of 2026-09-08, last of the day: the rural half of unincorporated
+    # Clackamas -- RRFF-5, FU-10, RA-2, RA-1 and FF-10, 3,676 lots, the
+    # largest block of unencoded land in either county and the only slice so
+    # far where every district in the reading refuses. ZDO 316's use table
+    # carries no dwelling row past the duplex and 316.03(A)(1) turns that
+    # silence into a prohibition. RR is the sixth district Section 316
+    # governs and carries no lots, so it is ruled in the district ledger
+    # instead of encoded, which is why this moves by five and not six.
+    #
     # 212 as of 2026-09-08, later still: Oregon City's whole non-residential
     # side, eleven districts at once. Six of them refuse the pod and are
     # encoded anyway -- a refusal is a reading, and an unencoded zone is not
@@ -244,7 +253,7 @@ def test_written_config_loads_through_the_real_loader() -> None:
     # use table permits a quadplex in and the port had never carried (2026-08-21),
     # then Wilsonville gained V and TC, the two zones its chapter states and no
     # ledger could see were absent.
-    assert sum(len(l.zones) for l in rules.layers.values()) == 212
+    assert sum(len(l.zones) for l in rules.layers.values()) == 217
 
 
 def test_state_parking_preemption_reaches_a_city_zone() -> None:

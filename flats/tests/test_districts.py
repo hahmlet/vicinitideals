@@ -101,6 +101,23 @@ RULINGS: dict[str, dict[str, str]] = {
         # still asking, so when the zone is encoded the ledger stops reporting
         # it and the ruling is a record of a question, not an answer to a live
         # one. Four are left below, all of them fetches.
+        #
+        # ZDO Section 316 arrived in the store on 2026-09-08 and brought six
+        # more designations with it: RA-1, RA-2, RR, RRFF-5, FF-10 and FU-10,
+        # printed both as parenthesised introductions in 316.02 and as the
+        # column heads of Table 316-1. Five carry lots and were encoded the
+        # same day, all five refusals. RR carries none, so it stays a ruling.
+        "RR": (
+            "prohibited: Recreational Residential, the third column of ZDO "
+            "Table 316-1. Its only dwelling rows are detached single-family "
+            "(P), manufactured, prefabricated and single room occupancy; "
+            "duplexes read X in this column and there is no triplex, quadplex "
+            "or townhouse row anywhere in the table. Note 8 states it "
+            "affirmatively -- 'each lot of record may be developed with only "
+            "one of the following' -- and 316.03(A)(1) makes the silence a "
+            "prohibition: 'Uses not listed are prohibited.' No lots carry it "
+            "in the parcel layer, which is why it is ruled and not encoded."
+        ),
         "VTH": (
             "fetch: Village Townhouse -- quadplexes P in Table 315-1, but its "
             "standards are in Table 315-3, which prints two cells in several "

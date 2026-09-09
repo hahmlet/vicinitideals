@@ -1829,6 +1829,81 @@ the list of places worth hoping about.
   something reports it as fine**, so these only ever surface when somebody
   writes a number into the part of the page it was blind to.
 
+  **And the rural half of Clackamas County is read — 3,676 lots, later the
+  same night.** This was the biggest single unread block of land anywhere in
+  either county, bigger than the whole Oregon City commercial side, and it is
+  the countryside rather than a town: five districts of one-, two-, five- and
+  ten-acre lots outside any city. **All five say no.** The county's rural
+  chapter lists what may be built on a rural lot — a house, a manufactured
+  home, and in exactly one district a duplex if you ask permission — and then
+  says in as many words that one lot of record gets *one* of those. There is
+  no fourplex row anywhere in it.
+
+  Nothing here needs a decision from you. What is worth knowing is that this
+  is the good kind of closure. Six thousand acres that had been sitting in the
+  "we have not looked" pile are now definitively out, on the page, with the
+  sentence quoted — rather than sitting there for another year looking like
+  they might be worth something. **The land left unread in the unincorporated
+  county drops from 6,257 lots to 2,581**, and what remains is mostly
+  commercial and industrial ground.
+
+  One thing I checked rather than assumed, because it would have been easy to
+  get backwards. The state law that forces Oregon cities to allow fourplexes
+  is the reason most of this corpus reads the way it does, and the instinct is
+  that it applies to anything inside the Portland urban growth boundary — and
+  some of this rural land *is* inside it. It does not apply, and the rule says
+  so twice: it binds cities and county land with city-level services, which
+  this is not, and it separately and by name excuses unincorporated land held
+  in a "future urban" holding zone, which is exactly one of the five. Had I
+  taken the shortcut and refused these on the word "rural", the answer would
+  have been right for the wrong reason and would have broken the first time
+  somebody looked closely.
+
+  A second thing checked rather than assumed, in the same chapter. Under the
+  county's rural use table sit thirty-five footnotes, and one of them is the
+  only sentence in the chapter that could have undone the whole answer: it
+  says a use *similar* to the one on that line may be approved anyway. If that
+  footnote had been attached to the duplex line, "there is no fourplex row"
+  would have stopped being a refusal, because a fourplex is plainly similar to
+  a duplex. So every one of the thirty-five was traced back to the line it is
+  actually printed on — which the county's own web page makes deliberately
+  hard, because each cell of the table lands on its own line with nothing
+  beside it. That footnote turns out to sit on lodges, government buildings,
+  broadcast towers, parks, campgrounds and utilities. Not one dwelling. The
+  refusal holds, and now it holds for a reason somebody can check.
+
+  **Three of our own ledgers were quietly blaming the state of Oregon for
+  every city's unread references.** Found on the way in, unrelated to the
+  errand, and it is the same shape as the checker problem in the paragraph
+  above. The queue that tracks "chapters our documents point at that we have
+  never fetched" had 1,348 entries, and **591 of them — 44 percent — were
+  filed against Oregon itself**, which points at nothing of the sort. Every
+  one of those rows was a real reference from some city, misattributed. The
+  fault had already been found and fixed twice in other parts of the system
+  back on 4 September; both fixes left a note in the code saying "the other
+  one is its twin", and neither of them looked here. The queue is now 758 real
+  rows. Nothing for you to do; noted because "how much unread code is left"
+  is a number you have been quoted, and it was nearly half wrong.
+
+  **And one number I shipped yesterday was wrong.** The coverage ledger — the
+  file that says, per zone, what we hold and what we still owe — is rebuilt on
+  a separate machine because that is where the lot data lives. Yesterday I
+  built it from files hand-copied across mid-edit, so six Oregon City
+  districts came out saying they owed nothing when they owe five standards
+  each. Rebuilt properly today it tells the truth. It changes no verdict —
+  those six districts prohibit our building anyway — but the guard that exists
+  precisely to catch this kind of staleness passed on it, because it can only
+  check the file it is handed. Every ledger in this system now gets rebuilt
+  before it is trusted, not read as a committed artefact.
+
+  The one thing that came out of tonight and *is* real work: the county's
+  rural chapter points at a tree-removal rule for land inside the Portland
+  growth boundary — "a development restriction that may apply if excessive
+  tree removal occurs". That is the same shape as Portland's tree code, which
+  turned out to cost real money per tree, and we have never fetched the
+  chapter. It is queued as a fetch rather than waved away, and it is mine to
+  do, not yours.
+
   **Five districts and five documents left across all cities**, down from
   fourteen and five this morning. Two of the five districts are in Lake
   Oswego, which is switched off — see item 16 — so in practice it is three:
