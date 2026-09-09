@@ -59,3 +59,43 @@ def test_the_tables_we_do_encode_from_are_whole() -> None:
     )
     assert zdo.short == 0, sorted(set(zdo.runs))
     assert set(zdo.runs) <= {7, 11}, sorted(set(zdo.runs))
+
+
+def test_a_verdict_letter_this_checker_has_never_seen_is_how_it_lies() -> None:
+    """The failure mode that matters more than any single document.
+
+    Clackamas ZDO 510 defines five codes where most chapters define four, and
+    the fifth is ``S`` -- "the use may be authorized only pursuant to Section
+    106". There are sixty-nine of them in Table 510-1. On the day the chapter
+    was fetched this check called that table 29 percent ragged: twenty-five
+    short rows, every single one of them broken at an ``S``, and not one of
+    them actually missing a cell. Two more were broken by ``See Table 835-1``,
+    the pointer Clackamas prints where a wireless facility's permission lives
+    in another chapter.
+
+    A guard that cries wolf twenty-five times is not a guard. It is where a
+    real dropped cell goes to hide, and it fails in the direction that costs
+    something: the corpus stops separating into one ragged document and the
+    rest at zero, and the assertion above stops being writable at all.
+    """
+    from flats.encode.ragged import CELL
+
+    assert CELL.match("S")
+    assert CELL.match("S/C")
+    assert CELL.match("See Table 835-1")
+    assert CELL.match("See Table 510-3.")
+    assert CELL.match("See Table 19.30.030.A.4, Maximum Density")
+    # Still not a cell: prose that happens to start with a permission letter.
+    assert not CELL.match("S means the use may be authorized")
+    assert not CELL.match("See Table 835-1 for the applicable standards.")
+
+
+def test_the_commercial_use_table_is_whole() -> None:
+    """Table 510-1 is where the answer for eleven unincorporated commercial
+    districts is read, quadplexes among them, and its rows are eleven cells
+    against eleven column heads. This is the table the ``S`` blindness was
+    hiding, so it is pinned by name rather than left to the corpus-wide count.
+    """
+    zdo = next(d for d in scan() if d.name.endswith("_unincorporated/zdo.510.txt"))
+    assert zdo.widest == 11
+    assert zdo.short == 0, sorted(set(zdo.runs))

@@ -38,9 +38,33 @@ DOCS = Path(__file__).resolve().parents[1] / "provenance" / "docs"
 #: comma-joined compounds a limited use takes ("L[1],C[2]"). Getting the
 #: compounds wrong is not harmless: a cell this pattern misses breaks a run in
 #: half and reports two short rows where the page has one whole one.
-_VERDICT = r"(?:P|C|A|N|X|L|CU|NP|SUR|L/SUR|CPUD)(?:/(?:P|C|A|N|X|L|CU|NP))*"
+#:
+#: ``S`` is Clackamas ZDO Section 510's own code and was added on 2026-09-08,
+#: the day that chapter was fetched: "'S' means the use may be authorized only
+#: pursuant to Section 106; however, identifying a use as 'S' does not indicate
+#: that any determination has been made regarding whether the use will be
+#: authorized." Sixty-nine of them, and without the letter this check reported
+#: Table 510-1 as 29 percent ragged -- twenty-five short rows, every one of
+#: them broken at an ``S`` and none of them missing a cell. A guard that cries
+#: wolf twenty-five times is where a real dropped cell would go to hide. The
+#: one other bare ``S`` in the corpus is a dictionary letter heading in
+#: Multnomah's definitions, surrounded by prose, so it can never reach the
+#: three-line minimum a run needs.
+_VERDICT = r"(?:P|C|A|N|S|X|L|CU|NP|SUR|L/SUR|CPUD)(?:/(?:P|C|A|N|S|X|L|CU|NP))*"
 _MARKS = r"(?:\s*\[[0-9,\s]+\])*"
-CELL = re.compile(rf"^{_VERDICT}{_MARKS}(?:\s*,\s*{_VERDICT}{_MARKS})*$")
+
+#: A cell that answers with a pointer instead of a letter. Clackamas writes
+#: "See Table 835-1" where a wireless facility's permission lives in another
+#: chapter's table, and Fairview writes "See Table 19.30.030.A.4, Maximum
+#: Density". It is a cell on the page and has to be one here: in ZDO 315 and
+#: 316 a whole row is nothing but these, and in ZDO 510 two of them sit in the
+#: middle of a row of ``P``, where not counting them cut one eleven-cell row
+#: into a six and a three.
+_XREF = r"See Table [0-9A-Za-z][0-9A-Za-z.\-]*(?:,[^.]*)?\.?"
+
+CELL = re.compile(
+    rf"^(?:{_XREF}|{_VERDICT}{_MARKS}(?:\s*,\s*{_VERDICT}{_MARKS})*)$"
+)
 
 #: Shorter than this and a run is as likely to be prose as a table row.
 MIN_RUN = 3

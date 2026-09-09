@@ -432,14 +432,25 @@ notes:
       amendment path, and the reason most of that table's cells read
       "Variable". States no dimension, in districts this layer does not encode.
 
+  # The MUR-M table reprints the R-5 table's open space note word for word, so
+  # this entry and the one at L679 share a digest. Until 2026-09-08 this one
+  # said only "left here as a pointer" -- and because ``_join`` keeps the LAST
+  # entry for a digest, the pointer was what the register held and the argument
+  # was thrown away. Both entries now carry the same words; the pointer is a
+  # comment, where it cannot displace a reason. See `flats/encode/travelled.py`.
   - quote: "or/clackamas/happy-valley/16.22.residential.txt#L1320"
     digest: "c48a98cc9b06"
     state: encoded
     encoded_as: "min_landscaped_pct = 20 on every zone in the layer."
     reason: >-
-      The MUR-M table reprints the R-5 table's open space note word for word,
-      so it shares a digest with it and is ruled by the same entry. Left here
-      as a pointer only.
+      "Pursuant to Section 16.42.030, 20% of the net developable area must be
+      usable open space." The city's own gloss on the standard encoded from
+      16.42.030(B)(1), and it disagrees with the chapter about two words: the
+      chapter says "gross developable lot area... shall be landscaped", the
+      footnote says net developable area and usable open space. Both
+      denominators are smaller than the lot, so the value is held against the
+      lot's own area, which asks for at least as much as either reading does.
+      The share is the same twenty percent in both.
 
   - quote: "or/clackamas/happy-valley/16.22.residential.txt#L1321"
     digest: "5c273cb78646"

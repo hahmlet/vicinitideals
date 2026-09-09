@@ -124,24 +124,116 @@ RULINGS: dict[str, dict[str, str]] = {
             "of its three-column rows; lot size, coverage and rear setback "
             "are a column question before they are a reading."
         ),
+        # These three were `fetch` until 2026-09-08, on the ground that "no
+        # ZDO 1005 is in the store". It is in the store now, fetched with
+        # Section 510 because Table 510-1 notes 12 and 14 send a freestanding
+        # quadplex in six commercial districts to exactly these standards. So
+        # the reason had to change, and the interesting part is that nothing
+        # made it change: a ruling whose argument is that a document is
+        # ABSENT goes quietly wrong the day the document arrives, and no check
+        # in this file or any other was watching for it.
         "HDR": (
-            "fetch: High Density Residential -- quadplexes P in Table 315-1, "
-            "but Table 315-4 answers rear setback, side setback and building "
-            "separation with 'See Subsection 1005.02(L)', and no ZDO 1005 is "
-            "in the store."
+            "encode: High Density Residential -- quadplexes P in Table 315-1, "
+            "and Table 315-4 answers rear setback, side setback and building "
+            "separation with 'See Subsection 1005.02(L)'. ZDO 1005 is in the "
+            "store since 2026-09-08 and 1005.02(L) has been read: the "
+            "distance to a site area line is not a number but an angle drawn "
+            "from the top of the building -- 60 degrees to the north, 15 "
+            "degrees east and west, printed as 'Separation = b x .267 (tan 15 "
+            "degrees)'. A setback that is a function of height and of which "
+            "way a lot line points needs the bearing of every line, which "
+            "nothing here measures. 253 lots."
         ),
         "SHD": (
-            "fetch: Special High Density -- quadplexes P in Table 315-1, "
-            "setbacks deferred to Subsection 1005.02(L), which is not in the "
-            "store."
+            "encode: Special High Density -- quadplexes P in Table 315-1, "
+            "setbacks deferred to Subsection 1005.02(L), which is in the "
+            "store since 2026-09-08 and states the same 60-degree and "
+            "15-degree separation planes as HDR. 1005.02(L)(4) says they are "
+            "not modifiable under Section 904, so there is no relief to read "
+            "our way out of."
         ),
         "RCHDR": (
-            "fetch: Regional Center High Density Residential -- quadplexes P "
-            "in Table 315-1, setbacks deferred to Subsection 1005.02(L), "
-            "which is not in the store."
+            "encode: Regional Center High Density Residential -- quadplexes P "
+            "in Table 315-1, setbacks deferred to Subsection 1005.02(L), read "
+            "2026-09-08 and blocked on the same lot-line bearings. 32 lots of "
+            "its own, and RCC and RCO in Section 510 wait on it: Table 510-1 "
+            "note 12 sends a freestanding quadplex there for its standards."
+        ),
+        # ZDO Section 510 arrived on 2026-09-08 and declared eleven urban
+        # commercial and mixed-use districts, in 510.02 as a parenthesised
+        # list and again as the column heads of Table 510-1. Three were
+        # encoded the same day and are gone from this dict: NC and C-2 read X
+        # on the Quadplexes row, and OA reads L[15], a permission for a
+        # quadplex inside somebody else's building. The other eight permit the
+        # pod outright, which is why every ruling below is `encode` and not a
+        # refusal -- this is the loosest land in the layer.
+        #
+        # Six of the eight cannot be encoded before a residential district is,
+        # and that is the whole shape of the remaining work here. Table 510-1
+        # note 12 sends a freestanding quadplex to the RCHDR District for its
+        # development and dimensional standards; note 14 sends it to HDR. The
+        # county's own words are "freestanding ... (as opposed to ... in a
+        # mixed-use building)", and freestanding is the only kind this
+        # building is.
+        "RCC": (
+            "encode: Regional Center Commercial -- Quadplexes row of Table "
+            "510-1 reads P[12], and note 12 sends a freestanding quadplex to "
+            "the RCHDR District for its development and dimensional "
+            "standards. 107 lots, blocked behind RCHDR above."
+        ),
+        "RCO": (
+            "encode: Regional Center Office -- P[12] on the same row as RCC "
+            "and the same referral to RCHDR. 38 lots. Table 510-2 gives it "
+            "the largest minimum lot in the section at 2 1/2 acres."
+        ),
+        "RTL": (
+            "encode: Retail Commercial -- P[14], and note 14 sends a "
+            "freestanding quadplex to the HDR District, except that Table "
+            "510-2's own minimum and maximum density standards still apply. "
+            "65 lots, minimum lot 1/2 acre."
+        ),
+        "CC": (
+            "encode: Corridor Commercial -- P[14], same referral to HDR. 130 "
+            "lots, no minimum lot size and no maximum height of its own."
+        ),
+        "C-3": (
+            "encode: General Commercial -- P[14], same referral to HDR. 470 "
+            "lots, the largest commercial district in this layer and the "
+            "second largest unencoded zone left in it."
+        ),
+        "OC": (
+            "encode: Office Commercial -- P[14], same referral to HDR. 86 "
+            "lots. 510.02 misprints its abbreviation as (OA), the second "
+            "time in one sentence, which is the county's typo and not a "
+            "second Office Apartment district; Table 510-1's column heads "
+            "print OA and OC as separate columns 9 and 10."
+        ),
+        "SCMU": (
+            "encode: Station Community Mixed Use -- P on the Quadplexes row "
+            "with no note at all, so nothing routes it elsewhere. What blocks "
+            "it is Table 510-2, whose header prints ten districts while every "
+            "data row carries eleven cells: SCMU is the missing head, and its "
+            "cell in each of the four setback rows is not a number but 'See "
+            "Subsection 1005.09'. That subsection is in the store since "
+            "2026-09-08 -- Fuller Road Station Community Dimensional and "
+            "Design Standards, 365 lines -- and is unread. 36 lots."
+        ),
+        "PMU": (
+            "encode: Planned Mixed Use -- P on the Quadplexes row, no note. "
+            "Its dimensions are site-specific: Table 510-2 prints six "
+            "different minimum lot sizes under one column head (PMU1 none, "
+            "PMU2 2 acres, PMU3 3, PMU4 1/2, PMU5 10, PMU6 5) and Table 510-3 "
+            "states the rest per site. The parcel layer spells them PMU1 "
+            "through PMU6, which is 20 lots across four of the six."
         ),
         # The density formula's variables. ZDO 1012.04 spells the whole thing:
         # {GSA - [NR + HRA + (MRA x 0.5)]} / DLA = BD.
+        "FAR": (
+            "not-a-zone: floor area ratio. Table 510-2 has a Minimum Floor "
+            "Area Ratio row and note 21 sends its arithmetic to Subsection "
+            "1005.02(K); the harvest reads the capitalised abbreviation as a "
+            "designation the way it reads DLA and BD below."
+        ),
         "DLA": (
             "not-a-zone: district land area, the per-dwelling divisor ZDO "
             "1012.04 assigns to a district, not a district."
@@ -545,6 +637,22 @@ def test_the_districts_still_owed_are_the_ones_we_think() -> None:
     refusals reasoned from OCMC 17.06.010.A, which the ledger cannot ask about
     because it only knows what a jurisdiction PRINTS as a designation, not
     what it declines to permit.
+
+    And then it rose, the same evening, from five to sixteen, which is what
+    the paragraph above says is worth a look at why. Two things moved at once.
+    ZDO Section 510 was fetched and declared eleven urban commercial and
+    mixed-use districts; three were encoded that day -- NC and C-2 read X on
+    the Quadplexes row and OA reads L[15] -- and the other eight are owed. And
+    HDR, SHD and RCHDR stopped being `fetch` and became `encode`, because ZDO
+    1005, the document all three rulings named as missing, arrived with
+    Section 510.
+
+    That second half is a finding rather than bookkeeping. A ruling whose
+    argument is that a document is ABSENT goes silently wrong the day the
+    document lands, and nothing in this file or any other was watching for it.
+    Six of the eight new entries wait on RCHDR and HDR, so the queue is
+    shorter than sixteen in practice: encode two residential districts and six
+    commercial ones follow.
     """
     owed: dict[str, list[str]] = {"encode": [], "fetch": [], "column": []}
     for layer, rulings in list(RULINGS.items()) + list(BY_HAND.items()):
@@ -554,6 +662,6 @@ def test_the_districts_still_owed_are_the_ones_we_think() -> None:
             verdict = match.group(1)
             if verdict in owed:
                 owed[verdict].append(f"{layer}/{token}")
-    assert len(owed["encode"]) == 5, sorted(owed["encode"])
-    assert len(owed["fetch"]) == 5, sorted(owed["fetch"])
+    assert len(owed["encode"]) == 16, sorted(owed["encode"])
+    assert len(owed["fetch"]) == 2, sorted(owed["fetch"])
     assert len(owed["column"]) == 10, sorted(owed["column"])

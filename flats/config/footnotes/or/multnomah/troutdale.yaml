@@ -112,15 +112,17 @@ notes:
     digest: "3c86e9804fc1"
     state: dismissed
     reason: >-
-      exempts buildings standing before March 10, 1950 from a maximum building
-      size; the pod is new construction, and no mixed-use zone is encoded here
+      exempts a building standing before March 10, 1950 from a maximum building
+      size, and the pod is new construction. Printed twice in this chapter,
+      once under each of the two tables that carry a maximum building size
 
   - quote: "or/multnomah/troutdale/3.zoning-districts.txt#L717"
     digest: "3c86e9804fc1"
     state: dismissed
     reason: >-
-      the same pre-1950 exemption reprinted under the mixed-use residential
-      table; new construction, and no mixed-use zone is encoded here
+      exempts a building standing before March 10, 1950 from a maximum building
+      size, and the pod is new construction. Printed twice in this chapter,
+      once under each of the two tables that carry a maximum building size
 
   - quote: "or/multnomah/troutdale/3.zoning-districts.txt#L927"
     digest: "dfe2a55c9abb"

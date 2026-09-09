@@ -103,9 +103,10 @@ notes:
     digest: "11c7e602ee7a"
     state: dismissed
     reason: >-
-      Table 4.0120 marks the cells it limits; the Quadplex and Townhouse rows
-      are a bare P in all seven districts, so no note of this table reaches the
-      use this layer encodes
+      "See Section 10.0900 for additional standards that apply." A bare
+      cross-reference, printed ten times across seven of this city's chapters,
+      and in every one of them the marker is on the Renewable Energy (Uses)
+      category heading
 
   - quote: "or/multnomah/gresham/4.0100.residential.txt#L206"
     digest: "4f2281f317e0"
@@ -280,13 +281,19 @@ notes:
       shared access, 25 with one
 
   # --- the rest of Table 4.0120, and the bonuses ----------------------
+  # Rewritten 2026-09-08, both entries to the same words: this sentence is in
+  # three of the city's use tables and the two rulings each argued about one.
   - quote: "or/multnomah/gresham/4.0100.residential.txt#L195"
     digest: "0c6f5742a9c1"
     state: dismissed
     reason: >-
-      Table 4.0120 marks the cells it limits; the Quadplex and Townhouse rows
-      are a bare P in all seven districts, so no note of this table reaches the
-      use this layer encodes
+      transitional housing for individuals leaving incarceration facilities is
+      subject to a Special Use Review. Printed in three of this city's use
+      tables and marked on the Multi-family/Shared Housing Facility row label
+      in all three -- in one of them the marker lands on the wrapped second
+      line of that label, which is the only thing that makes it look like a row
+      of its own. The pod is neither a shared housing facility nor transitional
+      housing; it reads the Quadplex and Townhouse rows
 
   - quote: "or/multnomah/gresham/4.0100.residential.txt#L380"
     digest: "ff7e17c3cf31"
@@ -498,7 +505,9 @@ notes:
     digest: "17d116396228"
     state: dismissed
     reason: >-
-      schools occupying existing commercial space; not our use
+      schools in an existing commercial space against schools in new
+      construction, marked on the Schools row in all five of this city's use
+      tables that print it. Not a use this building has
 
   - quote: "or/multnomah/gresham/4.0400.corridor.txt#L272"
     digest: "055abdf0d78b"
@@ -1034,11 +1043,20 @@ notes:
     reason: >-
       Table 4.1413 marks the cells it limits and note 2 marks the Multi-Family/Shared Housing Facility row; the Quadplex and Townhouse rows are a bare P in LDR-PV
 
+  # Rewritten 2026-09-08, both entries to the same words. This sentence is
+  # printed six times across three of this city's chapters, and the two rulings
+  # for it each argued about one table -- so which of the two was on the record
+  # was decided by file order. See `flats/encode/travelled.py`.
   - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L217"
     digest: "e70c194ccb27"
     state: dismissed
     reason: >-
-      Table 4.1413 marks the cells it limits and an affordable housing note; a permission resting on an election nobody has made; the Quadplex and Townhouse rows are a bare P in LDR-PV
+      "Affordable housing development is permitted. See Section 10.1700." The
+      city prints this six times across three chapters, and in every use table
+      it appears in the marker is on the Affordable Housing row -- never on a
+      dwelling row. It is a permission that turns on what is developed rather
+      than on anything about the lot, and it rests on an election nobody has
+      made: this product is market rate
 
   - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L218"
     digest: "ffa5a848125d"
@@ -1100,11 +1118,17 @@ notes:
     reason: >-
       Table 4.1413 marks the cells it limits and marks the Heliports row; the Quadplex and Townhouse rows are a bare P in LDR-PV
 
+  # Rewritten 2026-09-08, both entries to the same words, for the same reason
+  # as the transitional-housing note above.
   - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L232"
     digest: "e5b316f0e3f9"
     state: dismissed
     reason: >-
-      Table 4.1413 marks the cells it limits and marks the Cottage Cluster row; the Quadplex and Townhouse rows are a bare P in LDR-PV
+      "No more than one cottage cluster shall be permitted per parent parcel."
+      Printed in two of this city's use tables and marked on the Cottage
+      Cluster row in both. A cottage cluster is detached units around a common
+      court; the pod is one attached building, and it reads the Quadplex and
+      Townhouse rows
 
   - quote: "or/multnomah/gresham/4.1400.pleasant-valley.txt#L352"
     digest: "5495e9a14edb"
@@ -1266,7 +1290,12 @@ notes:
     digest: "e70c194ccb27"
     state: dismissed
     reason: >-
-      a note of Section 4.0200, whose use table has one column and reads NP on the Quadplex row with no marker on it; an affordable housing note; a permission resting on an election nobody has made
+      "Affordable housing development is permitted. See Section 10.1700." The
+      city prints this six times across three chapters, and in every use table
+      it appears in the marker is on the Affordable Housing row -- never on a
+      dwelling row. It is a permission that turns on what is developed rather
+      than on anything about the lot, and it rests on an election nobody has
+      made: this product is market rate
 
   - quote: "or/multnomah/gresham/4.0200.commercial.txt#L139"
     digest: "030f791cd975"
@@ -1575,7 +1604,8 @@ notes:
     state: dismissed
     reason: >-
       schools in an existing commercial space against schools in new
-      construction, marked on the Schools row
+      construction, marked on the Schools row in all five of this city's use
+      tables that print it. Not a use this building has
 
   - quote: "or/multnomah/gresham/4.1100.downtown.txt#L353"
     digest: "02ebbf6b70f0"
@@ -1597,8 +1627,10 @@ notes:
     digest: "11c7e602ee7a"
     state: dismissed
     reason: >-
-      a cross-reference to Section 10.0900 for additional standards,
-      marked on the Renewable Energy Uses category heading
+      "See Section 10.0900 for additional standards that apply." A bare
+      cross-reference, printed ten times across seven of this city's chapters,
+      and in every one of them the marker is on the Renewable Energy (Uses)
+      category heading
 
   - quote: "or/multnomah/gresham/4.1100.downtown.txt#L356"
     digest: "3e4b9a93f19b"
@@ -1639,11 +1671,13 @@ notes:
     digest: "0c6f5742a9c1"
     state: dismissed
     reason: >-
-      transitional housing for individuals leaving incarceration
-      facilities is subject to Special Use Review. Marked on the Multi-
-      Family/Shared Housing Facility row label. The pod reads the
-      Quadplex row, which carries only the L1 in DCC and DTM, and the
-      Townhouse row, which is a bare P in all six sub-districts
+      transitional housing for individuals leaving incarceration facilities is
+      subject to a Special Use Review. Printed in three of this city's use
+      tables and marked on the Multi-family/Shared Housing Facility row label
+      in all three -- in one of them the marker lands on the wrapped second
+      line of that label, which is the only thing that makes it look like a row
+      of its own. The pod is neither a shared housing facility nor transitional
+      housing; it reads the Quadplex and Townhouse rows
 
   - quote: "or/multnomah/gresham/4.1100.downtown.txt#L362"
     digest: "52ff8c1f23d9"
@@ -1671,11 +1705,11 @@ notes:
     digest: "e5b316f0e3f9"
     state: dismissed
     reason: >-
-      no more than one cottage cluster per parent parcel, marked on the
-      Cottage Cluster row. The pod reads the Quadplex row, which carries
-      only the L1 in DCC and DTM, and the Townhouse row, which is a bare
-      P in all six sub-districts. A cottage cluster is detached units
-      around a common court and the pod is one attached building
+      "No more than one cottage cluster shall be permitted per parent parcel."
+      Printed in two of this city's use tables and marked on the Cottage
+      Cluster row in both. A cottage cluster is detached units around a common
+      court; the pod is one attached building, and it reads the Quadplex and
+      Townhouse rows
 
   # --- Table 4.1415A, the notes behind the wrapped citation -----------
   #

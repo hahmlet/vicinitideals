@@ -1,0 +1,1547 @@
+510.01 Purpose
+
+Section 510 is adopted to implement the policies of the Comprehensive Plan for the Neighborhood Commercial zoning district and Community Commercial, Regional Center Commercial, Retail Commercial, Corridor Commercial, General Commercial, Planned Mixed Use, Station Community Mixed Use, Office Apartment, Office Commercial, and Regional Center Office areas.
+
+510.02 Applicability
+
+Section 510 applies to land in the Neighborhood Commercial (NC) Community Commercial (C-2), Regional Center Commercial (RCC), Retail Commercial (RTL), Corridor Commercial (CC), General Commercial (C-3), Planned Mixed Use (PMU), Station Community Mixed Use (SCMU), Office Apartment (OA), Office Commercial (OA), and Regional Center Office (RCO) Districts, hereinafter collectively referred to as the urban commercial and mixed-use zoning districts.
+
+510.03 Uses Permitted
+
+Uses permitted in each zoning district are listed in Table 510-1, Permitted Uses in the Urban Commercial and Mixed-Use Zoning Districts. In addition, uses similar to one or more of the listed uses for the applicable zoning district may be authorized pursuant to Section 106, Authorizations of Similar Uses.
+
+1 As used in Table 510-1:
+
+1 "P" means the use is a primary use.
+
+2 "A" means the use is an accessory use.
+
+3 "L" means the use is a limited use and shall be developed concurrently with, or after, a primary use.
+
+4 C" means the use is a conditional use, approval of which is subject to Section 1203, Conditional Uses.
+
+5 "S" means the use may be authorized only pursuant to Section 106; however, identifying a use as "S" does not indicate that any determination has been made regarding whether the use will be authorized pursuant to Section 106.
+
+6 "X" means the use is prohibited.
+
+7 Numbers in superscript correspond to the notes that follow Table 510-1.
+
+2 If a use is identified in Table 510-1 as prohibited, it is prohibited even if it also falls within a broader use description that is permitted in the applicable zoning district. For example, a car wash may be prohibited even if commercial services in general are permitted.
+
+3 If a use is included in more than one use description in Table 510-1, the more specific listing applies. For example, if a car wash is a conditional use, but commercial services in general are a primary use, the car wash shall be reviewed as a conditional use. Notwithstanding this provision, a use may be included in two of the following categories because it is allowed with fewer restrictions in one category than another: primary, accessory, limited, and conditional. In that case, the use may be approved in either category, to the extent that it complies with the respective approval criteria. For example, child care facilities may be permitted as a limited use with a maximum building floor area and as a conditional use without a maximum building floor area.
+
+4 Permitted uses are subject to the applicable provisions of Subsection 510.04, Dimensional Standards, Subsection 510.05, Development Standards, Section 1000, Development Standards, and Section 1100, Development Review Process.
+
+510.04 Dimensional Standards
+
+Dimensional standards applicable in the urban commercial and mixed-use zoning districts are listed in Table 510-2, Dimensional Standards in the Urban Commercial and Mixed-Use Zoning Districts. Modifications to the standards of Table 510-2 are established by Sections 800, Special Use Requirements; 903, Setback Exceptions; 904, Height Exceptions; 1012, Lot Size and Density; 1107, Property Line Adjustments; and 1205, Variances. As used in Table 510-2, numbers in superscript correspond to the notes that follow Table 510-2.
+
+510.05 Development Standards
+
+The following development standards apply:
+
+1 Outdoor Operations in the NC District: In the NC District, primary and accessory uses, including storage of materials, products, or waste, shall be wholly contained within an approved structure.
+
+2 Operational Impacts in the C-2 and C-3 Districts: In the C-2 and C-3 Districts, processes and equipment employed and goods processed or sold shall be limited to those that are not objectionable by reason of odor, dust, smoke, cinders, gas, fumes, noise, vibration, refuse matter, or water-carried wastes.
+
+3 Storage in the C-2 District: In the C-2 District, storage of materials and merchandise shall be confined and contained within completely enclosed buildings.
+
+4 Outdoor Operations in the RCC District: In the RCC District:
+
+1 Primary commercial uses are permitted provided that outdoor display and storage shall be limited to no more than five percent of the building coverage.
+
+2 Outdoor sales and services are prohibited.
+
+5 Outdoor Operations in the RTL District: In the RTL District, primary commercial uses and conditional uses are permitted provided that:
+
+1 Outdoor display and storage shall be limited to no more than five percent of the building coverage.
+
+2 Notwithstanding Subsection 510.05(E)(1), auto body, recreational vehicle, and boat repair businesses shall store within a completely enclosed structure those vehicles and equipment that are damaged or being repaired.
+
+3 Primary commercial uses shall conduct most activities within a completely enclosed structure.
+
+6 Outdoor Sales and Storage in the PMU District: In the PMU District, outdoor sales, except temporary sidewalk sales and sidewalk cafes and food vendors, are prohibited. Also prohibited is permanent outdoor storage of materials or products.
+
+7 Site-Specific Standards in the PMU District: Six sites have a Comprehensive Plan designation of PMU. These sites are designated PMU1 through PMU6 and are identified on Comprehensive Plan Map IV-6, North Urban Area Land Use Plan Map. When one of these sites is zoned Planned Mixed Use District, a site number corresponding to the number designated by the Comprehensive Plan is assigned. A PMU site shall comply with the specific standards for that site identified in Table 510-3, Site-Specific Requirements for the PMU District, except that there are no site-specific standards for PMU6. As used in Table 510-3, numbers in superscript correspond to the notes that follow Table 510-3.
+
+8 Outdoor Operations in the SCMU District: In the SCMU District, outdoor displays, processes, or storage, except for the storage of solid waste and recyclables either as required by Section 1021, Solid Waste and Recyclable Material Collection, or as an accessory use to a townhouse, are prohibited.
+
+9 Outdoor Operations in the OA District: In the OA District, all primary and accessory uses associated with office uses, including storage of materials, products, or waste, shall be wholly contained within an approved structure. For the purposes of this provision, "office uses" include the following uses from Table 510-1, Permitted Uses in the Urban Commercial and Mixed-Use Zoning Districts: Business Services, Financial Institutions, Information Services, Offices, Office and Outpatient Clinics, and Research Facilities and Laboratories.
+
+10 Outdoor Storage and Display in the OC District: In the OC District, outdoor storage or display of materials or products is prohibited.
+
+11 Outdoor Sales, Storage, and Display in the RCO District: In the RCO District, outdoor sales, storage, or display of materials or products is prohibited.
+
+Table 510-1: Permitted Uses in the Urban Commercial and Mixed-Use Zoning Districts
+
+Use
+NC
+C-2
+RCC
+RTL
+CC
+C-3
+PMU[1]
+SCMU
+OA[2,3]
+OC
+RCO
+Accessory Uses, Customarily Permitted, such as amateur (Ham) radio antennas and towers, arbors, bicycle racks, carports, citizen band transmitters and antennas, cogeneration facilities, courtyards, decks, decorative ponds, driveways, electric vehicle charging stations, family child care home, fountains, garages, garden sheds, gazebos, greenhouses, HVAC units, meeting facilities, outdoor kitchens, parking areas, patios, pergolas, pet enclosures, plazas, property maintenance and property management offices, recreational facilities (such as bicycle trails, children's play structures, dance studios, exercise studios, playgrounds, putting greens, recreation and activity rooms, saunas, spas, sport courts, swimming pools, and walking trails), rainwater collection systems, satellite dishes, self-service laundry facilities, shops, solar energy systems, storage buildings/rooms, stormwater management facilities, television antennas and receivers, transit amenities, trellises, utility service equipment, and utility service lines
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+Assembly Facilities, including auditoriums, community centers, convention facilities, exhibition halls, fraternal organization lodges, senior centers, and theaters for the performing arts
+C
+P
+P,C[4]
+P
+P
+P
+P
+P
+S
+P,C[4]
+P,C[4]
+Bed and Breakfast Residences and Inns, subject to Section 832
+P
+P
+X
+P
+P
+P
+X
+X
+X
+P
+X
+Bus Shelters
+A
+A
+P
+P
+P
+P
+P
+P
+A
+P
+P
+Child Care Facilities
+P
+P
+P
+P
+P
+P
+P
+P
+P
+L[5],C
+L[6],C
+Civic and Cultural Facilities, including art galleries, museums, and visitor centers
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+Composting Facilities
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+Daycare Services, Adult
+P
+P
+P
+P
+P
+P
+P
+P
+P
+L[5],C
+L[6],C
+Dog Services, including boarding, daycare, and grooming
+S
+P
+P
+P
+P
+P
+P
+P[7]
+S
+C[8]
+L[6]
+Drive-Thru Window Services, subject to Section 827
+C
+A
+A[9]
+A
+A
+A
+A[10]
+X
+X
+A[10]
+A[10]
+Dwellings[11], including:
+Dwellings[11], including:
+Dwellings[11], including:
+Dwellings[11], including:
+Dwellings[11], including:
+Dwellings[11], including:
+Dwellings[11], including:
+Dwellings[11], including:
+Dwellings[11], including:
+Dwellings[11], including:
+Dwellings[11], including:
+Dwellings[11], including:
+Congregate Housing Facilities
+X
+X
+P[12,13]
+P[14]
+P[14]
+P[14]
+P
+P
+L
+P[14]
+P[12,13]
+Detached Single-Family Dwellings
+A
+A
+X
+A
+X
+A
+X
+X
+X
+X
+X
+Duplexes
+X
+A
+X
+P
+P
+P
+P
+P
+L[15]
+P
+X
+Multifamily Dwellings
+X
+X
+P[12]
+P[14]
+P[14]
+P[14]
+P
+P
+L[15]
+P[14]
+P[12]
+Quadplexes
+X
+X
+P[12]
+P[14]
+P[14]
+P[14]
+P
+P
+L[15]
+P[14]
+P[12]
+Townhouses
+X
+A
+X
+A
+X
+A
+P
+P
+L[16]
+X
+X
+Triplexes
+X
+X
+X
+P
+P
+P
+P
+P
+L[15]
+P
+X
+Electric Vehicle Charging Stations
+A,C
+P
+A
+A,C
+P
+P
+A
+A
+A
+A
+A
+Employee Amenities, such as cafeterias, clinics, child care facilities, fitness facilities, lounges, and recreational facilities
+A
+A
+A
+A
+A
+A
+A
+A
+A[17]
+A[17]
+A[17]
+Entertainment Facilities, including arcades, billiard halls, bowling alleys, miniature golf courses, and movie theaters
+C[18]
+P[18]
+P[18]
+P
+P
+P
+P[18]
+P[7,18]
+S
+C[8,18]
+L[6,18]
+Farmers' Markets, subject to Section 840
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+Financial Institutions, including banks, brokerages, credit unions, loan companies, and savings and loan associations
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+Fitness Facilities, including athletic clubs, exercise studios, gymnasiums, and health clubs
+P[18]
+P[18]
+P[18]
+P
+P
+P
+P[18]
+P[7,18]
+L[18,19]
+C[18]
+L[18,20]
+Government Uses, including fire stations, police stations, and post offices
+C
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+Heliports
+X
+X
+C[21]
+C
+C
+C
+X
+X
+X
+C[21]
+C[21]
+Helistops
+X
+X
+C[21]
+C
+C
+C
+C
+C
+X
+C[21]
+C[21]
+Home Occupations, including bed and breakfast homestays, subject to Section 822
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+Hospitals
+X
+X
+X
+X
+X
+X
+X
+X
+X
+C
+C
+Hotels
+P
+P
+P
+P
+P
+P
+P
+P[7]
+S
+L[5,22],C[22]
+P[22]
+Libraries
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+Manufacturing, including the mechanical, physical, or chemical transformation of materials, substances, or components into new products and the assembly of component parts, but excluding the primary processing of raw materials
+S[23]
+S[24]
+S
+S
+P
+P
+S
+P[25,26]
+S
+P[27]
+S
+Manufacturing of Edible or Drinkable Products Retailed on the Same Site, including the primary processing of raw materials (e.g., malt, milk, spices) that are ingredients in edible or drinkable products retailed on the same site, and also including the wholesale distribution of edible or drinkable products that are manufactured and retailed on the same site.
+S
+P
+S
+S
+P
+P
+S
+P[25,26]
+S
+P[27]
+S
+Marijuana Processing
+X
+X
+X
+X
+P[28]
+P[28]
+X
+P[25,28]
+X
+P[27,28]
+X
+Marijuana Production
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+Marijuana Retailing, subject to Section 841
+P
+P
+P
+P
+P
+P
+P
+P[7]
+X
+P[8]
+L[6]
+Marijuana Wholesaling
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+X
+Mobile Vending Units, subject to Section 837
+P
+P
+P
+P
+P
+P
+P
+P
+A[29]
+A[29]
+A[29]
+Motels
+P
+P
+P
+P
+P
+P
+P
+P[7]
+S
+L[5,30],C[30]
+L[6]
+Multi-Use Developments, subject to Section 844
+X
+X
+X
+X
+X
+C
+X
+X
+X
+C
+X
+Nursing Homes
+X
+X
+X
+X
+X
+X
+P
+P
+L
+X
+X
+Offices, including administrative, business, corporate, governmental, and professional offices. Examples include offices for the following: accounting services, architectural services, business management services, call centers, employment agencies, engineering services, governmental services, income tax services, insurance services, legal services, manufacturer's representatives, office management services, property management services, real estate agencies, and travel agencies.
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+Offices and Outpatient Clinics—both of which may include associated pharmacies and laboratories—for healthcare services, such as acupuncture, chiropractic, counseling, dental, massage therapy, medical, naturopathic, optometric, physical therapy, psychiatric, occupational therapy, and speech therapy.
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+Parking Lots
+A
+A
+A
+A
+P
+P
+A
+A
+A
+P[31]
+A
+Parking Structures
+X
+A[32]
+P[31]
+P[31]
+P
+P
+A
+A
+A[32]
+P[31]
+P[31]
+Parks, Government-Owned, including amphitheaters; arboreta; arbors, decorative ponds, fountains, gazebos, pergolas, and trellises; ball fields; bicycle and walking trails; bicycle parks and skate parks; boat moorages and ramps; community buildings and grounds; community and ornamental gardens; courtyards and plazas; equine facilities; fitness and recreational facilities, such as exercise equipment, gymnasiums, and swimming pools; miniature golf, putting greens, and sports courts; nature preserves and wildlife sanctuaries; picnic areas and structures; play equipment and playgrounds; tables and seating; and similar recreational uses. Accessory uses to a park may include concessions, maintenance facilities, restrooms, and similar support uses.
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+Pedestrian Amenities
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+Places of Worship, subject to Section 804
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+Race Tracks, Outdoor
+X
+X
+X
+X
+X
+C
+X
+X
+X
+X
+X
+Radio and Television Studios, excluding transmission towers
+C
+P
+P
+P
+P
+P
+P
+P
+S
+P
+P
+Radio and Television Transmission and Receiving Towers and Earth Stations[33]
+S
+C
+S
+S
+C
+C
+S
+S
+S
+S
+S
+Radio and Television Transmission and Receiving Earth Stations
+S
+C
+C
+C
+C
+C
+A
+S
+S
+S
+S
+Recreational Sports Facilities for such sports as basketball, dance, gymnastics, martial arts, racquetball, skating, soccer, swimming, and tennis. These facilities may be used for any of the following: general recreation, instruction, practice, and competitions.
+P[18]
+P[18]
+P[18]
+P
+P
+P
+P[18]
+P[7,18]
+S
+C[18]
+L[18,20]
+Recyclable Drop-Off Sites, subject to Section 819
+A
+A
+A[34]
+A[34]
+A
+A
+A[34]
+A[34]
+A[34]
+A[34]
+A[34]
+Research Facilities and Laboratories, including medical laboratories, medical research, product design and testing, and product research and development
+S
+S
+S
+S
+P
+P
+P[27]
+P
+P[35]
+P[35]
+P[27]
+Retailing—whether by sale, lease, or rent—of new or used products
+S
+S
+P
+P
+P
+P
+P
+P[7]
+S
+C[8]
+L[6]
+Retailing—whether by sale, lease, or rent—of any of the following new or used products: apparel, appliances, art, art supplies, beverages, bicycle supplies, bicycles, books, cameras, computers, computer supplies, cookware, cosmetics, dry goods, electrical supplies, electronic equipment, firewood, flowers, food, furniture, garden supplies, gun supplies, guns, hardware, hides, interior decorating materials, jewelry, leather, linens, medications, music (whether recorded or printed), musical instruments, nutritional supplements, office supplies, optical goods, paper goods, periodicals, pet supplies, pets, plumbing supplies, photographic supplies, signs, small power equipment, sporting goods, stationery, tableware, tobacco, toiletries, tools, toys, vehicle supplies, and videos
+P
+P
+P
+P
+P
+P
+P
+P[7]
+L[19,36],S
+L[5,36],C[8]
+L[6]
+Retailing—whether by sale, lease, or rent—of any of the following new or used products: all-terrain vehicles, automobiles, light trucks, motorcycles, and snowmobiles
+S
+S
+P
+P
+P
+P
+X
+X
+X
+C[8]
+L[6]
+Retailing—whether by sale, lease, or rent—of any of the following new or used products: boats; heavy trucks such as dump trucks, moving trucks, and truck tractors; large cargo trailers such as semitrailers; large construction equipment such as backhoes and bulldozers; large farm equipment such as tractors and combines; large forestry equipment; large mineral extraction equipment; manufactured dwellings; recreational vehicles; and residential trailers
+X
+X
+X
+P
+P
+P
+X
+X
+X
+X
+X
+Roads
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+Schools
+P[37]
+P[37]
+P
+P
+P
+P
+P
+P
+L[38]
+P
+P
+Service Stations
+C
+P
+X
+C
+P
+P
+X
+X
+X
+X
+X
+Services, Business, including computer rental workstations; leasing, maintenance, repair, and sale of communications and office equipment; mailing; notary public; photocopying; and printing
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+Services, Commercial
+S
+S
+P
+P
+P
+P
+P
+P[7]
+S
+C[8]
+L[6]
+Services, Commercial—Car Washes
+S
+S
+X
+C
+P
+P
+P
+X
+X
+X
+X
+Services, Commercial—Construction and Maintenance, including contractors engaged in construction and maintenance of electrical and plumbing systems
+C
+P
+P
+P
+P
+P
+P
+S
+S
+C[8]
+L[6]
+Services, Commercial—Food and Beverage, including catering and eating and drinking establishments
+P
+P
+P
+P
+P
+P
+P
+P[7]
+L[18]
+L[5],C[39]
+L[6,40]
+Services, Commercial—Maintenance and Repair of any of the following: appliances, bicycles, electronic equipment, guns, housewares, musical instruments, optical goods, signs, small power equipment, sporting goods, and tools
+P
+P
+P
+P
+P
+P
+P
+P[7]
+S
+C[8]
+L[6]
+Services, Commercial—Maintenance and Repair of any of the following: all-terrain vehicles, automobiles, light trucks, motorcycles, and snowmobiles
+C
+P
+P
+P
+P
+P
+X
+X
+X
+C[8]
+L[6]
+Services, Commercial—Maintenance and Repair of any of the following: boats; heavy trucks such as dump trucks, moving trucks, and truck tractors; large cargo trailers such as semitrailers; large construction equipment such as backhoes and bulldozers; large farm equipment such as tractors and combines; large forestry equipment; large mineral extraction equipment; manufactured dwellings; recreational vehicles; and residential trailers
+X
+X
+X
+P
+P
+P
+X
+X
+X
+X
+X
+Services, Commercial—Miscellaneous, including food lockers, interior decorating, locksmith, upholstering, and veterinary
+P
+P
+P
+P
+P
+P
+P
+P[7]
+S
+C[8]
+L[6]
+Services, Commercial—Personal and Convenience, including barbershops, beauty salons, dry cleaners, laundries, photo processing, seamstresses, shoe repair, tailors, and tanning salons. Also permitted are incidental retail sales of products related to the service provided.
+P
+P
+P
+P
+P
+P
+P
+P[7]
+L[19]
+L[5]
+L[6]
+Services, Commercial—Mini-Storage/Self-Storage Facilities
+S
+S
+X
+C
+P
+P
+X
+X
+S
+X
+X
+Services, Commercial—Storage of any of the following: all-terrain vehicles, automobiles, light trucks, motorcycles, and snowmobiles
+S
+S
+X
+C
+P
+P
+X
+X
+X
+X
+X
+Services, Commercial—Storage of any of the following: boats; heavy trucks such as dump trucks, moving trucks, and truck tractors; large cargo trailers such as semitrailers; large construction equipment such as backhoes and bulldozers; large farm equipment such as tractors and combines; large forestry equipment; large mineral extraction equipment; manufactured dwellings; recreational vehicles; and residential trailers
+X
+X
+X
+C
+P
+P
+X
+X
+X
+X
+X
+Services, Commercial—Studios of the following types: art, craft, dance, music, and photography
+P
+P
+P
+P
+P
+P
+P
+P[7]
+S
+P
+P
+Services, Commercial—Truck Stops
+X
+X
+X
+X
+P
+P
+X
+X
+X
+X
+X
+Services, Information, including blueprinting, bookbinding, photo processing, photo reproduction, printing, and publishing
+S
+S
+S
+S
+P
+P
+P
+P[25]
+P
+P
+P
+Short-Term Rental in a dwelling unit permitted by this table, except for a dwelling unit that is an accessory use
+X
+X
+P
+P
+P
+P
+P
+P
+P
+P
+P
+Signs, subject to Section 1010
+A[41]
+A[41]
+A[41]
+A[41]
+A[41]
+A[41]
+A[41]
+A[41]
+A[41]
+A[41]
+A[41]
+Stadiums, Outdoor
+X
+X
+X
+X
+X
+C
+X
+X
+X
+X
+X
+Temporary Buildings for Uses Incidental to Construction Work, provided that such buildings shall be removed upon completion or abandonment of the construction work
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+Temporary Storage within an Enclosed Structure of Source-Separated Recyclable/Reusable Materials Generated and/or Used On-site Prior to On-site Reuse or Removal by the Generator or Licensed or Franchised Collector to a User or Broker
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+A
+Transit Facilities, including transit centers, transit park-and-rides, transit stations, and transit stops
+S
+S
+P
+P
+P
+P
+P
+P
+S
+P
+P
+Utility Facilities, including:
+Utility Facilities, including:
+Utility Facilities, including:
+Utility Facilities, including:
+Utility Facilities, including:
+Utility Facilities, including:
+Utility Facilities, including:
+Utility Facilities, including:
+Utility Facilities, including:
+Utility Facilities, including:
+Utility Facilities, including:
+Utility Facilities, including:
+Stormwater Management Facilities
+P,C[42]
+P,C[42]
+P,C[42]
+P,C[42]
+P,C[42]
+P,C[42]
+P,C[42]
+P,C[42]
+P,C[42]
+P,C[42]
+P,C[42]
+Utility Cabinets
+P,C[43]
+P,C[43]
+P,C[43]
+P,C[43]
+P,C[43]
+P,C[43]
+P,C[43]
+P,C[43]
+P,C[43]
+P,C[43]
+P,C[43]
+Utility Facilities, except Utility Lines, in Road Rights-of-Way
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+Utility Facilities Not Otherwise Listed in Table 510-1
+S
+C
+C
+C
+C
+C
+S
+S
+S
+S
+S
+Utility Lines
+P,C[44]
+P,C[44]
+P,C[44]
+P,C[44]
+P,C[44]
+P,C[44]
+P,C[44]
+P,C[44]
+P,C[44]
+P,C[44]
+P,C[44]
+Wireless Telecommunication Facilities, subject to Section 835
+See Table 835-1
+P
+P
+P
+P
+P
+P
+See Table 835-1
+P
+P
+P
+
+[1] Required primary uses for each Planned Mixed Use site are listed in Table 510-3, Site-Specific Requirements for the PMU District.
+
+[2] A minimum of 60 percent of the total building floor area on a site shall be primary use(s).
+
+[3] A maximum of 40 percent of the total building floor area on a site may be limited use(s).
+
+[4] An assembly facility with a maximum capacity of more than 500 people is a conditional use.
+
+[5] The maximum combined building floor area of the use, and any other limited uses, shall be 20 percent of the building floor area of primary uses in the same development.
+
+[6] The use is permitted only:
+
+a. In a multistory building with a primary use, up to a maximum building floor area equal to the building floor area of the first floor; or
+
+b. On the ground-level floor of a freestanding parking structure.
+
+[7] A maximum of 40,000 square feet of ground-floor building floor area may be occupied by any one business, regardless of the number of buildings occupied by that business. In addition, the total ground-floor building floor area occupied by any combination of uses subject to Note 7 shall not exceed 40,000 square feet in a single building.
+
+[8] The maximum combined building floor area of the use, any limited uses, and any other uses subject to Note 8, shall be 20 percent of the building floor area of primary uses in the same development.
+
+[9] Drive-thru window service is prohibited on streets designated as Main Streets on Comprehensive Plan Map X-CRC-3, Clackamas Regional Center Area Design Plan, Urban Design Elements.
+
+[10] Drive-thru window service is permitted only if it is accessory to a financial institution and only if the financial institution is not on a street designated as a Main Street on Comprehensive Plan Map X-CRC-3.
+
+[11] Dwellings not otherwise permitted in the applicable zoning district may nonetheless be permitted if they are developed as affordable housing, as defined in ORS 197A.445(1), and subject to Section 846, Affordable Housing.
+
+[12] Freestanding congregate housing facilities, freestanding multifamily dwellings, and freestanding quadplexes (as opposed to congregate housing facilities, multifamily dwellings, and quadplexes in a mixed-use building) are subject to the development and dimensional standards applicable to congregate housing facilities, multifamily dwellings, and quadplexes in the RCHDR District.
+
+[13] A congregate housing facility shall have a minimum of four dwelling units.
+
+[14] Freestanding congregate housing facilities, freestanding multifamily dwellings, and freestanding quadplexes (as opposed to congregate housing facilities, multifamily dwellings, and quadplexes in a mixed-use building) are subject to the development and dimensional standards applicable to congregate housing facilities, multifamily dwellings, and quadplexes in the HDR District, except that the minimum and maximum residential density standards of Table 510-2, Dimensional Standards in the Urban Commercial and Mixed-Use Zoning Districts, apply.
+
+[15] Duplexes, triplexes, quadplexes, and multifamily dwellings, subject to the density standards of the MR-2 District, may be developed in the same building as a primary use.
+
+[16] Townhouses, subject to the density standards of the VTH District, may be developed in the same building as a primary use.
+
+[17] Employee amenities shall be located in the same structure as the use to which they are accessory.
+
+[18] Only indoor facilities are permitted.
+
+[19] An individual use shall not exceed 2,500 square feet of building floor area. In addition, the maximum combined building floor area of an individual use, and any other uses subject to Note 18, shall be 10 percent of the total building floor area in the same development.
+
+[20] The use may be allowed in conjunction with a primary use on the site, subject to the following criteria:
+
+1 If the primary use on the site is an office use, the minimum floor area ratio (FAR) standard of Table 510-2 may be modified as follows for a lot of greater than two and one-half acres in size:
+
+1 The minimum FAR for the office use shall be 0.75; and
+
+2 The minimum FAR for the fitness facility or recreational sports facility and the office use combined shall be 1.0.
+
+2 If the primary use on the site is a multifamily dwelling, the site area developed with the fitness facility or recreational sports facility and any parking or accessory structures used exclusively for the fitness facility or recreational sports facility shall be included in the net acreage when calculating minimum density pursuant to Table 510-2.
+
+3 The fitness facility or recreational sports facility shall be developed concurrently with, or after, a primary use.
+
+[21] This use is permitted only in conjunction with a primary or another conditional use.
+
+[22] Also permitted are associated gift shops, newsstands, and eating and drinking establishments, all of which shall be located in the same building as the hotel.
+
+[23] In the NC District, sign production is a conditional use.
+
+[24] In the C-2 District, sign production is a permitted use.
+
+[25] These uses are permitted with a maximum of 10,000 square feet of building floor area per building, if part of a mixed-use development and if the combined building floor area of the use, and any other uses subject to Note 24, does not exceed 25 percent of the building floor area of the mixed-use development.
+
+[26] Manufacturing of the following is prohibited: explosive devices; incendiary devices; and renewable fuel resources, such as alcohol, biomass, and methanol.
+
+[27] This use is permitted only if it has physical and operational requirements that are similar to those of other primary uses allowed in the same zoning district.
+
+[28] Marijuana processing shall be located entirely within one or more completely enclosed buildings. The processing, compounding, or conversion of marijuana into cannabinoid concentrates or cannabinoid extracts is prohibited.
+
+[29] Only level one mobile vending units are permitted.
+
+[30] Also permitted are associated gift shops, newsstands, and eating and drinking establishments, all of which shall be located in the same building as the motel.
+
+[31] The parking is permitted to serve only developments located in the same zoning district as the subject property.
+
+[32] This use is limited to understructure parking.
+
+[33] The base of such towers shall not be closer to the property line than a distance equal to the height of the tower.
+
+[34] Recyclable drop-off sites are permitted only if accessory to an institutional use.
+
+[35] No operation shall be conducted or equipment used which would create hazards and/or noxious or offensive conditions.
+
+[36] Only retailing of videos is permitted as a limited use. All other retailing in this use category requires review pursuant to Section 106 in the OA District and is a conditional use, subject to Note 17, in the OC District.
+
+[37] Only commercial schools are permitted.
+
+[38] Schools shall be limited to no more than 30 percent of the total building floor area on a site.
+
+[39] An eating and drinking establishment may be permitted as a conditional use, provided that it complies with a minimum of five of the following criteria:
+
+1 Has a minimum seating capacity of 75;
+
+2 Specializes in gourmet, ethnic, or specialty cuisine;
+
+3 Includes banquet facilities and services;
+
+4 Provides live entertainment at least two nights a week;
+
+5 Utilizes custom architectural design and/or collections of artistic, cultural, or historic items to produce a distinctive thematic decor or atmosphere;
+
+6 Has an Oregon Liquor Control Commission license to serve beer and wine; or
+
+7 Employs only chefs who have graduated from a recognized culinary institute, or who have outstanding qualifications or reputations for their culinary skills.
+
+[40] Notwithstanding Note 6, a freestanding eating and drinking establishment shall be allowed in conjunction with a primary use in the same development, subject to the following criteria:
+
+1 The building floor area of the freestanding eating and drinking establishment shall not exceed 5,000 square feet.
+
+2 If the primary use in the same development is an office use, as defined in Note 23 to Table 510-2, Dimensional Standards in the Urban Commercial and Mixed-Use Zoning Districts, the floor area ratio of the development, including the eating and drinking establishment, shall comply with the minimum floor area ratio standard for primary office uses in Table 510-2.
+
+3 If the primary use in the same development is a multifamily dwelling or a congregate housing facility, the acreage developed with the eating and drinking establishment, and any parking or accessory structures that are used exclusively for the eating and drinking establishment, may be subtracted from the total acreage when calculating minimum density pursuant to Table 510-2.
+
+4 The eating and drinking establishment shall be developed concurrently with, or after, a primary use.
+
+[41] Temporary signs regulated under Subsection 1010.13(A) are a primary use.
+
+[42] Stormwater management facilities are a primary use if:
+
+1 They are underground, except for an outlet structure if applicable;
+
+2 They are vegetated, except for an outlet structure if applicable; or
+
+3 They are approved in conjunction with a development approved through another land use permit (e.g., a subdivision or design review).
+
+[43] Utility cabinets are a primary use if they comply with Section 830, Utility Cabinets, or if they are inside a road right-of-way.
+
+[44] Utility lines are a conditional use only if they are gas transmission lines or electric transmission lines.
+
+Table 510-2: Dimensional Standards in the Urban Commercial and Mixed-Use Zoning Districts
+
+Standard
+NC
+C-2
+RCC
+RTL
+CC
+C-3
+PMU
+OA
+OC
+RCO
+Minimum Lot Size
+7,260 square feet[1,2]
+None
+1 acre[2,3]
+½ acre[2,3]
+None
+None
+PMU1: None
+PMU2: 2 acres
+PMU3: 3 acres
+PMU4: ½ acre
+PMU5: 10 acres
+PMU6: 5 acres
+½ acre[2,4]
+None
+1 acre[2,3]
+2½ acres[2,3]
+Minimum Street Frontage
+None
+None
+None
+None
+None
+None
+None
+100 feet[5]
+None
+None
+None
+Maximum Front Setback
+20 feet[6]
+20 feet[6]
+20 feet[7]
+20 feet[6]
+20 feet[6]
+20 feet[6]
+20 feet[7,8]
+See Subsection 1005.09
+20 feet[6]
+20 feet[6]
+20 feet[7]
+Minimum Front Setback
+0
+15 feet
+5 feet[9]
+15 feet
+15 feet
+15 feet
+0
+See Subsection 1005.09
+10 feet
+15 feet
+5 feet[9]
+Minimum Rear Setback
+0
+0[10]
+0[11]
+0[12]
+0[12]
+0[12]
+0[8,10]
+See Subsection 1005.09
+10 feet[13]
+10 feet[11]
+0[14]
+Minimum Side Setback
+0
+0[15]
+0[15]
+0[16]
+0[16]
+0[16]
+0[8,15]
+See Subsection 1005.09
+6 feet[17]
+10 feet[18]
+0[15]
+Maximum Building Height
+35 feet
+None[19]
+None
+None
+None
+None
+None
+None
+45 feet
+None[20]
+None
+Minimum Floor Area Ratio
+None
+None
+0.3 for a retail development; 0.5 for an office development[21]
+None
+None
+None
+See Table 510-3.
+None
+None
+None
+0.5 for primary office uses on lots of 2½ acres or less; 1.0 for primary office uses on lots greater than 2½ acres[21,22,23]
+Maximum Building Floor Area per Use
+5,000 square feet
+None
+None
+None
+None
+None
+None
+None
+None
+None
+None
+Minimum Residential Density
+None
+None
+30 dwelling units per net acre for freestanding multifamily dwellings and freestanding congregate housing facilities; none if these uses are in a building with another primary use[24]
+20 dwelling units per net acre for residential development; none for mixed-use development[24]
+20 dwelling units per net acre for residential development; none for mixed-use development[24]
+20 dwelling units per net acre for residential development; none for mixed-use development[24]
+See Table 510-3
+20 dwelling units per net acre for residential development; none for mixed-use development[24]
+None
+20 dwelling units per net acre for residential development; none for mixed-use development[24]
+30 dwelling units per net acre for freestanding multifamily dwellings and freestanding congregate housing facilities; none if these uses are in a building with another primary use or with a limited use other than a fitness facility or a freestanding restaurant[24]
+Maximum Residential Density
+None, but residential density may be limited because dwellings are allowed only as an accessory use.
+None, but residential density may be limited because dwellings are allowed only as an accessory use.
+None
+60 dwelling units per acre[25]
+60 dwelling units per acre[25]
+60 dwelling units per acre[25]
+None
+None
+Standards in MR-2 District apply. See Table 315-4.
+60 dwelling units per acre[25]
+None
+
+Notes to Table 510-2:
+
+[1] The minimum lot size for land with a Comprehensive Plan land use plan designation of Low Density Residential shall be the same as that allowed by the zoning district that applied to the subject property immediately prior to the application of the NC zoning district.
+
+[2] The minimum lot size standard applies only to subdivisions, partitions, and property line adjustments. Notwithstanding the minimum lot size standard, an undersized lot of record may be developed, subject to other applicable standards of this Ordinance.
+
+[3] No minimum lot size standard applies to a lot created by partition or subdivision or adjusted through a property line adjustment, provided that the newly created or adjusted lot is developed only with a dwelling classified as a nonconforming use and uses accessory to that dwelling.
+
+[4] The minimum is 2,000 square feet for a lot developed only with a townhouse and uses accessory to that townhouse.
+
+[5] The minimum street frontage standard applies only to subdivisions, partitions, and property line adjustments. The minimum for a lot of record on the outer radius of a curved street or the circular end of a cul-de-sac is 35 feet measured on the arc. The minimum for a lot of record developed only with a townhouse, and uses accessory to that townhouse, shall be 20 feet. A lot of record with frontage on more than one street shall meet the minimum on each street.
+
+[6] The maximum front setback standard applies only if required by Subsection 1005.02(H). However, see Subsection 1005.02(E) for a related standard.
+
+[7] The maximum front setback standard shall be met for all buildings except freestanding parking structures. However, the maximum front setback may be exceeded to the minimum extent necessary to accommodate pedestrian amenities. If a lot has more than one front lot line, the standard must be met for only one. A private road used to satisfy the maximum front setback standard must comply with Subsection 1005.07(G). The maximum front setback from Main Streets identified on Comprehensive Plan Map X-CRC-3 is 10 feet.
+
+[8] In lieu of complying with the standard, an applicant for design review on a site of 25 acres or larger may propose alternate setback standards. The alternate standards, or any part thereof, shall be approved if they are found to be equally effective as the regular standards in establishing a visual image, sense of place, and quality pedestrian environment for the area.
+
+[9] There is no minimum setback from a front lot line that abuts a Main Street identified on Comprehensive Plan Map X-CRC-3.
+
+[10] If the rear lot line abuts a residential zoning district, the minimum shall be 15 feet.
+
+[11] If the rear lot line abuts a residential zoning district, the minimum shall be 35 feet.
+
+[12] If the rear lot line abuts a residential zoning district, the minimum shall be 15 feet plus one foot for each one-foot increase in building height over 35 feet. Height increments of less than one foot shall be rounded up to the nearest foot. For example, if the building height is 38.8 feet, the minimum setback shall be 19 feet.
+
+[13] If the rear lot line abuts an Urban Low Density Residential, VR-4/5, or VR-5/7 zoning district, the minimum shall be: 10 feet for the portion of a building that is 25 feet or less in height; 20 feet for the portion of a building that is greater than 25 feet and less than or equal to 35 feet in height; and 40 feet for the portion of a building that is greater than 35 feet and less than or equal to 45 feet in height.
+
+[14] If the rear lot line abuts a residential zoning district, the minimum shall be 35 feet plus one foot for each one-foot increase in building height over 35 feet. Height increments of less than one foot shall be rounded up to the nearest foot. For example, if the building height is 38.8 feet, the minimum setback shall be 39 feet.
+
+[15] If the side lot line abuts a residential zoning district, the minimum shall be 15 feet.
+
+[16] If the side lot line abuts a residential zoning district, the minimum side yard setback shall be 15 feet plus one foot for each one-foot increase in building height over 35 feet. Height increments of less than one foot shall be rounded up to the nearest foot. For example, if the building height is 38.8 feet, the minimum setback shall be 19 feet.
+
+[17] If the side lot line abuts an Urban Low Density Residential, VR-4/5, or VR-5/7 zoning district, the minimum shall be: six feet for the portion of a building that is 25 feet or less in height; 16 feet for the portion of a building that is greater than 25 feet and less than or equal to 35 feet in height; and 40 feet for the portion of a building that is greater than 35 feet and less than or equal to 45 feet in height.
+
+[18] If the side lot line abuts a residential zoning district, the minimum shall be 35 feet.
+
+[19] If the subject property abuts a residential zoning district, the maximum building height shall be 35 feet.
+
+[20] If the building is located less than 100 feet from an Urban Low Density Residential, VR-4/5, or VR-5/7 District, the maximum building height shall be equal to the building's distance from the Urban Low Density Residential, VR-4/5, or VR-5/7 District.
+
+[21] Floor area ratio shall be calculated pursuant to Subsection 1005.02(K).
+
+[22] With a master plan approved pursuant to Subsection 1102.03(B), a lot greater than two and one-half acres may be developed in phases provided that the minimum floor area ratio of each phase prior to the final phase is 0.5 and that the minimum floor area ratio of 1.0 is achieved for the entire lot with development of the final phase.
+
+[23] For the purposes of this provision, "office uses" include the following uses from Table 510-1, Permitted Uses in the Urban Commercial and Mixed-Use Zoning Districts: Business Services, Financial Institutions, Information Services, Offices, Offices and Outpatient Clinics, and Research Facilities and Laboratories.
+
+[24] Net acreage shall be calculated pursuant to Subsections 1012.08(A) and (B).
+
+[25] Maximum residential density may be increased pursuant to Table 1012-1, Bonus Density. Any partial figure of one-half or greater shall be rounded up to the next whole number.
+
+Table 510-3: Site-Specific Requirements for the PMU District
+
+PMU1
+
+Land Uses                                                                                      Areas Required
+Office uses[1], minimum square feet                                                            525,000 square feet
+Retail, entertainment, hotel, service commercial, theater, or equivalent, minimum square feet  500,000 square feet
+Dwelling units, minimum number                                                                 200 dwelling units; demonstrate ability to accommodate 600 dwelling units
+Public plaza                                                                                   one-half- to one-acre plaza
+Entertainment/recreational facility
+Transit facilities
+Preserve Phillips Creek and enhance Phillips Creek Greenway
+
+PMU 2, 3, 4, and 5
+
+Land Uses
+Areas Required
+Office uses[1] or residential uses[2], minimum site area
+50 percent
+Office uses[1], minimum floor area ratio (FAR)
+0.5 for office uses on lots of two and one-half acres or less; 1.0 for office uses on lots greater than two and one-half acres, calculated pursuant to Subsection 1005.02(K). With a master plan approved pursuant to Subsection 1102.03(B), a lot greater than two and one-half acres may be developed in phases, provided that the minimum floor area ratio of each phase prior to the final phase is 0.5 and that the minimum floor area ratio of 1.0 is achieved for the entire lot with development of the final phase.
+Retail uses and service commercial uses, minimum FAR
+0.3, calculated pursuant to Subsection 1005.02(K)
+Residential density[2]
+The minimum density for residential development shall be 30 dwelling units per net acre. Net acreage shall be calculated pursuant to Subsections 1012.08(A) and (B).
+
+Notes to Table 510-3:
+
+[1] For the purposes of this provision, "office uses" include the following uses from Table 510-1, Permitted Uses in the Urban Commercial and Mixed-Use Zoning Districts: Assembly Facilities, Business Services, Civic and Cultural Facilities, Financial Institutions, Information Services, Libraries, Offices, Offices and Outpatient Clinics, Radio and Television Studios, Research Facilities and Laboratories, and Schools.
+
+[2] For the purposes of this provision, "residential uses" include the following uses from Table 510-1: Congregate Housing Facilities, Multifamily Dwellings, and Nursing Homes. However, nursing homes are excluded from the minimum residential density standard.
+
+[Added by Ord. ZDO-250, 10/13/2014; Amended by Ord. ZDO-252, 6/1/2015; Amended by Ord. ZDO-253, 6/1/2015; Amended by Ord. ZDO-254, 1/4/2016; Amended by Ord. ZDO-266, 5/23/2018; Amended by Ord. ZDO-268, 10/2/2018; Amended by Ord. ZDO-276, 10/1/2020; Amended by Ord. ZDO-280, 10/23/2021; Amended by Ord. ZDO-277, 1/1/2022; Amended by Ord. ZDO-282, 7/1/2022; Amended by Ord. ZDO-273, on remand, 5/30/2023; Amended by Ord. ZDO-287, 8/3/2023; Amended by Ord. ZDO-283, 9/5/2023; Amended by Ord. ZDO-285, 9/3/2024; Amended by Ord. ZDO-288, 9/9/2024]

@@ -1859,7 +1859,138 @@ the list of places worth hoping about.
   have been right for the wrong reason and would have broken the first time
   somebody looked closely.
 
-  A second thing checked rather than assumed, in the same chapter. Under the
+  **And then the commercial half of the same county, an hour later — and this
+  one goes the other way.** The rural chapter said no five times, which makes
+  it easy to expect the next chapter to say no too. It does not. The county's
+  urban commercial and mixed-use chapter covers eleven districts, and **nine of
+  the eleven permit our building outright.** Shopping-street land, office
+  land, the mixed-use ground around the Clackamas Town Center — most of it is
+  open to us on the use question.
+
+  Three of the eleven are now settled and all three are closed, because those
+  are the three the table itself closes: two prohibit our building flatly, and
+  the third — an office-apartment district — allows a fourplex only *inside*
+  an office building, as up to 40% of its floor space. Ours is a building of
+  its own on a lot of its own, so that is a no. Sixty-six lots.
+
+  There was a door I had to check before believing any of that, and it is
+  worth knowing it exists because it is a real option rather than a
+  technicality. Printed above the dwelling rows, in small type that applies to
+  all of them, is a rule that says a kind of housing the district otherwise
+  prohibits **may be built anyway if it is built as affordable housing** under
+  the county's affordable-housing chapter. That would put our building back
+  into both prohibited districts. It turns on what we choose to build rather
+  than on anything about the land, and our product is market rate, so the
+  answer for us is still no — but it is written into the file beside the
+  refusal so nobody re-reads it later and thinks we missed something.
+
+  **The other eight districts are not refused and are not finished, and they
+  are all waiting on the same two words.** The county says that a *freestanding*
+  fourplex — "as opposed to" one inside a mixed-use building, which is their
+  phrase, not mine — is measured by the rules of a high-density *residential*
+  district rather than by the commercial district it sits in. Ours is only ever
+  freestanding. So **896 lots of commercial land, including the county's
+  largest commercial district at 470 lots, hang on two residential districts we
+  have never worked out** — and those two are the ones stuck behind the sun
+  rule two entries above.
+
+  That connection is the useful part of the night. I fetched the chapter the
+  sun rule lives in, which we had never held, and read it. It is what I
+  described from a distance last time and slightly worse: the distance a
+  building must stand off a boundary is calculated by drawing an angle from the
+  top of the building — steeply to the north, shallowly east and west — so the
+  answer depends both on how tall the building is and on which way each
+  boundary faces. The chapter also says explicitly that these particular
+  distances cannot be relaxed through the usual height-exception process, so
+  there is no way around it. **The compass-direction job is now worth 1,182
+  lots rather than 286** — the three residential districts that name it
+  outright, plus the 896 commercial lots that get sent there. It is still a
+  piece of work rather than a purchase, and it is now the single highest-value
+  piece of plumbing left in this county.
+
+  Two smaller things worth recording, both of the same family we keep finding.
+
+  A decision we had written down about one page turned out to be **quietly
+  answering a second page it was never about.** Our footnote file remembers
+  decisions by the *sentence* they were made about, so when a county repeats a
+  sentence in another chapter, the old answer applies automatically — which is
+  usually exactly right and saved reading eight notes tonight. But one of those
+  reused answers said, in effect, "this door does not matter because every
+  district here permits our building anyway." True where it was written. False
+  in the chapter it silently travelled to, where two districts prohibit it and
+  that door is the only way back in. The conclusion happened not to change;
+  the *reason* would not have survived being read aloud. Four such reasons are
+  rewritten to be about the sentence rather than about one table, and the rule
+  is written down.
+
+  And our own checkers again. The one built this morning to catch tables that
+  lost cells on the way into our files reported this chapter as 29% broken —
+  twenty-five bad rows. Not one was actually broken. This chapter uses a fifth
+  permission letter that every other chapter we hold does without, and the
+  checker had never seen it, so every time it appeared the checker thought the
+  row had ended. It is a milder version of the same lesson as always: **a
+  checker that cannot see something does not stay silent, it makes things
+  up** — and twenty-five false alarms is exactly where a real broken row would
+  have gone unnoticed. Fixed, and the chapter now reads clean.
+
+  **And one line in that chapter is worth flagging to you, because it is
+  probably a real cost on real sites and we have nowhere to put it yet.** In
+  the middle of a rule about outdoor storage, the county says a site must keep
+  a place for **rubbish and recycling collection** — it points at its own
+  chapter on the subject, which we have never read. That is not a permission,
+  it is a requirement, and a requirement of that kind takes up *ground*. We
+  have been here before: the space a car needs to back out of a parking stall
+  was assumed away for months, and when it was finally measured it took
+  between twelve and forty-two feet of depth off every lot we screen. A bin
+  enclosure is much smaller than that, but it is the same kind of thing, and
+  right now our model has no place to record it at all. Reading that chapter
+  is on the agent's list. Nothing for you to do; recorded so that if a site we
+  pass ends up short of room for the bins, we know where that came from.
+
+  **Then I built a check for the travelling-decision problem described further
+  up -- the one where a decision quietly answered a second page -- and it found
+  the same problem twice more.** The thing that went wrong was this: we record a
+  decision about a footnote by the *sentence* it was made about, so when a city
+  repeats a sentence in another chapter the old decision applies automatically.
+  That is usually right and saves a lot of reading. But the *reason* comes
+  along with it, and a reason can be about the table it was written under
+  rather than about the sentence — in which case it quietly answers a page it
+  was never read on.
+
+  The new check asks one question of every decision that covers more than one
+  chapter: **does the written reason mention only some of the places the
+  sentence appears?** Two live cases, both harmless in their conclusion and
+  both wrong in their reasoning. One was in this county's own rules — a
+  decision about minimum lot size that named one table when the sentence is
+  printed word for word in two. The other was Gresham's affordable-housing
+  note, decided on a fact about the commercial chapter's table and quietly
+  governing the same sentence in the Pleasant Valley and Springwater chapters
+  as well.
+
+  **Underneath it was a simpler and slightly worse thing.** Where two decisions
+  had been written about the same sentence, only one of them was ever read —
+  whichever happened to be later in the file. Nine of those. In every one the
+  *answer* agreed, so nothing was decided by accident. But in four of them the
+  half we kept was the weaker half, and in one, in Happy Valley, what survived
+  said literally "left here as a pointer only" while the entry that recorded
+  what we encoded and why — including a real disagreement between the chapter's
+  wording and its own footnote — was the one thrown away.
+
+  Ten reasons rewritten, none of them changing an answer. Fixing them meant
+  going back to each city's tables and tracing every footnote marker to the row
+  it is actually printed on — transitional housing in three tables, cottage
+  clusters in two, schools in five, one cross-reference printed ten times
+  across seven chapters. All of them landed where the old reason said they did;
+  the reason just had not been written in a way anybody could check twice.
+  Both checks now sit at zero and run with the rest.
+
+  The reason this is worth your time to know about, in one line: **we are
+  increasingly finding our mistakes in the arguments rather than in the
+  numbers.** The numbers have now been re-read twice, blind, with nothing
+  wrong. What is left is whether the written reasoning would survive somebody
+  reading it back to us — and twice this week it would not have.
+
+  A second thing checked rather than assumed, back in the rural chapter. Under the
   county's rural use table sit thirty-five footnotes, and one of them is the
   only sentence in the chapter that could have undone the whole answer: it
   says a use *similar* to the one on that line may be approved anyway. If that

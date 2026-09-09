@@ -160,11 +160,24 @@ notes:
     digest: "11f6c6281d46"
     state: dismissed
     reason: >-
-      note 6 lets a dwelling type the district does NOT permit in anyway,
-      if it is built as affordable housing under Section 846. A door into
-      a zone rather than a condition on one, and a quadplex is already
-      permitted outright in all nine districts, so the door is one this
-      building has no need of. Looser in every direction
+      the affordable-housing door, and it is the one sentence in either
+      of this county's urban use tables that can admit a dwelling type the
+      district prohibits: a dwelling "not otherwise permitted" is permitted
+      anyway if it is developed as affordable housing as defined in ORS
+      197A.445(1) and subject to Section 846. What it turns on is the
+      development and not the lot. This product is market rate, so the door
+      is shut by what is being placed rather than by anything about the
+      land, and a screen that opened it would be answering a question it was
+      not asked.
+
+      Rewritten 2026-09-08, and the rewrite is the point. The same sentence
+      is note 6 of Table 315-1 and note 11 of Table 510-1, so one ruling
+      answers both -- and the reason first written for it here was "a
+      quadplex is already permitted outright in all nine districts, so the
+      door is one this building has no need of". True of Section 315. False
+      of Section 510, where NC and C-2 prohibit a quadplex and this is the
+      only way back in. A digest match carries a reason into a table the
+      reason was never about, so a reason has to be about the sentence
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1076"
     digest: "f2a1c4b237bd"
@@ -233,9 +246,10 @@ notes:
     state: dismissed
     reason: >-
       note 13 permits indoor facilities only. a condition on a use this
-      screen does not place. It governs here only because the quadplex
-      permission is quoted from a line in this block's region, and the
-      Quadplexes cell carries notes 7 and 8 and nothing else
+      screen does not place. It governs the quadplex permission only
+      because that permission is quoted from a line in the same notes
+      block's region, and in neither of the two use tables this sentence
+      appears in is the marker printed on a dwelling row
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1090"
     digest: "2f142aa74ef7"
@@ -274,8 +288,9 @@ notes:
     state: dismissed
     reason: >-
       note 18 keeps the base of a tower back from the property line by its
-      own height. A setback, and a real one, but on towers: it marks the
-      communication tower rows, and the Quadplexes cell carries 7 and 8
+      own height. A setback, and a real one, but on towers: in both use
+      tables this sentence appears in, the marker is printed on the
+      communication tower rows and on no dwelling row
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1100"
     digest: "3d5db75d9ccd"
@@ -310,9 +325,10 @@ notes:
     reason: >-
       note 22 permits recyclable drop-off sites only as accessory to an
       institutional use. a condition on a use this screen does not place.
-      It governs here only because the quadplex permission is quoted from
-      a line in this block's region, and the Quadplexes cell carries notes
-      7 and 8 and nothing else
+      It governs the quadplex permission only because that permission is
+      quoted from a line in the same notes block's region, and in neither
+      of the two use tables this sentence appears in is the marker printed
+      on a dwelling row
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1108"
     digest: "976f9f0a4710"
@@ -328,11 +344,17 @@ notes:
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1249"
     digest: "b3163e8fb64f"
     state: dismissed
+    # Rewritten 2026-09-08. The reason used to name Table 315-2 alone, and this
+    # sentence is printed word for word as note 1 of Table 316-2 as well, so the
+    # ruling was answering the rural table with an argument about the urban one.
     reason: >-
-      note 1 sends minimum lot size to Sections 1012 and 1107. This layer does
-      not read its minimum lot size from Table 315-2 at all -- Section 845.01
-      sets 7,000 square feet for a quadplex in every district, which is the
-      figure encoded and the one this note does not touch
+      the sentence states no minimum lot size of its own, in either of the two
+      dimensional tables that print it. The first half sends the standard to
+      Sections 1012 and 1107; the second half is relief rather than a standard,
+      since a lot of record may be developed notwithstanding the minimum lot
+      size, except that Section 800's minimum lot sizes still apply. The figure
+      this layer holds for a quadplex comes from Section 845.01, 7,000 square
+      feet, which neither dimensional table touches
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1251"
     digest: "96b0141d95e6"
@@ -347,10 +369,11 @@ notes:
     digest: "ed75256d354d"
     state: dismissed
     reason: >-
-      note 3 gives a TOWNHOUSE project under Section 845 no minimum lot size
-      and one-third of the DLA. That is the split-plat path, which this layer
+      a townhouse project developed under Section 845 gets no minimum lot size
+      and one third of the DLA. That is the split-plat path, which this layer
       already carries as `unless: [unit_lots]` on the density exemption rather
-      than as a standard on the parent lot
+      than as a standard on the parent lot. Printed twice in this section, once
+      under each of the two dimensional tables
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1255"
     digest: "5b64244d9473"
@@ -371,10 +394,11 @@ notes:
     digest: "e26109f776ae"
     state: dismissed
     reason: >-
-      note 6 says coverage on a middle housing lot is calculated on the whole
-      parent lot. It changes what the 50 percent is measured against on a
-      split plat, not what the percentage is, and this layer screens the
-      parent lot
+      the sentence calculates lot coverage for a middle housing lot on the whole
+      parent lot that was divided, so it changes what the percentage is measured
+      against on a split plat and not the percentage itself. This layer screens
+      the parent lot. Printed twice in this section, once under each of the two
+      dimensional tables, which is why the note numbers differ
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1261"
     digest: "88f1b6e93c2c"
@@ -438,8 +462,11 @@ notes:
     digest: "ed75256d354d"
     state: dismissed
     reason: >-
-      note 2 is the townhouse one-third DLA again, carried by this layer's
-      `unless: [unit_lots]` lever rather than as a standard on the parent lot
+      a townhouse project developed under Section 845 gets no minimum lot size
+      and one third of the DLA. That is the split-plat path, which this layer
+      already carries as `unless: [unit_lots]` on the density exemption rather
+      than as a standard on the parent lot. Printed twice in this section, once
+      under each of the two dimensional tables
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1402"
     digest: "3bfb3f0b8b36"
@@ -477,8 +504,11 @@ notes:
     digest: "e26109f776ae"
     state: dismissed
     reason: >-
-      note 8 calculates coverage on the parent lot for a middle housing lot.
-      The percentage is unchanged and this layer screens the parent lot
+      the sentence calculates lot coverage for a middle housing lot on the whole
+      parent lot that was divided, so it changes what the percentage is measured
+      against on a split plat and not the percentage itself. This layer screens
+      the parent lot. Printed twice in this section, once under each of the two
+      dimensional tables, which is why the note numbers differ
 
   - quote: "or/clackamas/_unincorporated/zdo.315.txt#L1414"
     digest: "b5991bc086a7"
@@ -1471,3 +1501,353 @@ notes:
       accessory-building notes on this table, and the ordinance's amendment
       history is welded onto the end of it by the extractor, which is why the
       stored text of this note runs on into a list of ordinance numbers
+
+
+  # --- Table 510-1, the urban commercial use table, read 2026-09-08 --------
+  #
+  # Forty-four notes, thirty-six of them new here; the other eight are
+  # sentences the county also prints under Table 315-1, and a ruling is a
+  # statement about a sentence, so those were already answered. One of those
+  # eight had to be rewritten on the spot, and it is the most useful thing
+  # this block found. Note 11 -- "Dwellings not otherwise permitted in the
+  # applicable zoning district may nonetheless be permitted if they are
+  # developed as affordable housing" -- is word for word Section 315's note 6,
+  # and the reason written for it there was "a quadplex is already permitted
+  # outright in all nine districts, so the door is one this building has no
+  # need of". That is true of Section 315 and false here, where NC and C-2
+  # prohibit a quadplex and this note is the only way back in. A digest match
+  # carries a reason into a table the reason was never about.
+  #
+  # Every marker in this table was walked back up its column to its row before
+  # it was ruled, which is the check Section 316 taught. The result is short
+  # enough to write out: of the forty-four, six reach a dwelling row at all.
+  # Note 11 is printed on the group heading "Dwellings[11], including:", which
+  # the county repeats once per column above Congregate Housing Facilities,
+  # Duplexes, Multifamily Dwellings, Quadplexes, Townhouses and Triplexes.
+  # Notes 12, 14 and 15 are on the Quadplexes row itself. Note 13 is on
+  # congregate housing and note 16 on townhouses. The other thirty-eight are
+  # printed on commercial rows -- drive-thrus, hotels, manufacturing, parking
+  # structures, marijuana processing -- and reach this building only because
+  # the whole notes block governs a value quoted from its region.
+  #
+  # Tables 510-2 and 510-3 are a different matter and are deliberately NOT
+  # ruled here. See the jurisdiction file: nothing is encoded from either, so
+  # neither block governs anything, and eleven of Table 510-2's notes are live
+  # site conditions on a setback or a height ("If the rear lot line abuts a
+  # residential zoning district, the minimum shall be 15 feet"). Dismissing
+  # those today would be an amnesty collected by whoever encodes a dimension
+  # here tomorrow. Left unread, they block, which is what unread is for.
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1182"
+    digest: "fa10293dc0c2"
+    state: dismissed
+    reason: >-
+      note 1 is a pointer and not a standard: it says where the required
+      primary uses for each Planned Mixed Use site are listed. It is printed
+      on the PMU column head in the table header, states no dimension, and
+      grants and withholds nothing
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1184"
+    digest: "49a9f1356696"
+    state: encoded
+    encoded_as: >-
+      quadplex_allowed: false in OA
+    reason: >-
+      note 2 is one of the two printed on the OA column head -- the header
+      cell reads OA[2,3] -- and it is half of the arithmetic that closes that
+      district: "A minimum of 60 percent of the total building floor area on a
+      site shall be primary use(s)." Read with the Quadplexes cell's L[15], it
+      says a quadplex in OA is a minority share of somebody else's building.
+      A freestanding pod on its own lot cannot be 40 percent of anything
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1186"
+    digest: "f07c61492401"
+    state: encoded
+    encoded_as: >-
+      quadplex_allowed: false in OA
+    reason: >-
+      note 3 is the other half, from the same OA[2,3] column head: "A maximum
+      of 40 percent of the total building floor area on a site may be limited
+      use(s)." The quadplex is the limited use
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1188"
+    digest: "e5f19b67917c"
+    state: dismissed
+    reason: >-
+      note 4 makes a large assembly facility a conditional use. Printed on the
+      Assembly Facilities row and on no other
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1190"
+    digest: "713f812aff8f"
+    state: dismissed
+    reason: >-
+      note 5 caps a limited use's floor area at 20 percent of the primary uses
+      in the same development. Printed on seven commercial rows -- child care,
+      adult daycare, hotels, motels, retailing, food and beverage services,
+      personal and convenience services -- and on no dwelling row
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1192"
+    digest: "6cf7761b7e43"
+    state: dismissed
+    reason: >-
+      note 6 permits a use only inside a multistory building with a primary
+      use, or on the ground floor of a freestanding parking structure.
+      Printed on fourteen commercial rows and on no dwelling row
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1198"
+    digest: "2db08aca8f7f"
+    state: dismissed
+    reason: >-
+      note 7 caps ground-floor building floor area at 40,000 square feet per
+      business. Printed on fifteen commercial rows -- dog services,
+      entertainment, fitness, hotels, motels, retailing, commercial services --
+      and on no dwelling row
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1200"
+    digest: "b0e76374d20b"
+    state: dismissed
+    reason: >-
+      note 8 is note 5 written for a wider set of uses: the combined floor
+      area of the use and any limited uses shall be 20 percent of the primary
+      uses in the same development. Printed on nine commercial rows and on no
+      dwelling row
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1202"
+    digest: "7f957a40168e"
+    state: dismissed
+    reason: >-
+      note 9 prohibits drive-thru window service on designated Main Streets.
+      Printed on the Drive-Thru Window Services row alone
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1204"
+    digest: "1ef80309cd23"
+    state: dismissed
+    reason: >-
+      note 10 permits drive-thru window service only as accessory to a
+      financial institution off a Main Street. Same row as note 9, and the
+      pod has no window
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1208"
+    digest: "368b50c254f2"
+    state: dismissed
+    reason: >-
+      note 12 IS on the Quadplexes row, and it is the sentence that says what
+      a freestanding quadplex is measured by: one "as opposed to" a quadplex
+      in a mixed-use building is "subject to the development and dimensional
+      standards applicable to ... quadplexes in the RCHDR District". It moves
+      dimensions, not permission -- the cell it is printed on already reads P
+      -- and the two cells carrying it are RCC's and RCO's. NC's and C-2's
+      cells are X and OA's is L[15], so no value encoded from this row rests
+      on it.
+
+      What it does mean is that RCC and RCO cannot be encoded until the RCHDR
+      District is, which is recorded against those zones rather than here
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1210"
+    digest: "3fde1ab50bed"
+    state: dismissed
+    reason: >-
+      note 13 sets a minimum of four dwelling units for a congregate housing
+      facility. Printed on the Congregate Housing Facilities row alone, which
+      the county lists as a use distinct from a quadplex in the same group
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1212"
+    digest: "cde8c93cf395"
+    state: dismissed
+    reason: >-
+      note 14 is note 12 pointing at the HDR District instead of RCHDR, with
+      one addition: the minimum and maximum residential density standards of
+      Table 510-2 still apply. Printed on the RTL, CC, C-3 and OC cells of the
+      Quadplexes row, and on none of the three cells encoded from it. Same
+      consequence -- those four districts wait on HDR
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1214"
+    digest: "646a988df876"
+    state: encoded
+    encoded_as: >-
+      quadplex_allowed: false in OA
+    reason: >-
+      note 15 is the OA cell, and it is a permission rather than a
+      prohibition: "Duplexes, triplexes, quadplexes, and multifamily
+      dwellings, subject to the density standards of the MR-2 District, may be
+      developed in the same building as a primary use." A quadplex is allowed
+      in OA -- inside somebody else's building. This product is a
+      fixed-dimension factory-built four-unit pod on a lot of its own, which
+      is the one thing that sentence does not permit, so it is encoded as a
+      refusal of the use for what is actually being placed. It is printed on
+      the Duplexes, Multifamily Dwellings, Quadplexes and Triplexes rows
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1216"
+    digest: "ff0bbcc39732"
+    state: dismissed
+    reason: >-
+      note 16 is note 15 for townhouses, at VTH density instead of MR-2, and
+      it is printed on the Townhouses row alone. Clackamas lists Townhouses
+      and Quadplexes as separate rows of this table and this corpus reads the
+      pod against the Quadplexes row throughout -- one building, four attached
+      units, one lot
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1218"
+    digest: "14d1a832d37d"
+    state: dismissed
+    reason: >-
+      note 17 requires employee amenities to sit in the same structure as the
+      use they are accessory to. Printed on the Employee Amenities row alone
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1222"
+    digest: "fc76f25e8316"
+    state: dismissed
+    reason: >-
+      note 19 caps an individual use at 2,500 square feet of building floor
+      area. Printed on the fitness, retailing and personal-and-convenience
+      service rows
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1224"
+    digest: "5050462e9a72"
+    state: dismissed
+    reason: >-
+      note 20 lets a fitness or recreational sports facility sit alongside a
+      primary use, with three criteria about floor area ratio, density
+      arithmetic and build order. Printed on the Fitness Facilities and
+      Recreational Sports Facilities rows
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1236"
+    digest: "c9371c234d85"
+    state: dismissed
+    reason: >-
+      note 21 permits a use only in conjunction with a primary or another
+      conditional use. Printed on the Heliports and Helistops rows
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1238"
+    digest: "325b15a901e2"
+    state: dismissed
+    reason: >-
+      note 22 lets a hotel keep a gift shop, newsstand and eating and drinking
+      establishment in the same building. Printed on the Hotels row alone
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1240"
+    digest: "f6a9b230457e"
+    state: dismissed
+    reason: >-
+      note 23 makes sign production a conditional use in NC. Printed on the
+      Manufacturing row, and it is about what may be manufactured there rather
+      than about signage on a dwelling
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1242"
+    digest: "0f70c44ec9c2"
+    state: dismissed
+    reason: >-
+      note 24 is note 23 for C-2, where sign production is permitted outright.
+      Same row
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1244"
+    digest: "578146f4691e"
+    state: dismissed
+    reason: >-
+      note 25 permits certain uses up to 10,000 square feet per building
+      inside a mixed-use development. Printed on the two manufacturing rows,
+      marijuana processing and information services
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1246"
+    digest: "8d55ffb85a0b"
+    state: dismissed
+    reason: >-
+      note 26 prohibits the manufacture of explosive devices, incendiary
+      devices and renewable fuel resources. Printed on the two manufacturing
+      rows
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1248"
+    digest: "8e5f05d9ac94"
+    state: dismissed
+    reason: >-
+      note 27 permits a use only where its physical and operational
+      requirements are similar to other primary uses in the district. Printed
+      on the manufacturing, marijuana processing and research laboratory rows
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1250"
+    digest: "70bce2924fdc"
+    state: dismissed
+    reason: >-
+      note 28 requires marijuana processing to be wholly enclosed and bars
+      cannabinoid extraction. Printed on the Marijuana Processing row alone
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1252"
+    digest: "00ee41ee9cc5"
+    state: dismissed
+    reason: >-
+      note 29 permits only level one mobile vending units. Printed on the
+      Mobile Vending Units row alone
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1254"
+    digest: "f18c2685dade"
+    state: dismissed
+    reason: >-
+      note 30 is note 22 for motels. Printed on the Motels row alone
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1256"
+    digest: "34555483197f"
+    state: dismissed
+    reason: >-
+      note 31 limits a parking lot to serving development in the same zoning
+      district. Printed on the Parking Lots and Parking Structures rows, and
+      it is about a parking lot as a USE of a whole site -- the pod's own
+      stalls are accessory parking, which this table lists separately in the
+      customarily-permitted accessory row
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1258"
+    digest: "8d1d21f6d6f6"
+    state: dismissed
+    reason: >-
+      note 32 limits the use to understructure parking. Printed on the Parking
+      Structures row alone, and no structure this screen places has an
+      understructure
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1264"
+    digest: "61a1d6becb15"
+    state: dismissed
+    reason: >-
+      note 35 bars operations that create hazards or noxious conditions.
+      Printed on the Research Facilities and Laboratories row alone
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1266"
+    digest: "94338d497339"
+    state: dismissed
+    reason: >-
+      note 36 permits only the retailing of videos as a limited use, and sends
+      other retailing to Section 106 in OA and to a conditional use in OC.
+      Printed on the retailing row alone. It is worth reading twice because it
+      names OA, which is a district encoded here -- but what it names OA about
+      is a shop, and the row it sits on is retailing
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1268"
+    digest: "fd171ab626ab"
+    state: dismissed
+    reason: >-
+      note 37 permits commercial schools only. Printed on the Schools row
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1270"
+    digest: "437c42ef7015"
+    state: dismissed
+    reason: >-
+      note 38 limits schools to 30 percent of a site's total building floor
+      area. Same row as note 37
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1272"
+    digest: "252b335af7ce"
+    state: dismissed
+    reason: >-
+      note 39 lets an eating and drinking establishment be a conditional use
+      on five of seven criteria about seating, cuisine, banquets, live
+      entertainment, decor, a liquor licence and its chefs. Printed on the
+      food and beverage services row
+
+  - quote: "or/clackamas/_unincorporated/zdo.510.txt#L1288"
+    digest: "826e209e805f"
+    state: dismissed
+    reason: >-
+      note 40 allows a freestanding eating and drinking establishment
+      alongside a primary use notwithstanding note 6, on four criteria. Same
+      row as note 39. The word "freestanding" is the county's own, and it is
+      the third place in this table where it separates a building of its own
+      from floor area inside somebody else's -- which is the distinction the
+      OA refusal turns on

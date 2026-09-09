@@ -225,6 +225,17 @@ def test_written_config_loads_through_the_real_loader() -> None:
     rules = RuleSet(load_rules())
 
     assert len(rules.layers) == 19  # 18 jurisdictions + the state layer
+    # 220 as of 2026-09-08, later than the last of the day: the commercial half
+    # of the same county. ZDO Section 510 covers eleven urban commercial and
+    # mixed-use districts and marks the Quadplexes row P in nine of them, so
+    # this moves by three rather than eleven -- NC and C-2 read X, and OA reads
+    # L[15], a permission for a quadplex inside somebody else's building. The
+    # eight the table permits are blocked on two residential districts nobody
+    # has encoded: notes 12 and 14 send a freestanding quadplex to the RCHDR
+    # and HDR Districts for its dimensional standards, which is 896 lots of
+    # commercial land waiting on a setback drawn as an angle from the top of
+    # the building.
+    #
     # 217 as of 2026-09-08, last of the day: the rural half of unincorporated
     # Clackamas -- RRFF-5, FU-10, RA-2, RA-1 and FF-10, 3,676 lots, the
     # largest block of unencoded land in either county and the only slice so
@@ -253,7 +264,7 @@ def test_written_config_loads_through_the_real_loader() -> None:
     # use table permits a quadplex in and the port had never carried (2026-08-21),
     # then Wilsonville gained V and TC, the two zones its chapter states and no
     # ledger could see were absent.
-    assert sum(len(l.zones) for l in rules.layers.values()) == 217
+    assert sum(len(l.zones) for l in rules.layers.values()) == 220
 
 
 def test_state_parking_preemption_reaches_a_city_zone() -> None:

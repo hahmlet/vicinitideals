@@ -136,7 +136,17 @@ def rows() -> list[Routing]:
 #: standard for this building and never will be, but the pointer sits in a
 #: section a value cites and so it counts. Closing it would mean fetching a
 #: chapter to prove it is irrelevant.
+#: The Clackamas County row arrived with ZDO Section 510 on 2026-09-08 and it
+#: is the ledger being exactly right. 510.03 note 4 reads "Permitted uses are
+#: subject to the applicable provisions of Subsection 510.04, Dimensional
+#: Standards", and 510.04 is in the same stored document -- nobody has to fetch
+#: anything to close it. It is open because all three districts encoded from
+#: Section 510 are refusals, so no value in this layer cites a dimension from
+#: that chapter at all. It closes the day somebody encodes a district the table
+#: permits, which is the honest shape for this ledger: a pointer nobody
+#: followed because nobody yet had a number to hang on it.
 OPEN = {
+    "or/clackamas/_unincorporated 510.03 -> 510.04",
     "or/clackamas/milwaukie 19.607.1 -> 19.505.4",
     "or/clackamas/milwaukie 19.607.1 -> 19.505.5",
     "or/clackamas/lake-oswego 50.04.001.3 -> 50.04.003",
@@ -170,6 +180,18 @@ OPEN = {
 #: are, and encoding them is what closed it: a redirect closes by a citation
 #: landing inside the target, which is the only answer this ledger takes.
 FOLLOWED = {
+    # 510.03 -> 510.05 arrived with Section 510 the same day as the 510.04 row
+    # above, and it is worth reading the two together because the ledger calls
+    # them differently for a reason that is about our citation and not about
+    # our reading. Both pointers sit in the same sentence. This one counts as
+    # followed because all three zones encoded from Section 510 name 510.05 in
+    # their citation -- and they name it because the county prints every table
+    # in the chapter after all of its prose, so the use table physically lands
+    # below the 510.05 heading and a citation that did not say so would be
+    # unverifiable. Nobody has read the development standards. A redirect can
+    # close on a citation landing inside the target, and here the citation is
+    # there for layout rather than for a standard.
+    "or/clackamas/_unincorporated 510.03 -> 510.05",
     "or/clackamas/_unincorporated 845.01 -> 845.02",
     "or/clackamas/_unincorporated 315.04 -> 845",
     # Both arrived with ZDO Section 316 on 2026-09-08 and both are followed,

@@ -58,7 +58,7 @@ def test_every_encoded_footnote_still_finds_its_rule(rows) -> None:
 
 
 def test_the_register_and_the_ledger_agree_on_how_many_are_encoded(rows) -> None:
-    """46 as of 2026-09-08. A number that moves means a footnote was ruled or
+    """49 as of 2026-09-08. A number that moves means a footnote was ruled or
     un-ruled, which is a thing to notice rather than a thing to absorb.
 
     45 -> 46 on 2026-09-08: Clackamas ZDO Table 316-1 note 8, the sentence the
@@ -67,8 +67,21 @@ def test_the_register_and_the_ledger_agree_on_how_many_are_encoded(rows) -> None
     It reaches FF10, FU10, RA1, RA2 and RRFF5 and confirms in all five, which
     is what an `encoded` ruling is supposed to look like: a footnote that did
     not qualify a number so much as become one.
+
+    46 -> 49 later the same day, and all three come from the OA District in
+    Clackamas ZDO Table 510-1 -- the one refusal in that chapter that rests on
+    a permission rather than on a prohibition. The cell reads `L[15]`, so it
+    takes three sentences to close: note 15, which says quadplexes "may be
+    developed in the same building as a primary use", and the column head's
+    own notes 2 and 3, which require 60 percent of a site's floor area to be
+    primary uses and cap limited uses at 40. All three report reaching NC, C-2
+    and OA rather than OA alone, and that is the notes-block scope working as
+    designed: a footnote governs its whole block, and all three zones quote a
+    line inside it. Narrowing that would take a `zones:` key, which is not
+    warranted here -- the two prohibitions are decided by their `X` and do not
+    care what these three sentences say.
     """
-    assert len(rows) == 46
+    assert len(rows) == 49
 
 
 def test_no_ruling_is_pure_prose(rows) -> None:

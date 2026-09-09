@@ -96,7 +96,70 @@ notes: 'Table 315-2 (R-2.5 through R-30) read against the adopted ZDO on 2026-08
   block. The stall survives in that title. Every other dimension on those sheets, the drive aisle
   above all, is drawn. Somebody with the sheet open closes this in five seconds; nothing here can.
   Until then unincorporated Clackamas produces no site plan, which is the honest outcome rather than
-  a failure.'
+  a failure.
+
+
+  COMMERCIAL AND MIXED USE, read 2026-09-08 out of ZDO Section 510, and it is the loosest
+  land this layer holds rather than the tightest. Table 510-1 marks the Quadplexes row P in
+  nine of the eleven urban commercial and mixed-use districts. The pod is a listed, permitted
+  use on most of this land, which is the opposite of what the rural half said one commit
+  earlier and worth saying out loud: a chapter is not read to confirm a refusal.
+
+  Three districts are encoded and all three are refusals, because they are the three the
+  table itself closes. NC and C-2 read X, and 510.03(2) makes an X mean it -- "If a use is
+  identified in Table 510-1 as prohibited, it is prohibited even if it also falls within a
+  broader use description that is permitted". OA reads L[15], which is a permission for a
+  quadplex inside somebody else''s building and not for one standing on its own lot: "L"
+  means a limited use developed concurrently with or after a primary use, note 15 says
+  quadplexes "may be developed in the same building as a primary use", and the OA column
+  head carries notes 2 and 3, which require 60 percent of a site''s building floor area to
+  be primary uses and cap limited uses at 40. Sixty-six lots between the three.
+
+  The door that had to be checked before any of that could be believed is note 11, and
+  nothing but the row walk finds it. It is printed on the group heading "Dwellings[11],
+  including:", two rows above the quadplex cells, and it says a dwelling "not otherwise
+  permitted in the applicable zoning district may nonetheless be permitted if they are
+  developed as affordable housing" under Section 846. That is a real way back into NC and
+  C-2, and it turns on what is built rather than on the lot; this product is market rate, so
+  the prohibition is the answer for it. Every marker in Table 510-1 was resolved to its row
+  the same way: of forty-four notes, six reach a dwelling row and thirty-eight are printed on
+  drive-thrus, hotels, manufacturing, parking structures and the like.
+
+  The same walk found the note that had gone quietly wrong. Note 11 is word for word Section
+  315''s note 6, and a ruling binds to the sentence, so Section 315''s reason was already
+  answering it -- and that reason was "a quadplex is already permitted outright in all nine
+  districts, so the door is one this building has no need of". True there, false here. Four
+  shared reasons in the footnote register were rewritten to be about the sentence rather than
+  about one table.
+
+  THE OTHER EIGHT DISTRICTS ARE NOT REFUSED AND ARE NOT YET ENCODED, and the reason is one
+  sentence printed twice. Table 510-1 notes 12 and 14 say that a freestanding quadplex "(as
+  opposed to ... quadplexes in a mixed-use building)" takes the development and dimensional
+  standards of the RCHDR District (RCC, RCO) or of the HDR District (RTL, CC, C-3, OC).
+  Freestanding is the only kind this building is. So 896 lots of commercial land depend on
+  two residential districts this layer has never encoded, and encoding them is the whole of
+  the remaining work here. SCMU is a third shape: Table 510-2 omits it from the header while
+  every data row carries eleven cells, and its eighth cell is not a number but "See
+  Subsection 1005.09", the Fuller Road Station Community standards. PMU is a fourth -- Table
+  510-3 states its requirements site by site, six sites with six different minimum lot sizes.
+
+  ZDO Section 1005 is fetched and declared for that reason, and it holds a shape the value
+  model cannot express. Subsection 1005.02(L), which governs in exactly the HDR, RCHDR and
+  SHD Districts the two notes point at, sets the distance from a building to a site area line
+  by drawing an angle from the top of the building: 60 degrees to the north, 15 degrees east
+  and west, the second printed as a formula -- "Separation = b x .267 (tan 15 degrees)". A
+  setback that is a function of building height AND of which way a lot line points is not a
+  number, and it needs the bearing of every line, which nothing here measures. 1005.02(L)(4)
+  closes the obvious escape: these standards are not modifiable under Section 904, Height
+  Exceptions. That is the same missing measurement the HDR and VTH districts were already
+  waiting on, now with its source read rather than guessed at.
+
+  Tables 510-2 and 510-3 are captured and their twenty-seven notes are deliberately left
+  UNREAD. Nothing is encoded from either, so neither block governs a value, and eleven of
+  them are live site conditions on a setback or a height -- "If the rear lot line abuts a
+  residential zoning district, the minimum shall be 15 feet." Dismissing those today would
+  be an amnesty collected by whoever encodes a dimension here tomorrow. Unread blocks, which
+  is what unread is for.'
 ingest:
   geoid: null
   juris_city_codes:
@@ -231,6 +294,66 @@ crossrefs:
       argues about OUR corpus rather than about the page, and it goes stale the moment anybody
       reads 1002 for the urban districts. Section 1002 is not in the store. `fetch` keeps the row
       in the queue, which is where it belongs.
+  # --- and five more, arriving with ZDO Sections 510 and 1005 on 2026-09-08 -
+  # Four close and one does not, and the one that does not is the shape §30
+  # taught: a section this county cites for what it MAKES a site hold, not for
+  # what it lets a site do. A permission ignored is a lot wrongly refused; a
+  # requirement ignored is a lot wrongly passed.
+  "1203":
+    outcome: other_path
+    note: >-
+      Conditional Uses, and it is the key to the letter "C" in all three of this layer's use
+      tables -- '"C" means the use is a conditional use, approval of which is subject to Section
+      1203, Conditional Uses' (ZDO 315 L25, 316 L19, 510 L21, the last of which loses its opening
+      quotation mark in extraction). Those key lines are quoted by every zone encoded from those
+      tables, which is why it binds. It is the branch this screen never takes: a conditional use
+      is a discretionary approval of an application, and this project reads a use table by asking
+      whether the use is permitted outright rather than whether it is imaginable -- the reasoning
+      already written into RA-1, whose Duplexes cell reads C[8] and is encoded false. Its two
+      other mentions run the other way and are closed by the same argument as Section 846: ZDO
+      1012 notes 2 and 6 waive a minimum lot size for something approved under 1203, which can
+      only admit a lot this screen rejects.
+  "822":
+    outcome: other_building
+    note: >-
+      Home Occupations. In every use table this layer holds it is printed on a Home Occupations
+      row -- "Home Occupations, including bed and breakfast homestays, subject to Section 822"
+      (ZDO 315 L451, 316 L326, 510 L413) -- and its two footnote mentions say one thing twice:
+      "A use may be permitted as a home occupation, subject to Section 822, Home Occupations, even
+      if such use is also identified in another use listing in Table 315-1." A business run out of
+      somebody's house is not four attached dwellings built new, and the sentence hands out a
+      permission rather than stating a standard.
+  "1307":
+    outcome: procedure
+    note: >-
+      Procedures. Both citing sentences name it as the track an application runs on, and neither
+      states anything the application must measure: '"Type II" means the use requires review of a
+      Type II application, pursuant to Section 1307, Procedures' (ZDO 316 L25) and "Replats
+      reviewed as a Type II application pursuant to Section 1307, Procedures" (ZDO 1012 L9). The
+      replat limb is the land-division path, parked under Section 1105 on its own reasoning and
+      not reached twice.
+  "827":
+    outcome: other_building
+    note: >-
+      Drive-Thru Window Services, and the reference is the use row itself: "Drive-Thru Window
+      Services, subject to Section 827" (ZDO 510 L197). A window a car stops at, and one of the
+      thirty-eight markers in Table 510-1 that resolve to a row this building is not on.
+  "1021":
+    outcome: fetch
+    note: >-
+      Solid Waste and Recyclable Material Collection, and the second reference in this layer that
+      a chapter's arrival turned from a name into a requirement. Table 510-1 note 8 (ZDO 510 L67):
+      "In the SCMU District, outdoor displays, processes, or storage, except for the storage of
+      solid waste and recyclables either as required by Section 1021, Solid Waste and Recyclable
+      Material Collection, or as an accessory use to a townhouse, are prohibited." The three words
+      that matter are "as required by": the sentence is a prohibition on outdoor storage, and it
+      carves out the collection area because the county requires one somewhere else. A collection
+      area is ground. It is the same family as the parking court, which took between twelve and
+      forty-two feet of depth off every quadplex zone in this corpus the day somebody measured it
+      instead of assuming it, and this model holds no field for it. The tempting ruling -- that
+      the citing sentence is about SCMU and SCMU is not encoded -- argues about our corpus rather
+      than about the page and expires the day somebody encodes SCMU. Section 1021 is not in the
+      store. `fetch` keeps the row in the queue, which is where it belongs.
 
 definitions:
   # "LOT, CORNER: A lot with street frontage on two streets intersecting at a
@@ -296,6 +419,40 @@ code:
   start: "316.01"
   end: "Return to the Zoning and Development Ordinance main page"
   # Same shape as 315: a long use table whose use names dilute the ratio.
+  allow_thin: true
+# The commercial and mixed-use half of the urban county: eleven districts on
+# one use table, and the loosest land in this layer. Table 510-1 marks the
+# Quadplexes row P in nine of the eleven -- the pod is a listed, permitted use
+# in most of the commercial land here -- so this chapter is not read to find a
+# refusal. Two of the eleven refuse it outright (NC, C-2), one permits it only
+# inside somebody else's building (OA), and the other eight hand their
+# dimensional standards to a residential district this layer has not yet encoded.
+- id: zdo.510
+  url: https://www.clackamas.us/planning/zdo510
+  title: Clackamas County ZDO Section 510 - Urban Commercial and Mixed-Use Zoning Districts (Tables 510-1/2/3)
+  start: "510.01"
+  end: "Return to the Zoning and Development Ordinance main page"
+  # Table 510-1 runs eleven hundred lines of use names against eleven columns.
+  allow_thin: true
+# Where eight of those eleven districts' standards actually live. Table 510-1
+# notes 12 and 14 send a FREESTANDING quadplex -- which is the only kind this
+# building is -- to "the development and dimensional standards applicable to
+# ... quadplexes in the RCHDR District" and "in the HDR District", and Table
+# 510-2's eighth column is not a number at all but "See Subsection 1005.09".
+# So this section is the terminus of the commercial half, and it holds a shape
+# the value model has never carried: 1005.02(L) sets the distance to the site
+# area line by drawing an angle from the top of the building, 60 degrees to
+# the north and 15 to the east and west, and prints the second as a formula --
+# "Separation = b x .267 (tan 15 degrees)". A setback that is a function of
+# height and of which way a lot line points is not a number; it needs the
+# bearing of every lot line, which nothing here measures. 1005.02(L)(4) closes
+# the obvious escape by saying these standards are not modifiable under
+# Section 904, Height Exceptions.
+- id: zdo.1005
+  url: https://www.clackamas.us/planning/zdo1005
+  title: Clackamas County ZDO Section 1005 - Design Standards (Subsection 1005.02(L) separation, 1005.09 Fuller Road Station Community)
+  start: "1005.01"
+  end: "Return to the Zoning and Development Ordinance main page"
   allow_thin: true
 # Table 315-2 states the pod's dimensions and points somewhere else for two
 # standards that decide whether it fits at all. "District Land Area (DLA) for
@@ -2023,3 +2180,119 @@ zones:
       Encoded 2026-09-08. 81 lots on 257 acres, the smallest of the five and
       read at the same care as the largest. Ten acres a dwelling, one dwelling
       a lot of record.
+  NC:
+    cite_default:
+      cite: Clackamas ZDO 510.02 (applicability), 510.03 (uses permitted, and
+        the key to Table 510-1) and Table 510-1 (permitted uses in the urban
+        commercial and mixed-use zoning districts), with Table 510-1 note 11.
+        Both of this section's tables are printed after all of its prose, so in
+        the stored text the use table and its forty-four notes sit below the
+        510.05 heading; 510.05 is named here because that is where a reader
+        lands, not because the county files the use table there
+      url: https://www.clackamas.us/planning/zdo510
+      retrieved: '2026-09-08'
+    quadplex_allowed:
+      # Neighborhood Commercial, the first column of Table 510-1. The
+      # Quadplexes row reads X here, and 510.03(2) makes an X mean what it
+      # says: "If a use is identified in Table 510-1 as prohibited, it is
+      # prohibited even if it also falls within a broader use description that
+      # is permitted in the applicable zoning district." 15 lots.
+      value: false
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L7,L11,L15-L29,L75-L88,L209,L269-L280,L1206"
+    notes: >-
+      Encoded 2026-09-08 out of Table 510-1, and it is the minority answer in
+      this section rather than the expected one. Nine of the eleven urban
+      commercial and mixed-use districts permit a quadplex outright; NC and C-2
+      are the two that do not.
+
+      The door that had to be checked before the X could be believed is note
+      11, and it is not printed on the Quadplexes cell -- it is printed on the
+      group heading two rows above it, "Dwellings[11], including:", which the
+      county repeats once per column and which is the parent of Congregate
+      Housing Facilities, Duplexes, Multifamily Dwellings, Quadplexes,
+      Townhouses and Triplexes. Nothing but walking back up the column finds
+      it. It reads: "Dwellings not otherwise permitted in the applicable zoning
+      district may nonetheless be permitted if they are developed as affordable
+      housing, as defined in ORS 197A.445(1), and subject to Section 846,
+      Affordable Housing." That is a real route to a quadplex on this land, and
+      it turns on what is built rather than on anything about the lot: this
+      product is market rate, so the prohibition is the answer for it. A
+      screen that answered otherwise would be answering a different question
+      than the one it is asked.
+
+      The other route out of an unlisted use is closed by construction.
+      510.03 offers the same similar-use door Section 316 does -- "uses similar
+      to one or more of the listed uses ... may be authorized pursuant to
+      Section 106" -- but a quadplex is not an unlisted use here. It is a
+      listed use with an X against it, and 510.03(2) says an X survives being
+      inside a broader permitted description.
+  C2:
+    cite_default:
+      cite: Clackamas ZDO 510.02 (applicability), 510.03 (uses permitted, and
+        the key to Table 510-1) and Table 510-1 (permitted uses in the urban
+        commercial and mixed-use zoning districts), with Table 510-1 note 11.
+        Both of this section's tables are printed after all of its prose, so in
+        the stored text the use table and its forty-four notes sit below the
+        510.05 heading; 510.05 is named here because that is where a reader
+        lands, not because the county files the use table there
+      url: https://www.clackamas.us/planning/zdo510
+      retrieved: '2026-09-08'
+    quadplex_allowed:
+      # Community Commercial, the second column. Same X, same note 11 on the
+      # same group heading. 47 lots, the largest of the three refusals here.
+      value: false
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L7,L11,L15-L29,L75-L88,L209,L269-L280,L1206"
+    notes: >-
+      Encoded 2026-09-08. Read as the same cell as NC and refused for the same
+      reason, with one difference worth writing down: C-2 states no minimum lot
+      size at all in Table 510-2 and no maximum building height either, so
+      every dimensional gate this screen has is open here and the use gate is
+      the only thing standing. When the whole answer rests on one cell, the
+      cell is worth reading twice, and it was -- the Quadplexes row is eleven
+      cells against eleven column heads, the table is not ragged, and the
+      second cell is C-2's.
+  OA:
+    cite_default:
+      cite: Clackamas ZDO 510.02 (applicability), 510.03 (uses permitted, and
+        the key to Table 510-1) and Table 510-1 (permitted uses in the urban
+        commercial and mixed-use zoning districts), with Table 510-1 notes 2, 3
+        and 15. Both of this section's tables are printed after all of its
+        prose, so in the stored text the use table and its forty-four notes sit
+        below the 510.05 heading; 510.05 is named here because that is where a
+        reader lands, not because the county files the use table there
+      url: https://www.clackamas.us/planning/zdo510
+      retrieved: '2026-09-08'
+    quadplex_allowed:
+      # Office Apartment, the ninth column. The cell is not a refusal and not a
+      # permission -- it is L[15], and the two together say the same thing
+      # twice. "L" means the use is a limited use and shall be developed
+      # concurrently with, or after, a primary use; note 15 says quadplexes
+      # "may be developed in the same building as a primary use". 4 lots.
+      value: false
+      quote: "or/clackamas/_unincorporated/zdo.510.txt#L7,L11,L15-L29,L75-L88,L209,L269-L280,L1200-L1214"
+    notes: >-
+      Encoded 2026-09-08, and this one is a refusal of a permission rather than
+      a reading of a prohibition, so it is the one in this section most worth
+      arguing with.
+
+      What the table says is L[15]. "L" is defined in 510.03 as a limited use
+      that "shall be developed concurrently with, or after, a primary use", and
+      note 15 says what that means here: "Duplexes, triplexes, quadplexes, and
+      multifamily dwellings, subject to the density standards of the MR-2
+      District, may be developed in the same building as a primary use." A
+      quadplex is permitted in OA. It is permitted inside somebody else's
+      building.
+
+      This product is a fixed-dimension factory-built four-unit attached
+      townhome placed on a lot of its own. It is not floor area inside an
+      office building, and it cannot become floor area inside one. The column
+      head carries the arithmetic that settles it even if the sentence did not:
+      OA reads OA[2,3], and those two notes require a minimum of 60 percent of
+      a site's total building floor area to be primary uses and cap all limited
+      uses at 40 percent.
+
+      The county's own vocabulary is the corroboration. Notes 12 and 14 exist
+      precisely to tell "freestanding quadplexes" apart from "quadplexes in a
+      mixed-use building", and they send the freestanding kind somewhere else
+      for its standards. A code that draws that line in two other notes has
+      drawn it here too.

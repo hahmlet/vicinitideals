@@ -1,0 +1,993 @@
+1005.01 Purpose
+
+Section 1005 is adopted to ensure sites are developed and buildings designed to:
+
+1 Efficiently utilize the land used in development, particularly urban land in centers, corridors, station communities and employment areas;
+
+2 Create lively, safe, attractive and walkable centers, corridors, station communities, employment areas and neighborhoods;
+
+3 Support the use of non-auto modes of transportation, especially pedestrian trips to and between developments;
+
+4 Support community interaction by creating lively, safe and attractive public use spaces within developments and on the street;
+
+5 Reduce impacts of development on natural features and vegetation;
+
+6 Utilize opportunities arising from a site's configuration or natural features;
+
+7 Encourage use of green building technologies and green site development practices, energy conservation and use of renewable energy resources;
+
+8 Design illumination so that dark skies are maintained to the extent possible, balanced with the lighting needs of safe and functional developments; and
+
+9 Accommodate the needs of the users to be located in developments.
+
+1005.02 General Site Design Standards
+
+The following site design standards apply:
+
+1 Where feasible, cluster buildings within single and adjacent developments for efficient sharing of walkways, on-site vehicular circulation, connections to adjoining sites, parking, loading, transit-related facilities, plazas, recreation areas, and similar amenities.
+
+2 Where feasible, design the site so that so that the longest building elevations can be oriented within 20 degrees of true south in order to maximize the south-facing dimensions.
+
+3 Minimum setbacks may be reduced by up to 50 percent as needed to allow improved solar access when solar panels or other active or passive solar use is incorporated into the building plan.
+
+4 A continuous, interconnected on-site walkway system meeting the following standards shall be provided.
+
+1 Walkways shall directly connect each building public entrance accessible to the public to the nearest sidewalk or pedestrian pathway, and to all adjacent streets, including streets that dead-end at the development or to which the development is not oriented.
+
+2 Walkways shall connect each building to outdoor activity areas including parking lots, transit stops, children's play areas, and plazas.
+
+3 Walkways shall be illuminated. Separate lighting shall not be required if existing lighting adequately illuminates the walkway.
+
+4 Walkways shall be constructed with a well-drained, hard-surfaced material or porous pavement and shall be at least five feet in unobstructed width.
+
+5 Standards for walkways through vehicular areas:
+
+1 Walkways crossing driveways, parking areas, and loading areas shall be constructed to be clearly identifiable to motorists through the use of different paving material, raised elevation, warning signs, or other similar methods.
+
+2 Where walkways are adjacent to driveways, they shall be separated by a raised curb, bollards, landscaping, or other physical barrier.
+
+3 Inside the Portland Metropolitan Urban Growth Boundary (UGB), if the distance between the building public entrance and street is 75 feet or greater and located adjacent to a driveway or in a parking lot, the walkway shall be raised, with curbs, a minimum four-foot-wide landscape strip and shade trees planted a maximum of 30 feet on center.
+
+4 The exclusive use of a painted crossing zone to make walkways identifiable to motorists may be used only for portions of walkways which are shorter than 30 feet and located across driveways, parking lots, or loading areas.
+
+5 Walkways bordering parking spaces shall be at least seven feet wide or a minimum of five feet wide when concrete bumpers, bollards, curbing, landscaping, or other similar improvements are provided which prevent parked vehicles or opening doors from obstructing the walkway.
+
+6 The interconnected onsite walkway system shall connect to walkways in adjacent developments, or stub to the adjacent property line if the adjacent land is vacant or is developed without walkways.
+
+1 Walkway stubs shall be located in consideration of topography and eventual redevelopment of the adjacent property.
+
+2 Notwithstanding the remainder of Subsection 1005.02(D)(6), walkway linkages to adjacent development shall not be required within industrial developments, to industrial developments, or to vacant industrially zoned land.
+
+5 Inside the UGB, except for industrial developments, a minimum of 50 percent of the street frontage of the development site shall have buildings located at the minimum front setback line.
+
+1 If the minimum front setback standard is less than 20 feet, the front setback may be increased to a maximum of 20 feet provided pedestrian amenities are developed within the front setback area.
+
+2 Primary building entrances for buildings used to comply with Subsection 1005.02(E), shall:
+
+1 Face the street;
+
+2 Be located at an angle facing both the street and a parking lot; or
+
+3 Be located to the side of the building, provided that the walkway connecting to the street is a minimum of eight feet wide and is developed with landscaping and pedestrian amenities.
+
+3 If a development has frontage on more than one street, Subsection 1005.02(E) must be met on only one frontage, as follows:
+
+1 If one of the streets is a major transit street, the standard shall be met on that street.
+
+2 If neither or both are a major transit street, then the standard shall be met on the street with the higher functional classification.
+
+3 If neither 1005.02(E)(3)(a) or (b) applies, then the standard shall be met on the longest frontage.
+
+6 Inside the UGB, parking lots larger than three acres in size shall be built with major on-site vehicular circulation ways that include raised walkways with curbs, a minimum four-foot-wide landscape strip, and shade trees planted a maximum of 30 feet on center.
+
+7 New retail, office, mixed use, and institutional buildings located on major transit streets shall have at least one public entrance facing a major transit street, or street intersecting a major transit street.
+
+1 A private street used to meet the standards in Subsection 1005.02(G) must have raised walking surfaces on both sides, street trees, curbs, and pedestrian-scale street lighting, and must connect at both ends to an existing or proposed street.
+
+2 If a development has frontage on more than one major transit street, this orientation requirement needs to be met on only one side.
+
+3 The public entrance orientation requirement does not apply to warehouses or industrial buildings with less than 5,000 square feet of attached offices.
+
+8 New retail, office, mixed use, multifamily, and institutional buildings located at a major transit stop shall be set back a maximum of 20 feet from at least one of the following: the major transit stop, the major transit street or an intersecting street, or a pedestrian plaza at the major transit stop or a street intersection.
+
+1 For the purpose of Subsection 1005.02(H), a building is located at a major transit stop, if:
+
+1 The building is located on a lot that has frontage on the major transit street or an intersecting street; and
+
+2 Any portion of the building is within a 200-foot radius of the major transit stop.
+
+2 Lawfully established buildings that do not comply with the maximum setback standard may have additional height added as an expansion without being brought into conformance with the standard.
+
+3 The maximum setback standard does not apply to warehouses or industrial buildings with less than 5,000 square feet of attached offices.
+
+9 In the PMU District, there shall be no vehicular parking or circulation within the front setback area.
+
+10 In the OC District, the design and siting of structures shall control public access points into office buildings, utilizing a central lobby design, entrance courtyard, internal pedestrian walkway or mall, or similar designs that protect business/professional uses from the disturbances of direct public access.
+
+11 Where a minimum floor area ratio (FAR) is required by the standards of the applicable zoning district, it shall be calculated as follows:
+
+1 Calculate the building floor area by determining the square footage of all buildings in the proposed development, including:
+
+1 Gross floor area of all commercial structures (except parking structures), including storage and mechanical equipment;
+
+2 Square footage of commercial uses in a parking structure; and
+
+3 Square footage of the footprint of a multifamily residential structure.
+
+2 Calculate the net site area by subtracting from the gross site area the following:
+
+1 Right-of-way dedications;
+
+2 Off-road (except sidewalks) trails, bikeways, or multi-purpose trails;
+
+3 Stormwater detention facilities;
+
+4 Design elements (plazas, greenways, transit stations, etc.);
+
+5 Parks;
+
+6 Civic spaces;
+
+7 Stream buffers;
+
+8 Wetlands; and
+
+9 100-year floodplain (undeveloped portion)
+
+3 Divide the building floor area by the net site area. The result is the FAR. For example, if the building floor area is 20,000 square feet and the net site area is 40,000 square feet, the FAR is 0.5.
+
+12 The following standards apply in the HDR, RCHDR, and SHD Districts:
+
+1 The minimum distance on a north-south axis between any building and a site area line north of said building shall be the horizontal distance calculated by drawing a 60-degree angle line from the top of the structure to the natural ground elevation north of the structure. For purposes of this provision, the "top of the structure" shall be that part of projection of the structure which first intersects a 60-degree angle line projecting toward the ground north of the building. (See Figure 1005-0.) This provision shall be modified as follows:
+
+1 Intervening streets and 15 feet of setback into the property on the north side of said street may be included in the required separation distance.
+
+2 If an area on the adjacent site north of a proposed structure is developed or committed for use as a circulation drive or parking structure or lot, that area may be included in the required separation distance, provided no existing or proposed primary use structure on the adjacent site shall fall within the required separation distance.
+
+3 If the owner of the site area to the north grants a north-south separation easement, as provided under Subsection 1005.02(L)(2), that area may be included in the required separation distance.
+
+2 An owner, or owners, of a site area may grant a north-south separation easement to the owner, or owners, of a site area to the south provided that:
+
+1 Documentation and a map of the easement is submitted with the development plans for the site areas in question;
+
+2 The development plans for the two or more site areas in question are coordinated to the maximum extent possible; and
+
+3 Buildings are sited to minimize the loss of solar access to primary use structures. However, this provision shall not preclude or restrict the use or development of any north-south separation easement area.
+
+3
+The minimum distance on an east-west axis between any building and a site area line, except when abutting a public, County or state road, shall be the horizontal distance calculated by drawing a 15-degree angle line from the top of the structure to the natural ground elevation east and west of the structure. (See Figure 1005-0.)
+
+Formula:Separation = b x .267 (tan 15 degrees)
+
+4 The north-south and east-west separation distance requirements shall not preclude structurally connecting two or more buildings on separate site areas provided that the proposed connection is approved as part of the development plans for the affected site areas.
+
+Figure 1005-0: Separation Distance Illustration
+
+1 The standards of Subsection 1005.02(L) are not subject to modification pursuant to Section 904, Height Exceptions. However, these standards may be modified if the modification requested is necessary to allow development of primary uses at densities allowed for the site area.
+
+1005.03 Building Design
+
+1 The following standards apply to building facades visible from a public or private street or accessway and to all building facades where the primary entrance is located.
+
+1 Building facades shall be developed with architectural relief, variety and visual interest and shall avoid the effect of a single, long or massive wall with no relation to human size. Examples of elements that subdivide the wall: change in plane, texture, masonry pattern or color, or windows.
+
+2 Building facades shall have particular architectural emphasis at entrances and along sidewalks and walkways.
+
+3 Provide visual interest through use of articulation, placement and design of windows and entrances, building trim, detailing, ornamentation, planters, or modulating building masses.
+
+4 Utilize human scale, and proportion and rhythm in the design and placement of architectural features.
+
+5 Use architectural features which are consistent with the proposed use of the building, level and exposure to public view, exposure to natural elements, and ease of maintenance.
+
+6 When uses between ground-level spaces and upper stories differ, provide differentiation through use of bays or balconies for upper stories, and awnings, canopies, trim, and other similar treatments for lower levels.
+
+2 Requirements for building entries:
+
+1 Public entries shall be clearly defined, highly visible, and sheltered with an overhang or other architectural feature, with a depth of at least four feet.
+
+2 Commercial, mixed-use and institutional buildings sited to comply with 1005.02(E) shall have public entries that face streets and are open to the public during all business hours.
+
+3 The street-facing facade of commercial, mixed-use and institutional buildings sited to comply with 1005.02(E) shall meet the following requirements:
+
+1 Facades of buildings shall have transparent windows, display windows, entry areas, or arcades occupying a minimum of 60 percent of the first floor linear frontage.
+
+2 Transparent windows shall occupy a minimum of 40 percent of the first floor linear frontage. Such windows shall be designed and placed for viewing access by pedestrians.
+
+3 For large-format retail buildings greater than 50,000 square feet, features to enhance the pedestrian environment, other than transparent window, may be approved through design review. Such items may include, but are not limited to display cases, art, architectural features, wall articulation, landscaping, or seating, provided they are attractive to pedestrians, are built to human scale, and provide safety through informal surveillance.
+
+4 Requirements for roof design:
+
+1 For buildings with pitched roofs:
+
+1 Eaves shall overhang at least 24 inches.
+
+2 Roof vents shall be placed on the roof plane opposite the primary street.
+
+2 For buildings, other than industrial buildings, with flat roofs or without visible roof surfaces, a cornice or other architectural treatment shall be used to provide visual interest at the top of the building.
+
+5 Requirements for exterior building materials:
+
+1 Use architectural style, concepts, colors, materials, and other features that are compatible with the neighborhood's intended visual identity.
+
+2 Building materials shall be durable and consistent with the proposed use of the building, level and exposure to public view, exposure to natural elements, and ease of maintenance.
+
+3 Walls shall be surfaced with brick, tile, masonry, stucco, stone or synthetic equivalent, pre-cast masonry, gypsum reinforced fiber concrete, wood lap siding, architecturally treated concrete, glass, wood, metal, or a combination of these materials.
+
+4 The surfaces of metal exterior building materials that are subject to rust or corrosion shall be coated to inhibit such rust and corrosion, and the surfaces of metal exterior building materials with rust or corrosion shall be stabilized and coated to inhibit future rust and corrosion.
+
+6 Additional building design requirements for multifamily dwellings and middle housing, except middle housing developed pursuant to Section 845, Triplexes, Quadplexes, Townhouses, and Cottage Clusters:
+
+1 Facades of buildings that are two or more stories in height shall have a minimum of one balcony or bay per four dwelling units.
+
+2 Windows shall be frequent and coordinate with bays and balconies.
+
+3 Where feasible, place the buildings to minimize the potential of windows facing directly toward primary living areas of other dwelling units.
+
+4 For buildings that are one or two stories in height, roofs shall be hipped, gambrel, or gabled to provide visual interest. Flat roofs shall be allowed in areas of these buildings where mechanical equipment is mounted or where they are used for roof gardens or other outdoor activities.
+
+5 For multifamily developments, convenient areas shall be provided for storage of articles such as bicycles, barbecues, and outdoor furniture. These areas shall be completely enclosed and easily accessible to respective dwelling units.
+
+7 Requirements to increase safety and surveillance:
+
+1 Locate buildings and windows to maximize potential for surveillance of entryways, walkways, and parking, recreation, and laundry areas.
+
+2 Provide adequate lighting for entryways, walkways, and parking, recreation, and laundry areas.
+
+3 Locate parking and automobile circulation areas to permit easy police patrol.
+
+4 Design landscaping to allow for surveillance opportunities.
+
+5 Locate mail boxes where they are easily visible and accessible.
+
+6 Limit fences, walls and, except for trees, landscaping between a parking lot and a street to a maximum of 30 inches in height.
+
+7 Locate play areas for clear parental monitoring.
+
+8 Solar access requirements:
+
+1 Except for uses with greater cooling needs than heating needs, such as many retail uses, concentrate window areas on the south side of buildings (within 20 degrees of due south) where there is good southern exposure.
+
+2 Provide overhangs, balconies, or other shading devices to prevent excessive summer heat gains.
+
+3 Use architectural features, shape of buildings, fences, natural landforms, berms, and vegetation to catch and direct summer breezes for natural cooling, and minimize effects of winter winds.
+
+9 Requirements for compatibility with the intent of the design type or with the surrounding area. For purposes of Subsection 1005.03(I), design types are Centers, Station Communities or Corridor Streets as identified on Comprehensive Plan Map IV-8, Urban Growth Concept; X-CRC-1, Clackamas Regional Center Area Design Plan, Regional Center, Corridors and Station Community; X-SC-1, Sunnyside Corridor Community Plan, Community Plan Area and Corridor Design Type Location; or X-MC-1, McLoughlin Corridor Design Plan, Design Plan Area. The intent of these design types is stated in Chapter 4 or 10 of the Comprehensive Plan.
+
+1 Use shapes, colors, materials, textures, lines, and other architectural design features that enhance the design type area and complement the surrounding area and development.
+
+2 Use colors, materials, and scale, as appropriate, to visually connect building exteriors to adjoining civic/public spaces such as gateways, parks, plazas, and transit stations.
+
+3 Use building orientation and physical design, including setbacks and modulations, to ensure a development is compatible with other activities onsite, nearby properties, intended uses, and the intent of the design type.
+
+4 Orient loading and delivery areas and other major service activity areas of the proposed project away from existing dwellings. Loading areas shall be located to the side or rear of buildings unless topography, natural features, rail service, or other requirements of this Ordinance dictate loading bays to the front of buildings.
+
+5 In industrial zoning districts, site areas used for vehicular operations, outdoor storage, and outdoor processing to minimize the impacts on adjacent dissimilar uses.
+
+6 Inside the Portland Metropolitan Urban Growth Boundary, use colors, materials and architectural designs to visually reduce the impact of large buildings.
+
+7 In unincorporated communities, design structures to reflect and enhance the local character and to be in scale with surrounding development.
+
+8 In rural and natural resource areas, use materials, colors and shapes that imitate or complement those in the surrounding areas, such as those used in typical farm structures.
+
+9 In open space or scenic areas, use natural color tones, lines, and materials which blend with the natural features of the site or site background.
+
+10 Requirements for screening mechanical equipment:
+
+1 Rooftop mechanical equipment, except for solar energy systems, shall be screened from view by the use of parapet walls or a sight-obscuring enclosure around the equipment. The screen shall be constructed of one of the primary materials used on the primary facades, and shall be an integral part of the building's architectural design.
+
+2 Ground mounted mechanical equipment shall be located away from the intersection of two public streets, to the extent practicable, and shall be screened by ornamental fences, screening enclosures, or landscaping that blocks at least 80 percent of the view.
+
+3 Wall mounted mechanical equipment shall not be placed on the front of a building or on a facade that faces a street. Wall mounted mechanical equipment that extends six inches or more from the outer building wall shall be screened from view from the streets; from residential, public, and institutional properties; and from public areas of the site or adjacent sites through one of the screening techniques used in Subsection 1005.03(J)(1) or (2).
+
+11 Requirements for specialized structures in industrial zoning districts:
+
+1 In the GI District, silos, towers, and other specialized storage or processing structures are permitted as part of a primary use only if such structures are enclosed in a building that complies with the other applicable standards of Subsection 1005.03, or if such structures have the following characteristics:
+
+1 Provide windows and canopies, awnings, wood or masonry siding, or other exterior treatment to highlight accessory office areas within the same building, when applicable;
+
+2 Use exterior colors which blend with the landscape, such as brown, green, tan, or, in the case of tall structures, such as silos or towers, use light colors that blend with the sky; and
+
+3 Do not use bright colors, white, or multiple colors, except as specifically approved pursuant to Section 1102 for trim, accents, or to provide visual interest to equipment or structures that are unique to the particular use.
+
+2 In the BP and LI Districts, silos, towers, and other specialized storage or processing structures are prohibited unless they are enclosed in a building that complies with the other applicable standards of Subsection 1005.03, or unless they are approved as part of a conditional use.
+
+12 Facades in the OA District: In the OA District, facades are subject to the following standards:
+
+1 Building facades facing public streets shall be designed with windows and entries or bays. Sides or rears of buildings shall not consist of an undifferentiated wall when facing a public street, accessway, or a residential area.
+
+2 Arcades are encouraged along public street rights-of-way or along walkways within the complex of buildings.
+
+3 Consistent design elements shall be used throughout the office area to ensure that the entire complex is visually and functionally unified.
+
+1005.04 Outdoor Lighting
+
+1 Outdoor lighting devices:
+
+1 Shall be architecturally integrated with the character of the associated structures, site design, and landscape.
+
+2 Shall not direct light skyward.
+
+3 Shall direct downward and shield light; or direct light specifically toward walls, landscape elements, or other similar features, so that light is directed within the boundaries of the subject property;
+
+4 Shall be suitable for the use they serve (e.g. bollard lights along walkways, pole mounted lights for parking lots);
+
+5 Shall be compatible with the scale and intensity of uses they are serving. The height of pole-mounted fixtures shall not exceed 25 feet or the height of the tallest structure onsite, whichever is less; and
+
+6 At entrances, shall be glare-free. Entrance lighting may not exceed a height of 12 feet and must be directed downward.
+
+2 The following are exempt from Subsection 1005.04(A):
+
+1 Temporary lights used for holiday decorations;
+
+2 Street lights regulated in Section 1006, Utilities, Street Lights, Water Supply, Sewage Disposal, Surface Water Management, and Erosion Control; and
+
+3 Lighting associated with outdoor recreation uses such as ball fields or tennis courts.
+
+1005.05 Additional Requirements
+
+Development shall comply with a minimum of one of the following techniques per 20,000 square feet of site area. Regardless of site size, a minimum of one and a maximum of five techniques are required. Partial site area numbers shall be rounded.
+
+1 Install a solar energy system in the development.
+
+2 Use passive solar heating or cooling techniques to reduce energy consumption. Examples of techniques:
+
+1 Modulate building masses to maximize solar access.
+
+2 For developments with more than one structure, locate taller structures to minimize negative impacts on solar access for the development site and adjacent sites.
+
+3 Locate buildings to maximize windbreaks.
+
+4 Locate structures and landscaping to avoid winter shading on the south side and optimize summer shading on the west and southwest sides of buildings.
+
+5 Utilize deciduous trees to provide summer shade and allow winter sun.
+
+6 Utilize deciduous vines on fences, trellises, and arbors to provide summer shade.
+
+7 Locate and form berms to protect buildings and exterior use spaces against winter winds or utilize dense evergreens or conifers to screen winter wind and protect against hostile winter elements.
+
+8 Provide skylights or clerestory windows to provide natural lighting, and/or solar heating of interior spaces.
+
+3 Use highly reflective (high albedo) materials on roof surfaces.
+
+4 Place major outdoor use areas such as plazas, playgrounds, gardens, etc. on the south side of buildings.
+
+5 Construct a minimum of 75 percent of walkway area of porous pavement.
+
+6 Construct a minimum of 75 percent of all parking spaces with porous pavement.
+
+7 Provide additional landscaping area at least 10 percent above the requirement for the site pursuant to Table 1009-1, Minimum Landscaped Area. For example, if the minimum area requirement is 20 percent, then 22 percent shall be provided. Credit shall be given for green roofs or other areas of vegetation that exceed the minimum area requirements.
+
+8 Include additional swales in development landscaping, pursuant to Section 1009, Landscaping. Credit shall be given for additional swale(s) that exceed the requirements of Subsection 1009.04(A)(2) by at least 10 percent of area. For example, if 1009.04(A)(2) requires 200 square feet of swale area, then an additional 20 square feet of swale area would be required.
+
+9 Collect rainwater from roofs and/or other impervious surfaces and use it for irrigation.
+
+10 Apply other techniques for onsite storm water treatment identified by the surface water management regulatory authority.
+
+11 Lay out sites and locate buildings and on-site vehicular circulation to create functional open areas such as plazas, courtyards, outdoor recreation areas, mini-parks, and accessways that are open to the general public.
+
+12 Enhance sidewalks and/or walkways by providing additional width, using higher quality materials; shielding from vehicular traffic with enhanced planting strips, street trees and on-street parking, and/or providing pedestrian amenities that are compatible with the design of the development as well as the neighborhood as a whole.
+
+13 Coordinate development between adjacent uses to provide for a more attractive and lively streetscape, enhance connections, minimize conflicts, and provide common-use areas.
+
+14 Enhance the pedestrian connection between the development and neighborhood shopping areas, nearby transit, trails, bikeways, or parks. Examples include additional width or pedestrian amenities.
+
+15 Provide functional and accessible rooftop gardens.
+
+16 For multifamily dwelling units that face the street, raise first floor units a minimum of two feet above street level.
+
+17 Provide structured or under-structure parking to meet all or part of the parking need.
+
+18 Provide no more than the minimum number of surface parking spaces set out in Table 1015-1, Automobile Parking Space Requirements, or 1015-2, Minimum Automobile Parking Space Requirements for Dwellings, all of which shall be no greater than the minimum dimensions allowed in Subsection 1015.02(A)(2).
+
+19 Lay out sites or orient structures, to maximize significant vistas.
+
+20 Locate and design structures to protect scenic views or vistas from adjacent properties and public thoroughfares. Setbacks, building height, and bulk should be considered.
+
+21 Utilize rail service opportunities abutting the site.
+
+22 Inside the Portland Metropolitan Urban Growth Boundary (UGB), a minimum of 75 percent of the street frontage of the development site shall have buildings located at the minimum front setback line. If the minimum front setback standard is less than 20 feet, the front setback may be increased to a maximum of 20 feet provided pedestrian amenities are developed within the front setback area.
+
+23 Outside the UGB, or for industrial developments, a minimum of 25 percent of the street frontage of the development site shall have buildings located at the minimum front setback line. Up to 20 feet of additional front setback area may be provided where pedestrian amenities are located.
+
+24 Locate buildings at the minimum side setback line or within 10 feet of the side lot line, whichever is greater.
+
+1005.06 Modifications
+
+Modification of any standard identified in Subsections 1005.02 and 1005.03 may be approved as part of design review if the proposed modification will result in a development that achieves the purposes stated in Subsection 1005.01 as well or better than the requirement listed.
+
+1005.07 Clackamas Regional Center Area Design Standards
+
+Subsection 1005.07 applies in the Clackamas Regional Center Area, including the Regional Center and the Fuller Road Station Community, as identified on Comprehensive Plan Map X-CRC-1, Clackamas Regional Center Area Design Plan Regional Center, Corridors, and Station Community. Where these standards conflict with other provisions in Section 1000, Subsection 1005.07 shall take precedence.
+
+1 Clackamas Regional Center Area Design Plan: Development is subject to the Clackamas Regional Center Area Design Plan in Chapter 10 of the Comprehensive Plan.
+
+2 Urban Design Elements: New development is subject to the urban design elements shown on Comprehensive Plan Map X-CRC-3, Clackamas Regional Center Area Design Plan Urban Design Elements. The urban design elements are described in the Clackamas Regional Center Area Design Plan in Chapter 10 of the Comprehensive Plan.
+
+1 Urban design elements provided in a development may be used to reduce gross site area for calculating minimum density requirements in Subsection 1012.08, and to meet minimum landscaping requirements in Section 1009, Landscaping.
+
+2 For phased development approved through a master plan, requirements for the urban design elements may be roughly proportional to the amount of the master planned approved development being developed in any one phase.
+
+3 Parking Structure Orientation: Entrances for ground-level retail uses in parking structures located within 20 feet of a street shall be oriented to a street.
+
+4 Corner Lot Buildings:
+
+1 A corner lot is a lot, parcel, tax lot, or land area created by a lease agreement at the intersection of two streets.
+
+2 Buildings on street corners shall have corner entrances or other architectural features to enhance the pedestrian environment at the intersection.
+
+3 Development on lots at a Gateway intersection as shown on Comprehensive Plan Map X-CRC-3, and Comprehensive Plan Figure X-CRC-7, Clackamas Regional Center Area Design Plan Gateway Intersection (Boulevard and Main Street), shall be designed to accommodate future Gateway improvements.
+
+5 Building Setbacks from Private Streets: Where a setback from a private street, as defined in Subsection 1005.07(G), is required by the standards of the applicable zoning district, the setback shall be measured from the back edge of the sidewalk.
+
+6 Parking Structures: If a parking structure, including understructure parking, abuts a street, appropriate features shall be provided to create a transition between the parking structure, or the entrance to understructure parking, and the abutting street. Examples of appropriate features include, but are not limited to, landscape planters and trellises, awnings, canopies, building ornamentation, and art. As used in Subsection 1005.07(F), a parking structure "abuts a street" if no other building is sited between the parking structure and the street.
+
+7 Private Streets: Private streets used to meet the structure orientation or setback standards shall include:
+
+1 Sidewalks or raised walking surfaces on both sides;
+
+2 Curbs;
+
+3 Street trees, pursuant to Subsection 1007.06; and
+
+4 Pedestrian-scale lighting.
+
+5 Private streets may also provide on-street parking and at-grade loading zones, as applicable.
+
+8 Internal Streets:
+
+1 Internal streets may be required to connect to adjacent properties to increase connectivity and provide grid patterns that allow for future development.
+
+2 Internal streets shall be designed to allow for future development when applicable.
+
+3 Development shall provide, when applicable, direct street and pedestrian connections between developments and schools, parks, open space, shopping areas, employment areas, and transit stops.
+
+9 New development shall not be sited such that it precludes the construction of the new walkways, or eliminates the existing walkways, that are shown on Comprehensive Plan Map X-CRC-7a, Clackamas Regional Center Area Design Plan Walkway Network, or identified in the Clackamas Regional Center Pedestrian/Bicycle Plan adopted by reference in Appendix A of the Comprehensive Plan, unless an alternative walkway location that provides a similar connection is established. An alternative walkway location shall not be deemed "similar" to a planned or existing location unless:
+
+1 It provides comparably safe, direct, and convenient pedestrian access to significant destinations, such as transit facilities, major employers, multifamily dwelling complexes, and retail and service establishments; and
+
+2 It fulfills a comparable function in terms of filling gaps in the pedestrian circulation system planned for the Clackamas Regional Center Area.
+
+1005.08 Regional Center Design Standards
+
+Subsection 1005.08 applies in the Regional Center, as identified on Comprehensive Plan Map X-CRC-1, Clackamas Regional Center Area Design Plan Regional Center, Corridors, and Station Community. Where these standards conflict with other provisions in Section 1000, Subsection 1005.08 shall take precedence.
+
+1 Freestanding parking structures located within 20 feet of pedestrian facilities, including public or private streets, pedestrian ways, greenways, a transit station or shelter, or plaza, shall provide a quality pedestrian environment on the facade facing the pedestrian facility. Techniques to use may include:
+
+1 Provide retail or office uses on the ground floor of the parking structure facing the pedestrian facility;
+
+2 Provide architectural features that enhance the first floor of the parking structure adjacent to the pedestrian facility, such as building articulation, awnings, canopies, building ornamentation, and art; and
+
+3 Provide pedestrian amenities in the transition area between the parking structure and pedestrian facility, including landscaping, trellises, seating areas, kiosks, water features with seating, plazas, outdoor eating areas, and drinking fountains.
+
+2 New buildings shall have at least one public entrance oriented to a street. Private streets used to meet this standard shall include the elements identified in Subsection 1005.07(G).
+
+3 Pedestrian amenities are required between the building and the front lot line. The following guidelines apply to pedestrian amenities used to meet this requirement:
+
+1 Pedestrian areas include plazas, courtyards, outdoor seating areas for restaurants, pocket parks, and atriums when there is direct access for pedestrians. Pedestrian areas in front of buildings should be visible from the street.
+
+2 Pedestrian areas must include landscape planters and at least two of the following amenities for every 100 square feet of pedestrian area: lawn areas with trees and seating; awnings or other weather protection; kiosks; outdoor eating areas with seating; water features with seating; and drinking fountains.
+
+4 In the RCHDR District, pedestrian amenities are required in the front setback area, except landscaping for privacy may also be provided as an option in the setback area for residential buildings.
+
+5 Internal streets and driveways are prohibited between buildings and the street to which building entrances are oriented.
+
+1005.09 Fuller Road Station Community Dimensional and Design Standards
+
+Subsection 1005.09 applies in the Fuller Road Station Community, as shown on Comprehensive Plan Map X-CRC-1, Clackamas Regional Center Area Design Plan Regional Center, Corridors and Station Community. Where these standards conflict with other provisions in Section 1000, Subsection 1005.09 shall take precedence. If the text of Subsection 1005.09 is unclear as applied to a specific development, Figures 1005-1 through 1005-11, as applicable, may be used to resolve the ambiguity.
+
+1 Subsections 1005.09(B) through (M) do not apply in Sectors 1 and 2, as shown on Map 1005-1, until:
+
+1 One or more additional stories are to be added to one or more existing buildings that are more than 150 feet from 82nd Avenue in either Sector 1 or Sector 2. For the purpose of this provision, a mezzanine shall not be considered an additional story; or
+
+2 More than 40,000 square feet of new building area is to be developed in either Sector 1 or Sector 2.
+
+1 The tally of new square footage will be cumulative starting with new development after March 7, 2011.
+
+2 If an existing building is expanded, the square footage of the new building outside the existing building footprint will be counted toward the total of 40,000 square feet.
+
+3 If a mezzanine is added inside an existing building, the square footage of the mezzanine will be counted toward the total of 40,000 square feet.
+
+4 If one or more stories are added to a building 150 feet or less from 82nd Avenue, as allowed by Subsection 1005.09(A)(1), the additional square footage will be counted toward the total of 40,000 square feet.
+
+5 If a building is damaged or destroyed, regardless of the cause, and the building is restored or replaced, the square footage of the restored or new building that is constructed inside the previous building footprint will not be counted toward the total of 40,000 square feet, provided that restoration or replacement lawfully commences within three years of the occurrence of the damage or destruction. "Lawfully commenced" shall have the meaning given in Subsection 1206.03(B). However, if the new building has more stories than the previous building, Subsections 1005.09(B) through (M) will become applicable, if required pursuant to Subsection 1005.09(A)(1).
+
+3 Subsections 1005.09(A)(1) and (2) apply separately to Sectors 1 and 2, meaning that compliance with Subsections 1005.09(B) through (M) will not be required in Sector 1 or 2 until that particular sector exceeds the development threshold established by Subsection 1005.09(A)(1) or (2).
+
+4 Prior to the point at which Subsections 1005.09(B) through (M) become applicable, new development in Sectors 1 and 2 shall not be sited such that it:
+
+1 Precludes establishment of the "conceptual street grid" identified on Map 1005-2, or eliminates or reduces existing elements of that grid. All streets shown on the grid are planned to be Type D.; or
+
+2 Precludes establishment of a connection, with a Type D street cross section, between a signalized intersection at 82nd Avenue and a point on Fuller Road within the "access area" shown on Map 1005-2.
+
+2 Minimum Building Height: 20 feet, measured to top of parapet or roof.
+
+3 Minimum Side and Rear Setbacks: Five feet, except a zero setback is allowed for attached structures. (See Figure 1005-1.)
+
+4 Maximum Driveway Width: The maximum width of a curb cut for a driveway is 24 feet (not including sidewalks or landscaping) unless otherwise required by the Clackamas County Roadway Standards or applicable fire district. (See Figure 1005-1.)
+
+5 Regulating Plan: Map 1005-1 is the regulating plan for the Fuller Road Station Community. It identifies each existing or planned street in the Fuller Road Station Community as one of four street types: Type A, B, C, or D. As established by Subsections 1005.10(G) and (L), the building frontage and landscape screening regulations for the Fuller Road Station Community are applied by street type and are thereby "keyed" to the regulating plan.
+
+6 Streets: Street improvements are required as follows:
+
+1 Except as set forth in Subsection 1005.09(F)(3), the locations of required new streets are shown on Map 1005-1, or will be determined pursuant to Subsection 1005.09(F)(2). New streets shown on Map 1005-1 are intended to create blocks with a perimeter no greater than 2,200 feet. Exact location of these new streets may vary up to 50 feet, provided the maximum block perimeter standard is met and provided that the new streets create the connections/intersections shown on Map 1005-1.
+
+2 In addition to the mapped streets (existing and new) illustrated on Map 1005-1, a through-block connection is required for any block face longer than 450 feet. (See Figure 1005-2.)
+
+1 "Block face" means the curb to curb distance between any two streets, including Type E pedestrian/bicycle connections.
+
+2 These additional connections shall:
+
+1 Have a Type D street cross section or a Type E pedestrian/bicycle connection cross section;
+
+2 Be located no closer than 100 feet to an adjacent street intersection, whether existing or planned; and
+
+3 Align with other existing or planned streets or Type E pedestrian/bicycle connections where possible.
+
+3 Subsections 1005.09(F)(1) and (2) do not apply in Sectors 1 and 2 shown on Map 1005-1. Instead, compliance with either Subsection 1005.09(F)(3)(a) or Subsections 1005.09(F)(3)(b) and(c) is required.
+
+1 Development shall not occur until a connection with a Type D street cross section is constructed between a signalized intersection at 82nd Avenue and a point on Fuller Road within the "access area" shown on Map 1005-2. In addition:
+
+1 New development shall not be sited such that establishment of the "conceptual street grid" identified on Map 1005-2 is precluded, or existing elements of that grid are eliminated or reduced. All streets shown on the grid are planned to be Type D.
+
+2 New development is required to complete frontage improvements for all streets upon which it has street frontage, as necessary to achieve consistency with Subsection 1005.09(F)(4).
+
+2 In lieu of compliance with Subsection 1005.09(F)(3)(a), development shall not occur until an alternative connectivity plan is approved for Sectors 1 and 2 shown on Map 1005-1. This connectivity plan shall:
+
+1 Connect the on-site transportation system to the existing and planned facilities shown on Map 1005-1;
+
+2 Provide pedestrian, bicycle, and motor vehicle circulation that meets the needs of future residents and visitors;
+
+3 Emphasize pedestrian mobility and accessibility, demonstrating an effective and convenient system of pedestrian walkways leading through the subject site;
+
+4 Provide for bicycle connections and efficient motor vehicle movements through the site;
+
+5 Except where precluded by existing development, existing interests in real property, natural features, or topography, provide for block faces that do not exceed 450 feet between any two streets;
+
+6 Include a minimum of three street connections to 82nd Avenue and a minimum of two street connections to Fuller Road. These connections must be Type D streets, and one must connect to Fuller Road within the "access area" shown on Map 1005-2;
+
+7 Include a phasing plan for completion of the connectivity plan based on the submitted development application or conceptual future development, as appropriate. This phasing plan shall ensure that at no point is the overall connectivity in Sectors 1 and 2 reduced and that at least one connection from 82nd Avenue to Fuller Road is constructed to a Type D street cross section in conjunction with the first phase of new development; and
+
+8 Comply with the Clackamas County Roadway Standards and the requirements of the Oregon Department of Transportation, as applicable.
+
+3 Once an alternative connectivity plan is approved:
+
+1 New development shall not be sited such that establishment of the connections identified on the connectivity plan are precluded, or existing elements of that plan are eliminated or reduced.
+
+2 New development shall not occur until at least one connection from 82nd Avenue to Fuller Road is constructed to a Type D street cross section. The other connections required by the connectivity plan shall be constructed in a manner consistent with the approved phasing plan. However, at a minimum, if an existing connection is removed as allowed by the connectivity plan, a new connection that provides at least the same degree of connectivity shall be constructed.
+
+3 New development is required to complete frontage improvements for all streets upon which it has street frontage, as necessary to achieve consistency with Subsection 1005.09(F)(4). Frontage shall be determined based on the approved connectivity plan.
+
+4 Streets and Type E pedestrian/bicycle connections shall be designed in conformance with the design standards shown in Comprehensive Plan Figures X-CRC-8 through X-CRC-11, unless an alternative design is required pursuant to the Clackamas County Roadway Standards or to accommodate fire access, necessary truck circulation, or other engineering factors. An alternative design shall not change the designated street type for purposes of applying the building frontage and landscape screening regulations. Cross section designs for SE Johnson Creek Boulevard and SE 82nd Avenue shall be determined by Clackamas County and the Oregon Department of Transportation.
+
+7 Building Frontage Types: Four building frontage types are established, each of which is allowed on one or more of the four street types allowed in the Fuller Road Station Community. Subsection 1005.09(G) applies to existing or future Type A, B, C, and D streets, regardless of whether they are shown on Map 1005-1. Table 1005-1 establishes which building frontage types are permitted on each street type. Figure 1005-3 summarizes the four building frontage types.
+
+Table 1005-1: Permitted Building Frontage Type by Street Type
+
+Permitted Building Frontage Type:  Street Type
+Landscape                          A Street
+Linear                             A, B, C, and D Streets
+Forecourt                          A, B, C, and D Streets
+Porch/Stoop/Terrace                B, C, and D Streets
+
+1 Buildings, except parking structures, located wholly or partially within 40 feet of a Type A, B, C, or D street are required to comply with the standards for a building frontage type permitted on the applicable street type.
+
+2 The entire length of street frontage designated on Map 1005-1 as "building frontage required," or "required retail opportunity area," excluding walkway cuts with a maximum width of eight feet and driveway cuts, shall be developed with one or more buildings that comply with the standards of a building frontage type permitted on the abutting street type.
+
+1 Except along Otty Road, where the building frontage requirement extends the entire length of the street, the "building frontage required" designation extends a distance of 60 feet from the street intersection, and the "required retail opportunity area" designation extends a distance of 100 feet from the street intersection. The beginning point for measurement is the outside edge of the right-of-way, or in the case of a private street, the outside edge of the improved street surface, including any landscape strip or sidewalk.
+
+3 A minimum of 50 percent of the length of street frontage not designated as "building frontage required" or "required retail opportunity area" shall be developed with one or more buildings that comply with the standards of a building frontage type permitted on the abutting street type. The 50-percent building frontage requirement is calculated for each lot individually, rather than in the aggregate for an entire street.
+
+1 If part of the street frontage is designated as "building frontage required" or "required retail opportunity area," buildings developed pursuant to Subsection 1005.09(G)(2) may be counted toward meeting the 50-percent requirement for the entire street frontage.
+
+4 If a lot has street frontage on more than one street:
+
+1 Compliance with Subsection 1005.09(G)(2) is required for all street frontage designated as "building frontage required" or "required retail opportunity area."
+
+2 Compliance with Subsection 1005.09(G)(3) is required for only one street frontage, unless one of the frontages is on Otty Road, in which case compliance with Subsection 1005.09(G)(3) is not required.
+
+5 Lots developed solely with parks and open space uses are exempt from Subsection 1005.09(G)(2) and (3).
+
+6 Landscape Building Frontage Type: Landscape Building Frontage, which is permitted on Type A Streets, shall comply with the following standards (see Figure 1005-4):
+
+1 Front Setback: The street-facing facade of the building shall be set back a minimum of 10 feet and a maximum of 15 feet.
+
+1 If it is not possible for a development to comply with the maximum setback standard and the intersection sight distance and roadside clear zone standards of the County Roadway Standards, the setback may be increased to the minimum extent necessary.
+
+2 The front setback area shall be landscaped with plants, or paved with masonry pavers or stamped concrete.
+
+3 No parking, storage, or display of motorized vehicles or equipment is allowed in the front setback area.
+
+4 Building service and utility equipment and outdoor storage of garbage or recycling is not permitted along the street-facing building facade or in the front setback area, except:
+
+1 Garbage and recycling receptacles for public use are permitted, provided that they do not exceed 35 gallons in size and are clad in stone or dark-colored metal.
+
+5 Fences: Fences and walls are permitted in the front setback area, subject to the following standards:
+
+1 The fence or wall shall be a maximum of three feet high.
+
+2 A fence shall be wrought iron, steel, or a similar metal and shall be dark in color. Chain-link fences are prohibited.
+
+3 A wall shall be wood, masonry, concrete, or a combination thereof.
+
+4 A fence shall be a minimum of 20 percent transparent. The transparent portions of the fence shall be distributed along the length of the fence in a recognizable pattern (e.g., two-inch gaps alternating with eight-inch solid sections).
+
+2 Minimum Ground Floor Height: The ground floor of the building shall measure a minimum of 15 feet from floor to ceiling.
+
+3 Minimum Building Depth: Buildings shall be a minimum of 40 feet deep.
+
+4 Building Entrances: Building entrances shall either be covered by an awning or canopy, or be covered by being recessed behind the front building facade. If an awning or canopy is provided, it shall have a minimum vertical clearance of eight feet and a maximum vertical clearance of 13 ½ feet. If only a recessed entry is provided, it shall be recessed behind the front facade a minimum of three feet.
+
+5 Primary Building Entrances: Each building shall have at least one building entrance that faces the street and is directly connected to a public sidewalk by a walkway that is a minimum of five feet wide.
+
+1 If the entrance serves a business (other than a home occupation), the entrance must be open to the public during regular business hours.
+
+2 If a fence or wall is within the front setback area as provided in Subsection 1005.09(H)(1)(e), a pedestrian opening a minimum of five feet wide shall be provided for the walkway.
+
+6 Windows: Transparent ground-floor windows shall be provided along a minimum of 60 percent of the ground-floor, street-facing facade area.
+
+7 Building Materials: Exterior building materials and finishes shall be masonry, architecturally treated tilt-up concrete, glass, wood, stucco, metal, or a combination of these materials. The surfaces of metal exterior building materials that are subject to rust or corrosion shall be coated to inhibit such rust and corrosion, and the surfaces of metal exterior building materials with rust or corrosion shall be stabilized and coated to inhibit future rust and corrosion..
+
+7 Linear Building Frontage Type: Linear Building Frontage, which is permitted on all street types, shall comply with the following standards (see Figure 1005-5):
+
+1 Front Setback: The street-facing facade of the building shall be set back a maximum of five feet. There is no minimum front setback.
+
+1 If it is not possible for a development to comply with the maximum setback standard and the intersection sight distance and roadside clear zone standards of the County Roadway Standards, the setback may be increased to the minimum extent necessary.
+
+2 The front setback area, if any, shall be landscaped with plants, or paved with masonry pavers or stamped concrete.
+
+3 No parking, storage, or display of motorized vehicles or equipment is allowed in the front setback area.
+
+4 Building service and utility equipment and outdoor storage of garbage or recycling is not permitted along the street-facing building facade or in the front setback area, except:
+
+1 Garbage and recycling receptacles for public use are permitted, provided that they do not exceed 35 gallons in size and are clad in stone or dark-colored metal.
+
+5 Fences: Fences and walls are permitted in the front setback area, subject to the following standards:
+
+1 The fence or wall shall be a maximum of three feet high.
+
+2 A fence shall be wrought iron, steel, or a similar metal and shall be dark in color. Chain-link fences are prohibited.
+
+3 A wall shall be wood, masonry, concrete, or a combination thereof.
+
+4 A fence shall be a minimum of 20 percent transparent. The transparent portions of the fence shall be distributed along the length of the fence in a recognizable pattern (e.g., two-inch gaps alternating with eight-inch solid sections).
+
+2 Minimum Ground Floor Height: The ground floor of the building shall measure a minimum of 15 feet from floor to ceiling, except when the building is designed to accommodate residential uses, in which case the minimum floor-to-floor height shall be 12 feet.
+
+3 Ground Floor Construction Type: In areas designated "required retail opportunity area" on Map 1005-1, the ground floor construction type shall meet at least the minimum requirements for a commercial use, as set forth in the current edition of the Oregon Structural Specialty Code.
+
+4 Minimum Building Depth: In areas designated "required retail opportunity area" on Map 1005-1, buildings shall be a minimum of 40 feet deep.
+
+5 Weather Protection: Awnings or canopies shall be provided for a minimum of 50 percent of the linear distance of the street-facing building facade and shall comply with the following:
+
+1 Awnings and canopies shall project a minimum of five feet and a maximum of eight feet over the sidewalk.
+
+2 Awnings and canopies shall have a minimum vertical clearance of eight feet and a maximum vertical clearance of 13 ½ feet.
+
+6 Building Entrances: Building entrances shall either be covered by an awning or canopy, or be covered by being recessed behind the front building facade. If an awning or canopy is provided, it shall have a minimum vertical clearance of 8 feet and a maximum vertical clearance of 13 ½ feet. If only a recessed entry is provided, it shall be recessed behind the front facade a minimum of three feet.
+
+7 Primary Building Entrances: Primary building entrances shall face the street and be a minimum of 40 percent transparent. The minimum amount of transparency is measured as a percentage of the total area of the entrance.
+
+1 Primary building entrances shall open onto an abutting public sidewalk, or be directly connected to a public sidewalk by a walkway that is a minimum of five feet wide.
+
+2 If the entrance serves a business (other than a home occupation), the entrance must be open to the public during regular business hours.
+
+3 If a fence or wall is within the front setback as provided in Subsection 1005.09(I)(1)(e), a pedestrian opening a minimum of five feet wide shall be provided for the walkway.
+
+8 Windows: Transparent ground-floor windows shall be provided along a minimum of 60 percent of the ground-floor, street-facing facade area.
+
+9 Building Materials: Exterior building materials and finishes shall be masonry, architecturally treated tilt-up concrete, glass, wood, stucco, metal, or a combination of these materials. The surfaces of metal exterior building materials that are subject to rust or corrosion shall be coated to inhibit such rust and corrosion, and the surfaces of metal exterior building materials with rust or corrosion shall be stabilized and coated to inhibit future rust and corrosion.
+
+8 Forecourt Building Frontage Type: Forecourt Building Frontage, which is permitted on all street types, shall comply with the following standards (see Figure 1005-6):
+
+1 Front Setback: The street-facing facade of the building shall be set back a maximum of five feet. There is no minimum front setback. Except for the portion of the facade located behind a recessed courtyard, as required by Subsection 1005.09(J)(2), the street-facing facade of the building shall be built to the chosen setback line.
+
+1 If it is not possible for a development to comply with the maximum setback standard and the intersection sight distance and roadside clear zone standards of the County Roadway Standards, the setback may be increased to the minimum extent necessary.
+
+2 No parking, storage, or display of motorized vehicles or equipment is allowed in the front setback area or in the required courtyard. Bicycle parking may be permitted in the courtyard, subject to compliance with Section 1015, Parking and Loading.
+
+3 Building service and utility equipment and outdoor storage of garbage or recycling is not permitted along the street-facing building facade, in the front setback area, or in the required courtyard, except:
+
+1 Garbage and recycling receptacles for public use are permitted, provided that they do not exceed 35 gallons in size and are clad in stone or dark-colored metal.
+
+2 Courtyard: A recessed courtyard is required and shall comply with the following standards:
+
+1 The courtyard shall be set back from the street-facing building facade a minimum of 10 feet and a maximum of 30 feet.
+
+2 The courtyard shall not be covered.
+
+3 The courtyard shall be landscaped with plants, or paved with masonry pavers or stamped concrete.
+
+4 The courtyard shall span a minimum of 20 feet along the street-facing building facade and a maximum of 50 percent of the street-facing building facade. As a result, the building must have a street-facing building facade of at least 40 feet wide.
+
+3 Incorporation of Linear Building Frontage Type: The street facing-building facade not located behind a recessed courtyard shall comply with the standards for the Linear Building Frontage Type in Subsection 1005.09(I).
+
+4 Minimum Ground Floor Height: The ground floor of the building shall measure a minimum of 15 feet from floor to ceiling, except when the building is designed to accommodate residential uses, in which case the minimum floor-to-floor height shall be 12 feet.
+
+5 Ground Floor Construction Type: In areas designated "required retail opportunity area" on Map 1005-1, the ground floor construction type shall meet at least the minimum requirements for a commercial use, as set forth in the current edition of the Oregon Structural Specialty Code.
+
+6 Primary Building Entrances: Primary building entrances shall face the street or the courtyard and be a minimum of 40 percent transparent. The minimum amount of transparency is measured as a percentage of the total area of the entrance.
+
+1 Primary building entrances facing the street shall open onto an abutting public sidewalk, or be directly connected to a public sidewalk by a walkway that is a minimum of five feet wide.
+
+2 If the entrance serves a business (other than a home occupation), the entrance must be open to the public during regular business hours.
+
+7 Windows: Transparent ground-floor windows shall be provided along a minimum of 50 percent of the ground-floor, courtyard-facing facade area. See the Linear Building Frontage Type for window requirements for the street-facing facade.
+
+8 Building Materials: Exterior building materials and finishes shall be high-image, such as masonry, architecturally treated tilt-up concrete, glass, wood, stucco, metal, or a combination of these materials. The surfaces of metal exterior building materials that are subject to rust or corrosion shall be coated to inhibit such rust and corrosion, and the surfaces of metal exterior building materials with rust or corrosion shall be stabilized and coated to inhibit future rust and corrosion.
+
+9 Fences: Fences and walls are permitted in the courtyard setback area, subject to the following standards:
+
+1 The fence or wall shall be a maximum of three feet high.
+
+2 A fence shall be wrought iron, steel, or a similar metal and shall be dark in color. Chain-link fences are prohibited.
+
+3 A wall shall be wood, masonry, concrete, or a combination thereof.
+
+4 A fence shall be a minimum of 20 percent transparent. The transparent portions of the fence shall be distributed along the length of the fence in a recognizable pattern (e.g., two-inch gaps alternating with eight-inch solid sections).
+
+5 A minimum of one pedestrian opening per courtyard street frontage shall be provided in the fence or wall. Required pedestrian openings shall be a minimum of five feet wide.
+
+9 Porch/Stoop/Terrace Building Frontage Type: Porch/Stoop/Terrace Building Frontage, which is permitted on Type B, C, and D Streets, shall comply with the following standards (see Figure 1005-7):
+
+1 Front Setback: The street-facing facade of the building shall be set back a minimum of five feet and a maximum of 15 feet. Entry thresholds, including roofs over the thresholds and steps to the thresholds, may extend to the front property line.
+
+1 If it is not possible for a development to comply with the maximum setback standard and the intersection sight distance and roadside clear zone standards of the County Roadway Standards, the setback may be increased to the minimum extent necessary.
+
+2 The front setback area shall be landscaped with plants. Hardscaping is permitted only to provide access to the threshold and shall consist of masonry pavers or concrete.
+
+3 No parking, storage, or display of motorized vehicles or equipment is allowed in the front setback area.
+
+4 Building service and utility equipment and outdoor storage of garbage or recycling is not permitted along the street-facing building facade or in the front setback area, except:
+
+1 Garbage and recycling receptacles for public use are permitted, provided that they do not exceed 35 gallons in size and are clad in stone or dark-colored metal.
+
+5 Fences: Fences and walls are permitted in the front setback area, subject to the following standards:
+
+1 The fence or wall shall be a maximum of three feet high.
+
+2 A fence shall be wrought iron, steel, or a similar metal and shall be dark in color. Chain-link fences are prohibited.
+
+3 A wall shall be wood, masonry, concrete, or a combination thereof.
+
+4 A fence shall be a minimum of 50 percent transparent. The transparent portions of the fence shall be distributed along the length of the fence in a recognizable pattern (e.g., two-inch gaps alternating with two-inch solid sections).
+
+2 Entry Threshold: An entry threshold, such as a porch, stoop, terrace, patio, or light court, is required and shall comply with the following standards:
+
+1 The entry threshold shall have a minimum depth of five feet from the street-facing building facade to the front of the threshold.
+
+2 The entry threshold height shall be no more than six feet above finished grade. An additional threshold may be provided to access a lower level and shall be no more than five feet below finished grade.
+
+3 The entry threshold may be covered by a roof no larger than the threshold.
+
+3 Primary Building Entrances: Primary building entrances shall face the street and be a minimum of 10 percent transparent. The minimum amount of transparency is measured as a percentage of the total area of the entrance. Each ground-floor dwelling unit, if any, shall have an individual entrance that complies with this requirement.
+
+4 Windows: Transparent windows shall be provided along a minimum of 20 percent of the street-facing facade area. Windows shall be vertically oriented, but vertical windows may be grouped together to create square or horizontally-oriented rectangular windows.
+
+5 Building Materials: Exterior building materials and finishes shall be high-image, such as masonry, architecturally treated tilt-up concrete, glass, wood, stucco, metal, or a combination of these materials. The surfaces of metal exterior building materials that are subject to rust or corrosion shall be coated to inhibit such rust and corrosion, and the surfaces of metal exterior building materials with rust or corrosion shall be stabilized and coated to inhibit future rust and corrosion.
+
+10 Landscape Screening Types: Street frontage not developed with a building compliant with one of the four building types established by Subsections 1005.09(H) through (K), a walkway cut with a maximum width of eight feet, or a driveway cut, shall be developed with one of three landscape screening types, each of which is allowed on one or more of the four street types allowed in the Fuller Road Station Community. Table 1005-2 establishes which landscape screening types are permitted on each street type. Figure 1005-8 summarizes the three landscape screening types. If the subject property abuts an existing or future Type A, B, C, or D Street -- regardless of whether it is shown on Map 1005-1—compliance is required with the standards for a landscape screening type permitted on the applicable street type.
+
+Table 1005-2: Permitted Landscape Screening Type by Street Type
+
+Permitted Landscape Screening Type  Street Type
+Low Wall and Trellis                A, B, C, and D Streets
+Urban Fence or Wall                 A, B, C, and D Streets
+Landscaped Setback                  A, B, and C Streets
+
+1 Low Wall and Trellis Landscape Screening Type: Low Wall and Trellis Screening, which is permitted on all street types, shall comply with the following standards (see Figure 1005-9):
+
+1 The low wall and the support structure for the trellis shall be set back a maximum of five feet from the front lot line. The trellis itself may extend to the front lot line, or may overhang an abutting sidewalk or walkway if permitted by the County Engineering Division.
+
+2 Any area between the back edge of the sidewalk or walkway and the low wall shall be planted with ground cover or shrubs, or paved with masonry pavers or stamped concrete. Shrubs at maturity shall not exceed the height of the low wall.
+
+3 The underside of the trellis portion of a Low Wall and Trellis shall be a minimum of eight feet above grade and a maximum of 13½ feet above grade.
+
+4 The trellis shall be heavy timber or steel (or a similar metal) and shall consist of an open structure with no decking or awning material. The trellis shall have masonry, heavy timber, or steel (or similar metal) supporting columns spaced no more than 30 feet on center.
+
+5 The low wall portion of a Low Wall and Trellis shall be a minimum of 18 inches high and a maximum of three feet high (30 inches if it is between a parking lot and a street) and have a minimum depth of 16 inches. The low wall shall be wood, masonry, concrete, or a combination thereof.
+
+6 Surface parking and loading areas shall be set back a minimum of five feet from the Low Wall and Trellis. Low shrubs, groundcover, and climbing plants shall be provided in this setback area, in lieu of trees ordinarily required pursuant to Section 1009 for perimeter surface parking and loading area landscaping. Climbing plants shall be planted at each support column.
+
+7 Openings in the Low Wall and Trellis Screening are permitted for plazas that comply with Subsection 1005.09(M).
+
+2 Urban Fence or Wall Screening Type: Urban Fence or Wall Screening, which is permitted on all street types, shall comply with the following standards (see Figure 1005-10):
+
+1 The fence or wall shall be set back a maximum of five feet from the front lot line.
+
+2 Any area between the back edge of the sidewalk or walkway and the fence or wall shall be paved with masonry pavers or stamped concrete.
+
+3 The fence or wall shall be a minimum of two feet high and a maximum of three feet high (30 inches if it is between a parking lot and a street).
+
+4 A fence shall be wrought iron, steel, or a similar material and shall be dark in color. Chain-link fences are prohibited. A fence shall be a minimum of 50 percent transparent. The transparent portions of the fence shall be distributed along the length of the fence in a recognizable pattern (e.g., two-inch gaps alternating with two-inch solid sections).
+
+5 A wall shall be wood, masonry, concrete, or a combination thereof.
+
+6 Surface parking and loading areas shall be set back a minimum of five feet from the Urban Fence or Wall. This area shall be landscaped as follows:
+
+1 One large tree is required a minimum of every 30 linear feet, except where a waiver is necessary to comply with the intersection sight distance and roadside clear zone standards of the County Roadway Standards.
+
+2 A minimum of six shrubs is required every 30 linear feet along the fence or wall. The minimum shrub height at maturity shall be the same as the height of the fence or wall, and the maximum shall be six feet.
+
+3 Ground cover plants must fully cover any remaining area at maturity.
+
+7 Openings in the Urban Fence or Wall Screening are permitted for plazas that comply with Subsection 1005.09(M).
+
+3 Landscaped Setback Screening Type: Landscaped Setback Screening, which is permitted on Type A, B, and C Streets, shall include a landscape strip a minimum of 10 feet wide adjacent to the property line. This area shall be landscaped as follows (see Figure 1005-11):
+
+1 A continuous row of shrubs shall be planted at the inside edge of the landscape strip. The shrubs shall be a minimum of three feet high (maximum 30 inches between a parking lot and a street), and shall be mostly opaque year round.
+
+2 One large tree is required a minimum of every 30 linear feet except where a waiver is necessary to comply with the intersection sight distance and roadside clear zone standards of the County Roadway Standards. The required shrub row may be interrupted with a gap of up to two feet wide, in order to accommodate each tree.
+
+3 Ground cover plants must fully cover any remaining area at maturity.
+
+4 A three-foot-high masonry wall (30 inches between a parking lot and a street) may be substituted for the shrub row, but the trees and groundcover plants are still required.
+
+5 Openings in the Landscaped Setback Screening are permitted for plazas that comply with Subsection 1005.09(M).
+
+4 Plazas: Openings in required landscape screening are permitted for plazas, subject to the following standards:
+
+1 The plaza shall be permanent space open to the public.
+
+2 The plaza shall be integrated in the development and be accessible from and visible from the street(s) upon which it fronts.
+
+3 The plaza shall be surfaced with masonry pavers or stamped concrete.
+
+4 Ten percent of the total plaza area shall be landscaped. Landscape planters may count toward this requirement.
+
+5 If the plaza abuts a surface parking or loading area, it shall be separated from that area by a landscape strip that complies with Subsection 1009.04(B).
+
+1005.10 PMU District Standards
+
+Subsection 1005.10 applies in the PMU District. Where these standards conflict with other provisions of Section 1000, Subsection 1005.10 shall take precedence.
+
+1 Access and Circulation: Onsite circulation shall meet the minimum requirements shown on Comprehensive Plan Map X-CRC-3, Clackamas Regional Center Area Design Plan, Urban Design Elements, and in addition:
+
+1 An internal circulation system shall include a network of public, private, and internal streets subject to Subsection 1005.07(G) through (I). Private streets shall function like local streets, with curbs, sidewalks, or raised walking surfaces on both sides, street trees, pedestrian scale lighting, and connections to state, county, or public streets. This internal street network shall create developable sites defined by streets.
+
+In addition, the internal circulation system may include a range of secondary facilities, including service roads, driveways, drive aisles, and other similar facilities. The overall intent is to provide a pattern of access and circulation that provides a clear and logical network of primary streets that have pedestrian orientation and amenities. A secondary network of pedestrian ways and vehicular circulation will supplement this system.
+
+2 Internal driveways shall not be located between buildings and the streets to which building entrances are oriented.
+
+2 Building Siting and Design:
+
+1 New buildings shall have at least one public entrance oriented to a state, county, public, or private street.
+
+2 Buildings shall have first floor windows with views of internal activity or display cases, and the major entrance on the building facade facing the street the building is oriented to. Entrances and windows on the street-side facade shall not be blocked, or entrances locked during operation hours. Additional major entrances may also be allowed facing minor streets and parking areas.
+
+3 Buildings on street corners shall have corner entrances or other architectural features to enhance the pedestrian environment at the intersection.
+
+4 First floor windows or display cases are required on building facades facing and adjacent to public and private streets, plazas, walkways, and pedestrian areas. Windows and doorways shall not be blocked or entrances locked during operation hours.
+
+5 Parking structures located within 20 feet of pedestrian facilities including public or private streets, pedestrian ways, greenways, a transit station or shelter, or plaza, shall provide a quality pedestrian environment on the facade facing the pedestrian facility. Techniques to use include, but are not limited to:
+
+1 Provide retail, office or similar uses on the ground floor of the parking structure with windows and activity facing the pedestrian facility; or,
+
+2 Provide architectural features that enhance the first floor of the parking structure adjacent to the pedestrian facility, such as building articulation, awnings, canopies, building ornamentation, and art; or,
+
+3 Provide pedestrian amenities in the transition area between the parking structure and the pedestrian facility, including landscaping, trellises, trees, seating areas, kiosks, water features with a sitting area, plazas, outdoor eating areas, and drinking fountains.
+
+4 The above listed techniques and features, and others of similar nature, must be used so that blank walls are not created.
+
+3 Buffering: When existing residential uses are located adjacent to a PMU site, such uses shall be buffered from the PMU site with landscaped buffers or by the location of streets, parks, plazas, greenways, or low density residential uses in the PMU District.
+
+1005.11 Sunnyside Village Standards
+
+Subsection 1005.11 applies in Sunnyside Village, as identified on Comprehensive Plan Map X-SV-1, Sunnyside Village Plan Land Use Plan Map. Where these standards conflict with other provisions in Section 1000, Subsection 1005.11 shall take precedence.
+
+1 Primary Dwellings in the VTH District: In the VTH District, the following standards apply to primary dwellings:
+
+1 Primary entries shall be accessed directly from a street right-of-way and shall be visible from the street.
+
+2 Porches are required for each unit and shall be located immediately adjacent to the primary entry. Porches shall cover a minimum of 50 percent of the primary facade (not including the garage) with a minimum net depth of six feet.
+
+3 Front facades shall be designed with balconies and/or bays. Facades facing a street right-of-way or designated accessway shall not consist of a blank wall.
+
+4 Window trim shall not be flush with exterior wall treatment. Windows shall be provided with an architectural surround at the jamb, head, and sill.
+
+5 Hipped, gambrel, or gabled roofs are required. Flat roofs are prohibited.
+
+6 Townhouses shall orient to and line streets with a series of attached "rowhouse" units.
+
+2 B. Garages and Driveways in the VTH District: In the VTH District, the following standards apply:
+
+1 A detached garage may be placed at the rear of a lot.
+
+2 A front-access garage attached to the dwelling structure shall be recessed a minimum of two feet behind the front facade (not including porches, bays, and architectural features) and a minimum of 20 feet from the street right-of-way.
+
+3 A minimum two-foot-deep trellis or bay window shall be placed above the garage opening. The trellis shall extend the full width of the garage, and the bay window shall be a minimum of eight feet in width.
+
+4 If located in the front, the garage opening and the driveway shall not exceed a width of 10 feet.
+
+5 If a lot abuts an alley, then garage access from the street is prohibited.
+
+3 Site Design in the VA District: Except on Sunnyside Road, multifamily dwellings shall orient to and line the streets.
+
+4 Entries in the VA District: In the VA District, entries are subject to the following standards:
+
+1 Primary entries shall be accessed directly from a street right-of-way and shall be visible from the street.
+
+2 Secondary entries may face parking lots or loading areas.
+
+3 Ground floor units should have entries directly from the street; upper story units may share one or more entries.
+
+5 Facades in the VA District: In the VA District, facades are subject to the following standards:
+
+1 Building facades shall be designed, at a minimum, with windows, entries, balconies, and bays. Towers, or other special vertical elements, may be used in a limited fashion to focus views to the area from surrounding streets. Facades facing a street right-of-way or pedestrian path shall not consist of a blank wall.
+
+2 Windows shall be frequent and coordinate with bays and balconies. Vertical proportions and divided lights are preferred. Window trim shall not be flush with exterior wall treatment. Windows shall be provided with an architectural surround at the jamb, head, and sill. All windows facing the front street shall be double-hung or casement windows.
+
+6 Roofs in the VA District: In the VA District, hipped, gambrel, or gabled roofs are required. Flat roofs are prohibited except for mechanical equipment areas.
+
+7 Building Materials in the VA District: In the VA District, exterior finishes shall be primarily wood and/or masonry. Human-scaled building elements and finishes are encouraged.
+
+8 Site Design in the VCS District: In the VCS District, the following standards shall apply:
+
+1 The buildings occupying areas adjacent to the village green shall face the village green and traffic circle to better integrate with the surrounding neighborhood. Parking shall be to the rear of the buildings.
+
+2 Circulation facilities, architectural features, signing, and landscaping shall be designed for pedestrian safety and convenience.
+
+9 Site Design in the VO District: In the VO District, the following standards shall apply:
+
+1 Driveway access from 142nd Avenue and Sunnyside Road shall be prohibited. Access shall be off of 145th Avenue and Princeton Village Way.
+
+2 A group of small low-rise buildings shall be required, oriented toward the primary surrounding streets and the adjacent multifamily dwellings and townhouses, to better integrate with the neighborhood.
+
+3 Circulation facilities, architectural features, signing, and landscaping shall be designed for pedestrian safety and convenience.
+
+10 Facades in the VCS District: In the VCS District, facades are subject to the following standards:
+
+1 Building facades shall be designed with windows, entries, and/or bays. Sides or rears of buildings shall not consist of an undifferentiated wall when facing a public street.
+
+2 Towers, or other special vertical elements, may be used in a limited fashion to focus views to the area from surrounding streets.
+
+3 Consistent design elements shall be used throughout the VCS area to ensure that the entire complex is visually and functionally unified.
+
+4 Windows shall be placed with no more than six feet of blank non-window wall space in every 25 feet of frontage and shall be coordinated with bays and balconies. Square or vertical proportions are preferred. Window trim shall not be flush with exterior wall treatment. Windows shall be provided with an architectural surround at the jamb, head, and sill. All windows shall be placed so that their sills are at least two feet above floor level. Glass walls and reflective glass are prohibited.
+
+5 Awnings shall have clearance of a minimum eight feet above sidewalks and walkways for pedestrian access.
+
+11 Facades in the VO District: In the VO District, facades are subject to the following standards:
+
+1 Building facades shall be designed with windows, entries, or bays. Sides or rears of buildings shall not consist of an undifferentiated wall when facing a public street, an accessway, or a residential area.
+
+2 Towers, or other special vertical elements, may be used in a limited fashion to focus views to the area from surrounding streets.
+
+3 Consistent design elements shall be used throughout the office area to ensure that the entire complex is visually and functionally unified.
+
+4 There shall be no more than six feet of blank non-window wall space in every 25 feet of frontage. Windows shall be coordinated with bays and balconies. Square or vertical proportions are preferred. Windows shall not be flush with exterior wall treatment. Windows shall be provided with an architectural surround at the jamb, head, and sill. All windows shall be placed so that their sills are at least two feet above floor level. Glass walls and reflective glass are prohibited.
+
+5 Awnings shall have clearance of a minimum eight feet above sidewalks and walkways for pedestrian access.
+
+6 Arcades may be used along public street rights-of-way or along walkways within the complex of buildings.
+
+12 Roofs in the VCS and VO Districts: In the VCS and VO Districts, hipped, gambrel or gabled roofs are required. Flat roofs are not permitted except for mechanical equipment areas.
+
+13 Building Materials in the VCS and VO Districts: In the VCS and VO Districts, exterior finishes of buildings shall be primarily of materials such as masonry, wood siding or shingles, stucco, metal, or similar material. The surfaces of metal exterior finishes that are subject to rust or corrosion shall be coated to inhibit such rust and corrosion, and the surfaces of metal exterior finishes with rust or corrosion shall be stabilized and coated to inhibit future rust and corrosion. Cinder block and T1-11 are prohibited as exterior wall material.
+
+1005.12 Government Camp Standards
+
+Subsection 1005.12 applies in Government Camp. Where these standards conflict with other provisions in Section 1000, Subsection 1005.12 shall take precedence.
+
+1 MRR District: In the MRR District, the following standards shall apply to commercial developments.
+
+1 Exterior Building Materials: Primary and accessory structures shall use wood, stone, stone veneer, or stucco in exterior construction. Stucco and textured concrete may be used as secondary materials. Stucco must be acrylic-based and combined with heavy timber, wood, or stone cladding. A rock, rock veneer, or textured concrete base shall be provided around building exteriors visible from roadways. No exposed plywood, particle board, plain concrete, cinder block, or grooved T1-11 is permitted.
+
+2 Roofing Materials: No composition shingles are allowed. Metal roofing materials that are subject to rust or corrosion shall be coated to inhibit such rust and corrosion, and metal roofing materials with rust or corrosion shall be stabilized and coated to inhibit future rust and corrosion.
+
+3 Design: Building design shall meet the design intent of mountain architecture as described in the Government Camp Design Guidelines Handbook. Examples of mountain architecture include "Cascadian", "Oregon Rustic", and the "National Park Style".
+
+2 RTC District: In the RTC District, the following standards shall apply to all new development and, where reasonable, to remodels.
+
+1 Main Entrance Siting: Properties with street frontage on Government Camp Loop shall locate the main entrance and pedestrian amenities on Government Camp Loop.
+
+2 Walkways: Walkways parallel to Government Camp Loop are not required; however, if a walkway is extended from the existing 10-foot-wide sidewalk fronting Government Camp Loop, it shall be constructed of materials consistent with the existing 10-foot-wide sidewalk. Covered walkways may be provided along the building frontage of development on properties with street frontage on Government Camp Loop from Wy'East Trail to Olive Street and on Little Trail from Olive Street to Church Street. When a covered walkway is constructed, it shall be a permanent structure at a minimum of 8 feet in width and attached to the building, shall not project beyond the lot lines, and shall be consistent with the building design and materials and existing 10-foot-wide sidewalk fronting Government Camp Loop. A covered walkway shall extend along the entire frontage of the building.
+
+3 Exterior Building Materials: Building and accessory structures shall use wood, stone, stone veneer, or stucco in exterior construction. Stucco and textured concrete may be used as secondary materials. Stucco must be acrylic-based and combined with heavy timber, wood, or stone cladding. A rock, rock veneer, or textured concrete base shall be provided around building exteriors with street frontage. No exposed plywood, particle board, plain concrete, cinder block, or grooved T1-11 is permitted.
+
+4 Roofing Materials: No non-architectural composition shingles are allowed. Metal roofing materials that are subject to rust or corrosion shall be coated to inhibit such rust and corrosion, and metal roofing materials with rust or corrosion shall be stabilized and coated to inhibit future rust and corrosion.
+
+5 Design: Building design shall meet the design intent of mountain architecture styles as described in the Government Camp Village Design Guidelines Handbook. Examples of mountain architecture include "Cascadian", "Oregon Rustic", and the "National Park Style".
+
+6 Loading: Loading and delivery shall not be located on Government Camp Loop unless there is no other access.
+
+[Amended by Ord. ZDO-224, 5/31/11; Amended by Ord. ZDO-243, 9/9/13; Amended by Ord. ZDO-246, 3/1/14; Amended by Ord. ZDO-249, 10/13/14; Amended by Ord. ZDO-250, 10/13/14; Amended by Ord. ZDO-252, 6/1/15; Amended by Ord. ZDO-266, 5/23/18; Amended by Ord. ZDO-268, 10/2/18; Amended by Ord. ZDO-280, 10/23/21; Amended by Ord. ZDO-282, 7/1/22; Amended by Ord. ZDO-283, 9/5/23]

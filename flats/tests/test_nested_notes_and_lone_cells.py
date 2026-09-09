@@ -237,12 +237,13 @@ def test_and_the_cell_that_points_at_them_is_read_as_a_row(store: ProvenanceStor
 
 
 def test_every_note_in_this_layer_is_ruled_and_none_of_them_blocks() -> None:
-    """A hundred and forty-four, from ten blocks, none left unread. The count
-    is the point: the layer reported clean at zero, at fifty-seven, at
-    seventy-seven, at eighty-four, at eighty-nine, at ninety-six and now at
-    a hundred and forty-four, and only the last of those is because it is. The
-    fifth block is Table 1012-1, Bonus Density, which announces itself with
-    nothing but a weld.
+    """Two hundred and fifteen, from thirteen blocks, and twenty-seven of them
+    left unread deliberately. The count is the point: the layer reported clean
+    at zero, at fifty-seven, at seventy-seven, at eighty-four, at eighty-nine,
+    at ninety-six, at a hundred and forty-four and now at two hundred and
+    fifteen, and only the last of those is because it is. The fifth block is
+    Table 1012-1, Bonus Density, which announces itself with nothing but a
+    weld.
 
     Three of the blocks arrived with ZDO 1015 on 2026-08-27, when this layer
     was read for parking. Five of the seven govern the encoded number, because
@@ -268,10 +269,34 @@ def test_every_note_in_this_layer_is_ruled_and_none_of_them_blocks() -> None:
     dimension in these districts. They are ruled on what they say instead:
     another application path, another building, a rule about creating lots
     rather than building on one, or a relaxation.
+
+    The last three blocks arrived with ZDO 510 later the same day, when the
+    commercial half of the county was read, and they are where this test stops
+    asserting that nothing is unread. Table 510-1's forty-four notes govern
+    the three refusals encoded from it and are all ruled -- thirty-six here,
+    eight already answered because the county prints the same sentences under
+    Table 315-1. Tables 510-2 and 510-3 are captured and their twenty-seven
+    notes are left UNREAD on purpose, which is a different claim from nobody
+    having looked and is why the assertion below names their lines.
+
+    Nothing is encoded from either table, so neither block governs a value,
+    and eleven of the twenty-seven are live site conditions on a setback or a
+    height: "If the rear lot line abuts a residential zoning district, the
+    minimum shall be 15 feet." Dismissing those today buys nothing and would be
+    an amnesty collected by whoever encodes a dimension in these districts
+    tomorrow, because a dismissed note does not block and an unread one does.
+    Leaving them unread is the register working, not a gap in it.
     """
     ruled = list(dispositions(CLACKAMAS))
-    assert len(ruled) == 144
-    assert not [n for n in ruled if n.state == "unread"]
+    assert len(ruled) == 215
+    unread = sorted(n.line for n in ruled if n.state == "unread")
+    # Every unread note in this layer is in Table 510-2 or Table 510-3 of ZDO
+    # 510, and every one of them is unread on purpose. Pinned by line rather
+    # than by count so that a note going unread ANYWHERE ELSE is a failure,
+    # which is the property the old `not unread` assertion had and a bare
+    # number would lose.
+    assert unread == list(range(1465, 1514, 2)) + [1543, 1545]
+    assert all(n.doc.endswith("zdo.510.txt") for n in ruled if n.state == "unread")
     rows = [r for r in qualified() if r.layer == CLACKAMAS]
     # 74 until 2026-09-08, when Table 315-4's four districts were encoded and
     # every value in them fell under that table's sixteen notes. Asserted as a

@@ -3540,3 +3540,401 @@ in the queue — and deliberately *not* ruled moot on the grounds that Section
 316's own districts refuse the pod, because that is a reason that argues about
 our corpus rather than about the page, and it goes stale the moment somebody
 reads 1002 for the urban districts.
+
+## 31. The commercial half of the same county, and a reason that was true of one table
+
+Section 30 read the rural half of unincorporated Clackamas and every district
+in it refused the pod. Section 510, read the same evening, is the opposite
+result and it is worth stating plainly because the previous section makes the
+wrong expectation easy: **Table 510-1 marks the Quadplexes row `P` in nine of
+the eleven urban commercial and mixed-use districts.** The pod is a listed,
+permitted use on most of this land. A chapter is not read to confirm a refusal.
+
+Three districts are encoded and all three are refusals, because they are the
+three the table itself closes:
+
+| zone | cell | lots | why |
+|---|---|---:|---|
+| `NC` | `X` | 15 | Neighborhood Commercial. Prohibited outright. |
+| `C2` | `X` | 47 | Community Commercial. Prohibited outright. |
+| `OA` | `L[15]` | 4 | Office Apartment. Permitted **inside somebody else's building**. |
+
+`X` means what it says, and the section says so itself rather than leaving it
+to be argued: 510.03(2) reads *"If a use is identified in Table 510-1 as
+prohibited, it is prohibited even if it also falls within a broader use
+description that is permitted in the applicable zoning district."* That closes
+the similar-use door 510.03 opens one paragraph earlier — a quadplex here is
+not an unlisted use, it is a listed use with an X against it.
+
+`OA` is the one worth arguing with, because it is a refusal of a permission
+rather than a reading of a prohibition. The cell is `L[15]` and the two halves
+say the same thing twice. *"L"* is defined in 510.03 as a limited use that
+*"shall be developed concurrently with, or after, a primary use"*, and note 15
+says what that means here: *"Duplexes, triplexes, quadplexes, and multifamily
+dwellings, subject to the density standards of the MR-2 District, may be
+developed in the same building as a primary use."* A quadplex is permitted in
+OA — as floor area inside an office building. This product is a
+fixed-dimension factory-built four-unit pod on a lot of its own, which is the
+one thing that sentence does not permit. The column head carries the
+arithmetic even if the sentence did not: `OA[2,3]`, where note 2 requires 60
+percent of a site's building floor area to be primary uses and note 3 caps all
+limited uses at 40 percent.
+
+### The door on the row above
+
+Nothing but the row walk finds it, which is the check §30 turned into a
+standing rule. Note 11 is not printed on any quadplex cell. It is printed on
+the **group heading** the county repeats once per column two rows above them —
+`Dwellings[11], including:` — the parent of Congregate Housing Facilities,
+Duplexes, Multifamily Dwellings, Quadplexes, Townhouses and Triplexes. It
+reads:
+
+> Dwellings not otherwise permitted in the applicable zoning district may
+> nonetheless be permitted if they are developed as **affordable housing**, as
+> defined in ORS 197A.445(1), and subject to Section 846, Affordable Housing.
+
+That is a real way back into NC and C-2, and it is the same shape as Table
+316-1's similar-use note that could have sunk the rural refusal. It turns on
+what is **built** rather than on anything about the lot, and this product is
+market rate, so the prohibition is the answer for it. A screen that opened the
+door would be answering a question it was not asked. It is recorded in the
+zone notes so a human reading the refusal can see the option exists.
+
+Every marker in Table 510-1 was resolved to its row the same way. Of the
+forty-four notes, **six reach a dwelling row**: note 11 on the group heading,
+notes 12, 14 and 15 on the Quadplexes row itself, note 13 on congregate
+housing and note 16 on townhouses. The other thirty-eight are printed on
+drive-thrus, hotels, manufacturing, marijuana processing, parking structures
+and commercial services, and reach this building only because the whole notes
+block governs a value quoted from its region.
+
+### A reason that was true of one table and false of the next
+
+This is the finding, and it is a new failure shape for a register that has
+been audited twice.
+
+A footnote ruling binds to the **text** of the note, not to its line: the
+register digests the sentence, so a codifier who repeats a sentence between
+chapters gets one answer for both, and a codifier who amends it loses the
+ruling. That is the right design and it has been paying since it was built —
+eight of Section 510's forty-four notes needed no new reasoning at all,
+because Clackamas prints the same sentences about towers, recyclable drop-off
+sites, utility cabinets and transmission lines under Table 315-1.
+
+**But a digest match carries the reason with it, and a reason can be about the
+table rather than about the sentence.** Note 11 above is word for word Section
+315's note 6. The reason written for it there was:
+
+> a quadplex is already permitted outright in all nine districts, so the door
+> is one this building has no need of.
+
+True of Section 315, where every district permits a quadplex. False of Section
+510, where NC and C-2 prohibit one and this note is the only way back in. The
+ruling was already answering Section 510's note 11 before anybody read Section
+510, and it was answering it with an argument that does not hold there.
+
+Nothing detected this. It is not the staleness `stale.py` looks for — that
+check finds reasons that argue about *our corpus* and expire when somebody
+encodes a district. This reason argues about *the page*, which is what the
+standing rule asks for; it just argues about a different page than the one it
+ended up on. Four shared reasons were rewritten to be about the sentence:
+note 11's, and three whose text ended "the Quadplexes cell carries notes 7 and
+8 and nothing else", which is a true statement about Table 315-1 and a false
+one about Table 510-1, where the quadplex cells carry 12, 14 and 15.
+
+**The rule that comes out of it:** a footnote reason may name what the
+sentence says and what row the marker sits on *in the table being read*. It
+may not name a fact about one table's cells as though it settled the sentence,
+because the register will re-use it in the next table that prints those words.
+Where the row matters, say "in neither of the two use tables this sentence
+appears in is the marker printed on a dwelling row" — which is checkable in
+both places, and is what the four rewrites now say.
+
+### Twenty-seven notes deliberately left unread
+
+Tables 510-2 and 510-3 are captured and their twenty-seven notes are **not
+ruled**, which is the first time this project has left notes unread on
+purpose. Nothing is encoded from either table, so neither block governs a
+value and neither blocks anything today. Eleven of the twenty-seven are live
+site conditions on a setback or a height:
+
+> If the rear lot line abuts a residential zoning district, the minimum shall
+> be 15 feet plus one foot for each one-foot increase in building height over
+> 35 feet.
+
+Dismissing those today buys nothing — they gate nothing — and would be an
+amnesty collected by whoever encodes a dimension in these districts tomorrow,
+because a dismissed note does not block and an unread one does. §30 ruled
+Table 316-2's thirteen on exactly the opposite reasoning, and the difference is
+what the notes *are*: 316-2's are accessory buildings, land divisions and
+relaxations, dismissible on what they say. 510-2's are conditions waiting for a
+number to attach to.
+
+The test that used to assert "no note in this layer is unread" now asserts
+*which* lines are unread, so a note going unread anywhere else is still a
+failure.
+
+### Eight districts that are not refused and are not encoded
+
+The rest of Section 510 is blocked, and by one sentence printed twice. Table
+510-1 notes 12 and 14:
+
+> Freestanding congregate housing facilities, freestanding multifamily
+> dwellings, and freestanding quadplexes (**as opposed to** … quadplexes in a
+> mixed-use building) are subject to the development and dimensional standards
+> applicable to … quadplexes in the **RCHDR** District. *(note 12; note 14 says
+> **HDR**, and adds that Table 510-2's own density standards still apply)*
+
+Freestanding is the only kind this building is. So the county's own vocabulary
+routes the pod out of the commercial chapter and into two residential districts
+this layer has never encoded:
+
+| district | cell | lots | waits on |
+|---|---|---:|---|
+| `C3` | `P[14]` | 470 | HDR |
+| `CC` | `P[14]` | 130 | HDR |
+| `RCC` | `P[12]` | 107 | RCHDR |
+| `OC` | `P[14]` | 86 | HDR |
+| `RTL` | `P[14]` | 65 | HDR |
+| `RCO` | `P[12]` | 38 | RCHDR |
+| `SCMU` | `P` | 36 | Subsection 1005.09 |
+| `PMU1`–`PMU6` | `P` | 20 | Table 510-3, site by site |
+
+**896 lots of commercial land depend on two residential districts**, and
+encoding those two is the whole of the remaining work here.
+
+`SCMU` is a different shape and one this corpus has met before in reverse.
+Table 510-2's header prints ten district names while every data row carries
+eleven cells — the missing head is SCMU, and its cell in each of the four
+setback rows is not a number but *"See Subsection 1005.09"*. The column
+position is corroborated twice: 510.02 lists SCMU eighth, and 1005.09 is
+titled *Fuller Road Station Community Dimensional and Design Standards*, which
+is what a Station Community Mixed Use district would defer to. A missing
+column head is the same family as the dropped blank cell — the table is not
+ragged, the header is short — and it is worth recording that the check which
+would catch a dropped cell says nothing about a missing head.
+
+### ZDO 1005, and a setback that is a function of two things we do not hold
+
+Section 1005 was fetched with 510 because notes 12 and 14 point at it. It
+holds a shape the value model has never carried. Subsection 1005.02(L) governs
+in exactly the HDR, RCHDR and SHD Districts, and sets the distance from a
+building to a **site area line** by drawing an angle from the top of the
+building:
+
+- **North**: *"the horizontal distance calculated by drawing a 60-degree angle
+  line from the top of the structure to the natural ground elevation north of
+  the structure."*
+- **East and west**: a 15-degree line, printed as a formula —
+  *"Separation = b x .267 (tan 15 degrees)."*
+
+A setback that is a function of **building height** and of **which way a lot
+line points** is not a number. It needs the bearing of every line, which
+nothing in this pipeline measures, and it is why HDR, SHD and RCHDR have been
+stuck. 1005.02(L)(4) closes the obvious escape: these standards *"are not
+subject to modification pursuant to Section 904, Height Exceptions."* There is
+one relief limb — they may be modified where necessary to allow development at
+the densities allowed for the site area — which is a discretionary approval and
+not a standard.
+
+That raises the value of a lot-line-bearing measurement to **1,182 lots**: the
+three districts the subsection names outright — HDR 253, RCHDR 32, SHD 1 —
+plus the 896 commercial lots that route into HDR and RCHDR through notes 12
+and 14. Nearly four fifths of the value is in districts the subsection never
+mentions.
+
+### A ruling that argued from a document's absence
+
+HDR, SHD and RCHDR were each ruled `fetch` in the district ledger, and all
+three reasons said some version of *"no ZDO 1005 is in the store"*. It is in
+the store now. Nothing made those rulings change — no test, no ledger, no
+check anywhere in the project. **A ruling whose argument is that a document is
+absent goes silently wrong the day the document arrives**, and it fails in the
+comfortable direction: the queue keeps saying "fetch this" about a thing
+already fetched, and nobody reads the reason again.
+
+All three are now `encode`, with the real blocker written out. The district
+queue rose from five to sixteen for two reasons at once — Section 510's eight
+plus these three — which is the first time that number has risen since it was
+pinned, and the docstring says a rise is worth a look at why.
+
+### A checker blind to one letter
+
+`flats/encode/ragged.py`, built the same day to find use tables that lost cells
+on the way into the store, called Table 510-1 **29 percent ragged**: twenty-five
+short rows out of eighty-seven. Every one of the twenty-five was broken at an
+`S`, and not one was missing a cell.
+
+`S` is Section 510's own fifth code, defined at the top of the chapter —
+*"the use may be authorized only pursuant to Section 106; however, identifying a
+use as 'S' does not indicate that any determination has been made"* — and there
+are sixty-nine of them. Two more short runs were broken by `See Table 835-1`,
+the pointer Clackamas prints where a wireless facility's permission lives in
+another chapter, which is a cell that answers with a reference instead of a
+letter. With both taught to the pattern, ZDO 510 reads **0 percent** and the
+corpus separates cleanly again into one ragged document and the rest at zero.
+
+That separation is the whole basis of the test, so the blindness cost more than
+a wrong number: a guard that cries wolf twenty-five times is where a real
+dropped cell goes to hide. This is the twenty-seventh reader blind spot in this
+corpus and the second in a checker rather than an extractor.
+
+### Five references, and the one that is a requirement
+
+Fetching two chapters put five new binding cross-references into the ledger,
+and §30's precedent is that references arriving with a chapter are ruled with
+it. Four close on what their citing sentence is about:
+
+| ref | outcome | the sentence it is cited by |
+|---|---|---|
+| `1203` | `other_path` | Conditional Uses — the key to the letter **`C`** in all three of this layer's use tables |
+| `822` | `other_building` | Home Occupations — printed on a Home Occupations row in all three |
+| `827` | `other_building` | *"Drive-Thru Window Services, subject to Section 827"* |
+| `1307` | `procedure` | *"'Type II' means the use requires review of a Type II application"* |
+
+`1203` binds because the key line is quoted by every zone encoded from those
+tables, and it closes on a rule this project already settled twice: a
+conditional use is a discretionary approval of an application, and a use table
+is read by asking whether the use is **permitted outright**. That is the same
+answer RA-1's `C[8]` Duplexes cell got in §30 and Oregon City R-2 got before
+it.
+
+The fifth does not close, and it is the shape worth stopping on. Table 510-1
+note 8:
+
+> In the SCMU District, outdoor displays, processes, or storage, **except for
+> the storage of solid waste and recyclables either as required by Section
+> 1021, Solid Waste and Recyclable Material Collection**, or as an accessory
+> use to a townhouse, are prohibited.
+
+The three words are *"as required by"*. The sentence is a prohibition, and it
+carves the collection area out of that prohibition because the county requires
+one somewhere else. **A collection area is ground.** It is the same family as
+the parking court, which took between twelve and forty-two feet of depth off
+every quadplex zone in this corpus the day somebody measured it instead of
+assuming it, and the model holds no field for it.
+
+The tempting ruling is that the citing sentence is about SCMU and SCMU is not
+encoded. That is exactly the reason shape this section was about: it argues
+about *our corpus* rather than about the page, and it expires the day somebody
+encodes SCMU. `fetch`, and the row stays in the queue — the second one in this
+layer, beside `1002.02`.
+
+### Where the corpus stands
+
+| census | was | is | why it moved |
+|---|---:|---:|---|
+| encoded zones, corpus-wide | 217 | 220 | NC, C-2 and OA, all refusals |
+| districts owed `encode` | 5 | 16 | Section 510's eight, plus HDR/SHD/RCHDR re-verdicted |
+| districts owed `fetch` | 5 | 2 | ZDO 1005 arrived |
+| notes captured in this layer | 144 | 215 | ZDO 510's three blocks |
+| notes ruled in this layer | 144 | 188 | 36 new, 8 on Section 315 digests |
+| notes deliberately unread | 0 | 27 | Tables 510-2 and 510-3 |
+| ragged documents, corpus-wide | 2 | 1 | the checker could not read `S` |
+| crossref references ruled, this layer | 13 | 18 | 1021 left open |
+| unincorporated Clackamas `zone_missing` lots | 2,581 | 2,515 | 41 rows to 38 |
+
+## 32. The check for a reason that travels, and what it found
+
+§31 ended with a rule and an admission: a footnote reason may not state a fact
+about one table's cells as though it settled the sentence, and *nothing
+detected it today*. This section is the detector, written the same evening, and
+the honest summary is that it found the shape twice more and found a second,
+simpler shape underneath it that needed no heuristic at all.
+
+`flats/encode/travelled.py`. Two verdicts, both reading queues.
+
+### `partial` — a reason narrower than its own reach
+
+The question: **does the reason name only some of the documents its sentence
+appears in?** A ruling binds to the digest of the note's text, so a sentence
+printed under two tables gets one answer. If the reason names Table 315-1, and
+the sentence is also printed under Table 510-1, the argument is smaller than
+the decision.
+
+What is deliberately not flagged, and each exclusion is load-bearing:
+
+- **a reason naming no document at all** — most reasons argue about what the
+  sentence *says*, which travels correctly. This is the shape to prefer, and
+  it is why the queue is small rather than 777 rows long;
+- **a reason naming a document the sentence is not in** — *"subject to Section
+  846"* is a cross-reference, not a scope claim;
+- **a reason naming every document it reaches** — that is the repair.
+
+It over-reports in one direction only. It can call a sound reason partial, and
+a person sees that in a second. It cannot call a travelled reason sound *if the
+reason names a table*, because naming the table is what makes it wrong this
+way. Where a reason travels without naming anything — Gresham's downtown
+rulings say "the L1 in DCC and DTM", district codes rather than numbers —
+nothing here helps. That residual is real and is what the second verdict picks
+up by accident.
+
+**Two live rows on the first run.**
+
+| layer | the sentence | the reason named | it also reaches |
+|---|---|---|---|
+| Clackamas unincorporated | Table 315-2 note 1, minimum lot size | Table 315-2 | Table 316-2, word for word |
+| Gresham | *"Affordable housing development is permitted. See Section 10.1700."* | Section 4.0200 | Pleasant Valley, Springwater |
+
+The Gresham one is the same failure as §31's, in a different city and about
+the same subject. The reason read *"a note of Section 4.0200, whose use table
+has one column and reads NP on the Quadplex row with no marker on it"* — a
+statement about one chapter's table, governing the affordable-housing note in
+six places across three. The repair is the row walk: Gresham prints that
+sentence ten times and in **every** use table it appears in the marker is on
+the Affordable Housing row, never on a dwelling row. That is checkable
+everywhere, and the durable half of the old reason — a permission resting on
+an election nobody has made, and this product is market rate — travels on its
+own.
+
+### `shadowed` — two answers, and file order picks one
+
+Underneath the heuristic sits a defect with no heuristic in it. `_join` builds
+`by_digest` as a dict comprehension, so **last wins**: a register holding two
+rulings for one sentence keeps one and silently drops the other.
+
+Nine such pairs existed. In all nine the *state* agreed — nothing was decided
+by file order — but:
+
+- three kept a reason written about one document and threw away the one
+  written about another (Gresham's transitional-housing note, its cottage
+  cluster note, its 10.0900 cross-reference);
+- one, in Happy Valley, kept an entry whose entire reason was **"Left here as
+  a pointer only."** over the entry that said what was encoded and why —
+  including the recorded disagreement between the chapter's *"gross developable
+  lot area"* and the footnote's *"net developable area"*. The substance was on
+  the record and then it was not.
+
+The cure for both verdicts is the same and it is not deletion: **one reason,
+true everywhere the sentence is printed, written into every entry.** Keeping
+both entries keeps the record that the codifier prints the sentence twice; the
+pointer belongs in a comment, where it cannot displace a reason.
+
+### What the repairs cost, and what they bought
+
+Ten sentences rewritten across four layers -- eighteen entries, because a
+shadowed sentence has two -- and every one of them required the
+row walk §30 turned into a standing rule — resolving each marker to the row it
+is printed on, in *every* table that prints it. That is where the work is:
+
+- **transitional housing**, three tables, marker on the Multi-family/Shared
+  Housing Facility row label in all three. In Gresham's corridor chapter the
+  label wraps and the marker lands on its second line, which is the only reason
+  it looks like a row of its own;
+- **cottage clusters**, two tables, on the Cottage Cluster row in both;
+- **schools**, five tables, on the Schools row in all five;
+- **the 10.0900 cross-reference**, ten printings across seven chapters, on the
+  Renewable Energy (Uses) category heading every time.
+
+None of the eleven changed a conclusion. That is the expected result and not a
+reason to skip the work: a decision whose reason is false is a decision nobody
+can re-check, and this corpus is re-read by strangers — including, twice in
+three days, by its own author reading blind.
+
+Both verdicts are pinned at zero, with the behaviour pinned separately on
+synthetic notes so the guard survives the corpus being clean. The exposure is
+**deliberately not pinned**: 34 ruled sentences are answered in more than one
+document, that number moves every time a chapter is fetched, and pinning it
+would turn a healthy design into a test failure. What is pinned is that it is
+not zero.
+
